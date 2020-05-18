@@ -171,7 +171,6 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const ratio = width / height;
   const minWidth = width < height ? MIN_SIZE : MIN_SIZE * ratio;
   const minHeight = height < width ? MIN_SIZE : MIN_SIZE / ratio;
-  const maxWidthBuffer = maxWidth * 2.5;
 
   const showRightHandle =
     align === 'center' ||
@@ -193,6 +192,10 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         setAttributes={setAttributes}
         width={width}
         height={height}
+        minWidth={Math.ceil(minWidth)}
+        maxWidth={Math.floor(maxWidth)}
+        minHeight={Math.floor(minHeight)}
+        maxHeight={Math.ceil(maxWidth / ratio)}
       />
       <div className={`${className} align${align}`}>
         <ResizableBox
@@ -202,9 +205,9 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
             height,
           }}
           minWidth={minWidth}
-          maxWidth={maxWidthBuffer}
+          maxWidth={maxWidth}
           minHeight={minHeight}
-          maxHeight={maxWidthBuffer / ratio}
+          maxHeight={maxWidth / ratio}
           lockAspectRatio
           enable={{
             top: false,

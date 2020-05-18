@@ -48,6 +48,10 @@ const EmbedControls = (props) => {
     switchBackToURLInput,
     width,
     height,
+    minWidth,
+    maxWidth,
+    minHeight,
+    maxHeight,
     poster,
     title,
     setAttributes,
@@ -152,7 +156,8 @@ const EmbedControls = (props) => {
                   className="web-stories-embed-size-control__width"
                   label={__('Width', 'web-stories')}
                   value={width || ''}
-                  min={1}
+                  min={minWidth}
+                  max={maxWidth}
                   onChange={(value) =>
                     setAttributes({ width: parseInt(value) })
                   }
@@ -162,7 +167,8 @@ const EmbedControls = (props) => {
                   className="web-stories-embed-size-control__height"
                   label={__('Height', 'web-stories')}
                   value={height || ''}
-                  min={1}
+                  min={minHeight}
+                  max={maxHeight}
                   onChange={(value) =>
                     setAttributes({
                       height: parseInt(value),
@@ -183,6 +189,10 @@ EmbedControls.propTypes = {
   switchBackToURLInput: PropTypes.func,
   width: PropTypes.number,
   height: PropTypes.number,
+  minWidth: PropTypes.number,
+  maxWidth: PropTypes.number,
+  minHeight: PropTypes.number,
+  maxHeight: PropTypes.number,
   poster: PropTypes.string,
   title: PropTypes.string,
   setAttributes: PropTypes.func,
