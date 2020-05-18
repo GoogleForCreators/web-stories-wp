@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { dataFontEm } from '../../../../units';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../==../../app/font/defaultFonts';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 const DEFAULT_PRESET = {
   id: 'default-text',
