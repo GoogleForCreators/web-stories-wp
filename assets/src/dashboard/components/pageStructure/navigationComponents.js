@@ -39,7 +39,7 @@ export const NavButton = styled(Button)`
 `;
 
 export const NavList = styled.ul`
-  margin: 20px 0;
+  margin: 0;
   padding: 0;
 `;
 
