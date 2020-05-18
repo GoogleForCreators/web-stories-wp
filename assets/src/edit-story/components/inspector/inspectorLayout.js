@@ -29,19 +29,13 @@ import InspectorContent from './inspectorContent';
 
 const Layout = styled.div`
   height: 100%;
-  display: grid;
-  grid:
-    'tabs   ' 40px
-    'inspector' 1fr
-    / 1fr;
+  display: flex;
+  flex-direction: column;
 `;
 
-const TabsArea = styled.div`
-  grid-area: tabs;
-`;
+const TabsArea = styled.div``;
 
 const InspectorBackground = styled.div`
-  grid-area: inspector;
   background-color: ${({ theme }) => theme.colors.bg.v4};
   height: 100%;
   padding: 0;

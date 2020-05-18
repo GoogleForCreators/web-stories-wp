@@ -196,10 +196,16 @@ function MediaPane(props) {
    * @param {Object} resource Resource object
    * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (resource) => {
-    const width = Math.min(resource.width * DEFAULT_DPR, DEFAULT_ELEMENT_WIDTH);
-    return insertElement(resource.type, { resource, width });
-  };
+  const insertMediaElement = useCallback(
+    (resource) => {
+      const width = Math.min(
+        resource.width * DEFAULT_DPR,
+        DEFAULT_ELEMENT_WIDTH
+      );
+      return insertElement(resource.type, { resource, width });
+    },
+    [insertElement]
+  );
 
   /**
    * Check if number is odd or even.

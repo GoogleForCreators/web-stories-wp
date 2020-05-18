@@ -123,10 +123,12 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           parse: false,
         });
 
-        // TODO add headers for totals by status and have header reflect search
-        // only update totals when data is different
-        const totalStories = parseInt(response.headers.get('X-WP-Total'));
-        const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
+        const totalPages =
+          response.headers && parseInt(response.headers.get('X-WP-TotalPages'));
+
+        const totalStoriesByStatus =
+          response.headers &&
+          JSON.parse(response.headers.get('X-WP-TotalByStatus'));
 
         const serverStoryResponse = await response.json();
 
@@ -139,7 +141,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           payload: {
             stories: reshapedStories,
             totalPages,
-            totalStories,
+            totalStoriesByStatus,
             page,
           },
         });
@@ -184,7 +186,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         });
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
-          payload: { id: story.id },
+          payload: { id: story.id, storyStatus: story.status },
         });
       } catch (e) {
         // eslint-disable-next-line no-console
