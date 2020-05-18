@@ -1,3 +1,5 @@
+/* Loading Indicator */
+
 .wp-block-web-stories-embed.is-loading {
   display: flex;
   flex-direction: column;
@@ -15,12 +17,16 @@
   font-size: 13px;
 }
 
+/* Actual Edit Component */
+
 .wp-block-web-stories-embed
   .components-resizable-box__container
   amp-story-player {
   width: inherit;
   height: inherit;
 }
+
+/* Block Inspector */
 
 .web-stories-embed-poster-label {
   display: block !important;
