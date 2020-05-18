@@ -56,7 +56,7 @@ const sizeFromWidth = (
   }
   const itemsInRow = Math.floor(availableContainerSpace / width);
   const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
-  const pageGutter = theme.pageHorizontalGutter[bp] * 2;
+  const pageGutter = theme.standardViewContentGutter[bp] * 2;
   const takenSpace = width * itemsInRow + columnGapWidth + pageGutter;
   const remainingSpace = availableContainerSpace - takenSpace;
   const addToWidthValue = remainingSpace / itemsInRow;

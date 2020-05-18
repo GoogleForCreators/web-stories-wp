@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
 import usePagePreviewSize from '../../utils/usePagePreviewSize';
+import { resolveRoute } from '../../app/router';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
@@ -53,7 +54,6 @@ const EditControls = styled.div`
   &:hover {
     opacity: 1;
   }
-
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     button,
     a {
@@ -67,25 +67,19 @@ const EditControls = styled.div`
 
 const ActionContainer = styled.div`
   padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
 `;
 
 const EmptyActionContainer = styled(ActionContainer)`
   padding: 40px;
 `;
 
-const CenterActionButton = styled(Button)`
-  width: 100%;
-  font-size: 22px;
-  line-height: 22px;
-`;
-
-const BottomActionButton = styled(Button)`
-  width: 100%;
-`;
-
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
-    ? { href: targetAction, isLink: true }
+    ? { href: resolveRoute(targetAction), isLink: true }
     : { onClick: targetAction };
 
 const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
@@ -98,20 +92,18 @@ const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
         <EmptyActionContainer />
         {centerAction && (
           <ActionContainer>
-            <CenterActionButton
+            <Button
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
             >
               {centerAction.label}
-            </CenterActionButton>
+            </Button>
           </ActionContainer>
         )}
         <ActionContainer>
-          <BottomActionButton
-            {...getActionAttributes(bottomAction.targetAction)}
-          >
+          <Button {...getActionAttributes(bottomAction.targetAction)}>
             {bottomAction.label}
-          </BottomActionButton>
+          </Button>
         </ActionContainer>
       </EditControls>
     </>

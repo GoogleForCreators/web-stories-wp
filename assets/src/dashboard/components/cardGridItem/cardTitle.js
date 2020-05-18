@@ -32,6 +32,7 @@ import styled from 'styled-components';
 import { STORY_STATUS } from '../../constants';
 import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
+import { DashboardStatusesPropType } from '../../types';
 
 const StyledCardTitle = styled.div`
   font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
@@ -70,7 +71,7 @@ const DateHelperText = styled.span`
 `;
 
 const CardTitle = ({
-  author,
+  secondaryTitle,
   title,
   status,
   displayDate,
@@ -113,6 +114,9 @@ const CardTitle = ({
   );
 
   const displayDateText = useMemo(() => {
+    if (!displayDate) {
+      return null;
+    }
     return status === STORY_STATUS.PUBLISHED
       ? sprintf(
           /* translators: %s: last modified date */
@@ -146,17 +150,17 @@ const CardTitle = ({
         )}
         {displayDateText}
       </TitleBodyText>
-      {author && <TitleBodyText>{author}</TitleBodyText>}
+      {secondaryTitle && <TitleBodyText>{secondaryTitle}</TitleBodyText>}
     </StyledCardTitle>
   );
 };
 
 CardTitle.propTypes = {
   title: PropTypes.string.isRequired,
-  author: PropTypes.string,
-  status: PropTypes.oneOf(Object.values(STORY_STATUS)),
+  secondaryTitle: PropTypes.string,
+  status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
-  displayDate: PropTypes.object.isRequired,
+  displayDate: PropTypes.object,
   onEditComplete: PropTypes.func.isRequired,
   onEditCancel: PropTypes.func.isRequired,
 };
