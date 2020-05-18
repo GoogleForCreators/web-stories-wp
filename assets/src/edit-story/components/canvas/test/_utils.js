@@ -134,7 +134,7 @@ export function TestDisplayElement({
           <CanvasProvider>
             <TransformProvider>
               <WithRefs refs={refs}>
-                <DisplayElement element={element} />
+                <DisplayElement element={element} page={null} />
               </WithRefs>
             </TransformProvider>
           </CanvasProvider>

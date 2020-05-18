@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
+/**
+ * Environment variables
+ */
+const {
+  PUPPETEER_DEVTOOLS = false,
+  PUPPETEER_HEADLESS = true,
+  PUPPETEER_PRODUCT = 'chrome',
+  PUPPETEER_SLOWMO = 0,
+} = process.env;
+
 module.exports = {
   launch: {
-    headless: process.env.PUPPETEER_HEADLESS !== 'false',
-    slowMo: parseInt(process.env.PUPPETEER_SLOWMO) || 0,
-    dumpio: true,
-    product: process.env.PUPPETEER_PRODUCT || 'chrome',
+    devtools: PUPPETEER_DEVTOOLS === 'true',
+    headless: PUPPETEER_HEADLESS !== 'false',
+    slowMo: Number(PUPPETEER_SLOWMO) || 0,
+    product: PUPPETEER_PRODUCT,
   },
 };

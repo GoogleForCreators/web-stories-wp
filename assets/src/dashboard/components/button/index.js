@@ -36,10 +36,9 @@ const StyledButton = styled.button`
   border: ${({ theme }) => theme.borders.transparent};
   border-radius: ${({ theme }) => theme.button.borderRadius}px;
   display: flex;
-  height: 40px;
   min-width: 100px;
   opacity: 0.75;
-  padding: 0 10px;
+  padding: 4px 12px;
   text-decoration: none;
 
   &:focus,
@@ -71,6 +70,7 @@ const CtaButton = styled(StyledButton)`
 `;
 
 const SecondaryButton = styled(StyledButton)`
+  border-radius: 0px;
   background-color: transparent;
   text-shadow: ${({ theme }) => theme.text.shadow};
 
@@ -87,7 +87,14 @@ const StyledChildren = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border-bottom: ${({ isSecondary }) =>
+    isSecondary ? '0.1em solid currentColor' : 'none'};
 `;
+
+StyledChildren.propTypes = {
+  isSecondary: PropTypes.bool,
+};
 
 const Button = ({
   children,
@@ -110,7 +117,9 @@ const Button = ({
       disabled={isDisabled}
       {...rest}
     >
-      <StyledChildren>{children}</StyledChildren>
+      <StyledChildren isSecondary={type === BUTTON_TYPES.SECONDARY}>
+        {children}
+      </StyledChildren>
     </StyledButtonByType>
   );
 };

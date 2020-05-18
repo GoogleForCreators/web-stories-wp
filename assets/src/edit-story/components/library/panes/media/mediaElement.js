@@ -18,10 +18,10 @@
  * External dependencies
  */
 import styled, { keyframes, css } from 'styled-components';
-import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
+import { memo, useState, useRef, useMemo } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
-import { useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -118,6 +118,7 @@ const MediaElement = ({
   onInsert,
 }) => {
   const {
+    id: resourceId,
     src,
     type,
     width: originalWidth,
@@ -185,7 +186,7 @@ const MediaElement = ({
       }
     }
     return (
-      <Container>
+      <Container data-testid="mediaElement" data-id={resourceId}>
         <Image
           key={src}
           src={imageSrc}
@@ -268,4 +269,4 @@ MediaElement.propTypes = {
   onInsert: PropTypes.func,
 };
 
-export default MediaElement;
+export default memo(MediaElement);

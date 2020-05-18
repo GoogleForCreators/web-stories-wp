@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { memo } from 'react';
 
 /**
  * Internal dependencies
@@ -47,12 +48,15 @@ function DisplayLayer() {
   } = useStory();
   const {
     state: { editingElement },
-    actions: { setPageContainer },
+    actions: { setPageContainer, setFullbleedContainer },
   } = useCanvas();
 
   return (
     <Layer pointerEvents="none">
-      <DisplayPageArea ref={setPageContainer}>
+      <DisplayPageArea
+        ref={setPageContainer}
+        fullbleedRef={setFullbleedContainer}
+      >
         {currentPage
           ? currentPage.elements.map(({ id, ...rest }) => {
               if (editingElement === id) {
@@ -72,4 +76,4 @@ function DisplayLayer() {
   );
 }
 
-export default DisplayLayer;
+export default memo(DisplayLayer);

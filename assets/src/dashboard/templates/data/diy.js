@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 15,
+    version: 17,
     pages: [
       {
         elements: [
@@ -78,7 +78,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page1_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page1_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -104,10 +104,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 82,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -115,17 +112,8 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
@@ -133,7 +121,6 @@ export default function (imageBaseUrl) {
             },
             id: '4e256c35-5e30-45f5-9095-d8ce0a230b21',
             title: 'Subheading',
-            content: 'DOERS',
             x: -2,
             y: 273,
             width: 444,
@@ -142,6 +129,7 @@ export default function (imageBaseUrl) {
             focalX: 50,
             focalY: 50,
             isFill: false,
+            content: '<span style="color: #faf4ea">DOERS</span>',
           },
           {
             font: {
@@ -158,10 +146,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 82,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -169,24 +154,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'GET',
             width: 123,
             height: 82,
             scale: 100,
@@ -197,6 +172,7 @@ export default function (imageBaseUrl) {
             id: '59955c3a-57a0-4c4a-857d-bd6234e1382c',
             x: 44,
             y: 359,
+            content: '<span style="color: rgba(250, 244, 234, 1)">GET</span>',
           },
           {
             font: {
@@ -213,10 +189,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 82,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -224,24 +197,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'MORE',
             width: 189,
             height: 82,
             scale: 100,
@@ -252,6 +215,7 @@ export default function (imageBaseUrl) {
             id: '04ec92dc-313f-428d-87d0-00bd975290b5',
             x: 177,
             y: 359,
+            content: '<span style="color: rgba(255, 115, 36, 1)">MORE</span>',
           },
           {
             font: {
@@ -268,10 +232,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 82,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -279,24 +240,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'DONE',
             width: 438,
             height: 82,
             scale: 100,
@@ -307,6 +258,7 @@ export default function (imageBaseUrl) {
             id: '7dd406da-ea86-4b60-be48-aeb22c4451a2',
             x: 0,
             y: 445,
+            content: '<span style="color: rgba(255, 115, 36, 1)">DONE</span>',
           },
           {
             font: {
@@ -323,10 +275,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 13,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -334,24 +283,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'ISSUE NO. 2',
             width: 140,
             height: 13,
             scale: 100,
@@ -362,6 +301,8 @@ export default function (imageBaseUrl) {
             id: 'b8f9eb9a-5007-4642-aca3-750cdb7c7463',
             x: 150,
             y: 88,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">ISSUE NO. 2</span>',
           },
           {
             type: 'image',
@@ -379,7 +320,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_org_cross.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_org_cross.png`,
               width: 150,
               height: 150,
               posterId: 0,
@@ -467,7 +408,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page2_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page2_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -493,10 +434,7 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 70,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -504,24 +442,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'EXPAND YOUR\nLIVING SPACE TO',
             width: 444,
             height: 138,
             scale: 100,
@@ -532,6 +460,8 @@ export default function (imageBaseUrl) {
             id: '8e053a88-17a5-4162-8ae0-214e5a84e33c',
             x: -38,
             y: 301,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">EXPAND YOUR\nLIVING SPACE TO</span>',
           },
           {
             font: {
@@ -548,10 +478,7 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 70,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -559,24 +486,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'THE OUTDOORS',
             width: 444,
             height: 70,
             scale: 100,
@@ -587,6 +504,8 @@ export default function (imageBaseUrl) {
             id: '9b8df2db-2f35-4aa6-a48c-f7bc71afc6de',
             x: 66,
             y: 263,
+            content:
+              '<span style="color: rgba(255, 115, 36, 1)">THE OUTDOORS</span>',
           },
         ],
         backgroundElementId: '6d60fa52-25c3-4207-acea-45c2c9680fcf',
@@ -654,7 +573,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page3_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page3_image1.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -680,10 +599,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 13,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -691,24 +607,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'DAVID J. MARKS',
             width: 140,
             height: 13,
             scale: 100,
@@ -719,6 +625,8 @@ export default function (imageBaseUrl) {
             id: 'b767306b-6b92-4b2a-935d-00954a502681',
             x: 150,
             y: 566,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">DAVID J. MARKS</span>',
           },
           {
             font: {
@@ -735,10 +643,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 60,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -746,24 +651,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: '""',
             width: 96,
             height: 60,
             scale: 100,
@@ -774,6 +669,7 @@ export default function (imageBaseUrl) {
             id: 'ec867712-86cf-4681-a2f9-48fe633cfb4c',
             x: 172,
             y: 76,
+            content: '<span style="color: rgba(250, 244, 234, 1)">""</span>',
           },
           {
             type: 'shape',
@@ -849,10 +745,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 29,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -860,25 +753,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.2,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content:
-              'Always pay particular attention to the terrain, soil and weather influences of your landscape.',
             width: 274,
             height: 204,
             scale: 100,
@@ -889,6 +771,8 @@ export default function (imageBaseUrl) {
             id: '1788ced3-50fc-495e-9944-9f7a205b3107',
             x: 83,
             y: 158,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">Always pay particular attention to the terrain, soil and weather influences of your landscape.</span>',
           },
         ],
         backgroundElementId: 'a848ae15-78c1-488a-9c2f-befbc69a1fb3',
@@ -956,7 +840,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page4_page5_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -982,10 +866,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 100,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -993,24 +874,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'START\nWITH',
             width: 307,
             height: 200,
             scale: 100,
@@ -1021,6 +892,8 @@ export default function (imageBaseUrl) {
             id: '457c0ed6-69da-43c4-ac59-1d1359d980b9',
             x: 71,
             y: 82,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">START\nWITH</span>',
           },
           {
             font: {
@@ -1037,10 +910,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 100,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1048,24 +918,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'THE\nFOUNDA\nTION',
             width: 307,
             height: 300,
             scale: 100,
@@ -1076,6 +936,8 @@ export default function (imageBaseUrl) {
             id: 'b0b134b8-2aae-4da8-83be-a0f5a811f082',
             x: 71,
             y: 282,
+            content:
+              '<span style="color: rgba(255, 115, 36, 1)">THE\nFOUNDA\nTION</span>',
           },
         ],
         backgroundElementId: '5249418e-8fb7-46d7-8af1-835671d52f2b',
@@ -1101,7 +963,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page4_page5_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -1199,10 +1061,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 22,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1210,24 +1069,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'GETTING STARTED',
             width: 254,
             height: 22,
             scale: 100,
@@ -1238,6 +1087,8 @@ export default function (imageBaseUrl) {
             id: '67f45a53-bf09-4235-95f0-680ad1bc9e66',
             x: 31,
             y: 390,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">GETTING STARTED</span>',
           },
           {
             font: {
@@ -1254,10 +1105,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1265,24 +1113,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 133,
-                g: 130,
-                b: 128,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.4,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Every deck starts with a solid foundation. There are a few ways that a foundation system for a deck can be constructed and we’ll highlight three of them: footing, pier, and pier/footing.',
             x: 31,
             y: 429,
             width: 285,
@@ -1292,6 +1129,8 @@ export default function (imageBaseUrl) {
             focalY: 50,
             isFill: false,
             id: '566dcf70-af92-4ee1-8a03-e07dab4556b8',
+            content:
+              '<span style="color: rgba(133, 130, 128, 1)">Every deck starts with a solid foundation. There are a few ways that a foundation system for a deck can be constructed and we’ll highlight three of them: footing, pier, and pier/footing.</span>',
           },
           {
             font: {
@@ -1308,10 +1147,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 12,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1319,24 +1155,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'GETTING STARTED',
             width: 80,
             height: 11,
             scale: 100,
@@ -1347,6 +1173,8 @@ export default function (imageBaseUrl) {
             id: '88038fd9-5e4e-41f2-a831-a79e990695ce',
             x: 30,
             y: 616.5,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">GETTING STARTED</span>',
           },
           {
             type: 'image',
@@ -1364,7 +1192,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_arrow.png`,
               width: 128,
               height: 128,
               posterId: 0,
@@ -1410,7 +1238,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page6_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page6_bg.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -1506,10 +1334,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 50,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1517,25 +1342,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'right',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content:
-              'HEM-FIR\nBROWN\nSTAIN\nGROUND\nCONTACT\nPRESSURE-T\nREATED\nLUMBER',
             width: 320,
             height: 390,
             scale: 100,
@@ -1546,6 +1360,8 @@ export default function (imageBaseUrl) {
             id: '2af301c7-7cdf-4afc-bd9c-86309ec7cc80',
             x: 75,
             y: 68,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">HEM-FIR\nBROWN\nSTAIN\nGROUND\nCONTACT\nPRESSURE-T\nREATED\nLUMBER</span>',
           },
           {
             font: {
@@ -1562,10 +1378,7 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 13,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1573,24 +1386,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'NATURAL',
             width: 40,
             height: 13,
             scale: 100,
@@ -1601,6 +1404,8 @@ export default function (imageBaseUrl) {
             id: 'e754bfb7-0132-4515-80c2-5c20b2b1475b',
             x: 16,
             y: 597,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">NATURAL</span>',
           },
           {
             font: {
@@ -1617,10 +1422,7 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 13,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1628,24 +1430,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0.1,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: '1.5 in. x 5.5 in. x 96 in',
             width: 218,
             height: 13,
             scale: 100,
@@ -1656,6 +1448,8 @@ export default function (imageBaseUrl) {
             id: 'e3de1f4e-c47e-439b-97cd-50c779650b6d',
             x: -73,
             y: 413,
+            content:
+              '<span style="letter-spacing: 0.001em"><span style="color: rgba(250, 244, 234, 1)">1.5 in. x 5.5 in. x 96 in</span></span>',
           },
           {
             type: 'image',
@@ -1673,7 +1467,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_wh_cross.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_wh_cross.png`,
               width: 150,
               height: 158,
               posterId: 0,
@@ -1761,7 +1555,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -1845,10 +1639,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 22,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1856,24 +1647,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'DC390B 18V Circular Saw',
             width: 254,
             height: 22,
             scale: 100,
@@ -1884,6 +1665,8 @@ export default function (imageBaseUrl) {
             id: '9c0db82d-9759-4a90-8c97-3d1eb8f370e3',
             x: 42,
             y: 399,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">DC390B 18V Circular Saw</span>',
           },
           {
             font: {
@@ -1900,10 +1683,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1911,25 +1691,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.4,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content:
-              'The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip blade to maintain sharpness, and high strength shoe and upper guard for increased durability.',
             width: 289,
             height: 105,
             scale: 100,
@@ -1940,6 +1709,8 @@ export default function (imageBaseUrl) {
             id: '112e77ab-1cec-4679-b501-b9085d5f5d79',
             x: 42,
             y: 432,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip blade to maintain sharpness, and high strength shoe and upper guard for increased durability.</span>',
           },
           {
             font: {
@@ -1956,10 +1727,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1967,24 +1735,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'See Full Story',
             width: 190,
             height: 15,
             scale: 100,
@@ -1995,6 +1753,8 @@ export default function (imageBaseUrl) {
             id: '2ee5ed18-dc65-454e-8b69-a76fc5f06a38',
             x: 125,
             y: 616,
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)">See Full Story</span>',
           },
           {
             type: 'image',
@@ -2012,7 +1772,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_up_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_up_arrow.png`,
               width: 150,
               height: 69,
               posterId: 0,
@@ -2113,10 +1873,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2124,24 +1881,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'THE BEST TOOLS',
             width: 254,
             height: 40,
             scale: 100,
@@ -2152,6 +1899,8 @@ export default function (imageBaseUrl) {
             id: '2a83d681-85df-4b20-88e4-cc67d02817d4',
             x: 52,
             y: 31,
+            content:
+              '<span style="color: rgba(255, 115, 36, 1)">THE BEST TOOLS</span>',
           },
           {
             font: {
@@ -2168,10 +1917,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2179,24 +1925,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'FOR YOUR DIY\nPROJECT.',
             width: 254,
             height: 79,
             scale: 100,
@@ -2207,6 +1943,8 @@ export default function (imageBaseUrl) {
             id: '5fe94c96-3a59-4b24-bb76-1a2a24795c23',
             x: 52,
             y: 71,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">FOR YOUR DIY\nPROJECT.</span>',
           },
           {
             type: 'image',
@@ -2239,7 +1977,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page8_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page8_image1.jpg`,
               width: 220,
               height: 131,
               posterId: 0,
@@ -2278,7 +2016,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page8_image2.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page8_image2.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -2324,7 +2062,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page8_image3.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page8_image3.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -2350,10 +2088,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2361,24 +2096,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'CORDLESS\nPOWER DRILL',
             width: 112,
             height: 40,
             scale: 100,
@@ -2389,6 +2114,8 @@ export default function (imageBaseUrl) {
             id: 'ac28f1fa-0509-49e2-82d2-4607c9e2cc23',
             x: 189,
             y: 210,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">CORDLESS\nPOWER DRILL</span>',
           },
           {
             font: {
@@ -2405,10 +2132,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2416,24 +2140,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'JET SCREWS',
             width: 112,
             height: 19,
             scale: 100,
@@ -2444,6 +2158,8 @@ export default function (imageBaseUrl) {
             id: 'bc9330a4-a5c1-4711-842c-9f6c2a577bd0',
             x: 188,
             y: 354,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">JET SCREWS</span>',
           },
           {
             font: {
@@ -2460,10 +2176,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2471,24 +2184,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'CLAMP METER',
             width: 137,
             height: 19,
             scale: 100,
@@ -2499,6 +2202,8 @@ export default function (imageBaseUrl) {
             id: 'b29b6af7-1fd0-4f84-a9c5-8e33c4623865',
             x: 189,
             y: 486,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">CLAMP METER</span>',
           },
           {
             font: {
@@ -2515,10 +2220,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2526,24 +2228,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: '3.',
             width: 30,
             height: 20,
             scale: 100,
@@ -2554,6 +2246,7 @@ export default function (imageBaseUrl) {
             id: '7b1484d1-e0d5-4d8c-8c03-d28ecf193b4f',
             x: 169,
             y: 487,
+            content: '<span style="color: rgba(255, 115, 36, 1)">3.</span>',
           },
           {
             font: {
@@ -2570,10 +2263,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2581,24 +2271,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: '2.',
             width: 30,
             height: 19,
             scale: 100,
@@ -2609,6 +2289,7 @@ export default function (imageBaseUrl) {
             id: 'db606b2b-1199-4a93-885e-8e1be559c256',
             x: 169,
             y: 354,
+            content: '<span style="color: rgba(255, 115, 36, 1)">2.</span>',
           },
           {
             font: {
@@ -2625,10 +2306,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2636,24 +2314,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: '1.',
             width: 30,
             height: 19,
             scale: 100,
@@ -2664,6 +2332,7 @@ export default function (imageBaseUrl) {
             id: '9b59aecd-69c2-45c3-8f8e-b12aa586e99b',
             x: 168,
             y: 221,
+            content: '<span style="color: rgba(255, 115, 36, 1)">1.</span>',
           },
           {
             font: {
@@ -2680,10 +2349,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 13,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2691,24 +2357,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'VIEW ALL PRODUCTS',
             width: 140,
             height: 13,
             scale: 100,
@@ -2719,6 +2375,8 @@ export default function (imageBaseUrl) {
             id: '1f552208-c803-40aa-8eaf-8c7356196a87',
             x: 53,
             y: 616.5,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">VIEW ALL PRODUCTS</span>',
           },
           {
             type: 'image',
@@ -2736,7 +2394,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_arrow.png`,
               width: 128,
               height: 128,
               posterId: 0,
@@ -2782,7 +2440,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -2850,10 +2508,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2861,24 +2516,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'THE RIGHT TOOLS',
             width: 254,
             height: 40,
             scale: 100,
@@ -2889,6 +2534,8 @@ export default function (imageBaseUrl) {
             id: '7b86d9a0-7674-4172-8abb-ddd27f241376',
             x: 59,
             y: 34,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">THE RIGHT TOOLS</span>',
           },
           {
             font: {
@@ -2905,10 +2552,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2916,24 +2560,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'FOR THE JOB.',
             width: 254,
             height: 39,
             scale: 100,
@@ -2944,6 +2578,8 @@ export default function (imageBaseUrl) {
             id: '55d03a3d-486e-446e-9e02-92a6af422cfb',
             x: 59,
             y: 74,
+            content:
+              '<span style="color: rgba(255, 115, 36, 1)">FOR THE JOB.</span>',
           },
           {
             type: 'shape',
@@ -3003,7 +2639,7 @@ export default function (imageBaseUrl) {
             },
             id: '957322bc-5f94-4cf4-9163-6816b86d8e43',
             link: {
-              url: `http://google.com`,
+              url: 'http://google.com',
               icon: null,
               desc: 'DC390B 18V Circular Saw',
             },
@@ -3068,7 +2704,7 @@ export default function (imageBaseUrl) {
             x: 142,
             y: 330,
             link: {
-              url: `http://google.com`,
+              url: 'http://google.com',
               icon: null,
               desc:
                 'The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip...',
@@ -3134,7 +2770,7 @@ export default function (imageBaseUrl) {
             x: 24,
             y: 445,
             link: {
-              url: `http://google.com`,
+              url: 'http://google.com',
               icon: null,
               desc:
                 'The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip...',
@@ -3249,10 +2885,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3260,24 +2893,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'MORE',
             width: 111,
             height: 40,
             scale: 100,
@@ -3288,6 +2911,7 @@ export default function (imageBaseUrl) {
             id: '3d4ecfbb-db87-4575-95f3-ad04b65645c9',
             x: 59,
             y: 34,
+            content: '<span style="color: rgba(53, 51, 50, 1)">MORE</span>',
           },
           {
             font: {
@@ -3304,10 +2928,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 40,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3315,24 +2936,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 115,
-                b: 36,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'STORIES.',
             width: 161,
             height: 40,
             scale: 100,
@@ -3343,6 +2954,8 @@ export default function (imageBaseUrl) {
             id: '4e3adf8b-0488-45ba-8e8c-ced5b3a9d1b2',
             x: 59,
             y: 74,
+            content:
+              '<span style="color: rgba(255, 115, 36, 1)">STORIES.</span>',
           },
           {
             type: 'image',
@@ -3375,7 +2988,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -3414,7 +3027,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -3457,7 +3070,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -3500,7 +3113,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_page7_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page7_bg.jpg`,
               width: 220,
               height: 124,
               posterId: 0,
@@ -3530,10 +3143,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3541,24 +3151,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'STORY TITLE',
             width: 112,
             height: 19,
             scale: 100,
@@ -3569,6 +3169,8 @@ export default function (imageBaseUrl) {
             id: '57cb521c-1572-490b-96aa-daa9ae4b45a9',
             x: 180,
             y: 178,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">STORY TITLE</span>',
           },
           {
             font: {
@@ -3585,10 +3187,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3596,24 +3195,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 133,
-                g: 130,
-                b: 128,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'Lorem ipsum dolor',
             width: 150,
             height: 15,
             scale: 100,
@@ -3624,6 +3213,8 @@ export default function (imageBaseUrl) {
             id: 'e68025e7-bea3-47fc-ba92-466cdd5fbaf5',
             x: 179,
             y: 208,
+            content:
+              '<span style="color: rgba(133, 130, 128, 1)">Lorem ipsum dolor</span>',
           },
           {
             font: {
@@ -3640,10 +3231,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3651,24 +3239,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'STORY TITLE',
             width: 112,
             height: 19,
             scale: 100,
@@ -3679,6 +3257,8 @@ export default function (imageBaseUrl) {
             id: 'fb2ab27a-6f74-47b3-b913-395b53e79d62',
             x: 179,
             y: 295,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">STORY TITLE</span>',
           },
           {
             font: {
@@ -3695,10 +3275,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3706,24 +3283,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 133,
-                g: 130,
-                b: 128,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'Lorem ipsum dolor',
             width: 150,
             height: 15,
             scale: 100,
@@ -3734,6 +3301,8 @@ export default function (imageBaseUrl) {
             id: '605b22dd-f600-46ae-a0ec-fab0adcb4c9d',
             x: 178,
             y: 322,
+            content:
+              '<span style="color: rgba(133, 130, 128, 1)">Lorem ipsum dolor</span>',
           },
           {
             font: {
@@ -3750,10 +3319,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3761,24 +3327,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'STORY TITLE',
             width: 112,
             height: 19,
             scale: 100,
@@ -3789,6 +3345,8 @@ export default function (imageBaseUrl) {
             id: 'd133aa02-5c7a-4616-b192-cbc97dbbc1ef',
             x: 182,
             y: 421,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">STORY TITLE</span>',
           },
           {
             font: {
@@ -3805,10 +3363,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3816,24 +3371,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 133,
-                g: 130,
-                b: 128,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'Lorem ipsum dolor',
             width: 150,
             height: 14,
             scale: 100,
@@ -3844,6 +3389,8 @@ export default function (imageBaseUrl) {
             id: 'c392e542-c5f6-41f0-9096-1215bdbff68c',
             x: 181,
             y: 448,
+            content:
+              '<span style="color: rgba(133, 130, 128, 1)">Lorem ipsum dolor</span>',
           },
           {
             font: {
@@ -3860,10 +3407,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3871,24 +3415,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 53,
-                g: 51,
-                b: 50,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'STORY TITLE',
             width: 112,
             height: 19,
             scale: 100,
@@ -3899,6 +3433,8 @@ export default function (imageBaseUrl) {
             id: '94e8ca84-5e11-42d7-bf00-64b4208cf7a2',
             x: 183,
             y: 544,
+            content:
+              '<span style="color: rgba(53, 51, 50, 1)">STORY TITLE</span>',
           },
           {
             font: {
@@ -3915,10 +3451,7 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3926,24 +3459,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 133,
-                g: 130,
-                b: 128,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'Lorem ipsum dolor',
             width: 150,
             height: 14,
             scale: 100,
@@ -3954,6 +3477,8 @@ export default function (imageBaseUrl) {
             id: '86085ea2-7b70-460f-9a2f-0972f378536d',
             x: 182,
             y: 571,
+            content:
+              '<span style="color: rgba(133, 130, 128, 1)">Lorem ipsum dolor</span>',
           },
           {
             font: {
@@ -3970,10 +3495,7 @@ export default function (imageBaseUrl) {
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
-            fontWeight: 400,
             fontSize: 13,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3981,24 +3503,14 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 250,
-                g: 244,
-                b: 234,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
             title: 'Subheading',
-            content: 'SOCIAL',
             width: 140,
             height: 13,
             scale: 100,
@@ -4009,6 +3521,8 @@ export default function (imageBaseUrl) {
             id: '5e25fd0f-8962-4c22-93fb-9eeb25ad4506',
             x: 343,
             y: 287,
+            content:
+              '<span style="color: rgba(250, 244, 234, 1)">SOCIAL</span>',
           },
           {
             type: 'image',
@@ -4026,7 +3540,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_fb.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_fb.png`,
               width: 150,
               height: 300,
               posterId: 0,
@@ -4064,7 +3578,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_insta.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_insta.png`,
               width: 150,
               height: 150,
               posterId: 0,
@@ -4102,7 +3616,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_yt.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_yt.png`,
               width: 150,
               height: 102,
               posterId: 0,
@@ -4140,7 +3654,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/diy/diy_icon_tw.png`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_icon_tw.png`,
               width: 151,
               height: 119,
               posterId: 0,

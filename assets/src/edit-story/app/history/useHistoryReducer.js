@@ -19,66 +19,18 @@
  */
 import { useReducer, useCallback } from 'react';
 
-const ADD_ENTRY = 'add';
-const CLEAR_HISTORY = 'clear';
-const REPLAY = 'replay';
-
-const EMPTY_STATE = {
-  entries: [],
-  offset: 0,
-  replayState: null,
-  versionNumber: 0,
-};
-
-const reducer = (size) => (state, { type, payload }) => {
-  switch (type) {
-    case ADD_ENTRY:
-      // First check if everything in payload matches the current `replayState`,
-      // if so, update `offset` to match the state in entries and clear `replayState`
-      // and of course leave entries unchanged.
-      if (state.replayState) {
-        const isReplay = Object.keys(state.replayState).every(
-          (key) => state.replayState[key] === payload[key]
-        );
-
-        if (isReplay) {
-          return {
-            ...state,
-            offset: state.entries.indexOf(state.replayState),
-            replayState: null,
-          };
-        }
-      }
-
-      // If not, trim `entries` from `offset` (basically destroy all undone states),
-      // add new entry but limit entire storage to `size`
-      // and clear `offset` and `replayState`.
-      return {
-        entries: [payload, ...state.entries.slice(state.offset)].slice(0, size),
-        versionNumber: state.versionNumber + 1,
-        offset: 0,
-        replayState: null,
-      };
-
-    case REPLAY:
-      return {
-        ...state,
-        versionNumber: state.versionNumber + (state.offset - payload),
-        replayState: state.entries[payload],
-      };
-
-    case CLEAR_HISTORY:
-      return {
-        ...EMPTY_STATE,
-      };
-
-    default:
-      throw new Error(`Unknown history reducer action: ${type}`);
-  }
-};
+/**
+ * Internal dependencies
+ */
+import reducer, {
+  SET_CURRENT_STATE,
+  CLEAR_HISTORY,
+  REPLAY,
+  EMPTY_STATE,
+} from './reducer';
 
 function useHistoryReducer(size) {
-  // State has 3 parts:
+  // State has 4 parts:
   //
   // `state.entries` is an array of the last changes (up to `size`) to
   // the object with the most recent at position 0.
@@ -87,13 +39,17 @@ function useHistoryReducer(size) {
   // almost always be 0 unless the user recently did an undo without making
   // any new changes since.
   //
-  // `state.replayState` is the state that the user most recently tried to
+  // `state.requestedState` is the state that the user most recently tried to
   // undo/redo to - it will be null except for the very short timespan
   // between the user pressing undo and the app updating to that desired
   // state.
+  //
+  // `state.versionNumber` tracks the version number of the state.
+  // The version number is increased whenever a new entry is added.
+  // Undo and redo decrease and increase the version number respectively.
   const [state, dispatch] = useReducer(reducer(size), { ...EMPTY_STATE });
 
-  const { entries, offset, replayState, versionNumber } = state;
+  const { entries, offset, requestedState, versionNumber } = state;
   const historyLength = entries.length;
 
   // @todo: make this an identity-stable function, akin to `setState` or `dispatch`.
@@ -130,16 +86,16 @@ function useHistoryReducer(size) {
     return dispatch({ type: CLEAR_HISTORY });
   }, [dispatch]);
 
-  const appendToHistory = useCallback(
+  const stateToHistory = useCallback(
     (entry) => {
-      dispatch({ type: ADD_ENTRY, payload: entry });
+      dispatch({ type: SET_CURRENT_STATE, payload: entry });
     },
     [dispatch]
   );
 
   return {
-    replayState,
-    appendToHistory,
+    requestedState,
+    stateToHistory,
     clearHistory,
     offset,
     historyLength,

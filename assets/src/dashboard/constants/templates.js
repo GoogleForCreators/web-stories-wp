@@ -136,3 +136,30 @@ export const TEMPLATE_COLOR_ITEMS = [
     value: TEMPLATE_COLORS.PURPLE,
   },
 ];
+
+export const TEMPLATES_GALLERY_STATUS = {
+  ALL: 'template',
+};
+
+export const TEMPLATES_GALLERY_VIEWING_LABELS = {
+  [TEMPLATES_GALLERY_STATUS.ALL]: __('Viewing all templates', 'web-stories'),
+};
+export const TEMPLATES_GALLERY_SORT_OPTIONS = {
+  POPULAR: 'popular',
+  RECENT: 'recent',
+};
+
+export const TEMPLATES_GALLERY_SORT_MENU_ITEMS = [
+  {
+    label: __('Popular', 'web-stories'),
+    value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+  },
+  {
+    label: __('Recent', 'web-stories'),
+    value: TEMPLATES_GALLERY_SORT_OPTIONS.RECENT,
+  },
+];
+
+export const TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS = {
+  template: __('View', 'web-stories'),
+};

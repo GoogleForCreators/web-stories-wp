@@ -24,20 +24,27 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
+import { DROPDOWN_TYPES } from '../../constants';
+import { PILL_LABEL_TYPES } from '../../constants/components';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
 import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import { DROPDOWN_TYPES } from '../../constants';
+
+import { ColorDot } from '../colorDot';
 import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
-import { ColorDot } from '../colorDot';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+
+const dropdownLabelType = {
+  [DROPDOWN_TYPES.PANEL]: PILL_LABEL_TYPES.DEFAULT,
+  [DROPDOWN_TYPES.COLOR_PANEL]: PILL_LABEL_TYPES.SWATCH,
+};
 
 const StyledPopoverMenu = styled(PopoverMenu)`
   left: 50%;
@@ -55,37 +62,52 @@ const Label = styled.label`
 `;
 
 export const InnerDropdown = styled.button`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: ${({ theme, type }) => theme.dropdown[type].height}px;
-  width: auto;
-  padding: 10px 16px;
-  margin: 0;
-  background-color: ${({ theme, type, isOpen }) =>
-    theme.dropdown[type][isOpen ? 'activeBackground' : 'background']};
-  border-radius: ${({ theme, type }) => theme.dropdown[type].borderRadius}px;
-  border: ${({ theme, type }) => theme.dropdown[type].border};
-  color: ${({ theme }) => theme.colors.gray600};
-  cursor: ${({ disabled }) => (disabled ? 'inherit' : 'pointer')};
-  font-family: ${({ theme }) => theme.fonts.dropdown.family};
-  font-size: ${({ theme }) => theme.fonts.dropdown.size}px;
-  font-weight: ${({ theme }) => theme.fonts.dropdown.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.dropdown.letterSpacing}em;
-  line-height: ${({ theme }) => theme.fonts.dropdown.lineHeight}px;
+  ${({ theme, disabled, type, isOpen, hasSelectedItems }) => `
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    padding: 3px 20px;
+    padding-left: ${hasSelectedItems ? '10px' : '20px'};
+    margin: 0;
+    background-color: ${
+      hasSelectedItems
+        ? theme.colors.blueLight
+        : theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
+    };
 
-  &:hover {
-    background-color: ${({ theme, type }) =>
-      theme.dropdown[type].activeBackground};
-  }
+    border-radius: ${theme.dropdown[type].borderRadius}px;
+    border: ${theme.dropdown[type].border};
+    color: ${theme.colors.gray600};
+    cursor: ${disabled ? 'inherit' : 'pointer'};
+    font-family: ${theme.fonts.dropdown.family};
+    font-size: ${theme.fonts.dropdown.size}px;
+    font-weight: ${theme.fonts.dropdown.weight};
+    letter-spacing: ${theme.fonts.dropdown.letterSpacing}em;
+    line-height: ${theme.fonts.dropdown.lineHeight}px;
 
-  &:disabled {
-    color: ${({ theme }) => theme.colors.gray400};
-  }
+    &:hover {
+      background-color: ${
+        hasSelectedItems
+          ? theme.colors.blueLight
+          : theme.dropdown[type].activeBackground
+      };
+    }
+
+    &:focus {
+      border: ${theme.borders.action};
+    }
+
+    &:disabled {
+      color: ${theme.colors.gray400};
+    }
+  `}
 `;
 InnerDropdown.propTypes = {
   disabled: PropTypes.bool,
   isOpen: PropTypes.bool,
+  type: PropTypes.oneOf(Object.values(DROPDOWN_TYPES)),
+  hasSelectedItems: PropTypes.bool,
 };
 
 const InnerDropdownText = styled.span`
@@ -105,7 +127,7 @@ const DropdownIcon = styled.span`
   height: 100%;
   pointer-events: none;
   & > svg {
-    color: ${({ theme, type }) => theme.dropdown[type].arrowColor};
+    color: ${({ theme }) => theme.colors.gray500};
     width: 10px;
     height: 5px;
   }
@@ -117,7 +139,7 @@ const ClearButton = styled.div`
   justify-content: center;
   border: none;
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.bluePrimary600};
+  color: ${({ theme }) => theme.colors.gray600};
   margin: 0 8px 0 0;
   padding: 0;
 `;
@@ -136,7 +158,8 @@ const Dropdown = ({
   ...rest
 }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const dropdownRef = useRef();
+  const dropdownRef = useRef(null);
+  const dropdownButtonRef = useRef(null);
 
   const handleFocusOut = useCallback(() => {
     setShowMenu(false);
@@ -150,8 +173,16 @@ const Dropdown = ({
     }
   };
 
+  useEffect(() => {
+    if (showMenu && dropdownRef.current) {
+      // we need to maintain focus of the dropdown component as a whole
+      // but the button should lose focus as menu is open and focus moves there
+      dropdownButtonRef.current.blur();
+    }
+  }, [showMenu]);
+
   const handleMenuItemSelect = (item) => {
-    if (type === DROPDOWN_TYPES.PANEL) {
+    if (type === DROPDOWN_TYPES.PANEL || type === DROPDOWN_TYPES.COLOR_PANEL) {
       onChange(item);
       return;
     }
@@ -178,26 +209,37 @@ const Dropdown = ({
     return value && getCurrentLabel();
   }, [value, items]);
 
+  const currentValueIndex = useMemo(() => {
+    const activeItem = items.find((item) => {
+      return item.value === value;
+    });
+    return items.indexOf(activeItem);
+  }, [items, value]);
+
+  const hasSelectedItems = selectedItems.length > 0;
+
   return (
     <DropdownContainer ref={dropdownRef} {...rest}>
       <Label aria-label={ariaLabel} alignment={alignment}>
         <InnerDropdown
+          ref={dropdownButtonRef}
           onClick={handleInnerDropdownClick}
           isOpen={showMenu}
           disabled={disabled}
           type={type}
+          hasSelectedItems={hasSelectedItems}
         >
           <InnerDropdownText>
             {currentLabel || (
               <>
-                {selectedItems.length > 0 && (
+                {hasSelectedItems && (
                   <ClearButton
                     tab-index={0}
                     data-testid="dropdown-clear-btn"
                     aria-label="Clear Button"
                     onClick={onClear}
                   >
-                    <CloseIcon width={13} height={13} />
+                    <CloseIcon width={10} height={10} />
                   </ClearButton>
                 )}
                 {selectedItems[0]?.hex ? (
@@ -220,22 +262,23 @@ const Dropdown = ({
         </InnerDropdown>
       </Label>
 
-      {type === DROPDOWN_TYPES.PANEL ? (
+      {type === DROPDOWN_TYPES.PANEL || type === DROPDOWN_TYPES.COLOR_PANEL ? (
         <PopoverPanel
           isOpen={showMenu}
           title={placeholder}
-          onClose={() => setShowMenu(false)}
+          labelType={dropdownLabelType[type]}
           items={items}
+          onClose={() => setShowMenu(false)}
           onSelect={(_, selectedValue) => {
             handleMenuItemSelect(selectedValue);
           }}
         />
       ) : (
         <StyledPopoverMenu
+          currentValueIndex={currentValueIndex}
           isOpen={showMenu}
           items={items}
           onSelect={handleMenuItemSelect}
-          framelessButton={type === DROPDOWN_TYPES.TRANSPARENT_MENU}
         />
       )}
     </DropdownContainer>

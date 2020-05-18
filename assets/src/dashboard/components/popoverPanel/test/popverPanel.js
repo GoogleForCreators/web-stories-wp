@@ -41,7 +41,7 @@ const categoryDemoData = [
 
 describe('CardGrid', () => {
   it('should render children when open', () => {
-    const { getByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithTheme(
       <PopoverPanel
         isOpen
         onClose={() => {}}
@@ -51,7 +51,7 @@ describe('CardGrid', () => {
       />
     );
 
-    expect(getByTestId('pill-fieldset').children).toHaveLength(
+    expect(getAllByTestId('popover-pill')).toHaveLength(
       categoryDemoData.length
     );
   });

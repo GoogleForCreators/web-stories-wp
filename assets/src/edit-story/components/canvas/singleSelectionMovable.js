@@ -284,7 +284,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         set(frame.rotate);
       }}
       onRotate={({ target, beforeRotate }) => {
-        frame.rotate = beforeRotate;
+        frame.rotate = ((beforeRotate % 360) + 360) % 360;
         setTransformStyle(target);
       }}
       onRotateEnd={({ target }) => {
@@ -321,7 +321,7 @@ function getRenderDirections({ vertical, horizontal, diagonal }) {
 }
 
 SingleSelectionMovable.propTypes = {
-  selectedElement: PropTypes.object,
+  selectedElement: PropTypes.object.isRequired,
   targetEl: PropTypes.object.isRequired,
   pushEvent: PropTypes.object,
 };

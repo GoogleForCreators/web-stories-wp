@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 15,
+    version: 17,
     pages: [
       {
         elements: [
@@ -78,7 +78,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page1_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page1_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -98,7 +98,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -116,9 +115,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 68,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -126,23 +123,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.88,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Food &amp; Stuff',
             x: 92,
             y: 160,
             width: 256,
@@ -153,6 +140,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'be108bc9-3a51-48c4-b495-24be6163e44c',
+            content:
+              '<span style="font-weight: 700; color: #fff">Food &amp;  Stuff</span>',
           },
           {
             opacity: 100,
@@ -169,7 +158,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_logo.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_logo.png`,
               width: 56,
               height: 12,
               posterId: 0,
@@ -177,7 +166,7 @@ export default function (imageBaseUrl) {
               title: 'cooking_icon_logo',
               alt: 'cooking_icon_logo',
               local: false,
-              sizes: [],
+              sizes: {},
             },
             x: 165,
             y: 59,
@@ -377,7 +366,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_radish.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_radish.png`,
               width: 220,
               height: 309,
               posterId: 0,
@@ -397,7 +386,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -415,9 +403,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 30,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -425,24 +411,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.2,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              '"Your body is not a temple, it\'s an amusement park. Enjoy the ride."',
             x: 100,
             y: 207,
             width: 240,
@@ -453,6 +428,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '5ad5b20a-e1ef-4341-a9ea-afc442cca079',
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)">"Your body is not a temple, it\'s an amusement park. Enjoy the ride."</span>',
           },
           {
             opacity: 100,
@@ -463,7 +440,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -481,9 +457,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -491,23 +465,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.2,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '- Anthony Bourdain',
             width: 279,
             height: 19,
             scale: 100,
@@ -519,6 +483,8 @@ export default function (imageBaseUrl) {
             id: 'd3bb1cdf-9ab7-4444-a71b-e4a5bfd27410',
             x: 81,
             y: 394,
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)">- Anthony Bourdain</span>',
           },
           {
             opacity: 100,
@@ -706,7 +672,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page3_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page3_image1.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -940,7 +906,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_persimmon.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_persimmon.png`,
               width: 220,
               height: 228,
               posterId: 0,
@@ -972,7 +938,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -990,9 +955,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 30,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1000,23 +963,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Dan Williams',
             x: 103,
             y: 444,
             width: 317,
@@ -1027,6 +980,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '6c29ba73-482b-4759-bbc0-2a503f075b61',
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Dan Williams</span></span>',
           },
           {
             opacity: 100,
@@ -1037,7 +992,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -1055,9 +1009,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1065,24 +1017,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'We go behind the scene of his famous Soho restaurant, where Dan will show us what inspires him this season and how he plans his menu accordingly.',
             x: 43,
             y: 518,
             width: 277,
@@ -1093,6 +1034,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '31272720-81e0-416c-b7e6-870d7c68bf81',
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">We go behind the scene of his famous Soho restaurant, where Dan will show us what inspires him this season and how he plans his menu accordingly.</span>',
           },
           {
             opacity: 100,
@@ -1103,7 +1046,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
@@ -1125,9 +1067,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 10,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1135,23 +1075,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'VIEW\nMORE',
             width: 87,
             height: 22,
             scale: 100,
@@ -1163,6 +1093,8 @@ export default function (imageBaseUrl) {
             id: 'd189d8f5-809a-4775-8043-4f1ff432a932',
             x: 332,
             y: 549,
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)">VIEW\nMORE</span>',
           },
           {
             opacity: 100,
@@ -1179,7 +1111,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_arrow.png`,
               width: 100,
               height: 47,
               posterId: 0,
@@ -1252,7 +1184,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_radish.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_radish.png`,
               width: 220,
               height: 309,
               posterId: 0,
@@ -1290,7 +1222,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_carrot.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_carrot.png`,
               width: 220,
               height: 237,
               posterId: 0,
@@ -1328,7 +1260,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_persimmon.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_persimmon.png`,
               width: 220,
               height: 228,
               posterId: 0,
@@ -1366,7 +1298,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_artichoke.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_artichoke.png`,
               width: 220,
               height: 223,
               posterId: 0,
@@ -1398,7 +1330,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -1416,9 +1347,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1426,23 +1355,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Radishes',
             x: 103,
             y: 169,
             width: 235,
@@ -1453,6 +1372,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '30276475-9eaf-4f66-824b-4619e28b788f',
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Radishes</span></span>',
           },
           {
             opacity: 100,
@@ -1463,7 +1384,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -1481,9 +1401,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1491,23 +1409,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Carrots',
             width: 235,
             height: 60,
             scale: 100,
@@ -1519,6 +1427,8 @@ export default function (imageBaseUrl) {
             id: '2312c664-2f6e-4aa7-a179-2d76900b7ab1',
             x: 103,
             y: 292,
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Carrots</span></span>',
           },
           {
             opacity: 100,
@@ -1529,7 +1439,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -1547,9 +1456,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1557,23 +1464,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Persimmons',
             width: 374,
             height: 59,
             scale: 100,
@@ -1585,6 +1482,8 @@ export default function (imageBaseUrl) {
             id: '1ea46b67-82b6-43dc-9b68-761f60b23367',
             x: 34,
             y: 416,
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Persimmons</span></span>',
           },
           {
             opacity: 100,
@@ -1595,7 +1494,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -1613,9 +1511,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1623,23 +1519,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Artichokes',
             width: 374,
             height: 60,
             scale: 100,
@@ -1651,6 +1537,8 @@ export default function (imageBaseUrl) {
             id: '429d7f44-4a17-4bbe-af08-6786b3b122f2',
             x: 33,
             y: 540,
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Artichokes</span></span>',
           },
           {
             opacity: 100,
@@ -1811,7 +1699,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -1829,9 +1716,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -1839,23 +1724,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Currently in season',
             width: 377,
             height: 25,
             scale: 100,
@@ -1867,6 +1742,8 @@ export default function (imageBaseUrl) {
             id: 'b4b4b005-1524-4a37-ba21-0ef518581240',
             x: 27,
             y: 51,
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Currently in season</span></span>',
           },
           {
             opacity: 100,
@@ -1981,7 +1858,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page5_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page5_bg.jpg`,
               width: 220,
               height: 391,
               posterId: 0,
@@ -2014,7 +1891,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -2032,9 +1908,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 126,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2042,23 +1916,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 0.84,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Pers\nimm\non',
             x: 50,
             y: 172,
             width: 339,
@@ -2069,6 +1933,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'b93db3ac-4bbd-4189-90fa-c509f358a954',
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)"><span style="font-weight: 700">Pers\nimm\non</span></span>',
           },
           {
             opacity: 100,
@@ -2108,7 +1974,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               weights: [100, 300, 400, 500, 700, 900],
@@ -2130,9 +1995,7 @@ export default function (imageBaseUrl) {
               fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               service: 'fonts.google.com',
             },
-            fontWeight: 700,
             fontSize: 15,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2140,23 +2003,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'See Full Story',
             x: 140,
             y: 617,
             width: 160,
@@ -2167,6 +2020,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '92cc9ea9-89dd-43ac-bb8c-e36762171caf',
+            content:
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">See Full Story</span></span>',
           },
           {
             opacity: 100,
@@ -2183,7 +2038,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_up_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_up_arrow.png`,
               width: 150,
               height: 69,
               posterId: 0,
@@ -2215,7 +2070,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -2233,9 +2087,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2243,23 +2095,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'The ultimate recipe guide on',
             x: 27,
             y: 51,
             width: 377,
@@ -2270,6 +2112,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'a6b673a3-db8d-48a2-9469-1892e6266eb3',
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)"><span style="font-weight: 700">The ultimate recipe guide on</span></span>',
           },
           {
             opacity: 100,
@@ -2487,7 +2331,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page5_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page5_bg.jpg`,
               width: 220,
               height: 391,
               posterId: 0,
@@ -2656,7 +2500,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
@@ -2678,9 +2521,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 10,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -2688,23 +2529,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'DISCOVER THEM',
             width: 100,
             height: 10,
             scale: 100,
@@ -2716,6 +2547,8 @@ export default function (imageBaseUrl) {
             id: '7979d059-fcdd-4a43-b92c-a9700cab7519',
             x: 145,
             y: 605,
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)">DISCOVER THEM</span>',
           },
           {
             opacity: 100,
@@ -2732,7 +2565,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_arrow.png`,
               width: 100,
               height: 47,
               posterId: 0,
@@ -2975,7 +2808,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -2993,9 +2825,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3003,23 +2833,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Persimmon Salsa Tacos',
             width: 277,
             height: 20,
             scale: 100,
@@ -3031,6 +2851,8 @@ export default function (imageBaseUrl) {
             id: '38be890d-5627-4041-b008-2f24707bf749',
             x: 97,
             y: 179,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Persimmon Salsa Tacos</span>',
           },
           {
             opacity: 100,
@@ -3041,7 +2863,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3059,9 +2880,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3069,23 +2888,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Steamed Persimmon Pudding',
             width: 277,
             height: 19,
             scale: 100,
@@ -3097,6 +2906,8 @@ export default function (imageBaseUrl) {
             id: '127f9ed4-f754-45f1-9bc5-60fee6cbc90c',
             x: 97,
             y: 239,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Steamed Persimmon Pudding</span>',
           },
           {
             opacity: 100,
@@ -3107,7 +2918,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3125,9 +2935,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3135,23 +2943,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Persimmon and Brie Crostini',
             width: 277,
             height: 19,
             scale: 100,
@@ -3163,6 +2961,8 @@ export default function (imageBaseUrl) {
             id: '260c32cf-161f-4d2c-9b0b-f9d04cbf57f9',
             x: 97,
             y: 299,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Persimmon and Brie Crostini</span>',
           },
           {
             opacity: 100,
@@ -3173,7 +2973,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3191,9 +2990,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3201,23 +2998,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Persimmon, Beet, and Citrus Salad',
             width: 277,
             height: 19,
             scale: 100,
@@ -3229,6 +3016,8 @@ export default function (imageBaseUrl) {
             id: '9aa100d8-d095-4c1a-8430-1b3a5bbbc5b4',
             x: 97,
             y: 359,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Persimmon, Beet, and Citrus Salad</span>',
           },
           {
             opacity: 100,
@@ -3239,7 +3028,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3257,9 +3045,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3267,23 +3053,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Persimmon and Bresaola Bites',
             width: 277,
             height: 19,
             scale: 100,
@@ -3295,6 +3071,8 @@ export default function (imageBaseUrl) {
             id: 'e3681a5a-e2a2-4754-b9d2-5a466a46c218',
             x: 97,
             y: 419,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Persimmon and Bresaola Bites</span>',
           },
           {
             opacity: 100,
@@ -3305,7 +3083,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3323,9 +3100,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3333,23 +3108,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Squash Soup with Persimmon',
             width: 277,
             height: 19,
             scale: 100,
@@ -3361,6 +3126,8 @@ export default function (imageBaseUrl) {
             id: '1094fc63-1577-4c24-a4b2-3b41857e6ac7',
             x: 97,
             y: 479,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Squash Soup with Persimmon</span>',
           },
           {
             opacity: 100,
@@ -3371,7 +3138,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3389,9 +3155,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3399,23 +3163,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Mixed Chicories with Persimmons',
             width: 277,
             height: 19,
             scale: 100,
@@ -3427,6 +3181,8 @@ export default function (imageBaseUrl) {
             id: 'bb6e59b5-478b-40a9-a0ec-e08cc16cad71',
             x: 97,
             y: 539,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Mixed Chicories with Persimmons</span>',
           },
           {
             opacity: 100,
@@ -3437,7 +3193,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3455,9 +3210,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3465,23 +3218,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '1',
             width: 25,
             height: 24,
             scale: 100,
@@ -3493,6 +3236,7 @@ export default function (imageBaseUrl) {
             id: 'c65251ab-3347-4658-a18a-1425b12b7081',
             x: 38.5,
             y: 176,
+            content: '<span style="color: rgba(255, 146, 46, 1)">1</span>',
           },
           {
             opacity: 100,
@@ -3503,7 +3247,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3521,9 +3264,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3531,23 +3272,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '2',
             width: 25,
             height: 24,
             scale: 100,
@@ -3559,6 +3290,7 @@ export default function (imageBaseUrl) {
             id: '3d65fd5b-fc80-4b1a-90ba-d866036d934a',
             x: 38.5,
             y: 236,
+            content: '<span style="color: rgba(255, 146, 46, 1)">2</span>',
           },
           {
             opacity: 100,
@@ -3569,7 +3301,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3587,9 +3318,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3597,23 +3326,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '3',
             width: 25,
             height: 24,
             scale: 100,
@@ -3625,6 +3344,7 @@ export default function (imageBaseUrl) {
             id: '87a59266-ad7d-43cd-a626-0d2a0126828d',
             x: 38.5,
             y: 296,
+            content: '<span style="color: rgba(255, 146, 46, 1)">3</span>',
           },
           {
             opacity: 100,
@@ -3635,7 +3355,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3653,9 +3372,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3663,23 +3380,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '4',
             width: 25,
             height: 24,
             scale: 100,
@@ -3691,6 +3398,7 @@ export default function (imageBaseUrl) {
             id: '050e9d9e-6b37-44ef-9f9c-a516ea88c8a4',
             x: 38.5,
             y: 356,
+            content: '<span style="color: rgba(255, 146, 46, 1)">4</span>',
           },
           {
             opacity: 100,
@@ -3701,7 +3409,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3719,9 +3426,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3729,23 +3434,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '5',
             width: 25,
             height: 24,
             scale: 100,
@@ -3757,6 +3452,7 @@ export default function (imageBaseUrl) {
             id: '86a51872-f144-4332-8b93-13b189f1d30b',
             x: 38.5,
             y: 416,
+            content: '<span style="color: rgba(255, 146, 46, 1)">5</span>',
           },
           {
             opacity: 100,
@@ -3767,7 +3463,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3785,9 +3480,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3795,23 +3488,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '6',
             width: 25,
             height: 24,
             scale: 100,
@@ -3823,6 +3506,7 @@ export default function (imageBaseUrl) {
             id: 'ac878a4a-4cf7-41be-8269-c1f317f3fef6',
             x: 38.5,
             y: 476,
+            content: '<span style="color: rgba(255, 146, 46, 1)">6</span>',
           },
           {
             opacity: 100,
@@ -3833,7 +3517,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3851,9 +3534,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3861,23 +3542,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '7',
             width: 25,
             height: 24,
             scale: 100,
@@ -3889,6 +3560,7 @@ export default function (imageBaseUrl) {
             id: '0b59089d-80b3-4422-aff7-13f068d3051d',
             x: 38.5,
             y: 536,
+            content: '<span style="color: rgba(255, 146, 46, 1)">7</span>',
           },
           {
             opacity: 25,
@@ -3928,7 +3600,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -3946,9 +3617,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 46,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -3956,23 +3625,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.3,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Top 8',
             x: 78,
             y: 61,
             width: 141,
@@ -3983,6 +3642,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: 'c0040186-618e-4b75-bbda-ec1803464e6e',
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)"><span style="font-weight: 700">Top 8</span></span>',
           },
           {
             opacity: 100,
@@ -3993,7 +3654,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -4011,9 +3671,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4021,23 +3679,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'recipes with\npersimmon',
             x: 229,
             y: 70.5,
             width: 135,
@@ -4048,6 +3696,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '88dd72fa-b6d4-4749-85f7-a5430f7e51c2',
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)"><span style="font-weight: 700">recipes with\npersimmon</span></span>',
           },
         ],
         backgroundElementId: '353201ca-58e7-487f-b6f7-6360c5b72aa9',
@@ -4112,7 +3762,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page7_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page7_bg.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -4286,7 +3936,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               service: 'fonts.google.com',
@@ -4308,9 +3957,7 @@ export default function (imageBaseUrl) {
                 [1, 900],
               ],
             },
-            fontWeight: 400,
             fontSize: 10,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4318,23 +3965,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'LEARN\nMORE',
             width: 87,
             height: 22,
             scale: 100,
@@ -4346,6 +3983,8 @@ export default function (imageBaseUrl) {
             id: '962ba57a-da00-4ea0-8ac9-649c7996768d',
             x: 332,
             y: 558,
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)">LEARN\nMORE</span>',
           },
           {
             opacity: 100,
@@ -4362,7 +4001,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_arrow.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_arrow.png`,
               width: 100,
               height: 47,
               posterId: 0,
@@ -4395,7 +4034,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -4413,9 +4051,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 30,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4423,23 +4059,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'left',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Squash Soup&nbsp;\nwith Persimmon',
             width: 270,
             height: 60,
             scale: 100,
@@ -4451,6 +4077,8 @@ export default function (imageBaseUrl) {
             id: 'f4b2e739-5428-4639-8b71-b25630dac775',
             x: 41,
             y: 438,
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Squash Soup&nbsp;\n with Persimmon</span></span>',
           },
           {
             opacity: 100,
@@ -4551,7 +4179,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               weights: [100, 300, 400, 500, 700, 900],
@@ -4573,9 +4200,7 @@ export default function (imageBaseUrl) {
               fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               service: 'fonts.google.com',
             },
-            fontWeight: 400,
             fontSize: 12,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4583,23 +4208,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0.25,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'YIELD',
             x: 41,
             y: 530,
             width: 78,
@@ -4610,6 +4225,8 @@ export default function (imageBaseUrl) {
             isFill: false,
             type: 'text',
             id: '33d395dd-462d-4457-97c0-7b82f8c7c5d8',
+            content:
+              '<span style="letter-spacing: 0.0025em"><span style="color: rgba(255, 146, 46, 1)">YIELD</span></span>',
           },
           {
             opacity: 100,
@@ -4620,7 +4237,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -4638,9 +4254,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4648,23 +4262,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '4-6 people',
             width: 78,
             height: 20,
             scale: 100,
@@ -4676,6 +4280,8 @@ export default function (imageBaseUrl) {
             id: '6eff8e7e-7799-456b-9bd3-5abe4fffac5d',
             x: 41,
             y: 546,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">4-6 people</span>',
           },
           {
             opacity: 100,
@@ -4686,7 +4292,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               weights: [100, 300, 400, 500, 700, 900],
@@ -4708,9 +4313,7 @@ export default function (imageBaseUrl) {
               fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               service: 'fonts.google.com',
             },
-            fontWeight: 400,
             fontSize: 12,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4718,23 +4321,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0.25,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'TYPE',
             width: 78,
             height: 12,
             scale: 100,
@@ -4746,6 +4339,8 @@ export default function (imageBaseUrl) {
             id: 'a5f5f1d9-015f-4f74-8bb7-a92e3ec3ea9a',
             x: 41,
             y: 594,
+            content:
+              '<span style="letter-spacing: 0.0025em"><span style="color: rgba(255, 146, 46, 1)">TYPE</span></span>',
           },
           {
             opacity: 100,
@@ -4756,7 +4351,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -4774,9 +4368,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4784,23 +4376,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Vegetarian',
             width: 78,
             height: 19,
             scale: 100,
@@ -4812,6 +4394,8 @@ export default function (imageBaseUrl) {
             id: '5ac12eaa-a7f3-4ded-8273-ba0d9f73955e',
             x: 41,
             y: 608,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Vegetarian</span>',
           },
           {
             opacity: 100,
@@ -4822,7 +4406,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               weights: [100, 300, 400, 500, 700, 900],
@@ -4844,9 +4427,7 @@ export default function (imageBaseUrl) {
               fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               service: 'fonts.google.com',
             },
-            fontWeight: 400,
             fontSize: 12,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4854,23 +4435,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0.25,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'TIME',
             width: 78,
             height: 12,
             scale: 100,
@@ -4882,6 +4453,8 @@ export default function (imageBaseUrl) {
             id: '296554e7-af85-41ab-8f40-44b091a1b3a8',
             x: 198,
             y: 533,
+            content:
+              '<span style="letter-spacing: 0.0025em"><span style="color: rgba(255, 146, 46, 1)">TIME</span></span>',
           },
           {
             opacity: 100,
@@ -4892,7 +4465,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -4910,9 +4482,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4920,23 +4490,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '40 minutes',
             width: 98,
             height: 20,
             scale: 100,
@@ -4948,6 +4508,8 @@ export default function (imageBaseUrl) {
             id: 'b6d08619-ca6a-4466-8f40-e4845ec26eda',
             x: 198,
             y: 547,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">40 minutes</span>',
           },
           {
             opacity: 100,
@@ -4958,7 +4520,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Roboto',
               weights: [100, 300, 400, 500, 700, 900],
@@ -4980,9 +4541,7 @@ export default function (imageBaseUrl) {
               fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
               service: 'fonts.google.com',
             },
-            fontWeight: 400,
             fontSize: 12,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -4990,23 +4549,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0.25,
             lineHeight: 1,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'LEVEL',
             width: 78,
             height: 12,
             scale: 100,
@@ -5018,6 +4567,8 @@ export default function (imageBaseUrl) {
             id: '36968290-c6c8-4de1-bb7b-b8faf7a5872e',
             x: 198,
             y: 593,
+            content:
+              '<span style="letter-spacing: 0.0025em"><span style="color: rgba(255, 146, 46, 1)">LEVEL</span></span>',
           },
           {
             opacity: 100,
@@ -5028,7 +4579,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -5046,9 +4596,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -5056,23 +4604,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Beginner',
             width: 78,
             height: 19,
             scale: 100,
@@ -5084,6 +4622,8 @@ export default function (imageBaseUrl) {
             id: 'a3d09960-be5c-4ce2-b6ef-669d2efa927b',
             x: 198,
             y: 607,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Beginner</span>',
           },
         ],
         backgroundElementId: '9b628714-3fa2-490a-b766-4cf019ebe394',
@@ -5148,7 +4688,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page8_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page8_bg.jpg`,
               width: 220,
               height: 147,
               posterId: 0,
@@ -5351,7 +4891,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -5369,9 +4908,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -5379,23 +4916,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Prep the Squash',
             width: 211,
             height: 19,
             scale: 100,
@@ -5407,6 +4934,8 @@ export default function (imageBaseUrl) {
             id: '6b49808a-0de8-4ef8-87a0-0ee0781dab8a',
             x: 153,
             y: 448.5,
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Prep the Squash</span></span>',
           },
           {
             opacity: 100,
@@ -5417,7 +4946,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -5435,9 +4963,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 30,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -5445,23 +4971,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 249,
-                b: 238,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: '3',
             width: 76,
             height: 30,
             scale: 100,
@@ -5473,6 +4989,8 @@ export default function (imageBaseUrl) {
             id: '4377060a-594e-4d7d-a544-d6ab79b91c99',
             x: 21,
             y: 443,
+            content:
+              '<span style="color: rgba(255, 249, 238, 1)"><span style="font-weight: 700">3</span></span>',
           },
           {
             opacity: 100,
@@ -5483,7 +5001,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -5501,9 +5018,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -5511,24 +5026,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit integer auctor sollicitudin dolor, vel lacinia mi vehicula sed. Sed semper tortor est, et scelerisque lorem finibus efficitur maecenas vel aliquet nisl curabitur sollicitudin libero.',
             width: 359,
             height: 94,
             scale: 100,
@@ -5540,6 +5044,8 @@ export default function (imageBaseUrl) {
             id: 'e474a0ae-051d-4788-8578-b5888531dac8',
             x: 40,
             y: 519,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit integer auctor sollicitudin dolor, vel lacinia mi vehicula sed. Sed semper tortor est, et scelerisque lorem finibus efficitur maecenas vel aliquet nisl curabitur sollicitudin libero.</span>',
           },
         ],
         backgroundElementId: '7805eaf2-f323-4b3e-8c2b-a328f3e95056',
@@ -5607,7 +5113,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page9_image1.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page9_image1.jpg`,
               width: 220,
               height: 294,
               posterId: 0,
@@ -5646,7 +5152,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page9_image2.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page9_image2.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -5689,7 +5195,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page9_image3.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page9_image3.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -5732,7 +5238,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_page9_image4.jpg`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_page9_image4.jpg`,
               width: 220,
               height: 284,
               posterId: 0,
@@ -5762,7 +5268,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_facebook.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_facebook.png`,
               width: 50,
               height: 100,
               posterId: 0,
@@ -5800,7 +5306,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_instagram.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_instagram.png`,
               width: 150,
               height: 150,
               posterId: 0,
@@ -5838,7 +5344,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_youtube.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_youtube.png`,
               width: 100,
               height: 68,
               posterId: 0,
@@ -5876,7 +5382,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}assets/images/templates/cooking/cooking_icon_twitter.png`,
+              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_twitter.png`,
               width: 100,
               height: 79,
               posterId: 0,
@@ -6208,7 +5714,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -6226,9 +5731,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 20,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -6236,23 +5739,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Follow us',
             width: 211,
             height: 19,
             scale: 100,
@@ -6264,6 +5757,8 @@ export default function (imageBaseUrl) {
             id: 'b6b37e1f-c36b-4d93-97d4-a3eff77486e6',
             x: 114,
             y: 528,
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Follow us</span></span>',
           },
           {
             opacity: 100,
@@ -6274,7 +5769,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -6292,9 +5786,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 700,
             fontSize: 30,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -6302,23 +5794,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 255,
-                g: 146,
-                b: 46,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1,
             textAlign: 'center',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'More stories',
             width: 211,
             height: 30,
             scale: 100,
@@ -6330,6 +5812,8 @@ export default function (imageBaseUrl) {
             id: 'a2be26e3-7314-4fc5-aa65-c69d390a173f',
             x: 118,
             y: 58,
+            content:
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">More stories</span></span>',
           },
           {
             opacity: 100,
@@ -6340,7 +5824,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -6358,9 +5841,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -6368,23 +5849,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Our best taco recipes to date',
             width: 250,
             height: 19,
             scale: 100,
@@ -6396,6 +5867,8 @@ export default function (imageBaseUrl) {
             id: 'c4a34697-400c-4b45-8646-b81c1ada574f',
             x: 143,
             y: 163,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Our best taco recipes to date</span>',
           },
           {
             opacity: 100,
@@ -6406,7 +5879,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -6424,9 +5896,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -6434,23 +5904,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Comfort food for all occasions',
             width: 250,
             height: 19,
             scale: 100,
@@ -6462,6 +5922,8 @@ export default function (imageBaseUrl) {
             id: '8b2ad361-4db2-41ef-9f96-142b4f150556',
             x: 143,
             y: 258,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Comfort food for all occasions</span>',
           },
           {
             opacity: 100,
@@ -6472,7 +5934,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -6490,9 +5951,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -6500,23 +5959,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Desserts you can’t live without',
             width: 250,
             height: 19,
             scale: 100,
@@ -6528,6 +5977,8 @@ export default function (imageBaseUrl) {
             id: '55aae5bd-87d3-4ecb-add2-ed214ce75805',
             x: 143,
             y: 351,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Desserts you can’t live without</span>',
           },
           {
             opacity: 100,
@@ -6538,7 +5989,6 @@ export default function (imageBaseUrl) {
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
-            bold: false,
             font: {
               family: 'Gelasio',
               service: 'fonts.google.com',
@@ -6556,9 +6006,7 @@ export default function (imageBaseUrl) {
                 [1, 700],
               ],
             },
-            fontWeight: 400,
             fontSize: 16,
-            fontStyle: 'normal',
             backgroundColor: {
               color: {
                 r: 196,
@@ -6566,23 +6014,13 @@ export default function (imageBaseUrl) {
                 b: 196,
               },
             },
-            color: {
-              color: {
-                r: 103,
-                g: 100,
-                b: 97,
-              },
-            },
-            letterSpacing: 0,
             lineHeight: 1.25,
             textAlign: 'initial',
-            textDecoration: 'none',
             padding: {
               vertical: 0,
               horizontal: 0,
               locked: true,
             },
-            content: 'Easy brunch recipes that will impress your guests',
             width: 186,
             height: 40,
             scale: 100,
@@ -6594,6 +6032,8 @@ export default function (imageBaseUrl) {
             id: '21aed5d1-b061-4a20-87e8-3e9c9b804d41',
             x: 143,
             y: 437,
+            content:
+              '<span style="color: rgba(103, 100, 97, 1)">Easy brunch recipes that  will impress your guests</span>',
           },
           {
             opacity: 100,

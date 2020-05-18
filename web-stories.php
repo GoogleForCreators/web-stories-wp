@@ -41,10 +41,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WEBSTORIES_VERSION', '1.0.0-alpha' );
+define( 'WEBSTORIES_VERSION', '1.0.0-alpha+e601d64' );
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
+define( 'WEBSTORIES_ASSETS_URL', WEBSTORIES_PLUGIN_DIR_URL . '/assets' );
 define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6.0' );
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
