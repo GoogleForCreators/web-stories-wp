@@ -15,14 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { fireEvent } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
-import { Fixture } from '../../../karma/fixture';
+import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../../components/canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
@@ -74,10 +69,7 @@ describe('TextEdit integration', () => {
       let boldToggle;
 
       beforeEach(async () => {
-        // @todo: hide behind `fireEvent`-like API.
-        await fixture.act(async () => {
-          await karmaPuppeteer.click(frame);
-        });
+        await fixture.events.click(frame);
         editor = fixture.querySelector('[data-testid="textEditor"]');
         editLayer = fixture.querySelector('[data-testid="editLayer"]');
         boldToggle = fixture.querySelector('[data-testid="boldToggle"]');
@@ -90,19 +82,17 @@ describe('TextEdit integration', () => {
 
       it('should handle a commnad, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
-        await fixture.act(async () => {
-          await karmaPuppeteer.focus(draft);
-        });
+        await fixture.events.focus(draft);
 
         // Select all.
-        await fixture.act(async () => {
-          await karmaPuppeteer.click(draft, { clickCount: 3 });
-        });
+        await fixture.events.click(draft, { clickCount: 3 });
 
         expect(boldToggle.checked).toEqual(false);
 
         // @todo: Linux uses ctrlKey.
-        fireEvent.keyDown(draft, {
+        // @todo: would be preferable to be more semantic here. E.g.
+        // `keys('mod+B')`.
+        await fixture.events.keyDown(draft, {
           key: 'b',
           code: 'KeyB',
           keyCode: 66,
@@ -112,7 +102,7 @@ describe('TextEdit integration', () => {
         expect(boldToggle.checked).toEqual(true);
 
         // Exit edit mode.
-        fixture.fireEvent.mouseDown(editLayer);
+        await fixture.events.mouseDown(editLayer);
 
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
-import { render, act, fireEvent } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -28,6 +28,7 @@ import APIProvider from '../app/api/apiProvider';
 import APIContext from '../app/api/context';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
 import Layout from '../app/layout';
+import FixtureEvents from './fixtureEvents';
 
 const DEFAULT_CONFIG = {
   storyId: 1,
@@ -71,7 +72,7 @@ export class Fixture {
 
     this._layoutStub = this.stubComponent(Layout);
 
-    this._fireEvent = new FixtureFireEvent();
+    this._events = new FixtureEvents(this.act.bind(this));
 
     this._container = null;
   }
@@ -82,8 +83,8 @@ export class Fixture {
     return this._container;
   }
 
-  get fireEvent() {
-    return this._fireEvent;
+  get events() {
+    return this._events;
   }
 
   stubComponent(component, matcher) {
@@ -113,12 +114,7 @@ export class Fixture {
   }
 
   act(callback) {
-    let responsePromise;
-    return Promise.resolve(
-      act(async () => {
-        responsePromise = callback();
-      })
-    ).then(() => responsePromise);
+    return actPromise(callback);
   }
 
   querySelector(selector) {
@@ -126,6 +122,11 @@ export class Fixture {
   }
 }
 
+/**
+ * A component stub. Allows two main features:
+ * 1. Mock a component's implementation.
+ * 2. Execute a hook against a component.
+ */
 class ComponentStub {
   constructor(fixture, Component, matcher) {
     this._fixture = fixture;
@@ -224,40 +225,6 @@ class ComponentStub {
   }
 }
 
-class FixtureFireEvent {
-  pointerDown(element, options = {}) {
-    const { pointerType = 'mouse' } = options;
-
-    fireEvent.pointerDown(element, options);
-    if (pointerType === 'mouse') {
-      fireEvent.mouseDown(element, options);
-    }
-  }
-
-  pointerUp(element, options = {}) {
-    const { pointerType = 'mouse' } = options;
-
-    fireEvent.pointerUp(element, options);
-    if (pointerType === 'mouse') {
-      fireEvent.mouseUp(element, options);
-    }
-  }
-
-  mouseDown(element, options = {}) {
-    this.pointerDown(element, { ...options, pointerType: 'mouse' });
-  }
-
-  mouseUp(element, options = {}) {
-    this.pointerUp(element, { ...options, pointerType: 'mouse' });
-  }
-
-  click(element, options = {}) {
-    this.pointerDown(element, options);
-    this.pointerUp(element, options);
-    fireEvent.click(element, options);
-  }
-}
-
 function HookExecutor({ hooks, children }) {
   hooks.forEach((func) => func());
   return children;
@@ -270,7 +237,7 @@ class APIProviderFixture {
       const getStoryById = useCallback(
         // @todo: put this to __db__/
         () =>
-          actPromise({
+          asyncResponse({
             title: { raw: 'Auto Draft' },
             status: 'draft',
             author: 1,
@@ -306,7 +273,7 @@ class APIProviderFixture {
 
       const getAllFonts = useCallback(() => {
         // @todo: put actual data to __db__/
-        return actPromise(
+        return asyncResponse(
           [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
             name: font.family,
             value: font.family,
@@ -319,7 +286,7 @@ class APIProviderFixture {
       const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
         // @todo: arg support
         // @todo: put actual data to __db__/
-        return actPromise({ data: [], headers: {} });
+        return asyncResponse({ data: [], headers: {} });
       }, []);
       const uploadMedia = useCallback(
         () => jasmine.createSpy('uploadMedia'),
@@ -372,26 +339,38 @@ class APIProviderFixture {
   }
 }
 
-function actPromise(value) {
-  const promise = Promise.resolve(value);
-  return {
-    then(callback, errback) {
-      return actPromise(
-        promise.then(
-          (result) => act(async () => callback(result)),
-          (reason) => act(async () => errback(reason))
-        )
-      );
-    },
-    catch(errback) {
-      return actPromise(
-        promise.catch((reason) => act(async () => errback(reason)))
-      );
-    },
-    finally(callback) {
-      return actPromise(
-        promise.finally((result) => act(async () => callback(result)))
-      );
-    },
-  };
+/**
+ * Wraps a fixture response in a promise. May additionally add `act()` calls as
+ * needed.
+ *
+ * @param {*} value The reponse value.
+ * @return {!Promise} The promise of the response.
+ */
+function asyncResponse(value) {
+  return Promise.resolve(value);
+}
+
+/**
+ * For integration fixture tests we want `act()` to be always async, otherwise
+ * a tester would never know what to expect: switching from sync to async
+ * is often an implementation detail.
+ *
+ * See https://github.com/facebook/react/blob/master/packages/react-dom/src/test-utils/ReactTestUtilsAct.js.
+ *
+ * @param {function():(!Promise|undefined)} callback The body of the `act()`.
+ * @return {!Promise} The `act()` promise.
+ */
+function actPromise(callback) {
+  return new Promise((resolve) => {
+    let callbackResult;
+    const actResult = act(() => {
+      callbackResult = callback();
+      return Promise.resolve(callbackResult);
+    });
+    resolve(
+      new Promise((aResolve, aReject) => {
+        actResult.then(aResolve, aReject);
+      }).then(() => callbackResult)
+    );
+  });
 }
