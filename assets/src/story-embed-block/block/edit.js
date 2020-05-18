@@ -73,7 +73,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   }, [showLoadingIndicator, showPlaceholder]);
 
   const fetchStoryData = useCallback(
-    (url) => {
+    async (url) => {
       if (!url) {
         return;
       }
@@ -82,25 +82,24 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         setIsFetchingData(true);
         const urlObj = new URL(url);
 
-        apiFetch({
+        const data = await apiFetch({
           path: `web-stories/v1/embed?url=${urlObj.toString()}`,
-        })
-          .then((data) => {
-            setCannotEmbed(!data?.title);
-            setStoryData(data);
-            setAttributes({
-              url: localURL,
-            });
-          })
-          .catch((data) => {
-            setStoryData(data);
-            setCannotEmbed(true);
-          })
-          .finally(() => {
-            setIsFetchingData(false);
-          });
-      } catch {
+        });
+
+        setCannotEmbed(!data?.title);
+        setStoryData(data);
+        setAttributes({
+          url: localURL,
+        });
+      } catch (err) {
+        // Only care about errors from apiFetch
+        if (!(err instanceof TypeError)) {
+          setStoryData(err);
+        }
+
         setCannotEmbed(true);
+      } finally {
+        setIsFetchingData(false);
       }
     },
     [setAttributes, localURL]
