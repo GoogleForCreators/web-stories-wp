@@ -30,7 +30,7 @@ const DEFAULT_PRESET = {
     'Fill in some text',
     'web-stories'
   )}</span>`,
-  fontSize: dataFontEm(1),
+  fontSize: dataFontEm(1.5),
   font: TEXT_ELEMENT_DEFAULT_FONT,
 };
 
