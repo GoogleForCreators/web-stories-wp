@@ -36,7 +36,9 @@ describe('save', () => {
       <div
         class="wp-block-web-stories-embed alignnone"
       >
-        <amp-story-player>
+        <amp-story-player
+          data-testid="amp-story-player"
+        >
           <a
             href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
             style="--story-player-poster: url('https://amp.dev/static/samples/img/story_dog2_portrait.jpg');"

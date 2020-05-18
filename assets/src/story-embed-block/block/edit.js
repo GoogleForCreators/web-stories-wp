@@ -34,7 +34,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
-import StoryPlayer from './storyPlayer';
+import EmbedPreview from './embedPreview';
 import { icon } from './index.js';
 import './edit.css';
 
@@ -223,7 +223,13 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
             });
           }}
         >
-          <StoryPlayer url={outerURL} title={title} poster={poster} ref={ref} />
+          <EmbedPreview
+            url={outerURL}
+            title={title}
+            poster={poster}
+            ref={ref}
+            isSelected={isSelected}
+          />
         </ResizableBox>
       </div>
     </>

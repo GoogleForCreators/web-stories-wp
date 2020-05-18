@@ -32,6 +32,7 @@ function StoryPlayer({ url, title, poster, width, height }, ref) {
         width: width ? `${width}px` : undefined,
         height: height ? `${height}px` : undefined,
       }}
+      data-testid="amp-story-player"
     >
       <a
         href={url}

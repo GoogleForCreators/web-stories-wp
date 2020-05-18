@@ -32,6 +32,23 @@
   height: inherit;
 }
 
+/* Embed Preview Component */
+
+.web-stories-embed-preview {
+  position: relative;
+  width: inherit;
+  height: inherit;
+}
+
+.web-stories-embed-preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}
+
 /* Block Inspector */
 
 .web-stories-embed-poster-label {

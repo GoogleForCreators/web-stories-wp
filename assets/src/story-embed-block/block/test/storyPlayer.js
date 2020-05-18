@@ -33,7 +33,9 @@ describe('StoryPlayer', () => {
   it('should render an <amp-story-player> element', () => {
     const { container } = render(<StoryPlayer url={url} title={title} />);
     expect(container.firstChild).toMatchInlineSnapshot(`
-      <amp-story-player>
+      <amp-story-player
+        data-testid="amp-story-player"
+      >
         <a
           href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
         >
@@ -48,7 +50,9 @@ describe('StoryPlayer', () => {
       <StoryPlayer url={url} title={title} poster={poster} />
     );
     expect(container.firstChild).toMatchInlineSnapshot(`
-      <amp-story-player>
+      <amp-story-player
+        data-testid="amp-story-player"
+      >
         <a
           href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
           style="--story-player-poster: url('https://amp.dev/static/samples/img/story_dog2_portrait.jpg');"
