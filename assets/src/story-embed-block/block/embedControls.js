@@ -93,7 +93,7 @@ const EmbedControls = (props) => {
           <PanelRow>
             <BaseControl>
               <TextControl
-                type="string"
+                type="text"
                 className="web-stories-embed-title-control"
                 label={__('Title', 'web-stories')}
                 value={title || ''}
