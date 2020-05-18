@@ -179,15 +179,8 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		// Subsequent requests are cached and so it should not cause a request.
-		$response2 = rest_get_server()->dispatch( $request );
-		$data2     = $response2->get_data();
-		$this->assertEquals( 1, $this->request_count );
-
 		$this->assertEquals( 404, $response->get_status() );
 		$this->assertEquals( $data['code'], 'rest_invalid_story' );
-		$this->assertEquals( 404, $response2->get_status() );
-		$this->assertEquals( $data2['code'], 'rest_invalid_story' );
 	}
 
 	public function test_valid_url() {
@@ -202,7 +195,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 			'poster' => 'https://amp.dev/static/samples/img/story_dog2_portrait.jpg',
 		];
 
-		// Subsequent requests is cached and so it should not cause a request.
+		// Subsequent requests are cached, so it should not perform another HTTP request.
 		rest_get_server()->dispatch( $request );
 		$this->assertEquals( 1, $this->request_count );
 

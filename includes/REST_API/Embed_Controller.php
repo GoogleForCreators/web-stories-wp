@@ -146,14 +146,12 @@ class Embed_Controller extends WP_REST_Controller {
 		$html = wp_remote_retrieve_body( $response );
 
 		if ( ! $html ) {
-			set_transient( $cache_key, 'rest_invalid_story', $cache_ttl );
 			return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$data = $this->get_data_from_document( $html );
 
 		if ( ! $data ) {
-			set_transient( $cache_key, 'rest_invalid_story', $cache_ttl );
 			return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
