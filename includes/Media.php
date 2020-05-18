@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories;
 
-
 /**
  * Class Media
  */
