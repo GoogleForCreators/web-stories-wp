@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use WP_Query;
 
 /**
  * Class Media
