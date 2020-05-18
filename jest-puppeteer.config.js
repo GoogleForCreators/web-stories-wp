@@ -24,7 +24,7 @@ const {
   PUPPETEER_SLOWMO = 0,
 } = process.env;
 
-module.exports = {
+export default {
   launch: {
     devtools: PUPPETEER_DEVTOOLS === 'true',
     headless: PUPPETEER_HEADLESS !== 'false',
