@@ -20,20 +20,77 @@ namespace Google\Web_Stories\Tests;
 use WP_Block_Type_Registry;
 
 class Embed_Block extends \WP_UnitTestCase {
-	public function setUp() {
-		parent::setUp();
+	public function tearDown() {
+		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) ) {
+			unregister_block_type( 'web-stories/embed' );
+		}
 
-		unregister_block_type( 'web-stories/embed' );
+		parent::tearDown();
 	}
 
 	public function test_registers_block_type() {
-		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
-
 		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) );
 	}
 
 	public function test_adds_amp_story_player_to_list_of_allowed_html() {
 		$this->assertArrayHasKey( 'amp-story-player', wp_kses_allowed_html() );
+	}
+
+	public function test_render_block() {
+		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block->init();
+
+		$actual = $embed_block->render_block(
+			[
+				'url'    => 'https://example.com/story.html',
+				'title'  => 'Example Story',
+				'align'  => 'none',
+				'width'  => 360,
+				'height' => 600,
+			],
+			''
+		);
+
+		$this->assertContains( '<amp-story-player', $actual );
+	}
+
+
+	public function test_render_block_feed_no_poster() {
+		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block->init();
+
+		$this->go_to( '/?feed=rss2' );
+
+		$actual = $embed_block->render_block(
+			[
+				'url'   => 'https://example.com/story.html',
+				'title' => 'Example Story',
+			],
+			''
+		);
+
+		$this->assertNotContains( '<amp-story-player', $actual );
+		$this->assertNotContains( '<img', $actual );
+	}
+
+	public function test_render_block_with_poster() {
+		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block->init();
+
+		$this->go_to( '/?feed=rss2' );
+
+		$actual = $embed_block->render_block(
+			[
+				'url'    => 'https://example.com/story.html',
+				'title'  => 'Example Story',
+				'poster' => 'https://example.com/story.jpg',
+				'width'  => 360,
+				'height' => 600,
+			],
+			''
+		);
+
+		$this->assertNotContains( '<amp-story-player', $actual );
+		$this->assertContains( '<img', $actual );
 	}
 }

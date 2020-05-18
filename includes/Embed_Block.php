@@ -168,10 +168,10 @@ class Embed_Block {
 	protected function render_block_html( array $attributes, $content ) {
 		$url          = (string) $attributes['url'];
 		$title        = (string) $attributes['title'];
-		$poster       = isset( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
+		$poster       = ! empty( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
 		$align        = sprintf( 'align%s', $attributes['align'] );
-		$player_style = sprintf( 'width: %dpx; height: %dpx', $attributes['width'], $attributes['height'] );
-		$poster_style = $poster ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
+		$player_style = sprintf( 'width: %dpx; height: %dpx', absint( $attributes['width'] ), absint( $attributes['height'] ) );
+		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
 		wp_enqueue_style( 'amp-story-player' );
 		wp_enqueue_script( 'amp-story-player' );
@@ -211,7 +211,19 @@ class Embed_Block {
 		?>
 		<div class="wp-block-web-stories-embed">
 			<a href="<?php echo esc_url( $url ); ?>">
-				<?php echo esc_html( $title ); ?>
+				<?php
+				if ( ! empty( $attributes['poster'] ) ) {
+					printf(
+						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
+						esc_url( $attributes['poster'] ),
+						esc_attr( absint( $attributes['width'] ) ),
+						esc_attr( absint( $attributes['height'] ) ),
+						esc_attr( $title )
+					);
+				} else {
+					echo esc_html( $title );
+				}
+				?>
 			</a>
 		</div>
 		<?php
