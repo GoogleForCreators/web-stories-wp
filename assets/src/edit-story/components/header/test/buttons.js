@@ -39,8 +39,10 @@ function setupButtons(extraStoryProps, extraMetaProps) {
     actions: { saveStory, autoSave },
   };
   const configValue = {
-    previewLink:
-      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+    previewLink: 'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+    capabilities: {
+      hasPublishAction: true,
+    },
   };
   const { getByText, container } = renderWithTheme(
     <ConfigContext.Provider value={configValue}>
