@@ -92,6 +92,8 @@ class Database_Upgrader {
 
 	/**
 	 * Replaces conic color type with linear.
+	 *
+	 * @return void
 	 */
 	protected function v_2_replace_conic_style_presets() {
 		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
