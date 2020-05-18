@@ -17,7 +17,7 @@
 const path = require('path');
 
 function createPattern(pattern) {
-  return { pattern: pattern, included: true, served: true, watched: false };
+  return { pattern, included: true, served: true, watched: false };
 }
 
 function initEvents(files) {
