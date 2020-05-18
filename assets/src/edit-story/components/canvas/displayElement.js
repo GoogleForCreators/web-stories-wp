@@ -127,9 +127,9 @@ function DisplayElement({ element, previewMode, page }) {
           </ReplacementContainer>
         )}
       </WithMask>
-      {Boolean(isBackground) && Boolean(page.backgroundOverlay) && (
+      {Boolean(isBackground) && Boolean(page?.backgroundOverlay) && (
         <BackgroundOverlay
-          style={generateOverlayStyles(page.backgroundOverlay)}
+          style={generateOverlayStyles(page?.backgroundOverlay)}
         />
       )}
     </Wrapper>
@@ -139,7 +139,7 @@ function DisplayElement({ element, previewMode, page }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
-  page: StoryPropTypes.page.isRequired,
+  page: StoryPropTypes.page,
 };
 
 export default DisplayElement;

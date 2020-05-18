@@ -1,0 +1,144 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as CloseIconBase } from '../../../../icons/close.svg';
+
+export const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 300px;
+`;
+
+export const AnimationList = styled.div(
+  ({ theme }) => `
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    background-color: ${theme.colors.gray25};
+  `
+);
+
+export const DeleteButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  border: none;
+`;
+
+export const DeleteIcon = styled(CloseIconBase).attrs({
+  width: 12,
+  height: 12,
+})`
+  color: ${({ theme }) => theme.colors.gray700};
+`;
+
+export const LabelButton = styled.button(
+  ({ theme, isActive }) => `
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+
+    ${
+      isActive
+        ? `
+      color: ${theme.colors.bluePrimary};
+      font-weight: 700;
+    `
+        : ``
+    }
+  `
+);
+
+export const CancelButton = styled.button`
+  font-size: 11px;
+`;
+
+export const AnimationPanel = styled.div`
+  padding: 20px;
+  width: 350px;
+  height: 100%;
+  overflow: scroll;
+`;
+
+export const FormField = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+`;
+
+export const TimelineAnimation = styled.div(
+  ({ theme }) => `
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid ${theme.colors.gray600};
+    margin-bottom: 10px;
+  `
+);
+
+export const TimelineLabel = styled.div(
+  ({ theme }) => `
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100px;
+    padding: 20px 0;
+    border-right: 1px solid ${theme.colors.gray600};
+    background-color: ${theme.colors.white};
+  `
+);
+
+export const TimelineBarContainer = styled.div(
+  ({ theme }) => `
+    position: relative;
+    width: 100%;
+
+    &::after {
+      display: block;
+      content: '';
+      width: 100%;
+      height: 1px;
+      background-color: ${theme.colors.gray300};
+    }
+  `
+);
+
+export const TimelineBar = styled.button(
+  ({ theme, offset, width }) => `
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    left: ${offset}%;
+    width: ${width}%;
+    height: 20px;
+    background-color: ${theme.colors.bluePrimary};
+  `
+);

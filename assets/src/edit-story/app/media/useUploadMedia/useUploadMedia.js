@@ -46,6 +46,10 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
 
   const uploadMedia = useCallback(
     async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
+      // If there are no files passed, don't try to upload.
+      if (!files || files.length === 0) {
+        return;
+      }
       let localFiles;
       try {
         setIsUploading(true);

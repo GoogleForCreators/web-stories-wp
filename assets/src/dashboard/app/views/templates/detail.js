@@ -39,24 +39,29 @@ import FontProvider from '../../font/fontProvider';
 import {
   CardGallery,
   ColorList,
+  DetailViewContentGutter,
   PreviewPage,
   Pill,
   TemplateNavBar,
   Layout,
 } from '../../../components';
-import { ICON_METRICS } from '../../../constants';
+import {
+  ICON_METRICS,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
+} from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { StoryGridView } from '../shared';
 
 import {
   ByLine,
-  ContentContainer,
   ColumnContainer,
   Column,
   DetailContainer,
+  LargeDisplayPagination,
   MetadataContainer,
   NavButton,
   RowContainer,
+  SmallDisplayPagination,
   SubHeading,
   Text,
   Title,
@@ -165,7 +170,7 @@ function TemplateDetail() {
         onClick={() => switchToTemplateByOffset(-1)}
         disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
       >
-        <LeftArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} />
+        <LeftArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
       </NavButton>
     );
 
@@ -178,7 +183,7 @@ function TemplateDetail() {
           activeTemplateIndex === orderedTemplates.length - 1
         }
       >
-        <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} />
+        <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
       </NavButton>
     );
 
@@ -206,10 +211,16 @@ function TemplateDetail() {
               <TemplateNavBar />
             </Layout.Fixed>
             <Layout.Scrollable>
-              <ContentContainer>
+              <DetailViewContentGutter>
+                <SmallDisplayPagination>
+                  {PrevButton}
+                  {NextButton}
+                </SmallDisplayPagination>
                 <ColumnContainer>
                   <Column>
-                    {PrevButton}
+                    <LargeDisplayPagination>
+                      {PrevButton}
+                    </LargeDisplayPagination>
                     <CardGallery>{previewPages}</CardGallery>
                   </Column>
                   <Column>
@@ -234,7 +245,9 @@ function TemplateDetail() {
                         <ColorList colors={template.colors} size={30} />
                       </MetadataContainer>
                     </DetailContainer>
-                    {NextButton}
+                    <LargeDisplayPagination>
+                      {NextButton}
+                    </LargeDisplayPagination>
                   </Column>
                 </ColumnContainer>
                 {relatedTemplates.length > 0 && (
@@ -245,14 +258,16 @@ function TemplateDetail() {
                     <UnitsProvider pageSize={pageSize}>
                       <StoryGridView
                         stories={relatedTemplates}
-                        centerActionLabel={__('View', 'web-stories')}
+                        centerActionLabelByStatus={
+                          TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+                        }
                         bottomActionLabel={__('Use template', 'web-stories')}
                         isTemplate
                       />
                     </UnitsProvider>
                   </RowContainer>
                 )}
-              </ContentContainer>
+              </DetailViewContentGutter>
             </Layout.Scrollable>
           </Layout.Provider>
         </TransformProvider>

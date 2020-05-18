@@ -40,6 +40,7 @@ const ListContainer = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`

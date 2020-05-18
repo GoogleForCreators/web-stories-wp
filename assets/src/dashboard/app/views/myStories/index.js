@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -34,14 +34,20 @@ import {
   InfiniteScroller,
   ScrollToTop,
   Layout,
+  StandardViewContentGutter,
   ToggleButtonGroup,
 } from '../../../components';
-import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
-import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
+import {
+  VIEW_STYLE,
+  STORY_STATUSES,
+  DASHBOARD_VIEWS,
+  STORY_SORT_MENU_ITEMS,
+  STORY_ITEM_CENTER_ACTION_LABELS,
+} from '../../../constants';
+import { useDashboardResultsLabel, useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
-  BodyWrapper,
   BodyViewOptions,
   PageHeading,
   NoResults,
@@ -49,7 +55,6 @@ import {
   StoryListView,
   HeaderToggleButtonContainer,
 } from '../shared';
-import useStoryView from '../../../utils/useStoryView';
 
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -59,10 +64,6 @@ const DefaultBodyText = styled.p`
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing}em;
   color: ${({ theme }) => theme.colors.gray200};
   margin: 40px 20px;
-`;
-
-const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
-  margin-right: 9px;
 `;
 
 function MyStories() {
@@ -77,7 +78,7 @@ function MyStories() {
         isLoading,
         stories,
         storiesOrderById,
-        totalStories,
+        totalStoriesByStatus,
         totalPages,
       },
       tags,
@@ -89,6 +90,13 @@ function MyStories() {
   const { view, sort, filter, page, search } = useStoryView({
     filters: STORY_STATUSES,
     totalPages,
+  });
+
+  const resultsLabel = useDashboardResultsLabel({
+    isActiveSearch: Boolean(search.keyword),
+    currentFilter: filter.value,
+    totalResults: totalStoriesByStatus?.all,
+    view: DASHBOARD_VIEWS.MY_STORIES,
   });
 
   useEffect(() => {
@@ -115,12 +123,6 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
-  const listBarLabel = sprintf(
-    /* translators: %s: number of stories */
-    _n('%s total story', '%s total stories', totalStories, 'web-stories'),
-    totalStories
-  );
-
   const storiesView = useMemo(() => {
     switch (view.style) {
       case VIEW_STYLE.GRID:
@@ -131,12 +133,8 @@ function MyStories() {
             createTemplateFromStory={createTemplateFromStory}
             duplicateStory={duplicateStory}
             stories={orderedStories}
-            centerActionLabel={
-              <>
-                <PlayArrowIcon />
-                {__('Preview', 'web-stories')}
-              </>
-            }
+            users={users}
+            centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
             bottomActionLabel={__('Open in editor', 'web-stories')}
           />
         );
@@ -175,10 +173,11 @@ function MyStories() {
     return (
       <BodyViewOptions
         showGridToggle
-        listBarLabel={listBarLabel}
+        resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
+        pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
@@ -186,12 +185,12 @@ function MyStories() {
         )}
       />
     );
-  }, [sort, listBarLabel, view]);
+  }, [sort, resultsLabel, view]);
 
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
       return (
-        <BodyWrapper>
+        <StandardViewContentGutter>
           {storiesView}
           <InfiniteScroller
             canLoadMore={!allPagesFetched}
@@ -199,7 +198,7 @@ function MyStories() {
             allDataLoadedMessage={__('No more stories', 'web-stories')}
             onLoadMore={page.requestNextPage}
           />
-        </BodyWrapper>
+        </StandardViewContentGutter>
       );
     } else if (search.keyword.length > 0) {
       return <NoResults typeaheadValue={search.keyword} />;
@@ -219,6 +218,35 @@ function MyStories() {
     storiesView,
   ]);
 
+  const HeaderToggleButtons = useMemo(() => {
+    if (
+      totalStoriesByStatus &&
+      Object.keys(totalStoriesByStatus).length === 0
+    ) {
+      return null;
+    }
+
+    return (
+      <HeaderToggleButtonContainer>
+        <ToggleButtonGroup
+          buttons={STORY_STATUSES.map((storyStatus) => {
+            return {
+              handleClick: () => filter.set(storyStatus.value),
+              key: storyStatus.value,
+              isActive: filter.value === storyStatus.value,
+              disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
+              text: `${storyStatus.label} ${
+                totalStoriesByStatus?.[storyStatus.status]
+                  ? `(${totalStoriesByStatus?.[storyStatus.status]})`
+                  : ''
+              }`,
+            };
+          })}
+        />
+      </HeaderToggleButtonContainer>
+    );
+  }, [filter, totalStoriesByStatus]);
+
   return (
     <FontProvider>
       <TransformProvider>
@@ -231,18 +259,7 @@ function MyStories() {
               handleTypeaheadChange={search.setKeyword}
               typeaheadValue={search.keyword}
             >
-              <HeaderToggleButtonContainer>
-                <ToggleButtonGroup
-                  buttons={STORY_STATUSES.map((storyStatus) => {
-                    return {
-                      handleClick: () => filter.set(storyStatus.value),
-                      key: storyStatus.value,
-                      isActive: filter.value === storyStatus.value,
-                      text: storyStatus.label,
-                    };
-                  })}
-                />
-              </HeaderToggleButtonContainer>
+              {HeaderToggleButtons}
             </PageHeading>
             {storiesViewControls}
           </Layout.Squishable>
