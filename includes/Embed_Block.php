@@ -216,8 +216,8 @@ class Embed_Block {
 					printf(
 						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
 						esc_url( $attributes['poster'] ),
-						esc_attr( absint( $attributes['width'] ) ),
-						esc_attr( absint( $attributes['height'] ) ),
+						absint( $attributes['width'] ),
+						absint( $attributes['height'] ),
 						esc_attr( $title )
 					);
 				} else {
