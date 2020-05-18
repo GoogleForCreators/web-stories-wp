@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import styled from 'styled-components';
@@ -49,6 +54,7 @@ const SortDropdown = styled(Dropdown)`
 const ControlsContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const Label = styled.span`
@@ -56,6 +62,17 @@ const Label = styled.span`
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing}em;
   font-size: ${({ theme }) => theme.fonts.body2.size}px;
   color: ${({ theme }) => theme.colors.gray500};
+`;
+
+const ExternalLink = styled.a`
+  margin-right: 15px;
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing}em;
+  font-size: ${({ theme }) => theme.fonts.body2.size}px;
+  color: ${({ theme }) => theme.colors.bluePrimary};
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
 `;
 
 const BodyViewOptions = ({
@@ -85,11 +102,18 @@ const BodyViewOptions = ({
           </StorySortDropdownContainer>
         )}
         {showGridToggle && (
-          <ViewStyleBar
-            label={resultsLabel}
-            layoutStyle={layoutStyle}
-            onPress={handleLayoutSelect}
-          />
+          <ControlsContainer>
+            {layoutStyle === VIEW_STYLE.LIST && (
+              <ExternalLink href="edit.php?post_type=web-story">
+                {__('See classic WP list view', 'web-stories')}
+              </ExternalLink>
+            )}
+            <ViewStyleBar
+              label={resultsLabel}
+              layoutStyle={layoutStyle}
+              onPress={handleLayoutSelect}
+            />
+          </ControlsContainer>
         )}
       </ControlsContainer>
     </DisplayFormatContainer>
