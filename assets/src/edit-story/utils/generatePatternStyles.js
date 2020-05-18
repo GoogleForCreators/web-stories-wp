@@ -78,16 +78,14 @@ function getGradientDescription({ type, rotation, center, size }) {
  *
  * @param {Array} stops List of stops as an object with color and position
  * @param {number} alpha Alpha opacity to multiple to each stop
- * @param {boolean} isAngular Are the stops in percent of a turn or percent?
  *
  * @return {Array} List of serialized stops
  */
-function getStopList(stops, alpha, isAngular = false) {
-  const getPosition = (val) =>
-    isAngular ? `${truncate(val, 4)}turn` : `${truncate(val * 100, 2)}%`;
+function getStopList(stops, alpha) {
   const getColor = ({ r, g, b, a = 1 }) => rgba(r, g, b, a * alpha);
   return stops.map(
-    ({ color, position }) => `${getColor(color)} ${getPosition(position)}`
+    ({ color, position }) =>
+      `${getColor(color)} ${truncate(position * 100, 2)}%`
   );
 }
 
