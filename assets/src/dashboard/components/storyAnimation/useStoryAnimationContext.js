@@ -13,22 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { useContext } from 'react';
+/**
+ * Internal dependencies
+ */
+import { StoryAnimationContext } from './provider';
 
-const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
-
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.largeDisplayPhone}px`};
+function useStoryAnimationContext() {
+  const context = useContext(StoryAnimationContext);
+  if (!context) {
+    throw new Error(
+      'Must use `useStoryAnimationContext()` within <StoryAnimation.Provider />'
+    );
   }
+  return context;
+}
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.smallDisplayPhone}px`};
-  }
-`;
-
-export default BodyWrapper;
+export default useStoryAnimationContext;

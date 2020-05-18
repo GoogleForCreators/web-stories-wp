@@ -106,9 +106,6 @@ const theme = {
     },
   },
   leftRail: {
-    border: borders.gray50,
-    contentPadding: 20,
-    inset: 8,
     logoMargin: '75px auto 20px',
   },
   text: {
@@ -264,20 +261,12 @@ const theme = {
       letterSpacing: 0.01,
     },
   },
-  pageGutter: {
-    small: {
-      desktop: 20,
-      min: 10,
-      largeDisplayPhone: 10,
-      smallDisplayPhone: 10,
-    },
-    // specific to detail template
-    large: {
-      desktop: 80,
-      tablet: 40,
-    },
+  detailViewContentGutter: {
+    desktop: 80,
+    tablet: 40,
+    min: 10,
   },
-  pageHorizontalGutter: {
+  standardViewContentGutter: {
     desktop: 20,
     tablet: 20,
     largeDisplayPhone: 10,

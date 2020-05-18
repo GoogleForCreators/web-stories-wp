@@ -94,17 +94,34 @@ export const STORY_SORT_MENU_ITEMS = [
     value: STORY_SORT_OPTIONS.CREATED_BY,
   },
 ];
+
 export const STORY_STATUS = {
   ALL: 'publish,draft',
   PUBLISHED: 'publish',
   DRAFT: 'draft',
-  TEMPLATE: 'template',
+};
+
+export const STORY_ITEM_CENTER_ACTION_LABELS = {
+  [STORY_STATUS.PUBLISHED]: __('View', 'web-stories'),
+  [STORY_STATUS.DRAFT]: __('Preview', 'web-stories'),
 };
 
 export const STORY_STATUSES = [
-  { label: __('All Stories', 'web-stories'), value: STORY_STATUS.ALL },
-  { label: __('Drafts', 'web-stories'), value: STORY_STATUS.DRAFT },
-  { label: __('Published', 'web-stories'), value: STORY_STATUS.PUBLISHED },
+  {
+    label: __('All Stories', 'web-stories'),
+    value: STORY_STATUS.ALL,
+    status: 'all',
+  },
+  {
+    label: __('Drafts', 'web-stories'),
+    value: STORY_STATUS.DRAFT,
+    status: STORY_STATUS.DRAFT,
+  },
+  {
+    label: __('Published', 'web-stories'),
+    value: STORY_STATUS.PUBLISHED,
+    status: STORY_STATUS.PUBLISHED,
+  },
 ];
 
 export const STORY_VIEWING_LABELS = {

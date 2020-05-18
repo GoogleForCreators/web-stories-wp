@@ -33,7 +33,7 @@ export const defaultStoriesState = {
   isLoading: false,
   stories: {},
   storiesOrderById: [],
-  totalStories: null,
+  totalStoriesByStatus: {},
   totalPages: null,
 };
 
@@ -66,7 +66,12 @@ function storyReducer(state, action) {
         storiesOrderById: state.storiesOrderById.filter(
           (id) => id !== action.payload.id
         ),
-        totalStories: state.totalStories - 1,
+        totalStoriesByStatus: {
+          ...state.totalStoriesByStatus,
+          all: state.totalStoriesByStatus.all - 1,
+          [action.payload.storyStatus]:
+            state.totalStoriesByStatus[action.payload.storyStatus] - 1,
+        },
         stories: Object.keys(state.stories).reduce((memo, storyId) => {
           if (parseInt(storyId) !== action.payload.id) {
             memo[storyId] = state.stories[storyId];
@@ -79,7 +84,12 @@ function storyReducer(state, action) {
       return {
         ...state,
         storiesOrderById: [action.payload.id, ...state.storiesOrderById],
-        totalStories: state.totalStories + 1,
+        totalStoriesByStatus: {
+          ...state.totalStoriesByStatus,
+          all: state.totalStoriesByStatus.all + 1,
+          [action.payload.status]:
+            state.totalStoriesByStatus[action.payload.status] + 1,
+        },
         stories: {
           ...state.stories,
           [action.payload.id]: action.payload,
@@ -110,7 +120,7 @@ function storyReducer(state, action) {
         storiesOrderById: uniqueStoryIds,
         stories: { ...state.stories, ...groupBy(action.payload.stories, 'id') },
         totalPages: action.payload.totalPages,
-        totalStories: action.payload.totalStories,
+        totalStoriesByStatus: action.payload.totalStoriesByStatus,
         allPagesFetched: action.payload.page >= action.payload.totalPages,
       };
     }

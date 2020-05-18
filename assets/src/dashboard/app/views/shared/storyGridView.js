@@ -47,17 +47,19 @@ export const DetailRow = styled.div`
 `;
 
 const StoryGrid = styled(CardGrid)`
-  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.desktop}px)`};
+  width: ${({ theme }) =>
+    `calc(100% - ${theme.standardViewContentGutter.desktop}px)`};
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.min}px)`};
+    width: ${({ theme }) =>
+      `calc(100% - ${theme.standardViewContentGutter.min}px)`};
   }
 `;
 
 const StoryGridView = ({
   stories,
   users,
-  centerActionLabel,
+  centerActionLabelByStatus,
   bottomActionLabel,
   createTemplateFromStory,
   updateStory,
@@ -124,7 +126,7 @@ const StoryGridView = ({
           <CardPreviewContainer
             centerAction={{
               targetAction: story.centerTargetAction,
-              label: centerActionLabel,
+              label: centerActionLabelByStatus[story.status],
             }}
             bottomAction={{
               targetAction: story.bottomTargetAction,
@@ -171,7 +173,7 @@ StoryGridView.propTypes = {
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
   users: UsersPropType,
-  centerActionLabel: ActionLabel,
+  centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,
   updateStory: PropTypes.func,

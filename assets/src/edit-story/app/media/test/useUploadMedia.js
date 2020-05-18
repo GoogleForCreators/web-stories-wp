@@ -50,30 +50,50 @@ jest.mock('../../config', () => ({
 jest.mock('../../../app/media/utils');
 import { getResourceFromLocalFile } from '../../../app/media/utils';
 
+function setup() {
+  const media = [
+    { type: 'image/jpeg', src: 'image1.jpg' },
+    { type: 'image/jpeg', src: 'image2.jpg' },
+    { type: 'image/jpeg', src: 'image3.jpg' },
+  ];
+
+  const pagingNum = 1;
+  const mediaType = undefined;
+  const setMedia = jest.fn();
+  const fetchMedia = jest.fn();
+
+  const { result } = renderHook(() =>
+    useUploadMedia({
+      media,
+      pagingNum,
+      mediaType,
+      fetchMedia,
+      setMedia,
+    })
+  );
+
+  const { uploadMedia } = result.current;
+  return {
+    uploadMedia,
+    fetchMedia,
+    setMedia,
+    media,
+  };
+}
+
 describe('useUploadMedia', () => {
+  it('should not execute file upload process without files', async () => {
+    const { uploadMedia, fetchMedia, setMedia } = setup();
+    await act(() => uploadMedia([]));
+
+    expect(setMedia).toHaveBeenCalledTimes(0);
+    expect(fetchMedia).toHaveBeenCalledTimes(0);
+  });
+
   it('should only setMedia for files supported by getResourceFromLocalFile', async () => {
+    const { uploadMedia, setMedia, media } = setup();
+
     const supportedLocalResource = ['image', 'video'];
-
-    const media = [
-      { type: 'image/jpeg', src: 'image1.jpg' },
-      { type: 'image/jpeg', src: 'image2.jpg' },
-      { type: 'image/jpeg', src: 'image3.jpg' },
-    ];
-    const newFiles = [
-      { type: 'video/mp4', src: 'video1.mp4' },
-      { type: 'text/plain', src: 'text.txt' }, // Unsupported File Format
-      { type: 'image/jpeg', src: 'image5.jpg' },
-    ];
-
-    const pagingNum = 1;
-    const mediaType = undefined;
-    const setMedia = jest.fn();
-    const fetchMedia = jest.fn();
-
-    const expectedSetMediaArgs = [
-      ...media,
-      ...newFiles.filter(({ type }) => supportedLocalResource.includes(type)),
-    ];
 
     // Simple implementation of getResourceFromLocalFile that will return
     // null on unsupported resources.
@@ -85,17 +105,15 @@ describe('useUploadMedia', () => {
       }
     });
 
-    const { result } = renderHook(() =>
-      useUploadMedia({
-        media,
-        pagingNum,
-        mediaType,
-        fetchMedia,
-        setMedia,
-      })
-    );
-
-    const { uploadMedia } = result.current;
+    const newFiles = [
+      { type: 'video/mp4', src: 'video1.mp4' },
+      { type: 'text/plain', src: 'text.txt' }, // Unsupported File Format
+      { type: 'image/jpeg', src: 'image5.jpg' },
+    ];
+    const expectedSetMediaArgs = [
+      ...media,
+      ...newFiles.filter(({ type }) => supportedLocalResource.includes(type)),
+    ];
 
     await act(() => uploadMedia(newFiles));
 
