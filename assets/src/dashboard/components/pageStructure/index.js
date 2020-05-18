@@ -29,7 +29,6 @@ import { useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import Button from '../button';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
@@ -49,6 +48,7 @@ import {
   LogoPlaceholder,
   NavLink,
   Rule,
+  NavButton,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -83,7 +83,7 @@ export const LeftRailContainer = styled.nav.attrs({
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.colors.white};
-  border-right: ${({ theme }) => theme.leftRail.border};
+  border-right: ${({ theme }) => theme.borders.gray50};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, visibility 0.25s linear;
 
@@ -135,9 +135,9 @@ export function LeftRail() {
       <div ref={upperContentRef}>
         <LogoPlaceholder />
         <Content>
-          <Button type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
+          <NavButton type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
             {__('Create New Story', 'web-stories')}
-          </Button>
+          </NavButton>
         </Content>
         <Content>
           {primaryPaths.map((path) => (
@@ -165,7 +165,7 @@ export function LeftRail() {
       </div>
       <Content>
         <AppInfo>
-          {__('\u00A9 Google 2020', 'web-stories')}
+          {__('\u00A9 2020 Google', 'web-stories')}
           <br />
           {__('Version', 'web-stories')}&nbsp;
           {version}

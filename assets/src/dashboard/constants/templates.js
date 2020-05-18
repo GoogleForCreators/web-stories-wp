@@ -138,7 +138,7 @@ export const TEMPLATE_COLOR_ITEMS = [
 ];
 
 export const TEMPLATES_GALLERY_STATUS = {
-  ALL: 'ALL',
+  ALL: 'template',
 };
 
 export const TEMPLATES_GALLERY_VIEWING_LABELS = {
@@ -159,3 +159,7 @@ export const TEMPLATES_GALLERY_SORT_MENU_ITEMS = [
     value: TEMPLATES_GALLERY_SORT_OPTIONS.RECENT,
   },
 ];
+
+export const TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS = {
+  template: __('View', 'web-stories'),
+};

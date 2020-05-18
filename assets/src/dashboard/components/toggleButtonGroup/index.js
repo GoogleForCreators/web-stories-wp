@@ -77,6 +77,10 @@ const ToggleButton = styled.button`
     ${KEYBOARD_USER_SELECTOR} &:focus {
         border: 1px solid ${theme.colors.action};
     }
+    &:disabled {
+      color: ${theme.colors.gray400};
+      cursor: default;
+    }
   `}
 `;
 
@@ -152,13 +156,14 @@ const ToggleButtonGroup = ({ buttons }) => {
   return (
     <>
       <ToggleButtonContainer ref={containerRef}>
-        {buttons.map(({ isActive, handleClick, key, text }, idx) => (
+        {buttons.map(({ isActive, handleClick, key, text, ...rest }, idx) => (
           <ToggleButton
             {...(isActive ? { ref: activeRef } : {})}
             type="button"
             onClick={(e) => handleButtonClick(e, handleClick)}
             key={key || `toggle_button_${idx}`}
             isActive={isActive}
+            {...rest}
           >
             {text}
           </ToggleButton>

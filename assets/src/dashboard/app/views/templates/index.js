@@ -36,6 +36,7 @@ import {
   Dropdown,
   InfiniteScroller,
   ScrollToTop,
+  StandardViewContentGutter,
 } from '../../../components';
 import { DropdownContainer } from '../../../components/dropdown';
 
@@ -46,6 +47,7 @@ import {
   TEMPLATES_GALLERY_STATUS,
   TEMPLATES_GALLERY_SORT_MENU_ITEMS,
   TEMPLATES_GALLERY_SORT_OPTIONS,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
@@ -53,7 +55,6 @@ import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import {
-  BodyWrapper,
   PageHeading,
   NoResults,
   StoryGridView,
@@ -64,10 +65,12 @@ import useTemplateFilters from './templateFilters';
 const HeadingDropdownsContainer = styled.div`
   display: flex;
   align-items: baseline;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
 
   ${DropdownContainer} {
-    margin-right: 10px;
+    margin: 0 10px;
     &:last-child {
       margin-right: 0;
     }
@@ -149,10 +152,12 @@ function TemplatesGallery() {
   const BodyContent = useMemo(() => {
     if (totalTemplates > 0) {
       return (
-        <BodyWrapper>
+        <StandardViewContentGutter>
           <StoryGridView
             stories={orderedTemplates}
-            centerActionLabel={__('View', 'web-stories')}
+            centerActionLabelByStatus={
+              TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+            }
             bottomActionLabel={__('Use template', 'web-stories')}
             isTemplate
           />
@@ -162,7 +167,7 @@ function TemplatesGallery() {
             allDataLoadedMessage={__('No more templates', 'web-stories')}
             onLoadMore={handleNewPageRequest}
           />
-        </BodyWrapper>
+        </StandardViewContentGutter>
       );
     }
 
@@ -200,26 +205,12 @@ function TemplatesGallery() {
                     onChange={onNewCategorySelected}
                   />
                   <Dropdown
-                    ariaLabel={__('Style Dropdown', 'web-stories')}
-                    type={DROPDOWN_TYPES.PANEL}
-                    placeholder={__('Style', 'web-stories')}
-                    items={[]}
-                    onChange={() => {}}
-                  />
-                  <Dropdown
                     ariaLabel={__('Color Dropdown', 'web-stories')}
                     type={DROPDOWN_TYPES.COLOR_PANEL}
                     placeholder={__('Color', 'web-stories')}
                     items={selectedColors}
                     onClear={clearAllColors}
                     onChange={onNewColorSelected}
-                  />
-                  <Dropdown
-                    ariaLabel={__('Layout Type Dropdown', 'web-stories')}
-                    type={DROPDOWN_TYPES.PANEL}
-                    placeholder={__('Layout Type', 'web-stories')}
-                    items={[]}
-                    onChange={() => {}}
                   />
                 </HeadingDropdownsContainer>
               </PageHeading>
