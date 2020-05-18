@@ -105,7 +105,7 @@ module.exports = function (config) {
     singleRun: false,
 
     // Concurrency level
-    // how many browser should be started simultaneous
+    // how many browsers should be started simultaneously
     concurrency: Infinity,
   });
 };
