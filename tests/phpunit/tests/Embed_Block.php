@@ -54,6 +54,41 @@ class Embed_Block extends \WP_UnitTestCase {
 		$this->assertContains( '<amp-story-player', $actual );
 	}
 
+	public function test_render_block_missing_url() {
+		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block->init();
+
+		$actual = $embed_block->render_block(
+			[
+				'url'    => '',
+				'title'  => 'Example Story',
+				'align'  => 'none',
+				'width'  => 360,
+				'height' => 600,
+			],
+			''
+		);
+
+		$this->assertEmpty( $actual );
+	}
+
+	public function test_render_block_missing_title() {
+		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block->init();
+
+		$actual = $embed_block->render_block(
+			[
+				'url'    => 'https://example.com/story.html',
+				'title'  => '',
+				'align'  => 'none',
+				'width'  => 360,
+				'height' => 600,
+			],
+			''
+		);
+
+		$this->assertEmpty( $actual );
+	}
 
 	public function test_render_block_feed_no_poster() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
