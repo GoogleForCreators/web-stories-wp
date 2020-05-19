@@ -15,18 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
 import useStoryAnimationContext from './useStoryAnimationContext';
 
-function AMPAnimators({ pageId }) {
+function AMPAnimators() {
   const {
-    state: { animationTargets },
+    state: { providerId, animationTargets },
     actions: { getAnimationParts },
   } = useStoryAnimationContext();
 
@@ -34,15 +29,11 @@ function AMPAnimators({ pageId }) {
     (animators, target) => [
       ...animators,
       ...getAnimationParts(target).map(({ id, AMPAnimator }) => (
-        <AMPAnimator key={id} pageId={pageId} />
+        <AMPAnimator key={id} prefixId={providerId} />
       )),
     ],
     []
   );
 }
-
-AMPAnimators.propTypes = {
-  pageId: PropTypes.string.isRequired,
-};
 
 export default AMPAnimators;

@@ -27,6 +27,7 @@ import {
   useRef,
 } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -77,6 +78,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
     );
   }, [animations]);
 
+  const providerId = useMemo(() => uuidv4(), []);
   const animationTypes = useMemo(
     () => Array.from(animationTypesSet?.keys() || []),
     [animationTypesSet]
@@ -155,6 +157,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
   const value = useMemo(
     () => ({
       state: {
+        providerId,
         animationTypes,
         animationTargets,
       },
@@ -165,6 +168,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
       },
     }),
     [
+      providerId,
       getAnimationParts,
       animationTypes,
       animationTargets,

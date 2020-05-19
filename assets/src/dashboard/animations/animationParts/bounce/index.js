@@ -114,10 +114,10 @@ export function AnimationBounce(args) {
 
   AMPAnimation.propTypes = AMPAnimationProps;
 
-  const AMPAnimator = function ({ pageId }) {
+  const AMPAnimator = function ({ prefixId }) {
     return (
       <AnimatorOutput
-        animation={`${pageId}-${ANIMATION_TYPES.BOUNCE}`}
+        animation={`${prefixId}-${ANIMATION_TYPES.BOUNCE}`}
         config={{ selector: `#anim-${id}`, ...timings }}
       />
     );

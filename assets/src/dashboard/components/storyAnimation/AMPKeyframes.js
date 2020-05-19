@@ -15,20 +15,15 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
 import { KeyframesOutput } from '../../animations/animationOutputs';
 import { AnimationPart } from '../../animations/animationParts';
 import useStoryAnimationContext from './useStoryAnimationContext';
 
-function AMPKeyframes({ pageId }) {
+function AMPKeyframes() {
   const {
-    state: { animationTypes },
+    state: { providerId, animationTypes },
   } = useStoryAnimationContext();
 
   return animationTypes.map((type) => {
@@ -37,15 +32,11 @@ function AMPKeyframes({ pageId }) {
     return (
       <KeyframesOutput
         key={type}
-        id={`${pageId}-${type}`}
+        id={`${providerId}-${type}`}
         keyframes={keyframes}
       />
     );
   });
 }
-
-AMPKeyframes.propTypes = {
-  pageId: PropTypes.string.isRequired,
-};
 
 export default AMPKeyframes;

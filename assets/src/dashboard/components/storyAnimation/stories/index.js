@@ -167,11 +167,10 @@ export function AMPStory() {
       >
         <amp-story-page id={pages[0].id}>
           <StoryAnimation.Provider animations={pages[0].animations}>
-            <StoryAnimation.AMPKeyframes pageId={pages[0].id} />
-            <StoryAnimation.AMPAnimators pageId={pages[0].id} />
+            <StoryAnimation.AMPKeyframes />
+            <StoryAnimation.AMPAnimators />
 
             <StoryAnimation.AMPWrapper
-              pageId={pages[0].id}
               target="el1"
               style={{ width: '300px', height: '300px' }}
             >
@@ -185,8 +184,8 @@ export function AMPStory() {
         </amp-story-page>
         <amp-story-page id={pages[1].id}>
           <StoryAnimation.Provider animations={pages[1].animations}>
-            <StoryAnimation.AMPKeyframes pageId={pages[1].id} />
-            <StoryAnimation.AMPAnimators pageId={pages[1].id} />
+            <StoryAnimation.AMPKeyframes />
+            <StoryAnimation.AMPAnimators />
 
             <div
               style={{
@@ -212,14 +211,13 @@ export function AMPStory() {
         </amp-story-page>
         <amp-story-page id={pages[2].id}>
           <StoryAnimation.Provider animations={pages[2].animations}>
-            <StoryAnimation.AMPKeyframes pageId={pages[2].id} />
-            <StoryAnimation.AMPAnimators pageId={pages[2].id} />
+            <StoryAnimation.AMPKeyframes />
+            <StoryAnimation.AMPAnimators />
 
             <amp-story-grid-layer template="vertical">
               {pages[2].elements.map((element) => (
                 <StoryAnimation.AMPWrapper
                   key={element.id}
-                  pageId={pages[2].id}
                   target={element.id}
                   style={{
                     width: element.width,

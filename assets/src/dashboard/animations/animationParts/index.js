@@ -21,7 +21,11 @@ import { AnimationBounce } from './bounce';
 
 function throughput() {
   return {
+    id: -1,
+    keyframes: {},
     WAAPIAnimation: ({ children }) => children,
+    AMPAnimation: ({ children }) => children,
+    AMPAnimator: () => {},
   };
 }
 
