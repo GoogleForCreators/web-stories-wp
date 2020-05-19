@@ -141,7 +141,7 @@ describe('combineElements', () => {
 
     restore(getDefaultState2());
 
-    // Combine element 456 into 123
+    // Combine new element into 123
     const result = combineElements({
       firstElement: {
         type: 'image',
