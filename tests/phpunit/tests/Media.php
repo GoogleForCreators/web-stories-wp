@@ -80,7 +80,7 @@ class Media extends \WP_UnitTestCase {
 		$this->assertNull( get_post( $poster_attachment_id ) );
 	}
 
-	public function test_not_delete_video_poster() {
+	public function test_delete_video_poster_no_generated_poster() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
@@ -103,7 +103,6 @@ class Media extends \WP_UnitTestCase {
 		\Google\Web_Stories\Media::delete_video_poster( $video_attachment_id );
 		$this->assertNotNull( get_post( $poster_attachment_id ) );
 	}
-
 
 	public function test_delete_video_poster_when_attachment_is_deleted() {
 		$video_attachment_id = self::factory()->attachment->create_object(
