@@ -53,7 +53,6 @@ function ShapePreview({ mask }) {
   // Creating a ref to the Path so that it can be used as a drag icon.
   // This avoids the drag image that follows the cursor from being the whole
   // component with large paddings, and only drags the svg part of it.
-  // TODO(jhtin) Make the background completely transparent in the drag image.
   const pathRef = createRef();
 
   // Contains the props to be passed in for insertElement() calls in order
