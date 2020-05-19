@@ -22,28 +22,30 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { GeneralAnimationPropTypes, KeyframesPropTypes } from './types';
+import { KeyframesOutput } from '../../animations/animationOutputs';
+import { AnimationPart } from '../../animations/animationParts';
+import useStoryAnimationContext from './useStoryAnimationContext';
 
-function AnimationOutput({ id, keyframes, ...options }) {
-  return (
-    <amp-animation id={id} layout="nodisplay">
-      <script
-        type="application/json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            keyframes,
-            ...options,
-          }),
-        }}
+function AMPKeyframes({ pageId }) {
+  const {
+    state: { animationTypes },
+  } = useStoryAnimationContext();
+
+  return animationTypes.map((type) => {
+    const { keyframes } = AnimationPart(type);
+
+    return (
+      <KeyframesOutput
+        key={type}
+        id={`${pageId}-${type}`}
+        keyframes={keyframes}
       />
-    </amp-animation>
-  );
+    );
+  });
 }
 
-AnimationOutput.propTypes = {
-  id: PropTypes.string.isRequired,
-  keyframes: KeyframesPropTypes.isRequired,
-  ...GeneralAnimationPropTypes,
+AMPKeyframes.propTypes = {
+  pageId: PropTypes.string.isRequired,
 };
 
-export default AnimationOutput;
+export default AMPKeyframes;

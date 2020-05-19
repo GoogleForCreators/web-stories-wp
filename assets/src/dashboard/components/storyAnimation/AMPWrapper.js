@@ -25,18 +25,16 @@ import PropTypes from 'prop-types';
  */
 import useStoryAnimationContext from './useStoryAnimationContext';
 
-function ComposableWrapper({ animationParts, hoistAnimation, children }) {
+function ComposableWrapper({ animationParts, children, style }) {
   const ComposedWrapper = useMemo(
     () =>
       animationParts.reduce(
         (Composable, animationPart) => {
-          const { WAAPIAnimation } = animationPart;
+          const { AMPAnimation } = animationPart;
           const Composed = function (props) {
             return (
               <Composable>
-                <WAAPIAnimation hoistAnimation={hoistAnimation}>
-                  {props.children}
-                </WAAPIAnimation>
+                <AMPAnimation style={style}>{props.children}</AMPAnimation>
               </Composable>
             );
           };
@@ -45,36 +43,34 @@ function ComposableWrapper({ animationParts, hoistAnimation, children }) {
         },
         (props) => props.children
       ),
-    [animationParts, hoistAnimation]
+    [animationParts, style]
   );
 
   return <ComposedWrapper>{children}</ComposedWrapper>;
 }
 
 ComposableWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
   animationParts: PropTypes.arrayOf(PropTypes.object),
-  hoistAnimation: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  style: PropTypes.object,
 };
 
-function WAAPIWrapper({ children, target }) {
+function AMPWrapper({ target, children, style }) {
   const {
-    actions: { getAnimationParts, hoistWAAPIAnimation },
+    actions: { getAnimationParts },
   } = useStoryAnimationContext();
 
   return (
-    <ComposableWrapper
-      animationParts={getAnimationParts(target)}
-      hoistAnimation={hoistWAAPIAnimation}
-    >
+    <ComposableWrapper style={style} animationParts={getAnimationParts(target)}>
       {children}
     </ComposableWrapper>
   );
 }
 
-WAAPIWrapper.propTypes = {
-  children: PropTypes.node,
+AMPWrapper.propTypes = {
   target: PropTypes.string,
+  children: PropTypes.node,
+  style: PropTypes.object,
 };
 
-export default WAAPIWrapper;
+export default AMPWrapper;

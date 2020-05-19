@@ -19,31 +19,30 @@
  */
 import PropTypes from 'prop-types';
 
-function WithAnimation({ id, style, animationStyle, useContainer, children }) {
-  return useContainer ? (
-    <div
-      style={{
-        clipPath: 'inset(0)',
-        ...style,
-      }}
-    >
-      <div id={id} style={{ width: '100%', height: '100%', ...animationStyle }}>
-        {children}
-      </div>
-    </div>
-  ) : (
-    <div id={id} style={{ ...style, ...animationStyle }}>
-      {children}
-    </div>
+/**
+ * Internal dependencies
+ */
+import useStoryAnimationContext from './useStoryAnimationContext';
+
+function AMPAnimators({ pageId }) {
+  const {
+    state: { animationTargets },
+    actions: { getAnimationParts },
+  } = useStoryAnimationContext();
+
+  return animationTargets.reduce(
+    (animators, target) => [
+      ...animators,
+      ...getAnimationParts(target).map(({ id, AMPAnimator }) => (
+        <AMPAnimator key={id} pageId={pageId} />
+      )),
+    ],
+    []
   );
 }
 
-WithAnimation.propTypes = {
-  id: PropTypes.string,
-  style: PropTypes.object,
-  animationStyle: PropTypes.object,
-  useContainer: PropTypes.bool,
-  children: PropTypes.node,
+AMPAnimators.propTypes = {
+  pageId: PropTypes.string.isRequired,
 };
 
-export default WithAnimation;
+export default AMPAnimators;

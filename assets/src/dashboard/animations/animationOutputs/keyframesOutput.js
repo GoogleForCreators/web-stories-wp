@@ -13,18 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 
-export const WAAPIAnimationProps = {
-  children: PropTypes.node.isRequired,
-  hoistAnimation: PropTypes.func,
+/**
+ * Internal dependencies
+ */
+import { GeneralAnimationPropTypes, KeyframesPropTypes } from './types';
+
+function KeyframesOutput({ id, keyframes, ...options }) {
+  return (
+    <amp-animation id={id} layout="nodisplay">
+      <script
+        type="application/json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            keyframes,
+            ...options,
+          }),
+        }}
+      />
+    </amp-animation>
+  );
+}
+
+KeyframesOutput.propTypes = {
+  id: PropTypes.string.isRequired,
+  keyframes: KeyframesPropTypes.isRequired,
+  ...GeneralAnimationPropTypes,
 };
 
-export const AMPAnimationProps = {
-  children: PropTypes.node,
-  style: PropTypes.object,
-  pageId: PropTypes.string,
-};
+export default KeyframesOutput;

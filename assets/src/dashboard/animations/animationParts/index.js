@@ -17,16 +17,18 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../constants';
-import { WAAPIBounce } from './bounce';
+import { AnimationBounce } from './bounce';
 
 function throughput() {
-  return ({ children }) => children;
+  return {
+    WAAPIAnimation: ({ children }) => children,
+  };
 }
 
-export function WAAPI(type, args) {
+export function AnimationPart(type, args) {
   const generator =
     {
-      [ANIMATION_TYPES.BOUNCE]: WAAPIBounce,
+      [ANIMATION_TYPES.BOUNCE]: AnimationBounce,
     }[type] || throughput;
 
   return generator(args);

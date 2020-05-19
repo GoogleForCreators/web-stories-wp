@@ -17,7 +17,11 @@
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
+import {
+  AnimatorOutput,
+  KeyframesOutput,
+  WithAnimation,
+} from '../animationOutputs';
 import { ANIMATION_TYPES } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
@@ -47,7 +51,7 @@ export const _default = () => {
   return (
     <div style={{ padding: '20px' }}>
       {elementConfigs.map(({ id, keyframes, animationConfig }) => (
-        <AnimationOutput
+        <KeyframesOutput
           key={id}
           id={`${name}-${id}`}
           keyframes={keyframes}
