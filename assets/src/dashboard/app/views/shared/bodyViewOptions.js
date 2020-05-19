@@ -75,7 +75,7 @@ const ExternalLink = styled.a`
   text-decoration: none;
 `;
 
-const BodyViewOptions = ({
+export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
   handleSortChange,
@@ -84,41 +84,44 @@ const BodyViewOptions = ({
   pageSortOptions = [],
   showGridToggle,
   sortDropdownAriaLabel,
-}) => (
-  <StandardViewContentGutter>
-    <DisplayFormatContainer>
-      <Label>{resultsLabel}</Label>
-      <ControlsContainer>
-        {layoutStyle === VIEW_STYLE.GRID && (
-          <StorySortDropdownContainer>
-            <SortDropdown
-              alignment="flex-end"
-              ariaLabel={sortDropdownAriaLabel}
-              items={pageSortOptions}
-              type={DROPDOWN_TYPES.MENU}
-              value={currentSort}
-              onChange={(newSort) => handleSortChange(newSort.value)}
-            />
-          </StorySortDropdownContainer>
-        )}
-        {showGridToggle && (
-          <ControlsContainer>
-            {layoutStyle === VIEW_STYLE.LIST && (
-              <ExternalLink href="edit.php?post_type=web-story">
-                {__('See classic WP list view', 'web-stories')}
-              </ExternalLink>
-            )}
-            <ViewStyleBar
-              label={resultsLabel}
-              layoutStyle={layoutStyle}
-              onPress={handleLayoutSelect}
-            />
-          </ControlsContainer>
-        )}
-      </ControlsContainer>
-    </DisplayFormatContainer>
-  </StandardViewContentGutter>
-);
+  wpListURL,
+}) {
+  return (
+    <StandardViewContentGutter>
+      <DisplayFormatContainer>
+        <Label>{resultsLabel}</Label>
+        <ControlsContainer>
+          {layoutStyle === VIEW_STYLE.GRID && (
+            <StorySortDropdownContainer>
+              <SortDropdown
+                alignment="flex-end"
+                ariaLabel={sortDropdownAriaLabel}
+                items={pageSortOptions}
+                type={DROPDOWN_TYPES.MENU}
+                value={currentSort}
+                onChange={(newSort) => handleSortChange(newSort.value)}
+              />
+            </StorySortDropdownContainer>
+          )}
+          {showGridToggle && (
+            <ControlsContainer>
+              {layoutStyle === VIEW_STYLE.LIST && wpListURL && (
+                <ExternalLink href={wpListURL}>
+                  {__('See classic WP list view', 'web-stories')}
+                </ExternalLink>
+              )}
+              <ViewStyleBar
+                label={resultsLabel}
+                layoutStyle={layoutStyle}
+                onPress={handleLayoutSelect}
+              />
+            </ControlsContainer>
+          )}
+        </ControlsContainer>
+      </DisplayFormatContainer>
+    </StandardViewContentGutter>
+  );
+}
 
 BodyViewOptions.propTypes = {
   currentSort: PropTypes.string.isRequired,
@@ -126,6 +129,7 @@ BodyViewOptions.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   layoutStyle: PropTypes.string.isRequired,
   resultsLabel: PropTypes.string.isRequired,
+  wpListURL: PropTypes.string,
   pageSortOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
@@ -135,4 +139,3 @@ BodyViewOptions.propTypes = {
   showGridToggle: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
 };
-export default BodyViewOptions;

@@ -55,6 +55,7 @@ import {
   StoryListView,
   HeaderToggleButtonContainer,
 } from '../shared';
+import { useConfig } from '../../config';
 
 const DefaultBodyText = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -91,6 +92,8 @@ function MyStories() {
     filters: STORY_STATUSES,
     totalPages,
   });
+
+  const { wpListURL } = useConfig();
 
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
@@ -179,13 +182,14 @@ function MyStories() {
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
+        wpListURL={wpListURL}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
         )}
       />
     );
-  }, [sort, resultsLabel, view]);
+  }, [sort, resultsLabel, view, wpListURL]);
 
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
