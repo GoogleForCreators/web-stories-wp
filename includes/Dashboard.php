@@ -28,6 +28,8 @@
 
 namespace Google\Web_Stories;
 
+use WP_Screen;
+
 /**
  * Dashboard class.
  */
@@ -54,6 +56,7 @@ class Dashboard {
 	public function init() {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 	}
 
 	/**
@@ -182,5 +185,41 @@ class Dashboard {
 			wp_styles()->registered['wp-admin']->deps,
 			[ 'forms' ]
 		);
+	}
+
+	/**
+	 * Displays a link to the Web Stories dashboard on the WordPress list table view.
+	 *
+	 * @return void
+	 */
+	public function display_link_to_dashboard() {
+		$screen = get_current_screen();
+
+		if ( ! $screen instanceof WP_Screen ) {
+			return;
+		}
+
+		if ( 'edit' !== $screen->base ) {
+			return;
+		}
+
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
+			return;
+		}
+
+		$dashboard_url = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard',
+			],
+			admin_url( 'edit.php' )
+		)
+		?>
+		<div style="margin-top: 20px;">
+			<a href="<?php echo esc_url( $dashboard_url ); ?>">
+				<?php _e( '&larr; Return to Web Stories Dashboard', 'web-stories' ); ?>
+			</a>
+		</div>
+		<?php
 	}
 }
