@@ -38,6 +38,7 @@ const ShapePreviewContainer = styled.div`
   flex: 0 0 25%;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const Path = styled.path`
@@ -45,7 +46,6 @@ const Path = styled.path`
 `;
 
 function ShapePreview({ mask }) {
-  console.log(JSON.stringify(mask));
   const {
     actions: { insertElement },
   } = useLibrary();
