@@ -57,17 +57,11 @@ function setup() {
     { type: 'image/jpeg', src: 'image3.jpg' },
   ];
 
-  const pagingNum = 1;
-  const mediaType = undefined;
   const setMedia = jest.fn();
-  const fetchMedia = jest.fn();
 
   const { result } = renderHook(() =>
     useUploadMedia({
       media,
-      pagingNum,
-      mediaType,
-      fetchMedia,
       setMedia,
     })
   );
@@ -75,7 +69,6 @@ function setup() {
   const { uploadMedia } = result.current;
   return {
     uploadMedia,
-    fetchMedia,
     setMedia,
     media,
   };
@@ -83,11 +76,10 @@ function setup() {
 
 describe('useUploadMedia', () => {
   it('should not execute file upload process without files', async () => {
-    const { uploadMedia, fetchMedia, setMedia } = setup();
+    const { uploadMedia, setMedia } = setup();
     await act(() => uploadMedia([]));
 
     expect(setMedia).toHaveBeenCalledTimes(0);
-    expect(fetchMedia).toHaveBeenCalledTimes(0);
   });
 
   it('should only setMedia for files supported by getResourceFromLocalFile', async () => {
