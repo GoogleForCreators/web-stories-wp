@@ -87,6 +87,6 @@ describe('Layer', () => {
         failureThreshold: 0.01,
         failureThresholdType: 'percent',
       });
-    });
+    }, 10000);
   });
 });

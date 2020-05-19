@@ -193,9 +193,10 @@ function MediaPane(props) {
    * @param {Object} resource Resource object
    * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (resource) => {
-    return insertElement(resource.type, { resource });
-  };
+  const insertMediaElement = useCallback(
+    (resource) => insertElement(resource.type, { resource }),
+    [insertElement]
+  );
 
   /**
    * Check if number is odd or even.

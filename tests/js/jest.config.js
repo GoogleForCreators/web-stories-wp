@@ -56,6 +56,7 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/assets/src/**/*.js',
     '<rootDir>/bin/**/*.js',
+    '!**/karma/**',
     '!**/test/**',
     '!**/stories/**',
   ],

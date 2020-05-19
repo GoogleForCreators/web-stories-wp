@@ -29,17 +29,17 @@ import { ReactComponent as BookmarkOutline } from '../../icons/bookmark-outline.
 
 const chipSize = {
   [CHIP_TYPES.STANDARD]: {
-    container: '40px',
+    container: '28px',
     icon: {
-      height: '18px',
-      width: '14px',
+      height: '16px',
+      width: '12px',
     },
   },
   [CHIP_TYPES.SMALL]: {
-    container: '32px',
+    container: '20px',
     icon: {
-      height: '14px',
-      width: '10px',
+      height: '12px',
+      width: '8px',
     },
   },
 };
@@ -53,6 +53,7 @@ const ChipContainer = styled.button`
   color: ${({ theme }) => theme.colors.gray500};
   cursor: pointer;
   display: flex;
+  padding: 5px;
   height: ${({ chipType }) => chipSize[chipType].container};
   width: ${({ chipType }) => chipSize[chipType].container};
 

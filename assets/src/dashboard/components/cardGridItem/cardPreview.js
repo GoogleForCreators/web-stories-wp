@@ -31,8 +31,10 @@ import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
   position: relative;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   height: ${({ cardSize }) => `${cardSize.height}px`};
+  box-shadow: ${({ theme }) => theme.storyPreview.shadow};
+  border: ${({ theme }) => theme.storyPreview.border};
   width: 100%;
   overflow: hidden;
   z-index: -1;
@@ -49,7 +51,7 @@ const EditControls = styled.div`
   opacity: 0;
   transition: opacity ease-in-out 300ms;
   background: ${({ theme }) => theme.cardItem.previewOverlay};
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
 
   &:hover {
     opacity: 1;
