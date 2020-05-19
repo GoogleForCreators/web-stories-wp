@@ -22,7 +22,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useContext, useEffect, useMemo } from 'react';
 
 /**
@@ -36,7 +35,7 @@ import {
   Layout,
   StandardViewContentGutter,
   ToggleButtonGroup,
-  TypographyPresets,
+  DefaultParagraph1,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -56,12 +55,6 @@ import {
   StoryListView,
   HeaderToggleButtonContainer,
 } from '../shared';
-
-const DefaultBodyText = styled.p`
-  ${TypographyPresets.Medium};
-  color: ${({ theme }) => theme.colors.gray200};
-  margin: 40px 20px;
-`;
 
 function MyStories() {
   const {
@@ -202,9 +195,9 @@ function MyStories() {
     }
 
     return (
-      <DefaultBodyText>
+      <DefaultParagraph1>
         {__('Create a story to get started!', 'web-stories')}
-      </DefaultBodyText>
+      </DefaultParagraph1>
     );
   }, [
     orderedStories.length,

@@ -17,7 +17,13 @@
 /**
  * Internal dependencies
  */
-import { Heading1, Heading2, Paragraph1, Paragraph2 } from '../';
+import {
+  Heading1,
+  Heading2,
+  Paragraph1,
+  Paragraph2,
+  DefaultParagraph1,
+} from '../';
 
 export default {
   title: 'Dashboard/Components/Typography',
@@ -26,9 +32,13 @@ export default {
 
 export const _default = () => (
   <>
-    <Heading1>{'h1 Heading'}</Heading1>
-    <Heading2>{'h2 Heading'}</Heading2>
-    <Paragraph1>{'Larger Body Text'}</Paragraph1>
-    <Paragraph2>{'Smaller Body Text'}</Paragraph2>
+    <Heading1>{'<Heading1> - h1 Heading'}</Heading1>
+    <Heading2>{'<Heading2> - h2 Heading'}</Heading2>
+    <Paragraph1>{'<Paragraph1> - Larger Body Text'}</Paragraph1>
+    <Paragraph2>{'<Paragraph2> - Smaller Body Text'}</Paragraph2>
+    <hr />
+    <DefaultParagraph1>
+      {'<DefaultParagraph1> - used for default and helper text on dashboard'}
+    </DefaultParagraph1>
   </>
 );

@@ -62,6 +62,7 @@ const Medium = css(
     font-weight: ${theme.typography.weight.normal};
     line-height: ${theme.typography.presets.m.lineHeight}px;
     letter-spacing: ${theme.typography.presets.m.letterSpacing}em;
+    
     @media ${theme.breakpoint.smallDisplayPhone} {
       font-size: ${theme.typography.presets.m.minSize}px;
     }
@@ -100,6 +101,11 @@ export const Heading2 = styled.h2`
 
 export const Paragraph1 = styled.p`
   ${Medium}
+`;
+
+export const DefaultParagraph1 = styled(Paragraph1)`
+  color: ${({ theme }) => theme.colors.gray200};
+  margin: 40px 20px;
 `;
 
 export const Paragraph2 = styled.p`

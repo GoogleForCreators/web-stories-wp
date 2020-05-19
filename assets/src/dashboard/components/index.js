@@ -75,6 +75,7 @@ export { default as ToggleButtonGroup } from './toggleButtonGroup';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
 export {
+  DefaultParagraph1,
   Heading1,
   Heading2,
   Paragraph1,
