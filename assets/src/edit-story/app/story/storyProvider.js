@@ -36,10 +36,11 @@ import useAutoSave from './actions/useAutoSave';
 
 function StoryProvider({ storyId, children }) {
   const {
-    state: { pages, current, selection, story },
+    state: reducerState,
     api,
     internal: { restore },
   } = useStoryReducer();
+  const { pages, current, selection, story, capabilities } = reducerState;
 
   // Generate current page info.
   const {
@@ -89,7 +90,7 @@ function StoryProvider({ storyId, children }) {
   useLoadStory({ restore, shouldLoad, storyId });
 
   // These effects send updates to and restores state from history.
-  useHistoryEntry({ pages, current, selection, story });
+  useHistoryEntry({ pages, current, selection, story, capabilities });
   useHistoryReplay({ restore });
 
   // Ensure all pages have a background element at all times
@@ -128,6 +129,7 @@ function StoryProvider({ storyId, children }) {
       selectedElements,
       hasSelection,
       story,
+      capabilities,
       meta: {
         isSaving: isSaving || isAutoSaving,
       },
@@ -138,6 +140,7 @@ function StoryProvider({ storyId, children }) {
       saveStory,
       deleteStory,
     },
+    internal: { reducerState, restore },
   };
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
