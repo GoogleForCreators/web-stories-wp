@@ -60,6 +60,7 @@ export const TableDateHeaderCell = styled(TableHeaderCell)`
 
 export const TableStatusHeaderCell = styled(TableHeaderCell)`
   display: table-cell;
+  min-width: 100px;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     display: none;

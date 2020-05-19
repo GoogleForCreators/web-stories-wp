@@ -103,6 +103,11 @@ export const VIEW_STYLE = {
   LIST: 'LIST',
 };
 
+export const VIEW_STYLE_LABELS = {
+  [VIEW_STYLE.GRID]: __('Grid View', 'web-stories'),
+  [VIEW_STYLE.LIST]: __('List View', 'web-stories'),
+};
+
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
   UP_DOWN_ARROW: { width: 16, height: 16 },

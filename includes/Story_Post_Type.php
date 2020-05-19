@@ -398,6 +398,7 @@ class Story_Post_Type {
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
+			'flags'  => [],
 		];
 
 		return $settings;

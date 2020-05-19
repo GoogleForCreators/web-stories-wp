@@ -31,7 +31,8 @@ import styled from 'styled-components';
 
 import { ReactComponent as GridSVG } from '../icons/grid.svg';
 import { ReactComponent as ListSVG } from '../icons/list.svg';
-import { ICON_METRICS, VIEW_STYLE } from '../constants';
+import { ICON_METRICS, VIEW_STYLE, VIEW_STYLE_LABELS } from '../constants';
+import Tooltip from './tooltip';
 
 const Container = styled.div`
   display: flex;
@@ -70,16 +71,18 @@ const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
 export default function ViewStyleBar({ onPress, layoutStyle }) {
   return (
     <Container>
-      <ToggleButton
-        aria-label={__(
-          'Toggle between showing stories as a grid or list.',
-          'web-stories'
-        )}
-        onClick={onPress}
-      >
-        {layoutStyle === VIEW_STYLE.GRID && <ListIcon />}
-        {layoutStyle === VIEW_STYLE.LIST && <GridIcon />}
-      </ToggleButton>
+      <Tooltip content={VIEW_STYLE_LABELS[layoutStyle]} position="right">
+        <ToggleButton
+          aria-label={__(
+            'Toggle between showing stories as a grid or list.',
+            'web-stories'
+          )}
+          onClick={onPress}
+        >
+          {layoutStyle === VIEW_STYLE.GRID && <ListIcon />}
+          {layoutStyle === VIEW_STYLE.LIST && <GridIcon />}
+        </ToggleButton>
+      </Tooltip>
     </Container>
   );
 }
