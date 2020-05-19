@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import React, { createRef } from 'react';
 import styled from 'styled-components';
 
@@ -43,7 +44,8 @@ const Path = styled.path`
   fill: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function ShapePreview(mask) {
+function ShapePreview({ mask }) {
+  console.log(JSON.stringify(mask));
   const {
     actions: { insertElement },
   } = useLibrary();
@@ -87,6 +89,7 @@ function ShapePreview(mask) {
     <ShapePreviewContainer
       key={mask.type}
       draggable={true}
+      data-testid="preview"
       onClick={() => {
         // Shapes inserted with a specific size.
         insertElement('shape', props);
@@ -97,5 +100,8 @@ function ShapePreview(mask) {
     </ShapePreviewContainer>
   );
 }
+ShapePreview.propTypes = {
+  mask: PropTypes.object.isRequired,
+};
 
 export default ShapePreview;

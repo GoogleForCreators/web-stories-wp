@@ -52,9 +52,9 @@ function ShapesPane(props) {
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>
           {/** Basic masks */}
-          {MASKS.map((mask) => {
-            return ShapePreview(mask);
-          })}
+          {MASKS.map((mask) => (
+            <ShapePreview mask={mask} key={mask.type} />
+          ))}
         </SectionContent>
       </Section>
     </Pane>
