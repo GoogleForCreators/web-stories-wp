@@ -9,6 +9,7 @@ includes/data/fonts.json
 /assets/css
 /assets/js
 /assets/images
+/karma/karma-puppeteer-client/client.js
 .travis_deploy_key.enc
 .browserslistrc
 .distignore

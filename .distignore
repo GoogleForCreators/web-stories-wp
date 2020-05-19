@@ -4,6 +4,7 @@
 .storybook
 __mocks__
 assets/src
+assets/testjs
 bin
 build
 docs
@@ -34,7 +35,8 @@ codecov.yml
 composer.json
 composer.lock
 CONTRIBUTING.md
-jest-puppeteer.config.js
+jest-puppeteer.config.cjs
+karma.config.cjs
 package.json
 package-lock.json
 phpcs.xml
