@@ -265,13 +265,8 @@ class Embed_Controller extends WP_REST_Controller {
 		$title  = $this->get_dom_attribute_content( $amp_story, 'title' );
 		$poster = $this->get_dom_attribute_content( $amp_story, 'poster-portrait-src' );
 
-		// Title is required, poster is not.
-		if ( empty( $title ) ) {
-			return false;
-		}
-
 		return [
-			'title'  => $title,
+			'title'  => $title ?: '',
 			'poster' => $poster ?: '',
 		];
 	}
