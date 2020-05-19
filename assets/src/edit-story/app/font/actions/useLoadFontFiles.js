@@ -67,9 +67,7 @@ function useLoadFontFiles() {
               ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
             `.trim();
 
-            const hasFontLink = () => {
-              return document.getElementById(elementId);
-            };
+            const hasFontLink = () => document.getElementById(elementId);
 
             const appendFontLink = () => {
               return new Promise((resolve, reject) => {
@@ -87,13 +85,14 @@ function useLoadFontFiles() {
               });
             };
 
-            const ensureFontLoaded = async () => {
-              if (document?.fonts) {
-                await document.fonts.load(fontFaceSet, content || '');
-                return document.fonts.check(fontFaceSet, content || '');
-              } else {
-                return null;
+            const ensureFontLoaded = () => {
+              if (!document?.fonts) {
+                return Promise.resolve();
               }
+
+              return document.fonts
+                .load(fontFaceSet, content || '')
+                .then(() => document.fonts.check(fontFaceSet, content || ''));
             };
 
             if (!hasFontLink()) {
