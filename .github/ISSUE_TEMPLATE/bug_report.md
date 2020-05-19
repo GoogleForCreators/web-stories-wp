@@ -1,41 +1,38 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-labels: Type: Bug
----
-
-## Bug Description
-
-<!-- Please describe clearly and concisely what the bug is. -->
-
-## Expected Behaviour
-
-<!-- Please describe clearly and concisely what the expected behaviour should be. -->
-
-## Steps to Reproduce
-
-<!-- Please provide detailed steps on how to reproduce the bug. -->
-
-## Screenshots
-
-<!-- If applicable, please add screenshots to help explain your problem. Bonus points for videos! -->
-
-## Additional Context
-
-<!-- Please complete the following information. -->
-
-- Plugin Version:
-- Operating System:
-- Browser:
+title: ''
+labels: 'Type: Bug'
+assignees: ''
 
 ---
 
-_Do not alter or remove anything below. The following sections will be managed by moderators only._
+**Describe the bug**
+A clear and concise description of what the bug is.
 
-## Acceptance Criteria
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
 
-<!-- One or more bullet points for acceptance criteria. -->
+**Expected behavior**
+A clear and concise description of what you expected to happen.
 
-## Implementation Brief
+**Screenshots**
+If applicable, add screenshots to help explain your problem.
 
-<!-- One or more bullet points for how to technically implement the feature. -->
+**Desktop (please complete the following information):**
+ - OS: [e.g. iOS]
+ - Browser [e.g. chrome, safari]
+ - Version [e.g. 22]
+
+**Smartphone (please complete the following information):**
+ - Device: [e.g. iPhone6]
+ - OS: [e.g. iOS8.1]
+ - Browser [e.g. stock browser, safari]
+ - Version [e.g. 22]
+
+**Additional context**
+Add any other context about the problem here.
