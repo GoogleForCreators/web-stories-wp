@@ -136,6 +136,51 @@ describe('combineElements', () => {
     ]);
   });
 
+  it('should be able to copy properties from given element rather than existing', () => {
+    const { restore, combineElements } = setupReducer();
+
+    restore(getDefaultState2());
+
+    // Combine element 456 into 123
+    const result = combineElements({
+      firstElement: {
+        type: 'image',
+        resource: { type: 'image', src: '2' },
+        width: 30,
+        height: 30,
+        x: 30,
+        y: 30,
+      },
+      secondId: '123',
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '123',
+        resource: { type: 'image', src: '2' },
+        type: 'image',
+        focalX: 50,
+        focalY: 50,
+        scale: 100,
+        isFill: false,
+        x: 30,
+        y: 30,
+        width: 30,
+        height: 30,
+        isBackground: true,
+      },
+      {
+        id: '456',
+        type: 'image',
+        resource: { type: 'image', src: '1' },
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
+      },
+    ]);
+  });
+
   it('should create default background element when combining into that', () => {
     const { restore, combineElements } = setupReducer();
 
@@ -145,9 +190,9 @@ describe('combineElements', () => {
     const result = combineElements({ firstId: '456', secondId: '123' });
 
     expect(result.pages[0].defaultBackgroundElement).toStrictEqual({
-      // Note id is changed to the of the old now deleted element
-      // - it doesn't matter, just has to be unique and different from current$
-      id: '456',
+      // Note that id is regenerated. It doesn't matter what it is, just
+      // has to be unique and different from current
+      id: expect.not.stringMatching('123'),
       type: 'shape',
       isBackground: true,
       isDefaultBackground: true,

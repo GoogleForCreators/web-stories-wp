@@ -15,11 +15,19 @@
  */
 
 /**
+ * External dependencies
+ */
+import { v4 as uuidv4 } from 'uuid';
+
+/**
  * Combine elements by taking properties from a first item and
  * adding them to the given second item, then remove first item.
  *
- * First item has to be an element with a resource (some media element),
- * otherwise nothing happens.
+ *
+ * First item must either to be the id of an existing element with
+ * a resource (some media element, or be given as the properties of
+ * an element (with a resource) that doesn't exist but whose properties
+ * should be merged into the target element.
  *
  * If second item is background element, copy some extra properties not
  * relevant while background, but relevant if unsetting as background.
@@ -32,18 +40,20 @@
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.firstId Element to take properties from
+ * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
  * @return {Object} New state
  */
-function combineElements(state, { firstId, secondId }) {
-  if (!firstId || !secondId) {
+function combineElements(state, { firstId, firstElement, secondId }) {
+  if ((!firstId && !firstElement) || !secondId) {
     return state;
   }
 
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const page = state.pages[pageIndex];
   const elementPosition = page.elements.findIndex(({ id }) => id === firstId);
-  const element = page.elements[elementPosition];
+  const element =
+    elementPosition > -1 ? page.elements[elementPosition] : firstElement;
 
   const secondElementPosition = page.elements.findIndex(
     ({ id }) => id === secondId
@@ -58,7 +68,8 @@ function combineElements(state, { firstId, secondId }) {
     ? {
         defaultBackgroundElement: {
           ...secondElement,
-          id: firstId,
+          // But generate a new ID for this temp background element
+          id: uuidv4(),
         },
       }
     : {};
@@ -100,7 +111,9 @@ function combineElements(state, { firstId, secondId }) {
 
   // Elements are now
   const elements = page.elements
+    // Remove first element if combining from existing id
     .filter(({ id }) => id !== firstId)
+    // Update reference to second element
     .map((el) => (el.id === secondId ? newElement : el));
 
   const newPage = {

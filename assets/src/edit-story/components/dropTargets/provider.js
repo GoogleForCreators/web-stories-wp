@@ -18,13 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useTransform } from '../transform';
 import { useStory } from '../../app';
+import { useTransform } from '../transform';
+import { getElementProperties } from '../canvas/useInsertElement';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
@@ -38,7 +39,7 @@ function DropTargetsProvider({ children }) {
     actions: { pushTransform },
   } = useTransform();
   const {
-    actions: { combineElements, updateElementById },
+    actions: { combineElements },
     state: { currentPage },
   } = useStory();
 
@@ -76,11 +77,6 @@ function DropTargetsProvider({ children }) {
   const isDropTarget = (type) => {
     return DROP_TARGET_ALLOWED_TYPES.includes(type);
   };
-
-  const activeDropTarget = useMemo(
-    () => currentPage?.elements.find((el) => el.id === activeDropTargetId),
-    [activeDropTargetId, currentPage]
-  );
 
   /**
    * Dragging elements
@@ -134,28 +130,21 @@ function DropTargetsProvider({ children }) {
         return;
       }
 
-      const {
-        scale = 100,
-        focalX = 50,
-        focalY = 50,
-        isFill = false,
-      } = activeDropTarget;
+      const combineArgs = {
+        secondId: activeDropTargetId,
+      };
 
       if (selfId) {
-        combineElements({ firstId: selfId, secondId: activeDropTargetId });
+        combineArgs.firstId = selfId;
       } else {
-        updateElementById({
-          elementId: activeDropTargetId,
-          properties: {
-            resource,
-            type: resource.type,
-            scale,
-            focalX,
-            focalY,
-            isFill,
-          },
+        // Create properties as you'd create them for a new element to be added
+        // Then merge these into the existing element using the same logic as
+        // for merging existing elements.
+        combineArgs.firstElement = getElementProperties(resource.type, {
+          resource,
         });
       }
+      combineElements(combineArgs);
 
       // Reset styles on visisble elements
       (currentPage?.elements || [])
@@ -172,13 +161,11 @@ function DropTargetsProvider({ children }) {
       setActiveDropTargetId(null);
     },
     [
-      activeDropTarget,
       activeDropTargetId,
       currentPage,
       dropTargets,
       combineElements,
       pushTransform,
-      updateElementById,
     ]
   );
 
