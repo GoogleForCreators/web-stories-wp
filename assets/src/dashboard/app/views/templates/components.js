@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Button } from '../../../components';
+import { Button, TypographyPresets } from '../../../components';
 
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
@@ -62,33 +62,22 @@ export const Column = styled.div`
 `;
 
 export const Title = styled.h2`
-  ${({ theme }) => `
-    margin: 0;
-    font-family: ${theme.fonts.heading4.family};
-    font-size: ${theme.fonts.heading4.size}px;
-    font-weight: ${theme.fonts.heading4.weight};
-    line-height: ${theme.fonts.heading4.lineHeight}px;
-    color: ${theme.colors.gray900};
-  `}
+  ${TypographyPresets.ExtraLarge}
+  color: ${({ theme }) => theme.colors.gray900};
 `;
 
 export const ByLine = styled.p`
+  ${TypographyPresets.Small}
   ${({ theme }) => `
     margin: 0 0 20px;
-    font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size}px;
-    line-height: ${theme.fonts.body2.lineHeight}px;
     color: ${theme.colors.gray400};
   `}
 `;
 
 export const Text = styled.p`
+  ${TypographyPresets.Small}
   ${({ theme }) => `
     margin: 0 0 20px;
-    font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size}px;
-    line-height: ${theme.fonts.body2.lineHeight}px;
-    letter-spacing: ${theme.fonts.body2.letterSpacing}em;
     color: ${theme.colors.gray900};
   `}
 `;
@@ -137,12 +126,9 @@ export const RowContainer = styled.section`
 `;
 
 export const SubHeading = styled.h2`
-  font-family: ${({ theme }) => theme.fonts.heading3.family};
-  font-size: ${({ theme }) => theme.fonts.heading3.size}px;
-  line-height: ${({ theme }) => theme.fonts.heading3.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.fonts.heading3.letterSpacing}em;
-  font-weight: 500;
-  margin: 0 0 20px 0;
+  ${TypographyPresets.Large}
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  margin-bottom: 20px;
 `;
 
 export const LargeDisplayPagination = styled.div(

@@ -33,29 +33,25 @@ import { STORY_STATUS } from '../../constants';
 import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
 import { DashboardStatusesPropType } from '../../types';
+import { TypographyPresets } from '../typography';
 
 const StyledCardTitle = styled.div`
-  font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
-  font-size: ${({ theme }) => theme.fonts.storyGridItem.size}px;
-  font-weight: 500;
-  letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing}em;
-  line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight}px;
+  ${TypographyPresets.Small}
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   padding-top: 12px;
   max-width: 90%;
 `;
 
 const StyledTitle = styled.p`
   color: ${({ theme }) => theme.colors.gray900};
-  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
 const TitleBodyText = styled.p`
-  margin: 0;
   color: ${({ theme }) => theme.colors.gray500};
-  font-weight: 300;
+  font-weight: ${({ theme }) => theme.typography.weight.light};
 `;
 
 const DateHelperText = styled.span`

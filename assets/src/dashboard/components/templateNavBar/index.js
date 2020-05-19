@@ -30,6 +30,7 @@ import styled from 'styled-components';
 import { BUTTON_TYPES } from '../../constants';
 import { BookmarkChip, Button } from '../../components';
 import { parentRoute } from '../../app/router/route';
+import { TypographyPresets } from '../typography';
 
 const Nav = styled.nav`
   ${({ theme }) => `
@@ -66,12 +67,8 @@ const BookmarkToggle = styled(BookmarkChip)`
 `;
 
 const CloseLink = styled.a`
+  ${TypographyPresets.Medium}
   ${({ theme }) => `
-    font-family: ${theme.fonts.body1.family};
-    font-size: ${theme.fonts.body1.size}px;
-    font-weight: ${theme.fonts.body1.weight};
-    line-height: ${theme.fonts.body1.lineHeight}px;
-    letter-spacing: ${theme.fonts.body1.letterSpacing}em;
     text-decoration: none;
     color: ${theme.colors.gray700};
   `}

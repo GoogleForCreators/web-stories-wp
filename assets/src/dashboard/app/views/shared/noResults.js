@@ -25,12 +25,13 @@ import { __, sprintf } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { TypographyPresets } from '../../../components';
+
 const NoResultsText = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-weight: ${({ theme }) => theme.fonts.body1.weight};
-  font-size: ${({ theme }) => theme.fonts.body1.size}px;
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing}em;
+  ${TypographyPresets.Medium}
   color: ${({ theme }) => theme.colors.gray200};
   margin: 40px 20px;
 `;
