@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useState, useCallback, useRef, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -26,7 +27,11 @@ import styled from 'styled-components';
 import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
 import { resolveRoute } from '../../app/router';
-import { PageSizePropType } from '../../types';
+import { PageSizePropType, StoryPropType } from '../../types';
+
+import { clamp, useFocusOut } from '../../utils';
+import PreviewErrorBoundary from '../previewErrorBoundary';
+import PreviewPage from '../previewPage';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
@@ -51,11 +56,10 @@ const EditControls = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 0;
-  opacity: 0;
   transition: opacity ease-in-out 300ms;
   background: ${({ theme }) => theme.cardItem.previewOverlay};
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-
+  opacity: ${(props) => (props.isActive ? 1 : 0)};
   &:hover {
     opacity: 1;
   }
@@ -90,16 +94,61 @@ const getActionAttributes = (targetAction) =>
     ? { href: resolveRoute(targetAction), isLink: true }
     : { onClick: targetAction };
 
+const cardMachine = {
+  idle: {
+    activate: 'active',
+  },
+  active: {
+    deactivate: 'idle',
+  },
+};
+
+const cardReducer = (state, action) => cardMachine?.[state]?.[action] || state;
+
 const CardPreviewContainer = ({
   centerAction,
   bottomAction,
-  children,
+  story,
   pageSize,
 }) => {
+  const containElem = useRef(null);
+  const [cardState, dispatch] = useReducer(cardReducer, 'idle');
+  const [pageIndex, setPageIndex] = useState(0);
+
+  useEffect(() => {
+    if ('idle' === cardState) {
+      setPageIndex(0);
+    }
+  }, [cardState]);
+
+  const incrementPageIndex = useCallback(
+    () =>
+      'active' === cardState &&
+      setPageIndex((v) => clamp(v + 1, [0, story.pages.length - 1])),
+    [story.pages.length, cardState]
+  );
+
+  useFocusOut(containElem, () => dispatch('deactivate'), []);
+
   return (
     <>
-      <PreviewPane cardSize={pageSize}>{children}</PreviewPane>
-      <EditControls cardSize={pageSize}>
+      <PreviewPane cardSize={pageSize}>
+        <PreviewErrorBoundary>
+          <PreviewPage
+            page={story.pages[pageIndex]}
+            animationState={'active' === cardState ? 'animate' : 'idle'}
+            onAnimationComplete={incrementPageIndex}
+          />
+        </PreviewErrorBoundary>
+      </PreviewPane>
+      <EditControls
+        ref={containElem}
+        cardSize={pageSize}
+        isActive={'active' === cardState}
+        onFocus={() => dispatch('activate')}
+        onMouseEnter={() => dispatch('activate')}
+        onMouseLeave={() => dispatch('deactivate')}
+      >
         <EmptyActionContainer />
         {centerAction && (
           <ActionContainer>
@@ -128,10 +177,10 @@ const ActionButtonPropType = PropTypes.shape({
 });
 
 CardPreviewContainer.propTypes = {
-  children: PropTypes.node.isRequired,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
   pageSize: PageSizePropType.isRequired,
+  story: StoryPropType,
 };
 
 export default CardPreviewContainer;
