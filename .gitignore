@@ -6,6 +6,7 @@ node_modules
 /vendor
 /assets/css
 /assets/js
+/assets/testjs
 /build
 /bin/local-env/data
 phpunit.xml

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -36,6 +37,11 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
   const isBackground = getCommonValue(selectedElements, 'isBackground');
 
+  const onChange = useCallback(
+    (value) => pushUpdate({ backgroundColor: value }, true),
+    [pushUpdate]
+  );
+
   return (
     <SimplePanel name="style" title={__('Style', 'web-stories')}>
       <Row>
@@ -43,7 +49,7 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
           hasGradient
           value={backgroundColor}
           isMultiple={backgroundColor === ''}
-          onChange={(value) => pushUpdate({ backgroundColor: value }, true)}
+          onChange={onChange}
           label={__('Background color', 'web-stories')}
           hasOpacity={!isBackground}
           colorPickerActions={getColorPickerActions}

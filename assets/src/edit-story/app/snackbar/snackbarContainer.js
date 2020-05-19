@@ -80,7 +80,7 @@ function SnackbarContainer({
   component: Component,
   notifications,
   onRemove,
-  place,
+  place = 'bottom-left',
 }) {
   const orderednotifications =
     place.indexOf('top') === 0 ? [...notifications].reverse() : notifications;

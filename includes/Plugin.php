@@ -56,5 +56,8 @@ class Plugin {
 
 		$dashboard = new Dashboard();
 		add_action( 'init', [ $dashboard, 'init' ] );
+
+		$database_upgrader = new Database_Upgrader();
+		add_action( 'admin_init', [ $database_upgrader, 'init' ] );
 	}
 }

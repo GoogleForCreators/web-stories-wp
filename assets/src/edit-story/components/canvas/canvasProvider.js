@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -39,6 +39,7 @@ function CanvasProvider({ children }) {
     height: PAGE_WIDTH / PAGE_RATIO,
   });
   const [pageContainer, setPageContainer] = useState(null);
+  const [fullbleedContainer, setFullbleedContainer] = useState(null);
 
   const {
     nodesById,
@@ -103,6 +104,7 @@ function CanvasProvider({ children }) {
   const selectIntersection = useCallback(
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const newSelectedElementIds = currentPage.elements
+        .filter(({ isFill, isBackground }) => !isFill && !isBackground)
         .filter(({ x, y, width, height }) => {
           return (
             x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
@@ -133,28 +135,49 @@ function CanvasProvider({ children }) {
 
   useCanvasCopyPaste();
 
-  const state = {
-    state: {
+  const state = useMemo(
+    () => ({
+      state: {
+        pageContainer,
+        fullbleedContainer,
+        nodesById,
+        editingElement,
+        editingElementState,
+        isEditing: Boolean(editingElement),
+        lastSelectionEvent,
+        pageSize,
+      },
+      actions: {
+        setPageContainer,
+        setFullbleedContainer,
+        setNodeForElement,
+        setEditingElement: setEditingElementWithoutState,
+        setEditingElementWithState,
+        clearEditing,
+        handleSelectElement,
+        selectIntersection,
+        setPageSize,
+      },
+    }),
+    [
       pageContainer,
+      fullbleedContainer,
       nodesById,
       editingElement,
       editingElementState,
-      isEditing: Boolean(editingElement),
       lastSelectionEvent,
       pageSize,
-    },
-    actions: {
       setPageContainer,
+      setFullbleedContainer,
       setNodeForElement,
-      setEditingElement: setEditingElementWithoutState,
+      setEditingElementWithoutState,
       setEditingElementWithState,
       clearEditing,
       handleSelectElement,
       selectIntersection,
       setPageSize,
-    },
-  };
-
+    ]
+  );
   return (
     <Context.Provider value={state}>
       <UnitsProvider pageSize={pageSize}>{children}</UnitsProvider>

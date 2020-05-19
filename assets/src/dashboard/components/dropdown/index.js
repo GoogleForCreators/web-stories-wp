@@ -24,20 +24,27 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
+import { DROPDOWN_TYPES } from '../../constants';
+import { PILL_LABEL_TYPES } from '../../constants/components';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
 import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
 import useFocusOut from '../../utils/useFocusOut';
-import { DROPDOWN_TYPES } from '../../constants';
+
+import { ColorDot } from '../colorDot';
 import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
-import { ColorDot } from '../colorDot';
+
+const dropdownLabelType = {
+  [DROPDOWN_TYPES.PANEL]: PILL_LABEL_TYPES.DEFAULT,
+  [DROPDOWN_TYPES.COLOR_PANEL]: PILL_LABEL_TYPES.SWATCH,
+};
 
 const StyledPopoverMenu = styled(PopoverMenu)`
   left: 50%;
@@ -64,8 +71,11 @@ export const InnerDropdown = styled.button`
     padding-left: ${hasSelectedItems ? '10px' : '20px'};
     margin: 0;
     background-color: ${
-      theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
+      hasSelectedItems
+        ? theme.colors.blueLight
+        : theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
     };
+
     border-radius: ${theme.dropdown[type].borderRadius}px;
     border: ${theme.dropdown[type].border};
     color: ${theme.colors.gray600};
@@ -77,14 +87,16 @@ export const InnerDropdown = styled.button`
     line-height: ${theme.fonts.dropdown.lineHeight}px;
 
     &:hover {
-      background-color: ${theme.dropdown[type].activeBackground};
+      background-color: ${
+        hasSelectedItems
+          ? theme.colors.blueLight
+          : theme.dropdown[type].activeBackground
+      };
     }
 
     &:focus {
       border: ${theme.borders.action};
     }
-
-    background-color: ${hasSelectedItems ? theme.colors.blueLight : 'inherit'};
 
     &:disabled {
       color: ${theme.colors.gray400};
@@ -146,7 +158,8 @@ const Dropdown = ({
   ...rest
 }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const dropdownRef = useRef();
+  const dropdownRef = useRef(null);
+  const dropdownButtonRef = useRef(null);
 
   const handleFocusOut = useCallback(() => {
     setShowMenu(false);
@@ -160,8 +173,16 @@ const Dropdown = ({
     }
   };
 
+  useEffect(() => {
+    if (showMenu && dropdownRef.current) {
+      // we need to maintain focus of the dropdown component as a whole
+      // but the button should lose focus as menu is open and focus moves there
+      dropdownButtonRef.current.blur();
+    }
+  }, [showMenu]);
+
   const handleMenuItemSelect = (item) => {
-    if (type === DROPDOWN_TYPES.PANEL) {
+    if (type === DROPDOWN_TYPES.PANEL || type === DROPDOWN_TYPES.COLOR_PANEL) {
       onChange(item);
       return;
     }
@@ -187,12 +208,21 @@ const Dropdown = ({
     };
     return value && getCurrentLabel();
   }, [value, items]);
+
+  const currentValueIndex = useMemo(() => {
+    const activeItem = items.find((item) => {
+      return item.value === value;
+    });
+    return items.indexOf(activeItem);
+  }, [items, value]);
+
   const hasSelectedItems = selectedItems.length > 0;
 
   return (
     <DropdownContainer ref={dropdownRef} {...rest}>
       <Label aria-label={ariaLabel} alignment={alignment}>
         <InnerDropdown
+          ref={dropdownButtonRef}
           onClick={handleInnerDropdownClick}
           isOpen={showMenu}
           disabled={disabled}
@@ -232,10 +262,11 @@ const Dropdown = ({
         </InnerDropdown>
       </Label>
 
-      {type === DROPDOWN_TYPES.PANEL ? (
+      {type === DROPDOWN_TYPES.PANEL || type === DROPDOWN_TYPES.COLOR_PANEL ? (
         <PopoverPanel
           isOpen={showMenu}
           title={placeholder}
+          labelType={dropdownLabelType[type]}
           items={items}
           onClose={() => setShowMenu(false)}
           onSelect={(_, selectedValue) => {
@@ -244,10 +275,10 @@ const Dropdown = ({
         />
       ) : (
         <StyledPopoverMenu
+          currentValueIndex={currentValueIndex}
           isOpen={showMenu}
           items={items}
           onSelect={handleMenuItemSelect}
-          framelessButton={type === DROPDOWN_TYPES.TRANSPARENT_MENU}
         />
       )}
     </DropdownContainer>
