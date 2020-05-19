@@ -78,12 +78,22 @@ const Small = css(
   `
 );
 
-export const ViewHeader = styled.h1(
-  ({ theme }) => `
-    ${ExtraExtraLarge}
-    font-weight: ${theme.typography.weight.bold};
-  `
-);
+export const Heading1 = styled.h1`
+  ${ExtraExtraLarge}
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
+`;
+
+export const Heading2 = styled.h2`
+  ${ExtraLarge}
+`;
+
+export const Paragraph1 = styled.p`
+  ${Medium}
+`;
+
+export const Paragraph2 = styled.p`
+  ${Small}
+`;
 
 export const TypographyPresets = {
   ExtraExtraLarge,

@@ -22,7 +22,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Button, TypographyPresets } from '../../../components';
+import {
+  Button,
+  TypographyPresets,
+  Heading2,
+  Paragraph2,
+} from '../../../components';
 
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
@@ -61,21 +66,18 @@ export const Column = styled.div`
   `}
 `;
 
-export const Title = styled.h2`
-  ${TypographyPresets.ExtraLarge}
+export const Title = styled(Heading2)`
   color: ${({ theme }) => theme.colors.gray900};
 `;
 
-export const ByLine = styled.p`
-  ${TypographyPresets.Small}
-  ${({ theme }) => `
+export const ByLine = styled(Paragraph2)(
+  ({ theme }) => `
     margin: 0 0 20px;
     color: ${theme.colors.gray400};
-  `}
-`;
+  `
+);
 
-export const Text = styled.p`
-  ${TypographyPresets.Small}
+export const Text = styled(Paragraph2)`
   ${({ theme }) => `
     margin: 0 0 20px;
     color: ${theme.colors.gray900};

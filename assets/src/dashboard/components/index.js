@@ -74,6 +74,12 @@ export { TemplateNavBar } from './templateNavBar';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
-export { ViewHeader, TypographyPresets } from './typography';
+export {
+  Heading1,
+  Heading2,
+  Paragraph1,
+  Paragraph2,
+  TypographyPresets,
+} from './typography';
 export { default as ViewStyleBar } from './viewStyleBar';
 export { default as Tooltip } from './tooltip';

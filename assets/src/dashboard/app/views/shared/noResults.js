@@ -28,10 +28,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { TypographyPresets } from '../../../components';
+import { Paragraph1 } from '../../../components';
 
-const NoResultsText = styled.p`
-  ${TypographyPresets.Medium}
+const NoResultsText = styled(Paragraph1)`
   color: ${({ theme }) => theme.colors.gray200};
   margin: 40px 20px;
 `;

@@ -26,7 +26,7 @@ import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
 import {
-  ViewHeader,
+  Heading1,
   NavMenuButton,
   StandardViewContentGutter,
 } from '../../../components';
@@ -36,7 +36,7 @@ const Container = styled.div`
   padding: 10px 0 0;
 `;
 
-const StyledHeader = styled(ViewHeader)`
+const StyledHeader = styled(Heading1)`
   display: flex;
   justify-content: flex-start;
   align-items: center;

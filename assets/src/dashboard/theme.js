@@ -172,7 +172,7 @@ const theme = {
     presets: {
       xxl: {
         family: themeFonts.primary,
-        size: 26,
+        size: 32,
         minSize: 18,
         lineHeight: 53,
         minLineHeight: 43,
