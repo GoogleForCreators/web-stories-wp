@@ -39,7 +39,7 @@ jobs:
           CI: true
 
       - name: Run integration tests
-        run: npm run test:karma -- --headless
+        run: npm run test:karma -- --headless --snapshots
 
       - name: Uplaod code coverage report
         uses: codecov/codecov-action@v1
