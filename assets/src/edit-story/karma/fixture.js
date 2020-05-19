@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* global karmaSnapshot */
-
 /**
  * External dependencies
  */

@@ -214,7 +214,8 @@
         "testing-library/no-dom-import": "error"
       },
       "globals": {
-        "karmaPuppeteer": "readonly"
+        "karmaPuppeteer": "readonly",
+        "karmaSnapshot": "readonly"
       }
     },
     {

@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* global karmaPuppeteer */
-
 // Make Jasmine just a tiny bit more like Jest and Mocha.
 self.describe.only = self.fdescribe;
 self.it.only = self.fit;
@@ -35,7 +33,7 @@ beforeAll(() => {
     },
   });
 
-  window.karmaSnapshot = (name) => {
+  self.karmaSnapshot = (name) => {
     return karmaPuppeteer.saveSnapshot(currentSpec?.fullName, name);
   };
 });
