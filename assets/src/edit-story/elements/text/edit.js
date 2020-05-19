@@ -137,8 +137,15 @@ function TextEdit({
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);
   const editorRef = useRef(null);
+  const boxRef = useRef();
   const contentRef = useRef();
   const editorHeightRef = useRef(0);
+
+  // x, y, height, rotationAngle changes should not update the content while in edit mode.
+  // updateContent should be only called on unmount.
+  useEffect(() => {
+    boxRef.current = { x, y, height, rotationAngle };
+  }, [x, y, height, rotationAngle]);
 
   // Make sure to allow the user to click in the text box while working on the text.
   const onClick = (evt) => {
@@ -166,27 +173,19 @@ function TextEdit({
       // Recalculate the new height and offset.
       if (newHeight) {
         const [dx, dy] = calcRotatedResizeOffset(
-          rotationAngle,
+          boxRef.current.rotationAngle,
           0,
           0,
           0,
-          newHeight - height
+          newHeight - boxRef.current.height
         );
         properties.height = editorToDataY(newHeight);
-        properties.x = editorToDataX(x + dx);
-        properties.y = editorToDataY(y + dy);
+        properties.x = editorToDataX(boxRef.current.x + dx);
+        properties.y = editorToDataY(boxRef.current.y + dy);
       }
       setProperties(properties);
     }
-  }, [
-    editorToDataX,
-    editorToDataY,
-    height,
-    rotationAngle,
-    setProperties,
-    x,
-    y,
-  ]);
+  }, [editorToDataX, editorToDataY, setProperties]);
 
   // Update content for element on unmount.
   useUnmount(updateContent);

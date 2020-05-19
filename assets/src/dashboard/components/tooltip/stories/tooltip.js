@@ -13,43 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { text, select } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { LayerPanel } from '../../panels';
-import DesignPanels from './designPanels';
+import styled from 'styled-components';
+import Tooltip from '../';
 
-const Wrapper = styled.div`
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
+const Container = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const TopPanels = styled.div`
-  overflow: auto;
-  flex: 1;
-`;
+export default {
+  title: 'Dashboard/Components/Tooltip',
+  component: Tooltip,
+};
 
-const BottomPanels = styled.div``;
-
-function DesignInspector() {
+export const _default = () => {
+  const positionValues = {
+    left: 'left',
+    right: 'right',
+    center: 'center',
+  };
+  const position = select('Position', positionValues, 'left');
   return (
-    <Wrapper>
-      <TopPanels>
-        <DesignPanels />
-      </TopPanels>
-      <BottomPanels>
-        <LayerPanel />
-      </BottomPanels>
-    </Wrapper>
+    <Container>
+      <Tooltip
+        position={position}
+        content={text('tooltipContent', 'Tooltip Content')}
+      >
+        <button>{text('buttonTitle', 'Hover Over Me')}</button>
+      </Tooltip>
+    </Container>
   );
-}
-
-export default DesignInspector;
+};
