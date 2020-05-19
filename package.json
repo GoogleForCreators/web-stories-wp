@@ -35,6 +35,7 @@
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
+    "flagged": "^1.1.0",
     "history": "^4.10.1",
     "mockdate": "^2.0.5",
     "moment": "^2.25.3",
@@ -210,7 +211,7 @@
   },
   "lint-staged": {
     "*.js": "eslint --fix",
-    "*.(js|css)": "stylelint --fix",
+    "*.(js|css)": "stylelint --fix --allow-empty-input",
     "*.md": [
       "eslint --fix",
       "markdownlint -f"
