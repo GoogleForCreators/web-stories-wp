@@ -78,6 +78,16 @@ const Small = css(
   `
 );
 
+const ExtraSmall = css(
+  ({ theme }) => `
+    font-size: ${theme.typography.presets.xs.size}px;
+    font-family: ${theme.typography.presets.xs.family};
+    font-weight: ${theme.typography.weight.normal};
+    line-height: ${theme.typography.presets.xs.lineHeight}px;
+    letter-spacing: ${theme.typography.presets.xs.letterSpacing}em;
+  `
+);
+
 export const Heading1 = styled.h1`
   ${ExtraExtraLarge}
   font-weight: ${({ theme }) => theme.typography.weight.bold};
@@ -85,6 +95,7 @@ export const Heading1 = styled.h1`
 
 export const Heading2 = styled.h2`
   ${ExtraLarge}
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 
 export const Paragraph1 = styled.p`
@@ -101,4 +112,5 @@ export const TypographyPresets = {
   Large,
   Medium,
   Small,
+  ExtraSmall,
 };

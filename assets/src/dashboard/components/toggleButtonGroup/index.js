@@ -68,6 +68,7 @@ const ToggleButton = styled.button`
     border: none;
     padding: 0;
     margin: 0;
+    font-weight: ${theme.typography.weight.bold};
     color: ${isActive ? theme.colors.gray900 : theme.colors.gray600};
     background-color: transparent;
 

@@ -66,7 +66,7 @@ export const Rule = styled.div(
 );
 
 export const AppInfo = styled.div`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.ExtraSmall}
   color: ${({ theme }) => theme.colors.gray500};
 `;
 

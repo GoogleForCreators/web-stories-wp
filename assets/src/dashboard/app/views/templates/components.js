@@ -22,12 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  TypographyPresets,
-  Heading2,
-  Paragraph2,
-} from '../../../components';
+import { Button, TypographyPresets, Paragraph2 } from '../../../components';
 
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
@@ -66,7 +61,8 @@ export const Column = styled.div`
   `}
 `;
 
-export const Title = styled(Heading2)`
+export const Title = styled.h1`
+  ${TypographyPresets.ExtraLarge}
   color: ${({ theme }) => theme.colors.gray900};
 `;
 

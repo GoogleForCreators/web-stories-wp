@@ -70,6 +70,7 @@ const CloseLink = styled.a`
   ${TypographyPresets.Medium}
   ${({ theme }) => `
     text-decoration: none;
+    font-weight: ${theme.typography.weight.bold};
     color: ${theme.colors.gray700};
   `}
 `;

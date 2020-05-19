@@ -33,23 +33,22 @@ import { STORY_STATUS } from '../../constants';
 import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
 import { DashboardStatusesPropType } from '../../types';
-import { TypographyPresets } from '../typography';
+import { Paragraph2 } from '../typography';
 
 const StyledCardTitle = styled.div`
-  ${TypographyPresets.Small}
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
   padding-top: 12px;
   max-width: 90%;
 `;
 
-const StyledTitle = styled.p`
+const StyledTitle = styled(Paragraph2)`
   color: ${({ theme }) => theme.colors.gray900};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-const TitleBodyText = styled.p`
+const TitleBodyText = styled(Paragraph2)`
   color: ${({ theme }) => theme.colors.gray500};
   font-weight: ${({ theme }) => theme.typography.weight.light};
 `;
