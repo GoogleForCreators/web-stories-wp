@@ -308,16 +308,14 @@ class Media {
 	 */
 	public static function delete_video_poster( $attachment_id ) {
 		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
-		if ( empty( $post_id ) ) {
-			return;
-		}
 
-		if ( ! wp_attachment_is_image( $post_id ) ) {
+		if ( empty( $post_id ) ) {
 			return;
 		}
 
 		// Used in favor of slow meta queries.
 		$is_poster = (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
+
 		if ( $is_poster ) {
 			wp_delete_attachment( $post_id, true );
 		}
