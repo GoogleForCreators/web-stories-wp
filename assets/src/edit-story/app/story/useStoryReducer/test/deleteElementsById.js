@@ -182,7 +182,7 @@ describe('deleteElementsById', () => {
       selection: [],
     });
 
-    // 789 is selected, 456 is not
+    // 123 is the default background element
     const result = deleteElementsById({ elementIds: ['123', '789', '456'] });
 
     expect(result).toStrictEqual({
