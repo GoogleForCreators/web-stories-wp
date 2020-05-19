@@ -110,10 +110,12 @@ const CardPreviewContainer = ({
   bottomAction,
   story,
   pageSize,
+  children,
 }) => {
   const [cardState, dispatch] = useReducer(cardReducer, 'idle');
   const [pageIndex, setPageIndex] = useState(0);
   const containElem = useRef(null);
+  const storyPages = story.pages || [];
 
   useFocusOut(containElem, () => dispatch('deactivate'), []);
 
@@ -134,23 +136,24 @@ const CardPreviewContainer = ({
        * doesn't switch before the animations finishes.
        */
       intervalId = setInterval(
-        () => setPageIndex((v) => clamp(v + 1, [0, story.pages.length - 1])),
+        () => setPageIndex((v) => clamp(v + 1, [0, storyPages.length - 1])),
         2000
       );
     }
 
     return () => intervalId && clearInterval(intervalId);
-  }, [story.pages.length, cardState]);
+  }, [storyPages.length, cardState]);
 
   return (
     <>
       <PreviewPane cardSize={pageSize}>
         <PreviewErrorBoundary>
           <PreviewPage
-            page={story.pages[pageIndex]}
+            page={storyPages[pageIndex]}
             animationState={'active' === cardState ? 'animate' : 'idle'}
           />
         </PreviewErrorBoundary>
+        {children}
       </PreviewPane>
       <EditControls
         ref={containElem}
@@ -188,6 +191,7 @@ const ActionButtonPropType = PropTypes.shape({
 });
 
 CardPreviewContainer.propTypes = {
+  children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
   pageSize: PageSizePropType.isRequired,
