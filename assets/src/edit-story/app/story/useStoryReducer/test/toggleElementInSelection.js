@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('toggleElementInSelection', () => {
@@ -27,21 +26,28 @@ describe('toggleElementInSelection', () => {
     // Set an initial state.
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }] },
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
       ],
       current: '111',
-      selection: ['e1', 'e2'],
+      selection: ['e3', 'e2'],
     });
 
-    expect(initialState.selection).toContain('e1');
+    expect(initialState.selection).toContain('e3');
 
-    // Toggle element e1 - which would remove it from selection
-    const firstResult = toggleElementInSelection({ elementId: 'e1' });
-    expect(firstResult.selection).not.toContain('e1');
+    // Toggle element e3 - which would remove it from selection
+    const firstResult = toggleElementInSelection({ elementId: 'e3' });
+    expect(firstResult.selection).not.toContain('e3');
 
-    // Toggle element e1 again - which would add it to selection
-    const secondResult = toggleElementInSelection({ elementId: 'e1' });
-    expect(secondResult.selection).toContain('e1');
+    // Toggle element e3 again - which would add it to selection
+    const secondResult = toggleElementInSelection({ elementId: 'e3' });
+    expect(secondResult.selection).toContain('e3');
   });
 
   it('should ignore missing element id', () => {
@@ -50,7 +56,14 @@ describe('toggleElementInSelection', () => {
     // Set an initial state.
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }] },
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
       ],
       current: '111',
       selection: ['e1', 'e2'],
@@ -69,9 +82,11 @@ describe('toggleElementInSelection', () => {
       pages: [
         {
           id: '111',
-          backgroundElementId: 'e1',
-          backgroundOverlay: OverlayType.NONE,
-          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
         },
       ],
       current: '111',
@@ -80,7 +95,7 @@ describe('toggleElementInSelection', () => {
 
     // Toggle no element
     const failedAttempt = toggleElementInSelection({ elementId: 'e1' });
-    expect(failedAttempt).toStrictEqual(initialState);
+    expect(failedAttempt.selection).toStrictEqual(initialState.selection);
   });
 
   it('should remove background element from selection if adding a new one', () => {
@@ -91,9 +106,11 @@ describe('toggleElementInSelection', () => {
       pages: [
         {
           id: '111',
-          backgroundElementId: 'e1',
-          backgroundOverlay: OverlayType.NONE,
-          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
         },
       ],
       current: '111',
