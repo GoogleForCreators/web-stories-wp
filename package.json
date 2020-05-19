@@ -202,7 +202,7 @@
   },
   "lint-staged": {
     "*.js": "eslint --fix",
-    "*.(js|css)": "stylelint --fix",
+    "*.(js|css)": "stylelint --fix --allow-empty-input",
     "*.md": [
       "eslint --fix",
       "markdownlint -f"
