@@ -256,11 +256,10 @@ class Media {
 	 * @return array $response;
 	 */
 	public static function wp_prepare_attachment_for_js( $response, $attachment ) {
-
 		if ( 'video' === $response['type'] ) {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
-			if ( 0 === $thumbnail_id ) {
+			if ( 0 !== $thumbnail_id ) {
 				$image = self::get_thumbnail_data( $thumbnail_id );
 			}
 			$response['featured_media']     = $thumbnail_id;
