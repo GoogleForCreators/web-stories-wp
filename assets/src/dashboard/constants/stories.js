@@ -107,9 +107,21 @@ export const STORY_ITEM_CENTER_ACTION_LABELS = {
 };
 
 export const STORY_STATUSES = [
-  { label: __('All Stories', 'web-stories'), value: STORY_STATUS.ALL },
-  { label: __('Drafts', 'web-stories'), value: STORY_STATUS.DRAFT },
-  { label: __('Published', 'web-stories'), value: STORY_STATUS.PUBLISHED },
+  {
+    label: __('All Stories', 'web-stories'),
+    value: STORY_STATUS.ALL,
+    status: 'all',
+  },
+  {
+    label: __('Drafts', 'web-stories'),
+    value: STORY_STATUS.DRAFT,
+    status: STORY_STATUS.DRAFT,
+  },
+  {
+    label: __('Published', 'web-stories'),
+    value: STORY_STATUS.PUBLISHED,
+    status: STORY_STATUS.PUBLISHED,
+  },
 ];
 
 export const STORY_VIEWING_LABELS = {
