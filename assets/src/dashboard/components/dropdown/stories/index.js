@@ -77,28 +77,6 @@ export const _default = () => {
   );
 };
 
-export const _transparent = () => {
-  const [value, setValue] = useState();
-
-  return (
-    <DropdownWrapper>
-      <Dropdown
-        ariaLabel={text('ariaLabel', 'my dropdown description')}
-        items={demoItems}
-        disabled={boolean('disabled')}
-        value={value}
-        type={DROPDOWN_TYPES.TRANSPARENT_MENU}
-        placeholder={text('placeholder', 'Select Value')}
-        onChange={(item) => {
-          action(`clicked on dropdown item ${item.value}`)(item);
-          setValue(item.value);
-        }}
-      />
-      <FillerContainer />
-    </DropdownWrapper>
-  );
-};
-
 const categoryDemoData = [
   {
     label: <span>{__('All Categories', 'web-stories')}</span>,

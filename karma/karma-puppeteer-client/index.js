@@ -14,5 +14,18 @@
  * limitations under the License.
  */
 
-export { default as SidebarProvider } from './provider';
-export { default as useSidebar } from './use';
+const path = require('path');
+
+function createPattern(pattern) {
+  return { pattern, included: true, served: true, watched: false };
+}
+
+function initEvents(files) {
+  files.unshift(createPattern(path.join(__dirname, '/client.js')));
+}
+
+initEvents.$inject = ['config.files'];
+
+module.exports = {
+  'framework:karma-puppeteer-client': ['factory', initEvents],
+};

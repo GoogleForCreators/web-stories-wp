@@ -1,11 +1,23 @@
 ---
 name: Enhancement
 about: Suggest an idea for this project
+title: ''
+labels: 'Type: Enhancement'
+assignees: ''
+
 ---
 
 ## Feature Description
 
-<!-- Please describe clear and concisely which problem the feature would solve or which publisher needs it would address. -->
+<!-- A clear and concise description of what the problem is and what you want to happen. -->
+
+## Alternatives Considered
+
+<!-- A clear and concise description of any alternative solutions or features you've considered. -->
+
+## Additional Context
+
+<!-- Add any other context or screenshots about the feature request. -->
 
 ---
 
@@ -13,4 +25,8 @@ _Do not alter or remove anything below. The following sections will be managed b
 
 ## Acceptance Criteria
 
-## QA Instructions
+<!-- One or more bullet points for acceptance criteria. -->
+
+## Implementation Brief
+
+<!-- One or more bullet points for how to technically implement the feature. -->

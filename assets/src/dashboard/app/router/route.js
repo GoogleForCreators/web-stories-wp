@@ -26,6 +26,49 @@ import PropTypes from 'prop-types';
  */
 import { RouterContext } from './routerProvider';
 
+export function parentRoute() {
+  const potentialParent = window.location.hash
+    .split('/')
+    .slice(0, -1)
+    .join('/');
+  if (potentialParent.startsWith('#')) {
+    return potentialParent;
+  } else {
+    return '#/';
+  }
+}
+
+export function resolveRoute(route) {
+  if (
+    route.toLowerCase().startsWith('http://') ||
+    route.toLowerCase().startsWith('https://')
+  ) {
+    /**
+     * If the url starts with a protocol assume it's a full path and
+     * visit it normally.
+     */
+    return route;
+  } else if (route.startsWith('/')) {
+    /**
+     * If the url starts with a backslash visit it as a root view
+     * within the context of the dashboard app.
+     */
+    return `#${route}`;
+  } else if (route === '') {
+    /**
+     * If the url is empty visit it as a root view
+     * within the context of the dashboard app.
+     */
+    return '#/';
+  } else {
+    /**
+     * If the url has no root append it to the current route and create
+     * a nested root within the context of the dashboard app.
+     */
+    return `${window.location.hash}/${route}`;
+  }
+}
+
 export function matchPath(currentPath, path, exact = false) {
   const match = new RegExp(`^${path}`).exec(currentPath);
   if (!match) {

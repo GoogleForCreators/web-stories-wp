@@ -112,14 +112,15 @@ describe('multiSelectionMovable', () => {
     moveable.onRotateGroupEnd({ targets: [target1, target2] });
   }
 
-  describe('should rotate', () => {
-    const cases = [
-      ['normally', { rotateTo: 45, expectedRotationAngle: 45 }],
-      ['through 360 degrees', { rotateTo: 370, expectedRotationAngle: 10 }],
-      ['through negative', { rotateTo: -370, expectedRotationAngle: 350 }],
-    ];
+  const rotateCases = [
+    ['normally', { rotateTo: 45, expectedRotationAngle: 45 }],
+    ['through 360 degrees', { rotateTo: 370, expectedRotationAngle: 10 }],
+    ['through negative', { rotateTo: -370, expectedRotationAngle: 350 }],
+  ];
 
-    it.each(cases)('%p', (_, { rotateTo, expectedRotationAngle }) => {
+  it.each(rotateCases)(
+    'should rotate %p',
+    (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
       performRotatation(rotateTo);
 
@@ -132,6 +133,6 @@ describe('multiSelectionMovable', () => {
         elementIds: ['2'],
         properties: { rotationAngle: expectedRotationAngle, x: anyN, y: anyN },
       });
-    });
-  });
+    }
+  );
 });

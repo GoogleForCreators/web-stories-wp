@@ -30,6 +30,9 @@ import Context from './context';
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
 const DROP_TARGET_ALLOWED_TYPES = ['image', 'video', 'shape'];
 
+const isDropSource = (type) => DROP_SOURCE_ALLOWED_TYPES.includes(type);
+const isDropTarget = (type) => DROP_TARGET_ALLOWED_TYPES.includes(type);
+
 function DropTargetsProvider({ children }) {
   const [draggingResource, setDraggingResource] = useState(null);
   const [dropTargets, setDropTargets] = useState({});
@@ -68,14 +71,6 @@ function DropTargetsProvider({ children }) {
       return without;
     });
   }, []);
-
-  const isDropSource = (type) => {
-    return DROP_SOURCE_ALLOWED_TYPES.includes(type);
-  };
-
-  const isDropTarget = (type) => {
-    return DROP_TARGET_ALLOWED_TYPES.includes(type);
-  };
 
   const activeDropTarget = useMemo(
     () => currentPage?.elements.find((el) => el.id === activeDropTargetId),

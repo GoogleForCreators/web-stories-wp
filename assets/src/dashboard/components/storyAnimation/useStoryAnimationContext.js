@@ -13,16 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { createContext } from 'react';
+import { useContext } from 'react';
+/**
+ * Internal dependencies
+ */
+import { StoryAnimationContext } from './provider';
 
-export default createContext({
-  state: {},
-  actions: {
-    showColorPickerAt: () => {},
-    hideSidebar: () => {},
-  },
-});
+function useStoryAnimationContext() {
+  const context = useContext(StoryAnimationContext);
+  if (!context) {
+    throw new Error(
+      'Must use `useStoryAnimationContext()` within <StoryAnimation.Provider />'
+    );
+  }
+  return context;
+}
+
+export default useStoryAnimationContext;

@@ -30,15 +30,15 @@ import styled from 'styled-components';
 import {
   CardGrid,
   CardGridItem,
-  CardTitle,
   CardItemMenu,
+  CardTitle,
   CardPreviewContainer,
   ActionLabel,
   PreviewPage,
+  PreviewErrorBoundary,
 } from '../../../components';
-import { StoriesPropType } from '../../../types';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
+import { StoriesPropType, UsersPropType } from '../../../types';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -47,22 +47,26 @@ export const DetailRow = styled.div`
 `;
 
 const StoryGrid = styled(CardGrid)`
-  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.desktop}px)`};
+  width: ${({ theme }) =>
+    `calc(100% - ${theme.standardViewContentGutter.desktop}px)`};
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.small.min}px)`};
+    width: ${({ theme }) =>
+      `calc(100% - ${theme.standardViewContentGutter.min}px)`};
   }
 `;
 
 const StoryGridView = ({
   stories,
-  centerActionLabel,
+  users,
+  centerActionLabelByStatus,
   bottomActionLabel,
   createTemplateFromStory,
   updateStory,
   trashStory,
   duplicateStory,
   isTemplate,
+  isSavedTemplate,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -122,7 +126,7 @@ const StoryGridView = ({
           <CardPreviewContainer
             centerAction={{
               targetAction: story.centerTargetAction,
-              label: centerActionLabel,
+              label: centerActionLabelByStatus[story.status],
             }}
             bottomAction={{
               targetAction: story.bottomTargetAction,
@@ -137,12 +141,18 @@ const StoryGridView = ({
             <DetailRow>
               <CardTitle
                 title={story.title}
-                modifiedDate={story.modified.startOf('day').fromNow()}
+                status={story?.status}
+                secondaryTitle={
+                  isSavedTemplate
+                    ? __('Google', 'web-stories')
+                    : users[story.author]?.name
+                }
+                displayDate={story?.modified}
+                editMode={titleRenameId === story.id}
                 onEditComplete={(newTitle) =>
                   handleOnRenameStory(story, newTitle)
                 }
                 onEditCancel={() => setTitleRenameId(-1)}
-                editMode={titleRenameId === story.id}
               />
               <CardItemMenu
                 onMoreButtonSelected={setContextMenuId}
@@ -160,8 +170,10 @@ const StoryGridView = ({
 
 StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
+  isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
-  centerActionLabel: ActionLabel,
+  users: UsersPropType,
+  centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
   bottomActionLabel: ActionLabel,
   createTemplateFromStory: PropTypes.func,
   updateStory: PropTypes.func,

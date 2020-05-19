@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { useContext } from 'react';
+import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useSidebar() {
-  return useContext(Context);
-}
-
-export default useSidebar;
+export default styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;

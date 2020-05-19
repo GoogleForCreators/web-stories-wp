@@ -1,4 +1,5 @@
-/*
+<?php
+/**
  * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,21 +15,18 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
+namespace Google\Web_Stories\Tests;
 
-const BodyWrapper = styled.div`
-  margin: ${({ theme }) => `0 ${theme.pageGutter.small.desktop}px`};
+class Database_Upgrader extends \WP_UnitTestCase {
+	public function setUp() {
+		parent::setUp();
+		$option_name = \Google\Web_Stories\Database_Upgrader::OPTION;
+		delete_option( $option_name );
+	}
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.largeDisplayPhone}px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.small.smallDisplayPhone}px`};
-  }
-`;
-
-export default BodyWrapper;
+	public function test_init() {
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$object->init();
+		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
+	}
+}
