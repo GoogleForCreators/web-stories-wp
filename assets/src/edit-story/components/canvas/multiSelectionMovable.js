@@ -176,7 +176,6 @@ function MultiSelectionMovable({ selectedElements }) {
   };
 
   const hideHandles = isDragging || Boolean(draggingResource);
-
   return (
     <Movable
       className={`default-movable ${hideHandles ? 'hide-handles' : ''}`}
@@ -211,7 +210,7 @@ function MultiSelectionMovable({ selectedElements }) {
         events.forEach(({ target, beforeRotate, drag }, i) => {
           const sFrame = frames[i];
           const { element } = targetList[i];
-          sFrame.rotate = beforeRotate;
+          sFrame.rotate = ((beforeRotate % 360) + 360) % 360;
           sFrame.translate = drag.beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
         });

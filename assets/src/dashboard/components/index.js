@@ -31,6 +31,10 @@ export {
   useNavContext,
 } from '../components/navProvider';
 export { default as ColorList } from './colorList';
+export {
+  DetailViewContentGutter,
+  StandardViewContentGutter,
+} from './contentGutter';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
 export { TextInput } from './input';
@@ -42,10 +46,11 @@ export {
   PageContent,
   NavMenuButton,
 } from './pageStructure';
-export { FloatingTab, Pill } from './pill';
+export { default as Pill } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
 export { default as PopoverPanel } from './popoverPanel';
 export { default as PreviewPage } from './previewPage';
+export { default as PreviewErrorBoundary } from './previewErrorBoundary';
 export { default as ScrollToTop } from './scrollToTop';
 export {
   Table,
@@ -60,6 +65,10 @@ export {
   TableContentHeaderCell,
   TableRow,
   TableTitleHeaderCell,
+  TableAuthorHeaderCell,
+  TableDateHeaderCell,
+  TableStatusHeaderCell,
+  TableStatusCell,
 } from './table';
 export { TemplateNavBar } from './templateNavBar';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';
@@ -67,3 +76,4 @@ export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
 export { ViewHeader } from './typography';
 export { default as ViewStyleBar } from './viewStyleBar';
+export { default as Tooltip } from './tooltip';

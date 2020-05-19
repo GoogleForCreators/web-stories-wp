@@ -25,8 +25,11 @@ import PropTypes from 'prop-types';
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
-import { ViewHeader, NavMenuButton } from '../../../components';
-import BodyWrapper from './bodyWrapper';
+import {
+  ViewHeader,
+  NavMenuButton,
+  StandardViewContentGutter,
+} from '../../../components';
 import TypeaheadSearch from './typeaheadSearch';
 
 const Container = styled.div`
@@ -60,7 +63,7 @@ const SearchContainer = styled.div`
   width: 100%;
   height: 29px;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) => `${theme.pageGutter.small.min}px`};
+    left: ${({ theme }) => `${theme.standardViewContentGutter.min}px`};
     max-width: 100%;
     justify-content: flex-start;
   }
@@ -75,7 +78,7 @@ const SearchInner = styled.div`
   justify-content: flex-end;
 `;
 
-const HeadingBodyWrapper = styled(BodyWrapper)`
+const HeadingBodyWrapper = styled(StandardViewContentGutter)`
   display: grid;
   grid-template-columns: 25% 50% 1fr;
   align-items: center;

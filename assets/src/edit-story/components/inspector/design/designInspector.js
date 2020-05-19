@@ -27,20 +27,17 @@ import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
   height: 100%;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
+  display: flex;
 `;
 
 const TopPanels = styled.div`
-  flex: 1 1;
   overflow: auto;
-  overflow: overlay;
+  flex: 1;
 `;
 
-const BottomPanels = styled.div`
-  flex: 0 0;
-`;
+const BottomPanels = styled.div``;
 
 function DesignInspector() {
   return (

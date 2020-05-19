@@ -20,4 +20,4 @@
 
 export { default as RouterProvider, RouterContext } from './routerProvider';
 export { default as useRouteHistory } from './useRouteHistory';
-export { default as Route, matchPath } from './route';
+export { default as Route, matchPath, resolveRoute } from './route';

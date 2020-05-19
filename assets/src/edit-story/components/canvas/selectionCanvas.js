@@ -62,7 +62,7 @@ function SelectionCanvas({ children }) {
     state: { selectedElements, currentPage },
   } = useStory();
   const {
-    state: { pageContainer, isEditing, nodesById },
+    state: { fullbleedContainer, isEditing, nodesById },
     actions: { clearEditing, selectIntersection },
   } = useCanvas();
   const {
@@ -150,8 +150,8 @@ function SelectionCanvas({ children }) {
   const onMouseUp = () => {
     if (lassoModeRef.current === LassoMode.ON) {
       const [lx, ly, lwidth, lheight] = getLassoBox();
-      const x = editorToDataX(lx - pageContainer.offsetLeft);
-      const y = editorToDataY(ly - pageContainer.offsetTop);
+      const x = editorToDataX(lx - fullbleedContainer.offsetLeft);
+      const y = editorToDataY(ly - fullbleedContainer.offsetTop);
       const width = editorToDataX(lwidth);
       const height = editorToDataY(lheight);
       clearSelection();

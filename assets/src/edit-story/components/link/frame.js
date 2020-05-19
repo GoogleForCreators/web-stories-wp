@@ -24,9 +24,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useMemo, useState } from 'react';
 import StoryPropTypes from '../../types';
 import { ReactComponent as Link } from '../../icons/link.svg';
 import { ReactComponent as External } from '../../icons/external.svg';
+import Popup from '../popup';
+import { useTransformHandler } from '../transform';
 import { getLinkFromElement } from './index';
 
 const Tooltip = styled.div`
@@ -40,7 +43,6 @@ const Tooltip = styled.div`
   padding: 6px;
   border-radius: 6px;
   box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
-  margin-top: -68px;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -79,9 +81,6 @@ const LinkOutIcon = styled(External)`
 `;
 
 const LinkIcon = styled(Link)`
-  position: absolute;
-  left: -24px;
-  top: 12px;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -99,25 +98,34 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
-const TooltipContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-`;
-
-function WithLink({ element, active, dragging, children }) {
+function WithLink({ element, active, dragging, children, anchorRef }) {
   const link = getLinkFromElement(element);
+  const spacing = useMemo(() => ({ x: active ? 0 : 20, y: active ? 42 : 0 }), [
+    active,
+  ]);
+  const [hasTransforms, setHasTransforms] = useState(false);
+
+  useTransformHandler(element.id, (transform) => {
+    setHasTransforms(
+      Boolean(
+        transform &&
+          [transform.translate, transform.resize, transform.rotate].some(
+            (t) => t !== undefined
+          )
+      )
+    );
+  });
 
   return (
     <>
       {children}
-      {link && !active && !dragging && <LinkIcon />}
-      {link && active && !dragging && (
-        <TooltipContainer>
+      <Popup
+        anchor={anchorRef}
+        isOpen={link && !dragging && !hasTransforms}
+        placement={active ? 'top' : 'left-start'}
+        spacing={spacing}
+      >
+        {link && active && !dragging && (
           <Tooltip>
             <BrandIcon src={link.icon} />
             <LinkDesc>{link.desc || link.url}</LinkDesc>
@@ -125,14 +133,16 @@ function WithLink({ element, active, dragging, children }) {
               <LinkOutIcon />
             </LinkOut>
           </Tooltip>
-        </TooltipContainer>
-      )}
+        )}
+        {link && !active && !dragging && <LinkIcon />}
+      </Popup>
     </>
   );
 }
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  anchorRef: PropTypes.object,
   active: PropTypes.bool.isRequired,
   dragging: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,

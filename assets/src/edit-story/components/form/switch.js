@@ -42,7 +42,7 @@ const SwitchContainer = styled.div`
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  padding: 6px 3px;
+  padding: 8px 4px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -76,6 +76,11 @@ const Label = styled.label`
   text-align: center;
   opacity: 0.86;
   cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+  padding: 0px 6px;
 
   ${({ disabled }) =>
     disabled &&
@@ -96,7 +101,7 @@ const SwitchSpan = styled.span`
   left: 1px;
   display: block;
   width: calc(50% - 3px);
-  height: 26px;
+  height: 28px;
   border-radius: 100px;
   background-color: ${({ theme }) => theme.colors.bg.v10};
   transition: left 0.15s ease-out;

@@ -73,6 +73,7 @@ const borders = {
   gray100: `1px solid ${colors.gray100}`,
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
+  action: `1px solid ${colors.action}`,
 };
 
 const theme = {
@@ -88,29 +89,23 @@ const theme = {
       borderRadius: 40,
       border: borders.gray50,
       arrowColor: colors.bluePrimary,
-      height: 48,
+    },
+    [DROPDOWN_TYPES.COLOR_PANEL]: {
+      background: 'transparent',
+      activeBackground: colors.gray25,
+      borderRadius: 40,
+      border: borders.gray50,
+      arrowColor: colors.bluePrimary,
     },
     [DROPDOWN_TYPES.MENU]: {
-      background: colors.gray25,
-      activeBackground: colors.gray25,
-      borderRadius: 4,
-      border: 'none',
-      arrowColor: colors.gray300,
-      height: 48,
-    },
-    [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
       background: 'transparent',
       activeBackground: 'transparent',
-      borderRadius: 0,
-      border: 'none',
+      borderRadius: 4,
+      border: borders.transparent,
       arrowColor: colors.gray300,
-      height: 40,
     },
   },
   leftRail: {
-    border: borders.gray50,
-    contentPadding: 20,
-    inset: 8,
     logoMargin: '75px auto 20px',
   },
   text: {
@@ -122,6 +117,9 @@ const theme = {
   typeahead: {
     borderRadius: 100,
   },
+  formatContainer: {
+    height: 44,
+  },
   expandedTypeahead: {
     borderRadius: 8,
     boxShadow:
@@ -129,6 +127,15 @@ const theme = {
   },
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
+  },
+  storyPreview: {
+    shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
+    border: `1px solid ${colors.gray75}`,
+    borderRadius: 4,
+  },
+  tooltip: {
+    background: colors.gray900,
+    color: colors.white,
   },
   navBar: {
     height: 64,
@@ -208,7 +215,7 @@ const theme = {
     },
     pill: {
       family: themeFonts.primary,
-      weight: 500,
+      weight: 400,
       size: 14,
       lineHeight: 20,
       letterSpacing: 0.01,
@@ -224,7 +231,7 @@ const theme = {
       family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
-      weight: '500',
+      weight: '400',
       letterSpacing: 0.01,
     },
     textInput: {
@@ -240,17 +247,12 @@ const theme = {
       family: themeFonts.primary,
       size: 14,
       lineHeight: 20,
-      weight: '500',
       letterSpacing: 0.01,
-    },
-    storyGridItemSub: {
-      family: themeFonts.secondary,
-      weight: 'normal',
     },
     table: {
       family: themeFonts.primary,
       size: 14,
-      weight: '500',
+      weight: 'normal',
       letterSpacing: 0.01,
     },
     typeaheadInput: {
@@ -268,21 +270,15 @@ const theme = {
       letterSpacing: 0.01,
     },
   },
-  pageGutter: {
-    small: {
-      desktop: 20,
-      min: 10,
-    },
-    // specific to detail template
-    large: {
-      desktop: 80,
-      tablet: 40,
-    },
+  detailViewContentGutter: {
+    desktop: 80,
+    tablet: 40,
+    min: 10,
   },
-  pageHorizontalGutter: {
+  standardViewContentGutter: {
     desktop: 20,
     tablet: 20,
-    largeDisplayPhone: 20,
+    largeDisplayPhone: 10,
     smallDisplayPhone: 10,
     min: 10,
   },
