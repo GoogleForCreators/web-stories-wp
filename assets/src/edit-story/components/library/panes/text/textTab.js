@@ -35,10 +35,6 @@ import { ReactComponent as TextIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
 import { DEFAULT_PRESET } from './textPresets';
 
-// By default, the element span roughly the size of the text contained in it.
-// This is an approximation based on the sample text.
-const DEFAULT_ELEMENT_WIDTH = 160;
-
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
   // Necessary because of https://github.com/styled-components/styled-components/pull/2093
   <TextIcon {...rest} />
@@ -80,10 +76,7 @@ function TextTab(props) {
 
   const handleAddText = (evt) => {
     evt.stopPropagation();
-    insertElement('text', {
-      ...DEFAULT_PRESET,
-      width: DEFAULT_ELEMENT_WIDTH,
-    });
+    insertElement('text', DEFAULT_PRESET);
   };
   const { isActive } = props;
   return (

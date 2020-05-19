@@ -27,16 +27,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH } from '../../../../constants';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
-
-// By default, the element should be 50% of the page.
-const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
 
 const SectionContent = styled.p``;
 
@@ -56,14 +52,7 @@ function TextPane(props) {
       <Section
         title={__('Presets', 'web-stories')}
         titleTools={
-          <MainButton
-            onClick={() =>
-              insertElement('text', {
-                ...DEFAULT_PRESET,
-                width: DEFAULT_ELEMENT_WIDTH,
-              })
-            }
-          >
+          <MainButton onClick={() => insertElement('text', DEFAULT_PRESET)}>
             {__('Add new text', 'web-stories')}
           </MainButton>
         }
@@ -72,12 +61,7 @@ function TextPane(props) {
           <FontPreview
             key={`preset-${preset.id}`}
             {...preset}
-            onClick={() =>
-              insertElement('text', {
-                ...preset,
-                width: DEFAULT_ELEMENT_WIDTH,
-              })
-            }
+            onClick={() => insertElement('text', preset)}
           />
         ))}
       </Section>

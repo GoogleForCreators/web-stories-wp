@@ -23,7 +23,6 @@ import { act, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { FontProvider } from '../../../../app/font';
-import { PAGE_WIDTH } from '../../../../constants';
 import { TextPane } from '../../panes/text';
 import APIContext from '../../../../app/api/context';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
@@ -64,9 +63,6 @@ describe('TextPane', () => {
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);
-    expect(insertElement).toHaveBeenCalledWith('text', {
-      ...DEFAULT_PRESET,
-      width: PAGE_WIDTH / 2,
-    });
+    expect(insertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
   });
 });

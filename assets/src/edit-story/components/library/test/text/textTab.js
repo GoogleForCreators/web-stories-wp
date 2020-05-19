@@ -63,9 +63,6 @@ describe('TextTab', () => {
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);
-    expect(insertElement).toHaveBeenCalledWith('text', {
-      ...DEFAULT_PRESET,
-      width: 160,
-    });
+    expect(insertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
   });
 });
