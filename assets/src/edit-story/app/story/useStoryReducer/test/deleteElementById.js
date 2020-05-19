@@ -17,24 +17,23 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('deleteElementById', () => {
   it('should delete the given element', () => {
     const { restore, deleteElementById } = setupReducer();
 
-    // Set an initial state with a current page with an element.
+    // Set an initial state with a current page with two elements.
     restore({
       pages: [{ id: '111', elements: [{ id: '123' }, { id: '456' }] }],
       current: '111',
       selection: [],
     });
 
-    const result = deleteElementById({ elementId: '123' });
+    const result = deleteElementById({ elementId: '456' });
 
     expect(result.pages).toStrictEqual([
-      { id: '111', elements: [{ id: '456' }] },
+      { id: '111', elements: [{ id: '123' }] },
     ]);
   });
 
@@ -69,45 +68,65 @@ describe('deleteElementById', () => {
       selection: ['123', '456'],
     });
 
-    const result = deleteElementById({ elementId: '123' });
+    const result = deleteElementById({ elementId: '456' });
 
     expect(result).toStrictEqual({
       ...initialState,
-      pages: [{ id: '111', elements: [{ id: '456' }] }],
-      selection: ['456'],
+      pages: [{ id: '111', elements: [{ id: '123' }] }],
+      selection: ['123'],
     });
   });
 
-  it('should unset background element id if background element is deleted', () => {
+  it('should not allow deleting default background element', () => {
     const { restore, deleteElementById } = setupReducer();
 
     // Set an initial state with a current page and a selected element.
     const initialState = restore({
       pages: [
         {
-          backgroundElementId: '123',
-          backgroundOverlay: OverlayType.NONE,
           id: '111',
-          elements: [{ id: '123' }, { id: '456' }],
+          elements: [
+            { id: '123', isBackground: true, isDefaultBackground: true },
+            { id: '456' },
+          ],
         },
       ],
       current: '111',
-      selection: ['123', '456'],
+      selection: ['456'],
     });
 
     const result = deleteElementById({ elementId: '123' });
 
-    expect(result).toStrictEqual({
-      ...initialState,
+    expect(result).toStrictEqual(initialState);
+  });
+
+  it('should restore default background element if non-default background element is deleted', () => {
+    const { restore, deleteElementById } = setupReducer();
+
+    // Set an initial state with a current page and a selected element.
+    restore({
       pages: [
         {
-          backgroundElementId: null,
-          backgroundOverlay: OverlayType.NONE,
           id: '111',
-          elements: [{ id: '456' }],
+          defaultBackgroundElement: {
+            id: '000',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
+          elements: [{ id: '123', isBackground: true }, { id: '456' }],
         },
       ],
-      selection: ['456'],
     });
+
+    const result = deleteElementById({ elementId: '123' });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '000',
+        isDefaultBackground: true,
+        isBackground: true,
+      },
+      { id: '456' },
+    ]);
   });
 });

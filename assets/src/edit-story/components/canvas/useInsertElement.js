@@ -94,9 +94,9 @@ function useInsertElement() {
  * @param {number} props.width The element's width.
  * @param {number} props.height The element's height.
  * @param {?Object} props.mask The element's mask.
- * @return {!Object} The new element.
+ * @return {!Object} The element properties.
  */
-function createElementForCanvas(
+function getElementProperties(
   type,
   {
     resource,
@@ -132,7 +132,7 @@ function createElementForCanvas(
       width = height * ratio;
     } else if (resource) {
       // Resource is available: take resource's width with DPR, but limit
-      // to fit on the page.
+      // to fit on the page (80% max).
       width = Math.min(resource.width * DEFAULT_DPR, PAGE_WIDTH * 0.8);
     } else {
       // Default to half of page.
@@ -173,7 +173,7 @@ function createElementForCanvas(
   x = dataPixels(Math.min(x, PAGE_WIDTH - width));
   y = dataPixels(Math.min(y, PAGE_HEIGHT - height));
 
-  const element = createNewElement(type, {
+  return {
     ...attrs,
     ...(Boolean(resource) && {
       resource: {
@@ -197,8 +197,16 @@ function createElementForCanvas(
           mask: mask || DEFAULT_MASK,
         }
       : {}),
-  });
-  return element;
+  };
+}
+
+/**
+ * @param {string} type Element type.
+ * @param {!Object} props The element's properties.
+ * @return {!Object} The new element.
+ */
+function createElementForCanvas(type, props) {
+  return createNewElement(type, getElementProperties(type, props));
 }
 
 /**
@@ -210,4 +218,4 @@ function isNum(value) {
 }
 
 export default useInsertElement;
-export { createElementForCanvas };
+export { getElementProperties };

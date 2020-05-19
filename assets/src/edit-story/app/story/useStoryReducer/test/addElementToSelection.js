@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('addElementToSelection', () => {
@@ -27,7 +26,14 @@ describe('addElementToSelection', () => {
     // Set an initial state.
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }] },
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
       ],
       current: '111',
       selection: [],
@@ -50,7 +56,14 @@ describe('addElementToSelection', () => {
     // Set an initial state.
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }] },
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
       ],
       current: '111',
       selection: ['e1', 'e2'],
@@ -69,9 +82,11 @@ describe('addElementToSelection', () => {
       pages: [
         {
           id: '111',
-          backgroundElementId: 'e1',
-          backgroundOverlay: OverlayType.NONE,
-          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
         },
       ],
       current: '111',
@@ -80,7 +95,7 @@ describe('addElementToSelection', () => {
 
     // Toggle no element
     const failedAttempt = addElementToSelection({ elementId: 'e1' });
-    expect(failedAttempt).toStrictEqual(initialState);
+    expect(failedAttempt.selection).toStrictEqual(initialState.selection);
   });
 
   it('should remove background element from selection if adding a new one', () => {
@@ -91,9 +106,11 @@ describe('addElementToSelection', () => {
       pages: [
         {
           id: '111',
-          backgroundElementId: 'e1',
-          backgroundOverlay: OverlayType.NONE,
-          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
         },
       ],
       current: '111',
