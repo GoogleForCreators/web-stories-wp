@@ -203,7 +203,8 @@ function APIProvider({ children }) {
   const deleteMedia = useCallback(
     (mediaId) => {
       return apiFetch({
-        path: `${media}/${mediaId}/?force=true`,
+        path: `${media}/${mediaId}`,
+        data: { force: true },
         method: 'DELETE',
       });
     },
