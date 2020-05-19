@@ -18,13 +18,20 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory, useFont } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
+import { getHTMLInfo } from '../../components/richText/htmlManipulation';
 import { useUnits } from '../../units';
 import {
   elementFillContent,
@@ -36,6 +43,7 @@ import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import useUnmount from '../../utils/useUnmount';
 import createSolid from '../../utils/createSolid';
+import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
@@ -86,6 +94,14 @@ function TextEdit({
   box: { x, y, height, rotationAngle },
 }) {
   const { font } = rest;
+  const fontFaceSetConfigs = useMemo(() => {
+    const htmlInfo = getHTMLInfo(content);
+    return {
+      fontStyle: htmlInfo.isItalic ? 'italic' : 'normal',
+      fontWeight: htmlInfo.fontWeight,
+      content: stripHTML(content),
+    };
+  }, [content]);
 
   const {
     actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
@@ -193,8 +209,13 @@ function TextEdit({
   useEffect(handleResize, [elementHeight]);
 
   useEffect(() => {
-    maybeEnqueueFontStyle(font);
-  }, [font, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle([
+      {
+        ...fontFaceSetConfigs,
+        font,
+      },
+    ]);
+  }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   return (
     <Wrapper ref={wrapperRef} onClick={onClick}>
