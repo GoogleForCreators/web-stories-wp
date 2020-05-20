@@ -30,6 +30,7 @@ import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
+import isClick from '../../utils/isClick';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -190,22 +191,6 @@ function MultiSelectionMovable({ selectedElements }) {
     };
   };
 
-  const isClick = (evt) => {
-    const timingDifference =
-      window.performance.now() - eventTracker.current.time;
-    if (
-      !eventTracker.current?.coordinates?.x ||
-      !eventTracker.current?.coordinates?.y
-    ) {
-      return false;
-    }
-
-    const { x, y } = eventTracker.current.coordinates;
-
-    const distanceMoved = Math.abs(evt.clientX - x) + Math.abs(evt.clientY - y);
-    return !(timingDifference > 300 || distanceMoved > 4);
-  };
-
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Movable
@@ -235,7 +220,13 @@ function MultiSelectionMovable({ selectedElements }) {
         setIsDragging(false);
         // Let's check if we consider this a drag or a click.
         // In case of a click we should select the element instead.
-        if (isClick(inputEvent)) {
+        if (
+          isClick(
+            inputEvent,
+            eventTracker.current.time,
+            eventTracker.current.coordinates
+          )
+        ) {
           const clickedElement = Object.keys(nodesById).find(
             (id) =>
               currentPage.elements[0].id !== id &&
