@@ -62,7 +62,7 @@ export const Column = styled.div`
 `;
 
 export const Title = styled.h1`
-  ${TypographyPresets.ExtraLarge}
+  ${TypographyPresets.ExtraLarge};
   color: ${({ theme }) => theme.colors.gray900};
 `;
 
@@ -124,7 +124,7 @@ export const RowContainer = styled.section`
 `;
 
 export const SubHeading = styled.h2`
-  ${TypographyPresets.Large}
+  ${TypographyPresets.Large};
   font-weight: ${({ theme }) => theme.typography.weight.bold};
   margin-bottom: 20px;
 `;

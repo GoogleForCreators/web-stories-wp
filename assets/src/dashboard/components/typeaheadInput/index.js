@@ -79,7 +79,7 @@ ControlVisibilityContainer.propTypes = {
 };
 
 const StyledInput = styled.input`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   position: relative;
   height: 100%;
   width: 100%;
