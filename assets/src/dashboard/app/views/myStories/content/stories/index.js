@@ -22,7 +22,7 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import Content from '../';
+import { Layout } from '../../../../../components';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
@@ -31,8 +31,7 @@ import {
 } from '../../../../../constants';
 import formattedStoriesArray from '../../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../../storybookUtils/formattedUsersObject';
-
-import { Layout } from '../../../../../components';
+import Content from '../';
 
 export default {
   title: 'Dashboard/Components/myStories/Content',
@@ -47,7 +46,7 @@ const filter = {
 const sort = {
   value: STORY_SORT_OPTIONS.NAME,
   set: action('set sort'),
-  direction: SORT_DIRECTION[0],
+  direction: SORT_DIRECTION.ASC,
   setDirection: action('set sort direction'),
 };
 const search = {

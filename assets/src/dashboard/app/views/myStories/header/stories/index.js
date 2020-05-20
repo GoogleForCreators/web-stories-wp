@@ -45,7 +45,7 @@ const filter = {
 const sort = {
   value: STORY_SORT_OPTIONS.NAME,
   set: action('set sort'),
-  direction: SORT_DIRECTION[0],
+  direction: SORT_DIRECTION.ASC,
   setDirection: action('set sort direction'),
 };
 const search = {

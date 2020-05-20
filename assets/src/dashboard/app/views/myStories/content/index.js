@@ -64,7 +64,7 @@ function Content({
   search,
   sort,
   stories,
-  storyActions = {},
+  storyActions,
   tags,
   users,
   view,
