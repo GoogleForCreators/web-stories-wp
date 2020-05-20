@@ -53,7 +53,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     },
   } = useCanvas();
   const {
-    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
+    actions: {
+      getBox,
+      editorToDataX,
+      editorToDataY,
+      dataToEditorY,
+      dataToEditorX,
+    },
   } = useUnits();
   const {
     actions: { pushTransform },
@@ -168,12 +174,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
-  const minWidth = dataToEditorY(resizeRules.minWidth);
+  const minWidth = dataToEditorX(resizeRules.minWidth);
   const minHeight = dataToEditorY(resizeRules.minHeight);
   const aspectRatio = selectedElement.width / selectedElement.height;
 
   const visuallyHideHandles =
-    selectedElement.width <= minWidth || selectedElement.height <= minHeight;
+    selectedElement.width <= resizeRules.minWidth ||
+    selectedElement.height <= resizeRules.minHeight;
 
   return (
     <Movable
