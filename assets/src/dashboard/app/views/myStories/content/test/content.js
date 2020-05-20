@@ -70,11 +70,17 @@ describe('My Stories <Content />', function () {
           stories={fakeStories}
           users={formattedUsersObject}
           page={{
-            requestNextPage: jest.fn(),
+            requestNextPage: jest.fn,
           }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
+          }}
+          storyActions={{
+            createTemplateFromStory: jest.fn,
+            duplicateStory: jest.fn,
+            trashStory: jest.fn,
+            updateStory: jest.fn,
           }}
         />
       </LayoutProvider>
@@ -92,11 +98,17 @@ describe('My Stories <Content />', function () {
           stories={[]}
           users={{}}
           page={{
-            requestNextPage: jest.fn(),
+            requestNextPage: jest.fn,
           }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
+          }}
+          storyActions={{
+            createTemplateFromStory: jest.fn,
+            duplicateStory: jest.fn,
+            trashStory: jest.fn,
+            updateStory: jest.fn,
           }}
         />
       </LayoutProvider>
@@ -114,11 +126,17 @@ describe('My Stories <Content />', function () {
           stories={[]}
           users={{}}
           page={{
-            requestNextPage: jest.fn(),
+            requestNextPage: jest.fn,
           }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
+          }}
+          storyActions={{
+            createTemplateFromStory: jest.fn,
+            duplicateStory: jest.fn,
+            trashStory: jest.fn,
+            updateStory: jest.fn,
           }}
         />
       </LayoutProvider>
