@@ -128,6 +128,16 @@ async function exposeFunctions(page, config) {
     return frame.focus(selector, options);
   });
 
+  // Keyboard sequence.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard
+  await exposeKeyboardFunction(page, 'seq', (frame, seq) => {
+    const { keyboard } = page;
+    return seq.reduce((promise, item) => {
+      const { type, key, options } = item;
+      return promise.then(() => keyboard[type](key, options));
+    }, Promise.resolve());
+  });
+
   // TODO:
   // - frame.hover(selector)
   // - frame.select(selector, ...values)
@@ -145,6 +155,10 @@ function exposeFunction(page, name, func) {
   return page.exposeFunction(`__karma_puppeteer_${name}`, (...args) => {
     return func(getContextFrame(page), ...args);
   });
+}
+
+function exposeKeyboardFunction(page, name, func) {
+  return exposeFunction(page, `keyboard_${name}`, func);
 }
 
 function getContextFrame(page) {

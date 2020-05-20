@@ -65,11 +65,20 @@
     };
   }
 
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard.
+  function keyboard() {
+    return {
+      seq: puppeteerFunction('keyboard_seq'),
+    };
+  }
+
   window.karmaPuppeteer = {
     saveSnapshot: puppeteerFunction('saveSnapshot'),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pageclickselector-options
     click: withSelector('click'),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pagefocusselector
     focus: withSelector('focus'),
+    // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard.
+    keyboard: keyboard(),
   };
 }(typeof window !== 'undefined' ? window : global))
