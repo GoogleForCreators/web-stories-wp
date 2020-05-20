@@ -93,8 +93,10 @@ function MyStories() {
       <Content
         allPagesFetched={allPagesFetched}
         categories={categories}
+        filter={filter}
         isLoading={isLoading}
         page={page}
+        search={search}
         sort={sort}
         stories={orderedStories}
         storyActions={{
