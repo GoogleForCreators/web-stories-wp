@@ -52,15 +52,22 @@ function LibraryTabs() {
     [tab, setTab, panes]
   );
 
-  const backwardDirection = isRTL ? 1 : -1;
-  const forwardDirection = isRTL ? -1 : 1;
-
-  useKeyDownEffect(ref, 'left', handleNavigation(backwardDirection), [
-    handleNavigation,
-  ]);
-  useKeyDownEffect(ref, 'right', handleNavigation(forwardDirection), [
-    handleNavigation,
-  ]);
+  useKeyDownEffect(
+    ref,
+    'left',
+    () => {
+      isRTL ? handleNavigation(1) : handleNavigation(-1);
+    },
+    [handleNavigation, isRTL]
+  );
+  useKeyDownEffect(
+    ref,
+    'right',
+    () => {
+      isRTL ? handleNavigation(-1) : handleNavigation(1);
+    },
+    [handleNavigation, isRTL]
+  );
 
   return (
     <Tabs ref={ref}>

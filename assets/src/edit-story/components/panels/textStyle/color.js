@@ -108,7 +108,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
       }
       pushUpdate({ backgroundTextMode: BUTTONS[next].mode }, true);
     },
-    [backgroundTextMode]
+    [backgroundTextMode, pushUpdate]
   );
 
   return (

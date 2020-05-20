@@ -191,30 +191,39 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     [currentButton, setCurrentButton]
   );
 
-  const backwardDirection = isRTL ? 1 : -1;
-  const forwardDirection = isRTL ? -1 : 1;
-
-  useKeyDownEffect(ref, 'left', handleNavigation(backwardDirection), [
-    handleNavigation,
-  ]);
-  useKeyDownEffect(ref, 'right', handleNavigation(forwardDirection), [
-    handleNavigation,
-  ]);
+  useKeyDownEffect(
+    ref,
+    'left',
+    () => {
+      isRTL ? handleNavigation(1) : handleNavigation(-1);
+    },
+    [handleNavigation, isRTL]
+  );
+  useKeyDownEffect(
+    ref,
+    'right',
+    () => {
+      isRTL ? handleNavigation(-1) : handleNavigation(1);
+    },
+    [handleNavigation, isRTL]
+  );
 
   useKeyDownEffect(
     ref,
     { key: 'mod+{', shift: true },
     () => handleAlign('left'),
-    []
+    [handleAlign]
   );
 
-  useKeyDownEffect(ref, { key: 'mod+h', shift: true }, handleAlignCenter, []);
+  useKeyDownEffect(ref, { key: 'mod+h', shift: true }, handleAlignCenter, [
+    handleAlignCenter,
+  ]);
 
   useKeyDownEffect(
     ref,
     { key: 'mod+}', shift: true },
     () => handleAlign('right'),
-    []
+    [handleAlign]
   );
 
   return (

@@ -61,7 +61,7 @@ function EditablePreview({ label, value, width, format, onChange }) {
 
   // Handle ESC keypress to toggle input field.
   useKeyDownEffect(wrapperRef, { key: 'esc', editable: true }, disableEditing, [
-    isEditing,
+    disableEditing,
   ]);
 
   const handleOnBlur = (evt) => {

@@ -95,7 +95,7 @@ function ColorPresetActions({ color }) {
     linkRef,
     { key: ['space', 'enter'] },
     () => handleAddColorPreset(color),
-    [color]
+    [color, handleAddColorPreset]
   );
 
   return (
