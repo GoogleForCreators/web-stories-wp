@@ -37,6 +37,11 @@ const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 function MultiSelectionMovable({ selectedElements }) {
   const moveable = useRef();
 
+  const eventTracker = useRef({
+    time: 0,
+    coordinates: {},
+  });
+
   const {
     actions: { updateElementsById },
   } = useStory();
@@ -175,6 +180,30 @@ function MultiSelectionMovable({ selectedElements }) {
     resetMoveable();
   };
 
+  const startEventTracking = (evt) => {
+    eventTracker.current.time = window.performance.now();
+    eventTracker.current.coordinates = {
+      x: evt.clientX,
+      y: evt.clientY,
+    };
+  };
+
+  const isClick = (evt) => {
+    const timingDifference =
+      window.performance.now() - eventTracker.current.time;
+    if (
+      !eventTracker.current?.coordinates?.x ||
+      !eventTracker.current?.coordinates?.y
+    ) {
+      return false;
+    }
+
+    const { x, y } = eventTracker.current.coordinates;
+
+    const distanceMoved = Math.abs(evt.clientX - x) + Math.abs(evt.clientY - y);
+    return !(timingDifference > 300 || distanceMoved > 4);
+  };
+
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Movable
@@ -193,14 +222,21 @@ function MultiSelectionMovable({ selectedElements }) {
           setTransformStyle(element.id, target, sFrame);
         });
       }}
-      onDragGroupStart={({ events }) => {
+      onDragGroupStart={({ events, inputEvent }) => {
+        startEventTracking(inputEvent);
         if (!isDragging) {
           setIsDragging(true);
         }
         onGroupEventStart({ events, isDrag: true });
       }}
-      onDragGroupEnd={({ targets }) => {
+      onDragGroupEnd={({ targets, inputEvent }) => {
         setIsDragging(false);
+        // Let's check if we consider this a drag or a click.
+        // In case of a click we should select the element instead.
+        if (isClick(inputEvent)) {
+          console.log('isClick');
+        }
+        // Let's still move the targets, too, to avoid inconsistencies (@todo check if better option)
         onGroupEventEnd({ targets });
       }}
       onRotateGroupStart={({ events }) => {
