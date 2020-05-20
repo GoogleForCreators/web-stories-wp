@@ -25,38 +25,85 @@ import { useCallback } from 'react';
 import cleanForSlug from '../../../utils/cleanForSlug';
 import getGoogleFontURL from '../../../utils/getGoogleFontURL';
 
+/**
+ * This is a utility ensure that Promise.all return ONLY when all promises are processed.
+ *
+ * @param {Promise} promise Promise to be processed
+ * @return {Promise} Return a rejected or fulfilled Promise
+ */
+const reflect = (promise) => {
+  return promise.then(
+    (v) => ({ v, status: 'fulfilled' }),
+    (e) => ({ e, status: 'rejected' })
+  );
+};
+
 function useLoadFontFiles() {
   /**
    * Adds a <link> element to the <head> for a given font in case there is none yet.
    *
    * Allows dynamically enqueuing font styles when needed.
    *
-   * @param {string} name Font name.
+   * @param {Array} fonts An array of fonts properties to create a valid FontFaceSet to inject and preload a font-face
+   * @return {Promise} Returns fonts loaded promise
    */
-  const maybeEnqueueFontStyle = useCallback(({ family, service, variants }) => {
-    if (!family || service !== 'fonts.google.com') {
-      return;
-    }
+  const maybeEnqueueFontStyle = useCallback((fonts) => {
+    return Promise.all(
+      fonts
+        .map(
+          async ({
+            font: { family, service, variants },
+            fontWeight,
+            fontStyle,
+            content,
+          }) => {
+            if (!family || service !== 'fonts.google.com') {
+              return null;
+            }
 
-    const handle = cleanForSlug(family);
-    const id = `${handle}-css`;
-    const element = document.getElementById(id);
+            const handle = cleanForSlug(family);
+            const elementId = `${handle}-css`;
+            const fontFaceSet = `
+              ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
+            `.trim();
 
-    if (element) {
-      return;
-    }
+            const hasFontLink = () => document.getElementById(elementId);
 
-    const src = getGoogleFontURL([{ family, variants }]);
+            const appendFontLink = () => {
+              return new Promise((resolve, reject) => {
+                const src = getGoogleFontURL([{ family, variants }], 'auto');
+                const fontStylesheet = document.createElement('link');
+                fontStylesheet.id = elementId;
+                fontStylesheet.href = src;
+                fontStylesheet.rel = 'stylesheet';
+                fontStylesheet.type = 'text/css';
+                fontStylesheet.media = 'all';
+                fontStylesheet.crossOrigin = 'anonymous';
+                fontStylesheet.addEventListener('load', () => resolve());
+                fontStylesheet.addEventListener('error', (e) => reject(e));
+                document.head.appendChild(fontStylesheet);
+              });
+            };
 
-    const fontStylesheet = document.createElement('link');
-    fontStylesheet.id = id;
-    fontStylesheet.href = src;
-    fontStylesheet.rel = 'stylesheet';
-    fontStylesheet.type = 'text/css';
-    fontStylesheet.media = 'all';
-    fontStylesheet.crossOrigin = 'anonymous';
+            const ensureFontLoaded = () => {
+              if (!document?.fonts) {
+                return Promise.resolve();
+              }
 
-    document.head.appendChild(fontStylesheet);
+              return document.fonts
+                .load(fontFaceSet, content || '')
+                .then(() => document.fonts.check(fontFaceSet, content || ''));
+            };
+
+            if (!hasFontLink()) {
+              await appendFontLink();
+            }
+
+            return ensureFontLoaded();
+          }
+        )
+        .map(reflect)
+    );
   }, []);
 
   return maybeEnqueueFontStyle;

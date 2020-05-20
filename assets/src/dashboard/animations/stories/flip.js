@@ -107,7 +107,7 @@ const Flip = ({ name, duration, content, containerStyle, direction }) => {
                 style={{
                   display: 'inline-block',
                   fontSize: '48px',
-                  fontFamily: theme.fonts.heading1.family,
+                  fontFamily: theme.typography.family.primary,
                   fontWeight: 600,
                   color,
                   textTransform: 'uppercase',

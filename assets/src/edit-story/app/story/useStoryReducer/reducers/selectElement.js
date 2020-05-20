@@ -30,7 +30,7 @@ function selectElement(state, { elementId }) {
   }
 
   const currentPage = state.pages.find(({ id }) => id === state.current);
-  const isBackgroundElement = currentPage.backgroundElementId === elementId;
+  const isBackgroundElement = currentPage.elements[0].id === elementId;
   const hasExistingSelection = state.selection.length > 0;
   // The bg element can't be added to non-empty selection
   if (isBackgroundElement && hasExistingSelection) {
@@ -38,7 +38,7 @@ function selectElement(state, { elementId }) {
   }
 
   // If bg element was already the (only) selection, set selection to new element only
-  if (state.selection.includes(currentPage.backgroundElementId)) {
+  if (state.selection.includes(currentPage.elements[0].id)) {
     return {
       ...state,
       selection: [elementId],

@@ -102,7 +102,6 @@ StoryPropTypes.box = PropTypes.exact({
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
-  backgroundElementId: PropTypes.string,
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
