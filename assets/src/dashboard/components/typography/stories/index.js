@@ -15,22 +15,30 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import { TypographyPresets } from '../typography';
+import {
+  Heading1,
+  Heading2,
+  Paragraph1,
+  Paragraph2,
+  DefaultParagraph1,
+} from '../';
 
-export const TextInput = styled.input`
-  ${TypographyPresets.Small}
-  margin: 0;
-  padding: 1px 8px;
-  border-radius: 6px;
-  border: ${({ theme }) => theme.borders.gray100};
-  &:active {
-    border: ${({ theme }) => theme.borders.action};
-  }
-`;
+export default {
+  title: 'Dashboard/Components/Typography',
+  component: Heading1,
+};
+
+export const _default = () => (
+  <>
+    <Heading1>{'<Heading1> - h1 Heading'}</Heading1>
+    <Heading2>{'<Heading2> - h2 Heading'}</Heading2>
+    <Paragraph1>{'<Paragraph1> - Larger Body Text'}</Paragraph1>
+    <Paragraph2>{'<Paragraph2> - Smaller Body Text'}</Paragraph2>
+    <hr />
+    <DefaultParagraph1>
+      {'<DefaultParagraph1> - used for default and helper text on dashboard'}
+    </DefaultParagraph1>
+  </>
+);
