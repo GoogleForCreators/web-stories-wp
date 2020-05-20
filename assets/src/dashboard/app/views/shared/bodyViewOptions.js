@@ -27,6 +27,7 @@ import {
   Dropdown,
   StandardViewContentGutter,
   ViewStyleBar,
+  TypographyPresets,
 } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 
@@ -52,9 +53,7 @@ const ControlsContainer = styled.div`
 `;
 
 const Label = styled.span`
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing}em;
-  font-size: ${({ theme }) => theme.fonts.body2.size}px;
+  ${TypographyPresets.Small}
   color: ${({ theme }) => theme.colors.gray500};
 `;
 

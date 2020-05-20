@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import conicToLinear from '../v0018_conicToLinear';
+import conicToLinear from '../v0019_conicToLinear';
 
 describe('conicToLinear', () => {
   it('should convert conic to linear', () => {

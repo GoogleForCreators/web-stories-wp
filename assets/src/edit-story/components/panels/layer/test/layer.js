@@ -42,8 +42,7 @@ function setupLayer({ layer }) {
   const storyContextValue = {
     state: {
       currentPage: {
-        backgroundElementId: 'foobar',
-        elements: [],
+        elements: [{ id: '123' }],
       },
       selectedElementIds: [],
     },
@@ -88,6 +87,6 @@ describe('Layer', () => {
         failureThreshold: 0.01,
         failureThresholdType: 'percent',
       });
-    });
+    }, 10000);
   });
 });

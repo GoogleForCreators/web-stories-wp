@@ -29,7 +29,10 @@ describe('addPageAt', () => {
       current: '222',
     });
 
-    const result = addPageAt({ page: { id: '123' }, position: 1 });
+    const result = addPageAt({
+      page: { id: '123', elements: [{ id: '456' }] },
+      position: 1,
+    });
     expect(getPageIds(result)).toStrictEqual(['111', '123', '222']);
   });
 
@@ -42,10 +45,16 @@ describe('addPageAt', () => {
       current: '222',
     });
 
-    const firstResult = addPageAt({ page: { id: '123' }, position: -50 });
+    const firstResult = addPageAt({
+      page: { id: '123', elements: [{ id: '456' }] },
+      position: -50,
+    });
     expect(getPageIds(firstResult)).toStrictEqual(['111', '222', '123']);
 
-    const secondResult = addPageAt({ page: { id: '321' }, position: 50 });
+    const secondResult = addPageAt({
+      page: { id: '321', elements: [{ id: '456' }] },
+      position: 50,
+    });
     expect(getPageIds(secondResult)).toStrictEqual([
       '111',
       '222',

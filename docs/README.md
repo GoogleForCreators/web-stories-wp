@@ -12,7 +12,9 @@
 * [Code Style](./code-style.md)
 * [Environment Variables](./environment-variables.md)
 * [Migrations](./migrations.md)
-* [Design docs](./design-docs.md)
+* [Development Tools](./devtools.md)
+* [Feature Flags](./feature-flags.md)
+* [Design Docs](./design-docs.md)
 
 ## Testing
 

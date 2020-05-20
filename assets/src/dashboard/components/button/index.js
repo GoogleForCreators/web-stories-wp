@@ -24,12 +24,12 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
+import { TypographyPresets } from '../typography';
 
 const StyledButton = styled.button`
-  font-family: ${({ theme }) => theme.fonts.button.family};
-  font-size: ${({ theme }) => theme.fonts.button.size}px;
-  font-weight: ${({ theme }) => theme.fonts.button.weight};
-  line-height: ${({ theme }) => theme.fonts.button.lineHeight}px;
+  ${TypographyPresets.Small};
+
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   align-items: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;

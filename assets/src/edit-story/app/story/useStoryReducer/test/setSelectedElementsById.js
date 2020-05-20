@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('setSelectedElementsById', () => {
@@ -27,16 +26,24 @@ describe('setSelectedElementsById', () => {
     // Set an initial state.
     restore({
       pages: [
-        { id: '111', elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }] },
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+            { id: 'e4' },
+          ],
+        },
       ],
       current: '111',
-      selection: ['e2', 'e1'],
+      selection: ['e2', 'e4'],
     });
 
-    // Select element 1 and 3
-    const result = setSelectedElementsById({ elementIds: ['e1', 'e3'] });
+    // Select element 2 and 3
+    const result = setSelectedElementsById({ elementIds: ['e2', 'e3'] });
 
-    expect(result.selection).toStrictEqual(['e1', 'e3']);
+    expect(result.selection).toStrictEqual(['e2', 'e3']);
   });
 
   it('should remove duplicates', () => {
@@ -45,16 +52,23 @@ describe('setSelectedElementsById', () => {
     // Set an initial state.
     restore({
       pages: [
-        { id: '111', elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }] },
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
       ],
       current: '111',
       selection: [],
     });
 
-    // Select element 1 and 3 (and 1 again for weird reasons)
-    const result = setSelectedElementsById({ elementIds: ['e1', 'e3', 'e1'] });
+    // Select element 2 and 3 (and 2 again for weird reasons)
+    const result = setSelectedElementsById({ elementIds: ['e2', 'e3', 'e2'] });
 
-    expect(result.selection).toStrictEqual(['e1', 'e3']);
+    expect(result.selection).toStrictEqual(['e2', 'e3']);
   });
 
   it('should not update selection if nothing has changed', () => {
@@ -63,16 +77,23 @@ describe('setSelectedElementsById', () => {
     // Set an initial state.
     restore({
       pages: [
-        { id: '111', elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }] },
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
       ],
       current: '111',
-      selection: ['e1', 'e2'],
+      selection: ['e3', 'e2'],
     });
 
-    // Update to e2+e1, which is the same as e1+e2.
-    const result = setSelectedElementsById({ elementIds: ['e2', 'e1'] });
+    // Update to e2+e3, which is the same as e3+e2.
+    const result = setSelectedElementsById({ elementIds: ['e2', 'e3'] });
 
-    expect(result.selection).toStrictEqual(['e1', 'e2']);
+    expect(result.selection).toStrictEqual(['e3', 'e2']);
   });
 
   it('should ignore non-list arguments', () => {
@@ -81,7 +102,14 @@ describe('setSelectedElementsById', () => {
     // Set an initial state.
     restore({
       pages: [
-        { id: '111', elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }] },
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
       ],
       current: '111',
       selection: ['e1', 'e2'],
@@ -101,9 +129,11 @@ describe('setSelectedElementsById', () => {
       pages: [
         {
           id: '111',
-          backgroundElementId: 'e1',
-          backgroundOverlay: OverlayType.NONE,
-          elements: [{ id: 'e1' }, { id: 'e2' }, { id: 'e3' }],
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
         },
       ],
       current: '111',

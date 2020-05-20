@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useStory, useHistory, useConfig } from '../../../app';
-import { createPage } from '../../../elements';
+import { createPage, duplicatePage } from '../../../elements';
 import { ReactComponent as Delete } from '../../../icons/delete_icon.svg';
 import { ReactComponent as Duplicate } from '../../../icons/duplicate_icon.svg';
 import { ReactComponent as LeftArrow } from '../../../icons/undo_icon.svg';
@@ -128,7 +128,7 @@ function PageMenu() {
   ]);
 
   const handleDuplicatePage = useCallback(
-    () => addPage({ page: createPage(currentPage) }),
+    () => addPage({ page: duplicatePage(currentPage) }),
     [addPage, currentPage]
   );
 

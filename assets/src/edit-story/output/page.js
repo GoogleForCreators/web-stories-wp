@@ -31,7 +31,7 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const { id, elements, backgroundElementId, backgroundOverlay } = page;
+  const { id, elements, backgroundOverlay } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
     backgroundImage: `linear-gradient(45deg, #999999 25%, transparent 25%),
@@ -42,12 +42,8 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
   };
   const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
-  const backgroundElements = elements.filter(
-    (element) => element.id === backgroundElementId
-  );
-  const regularElements = elements.filter(
-    (element) => element.id !== backgroundElementId
-  );
+  const backgroundElements = elements.filter((element) => element.isBackground);
+  const regularElements = elements.filter((element) => !element.isBackground);
   const longestMediaElement = getLongestMediaElement(elements);
 
   const autoAdvanceAfter = longestMediaElement?.id
