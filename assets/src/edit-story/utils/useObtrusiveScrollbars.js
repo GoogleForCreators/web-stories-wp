@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 const parentStyle = `
 width:30px;
@@ -30,6 +30,23 @@ scrollbar-width: var(--scrollbar-ff-width);`;
 
 const childStyle = 'width:100%; height:40px;';
 
+function browserHasObtrusiveScrollbars() {
+  const parent = document.createElement('div');
+  parent.setAttribute('style', parentStyle);
+
+  const child = document.createElement('div');
+  child.setAttribute('style', childStyle);
+  parent.appendChild(child);
+
+  document.body.appendChild(parent);
+
+  // Measure the child element, if it is not 30px wide the scrollbars are obtrusive.
+  const scrollbarWidth = 30 - parent.firstChild.clientWidth;
+  document.body.removeChild(parent);
+
+  return Boolean(scrollbarWidth);
+}
+
 /**
  * Custom hook to detect whether scrollbars are obtrusive or hidden until scrolled.
  *
@@ -38,26 +55,7 @@ const childStyle = 'width:100%; height:40px;';
  * @return {boolean} Whether scrollbars are obtrusive.
  */
 function useObtrusiveScrollbars() {
-  const [obtrusiveScrollbars, setObtrusiveScrollbars] = useState(false);
-
-  useEffect(() => {
-    const parent = document.createElement('div');
-    parent.setAttribute('style', parentStyle);
-
-    const child = document.createElement('div');
-    child.setAttribute('style', childStyle);
-    parent.appendChild(child);
-
-    document.body.appendChild(parent);
-
-    // Measure the child element, if it is not 30px wide the scrollbars are obtrusive.
-    const scrollbarWidth = 30 - parent.firstChild.clientWidth;
-    setObtrusiveScrollbars(Boolean(scrollbarWidth));
-
-    document.body.removeChild(parent);
-  }, []);
-
-  return obtrusiveScrollbars;
+  return useMemo(() => browserHasObtrusiveScrollbars(), []);
 }
 
 export default useObtrusiveScrollbars;
