@@ -141,6 +141,15 @@ class Dashboard {
 			)
 		);
 
+		$classic_wp_list_url = admin_url(
+			add_query_arg(
+				[
+					'post_type' => 'web-story',
+				],
+				'edit.php'
+			)
+		);
+
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
 			'webStoriesDashboardSettings',
@@ -150,6 +159,7 @@ class Dashboard {
 					'isRTL'        => is_rtl(),
 					'newStoryURL'  => $new_story_url,
 					'editStoryURL' => $edit_story_url,
+					'wpListURL'    => $classic_wp_list_url,
 					'assetsURL'    => WEBSTORIES_ASSETS_URL,
 					'version'      => WEBSTORIES_VERSION,
 					'api'          => [

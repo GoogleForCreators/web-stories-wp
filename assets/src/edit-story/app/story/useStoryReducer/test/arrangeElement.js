@@ -22,21 +22,20 @@ import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('arrangeElement', () => {
-  it('should do nothing if there is only one element on page', () => {
+  it('should do nothing if there is only two elements on page', () => {
     const { restore, arrangeElement } = setupReducer();
 
     const initialState = restore({
       pages: [
         {
-          backgroundElementId: null,
           id: '111',
-          elements: [{ id: '123' }],
+          elements: [{ id: '123', isBackground: true }, { id: '234' }],
         },
       ],
       current: '111',
     });
 
-    const result = arrangeElement({ elementId: '123', position: 2 });
+    const result = arrangeElement({ elementId: '234', position: 0 });
 
     expect(result).toStrictEqual(initialState);
   });
@@ -46,12 +45,12 @@ describe('arrangeElement', () => {
 
     restore(getInitialState());
 
-    const result = arrangeElement({ elementId: '123', position: 2 });
+    const result = arrangeElement({ elementId: '234', position: 2 });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
-      '234',
-      '345',
       '123',
+      '345',
+      '234',
       '456',
     ]);
   });
@@ -80,15 +79,15 @@ describe('arrangeElement', () => {
     restore(getInitialState());
 
     const result = arrangeElement({
-      elementId: '345',
+      elementId: '456',
       position: LAYER_DIRECTIONS.BACK,
     });
 
     expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
-      '345',
       '123',
-      '234',
       '456',
+      '234',
+      '345',
     ]);
   });
 
@@ -134,94 +133,92 @@ describe('arrangeElement', () => {
     restore(getInitialState());
 
     // Try to move element from 2nd position before the start.
-    const firstResult = arrangeElement({ elementId: '234', position: -100 });
+    const firstResult = arrangeElement({ elementId: '456', position: -100 });
     expect(getElementIdsFromCurrentPage(firstResult)).toStrictEqual([
-      '234',
       '123',
-      '345',
       '456',
+      '234',
+      '345',
     ]);
 
     // Try to move element from 2nd position after the end.
     const secondResult = arrangeElement({ elementId: '234', position: 100 });
     expect(getElementIdsFromCurrentPage(secondResult)).toStrictEqual([
       '123',
-      '345',
       '456',
+      '345',
       '234',
     ]);
   });
 
-  describe('when there is a background element', () => {
-    it('should not be able to move background element at all', () => {
-      const { restore, arrangeElement } = setupReducer();
+  it('should not be able to move background element at all', () => {
+    const { restore, arrangeElement } = setupReducer();
 
-      restore(getInitialState({ backgroundElementId: '123' }));
+    restore(getInitialState());
 
-      // Try to move bg element anywhere
-      const result = arrangeElement({ elementId: '123', position: 2 });
+    // Try to move bg element anywhere
+    const result = arrangeElement({ elementId: '123', position: 2 });
 
-      expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
-        '123',
-        '234',
-        '345',
-        '456',
-      ]);
+    expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
+      '123',
+      '234',
+      '345',
+      '456',
+    ]);
+  });
+
+  it('should not be able to move element below background using position', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    restore(getInitialState());
+
+    // Try to move any non-bg element to position 0
+    const result = arrangeElement({ elementId: '345', position: 0 });
+
+    expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
+      '123',
+      '345', // Note that it *does* move, but not below background
+      '234',
+      '456',
+    ]);
+  });
+
+  it('should not be able to move element below background using "send backwards"', () => {
+    const { restore, arrangeElement } = setupReducer();
+
+    restore(getInitialState());
+
+    // Try to move the element just above the background further backwards.
+    const result = arrangeElement({
+      elementId: '234',
+      position: LAYER_DIRECTIONS.BACKWARD,
     });
 
-    it('should not be able to move element below background using position', () => {
-      const { restore, arrangeElement } = setupReducer();
+    expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
+      '123',
+      '234',
+      '345',
+      '456',
+    ]);
+  });
 
-      restore(getInitialState({ backgroundElementId: '123' }));
+  it('should not be able to move element below background using "send to back"', () => {
+    const { restore, arrangeElement } = setupReducer();
 
-      // Try to move any non-bg element to position 0
-      const result = arrangeElement({ elementId: '345', position: 0 });
+    restore(getInitialState());
 
-      expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
-        '123',
-        '345', // Note that it *does* move, but not below background
-        '234',
-        '456',
-      ]);
+    // Try to move any non-bg element to position BACK
+    const result = arrangeElement({
+      elementId: '345',
+      position: LAYER_DIRECTIONS.BACK,
     });
 
-    it('should not be able to move element below background using "send backwards"', () => {
-      const { restore, arrangeElement } = setupReducer();
-
-      restore(getInitialState({ backgroundElementId: '123' }));
-
-      // Try to move the element just above the background further backwards.
-      const result = arrangeElement({
-        elementId: '234',
-        position: LAYER_DIRECTIONS.BACKWARD,
-      });
-
-      expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
-        '123',
-        '234',
-        '345',
-        '456',
-      ]);
-    });
-
-    it('should not be able to move element below background using "send to back"', () => {
-      const { restore, arrangeElement } = setupReducer();
-
-      restore(getInitialState({ backgroundElementId: '123' }));
-
-      // Try to move any non-bg element to position BACK
-      const result = arrangeElement({
-        elementId: '345',
-        position: LAYER_DIRECTIONS.BACK,
-      });
-
-      expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
-        '123',
-        '345', // Note that it *does* move, but not below background
-        '234',
-        '456',
-      ]);
-    });
+    expect(getElementIdsFromCurrentPage(result)).toStrictEqual([
+      '123',
+      '345', // Note that it *does* move, but not below background
+      '234',
+      '456',
+    ]);
   });
 });
 
@@ -229,15 +226,18 @@ function getElementIdsFromCurrentPage({ pages, current }) {
   return pages.find(({ id }) => id === current).elements.map(({ id }) => id);
 }
 
-function getInitialState(extraProps) {
+function getInitialState() {
   return {
     pages: [
       {
-        backgroundElementId: null,
         backgroundOverlay: OverlayType.NONE,
         id: '111',
-        elements: [{ id: '123' }, { id: '234' }, { id: '345' }, { id: '456' }],
-        ...extraProps,
+        elements: [
+          { id: '123', isBackground: true },
+          { id: '234' },
+          { id: '345' },
+          { id: '456' },
+        ],
       },
     ],
     current: '111',

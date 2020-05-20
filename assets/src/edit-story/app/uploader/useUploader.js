@@ -67,6 +67,11 @@ function useUploader(refreshLibrary = true) {
     [maxUpload]
   );
 
+  /**
+   * Uploads a file.
+   *
+   * @param {Object} file File object.
+   */
   const uploadFile = (file) => {
     if (!hasUploadMediaAction) {
       const message = __(

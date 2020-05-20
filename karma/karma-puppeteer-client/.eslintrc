@@ -15,6 +15,9 @@
         "no-unused-vars": "off",
         "prefer-rest-params": "off",
         "prefer-spread": "off"
+      },
+      "globals": {
+        "karmaPuppeteer": "writable"
       }
     }
   ]

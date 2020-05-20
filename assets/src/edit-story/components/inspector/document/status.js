@@ -45,8 +45,7 @@ const BoxedTextInput = styled(TextInput)`
 
 function StatusPanel() {
   const {
-    actions: { loadStatuses, loadUsers },
-    state: { statuses },
+    actions: { loadUsers },
   } = useInspector();
 
   const {
@@ -59,7 +58,6 @@ function StatusPanel() {
   const { capabilities } = useConfig();
 
   useEffect(() => {
-    loadStatuses();
     loadUsers();
   });
 
@@ -69,17 +67,20 @@ function StatusPanel() {
       name: __('Draft', 'web-stories'),
       helper: __('Visible to just me', 'web-stories'),
     },
-    {
+  ];
+
+  if (capabilities?.hasPublishAction) {
+    visibilityOptions.push({
       value: 'publish',
       name: __('Public', 'web-stories'),
       helper: __('Visible to everyone', 'web-stories'),
-    },
-    {
+    });
+    visibilityOptions.push({
       value: 'private',
       name: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
-    },
-  ];
+    });
+  }
 
   const passwordProtected = 'protected';
   // @todo Add this back once we have FE implementation, too.
@@ -145,32 +146,30 @@ function StatusPanel() {
 
   return (
     <SimplePanel name="status" title={__('Status & Visibility', 'web-stories')}>
-      {capabilities && capabilities.hasPublishAction && statuses && (
-        <>
-          <Row>
-            <RadioGroup
-              options={visibilityOptions}
-              onChange={handleChangeVisibility}
-              value={getStatusValue(status)}
-            />
-          </Row>
-          {passwordProtected === status && (
-            <>
-              <Row>
-                <BoxedTextInput
-                  label={__('Password', 'web-stories')}
-                  value={password}
-                  onChange={handleChangePassword}
-                  placeholder={__('Enter a password', 'web-stories')}
-                />
-              </Row>
-              <HelperText isWarning={password && password.length > 20}>
-                {__('Must not exceed 20 characters', 'web-stories')}
-              </HelperText>
-            </>
-          )}
-        </>
-      )}
+      <>
+        <Row>
+          <RadioGroup
+            options={visibilityOptions}
+            onChange={handleChangeVisibility}
+            value={getStatusValue(status)}
+          />
+        </Row>
+        {passwordProtected === status && (
+          <>
+            <Row>
+              <BoxedTextInput
+                label={__('Password', 'web-stories')}
+                value={password}
+                onChange={handleChangePassword}
+                placeholder={__('Enter a password', 'web-stories')}
+              />
+            </Row>
+            <HelperText isWarning={password && password.length > 20}>
+              {__('Must not exceed 20 characters', 'web-stories')}
+            </HelperText>
+          </>
+        )}
+      </>
       <Button onClick={handleRemoveStory} fullWidth>
         {__('Move to trash', 'web-stories')}
       </Button>

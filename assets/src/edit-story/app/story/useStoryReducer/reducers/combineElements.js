@@ -15,32 +15,64 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import deleteElements from './deleteElements';
-import updateElements from './updateElements';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Combine elements by taking properties from a first item and
- * adding them to the given second item
+ * adding them to the given second item, then remove first item.
+ *
+ *
+ * First item must either to be the id of an existing element with
+ * a resource (some media element, or be given as the properties of
+ * an element (with a resource) that doesn't exist but whose properties
+ * should be merged into the target element.
+ *
+ * If second item is background element, copy some extra properties not
+ * relevant while background, but relevant if unsetting as background.
+ *
+ * If the second item is the default background element,
+ * save a copy of the old element as appropriate and remove flag.
+ *
+ * Updates selection to only include the second item after merge.
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
  * @param {string} payload.firstId Element to take properties from
+ * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
  * @return {Object} New state
  */
-function combineElements(state, { firstId, secondId }) {
-  if (!firstId || !secondId) {
+function combineElements(state, { firstId, firstElement, secondId }) {
+  if ((!firstId && !firstElement) || !secondId) {
     return state;
   }
 
-  const page = state.pages.find(({ id }) => id === state.current);
-  const element = page.elements.find(({ id }) => id === firstId);
+  const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
+  const page = state.pages[pageIndex];
+  const elementPosition = page.elements.findIndex(({ id }) => id === firstId);
+  const element =
+    elementPosition > -1 ? page.elements[elementPosition] : firstElement;
 
-  if (!element || !element.resource) {
+  const secondElementPosition = page.elements.findIndex(
+    ({ id }) => id === secondId
+  );
+  const secondElement = page.elements[secondElementPosition];
+
+  if (!element || !element.resource || !secondElement) {
     return state;
   }
+
+  const newPageProps = secondElement.isDefaultBackground
+    ? {
+        defaultBackgroundElement: {
+          ...secondElement,
+          // But generate a new ID for this temp background element
+          id: uuidv4(),
+        },
+      }
+    : {};
 
   const {
     resource,
@@ -48,20 +80,59 @@ function combineElements(state, { firstId, secondId }) {
     focalX = 50,
     focalY = 50,
     isFill = false,
+    width,
+    height,
+    x,
+    y,
   } = element;
 
-  const updatedState = updateElements(state, {
-    elementIds: [secondId],
-    properties: {
-      resource,
-      type: resource.type,
-      scale,
-      focalX,
-      focalY,
-      isFill,
-    },
-  });
-  return deleteElements(updatedState, { elementIds: [firstId] });
+  const newElement = {
+    ...secondElement,
+    resource,
+    type: resource.type,
+    scale,
+    focalX,
+    focalY,
+    isFill,
+    // Only remember these for backgrounds, as they're ignored while being background
+    ...(secondElement.isBackground
+      ? {
+          width,
+          height,
+          x,
+          y,
+        }
+      : {}),
+    // Only unset if it was set
+    ...(secondElement.isDefaultBackground
+      ? { isDefaultBackground: false }
+      : {}),
+  };
+
+  // Elements are now
+  const elements = page.elements
+    // Remove first element if combining from existing id
+    .filter(({ id }) => id !== firstId)
+    // Update reference to second element
+    .map((el) => (el.id === secondId ? newElement : el));
+
+  const newPage = {
+    ...page,
+    elements,
+    ...newPageProps,
+  };
+
+  const newPages = [
+    ...state.pages.slice(0, pageIndex),
+    newPage,
+    ...state.pages.slice(pageIndex + 1),
+  ];
+
+  return {
+    ...state,
+    pages: newPages,
+    selection: [secondId],
+  };
 }
 
 export default combineElements;

@@ -17,6 +17,8 @@
 
 namespace Google\Web_Stories\Tests;
 
+use Google\Web_Stories\REST_API\Stories_Controller;
+
 class Database_Upgrader extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
@@ -28,5 +30,77 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		$object = new \Google\Web_Stories\Database_Upgrader();
 		$object->init();
 		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
+	}
+
+	public function test_v_2_remove_conic_style_presets() {
+		$radial_preset = [
+			[
+				'color'              => [],
+				'backgroundColor'    =>
+					[
+						'type'     => 'radial',
+						'stops'    => [],
+						'rotation' => 0.5,
+					],
+				'backgroundTextMode' => 'FILL',
+			],
+		];
+		$presets       = [
+			'fillColors' => [
+				[
+					'type'     => 'conic',
+					'stops'    =>
+						[
+							[
+								'color'    => [],
+								'position' => 0,
+							],
+							[
+								'color'    => [],
+								'position' => 0.7,
+							],
+						],
+					'rotation' => 0.5,
+				],
+			],
+			'textColors' => [
+				[
+					'color' => [],
+				],
+			],
+			'textStyles' => [
+				[
+					'color'              => [],
+					'backgroundColor'    =>
+						[
+							'type'     => 'conic',
+							'stops'    => [],
+							'rotation' => 0.5,
+						],
+					'backgroundTextMode' => 'FILL',
+					'font'               => [],
+				],
+				$radial_preset,
+			],
+		];
+		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$object->init();
+
+		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$this->assertSame( $style_presets['textStyles'][1], $radial_preset );
+		$this->assertSame( $style_presets['textStyles'][0]['backgroundColor']['type'], 'linear' );
+		$this->assertSame( $style_presets['fillColors'][0]['type'], 'linear' );
+		$this->assertSame(
+			$style_presets['textColors'],
+			[
+				[
+					'color' => [],
+				],
+			]
+		);
+
+		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
 	}
 }
