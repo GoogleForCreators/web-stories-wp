@@ -64,10 +64,8 @@ const Label = styled.span`
 `;
 
 const ExternalLink = styled.a`
+  ${TypographyPresets.Small};
   margin-right: 15px;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing}em;
-  font-size: ${({ theme }) => theme.fonts.body2.size}px;
   color: ${({ theme }) => theme.colors.bluePrimary};
   font-weight: 500;
   cursor: pointer;
