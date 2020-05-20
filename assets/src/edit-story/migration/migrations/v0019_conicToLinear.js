@@ -14,9 +14,32 @@
  * limitations under the License.
  */
 
-export const LINE_LENGTH = 155;
-export const LINE_WIDTH = 12;
+function conicToLinear({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
 
-export const TYPE_SOLID = 'solid';
-export const TYPE_LINEAR = 'linear';
-export const TYPE_RADIAL = 'radial';
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  const { backgroundColor } = element;
+  if (backgroundColor?.type !== 'conic') {
+    return element;
+  }
+  return {
+    ...element,
+    backgroundColor: {
+      ...backgroundColor,
+      type: 'linear',
+    },
+  };
+}
+
+export default conicToLinear;
