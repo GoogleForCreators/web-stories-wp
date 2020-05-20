@@ -217,7 +217,7 @@ class Dashboard {
 		?>
 		<div style="margin-top: 20px;">
 			<a href="<?php echo esc_url( $dashboard_url ); ?>">
-				<?php _e( '&larr; Return to Web Stories Dashboard', 'web-stories' ); ?>
+				<?php esc_html_e( '&larr; Return to Web Stories Dashboard', 'web-stories' ); ?>
 			</a>
 		</div>
 		<?php
