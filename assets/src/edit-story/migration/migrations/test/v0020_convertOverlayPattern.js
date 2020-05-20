@@ -197,11 +197,12 @@ describe('convertOverlayPattern', () => {
               type: 'video',
               backgroundOverlay: {
                 type: 'radial',
+                size: { w: 0.8, h: 0.5 },
                 stops: [
-                  { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.3 },
-                  { color: { r: 0, g: 0, b: 0, a: 1 }, position: 0.8 },
+                  { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.25 },
+                  { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
                 ],
-                alpha: 0.8,
+                alpha: 0.6,
               },
               isBackground: true,
             },
