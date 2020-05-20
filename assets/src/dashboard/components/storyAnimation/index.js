@@ -19,10 +19,16 @@
  */
 import Provider from './provider';
 import WAAPIWrapper from './WAAPIWrapper';
+import AMPWrapper from './AMPWrapper';
+import AMPKeyframes from './AMPKeyframes';
+import AMPAnimators from './AMPAnimators';
 
 const StoryAnimation = {
   Provider,
   WAAPIWrapper,
+  AMPWrapper,
+  AMPKeyframes,
+  AMPAnimators,
 };
 
 export default StoryAnimation;

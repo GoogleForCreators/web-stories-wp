@@ -74,6 +74,8 @@ export const _default = () => {
           author="Rick Grimes"
           displayDate={moment('04-04-2020', 'MM-DD-YYYY')}
           status={STORY_STATUS.DRAFT}
+          onEditCancel={() => {}}
+          onEditComplete={() => {}}
         />
       </CardGridItem>
     </CardGrid>
@@ -101,6 +103,8 @@ export const _publishedStory = () => {
           author="Inigo Moñtoya"
           displayDate={moment('04-19-2020', 'MM-DD-YYYY')}
           status={STORY_STATUS.PUBLISHED}
+          onEditCancel={() => {}}
+          onEditComplete={() => {}}
         />
       </CardGridItem>
     </CardGrid>
@@ -131,6 +135,8 @@ export const _contextMenu = () => {
               author="storybook author"
               status={STORY_STATUS.DRAFT}
               displayDate={moment('05-02-2020', 'MM-DD-YYYY')}
+              onEditCancel={() => {}}
+              onEditComplete={() => {}}
             />
             <CardItemMenu
               onMoreButtonSelected={setContextMenuId}

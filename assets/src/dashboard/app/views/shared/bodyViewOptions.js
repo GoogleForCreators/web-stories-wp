@@ -59,7 +59,7 @@ const ControlsContainer = styled.div`
 `;
 
 const Label = styled.span`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   color: ${({ theme }) => theme.colors.gray500};
 `;
 

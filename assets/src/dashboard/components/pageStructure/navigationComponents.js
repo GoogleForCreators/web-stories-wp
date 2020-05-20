@@ -39,7 +39,7 @@ export const NavButton = styled(Button)`
 `;
 
 export const NavLink = styled.a`
-  ${TypographyPresets.Medium}
+  ${TypographyPresets.Medium};
   ${({ theme, active }) => `
     padding: 4px 20px;
     margin: 4px 0;
@@ -66,7 +66,7 @@ export const Rule = styled.div(
 );
 
 export const AppInfo = styled.div`
-  ${TypographyPresets.ExtraSmall}
+  ${TypographyPresets.ExtraSmall};
   color: ${({ theme }) => theme.colors.gray500};
 `;
 

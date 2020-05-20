@@ -13,15 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { useRef, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
+import { AnimatorOutput, WithAnimation } from '../../animationOutputs';
+import { ANIMATION_TYPES } from '../../constants';
+import getInitialStyleFromKeyframes from '../../utils/getInitialStyleFromKeyframes';
 import FullSizeAbsolute from '../fullSizeAbsolute';
-import { WAAPIAnimationProps } from '../types';
+import { WAAPIAnimationProps, AMPAnimationProps } from '../types';
 
 const keyframes = {
   transform: [
@@ -69,7 +75,8 @@ const defaults = {
   duration: 1500,
 };
 
-export function WAAPIBounce(args) {
+export function AnimationBounce(args) {
+  const id = uuidv4();
   const timings = {
     ...defaults,
     ...args,
@@ -88,6 +95,41 @@ export function WAAPIBounce(args) {
 
     return <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>;
   };
+
   WAAPIAnimation.propTypes = WAAPIAnimationProps;
-  return WAAPIAnimation;
+
+  const AMPAnimation = function ({ children, style }) {
+    return (
+      <WithAnimation
+        id={`anim-${id}`}
+        style={{
+          ...style,
+          ...getInitialStyleFromKeyframes(keyframes),
+        }}
+      >
+        {children}
+      </WithAnimation>
+    );
+  };
+
+  AMPAnimation.propTypes = AMPAnimationProps;
+
+  const AMPAnimator = function ({ prefixId }) {
+    return (
+      <AnimatorOutput
+        animation={`${prefixId}-${ANIMATION_TYPES.BOUNCE}`}
+        config={{ selector: `#anim-${id}`, ...timings }}
+      />
+    );
+  };
+
+  AMPAnimator.propTypes = AMPAnimationProps;
+
+  return {
+    id,
+    keyframes,
+    WAAPIAnimation,
+    AMPAnimation,
+    AMPAnimator,
+  };
 }
