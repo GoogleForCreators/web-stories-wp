@@ -87,18 +87,14 @@ export const Heading2 = styled.h2`
   font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 
-export const Paragraph1 = styled.p`
-  ${Medium}
-`;
+export const Paragraph1 = styled.p(Medium);
 
 export const DefaultParagraph1 = styled(Paragraph1)`
   color: ${({ theme }) => theme.colors.gray200};
   margin: 40px 20px;
 `;
 
-export const Paragraph2 = styled.p`
-  ${Small}
-`;
+export const Paragraph2 = styled.p(Small);
 
 export const TypographyPresets = {
   ExtraExtraLarge,
