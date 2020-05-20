@@ -26,17 +26,24 @@ describe('deleteSelectedElements', () => {
     // Set an initial state with a current page and some elements selected.
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
       ],
       current: '111',
-      selection: ['123', '456'],
+      selection: ['789', '456'],
     });
 
     const result = deleteSelectedElements();
 
     expect(result).toStrictEqual({
       ...initialState,
-      pages: [{ id: '111', elements: [{ id: '789' }] }],
+      pages: [{ id: '111', elements: [{ id: '123', isBackground: true }] }],
       selection: [],
     });
   });
@@ -47,7 +54,14 @@ describe('deleteSelectedElements', () => {
     // Set an initial state with a current page and some elements, none selected.
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
       ],
       current: '111',
       selection: [],

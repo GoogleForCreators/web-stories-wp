@@ -35,7 +35,8 @@ function toggleElement(state, { elementId }) {
 
   const wasSelected = state.selection.includes(elementId);
   const currentPage = state.pages.find(({ id }) => id === state.current);
-  const isBackgroundElement = currentPage.backgroundElementId === elementId;
+  const backgroundElementId = currentPage.elements[0].id;
+  const isBackgroundElement = backgroundElementId === elementId;
   const hasExistingSelection = state.selection.length > 0;
 
   // If it wasn't selected, we're adding the element to the selection.
@@ -46,7 +47,7 @@ function toggleElement(state, { elementId }) {
     }
 
     // If bg element was already the (only) selection, set selection to new element only
-    if (state.selection.includes(currentPage.backgroundElementId)) {
+    if (state.selection.includes(backgroundElementId)) {
       return {
         ...state,
         selection: [elementId],

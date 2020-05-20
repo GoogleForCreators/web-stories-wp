@@ -206,6 +206,7 @@ describe('updateElementsByResourceId', () => {
     });
 
     const result = updateElementsByResourceId({
+      id: null,
       properties: ({ resource, ...rest }) => ({
         ...rest,
         resource: { ...resource, posterId: '1', poster: '2' },

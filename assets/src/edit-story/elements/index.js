@@ -46,39 +46,39 @@ export const createNewElement = (type, attributes = {}) => {
   };
 };
 
-export const createPage = (attributes = {}) => {
-  const { elements: oldElements, ...rest } = attributes;
+export const createPage = () => {
+  const backgroundElementProps = {
+    // The values of x, y, width, height are irrelevant here, however, need to be set.
+    x: 1,
+    y: 1,
+    width: 1,
+    height: 1,
+    mask: {
+      type: 'rectangle',
+    },
+    isBackground: true,
+    isDefaultBackground: true,
+  };
+  const backgroundElement = createNewElement('shape', backgroundElementProps);
+
+  const newAttributes = {
+    elements: [backgroundElement],
+  };
+
+  return createNewElement('page', newAttributes);
+};
+
+export const duplicatePage = (oldPage) => {
+  const { elements: oldElements, ...rest } = oldPage;
 
   // Ensure all existing elements get new ids
-  const elements = (oldElements || []).map(({ type, ...attrs }) =>
+  const elements = oldElements.map(({ type, ...attrs }) =>
     createNewElement(type, attrs)
   );
   const newAttributes = {
     elements,
     ...rest,
   };
-
-  // Enforce having background element for each Page.
-  if (!newAttributes.backgroundElementId) {
-    // The values of x, y, width, height are irrelevant here, however, need to be set.
-    const props = {
-      x: 1,
-      y: 1,
-      width: 1,
-      height: 1,
-      mask: {
-        type: 'rectangle',
-      },
-      isBackground: true,
-    };
-    const backgroundElement = createNewElement('shape', props);
-    newAttributes.elements = [backgroundElement, ...elements];
-    newAttributes.backgroundElementId = backgroundElement.id;
-  } else {
-    // Update reference background element, as we just changed the id
-    // Background element is guaranteed to be first element
-    newAttributes.backgroundElementId = elements[0].id;
-  }
 
   return createNewElement('page', newAttributes);
 };
