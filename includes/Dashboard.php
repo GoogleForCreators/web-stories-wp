@@ -179,11 +179,26 @@ class Dashboard {
 			[],
 			WEBSTORIES_VERSION
 		);
-
+		
 		wp_enqueue_style(
 			self::SCRIPT_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
 			[ 'google-sans' ],
+			$version
+		);
+
+
+		wp_register_style(
+			'roboto',
+			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap',
+			[],
+			WEBSTORIES_VERSION
+		);
+
+		wp_enqueue_style(
+			self::SCRIPT_HANDLE,
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
+			[ 'roboto' ],
 			$version
 		);
 
