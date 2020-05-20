@@ -43,13 +43,15 @@ function MultiSelectionMovable({ selectedElements }) {
   });
 
   const {
-    actions: { updateElementsById },
+    actions: { updateElementsById, setSelectedElementsById },
+    state: { currentPage },
   } = useStory();
   const {
     state: {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
     },
+    actions: { handleSelectElement },
   } = useCanvas();
   const {
     actions: { editorToDataX, editorToDataY, dataToEditorY },
@@ -234,10 +236,20 @@ function MultiSelectionMovable({ selectedElements }) {
         // Let's check if we consider this a drag or a click.
         // In case of a click we should select the element instead.
         if (isClick(inputEvent)) {
-          console.log('isClick');
+          const clickedElement = Object.keys(nodesById).find(
+            (id) =>
+              currentPage.elements[0].id !== id &&
+              nodesById[id].contains(inputEvent.target)
+          );
+          if (clickedElement) {
+            handleSelectElement(clickedElement, inputEvent);
+          } else if (!inputEvent.shiftKey) {
+            // Clear selection.
+            setSelectedElementsById({ elementIds: [] });
+          }
+        } else {
+          onGroupEventEnd({ targets });
         }
-        // Let's still move the targets, too, to avoid inconsistencies (@todo check if better option)
-        onGroupEventEnd({ targets });
       }}
       onRotateGroupStart={({ events }) => {
         onGroupEventStart({ events, isRotate: true });
