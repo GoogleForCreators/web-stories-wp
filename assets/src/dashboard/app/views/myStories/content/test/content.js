@@ -82,4 +82,52 @@ describe('My Stories <Content />', function () {
 
     expect(getAllByTestId('grid-item')).toHaveLength(fakeStories.length);
   });
+
+  it('should show "Create a story to get started!" if no stories are present.', function () {
+    const { getByText } = renderWithTheme(
+      <LayoutProvider>
+        <Content
+          filter={STORY_STATUSES[0]}
+          search={{ keyword: '' }}
+          stories={[]}
+          users={{}}
+          page={{
+            requestNextPage: jest.fn(),
+          }}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 200, height: 300 },
+          }}
+        />
+      </LayoutProvider>
+    );
+
+    expect(getByText('Create a story to get started!')).toBeInTheDocument();
+  });
+
+  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
+    const { getByText } = renderWithTheme(
+      <LayoutProvider>
+        <Content
+          filter={STORY_STATUSES[0]}
+          search={{ keyword: 'scooby dooby doo' }}
+          stories={[]}
+          users={{}}
+          page={{
+            requestNextPage: jest.fn(),
+          }}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 200, height: 300 },
+          }}
+        />
+      </LayoutProvider>
+    );
+
+    expect(
+      getByText(
+        'Sorry, we couldn\'t find any results matching "scooby dooby doo"'
+      )
+    ).toBeInTheDocument();
+  });
 });

@@ -26,6 +26,7 @@ import {
   STORY_SORT_OPTIONS,
   VIEW_STYLE,
   STORY_STATUS,
+  STORY_STATUSES,
 } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
 import { renderWithTheme } from '../../../../../testUtils';
@@ -63,7 +64,7 @@ describe('My Stories <Header />', function () {
     const { getByText } = renderWithTheme(
       <LayoutProvider>
         <Header
-          filter={{ status: 'all', value: STORY_STATUS.ALL }}
+          filter={STORY_STATUSES[0]}
           stories={fakeStories}
           search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
@@ -82,7 +83,7 @@ describe('My Stories <Header />', function () {
     const { getByPlaceholderText, getByText } = renderWithTheme(
       <LayoutProvider>
         <Header
-          filter={{ status: 'all', value: STORY_STATUS.ALL }}
+          filter={STORY_STATUSES[0]}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
@@ -117,12 +118,33 @@ describe('My Stories <Header />', function () {
     expect(getByText('Viewing drafts')).toBeInTheDocument();
   });
 
+  it('should have 3 toggle buttons, one for each status that say how many items belong to that status', function () {
+    const { getByText } = renderWithTheme(
+      <LayoutProvider>
+        <Header
+          filter={STORY_STATUSES[0]}
+          stories={fakeStories}
+          search={{ keyword: '', setKeyword: jest.fn() }}
+          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
+          totalStoriesByStatus={{ all: 19, draft: 9, publish: 10 }}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 200, height: 300 },
+          }}
+        />
+      </LayoutProvider>
+    );
+    expect(getByText('All Stories (19)')).toBeInTheDocument();
+    expect(getByText('Drafts (9)')).toBeInTheDocument();
+    expect(getByText('Published (10)')).toBeInTheDocument();
+  });
+
   it('should call the set keyword function when new text is searched', function () {
     const setKeywordFn = jest.fn();
     const { getByPlaceholderText } = renderWithTheme(
       <LayoutProvider>
         <Header
-          filter={{ status: 'all', value: STORY_STATUS.ALL }}
+          filter={STORY_STATUSES[0]}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: setKeywordFn }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
@@ -145,7 +167,7 @@ describe('My Stories <Header />', function () {
     const { getAllByText, getByText } = renderWithTheme(
       <LayoutProvider>
         <Header
-          filter={{ status: 'all', value: STORY_STATUS.ALL }}
+          filter={STORY_STATUSES[0]}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
