@@ -78,3 +78,7 @@ export const LogoPlaceholder = styled.div(
     background-color: ${theme.colors.gray100};
   `
 );
+
+export const WebStoriesLogo = styled.h1`
+  font-family: ${({ theme }) => theme.typography.family.secondary};
+`;
