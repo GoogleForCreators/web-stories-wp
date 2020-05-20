@@ -47,6 +47,7 @@ import {
   TagsPropType,
   CategoriesPropType,
   StoriesPropType,
+  StoryActionsPropType,
 } from '../../../../types';
 import {
   FilterPropTypes,
@@ -162,12 +163,7 @@ Content.propTypes = {
   search: PropTypes.object,
   sort: SortPropTypes,
   stories: StoriesPropType,
-  storyActions: PropTypes.shape({
-    createTemplateFromStory: PropTypes.func,
-    duplicateStory: PropTypes.func,
-    trashStory: PropTypes.func,
-    updateStory: PropTypes.func,
-  }),
+  storyActions: StoryActionsPropType,
   tags: TagsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
