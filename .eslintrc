@@ -246,7 +246,7 @@
         "babel.config.js",
         "jest-puppeteer.config.js",
         "karma.config.js",
-        "webpack.config.js",
+        "webpack.*.js",
         ".storybook/*.js",
         "tests/js/*.js",
         "tests/e2e/*.js",

@@ -44,3 +44,4 @@ phpstan.neon.dist
 phpunit.xml.dist
 README.md
 webpack.config.js
+webpack.config.test.js
