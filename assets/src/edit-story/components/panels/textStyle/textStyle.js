@@ -131,6 +131,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           }
         />
         <ToggleButton
+          data-testid="boldToggle"
           icon={<BoldIcon />}
           value={isBold}
           iconWidth={9}

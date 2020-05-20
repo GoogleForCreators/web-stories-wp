@@ -31,7 +31,7 @@ function getBrightnessFromPattern(pattern = null) {
   }
 
   const { type = 'solid' } = pattern;
-  if (!['solid', 'radial', 'linear', 'conic'].includes(type)) {
+  if (!['solid', 'radial', 'linear'].includes(type)) {
     throw new Error(`Unknown pattern type: '${type}'`);
   }
 
