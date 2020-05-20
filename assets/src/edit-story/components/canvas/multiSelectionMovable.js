@@ -191,6 +191,35 @@ function MultiSelectionMovable({ selectedElements }) {
     };
   };
 
+  // Let's check if we consider this a drag or a click, In case of a click handle click instead.
+  // We are doing this here in Moveable selection since it takes over the mouseup event
+  // and it can be captured here and not in the frame element.
+  const clickHandled = (inputEvent) => {
+    if (
+      isClick(
+        inputEvent,
+        eventTracker.current.time,
+        eventTracker.current.coordinates
+      )
+    ) {
+      const clickedElement = Object.keys(nodesById).find(
+        (id) =>
+          currentPage.elements[0].id !== id &&
+          nodesById[id].contains(inputEvent.target)
+      );
+      if (clickedElement) {
+        handleSelectElement(clickedElement, inputEvent);
+      } else if (!inputEvent.shiftKey) {
+        // Clear selection.
+        setSelectedElementsById({ elementIds: [] });
+      }
+      // Click was handled.
+      return true;
+    }
+    // No click was found/handled.
+    return false;
+  };
+
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Movable
@@ -218,27 +247,7 @@ function MultiSelectionMovable({ selectedElements }) {
       }}
       onDragGroupEnd={({ targets, inputEvent }) => {
         setIsDragging(false);
-        // Let's check if we consider this a drag or a click.
-        // In case of a click we should select the element instead.
-        if (
-          isClick(
-            inputEvent,
-            eventTracker.current.time,
-            eventTracker.current.coordinates
-          )
-        ) {
-          const clickedElement = Object.keys(nodesById).find(
-            (id) =>
-              currentPage.elements[0].id !== id &&
-              nodesById[id].contains(inputEvent.target)
-          );
-          if (clickedElement) {
-            handleSelectElement(clickedElement, inputEvent);
-          } else if (!inputEvent.shiftKey) {
-            // Clear selection.
-            setSelectedElementsById({ elementIds: [] });
-          }
-        } else {
+        if (!clickHandled(inputEvent)) {
           onGroupEventEnd({ targets });
         }
       }}
