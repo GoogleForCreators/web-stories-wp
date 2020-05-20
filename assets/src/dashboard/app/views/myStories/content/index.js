@@ -69,7 +69,7 @@ function Content({
   users,
   view,
 }) {
-  const storiesView = useMemo(() => {
+  const contentView = useMemo(() => {
     switch (view.style) {
       case VIEW_STYLE.GRID:
         return (
@@ -116,7 +116,7 @@ function Content({
     if (stories.length > 0) {
       return (
         <StandardViewContentGutter>
-          {storiesView}
+          {contentView}
           <InfiniteScroller
             canLoadMore={!allPagesFetched}
             isLoading={isLoading}
@@ -140,7 +140,7 @@ function Content({
     allPagesFetched,
     page.requestNextPage,
     search.keyword,
-    storiesView,
+    contentView,
   ]);
 
   return (
