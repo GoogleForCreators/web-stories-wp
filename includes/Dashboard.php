@@ -179,14 +179,6 @@ class Dashboard {
 			[],
 			WEBSTORIES_VERSION
 		);
-		
-		wp_enqueue_style(
-			self::SCRIPT_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
-			[ 'google-sans' ],
-			$version
-		);
-
 
 		wp_register_style(
 			'roboto',
@@ -194,11 +186,11 @@ class Dashboard {
 			[],
 			WEBSTORIES_VERSION
 		);
-
+		
 		wp_enqueue_style(
 			self::SCRIPT_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
-			[ 'roboto' ],
+			[ 'google-sans', 'roboto' ],
 			$version
 		);
 
