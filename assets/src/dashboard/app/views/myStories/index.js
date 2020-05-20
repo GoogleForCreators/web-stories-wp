@@ -22,7 +22,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useContext, useEffect, useMemo } from 'react';
 
 /**
@@ -36,6 +35,7 @@ import {
   Layout,
   StandardViewContentGutter,
   ToggleButtonGroup,
+  DefaultParagraph1,
 } from '../../../components';
 import {
   VIEW_STYLE,
@@ -55,16 +55,7 @@ import {
   StoryListView,
   HeaderToggleButtonContainer,
 } from '../shared';
-
-const DefaultBodyText = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-weight: ${({ theme }) => theme.fonts.body1.weight};
-  font-size: ${({ theme }) => theme.fonts.body1.size}px;
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing}em;
-  color: ${({ theme }) => theme.colors.gray200};
-  margin: 40px 20px;
-`;
+import { useConfig } from '../../config';
 
 function MyStories() {
   const {
@@ -91,6 +82,8 @@ function MyStories() {
     filters: STORY_STATUSES,
     totalPages,
   });
+
+  const { wpListURL } = useConfig();
 
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
@@ -179,13 +172,14 @@ function MyStories() {
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
+        wpListURL={wpListURL}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
         )}
       />
     );
-  }, [sort, resultsLabel, view]);
+  }, [sort, resultsLabel, view, wpListURL]);
 
   const BodyContent = useMemo(() => {
     if (orderedStories.length > 0) {
@@ -205,9 +199,9 @@ function MyStories() {
     }
 
     return (
-      <DefaultBodyText>
+      <DefaultParagraph1>
         {__('Create a story to get started!', 'web-stories')}
-      </DefaultBodyText>
+      </DefaultParagraph1>
     );
   }, [
     orderedStories.length,

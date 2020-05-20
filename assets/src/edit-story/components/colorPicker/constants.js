@@ -20,4 +20,3 @@ export const LINE_WIDTH = 12;
 export const TYPE_SOLID = 'solid';
 export const TYPE_LINEAR = 'linear';
 export const TYPE_RADIAL = 'radial';
-export const TYPE_CONIC = 'conic';

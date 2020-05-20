@@ -102,7 +102,7 @@ function SelectionCanvas({ children }) {
 
   const onMouseDown = (evt) => {
     // Selecting the background element should be handeled at the frameElement level
-    if (!nodesById[currentPage.backgroundElementId].contains(evt.target)) {
+    if (!nodesById[currentPage.elements[0].id].contains(evt.target)) {
       if (selectedElements.length) {
         clearSelection();
       }

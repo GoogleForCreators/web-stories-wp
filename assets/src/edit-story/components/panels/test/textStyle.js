@@ -73,6 +73,7 @@ function Wrapper({ children }) {
           ],
         },
         actions: {
+          maybeEnqueueFontStyle: () => Promise.resolve(),
           getFontByName: () => ({
             name: 'Neu Font',
             value: 'Neu Font',
@@ -420,9 +421,9 @@ describe('Panels/TextStyle', () => {
   });
 
   describe('FontControls', () => {
-    it('should select font', () => {
+    it('should select font', async () => {
       const { pushUpdate } = renderTextStyle([textElement]);
-      act(() => controls.font.onChange('Neu Font'));
+      await act(() => controls.font.onChange('Neu Font'));
       expect(pushUpdate).toHaveBeenCalledWith(
         {
           font: {
@@ -441,9 +442,9 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should select font weight', () => {
+    it('should select font weight', async () => {
       const { pushUpdate } = renderTextStyle([textElement]);
-      act(() => controls['font.weight'].onChange('300'));
+      await act(() => controls['font.weight'].onChange('300'));
       const updatingFunction = pushUpdate.mock.calls[0][0];
       const resultOfUpdating = updatingFunction({ content: 'Hello world' });
       expect(resultOfUpdating).toStrictEqual(
@@ -454,17 +455,17 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should select font size', () => {
+    it('should select font size', async () => {
       const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
       const input = getByTestId('font.size');
-      fireEvent.change(input, { target: { value: '32' } });
+      await fireEvent.change(input, { target: { value: '32' } });
       expect(pushUpdate).toHaveBeenCalledWith({ fontSize: 32 });
     });
 
-    it('should select font size to empty value', () => {
+    it('should select font size to empty value', async () => {
       const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
       const input = getByTestId('font.size');
-      fireEvent.change(input, { target: { value: '' } });
+      await fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ fontSize: '' });
     });
   });

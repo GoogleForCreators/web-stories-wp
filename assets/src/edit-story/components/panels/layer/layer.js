@@ -111,7 +111,7 @@ function Layer({ layer }) {
   const {
     state: { currentPage },
   } = useStory();
-  const isBackground = currentPage.backgroundElementId === layer.id;
+  const isBackground = currentPage.elements[0].id === layer.id;
   const showPreview = !isBackground || layer.type !== 'shape';
 
   return (

@@ -21,12 +21,16 @@ import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { moveArrayElement } from './utils';
 
 /**
- * Set background element on the current page to the given id.
+ * Set background element on the current page to element matching the given id.
  *
- * If element id is null, background id is cleared for the page.
+ * If element id is null, default background element is restored.
  *
- * If page had a background element before, that element is deleted!
- * And if that element was selected, selection is cleared.
+ * If page had a background element before, that element is removed!
+ * If that element was the default background element, it will be remembered as such.
+ * If the removed background element was in selection, selection is cleared.
+ *
+ * Default background element can never be "set to nothing" - only replaced by another
+ * element.
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
@@ -37,19 +41,22 @@ function setBackgroundElement(state, { elementId }) {
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
 
   const page = state.pages[pageIndex];
+  const currentBackgroundElement = page.elements[0];
 
   let newPage;
   let newSelection = state.selection;
 
   // If new id is null, clear background attribute and proceed
   if (elementId === null) {
-    if (!page.backgroundElementId) {
-      // Nothing to do here, there isn't any background to clear
+    if (currentBackgroundElement.isDefaultBackground) {
+      // Nothing to do here, we can't unset default background
       return state;
     }
 
+    const defaultBackgroundElement = page.defaultBackgroundElement;
+
     // Unset isBackground for the element, too.
-    const updatedElements = page.elements.map((element) => {
+    const elementsWithoutBackground = page.elements.map((element) => {
       if (element.isBackground) {
         return {
           ...element,
@@ -60,43 +67,49 @@ function setBackgroundElement(state, { elementId }) {
     });
     newPage = {
       ...page,
-      elements: updatedElements,
-      backgroundElementId: null,
+      elements: [defaultBackgroundElement, ...elementsWithoutBackground],
       backgroundOverlay: OverlayType.NONE,
     };
   } else {
     // Does the element even exist or is it already background
-    let elementPosition = page.elements.findIndex(({ id }) => id === elementId);
-    if (elementPosition === -1 || page.backgroundElementId === elementId) {
+    const elementPosition = page.elements.findIndex(
+      ({ id }) => id === elementId
+    );
+    const isBackground = elementPosition === 0;
+    const exists = elementPosition !== -1;
+    if (!exists || isBackground) {
       return state;
     }
-    let pageElements = page.elements;
 
-    // Check if we already had a background id.
-    const hadBackground = Boolean(page.backgroundElementId);
-    if (hadBackground) {
-      // If so, slice first element out and update position
-      pageElements = pageElements.slice(1);
-      elementPosition = elementPosition - 1;
+    // If current bg is default, save it as such
+    const wasDefault = currentBackgroundElement.isDefaultBackground;
+    const defaultBackgroundElement = wasDefault
+      ? currentBackgroundElement
+      : page.defaultBackgroundElement;
 
-      // Also remove old element from selection
-      if (state.selection.includes(page.backgroundElementId)) {
-        newSelection = state.selection.filter(
-          (id) => id !== page.backgroundElementId
-        );
-      }
+    // Slice first element out and update position
+    const pageElements = page.elements.slice(1);
+    const currentPosition = elementPosition - 1;
+
+    // Also remove old element from selection
+    if (state.selection.includes(currentBackgroundElement.id)) {
+      newSelection = state.selection.filter(
+        (id) => id !== currentBackgroundElement.id
+      );
     }
 
     // Reorder elements and set element opacity to 100% because backgrounds
     // cannot be transparent.
-    const newElements = moveArrayElement(pageElements, elementPosition, 0).map(
+    const newElements = moveArrayElement(pageElements, currentPosition, 0).map(
       (element) => {
         // Set isBackground for the element.
         if (element.id === elementId) {
           return {
             ...element,
-            opacity: 100,
             isBackground: true,
+            ...(Object.prototype.hasOwnProperty.call(element, 'opacity') && {
+              opacity: 100,
+            }),
           };
         }
         return element;
@@ -110,7 +123,7 @@ function setBackgroundElement(state, { elementId }) {
 
     newPage = {
       ...page,
-      backgroundElementId: elementId,
+      defaultBackgroundElement,
       backgroundOverlay: OverlayType.NONE,
       elements: newElements,
     };

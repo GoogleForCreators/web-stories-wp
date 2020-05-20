@@ -38,7 +38,7 @@ export const ColorStopPropType = PropTypes.shape({
 });
 
 export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'radial', 'conic']),
+  type: PropTypes.oneOf(['solid', 'linear', 'radial']),
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number,
@@ -102,7 +102,6 @@ StoryPropTypes.box = PropTypes.exact({
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
-  backgroundElementId: PropTypes.string,
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 

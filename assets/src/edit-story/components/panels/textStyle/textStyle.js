@@ -40,6 +40,8 @@ import { ReactComponent as BoldIcon } from '../../../icons/bold_icon.svg';
 import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
 import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
 import { getCommonValue } from '../utils';
+import { useFont } from '../../../app/font';
+import stripHTML from '../../../utils/stripHTML';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const BoxedNumeric = styled(Numeric)`
@@ -62,11 +64,14 @@ const Space = styled.div`
 `;
 
 function StylePanel({ selectedElements, pushUpdate }) {
+  const {
+    actions: { maybeEnqueueFontStyle },
+  } = useFont();
   const textAlign = getCommonValue(selectedElements, 'textAlign');
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
 
   const {
-    textInfo: { isBold, isItalic, isUnderline, letterSpacing },
+    textInfo: { isBold, isItalic, isUnderline, letterSpacing, fontWeight },
     handlers: {
       handleClickBold,
       handleClickItalic,
@@ -126,6 +131,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           }
         />
         <ToggleButton
+          data-testid="boldToggle"
           icon={<BoldIcon />}
           value={isBold}
           iconWidth={9}
@@ -137,7 +143,19 @@ function StylePanel({ selectedElements, pushUpdate }) {
           value={isItalic}
           iconWidth={10}
           iconHeight={10}
-          onChange={handleClickItalic}
+          onChange={async (value) => {
+            await maybeEnqueueFontStyle(
+              selectedElements.map(({ font, content }) => {
+                return {
+                  font,
+                  fontStyle: value ? 'italic' : 'normal',
+                  fontWeight,
+                  content: stripHTML(content),
+                };
+              })
+            );
+            handleClickItalic(value);
+          }}
         />
         <ToggleButton
           icon={<UnderlineIcon />}

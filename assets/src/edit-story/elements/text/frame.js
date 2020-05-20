@@ -140,6 +140,7 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
   return (
     <Element
       ref={elementRef}
+      data-testid="textFrame"
       dangerouslySetInnerHTML={{ __html: content }}
       {...props}
     />
