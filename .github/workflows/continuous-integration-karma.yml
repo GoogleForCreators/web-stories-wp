@@ -39,9 +39,9 @@ jobs:
           CI: true
 
       - name: Run integration tests
-        run: npm run test:karma -- --headless --snapshots
+        run: npm run test:karma -- --headless --snapshots --coverage
 
       - name: Uplaod code coverage report
         uses: codecov/codecov-action@v1
         with:
-          file: build/karma-coverage/lcov.info
+          file: build/logs/karma-coverage/lcov.info

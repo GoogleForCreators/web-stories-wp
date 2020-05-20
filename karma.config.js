@@ -92,7 +92,7 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'],
+    reporters: config.coverage ? ['progress', 'coverage'] : ['progress'],
 
     // web server port
     port: 9876,
@@ -132,7 +132,7 @@ module.exports = function (config) {
     // Configure coverage output
     coverageReporter: {
       type: 'lcov',
-      dir: 'build/karma-coverage',
+      dir: 'build/logs/karma-coverage',
       includeAllSources: true,
     },
   });
