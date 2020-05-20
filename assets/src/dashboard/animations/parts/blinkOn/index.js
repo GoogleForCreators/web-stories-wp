@@ -23,7 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import SimpleAnimation from '../components/simpleAnimation';
+import SimpleAnimation from '../simpleAnimation';
 import generateLookupMap from '../../utils/generateLookupMap';
 import padArray from '../../utils/padArray';
 

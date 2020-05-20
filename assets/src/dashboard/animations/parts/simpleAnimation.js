@@ -23,10 +23,10 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, WithAnimation } from '../../outputs';
-import getInitialStyleFromKeyframes from '../../utils/getInitialStyleFromKeyframes';
-import { WAAPIAnimationProps, AMPAnimationProps } from '../types';
-import FullSizeAbsolute from './fullSizeAbsolute';
+import { AnimatorOutput, WithAnimation } from '../outputs';
+import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
+import { WAAPIAnimationProps, AMPAnimationProps } from './types';
+import FullSizeAbsolute from './components/fullSizeAbsolute';
 
 function SimpleAnimation(animationName, keyframes, timings) {
   const id = uuidv4();

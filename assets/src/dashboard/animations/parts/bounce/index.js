@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import SimpleAnimation from '../components/simpleAnimation';
+import SimpleAnimation from '../simpleAnimation';
 
 const keyframes = {
   transform: [
