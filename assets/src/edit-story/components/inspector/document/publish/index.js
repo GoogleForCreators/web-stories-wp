@@ -109,7 +109,7 @@ function PublishPanel() {
   useKeyDownEffect(
     dateFieldRef,
     { key: ['space', 'enter'] },
-    () => setShowDatePicker( ( val ) => !val ),
+    () => setShowDatePicker((val) => !val),
     []
   );
 

@@ -52,18 +52,14 @@ function LibraryTabs() {
     [tab, setTab, panes]
   );
 
-  useKeyDownEffect(
-    ref,
-    'left',
-    () => handleNavigation(isRTL ? 1 : -1),
-    [handleNavigation, isRTL]
-  );
-  useKeyDownEffect(
-    ref,
-    'right',
-    () => handleNavigation(isRTL ? -1 : 1),
-    [handleNavigation, isRTL]
-  );
+  useKeyDownEffect(ref, 'left', () => handleNavigation(isRTL ? 1 : -1), [
+    handleNavigation,
+    isRTL,
+  ]);
+  useKeyDownEffect(ref, 'right', () => handleNavigation(isRTL ? -1 : 1), [
+    handleNavigation,
+    isRTL,
+  ]);
 
   return (
     <Tabs ref={ref}>
