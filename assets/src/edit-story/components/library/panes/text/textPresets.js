@@ -48,10 +48,7 @@ const PRESETS = [
       'web-stories'
     )}</span>`,
     fontSize: dataFontEm(2),
-    font: {
-      family: 'Open Sans',
-      service: 'fonts.google.com',
-    },
+    font: TEXT_ELEMENT_DEFAULT_FONT,
     width: DEFAULT_ELEMENT_WIDTH,
   },
   {
@@ -62,10 +59,7 @@ const PRESETS = [
       'web-stories'
     )}</span>`,
     fontSize: dataFontEm(1.5),
-    font: {
-      family: 'Open Sans',
-      service: 'fonts.google.com',
-    },
+    font: TEXT_ELEMENT_DEFAULT_FONT,
     width: DEFAULT_ELEMENT_WIDTH,
   },
   {
