@@ -37,13 +37,11 @@ const StyledCard = styled.div`
   }
 `;
 
-const CardGridItem = ({ children, isTemplate }) => {
-  return (
-    <StyledCard data-testid={'grid-item'} isTemplate={isTemplate}>
-      {children}
-    </StyledCard>
-  );
-};
+const CardGridItem = ({ children, isTemplate }) => (
+  <StyledCard data-testid={'grid-item'} isTemplate={isTemplate}>
+    {children}
+  </StyledCard>
+);
 
 CardGridItem.propTypes = {
   isTemplate: PropTypes.bool,

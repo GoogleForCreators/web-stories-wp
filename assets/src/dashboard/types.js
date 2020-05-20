@@ -72,3 +72,9 @@ export const StoryActionsPropType = PropTypes.shape({
   trashStory: PropTypes.func,
   updateStory: PropTypes.func,
 });
+
+export const TotalStoriesByStatusPropType = PropTypes.shape({
+  all: PropTypes.number,
+  draft: PropTypes.number,
+  publish: PropTypes.number,
+});

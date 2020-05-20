@@ -22,7 +22,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 
 /**
@@ -30,25 +29,27 @@ import { useMemo } from 'react';
  */
 import { Layout, ToggleButtonGroup } from '../../../../components';
 import {
-  STORY_STATUSES,
   DASHBOARD_VIEWS,
+  STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
 } from '../../../../constants';
-import { StoriesPropType } from '../../../../types';
+import {
+  StoriesPropType,
+  TotalStoriesByStatusPropType,
+} from '../../../../types';
 import {
   FilterPropTypes,
-  ViewPropTypes,
   SearchPropTypes,
   SortPropTypes,
+  ViewPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
-
+import { useConfig } from '../../../config';
 import {
   BodyViewOptions,
-  PageHeading,
   HeaderToggleButtonContainer,
+  PageHeading,
 } from '../../shared';
-import { useConfig } from '../../../config';
 
 function Header({ filter, search, sort, stories, totalStoriesByStatus, view }) {
   const { wpListURL } = useConfig();
@@ -123,11 +124,7 @@ Header.propTypes = {
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
   stories: StoriesPropType,
-  totalStoriesByStatus: PropTypes.shape({
-    all: PropTypes.number,
-    draft: PropTypes.number,
-    publish: PropTypes.number,
-  }),
+  totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
 };
 

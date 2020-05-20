@@ -40,8 +40,6 @@ import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../../constants';
-import FontProvider from '../../../font/fontProvider';
-import { NoResults, StoryGridView, StoryListView } from '../../shared';
 import {
   UsersPropType,
   TagsPropType,
@@ -55,6 +53,8 @@ import {
   PagePropTypes,
   SortPropTypes,
 } from '../../../../utils/useStoryView';
+import FontProvider from '../../../font/fontProvider';
+import { NoResults, StoryGridView, StoryListView } from '../../shared';
 
 function Content({
   allPagesFetched,
