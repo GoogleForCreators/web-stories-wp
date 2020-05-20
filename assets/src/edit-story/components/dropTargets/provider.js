@@ -82,11 +82,25 @@ function DropTargetsProvider({ children }) {
         return;
       }
 
+      const {
+        scale = 100,
+        focalX = 50,
+        focalY = 50,
+        flip = { vertical: false, horizontal: false },
+      } =
+        currentPage.elements.find(({ id }) => id === selfId) ??
+        getElementProperties(resource.type, {
+          resource,
+        });
+
       const dropTargetId = getDropTargetFromCursor(x, y, selfId);
 
       if (dropTargetId && dropTargetId !== activeDropTargetId) {
         pushTransform(dropTargetId, {
-          dropTargets: { active: true, replacement: resource },
+          dropTargets: {
+            active: true,
+            replacement: { resource, scale, focalX, focalY, flip },
+          },
         });
         if (selfId) {
           pushTransform(selfId, {

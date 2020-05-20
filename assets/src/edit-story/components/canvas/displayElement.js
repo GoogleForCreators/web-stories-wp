@@ -37,10 +37,10 @@ import WithMask from '../../masks/display';
 import { generateOverlayStyles } from '../../utils/backgroundOverlay';
 
 const Wrapper = styled.div`
-	${elementWithPosition}
-	${elementWithSize}
-	${elementWithRotation}
-	contain: layout paint;
+  ${elementWithPosition}
+  ${elementWithSize}
+  ${elementWithRotation}
+  contain: layout paint;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 
@@ -67,19 +67,20 @@ function DisplayElement({ element, previewMode, page }) {
   const replacementElement = replacement
     ? {
         ...element,
-        type: replacement.type,
-        resource: replacement,
-        scale: element.scale || 100,
-        focalX: element.focalX || 50,
-        focalY: element.focalY || 50,
-        isFill: element.isFill || false,
+        type: replacement.resource.type,
+        resource: replacement.resource,
+        scale: replacement.scale,
+        focalX: replacement.focalX,
+        focalY: replacement.focalY,
+        flip: replacement.flip,
+        isFill: element.isFill,
       }
     : null;
 
   const { id, opacity, type, isBackground } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
-    getDefinitionForType(replacement?.type) || {};
+    getDefinitionForType(replacement?.resource.type) || {};
 
   const wrapperRef = useRef(null);
 
@@ -119,14 +120,24 @@ function DisplayElement({ element, previewMode, page }) {
         previewMode={previewMode}
       >
         <Display element={element} previewMode={previewMode} box={box} />
-        {!previewMode && (
-          <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
-            {replacementElement && (
-              <Replacement element={replacementElement} box={box} />
-            )}
-          </ReplacementContainer>
-        )}
       </WithMask>
+      {!previewMode && (
+        <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
+          {replacementElement && (
+            <WithMask
+              element={replacementElement}
+              fill={true}
+              box={box}
+              style={{
+                opacity: opacity ? opacity / 100 : null,
+              }}
+              previewMode={previewMode}
+            >
+              <Replacement element={replacementElement} box={box} />
+            </WithMask>
+          )}
+        </ReplacementContainer>
+      )}
       {Boolean(isBackground) && Boolean(page?.backgroundOverlay) && (
         <BackgroundOverlay
           style={generateOverlayStyles(page?.backgroundOverlay)}
