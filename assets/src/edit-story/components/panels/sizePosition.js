@@ -100,7 +100,7 @@ function SizePositionPanel({
     state: { currentPage },
     actions: { combineElements },
   } = useStory();
-  const currentBackgroundId = currentPage.elements[0].id;
+  const currentBackgroundId = currentPage?.elements[0].id;
 
   const isSingleElement = selectedElements.length === 1;
   const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
