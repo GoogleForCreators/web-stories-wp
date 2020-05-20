@@ -213,6 +213,9 @@
       "rules": {
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error"
+      },
+      "globals": {
+        "karmaPuppeteer": "readonly"
       }
     },
     {

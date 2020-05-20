@@ -47,8 +47,12 @@ export default function useMediaPicker({
   } = useConfig();
   const { showSnackbar } = useSnackbar();
   useEffect(() => {
-    // Work around that forces default tab as upload tab.
-    wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
+    try {
+      // Work around that forces default tab as upload tab.
+      wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
+    } catch (e) {
+      // Silence.
+    }
   });
   useEffect(() => {
     try {

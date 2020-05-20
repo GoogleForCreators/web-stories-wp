@@ -74,10 +74,6 @@ const Radial = styled(TypeSelector)`
   background-image: radial-gradient(white, ${insertActiveColor});
 `;
 
-const Conic = styled(TypeSelector)`
-  background-image: conic-gradient(white, ${insertActiveColor});
-`;
-
 function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
   const setToLinear = useCallback(() => setToGradient('linear'), [
     setToGradient,
@@ -85,7 +81,6 @@ function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
   const setToRadial = useCallback(() => setToGradient('radial'), [
     setToGradient,
   ]);
-  const setToConic = useCallback(() => setToGradient('conic'), [setToGradient]);
 
   const solid = useRef();
   useEffect(() => {
@@ -111,11 +106,6 @@ function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
             isActive={type === 'radial'}
             onClick={setToRadial}
             aria-label={__('Radial gradient pattern type', 'web-stories')}
-          />
-          <Conic
-            isActive={type === 'conic'}
-            onClick={setToConic}
-            aria-label={__('Conic gradient pattern type', 'web-stories')}
           />
         </>
       )}

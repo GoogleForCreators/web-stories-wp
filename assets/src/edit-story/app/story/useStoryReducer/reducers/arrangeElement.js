@@ -62,8 +62,8 @@ function arrangeElement(state, { elementId, position }) {
 
   const page = state.pages[pageIndex];
 
-  // Abort if there's less than two elements (nothing to rearrange)
-  if (page.elements.length < 2) {
+  // Abort if there's less than three elements (nothing to rearrange as first is bg)
+  if (page.elements.length < 3) {
     return state;
   }
 
@@ -71,11 +71,11 @@ function arrangeElement(state, { elementId, position }) {
     ({ id }) => id === idToArrange
   );
 
-  if (currentPosition === -1 || page.backgroundElementId === idToArrange) {
+  if (currentPosition === -1 || page.elements[0].id === idToArrange) {
     return state;
   }
 
-  const minPosition = page.backgroundElementId ? 1 : 0;
+  const minPosition = 1;
   const maxPosition = page.elements.length - 1;
   const newPosition = getAbsolutePosition({
     currentPosition,

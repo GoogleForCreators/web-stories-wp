@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -65,6 +65,8 @@ describe('useMediaPicker', () => {
     const evt = {
       preventDefault: jest.fn(),
     };
-    expect(openMediaPicker(evt)).toBe(false);
+    act(() => {
+      expect(openMediaPicker(evt)).toBe(false);
+    });
   });
 });
