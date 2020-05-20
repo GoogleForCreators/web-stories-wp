@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -32,6 +32,7 @@ import {
 import formattedStoriesArray from '../../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../../storybookUtils/formattedUsersObject';
 import Content from '../';
+import { usePagePreviewSize } from '../../../../../utils';
 
 export default {
   title: 'Dashboard/Components/myStories/Content',
@@ -85,33 +86,63 @@ const defaultProps = {
   users: formattedUsersObject,
   view: view,
 };
-export const _default = () => (
-  <Layout.Provider>
-    <Content {...defaultProps} />
-  </Layout.Provider>
-);
+
+const StorybookLayoutContainer = styled.div`
+  margin-top: 40px;
+  height: 100vh;
+`;
+export const _default = () => {
+  const { pageSize } = usePagePreviewSize({
+    isGrid: true,
+  });
+
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Content {...defaultProps} view={{ ...view, pageSize }} />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
+};
 
 export const NoStories = () => (
   <Layout.Provider>
-    <Content {...defaultProps} stories={[]} />
+    <StorybookLayoutContainer>
+      <Content {...defaultProps} stories={[]} />
+    </StorybookLayoutContainer>
   </Layout.Provider>
 );
 
-export const AllDataFetched = () => (
-  <Layout.Provider>
-    <Content {...defaultProps} allPagesFetched={true} />
-  </Layout.Provider>
-);
+export const AllDataFetched = () => {
+  const { pageSize } = usePagePreviewSize({
+    isGrid: true,
+  });
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Content
+          {...defaultProps}
+          allPagesFetched={true}
+          view={{ ...view, pageSize }}
+        />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
+};
 
-export const AllDataFetchedAsList = () => (
-  <Layout.Provider>
-    <Content
-      {...defaultProps}
-      allPagesFetched={true}
-      view={{
-        ...view,
-        style: VIEW_STYLE.LIST,
-      }}
-    />
-  </Layout.Provider>
-);
+export const AllDataFetchedAsList = () => {
+  const { pageSize } = usePagePreviewSize({
+    thumbnailMode: true,
+  });
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Content
+          {...defaultProps}
+          allPagesFetched={true}
+          view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
+        />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
+};
