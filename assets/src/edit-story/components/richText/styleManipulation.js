@@ -92,13 +92,13 @@ export function getPrefixStyleForCharacter(styles, prefix) {
  */
 export function getPrefixStylesInSelection(editorState, prefix) {
   const selection = editorState.getSelection();
-  if (selection.isCollapsed()) {
+  const styleSets = getAllStyleSetsInSelection(editorState);
+  if (selection.isCollapsed() || styleSets.length === 0) {
     return [
       getPrefixStyleForCharacter(editorState.getCurrentInlineStyle(), prefix),
     ];
   }
 
-  const styleSets = getAllStyleSetsInSelection(editorState);
   const styles = new Set();
   styleSets.forEach((styleSet) =>
     styles.add(getPrefixStyleForCharacter(styleSet, prefix))
