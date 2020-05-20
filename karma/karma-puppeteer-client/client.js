@@ -15,7 +15,6 @@
  */
 
 ;(function (global) {
-  /* global karmaPuppeteer */
   'use strict'
 
   function noCleanup() {}

@@ -45,9 +45,9 @@ export const UPDATE_STORY = 'UPDATE_STORY';
 export const RESTORE = 'RESTORE';
 
 // Reserved property names for pages and elements.
-export const PAGE_RESERVED_PROPERTIES = [
+export const PAGE_RESERVED_PROPERTIES = ['id', 'elements'];
+export const ELEMENT_RESERVED_PROPERTIES = [
   'id',
-  'elements',
-  'backgroundElementId',
+  'isBackground',
+  'isDefaultBackground',
 ];
-export const ELEMENT_RESERVED_PROPERTIES = ['id'];

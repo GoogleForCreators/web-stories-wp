@@ -40,10 +40,11 @@ const INITIAL_STATE = {
  * - All pages have a elements array.
  * - If there's at least one page, current page points to a valid page.
  * - Selection is always a unique array (and never null, never has duplicates).
- * - Pages always have a backgroundElementId property.
+ * - Pages always have a background element which is the bottom-most element
+ * - Pages are created with a default background element, which will be remembered even as other elements become background
+ * - If a page is ever set to not have a background element, the default one will be inserted instead
  * - A page can only have non-duplicated element ids, however two different pages can have the same element id.
- * - If a page has non-empty background element, it will be the id of the first element in the elements array.
- * - If selection has multiple elements, it can never include the background element.
+ * - If selection has multiple elements, it can never include the bottom-most (background) element.
  *
  * Invariants *not* kept by the system:
  * - New pages and objects aren't checked for id's and id's aren't validated for type.
