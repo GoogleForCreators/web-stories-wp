@@ -21,9 +21,9 @@ import { render } from '@testing-library/react';
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import { WAAPI } from '..';
+import { AnimationPart } from '..';
 
-describe('WAAPI', () => {
+describe('AnimationPart', () => {
   /**
    * These aren't defined in jsdom so
    * can't mock. So instead just adding
@@ -52,15 +52,15 @@ describe('WAAPI', () => {
    * to a react component as new animations
    * are created
    */
-  it.each(Object.keys(ANIMATION_TYPES))(
+  it.each(Object.values(ANIMATION_TYPES))(
     'type: %s returns a react component',
     (type) => {
       const args = {};
-      const WAAPIWrapper = WAAPI(type, args);
+      const { WAAPIAnimation } = AnimationPart(type, args);
       const { getByTestId } = render(
-        <WAAPIWrapper hoistAnimation={() => {}}>
+        <WAAPIAnimation hoistAnimation={() => {}}>
           <div data-testid="child-rendered" />
-        </WAAPIWrapper>
+        </WAAPIAnimation>
       );
       expect(getByTestId('child-rendered')).toBeDefined();
     }

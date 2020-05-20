@@ -13,18 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 
-export const WAAPIAnimationProps = {
-  children: PropTypes.node.isRequired,
-  hoistAnimation: PropTypes.func,
+function WithAnimation({ id, style, animationStyle, useContainer, children }) {
+  return useContainer ? (
+    <div
+      style={{
+        clipPath: 'inset(0)',
+        ...style,
+      }}
+    >
+      <div id={id} style={{ width: '100%', height: '100%', ...animationStyle }}>
+        {children}
+      </div>
+    </div>
+  ) : (
+    <div id={id} style={{ ...style, ...animationStyle }}>
+      {children}
+    </div>
+  );
+}
+
+WithAnimation.propTypes = {
+  id: PropTypes.string,
+  style: PropTypes.object,
+  animationStyle: PropTypes.object,
+  useContainer: PropTypes.bool,
+  children: PropTypes.node,
 };
 
-export const AMPAnimationProps = {
-  children: PropTypes.node,
-  style: PropTypes.object,
-  prefixId: PropTypes.string,
+WithAnimation.defaultProps = {
+  style: {},
+  animationStyle: {},
 };
+
+export default WithAnimation;

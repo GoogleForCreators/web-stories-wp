@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES } from '../constants';
-import { AnimationBounce } from './bounce';
+import useStoryAnimationContext from './useStoryAnimationContext';
 
-function throughput() {
-  return {
-    id: -1,
-    keyframes: {},
-    WAAPIAnimation: ({ children }) => children,
-    AMPAnimation: ({ children }) => children,
-    AMPAnimator: () => {},
-  };
+function AMPAnimators() {
+  const {
+    state: { providerId, animationTargets },
+    actions: { getAnimationParts },
+  } = useStoryAnimationContext();
+
+  return animationTargets.reduce(
+    (animators, target) => [
+      ...animators,
+      ...getAnimationParts(target).map(({ id, AMPAnimator }) => (
+        <AMPAnimator key={id} prefixId={providerId} />
+      )),
+    ],
+    []
+  );
 }
 
-export function AnimationPart(type, args) {
-  const generator =
-    {
-      [ANIMATION_TYPES.BOUNCE]: AnimationBounce,
-    }[type] || throughput;
-
-  return generator(args);
-}
+export default AMPAnimators;
