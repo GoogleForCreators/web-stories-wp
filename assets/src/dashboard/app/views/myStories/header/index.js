@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import { useMemo } from 'react';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -44,16 +44,21 @@ import {
   ViewPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
-import { useConfig } from '../../../config';
 import {
   BodyViewOptions,
   HeaderToggleButtonContainer,
   PageHeading,
 } from '../../shared';
 
-function Header({ filter, search, sort, stories, totalStoriesByStatus, view }) {
-  const { wpListURL } = useConfig();
-
+function Header({
+  filter,
+  search,
+  sort,
+  stories,
+  totalStoriesByStatus,
+  view,
+  wpListURL,
+}) {
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
     isActiveSearch: Boolean(search.keyword),
@@ -126,6 +131,7 @@ Header.propTypes = {
   stories: StoriesPropType,
   totalStoriesByStatus: TotalStoriesByStatusPropType,
   view: ViewPropTypes.isRequired,
+  wpListURL: PropTypes.string,
 };
 
 export default Header;

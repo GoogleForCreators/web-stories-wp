@@ -26,6 +26,7 @@ import { ScrollToTop, Layout } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
+import { useConfig } from '../../config';
 import Content from './content';
 import Header from './header';
 
@@ -54,6 +55,8 @@ function MyStories() {
     filters: STORY_STATUSES,
     totalPages,
   });
+
+  const { wpListURL } = useConfig();
 
   useEffect(() => {
     fetchStories({
@@ -88,6 +91,7 @@ function MyStories() {
         stories={orderedStories}
         totalStoriesByStatus={totalStoriesByStatus}
         view={view}
+        wpListURL={wpListURL}
       />
 
       <Content
