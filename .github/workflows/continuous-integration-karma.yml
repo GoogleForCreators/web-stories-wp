@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  unit-js:
+  karma:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
