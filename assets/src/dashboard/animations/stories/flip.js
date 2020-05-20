@@ -22,11 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {
-  AnimatorOutput,
-  KeyframesOutput,
-  WithAnimation,
-} from '../animationOutputs';
+import { AnimatorOutput, KeyframesOutput, WithAnimation } from '../outputs';
 import { ANIMATION_TYPES, ROTATION, AXIS, DIRECTION } from '../constants';
 import theme from '../../theme';
 import getAnimationConfigs from '../configs';

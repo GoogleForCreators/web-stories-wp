@@ -32,7 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { AnimationPart } from '../../animations/animationParts';
+import { AnimationPart } from '../../animations/parts';
 
 const Context = createContext(null);
 
@@ -56,33 +56,20 @@ const createOnFinishPromise = (animation) => {
 };
 
 function Provider({ animations, children, onWAAPIFinish }) {
-  const { map: animationPartsMap, set: animationTypesSet } = useMemo(() => {
-    return (animations || []).reduce(
-      ({ map, set }, animation) => {
-        const { targets, type, ...args } = animation;
+  const animationPartsMap = useMemo(() => {
+    return (animations || []).reduce((map, animation) => {
+      const { targets, type, ...args } = animation;
 
-        (targets || []).forEach((t) => {
-          const generatedParts = map.get(t) || [];
-          map.set(t, [...generatedParts, AnimationPart(type, args)]);
+      (targets || []).forEach((t) => {
+        const generatedParts = map.get(t) || [];
+        map.set(t, [...generatedParts, AnimationPart(type, args)]);
+      });
 
-          // Gather unique animation types
-          set.add(type);
-        });
-
-        return { map, set };
-      },
-      {
-        map: new Map(),
-        set: new Set(),
-      }
-    );
+      return map;
+    }, new Map());
   }, [animations]);
 
   const providerId = useMemo(() => uuidv4(), []);
-  const animationTypes = useMemo(
-    () => Array.from(animationTypesSet?.keys() || []),
-    [animationTypesSet]
-  );
 
   const animationTargets = useMemo(
     () => Array.from(animationPartsMap?.keys() || []),
@@ -158,7 +145,6 @@ function Provider({ animations, children, onWAAPIFinish }) {
     () => ({
       state: {
         providerId,
-        animationTypes,
         animationTargets,
       },
       actions: {
@@ -170,7 +156,6 @@ function Provider({ animations, children, onWAAPIFinish }) {
     [
       providerId,
       getAnimationParts,
-      animationTypes,
       animationTargets,
       hoistWAAPIAnimation,
       playWAAPIAnimations,

@@ -23,64 +23,13 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, WithAnimation } from '../../animationOutputs';
-import { ANIMATION_TYPES } from '../../constants';
+import { AnimatorOutput, WithAnimation } from '../../outputs';
 import getInitialStyleFromKeyframes from '../../utils/getInitialStyleFromKeyframes';
-import FullSizeAbsolute from '../fullSizeAbsolute';
 import { WAAPIAnimationProps, AMPAnimationProps } from '../types';
+import FullSizeAbsolute from './fullSizeAbsolute';
 
-const keyframes = {
-  transform: [
-    'scale(0)',
-    'scale(1.27)',
-    'scale(0.84)',
-    'scale(0.84)',
-    'scale(1.1)',
-    'scale(1.1)',
-    'scale(0.95)',
-    'scale(0.95)',
-    'scale(1.03)',
-    'scale(1.03)',
-    'scale(0.98)',
-    'scale(0.98)',
-    'scale(1.02)',
-    'scale(1.02)',
-    'scale(0.99)',
-    'scale(0.99)',
-    'scale(1)',
-  ],
-  offset: [
-    0.0,
-    0.18,
-    0.28,
-    0.29,
-    0.4,
-    0.41,
-    0.52,
-    0.53,
-    0.6,
-    0.61,
-    0.7,
-    0.71,
-    0.8,
-    0.81,
-    0.9,
-    0.91,
-    1.0,
-  ],
-};
-
-const defaults = {
-  fill: 'forwards',
-  duration: 1500,
-};
-
-export function AnimationBounce(args) {
+function SimpleAnimation(animationName, keyframes, timings) {
   const id = uuidv4();
-  const timings = {
-    ...defaults,
-    ...args,
-  };
 
   const WAAPIAnimation = function ({ children, hoistAnimation }) {
     const target = useRef(null);
@@ -117,7 +66,7 @@ export function AnimationBounce(args) {
   const AMPAnimator = function ({ prefixId }) {
     return (
       <AnimatorOutput
-        animation={`${prefixId}-${ANIMATION_TYPES.BOUNCE}`}
+        animation={`${prefixId}-${animationName}`}
         config={{ selector: `#anim-${id}`, ...timings }}
       />
     );
@@ -127,9 +76,10 @@ export function AnimationBounce(args) {
 
   return {
     id,
-    keyframes,
     WAAPIAnimation,
     AMPAnimation,
     AMPAnimator,
   };
 }
+
+export default SimpleAnimation;

@@ -18,6 +18,7 @@
  */
 import { ANIMATION_TYPES } from '../constants';
 import { AnimationBounce } from './bounce';
+import { AnimationBlinkOn } from './blinkOn';
 
 function throughput() {
   return {
@@ -33,6 +34,7 @@ export function AnimationPart(type, args) {
   const generator =
     {
       [ANIMATION_TYPES.BOUNCE]: AnimationBounce,
+      [ANIMATION_TYPES.BLINK_ON]: AnimationBlinkOn,
     }[type] || throughput;
 
   return generator(args);

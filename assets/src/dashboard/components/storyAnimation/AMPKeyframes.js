@@ -15,28 +15,46 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useMemo } from 'react';
+
+/**
  * Internal dependencies
  */
-import { KeyframesOutput } from '../../animations/animationOutputs';
-import { AnimationPart } from '../../animations/animationParts';
+import { KeyframesOutput } from '../../animations/outputs';
 import useStoryAnimationContext from './useStoryAnimationContext';
 
 function AMPKeyframes() {
   const {
-    state: { providerId, animationTypes },
+    state: { providerId, animationTargets },
+    actions: { getAnimationParts },
   } = useStoryAnimationContext();
 
-  return animationTypes.map((type) => {
-    const { keyframes } = AnimationPart(type);
+  const keyframesMap = useMemo(
+    () =>
+      animationTargets.reduce((acc, target) => {
+        return {
+          ...acc,
+          ...getAnimationParts(target).reduce((a, part) => {
+            const { generatedKeyframes } = part;
+            return {
+              ...a,
+              ...generatedKeyframes,
+            };
+          }, acc),
+        };
+      }, {}),
+    [animationTargets, getAnimationParts]
+  );
 
-    return (
-      <KeyframesOutput
-        key={type}
-        id={`${providerId}-${type}`}
-        keyframes={keyframes}
-      />
-    );
-  });
+  return Object.keys(keyframesMap).map((animationName) => (
+    <KeyframesOutput
+      key={animationName}
+      id={`${providerId}-${animationName}`}
+      keyframes={keyframesMap[animationName]}
+    />
+  ));
 }
 
 export default AMPKeyframes;
