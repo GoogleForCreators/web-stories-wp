@@ -34,7 +34,7 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
-import { generateOverlayStyles } from '../../utils/backgroundOverlay';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -57,7 +57,7 @@ const ReplacementContainer = styled.div`
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
-function DisplayElement({ element, previewMode, page }) {
+function DisplayElement({ element, previewMode }) {
   const {
     actions: { getBox },
   } = useUnits();
@@ -76,7 +76,7 @@ function DisplayElement({ element, previewMode, page }) {
       }
     : null;
 
-  const { id, opacity, type, isBackground } = element;
+  const { id, opacity, type, isBackground, backgroundOverlay } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.type) || {};
@@ -127,9 +127,9 @@ function DisplayElement({ element, previewMode, page }) {
           </ReplacementContainer>
         )}
       </WithMask>
-      {Boolean(isBackground) && Boolean(page?.backgroundOverlay) && (
+      {isBackground && backgroundOverlay && (
         <BackgroundOverlay
-          style={generateOverlayStyles(page?.backgroundOverlay)}
+          style={generatePatternStyles(element.backgroundOverlay)}
         />
       )}
     </Wrapper>
@@ -139,7 +139,6 @@ function DisplayElement({ element, previewMode, page }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
-  page: StoryPropTypes.page,
 };
 
 export default DisplayElement;

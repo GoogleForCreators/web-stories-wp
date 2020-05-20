@@ -24,14 +24,15 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
-import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
+import { OverlayType } from '../utils/backgroundOverlay';
+import generatePatternStyles from '../utils/generatePatternStyles';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const { id, elements, backgroundOverlay } = page;
+  const { id, elements } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
     backgroundImage: `linear-gradient(45deg, #999999 25%, transparent 25%),
@@ -41,8 +42,12 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     backgroundSize: '20px 20px',
     backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
   };
-  const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
   const backgroundElements = elements.filter((element) => element.isBackground);
+  const backgroundOverlays = backgroundElements.filter(
+    (element) =>
+      element.backgroundOverlay &&
+      element.backgroundOverlay !== OverlayType.NONE
+  );
   const regularElements = elements.filter((element) => !element.isBackground);
   const longestMediaElement = getLongestMediaElement(elements);
 
@@ -59,18 +64,16 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         <amp-story-grid-layer template="vertical">
           <div className="page-background-area" style={backgroundStyles}>
             {backgroundElements.map((element) => (
-              <OutputElement key={'el-' + element.id} element={element} />
+              <OutputElement key={element.id} element={element} />
+            ))}
+            {backgroundOverlays.map((element) => (
+              <div
+                key={element.id}
+                className="page-background-overlay-area"
+                style={generatePatternStyles(element.backgroundOverlay)}
+              />
             ))}
           </div>
-        </amp-story-grid-layer>
-      )}
-
-      {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
-        <amp-story-grid-layer template="vertical">
-          <div
-            className="page-background-overlay-area"
-            style={{ ...backgroundOverlayStyles }}
-          />
         </amp-story-grid-layer>
       )}
 
