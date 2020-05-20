@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { select, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 /**
@@ -33,6 +34,8 @@ import formattedStoriesArray from '../../../../../storybookUtils/formattedStorie
 import formattedUsersObject from '../../../../../storybookUtils/formattedUsersObject';
 import Content from '../';
 import { usePagePreviewSize } from '../../../../../utils';
+import StoriesView from '../storiesView';
+import EmptyView from '../emptyView';
 
 export default {
   title: 'Dashboard/Components/myStories/Content',
@@ -66,6 +69,12 @@ const page = {
 };
 const tags = {};
 const categories = {};
+const storyActions = {
+  createTemplateFromStory: action('create template from story clicked'),
+  duplicateStory: action('duplicate story clicked'),
+  trashStory: action('trash story clicked'),
+  updateStory: action('update story clicked'),
+};
 
 const defaultProps = {
   allPagesFetched: false,
@@ -76,12 +85,7 @@ const defaultProps = {
   search: search,
   sort: sort,
   stories: formattedStoriesArray,
-  storyActions: {
-    createTemplateFromStory: action('create template from story clicked'),
-    duplicateStory: action('duplicate story clicked'),
-    trashStory: action('trash story clicked'),
-    updateStory: action('update story clicked'),
-  },
+  storyActions: storyActions,
   tags: tags,
   users: formattedUsersObject,
   view: view,
@@ -146,3 +150,20 @@ export const AllDataFetchedAsList = () => {
     </Layout.Provider>
   );
 };
+
+export const _StoriesView = () => (
+  <StoriesView
+    categories={categories}
+    filterValue={STORY_STATUS.ALL}
+    sort={sort}
+    storyActions={storyActions}
+    stories={formattedStoriesArray}
+    tags={tags}
+    users={formattedUsersObject}
+    viewStyle={select('viewStyle', VIEW_STYLE, VIEW_STYLE.GRID)}
+  />
+);
+
+export const _EmptyView = () => (
+  <EmptyView searchKeyword={text('searchKeyword', '')} />
+);

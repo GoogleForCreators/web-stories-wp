@@ -23,7 +23,6 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -34,12 +33,7 @@ import {
   InfiniteScroller,
   Layout,
   StandardViewContentGutter,
-  DefaultParagraph1,
 } from '../../../../components';
-import {
-  VIEW_STYLE,
-  STORY_ITEM_CENTER_ACTION_LABELS,
-} from '../../../../constants';
 import {
   UsersPropType,
   TagsPropType,
@@ -54,7 +48,8 @@ import {
   SortPropTypes,
 } from '../../../../utils/useStoryView';
 import FontProvider from '../../../font/fontProvider';
-import { NoResults, StoryGridView, StoryListView } from '../../shared';
+import StoriesView from './storiesView';
+import EmptyView from './emptyView';
 
 function Content({
   allPagesFetched,
@@ -70,85 +65,34 @@ function Content({
   users,
   view,
 }) {
-  const contentView = useMemo(() => {
-    switch (view.style) {
-      case VIEW_STYLE.GRID:
-        return (
-          <StoryGridView
-            trashStory={storyActions.trashStory}
-            updateStory={storyActions.updateStory}
-            createTemplateFromStory={storyActions.createTemplateFromStory}
-            duplicateStory={storyActions.duplicateStory}
-            stories={stories}
-            users={users}
-            centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
-            bottomActionLabel={__('Open in editor', 'web-stories')}
-          />
-        );
-      case VIEW_STYLE.LIST:
-        return (
-          <StoryListView
-            stories={stories}
-            storySort={sort.value}
-            storyStatus={filter.value}
-            sortDirection={sort.direction}
-            handleSortChange={sort.set}
-            handleSortDirectionChange={sort.setDirection}
-            tags={tags}
-            categories={categories}
-            users={users}
-          />
-        );
-      default:
-        return null;
-    }
-  }, [
-    categories,
-    filter.value,
-    sort,
-    storyActions,
-    stories,
-    tags,
-    users,
-    view.style,
-  ]);
-
-  const BodyContent = useMemo(() => {
-    if (stories.length > 0) {
-      return (
-        <StandardViewContentGutter>
-          {contentView}
-          <InfiniteScroller
-            canLoadMore={!allPagesFetched}
-            isLoading={isLoading}
-            allDataLoadedMessage={__('No more stories', 'web-stories')}
-            onLoadMore={page.requestNextPage}
-          />
-        </StandardViewContentGutter>
-      );
-    } else if (search.keyword.length > 0) {
-      return <NoResults typeaheadValue={search.keyword} />;
-    }
-
-    return (
-      <DefaultParagraph1>
-        {__('Create a story to get started!', 'web-stories')}
-      </DefaultParagraph1>
-    );
-  }, [
-    stories.length,
-    isLoading,
-    allPagesFetched,
-    page.requestNextPage,
-    search.keyword,
-    contentView,
-  ]);
-
   return (
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>{BodyContent}</UnitsProvider>
+          <UnitsProvider pageSize={view.pageSize}>
+            {stories.length > 0 ? (
+              <StandardViewContentGutter>
+                <StoriesView
+                  categories={categories}
+                  filterValue={filter.value}
+                  sort={sort}
+                  storyActions={storyActions}
+                  stories={stories}
+                  tags={tags}
+                  users={users}
+                  viewStyle={view.style}
+                />
+                <InfiniteScroller
+                  canLoadMore={!allPagesFetched}
+                  isLoading={isLoading}
+                  allDataLoadedMessage={__('No more stories', 'web-stories')}
+                  onLoadMore={page.requestNextPage}
+                />
+              </StandardViewContentGutter>
+            ) : (
+              <EmptyView searchKeyword={search.keyword} />
+            )}
+          </UnitsProvider>
         </TransformProvider>
       </FontProvider>
     </Layout.Scrollable>
