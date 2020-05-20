@@ -55,7 +55,7 @@ const search = {
 const view = {
   style: VIEW_STYLE.GRID,
   toggleStyle: action('toggle view style'),
-  pageSize: { width: 300, height: 255 },
+  pageSize: { width: 309, height: 206 },
 };
 const totalStoriesByStatus = {
   all: 32,
