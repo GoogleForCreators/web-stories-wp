@@ -25,6 +25,21 @@ import { useMemo } from 'react';
 import { KeyframesOutput } from '../../animations/outputs';
 import useStoryAnimationContext from './useStoryAnimationContext';
 
+export function generateKeyframesMap(targets, getAnimationParts) {
+  return targets.reduce((acc, target) => {
+    return {
+      ...acc,
+      ...getAnimationParts(target).reduce((a, part) => {
+        const { generatedKeyframes } = part;
+        return {
+          ...a,
+          ...generatedKeyframes,
+        };
+      }, acc),
+    };
+  }, {});
+}
+
 function AMPKeyframes() {
   const {
     state: { providerId, animationTargets },
@@ -32,19 +47,7 @@ function AMPKeyframes() {
   } = useStoryAnimationContext();
 
   const keyframesMap = useMemo(
-    () =>
-      animationTargets.reduce((acc, target) => {
-        return {
-          ...acc,
-          ...getAnimationParts(target).reduce((a, part) => {
-            const { generatedKeyframes } = part;
-            return {
-              ...a,
-              ...generatedKeyframes,
-            };
-          }, acc),
-        };
-      }, {}),
+    () => generateKeyframesMap(animationTargets, getAnimationParts),
     [animationTargets, getAnimationParts]
   );
 
