@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
+export const ASSETS_URL_CDN =
+  'https://google.github.io/web-stories-wp/plugin-assets/';
+
 const DEFAULT_ATTRIBUTES = {
   weights: [400, 700],
   styles: ['italic', 'regular'],
   service: 'system',
 };
 
-const SYSTEM_FONTS = [
+export const SYSTEM_FONTS = [
   {
     family: 'Arial',
     fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
@@ -151,5 +154,3 @@ const SYSTEM_FONTS = [
     ...DEFAULT_ATTRIBUTES,
   },
 ];
-
-export default SYSTEM_FONTS;

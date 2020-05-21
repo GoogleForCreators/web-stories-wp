@@ -14,4 +14,24 @@
  * limitations under the License.
  */
 
-export default {};
+/**
+ * Internal dependencies
+ */
+import getFontFallback from '../getFontFallback';
+
+describe('getFontFallback', () => {
+  const categories = [
+    ['handwriting', 'cursive'],
+    ['display', 'cursive'],
+    ['sans-serif', 'sans-serif'],
+    ['monospace', 'monospace'],
+    ['serif', 'serif'],
+    ['invalid', 'serif'],
+  ];
+  it.each(categories)(
+    'should return expected fallback for category "%s"',
+    (category, expected) => {
+      expect(getFontFallback(category)).toStrictEqual(expected);
+    }
+  );
+});

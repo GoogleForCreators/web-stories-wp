@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Copyright 2020 Google LLC
  *
@@ -18,45 +17,32 @@
 /**
  * Internal dependencies
  */
-import SYSTEM_FONTS from './systemFonts';
-
-const { readFileSync, writeFileSync, existsSync } = require('fs');
-const process = require('process');
-
-const PLUGIN_DIR = process.cwd();
-const FONTS_FILE = PLUGIN_DIR + '/includes/data/fonts.json';
-
-if (!existsSync(FONTS_FILE)) {
-  process.exit(1);
-}
-
-const rawData = readFileSync(FONTS_FILE);
-const googleFonts = JSON.parse(rawData);
-
-const fonts = [...SYSTEM_FONTS];
+import getFontFallback from './getFontFallback.js';
 
 const FONT_VARIANT_PATTERN = /(?<weight>\d+)?(?<style>\D+)?/;
 
 /**
- * Returns a valid CSS font fallback declaration for a Google font.
+ * Font object.
  *
- * @param {string} category Font category.
- * @return {string} Font fallback.
+ * @typedef {Font} Font
+ * @property {string} family Font family.
+ * @property {Array<string>} fallbacks Font fallbacks.
+ * @property {Array<number>} weights Font weights.
+ * @property {Array<string>} styles Font styles.
+ * @property {Array<Array<number, number>>} variants Font variants.
+ * @property {string} service Font provider.
  */
-function getFontFallback(category) {
-  switch (category) {
-    case 'handwriting':
-    case 'display':
-      return 'cursive';
-    case 'sans-serif':
-    case 'monospace':
-      return category;
-    default:
-      return 'serif';
-  }
-}
 
-for (const font of googleFonts) {
+/**
+ * Normalizes font objects for later use.
+ *
+ * Drops unnecessary fields, and splits provided variants list
+ * into weights, styles, and variants tuples.
+ *
+ * @param {Object} font Font object.
+ * @return {Font} Normalized font object.
+ */
+function normalizeFont(font) {
   const variants = [];
   const weights = [];
   const styles = [];
@@ -88,27 +74,17 @@ for (const font of googleFonts) {
       weight ? Number(weight) : 400,
     ];
 
-    const hasVariant = variants.some(
-      (val) => val[0] === variantTuple[0] && val[1] === variantTuple[1]
-    );
-
-    if (!hasVariant) {
-      variants.push(variantTuple);
-    }
+    variants.push(variantTuple);
   }
 
-  fonts.push({
+  return {
     family,
     fallbacks: [getFontFallback(category)],
     weights: [...new Set(weights)],
     styles: [...new Set(styles)],
     variants,
     service: 'fonts.google.com',
-  });
+  };
 }
 
-fonts.sort((a, b) => a.family.localeCompare(b.family));
-
-writeFileSync(FONTS_FILE, JSON.stringify(fonts));
-
-process.exit(0);
+export default normalizeFont;

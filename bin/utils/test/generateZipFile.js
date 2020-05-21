@@ -14,4 +14,29 @@
  * limitations under the License.
  */
 
-export default {};
+/**
+ * External dependencies
+ */
+import { execSync } from 'child_process';
+
+/**
+ * Internal dependencies
+ */
+import generateZipFile from '../generateZipFile';
+
+jest.mock('child_process');
+
+describe('generateZipFile', () => {
+  it('should ZIP the web-stories directory', () => {
+    generateZipFile(
+      '/full/path/to/build/web-stories',
+      'web-stories-stable.zip'
+    );
+    expect(execSync).toHaveBeenLastCalledWith(
+      'zip -r web-stories-stable.zip web-stories',
+      expect.objectContaining({
+        cwd: '/full/path/to/build',
+      })
+    );
+  });
+});

@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-export default {};
+/**
+ * Returns a valid CSS font fallback declaration for a given category.
+ *
+ * @param {string} category Font category as used on Google Fonts.
+ * @return {string} Font fallback.
+ */
+function getFontFallback(category) {
+  switch (category) {
+    case 'handwriting':
+    case 'display':
+      return 'cursive';
+    case 'sans-serif':
+    case 'monospace':
+      return category;
+    default:
+      return 'serif';
+  }
+}
+
+export default getFontFallback;
