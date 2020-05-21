@@ -78,6 +78,7 @@ describe('multiSelectionMovable', () => {
           '2': target2,
         },
       },
+      actions: { handleSelectElement: jest.fn() },
     };
   });
 
