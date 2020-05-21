@@ -61,24 +61,6 @@ describe('<ColorPicker /> as the header is interacted with', () => {
     });
   });
 
-  it('should invoke onchange with new correct pattern when switching to conic', () => {
-    const { getConicButton, onChange } = arrange({
-      color: createSolid(0, 0, 255),
-      hasGradient: true,
-    });
-
-    fireEvent.click(getConicButton());
-
-    expect(onChange).toHaveBeenCalledWith({
-      rotation: 0.5,
-      stops: [
-        { color: { r: 0, g: 0, b: 255 }, position: 0 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-      type: 'conic',
-    });
-  });
-
   it('should display gradient line only if switching to non-solid pattern', () => {
     const { getGradientLine, getSolidButton, getLinearButton } = arrange({
       color: createSolid(0, 0, 0),

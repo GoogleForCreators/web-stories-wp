@@ -44,7 +44,7 @@ MenuContainer.propTypes = {
 };
 
 export const MenuItem = styled.li`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   ${({ theme, isDisabled, isHovering }) => `
     padding: 5px 25px;
     background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};

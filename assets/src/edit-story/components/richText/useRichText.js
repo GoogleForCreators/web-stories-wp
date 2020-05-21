@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
-import RichTextContext from './context';
+import { identity, useContextSelector } from '../../utils/context';
+import Context from './context';
 
-function useRichText() {
-  return useContext(RichTextContext);
+function useRichText(selector) {
+  return useContextSelector(Context, selector ?? identity);
 }
 
 export default useRichText;

@@ -18,12 +18,13 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-import { useContext, useEffect, createRef, useState } from 'react';
+import { useEffect, createRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import useBatchingCallback from '../../utils/useBatchingCallback';
+import { useContext } from '../../utils/context';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';

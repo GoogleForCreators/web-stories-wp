@@ -57,7 +57,7 @@ AnimationBar.propTypes = {
 };
 
 const ToggleButton = styled.button`
-  ${TypographyPresets.Medium}
+  ${TypographyPresets.Medium};
   cursor: pointer;
 
   ${({ theme, isActive }) => `

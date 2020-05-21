@@ -15,20 +15,13 @@
  */
 
 /**
- * WordPress dependencies
- */
-/**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
+import { identity, useContextSelector } from '../../utils/context';
 import Context from './context';
 
-function useReorderable() {
-  return useContext(Context);
+function useReorderable(selector) {
+  return useContextSelector(Context, selector ?? identity);
 }
 
 export default useReorderable;

@@ -35,7 +35,7 @@ import Context from './context';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, fonts, link, users, statuses },
+    api: { stories, media, fonts, link, users },
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -221,11 +221,6 @@ function APIProvider({ children }) {
     );
   }, [fonts]);
 
-  const getAllStatuses = useCallback(() => {
-    const path = addQueryArgs(statuses, { context: `edit` });
-    return apiFetch({ path });
-  }, [statuses]);
-
   const getAllUsers = useCallback(() => {
     return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
@@ -239,7 +234,6 @@ function APIProvider({ children }) {
       saveStoryById,
       deleteStoryById,
       getAllFonts,
-      getAllStatuses,
       getAllUsers,
       uploadMedia,
       updateMedia,

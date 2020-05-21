@@ -49,6 +49,7 @@ module.exports = function (api) {
       '@babel/plugin-transform-react-jsx',
       'styled-components',
       '@babel/plugin-proposal-class-properties',
+      'babel-plugin-inline-json-import',
     ],
     sourceMaps: true,
     env: {

@@ -25,7 +25,7 @@ import styled from 'styled-components';
 import { TypographyPresets } from '../typography';
 
 export const TextInput = styled.input`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   margin: 0;
   padding: 1px 8px;
   border-radius: 6px;

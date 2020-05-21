@@ -22,7 +22,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
+import {
+  AnimatorOutput,
+  KeyframesOutput,
+  WithAnimation,
+} from '../animationOutputs';
 import { ANIMATION_TYPES, ROTATION, AXIS, DIRECTION } from '../constants';
 import theme from '../../theme';
 import getAnimationConfigs from '../configs';
@@ -51,13 +55,13 @@ const Flip = ({ name, duration, content, containerStyle, direction }) => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <AnimationOutput
+      <KeyframesOutput
         id={floatOnName}
         keyframes={floatKeyframes}
         {...floatConfig}
       />
       {content.map(({ id, keyframes, animationConfig }) => (
-        <AnimationOutput
+        <KeyframesOutput
           key={id}
           id={`${id}-${name}`}
           keyframes={keyframes}

@@ -50,7 +50,7 @@ Menu.propTypes = {
 };
 
 const MenuItem = styled.li`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   ${({ theme, isDisabled, isHovering }) => `
     padding: 10px 20px;
     background: ${isHovering ? theme.colors.gray25 : 'none'};

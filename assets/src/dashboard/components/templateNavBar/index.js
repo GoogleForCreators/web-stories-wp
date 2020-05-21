@@ -67,7 +67,7 @@ const BookmarkToggle = styled(BookmarkChip)`
 `;
 
 const CloseLink = styled.a`
-  ${TypographyPresets.Medium}
+  ${TypographyPresets.Medium};
   ${({ theme }) => `
     text-decoration: none;
     font-weight: ${theme.typography.weight.bold};

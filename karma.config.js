@@ -84,6 +84,7 @@ module.exports = function (config) {
       puppeteer: {
         headless: config.headless || false,
         slowMo: config.slowMo || 0,
+        snapshots: config.snapshots || false,
       },
     },
 
