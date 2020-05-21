@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -114,11 +114,10 @@ const videoDialogDescription = __(
  *
  * @param {Object} props Component props.
  * @param {Object} props.resource Selected media element's resource object.
- * @param {Object} props.showEditDialog If dialog should be displayed.
- * @param {Object} props.setShowEditDialog Callback to toggle dialog display.
+ * @param {Object} props.onClose Callback to toggle dialog display.
  * @return {null|*} The dialog element.
  */
-function MediaEditDialog({ resource, showEditDialog, setShowEditDialog }) {
+function MediaEditDialog({ resource, onClose }) {
   const {
     id,
     src,
@@ -138,50 +137,36 @@ function MediaEditDialog({ resource, showEditDialog, setShowEditDialog }) {
   } = UseMedia();
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
-  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
   }, []);
 
-  useEffect(() => {
-    const updateMediaItem = async () => {
-      setShouldUpdate(false);
-      try {
-        // Update server.
-        await updateMedia(id, { alt_text: altText });
-        // Update internal state.
-        updateMediaElement({ id, alt: altText });
-        setShowEditDialog(false);
-      } catch (err) {
-        showSnackbar({
-          message: __('Failed to update, please try again.', 'web-stories'),
-        });
-      }
-    };
-    shouldUpdate ? updateMediaItem() : null;
-  }, [
-    altText,
-    id,
-    resource,
-    setShowEditDialog,
-    shouldUpdate,
-    showSnackbar,
-    updateMedia,
-    updateMediaElement,
-  ]);
+  const updateMediaItem = useCallback(async () => {
+    try {
+      // Update server.
+      await updateMedia(id, { alt_text: altText });
+      // Update internal state.
+      updateMediaElement({ id, alt: altText });
+      onClose();
+    } catch (err) {
+      showSnackbar({
+        message: __('Failed to update, please try again.', 'web-stories'),
+      });
+    }
+  }, [altText, id, onClose, showSnackbar, updateMedia, updateMediaElement]);
 
   return (
     <Dialog
-      open={showEditDialog}
-      onClose={() => setShowEditDialog(false)}
+      open={true}
+      onClose={() => onClose()}
       title={type == 'image' ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
-          <Plain data-testid="cancel" onClick={() => setShowEditDialog(false)}>
+          <Plain data-testid="cancel" onClick={() => onClose()}>
             {__('Cancel', 'web-stories')}
           </Plain>
-          <Plain data-testid="save" onClick={() => setShouldUpdate(true)}>
+          <Plain data-testid="save" onClick={updateMediaItem}>
             {__('Save', 'web-stories')}
           </Plain>
         </>
@@ -223,8 +208,7 @@ function MediaEditDialog({ resource, showEditDialog, setShowEditDialog }) {
 
 MediaEditDialog.propTypes = {
   resource: PropTypes.object,
-  showEditDialog: PropTypes.bool,
-  setShowEditDialog: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 export default MediaEditDialog;

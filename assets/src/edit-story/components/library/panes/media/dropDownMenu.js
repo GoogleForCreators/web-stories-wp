@@ -128,11 +128,7 @@ function DropDownMenu({
           />
         )}
         {showEditDialog && (
-          <MediaEditDialog
-            resource={resource}
-            showEditDialog={showEditDialog}
-            setShowEditDialog={setShowEditDialog}
-          />
+          <MediaEditDialog resource={resource} onClose={setShowEditDialog} />
         )}
       </div>
     )

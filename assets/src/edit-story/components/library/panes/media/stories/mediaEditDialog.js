@@ -43,11 +43,5 @@ export const _default = () => {
     sizes: {},
   });
 
-  return (
-    <MediaEditDialog
-      resource={resource}
-      showEditDialog={true}
-      setShowEditDialog={() => {}}
-    />
-  );
+  return <MediaEditDialog resource={resource} onClose={() => {}} />;
 };

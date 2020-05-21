@@ -67,11 +67,7 @@ function setup() {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <MediaEditDialog
-            resource={resource}
-            showEditDialog={true}
-            setShowEditDialog={() => {}}
-          />
+          <MediaEditDialog resource={resource} onClose={() => {}} />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
