@@ -106,9 +106,12 @@ function PublishPanel() {
   const dateTimeNode = useRef();
   const dateFieldRef = useRef();
 
-  useKeyDownEffect(dateFieldRef, { key: ['space', 'enter'] }, () => {
-    setShowDatePicker((val) => !val);
-  });
+  useKeyDownEffect(
+    dateFieldRef,
+    { key: ['space', 'enter'] },
+    () => setShowDatePicker((val) => !val),
+    []
+  );
 
   useFocusOut(dateTimeNode, () => setShowDatePicker(false), [showDatePicker]);
 
