@@ -26,7 +26,6 @@ import { ReactComponent as OverlayNoneIcon } from '../icons/overlay_none.svg';
 import { ReactComponent as OverlaySolidIcon } from '../icons/overlay_solid.svg';
 import { ReactComponent as OverlayLinearIcon } from '../icons/overlay_linear.svg';
 import { ReactComponent as OverlayRadialIcon } from '../icons/overlay_radial.svg';
-import generatePatternStyles from './generatePatternStyles';
 
 export const OverlayType = {
   NONE: 'none',
@@ -53,30 +52,3 @@ export const OverlayPreset = {
     icon: <OverlayRadialIcon />,
   },
 };
-
-/**
- * Generate CSS styles for background overlay types.
- *
- * @param {OverlayType} type Type of the background overlay
- * @return {Object} CSS declaration as object.
- */
-export function generateOverlayStyles(type = OverlayType.NONE) {
-  if (type === OverlayType.NONE) {
-    return { background: 'none' };
-  }
-  return generatePatternStyles({
-    type,
-    color: { r: 0, g: 0, b: 0, a: 0.3 },
-    rotation: 0.5,
-    stops:
-      type === 'radial'
-        ? [
-            { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.3 },
-            { color: { r: 0, g: 0, b: 0, a: 0.8 }, position: 0.8 },
-          ]
-        : [
-            { color: { r: 0, g: 0, b: 0, a: 0.9 }, position: 0 },
-            { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.6 },
-          ],
-  });
-}
