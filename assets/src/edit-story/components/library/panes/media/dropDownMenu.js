@@ -47,12 +47,13 @@ const DropDownContainer = styled.div`
  * Get a More icon that displays a dropdown menu on click.
  *
  * @param {Object} props Component props.
+ * @param {Object} props.resource Selected media element's resource object.
  * @param {boolean} props.pointerEntered If the user's pointer is in the media element.
  * @param {boolean} props.isMenuOpen If the dropdown menu is open.
  * @param {function(boolean)} props.setIsMenuOpen Callback for when menu is opened / closed.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function DropDownMenu({ pointerEntered, isMenuOpen, setIsMenuOpen }) {
+function DropDownMenu({ resource, pointerEntered, isMenuOpen, setIsMenuOpen }) {
   const options = [
     { name: __('Edit', 'web-stories'), value: 'edit' },
     { name: __('Delete', 'web-stories'), value: 'delete' },
@@ -85,6 +86,7 @@ function DropDownMenu({ pointerEntered, isMenuOpen, setIsMenuOpen }) {
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
+    !resource.local && // Don't show menu if resource not uploaded to server yet.
     (pointerEntered || isMenuOpen) && (
       <>
         <MoreButton
@@ -111,6 +113,7 @@ function DropDownMenu({ pointerEntered, isMenuOpen, setIsMenuOpen }) {
 }
 
 DropDownMenu.propTypes = {
+  resource: PropTypes.object,
   pointerEntered: PropTypes.bool,
   isMenuOpen: PropTypes.bool,
   setIsMenuOpen: PropTypes.func,

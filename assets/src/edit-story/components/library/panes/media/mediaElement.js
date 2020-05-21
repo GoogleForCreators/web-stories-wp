@@ -252,6 +252,7 @@ const MediaElement = ({
         )}
         {hasDropdownMenu && (
           <DropDownMenu
+            resource={resource}
             pointerEntered={pointerEntered}
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={menuCallback}
@@ -291,6 +292,7 @@ const MediaElement = ({
       )}
       {hasDropdownMenu && (
         <DropDownMenu
+          resource={resource}
           pointerEntered={pointerEntered}
           isMenuOpen={isMenuOpen}
           setIsMenuOpen={menuCallback}
