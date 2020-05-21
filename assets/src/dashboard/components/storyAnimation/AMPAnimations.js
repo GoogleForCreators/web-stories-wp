@@ -19,7 +19,7 @@
  */
 import useStoryAnimationContext from './useStoryAnimationContext';
 
-function AMPAnimators() {
+function AMPAnimations() {
   const {
     state: { providerId, animationTargets },
     actions: { getAnimationParts },
@@ -28,12 +28,12 @@ function AMPAnimators() {
   return animationTargets.reduce(
     (animators, target) => [
       ...animators,
-      ...getAnimationParts(target).map(({ id, AMPAnimator }) => (
-        <AMPAnimator key={id} prefixId={providerId} />
+      ...getAnimationParts(target).map(({ id, AMPAnimation }) => (
+        <AMPAnimation key={id} prefixId={providerId} />
       )),
     ],
     []
   );
 }
 
-export default AMPAnimators;
+export default AMPAnimations;

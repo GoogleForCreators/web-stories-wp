@@ -21,14 +21,14 @@ import Provider from './provider';
 import WAAPIWrapper from './WAAPIWrapper';
 import AMPWrapper from './AMPWrapper';
 import AMPKeyframes from './AMPKeyframes';
-import AMPAnimators from './AMPAnimators';
+import AMPAnimations from './AMPAnimations';
 
 const StoryAnimation = {
   Provider,
   WAAPIWrapper,
   AMPWrapper,
   AMPKeyframes,
-  AMPAnimators,
+  AMPAnimations,
 };
 
 export default StoryAnimation;

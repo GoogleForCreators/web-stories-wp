@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, KeyframesOutput, WithAnimation } from '../outputs';
+import { AnimationOutput, KeyframesOutput, WithAnimation } from '../outputs';
 import { ANIMATION_TYPES, ROTATION } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
@@ -66,7 +66,7 @@ const Spin = ({ name, color, keyframes, animationConfig, animatorConfig }) => {
   return (
     <div style={{ padding: '20px' }}>
       <KeyframesOutput id={name} keyframes={keyframes} {...animationConfig} />
-      <AnimatorOutput
+      <AnimationOutput
         id={`${name}-spin`}
         animation={name}
         config={animatorConfig}

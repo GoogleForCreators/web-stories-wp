@@ -60,7 +60,7 @@ export function AnimationBlinkOn({ blinkCount, ...args }) {
     opacity: [0, ...generateOpacityFrames(blinkCount), 1],
   };
 
-  const { id, WAAPIAnimation, AMPAnimation, AMPAnimator } = SimpleAnimation(
+  const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,
     keyframes,
     timings
@@ -69,8 +69,8 @@ export function AnimationBlinkOn({ blinkCount, ...args }) {
   return {
     id,
     WAAPIAnimation,
+    AMPTarget,
     AMPAnimation,
-    AMPAnimator,
     generatedKeyframes: {
       [animationName]: keyframes,
     },

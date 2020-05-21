@@ -96,7 +96,7 @@ export const AMPStory = () => {
           <amp-story-page key={pageId} id={`page-${pageId}`}>
             <StoryAnimation.Provider animations={animations}>
               <StoryAnimation.AMPKeyframes />
-              <StoryAnimation.AMPAnimators />
+              <StoryAnimation.AMPAnimations />
 
               <amp-story-grid-layer template="horizontal">
                 {elements.map(({ id, color }) => (

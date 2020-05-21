@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, KeyframesOutput, WithAnimation } from '../outputs';
+import { AnimationOutput, KeyframesOutput, WithAnimation } from '../outputs';
 import { ANIMATION_TYPES, DIRECTION } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
@@ -42,7 +42,7 @@ const FloatOn = ({ direction }) => {
   return (
     <div style={{ padding: '20px' }}>
       <KeyframesOutput id={name} keyframes={keyframes} {...config} />
-      <AnimatorOutput
+      <AnimationOutput
         id={`${name}-anim`}
         animation={name}
         config={{

@@ -23,7 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, WithAnimation } from '../outputs';
+import { AnimationOutput, WithAnimation } from '../outputs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
 import { WAAPIAnimationProps, AMPAnimationProps } from './types';
 import FullSizeAbsolute from './components/fullSizeAbsolute';
@@ -47,7 +47,7 @@ function SimpleAnimation(animationName, keyframes, timings) {
 
   WAAPIAnimation.propTypes = WAAPIAnimationProps;
 
-  const AMPAnimation = function ({ children, style }) {
+  const AMPTarget = function ({ children, style }) {
     return (
       <WithAnimation
         id={`anim-${id}`}
@@ -61,24 +61,24 @@ function SimpleAnimation(animationName, keyframes, timings) {
     );
   };
 
-  AMPAnimation.propTypes = AMPAnimationProps;
+  AMPTarget.propTypes = AMPAnimationProps;
 
-  const AMPAnimator = function ({ prefixId }) {
+  const AMPAnimation = function ({ prefixId }) {
     return (
-      <AnimatorOutput
+      <AnimationOutput
         animation={`${prefixId}-${animationName}`}
         config={{ selector: `#anim-${id}`, ...timings }}
       />
     );
   };
 
-  AMPAnimator.propTypes = AMPAnimationProps;
+  AMPAnimation.propTypes = AMPAnimationProps;
 
   return {
     id,
     WAAPIAnimation,
+    AMPTarget,
     AMPAnimation,
-    AMPAnimator,
   };
 }
 

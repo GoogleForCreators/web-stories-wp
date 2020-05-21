@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { GeneralAnimationPropTypes } from './types';
 
-function AnimatorOutput({ animation, config }) {
+function AnimationOutput({ animation, config }) {
   const configs = Array.isArray(config) ? config : [config];
 
   return (
@@ -50,7 +50,7 @@ const AnimationConfigPropTypes = PropTypes.shape({
   ...GeneralAnimationPropTypes,
 });
 
-AnimatorOutput.propTypes = {
+AnimationOutput.propTypes = {
   animation: PropTypes.string,
   config: PropTypes.oneOfType([
     AnimationConfigPropTypes,
@@ -58,4 +58,4 @@ AnimatorOutput.propTypes = {
   ]).isRequired,
 };
 
-export default AnimatorOutput;
+export default AnimationOutput;

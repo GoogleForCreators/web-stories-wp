@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, KeyframesOutput, WithAnimation } from '../outputs';
+import { AnimationOutput, KeyframesOutput, WithAnimation } from '../outputs';
 import { ANIMATION_TYPES, ROTATION, AXIS, DIRECTION } from '../constants';
 import theme from '../../theme';
 import getAnimationConfigs from '../configs';
@@ -65,7 +65,7 @@ const Flip = ({ name, duration, content, containerStyle, direction }) => {
         />
       ))}
 
-      <AnimatorOutput
+      <AnimationOutput
         id={`${name}-anim`}
         config={[
           ...animatorConfig,

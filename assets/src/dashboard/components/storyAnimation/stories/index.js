@@ -168,7 +168,7 @@ export function AMPStory() {
         <amp-story-page id={pages[0].id}>
           <StoryAnimation.Provider animations={pages[0].animations}>
             <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimators />
+            <StoryAnimation.AMPAnimations />
 
             <StoryAnimation.AMPWrapper
               target="el1"
@@ -185,7 +185,7 @@ export function AMPStory() {
         <amp-story-page id={pages[1].id}>
           <StoryAnimation.Provider animations={pages[1].animations}>
             <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimators />
+            <StoryAnimation.AMPAnimations />
 
             <div
               style={{
@@ -212,7 +212,7 @@ export function AMPStory() {
         <amp-story-page id={pages[2].id}>
           <StoryAnimation.Provider animations={pages[2].animations}>
             <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimators />
+            <StoryAnimation.AMPAnimations />
 
             <amp-story-grid-layer template="vertical">
               {pages[2].elements.map((element) => (

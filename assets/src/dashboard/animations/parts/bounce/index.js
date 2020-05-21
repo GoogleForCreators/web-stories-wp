@@ -72,7 +72,7 @@ export function AnimationBounce(args) {
     ...args,
   };
 
-  const { id, WAAPIAnimation, AMPAnimation, AMPAnimator } = SimpleAnimation(
+  const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     ANIMATION_TYPES.BOUNCE,
     keyframes,
     timings
@@ -81,8 +81,8 @@ export function AnimationBounce(args) {
   return {
     id,
     WAAPIAnimation,
+    AMPTarget,
     AMPAnimation,
-    AMPAnimator,
     generatedKeyframes: {
       [ANIMATION_TYPES.BOUNCE]: keyframes,
     },
