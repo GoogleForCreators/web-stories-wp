@@ -37,8 +37,13 @@ const Column = styled.div`
 `;
 
 const snackbarValue = { showSnackbar: () => {} };
-const mediaValue = { actions: { deleteMediaElement: () => {} } };
-const apiValue = { actions: { deleteMedia: () => {} } };
+const mediaValue = {
+  actions: {
+    deleteMediaElement: () => {},
+    updateMediaElement: () => {},
+  },
+};
+const apiValue = { actions: { deleteMedia: () => {}, updateMedia: () => {} } };
 
 export default {
   title: 'Stories Editor/Components/Media Element',

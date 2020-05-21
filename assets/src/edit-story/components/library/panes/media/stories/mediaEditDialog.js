@@ -23,12 +23,23 @@ import { object } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import MediaEditDialog from '../mediaEditDialog';
+import ApiContext from '../../../../../app/api/context';
+import MediaContext from '../../../../../app/media/context';
+import SnackbarContext from '../../../../../app/snackbar/context';
 import testImage from './test-image.jpg';
 
 export default {
   title: 'Stories Editor/Components/Media Edit Dialog',
   component: MediaEditDialog,
 };
+
+const apiValue = {
+  actions: { deleteMedia: () => {} },
+};
+const mediaValue = {
+  actions: { deleteMediaElement: () => {} },
+};
+const snackbarValue = { showSnackbar: () => {} };
 
 export const _default = () => {
   const resource = object('Image Resource', {
@@ -43,5 +54,13 @@ export const _default = () => {
     sizes: {},
   });
 
-  return <MediaEditDialog resource={resource} onClose={() => {}} />;
+  return (
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <MediaEditDialog resource={resource} onClose={() => {}} />
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
+  );
 };
