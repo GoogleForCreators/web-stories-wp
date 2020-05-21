@@ -45,20 +45,20 @@ export const useContextSelector = (
 ) => {
   const ref = useRef();
 
+  const equalityFnCallback = useCallback(
+    (state) => {
+      const selected = selector(state);
+      if (equalityFn(ref.current, selected)) {
+        return ref.current;
+      }
+      ref.current = selected;
+      return selected;
+    },
+    [selector, equalityFn]
+  );
+
   // Update the selector fn to memoize the selected value by [equalityFn].
-  const patchedSelector = equalityFn
-    ? useCallback(
-        (state) => {
-          const selected = selector(state);
-          if (equalityFn(ref.current, selected)) {
-            return ref.current;
-          }
-          ref.current = selected;
-          return selected;
-        },
-        [selector, equalityFn]
-      )
-    : selector;
+  const patchedSelector = equalityFn ? equalityFnCallback : selector;
   return useContextSelectorOrig(context, patchedSelector);
 };
 
