@@ -15,22 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Row, ToggleButton } from '../form';
-import { OverlayPreset, OverlayType } from '../../utils/backgroundOverlay';
-import { SimplePanel } from './panel';
+import { OverlayType } from '../../../utils/backgroundOverlay';
 
 function convertToSolid(currentOverlay, currentType) {
   switch (currentType) {
@@ -45,7 +32,9 @@ function convertToSolid(currentOverlay, currentType) {
       // converting from any gradient to SOLID
       // use "opaque'st" stop as primary color, but fix alpha at .3
       const { stops } = currentOverlay;
-      const stopsByAlpha = stops.sort((x, y) => y.color.a - x.color.a);
+      const stopsByAlpha = stops.sort(
+        (x, y) => (y.color.a ?? 1) - (x.color.a ?? 1)
+      );
       const {
         color: { r, g, b },
       } = stopsByAlpha[0];
@@ -168,44 +157,4 @@ function convertOverlay(currentOverlay, currentType, newType) {
   }
 }
 
-function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
-  const overlay = selectedElements[0].backgroundOverlay || null;
-
-  const overlayType =
-    overlay === null ? OverlayType.NONE : overlay.type || OverlayType.SOLID;
-
-  const updateOverlay = useCallback(
-    (value) => pushUpdate({ backgroundOverlay: value }, true),
-    [pushUpdate]
-  );
-
-  return (
-    <SimplePanel name="backgroundOverlay" title={__('Overlay', 'web-stories')}>
-      <Row>
-        {Object.keys(OverlayPreset).map((type) => {
-          const { label, icon } = OverlayPreset[type];
-          return (
-            <ToggleButton
-              key={type}
-              icon={icon}
-              label={label}
-              value={overlayType === type}
-              onChange={() =>
-                updateOverlay(convertOverlay(overlay, overlayType, type))
-              }
-              iconWidth={22}
-              iconHeight={16}
-            />
-          );
-        })}
-      </Row>
-    </SimplePanel>
-  );
-}
-
-BackgroundOverlayPanel.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
-  pushUpdate: PropTypes.func.isRequired,
-};
-
-export default BackgroundOverlayPanel;
+export default convertOverlay;
