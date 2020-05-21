@@ -22,6 +22,14 @@ self.it.skip = self.xit;
 
 let currentSpec;
 let rootEl;
+let cleanupsAll;
+
+function withCleanupAll(callback) {
+  if (!cleanupsAll) {
+    cleanupsAll = [];
+  }
+  cleanupsAll.push(callback());
+}
 
 beforeAll(() => {
   jasmine.getEnv().addReporter({
@@ -36,6 +44,50 @@ beforeAll(() => {
   self.karmaSnapshot = (name) => {
     return karmaPuppeteer.saveSnapshot(currentSpec?.fullName, name);
   };
+
+  // By default Jasmine doesn't report unhandled promise rejections.
+  // But with `act()` it's very easy to do. So this is patched for Jasmine
+  // here until the relevant issues are addressed.
+  // See https://github.com/karma-runner/karma-jasmine/issues/184
+  // See https://eng.wealthfront.com/2016/11/03/handling-unhandledrejections-in-node-and-the-browser/
+  withCleanupAll(() => {
+    const handler = (evt) => {
+      throw evt.reason?.stack || evt.reason || evt;
+    };
+    self.addEventListener('unhandledrejection', handler);
+    return () => {
+      self.removeEventListener('unhandledrejection', handler);
+    };
+  });
+
+  // Make sure that testing iframe takes over the whole screen. This way, the
+  // native events can be targetted precisely.
+  withCleanupAll(() => {
+    const frameElement = self.frameElement;
+    if (!frameElement) {
+      return undefined;
+    }
+    frameElement.style.position = 'absolute';
+    frameElement.style.top = '0';
+    frameElement.style.left = '0';
+    return () => {
+      frameElement.style.position = '';
+      frameElement.style.top = '';
+      frameElement.style.left = '';
+    };
+  });
+});
+
+afterAll(() => {
+  if (cleanupsAll) {
+    const toCleanup = cleanupsAll.slice(0);
+    cleanupsAll = undefined;
+    toCleanup.forEach((cleanup) => {
+      if (cleanup) {
+        cleanup();
+      }
+    });
+  }
 });
 
 beforeEach(() => {
