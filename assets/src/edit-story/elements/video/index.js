@@ -24,10 +24,10 @@ import {
   MEDIA_PANELS,
   resizeRules as mediaResizeRules,
 } from '../media';
-import { PLAY_BUTTON_MIN_SIZE } from './frame';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
+export { default as Controls } from './controls';
 export { default as Output } from './output';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
@@ -41,8 +41,6 @@ export {
 
 export const resizeRules = {
   ...mediaResizeRules,
-  minWidth: PLAY_BUTTON_MIN_SIZE,
-  minHeight: PLAY_BUTTON_MIN_SIZE,
 };
 
 export const defaultAttributes = {

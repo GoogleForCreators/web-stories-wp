@@ -63,7 +63,7 @@ const EmptyFrame = styled.div`
 
 function FrameElement({ element }) {
   const { id, type } = element;
-  const { Frame, isMaskable } = getDefinitionForType(type);
+  const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
 
   const {
@@ -76,7 +76,7 @@ function FrameElement({ element }) {
     actions: { getBox },
   } = useUnits();
   const {
-    state: { activeDropTargetId },
+    state: { activeDropTargetId, draggingResource },
   } = useDropTargets();
 
   useLayoutEffect(() => {
@@ -100,6 +100,15 @@ function FrameElement({ element }) {
       dragging={Boolean(activeDropTargetId)}
       anchorRef={elementRef}
     >
+      {Controls && (
+        <Controls
+          isDragged={Boolean(draggingResource)}
+          isSelected={isSelected}
+          box={box}
+          elementRef={elementRef}
+          element={element}
+        />
+      )}
       <Wrapper
         ref={elementRef}
         data-element-id={id}
