@@ -135,9 +135,6 @@ const CardPreviewContainer = ({
     }
   }, [cardState]);
 
-  const inervalDuration = story.originalStoryData?.story_data?.autoAdvance
-    ? story.originalStoryData?.story_data?.defaultPageDuration * 1000
-    : DEFAULT_STORY_PAGE_ADVANCE_DURATION;
   useEffect(() => {
     let intervalId;
     if (CARD_STATE.ACTIVE === cardState) {
@@ -150,12 +147,12 @@ const CardPreviewContainer = ({
        */
       intervalId = setInterval(
         () => setPageIndex((v) => clamp(v + 1, [0, storyPages.length - 1])),
-        inervalDuration
+        DEFAULT_STORY_PAGE_ADVANCE_DURATION
       );
     }
 
     return () => intervalId && clearInterval(intervalId);
-  }, [storyPages.length, cardState, inervalDuration]);
+  }, [storyPages.length, cardState]);
 
   return (
     <>
