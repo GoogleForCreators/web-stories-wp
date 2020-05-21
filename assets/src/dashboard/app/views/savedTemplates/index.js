@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -123,12 +123,12 @@ function SavedTemplates() {
     totalPages: 1,
   });
 
-  /**
-   * A placeholder to just have template data in the view for now.
-   */
-  const mockTemplates = useRef(
-    getAllTemplates(config).map(reshapeTemplateObject(false))
-  );
+  const [mockTemplates, setMockTemplates] = useState([]);
+
+  useEffect(() => {
+    const templates = getAllTemplates(config).map(reshapeTemplateObject(false));
+    setMockTemplates(templates);
+  }, [config]);
 
   return (
     <Layout.Provider>
@@ -136,15 +136,10 @@ function SavedTemplates() {
         filter={filter}
         view={view}
         search={search}
-        stories={mockTemplates.current}
+        stories={mockTemplates}
         sort={sort}
       />
-      <Content
-        view={view}
-        page={page}
-        sort={sort}
-        stories={mockTemplates.current}
-      />
+      <Content view={view} page={page} sort={sort} stories={mockTemplates} />
     </Layout.Provider>
   );
 }

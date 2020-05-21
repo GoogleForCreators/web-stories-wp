@@ -18,7 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import {
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  Children,
+} from 'react';
 
 /**
  * Internal dependencies
@@ -42,13 +49,19 @@ const CARD_WRAPPER_BUFFER = 12;
 function CardGallery({ children }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
-
+  const [cards, setCards] = useState([]);
   const containerRef = useRef();
 
-  const cards = useMemo(
-    () => (Array.isArray(children) ? [...children] : [children]),
-    [children]
-  );
+  useEffect(() => {
+    const count = Children.count(children);
+    if (count > 1) {
+      setCards(children);
+    } else if (count === 1) {
+      setCards([children]);
+    } else if (count === 0) {
+      setCards([]);
+    }
+  }, [children]);
 
   const metrics = useMemo(() => {
     if (!dimensionMultiplier) {

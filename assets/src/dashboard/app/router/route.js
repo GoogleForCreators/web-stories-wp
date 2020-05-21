@@ -40,7 +40,7 @@ export function parentRoute() {
 
 export function resolveRelatedTemplateRoute(relatedTemplate) {
   return (
-    window.location.href.split('#')[1].split('?')[0] +
+    window.location.hash.split('#')[1].split('?')[0] +
     '?' +
     relatedTemplate.centerTargetAction.split('?')[1]
   );
