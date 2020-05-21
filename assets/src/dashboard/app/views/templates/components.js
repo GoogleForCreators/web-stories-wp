@@ -99,17 +99,18 @@ export const NavButton = styled(Button)`
     min-width: 0;
     height: 40px;
     width: 40px;
+    padding: 4px;
     border-radius: 50%;
-    color: ${theme.colors.gray600};
+    color: ${theme.colors.gray900};
     background-color: transparent;
     border: ${theme.borders.transparent};
     transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
 
     &:hover, &:active, &:focus {
-      background-color: ${theme.colors.gray600};
+      background-color: ${theme.colors.gray800};
       color: ${theme.colors.white};
       @media ${theme.breakpoint.largeDisplayPhone} {
-        color: ${theme.colors.gray900};
+        color: ${theme.colors.gray800};
         background-color: transparent;
        }
     }
@@ -145,7 +146,7 @@ export const SmallDisplayPagination = styled.div(
       width: 100%;
       display: flex;
       justify-content: flex-start;
-      margin: 0 0 10px;
+      margin: 0 0 10px 10px;
     }
   `
 );

@@ -30,7 +30,7 @@ import { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import { useConfig } from '../../config';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ApiContext } from '../../api/apiProvider';
-import { LeftArrow, RightArrow } from '../../../icons';
+import { PaginationArrowLeft, PaginationArrowRight } from '../../../icons';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
 
@@ -44,10 +44,7 @@ import {
   TemplateNavBar,
   Layout,
 } from '../../../components';
-import {
-  ICON_METRICS,
-  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
-} from '../../../constants';
+import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { StoryGridView } from '../shared';
 import { resolveRelatedTemplateRoute } from '../../router';
@@ -65,6 +62,8 @@ import {
   Text,
   Title,
 } from './components';
+
+const PAGINATION_ICON_SIZE = { height: 28, width: 28 };
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
@@ -173,7 +172,7 @@ function TemplateDetail() {
         onClick={() => switchToTemplateByOffset(-1)}
         disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
       >
-        <LeftArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
+        <PaginationArrowLeft {...PAGINATION_ICON_SIZE} aria-hidden={true} />
       </NavButton>
     );
 
@@ -186,7 +185,7 @@ function TemplateDetail() {
           activeTemplateIndex === orderedTemplates?.length - 1
         }
       >
-        <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
+        <PaginationArrowRight {...PAGINATION_ICON_SIZE} aria-hidden={true} />
       </NavButton>
     );
 
