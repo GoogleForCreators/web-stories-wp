@@ -83,7 +83,6 @@ describe('TextEdit integration', () => {
 
       it('should handle a commnad, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
-        await fixture.events.focus(draft);
 
         // Select all.
         await fixture.events.click(draft, { clickCount: 3 });

@@ -28,7 +28,11 @@
   function puppeteerFunction(methodName) {
     return function() {
       var args = Array.prototype.slice.call(arguments, 0);
-      return global['__karma_puppeteer_' + methodName].apply(null, args);
+      var name = '__karma_puppeteer_' + methodName;
+      if (!global[name]) {
+        throw new Error('unknown method: ' + name);
+      }
+      return global[name].apply(null, args);
     };
   }
 
@@ -67,8 +71,15 @@
 
   // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard.
   function keyboard() {
+    function keyboardFunction(name) {
+      return puppeteerFunction('keyboard_' + name);
+    }
     return {
-      seq: puppeteerFunction('keyboard_seq'),
+      seq: keyboardFunction('seq'),
+      // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardsendcharacterchar
+      sendCharacter: keyboardFunction('sendCharacter'),
+      // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardtypetext-options
+      type: keyboardFunction('type'),
     };
   }
 
@@ -80,5 +91,7 @@
     focus: withSelector('focus'),
     // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard.
     keyboard: keyboard(),
+    // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#frameselectselector-values
+    select: withSelector('select'),
   };
 }(typeof window !== 'undefined' ? window : global))

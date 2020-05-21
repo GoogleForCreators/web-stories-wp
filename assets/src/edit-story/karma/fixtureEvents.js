@@ -69,6 +69,20 @@ class FixtureEvents {
     return this._act(() => karmaPuppeteer.focus(target, options));
   }
 
+  /**
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#frameselectselector-values
+   *
+   * Triggers a change and input event once all the provided options have been
+   * selected.
+   *
+   * @param {Element} target The event target.
+   * @param {Array<string>} values
+   * @return {!Promise} The promise when the event handling is complete.
+   */
+  select(target, ...values) {
+    return this._act(() => karmaPuppeteer.select(target, values));
+  }
+
   // @todo: look for a native way to implement this. See Puppeteer's
   // Mouse API (https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse).
   pointerDown(element, options = {}) {
@@ -157,7 +171,8 @@ class Keyboard {
    * @return {!Promise} Yields when the event is processed.
    */
   down(key, options = {}) {
-    return this.seq([{ type: 'down', key, options }]);
+    const type = 'down';
+    return this.seq([{ type, key, options }]);
   }
 
   /**
@@ -170,7 +185,8 @@ class Keyboard {
    * @return {!Promise} Yields when the event is processed.
    */
   up(key, options = {}) {
-    return this.seq([{ type: 'up', key, options }]);
+    const type = 'up';
+    return this.seq([{ type, key, options }]);
   }
 
   /**
@@ -179,11 +195,44 @@ class Keyboard {
    * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardpresskey-options
    *
    * @param {string} key
-   * @param {Object} options
+   * @param {Object} options Accepts `delay` and `text` options.
    * @return {!Promise} Yields when the event is processed.
    */
   press(key, options = {}) {
-    return this.seq([{ type: 'press', key, options }]);
+    const type = 'press';
+    return this.seq([{ type, key, options }]);
+  }
+
+  /**
+   * The `keyboard.type` API.
+   *
+   * Sends a keydown, keypress/input, and keyup event for each character in the
+   * text.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardtypetext-options
+   *
+   * @param {string} text
+   * @param {Object} options Accepts `delay` option to wait between key presses
+   * in milliseconds.
+   * @return {!Promise} Yields when the event is processed.
+   */
+  type(text, options = {}) {
+    return this._act(() => karmaPuppeteer.keyboard.type(text, options));
+  }
+
+  /**
+   * The `keyboard.sendCharacter` API.
+   *
+   * Dispatches a keypress and input event. This does not send a keydown or
+   * keyup event.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardsendcharacterchar
+   *
+   * @param {string} char
+   * @return {!Promise} Yields when the event is processed.
+   */
+  sendCharacter(char) {
+    return this._act(() => karmaPuppeteer.keyboard.sendCharacter(char));
   }
 }
 
