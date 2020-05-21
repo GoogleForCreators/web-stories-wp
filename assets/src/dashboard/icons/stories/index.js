@@ -13,11 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { ReactComponent as PaginationArrowLeft } from './paginationArrowLeft.svg';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { PaginationArrowLeft, PaginationArrowRight } from '../';
 
-import { ReactComponent as PaginationArrowRight } from './paginationArrowRight.svg';
+export default {
+  title: 'Dashboard/Components/Icons',
+  component: PaginationArrowRight,
+};
 
-export { PaginationArrowLeft, PaginationArrowRight };
+const IconsContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: lime;
+`;
+export const _default = () => {
+  <IconsContainer>
+    <PaginationArrowLeft />
+    <PaginationArrowRight />
+  </IconsContainer>;
+};
