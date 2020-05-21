@@ -129,6 +129,57 @@ describe('PublishPanel', () => {
     expect(date.getFullYear()).toStrictEqual(2020);
   });
 
+  it('should update the story when choosing time', () => {
+    const { getByText, getByLabelText, updateStory } = setupPanel();
+    const element = getByText('01/01/2020');
+
+    fireEvent.click(element);
+    const hours = getByLabelText('Hours');
+    const minutes = getByLabelText('Minutes');
+    const am = getByText('AM');
+
+    expect(minutes).toBeDefined();
+    expect(hours).toBeDefined();
+    expect(am).toBeDefined();
+
+    fireEvent.change(hours, { target: { value: '9' } });
+    fireEvent.blur(hours);
+
+    fireEvent.change(minutes, { target: { value: '59' } });
+    fireEvent.blur(minutes);
+
+    expect(updateStory).toHaveBeenCalledTimes(3);
+    const calledArgs = updateStory.mock.calls;
+
+    // The original date was using PM.
+    const date1 = new Date(calledArgs[0][0].properties.date);
+    expect(date1.getHours()).toStrictEqual(21);
+
+    const date2 = new Date(calledArgs[1][0].properties.date);
+    expect(date2.getMinutes()).toStrictEqual(59);
+
+    // After choosing AM, the hours should be 9.
+    const date3 = new Date(calledArgs[2][0].properties.date);
+    expect(date3.getHours()).toStrictEqual(9);
+  });
+
+  it('should not update the date with incorrect times', () => {
+    const { getByText, getByLabelText, updateStory } = setupPanel();
+    const element = getByText('01/01/2020');
+
+    fireEvent.click(element);
+    const hours = getByLabelText('Hours');
+    const minutes = getByLabelText('Minutes');
+
+    fireEvent.change(hours, { target: { value: '30' } });
+    fireEvent.blur(hours);
+
+    fireEvent.change(minutes, { target: { value: '130' } });
+    fireEvent.blur(minutes);
+
+    expect(updateStory).toHaveBeenCalledTimes(0);
+  });
+
   it('should open the calendar via keyboard events', () => {
     const { getByText, queryByLabelText } = setupPanel();
 
