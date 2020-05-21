@@ -18,30 +18,32 @@
  * External dependencies
  */
 import { useMemo } from 'react';
+import { css } from 'styled-components';
 
-const parentStyle = `
-width:30px;
-height:30px;
-overscroll-behavior: contain;
-overflow-y: auto;
--webkit-overflow-scrolling: touch;
--ms-overflow-style: -ms-autohiding-scrollbar;
-scrollbar-width: var(--scrollbar-ff-width);`;
+const parentStyle = css`
+  width: 30px;
+  height: 30px;
+  overscroll-behavior: contain;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  scrollbar-width: thin;
+`;
 
 const childStyle = 'width:100%; height:40px;';
 
 function browserHasObtrusiveScrollbars() {
   const parent = document.createElement('div');
-  parent.setAttribute('style', parentStyle);
+  parent.style.cssText = parentStyle;
 
   const child = document.createElement('div');
-  child.setAttribute('style', childStyle);
-  parent.appendChild(child);
+  child.style.cssText = childStyle;
 
+  parent.appendChild(child);
   document.body.appendChild(parent);
 
   // Measure the child element, if it is not 30px wide the scrollbars are obtrusive.
-  const scrollbarWidth = 30 - parent.firstChild.clientWidth;
+  const scrollbarWidth = 30 - child.clientWidth;
   document.body.removeChild(parent);
 
   return Boolean(scrollbarWidth);
@@ -55,7 +57,7 @@ function browserHasObtrusiveScrollbars() {
  * @return {boolean} Whether scrollbars are obtrusive.
  */
 function useObtrusiveScrollbars() {
-  return useMemo(() => browserHasObtrusiveScrollbars(), []);
+  return useMemo(browserHasObtrusiveScrollbars, []);
 }
 
 export default useObtrusiveScrollbars;
