@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ReactComponent as CloseIconBase } from '../../../../icons/close.svg';
+import { Close as CloseIconBase } from '../../../../icons';
 
 export const Container = styled.div`
   display: flex;

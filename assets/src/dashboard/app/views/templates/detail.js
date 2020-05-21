@@ -30,8 +30,7 @@ import { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import { useConfig } from '../../config';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ApiContext } from '../../api/apiProvider';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
-import { ReactComponent as RightArrow } from '../../../icons/right-arrow.svg';
+import { LeftArrow, RightArrow } from '../../../icons';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
 

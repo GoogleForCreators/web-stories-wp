@@ -21,21 +21,39 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { PaginationArrowLeft, PaginationArrowRight } from '../';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
+import * as Icons from '..';
 
 export default {
-  title: 'Dashboard/Components/Icons',
-  component: PaginationArrowRight,
+  title: 'Dashboard/Icons',
+  component: Icons,
 };
 
-const IconsContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: lime;
+const IconsList = styled.ul`
+  color: ${({ theme }) => theme.colors.gray600};
+  list-style-type: none;
+  li {
+    padding: 10px 0;
+  }
+  svg {
+    height: 1em;
+    width: 1em;
+    margin-right: 10px;
+  }
 `;
+
 export const _default = () => {
-  <IconsContainer>
-    <PaginationArrowLeft />
-    <PaginationArrowRight />
-  </IconsContainer>;
+  return (
+    <IconsList>
+      {Object.keys(Icons).map((iconName) => {
+        const Icon = Icons[iconName];
+        return (
+          <li key={iconName}>
+            <Icon />
+            {iconName}
+          </li>
+        );
+      })}
+    </IconsList>
+  );
 };

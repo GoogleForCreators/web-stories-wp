@@ -23,8 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ReactComponent as CheckmarkIcon } from '../../icons/checkmark.svg';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { Checkmark as CheckmarkIcon, Close as CloseIcon } from '../../icons';
 import { BEZIER } from '../../constants';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { TypographyPresets } from '../typography';

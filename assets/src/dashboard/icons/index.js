@@ -16,8 +16,20 @@
 /**
  * Internal dependencies
  */
-import { ReactComponent as PaginationArrowLeft } from './paginationArrowLeft.svg';
-
-import { ReactComponent as PaginationArrowRight } from './paginationArrowRight.svg';
-
-export { PaginationArrowLeft, PaginationArrowRight };
+export { ReactComponent as BookmarkFill } from './bookmarkFill.svg';
+export { ReactComponent as BookmarkOutline } from './bookmarkOutline.svg';
+export { ReactComponent as Checkmark } from './checkmark.svg';
+export { ReactComponent as Close } from './close.svg';
+export { ReactComponent as Download } from './download.svg';
+export { ReactComponent as DropDownArrow } from './dropDownArrow.svg';
+export { ReactComponent as DropUpArrow } from './dropUpArrow.svg';
+export { ReactComponent as Grid } from './grid.svg';
+export { ReactComponent as LeftArrow } from './leftArrow.svg';
+export { ReactComponent as List } from './list.svg';
+export { ReactComponent as Menu } from './menu.svg';
+export { ReactComponent as MoreVertical } from './moreVertical.svg';
+export { ReactComponent as PaginationArrowLeft } from './paginationArrowLeft.svg';
+export { ReactComponent as PaginationArrowRight } from './paginationArrowRight.svg';
+export { ReactComponent as PlayArrow } from './playArrow.svg';
+export { ReactComponent as RightArrow } from './rightArrow.svg';
+export { ReactComponent as Search } from './search.svg';

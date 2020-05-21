@@ -26,7 +26,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropUpArrowSvg } from '../../icons/dropUpArrow.svg';
+import { DropUpArrow as DropUpArrowSvg } from '../../icons';
 import cssLerp from '../../utils/cssLerp';
 import { useLayoutContext, SQUISH_CSS_VAR } from '../layout';
 
