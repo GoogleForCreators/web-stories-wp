@@ -18,12 +18,13 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-import { useContext, useEffect, createRef, useState } from 'react';
+import { useEffect, createRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import useBatchingCallback from '../../utils/useBatchingCallback';
+import { useContext } from '../../utils/context';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';
@@ -64,6 +65,7 @@ function useKeyEffectInternal(
   deps = undefined
 ) {
   const { keys } = useContext(Context);
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   const batchingCallback = useBatchingCallback(callback, deps || []);
   useEffect(
     () => {
@@ -111,6 +113,7 @@ export function useKeyEffect(
   callback,
   deps = undefined
 ) {
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyEffectInternal(refOrNode, keyNameOrSpec, undefined, callback, deps);
 }
 
@@ -126,6 +129,7 @@ export function useKeyDownEffect(
   callback,
   deps = undefined
 ) {
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
 }
 
@@ -141,6 +145,7 @@ export function useKeyUpEffect(
   callback,
   deps = undefined
 ) {
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
 }
 
@@ -152,7 +157,9 @@ export function useKeyUpEffect(
  */
 export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
   const [isKeyPressed, setIsKeyPressed] = useState(false);
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyDownEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(true), deps);
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyUpEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(false), deps);
   return isKeyPressed;
 }
@@ -168,6 +175,7 @@ export function useGlobalKeyDownEffect(
   deps = undefined
 ) {
   setGlobalRef();
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
@@ -182,6 +190,7 @@ export function useGlobalKeyUpEffect(
   deps = undefined
 ) {
   setGlobalRef();
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyUpEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
@@ -210,6 +219,7 @@ export function useEscapeToBlurEffect(ref, deps = undefined) {
         activeElement.blur();
       }
     },
+    //eslint-disable-next-line react-hooks/exhaustive-deps
     deps
   );
 }
