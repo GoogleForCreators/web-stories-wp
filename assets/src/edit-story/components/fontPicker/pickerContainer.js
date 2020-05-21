@@ -60,7 +60,6 @@ const ListContainer = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   padding-bottom: 8px;
-  ${({ menuFonts }) => menuFonts}
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`
@@ -128,7 +127,7 @@ const FONT_ROW_HEIGHT = 34;
 function FontPickerContainer({ handleCurrentValue, onClose }) {
   const {
     state: { fonts, recentUsedFontValues },
-    actions: { insertUsedFont, getMenuFonts },
+    actions: { insertUsedFont, ensureMenuFontsLoaded },
   } = useFont();
 
   const pickerContainerRef = useRef();
@@ -142,7 +141,6 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchInputValue, setSearchInputValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
-  const [menuFonts, setMenuFonts] = useState();
 
   const isSearchResult = searchValue && searchValue !== '';
 
@@ -194,11 +192,11 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
       .map(({ name }) => name);
 
     if (combinedFontList.length > 0) {
-      getMenuFonts(combinedFontList).then(setMenuFonts);
+      ensureMenuFontsLoaded(combinedFontList);
     }
   }, [
     currentIndex,
-    getMenuFonts,
+    ensureMenuFontsLoaded,
     recentUsedFonts,
     otherFonts,
     includeSearchFonts,
@@ -239,15 +237,17 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
     }
   }, []);
 
+  const [debouncedHandleScroll] = useDebouncedCallback(handleScroll, 300);
+
   useEffect(() => {
     inputRef.current.focus();
     const listElement = listContainerRef.current;
-    listElement.addEventListener('scroll', handleScroll);
+    listElement.addEventListener('scroll', debouncedHandleScroll);
 
     return () => {
-      listElement.removeEventListener('scroll', handleScroll);
+      listElement.removeEventListener('scroll', debouncedHandleScroll);
     };
-  }, [handleScroll]);
+  }, [debouncedHandleScroll]);
 
   useFocusOut(pickerContainerRef, onClose, [onClose]);
 
@@ -273,7 +273,7 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
 
   const [handleSearchValue] = useDebouncedCallback((value) => {
     setSearchValue(value);
-  }, 800);
+  }, 300);
 
   const handleSearchInputChange = useCallback(
     (value) => {
@@ -317,7 +317,6 @@ function FontPickerContainer({ handleCurrentValue, onClose }) {
       <ListContainer
         ref={listContainerRef}
         aria-labelledby={__('FontPicker', 'web-stories')}
-        menuFonts={menuFonts}
       >
         {renderListWithOptions(recentUsedFonts)}
         {renderListWithOptions(otherFonts)}

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback, useRef } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -86,14 +87,11 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  // Make some delay, since when click the dropdown again to close it, this function called before by useFocusOut
-  // Causing reopen
-  const closeFontPicker = useCallback(() => {
-    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 100);
-  }, []);
+  const closeFontPicker = useCallback(() => setIsOpen(false), []);
+  const toggleFontPicker = useCallback(() => setIsOpen((val) => !val), []);
+  // Must be debounced to account for clicking the select box again
+  // (closing in useFocusOut and then opening again in onClick)
+  const [debouncedCloseFontPicker] = useDebouncedCallback(closeFontPicker, 100);
 
   const handleCurrentValue = useCallback(
     (option) => {
@@ -106,17 +104,12 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
     [onChange]
   );
 
-  const handleSelectClick = (e) => {
-    e.preventDefault();
-    setIsOpen(!isOpen);
-  };
-
   return (
     <Container>
       <FontPickerSelect
-        onClick={handleSelectClick}
+        onClick={toggleFontPicker}
         aria-pressed={isOpen}
-        aria-haspopup={true}
+        aria-haspopup
         aria-expanded={isOpen}
         ref={selectRef}
         lightMode={lightMode}
@@ -127,7 +120,7 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
       <Popup anchor={selectRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
         <FontPickerContainer
           handleCurrentValue={handleCurrentValue}
-          onClose={closeFontPicker}
+          onClose={debouncedCloseFontPicker}
         />
       </Popup>
     </Container>
