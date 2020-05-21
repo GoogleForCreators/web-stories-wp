@@ -43,7 +43,7 @@ function PreviewPageController({ page, animationState }) {
       key={id}
       page={page}
       element={{ id, ...rest }}
-      animationMode={true}
+      isAnimatable
     />
   ));
 }

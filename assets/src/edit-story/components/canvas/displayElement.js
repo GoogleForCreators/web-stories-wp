@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -60,9 +59,8 @@ const ReplacementContainer = styled.div`
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
-function AnimationWrapper({ children, id, animationMode }) {
-  const enableAnimation = useFeature('enableAnimation');
-  return enableAnimation && animationMode ? (
+function AnimationWrapper({ children, id, isAnimatable }) {
+  return isAnimatable ? (
     <StoryAnimation.WAAPIWrapper target={id}>
       {children}
     </StoryAnimation.WAAPIWrapper>
@@ -71,12 +69,12 @@ function AnimationWrapper({ children, id, animationMode }) {
   );
 }
 AnimationWrapper.propTypes = {
-  animationMode: PropTypes.bool.isRequired,
+  isAnimatable: PropTypes.bool.isRequired,
   children: PropTypes.arrayOf(PropTypes.node),
   id: PropTypes.string,
 };
 
-function DisplayElement({ element, previewMode, page, animationMode = false }) {
+function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
   const {
     actions: { getBox },
   } = useUnits();
@@ -128,7 +126,7 @@ function DisplayElement({ element, previewMode, page, animationMode = false }) {
 
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
-      <AnimationWrapper id={id} animationMode={animationMode}>
+      <AnimationWrapper id={id} isAnimatable={isAnimatable}>
         <WithMask
           element={element}
           fill={true}
@@ -161,7 +159,7 @@ DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
   page: StoryPropTypes.page,
-  animationMode: PropTypes.bool,
+  isAnimatable: PropTypes.bool,
 };
 
 export default DisplayElement;
