@@ -148,6 +148,8 @@ describe('PublishPanel', () => {
     fireEvent.change(minutes, { target: { value: '59' } });
     fireEvent.blur(minutes);
 
+    fireEvent.click(am);
+
     expect(updateStory).toHaveBeenCalledTimes(3);
     const calledArgs = updateStory.mock.calls;
 
