@@ -17,18 +17,20 @@
 /**
  * External dependencies
  */
-import { useState, useRef, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
-
 /**
  * Internal dependencies
  */
 import { Button } from '..';
-import { BUTTON_TYPES } from '../../constants';
 import { resolveRoute } from '../../app/router';
+import {
+  BUTTON_TYPES,
+  DEFAULT_STORY_PAGE_ADVANCE_DURATION,
+  STORY_PAGE_STATE,
+} from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
-
 import { clamp, useFocusOut } from '../../utils';
 import PreviewErrorBoundary from '../previewErrorBoundary';
 import PreviewPage from '../previewPage';
@@ -59,10 +61,8 @@ const EditControls = styled.div`
   transition: opacity ease-in-out 300ms;
   background: ${({ theme }) => theme.cardItem.previewOverlay};
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  opacity: ${(props) => (props.isActive ? 1 : 0)};
-  &:hover {
-    opacity: 1;
-  }
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     button,
     a {
@@ -94,12 +94,22 @@ const getActionAttributes = (targetAction) =>
     ? { href: resolveRoute(targetAction), isLink: true }
     : { onClick: targetAction };
 
+const CARD_STATE = {
+  IDLE: 'idle',
+  ACTIVE: 'active',
+};
+
+const CARD_ACTION = {
+  ACTIVATE: 'activate',
+  DEACTIVATE: 'deactivate',
+};
+
 const cardMachine = {
-  idle: {
-    activate: 'active',
+  [CARD_STATE.IDLE]: {
+    [CARD_ACTION.ACTIVATE]: CARD_STATE.ACTIVE,
   },
-  active: {
-    deactivate: 'idle',
+  [CARD_STATE.ACTIVE]: {
+    [CARD_ACTION.DEACTIVATE]: CARD_STATE.IDLE,
   },
 };
 
@@ -112,22 +122,25 @@ const CardPreviewContainer = ({
   pageSize,
   children,
 }) => {
-  const [cardState, dispatch] = useReducer(cardReducer, 'idle');
+  const [cardState, dispatch] = useReducer(cardReducer, CARD_STATE.IDLE);
   const [pageIndex, setPageIndex] = useState(0);
   const containElem = useRef(null);
   const storyPages = story.pages || [];
 
-  useFocusOut(containElem, () => dispatch('deactivate'), []);
+  useFocusOut(containElem, () => dispatch(CARD_ACTION.DEACTIVATE), []);
 
   useEffect(() => {
-    if ('idle' === cardState) {
+    if (CARD_STATE.IDLE === cardState) {
       setPageIndex(0);
     }
   }, [cardState]);
 
+  const inervalDuration = story.originalStoryData?.story_data?.autoAdvance
+    ? story.originalStoryData?.story_data?.defaultPageDuration * 1000
+    : DEFAULT_STORY_PAGE_ADVANCE_DURATION;
   useEffect(() => {
     let intervalId;
-    if ('active' === cardState) {
+    if (CARD_STATE.ACTIVE === cardState) {
       /**
        * The interval duration should eventually get pulled off the story schema's
        * auto advance duration and if no duration provided, use a default.
@@ -137,12 +150,12 @@ const CardPreviewContainer = ({
        */
       intervalId = setInterval(
         () => setPageIndex((v) => clamp(v + 1, [0, storyPages.length - 1])),
-        2000
+        inervalDuration
       );
     }
 
     return () => intervalId && clearInterval(intervalId);
-  }, [storyPages.length, cardState]);
+  }, [storyPages.length, cardState, inervalDuration]);
 
   return (
     <>
@@ -150,7 +163,11 @@ const CardPreviewContainer = ({
         <PreviewErrorBoundary>
           <PreviewPage
             page={storyPages[pageIndex]}
-            animationState={'active' === cardState ? 'animate' : 'idle'}
+            animationState={
+              CARD_STATE.ACTIVE === cardState
+                ? STORY_PAGE_STATE.ANIMATE
+                : STORY_PAGE_STATE.IDLE
+            }
           />
         </PreviewErrorBoundary>
         {children}
@@ -158,10 +175,10 @@ const CardPreviewContainer = ({
       <EditControls
         ref={containElem}
         cardSize={pageSize}
-        isActive={'active' === cardState}
-        onFocus={() => dispatch('activate')}
-        onMouseEnter={() => dispatch('activate')}
-        onMouseLeave={() => dispatch('deactivate')}
+        isActive={CARD_STATE.ACTIVE === cardState}
+        onFocus={() => dispatch(CARD_ACTION.ACTIVATE)}
+        onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
+        onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
       >
         <EmptyActionContainer />
         {centerAction && (

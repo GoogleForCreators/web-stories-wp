@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -60,30 +61,22 @@ const ReplacementContainer = styled.div`
 `;
 
 function AnimationWrapper({ children, id, animationMode }) {
-  switch (animationMode) {
-    case 'WAAPI':
-      return (
-        <StoryAnimation.WAAPIWrapper target={id}>
-          {children}
-        </StoryAnimation.WAAPIWrapper>
-      );
-    case 'AMP':
-    default:
-      return children;
-  }
+  const enableAnimation = useFeature('enableAnimation');
+  return enableAnimation && animationMode ? (
+    <StoryAnimation.WAAPIWrapper target={id}>
+      {children}
+    </StoryAnimation.WAAPIWrapper>
+  ) : (
+    children
+  );
 }
 AnimationWrapper.propTypes = {
-  animationMode: PropTypes.oneOf(['none', 'WAAPI', 'AMP']).isRequired,
+  animationMode: PropTypes.bool.isRequired,
   children: PropTypes.arrayOf(PropTypes.node),
   id: PropTypes.string,
 };
 
-function DisplayElement({
-  element,
-  previewMode,
-  page,
-  animationMode = 'none',
-}) {
+function DisplayElement({ element, previewMode, page, animationMode = false }) {
   const {
     actions: { getBox },
   } = useUnits();
@@ -168,7 +161,7 @@ DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
   page: StoryPropTypes.page,
-  animationMode: PropTypes.oneOf(['none', 'WAAPI', 'AMP']),
+  animationMode: PropTypes.bool,
 };
 
 export default DisplayElement;

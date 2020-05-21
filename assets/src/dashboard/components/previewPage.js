@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  */
 import DisplayElement from '../../edit-story/components/canvas/displayElement';
 import StoryPropTypes from '../../edit-story/types';
+import { STORY_PAGE_STATE } from '../constants';
 import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 
 function PreviewPageController({ page, animationState }) {
@@ -42,7 +43,7 @@ function PreviewPageController({ page, animationState }) {
       key={id}
       page={page}
       element={{ id, ...rest }}
-      animationMode="WAAPI"
+      animationMode={true}
     />
   ));
 }
@@ -64,7 +65,7 @@ function PreviewPage({ page, animationState = 'idle', onAnimationComplete }) {
 
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
-  animationState: PropTypes.oneOf(['animate', 'idle']),
+  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
   onAnimationComplete: PropTypes.func,
 };
 
