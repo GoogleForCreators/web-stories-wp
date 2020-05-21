@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
