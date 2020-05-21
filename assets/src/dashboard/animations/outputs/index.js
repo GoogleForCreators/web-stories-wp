@@ -13,27 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { ANIMATION_TYPES } from '../constants';
-import { AnimationBounce } from './bounce';
 
-function throughput() {
-  return {
-    id: -1,
-    keyframes: {},
-    WAAPIAnimation: ({ children }) => children,
-    AMPAnimation: ({ children }) => children,
-    AMPAnimator: () => {},
-  };
-}
-
-export function AnimationPart(type, args) {
-  const generator =
-    {
-      [ANIMATION_TYPES.BOUNCE]: AnimationBounce,
-    }[type] || throughput;
-
-  return generator(args);
-}
+export { default as AnimationOutput } from './animationOutput';
+export { default as KeyframesOutput } from './keyframesOutput';
+export { default as WithAnimation } from './output';

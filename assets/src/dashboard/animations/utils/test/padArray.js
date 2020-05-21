@@ -17,19 +17,46 @@
 /**
  * Internal dependencies
  */
-import Provider from './provider';
-import WAAPIWrapper from './WAAPIWrapper';
-import AMPWrapper from './AMPWrapper';
-import AMPKeyframes from './AMPKeyframes';
-import AMPAnimations from './AMPAnimations';
+import padArray from '../padArray';
 
-const StoryAnimation = {
-  Provider,
-  WAAPIWrapper,
-  AMPWrapper,
-  AMPKeyframes,
-  AMPAnimations,
-};
+describe('padArray', () => {
+  it('should return array with additional padded items', () => {
+    const values = [0, 4, 67, 89.5, 23, 5];
 
-export default StoryAnimation;
-export { default as useStoryAnimationContext } from './useStoryAnimationContext';
+    expect(padArray(values, 2)).toStrictEqual([
+      0,
+      0,
+      4,
+      4,
+      67,
+      67,
+      89.5,
+      89.5,
+      23,
+      23,
+      5,
+      5,
+    ]);
+
+    expect(padArray(values, 3)).toStrictEqual([
+      0,
+      0,
+      0,
+      4,
+      4,
+      4,
+      67,
+      67,
+      67,
+      89.5,
+      89.5,
+      89.5,
+      23,
+      23,
+      23,
+      5,
+      5,
+      5,
+    ]);
+  });
+});

@@ -17,23 +17,19 @@
 /**
  * Internal dependencies
  */
-import useStoryAnimationContext from './useStoryAnimationContext';
+import generateLookupMap from '../generateLookupMap';
 
-function AMPAnimators() {
-  const {
-    state: { providerId, animationTargets },
-    actions: { getAnimationParts },
-  } = useStoryAnimationContext();
+describe('generateLookupMap', () => {
+  it('should generate a correct mapping from array', () => {
+    const values = [3, 45, 6, 89, 90];
+    const result = generateLookupMap(values);
 
-  return animationTargets.reduce(
-    (animators, target) => [
-      ...animators,
-      ...getAnimationParts(target).map(({ id, AMPAnimator }) => (
-        <AMPAnimator key={id} prefixId={providerId} />
-      )),
-    ],
-    []
-  );
-}
-
-export default AMPAnimators;
+    expect(result).toStrictEqual({
+      3: [45, 6, 89, 90],
+      45: [3, 6, 89, 90],
+      6: [3, 45, 89, 90],
+      89: [3, 45, 6, 90],
+      90: [3, 45, 6, 89],
+    });
+  });
+});

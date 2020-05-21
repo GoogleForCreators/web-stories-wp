@@ -17,19 +17,23 @@
 /**
  * Internal dependencies
  */
-import Provider from './provider';
-import WAAPIWrapper from './WAAPIWrapper';
-import AMPWrapper from './AMPWrapper';
-import AMPKeyframes from './AMPKeyframes';
-import AMPAnimations from './AMPAnimations';
+import useStoryAnimationContext from './useStoryAnimationContext';
 
-const StoryAnimation = {
-  Provider,
-  WAAPIWrapper,
-  AMPWrapper,
-  AMPKeyframes,
-  AMPAnimations,
-};
+function AMPAnimations() {
+  const {
+    state: { providerId, animationTargets },
+    actions: { getAnimationParts },
+  } = useStoryAnimationContext();
 
-export default StoryAnimation;
-export { default as useStoryAnimationContext } from './useStoryAnimationContext';
+  return animationTargets.reduce(
+    (animators, target) => [
+      ...animators,
+      ...getAnimationParts(target).map(({ id, AMPAnimation }) => (
+        <AMPAnimation key={id} prefixId={providerId} />
+      )),
+    ],
+    []
+  );
+}
+
+export default AMPAnimations;

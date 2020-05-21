@@ -14,22 +14,11 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import Provider from './provider';
-import WAAPIWrapper from './WAAPIWrapper';
-import AMPWrapper from './AMPWrapper';
-import AMPKeyframes from './AMPKeyframes';
-import AMPAnimations from './AMPAnimations';
+function padArray(values, padCount) {
+  return values.reduce(
+    (acc, currentValue) => acc.concat(Array(padCount).fill(currentValue)),
+    []
+  );
+}
 
-const StoryAnimation = {
-  Provider,
-  WAAPIWrapper,
-  AMPWrapper,
-  AMPKeyframes,
-  AMPAnimations,
-};
-
-export default StoryAnimation;
-export { default as useStoryAnimationContext } from './useStoryAnimationContext';
+export default padArray;
