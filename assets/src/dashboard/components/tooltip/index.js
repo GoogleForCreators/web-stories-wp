@@ -26,7 +26,7 @@ import { useState, useRef, useMemo, useEffect } from 'react';
 import { TypographyPresets } from '../typography';
 
 export const Content = styled.div`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
   position: absolute;
   border-radius: 2px;

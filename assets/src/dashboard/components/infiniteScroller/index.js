@@ -31,7 +31,7 @@ import styled from 'styled-components';
 import { TypographyPresets } from '../typography';
 
 const ScrollMessage = styled.div`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   width: 100%;
   margin: 40px auto;
   text-align: center;

@@ -24,7 +24,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import ConfigContext from '../../config/context';
 import useUploader from '../useUploader';
 
-function setup(args, refreshLibrary = false) {
+function setup(args) {
   const configValue = {
     api: {},
     allowedMimeTypes: {
@@ -43,7 +43,7 @@ function setup(args, refreshLibrary = false) {
       {params.children}
     </ConfigContext.Provider>
   );
-  const { result } = renderHook(() => useUploader(refreshLibrary), { wrapper });
+  const { result } = renderHook(() => useUploader(), { wrapper });
   return {
     uploadFile: result.current.uploadFile,
     isValidType: result.current.isValidType,

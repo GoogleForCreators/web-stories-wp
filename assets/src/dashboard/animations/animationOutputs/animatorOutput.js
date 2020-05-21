@@ -24,11 +24,11 @@ import PropTypes from 'prop-types';
  */
 import { GeneralAnimationPropTypes } from './types';
 
-function AnimatorOutput({ id, animation, config, trigger }) {
+function AnimatorOutput({ animation, config }) {
   const configs = Array.isArray(config) ? config : [config];
 
   return (
-    <amp-animation id={id} layout="nodisplay" trigger={trigger}>
+    <amp-story-animation layout="nodisplay">
       <script
         type="application/json"
         dangerouslySetInnerHTML={{
@@ -40,7 +40,7 @@ function AnimatorOutput({ id, animation, config, trigger }) {
           ),
         }}
       />
-    </amp-animation>
+    </amp-story-animation>
   );
 }
 
@@ -51,13 +51,11 @@ const AnimationConfigPropTypes = PropTypes.shape({
 });
 
 AnimatorOutput.propTypes = {
-  id: PropTypes.string.isRequired,
   animation: PropTypes.string,
   config: PropTypes.oneOfType([
     AnimationConfigPropTypes,
     PropTypes.arrayOf(AnimationConfigPropTypes),
   ]).isRequired,
-  trigger: PropTypes.oneOf(['visibility']),
 };
 
 export default AnimatorOutput;

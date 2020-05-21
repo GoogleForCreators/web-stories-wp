@@ -60,6 +60,8 @@ const StorybookGridItem = (
       author={'Ron Weasley'}
       status={STORY_STATUS.DRAFT}
       displayDate={moment().subtract(2, 'minutes')}
+      onEditCancel={() => {}}
+      onEditComplete={() => {}}
     />
   </CardGridItem>
 );
