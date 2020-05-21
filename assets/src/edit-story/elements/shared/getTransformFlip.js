@@ -25,11 +25,11 @@ function getTransformFlip(flip) {
     return transformFlip;
   }
   if (flip.vertical && flip.horizontal) {
-    transformFlip = 'scale(-1, -1)';
+    transformFlip = 'scale3d(-1, -1, 1)';
   } else if (flip.horizontal) {
-    transformFlip = 'scaleX(-1)';
+    transformFlip = 'scale3d(-1, 1, 1)';
   } else if (flip.vertical) {
-    transformFlip = 'scaleY(-1)';
+    transformFlip = 'scale3d(1, -1, 1)';
   }
   return transformFlip;
 }

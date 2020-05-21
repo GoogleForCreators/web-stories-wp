@@ -36,8 +36,6 @@ function getPreviewText(pattern) {
   switch (pattern.type) {
     case 'radial':
       return __('Radial', 'web-stories');
-    case 'conic':
-      return __('Conic', 'web-stories');
     case 'linear':
       return __('Linear', 'web-stories');
     case 'solid':

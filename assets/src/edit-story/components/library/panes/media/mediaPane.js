@@ -249,7 +249,7 @@ function MediaPane(props) {
 
       setNextPage();
     },
-    [hasMore, isMediaLoading, isMediaLoaded]
+    [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
   return (

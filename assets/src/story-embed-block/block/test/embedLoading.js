@@ -17,33 +17,16 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import { render, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { GeneralAnimationPropTypes, KeyframesPropTypes } from './types';
+import EmbedLoading from '../embedLoading';
 
-function AnimationOutput({ id, keyframes, ...options }) {
-  return (
-    <amp-animation id={id} layout="nodisplay">
-      <script
-        type="application/json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            keyframes,
-            ...options,
-          }),
-        }}
-      />
-    </amp-animation>
-  );
-}
-
-AnimationOutput.propTypes = {
-  id: PropTypes.string.isRequired,
-  keyframes: KeyframesPropTypes.isRequired,
-  ...GeneralAnimationPropTypes,
-};
-
-export default AnimationOutput;
+describe('EmbedLoading', () => {
+  it('should display spinner', () => {
+    render(<EmbedLoading />);
+    expect(screen.getByText('Embedding…')).toBeInTheDocument();
+  });
+});

@@ -90,7 +90,7 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
         }
       }
     },
-    [activeIndex]
+    [activeIndex, presets.length, type]
   );
 
   const buttonWidth =

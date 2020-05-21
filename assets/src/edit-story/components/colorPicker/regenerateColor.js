@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import createSolid from '../../utils/createSolid';
-import { TYPE_SOLID, TYPE_LINEAR, TYPE_RADIAL, TYPE_CONIC } from './constants';
+import { TYPE_SOLID, TYPE_LINEAR, TYPE_RADIAL } from './constants';
 
 function regenerateSolid({ currentColor: { r, g, b, a } }) {
   return createSolid(r, g, b, a);
@@ -62,23 +62,6 @@ function regenerateRadial({ stops, center, size, alpha }) {
   return minimal;
 }
 
-function regenerateConic({ stops, rotation, center, alpha }) {
-  const minimal = {
-    type: TYPE_CONIC,
-    stops: regenerateStops(stops),
-  };
-  if (rotation !== 0) {
-    minimal.rotation = rotation;
-  }
-  if (center && (center.x !== 0.5 || center.y !== 0.5)) {
-    minimal.center = center;
-  }
-  if (alpha !== 1 && alpha !== undefined) {
-    minimal.alpha = alpha;
-  }
-  return minimal;
-}
-
 function regenerateColor(pattern) {
   const { regenerate, type } = pattern;
   if (!regenerate) {
@@ -92,8 +75,6 @@ function regenerateColor(pattern) {
       return regenerateLinear(pattern);
     case TYPE_RADIAL:
       return regenerateRadial(pattern);
-    case TYPE_CONIC:
-      return regenerateConic(pattern);
 
     // Ignore reason: only required for eslint, won't actually happen
     // istanbul ignore next
