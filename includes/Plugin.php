@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Fonts_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 
@@ -52,12 +53,21 @@ class Plugin {
 		$link_controller = new Link_Controller();
 		add_action( 'rest_api_init', [ $link_controller, 'register_routes' ] );
 
+		$embed_controller = new Embed_Controller();
+		add_action( 'rest_api_init', [ $embed_controller, 'register_routes' ] );
+
 		// Dashboard.
 
 		$dashboard = new Dashboard();
 		add_action( 'init', [ $dashboard, 'init' ] );
 
+		// Migrations.
+
 		$database_upgrader = new Database_Upgrader();
 		add_action( 'admin_init', [ $database_upgrader, 'init' ] );
+
+		// Gutenberg Blocks.
+		$embed_block = new Embed_Block();
+		add_action( 'init', [ $embed_block, 'init' ] );
 	}
 }

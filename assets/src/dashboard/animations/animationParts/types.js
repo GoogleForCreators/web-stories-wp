@@ -22,3 +22,9 @@ export const WAAPIAnimationProps = {
   children: PropTypes.node.isRequired,
   hoistAnimation: PropTypes.func,
 };
+
+export const AMPAnimationProps = {
+  children: PropTypes.node,
+  style: PropTypes.object,
+  prefixId: PropTypes.string,
+};

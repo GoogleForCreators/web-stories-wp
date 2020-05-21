@@ -33,7 +33,7 @@ export const ACTIVE_CHOICE_ICON_SIZE = 16;
 export const ACTIVE_CHOICE_LEFT_MARGIN = 4;
 
 export const PillContainer = styled.label`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   display: inline-flex;
   justify-content: center;
 `;

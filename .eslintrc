@@ -103,6 +103,7 @@
       {
         "enableDangerousAutofixThisMayCauseInfiniteLoops": false,
         "additionalHooksMap": {
+          "useSelect": 0,
           "useBatchingCallback": 0,
           "useKeyEffectInternal": 3,
           "useKeyEffect": 2,
@@ -231,7 +232,8 @@
         "testing-library/no-dom-import": "error"
       },
       "globals": {
-        "karmaPuppeteer": "readonly"
+        "karmaPuppeteer": "readonly",
+        "karmaSnapshot": "readonly"
       }
     },
     {
