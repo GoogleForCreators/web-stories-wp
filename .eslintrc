@@ -101,7 +101,7 @@
     "react-hooks/exhaustive-deps": [
       "error",
       {
-//        "enableDangerousAutofixThisMayCauseInfiniteLoops": false,
+        "enableDangerousAutofixThisMayCauseInfiniteLoops": false,
         "additionalHooksMap": {
           "useBatchingCallback": 0,
           "useKeyEffectInternal": 3,
