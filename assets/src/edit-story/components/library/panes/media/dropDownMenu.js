@@ -90,6 +90,11 @@ function DropDownMenu({
     }
   };
 
+  // On Delete dialog closing.
+  const onDeleteDialogClose = useCallback(() => setShowDeleteDialog(false), [
+    setShowDeleteDialog,
+  ]);
+
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     !resource.local && ( // Don't show menu if resource not uploaded to server yet.
@@ -118,11 +123,7 @@ function DropDownMenu({
           </>
         )}
         {showDeleteDialog && (
-          <DeleteDialog
-            mediaId={resource.id}
-            showDeleteDialog={showDeleteDialog}
-            setShowDeleteDialog={setShowDeleteDialog}
-          />
+          <DeleteDialog mediaId={resource.id} onClose={onDeleteDialogClose} />
         )}
       </div>
     )

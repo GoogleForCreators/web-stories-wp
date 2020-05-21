@@ -24,11 +24,5 @@ export default {
 };
 
 export const _default = () => {
-  return (
-    <DeleteDialog
-      mediaId={123}
-      showDeleteDialog={true}
-      setShowDeleteDialog={() => {}}
-    />
-  );
+  return <DeleteDialog mediaId={123} onClose={() => {}} />;
 };

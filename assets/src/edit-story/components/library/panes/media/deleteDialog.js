@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -44,20 +44,15 @@ const DialogBody = styled.div`
   color: ${({ theme }) => theme.colors.fg.v0};
 `;
 
-const Bold = styled.span`
-  font-weight: bold;
-`;
-
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
  *
  * @param {Object} props Component props.
  * @param {number} props.mediaId Selected media element.
- * @param {boolean} props.showDeleteDialog If dialog should be displayed.
- * @param {function(boolean)} props.setShowDeleteDialog Callback to toggle dialog display.
+ * @param {function()} props.onClose Callback to toggle dialog display on close.
  * @return {null|*} The dialog element.
  */
-function DeleteDialog({ mediaId, showDeleteDialog, setShowDeleteDialog }) {
+function DeleteDialog({ mediaId, onClose }) {
   const {
     actions: { deleteMedia },
   } = useAPI();
@@ -66,46 +61,30 @@ function DeleteDialog({ mediaId, showDeleteDialog, setShowDeleteDialog }) {
     actions: { deleteMediaElement },
   } = useMedia();
 
-  const [shouldDelete, setShouldDelete] = useState(false);
-
-  useEffect(() => {
-    const deleteMediaItem = async () => {
-      setShouldDelete(false);
-      setShowDeleteDialog(false);
-      try {
-        await deleteMedia(mediaId);
-        deleteMediaElement({ id: mediaId });
-      } catch (err) {
-        showSnackbar({
-          message: __('Failed to delete media item.', 'web-stories'),
-        });
-      }
-    };
-    shouldDelete ? deleteMediaItem() : null;
-  }, [
-    deleteMedia,
-    deleteMediaElement,
-    mediaId,
-    setShowDeleteDialog,
-    shouldDelete,
-    showSnackbar,
-  ]);
+  const onDelete = useCallback(async () => {
+    onClose();
+    try {
+      await deleteMedia(mediaId);
+      deleteMediaElement({ id: mediaId });
+    } catch (err) {
+      showSnackbar({
+        message: __('Failed to delete media item.', 'web-stories'),
+      });
+    }
+  }, [deleteMedia, deleteMediaElement, mediaId, onClose, showSnackbar]);
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <Dialog
-      open={showDeleteDialog}
-      onClose={() => setShowDeleteDialog(false)}
+      open={true}
+      onClose={() => onClose()}
       title={__('Delete image/video?', 'web-stories')}
       actions={
         <>
-          <Plain
-            data-testid="cancel"
-            onClick={() => setShowDeleteDialog(false)}
-          >
+          <Plain data-testid="cancel" onClick={() => onClose()}>
             {__('Cancel', 'web-stories')}
           </Plain>
-          <Plain data-testid="delete" onClick={() => setShouldDelete(true)}>
+          <Plain data-testid="delete" onClick={() => onDelete()}>
             {__('Delete', 'web-stories')}
           </Plain>
         </>
@@ -117,7 +96,7 @@ function DeleteDialog({ mediaId, showDeleteDialog, setShowDeleteDialog }) {
             'The image/video will appear broken in any stories that uses it. ',
           'web-stories'
         )}
-        <Bold>{__('This action can not be undone.', 'web-stories')}</Bold>
+        <strong>{__('This action can not be undone.', 'web-stories')}</strong>
       </DialogBody>
     </Dialog>
   );
@@ -125,8 +104,7 @@ function DeleteDialog({ mediaId, showDeleteDialog, setShowDeleteDialog }) {
 
 DeleteDialog.propTypes = {
   mediaId: PropTypes.number,
-  showDeleteDialog: PropTypes.bool,
-  setShowDeleteDialog: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 export default DeleteDialog;

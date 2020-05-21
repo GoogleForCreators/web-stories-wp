@@ -55,11 +55,7 @@ function setup() {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <DeleteDialog
-            mediaId={123}
-            showDeleteDialog={true}
-            setShowDeleteDialog={() => {}}
-          />
+          <DeleteDialog mediaId={123} onClose={() => {}} />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
