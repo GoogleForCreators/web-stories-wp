@@ -134,6 +134,7 @@ function PublishTime() {
         anchor={dateFieldRef}
         isOpen={showDatePicker}
         placement={'bottom-end'}
+        maxHeight={350}
       >
         <DateTime
           value={date}
