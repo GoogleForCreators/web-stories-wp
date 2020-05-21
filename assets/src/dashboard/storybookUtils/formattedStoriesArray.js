@@ -14,1291 +14,18 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import moment from 'moment';
+
 const formattedStoriesArray = [
   {
-    id: 83,
-    status: 'publish',
-    title: 'THIS IS MORTAL COMBAT',
-    modified: '2020-05-08T20:25:40.000Z',
-    created: '2020-05-04T01:19:41.000Z',
-    pages: [
-      {
-        elements: [
-          {
-            type: 'shape',
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            backgroundColor: {
-              color: {
-                r: 12,
-                g: 215,
-                b: 24,
-              },
-            },
-            isFill: false,
-            x: 1,
-            y: 1,
-            width: 1,
-            height: 1,
-            mask: {
-              type: 'rectangle',
-            },
-            isBackground: true,
-            id: 'ada8a96a-0166-484d-b2e5-48fbad8f1961',
-          },
-          {
-            type: 'shape',
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            backgroundColor: {
-              color: {
-                r: 51,
-                g: 51,
-                b: 51,
-              },
-            },
-            isFill: false,
-            x: 70,
-            y: 111,
-            width: 147,
-            height: 147,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            mask: {
-              type: 'rectangle',
-            },
-            id: '16f23328-7093-4308-9eb6-db8205e50bee',
-          },
-        ],
-        backgroundElementId: 'ada8a96a-0166-484d-b2e5-48fbad8f1961',
-        type: 'page',
-        id: 'db3af86b-99f8-4d8b-b8ca-9d232c772045',
-      },
-    ],
-    tags: [],
-    categories: [],
-    author: 1,
-    centerTargetAction: '',
-    bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=83',
-    originalStoryData: {
-      id: 83,
-      date: '2020-05-03T18:19:41',
-      date_gmt: '2020-05-04T01:19:41',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=83',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=83',
-      },
-      modified: '2020-05-08T13:25:40',
-      modified_gmt: '2020-05-08T20:25:40',
-      password: '',
-      slug: 'askjdflakjsdflkajdfslka',
-      status: 'publish',
-      type: 'web-story',
-      link: 'http://localhost:8899/stories/askjdflakjsdflkajdfslka',
-      title: {
-        raw: 'THIS IS MORTAL COMBAT',
-        rendered: 'THIS IS MORTAL COMBAT',
-      },
-      content: {
-        raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              amp-story-grid-layer {\n                overflow: visible;\n              }\n\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: visible;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=83"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="THIS IS MORTAL COMBAT" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="db3af86b-99f8-4d8b-b8ca-9d232c772045" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-ada8a96a-0166-484d-b2e5-48fbad8f1961" class="wrapper"><div class="fill" style="background-color:#0cd718"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"><div style="left:15.90909%;top:16.81818%;width:33.40909%;height:22.27273%;opacity:1;clip-path:url(#mask-rectangle-16f23328-7093-4308-9eb6-db8205e50bee-output);-webkit-clip-path:url(#mask-rectangle-16f23328-7093-4308-9eb6-db8205e50bee-output)" id="el-16f23328-7093-4308-9eb6-db8205e50bee" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-16f23328-7093-4308-9eb6-db8205e50bee-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg><div class="fill" style="background-color:#333"></div></div></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-        rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              amp-story-grid-layer {\n                overflow: visible;\n              }</p>\n<p>              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: visible;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=83"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="THIS IS MORTAL COMBAT" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="db3af86b-99f8-4d8b-b8ca-9d232c772045" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-ada8a96a-0166-484d-b2e5-48fbad8f1961" class="wrapper">\n<div class="fill" style="background-color:#0cd718"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area">\n<div style="left:15.90909%;top:16.81818%;width:33.40909%;height:22.27273%;opacity:1;clip-path:url(#mask-rectangle-16f23328-7093-4308-9eb6-db8205e50bee-output);-webkit-clip-path:url(#mask-rectangle-16f23328-7093-4308-9eb6-db8205e50bee-output)" id="el-16f23328-7093-4308-9eb6-db8205e50bee" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-16f23328-7093-4308-9eb6-db8205e50bee-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg></p>\n<div class="fill" style="background-color:#333"></div>\n</div>\n</div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
-        protected: false,
-        block_version: 0,
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'this-is-mortal-combat',
-      story_data: {
-        version: 17,
-        pages: [
-          {
-            elements: [
-              {
-                type: 'shape',
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                backgroundColor: {
-                  color: {
-                    r: 12,
-                    g: 215,
-                    b: 24,
-                  },
-                },
-                isFill: false,
-                x: 1,
-                y: 1,
-                width: 1,
-                height: 1,
-                mask: {
-                  type: 'rectangle',
-                },
-                isBackground: true,
-                id: 'ada8a96a-0166-484d-b2e5-48fbad8f1961',
-              },
-              {
-                type: 'shape',
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                backgroundColor: {
-                  color: {
-                    r: 51,
-                    g: 51,
-                    b: 51,
-                  },
-                },
-                isFill: false,
-                x: 70,
-                y: 111,
-                width: 147,
-                height: 147,
-                scale: 100,
-                focalX: 50,
-                focalY: 50,
-                mask: {
-                  type: 'rectangle',
-                },
-                id: '16f23328-7093-4308-9eb6-db8205e50bee',
-              },
-            ],
-            backgroundElementId: 'ada8a96a-0166-484d-b2e5-48fbad8f1961',
-            type: 'page',
-            id: 'db3af86b-99f8-4d8b-b8ca-9d232c772045',
-          },
-        ],
-      },
-      featured_media_url: '',
-      publisher_logo_url:
-        'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
-      style_presets: {
-        fillColors: [],
-        textColors: [],
-        styles: [],
-        textStyles: [],
-      },
-      _links: {
-        self: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83',
-          },
-        ],
-        collection: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
-          },
-        ],
-        about: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
-          },
-        ],
-        author: [
-          {
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
-          },
-        ],
-        'version-history': [
-          {
-            count: 4,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 121,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/83/revisions/121',
-          },
-        ],
-        'wp:attachment': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=83',
-          },
-        ],
-        'wp:term': [
-          {
-            taxonomy: 'category',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=83',
-          },
-          {
-            taxonomy: 'post_tag',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=83',
-          },
-        ],
-        'wp:action-publish': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83',
-          },
-        ],
-        'wp:action-unfiltered-html': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83',
-          },
-        ],
-        'wp:action-assign-author': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83',
-          },
-        ],
-        'wp:action-create-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83',
-          },
-        ],
-        'wp:action-assign-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83',
-          },
-        ],
-        'wp:action-create-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83',
-          },
-        ],
-        'wp:action-assign-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/83',
-          },
-        ],
-        curies: [
-          {
-            name: 'wp',
-            href: 'https://api.w.org/{rel}',
-            templated: true,
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: 111,
-    status: 'draft',
-    title: 'NEW FROM COLUMBIA RECORDS',
-    modified: '2020-05-08T20:24:18.000Z',
-    created: '2020-05-07T21:33:59.000Z',
-    pages: [
-      {
-        elements: [
-          {
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            lockAspectRatio: true,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/png',
-              src:
-                'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM.png',
-              width: 111,
-              height: 166,
-              posterId: 0,
-              id: 112,
-              title: 'Screen Shot 2020-05-05 at 8.45.09 AM',
-              alt: 'Screen Shot 2020-05-05 at 8.45.09 AM',
-              local: false,
-              sizes: {
-                medium: {
-                  file: 'Screen-Shot-2020-05-05-at-8.45.09-AM-201x300.png',
-                  width: 201,
-                  height: 300,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM-201x300.png',
-                },
-                thumbnail: {
-                  file: 'Screen-Shot-2020-05-05-at-8.45.09-AM-150x150.png',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM-150x150.png',
-                },
-                web_stories_thumbnail: {
-                  file: 'Screen-Shot-2020-05-05-at-8.45.09-AM-150x224.png',
-                  width: 150,
-                  height: 224,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM-150x224.png',
-                },
-                full: {
-                  file: 'Screen-Shot-2020-05-05-at-8.45.09-AM.png',
-                  width: 222,
-                  height: 331,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM.png',
-                },
-              },
-            },
-            x: 41,
-            y: 33,
-            width: 111,
-            height: 166,
-            mask: {
-              type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-            },
-            type: 'image',
-            id: '52d4baa7-f860-4092-bbf5-5590dbda9653',
-            isBackground: true,
-          },
-        ],
-        backgroundElementId: '52d4baa7-f860-4092-bbf5-5590dbda9653',
-        type: 'page',
-        id: '7bdbba26-6ee1-4bbb-b18d-1a9b0e6b15e6',
-        backgroundOverlay: 'none',
-      },
-    ],
-    tags: [],
-    categories: [],
-    author: 2,
-    centerTargetAction: '',
-    bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=111',
-    originalStoryData: {
-      id: 111,
-      date: '2020-05-07T14:33:59',
-      date_gmt: '2020-05-07T21:33:59',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=111',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=111',
-      },
-      modified: '2020-05-08T13:24:18',
-      modified_gmt: '2020-05-08T20:24:18',
-      password: '',
-      slug: 'happy-star-wars-day',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=111',
-      title: {
-        raw: 'NEW FROM COLUMBIA RECORDS',
-        rendered: 'NEW FROM COLUMBIA RECORDS',
-      },
-      content: {
-        raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              amp-story-grid-layer {\n                overflow: visible;\n              }\n\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: visible;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=111"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="NEW FROM COLUMBIA RECORDS" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="7bdbba26-6ee1-4bbb-b18d-1a9b0e6b15e6" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-52d4baa7-f860-4092-bbf5-5590dbda9653" class="wrapper"><div style="position:absolute;width:118.8755%;height:100%;left:-9.43775%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM.png" alt="Screen Shot 2020-05-05 at 8.45.09 AM"></amp-img></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-        rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              amp-story-grid-layer {\n                overflow: visible;\n              }</p>\n<p>              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: visible;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=111"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="NEW FROM COLUMBIA RECORDS" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="7bdbba26-6ee1-4bbb-b18d-1a9b0e6b15e6" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-52d4baa7-f860-4092-bbf5-5590dbda9653" class="wrapper">\n<div style="position:absolute;width:118.8755%;height:100%;left:-9.43775%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM.png" alt="Screen Shot 2020-05-05 at 8.45.09 AM"></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area"></div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
-        protected: false,
-        block_version: 0,
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 2,
-      featured_media: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'new-from-columbia-records',
-      story_data: {
-        version: 17,
-        pages: [
-          {
-            elements: [
-              {
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                lockAspectRatio: true,
-                scale: 100,
-                focalX: 50,
-                focalY: 50,
-                isFill: false,
-                resource: {
-                  type: 'image',
-                  mimeType: 'image/png',
-                  src:
-                    'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM.png',
-                  width: 111,
-                  height: 166,
-                  posterId: 0,
-                  id: 112,
-                  title: 'Screen Shot 2020-05-05 at 8.45.09 AM',
-                  alt: 'Screen Shot 2020-05-05 at 8.45.09 AM',
-                  local: false,
-                  sizes: {
-                    medium: {
-                      file: 'Screen-Shot-2020-05-05-at-8.45.09-AM-201x300.png',
-                      width: 201,
-                      height: 300,
-                      mime_type: 'image/png',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM-201x300.png',
-                    },
-                    thumbnail: {
-                      file: 'Screen-Shot-2020-05-05-at-8.45.09-AM-150x150.png',
-                      width: 150,
-                      height: 150,
-                      mime_type: 'image/png',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM-150x150.png',
-                    },
-                    web_stories_thumbnail: {
-                      file: 'Screen-Shot-2020-05-05-at-8.45.09-AM-150x224.png',
-                      width: 150,
-                      height: 224,
-                      mime_type: 'image/png',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM-150x224.png',
-                    },
-                    full: {
-                      file: 'Screen-Shot-2020-05-05-at-8.45.09-AM.png',
-                      width: 222,
-                      height: 331,
-                      mime_type: 'image/png',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/05/Screen-Shot-2020-05-05-at-8.45.09-AM.png',
-                    },
-                  },
-                },
-                x: 41,
-                y: 33,
-                width: 111,
-                height: 166,
-                mask: {
-                  type: 'rectangle',
-                  name: 'Rectangle',
-                  path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-                  ratio: 1,
-                },
-                type: 'image',
-                id: '52d4baa7-f860-4092-bbf5-5590dbda9653',
-                isBackground: true,
-              },
-            ],
-            backgroundElementId: '52d4baa7-f860-4092-bbf5-5590dbda9653',
-            type: 'page',
-            id: '7bdbba26-6ee1-4bbb-b18d-1a9b0e6b15e6',
-            backgroundOverlay: 'none',
-          },
-        ],
-        autoAdvance: true,
-        defaultPageDuration: 7,
-      },
-      featured_media_url: '',
-      publisher_logo_url:
-        'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
-      style_presets: {
-        fillColors: [],
-        textColors: [],
-        styles: [],
-        textStyles: [],
-      },
-      _links: {
-        self: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111',
-          },
-        ],
-        collection: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
-          },
-        ],
-        about: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
-          },
-        ],
-        author: [
-          {
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/2',
-          },
-        ],
-        'version-history': [
-          {
-            count: 1,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 113,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/111/revisions/113',
-          },
-        ],
-        'wp:attachment': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=111',
-          },
-        ],
-        'wp:term': [
-          {
-            taxonomy: 'category',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=111',
-          },
-          {
-            taxonomy: 'post_tag',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=111',
-          },
-        ],
-        'wp:action-publish': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111',
-          },
-        ],
-        'wp:action-unfiltered-html': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111',
-          },
-        ],
-        'wp:action-assign-author': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111',
-          },
-        ],
-        'wp:action-create-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111',
-          },
-        ],
-        'wp:action-assign-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111',
-          },
-        ],
-        'wp:action-create-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111',
-          },
-        ],
-        'wp:action-assign-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/111',
-          },
-        ],
-        curies: [
-          {
-            name: 'wp',
-            href: 'https://api.w.org/{rel}',
-            templated: true,
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: 86,
-    status: 'publish',
-    title: 'HARRY POTTER',
-    modified: '2020-05-08T20:23:53.000Z',
-    created: '2020-05-08T17:58:24.000Z',
-    pages: [
-      {
-        elements: [
-          {
-            type: 'image',
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/jpeg',
-              src:
-                'http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg',
-              width: 229,
-              height: 308,
-              posterId: 0,
-              id: 74,
-              title: 'MSDHAPO EC040',
-              alt: 'MSDHAPO EC040',
-              local: false,
-              sizes: {
-                medium: {
-                  file: 'hpyoung-230x300.jpg',
-                  width: 230,
-                  height: 300,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-230x300.jpg',
-                },
-                thumbnail: {
-                  file: 'hpyoung-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-150x150.jpg',
-                },
-                'web-stories-poster-landscape': {
-                  file: 'hpyoung-600x696.jpg',
-                  width: 600,
-                  height: 696,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-600x696.jpg',
-                },
-                web_stories_thumbnail: {
-                  file: 'hpyoung-150x196.jpg',
-                  width: 150,
-                  height: 196,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-150x196.jpg',
-                },
-                full: {
-                  file: 'hpyoung.jpg',
-                  width: 600,
-                  height: 783,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg',
-                },
-              },
-            },
-            x: 88,
-            y: 127,
-            width: 229,
-            height: 308,
-            mask: {
-              type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-            },
-            id: '7a70b087-2a0a-4d8b-82db-ed95923e6f17',
-            isBackground: true,
-          },
-        ],
-        backgroundElementId: '7a70b087-2a0a-4d8b-82db-ed95923e6f17',
-        type: 'page',
-        id: '2a6e3edf-f47a-46ec-8e5a-e8210cdb2112',
-        backgroundOverlay: 'none',
-      },
-    ],
-    tags: [],
-    categories: [],
-    author: 1,
-    centerTargetAction: '',
-    bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=86',
-    originalStoryData: {
-      id: 86,
-      date: '2020-05-08T10:58:24',
-      date_gmt: '2020-05-08T17:58:24',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=86',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=86',
-      },
-      modified: '2020-05-08T13:23:53',
-      modified_gmt: '2020-05-08T20:23:53',
-      password: '',
-      slug: 'yung-hp',
-      status: 'publish',
-      type: 'web-story',
-      link: 'http://localhost:8899/stories/yung-hp',
-      title: {
-        raw: 'HARRY POTTER',
-        rendered: 'HARRY POTTER',
-      },
-      content: {
-        raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              amp-story-grid-layer {\n                overflow: visible;\n              }\n\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: visible;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/stories/yung-hp"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="HARRY POTTER" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="2a6e3edf-f47a-46ec-8e5a-e8210cdb2112" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-7a70b087-2a0a-4d8b-82db-ed95923e6f17" class="wrapper"><div style="position:absolute;width:132.17893%;height:100%;left:-16.08947%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg" alt="MSDHAPO EC040"></amp-img></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-        rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              amp-story-grid-layer {\n                overflow: visible;\n              }</p>\n<p>              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: visible;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/stories/yung-hp"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="HARRY POTTER" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="2a6e3edf-f47a-46ec-8e5a-e8210cdb2112" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-7a70b087-2a0a-4d8b-82db-ed95923e6f17" class="wrapper">\n<div style="position:absolute;width:132.17893%;height:100%;left:-16.08947%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg" alt="MSDHAPO EC040"></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area"></div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
-        protected: false,
-        block_version: 0,
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'harry-potter',
-      story_data: {
-        version: 17,
-        pages: [
-          {
-            elements: [
-              {
-                type: 'image',
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                scale: 100,
-                focalX: 50,
-                focalY: 50,
-                isFill: false,
-                resource: {
-                  type: 'image',
-                  mimeType: 'image/jpeg',
-                  src:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg',
-                  width: 229,
-                  height: 308,
-                  posterId: 0,
-                  id: 74,
-                  title: 'MSDHAPO EC040',
-                  alt: 'MSDHAPO EC040',
-                  local: false,
-                  sizes: {
-                    medium: {
-                      file: 'hpyoung-230x300.jpg',
-                      width: 230,
-                      height: 300,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-230x300.jpg',
-                    },
-                    thumbnail: {
-                      file: 'hpyoung-150x150.jpg',
-                      width: 150,
-                      height: 150,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-150x150.jpg',
-                    },
-                    'web-stories-poster-landscape': {
-                      file: 'hpyoung-600x696.jpg',
-                      width: 600,
-                      height: 696,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-600x696.jpg',
-                    },
-                    web_stories_thumbnail: {
-                      file: 'hpyoung-150x196.jpg',
-                      width: 150,
-                      height: 196,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-150x196.jpg',
-                    },
-                    full: {
-                      file: 'hpyoung.jpg',
-                      width: 600,
-                      height: 783,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg',
-                    },
-                  },
-                },
-                x: 88,
-                y: 127,
-                width: 229,
-                height: 308,
-                mask: {
-                  type: 'rectangle',
-                  name: 'Rectangle',
-                  path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-                  ratio: 1,
-                },
-                id: '7a70b087-2a0a-4d8b-82db-ed95923e6f17',
-                isBackground: true,
-              },
-            ],
-            backgroundElementId: '7a70b087-2a0a-4d8b-82db-ed95923e6f17',
-            type: 'page',
-            id: '2a6e3edf-f47a-46ec-8e5a-e8210cdb2112',
-            backgroundOverlay: 'none',
-          },
-        ],
-      },
-      featured_media_url: '',
-      publisher_logo_url:
-        'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
-      style_presets: {
-        fillColors: [],
-        textColors: [],
-        styles: [],
-        textStyles: [],
-      },
-      _links: {
-        self: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86',
-          },
-        ],
-        collection: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
-          },
-        ],
-        about: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
-          },
-        ],
-        author: [
-          {
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
-          },
-        ],
-        'version-history': [
-          {
-            count: 8,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 118,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/86/revisions/118',
-          },
-        ],
-        'wp:attachment': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=86',
-          },
-        ],
-        'wp:term': [
-          {
-            taxonomy: 'category',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=86',
-          },
-          {
-            taxonomy: 'post_tag',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=86',
-          },
-        ],
-        'wp:action-publish': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86',
-          },
-        ],
-        'wp:action-unfiltered-html': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86',
-          },
-        ],
-        'wp:action-assign-author': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86',
-          },
-        ],
-        'wp:action-create-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86',
-          },
-        ],
-        'wp:action-assign-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86',
-          },
-        ],
-        'wp:action-create-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86',
-          },
-        ],
-        'wp:action-assign-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/86',
-          },
-        ],
-        curies: [
-          {
-            name: 'wp',
-            href: 'https://api.w.org/{rel}',
-            templated: true,
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: 94,
-    status: 'draft',
-    title: 'every day is taco day',
-    modified: '2020-05-02T01:37:41.000Z',
-    created: '2020-04-15T04:29:15.000Z',
-    pages: [
-      {
-        elements: [
-          {
-            type: 'image',
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/jpeg',
-              src:
-                'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
-              width: 229,
-              height: 236,
-              posterId: 0,
-              id: 46,
-              title: 'The-Best-Classic-Tacos-550',
-              alt: 'The-Best-Classic-Tacos-550',
-              local: false,
-              sizes: {
-                medium: {
-                  file: 'The-Best-Classic-Tacos-550-300x300.jpg',
-                  width: 300,
-                  height: 300,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-300x300.jpg',
-                },
-                thumbnail: {
-                  file: 'The-Best-Classic-Tacos-550-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
-                },
-                web_stories_thumbnail: {
-                  file: 'The-Best-Classic-Tacos-550-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
-                },
-                full: {
-                  file: 'The-Best-Classic-Tacos-550.jpg',
-                  width: 550,
-                  height: 550,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
-                },
-              },
-            },
-            x: 99,
-            y: 189,
-            width: 229,
-            height: 236,
-            mask: {
-              type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-            },
-            id: '690608b2-7cfb-4d38-aecb-6f741122da25',
-            isBackground: true,
-          },
-        ],
-        backgroundElementId: '690608b2-7cfb-4d38-aecb-6f741122da25',
-        type: 'page',
-        id: 'a02f7cff-e25a-412b-b73f-6278373ab456',
-        backgroundOverlay: 'none',
-      },
-    ],
-    tags: [],
-    categories: [],
-    author: 1,
-    centerTargetAction: '',
-    bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=94',
-    originalStoryData: {
-      id: 94,
-      date: '2020-04-14T21:29:15',
-      date_gmt: '2020-04-14T21:29:15',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=94',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=94',
-      },
-      modified: '2020-05-01T18:37:41',
-      modified_gmt: '2020-05-01T18:37:41',
-      password: '',
-      slug: 'every-day-is-taco-day',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=94',
-      title: {
-        raw: 'every day is taco day',
-        rendered: 'every day is taco day',
-      },
-      content: {
-        raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=94"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="every day is taco day" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="a02f7cff-e25a-412b-b73f-6278373ab456" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-690608b2-7cfb-4d38-aecb-6f741122da25" class="wrapper"><div style="position:absolute;width:145.55085%;height:100%;left:-22.77542%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg" alt="The-Best-Classic-Tacos-550"></amp-img></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-        rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=94"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="every day is taco day" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="a02f7cff-e25a-412b-b73f-6278373ab456" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-690608b2-7cfb-4d38-aecb-6f741122da25" class="wrapper">\n<div style="position:absolute;width:145.55085%;height:100%;left:-22.77542%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg" alt="The-Best-Classic-Tacos-550"></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area"></div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
-        protected: false,
-        block_version: 0,
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'every-day-is-taco-day',
-      story_data: {
-        version: 15,
-        pages: [
-          {
-            elements: [
-              {
-                type: 'image',
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                scale: 100,
-                focalX: 50,
-                focalY: 50,
-                isFill: false,
-                resource: {
-                  type: 'image',
-                  mimeType: 'image/jpeg',
-                  src:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
-                  width: 229,
-                  height: 236,
-                  posterId: 0,
-                  id: 46,
-                  title: 'The-Best-Classic-Tacos-550',
-                  alt: 'The-Best-Classic-Tacos-550',
-                  local: false,
-                  sizes: {
-                    medium: {
-                      file: 'The-Best-Classic-Tacos-550-300x300.jpg',
-                      width: 300,
-                      height: 300,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-300x300.jpg',
-                    },
-                    thumbnail: {
-                      file: 'The-Best-Classic-Tacos-550-150x150.jpg',
-                      width: 150,
-                      height: 150,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
-                    },
-                    web_stories_thumbnail: {
-                      file: 'The-Best-Classic-Tacos-550-150x150.jpg',
-                      width: 150,
-                      height: 150,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
-                    },
-                    full: {
-                      file: 'The-Best-Classic-Tacos-550.jpg',
-                      width: 550,
-                      height: 550,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
-                    },
-                  },
-                },
-                x: 99,
-                y: 189,
-                width: 229,
-                height: 236,
-                mask: {
-                  type: 'rectangle',
-                  name: 'Rectangle',
-                  path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-                  ratio: 1,
-                },
-                id: '690608b2-7cfb-4d38-aecb-6f741122da25',
-                isBackground: true,
-              },
-            ],
-            backgroundElementId: '690608b2-7cfb-4d38-aecb-6f741122da25',
-            type: 'page',
-            id: 'a02f7cff-e25a-412b-b73f-6278373ab456',
-            backgroundOverlay: 'none',
-          },
-        ],
-      },
-      featured_media_url: '',
-      publisher_logo_url:
-        'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
-      style_presets: {
-        fillColors: [],
-        textColors: [],
-        styles: [],
-        textStyles: [],
-      },
-      _links: {
-        self: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94',
-          },
-        ],
-        collection: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
-          },
-        ],
-        about: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
-          },
-        ],
-        author: [
-          {
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
-          },
-        ],
-        'version-history': [
-          {
-            count: 2,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 109,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/94/revisions/109',
-          },
-        ],
-        'wp:attachment': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=94',
-          },
-        ],
-        'wp:term': [
-          {
-            taxonomy: 'category',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=94',
-          },
-          {
-            taxonomy: 'post_tag',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=94',
-          },
-        ],
-        'wp:action-publish': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94',
-          },
-        ],
-        'wp:action-unfiltered-html': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94',
-          },
-        ],
-        'wp:action-assign-author': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94',
-          },
-        ],
-        'wp:action-create-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94',
-          },
-        ],
-        'wp:action-assign-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94',
-          },
-        ],
-        'wp:action-create-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94',
-          },
-        ],
-        'wp:action-assign-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/94',
-          },
-        ],
-        curies: [
-          {
-            name: 'wp',
-            href: 'https://api.w.org/{rel}',
-            templated: true,
-          },
-        ],
-      },
-    },
-  },
-  {
     id: 92,
-    status: 'draft',
+    status: 'publish',
     title: 'CAPYBaRaS can swim',
-    modified: '2020-05-02T01:37:07.000Z',
-    created: '2020-04-24T04:16:57.000Z',
+    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    created: '2020-04-23T21:16:57.000Z',
     pages: [
       {
         elements: [
@@ -1388,6 +115,158 @@ const formattedStoriesArray = [
         id: '9e3e7280-6e7d-4ccc-8717-d2fa399a7b05',
         backgroundOverlay: 'none',
       },
+      {
+        elements: [
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            backgroundColor: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            isFill: false,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            mask: {
+              type: 'rectangle',
+            },
+            isBackground: true,
+            type: 'shape',
+            id: '1d9cf4fc-12ea-4d69-b275-6ccd620fd8db',
+          },
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            backgroundTextMode: 'NONE',
+            font: {
+              family: 'Open Sans',
+              service: 'fonts.google.com',
+            },
+            fontSize: 29,
+            backgroundColor: {
+              color: {
+                r: 196,
+                g: 196,
+                b: 196,
+              },
+            },
+            lineHeight: 1.3,
+            textAlign: 'initial',
+            padding: {
+              vertical: 0,
+              horizontal: 0,
+              locked: true,
+            },
+            type: 'text',
+            id: 'cb304ba9-8909-4276-8458-107d77899b50',
+            title: 'Heading',
+            content: '<span style="font-weight: 700">Page 2</span>\n',
+            x: 65,
+            y: 108,
+            width: 220,
+            height: 72,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+          },
+        ],
+        backgroundElementId: '1d9cf4fc-12ea-4d69-b275-6ccd620fd8db',
+        backgroundOverlay: 'none',
+        type: 'page',
+        id: '2ea61241-d1a6-4504-9f94-2ba927d78cdd',
+      },
+      {
+        elements: [
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            backgroundColor: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            isFill: false,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            mask: {
+              type: 'rectangle',
+            },
+            isBackground: true,
+            id: 'a41aa0c2-c4fe-48b6-9484-3a1e12180361',
+            type: 'shape',
+          },
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            backgroundTextMode: 'NONE',
+            font: {
+              family: 'Open Sans',
+              service: 'fonts.google.com',
+            },
+            fontSize: 29,
+            backgroundColor: {
+              color: {
+                r: 196,
+                g: 196,
+                b: 196,
+              },
+            },
+            lineHeight: 1.3,
+            textAlign: 'initial',
+            padding: {
+              vertical: 0,
+              horizontal: 0,
+              locked: true,
+            },
+            id: '481b72b6-aa8c-4bdb-8c8f-0871879aaab4',
+            title: 'Heading',
+            content: '<span style="font-weight: 700">Page 3</span>\n',
+            x: 65,
+            y: 108,
+            width: 220,
+            height: 72,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            type: 'text',
+          },
+        ],
+        backgroundElementId: 'a41aa0c2-c4fe-48b6-9484-3a1e12180361',
+        backgroundOverlay: 'none',
+        type: 'page',
+        id: '1bbf9af0-c180-4ee7-be70-7a1ea6ed2de5',
+      },
     ],
     tags: [13, 15, 16, 14],
     categories: [9, 11],
@@ -1397,34 +276,34 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=92',
     originalStoryData: {
       id: 92,
-      date: '2020-04-23T21:16:57',
+      date: '2020-04-23T14:16:57',
       date_gmt: '2020-04-23T21:16:57',
       guid: {
         rendered: 'http://localhost:8899/?post_type=web-story&#038;p=92',
         raw: 'http://localhost:8899/?post_type=web-story&#038;p=92',
       },
-      modified: '2020-05-01T18:37:07',
-      modified_gmt: '2020-05-01T18:37:07',
+      modified: '2020-05-19T11:09:54',
+      modified_gmt: '2020-05-19T18:09:54',
       password: '',
       slug: 'swimming-capy',
-      status: 'draft',
+      status: 'publish',
       type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=92',
+      link: 'http://localhost:8899/stories/swimming-capy',
       title: {
         raw: 'CAPYBaRaS can swim',
         rendered: 'CAPYBaRaS can swim',
       },
       content: {
         raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=92"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="CAPYBaRaS can swim" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="9e3e7280-6e7d-4ccc-8717-d2fa399a7b05" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-87cb6bad-dbf2-4ff7-ae6f-3a0200ba32f3" class="wrapper"><div style="position:absolute;width:260.22727%;height:100%;left:-80.11364%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/capybara-swimming.gif" alt="capybara swimming"></amp-img></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
+          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Open+Sans" rel="stylesheet"/><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              amp-story-grid-layer {\n                overflow: visible;\n              }\n\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: visible;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=92"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="CAPYBaRaS can swim" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="9e3e7280-6e7d-4ccc-8717-d2fa399a7b05" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-87cb6bad-dbf2-4ff7-ae6f-3a0200ba32f3" class="wrapper"><div style="position:absolute;width:308.41751%;height:100%;left:-104.20876%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/capybara-swimming.gif" alt="capybara swimming"></amp-img></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"></div></amp-story-grid-layer></amp-story-page><amp-story-page id="2ea61241-d1a6-4504-9f94-2ba927d78cdd" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-1d9cf4fc-12ea-4d69-b275-6ccd620fd8db" class="wrapper"><div class="fill" style="background-color:#fff"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"><div style="left:14.77273%;top:16.36364%;width:50%;height:10.90909%;opacity:1" id="el-cb304ba9-8909-4276-8458-107d77899b50" class="wrapper"><p class="fill" style="white-space:pre-wrap;margin:0;font-family:&quot;Open Sans&quot;;font-size:0.439394em;line-height:1.3;text-align:initial;padding:0% 0%;color:#000000"><span style="font-weight: 700">Page 2</span>\n</p></div></div></amp-story-grid-layer></amp-story-page><amp-story-page id="1bbf9af0-c180-4ee7-be70-7a1ea6ed2de5" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-a41aa0c2-c4fe-48b6-9484-3a1e12180361" class="wrapper"><div class="fill" style="background-color:#fff"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"><div style="left:14.77273%;top:16.36364%;width:50%;height:10.90909%;opacity:1" id="el-481b72b6-aa8c-4bdb-8c8f-0871879aaab4" class="wrapper"><p class="fill" style="white-space:pre-wrap;margin:0;font-family:&quot;Open Sans&quot;;font-size:0.439394em;line-height:1.3;text-align:initial;padding:0% 0%;color:#000000"><span style="font-weight: 700">Page 3</span>\n</p></div></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
         rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=92"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="CAPYBaRaS can swim" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="9e3e7280-6e7d-4ccc-8717-d2fa399a7b05" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-87cb6bad-dbf2-4ff7-ae6f-3a0200ba32f3" class="wrapper">\n<div style="position:absolute;width:260.22727%;height:100%;left:-80.11364%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/capybara-swimming.gif" alt="capybara swimming"></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area"></div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
+          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Open+Sans" rel="stylesheet"/>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              amp-story-grid-layer {\n                overflow: visible;\n              }</p>\n<p>              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: visible;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=92"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="CAPYBaRaS can swim" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="9e3e7280-6e7d-4ccc-8717-d2fa399a7b05" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-87cb6bad-dbf2-4ff7-ae6f-3a0200ba32f3" class="wrapper">\n<div style="position:absolute;width:308.41751%;height:100%;left:-104.20876%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/capybara-swimming.gif" alt="capybara swimming"></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area"></div>\n<p></amp-story-grid-layer></amp-story-page><amp-story-page id="2ea61241-d1a6-4504-9f94-2ba927d78cdd" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-1d9cf4fc-12ea-4d69-b275-6ccd620fd8db" class="wrapper">\n<div class="fill" style="background-color:#fff"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area">\n<div style="left:14.77273%;top:16.36364%;width:50%;height:10.90909%;opacity:1" id="el-cb304ba9-8909-4276-8458-107d77899b50" class="wrapper">\n<p class="fill" style="white-space:pre-wrap;margin:0;font-family:&quot;Open Sans&quot;;font-size:0.439394em;line-height:1.3;text-align:initial;padding:0% 0%;color:#000000"><span style="font-weight: 700">Page 2</span>\n</p>\n</div>\n</div>\n<p></amp-story-grid-layer></amp-story-page><amp-story-page id="1bbf9af0-c180-4ee7-be70-7a1ea6ed2de5" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" id="el-a41aa0c2-c4fe-48b6-9484-3a1e12180361" class="wrapper">\n<div class="fill" style="background-color:#fff"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area">\n<div style="left:14.77273%;top:16.36364%;width:50%;height:10.90909%;opacity:1" id="el-481b72b6-aa8c-4bdb-8c8f-0871879aaab4" class="wrapper">\n<p class="fill" style="white-space:pre-wrap;margin:0;font-family:&quot;Open Sans&quot;;font-size:0.439394em;line-height:1.3;text-align:initial;padding:0% 0%;color:#000000"><span style="font-weight: 700">Page 3</span>\n</p>\n</div>\n</div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
         protected: false,
         block_version: 0,
       },
       excerpt: {
         raw: '',
-        rendered: '',
+        rendered: '<p>Page 2 Page 3</p>\n',
         protected: false,
       },
       author: 1,
@@ -1435,7 +314,7 @@ const formattedStoriesArray = [
       permalink_template: 'http://localhost:8899/stories/%pagename%',
       generated_slug: 'capybaras-can-swim',
       story_data: {
-        version: 15,
+        version: 17,
         pages: [
           {
             elements: [
@@ -1525,6 +404,158 @@ const formattedStoriesArray = [
             id: '9e3e7280-6e7d-4ccc-8717-d2fa399a7b05',
             backgroundOverlay: 'none',
           },
+          {
+            elements: [
+              {
+                opacity: 100,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                lockAspectRatio: true,
+                backgroundColor: {
+                  color: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                  },
+                },
+                isFill: false,
+                x: 1,
+                y: 1,
+                width: 1,
+                height: 1,
+                mask: {
+                  type: 'rectangle',
+                },
+                isBackground: true,
+                type: 'shape',
+                id: '1d9cf4fc-12ea-4d69-b275-6ccd620fd8db',
+              },
+              {
+                opacity: 100,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                lockAspectRatio: true,
+                backgroundTextMode: 'NONE',
+                font: {
+                  family: 'Open Sans',
+                  service: 'fonts.google.com',
+                },
+                fontSize: 29,
+                backgroundColor: {
+                  color: {
+                    r: 196,
+                    g: 196,
+                    b: 196,
+                  },
+                },
+                lineHeight: 1.3,
+                textAlign: 'initial',
+                padding: {
+                  vertical: 0,
+                  horizontal: 0,
+                  locked: true,
+                },
+                type: 'text',
+                id: 'cb304ba9-8909-4276-8458-107d77899b50',
+                title: 'Heading',
+                content: '<span style="font-weight: 700">Page 2</span>\n',
+                x: 65,
+                y: 108,
+                width: 220,
+                height: 72,
+                scale: 100,
+                focalX: 50,
+                focalY: 50,
+                isFill: false,
+              },
+            ],
+            backgroundElementId: '1d9cf4fc-12ea-4d69-b275-6ccd620fd8db',
+            backgroundOverlay: 'none',
+            type: 'page',
+            id: '2ea61241-d1a6-4504-9f94-2ba927d78cdd',
+          },
+          {
+            elements: [
+              {
+                opacity: 100,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                lockAspectRatio: true,
+                backgroundColor: {
+                  color: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                  },
+                },
+                isFill: false,
+                x: 1,
+                y: 1,
+                width: 1,
+                height: 1,
+                mask: {
+                  type: 'rectangle',
+                },
+                isBackground: true,
+                id: 'a41aa0c2-c4fe-48b6-9484-3a1e12180361',
+                type: 'shape',
+              },
+              {
+                opacity: 100,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                lockAspectRatio: true,
+                backgroundTextMode: 'NONE',
+                font: {
+                  family: 'Open Sans',
+                  service: 'fonts.google.com',
+                },
+                fontSize: 29,
+                backgroundColor: {
+                  color: {
+                    r: 196,
+                    g: 196,
+                    b: 196,
+                  },
+                },
+                lineHeight: 1.3,
+                textAlign: 'initial',
+                padding: {
+                  vertical: 0,
+                  horizontal: 0,
+                  locked: true,
+                },
+                id: '481b72b6-aa8c-4bdb-8c8f-0871879aaab4',
+                title: 'Heading',
+                content: '<span style="font-weight: 700">Page 3</span>\n',
+                x: 65,
+                y: 108,
+                width: 220,
+                height: 72,
+                scale: 100,
+                focalX: 50,
+                focalY: 50,
+                isFill: false,
+                type: 'text',
+              },
+            ],
+            backgroundElementId: 'a41aa0c2-c4fe-48b6-9484-3a1e12180361',
+            backgroundOverlay: 'none',
+            type: 'page',
+            id: '1bbf9af0-c180-4ee7-be70-7a1ea6ed2de5',
+          },
         ],
       },
       featured_media_url: '',
@@ -1533,7 +564,6 @@ const formattedStoriesArray = [
       style_presets: {
         fillColors: [],
         textColors: [],
-        styles: [],
         textStyles: [],
       },
       _links: {
@@ -1560,15 +590,15 @@ const formattedStoriesArray = [
         ],
         'version-history': [
           {
-            count: 5,
+            count: 6,
             href: 'http://localhost:8899/wp-json/wp/v2/web-story/92/revisions',
           },
         ],
         'predecessor-version': [
           {
-            id: 108,
+            id: 149,
             href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/92/revisions/108',
+              'http://localhost:8899/wp-json/wp/v2/web-story/92/revisions/149',
           },
         ],
         'wp:attachment': [
@@ -1634,16 +664,15 @@ const formattedStoriesArray = [
     },
   },
   {
-    id: 81,
+    id: 147,
     status: 'draft',
-    title: 'Palm trees',
-    modified: '2020-05-02T01:36:40.000Z',
-    created: '2020-04-15T04:27:59.000Z',
+    title: 'Fighting COVID-19: ER DOCTORS EVERYWHERE (Copy)',
+    modified: moment('04-06-2020', 'MM-DD-YYYY'),
+    created: '2020-05-14T22:33:05.000Z',
     pages: [
       {
         elements: [
           {
-            type: 'shape',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1652,229 +681,25 @@ const formattedStoriesArray = [
             rotationAngle: 0,
             backgroundColor: {
               color: {
-                r: 29,
-                g: 149,
-                b: 25,
+                r: 255,
+                g: 255,
+                b: 255,
               },
             },
             isFill: false,
-            x: 1,
-            y: 1,
-            width: 1,
-            height: 1,
+            x: 8.923633420864867,
+            y: 54.621280085252785,
+            width: 146.66666666666666,
+            height: 146.66666666666666,
             mask: {
               type: 'rectangle',
             },
             isBackground: true,
-            id: 'd399e073-3ab0-40b8-a84e-4435b5b5dd38',
-          },
-        ],
-        backgroundElementId: 'd399e073-3ab0-40b8-a84e-4435b5b5dd38',
-        type: 'page',
-        id: 'af01f2d0-57e3-43d5-865e-32f589a97d83',
-      },
-    ],
-    tags: [24, 25, 27, 16, 26],
-    categories: [10],
-    author: 1,
-    centerTargetAction: '',
-    bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=81',
-    originalStoryData: {
-      id: 81,
-      date: '2020-04-14T21:27:59',
-      date_gmt: '2020-04-14T21:27:59',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=81',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=81',
-      },
-      modified: '2020-05-01T18:36:40',
-      modified_gmt: '2020-05-01T18:36:40',
-      password: '',
-      slug: 'palm-trees',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=81',
-      title: {
-        raw: 'Palm trees',
-        rendered: 'Palm trees',
-      },
-      content: {
-        raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=81"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="Palm trees" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="af01f2d0-57e3-43d5-865e-32f589a97d83" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-d399e073-3ab0-40b8-a84e-4435b5b5dd38" class="wrapper"><div class="fill" style="background-color:#1d9519"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-        rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=81"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="Palm trees" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="af01f2d0-57e3-43d5-865e-32f589a97d83" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-d399e073-3ab0-40b8-a84e-4435b5b5dd38" class="wrapper">\n<div class="fill" style="background-color:#1d9519"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area"></div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
-        protected: false,
-        block_version: 0,
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [10],
-      tags: [24, 25, 27, 16, 26],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'palm-trees',
-      story_data: {
-        version: 15,
-        pages: [
-          {
-            elements: [
-              {
-                type: 'shape',
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                backgroundColor: {
-                  color: {
-                    r: 29,
-                    g: 149,
-                    b: 25,
-                  },
-                },
-                isFill: false,
-                x: 1,
-                y: 1,
-                width: 1,
-                height: 1,
-                mask: {
-                  type: 'rectangle',
-                },
-                isBackground: true,
-                id: 'd399e073-3ab0-40b8-a84e-4435b5b5dd38',
-              },
-            ],
-            backgroundElementId: 'd399e073-3ab0-40b8-a84e-4435b5b5dd38',
-            type: 'page',
-            id: 'af01f2d0-57e3-43d5-865e-32f589a97d83',
-          },
-        ],
-      },
-      featured_media_url: '',
-      publisher_logo_url:
-        'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
-      style_presets: {
-        fillColors: [],
-        textColors: [],
-        styles: [],
-        textStyles: [],
-      },
-      _links: {
-        self: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81',
-          },
-        ],
-        collection: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
-          },
-        ],
-        about: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
-          },
-        ],
-        author: [
-          {
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
-          },
-        ],
-        'version-history': [
-          {
-            count: 2,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 107,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/81/revisions/107',
-          },
-        ],
-        'wp:attachment': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=81',
-          },
-        ],
-        'wp:term': [
-          {
-            taxonomy: 'category',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=81',
-          },
-          {
-            taxonomy: 'post_tag',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=81',
-          },
-        ],
-        'wp:action-publish': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81',
-          },
-        ],
-        'wp:action-unfiltered-html': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81',
-          },
-        ],
-        'wp:action-assign-author': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81',
-          },
-        ],
-        'wp:action-create-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81',
-          },
-        ],
-        'wp:action-assign-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81',
-          },
-        ],
-        'wp:action-create-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81',
-          },
-        ],
-        'wp:action-assign-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/81',
-          },
-        ],
-        curies: [
-          {
-            name: 'wp',
-            href: 'https://api.w.org/{rel}',
-            templated: true,
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: 88,
-    status: 'draft',
-    title: 'enemies?',
-    modified: '2020-05-02T01:19:24.000Z',
-    created: '2020-04-15T04:28:51.000Z',
-    pages: [
-      {
-        elements: [
-          {
             type: 'shape',
-            opacity: 100,
+            id: 'c4f3e766-0c8b-43b5-ba9b-ad6083b1331e',
+          },
+          {
+            opacity: 80,
             flip: {
               vertical: false,
               horizontal: false,
@@ -1882,24 +707,26 @@ const formattedStoriesArray = [
             rotationAngle: 0,
             backgroundColor: {
               color: {
-                r: 53,
-                g: 108,
-                b: 137,
+                r: 51,
+                g: 51,
+                b: 51,
               },
             },
             isFill: false,
-            x: 1,
-            y: 1,
-            width: 1,
-            height: 1,
+            x: 0,
+            y: 0,
+            width: 439,
+            height: 661,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
             mask: {
               type: 'rectangle',
             },
-            isBackground: true,
-            id: 'c1417ab4-efc8-4469-8b30-e778f0e24bf9',
+            type: 'shape',
+            id: '718c2af2-c673-4d25-b906-1339c2fae397',
           },
           {
-            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
@@ -1912,210 +739,102 @@ const formattedStoriesArray = [
             isFill: false,
             resource: {
               type: 'image',
-              mimeType: 'image/jpeg',
+              mimeType: 'image/gif',
               src:
-                'http://localhost:8899/wp-content/uploads/2020/04/snape.jpeg',
-              width: 229,
-              height: 177,
+                'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies.gif',
+              width: 220,
+              height: 124,
+              poster: '',
               posterId: 0,
-              id: 75,
-              title: 'snape',
-              alt: 'snape',
+              videoId: 55,
+              title: 'capybarawithpuppies',
+              alt: '',
               local: false,
               sizes: {
                 medium: {
-                  file: 'snape-300x225.jpeg',
+                  file: 'capybarawithpuppies-300x169.gif',
                   width: 300,
-                  height: 225,
-                  mime_type: 'image/jpeg',
+                  height: 169,
+                  mime_type: 'image/gif',
                   source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape-300x225.jpeg',
+                    'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies-300x169.gif',
                 },
                 thumbnail: {
-                  file: 'snape-150x150.jpeg',
+                  file: 'capybarawithpuppies-150x150.gif',
                   width: 150,
                   height: 150,
-                  mime_type: 'image/jpeg',
+                  mime_type: 'image/gif',
                   source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape-150x150.jpeg',
-                },
-                medium_large: {
-                  file: 'snape-768x576.jpeg',
-                  width: 768,
-                  height: 576,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape-768x576.jpeg',
-                },
-                'web-stories-poster-portrait': {
-                  file: 'snape-696x703.jpeg',
-                  width: 696,
-                  height: 703,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape-696x703.jpeg',
-                },
-                'web-stories-poster-square': {
-                  file: 'snape-928x703.jpeg',
-                  width: 928,
-                  height: 703,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape-928x703.jpeg',
-                },
-                'web-stories-poster-landscape': {
-                  file: 'snape-928x696.jpeg',
-                  width: 928,
-                  height: 696,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape-928x696.jpeg',
+                    'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies-150x150.gif',
                 },
                 web_stories_thumbnail: {
-                  file: 'snape-150x113.jpeg',
+                  file: 'capybarawithpuppies-150x84.gif',
                   width: 150,
-                  height: 113,
-                  mime_type: 'image/jpeg',
+                  height: 84,
+                  mime_type: 'image/gif',
                   source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape-150x113.jpeg',
+                    'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies-150x84.gif',
                 },
                 full: {
-                  file: 'snape.jpeg',
-                  width: 937,
-                  height: 703,
-                  mime_type: 'image/jpeg',
+                  file: 'capybarawithpuppies.gif',
+                  width: 480,
+                  height: 270,
+                  mime_type: 'image/gif',
                   source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape.jpeg',
+                    'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies.gif',
                 },
               },
             },
-            x: 68,
-            y: 60,
-            width: 229,
-            height: 177,
+            x: 109,
+            y: 139,
+            width: 220,
+            height: 437,
             mask: {
               type: 'rectangle',
               name: 'Rectangle',
               path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
               ratio: 1,
             },
-            id: '44492c71-51b4-486a-a850-36c2c9b3129b',
-          },
-          {
             type: 'image',
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/jpeg',
-              src:
-                'http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg',
-              width: 229,
-              height: 308,
-              posterId: 0,
-              id: 74,
-              title: 'MSDHAPO EC040',
-              alt: 'MSDHAPO EC040',
-              local: false,
-              sizes: {
-                medium: {
-                  file: 'hpyoung-230x300.jpg',
-                  width: 230,
-                  height: 300,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-230x300.jpg',
-                },
-                thumbnail: {
-                  file: 'hpyoung-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-150x150.jpg',
-                },
-                'web-stories-poster-landscape': {
-                  file: 'hpyoung-600x696.jpg',
-                  width: 600,
-                  height: 696,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-600x696.jpg',
-                },
-                web_stories_thumbnail: {
-                  file: 'hpyoung-150x196.jpg',
-                  width: 150,
-                  height: 196,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-150x196.jpg',
-                },
-                full: {
-                  file: 'hpyoung.jpg',
-                  width: 600,
-                  height: 783,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg',
-                },
-              },
-            },
-            x: 148,
-            y: 284,
-            width: 229,
-            height: 308,
-            mask: {
-              type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-            },
-            id: 'b3af6cbd-9f15-499a-a595-37a9b78c08c5',
+            id: 'cb352b5a-3697-4b11-937b-aa5fe1d3c6cd',
           },
         ],
-        backgroundElementId: 'c1417ab4-efc8-4469-8b30-e778f0e24bf9',
         type: 'page',
-        id: 'e3af46c3-71c6-4724-ade9-16074bba7d74',
+        id: '01ac6bd7-f94b-4f2d-8fd0-2f3981c31828',
+        backgroundElementId: 'c4f3e766-0c8b-43b5-ba9b-ad6083b1331e',
+        backgroundOverlay: 'none',
       },
     ],
-    tags: [23, 21, 22],
-    categories: [12],
+    tags: [],
+    categories: [],
     author: 1,
     centerTargetAction: '',
     bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=88',
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=147',
     originalStoryData: {
-      id: 88,
-      date: '2020-04-14T21:28:51',
-      date_gmt: '2020-04-14T21:28:51',
+      id: 147,
+      date: '2020-05-14T15:33:05',
+      date_gmt: '2020-05-14T22:33:05',
       guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=88',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=88',
+        rendered: 'http://localhost:8899/?post_type=web-story&p=147',
+        raw: 'http://localhost:8899/?post_type=web-story&p=147',
       },
-      modified: '2020-05-01T18:19:24',
-      modified_gmt: '2020-05-01T18:19:24',
+      modified: '2020-05-14T15:33:05',
+      modified_gmt: '2020-05-14T22:33:05',
       password: '',
-      slug: 'enemies',
+      slug: '',
       status: 'draft',
       type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=88',
+      link: 'http://localhost:8899/?post_type=web-story&p=147',
       title: {
-        raw: 'enemies?',
-        rendered: 'enemies?',
+        raw: 'Fighting COVID-19: ER DOCTORS EVERYWHERE (Copy)',
+        rendered: 'Fighting COVID-19: ER DOCTORS EVERYWHERE (Copy)',
       },
       content: {
         raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=88"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="enemies?" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="e3af46c3-71c6-4724-ade9-16074bba7d74" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-c1417ab4-efc8-4469-8b30-e778f0e24bf9" class="wrapper"><div class="fill" style="background-color:#356c89"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"><div style="left:15.45455%;top:9.09091%;width:52.04545%;height:26.81818%;opacity:1;clip-path:url(#mask-rectangle-44492c71-51b4-486a-a850-36c2c9b3129b-output);-webkit-clip-path:url(#mask-rectangle-44492c71-51b4-486a-a850-36c2c9b3129b-output)" id="el-44492c71-51b4-486a-a850-36c2c9b3129b" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-44492c71-51b4-486a-a850-36c2c9b3129b-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg><div style="position:absolute;width:100%;height:100%;left:0%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/snape.jpeg" alt="snape"></amp-img></div></div><div style="left:33.63636%;top:43.0303%;width:52.04545%;height:46.66667%;opacity:1;clip-path:url(#mask-rectangle-b3af6cbd-9f15-499a-a595-37a9b78c08c5-output);-webkit-clip-path:url(#mask-rectangle-b3af6cbd-9f15-499a-a595-37a9b78c08c5-output)" id="el-b3af6cbd-9f15-499a-a595-37a9b78c08c5" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-b3af6cbd-9f15-499a-a595-37a9b78c08c5-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg><div style="position:absolute;width:100.00002%;height:100%;left:-0.00001%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg" alt="MSDHAPO EC040"></amp-img></div></div></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
+          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=25"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="Fighting COVID-19: ER DOCTORS EVERYWHERE" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="01ac6bd7-f94b-4f2d-8fd0-2f3981c31828" auto-advance-after="el-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd-media"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-c4f3e766-0c8b-43b5-ba9b-ad6083b1331e" class="wrapper"><div class="fill" style="background-color:#fff"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"><div style="left:0%;top:0%;width:99.77273%;height:100.15152%;opacity:0.8;clip-path:url(#mask-rectangle-718c2af2-c673-4d25-b906-1339c2fae397-output);-webkit-clip-path:url(#mask-rectangle-718c2af2-c673-4d25-b906-1339c2fae397-output)" id="el-718c2af2-c673-4d25-b906-1339c2fae397" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-718c2af2-c673-4d25-b906-1339c2fae397-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg><div class="fill" style="background-color:#333"></div></div><div style="left:24.77273%;top:21.06061%;width:50%;height:66.21212%;opacity:1;clip-path:url(#mask-rectangle-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd-output);-webkit-clip-path:url(#mask-rectangle-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd-output)" id="el-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg><div style="position:absolute;width:352.41935%;height:100%;left:-126.20967%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies.gif" alt=""></amp-img></div></div></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
         rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=88"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="enemies?" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="e3af46c3-71c6-4724-ade9-16074bba7d74" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-c1417ab4-efc8-4469-8b30-e778f0e24bf9" class="wrapper">\n<div class="fill" style="background-color:#356c89"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area">\n<div style="left:15.45455%;top:9.09091%;width:52.04545%;height:26.81818%;opacity:1;clip-path:url(#mask-rectangle-44492c71-51b4-486a-a850-36c2c9b3129b-output);-webkit-clip-path:url(#mask-rectangle-44492c71-51b4-486a-a850-36c2c9b3129b-output)" id="el-44492c71-51b4-486a-a850-36c2c9b3129b" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-44492c71-51b4-486a-a850-36c2c9b3129b-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg></p>\n<div style="position:absolute;width:100%;height:100%;left:0%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/snape.jpeg" alt="snape"></amp-img></div>\n</div>\n<div style="left:33.63636%;top:43.0303%;width:52.04545%;height:46.66667%;opacity:1;clip-path:url(#mask-rectangle-b3af6cbd-9f15-499a-a595-37a9b78c08c5-output);-webkit-clip-path:url(#mask-rectangle-b3af6cbd-9f15-499a-a595-37a9b78c08c5-output)" id="el-b3af6cbd-9f15-499a-a595-37a9b78c08c5" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-b3af6cbd-9f15-499a-a595-37a9b78c08c5-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg></p>\n<div style="position:absolute;width:100.00002%;height:100%;left:-0.00001%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg" alt="MSDHAPO EC040"></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
+          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=25"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="Fighting COVID-19: ER DOCTORS EVERYWHERE" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="01ac6bd7-f94b-4f2d-8fd0-2f3981c31828" auto-advance-after="el-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd-media"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-c4f3e766-0c8b-43b5-ba9b-ad6083b1331e" class="wrapper">\n<div class="fill" style="background-color:#fff"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area">\n<div style="left:0%;top:0%;width:99.77273%;height:100.15152%;opacity:0.8;clip-path:url(#mask-rectangle-718c2af2-c673-4d25-b906-1339c2fae397-output);-webkit-clip-path:url(#mask-rectangle-718c2af2-c673-4d25-b906-1339c2fae397-output)" id="el-718c2af2-c673-4d25-b906-1339c2fae397" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-718c2af2-c673-4d25-b906-1339c2fae397-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg></p>\n<div class="fill" style="background-color:#333"></div>\n</div>\n<div style="left:24.77273%;top:21.06061%;width:50%;height:66.21212%;opacity:1;clip-path:url(#mask-rectangle-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd-output);-webkit-clip-path:url(#mask-rectangle-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd-output)" id="el-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-cb352b5a-3697-4b11-937b-aa5fe1d3c6cd-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg></p>\n<div style="position:absolute;width:352.41935%;height:100%;left:-126.20967%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies.gif" alt=""></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
         protected: false,
         block_version: 0,
       },
@@ -2127,17 +846,16 @@ const formattedStoriesArray = [
       author: 1,
       featured_media: 0,
       template: '',
-      categories: [12],
-      tags: [23, 21, 22],
+      categories: [],
+      tags: [],
       permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'enemies',
+      generated_slug: 'fighting-covid-19-er-doctors-everywhere-copy',
       story_data: {
-        version: 15,
+        version: 12,
         pages: [
           {
             elements: [
               {
-                type: 'shape',
                 opacity: 100,
                 flip: {
                   vertical: false,
@@ -2146,24 +864,52 @@ const formattedStoriesArray = [
                 rotationAngle: 0,
                 backgroundColor: {
                   color: {
-                    r: 53,
-                    g: 108,
-                    b: 137,
+                    r: 255,
+                    g: 255,
+                    b: 255,
                   },
                 },
                 isFill: false,
-                x: 1,
-                y: 1,
-                width: 1,
-                height: 1,
+                x: 8.923633420864867,
+                y: 54.621280085252785,
+                width: 146.66666666666666,
+                height: 146.66666666666666,
                 mask: {
                   type: 'rectangle',
                 },
                 isBackground: true,
-                id: 'c1417ab4-efc8-4469-8b30-e778f0e24bf9',
+                type: 'shape',
+                id: 'c4f3e766-0c8b-43b5-ba9b-ad6083b1331e',
               },
               {
-                type: 'image',
+                opacity: 80,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                backgroundColor: {
+                  color: {
+                    r: 51,
+                    g: 51,
+                    b: 51,
+                  },
+                },
+                isFill: false,
+                x: 0,
+                y: 0,
+                width: 439,
+                height: 661,
+                scale: 100,
+                focalX: 50,
+                focalY: 50,
+                mask: {
+                  type: 'rectangle',
+                },
+                type: 'shape',
+                id: '718c2af2-c673-4d25-b906-1339c2fae397',
+              },
+              {
                 opacity: 100,
                 flip: {
                   vertical: false,
@@ -2176,180 +922,74 @@ const formattedStoriesArray = [
                 isFill: false,
                 resource: {
                   type: 'image',
-                  mimeType: 'image/jpeg',
+                  mimeType: 'image/gif',
                   src:
-                    'http://localhost:8899/wp-content/uploads/2020/04/snape.jpeg',
-                  width: 229,
-                  height: 177,
+                    'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies.gif',
+                  width: 220,
+                  height: 124,
+                  poster: '',
                   posterId: 0,
-                  id: 75,
-                  title: 'snape',
-                  alt: 'snape',
+                  videoId: 55,
+                  title: 'capybarawithpuppies',
+                  alt: '',
                   local: false,
                   sizes: {
                     medium: {
-                      file: 'snape-300x225.jpeg',
+                      file: 'capybarawithpuppies-300x169.gif',
                       width: 300,
-                      height: 225,
-                      mime_type: 'image/jpeg',
+                      height: 169,
+                      mime_type: 'image/gif',
                       source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/snape-300x225.jpeg',
+                        'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies-300x169.gif',
                     },
                     thumbnail: {
-                      file: 'snape-150x150.jpeg',
+                      file: 'capybarawithpuppies-150x150.gif',
                       width: 150,
                       height: 150,
-                      mime_type: 'image/jpeg',
+                      mime_type: 'image/gif',
                       source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/snape-150x150.jpeg',
-                    },
-                    medium_large: {
-                      file: 'snape-768x576.jpeg',
-                      width: 768,
-                      height: 576,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/snape-768x576.jpeg',
-                    },
-                    'web-stories-poster-portrait': {
-                      file: 'snape-696x703.jpeg',
-                      width: 696,
-                      height: 703,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/snape-696x703.jpeg',
-                    },
-                    'web-stories-poster-square': {
-                      file: 'snape-928x703.jpeg',
-                      width: 928,
-                      height: 703,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/snape-928x703.jpeg',
-                    },
-                    'web-stories-poster-landscape': {
-                      file: 'snape-928x696.jpeg',
-                      width: 928,
-                      height: 696,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/snape-928x696.jpeg',
+                        'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies-150x150.gif',
                     },
                     web_stories_thumbnail: {
-                      file: 'snape-150x113.jpeg',
+                      file: 'capybarawithpuppies-150x84.gif',
                       width: 150,
-                      height: 113,
-                      mime_type: 'image/jpeg',
+                      height: 84,
+                      mime_type: 'image/gif',
                       source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/snape-150x113.jpeg',
+                        'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies-150x84.gif',
                     },
                     full: {
-                      file: 'snape.jpeg',
-                      width: 937,
-                      height: 703,
-                      mime_type: 'image/jpeg',
+                      file: 'capybarawithpuppies.gif',
+                      width: 480,
+                      height: 270,
+                      mime_type: 'image/gif',
                       source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/snape.jpeg',
+                        'http://localhost:8899/wp-content/uploads/2020/04/capybarawithpuppies.gif',
                     },
                   },
                 },
-                x: 68,
-                y: 60,
-                width: 229,
-                height: 177,
+                x: 109,
+                y: 139,
+                width: 220,
+                height: 437,
                 mask: {
                   type: 'rectangle',
                   name: 'Rectangle',
                   path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
                   ratio: 1,
                 },
-                id: '44492c71-51b4-486a-a850-36c2c9b3129b',
-              },
-              {
                 type: 'image',
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                scale: 100,
-                focalX: 50,
-                focalY: 50,
-                isFill: false,
-                resource: {
-                  type: 'image',
-                  mimeType: 'image/jpeg',
-                  src:
-                    'http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg',
-                  width: 229,
-                  height: 308,
-                  posterId: 0,
-                  id: 74,
-                  title: 'MSDHAPO EC040',
-                  alt: 'MSDHAPO EC040',
-                  local: false,
-                  sizes: {
-                    medium: {
-                      file: 'hpyoung-230x300.jpg',
-                      width: 230,
-                      height: 300,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-230x300.jpg',
-                    },
-                    thumbnail: {
-                      file: 'hpyoung-150x150.jpg',
-                      width: 150,
-                      height: 150,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-150x150.jpg',
-                    },
-                    'web-stories-poster-landscape': {
-                      file: 'hpyoung-600x696.jpg',
-                      width: 600,
-                      height: 696,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-600x696.jpg',
-                    },
-                    web_stories_thumbnail: {
-                      file: 'hpyoung-150x196.jpg',
-                      width: 150,
-                      height: 196,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung-150x196.jpg',
-                    },
-                    full: {
-                      file: 'hpyoung.jpg',
-                      width: 600,
-                      height: 783,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/hpyoung.jpg',
-                    },
-                  },
-                },
-                x: 148,
-                y: 284,
-                width: 229,
-                height: 308,
-                mask: {
-                  type: 'rectangle',
-                  name: 'Rectangle',
-                  path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-                  ratio: 1,
-                },
-                id: 'b3af6cbd-9f15-499a-a595-37a9b78c08c5',
+                id: 'cb352b5a-3697-4b11-937b-aa5fe1d3c6cd',
               },
             ],
-            backgroundElementId: 'c1417ab4-efc8-4469-8b30-e778f0e24bf9',
             type: 'page',
-            id: 'e3af46c3-71c6-4724-ade9-16074bba7d74',
+            id: '01ac6bd7-f94b-4f2d-8fd0-2f3981c31828',
+            backgroundElementId: 'c4f3e766-0c8b-43b5-ba9b-ad6083b1331e',
+            backgroundOverlay: 'none',
           },
         ],
+        autoAdvance: true,
+        defaultPageDuration: 7,
       },
       featured_media_url: '',
       publisher_logo_url:
@@ -2357,13 +997,12 @@ const formattedStoriesArray = [
       style_presets: {
         fillColors: [],
         textColors: [],
-        styles: [],
         textStyles: [],
       },
       _links: {
         self: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147',
           },
         ],
         collection: [
@@ -2384,67 +1023,60 @@ const formattedStoriesArray = [
         ],
         'version-history': [
           {
-            count: 2,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 105,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/88/revisions/105',
+            count: 0,
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147/revisions',
           },
         ],
         'wp:attachment': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=88',
+            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=147',
           },
         ],
         'wp:term': [
           {
             taxonomy: 'category',
             embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=88',
+            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=147',
           },
           {
             taxonomy: 'post_tag',
             embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=88',
+            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=147',
           },
         ],
         'wp:action-publish': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147',
           },
         ],
         'wp:action-unfiltered-html': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147',
           },
         ],
         'wp:action-assign-author': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147',
           },
         ],
         'wp:action-create-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147',
           },
         ],
         'wp:action-assign-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147',
           },
         ],
         'wp:action-create-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147',
           },
         ],
         'wp:action-assign-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/88',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/147',
           },
         ],
         curies: [
@@ -2458,11 +1090,640 @@ const formattedStoriesArray = [
     },
   },
   {
-    id: 90,
+    id: 39,
+    status: 'publish',
+    title: "taco tuesday menu for rosita's",
+    modified: moment('05-04-2020', 'MM-DD-YYYY'),
+    created: '2020-04-02T06:10:54.000Z',
+    pages: [
+      {
+        elements: [
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            backgroundColor: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            isFill: false,
+            x: 28.28050513436558,
+            y: 15.798762728965317,
+            width: 146.66666666666666,
+            height: 146.66666666666666,
+            mask: {
+              type: 'rectangle',
+            },
+            isBackground: true,
+            type: 'shape',
+            id: 'd1f9f7f0-6734-4307-b91b-b18dafea10f2',
+          },
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            resource: {
+              type: 'image',
+              mimeType: 'image/jpeg',
+              src:
+                'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
+              width: 220,
+              height: 220,
+              videoId: 46,
+              alt: '',
+              sizes: {
+                thumbnail: {
+                  height: 150,
+                  width: 150,
+                  url:
+                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
+                  orientation: 'landscape',
+                },
+                medium: {
+                  height: 300,
+                  width: 300,
+                  url:
+                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-300x300.jpg',
+                  orientation: 'landscape',
+                },
+                full: {
+                  url:
+                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
+                  height: 550,
+                  width: 550,
+                  orientation: 'landscape',
+                },
+              },
+            },
+            x: 0,
+            y: -1,
+            width: 440,
+            height: 661,
+            mask: {
+              type: 'rectangle',
+              name: 'Rectangle',
+              path: 'M 0,0 1,0 1,1 0,1 0,0',
+              ratio: 1,
+            },
+            type: 'image',
+            id: 'cbc058ed-fad4-4882-8d4f-cf9b4b921b91',
+          },
+          {
+            opacity: 90,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            backgroundTextMode: 'NONE',
+            bold: false,
+            fontFamily: 'Paprika',
+            fontFallback: ['cursive'],
+            fontWeight: 400,
+            fontSize: 60,
+            fontStyle: 'normal',
+            color: {
+              color: {
+                r: 46,
+                g: 47,
+                b: 158,
+              },
+            },
+            letterSpacing: 0,
+            lineHeight: 1.3,
+            textAlign: 'initial',
+            textDecoration: 'none',
+            padding: {
+              vertical: 0,
+              horizontal: 0,
+            },
+            content: 'Tacos',
+            backgroundColor: {
+              color: {
+                r: 196,
+                g: 196,
+                b: 196,
+              },
+            },
+            x: 110,
+            y: 10,
+            width: 220,
+            height: 77,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            type: 'text',
+            id: '02a01d27-1d3e-44b8-a7d7-90e976e4d78c',
+          },
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            backgroundTextMode: 'FILL',
+            bold: false,
+            fontFamily: 'Paprika',
+            fontFallback: ['cursive'],
+            fontWeight: 400,
+            fontSize: 30,
+            fontStyle: 'normal',
+            color: {
+              color: {
+                r: 32,
+                g: 74,
+                b: 215,
+              },
+            },
+            letterSpacing: 0,
+            lineHeight: 1.3,
+            textAlign: 'initial',
+            textDecoration: 'none',
+            padding: {
+              vertical: 0,
+              horizontal: 0,
+            },
+            id: '53659f81-6ab9-437c-bcea-7c42ec10f6e2',
+            title: 'Subheading',
+            content: 'ellos, ellos no',
+            backgroundColor: {
+              type: 'conic',
+              stops: [
+                {
+                  color: {
+                    r: 199,
+                    g: 17,
+                    b: 17,
+                    a: 0.6,
+                  },
+                  position: 0,
+                },
+                {
+                  color: {
+                    r: 199,
+                    g: 17,
+                    b: 17,
+                    a: 0.6,
+                  },
+                  position: 1,
+                },
+              ],
+              rotation: 0.5,
+            },
+            x: 180,
+            y: 146,
+            width: 261,
+            height: 38,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            isFill: false,
+            type: 'text',
+          },
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            backgroundColor: {
+              color: {
+                r: 51,
+                g: 51,
+                b: 51,
+              },
+            },
+            isFill: false,
+            x: 62,
+            y: 330,
+            width: 158,
+            height: 147,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            mask: {
+              type: 'heart',
+            },
+            type: 'shape',
+            id: '202a2046-3317-478c-a944-f41e837528c2',
+          },
+        ],
+        type: 'page',
+        id: 'f1ffaa13-ccba-4a32-9e46-5540e38ad953',
+        backgroundElementId: 'd1f9f7f0-6734-4307-b91b-b18dafea10f2',
+        backgroundOverlay: 'none',
+      },
+    ],
+    tags: [],
+    categories: [],
+    author: 1,
+    centerTargetAction: '',
+    bottomTargetAction:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=39',
+    originalStoryData: {
+      id: 39,
+      date: '2020-04-01T23:10:54',
+      date_gmt: '2020-04-02T06:10:54',
+      guid: {
+        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=39',
+        raw: 'http://localhost:8899/?post_type=web-story&#038;p=39',
+      },
+      modified: '2020-05-14T15:32:46',
+      modified_gmt: '2020-05-14T22:32:46',
+      password: '',
+      slug: 'taco-tuesday-menu-for-rositas',
+      status: 'publish',
+      type: 'web-story',
+      link: 'http://localhost:8899/stories/taco-tuesday-menu-for-rositas',
+      title: {
+        raw: "taco tuesday menu for rosita's",
+        rendered: 'taco tuesday menu for rosita&#8217;s',
+      },
+      content: {
+        raw:
+          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=39"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="taco tuesday menu for rosita&#x27;s" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="f1ffaa13-ccba-4a32-9e46-5540e38ad953"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-d1f9f7f0-6734-4307-b91b-b18dafea10f2" class="wrapper"><div class="fill" style="background-color:#fff"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"><div style="left:0%;top:-0.15152%;width:100%;height:100.15152%;opacity:1;clip-path:url(#mask-rectangle-cbc058ed-fad4-4882-8d4f-cf9b4b921b91-output);-webkit-clip-path:url(#mask-rectangle-cbc058ed-fad4-4882-8d4f-cf9b4b921b91-output)" id="el-cbc058ed-fad4-4882-8d4f-cf9b4b921b91" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-cbc058ed-fad4-4882-8d4f-cf9b4b921b91-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0"></path></clipPath></defs></svg><div style="position:absolute;width:150.22728%;height:100%;left:-25.11364%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg" alt=""></amp-img></div></div><div style="left:25%;top:1.51515%;width:50%;height:11.66667%;opacity:0.9" id="el-02a01d27-1d3e-44b8-a7d7-90e976e4d78c" class="wrapper"><p class="fill" style="white-space:pre-wrap;margin:0;font-family:Paprika,cursive;font-size:0.909091em;font-style:normal;font-weight:400;line-height:1.3;letter-spacing:0em;text-align:initial;text-decoration:none;padding:0% 0%;color:#2e2f9e">Tacos</p></div><div style="left:40.90909%;top:22.12121%;width:59.31818%;height:5.75758%;opacity:1" id="el-53659f81-6ab9-437c-bcea-7c42ec10f6e2" class="wrapper"><p class="fill" style="white-space:pre-wrap;margin:0;font-family:Paprika,cursive;font-size:0.454545em;font-style:normal;font-weight:400;line-height:1.3;letter-spacing:0em;text-align:initial;text-decoration:none;padding:0% 0%;color:#204ad7;background-image:conic-gradient(from 0.5turn, rgba(199,17,17,0.6) 0turn, rgba(199,17,17,0.6) 1turn)">ellos, ellos no</p></div><div style="left:14.09091%;top:50%;width:35.90909%;height:22.27273%;opacity:1;clip-path:url(#mask-heart-202a2046-3317-478c-a944-f41e837528c2-output);-webkit-clip-path:url(#mask-heart-202a2046-3317-478c-a944-f41e837528c2-output)" id="el-202a2046-3317-478c-a944-f41e837528c2" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-heart-202a2046-3317-478c-a944-f41e837528c2-output" transform="scale(1 1.075533375284871)" clipPathUnits="objectBoundingBox"><path d="M.99834689.27724859C.98374997.1165844.87003101.00001922.7277144.00001922c-.0948137 0-.18162681.05102248-.23047608.13279699C.44883142.04998394.36557613 0 .27228183 0 .12998435 0 .01624632.1165652.00166847.27722932c-.00115382.007097-.00588463.0444451.00850059.10535296.0207321.0878518.06861968.1677608.13845102.23103404l.34838744.31615494.35436847-.31613565c.0698315-.0632926.1177191-.14318227.13845114-.23105333.0143856-.0608885.009655-.0982371.00852-.10533369z"></path></clipPath></defs></svg><div class="fill" style="background-color:#333"></div></div></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
+        rendered:
+          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=39"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="taco tuesday menu for rosita&#x27;s" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="f1ffaa13-ccba-4a32-9e46-5540e38ad953"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-d1f9f7f0-6734-4307-b91b-b18dafea10f2" class="wrapper">\n<div class="fill" style="background-color:#fff"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area">\n<div style="left:0%;top:-0.15152%;width:100%;height:100.15152%;opacity:1;clip-path:url(#mask-rectangle-cbc058ed-fad4-4882-8d4f-cf9b4b921b91-output);-webkit-clip-path:url(#mask-rectangle-cbc058ed-fad4-4882-8d4f-cf9b4b921b91-output)" id="el-cbc058ed-fad4-4882-8d4f-cf9b4b921b91" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-cbc058ed-fad4-4882-8d4f-cf9b4b921b91-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0"></path></clipPath></defs></svg></p>\n<div style="position:absolute;width:150.22728%;height:100%;left:-25.11364%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg" alt=""></amp-img></div>\n</div>\n<div style="left:25%;top:1.51515%;width:50%;height:11.66667%;opacity:0.9" id="el-02a01d27-1d3e-44b8-a7d7-90e976e4d78c" class="wrapper">\n<p class="fill" style="white-space:pre-wrap;margin:0;font-family:Paprika,cursive;font-size:0.909091em;font-style:normal;font-weight:400;line-height:1.3;letter-spacing:0em;text-align:initial;text-decoration:none;padding:0% 0%;color:#2e2f9e">Tacos</p>\n</div>\n<div style="left:40.90909%;top:22.12121%;width:59.31818%;height:5.75758%;opacity:1" id="el-53659f81-6ab9-437c-bcea-7c42ec10f6e2" class="wrapper">\n<p class="fill" style="white-space:pre-wrap;margin:0;font-family:Paprika,cursive;font-size:0.454545em;font-style:normal;font-weight:400;line-height:1.3;letter-spacing:0em;text-align:initial;text-decoration:none;padding:0% 0%;color:#204ad7;background-image:conic-gradient(from 0.5turn, rgba(199,17,17,0.6) 0turn, rgba(199,17,17,0.6) 1turn)">ellos, ellos no</p>\n</div>\n<div style="left:14.09091%;top:50%;width:35.90909%;height:22.27273%;opacity:1;clip-path:url(#mask-heart-202a2046-3317-478c-a944-f41e837528c2-output);-webkit-clip-path:url(#mask-heart-202a2046-3317-478c-a944-f41e837528c2-output)" id="el-202a2046-3317-478c-a944-f41e837528c2" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-heart-202a2046-3317-478c-a944-f41e837528c2-output" transform="scale(1 1.075533375284871)" clipPathUnits="objectBoundingBox"><path d="M.99834689.27724859C.98374997.1165844.87003101.00001922.7277144.00001922c-.0948137 0-.18162681.05102248-.23047608.13279699C.44883142.04998394.36557613 0 .27228183 0 .12998435 0 .01624632.1165652.00166847.27722932c-.00115382.007097-.00588463.0444451.00850059.10535296.0207321.0878518.06861968.1677608.13845102.23103404l.34838744.31615494.35436847-.31613565c.0698315-.0632926.1177191-.14318227.13845114-.23105333.0143856-.0608885.009655-.0982371.00852-.10533369z"></path></clipPath></defs></svg></p>\n<div class="fill" style="background-color:#333"></div>\n</div>\n</div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
+        protected: false,
+        block_version: 0,
+      },
+      excerpt: {
+        raw: '',
+        rendered: '<p>Tacos ellos, ellos no</p>\n',
+        protected: false,
+      },
+      author: 1,
+      featured_media: 0,
+      template: '',
+      categories: [],
+      tags: [],
+      permalink_template: 'http://localhost:8899/stories/%pagename%',
+      generated_slug: 'taco-tuesday-menu-for-rositas',
+      story_data: {
+        version: 12,
+        pages: [
+          {
+            elements: [
+              {
+                opacity: 100,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                backgroundColor: {
+                  color: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                  },
+                },
+                isFill: false,
+                x: 28.28050513436558,
+                y: 15.798762728965317,
+                width: 146.66666666666666,
+                height: 146.66666666666666,
+                mask: {
+                  type: 'rectangle',
+                },
+                isBackground: true,
+                type: 'shape',
+                id: 'd1f9f7f0-6734-4307-b91b-b18dafea10f2',
+              },
+              {
+                opacity: 100,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                scale: 100,
+                focalX: 50,
+                focalY: 50,
+                isFill: false,
+                resource: {
+                  type: 'image',
+                  mimeType: 'image/jpeg',
+                  src:
+                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
+                  width: 220,
+                  height: 220,
+                  videoId: 46,
+                  alt: '',
+                  sizes: {
+                    thumbnail: {
+                      height: 150,
+                      width: 150,
+                      url:
+                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
+                      orientation: 'landscape',
+                    },
+                    medium: {
+                      height: 300,
+                      width: 300,
+                      url:
+                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-300x300.jpg',
+                      orientation: 'landscape',
+                    },
+                    full: {
+                      url:
+                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
+                      height: 550,
+                      width: 550,
+                      orientation: 'landscape',
+                    },
+                  },
+                },
+                x: 0,
+                y: -1,
+                width: 440,
+                height: 661,
+                mask: {
+                  type: 'rectangle',
+                  name: 'Rectangle',
+                  path: 'M 0,0 1,0 1,1 0,1 0,0',
+                  ratio: 1,
+                },
+                type: 'image',
+                id: 'cbc058ed-fad4-4882-8d4f-cf9b4b921b91',
+              },
+              {
+                opacity: 90,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                backgroundTextMode: 'NONE',
+                bold: false,
+                fontFamily: 'Paprika',
+                fontFallback: ['cursive'],
+                fontWeight: 400,
+                fontSize: 60,
+                fontStyle: 'normal',
+                color: {
+                  color: {
+                    r: 46,
+                    g: 47,
+                    b: 158,
+                  },
+                },
+                letterSpacing: 0,
+                lineHeight: 1.3,
+                textAlign: 'initial',
+                textDecoration: 'none',
+                padding: {
+                  vertical: 0,
+                  horizontal: 0,
+                },
+                content: 'Tacos',
+                backgroundColor: {
+                  color: {
+                    r: 196,
+                    g: 196,
+                    b: 196,
+                  },
+                },
+                x: 110,
+                y: 10,
+                width: 220,
+                height: 77,
+                scale: 100,
+                focalX: 50,
+                focalY: 50,
+                isFill: false,
+                type: 'text',
+                id: '02a01d27-1d3e-44b8-a7d7-90e976e4d78c',
+              },
+              {
+                opacity: 100,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                backgroundTextMode: 'FILL',
+                bold: false,
+                fontFamily: 'Paprika',
+                fontFallback: ['cursive'],
+                fontWeight: 400,
+                fontSize: 30,
+                fontStyle: 'normal',
+                color: {
+                  color: {
+                    r: 32,
+                    g: 74,
+                    b: 215,
+                  },
+                },
+                letterSpacing: 0,
+                lineHeight: 1.3,
+                textAlign: 'initial',
+                textDecoration: 'none',
+                padding: {
+                  vertical: 0,
+                  horizontal: 0,
+                },
+                id: '53659f81-6ab9-437c-bcea-7c42ec10f6e2',
+                title: 'Subheading',
+                content: 'ellos, ellos no',
+                backgroundColor: {
+                  type: 'conic',
+                  stops: [
+                    {
+                      color: {
+                        r: 199,
+                        g: 17,
+                        b: 17,
+                        a: 0.6,
+                      },
+                      position: 0,
+                    },
+                    {
+                      color: {
+                        r: 199,
+                        g: 17,
+                        b: 17,
+                        a: 0.6,
+                      },
+                      position: 1,
+                    },
+                  ],
+                  rotation: 0.5,
+                },
+                x: 180,
+                y: 146,
+                width: 261,
+                height: 38,
+                scale: 100,
+                focalX: 50,
+                focalY: 50,
+                isFill: false,
+                type: 'text',
+              },
+              {
+                opacity: 100,
+                flip: {
+                  vertical: false,
+                  horizontal: false,
+                },
+                rotationAngle: 0,
+                backgroundColor: {
+                  color: {
+                    r: 51,
+                    g: 51,
+                    b: 51,
+                  },
+                },
+                isFill: false,
+                x: 62,
+                y: 330,
+                width: 158,
+                height: 147,
+                scale: 100,
+                focalX: 50,
+                focalY: 50,
+                mask: {
+                  type: 'heart',
+                },
+                type: 'shape',
+                id: '202a2046-3317-478c-a944-f41e837528c2',
+              },
+            ],
+            type: 'page',
+            id: 'f1ffaa13-ccba-4a32-9e46-5540e38ad953',
+            backgroundElementId: 'd1f9f7f0-6734-4307-b91b-b18dafea10f2',
+            backgroundOverlay: 'none',
+          },
+        ],
+      },
+      featured_media_url: '',
+      publisher_logo_url:
+        'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
+      style_presets: {
+        fillColors: [],
+        textColors: [],
+        textStyles: [],
+      },
+      _links: {
+        self: [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39',
+          },
+        ],
+        collection: [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
+          },
+        ],
+        about: [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
+          },
+        ],
+        author: [
+          {
+            embeddable: true,
+            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
+          },
+        ],
+        'version-history': [
+          {
+            count: 4,
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39/revisions',
+          },
+        ],
+        'predecessor-version': [
+          {
+            id: 146,
+            href:
+              'http://localhost:8899/wp-json/wp/v2/web-story/39/revisions/146',
+          },
+        ],
+        'wp:attachment': [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=39',
+          },
+        ],
+        'wp:term': [
+          {
+            taxonomy: 'category',
+            embeddable: true,
+            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=39',
+          },
+          {
+            taxonomy: 'post_tag',
+            embeddable: true,
+            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=39',
+          },
+        ],
+        'wp:action-publish': [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39',
+          },
+        ],
+        'wp:action-unfiltered-html': [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39',
+          },
+        ],
+        'wp:action-assign-author': [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39',
+          },
+        ],
+        'wp:action-create-categories': [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39',
+          },
+        ],
+        'wp:action-assign-categories': [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39',
+          },
+        ],
+        'wp:action-create-tags': [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39',
+          },
+        ],
+        'wp:action-assign-tags': [
+          {
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/39',
+          },
+        ],
+        curies: [
+          {
+            name: 'wp',
+            href: 'https://api.w.org/{rel}',
+            templated: true,
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: 144,
     status: 'draft',
-    title: 'Harry Potter?',
-    modified: '2020-05-02T01:19:07.000Z',
-    created: '2020-04-24T04:13:19.000Z',
+    title: 'Harry Potter',
+    modified: moment('04-14-2020', 'MM-DD-YYYY'),
+    created: '2020-05-14T22:31:25.000Z',
     pages: [
       {
         elements: [
@@ -2680,30 +1941,30 @@ const formattedStoriesArray = [
         id: '15bc9b2c-7ec1-4ef4-b6f2-7ae2248e0851',
       },
     ],
-    tags: [19, 18, 20, 17],
-    categories: [6, 7, 9],
+    tags: [],
+    categories: [],
     author: 1,
     centerTargetAction: '',
     bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=90',
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=144',
     originalStoryData: {
-      id: 90,
-      date: '2020-04-23T21:13:19',
-      date_gmt: '2020-04-23T21:13:19',
+      id: 144,
+      date: '2020-05-14T15:31:25',
+      date_gmt: '2020-05-14T22:31:25',
       guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=90',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=90',
+        rendered: 'http://localhost:8899/?post_type=web-story&p=144',
+        raw: 'http://localhost:8899/?post_type=web-story&p=144',
       },
-      modified: '2020-05-01T18:19:07',
-      modified_gmt: '2020-05-01T18:19:07',
+      modified: '2020-05-14T15:31:25',
+      modified_gmt: '2020-05-14T22:31:25',
       password: '',
-      slug: 'friends',
+      slug: '',
       status: 'draft',
       type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=90',
+      link: 'http://localhost:8899/?post_type=web-story&p=144',
       title: {
-        raw: 'Harry Potter?',
-        rendered: 'Harry Potter?',
+        raw: 'Harry Potter? (Copy)',
+        rendered: 'Harry Potter? (Copy)',
       },
       content: {
         raw:
@@ -2721,10 +1982,10 @@ const formattedStoriesArray = [
       author: 1,
       featured_media: 0,
       template: '',
-      categories: [6, 7, 9],
-      tags: [19, 18, 20, 17],
+      categories: [],
+      tags: [],
       permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'harry-potter',
+      generated_slug: 'harry-potter-copy',
       story_data: {
         version: 15,
         pages: [
@@ -2951,13 +2212,12 @@ const formattedStoriesArray = [
       style_presets: {
         fillColors: [],
         textColors: [],
-        styles: [],
         textStyles: [],
       },
       _links: {
         self: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144',
           },
         ],
         collection: [
@@ -2978,801 +2238,60 @@ const formattedStoriesArray = [
         ],
         'version-history': [
           {
-            count: 3,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 104,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/90/revisions/104',
+            count: 0,
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144/revisions',
           },
         ],
         'wp:attachment': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=90',
+            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=144',
           },
         ],
         'wp:term': [
           {
             taxonomy: 'category',
             embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=90',
+            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=144',
           },
           {
             taxonomy: 'post_tag',
             embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=90',
+            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=144',
           },
         ],
         'wp:action-publish': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144',
           },
         ],
         'wp:action-unfiltered-html': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144',
           },
         ],
         'wp:action-assign-author': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144',
           },
         ],
         'wp:action-create-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144',
           },
         ],
         'wp:action-assign-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144',
           },
         ],
         'wp:action-create-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144',
           },
         ],
         'wp:action-assign-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/90',
-          },
-        ],
-        curies: [
-          {
-            name: 'wp',
-            href: 'https://api.w.org/{rel}',
-            templated: true,
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: 22,
-    status: 'draft',
-    title: 'DERPIN WITH FRED',
-    modified: '2020-05-01T22:48:27.000Z',
-    created: '2020-04-07T04:14:58.000Z',
-    pages: [
-      {
-        elements: [
-          {
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            isFill: false,
-            x: 64.11696768068994,
-            y: 0.8118457146662683,
-            width: 146.66666666666666,
-            height: 146.66666666666666,
-            mask: {
-              type: 'rectangle',
-            },
-            isBackground: true,
-            type: 'shape',
-            id: '3ffaee2f-ccfb-4d26-b419-60f959032f5d',
-          },
-          {
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/png',
-              src:
-                'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133.png',
-              width: 220,
-              height: 391,
-              videoId: 65,
-              alt: '',
-              sizes: {
-                thumbnail: {
-                  height: 150,
-                  width: 150,
-                  url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133-150x150.png',
-                  orientation: 'landscape',
-                },
-                medium: {
-                  height: 300,
-                  width: 169,
-                  url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133-169x300.png',
-                  orientation: 'portrait',
-                },
-                large: {
-                  height: 1024,
-                  width: 576,
-                  url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133-576x1024.png',
-                  orientation: 'portrait',
-                },
-                full: {
-                  url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133.png',
-                  height: 2208,
-                  width: 1242,
-                  orientation: 'portrait',
-                },
-              },
-            },
-            x: 0,
-            y: -36,
-            width: 440,
-            height: 696,
-            mask: {
-              type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-            },
-            type: 'image',
-            id: 'bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1',
-          },
-        ],
-        type: 'page',
-        id: 'c2e58c83-b1df-4b92-886e-6ca0479a3465',
-        backgroundElementId: '3ffaee2f-ccfb-4d26-b419-60f959032f5d',
-        backgroundOverlay: 'none',
-      },
-    ],
-    tags: [28, 29, 30],
-    categories: [9, 11],
-    author: 1,
-    centerTargetAction: '',
-    bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=22',
-    originalStoryData: {
-      id: 22,
-      date: '2020-04-06T21:14:58',
-      date_gmt: '2020-04-06T21:14:58',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=22',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=22',
-      },
-      modified: '2020-05-01T15:48:27',
-      modified_gmt: '2020-05-01T15:48:27',
-      password: '',
-      slug: 'danny-trejo-action-movie-fight-tips',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=22',
-      title: {
-        raw: 'DERPIN WITH FRED',
-        rendered: 'DERPIN WITH FRED',
-      },
-      content: {
-        raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=22"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="DERPIN WITH FRED" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="c2e58c83-b1df-4b92-886e-6ca0479a3465" auto-advance-after="el-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1-media"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-3ffaee2f-ccfb-4d26-b419-60f959032f5d" class="wrapper"><div class="fill" style="background-color:#fff"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"><div style="left:0%;top:-5.45455%;width:100%;height:105.45455%;opacity:1;clip-path:url(#mask-rectangle-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1-output);-webkit-clip-path:url(#mask-rectangle-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1-output)" id="el-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg><div style="position:absolute;width:100%;height:112.35632%;left:0%;top:-6.17816%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/IMG_4133.png" alt=""></amp-img></div></div></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-        rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=22"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="DERPIN WITH FRED" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="c2e58c83-b1df-4b92-886e-6ca0479a3465" auto-advance-after="el-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1-media"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-3ffaee2f-ccfb-4d26-b419-60f959032f5d" class="wrapper">\n<div class="fill" style="background-color:#fff"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area">\n<div style="left:0%;top:-5.45455%;width:100%;height:105.45455%;opacity:1;clip-path:url(#mask-rectangle-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1-output);-webkit-clip-path:url(#mask-rectangle-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1-output)" id="el-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg></p>\n<div style="position:absolute;width:100%;height:112.35632%;left:0%;top:-6.17816%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/IMG_4133.png" alt=""></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
-        protected: false,
-        block_version: 0,
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [9, 11],
-      tags: [28, 29, 30],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'derpin-with-fred',
-      story_data: {
-        version: 12,
-        pages: [
-          {
-            elements: [
-              {
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                backgroundColor: {
-                  color: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                  },
-                },
-                isFill: false,
-                x: 64.11696768068994,
-                y: 0.8118457146662683,
-                width: 146.66666666666666,
-                height: 146.66666666666666,
-                mask: {
-                  type: 'rectangle',
-                },
-                isBackground: true,
-                type: 'shape',
-                id: '3ffaee2f-ccfb-4d26-b419-60f959032f5d',
-              },
-              {
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                scale: 100,
-                focalX: 50,
-                focalY: 50,
-                isFill: false,
-                resource: {
-                  type: 'image',
-                  mimeType: 'image/png',
-                  src:
-                    'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133.png',
-                  width: 220,
-                  height: 391,
-                  videoId: 65,
-                  alt: '',
-                  sizes: {
-                    thumbnail: {
-                      height: 150,
-                      width: 150,
-                      url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133-150x150.png',
-                      orientation: 'landscape',
-                    },
-                    medium: {
-                      height: 300,
-                      width: 169,
-                      url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133-169x300.png',
-                      orientation: 'portrait',
-                    },
-                    large: {
-                      height: 1024,
-                      width: 576,
-                      url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133-576x1024.png',
-                      orientation: 'portrait',
-                    },
-                    full: {
-                      url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/IMG_4133.png',
-                      height: 2208,
-                      width: 1242,
-                      orientation: 'portrait',
-                    },
-                  },
-                },
-                x: 0,
-                y: -36,
-                width: 440,
-                height: 696,
-                mask: {
-                  type: 'rectangle',
-                  name: 'Rectangle',
-                  path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-                  ratio: 1,
-                },
-                type: 'image',
-                id: 'bb6c66cc-be6e-4f7e-93a1-fac47ccc15f1',
-              },
-            ],
-            type: 'page',
-            id: 'c2e58c83-b1df-4b92-886e-6ca0479a3465',
-            backgroundElementId: '3ffaee2f-ccfb-4d26-b419-60f959032f5d',
-            backgroundOverlay: 'none',
-          },
-        ],
-        autoAdvance: true,
-        defaultPageDuration: 7,
-      },
-      featured_media_url: '',
-      publisher_logo_url:
-        'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
-      style_presets: {
-        fillColors: [],
-        textColors: [],
-        styles: [],
-        textStyles: [],
-      },
-      _links: {
-        self: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22',
-          },
-        ],
-        collection: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
-          },
-        ],
-        about: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
-          },
-        ],
-        author: [
-          {
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
-          },
-        ],
-        'version-history': [
-          {
-            count: 2,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 66,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/22/revisions/66',
-          },
-        ],
-        'wp:attachment': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=22',
-          },
-        ],
-        'wp:term': [
-          {
-            taxonomy: 'category',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=22',
-          },
-          {
-            taxonomy: 'post_tag',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=22',
-          },
-        ],
-        'wp:action-publish': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22',
-          },
-        ],
-        'wp:action-unfiltered-html': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22',
-          },
-        ],
-        'wp:action-assign-author': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22',
-          },
-        ],
-        'wp:action-create-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22',
-          },
-        ],
-        'wp:action-assign-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22',
-          },
-        ],
-        'wp:action-create-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22',
-          },
-        ],
-        'wp:action-assign-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/22',
-          },
-        ],
-        curies: [
-          {
-            name: 'wp',
-            href: 'https://api.w.org/{rel}',
-            templated: true,
-          },
-        ],
-      },
-    },
-  },
-  {
-    id: 100,
-    status: 'draft',
-    title: 'every day is taco day (Copy)',
-    modified: '2020-05-01T22:46:56.000Z',
-    created: '2020-04-28T23:02:04.000Z',
-    pages: [
-      {
-        elements: [
-          {
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
-            isFill: false,
-            x: 1,
-            y: 1,
-            width: 1,
-            height: 1,
-            mask: {
-              type: 'rectangle',
-            },
-            isBackground: true,
-            type: 'shape',
-            id: '6ffdb0d7-34a7-4677-9841-f237d93c93e0',
-          },
-          {
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/jpeg',
-              src:
-                'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
-              width: 229,
-              height: 236,
-              posterId: 0,
-              id: 46,
-              title: 'The-Best-Classic-Tacos-550',
-              alt: 'The-Best-Classic-Tacos-550',
-              local: false,
-              sizes: {
-                medium: {
-                  file: 'The-Best-Classic-Tacos-550-300x300.jpg',
-                  width: 300,
-                  height: 300,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-300x300.jpg',
-                },
-                thumbnail: {
-                  file: 'The-Best-Classic-Tacos-550-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
-                },
-                web_stories_thumbnail: {
-                  file: 'The-Best-Classic-Tacos-550-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
-                },
-                full: {
-                  file: 'The-Best-Classic-Tacos-550.jpg',
-                  width: 550,
-                  height: 550,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
-                },
-              },
-            },
-            x: 99,
-            y: 189,
-            width: 229,
-            height: 236,
-            mask: {
-              type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-            },
-            type: 'image',
-            id: '690608b2-7cfb-4d38-aecb-6f741122da25',
-          },
-        ],
-        backgroundElementId: '6ffdb0d7-34a7-4677-9841-f237d93c93e0',
-        type: 'page',
-        id: 'a02f7cff-e25a-412b-b73f-6278373ab456',
-      },
-    ],
-    tags: [5, 4, 2, 3],
-    categories: [7],
-    author: 1,
-    centerTargetAction: '',
-    bottomTargetAction:
-      'http://localhost:8899/wp-admin/post.php?action=edit&post=100',
-    originalStoryData: {
-      id: 100,
-      date: '2020-04-28T16:02:04',
-      date_gmt: '2020-04-28T16:02:04',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=100',
-        raw: 'http://localhost:8899/?post_type=web-story&#038;p=100',
-      },
-      modified: '2020-05-01T15:46:56',
-      modified_gmt: '2020-05-01T15:46:56',
-      password: '',
-      slug: '',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=100',
-      title: {
-        raw: 'every day is taco day (Copy)',
-        rendered: 'every day is taco day (Copy)',
-      },
-      content: {
-        raw:
-          '<html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script><style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript><style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }\n\n              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }\n\n              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }\n\n              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }\n\n              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=94"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="every day is taco day" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="a02f7cff-e25a-412b-b73f-6278373ab456" auto-advance-after="7s"><amp-story-grid-layer template="vertical"><div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"><div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-6ffdb0d7-34a7-4677-9841-f237d93c93e0" class="wrapper"><div class="fill" style="background-color:#fff"></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"><div class="page-safe-area"><div style="left:22.5%;top:28.63636%;width:52.04545%;height:35.75758%;opacity:1;clip-path:url(#mask-rectangle-690608b2-7cfb-4d38-aecb-6f741122da25-output);-webkit-clip-path:url(#mask-rectangle-690608b2-7cfb-4d38-aecb-6f741122da25-output)" id="el-690608b2-7cfb-4d38-aecb-6f741122da25" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-690608b2-7cfb-4d38-aecb-6f741122da25-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg><div style="position:absolute;width:100.00002%;height:100%;left:-0.00001%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg" alt="The-Best-Classic-Tacos-550"></amp-img></div></div></div></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-        rendered:
-          '<p><html amp="" lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"/><script async="" src="https://cdn.ampproject.org/v0.js"></script><script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script></p>\n<style amp-boilerplate="">body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>\n<p><noscript></p>\n<style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>\n<p></noscript></p>\n<style amp-custom="">\n              .page-background-area,\n              .page-background-overlay-area,\n              .page-safe-area {\n                position: absolute;\n                overflow: hidden;\n                top: 0;\n                bottom: 0;\n                left: 0;\n                right: 0;\n              }</p>\n<p>              .page-cta-area {\n                position: absolute;\n                overflow: hidden;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                height: calc(100 * var(--story-page-vh, 1vh));\n              }</p>\n<p>              .page-background-area img, .page-background-area video {\n                object-fit: cover;\n              }</p>\n<p>              .wrapper {\n                position: absolute;\n                overflow: hidden;\n              }</p>\n<p>              .fill {\n                position: absolute;\n                top: 0;\n                left: 0;\n                right: 0;\n                bottom: 0;\n                margin: 0;\n              }\n              </style>\n<p><meta name="web-stories-replace-head-start"/><link rel="canonical" href="http://localhost:8899/?post_type=web-story&amp;p=94"/><meta name="web-stories-replace-head-end"/></head><body><amp-story standalone="standalone" publisher="Web Stories Dev" publisher-logo-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png" title="every day is taco day" poster-portrait-src="http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-poster.jpg"><amp-story-page id="a02f7cff-e25a-412b-b73f-6278373ab456" auto-advance-after="7s"><amp-story-grid-layer template="vertical"></p>\n<div class="page-background-area" style="background-color:white;background-image:linear-gradient(45deg, #999999 25%, transparent 25%),\n      linear-gradient(-45deg, #999999 25%, transparent 25%),\n      linear-gradient(45deg, transparent 75%, #999999 75%),\n      linear-gradient(-45deg, transparent 75%, #999999 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px"></p>\n<div style="left:0%;top:0%;width:100%;height:100%;opacity:1" id="el-6ffdb0d7-34a7-4677-9841-f237d93c93e0" class="wrapper">\n<div class="fill" style="background-color:#fff"></div>\n</div>\n</div>\n<p></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="440:660"></p>\n<div class="page-safe-area">\n<div style="left:22.5%;top:28.63636%;width:52.04545%;height:35.75758%;opacity:1;clip-path:url(#mask-rectangle-690608b2-7cfb-4d38-aecb-6f741122da25-output);-webkit-clip-path:url(#mask-rectangle-690608b2-7cfb-4d38-aecb-6f741122da25-output)" id="el-690608b2-7cfb-4d38-aecb-6f741122da25" class="wrapper"><svg width="0" height="0"><defs><clipPath id="mask-rectangle-690608b2-7cfb-4d38-aecb-6f741122da25-output" transform="scale(1 1)" clipPathUnits="objectBoundingBox"><path d="M 0,0 1,0 1,1 0,1 0,0 Z"></path></clipPath></defs></svg></p>\n<div style="position:absolute;width:100.00002%;height:100%;left:-0.00001%;top:0%"><amp-img layout="fill" src="http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg" alt="The-Best-Classic-Tacos-550"></amp-img></div>\n</div>\n</div>\n<p></amp-story-grid-layer></amp-story-page></amp-story></body></html></p>\n',
-        protected: false,
-        block_version: 0,
-      },
-      excerpt: {
-        raw: '',
-        rendered: '',
-        protected: false,
-      },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [7],
-      tags: [5, 4, 2, 3],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
-      generated_slug: 'every-day-is-taco-day-copy',
-      story_data: {
-        version: 14,
-        pages: [
-          {
-            elements: [
-              {
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                backgroundColor: {
-                  color: {
-                    r: 255,
-                    g: 255,
-                    b: 255,
-                  },
-                },
-                isFill: false,
-                x: 1,
-                y: 1,
-                width: 1,
-                height: 1,
-                mask: {
-                  type: 'rectangle',
-                },
-                isBackground: true,
-                type: 'shape',
-                id: '6ffdb0d7-34a7-4677-9841-f237d93c93e0',
-              },
-              {
-                opacity: 100,
-                flip: {
-                  vertical: false,
-                  horizontal: false,
-                },
-                rotationAngle: 0,
-                scale: 100,
-                focalX: 50,
-                focalY: 50,
-                isFill: false,
-                resource: {
-                  type: 'image',
-                  mimeType: 'image/jpeg',
-                  src:
-                    'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
-                  width: 229,
-                  height: 236,
-                  posterId: 0,
-                  id: 46,
-                  title: 'The-Best-Classic-Tacos-550',
-                  alt: 'The-Best-Classic-Tacos-550',
-                  local: false,
-                  sizes: {
-                    medium: {
-                      file: 'The-Best-Classic-Tacos-550-300x300.jpg',
-                      width: 300,
-                      height: 300,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-300x300.jpg',
-                    },
-                    thumbnail: {
-                      file: 'The-Best-Classic-Tacos-550-150x150.jpg',
-                      width: 150,
-                      height: 150,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
-                    },
-                    web_stories_thumbnail: {
-                      file: 'The-Best-Classic-Tacos-550-150x150.jpg',
-                      width: 150,
-                      height: 150,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550-150x150.jpg',
-                    },
-                    full: {
-                      file: 'The-Best-Classic-Tacos-550.jpg',
-                      width: 550,
-                      height: 550,
-                      mime_type: 'image/jpeg',
-                      source_url:
-                        'http://localhost:8899/wp-content/uploads/2020/04/The-Best-Classic-Tacos-550.jpg',
-                    },
-                  },
-                },
-                x: 99,
-                y: 189,
-                width: 229,
-                height: 236,
-                mask: {
-                  type: 'rectangle',
-                  name: 'Rectangle',
-                  path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-                  ratio: 1,
-                },
-                type: 'image',
-                id: '690608b2-7cfb-4d38-aecb-6f741122da25',
-              },
-            ],
-            backgroundElementId: '6ffdb0d7-34a7-4677-9841-f237d93c93e0',
-            type: 'page',
-            id: 'a02f7cff-e25a-412b-b73f-6278373ab456',
-          },
-        ],
-      },
-      featured_media_url: '',
-      publisher_logo_url:
-        'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
-      style_presets: {
-        fillColors: [],
-        textColors: [],
-        styles: [],
-        textStyles: [],
-      },
-      _links: {
-        self: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100',
-          },
-        ],
-        collection: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
-          },
-        ],
-        about: [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
-          },
-        ],
-        author: [
-          {
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
-          },
-        ],
-        'version-history': [
-          {
-            count: 1,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100/revisions',
-          },
-        ],
-        'predecessor-version': [
-          {
-            id: 103,
-            href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/100/revisions/103',
-          },
-        ],
-        'wp:attachment': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/media?parent=100',
-          },
-        ],
-        'wp:term': [
-          {
-            taxonomy: 'category',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/categories?post=100',
-          },
-          {
-            taxonomy: 'post_tag',
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/tags?post=100',
-          },
-        ],
-        'wp:action-publish': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100',
-          },
-        ],
-        'wp:action-unfiltered-html': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100',
-          },
-        ],
-        'wp:action-assign-author': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100',
-          },
-        ],
-        'wp:action-create-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100',
-          },
-        ],
-        'wp:action-assign-categories': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100',
-          },
-        ],
-        'wp:action-create-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100',
-          },
-        ],
-        'wp:action-assign-tags': [
-          {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/100',
+            href: 'http://localhost:8899/wp-json/wp/v2/web-story/144',
           },
         ],
         curies: [
@@ -3786,4 +2305,5 @@ const formattedStoriesArray = [
     },
   },
 ];
+
 export default formattedStoriesArray;

@@ -114,7 +114,7 @@ export const ICON_METRICS = {
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
-export const ITEMS_PER_PAGE = 10;
+export const ITEMS_PER_PAGE = 20;
 
 export const DASHBOARD_VIEWS = {
   MY_STORIES: 'MY_STORIES',
