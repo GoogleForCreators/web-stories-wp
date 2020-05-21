@@ -159,10 +159,10 @@ describe('convertOverlayPattern', () => {
               type: 'image',
               backgroundOverlay: {
                 type: 'linear',
-                rotation: 0.5,
+                rotation: 0,
                 stops: [
-                  { color: { r: 0, g: 0, b: 0, a: 1 }, position: 0 },
-                  { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.6 },
+                  { color: { r: 0, g: 0, b: 0, a: 1 }, position: 0.4 },
+                  { color: { r: 0, g: 0, b: 0, a: 0 }, position: 1 },
                 ],
                 alpha: 0.9,
               },

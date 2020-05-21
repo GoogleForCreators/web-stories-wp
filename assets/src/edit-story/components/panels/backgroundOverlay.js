@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
 /**
@@ -28,22 +29,154 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Row, ToggleButton } from '../form';
-import { useStory } from '../../app';
 import { OverlayPreset, OverlayType } from '../../utils/backgroundOverlay';
 import { SimplePanel } from './panel';
 
-function BackgroundOverlayPanel() {
-  const {
-    state: { currentPage },
-    actions: { updateCurrentPageProperties },
-  } = useStory();
-  const overlay = currentPage.backgroundOverlay || OverlayType.NONE;
+function convertToSolid(currentOverlay, currentType) {
+  switch (currentType) {
+    case OverlayType.NONE:
+      // default color
+      return {
+        color: { r: 0, g: 0, b: 0, a: 0.3 },
+      };
+
+    case OverlayType.LINEAR:
+    case OverlayType.RADIAL: {
+      // converting from any gradient to SOLID
+      // use "opaque'st" stop as primary color, but fix alpha at .3
+      const { stops } = currentOverlay;
+      const stopsByAlpha = stops.sort((x, y) => y.color.a - x.color.a);
+      const {
+        color: { r, g, b },
+      } = stopsByAlpha[0];
+      return {
+        color: { r, g, b, a: 0.3 },
+      };
+    }
+
+    default:
+      return currentOverlay;
+  }
+}
+function convertToLinear(currentOverlay, currentType) {
+  switch (currentType) {
+    case OverlayType.NONE:
+      // default pattern
+      return {
+        type: 'linear',
+        rotation: 0,
+        stops: [
+          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.4 },
+          { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
+        ],
+        alpha: 0.9,
+      };
+
+    case OverlayType.SOLID: {
+      // converting from SOLID to RADIAL
+      const {
+        color: { r, g, b, a },
+      } = currentOverlay;
+      return {
+        type: 'linear',
+        rotation: 0,
+        stops: [
+          { color: { r, g, b, a: 0 }, position: 0.4 },
+          { color: { r, g, b, a: 1 }, position: 1 },
+        ],
+        alpha: a,
+      };
+    }
+
+    case OverlayType.RADIAL: {
+      // converting from LINEAR to RADIAL
+      const { stops, alpha } = currentOverlay;
+      return {
+        type: 'linear',
+        rotation: 0,
+        stops,
+        alpha,
+      };
+    }
+
+    default:
+      return currentOverlay;
+  }
+}
+function convertToRadial(currentOverlay, currentType) {
+  switch (currentType) {
+    case OverlayType.NONE:
+      // default pattern
+      return {
+        type: 'radial',
+        size: { w: 0.8, h: 0.5 },
+        stops: [
+          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.25 },
+          { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
+        ],
+        alpha: 0.6,
+      };
+
+    case OverlayType.SOLID: {
+      // converting from SOLID to RADIAL
+      const {
+        color: { r, g, b, a },
+      } = currentOverlay;
+      return {
+        type: 'radial',
+        size: { w: 0.8, h: 0.5 },
+        stops: [
+          { color: { r, g, b, a: 0 }, position: 0.25 },
+          { color: { r, g, b, a: 1 }, position: 1 },
+        ],
+        alpha: a,
+      };
+    }
+
+    case OverlayType.LINEAR: {
+      // converting from LINEAR to RADIAL
+      const { stops, alpha } = currentOverlay;
+      return {
+        type: 'radial',
+        size: { w: 0.8, h: 0.5 },
+        stops,
+        alpha,
+      };
+    }
+
+    default:
+      return currentOverlay;
+  }
+}
+
+function convertOverlay(currentOverlay, currentType, newType) {
+  switch (newType) {
+    case OverlayType.NONE:
+      return null;
+
+    case OverlayType.SOLID:
+      return convertToSolid(currentOverlay, currentType);
+
+    case OverlayType.LINEAR:
+      return convertToLinear(currentOverlay, currentType);
+
+    case OverlayType.RADIAL:
+      return convertToRadial(currentOverlay, currentType);
+
+    default:
+      return currentOverlay;
+  }
+}
+
+function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
+  const overlay = selectedElements[0].backgroundOverlay || null;
+
+  const overlayType =
+    overlay === null ? OverlayType.NONE : overlay.type || OverlayType.SOLID;
 
   const updateOverlay = useCallback(
-    (value) => {
-      updateCurrentPageProperties({ properties: { backgroundOverlay: value } });
-    },
-    [updateCurrentPageProperties]
+    (value) => pushUpdate({ backgroundOverlay: value }, true),
+    [pushUpdate]
   );
 
   return (
@@ -56,8 +189,10 @@ function BackgroundOverlayPanel() {
               key={type}
               icon={icon}
               label={label}
-              value={overlay === type}
-              onChange={() => updateOverlay(type)}
+              value={overlayType === type}
+              onChange={() =>
+                updateOverlay(convertOverlay(overlay, overlayType, type))
+              }
               iconWidth={22}
               iconHeight={16}
             />
@@ -68,6 +203,9 @@ function BackgroundOverlayPanel() {
   );
 }
 
-BackgroundOverlayPanel.propTypes = {};
+BackgroundOverlayPanel.propTypes = {
+  selectedElements: PropTypes.array.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
+};
 
 export default BackgroundOverlayPanel;
