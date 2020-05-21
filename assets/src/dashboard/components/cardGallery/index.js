@@ -137,7 +137,7 @@ function CardGallery({ children }) {
           </MiniCardsContainer>
         </UnitsProvider>
       )}
-      {metrics.activeCardSize && (
+      {metrics.activeCardSize && cards[activeCardIndex] && (
         <UnitsProvider pageSize={metrics.activeCardSize}>
           <ActiveCard {...metrics.activeCardSize}>
             {cards[activeCardIndex]}

@@ -71,6 +71,7 @@ function TemplateDetail() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
   const [orderedTemplates, setOrderedTemplates] = useState([]);
+  const [previewPages, setPreviewPages] = useState([]);
 
   const { pageSize } = usePagePreviewSize({ isGrid: true });
   const {
@@ -94,6 +95,8 @@ function TemplateDetail() {
   const { isRTL } = useConfig();
 
   useEffect(() => {
+    setPreviewPages([]);
+
     if (!templateId) {
       return;
     }
@@ -122,6 +125,9 @@ function TemplateDetail() {
         (templateByOrderId) => templates[templateByOrderId]
       )
     );
+    setPreviewPages(
+      template.pages.map((page) => <PreviewPage key={page.id} page={page} />)
+    );
   }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
 
   const { byLine } = useMemo(() => {
@@ -145,13 +151,6 @@ function TemplateDetail() {
 
     return orderedTemplates.findIndex((t) => t.id === template?.id);
   }, [orderedTemplates, template?.id]);
-
-  const previewPages = useMemo(
-    () =>
-      template &&
-      template.pages.map((page) => <PreviewPage key={page.id} page={page} />),
-    [template]
-  );
 
   const switchToTemplateByOffset = useCallback(
     (offset) => {
