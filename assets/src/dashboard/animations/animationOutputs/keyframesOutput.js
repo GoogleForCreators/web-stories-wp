@@ -19,31 +19,31 @@
  */
 import PropTypes from 'prop-types';
 
-function WithAnimation({ id, style, animationStyle, useContainer, children }) {
-  return useContainer ? (
-    <div
-      style={{
-        clipPath: 'inset(0)',
-        ...style,
-      }}
-    >
-      <div id={id} style={{ width: '100%', height: '100%', ...animationStyle }}>
-        {children}
-      </div>
-    </div>
-  ) : (
-    <div id={id} style={{ ...style, ...animationStyle }}>
-      {children}
-    </div>
+/**
+ * Internal dependencies
+ */
+import { GeneralAnimationPropTypes, KeyframesPropTypes } from './types';
+
+function KeyframesOutput({ id, keyframes, ...options }) {
+  return (
+    <amp-animation id={id} layout="nodisplay">
+      <script
+        type="application/json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            keyframes,
+            ...options,
+          }),
+        }}
+      />
+    </amp-animation>
   );
 }
 
-WithAnimation.propTypes = {
-  id: PropTypes.string,
-  style: PropTypes.object,
-  animationStyle: PropTypes.object,
-  useContainer: PropTypes.bool,
-  children: PropTypes.node,
+KeyframesOutput.propTypes = {
+  id: PropTypes.string.isRequired,
+  keyframes: KeyframesPropTypes.isRequired,
+  ...GeneralAnimationPropTypes,
 };
 
-export default WithAnimation;
+export default KeyframesOutput;

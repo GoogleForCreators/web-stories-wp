@@ -36,6 +36,7 @@ import fontObjects from './migrations/v0015_fontObjects';
 import isFullBleedDeprecate from './migrations/v0016_isFullbleedDeprecate';
 import inlineTextProperties from './migrations/v0017_inlineTextProperties';
 import defaultBackgroundElement from './migrations/v0018_defaultBackgroundElement';
+import conicToLinear from './migrations/v0019_conicToLinear';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -56,6 +57,7 @@ const MIGRATIONS = {
   16: [isFullBleedDeprecate],
   17: [inlineTextProperties],
   18: [defaultBackgroundElement],
+  19: [conicToLinear],
 };
 
 export const DATA_VERSION = Math.max.apply(

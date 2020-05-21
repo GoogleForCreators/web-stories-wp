@@ -17,7 +17,11 @@
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
+import {
+  AnimatorOutput,
+  KeyframesOutput,
+  WithAnimation,
+} from '../animationOutputs';
 import { ANIMATION_TYPES } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
@@ -33,7 +37,7 @@ export const _default = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <AnimationOutput id={name} keyframes={keyframes} {...config} />
+      <KeyframesOutput id={name} keyframes={keyframes} {...config} />
       <AnimatorOutput
         id={`${name}-solo`}
         animation={name}
@@ -76,7 +80,7 @@ export const Cascading = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <AnimationOutput id={name} keyframes={keyframes} {...config} />
+      <KeyframesOutput id={name} keyframes={keyframes} {...config} />
       <AnimatorOutput
         id={`${name}-group`}
         animation={name}

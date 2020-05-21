@@ -22,7 +22,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { AnimatorOutput, AnimationOutput, WithAnimation } from '../animator';
+import {
+  AnimatorOutput,
+  KeyframesOutput,
+  WithAnimation,
+} from '../animationOutputs';
 import { ANIMATION_TYPES } from '../constants';
 import getAnimationConfigs from '../configs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
@@ -42,7 +46,7 @@ const Fade = ({ from, to, color }) => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <AnimationOutput id={name} keyframes={keyframes} {...config} />
+      <KeyframesOutput id={name} keyframes={keyframes} {...config} />
       <AnimatorOutput
         id={`${name}-fade`}
         config={{

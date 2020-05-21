@@ -24,7 +24,7 @@ describe('useColor({ action:"selectStop" })', () => {
     const { load, selectStop } = arrangeUseColor();
 
     const pattern = {
-      type: 'conic',
+      type: 'radial',
       stops: [
         { color: { r: 255, g: 0, b: 0, a: 1 }, position: 0 },
         { color: { r: 0, g: 255, b: 0, a: 1 }, position: 0.4 },

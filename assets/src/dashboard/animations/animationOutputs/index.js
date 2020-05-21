@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export { default as AnimationOutput } from './animationOutput';
 export { default as AnimatorOutput } from './animatorOutput';
+export { default as KeyframesOutput } from './keyframesOutput';
 export { default as WithAnimation } from './output';

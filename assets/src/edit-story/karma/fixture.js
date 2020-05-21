@@ -120,6 +120,10 @@ export class Fixture {
   querySelector(selector) {
     return this._container.querySelector(selector);
   }
+
+  snapshot(name) {
+    return karmaSnapshot(name);
+  }
 }
 
 /**

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import { useContext } from 'react';
 import { rgba } from 'polished';
 
 /**
@@ -26,6 +25,7 @@ import { rgba } from 'polished';
  */
 import { SCROLLBAR_WIDTH } from './constants';
 import useObtrusiveScrollbars from './utils/useObtrusiveScrollbars';
+import { identity, useContextSelector } from './utils/context';
 
 const GlobalStyle = createGlobalStyle`
 	*,
@@ -96,8 +96,8 @@ const CombinedGlobalStyle = () => {
 
 export { CombinedGlobalStyle as GlobalStyle };
 
-export function useTheme() {
-  return useContext(ThemeContext);
+export function useTheme(selector) {
+  return useContextSelector(ThemeContext, selector ?? identity);
 }
 
 const theme = {

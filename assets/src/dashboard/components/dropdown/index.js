@@ -63,7 +63,7 @@ const Label = styled.label`
 `;
 
 export const InnerDropdown = styled.button`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   ${({ theme, disabled, type, isOpen, hasSelectedItems }) => `
     display: inline-flex;
     justify-content: center;
