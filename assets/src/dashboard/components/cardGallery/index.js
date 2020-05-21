@@ -40,7 +40,7 @@ const CARD_GAP = 15;
 const CARD_WRAPPER_BUFFER = 12;
 
 function CardGallery({ children }) {
-  const [dimensionMultiplier, setDimensionMultiplier] = useState(1);
+  const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
 
   const containerRef = useRef();
@@ -50,38 +50,28 @@ function CardGallery({ children }) {
     [children]
   );
 
-  const { activeCardWidth, miniCardWidth, gap } = useMemo(
-    () => ({
-      activeCardWidth: ACTIVE_CARD_WIDTH * dimensionMultiplier,
-      miniCardWidth: MINI_CARD_WIDTH * dimensionMultiplier,
+  const metrics = useMemo(() => {
+    if (!dimensionMultiplier) {
+      return {};
+    }
+    const activeCardWidth = ACTIVE_CARD_WIDTH * dimensionMultiplier;
+    const miniCardWidth = MINI_CARD_WIDTH * dimensionMultiplier;
+    return {
+      activeCardSize: {
+        width: activeCardWidth,
+        height: activeCardWidth / PAGE_RATIO,
+      },
+      miniCardSize: {
+        width: miniCardWidth,
+        height: miniCardWidth / PAGE_RATIO,
+      },
+      miniWrapperSize: {
+        width: miniCardWidth + CARD_WRAPPER_BUFFER,
+        height: miniCardWidth / PAGE_RATIO + CARD_WRAPPER_BUFFER,
+      },
       gap: CARD_GAP * dimensionMultiplier,
-    }),
-    [dimensionMultiplier]
-  );
-
-  const activeCardSize = useMemo(
-    () => ({
-      width: activeCardWidth,
-      height: activeCardWidth / PAGE_RATIO,
-    }),
-    [activeCardWidth]
-  );
-
-  const miniCardSize = useMemo(
-    () => ({
-      width: miniCardWidth,
-      height: miniCardWidth / PAGE_RATIO,
-    }),
-    [miniCardWidth]
-  );
-
-  const miniWrapperCardSize = useMemo(
-    () => ({
-      width: miniCardWidth + CARD_WRAPPER_BUFFER,
-      height: miniCardWidth / PAGE_RATIO + CARD_WRAPPER_BUFFER,
-    }),
-    [miniCardWidth]
-  );
+    };
+  }, [dimensionMultiplier]);
 
   const handleMiniCardClick = useCallback((index) => {
     setActiveCardIndex(index);
@@ -115,23 +105,32 @@ function CardGallery({ children }) {
 
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
-      <UnitsProvider pageSize={miniCardSize}>
-        <MiniCardsContainer rowHeight={miniWrapperCardSize.height} gap={gap}>
-          {cards.map((card, index) => (
-            <MiniCardWrapper
-              key={index}
-              isSelected={index === activeCardIndex}
-              {...miniWrapperCardSize}
-              onClick={() => handleMiniCardClick(index)}
-            >
-              <MiniCard {...miniCardSize}>{card}</MiniCard>
-            </MiniCardWrapper>
-          ))}
-        </MiniCardsContainer>
-      </UnitsProvider>
-      <UnitsProvider pageSize={activeCardSize}>
-        <ActiveCard {...activeCardSize}>{cards[activeCardIndex]}</ActiveCard>
-      </UnitsProvider>
+      {metrics.miniCardSize && (
+        <UnitsProvider pageSize={metrics.miniCardSize}>
+          <MiniCardsContainer
+            rowHeight={metrics.miniWrapperSize.height}
+            gap={metrics.gap}
+          >
+            {cards.map((card, index) => (
+              <MiniCardWrapper
+                key={index}
+                isSelected={index === activeCardIndex}
+                {...metrics.miniWrapperSize}
+                onClick={() => handleMiniCardClick(index)}
+              >
+                <MiniCard {...metrics.miniCardSize}>{card}</MiniCard>
+              </MiniCardWrapper>
+            ))}
+          </MiniCardsContainer>
+        </UnitsProvider>
+      )}
+      {metrics.activeCardSize && (
+        <UnitsProvider pageSize={metrics.activeCardSize}>
+          <ActiveCard {...metrics.activeCardSize}>
+            {cards[activeCardIndex]}
+          </ActiveCard>
+        </UnitsProvider>
+      )}
     </GalleryContainer>
   );
 }

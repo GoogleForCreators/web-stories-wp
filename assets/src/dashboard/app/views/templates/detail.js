@@ -51,7 +51,7 @@ import {
 } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { StoryGridView } from '../shared';
-
+import { resolveRelatedTemplateRoute } from '../../router';
 import {
   ByLine,
   ColumnContainer,
@@ -69,6 +69,9 @@ import {
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
+  const [relatedTemplates, setRelatedTemplates] = useState([]);
+  const [orderedTemplates, setOrderedTemplates] = useState([]);
+
   const { pageSize } = usePagePreviewSize({ isGrid: true });
   const {
     state: {
@@ -97,27 +100,29 @@ function TemplateDetail() {
 
     const id = parseInt(templateId);
     const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
+    const templateFetchFn = isLocalTemplate
+      ? fetchMyTemplateById
+      : fetchExternalTemplateById;
 
-    if (isLocalTemplate) {
-      fetchMyTemplateById(id).then((fetchedTemplate) =>
-        setTemplate(fetchedTemplate)
-      );
-    } else {
-      fetchExternalTemplateById(id).then((fetchedTemplate) =>
-        setTemplate(fetchedTemplate)
-      );
+    templateFetchFn(id).then(setTemplate);
+  }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
+
+  useEffect(() => {
+    if (!template) {
+      return;
     }
-  }, [fetchMyTemplateById, fetchExternalTemplateById, templateId, isLocal]);
-
-  const relatedTemplates = useMemo(() => {
-    return fetchRelatedTemplates();
-  }, [fetchRelatedTemplates]);
-
-  const orderedTemplates = useMemo(() => {
-    return templatesOrderById.map((templateByOrderId) => {
-      return templates[templateByOrderId];
-    });
-  }, [templatesOrderById, templates]);
+    setRelatedTemplates(
+      fetchRelatedTemplates().map((relatedTemplate) => ({
+        ...relatedTemplate,
+        centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
+      }))
+    );
+    setOrderedTemplates(
+      templatesOrderById.map(
+        (templateByOrderId) => templates[templateByOrderId]
+      )
+    );
+  }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
