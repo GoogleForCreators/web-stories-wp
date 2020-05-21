@@ -17,6 +17,9 @@
  * Internal dependencies
  */
 import DeleteDialog from '../deleteDialog';
+import ApiContext from '../../../../../app/api/context';
+import MediaContext from '../../../../../app/media/context';
+import SnackbarContext from '../../../../../app/snackbar/context';
 
 export default {
   title: 'Stories Editor/Components/Media Delete Dialog',
@@ -24,5 +27,21 @@ export default {
 };
 
 export const _default = () => {
-  return <DeleteDialog mediaId={123} onClose={() => {}} />;
+  const apiValue = {
+    actions: { deleteMedia: () => {} },
+  };
+  const mediaValue = {
+    actions: { deleteMediaElement: () => {} },
+  };
+  const snackbarValue = { showSnackbar: () => {} };
+
+  return (
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <DeleteDialog mediaId={123} onClose={() => {}} />
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
+  );
 };
