@@ -194,6 +194,7 @@ function MultiSelectionMovable({ selectedElements }) {
   // Let's check if we consider this a drag or a click, In case of a click handle click instead.
   // We are doing this here in Moveable selection since it takes over the mouseup event
   // and it can be captured here and not in the frame element.
+  // @todo Add integration test for this!
   const clickHandled = (inputEvent) => {
     if (
       isClick(

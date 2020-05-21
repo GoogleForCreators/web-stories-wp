@@ -15,7 +15,7 @@
  */
 
 /**
- * Determine if an event (mouseup) is considered a click.
+ * Determine if an event (mousedown + mouseup combination) is considered a click.
  *
  * @param {Object} evt         Event object.
  * @param {number} time        Initial time of the event,
@@ -24,7 +24,7 @@
  */
 function isClick(evt, time, coordinates) {
   const timingDifference = window.performance.now() - time;
-  if (!coordinates?.x || !coordinates?.y) {
+  if (undefined === coordinates?.x || undefined === coordinates?.y) {
     return false;
   }
 
