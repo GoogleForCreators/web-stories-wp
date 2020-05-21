@@ -32,4 +32,5 @@ export { ReactComponent as PaginationArrowLeft } from './paginationArrowLeft.svg
 export { ReactComponent as PaginationArrowRight } from './paginationArrowRight.svg';
 export { ReactComponent as PlayArrow } from './playArrow.svg';
 export { ReactComponent as RightArrow } from './rightArrow.svg';
+export { ReactComponent as ScrollUpArrow } from './scrollUpArrow.svg';
 export { ReactComponent as Search } from './search.svg';

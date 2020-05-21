@@ -26,7 +26,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DropUpArrow as DropUpArrowSvg } from '../../icons';
+import { ScrollUpArrow } from '../../icons';
 import cssLerp from '../../utils/cssLerp';
 import { useLayoutContext, SQUISH_CSS_VAR } from '../layout';
 
@@ -46,9 +46,9 @@ const ScrollButton = styled.button`
   opacity: ${cssLerp(0, 1, SQUISH_CSS_VAR)};
 `;
 
-// TODO needs actual SVG
-const DropUpArrowIcon = styled(DropUpArrowSvg).attrs({ width: 30, height: 40 })`
+const DropUpArrowIcon = styled(ScrollUpArrow).attrs({ width: 30, height: 30 })`
   margin: auto;
+  padding: 2px;
 `;
 
 const ScrollToTop = () => {
