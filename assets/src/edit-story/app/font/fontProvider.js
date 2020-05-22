@@ -37,23 +37,8 @@ const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
-  const [recentUsedFontValues, setRecentUsedFontValues] = useState([]);
 
   useLoadFonts({ fonts, setFonts });
-
-  const insertUsedFont = useCallback(
-    (value) => {
-      const findFontIndex = recentUsedFontValues.findIndex(
-        (fontValue) => fontValue === value
-      );
-      if (findFontIndex < 0) {
-        const newUsedFonts = recentUsedFontValues.slice();
-        newUsedFonts.push(value);
-        setRecentUsedFontValues(newUsedFonts);
-      }
-    },
-    [recentUsedFontValues]
-  );
 
   const getFontBy = useCallback(
     (key, value) => {
@@ -141,10 +126,8 @@ function FontProvider({ children }) {
   const state = {
     state: {
       fonts,
-      recentUsedFontValues,
     },
     actions: {
-      insertUsedFont,
       getFontByName,
       maybeEnqueueFontStyle,
       getFontWeight,
