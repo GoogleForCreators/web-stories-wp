@@ -80,8 +80,6 @@ const getTrueInnerWidth = (wpMenuWidth) => {
 
 export default function usePagePreviewSize(options = {}) {
   const wpLeftNav = useRef(document.getElementById('adminmenu'));
-  wpLeftNav.current = document.getElementById('adminmenu');
-
   const { thumbnailMode = false, isGrid } = options;
 
   const [wpMenuWidth, setWpMenuWidth] = useState(
@@ -124,10 +122,11 @@ export default function usePagePreviewSize(options = {}) {
     if (thumbnailMode || !wpLeftNav.current) {
       return () => {};
     }
+    const wpLeftNavCurrent = wpLeftNav.current;
 
-    wpLeftNav.current.addEventListener('click', debounceWpMenuToggle);
+    wpLeftNavCurrent.addEventListener('click', debounceWpMenuToggle);
     return () => {
-      wpLeftNav.current.removeEventListener('click', debounceWpMenuToggle);
+      wpLeftNavCurrent.removeEventListener('click', debounceWpMenuToggle);
     };
   }, [thumbnailMode, debounceWpMenuToggle]);
 
