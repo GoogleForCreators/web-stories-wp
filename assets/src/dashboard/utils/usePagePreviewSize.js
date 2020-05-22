@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useLayoutEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
@@ -85,7 +85,7 @@ export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
 
   const [wpMenuWidth, setWpMenuWidth] = useState(
-    wpLeftNav.current.offsetWidth || 0
+    wpLeftNav.current?.offsetWidth || 0
   );
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
     getTrueInnerWidth(wpMenuWidth)
@@ -106,11 +106,9 @@ export default function usePagePreviewSize(options = {}) {
       return () => {};
     }
 
-    const handleResize = () => debounceAvailableContainerSpace();
-
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', debounceAvailableContainerSpace);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', debounceAvailableContainerSpace);
     };
   }, [thumbnailMode, debounceAvailableContainerSpace]);
 
@@ -118,21 +116,18 @@ export default function usePagePreviewSize(options = {}) {
     availableContainerSpace,
   ]);
 
-  useLayoutEffect(
-    () => setAvailableContainerSpace(getTrueInnerWidth(wpMenuWidth)),
-    [wpMenuWidth]
-  );
+  useEffect(() => setAvailableContainerSpace(getTrueInnerWidth(wpMenuWidth)), [
+    wpMenuWidth,
+  ]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (thumbnailMode || !wpLeftNav.current) {
       return () => {};
     }
 
-    const handleWpMenuToggle = () => debounceWpMenuToggle();
-
-    wpLeftNav.current.addEventListener('click', handleWpMenuToggle);
+    wpLeftNav.current.addEventListener('click', debounceWpMenuToggle);
     return () => {
-      wpLeftNav.current.removeEventListener('click', handleWpMenuToggle);
+      wpLeftNav.current.removeEventListener('click', debounceWpMenuToggle);
     };
   }, [thumbnailMode, debounceWpMenuToggle]);
 
