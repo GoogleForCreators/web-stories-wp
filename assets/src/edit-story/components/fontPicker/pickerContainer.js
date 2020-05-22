@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -30,10 +30,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useDebouncedCallback } from 'use-debounce';
 import useFocusOut from '../../utils/useFocusOut';
 import { useFont } from '../../app/font';
 import { TextInput } from '../form';
+import ScrollList from './scrollList';
 
 const PickerContainer = styled.div`
   display: flex;
@@ -50,31 +50,25 @@ const PickerContainer = styled.div`
   padding: 0;
 `;
 
-const ListContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+const List = styled(ScrollList)`
   width: 100%;
   max-height: 305px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: none auto;
-  padding-bottom: 8px;
-`;
-
-const List = styled.ul.attrs({ role: 'listbox' })`
-  width: 100%;
   padding: 5px 0;
   margin: 0;
   font-size: 14px;
   text-align: left;
   list-style: none;
-  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
 `;
 
-const Item = styled.li.attrs(({ fontFamily }) => ({
-  tabIndex: '0',
-  role: 'option',
+const Divider = styled.hr`
+  margin: 5px 0;
+  height: 0;
+  background: transparent;
+  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  border-width: 1px 0 0;
+`;
+
+const Item = styled.div.attrs(({ fontFamily }) => ({
   style: {
     fontFamily,
   },
@@ -98,7 +92,7 @@ const Item = styled.li.attrs(({ fontFamily }) => ({
   }
 `;
 
-const NoItem = styled.span`
+const NoResult = styled.span`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
   padding: 8px 12px 0 12px;
   margin: 0;
@@ -121,219 +115,76 @@ const ExpandedTextInput = styled(BoxedTextInput)`
   margin: 8px;
 `;
 
-const LIST_PADDING = 5;
-const FONT_ROW_HEIGHT = 34;
-
-function FontPickerContainer({ handleCurrentValue, onClose }) {
+function FontPickerContainer({ onSelect, onClose }) {
   const {
-    state: { fonts, recentUsedFontValues },
-    actions: { insertUsedFont, ensureMenuFontsLoaded },
+    state: { fonts },
+    actions: { ensureMenuFontsLoaded },
   } = useFont();
 
-  const pickerContainerRef = useRef();
-  const listContainerRef = useRef();
-  const listRef = useRef();
-  const inputRef = useRef();
-  const currentActiveRef = useRef(0);
-  const otherFontsLengthRef = useRef(0);
-  const recentUsedFontsLengthRef = useRef(0);
+  const ref = useRef();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [searchInputValue, setSearchInputValue] = useState('');
-  const [searchValue, setSearchValue] = useState('');
-
-  const isSearchResult = searchValue && searchValue !== '';
-
-  // Recently used font options, clean up on refresh
-  const recentUsedFonts = useMemo(() => {
-    const fontsFromSlug = recentUsedFontValues.map((value) =>
-      fonts.find((font) => font.value === value)
-    );
-    const resultArray = isSearchResult
-      ? fontsFromSlug.filter(({ name }) =>
-          name.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      : fontsFromSlug;
-    recentUsedFontsLengthRef.current = resultArray.length;
-    return resultArray;
-  }, [searchValue, recentUsedFontValues, fonts, isSearchResult]);
-
-  // Font options that start with search term
-  const otherFonts = useMemo(() => {
-    const resultArray = isSearchResult
-      ? fonts.filter(({ name }) =>
-          name.toLowerCase().startsWith(searchValue.toLowerCase())
-        )
-      : fonts;
-    otherFontsLengthRef.current = resultArray.length;
-    return resultArray;
-  }, [searchValue, fonts, isSearchResult]);
-
-  // Font options that include search term but not start with
-  const includeSearchFonts = useMemo(
-    () =>
-      isSearchResult
-        ? fonts.filter(
-            ({ name }) =>
-              name.toLowerCase().indexOf(searchValue.toLowerCase()) > 0
-          )
-        : [],
-    [searchValue, fonts, isSearchResult]
-  );
-
-  useEffect(() => {
-    const combinedFontList = [
-      ...recentUsedFonts,
-      ...otherFonts,
-      ...includeSearchFonts,
-    ]
-      .slice(currentIndex, currentIndex + 10)
-      .filter(({ service }) => service.includes('google'))
-      .map(({ name }) => name);
-
-    if (combinedFontList.length > 0) {
-      ensureMenuFontsLoaded(combinedFontList);
-    }
-  }, [
-    currentIndex,
-    ensureMenuFontsLoaded,
-    recentUsedFonts,
-    otherFonts,
-    includeSearchFonts,
-  ]);
-
-  const handleScroll = useCallback(() => {
-    const listElement = listContainerRef.current;
-    let { scrollTop } = listElement;
-    // Remove the Ul list container padding offset
-    scrollTop -= LIST_PADDING;
-    // Calculate the current visible font index
-    let currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
-
-    // If there is recent used fonts and current visible options index is on next list
-    if (
-      recentUsedFontsLengthRef.current > 0 &&
-      currentVisibleIndex > recentUsedFontsLengthRef.current
-    ) {
-      scrollTop -= LIST_PADDING * 2;
-      currentVisibleIndex =
-        Math.floor(scrollTop / FONT_ROW_HEIGHT) -
-        recentUsedFontsLengthRef.current;
-    }
-    // If there is other fonts and current visible options index is on next list
-    if (
-      otherFontsLengthRef.current > 0 &&
-      currentVisibleIndex > otherFontsLengthRef.current
-    ) {
-      scrollTop -= LIST_PADDING * 2;
-    }
-    currentVisibleIndex = Math.floor(scrollTop / FONT_ROW_HEIGHT);
-    if (currentVisibleIndex < 0) {
-      currentVisibleIndex = 0;
-    }
-    if (currentVisibleIndex !== currentActiveRef.current) {
-      currentActiveRef.current = currentVisibleIndex;
-      setCurrentIndex(currentVisibleIndex);
-    }
-  }, []);
-
-  const [debouncedHandleScroll] = useDebouncedCallback(handleScroll, 300);
-
-  useEffect(() => {
-    inputRef.current.focus();
-    const listElement = listContainerRef.current;
-    listElement.addEventListener('scroll', debouncedHandleScroll);
-
-    return () => {
-      listElement.removeEventListener('scroll', debouncedHandleScroll);
-    };
-  }, [debouncedHandleScroll]);
-
-  useFocusOut(pickerContainerRef, onClose, [onClose]);
-
-  const handleItemClick = useCallback(
-    (value) => {
-      handleCurrentValue(value);
-      insertUsedFont(value);
+  const handleScroll = useCallback(
+    (startIndex, endIndex) => {
+      const startFrom = Math.max(0, startIndex - 2);
+      const endAt = Math.min(fonts.length - 1, endIndex + 2);
+      const visibleFontNames = fonts
+        .slice(startFrom, endAt)
+        .map(({ name }) => name)
+        .filter((name) => Boolean(name));
+      ensureMenuFontsLoaded(visibleFontNames);
     },
-    [insertUsedFont, handleCurrentValue]
+    [ensureMenuFontsLoaded, fonts]
   );
 
-  const handleSearchInput = useCallback(
-    ({ keyCode }) => {
-      if (keyCode === 13 && otherFonts.length > 0) {
-        const topFont =
-          recentUsedFonts[0] || otherFonts[0] || includeSearchFonts[0];
-        const topFontValue = topFont.value;
-        handleItemClick(topFontValue);
-      }
-    },
-    [otherFonts, recentUsedFonts, includeSearchFonts, handleItemClick]
-  );
+  useFocusOut(ref, onClose, [onClose]);
 
-  const [handleSearchValue] = useDebouncedCallback((value) => {
-    setSearchValue(value);
-  }, 300);
+  const matchingFonts = fonts.map((font, index) => ({
+    ...font,
+    hasDivider: index % 10 === 9,
+  }));
 
-  const handleSearchInputChange = useCallback(
-    (value) => {
-      setSearchInputValue(value);
-      handleSearchValue(value);
-    },
-    [handleSearchValue]
-  );
-
-  const renderListWithOptions = (options) => {
-    if (options?.length > 0) {
+  const itemRenderer = useCallback(
+    (item) => {
+      const { service, name, hasDivider } = item;
       return (
-        <List aria-multiselectable={false} aria-required={false} ref={listRef}>
-          {options.map(({ name, value, service }) => (
-            <Item
-              key={value}
-              onClick={() => handleItemClick(value)}
-              fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
-            >
-              {name}
-            </Item>
-          ))}
-        </List>
+        <>
+          <Item
+            fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
+            onClick={() => onSelect(item)}
+          >
+            {name}
+          </Item>
+          {hasDivider && <Divider />}
+        </>
       );
-    }
-    return null;
-  };
+    },
+    [onSelect]
+  );
 
   return (
-    <PickerContainer ref={pickerContainerRef}>
+    <PickerContainer ref={ref}>
       <ExpandedTextInput
-        ref={inputRef}
         ariaLabel={__('Search Fonts', 'web-stories')}
-        value={searchInputValue}
         placeholder={__('Search fonts', 'web-stories')}
-        onChange={handleSearchInputChange}
-        onKeyDown={handleSearchInput}
         color="white"
         clear
       />
-      <ListContainer
-        ref={listContainerRef}
-        aria-labelledby={__('FontPicker', 'web-stories')}
-      >
-        {renderListWithOptions(recentUsedFonts)}
-        {renderListWithOptions(otherFonts)}
-        {renderListWithOptions(includeSearchFonts)}
-        {!recentUsedFonts.length &&
-          !otherFonts.length &&
-          !includeSearchFonts.length && (
-            <NoItem>{__('No matches found', 'web-stories')}</NoItem>
-          )}
-      </ListContainer>
+      {matchingFonts.length ? (
+        <List
+          items={matchingFonts}
+          onScroll={handleScroll}
+          itemRenderer={itemRenderer}
+        />
+      ) : (
+        <NoResult>{__('No matches found', 'web-stories')}</NoResult>
+      )}
     </PickerContainer>
   );
 }
 
 FontPickerContainer.propTypes = {
   onClose: PropTypes.func.isRequired,
-  handleCurrentValue: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default FontPickerContainer;

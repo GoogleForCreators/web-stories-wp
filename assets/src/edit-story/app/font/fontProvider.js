@@ -128,7 +128,12 @@ function FontProvider({ children }) {
     // Create new <link> in head with ref to new font families
     const families = encodeURIComponent(newMenuFonts.join('|'));
     const url = `${GOOGLE_MENU_FONT_URL}?family=${families}&subset=menu`;
-    loadStylesheet(url);
+    loadStylesheet(url).catch(() => {
+      // If they failed to load, remove from array again!
+      menuFonts.current = menuFonts.current.filter(
+        (font) => !newMenuFonts.includes(font)
+      );
+    });
   }, []);
 
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
