@@ -84,7 +84,9 @@ export default function usePagePreviewSize(options = {}) {
 
   const { thumbnailMode = false, isGrid } = options;
 
-  const [wpMenuWidth, setWpMenuWidth] = useState(wpLeftNav.offsetWidth || 0);
+  const [wpMenuWidth, setWpMenuWidth] = useState(
+    wpLeftNav.current.offsetWidth || 0
+  );
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
     getTrueInnerWidth(wpMenuWidth)
   );
