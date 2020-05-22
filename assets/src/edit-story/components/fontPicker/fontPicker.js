@@ -83,7 +83,7 @@ const FontPickerTitle = styled.span`
 `;
 
 function FontPicker({ onChange, lightMode = false, placeholder, value }) {
-  const selectRef = useRef();
+  const ref = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -93,13 +93,11 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
   // (closing in useFocusOut and then opening again in onClick)
   const [debouncedCloseFontPicker] = useDebouncedCallback(closeFontPicker, 100);
 
-  const handleCurrentValue = useCallback(
+  const handleSelect = useCallback(
     (option) => {
-      if (onChange) {
-        onChange(option);
-      }
+      onChange(option);
       setIsOpen(false);
-      selectRef.current.focus();
+      ref.current.focus();
     },
     [onChange]
   );
@@ -111,15 +109,15 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
         aria-pressed={isOpen}
         aria-haspopup
         aria-expanded={isOpen}
-        ref={selectRef}
+        ref={ref}
         lightMode={lightMode}
       >
         <FontPickerTitle>{value || placeholder}</FontPickerTitle>
         <DropDownIcon />
       </FontPickerSelect>
-      <Popup anchor={selectRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+      <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
         <FontPickerContainer
-          onSelect={handleCurrentValue}
+          onSelect={handleSelect}
           onClose={debouncedCloseFontPicker}
         />
       </Popup>
@@ -136,7 +134,6 @@ FontPicker.propTypes = {
 
 FontPicker.defaultProps = {
   value: '',
-  onChange: () => {},
   lightMode: false,
   placeholder: __('Select an Option', 'web-stories'),
 };
