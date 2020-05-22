@@ -206,7 +206,7 @@ function TextEdit({
     [handleResize]
   );
   // Also invoke if the raw element height ever changes
-  useEffect(handleResize, [elementHeight]);
+  useEffect(handleResize, [elementHeight, handleResize]);
 
   useEffect(() => {
     maybeEnqueueFontStyle([
@@ -218,7 +218,7 @@ function TextEdit({
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   return (
-    <Wrapper ref={wrapperRef} onClick={onClick}>
+    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
       <TextBox ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}

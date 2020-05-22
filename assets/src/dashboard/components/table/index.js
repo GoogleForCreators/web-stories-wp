@@ -24,7 +24,7 @@ import styled from 'styled-components';
 import { TypographyPresets } from '../typography';
 
 export const Table = styled.table`
-  ${TypographyPresets.Small}
+  ${TypographyPresets.Small};
   border-collapse: collapse;
   width: inherit;
 `;

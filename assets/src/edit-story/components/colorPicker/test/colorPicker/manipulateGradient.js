@@ -28,7 +28,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
   it('should have stops reversed when reverse button is clicked', () => {
     const { getGradientReverse, onChange } = arrange({
       color: {
-        type: 'conic',
+        type: 'linear',
         stops: [
           { color: { r: 255, g: 0, b: 0 }, position: 0 },
           { color: { r: 0, g: 255, b: 0 }, position: 0.4 },
@@ -41,7 +41,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
     fireEvent.click(getGradientReverse());
 
     expect(onChange).toHaveBeenCalledWith({
-      type: 'conic',
+      type: 'linear',
       stops: [
         { color: { r: 0, g: 0, b: 255 }, position: 0 },
         { color: { r: 0, g: 255, b: 0 }, position: 0.6 },
@@ -52,7 +52,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
     fireEvent.click(getGradientReverse());
 
     expect(onChange).toHaveBeenCalledWith({
-      type: 'conic',
+      type: 'linear',
       stops: [
         { color: { r: 255, g: 0, b: 0 }, position: 0 },
         { color: { r: 0, g: 255, b: 0 }, position: 0.4 },
@@ -64,7 +64,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
   it('should have rotation changed by .25 turn when rotate button is clicked', () => {
     const { getGradientRotate, onChange } = arrange({
       color: {
-        type: 'conic',
+        type: 'linear',
         rotation: 0.25,
         stops: [
           { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -77,7 +77,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
     fireEvent.click(getGradientRotate());
 
     expect(onChange).toHaveBeenCalledWith({
-      type: 'conic',
+      type: 'linear',
       rotation: 0.5,
       stops: [
         { color: { r: 255, g: 0, b: 0 }, position: 0 },
@@ -90,7 +90,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
 
     // Because rotation is now at 0, it's not included
     expect(onChange).toHaveBeenCalledWith({
-      type: 'conic',
+      type: 'linear',
       stops: [
         { color: { r: 255, g: 0, b: 0 }, position: 0 },
         { color: { r: 0, g: 0, b: 255 }, position: 1 },

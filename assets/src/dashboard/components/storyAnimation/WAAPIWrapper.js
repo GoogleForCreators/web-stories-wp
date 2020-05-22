@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
-import { WAAPI } from '../../animations/animationParts';
 import useStoryAnimationContext from './useStoryAnimationContext';
 
-function ComposableWrapper({ generators, hoistAnimation, children }) {
+function ComposableWrapper({ animationParts, hoistAnimation, children }) {
   const ComposedWrapper = useMemo(
     () =>
-      generators.reduce(
-        (Composable, generate) => {
-          // eslint-disable-next-line @wordpress/no-unused-vars-before-return
-          const WAAPIAnimation = generate(WAAPI);
+      animationParts.reduce(
+        (Composable, animationPart) => {
+          const { WAAPIAnimation } = animationPart;
           const Composed = function (props) {
             return (
               <Composable>
@@ -45,32 +45,33 @@ function ComposableWrapper({ generators, hoistAnimation, children }) {
         },
         (props) => props.children
       ),
-    [generators, hoistAnimation]
+    [animationParts, hoistAnimation]
   );
 
   return <ComposedWrapper>{children}</ComposedWrapper>;
 }
+
 ComposableWrapper.propTypes = {
   children: PropTypes.node.isRequired,
-  generators: PropTypes.arrayOf(PropTypes.func),
+  animationParts: PropTypes.arrayOf(PropTypes.object),
   hoistAnimation: PropTypes.func.isRequired,
 };
 
 function WAAPIWrapper({ children, target }) {
   const {
-    state: { getAnimationGenerators },
-    actions: { hoistWAAPIAnimation },
+    actions: { getAnimationParts, hoistWAAPIAnimation },
   } = useStoryAnimationContext();
 
   return (
     <ComposableWrapper
-      generators={getAnimationGenerators(target)}
+      animationParts={getAnimationParts(target)}
       hoistAnimation={hoistWAAPIAnimation}
     >
       {children}
     </ComposableWrapper>
   );
 }
+
 WAAPIWrapper.propTypes = {
   children: PropTypes.node,
   target: PropTypes.string,

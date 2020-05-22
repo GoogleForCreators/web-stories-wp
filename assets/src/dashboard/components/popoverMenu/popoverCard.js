@@ -200,7 +200,7 @@ ButtonInner.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-const popoverCard = ({ children, isOpen }) => {
+function PopoverCard({ children, isOpen }) {
   const [align, setAlign] = useState(null);
   const [isReady, setIsReady] = useState(false);
   const menuPositionRef = useRef(null);
@@ -265,11 +265,11 @@ const popoverCard = ({ children, isOpen }) => {
       </MenuWrapper>
     </ButtonInner>
   );
-};
+}
 
-popoverCard.propTypes = {
+PopoverCard.propTypes = {
   children: PropTypes.node,
   isOpen: PropTypes.bool.isRequired,
 };
 
-export default popoverCard;
+export default PopoverCard;

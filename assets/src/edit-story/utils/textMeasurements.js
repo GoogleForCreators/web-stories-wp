@@ -48,9 +48,8 @@ const MEASURER_PROPS = {
   dataToStyleY: (y) => `${y}px`,
 };
 
+const MEASURER_NODE = '__WEB_STORIES_MEASURER__';
 const LAST_ELEMENT = '__WEB_STORIES_LASTEL__';
-
-let measurerNode = null;
 
 export function calculateTextHeight(element, width) {
   const measurer = getOrCreateMeasurer(element);
@@ -80,12 +79,14 @@ export function calculateFitTextFontSize(element, width, height) {
 }
 
 function getOrCreateMeasurer(element) {
+  let measurerNode = document.body[MEASURER_NODE];
   if (!measurerNode) {
     measurerNode = document.createElement('div');
     measurerNode.id = '__web-stories-text-measurer';
     measurerNode.className = 'web-stories-content';
     setStyles(measurerNode, MEASURER_STYLES);
     document.body.appendChild(measurerNode);
+    document.body[MEASURER_NODE] = measurerNode;
   }
   // Very unfortunately `ReactDOM.render()` is not synchoronous. Thus, we
   // have to use `renderToStaticMarkup()` markup instead and do manual

@@ -1,0 +1,27 @@
+{
+  "name": "web-stories/embed",
+  "category": "embed",
+  "attributes": {
+    "url": {
+      "type": "url"
+    },
+    "title": {
+      "type": "string"
+    },
+    "poster": {
+      "type": "string"
+    },
+    "width": {
+      "type": "number",
+      "default": 360
+    },
+    "height": {
+      "type": "number",
+      "default": 600
+    },
+    "align": {
+      "type": "string",
+      "default": "none"
+    }
+  }
+}

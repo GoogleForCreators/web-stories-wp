@@ -165,7 +165,7 @@ function ColorPicker({
             onChange={updateCurrentColor}
             showOpacity={hasOpacity}
           />
-          {renderFooter && renderFooter(generatedColor)}
+          {renderFooter && renderFooter(color)}
         </Body>
       </Container>
     </CSSTransition>

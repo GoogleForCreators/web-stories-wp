@@ -44,7 +44,8 @@ const Reorderable = forwardRef(
     },
     forwardedRef
   ) => {
-    const containerRef = forwardedRef || useRef(null);
+    const ref = useRef(null);
+    const containerRef = forwardedRef || ref;
     const {
       isReordering,
       currentSeparator,

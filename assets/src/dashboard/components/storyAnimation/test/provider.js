@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
+
 /**
  * Internal dependencies
  */
 import { createWrapperWithProps, flushPromiseQueue } from '../../../testUtils';
 import StoryAnimation, { useStoryAnimationContext } from '..';
+import * as animationParts from '../../../animations/parts';
 
 const defaultWAAPIAnimation = {
   onfinish: null,
@@ -34,8 +37,8 @@ const mockWAAPIAnimation = (overrides = {}) => ({
 });
 
 describe('StoryAnimation.Provider', () => {
-  describe('getAnimationGenerators(target)', () => {
-    it('calls all generators for a target', () => {
+  describe('getAnimationParts(target)', () => {
+    it('gets all generated parts for a target', () => {
       const target = 'some-target';
       const targets = [target];
       const animations = [
@@ -52,12 +55,12 @@ describe('StoryAnimation.Provider', () => {
       });
 
       const {
-        state: { getAnimationGenerators },
+        actions: { getAnimationParts },
       } = result.current;
 
-      expect(getAnimationGenerators(target)).toHaveLength(3);
-      expect(getAnimationGenerators('other-target')).toHaveLength(2);
-      expect(getAnimationGenerators('not used target')).toHaveLength(0);
+      expect(getAnimationParts(target)).toHaveLength(3);
+      expect(getAnimationParts('other-target')).toHaveLength(2);
+      expect(getAnimationParts('not used target')).toHaveLength(0);
     });
 
     it('calls generators for a target in ascending order', () => {
@@ -71,6 +74,13 @@ describe('StoryAnimation.Provider', () => {
         { targets, type: type[2], ...args },
       ];
 
+      const AnimationPartMock = jest
+        .spyOn(animationParts, 'AnimationPart')
+        .mockImplementation((t, a) => ({
+          type: t,
+          args: a,
+        }));
+
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {
           animations,
@@ -78,14 +88,14 @@ describe('StoryAnimation.Provider', () => {
       });
 
       const {
-        state: { getAnimationGenerators },
+        actions: { getAnimationParts },
       } = result.current;
 
-      const sample = jest.fn();
-      getAnimationGenerators(target).forEach((generator, i) => {
-        generator(sample);
-        expect(sample).toHaveBeenCalledWith(type[i], args);
+      getAnimationParts(target).forEach((animationPart, i) => {
+        expect(animationPart).toStrictEqual({ type: type[i], args });
       });
+
+      AnimationPartMock.mockRestore();
     });
 
     it('calls generators for a target with propper args', () => {
@@ -103,6 +113,13 @@ describe('StoryAnimation.Provider', () => {
         { targets, type: type, ...args[2] },
       ];
 
+      const AnimationPartMock = jest
+        .spyOn(animationParts, 'AnimationPart')
+        .mockImplementation((t, a) => ({
+          type: t,
+          args: a,
+        }));
+
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {
           animations,
@@ -110,14 +127,14 @@ describe('StoryAnimation.Provider', () => {
       });
 
       const {
-        state: { getAnimationGenerators },
+        actions: { getAnimationParts },
       } = result.current;
 
-      const sample = jest.fn();
-      getAnimationGenerators(target).forEach((generator, i) => {
-        generator(sample);
-        expect(sample).toHaveBeenCalledWith(type, args[i]);
+      getAnimationParts(target).forEach((animationPart, i) => {
+        expect(animationPart).toStrictEqual({ type, args: { ...args[i] } });
       });
+
+      AnimationPartMock.mockRestore();
     });
   });
 

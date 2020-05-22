@@ -130,6 +130,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
 
 		$this->assertEquals( $orderby, "wp_posts.post_author = '" . self::$user_id . "' DESC, wp_posts.post_author DESC, wp_posts.post_modified DESC" );
+
+		// Registered during init.
+		unregister_block_type( 'web-stories/embed' );
 	}
 
 	public function test_filter_posts_orderby_irrelevant_query() {
@@ -157,5 +160,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
 		$this->assertEquals( $orderby, $initial_orderby );
 
+		// Registered during init.
+		unregister_block_type( 'web-stories/embed' );
 	}
 }

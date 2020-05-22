@@ -40,19 +40,21 @@ function __setMockFiles(newMockFiles) {
 }
 
 function readdirSync(directoryPath) {
-  return mockFiles[directoryPath] || [];
+  return mockFiles[directoryPath] ? Object.keys(mockFiles[directoryPath]) : [];
 }
 
-function existsSync(file) {
-  const dir = path.dirname(file);
-  if (!mockFiles[dir]) {
-    return false;
-  }
+function existsSync(dirOrFile) {
+  const dirExists = Object.prototype.hasOwnProperty.call(mockFiles, dirOrFile);
 
-  return Object.prototype.hasOwnProperty.call(
-    mockFiles[dir],
-    path.basename(file)
-  );
+  const dirname = path.dirname(dirOrFile);
+  const fileExists =
+    Object.prototype.hasOwnProperty.call(mockFiles, dirname) &&
+    Object.prototype.hasOwnProperty.call(
+      mockFiles[dirname],
+      path.basename(dirOrFile)
+    );
+
+  return dirExists || fileExists;
 }
 
 function readFileSync(file) {
@@ -69,10 +71,31 @@ function writeFileSync(file, content) {
   mockFiles[dir][path.basename(file)] = content;
 }
 
+function lstatSync(dirOrFile) {
+  return {
+    isDirectory: () =>
+      Object.prototype.hasOwnProperty.call(mockFiles, dirOrFile),
+  };
+}
+
+function rmdirSync(dirname) {
+  if (Object.prototype.hasOwnProperty.call(mockFiles, dirname)) {
+    delete mockFiles[dirname];
+  }
+}
+
+function unlinkSync(file) {
+  const dir = path.dirname(file);
+  delete mockFiles[dir][path.basename(file)];
+}
+
 fs.__setMockFiles = __setMockFiles;
 fs.readdirSync = readdirSync;
 fs.readFileSync = readFileSync;
 fs.writeFileSync = writeFileSync;
 fs.existsSync = existsSync;
+fs.lstatSync = lstatSync;
+fs.rmdirSync = rmdirSync;
+fs.unlinkSync = unlinkSync;
 
 module.exports = fs;

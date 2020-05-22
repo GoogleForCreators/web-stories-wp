@@ -19,7 +19,11 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useContext, useCallback } from 'react';
+import { useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
 import { rgba } from 'polished';
 
 /**
@@ -34,6 +38,7 @@ import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
 import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
+import { useContext } from '../../../../utils/context';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
