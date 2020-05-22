@@ -37,6 +37,8 @@ import { useStory } from '../../app/story';
 import StoryPropTypes from '../../types';
 
 const PLAY_BUTTON_SIZE = 48;
+const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
+const PLAY_ABOVE_BREAKPOINT_HEIGHT = 120;
 
 const Controls = styled.div`
   position: absolute;
@@ -49,7 +51,7 @@ const Controls = styled.div`
 
 const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   position: absolute;
-  top: 50%;
+  top: ${({ isAbove }) => (isAbove ? `-52px` : `50%`)};
   left: 50%;
   transform: translate(-50%, -50%);
   cursor: pointer;
@@ -57,7 +59,7 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   width: ${PLAY_BUTTON_SIZE}px;
   height: ${PLAY_BUTTON_SIZE}px;
 
-  opacity: 0;
+  opacity: ${({ isAbove }) => (isAbove ? 1 : 0)};
   &.button-enter {
     opacity: 0;
   }
@@ -79,13 +81,20 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
 const Play = styled(PlayIcon)`
   width: 100%;
   height: 100%;
+  opacity: 0.84;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
 const Pause = styled(PauseIcon)`
   width: 100%;
   height: 100%;
+  opacity: 0.84;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
 
 function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
+  const isPlayAbove =
+    element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
+    element.height < PLAY_ABOVE_BREAKPOINT_HEIGHT;
   const [hovering, setHovering] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -131,13 +140,14 @@ function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
   }, [getVideoNode, id]);
 
   const [checkShowControls] = useDebouncedCallback(() => {
-    setShowControls(!isPlaying);
+    if (!isPlayAbove) {
+      setShowControls(!isPlaying);
+    }
   }, 2000);
-  // eslint-disable-next-line consistent-return
   const [checkMouseInBBox] = useDebouncedCallback((evt) => {
     const node = elementRef.current;
     if (!node) {
-      return null;
+      return;
     }
     const elementBBox = node.getBoundingClientRect();
     const isHovering =
@@ -180,20 +190,27 @@ function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
   const buttonTitle = isPlaying
     ? __('Click to pause', 'web-stories')
     : __('Click to play', 'web-stories');
+  const TransitionWrapper = isPlayAbove ? 'div' : CSSTransition;
 
   return (
     <Controls {...box}>
       {showControls && (
-        <CSSTransition in={hovering} appear classNames="button" timeout={100}>
+        <TransitionWrapper
+          in={hovering}
+          appear
+          classNames="button"
+          timeout={100}
+        >
           <ButtonWrapper
             title={buttonTitle}
             aria-pressed={isPlaying}
             key="wrapper"
             onMouseDown={handlePlayPause}
+            isAbove={isPlayAbove}
           >
             {isPlaying ? <Pause /> : <Play />}
           </ButtonWrapper>
-        </CSSTransition>
+        </TransitionWrapper>
       )}
     </Controls>
   );
