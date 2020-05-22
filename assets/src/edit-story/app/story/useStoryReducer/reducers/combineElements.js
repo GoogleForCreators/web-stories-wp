@@ -94,6 +94,7 @@ function combineElements(state, { firstId, firstElement, secondId }) {
     focalX,
     focalY,
     isFill,
+    backgroundOverlay: null,
     // Only remember these for backgrounds, as they're ignored while being background
     ...(secondElement.isBackground
       ? {

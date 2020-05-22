@@ -64,7 +64,9 @@ function DisplayElement({ element, previewMode }) {
 
   const [replacement, setReplacement] = useState(null);
 
-  const replacementElement = replacement
+  const hasReplacement = Boolean(replacement);
+
+  const replacementElement = hasReplacement
     ? {
         ...element,
         type: replacement.type,
@@ -120,14 +122,14 @@ function DisplayElement({ element, previewMode }) {
       >
         <Display element={element} previewMode={previewMode} box={box} />
         {!previewMode && (
-          <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
-            {replacementElement && (
+          <ReplacementContainer hasReplacement={hasReplacement}>
+            {hasReplacement && (
               <Replacement element={replacementElement} box={box} />
             )}
           </ReplacementContainer>
         )}
       </WithMask>
-      {isBackground && backgroundOverlay && (
+      {isBackground && backgroundOverlay && !hasReplacement && (
         <BackgroundOverlay
           style={generatePatternStyles(element.backgroundOverlay)}
         />
