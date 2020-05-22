@@ -82,16 +82,20 @@ function DropTargetsProvider({ children }) {
         return;
       }
 
-      const {
-        scale = 100,
-        focalX = 50,
-        focalY = 50,
-        flip = { vertical: false, horizontal: false },
-      } =
-        currentPage.elements.find(({ id }) => id === selfId) ??
-        getElementProperties(resource.type, {
-          resource,
-        });
+      const newElement = getElementProperties(resource.type, {
+        resource,
+      });
+
+      const existingElement = currentPage.elements.find(
+        ({ id }) => id === selfId
+      );
+
+      // Get these attributes from the existing element (if exists and is non-null)
+      // or get defaults from a new element of the same type
+      const scale = existingElement?.scale ?? newElement.scale;
+      const focalX = existingElement?.focalX ?? newElement.focalX;
+      const focalY = existingElement?.focalY ?? newElement.focalY;
+      const flip = existingElement?.flip ?? newElement.flip;
 
       const dropTargetId = getDropTargetFromCursor(x, y, selfId);
 

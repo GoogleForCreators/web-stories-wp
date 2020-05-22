@@ -20,6 +20,11 @@
 import { v4 as uuidv4 } from 'uuid';
 
 /**
+ * Internal dependencies
+ */
+import { MEDIA_DEFAULT_ATTRIBUTES } from '../../../../elements/media';
+
+/**
  * Combine elements by taking properties from a first item and
  * adding them to the given second item, then remove first item.
  *
@@ -76,11 +81,11 @@ function combineElements(state, { firstId, firstElement, secondId }) {
 
   const {
     resource,
-    scale = 100,
-    focalX = 50,
-    focalY = 50,
-    isFill = false,
-    flip = { vertical: false, horizontal: false },
+    scale = MEDIA_DEFAULT_ATTRIBUTES.scale,
+    focalX = MEDIA_DEFAULT_ATTRIBUTES.focalX,
+    focalY = MEDIA_DEFAULT_ATTRIBUTES.focalY,
+    isFill = MEDIA_DEFAULT_ATTRIBUTES.isFill,
+    flip = {},
     width,
     height,
     x,
