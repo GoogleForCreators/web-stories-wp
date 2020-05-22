@@ -31,8 +31,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useFocusOut from '../../utils/useFocusOut';
+import { ReactComponent as Checkmark } from '../../icons/checkmark.svg';
 import { useFont } from '../../app/font';
-import { TextInput } from '../form';
 import ScrollList from './scrollList';
 
 const PickerContainer = styled.div`
@@ -74,22 +74,28 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   },
 }))`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
-  padding: 8px 12px;
+  padding: 8px 12px 8px 26px;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
+  position: relative;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.bg.v12};
-  }
-
+  &:hover,
   &:focus {
     background-color: ${({ theme }) => theme.colors.bg.v12};
     outline: none;
   }
+`;
+
+const Selected = styled(Checkmark)`
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 28px;
+  height: 28px;
 `;
 
 const NoResult = styled.span`
@@ -102,20 +108,7 @@ const NoResult = styled.span`
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 `;
 
-const BoxedTextInput = styled(TextInput)`
-  padding: 6px;
-  border: 1px solid ${({ theme }) => theme.colors.bg.v4};
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
-  color: ${({ theme }) => theme.colors.fg.v0};
-`;
-
-const ExpandedTextInput = styled(BoxedTextInput)`
-  flex-grow: 1;
-  margin: 8px;
-`;
-
-function FontPickerContainer({ onSelect, onClose }) {
+function FontPickerContainer({ value, onSelect, onClose }) {
   const {
     state: { fonts },
     actions: { ensureMenuFontsLoaded },
@@ -138,42 +131,37 @@ function FontPickerContainer({ onSelect, onClose }) {
 
   useFocusOut(ref, onClose, [onClose]);
 
-  const matchingFonts = fonts.map((font, index) => ({
-    ...font,
-    hasDivider: index % 10 === 9,
-  }));
+  // Scroll to offset for current value
+  const currentOffset = fonts.findIndex(({ name }) => name === value);
+
+  // This is static for now, but with search and used fonts, this will change later
+  const matchingFonts = fonts;
 
   const itemRenderer = useCallback(
-    (item) => {
-      const { service, name, hasDivider } = item;
-      return (
-        <>
-          <Item
-            fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
-            onClick={() => onSelect(item)}
-          >
-            {name}
-          </Item>
-          {hasDivider && <Divider />}
-        </>
-      );
-    },
-    [onSelect]
+    ({ service, name, hasDivider }) => (
+      <>
+        <Item
+          fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
+          data-stuff={`'${name}' = '${value}'`}
+          onClick={() => onSelect(name)}
+        >
+          {name === value && <Selected />}
+          {name}
+        </Item>
+        {hasDivider && <Divider />}
+      </>
+    ),
+    [onSelect, value]
   );
 
   return (
     <PickerContainer ref={ref}>
-      <ExpandedTextInput
-        ariaLabel={__('Search Fonts', 'web-stories')}
-        placeholder={__('Search fonts', 'web-stories')}
-        color="white"
-        clear
-      />
       {matchingFonts.length ? (
         <List
           items={matchingFonts}
           onScroll={handleScroll}
           itemRenderer={itemRenderer}
+          currentOffset={currentOffset}
         />
       ) : (
         <NoResult>{__('No matches found', 'web-stories')}</NoResult>
@@ -183,6 +171,7 @@ function FontPickerContainer({ onSelect, onClose }) {
 }
 
 FontPickerContainer.propTypes = {
+  value: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
 };

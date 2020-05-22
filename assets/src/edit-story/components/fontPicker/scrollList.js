@@ -40,7 +40,13 @@ const Item = styled.li.attrs({
   overflow: hidden;
 `;
 
-function ScrollList({ items, itemRenderer, onScroll, className }) {
+function ScrollList({
+  items,
+  itemRenderer,
+  onScroll,
+  currentOffset,
+  className,
+}) {
   const ref = useRef();
   const itemOffsets = useRef([]);
   const numItems = items.length;
@@ -86,6 +92,16 @@ function ScrollList({ items, itemRenderer, onScroll, className }) {
     return () => node.removeEventListener('scroll', handleScroll);
   }, [onScroll, numItems]);
 
+  // If current offset changes, scroll to that one
+  useEffect(() => {
+    const node = ref.current;
+    if (currentOffset === -1 || !node) {
+      return;
+    }
+    const offset = itemOffsets.current[currentOffset];
+    node.scrollTo(0, -(offset + node.clientHeight / 2));
+  }, [currentOffset]);
+
   // Trim to current length of list
   useEffect(() => {
     itemOffsets.current = itemOffsets.current.slice(0, numItems);
@@ -111,6 +127,7 @@ ScrollList.propTypes = {
   items: PropTypes.array.isRequired,
   itemRenderer: PropTypes.func.isRequired,
   onScroll: PropTypes.func.isRequired,
+  currentOffset: PropTypes.number,
   className: PropTypes.string,
 };
 
