@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
@@ -26,8 +26,6 @@ import theme from '../theme';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   PAGE_RATIO,
-  VIEWPORT_WP_LEFT_NAV_HIDES,
-  WP_LEFT_NAV_WIDTH,
 } from '../constants/pageStructure';
 
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
@@ -62,6 +60,7 @@ const sizeFromWidth = (
   const addToWidthValue = remainingSpace / itemsInRow;
 
   const trueWidth = width + addToWidthValue;
+
   return {
     width: trueWidth,
     height: trueWidth / PAGE_RATIO,
@@ -70,25 +69,32 @@ const sizeFromWidth = (
 
 // we want to set the size of story pages based on the available space
 // this means we need to take the window.innerWidth value and remove the built in WP nav and the dashboard nav according to breakpoints
-const getTrueInnerWidth = () => {
+const getTrueInnerWidth = (wpMenuWidth) => {
   const { innerWidth } = window;
   if (innerWidth >= theme.breakpoint.raw.tablet) {
-    return innerWidth - WP_LEFT_NAV_WIDTH - DASHBOARD_LEFT_NAV_WIDTH;
-  } else if (innerWidth < VIEWPORT_WP_LEFT_NAV_HIDES) {
-    return innerWidth;
+    return innerWidth - wpMenuWidth - DASHBOARD_LEFT_NAV_WIDTH;
   } else {
-    return innerWidth - WP_LEFT_NAV_WIDTH;
+    return innerWidth - wpMenuWidth;
   }
 };
 
 export default function usePagePreviewSize(options = {}) {
+  const wpLeftNav = useRef(document.getElementById('adminmenu'));
+  wpLeftNav.current = document.getElementById('adminmenu');
+
   const { thumbnailMode = false, isGrid } = options;
+
+  const [wpMenuWidth, setWpMenuWidth] = useState(wpLeftNav.offsetWidth || 0);
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
-    getTrueInnerWidth()
+    getTrueInnerWidth(wpMenuWidth)
   );
 
   const [debounceAvailableContainerSpace] = useDebouncedCallback(() => {
-    setAvailableContainerSpace(getTrueInnerWidth());
+    setAvailableContainerSpace(getTrueInnerWidth(wpMenuWidth));
+  }, 250);
+
+  const [debounceWpMenuToggle] = useDebouncedCallback(() => {
+    setWpMenuWidth(wpLeftNav.current.offsetWidth);
   }, 250);
 
   const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
@@ -109,6 +115,24 @@ export default function usePagePreviewSize(options = {}) {
   useEffect(() => setBp(getCurrentBp(availableContainerSpace)), [
     availableContainerSpace,
   ]);
+
+  useLayoutEffect(
+    () => setAvailableContainerSpace(getTrueInnerWidth(wpMenuWidth)),
+    [wpMenuWidth]
+  );
+
+  useLayoutEffect(() => {
+    if (thumbnailMode || !wpLeftNav.current) {
+      return () => {};
+    }
+
+    const handleWpMenuToggle = () => debounceWpMenuToggle();
+
+    wpLeftNav.current.addEventListener('click', handleWpMenuToggle);
+    return () => {
+      wpLeftNav.current.removeEventListener('click', handleWpMenuToggle);
+    };
+  }, [thumbnailMode, debounceWpMenuToggle]);
 
   return useMemo(
     () => ({
