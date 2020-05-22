@@ -18,8 +18,6 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../constants';
-import getBlinkOnConfig from './blinkOn';
-import getBounceConfig from './bounce';
 import getFadeConfig from './fade';
 import getFlipConfig from './flip';
 import getFloatOnConfig from './floatOn';
@@ -28,8 +26,6 @@ import getSpinConfig from './spin';
 import getZoomConfig from './zoom';
 
 export default {
-  [ANIMATION_TYPES.BLINK_ON]: getBlinkOnConfig,
-  [ANIMATION_TYPES.BOUNCE]: getBounceConfig,
   [ANIMATION_TYPES.FADE]: getFadeConfig,
   [ANIMATION_TYPES.FLIP]: getFlipConfig,
   [ANIMATION_TYPES.FLOAT_ON]: getFloatOnConfig,

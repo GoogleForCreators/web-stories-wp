@@ -24,7 +24,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
  */
 import { createWrapperWithProps, flushPromiseQueue } from '../../../testUtils';
 import StoryAnimation, { useStoryAnimationContext } from '..';
-import * as animationParts from '../../../animations/animationParts';
+import * as animationParts from '../../../animations/parts';
 
 const defaultWAAPIAnimation = {
   onfinish: null,
