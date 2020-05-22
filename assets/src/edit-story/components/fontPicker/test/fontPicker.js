@@ -28,7 +28,7 @@ import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
-async function fontPicker() {
+async function getFontPicker() {
   const getAllFontsPromise = Promise.resolve(fontsListResponse);
   const apiContextValue = {
     actions: {
@@ -54,120 +54,52 @@ async function fontPicker() {
 }
 
 describe('Font Picker', () => {
+  // Mock scrollTo
+  const scrollTo = jest.fn();
+  Object.defineProperty(window.Element.prototype, 'scrollTo', {
+    writable: true,
+    value: scrollTo,
+  });
+
   it('should render font picker title and clicking the button should open the font picker', async () => {
-    const { getByRole, getByLabelText, getAllByRole } = await fontPicker();
+    const { getByRole, getAllByRole } = await getFontPicker();
 
     // Fire a click event.
     const selectButton = getByRole('button');
-    act(() => fireEvent.click(selectButton));
+    fireEvent.click(selectButton);
 
     // Listbox should be showing after click
     const fontsList = getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
-    // Search fonts input should be rendered
-    const searchInputText = getByLabelText('Search Fonts');
-    expect(searchInputText).toBeInTheDocument();
-
-    // Should render all 35 options
+    // Should render all options
     const allOptionItems = getAllByRole('option');
     expect(allOptionItems).toHaveLength(fontsListResponse.length);
   });
 
-  it('open the font picker, types on search box should have two fonts list that starts with search value and including search value', async () => {
-    const { getByRole, getByLabelText, getAllByRole } = await fontPicker();
-
-    const searchValue = 'al';
-
-    // Fire a click event.
-    const selectButton = getByRole('button');
-    act(() => fireEvent.click(selectButton));
-
-    // Search font input and types al
-    const searchInputText = getByLabelText('Search Fonts');
-    fireEvent.change(searchInputText, { target: { value: searchValue } });
-
-    // There should be two separate font lists
-    const fontLists = getAllByRole('listbox');
-    expect(fontLists).toHaveLength(2);
-
-    // Should render all starts with fonts and including fonts
-    const otherFonts = fontsListResponse.filter(({ name }) =>
-      name.toLowerCase().startsWith(searchValue.toLowerCase())
-    );
-    const includeSearchFonts = fontsListResponse.filter(
-      ({ name }) => name.toLowerCase().indexOf(searchValue.toLowerCase()) > 0
-    );
-    const allOptionItems = getAllByRole('option');
-    expect(allOptionItems).toHaveLength(
-      otherFonts.length + includeSearchFonts.length
-    );
-  });
-
-  it('types on search box, press enter should select the first font', async () => {
-    const {
-      getByRole,
-      queryByRole,
-      getByLabelText,
-      getAllByText,
-    } = await fontPicker();
-
-    const searchValue = 'al';
+  it('should mark the currently selected font and scroll to it', async () => {
+    scrollTo.mockReset();
+    const { getByRole } = await getFontPicker();
 
     // Fire a click event.
     const selectButton = getByRole('button');
-    act(() => fireEvent.click(selectButton));
+    fireEvent.click(selectButton);
 
-    // Search font input and types al
-    const searchInputText = getByLabelText('Search Fonts');
-    act(() =>
-      fireEvent.change(searchInputText, { target: { value: searchValue } })
-    );
+    // Listbox should be showing after click
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
 
-    expect(searchInputText.value).toBe(searchValue);
+    // Roboto option should be visible and have a selected checkmark
+    const selectedRobotoOption = getByRole('option', {
+      // The "accessible name" is derived by concatenating the accessible names
+      // of all children,  which in this case is an SVG with aria-label="Selected"
+      // and a plain text node with the font name. Thus this works!
+      name: 'Selected Roboto',
+    });
+    expect(selectedRobotoOption).toBeInTheDocument();
 
-    // Press enter
-    act(() =>
-      fireEvent.keyDown(searchInputText, {
-        key: 'Enter',
-        code: 'Enter',
-        keyCode: 13,
-      })
-    );
-
-    // Now list should be there, the picker should be closed
-    const fontsLists = queryByRole('listbox');
-    expect(fontsLists).toBeNull();
-
-    // Open the font picker again
-    act(() => fireEvent.click(selectButton));
-
-    const selectedFont = 'Alfa Slab One';
-
-    const allOptionItems = getAllByText(selectedFont);
-    expect(allOptionItems).toHaveLength(2);
-  });
-
-  it('should render no match available', async () => {
-    const { getByRole, queryByText, getByLabelText } = await fontPicker();
-
-    const searchValue = 'abcdef';
-
-    // Fire a click event.
-    const selectButton = getByRole('button');
-    act(() => fireEvent.click(selectButton));
-
-    // Search font input and types al
-    const searchInputText = getByLabelText('Search Fonts');
-    act(() =>
-      fireEvent.change(searchInputText, { target: { value: searchValue } })
-    );
-
-    expect(searchInputText.value).toBe(searchValue);
-
-    const noMatchText = 'No matches found';
-
-    const noMatchITem = queryByText(noMatchText);
-    expect(noMatchITem).toBeInTheDocument();
+    // We can't really validate this number anyway in JSDom (no actual
+    // layout is happening), so just expect it to be called
+    expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
   });
 });

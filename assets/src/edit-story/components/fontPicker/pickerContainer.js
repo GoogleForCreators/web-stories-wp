@@ -145,7 +145,9 @@ function FontPickerContainer({ value, onSelect, onClose }) {
           data-stuff={`'${name}' = '${value}'`}
           onClick={() => onSelect(name)}
         >
-          {name === value && <Selected />}
+          {name === value && (
+            <Selected aria-label={__('Selected', 'web-stories')} />
+          )}
           {name}
         </Item>
         {hasDivider && <Divider />}
