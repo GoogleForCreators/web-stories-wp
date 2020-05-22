@@ -129,8 +129,8 @@ function FontPickerContainer({ onSelect, onClose }) {
       const endAt = Math.min(fonts.length - 1, endIndex + 2);
       const visibleFontNames = fonts
         .slice(startFrom, endAt)
-        .map(({ name }) => name)
-        .filter((name) => Boolean(name));
+        .filter(({ service }) => service === 'fonts.google.com')
+        .map(({ name }) => name);
       ensureMenuFontsLoaded(visibleFontNames);
     },
     [ensureMenuFontsLoaded, fonts]
