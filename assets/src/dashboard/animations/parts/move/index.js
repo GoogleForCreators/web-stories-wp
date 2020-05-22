@@ -20,59 +20,21 @@
 import { ANIMATION_TYPES } from '../../constants';
 import SimpleAnimation from '../simpleAnimation';
 
-const keyframes = {
-  transform: [
-    'scale(0)',
-    'scale(1.27)',
-    'scale(0.84)',
-    'scale(0.84)',
-    'scale(1.1)',
-    'scale(1.1)',
-    'scale(0.95)',
-    'scale(0.95)',
-    'scale(1.03)',
-    'scale(1.03)',
-    'scale(0.98)',
-    'scale(0.98)',
-    'scale(1.02)',
-    'scale(1.02)',
-    'scale(0.99)',
-    'scale(0.99)',
-    'scale(1)',
-  ],
-  offset: [
-    0.0,
-    0.18,
-    0.28,
-    0.29,
-    0.4,
-    0.41,
-    0.52,
-    0.53,
-    0.6,
-    0.61,
-    0.7,
-    0.71,
-    0.8,
-    0.81,
-    0.9,
-    0.91,
-    1.0,
-  ],
-};
-
 const defaults = {
   fill: 'forwards',
-  duration: 1500,
+  duration: 1000,
 };
 
-export function AnimationBounce(args) {
+export function AnimationMove({ offsetX = 0, offsetY = 0, ...args }) {
   const timings = {
     ...defaults,
     ...args,
   };
 
-  const animationName = ANIMATION_TYPES.BOUNCE;
+  const animationName = `x-${offsetX}-y-${offsetY}-${ANIMATION_TYPES.MOVE}`;
+  const keyframes = {
+    transform: [`translate(${offsetX}px, ${offsetY}px)`, 'translate(0%, 0%)'],
+  };
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,

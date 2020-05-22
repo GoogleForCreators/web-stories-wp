@@ -14,13 +14,7 @@
  * limitations under the License.
  */
 
-export default function (config) {
-  const { offsetX = 0, offsetY = 0 } = config;
-
-  return {
-    fill: 'forwards',
-    keyframes: {
-      transform: [`translate(${offsetX}px, ${offsetY}px)`, 'translate(0%, 0%)'],
-    },
-  };
-}
+export { default as AMPStoryWrapper } from './ampStoryWrapper';
+export { default as formattedStoriesArray } from './formattedStoriesArray';
+export { default as formattedUsersObject } from './formattedUsersObject';
+export { default as PlayButton } from './playButton';

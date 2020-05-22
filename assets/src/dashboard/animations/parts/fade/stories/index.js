@@ -17,57 +17,52 @@
 /**
  * Internal dependencies
  */
-import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import StoryAnimation from '../../../../components/storyAnimation';
+import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/BlinkOn',
+  title: 'Dashboard/Animations/Fade',
 };
 
 const animations = [
-  { targets: ['e1'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e2'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e3'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e4'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
+  { targets: ['e1'], type: ANIMATION_TYPES.FADE, duration: 1000 },
+  {
+    targets: ['e2'],
+    type: ANIMATION_TYPES.FADE,
+    duration: 1000,
+    fadeFrom: 1,
+    fadeTo: 0,
+  },
 ];
 
 const elements = [
   { id: 'e1', color: 'red' },
   { id: 'e2', color: 'orange' },
-  { id: 'e3', color: 'blue' },
-  { id: 'e4', color: 'green' },
 ];
+
+const defaultStyles = {
+  width: '50px',
+  height: '50px',
+};
 
 export const _default = () => {
   return (
     <StoryAnimation.Provider animations={animations}>
       <PlayButton />
-      <div
-        style={{
-          display: 'flex',
-          width: '220px',
-          justifyContent: 'space-between',
-          marginTop: '20px',
-        }}
-      >
-        {elements.map(({ id, color }) => (
-          <div
-            key={id}
-            style={{ position: 'relative', width: '50px', height: '50px' }}
-          >
-            <StoryAnimation.WAAPIWrapper target={id}>
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: color,
-                }}
-              />
-            </StoryAnimation.WAAPIWrapper>
-          </div>
-        ))}
-      </div>
+      {elements.map(({ id, color }) => (
+        <div key={id} style={{ position: 'relative', ...defaultStyles }}>
+          <StoryAnimation.WAAPIWrapper target={id}>
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: color,
+              }}
+            />
+          </StoryAnimation.WAAPIWrapper>
+        </div>
+      ))}
     </StoryAnimation.Provider>
   );
 };
@@ -86,7 +81,7 @@ export const AMPStory = () => {
                 <StoryAnimation.AMPWrapper
                   key={id}
                   target={id}
-                  style={{ width: '50px', height: '50px' }}
+                  style={defaultStyles}
                 >
                   <div
                     style={{
