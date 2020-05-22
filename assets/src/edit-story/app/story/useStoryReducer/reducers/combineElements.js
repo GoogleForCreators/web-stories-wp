@@ -22,7 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { MEDIA_DEFAULT_ATTRIBUTES } from '../../../../elements/media';
+import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
 
 /**
  * Combine elements by taking properties from a first item and
@@ -81,10 +81,10 @@ function combineElements(state, { firstId, firstElement, secondId }) {
 
   const {
     resource,
-    scale = MEDIA_DEFAULT_ATTRIBUTES.scale,
-    focalX = MEDIA_DEFAULT_ATTRIBUTES.focalX,
-    focalY = MEDIA_DEFAULT_ATTRIBUTES.focalY,
-    isFill = MEDIA_DEFAULT_ATTRIBUTES.isFill,
+    scale = DEFAULT_ATTRIBUTES_FOR_MEDIA.scale,
+    focalX = DEFAULT_ATTRIBUTES_FOR_MEDIA.focalX,
+    focalY = DEFAULT_ATTRIBUTES_FOR_MEDIA.focalY,
+    isFill = DEFAULT_ATTRIBUTES_FOR_MEDIA.isFill,
     flip = {},
     width,
     height,

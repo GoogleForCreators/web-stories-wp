@@ -49,6 +49,13 @@ export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
 export const MIN_FONT_SIZE = 30;
 export const MAX_FONT_SIZE = 200;
 
+export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
+  isFill: false,
+};
+
 export const LAYER_DIRECTIONS = {
   FRONT: 'FRONT',
   BACK: 'BACK',
