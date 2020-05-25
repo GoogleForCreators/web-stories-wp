@@ -97,7 +97,7 @@ function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
     element.height < PLAY_ABOVE_BREAKPOINT_HEIGHT;
   const [hovering, setHovering] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(!isDragged);
   const { id } = element;
   const {
     state: { selectedElementIds },
@@ -123,6 +123,14 @@ function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
     }, 0);
     return () => clearTimeout(syncTimer);
   }, [getVideoNode, id, isElementSelected]);
+
+  useEffect(() => {
+    const videoNode = getVideoNode();
+    if (videoNode && !videoNode.paused && isDragged) {
+      videoNode.pause();
+      setIsPlaying(false);
+    }
+  }, [getVideoNode, isDragged]);
 
   useEffect(() => {
     const videoNode = getVideoNode();
