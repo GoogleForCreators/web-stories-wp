@@ -50,8 +50,8 @@ function EditLayer() {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
-  const { editingElement: editingElementId } = useCanvas((state) => ({
-    editingElementId: state.state.editingElementId,
+  const { editingElementId } = useCanvas((state) => ({
+    editingElementId: state.state.editingElement,
   }));
 
   const editingElement =
