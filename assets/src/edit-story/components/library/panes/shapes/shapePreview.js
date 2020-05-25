@@ -80,7 +80,10 @@ function ShapePreview({ mask }) {
   // Callback that sets the drag image and adds information about the shape
   // to be used in an [insertElement] call on the drop handler.
   const onDragStart = (e) => {
-    e.dataTransfer.setDragImage(pathRef.current, 0, 0);
+    const { x, y } = pathRef.current.getBoundingClientRect();
+    const offsetX = e.clientX - x;
+    const offsetY = e.clientY - y;
+    e.dataTransfer.setDragImage(pathRef.current, offsetX, offsetY);
     e.dataTransfer.setData('shape', JSON.stringify(shapeData));
   };
 
