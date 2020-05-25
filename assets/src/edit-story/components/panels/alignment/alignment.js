@@ -119,7 +119,6 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   // Set boundRect with pageSize when there is only element selected
   const boundRect =
     selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
-  const isFill = getCommonValue(selectedElements, 'isFill');
 
   const updatedSelectedElementsWithFrame = useMemo(
     () =>
@@ -170,8 +169,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     [updatedSelectedElementsWithFrame, setUpdatedSelectedElementsWithFrame]
   );
 
-  const isDistributionEnabled = !isFill && selectedElements.length > 2;
-  const isAlignEnabled = !isFill;
+  const isDistributionEnabled = selectedElements.length > 2;
 
   const ref = useRef();
   const [currentButton, setCurrentButton] = useState(null);

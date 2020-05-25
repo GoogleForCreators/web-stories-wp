@@ -104,7 +104,7 @@ function CanvasProvider({ children }) {
   const selectIntersection = useCallback(
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const newSelectedElementIds = currentPage.elements
-        .filter(({ isFill, isBackground }) => !isFill && !isBackground)
+        .filter(({ isBackground }) => !isBackground)
         .filter(({ x, y, width, height }) => {
           return (
             x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height

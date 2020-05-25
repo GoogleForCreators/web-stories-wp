@@ -42,7 +42,6 @@ describe('Panels/SizePosition', () => {
       isBackground: false,
       width: 100,
       height: 80,
-      isFill: false,
       rotationAngle: 0,
       lockAspectRatio: true,
     };
@@ -51,7 +50,6 @@ describe('Panels/SizePosition', () => {
       isBackground: false,
       width: 100,
       height: 80,
-      isFill: false,
       rotationAngle: 0,
       lockAspectRatio: false,
     };
@@ -144,12 +142,6 @@ describe('Panels/SizePosition', () => {
         defaultFlip,
         true
       );
-    });
-
-    it('should update fill', () => {
-      const { getByTitle, pushUpdate } = renderSizePosition([defaultImage]);
-      fireEvent.click(getByTitle('Fill'));
-      expect(pushUpdate).toHaveBeenCalledWith({ isFill: true }, true);
     });
 
     it('should update width with lock ratio', () => {

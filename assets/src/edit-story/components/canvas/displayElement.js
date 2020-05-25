@@ -72,7 +72,6 @@ function DisplayElement({ element, previewMode, page }) {
         scale: element.scale || 100,
         focalX: element.focalX || 50,
         focalY: element.focalY || 50,
-        isFill: element.isFill || false,
       }
     : null;
 

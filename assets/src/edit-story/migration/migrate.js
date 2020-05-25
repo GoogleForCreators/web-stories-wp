@@ -58,6 +58,7 @@ const MIGRATIONS = {
   17: [inlineTextProperties],
   18: [defaultBackgroundElement],
   19: [conicToLinear],
+  20: [isFillDeprecate],
 };
 
 export const DATA_VERSION = Math.max.apply(

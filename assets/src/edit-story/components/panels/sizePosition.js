@@ -78,7 +78,6 @@ function SizePositionPanel({
 }) {
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
-  const isFill = getCommonValue(selectedElements, 'isFill', false);
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
 
@@ -203,7 +202,6 @@ function SizePositionPanel({
             }
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
-          disabled={isFill}
         />
         <Toggle
           aria-label={__('Aspect ratio lock', 'web-stories')}
@@ -212,7 +210,6 @@ function SizePositionPanel({
           uncheckedIcon={<StyledUnlocked />}
           value={lockAspectRatio}
           onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
-          disabled={isFill}
         />
         <BoxedNumeric
           data-testid="height"
@@ -230,7 +227,6 @@ function SizePositionPanel({
             }
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
-          disabled={isFill}
         />
       </Row>
       {/** Rotation and Flipping */}
@@ -240,7 +236,6 @@ function SizePositionPanel({
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
-          disabled={isFill}
         />
         {canFlip && (
           <FlipControls
@@ -248,17 +243,6 @@ function SizePositionPanel({
               pushUpdateForObject('flip', value, DEFAULT_FLIP, true)
             }
             value={flip}
-          />
-        )}
-        {canFill && isSingleElement && (
-          <ToggleButton
-            icon={<Fullbleed />}
-            title={__('Fill', 'web-stories')}
-            aria-label={__('Fill', 'web-stories')}
-            iconWidth={15}
-            iconHeight={15}
-            value={isFill}
-            onChange={(value) => pushUpdate({ isFill: value }, true)}
           />
         )}
       </Row>

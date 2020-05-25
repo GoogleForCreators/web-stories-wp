@@ -54,7 +54,6 @@ export const MEDIA_DEFAULT_ATTRIBUTES = {
   scale: 100,
   focalX: 50,
   focalY: 50,
-  isFill: false,
   resource: {
     alt: '',
   },
