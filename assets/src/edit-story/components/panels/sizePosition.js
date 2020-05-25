@@ -34,14 +34,12 @@ import {
   Row,
   Numeric,
   Toggle,
-  ToggleButton,
   usePresubmitHandler,
   MULTIPLE_VALUE,
 } from '../form';
 import { dataPixels } from '../../units';
 import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
-import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
@@ -100,7 +98,7 @@ function SizePositionPanel({
   } = useStory();
 
   const isSingleElement = selectedElements.length === 1;
-  const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
+  const { isMedia } = getDefinitionForType(selectedElements[0].type);
 
   const canFlip = selectedElements.every(
     ({ type }) => getDefinitionForType(type).canFlip
