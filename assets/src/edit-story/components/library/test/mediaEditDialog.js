@@ -63,7 +63,7 @@ function setup() {
 
   const snackbarValue = { showSnackbar };
 
-  const { queryByText, getByTestId } = renderWithTheme(
+  const { getByLabelText, getByRole, queryByText } = renderWithTheme(
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
@@ -72,23 +72,23 @@ function setup() {
       </MediaContext.Provider>
     </SnackbarContext.Provider>
   );
-  return { queryByText, getByTestId };
+  return { getByLabelText, getByRole, queryByText };
 }
 
 describe('MediaEditDialog', () => {
   it('should render', () => {
-    const { queryByText, getByTestId } = setup();
+    const { getByLabelText, getByRole, queryByText } = setup();
 
     expect(queryByText('Edit Image')).toBeInTheDocument();
     expect(queryByText('My Image :)')).toBeInTheDocument();
     expect(queryByText('910 x 675 pixels')).toBeInTheDocument();
-    expect(getByTestId('altTextInput').value).toContain('my image alt text');
-    expect(getByTestId('save')).toBeInTheDocument();
-    expect(getByTestId('cancel')).toBeInTheDocument();
+    expect(getByLabelText('Alt text').value).toContain('my image alt text');
+    expect(getByRole('button', { name: /save/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /cancel/i })).toBeInTheDocument();
   });
 
   it('should update server and internal state with new alt text on save', async () => {
-    const { getByTestId } = setup();
+    const { getByLabelText, getByRole } = setup();
 
     // Mock out `updateMedia`.
     let serverAltText = resource.alt;
@@ -102,9 +102,9 @@ describe('MediaEditDialog', () => {
       stateAltText = update.alt;
     });
 
-    const input = getByTestId('altTextInput');
+    const input = getByLabelText('Alt text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
-    fireEvent.click(getByTestId('save'));
+    fireEvent.click(getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
     expect(updateMediaElement).toHaveBeenCalledTimes(1);
@@ -114,7 +114,7 @@ describe('MediaEditDialog', () => {
   });
 
   it('should show snackbar if error on save to server', async () => {
-    const { getByTestId } = setup();
+    const { getByLabelText, getByRole } = setup();
 
     // Mock out `updateMedia`.
     let serverAltText = resource.alt;
@@ -122,9 +122,9 @@ describe('MediaEditDialog', () => {
       throw Error;
     });
 
-    const input = getByTestId('altTextInput');
+    const input = getByLabelText('Alt text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
-    fireEvent.click(getByTestId('save'));
+    fireEvent.click(getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
     expect(updateMediaElement).toHaveBeenCalledTimes(0);
@@ -133,16 +133,16 @@ describe('MediaEditDialog', () => {
   });
 
   it('should show snackbar if error on save to state', async () => {
-    const { getByTestId } = setup();
+    const { getByLabelText, getByRole } = setup();
 
     // Mock out `updateMediaElement`.
     updateMediaElement.mockImplementation(() => {
       throw Error;
     });
 
-    const input = getByTestId('altTextInput');
+    const input = getByLabelText('Alt text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
-    fireEvent.click(getByTestId('save'));
+    fireEvent.click(getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
     expect(updateMediaElement).toHaveBeenCalledTimes(1);

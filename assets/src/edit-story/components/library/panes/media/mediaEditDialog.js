@@ -137,6 +137,7 @@ function MediaEditDialog({ resource, onClose }) {
   } = UseMedia();
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
+  const imageSrc = useSmallestImage(resource);
 
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
@@ -163,18 +164,14 @@ function MediaEditDialog({ resource, onClose }) {
       title={type == 'image' ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
-          <Plain data-testid="cancel" onClick={() => onClose()}>
-            {__('Cancel', 'web-stories')}
-          </Plain>
-          <Plain data-testid="save" onClick={updateMediaItem}>
-            {__('Save', 'web-stories')}
-          </Plain>
+          <Plain onClick={() => onClose()}>{__('Cancel', 'web-stories')}</Plain>
+          <Plain onClick={updateMediaItem}>{__('Save', 'web-stories')}</Plain>
         </>
       }
     >
       <DialogBody>
         {type == 'image' ? (
-          <Image src={useSmallestImage(resource)} alt={alt} loading={'lazy'} />
+          <Image src={imageSrc} alt={alt} loading={'lazy'} />
         ) : (
           <Video key={src} poster={poster} preload="none" muted>
             <source src={src} type={mimeType} />
@@ -191,8 +188,8 @@ function MediaEditDialog({ resource, onClose }) {
             )}
           </MediaSizeText>
           <Input
-            data-testid="altTextInput"
             value={altText}
+            aria-label={__('Alt text', 'web-stories')}
             type="text"
             placeholder={__('Alt text', 'web-stories')}
             onChange={handleAltTextChange}
