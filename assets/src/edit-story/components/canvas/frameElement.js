@@ -68,6 +68,7 @@ function FrameElement({ element }) {
 
   const {
     actions: { setNodeForElement, handleSelectElement },
+    state: { isEditing },
   } = useCanvas();
   const {
     state: { selectedElementIds, currentPage },
@@ -100,7 +101,7 @@ function FrameElement({ element }) {
       dragging={Boolean(activeDropTargetId)}
       anchorRef={elementRef}
     >
-      {Controls && (
+      {!isEditing && Controls && (
         <Controls
           isDragged={Boolean(draggingResource)}
           isSelected={isSelected}
