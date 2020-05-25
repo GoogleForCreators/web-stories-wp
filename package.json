@@ -206,7 +206,6 @@
     "workflow:copy-template-assets": "cp -R assets/images/templates build/storybook/plugin-assets/images/templates",
     "workflow:version": "./bin/commander.js version",
     "workflow:build-plugin": "./bin/commander.js build-plugin",
-    "preworkflow:fonts": "curl -s \"https://www.googleapis.com/webfonts/v1/webfonts?fields=items&prettyPrint=false&key=$GOOGLE_FONTS_API_KEY\" | jq -c '[.items[] | { family: .family, variants: .variants, category: .category }]' > includes/data/fonts.json",
     "workflow:fonts": "./bin/commander.js build-fonts"
   },
   "husky": {
