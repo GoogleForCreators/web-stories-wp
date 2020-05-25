@@ -1,0 +1,6 @@
+<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<title>Reverse gradient stops</title>
+<g transform="translate(2 3)">
+<path d="M5 3H13M13 3L11 1M13 3L11 5M9 9H1M1 9L3 11M1 9L3 7" stroke="currentColor"/>
+</g>
+</svg>
