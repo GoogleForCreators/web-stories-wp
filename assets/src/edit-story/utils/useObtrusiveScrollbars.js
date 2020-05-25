@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from 'styled-components';
 
 const parentStyle = css`
@@ -32,7 +32,13 @@ const parentStyle = css`
 
 const childStyle = 'width:100%; height:40px;';
 
+let result = null;
+
 function browserHasObtrusiveScrollbars() {
+  if (result !== null) {
+    return result;
+  }
+
   const parent = document.createElement('div');
   parent.style.cssText = parentStyle;
 
@@ -46,7 +52,8 @@ function browserHasObtrusiveScrollbars() {
   const scrollbarWidth = 30 - child.clientWidth;
   document.body.removeChild(parent);
 
-  return Boolean(scrollbarWidth);
+  result = Boolean(scrollbarWidth);
+  return result;
 }
 
 /**
@@ -57,7 +64,9 @@ function browserHasObtrusiveScrollbars() {
  * @return {boolean} Whether scrollbars are obtrusive.
  */
 function useObtrusiveScrollbars() {
-  return useMemo(browserHasObtrusiveScrollbars, []);
+  const [obtrusiveScrollbars, setObtrusiveScrollbars] = useState(false);
+  useEffect(() => setObtrusiveScrollbars(browserHasObtrusiveScrollbars()), []);
+  return obtrusiveScrollbars;
 }
 
 export default useObtrusiveScrollbars;
