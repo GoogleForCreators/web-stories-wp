@@ -81,10 +81,8 @@ function DeleteDialog({ mediaId, onClose }) {
       title={__('Delete image/video?', 'web-stories')}
       actions={
         <>
-          <Plain data-testid="cancel" onClick={() => onClose()}>
-            {__('Cancel', 'web-stories')}
-          </Plain>
-          <Plain data-testid="delete" onClick={() => onDelete()}>
+          <Plain onClick={() => onClose()}>{__('Cancel', 'web-stories')}</Plain>
+          <Plain onClick={() => onDelete()}>
             {__('Delete', 'web-stories')}
           </Plain>
         </>
