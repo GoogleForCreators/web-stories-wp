@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, createContext, useContext } from 'react';
+import { useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { createContext, useContext } from './context';
 
 const PreventUnloadContext = createContext({ listeners: new Map() });
 

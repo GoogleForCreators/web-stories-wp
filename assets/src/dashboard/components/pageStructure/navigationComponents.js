@@ -23,6 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Button from '../button';
+import { TypographyPresets } from '../typography';
 
 export const Content = styled.div`
   display: flex;
@@ -37,15 +38,12 @@ export const NavButton = styled(Button)`
   margin-bottom: 0;
 `;
 
-export const NavLink = styled.a(
-  ({ theme, active }) => `
+export const NavLink = styled.a`
+  ${TypographyPresets.Medium};
+  ${({ theme, active }) => `
     padding: 4px 20px;
     margin: 4px 0;
-    font-family: ${theme.fonts.tab.family};
-    font-size: ${theme.fonts.tab.size}px;
-    font-weight: ${active ? '500' : 'normal'};
-    line-height: ${theme.fonts.tab.lineHeight}px;
-    letter-spacing: ${theme.fonts.tab.letterSpacing}em;
+    font-weight: ${theme.typography.weight[active ? 'bold' : 'normal']};
     text-decoration: none;
     color: ${active ? theme.colors.gray900 : theme.colors.gray600};
 
@@ -56,11 +54,8 @@ export const NavLink = styled.a(
       color: ${active ? theme.colors.gray900 : theme.colors.gray600};
       background-color: ${theme.colors.gray50};
     }
-    @media ${theme.breakpoint.min} {
-      font-size: ${theme.fonts.tab.minSize}px;
-    }
-  `
-);
+  `}
+`;
 
 export const Rule = styled.div(
   ({ theme }) => `
@@ -70,14 +65,10 @@ export const Rule = styled.div(
   `
 );
 
-export const AppInfo = styled.div(
-  ({ theme }) => `
-    color: ${theme.colors.gray500};
-    font-family: ${theme.fonts.smallLabel.family};
-    font-size: ${theme.fonts.smallLabel.size}px;
-    letter-spacing: ${theme.fonts.smallLabel.letterSpacing};
-  `
-);
+export const AppInfo = styled.div`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.gray500};
+`;
 
 export const LogoPlaceholder = styled.div(
   ({ theme }) => `

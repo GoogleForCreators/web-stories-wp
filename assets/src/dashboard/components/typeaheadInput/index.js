@@ -33,6 +33,7 @@ import { ReactComponent as SearchIcon } from '../../icons/search.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import TypeaheadOptions from '../typeaheadOptions';
+import { TypographyPresets } from '../typography';
 
 const SearchContainer = styled.div`
   display: flex;
@@ -78,15 +79,12 @@ ControlVisibilityContainer.propTypes = {
 };
 
 const StyledInput = styled.input`
+  ${TypographyPresets.Small};
   position: relative;
   height: 100%;
   width: 100%;
   padding: 0 0 0 7.5px;
-  font-family: ${({ theme }) => theme.fonts.typeaheadInput.family};
-  font-size: ${({ theme }) => theme.fonts.typeaheadInput.size}px;
-  line-height: ${({ theme }) => theme.fonts.typeaheadInput.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.fonts.typeaheadInput.letterSpacing}em;
-  font-weight: ${({ theme }) => theme.fonts.typeaheadInput.weight};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   text-overflow: ellipsis;
   color: ${({ theme }) => theme.colors.gray900};
   background-color: transparent;

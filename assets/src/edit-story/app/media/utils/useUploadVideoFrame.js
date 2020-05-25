@@ -31,7 +31,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const {
     actions: { updateMedia },
   } = useAPI();
-  const { uploadFile } = useUploader(false);
+  const { uploadFile } = useUploader();
   const { storyId } = useConfig();
   const {
     actions: { updateElementsByResourceId },
@@ -51,6 +51,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         source_url: poster,
         media_details: { width: posterWidth, height: posterHeight },
       } = await uploadFile(obj);
+      // Meta data cannot be sent as part of upload.
       await updateMedia(posterId, {
         meta: {
           web_stories_is_poster: true,
@@ -58,6 +59,9 @@ function useUploadVideoFrame({ updateMediaElement }) {
       });
       await updateMedia(id, {
         featured_media: posterId,
+        meta: {
+          web_stories_poster_id: posterId,
+        },
         post: storyId,
       });
 
@@ -98,7 +102,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
    *
    */
   const uploadVideoFrame = useCallback(processData, [
-    getFirstFrameOfVideo,
+    storyId,
+    updateMediaElement,
     uploadFile,
     updateMedia,
     setProperties,

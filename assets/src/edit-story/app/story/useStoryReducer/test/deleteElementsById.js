@@ -26,17 +26,24 @@ describe('deleteElementsById', () => {
     // Set an initial state with a current page and some elements
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
       ],
       current: '111',
       selection: [],
     });
 
-    const result = deleteElementsById({ elementIds: ['123', '456'] });
+    const result = deleteElementsById({ elementIds: ['789', '456'] });
 
     expect(result).toStrictEqual({
       ...initialState,
-      pages: [{ id: '111', elements: [{ id: '789' }] }],
+      pages: [{ id: '111', elements: [{ id: '123', isBackground: true }] }],
     });
   });
 
@@ -46,17 +53,29 @@ describe('deleteElementsById', () => {
     // Set an initial state with a current page and some elements
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
       ],
       current: '111',
       selection: [],
     });
 
-    const result = deleteElementsById({ elementIds: ['123', '000'] });
+    const result = deleteElementsById({ elementIds: ['456', '000'] });
 
     expect(result).toStrictEqual({
       ...initialState,
-      pages: [{ id: '111', elements: [{ id: '456' }, { id: '789' }] }],
+      pages: [
+        {
+          id: '111',
+          elements: [{ id: '123', isBackground: true }, { id: '789' }],
+        },
+      ],
     });
   });
 
@@ -66,7 +85,14 @@ describe('deleteElementsById', () => {
     // Set an initial state with a current page and some elements
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
       ],
       current: '111',
       selection: [],
@@ -83,7 +109,14 @@ describe('deleteElementsById', () => {
     // Set an initial state with a current page and some elements
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
       ],
       current: '111',
       selection: [],
@@ -100,19 +133,70 @@ describe('deleteElementsById', () => {
     // Set an initial state with a current page and some elements
     const initialState = restore({
       pages: [
-        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '234' },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
       ],
       current: '111',
-      selection: ['123', '789'],
+      selection: ['234', '789'],
     });
 
-    // 123 is selected, 456 is not
-    const result = deleteElementsById({ elementIds: ['123', '456'] });
+    // 789 is selected, 456 is not
+    const result = deleteElementsById({ elementIds: ['789', '456'] });
 
     expect(result).toStrictEqual({
       ...initialState,
-      pages: [{ id: '111', elements: [{ id: '789' }] }],
-      selection: ['789'],
+      pages: [
+        {
+          id: '111',
+          elements: [{ id: '123', isBackground: true }, { id: '234' }],
+        },
+      ],
+      selection: ['234'],
+    });
+  });
+
+  it('should skip default background element if included', () => {
+    const { restore, deleteElementsById } = setupReducer();
+
+    // Set an initial state with a current page and some elements
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true, isDefaultBackground: true },
+            { id: '234' },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    // 123 is the default background element
+    const result = deleteElementsById({ elementIds: ['123', '789', '456'] });
+
+    expect(result).toStrictEqual({
+      ...initialState,
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true, isDefaultBackground: true },
+            { id: '234' },
+          ],
+        },
+      ],
+      selection: [],
     });
   });
 });

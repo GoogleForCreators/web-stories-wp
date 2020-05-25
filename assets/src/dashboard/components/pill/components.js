@@ -27,21 +27,16 @@ import { ReactComponent as CheckmarkIcon } from '../../icons/checkmark.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { BEZIER } from '../../constants';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
+import { TypographyPresets } from '../typography';
 
 export const ACTIVE_CHOICE_ICON_SIZE = 16;
 export const ACTIVE_CHOICE_LEFT_MARGIN = 4;
 
-export const PillContainer = styled.label(
-  ({ theme }) => `
-    display: inline-flex;
-    justify-content: center;
-    font-family: ${theme.fonts.pill.family};
-    font-weight: ${theme.fonts.pill.weight};
-    font-size: ${theme.fonts.pill.size}px;
-    line-height: ${theme.fonts.pill.lineHeight}px;
-    letter-spacing: ${theme.fonts.pill.letterSpacing}em;
-`
-);
+export const PillContainer = styled.label`
+  ${TypographyPresets.Small};
+  display: inline-flex;
+  justify-content: center;
+`;
 
 export const PillInput = styled.input`
   ${visuallyHiddenStyles}

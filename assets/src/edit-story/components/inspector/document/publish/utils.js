@@ -15,27 +15,35 @@
  */
 
 /**
- * External dependencies
+ * Adds 0 in front of the number if it's less than 10.
+ *
+ * @param {number} number Number to check.
+ * @return {string} Converted number.
  */
-import moment from 'moment';
+function ensureDoubleDigitNumber(number) {
+  // This could also be done via 0 + value and slicing, however, comparison is faster.
+  return number < 10 ? '0' + number : String(number);
+}
 
 export function getReadableDate(date, is12Hours = true) {
-  const displayDate = date ? moment(date) : moment();
+  const displayDate = date ? new Date(date) : new Date();
+  const day = ensureDoubleDigitNumber(displayDate.getDate());
+  const month = ensureDoubleDigitNumber(displayDate.getMonth() + 1);
   if (is12Hours) {
-    return `${displayDate.format('MM')}/${displayDate.format(
-      'DD'
-    )}/${displayDate.format('YYYY')}`;
+    return `${month}/${day}/${displayDate.getFullYear()}`;
   }
-  return `${displayDate.format('DD')}/${displayDate.format(
-    'MM'
-  )}/${displayDate.format('YYYY')}`;
+  return `${day}/${month}/${displayDate.getFullYear()}`;
 }
 
 export function getReadableTime(date, is12Hours = true) {
-  const displayTime = date ? moment(date) : moment();
-  const hourFormat = is12Hours ? 'hh' : 'HH';
-  const am = is12Hours ? displayTime.format('A') : '';
-  return `${displayTime.format(hourFormat)}:${displayTime.format('mm')}${am}`;
+  const displayTime = date ? new Date(date) : new Date();
+  const hours = is12Hours
+    ? displayTime.getHours() % 12 || 12
+    : displayTime.getHours();
+  const minutes = ensureDoubleDigitNumber(displayTime.getMinutes());
+  const am = displayTime.getHours() < 12 ? 'AM' : 'PM';
+  const displayedAm = is12Hours ? am : '';
+  return `${ensureDoubleDigitNumber(hours)}:${minutes}${displayedAm}`;
 }
 
 export function is12Hour(timeFormat) {

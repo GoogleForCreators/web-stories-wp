@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import moment from 'moment';
 import { actions } from '@storybook/addon-actions';
 
 /**
@@ -71,8 +72,10 @@ export const _default = () => {
         <CardTitle
           title="How to be a leader in the apocalpyse"
           author="Rick Grimes"
-          displayDate="4/4/2020"
+          displayDate={moment('04-04-2020', 'MM-DD-YYYY')}
           status={STORY_STATUS.DRAFT}
+          onEditCancel={() => {}}
+          onEditComplete={() => {}}
         />
       </CardGridItem>
     </CardGrid>
@@ -98,8 +101,10 @@ export const _publishedStory = () => {
         <CardTitle
           title="The 6 fingered man"
           author="Inigo Moñtoya"
-          displayDate="4/19/2020"
+          displayDate={moment('04-19-2020', 'MM-DD-YYYY')}
           status={STORY_STATUS.PUBLISHED}
+          onEditCancel={() => {}}
+          onEditComplete={() => {}}
         />
       </CardGridItem>
     </CardGrid>
@@ -129,7 +134,9 @@ export const _contextMenu = () => {
               title="Story Title"
               author="storybook author"
               status={STORY_STATUS.DRAFT}
-              displayDate={new Date()}
+              displayDate={moment('05-02-2020', 'MM-DD-YYYY')}
+              onEditCancel={() => {}}
+              onEditComplete={() => {}}
             />
             <CardItemMenu
               onMoreButtonSelected={setContextMenuId}

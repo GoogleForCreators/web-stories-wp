@@ -20,8 +20,13 @@
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useRef, useMemo, useEffect } from 'react';
+/**
+ * Internal dependencies
+ */
+import { TypographyPresets } from '../typography';
 
 export const Content = styled.div`
+  ${TypographyPresets.Small};
   visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
   position: absolute;
   border-radius: 2px;

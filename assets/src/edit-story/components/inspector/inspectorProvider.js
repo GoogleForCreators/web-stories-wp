@@ -34,7 +34,7 @@ const PREPUBLISH = 'prepublish';
 
 function InspectorProvider({ children }) {
   const {
-    actions: { getAllStatuses, getAllUsers },
+    actions: { getAllUsers },
   } = useAPI();
   const {
     state: { selectedElementIds, currentPage },
@@ -43,20 +43,20 @@ function InspectorProvider({ children }) {
 
   const [tab, setTab] = useState(DESIGN);
   const [users, setUsers] = useState([]);
-  const [statuses, setStatuses] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
   const tabRef = useRef(tab);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
-  const [isStatusesLoading, setIsStatusesLoading] = useState(false);
 
   const setInspectorContentNode = useCallback((node) => {
     inspectorContentRef.current = node;
   }, []);
 
-  useResizeEffect(inspectorContentRef, ({ height }) =>
-    setInspectorContentHeight(height)
+  useResizeEffect(
+    inspectorContentRef,
+    ({ height }) => setInspectorContentHeight(height),
+    []
   );
 
   useEffect(() => {
@@ -74,25 +74,6 @@ function InspectorProvider({ children }) {
       setTab(DESIGN);
     }
   }, [currentPage]);
-
-  const loadStatuses = useCallback(() => {
-    if (!isStatusesLoading && statuses.length === 0) {
-      setIsStatusesLoading(true);
-      getAllStatuses()
-        .then((data) => {
-          data = Object.values(data);
-          data = data.filter(({ show_in_list: isShown }) => isShown);
-          const saveData = data.map(({ slug, name }) => ({
-            value: slug,
-            name,
-          }));
-          setStatuses(saveData);
-        })
-        .finally(() => {
-          setIsStatusesLoading(false);
-        });
-    }
-  }, [isStatusesLoading, statuses.length, getAllStatuses]);
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
@@ -116,7 +97,6 @@ function InspectorProvider({ children }) {
     state: {
       tab,
       users,
-      statuses,
       inspectorContentHeight,
       isUsersLoading,
     },
@@ -125,7 +105,6 @@ function InspectorProvider({ children }) {
     },
     actions: {
       setTab,
-      loadStatuses,
       loadUsers,
       setInspectorContentNode,
     },

@@ -65,16 +65,16 @@ jobs:
         run: |
           echo 'assets/images/templates' >> .distignore
           npm run build:js
-          npm run workflow:build-plugin -- --cdn
-          npm run workflow:bundle-plugin web-stories-composer.zip -- --composer --skip-delete
-          npm run workflow:bundle-plugin web-stories.zip -- --skip-delete
+          npm run workflow:version -- --nightly
+          npm run workflow:build-plugin -- --cdn --composer --zip web-stories-composer.zip
+          npm run workflow:build-plugin -- --cdn --zip web-stories.zip
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          NODE_ENV=development npx webpack
-          npm run workflow:build-plugin
-          npm run workflow:bundle-plugin web-stories-dev.zip -- --skip-delete
+          NODE_ENV=development npx webpack --config webpack.config.cjs
+          npm run workflow:version -- --nightly
+          npm run workflow:build-plugin -- --cdn --zip web-stories-dev.zip
 
       - name: Upload full bundle
         uses: actions/upload-artifact@v2

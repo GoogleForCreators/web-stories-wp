@@ -19,7 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useEffect, useState, useCallback, useContext } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useContext } from '../../utils/context';
 
 /**
  * Internal dependencies

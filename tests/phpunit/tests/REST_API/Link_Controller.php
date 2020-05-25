@@ -173,7 +173,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( 1, $this->request_count );
 
 		$this->assertNotEmpty( $data );
-		$this->assertEqualSets( $expected, $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
 	public function test_example_url() {
@@ -194,7 +194,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( 1, $this->request_count );
 
 		$this->assertNotEmpty( $data );
-		$this->assertEqualSets( $expected, $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
 	public function test_valid_url() {
@@ -215,7 +215,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( 1, $this->request_count );
 
 		$this->assertNotEmpty( $data );
-		$this->assertEqualSets( $expected, $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
 	public function test_removes_trailing_slashes() {
@@ -237,6 +237,6 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( 1, $this->request_count );
 
 		$this->assertNotEmpty( $data );
-		$this->assertEqualSets( $expected, $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 }

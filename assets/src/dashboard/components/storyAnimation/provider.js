@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -26,6 +27,12 @@ import {
   useRef,
 } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
+
+/**
+ * Internal dependencies
+ */
+import { AnimationPart } from '../../animations/parts';
 
 const Context = createContext(null);
 
@@ -49,24 +56,31 @@ const createOnFinishPromise = (animation) => {
 };
 
 function Provider({ animations, children, onWAAPIFinish }) {
-  const animationGeneratorMap = useMemo(() => {
+  const animationPartsMap = useMemo(() => {
     return (animations || []).reduce((map, animation) => {
       const { targets, type, ...args } = animation;
 
       (targets || []).forEach((t) => {
-        const animationGenerators = map.get(t) || [];
-        map.set(t, [...animationGenerators, (fn) => fn(type, args)]);
+        const generatedParts = map.get(t) || [];
+        map.set(t, [...generatedParts, AnimationPart(type, args)]);
       });
 
       return map;
     }, new Map());
   }, [animations]);
 
-  const getAnimationGenerators = useCallback(
+  const providerId = useMemo(() => uuidv4(), []);
+
+  const animationTargets = useMemo(
+    () => Array.from(animationPartsMap?.keys() || []),
+    [animationPartsMap]
+  );
+
+  const getAnimationParts = useCallback(
     (target) => {
-      return animationGeneratorMap.get(target) || [];
+      return animationPartsMap?.get(target) || [];
     },
-    [animationGeneratorMap]
+    [animationPartsMap]
   );
 
   /**
@@ -130,14 +144,22 @@ function Provider({ animations, children, onWAAPIFinish }) {
   const value = useMemo(
     () => ({
       state: {
-        getAnimationGenerators,
+        providerId,
+        animationTargets,
       },
       actions: {
+        getAnimationParts,
         hoistWAAPIAnimation,
         playWAAPIAnimations,
       },
     }),
-    [getAnimationGenerators, hoistWAAPIAnimation, playWAAPIAnimations]
+    [
+      providerId,
+      getAnimationParts,
+      animationTargets,
+      hoistWAAPIAnimation,
+      playWAAPIAnimations,
+    ]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

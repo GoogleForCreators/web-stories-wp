@@ -55,8 +55,5 @@ describe('getPreviewText', () => {
 
     const radialResult = getPreviewText({ type: 'radial' });
     expect(radialResult).toBe('Radial');
-
-    const conicResult = getPreviewText({ type: 'conic' });
-    expect(conicResult).toBe('Conic');
   });
 });

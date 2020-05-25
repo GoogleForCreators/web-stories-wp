@@ -26,6 +26,7 @@ import { useEffect, useState, useRef } from 'react';
  */
 import { KEYS, Z_INDEX } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
+import { TypographyPresets } from '../typography';
 
 export const Menu = styled.ul`
   ${({ theme, isOpen }) => `
@@ -48,21 +49,17 @@ Menu.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-const MenuItem = styled.li(
-  ({ theme, isDisabled, isHovering }) => `
+const MenuItem = styled.li`
+  ${TypographyPresets.Small};
+  ${({ theme, isDisabled, isHovering }) => `
     padding: 10px 20px;
     background: ${isHovering ? theme.colors.gray25 : 'none'};
     color: ${theme.colors.gray700};
     cursor: ${isDisabled ? 'default' : 'pointer'};
     display: flex;
-    font-family: ${theme.fonts.typeaheadOptions.family};
-    font-size: ${theme.fonts.typeaheadOptions.size}px;
-    line-height: ${theme.fonts.typeaheadOptions.lineHeight}px;
-    font-weight: ${theme.fonts.typeaheadOptions.weight};
-    letter-spacing: ${theme.fonts.typeaheadOptions.letterSpacing}em;
     width: 100%;
-  `
-);
+  `}
+`;
 MenuItem.propTypes = {
   isDisabled: PropTypes.bool,
   isHovering: PropTypes.bool,

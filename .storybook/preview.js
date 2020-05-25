@@ -35,6 +35,8 @@ import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
 } from '../assets/src/dashboard/theme';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
+import { ConfigProvider } from '../assets/src/dashboard/app/config';
+import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -70,9 +72,15 @@ addDecorator((story, { id }) => {
   if (useDashboardTheme) {
     return (
       <ThemeProvider theme={dashboardTheme}>
-        <DashboardGlobalStyle />
-        <DashboardKeyboardOnlyOutline />
-        {story()}
+        <ConfigProvider
+          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
+        >
+          <ApiProvider>
+            <DashboardGlobalStyle />
+            <DashboardKeyboardOnlyOutline />
+            {story()}
+          </ApiProvider>
+        </ConfigProvider>
       </ThemeProvider>
     );
   }

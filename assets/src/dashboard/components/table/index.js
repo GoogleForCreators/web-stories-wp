@@ -18,13 +18,15 @@
  * External dependencies
  */
 import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { TypographyPresets } from '../typography';
 
 export const Table = styled.table`
+  ${TypographyPresets.Small};
   border-collapse: collapse;
   width: inherit;
-  font-family: ${({ theme }) => theme.fonts.table.family};
-  font-size: ${({ theme }) => theme.fonts.table.size}px;
-  letter-spacing: ${({ theme }) => theme.fonts.table.letterSpacing}em;
 `;
 
 export const TableBody = styled.tbody``;
@@ -37,7 +39,7 @@ export const TableHeader = styled.thead`
 
 export const TableHeaderCell = styled.th`
   padding: ${({ theme }) => theme.table.headerCellPadding}px;
-  font-weight: ${({ theme }) => theme.fonts.table.weight};
+  font-weight: ${({ theme }) => theme.typography.weight.normal};
   color: ${({ theme }) => theme.colors.gray500};
   text-align: left;
 `;
@@ -98,8 +100,8 @@ export const TableRow = styled.tr``;
 
 export const TableCell = styled.td`
   padding: ${({ theme }) => theme.table.cellPadding}px;
-  font-weight: ${({ theme }) => theme.fonts.table.weight};
-  font-size: ${({ theme }) => theme.fonts.table.size}px;
+  font-weight: ${({ theme }) => theme.typography.weight.normal};
+  font-size: ${({ theme }) => theme.typography.presets.s.size}px;
   color: ${({ theme }) => theme.colors.gray900};
   height: ${({ theme }) => theme.table.cellPadding * 2 + 50}px;
   vertical-align: middle;

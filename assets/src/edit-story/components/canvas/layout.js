@@ -217,9 +217,11 @@ const PageArea = forwardRef(
     ref
   ) => {
     return (
-      <PageAreaFullbleedContainer ref={fullbleedRef}>
+      <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
         <PageAreaOverflowHidden>
-          <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
+          <PageAreaSafeZone ref={ref} data-testid="safezone">
+            {children}
+          </PageAreaSafeZone>
           {showDangerZone && (
             <>
               <PageAreaDangerZoneTop />

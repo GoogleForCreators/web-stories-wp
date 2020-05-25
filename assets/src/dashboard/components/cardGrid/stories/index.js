@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import moment from 'moment';
 import { text } from '@storybook/addon-knobs';
 
 /**
@@ -58,7 +59,9 @@ const StorybookGridItem = (
       title="Story Title"
       author={'Ron Weasley'}
       status={STORY_STATUS.DRAFT}
-      displayDate={'Modified 2 minutes ago'}
+      displayDate={moment().subtract(2, 'minutes')}
+      onEditCancel={() => {}}
+      onEditComplete={() => {}}
     />
   </CardGridItem>
 );

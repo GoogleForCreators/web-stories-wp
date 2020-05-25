@@ -15,61 +15,25 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useContext, useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import {
-  InfiniteScroller,
-  ScrollToTop,
-  Layout,
-  StandardViewContentGutter,
-  ToggleButtonGroup,
-} from '../../../components';
-import {
-  VIEW_STYLE,
-  STORY_STATUSES,
-  DASHBOARD_VIEWS,
-  STORY_SORT_MENU_ITEMS,
-  STORY_ITEM_CENTER_ACTION_LABELS,
-} from '../../../constants';
-import { useDashboardResultsLabel, useStoryView } from '../../../utils';
+import { ScrollToTop, Layout } from '../../../components';
+import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
+import { useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
-import FontProvider from '../../font/fontProvider';
-import {
-  BodyViewOptions,
-  PageHeading,
-  NoResults,
-  StoryGridView,
-  StoryListView,
-  HeaderToggleButtonContainer,
-} from '../shared';
-
-const DefaultBodyText = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-weight: ${({ theme }) => theme.fonts.body1.weight};
-  font-size: ${({ theme }) => theme.fonts.body1.size}px;
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing}em;
-  color: ${({ theme }) => theme.colors.gray200};
-  margin: 40px 20px;
-`;
+import { useConfig } from '../../config';
+import Content from './content';
+import Header from './header';
 
 function MyStories() {
   const {
     actions: {
-      storyApi: { updateStory, fetchStories, trashStory, duplicateStory },
+      storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
       templateApi: { createTemplateFromStory },
     },
     state: {
@@ -78,43 +42,38 @@ function MyStories() {
         isLoading,
         stories,
         storiesOrderById,
-        totalStoriesByStatus,
         totalPages,
+        totalStoriesByStatus,
       },
-      tags,
       categories,
+      tags,
       users,
     },
   } = useContext(ApiContext);
 
-  const { view, sort, filter, page, search } = useStoryView({
+  const { filter, page, search, sort, view } = useStoryView({
     filters: STORY_STATUSES,
     totalPages,
   });
 
-  const resultsLabel = useDashboardResultsLabel({
-    isActiveSearch: Boolean(search.keyword),
-    currentFilter: filter.value,
-    totalResults: totalStoriesByStatus?.all,
-    view: DASHBOARD_VIEWS.MY_STORIES,
-  });
+  const { wpListURL } = useConfig();
 
   useEffect(() => {
     fetchStories({
-      sortOption: sort.value,
+      page: page.value,
       searchTerm: search.keyword,
       sortDirection: view.style === VIEW_STYLE.LIST && sort.direction,
+      sortOption: sort.value,
       status: filter.value,
-      page: page.value,
     });
   }, [
-    view.style,
-    sort.direction,
-    page.value,
-    sort.value,
-    filter.value,
-    search.keyword,
     fetchStories,
+    filter.value,
+    page.value,
+    search.keyword,
+    sort.direction,
+    sort.value,
+    view.style,
   ]);
 
   const orderedStories = useMemo(() => {
@@ -123,157 +82,42 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
-  const storiesView = useMemo(() => {
-    switch (view.style) {
-      case VIEW_STYLE.GRID:
-        return (
-          <StoryGridView
-            trashStory={trashStory}
-            updateStory={updateStory}
-            createTemplateFromStory={createTemplateFromStory}
-            duplicateStory={duplicateStory}
-            stories={orderedStories}
-            users={users}
-            centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
-            bottomActionLabel={__('Open in editor', 'web-stories')}
-          />
-        );
-      case VIEW_STYLE.LIST:
-        return (
-          <StoryListView
-            stories={orderedStories}
-            storySort={sort.value}
-            storyStatus={filter.value}
-            sortDirection={sort.direction}
-            handleSortChange={sort.set}
-            handleSortDirectionChange={sort.setDirection}
-            tags={tags}
-            categories={categories}
-            users={users}
-          />
-        );
-      default:
-        return null;
-    }
-  }, [
-    view.style,
-    trashStory,
-    updateStory,
-    createTemplateFromStory,
-    duplicateStory,
-    orderedStories,
-    filter.value,
-    sort,
-    tags,
-    categories,
-    users,
-  ]);
-
-  const storiesViewControls = useMemo(() => {
-    return (
-      <BodyViewOptions
-        showGridToggle
-        resultsLabel={resultsLabel}
-        layoutStyle={view.style}
-        handleLayoutSelect={view.toggleStyle}
-        currentSort={sort.value}
-        pageSortOptions={STORY_SORT_MENU_ITEMS}
-        handleSortChange={sort.set}
-        sortDropdownAriaLabel={__(
-          'Choose sort option for display',
-          'web-stories'
-        )}
-      />
-    );
-  }, [sort, resultsLabel, view]);
-
-  const BodyContent = useMemo(() => {
-    if (orderedStories.length > 0) {
-      return (
-        <StandardViewContentGutter>
-          {storiesView}
-          <InfiniteScroller
-            canLoadMore={!allPagesFetched}
-            isLoading={isLoading}
-            allDataLoadedMessage={__('No more stories', 'web-stories')}
-            onLoadMore={page.requestNextPage}
-          />
-        </StandardViewContentGutter>
-      );
-    } else if (search.keyword.length > 0) {
-      return <NoResults typeaheadValue={search.keyword} />;
-    }
-
-    return (
-      <DefaultBodyText>
-        {__('Create a story to get started!', 'web-stories')}
-      </DefaultBodyText>
-    );
-  }, [
-    orderedStories.length,
-    isLoading,
-    allPagesFetched,
-    page.requestNextPage,
-    search.keyword,
-    storiesView,
-  ]);
-
-  const HeaderToggleButtons = useMemo(() => {
-    if (
-      totalStoriesByStatus &&
-      Object.keys(totalStoriesByStatus).length === 0
-    ) {
-      return null;
-    }
-
-    return (
-      <HeaderToggleButtonContainer>
-        <ToggleButtonGroup
-          buttons={STORY_STATUSES.map((storyStatus) => {
-            return {
-              handleClick: () => filter.set(storyStatus.value),
-              key: storyStatus.value,
-              isActive: filter.value === storyStatus.value,
-              disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
-              text: `${storyStatus.label} ${
-                totalStoriesByStatus?.[storyStatus.status]
-                  ? `(${totalStoriesByStatus?.[storyStatus.status]})`
-                  : ''
-              }`,
-            };
-          })}
-        />
-      </HeaderToggleButtonContainer>
-    );
-  }, [filter, totalStoriesByStatus]);
-
   return (
-    <FontProvider>
-      <TransformProvider>
-        <Layout.Provider>
-          <Layout.Squishable>
-            <PageHeading
-              defaultTitle={__('My Stories', 'web-stories')}
-              searchPlaceholder={__('Search Stories', 'web-stories')}
-              stories={orderedStories}
-              handleTypeaheadChange={search.setKeyword}
-              typeaheadValue={search.keyword}
-            >
-              {HeaderToggleButtons}
-            </PageHeading>
-            {storiesViewControls}
-          </Layout.Squishable>
-          <Layout.Scrollable>
-            <UnitsProvider pageSize={view.pageSize}>
-              {BodyContent}
-            </UnitsProvider>
-          </Layout.Scrollable>
-          <Layout.Fixed>
-            <ScrollToTop />
-          </Layout.Fixed>
-        </Layout.Provider>
-      </TransformProvider>
-    </FontProvider>
+    <Layout.Provider>
+      <Header
+        filter={filter}
+        search={search}
+        sort={sort}
+        stories={orderedStories}
+        totalStoriesByStatus={totalStoriesByStatus}
+        view={view}
+        wpListURL={wpListURL}
+      />
+
+      <Content
+        allPagesFetched={allPagesFetched}
+        categories={categories}
+        filter={filter}
+        isLoading={isLoading}
+        page={page}
+        search={search}
+        sort={sort}
+        stories={orderedStories}
+        storyActions={{
+          createTemplateFromStory,
+          duplicateStory,
+          trashStory,
+          updateStory,
+        }}
+        tags={tags}
+        users={users}
+        view={view}
+      />
+
+      <Layout.Fixed>
+        <ScrollToTop />
+      </Layout.Fixed>
+    </Layout.Provider>
   );
 }
 
