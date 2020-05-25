@@ -76,7 +76,7 @@
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/addon-storysource": "^5.3.18",
     "@storybook/addon-viewport": "^5.3.19",
-    "@storybook/client-api": "^5.3.18",
+    "@storybook/client-api": "^5.3.19",
     "@storybook/react": "^5.3.18",
     "@svgr/webpack": "^5.4.0",
     "@testing-library/dom": "^7.5.7",
