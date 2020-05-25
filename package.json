@@ -38,7 +38,7 @@
     "draftjs-filters": "^2.3.0",
     "flagged": "^1.1.0",
     "history": "^4.10.1",
-    "mockdate": "^2.0.5",
+    "mockdate": "^3.0.2",
     "moment": "^2.26.0",
     "mousetrap": "^1.6.5",
     "patch-package": "^6.2.2",
