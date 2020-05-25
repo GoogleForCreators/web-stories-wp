@@ -80,6 +80,15 @@ function StatusPanel() {
       name: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
     });
+  } else {
+    visibilityOptions.push({
+      value: 'pending',
+      name: __('Pending review', 'web-stories'),
+      helper: __(
+        'Submitted for review so that an Editor can approve it for you',
+        'web-stories'
+      ),
+    });
   }
 
   const passwordProtected = 'protected';

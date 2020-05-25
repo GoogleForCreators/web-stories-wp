@@ -177,19 +177,21 @@ function Publish() {
   const hasFutureDate = Date.now() < Date.parse(date);
 
   const handlePublish = useCallback(() => {
-    saveStory({ status: 'publish' });
+    const status = !capabilities?.hasPublishAction ? 'pending' : 'publish';
+    saveStory({ status });
     refreshPostEditURL();
-  }, [refreshPostEditURL, saveStory]);
+  }, [refreshPostEditURL, saveStory, capabilities]);
 
-  const text = hasFutureDate
+  let text = hasFutureDate
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
 
+  if (!capabilities?.hasPublishAction) {
+    text = __('Submit to review', 'web-stories');
+  }
+
   return (
-    <Primary
-      onClick={handlePublish}
-      isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
-    >
+    <Primary onClick={handlePublish} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );
@@ -234,6 +236,9 @@ function Update() {
 
   let text;
   switch (status) {
+    case 'pending':
+      text = __('Submit to review', 'web-stories');
+      break;
     case 'publish':
     case 'private':
       text = __('Update', 'web-stories');
