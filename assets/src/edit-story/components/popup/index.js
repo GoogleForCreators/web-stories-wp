@@ -67,6 +67,9 @@ const Container = styled.div.attrs(
     },
   })
 )`
+  max-height: ${({ maxHeight }) =>
+    maxHeight > 0 ? maxHeight + 'px' : 'initial'};
+  overflow-y: auto;
   position: fixed;
   z-index: 2147483646;
   ${({ placement }) => getTransforms(placement)}
@@ -112,6 +115,7 @@ function Popup({
   isOpen,
   fillWidth = false,
   fillHeight = false,
+  maxHeight = 0,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -163,6 +167,7 @@ function Popup({
           fillHeight={fillHeight}
           placement={placement}
           obtrusiveScrollbars={obtrusiveScrollbars}
+          maxHeight={maxHeight}
         >
           {children}
         </Container>,

@@ -65,3 +65,16 @@ export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
 export const CategoriesPropType = PropTypes.objectOf(CategoryPropType)
   .isRequired;
 export const UsersPropType = PropTypes.objectOf(UserPropType);
+
+export const StoryActionsPropType = PropTypes.shape({
+  createTemplateFromStory: PropTypes.func,
+  duplicateStory: PropTypes.func,
+  trashStory: PropTypes.func,
+  updateStory: PropTypes.func,
+});
+
+export const TotalStoriesByStatusPropType = PropTypes.shape({
+  all: PropTypes.number,
+  draft: PropTypes.number,
+  publish: PropTypes.number,
+});

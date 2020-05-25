@@ -112,7 +112,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         poster: storyData?.poster,
       });
     }
-  }, [outerURL, storyData, setAttributes]);
+  }, [outerURL, setAttributes, storyData?.title, storyData?.poster]);
 
   const onSubmit = useCallback(
     (event) => {
