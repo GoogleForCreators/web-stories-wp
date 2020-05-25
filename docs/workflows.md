@@ -6,8 +6,8 @@ To create a build of the plugin for installing in WordPress as a ZIP package, ru
 
 ```bash
 npm run build # Build JS
-npm run workflow:build-plugin # Updates version numbers and the like
-npm run workflow:bundle-plugin # Creates a ready-to-use ZIP file
+npm run workflow:version [version] # Bump version number
+npm run workflow:build-plugin -- [--composer] [--cdn  [url]] [--zip [filename] [--clean] # Creates a full build.
 ```
 
 ## Update list of available fonts
@@ -22,11 +22,11 @@ Once obtained, follow these steps to configure the project appropriately:
 
 ```bash
 export GOOGLE_FONTS_API_KEY=your-api-key
-npm run build:fonts
+npm run workflow:build-fonts
 ```
 
 This script does the following:
 
-1. Downloads all available fonts from Google Fonts to `includes/data/fonts.json`.
+1. Downloads all available fonts from Google Fonts
 1. Merges font list with a set of system fonts and prepares them for usage in the editor.
 1. Saves changes to `includes/data/fonts.json`.

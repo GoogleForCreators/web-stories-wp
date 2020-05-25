@@ -53,8 +53,10 @@ function InspectorProvider({ children }) {
     inspectorContentRef.current = node;
   }, []);
 
-  useResizeEffect(inspectorContentRef, ({ height }) =>
-    setInspectorContentHeight(height)
+  useResizeEffect(
+    inspectorContentRef,
+    ({ height }) => setInspectorContentHeight(height),
+    []
   );
 
   useEffect(() => {

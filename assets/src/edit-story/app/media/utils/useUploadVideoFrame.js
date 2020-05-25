@@ -102,7 +102,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
    *
    */
   const uploadVideoFrame = useCallback(processData, [
-    getFirstFrameOfVideo,
+    storyId,
+    updateMediaElement,
     uploadFile,
     updateMedia,
     setProperties,
