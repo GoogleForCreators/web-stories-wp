@@ -49,7 +49,8 @@ const Container = styled.div`
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
   overflow: auto;
-  padding: 1em 1.5em 0 1.5em;
+  padding: 0 1.5em 0 1.5em;
+  margin-top: 1em;
 `;
 
 const Column = styled.div`
