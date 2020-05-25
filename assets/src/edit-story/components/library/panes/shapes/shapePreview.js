@@ -55,10 +55,10 @@ function ShapePreview({ mask }) {
   // component with large paddings, and only drags the svg part of it.
   const pathRef = createRef();
 
-  // Contains the props to be passed in for insertElement() calls in order
+  // Contains the data to be passed in for insertElement() calls in order
   // to insert the correct shape.
-  const props = {
-    backgroundColor: createSolid(51, 51, 51),
+  const shapeData = {
+    backgroundColor: createSolid(255, 255, 255),
     width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
     height: DEFAULT_ELEMENT_WIDTH,
     mask: {
@@ -81,17 +81,17 @@ function ShapePreview({ mask }) {
   // to be used in an [insertElement] call on the drop handler.
   const onDragStart = (e) => {
     e.dataTransfer.setDragImage(pathRef.current, 0, 0);
-    e.dataTransfer.setData('shape', JSON.stringify(props));
+    e.dataTransfer.setData('shape', JSON.stringify(shapeData));
   };
 
   return (
     <ShapePreviewContainer
       key={mask.type}
       draggable={true}
-      data-testid="preview"
+      aria-label={mask.name}
       onClick={() => {
         // Shapes inserted with a specific size.
-        insertElement('shape', props);
+        insertElement('shape', shapeData);
       }}
       onDragStart={onDragStart}
     >

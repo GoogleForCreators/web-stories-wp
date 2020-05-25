@@ -46,15 +46,13 @@ describe('ShapePreview', () => {
     }));
   });
 
-  it('should be draggable', async () => {
+  it('should be draggable', () => {
     let shapePreviewElement;
     act(() => {
-      const { getByTestId } = renderWithTheme(
+      const { getByLabelText } = renderWithTheme(
         <ShapePreview mask={rectangleMask} />
       );
-
-      // Test that the drag event has the right data transfer object...
-      shapePreviewElement = getByTestId('preview');
+      shapePreviewElement = getByLabelText(rectangleMask.name);
     });
 
     expect(shapePreviewElement).toHaveAttribute('draggable');
