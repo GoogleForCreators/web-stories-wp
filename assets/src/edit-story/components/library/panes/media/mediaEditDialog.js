@@ -34,7 +34,7 @@ import Dialog from '../../../../components/dialog';
 import { Plain } from '../../../../components/button';
 import { useSnackbar } from '../../../../app/snackbar';
 import UseMedia from '../../../../app/media/useMedia';
-import useSmallestImage from './useSmallestImage';
+import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 
 const styledMediaThumbnail = css`
   display: flex;
@@ -137,7 +137,6 @@ function MediaEditDialog({ resource, onClose }) {
   } = UseMedia();
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
-  const imageSrc = useSmallestImage(resource);
 
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
@@ -160,18 +159,18 @@ function MediaEditDialog({ resource, onClose }) {
   return (
     <Dialog
       open={true}
-      onClose={() => onClose()}
+      onClose={onClose}
       title={type == 'image' ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
-          <Plain onClick={() => onClose()}>{__('Cancel', 'web-stories')}</Plain>
+          <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
           <Plain onClick={updateMediaItem}>{__('Save', 'web-stories')}</Plain>
         </>
       }
     >
       <DialogBody>
         {type == 'image' ? (
-          <Image src={imageSrc} alt={alt} loading={'lazy'} />
+          <Image src={getThumbnailUrl(resource)} alt={alt} loading={'lazy'} />
         ) : (
           <Video key={src} poster={poster} preload="none" muted>
             <source src={src} type={mimeType} />
@@ -204,8 +203,8 @@ function MediaEditDialog({ resource, onClose }) {
 }
 
 MediaEditDialog.propTypes = {
-  resource: PropTypes.object,
-  onClose: PropTypes.func,
+  resource: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default MediaEditDialog;

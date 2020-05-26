@@ -20,7 +20,7 @@
  * @param {*} resource Image resource object.
  * @return {string} Source URL of the smallest available size image.
  */
-function useSmallestImage(resource) {
+function getThumbnailUrl(resource) {
   const { src, sizes } = resource;
 
   let imageSrc = src;
@@ -37,4 +37,4 @@ function useSmallestImage(resource) {
   return imageSrc;
 }
 
-export default useSmallestImage;
+export default getThumbnailUrl;

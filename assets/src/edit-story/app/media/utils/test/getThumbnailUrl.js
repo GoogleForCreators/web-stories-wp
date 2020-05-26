@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
-import useSmallestImage from '../panes/media/useSmallestImage';
+import getThumbnailUrl from '../getThumbnailUrl';
 
-describe('useSmallestImage', () => {
+describe('getThumbnailUrl', () => {
   it('should return the smallest available image URL (thumbnail < large < full < default)', () => {
     const resource = {
       src: 'default-url',
@@ -29,7 +29,7 @@ describe('useSmallestImage', () => {
         large: { source_url: 'large-url' },
       },
     };
-    expect(useSmallestImage(resource)).toBe('thumbnail-url');
+    expect(getThumbnailUrl(resource)).toBe('thumbnail-url');
   });
 
   it('should return the smallest available image URL (large < full < default)', () => {
@@ -40,7 +40,7 @@ describe('useSmallestImage', () => {
         large: { source_url: 'large-url' },
       },
     };
-    expect(useSmallestImage(resource)).toBe('large-url');
+    expect(getThumbnailUrl(resource)).toBe('large-url');
   });
 
   it('should return the smallest available image URL (full < default)', () => {
@@ -50,11 +50,11 @@ describe('useSmallestImage', () => {
         full: { source_url: 'full-url' },
       },
     };
-    expect(useSmallestImage(resource)).toBe('full-url');
+    expect(getThumbnailUrl(resource)).toBe('full-url');
   });
 
   it('should return the default src URL if no alternatives', () => {
     const resource = { src: 'default-url' };
-    expect(useSmallestImage(resource)).toBe('default-url');
+    expect(getThumbnailUrl(resource)).toBe('default-url');
   });
 });

@@ -29,7 +29,7 @@ import { useFeature } from 'flagged';
  */
 import { useDropTargets } from '../../../../app';
 import { ReactComponent as Play } from '../../../../icons/play.svg';
-import useSmallestImage from './useSmallestImage';
+import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from './dropDownMenu';
 
 const styledTiles = css`
@@ -225,7 +225,7 @@ const MediaElement = ({
       >
         <Image
           key={src}
-          src={useSmallestImage(resource)}
+          src={getThumbnailUrl(resource)}
           ref={mediaElement}
           width={width}
           height={height}
