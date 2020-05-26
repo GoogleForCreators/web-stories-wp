@@ -90,7 +90,7 @@ function Toggle({
           onChange={() => onChange(!value)}
           disabled={disabled}
           title={title}
-          ariaLabel={ariaLabel}
+          aria-label={ariaLabel}
           {...rest}
         />
         <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>

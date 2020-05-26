@@ -55,6 +55,7 @@ function LockedPaddingControls({ padding, handleChange }) {
             vertical: value,
           })
         }
+        ariaLabel={__('Edit: Horizontal & Vertical padding', 'web-stories')}
       />
       <Space />
       <Toggle
@@ -63,6 +64,7 @@ function LockedPaddingControls({ padding, handleChange }) {
         uncheckedIcon={<Unlocked />}
         value={true}
         onChange={() => handleChange({ locked: false })}
+        ariaLabel={__('Toggle padding ratio lock', 'web-stories')}
       />
     </>
   );

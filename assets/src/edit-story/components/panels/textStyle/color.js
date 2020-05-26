@@ -24,7 +24,7 @@ import { useRef } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -120,6 +120,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
           value={color}
           onChange={handleSetColor}
           colorPickerActions={getColorPickerActions}
+          label={__('Text color', 'web-stories')}
         />
       </Row>
       <FillRow ref={fillRow}>
@@ -130,6 +131,11 @@ function ColorControls({ selectedElements, pushUpdate }) {
             icon={<Icon />}
             value={backgroundTextMode === mode}
             label={label}
+            ariaLabel={sprintf(
+              /* translators: %s: Text background mode. */
+              __('Set text background mode: %s', 'web-stories'),
+              mode
+            )}
             onChange={(value) =>
               value &&
               pushUpdate(

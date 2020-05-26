@@ -108,6 +108,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'left' : '' }, true)
           }
+          ariaLabel={__('Align: left', 'web-stories')}
         />
         <ToggleButton
           icon={<CenterAlign />}
@@ -115,6 +116,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'center' : '' }, true)
           }
+          ariaLabel={__('Align: center', 'web-stories')}
         />
         <ToggleButton
           icon={<RightAlign />}
@@ -122,6 +124,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'right' : '' }, true)
           }
+          ariaLabel={__('Align: right', 'web-stories')}
         />
         <ToggleButton
           icon={<MiddleAlign />}
@@ -129,6 +132,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'justify' : '' }, true)
           }
+          ariaLabel={__('Align: justify', 'web-stories')}
         />
         <ToggleButton
           data-testid="boldToggle"
@@ -137,6 +141,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           iconWidth={9}
           iconHeight={10}
           onChange={handleClickBold}
+          ariaLabel={__('Toggle: bold', 'web-stories')}
         />
         <ToggleButton
           icon={<ItalicIcon />}
@@ -156,6 +161,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
             );
             handleClickItalic(value);
           }}
+          ariaLabel={__('Toggle: italic', 'web-stories')}
         />
         <ToggleButton
           icon={<UnderlineIcon />}
@@ -163,6 +169,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           iconWidth={8}
           iconHeight={21}
           onChange={handleClickUnderline}
+          ariaLabel={__('Toggle: underline', 'web-stories')}
         />
       </Row>
     </>
