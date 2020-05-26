@@ -17,16 +17,13 @@
  * External dependencies
  */
 import { useEffect, useMemo, useState, useRef } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * Internal dependencies
  */
 import theme from '../theme';
-import {
-  DASHBOARD_LEFT_NAV_WIDTH,
-  PAGE_RATIO,
-  TOP_LEVEL_DASHBOARD_APP_ID,
-} from '../constants';
+import { DASHBOARD_LEFT_NAV_WIDTH, PAGE_RATIO, WPBODY_ID } from '../constants';
 import { useResizeEffect } from './';
 
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
@@ -50,9 +47,14 @@ const sizeFromWidth = (
   width,
   { bp, respectSetWidth, availableContainerSpace }
 ) => {
-  if (respectSetWidth || !bp) {
+  if (respectSetWidth) {
     return { width, height: width / PAGE_RATIO };
   }
+
+  if (bp === 'desktop') {
+    availableContainerSpace -= DASHBOARD_LEFT_NAV_WIDTH;
+  }
+
   const itemsInRow = Math.floor(availableContainerSpace / width);
   const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
   const pageGutter = theme.standardViewContentGutter[bp] * 2;
@@ -61,46 +63,43 @@ const sizeFromWidth = (
   const addToWidthValue = remainingSpace / itemsInRow;
 
   const trueWidth = width + addToWidthValue;
-
   return {
     width: trueWidth,
     height: trueWidth / PAGE_RATIO,
   };
 };
 
-// we want to set the size of story pages based on the available space
-const getTrueInnerWidth = (availableWindowWidth) => {
-  if (availableWindowWidth >= theme.breakpoint.raw.tablet) {
-    return availableWindowWidth - DASHBOARD_LEFT_NAV_WIDTH;
-  } else {
-    return availableWindowWidth;
-  }
-};
-
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
-  const dashboardContainerRef = useRef(
-    document.getElementById(TOP_LEVEL_DASHBOARD_APP_ID)
-  );
+  // When the dashboard is pulled out of wordpress this id will need to be updated.
+  // For now, we need to grab wordpress instead because of how the app's rendered
+  const dashboardContainerRef = useRef(document.getElementById(WPBODY_ID));
+  // BP is contingent on the actual window size
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [bp, setBp] = useState(getCurrentBp(viewportWidth));
+
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
-    getTrueInnerWidth(
-      dashboardContainerRef.current?.offsetWidth || window.innerWidth
-    )
+    dashboardContainerRef.current?.offsetWidth || window.innerWidth
   );
-  const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
+
+  const [debounceSetViewportWidth] = useDebouncedCallback((width) => {
+    setViewportWidth(width);
+  }, 500);
 
   useEffect(() => {
-    setBp(getCurrentBp(availableContainerSpace));
-  }, [availableContainerSpace]);
+    setBp(getCurrentBp(viewportWidth));
+  }, [viewportWidth]);
 
   useResizeEffect(
     dashboardContainerRef,
-    (dashboardContainerRefCurrent) => {
-      setAvailableContainerSpace(
-        getTrueInnerWidth(dashboardContainerRefCurrent.width)
-      );
+    ({ width }) => {
+      setAvailableContainerSpace(width);
+
+      if (window.innerWidth !== viewportWidth) {
+        debounceSetViewportWidth(window.innerWidth);
+      }
     },
-    []
+    [setAvailableContainerSpace, viewportWidth, debounceSetViewportWidth]
   );
 
   return useMemo(
