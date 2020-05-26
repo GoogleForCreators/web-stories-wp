@@ -36,11 +36,17 @@ module.exports = function (config) {
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine', 'karma-puppeteer-client'],
 
-    // Base path that will be used to resolve all patterns (eg. files, exclude).
-    basePath: 'assets/src/edit-story',
-
     // list of files / patterns to load in the browser
-    files: [{ pattern: '**/karma/**/*.js', watched: false }],
+    files: [
+      { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
+      {
+        pattern: '__static__/**/*',
+        watched: false,
+        included: false,
+        served: true,
+        nocache: false,
+      },
+    ],
 
     // list of files / patterns to exclude
     exclude: ['**/test/**/*.js'],
@@ -48,7 +54,11 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/karma/**/*.js': ['webpack', 'sourcemap'],
+      'assets/src/edit-story/**/karma/**/*.js': ['webpack', 'sourcemap'],
+    },
+
+    proxies: {
+      '/__static__/': '/base/__static__/',
     },
 
     webpack: webpackConfig,
