@@ -83,7 +83,6 @@ describe('TextEdit integration', () => {
 
       it('should handle a commnad, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
-        await fixture.events.focus(draft);
 
         // Select all.
         await fixture.events.click(draft, { clickCount: 3 });
@@ -92,15 +91,7 @@ describe('TextEdit integration', () => {
 
         await fixture.snapshot('before mod+b');
 
-        // @todo: Linux uses ctrlKey.
-        // @todo: would be preferable to be more semantic here. E.g.
-        // `keys('mod+B')`.
-        await fixture.events.keyDown(draft, {
-          key: 'b',
-          code: 'KeyB',
-          keyCode: 66,
-          metaKey: true,
-        });
+        await fixture.events.keyboard.shortcut('mod+b');
 
         await fixture.snapshot('after mod+b');
 
