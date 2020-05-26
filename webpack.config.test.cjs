@@ -27,7 +27,7 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
 /**
  * Internal dependencies
  */
-const webpackConfigArray = require('./webpack.config');
+const webpackConfigArray = require('./webpack.config.cjs');
 
 module.exports = webpackConfigArray
   .filter((webpackConfig) => 'edit-story' in webpackConfig.entry)
