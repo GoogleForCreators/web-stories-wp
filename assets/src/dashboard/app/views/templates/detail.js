@@ -268,6 +268,7 @@ function TemplateDetail() {
                         }
                         bottomActionLabel={__('Use template', 'web-stories')}
                         isTemplate
+                        pageSize={pageSize}
                       />
                     </UnitsProvider>
                   </RowContainer>
