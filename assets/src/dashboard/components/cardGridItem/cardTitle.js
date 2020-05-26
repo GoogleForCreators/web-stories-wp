@@ -37,7 +37,8 @@ import { Paragraph2 } from '../typography';
 
 const StyledCardTitle = styled.div`
   padding-top: 12px;
-  max-width: 90%;
+  display: inline-block;
+  overflow: hidden;
 `;
 
 const StyledTitle = styled(Paragraph2)`
