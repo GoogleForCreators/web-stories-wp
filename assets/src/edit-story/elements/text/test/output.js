@@ -83,6 +83,55 @@ describe('TextOutput', () => {
     });
   });
 
+  it('should return HTML Output based on the params containing composed character', () => {
+    const element = {
+      id: '123',
+      content: 'こんにち',
+      backgroundColor: {
+        color: {
+          r: 255,
+          g: 0,
+          b: 0,
+          a: 0.3,
+        },
+      },
+      font: {
+        family: 'Roboto',
+      },
+      fontSize: 16,
+      textAlign: 'left',
+      type: 'text',
+      x: 10,
+      y: 10,
+      width: 50,
+      height: 50,
+      rotationAngle: 0,
+      padding: {
+        vertical: 0,
+        horizontal: 0,
+      },
+      box: { width: 1080 },
+    };
+
+    const output = renderViaString(
+      <TextOutput
+        element={element}
+        box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
+      />
+    );
+    expect(output.tagName).toBe('P');
+    expect(output.innerHTML).toBe('こんにち');
+    expect(output.className).toBe('fill');
+    expect(output.style).toMatchObject({
+      whiteSpace: 'pre-wrap',
+      padding: '0% 0%',
+      margin: '0px',
+      backgroundColor: 'rgba(255, 0, 0, 0.3)',
+      fontSize: '0.242424em',
+      textAlign: 'left',
+    });
+  });
+
   it('should convert padding to percent of width', () => {
     const element = {
       id: '123',
