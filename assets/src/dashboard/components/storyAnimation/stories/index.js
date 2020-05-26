@@ -32,35 +32,6 @@ export default {
   component: StoryAnimation,
 };
 
-<<<<<<< HEAD
-=======
-const PlayButton = () => {
-  const {
-    actions: { WAAPIAnimationMethods },
-  } = useStoryAnimationContext();
-
-  const label = {
-    play: 'play',
-    pause: 'pause',
-    reset: 'reset',
-  };
-  return (
-    <>
-      <button onClick={WAAPIAnimationMethods.play}>{label.play}</button>
-      <button onClick={WAAPIAnimationMethods.pause}>{label.pause}</button>
-      <button
-        onClick={() => {
-          WAAPIAnimationMethods.setCurrentTime(0);
-          WAAPIAnimationMethods.pause();
-        }}
-      >
-        {label.reset}
-      </button>
-    </>
-  );
-};
-
->>>>>>> added tests & updated story to utilize new methods
 function ColorSquare({ color }) {
   return (
     <div
