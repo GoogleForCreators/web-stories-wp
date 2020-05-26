@@ -21,7 +21,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-/*eslint import/namespace: [2, { allowComputed: true }]*/
 import * as Icons from '..';
 
 export default {
@@ -46,6 +45,7 @@ export const _default = () => {
   return (
     <IconsList>
       {Object.keys(Icons).map((iconName) => {
+        // eslint-disable-next-line import/namespace
         const Icon = Icons[iconName];
         return (
           <li key={iconName}>
