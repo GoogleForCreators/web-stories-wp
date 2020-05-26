@@ -25,7 +25,6 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-sourcemap-loader',
       'karma-webpack',
-      'karma-coverage',
       require('./karma/karma-puppeteer-launcher'),
       require('./karma/karma-puppeteer-client'),
     ],
@@ -47,7 +46,6 @@ module.exports = function (config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       '**/karma/**/*.js': ['webpack', 'sourcemap'],
-      'assets/src/**/*.js': ['coverage'],
     },
 
     webpack: webpackConfig,
@@ -61,7 +59,7 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: config.coverage ? ['progress', 'coverage'] : ['progress'],
+    reporters: ['progress'],
 
     // web server port
     port: 9876,
@@ -98,16 +96,5 @@ module.exports = function (config) {
 
     // Allow not having any tests
     failOnEmptyTestSuite: false,
-
-    // Configure coverage output
-    coverageReporter: {
-      // specify a common output directory
-      dir: 'build/logs/karma-coverage',
-      includeAllSources: true,
-      reporters: [
-        { type: 'lcov', subdir: 'lcov-report' },
-        { type: 'text-summary' },
-      ],
-    },
   });
 };

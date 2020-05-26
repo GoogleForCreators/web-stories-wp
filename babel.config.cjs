@@ -56,11 +56,6 @@ module.exports = function (api) {
       production: {
         plugins: ['transform-react-remove-prop-types'],
       },
-      // TODO: Does this affect Jest?
-      // See https://jestjs.io/docs/uk/troubleshooting#coveragepathignorepatterns-seems-to-not-have-any-effect
-      test: {
-        plugins: ['istanbul'],
-      },
     },
   };
 };
