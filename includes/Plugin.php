@@ -57,17 +57,173 @@ class Plugin {
 		add_action( 'rest_api_init', [ $embed_controller, 'register_routes' ] );
 
 		// Dashboard.
-
 		$dashboard = new Dashboard();
 		add_action( 'init', [ $dashboard, 'init' ] );
 
 		// Migrations.
-
 		$database_upgrader = new Database_Upgrader();
 		add_action( 'admin_init', [ $database_upgrader, 'init' ] );
 
 		// Gutenberg Blocks.
 		$embed_block = new Embed_Block();
 		add_action( 'init', [ $embed_block, 'init' ] );
+
+		// Everything else.
+		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
+		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
+	}
+
+	/**
+	 * Filter the list of admin classes.
+	 *
+	 * @param string $class Current classes.
+	 *
+	 * @return string $class List of Classes.
+	 */
+	public static function admin_body_class( $class ) {
+		$screen = get_current_screen();
+
+		if ( ! $screen instanceof WP_Screen ) {
+			return $class;
+		}
+
+		if ( self::POST_TYPE_SLUG !== $screen->post_type ) {
+			return $class;
+		}
+
+		$class .= ' edit-story';
+
+		// Overrides regular WordPress behavior by collapsing the admin menu by default.
+		if ( false === strpos( $class, 'folded' ) ) {
+			$class .= ' folded';
+		}
+
+		return $class;
+	}
+
+	/**
+	 * Filter the allowed tags for KSES to allow for amp-story children.
+	 *
+	 * @param array|string $allowed_tags Allowed tags.
+	 *
+	 * @return array|string Allowed tags.
+	 */
+	public static function filter_kses_allowed_html( $allowed_tags ) {
+		if ( ! is_array( $allowed_tags ) ) {
+			return $allowed_tags;
+		}
+
+		$story_components = [
+			'amp-story'                 => [
+				'background-audio'     => true,
+				'live-story'           => true,
+				'live-story-disabled'  => true,
+				'poster-landscape-src' => true,
+				'poster-portrait-src'  => true,
+				'poster-square-src'    => true,
+				'publisher'            => true,
+				'publisher-logo-src'   => true,
+				'standalone'           => true,
+				'supports-landscape'   => true,
+				'title'                => true,
+			],
+			'amp-story-page'            => [
+				'auto-advance-after' => true,
+				'background-audio'   => true,
+				'id'                 => true,
+			],
+			'amp-story-page-attachment' => [
+				'theme' => true,
+			],
+			'amp-story-grid-layer'      => [
+				'position' => true,
+				'template' => true,
+			],
+			'amp-story-cta-layer'       => [],
+			'amp-img'                   => [
+				'alt'                       => true,
+				'attribution'               => true,
+				'data-amp-bind-alt'         => true,
+				'data-amp-bind-attribution' => true,
+				'data-amp-bind-src'         => true,
+				'data-amp-bind-srcset'      => true,
+				'lightbox'                  => true,
+				'lightbox-thumbnail-id'     => true,
+				'media'                     => true,
+				'noloading'                 => true,
+				'object-fit'                => true,
+				'object-position'           => true,
+				'placeholder'               => true,
+				'src'                       => true,
+				'srcset'                    => true,
+			],
+			'amp-video'                 => [
+				'album'                      => true,
+				'alt'                        => true,
+				'artist'                     => true,
+				'artwork'                    => true,
+				'attribution'                => true,
+				'autoplay'                   => true,
+				'controls'                   => true,
+				'controlslist'               => true,
+				'crossorigin'                => true,
+				'data-amp-bind-album'        => true,
+				'data-amp-bind-alt'          => true,
+				'data-amp-bind-artist'       => true,
+				'data-amp-bind-artwork'      => true,
+				'data-amp-bind-attribution'  => true,
+				'data-amp-bind-controls'     => true,
+				'data-amp-bind-controlslist' => true,
+				'data-amp-bind-loop'         => true,
+				'data-amp-bind-poster'       => true,
+				'data-amp-bind-preload'      => true,
+				'data-amp-bind-src'          => true,
+				'data-amp-bind-title'        => true,
+				'disableremoteplayback'      => true,
+				'dock'                       => true,
+				'lightbox'                   => true,
+				'lightbox-thumbnail-id'      => true,
+				'loop'                       => true,
+				'media'                      => true,
+				'muted'                      => true,
+				'noaudio'                    => true,
+				'noloading'                  => true,
+				'object-fit'                 => true,
+				'object-position'            => true,
+				'placeholder'                => true,
+				'poster'                     => true,
+				'preload'                    => true,
+				'rotate-to-fullscreen'       => true,
+				'src'                        => true,
+			],
+			'img'                       => [
+				'alt'           => true,
+				'attribution'   => true,
+				'border'        => true,
+				'decoding'      => true,
+				'height'        => true,
+				'importance'    => true,
+				'intrinsicsize' => true,
+				'ismap'         => true,
+				'loading'       => true,
+				'longdesc'      => true,
+				'sizes'         => true,
+				'src'           => true,
+				'srcset'        => true,
+				'srcwidth'      => true,
+			],
+		];
+
+		$allowed_tags = array_merge( $allowed_tags, $story_components );
+
+		foreach ( $allowed_tags as &$allowed_tag ) {
+			$allowed_tag['animate-in']          = true;
+			$allowed_tag['animate-in-duration'] = true;
+			$allowed_tag['animate-in-delay']    = true;
+			$allowed_tag['animate-in-after']    = true;
+			$allowed_tag['layout']              = true;
+		}
+
+		return $allowed_tags;
 	}
 }
