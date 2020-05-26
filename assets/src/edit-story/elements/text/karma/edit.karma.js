@@ -51,6 +51,9 @@ describe('TextEdit integration', () => {
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
           content: 'hello world!',
+          x: 40,
+          y: 40,
+          width: 250,
         })
       );
 
