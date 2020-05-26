@@ -49,13 +49,17 @@ function DropTargetsProvider({ children }) {
   const getDropTargetFromCursor = useCallback(
     (x, y, ignoreId = null) => {
       const underCursor = document.elementsFromPoint(x, y);
+      const sortedDropTargetIds = (currentPage?.elements || [])
+        .filter(({ id }) => id in dropTargets)
+        .map(({ id }) => id)
+        .reverse(); // Sort by z-index
       return (
-        Object.keys(dropTargets).find(
+        sortedDropTargetIds.find(
           (id) => underCursor.includes(dropTargets[id]) && id !== ignoreId
         ) || null
       );
     },
-    [dropTargets]
+    [dropTargets, currentPage?.elements]
   );
 
   /**
