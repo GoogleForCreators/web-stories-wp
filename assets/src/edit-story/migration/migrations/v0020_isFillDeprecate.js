@@ -29,9 +29,7 @@ function reducePage({ elements, ...rest }) {
 }
 
 function updateElement(element) {
-  if (typeof element.isFill !== 'undefined') {
-    delete element.isFill;
-  }
+  delete element.isFill;
   return element;
 }
 
