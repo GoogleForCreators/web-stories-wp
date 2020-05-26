@@ -19,6 +19,7 @@
  */
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../edit-story/constants';
 
+export const TOP_LEVEL_DASHBOARD_APP_ID = 'dashboardAppFrame';
 export const PAGE_RATIO = PAGE_WIDTH / PAGE_HEIGHT;
 
 export const DASHBOARD_LEFT_NAV_WIDTH = 190;

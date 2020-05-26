@@ -26,7 +26,9 @@ import theme from '../theme';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   PAGE_RATIO,
-} from '../constants/pageStructure';
+  TOP_LEVEL_DASHBOARD_APP_ID,
+} from '../constants';
+import { useResizeEffect } from './';
 
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
@@ -52,6 +54,7 @@ const sizeFromWidth = (
   if (respectSetWidth) {
     return { width, height: width / PAGE_RATIO };
   }
+
   const itemsInRow = Math.floor(availableContainerSpace / width);
   const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
   const pageGutter = theme.standardViewContentGutter[bp] * 2;
@@ -68,67 +71,41 @@ const sizeFromWidth = (
 };
 
 // we want to set the size of story pages based on the available space
-// this means we need to take the window.innerWidth value and remove the built in WP nav and the dashboard nav according to breakpoints
-const getTrueInnerWidth = (wpMenuWidth) => {
-  const { innerWidth } = window;
-  if (innerWidth >= theme.breakpoint.raw.tablet) {
-    return innerWidth - wpMenuWidth - DASHBOARD_LEFT_NAV_WIDTH;
+const getTrueInnerWidth = (availableWindowWidth = window.innerWidth) => {
+  if (availableWindowWidth >= theme.breakpoint.raw.tablet) {
+    return availableWindowWidth - DASHBOARD_LEFT_NAV_WIDTH;
   } else {
-    return innerWidth - wpMenuWidth;
+    return availableWindowWidth;
   }
 };
 
 export default function usePagePreviewSize(options = {}) {
-  const wpLeftNav = useRef(document.getElementById('adminmenu'));
   const { thumbnailMode = false, isGrid } = options;
-
-  const [wpMenuWidth, setWpMenuWidth] = useState(
-    wpLeftNav.current?.offsetWidth || 0
+  const dashboardContainerRef = useRef(
+    document.getElementById(TOP_LEVEL_DASHBOARD_APP_ID)
   );
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
-    getTrueInnerWidth(wpMenuWidth)
+    getTrueInnerWidth(dashboardContainerRef.current?.offsetWidth)
   );
-
-  const [debounceAvailableContainerSpace] = useDebouncedCallback(() => {
-    setAvailableContainerSpace(getTrueInnerWidth(wpMenuWidth));
-  }, 250);
-
-  const [debounceWpMenuToggle] = useDebouncedCallback(() => {
-    setWpMenuWidth(wpLeftNav.current.offsetWidth);
-  }, 250);
-
   const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
 
-  useEffect(() => {
-    if (thumbnailMode) {
-      return () => {};
-    }
-
-    window.addEventListener('resize', debounceAvailableContainerSpace);
-    return () => {
-      window.removeEventListener('resize', debounceAvailableContainerSpace);
-    };
-  }, [thumbnailMode, debounceAvailableContainerSpace]);
-
-  useEffect(() => setBp(getCurrentBp(availableContainerSpace)), [
-    availableContainerSpace,
-  ]);
-
-  useEffect(() => setAvailableContainerSpace(getTrueInnerWidth(wpMenuWidth)), [
-    wpMenuWidth,
-  ]);
+  const [debounceAvailableContainerSpace] = useDebouncedCallback((newWidth) => {
+    setAvailableContainerSpace(newWidth);
+  }, 250);
 
   useEffect(() => {
-    if (thumbnailMode || !wpLeftNav.current) {
-      return () => {};
-    }
-    const wpLeftNavCurrent = wpLeftNav.current;
+    setBp(getCurrentBp(availableContainerSpace));
+  }, [availableContainerSpace]);
 
-    wpLeftNavCurrent.addEventListener('click', debounceWpMenuToggle);
-    return () => {
-      wpLeftNavCurrent.removeEventListener('click', debounceWpMenuToggle);
-    };
-  }, [thumbnailMode, debounceWpMenuToggle]);
+  useResizeEffect(
+    dashboardContainerRef,
+    (dashboardContainerRefCurrent) => {
+      debounceAvailableContainerSpace(
+        getTrueInnerWidth(dashboardContainerRefCurrent.width)
+      );
+    },
+    [debounceAvailableContainerSpace]
+  );
 
   return useMemo(
     () => ({
