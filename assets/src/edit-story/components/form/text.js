@@ -153,7 +153,7 @@ TextInput.propTypes = {
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
   clear: PropTypes.bool,
-  ariaLabel: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
 };
 
@@ -163,7 +163,6 @@ TextInput.defaultProps = {
   flexBasis: 100,
   textCenter: false,
   clear: false,
-  ariaLabel: __('Standard input', 'web-stories'),
   placeholder: null,
 };
 

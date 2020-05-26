@@ -78,6 +78,7 @@ function Toggle({
   boxed,
   expand,
   title = null,
+  ariaLabel,
   ...rest
 }) {
   const Wrapper = title ? WithTooltip : Fragment;
@@ -89,6 +90,7 @@ function Toggle({
           onChange={() => onChange(!value)}
           disabled={disabled}
           title={title}
+          ariaLabel={ariaLabel}
           {...rest}
         />
         <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
@@ -106,6 +108,7 @@ Toggle.propTypes = {
   boxed: PropTypes.bool,
   expand: PropTypes.bool,
   title: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
 };
 
 Toggle.defaultProps = {

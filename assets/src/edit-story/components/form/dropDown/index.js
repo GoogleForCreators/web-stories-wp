@@ -162,14 +162,13 @@ DropDown.propTypes = {
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  ariaLabel: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
 };
 
 DropDown.defaultProps = {
   disabled: false,
-  ariaLabel: __('DropDown', 'web-stories'),
   value: '',
   onChange: () => {},
   options: [],
