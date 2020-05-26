@@ -27,11 +27,7 @@ import PropTypes from 'prop-types';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-import {
-  APP_ROUTES,
-  NESTED_APP_ROUTES,
-  TOP_LEVEL_DASHBOARD_APP_ID,
-} from '../constants';
+import { APP_ROUTES, NESTED_APP_ROUTES } from '../constants';
 
 import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
 import ApiProvider from './api/apiProvider';
@@ -55,7 +51,7 @@ const AppContent = () => {
     matchPath(currentPath, NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL);
 
   return (
-    <AppFrame id={TOP_LEVEL_DASHBOARD_APP_ID}>
+    <AppFrame>
       {!hideLeftRail && <LeftRail />}
       <PageContent fullWidth={hideLeftRail}>
         <Route
