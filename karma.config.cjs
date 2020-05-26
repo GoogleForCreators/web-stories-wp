@@ -17,19 +17,9 @@
 'use strict';
 
 /**
- * External dependencies
- */
-const path = require('path');
-
-/**
- * WordPress dependencies
- */
-const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
-
-/**
  * Internal dependencies
  */
-const webpackConfigArray = require('./webpack.config.cjs');
+const webpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -61,25 +51,7 @@ module.exports = function (config) {
       '**/karma/**/*.js': ['webpack', 'sourcemap'],
     },
 
-    webpack: webpackConfigArray
-      .filter((webpackConfig) => 'edit-story' in webpackConfig.entry)
-      .map((webpackConfig) => ({
-        ...webpackConfig,
-        // Karma watches the test entry points, so we don't need to specify
-        // them here. Webpack watches dependencies.
-        entry: null,
-        mode: 'development',
-        devtool: 'inline-source-map',
-        output: {
-          ...webpackConfig.output,
-          path: path.resolve(process.cwd(), 'assets', 'testjs'),
-        },
-        // WP's DependencyExtractionWebpackPlugin is not needed for tests and
-        // otherwise has some failures.
-        plugins: webpackConfig.plugins.filter(
-          (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
-        ),
-      }))[0],
+    webpack: webpackConfig,
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
@@ -129,5 +101,8 @@ module.exports = function (config) {
     // Concurrency level
     // how many browsers should be started simultaneously
     concurrency: Infinity,
+
+    // Allow not having any tests
+    failOnEmptyTestSuite: false,
   });
 };

@@ -265,7 +265,7 @@
         "babel.config.cjs",
         "jest-puppeteer.config.cjs",
         "karma.config.cjs",
-        "webpack.config.cjs",
+        "webpack.*.cjs",
         ".storybook/*.cjs",
         ".storybook/*.js",
         "tests/js/*.js",
