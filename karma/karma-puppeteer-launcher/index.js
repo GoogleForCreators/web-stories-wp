@@ -145,7 +145,7 @@ async function exposeFunctions(page, config) {
   await exposeKeyboardFunctions(page);
 
   // mouse.
-  // See See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
   await exposeMouseFunctions(page);
 }
 
