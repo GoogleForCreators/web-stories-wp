@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { rgba } from 'polished';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -252,6 +252,21 @@ function MediaPane(props) {
     },
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
+
+  // The media pane is supposed to have a scrollbar that shows on focus and
+  // "hovers" over content. As of May 2020 this cannot be achieved without
+  // js (as the scrollbar-gutter prop is no yet ready).
+  useEffect(() => {
+    const scrollBarWidth =
+      refContainer.current.offsetWidth - refContainer.current.clientWidth;
+    const currentPaddingLeft = parseFloat(
+      window
+        .getComputedStyle(refContainer.current, null)
+        .getPropertyValue('padding-left')
+    );
+    refContainer.current.style['padding-right'] =
+      currentPaddingLeft - scrollBarWidth + 'px';
+  });
 
   return (
     <StyledPane id={paneId} {...props}>
