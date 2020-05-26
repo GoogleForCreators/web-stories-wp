@@ -65,8 +65,6 @@ export const isMedia = true;
 
 export const canFlip = true;
 
-export const canFill = true;
-
 export const isMaskable = true;
 
 export const editModeGrayout = true;

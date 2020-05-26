@@ -65,7 +65,6 @@ describe('Panels/SizePosition', () => {
       return {
         isMedia: 'image' === type,
         canFlip: 'image' === type,
-        canFill: true,
       };
     });
   });
