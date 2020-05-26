@@ -38,8 +38,11 @@ import {
   PreviewErrorBoundary,
 } from '../../../components';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import { StoriesPropType, UsersPropType } from '../../../types';
-import { usePagePreviewSize } from '../../../utils';
+import {
+  StoriesPropType,
+  UsersPropType,
+  PageSizePropType,
+} from '../../../types';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -68,10 +71,10 @@ const StoryGridView = ({
   duplicateStory,
   isTemplate,
   isSavedTemplate,
+  pageSize,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
-  const { pageSize } = usePagePreviewSize({ isGrid: true });
 
   const handleMenuItemSelected = useCallback(
     (sender, story) => {
@@ -182,6 +185,7 @@ StoryGridView.propTypes = {
   updateStory: PropTypes.func,
   trashStory: PropTypes.func,
   duplicateStory: PropTypes.func,
+  pageSize: PageSizePropType.isRequired,
 };
 
 export default StoryGridView;
