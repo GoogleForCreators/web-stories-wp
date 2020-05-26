@@ -128,6 +128,12 @@ async function exposeFunctions(page, config) {
     return frame.focus(selector, options);
   });
 
+  // hover.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#framehoverselector
+  await exposeFunction(page, 'hover', (frame, selector, options) => {
+    return frame.hover(selector, options);
+  });
+
   // select.
   // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#frameselectselector-values
   await exposeFunction(page, 'select', (frame, selector, values) => {
@@ -138,9 +144,9 @@ async function exposeFunctions(page, config) {
   // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard
   await exposeKeyboardFunctions(page);
 
-  // TODO:
-  // - frame.hover(selector)
-  // - mouse (https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#class-mouse)
+  // mouse.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
+  await exposeMouseFunctions(page);
 }
 
 function exposeFunction(page, name, func) {
@@ -176,6 +182,27 @@ async function exposeKeyboardFunctions(page) {
   // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardtypetext-options
   await exposeKeyboardFunction('type', (frame, text, options) => {
     return keyboard.type(text, options);
+  });
+}
+
+async function exposeMouseFunctions(page) {
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
+  const { mouse } = page;
+
+  function exposeMouseFunction(name, func) {
+    return exposeFunction(page, `mouse_${name}`, func);
+  }
+
+  // Mouse sequence of "down", "up", "move", and "click".
+  await exposeMouseFunction('seq', (frame, seq) => {
+    return seq.reduce((promise, item) => {
+      const { type, x, y, options } = item;
+      const acceptsXY = type === 'move' || type === 'click';
+      if (acceptsXY) {
+        return promise.then(() => mouse[type](x, y, options));
+      }
+      return promise.then(() => mouse[type](options));
+    }, Promise.resolve());
   });
 }
 

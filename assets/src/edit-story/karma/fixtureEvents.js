@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { fireEvent } from '@testing-library/react';
-
 const KEY_MAP = {
   ALT: 'Alt',
   COMMAND: 'Meta',
@@ -41,10 +36,15 @@ class FixtureEvents {
   constructor(act) {
     this._act = act;
     this._keyboard = new Keyboard(act);
+    this._mouse = new Mouse(act);
   }
 
   get keyboard() {
     return this._keyboard;
+  }
+
+  get mouse() {
+    return this._mouse;
   }
 
   /**
@@ -70,6 +70,17 @@ class FixtureEvents {
   }
 
   /**
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#framehoverselector.
+   *
+   * @param {Element} target The event target.
+   * @param {Object} options The event options.
+   * @return {!Promise} The promise when the event handling is complete.
+   */
+  hover(target, options = {}) {
+    return this._act(() => karmaPuppeteer.hover(target, options));
+  }
+
+  /**
    * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#frameselectselector-values
    *
    * Triggers a change and input event once all the provided options have been
@@ -81,37 +92,6 @@ class FixtureEvents {
    */
   select(target, ...values) {
     return this._act(() => karmaPuppeteer.select(target, values));
-  }
-
-  // @todo: look for a native way to implement this. See Puppeteer's
-  // Mouse API (https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse).
-  pointerDown(element, options = {}) {
-    const { pointerType = 'mouse' } = options;
-    fireEvent.pointerDown(element, options);
-    if (pointerType === 'mouse') {
-      fireEvent.mouseDown(element, options);
-    }
-    return Promise.resolve();
-  }
-
-  // @todo: look for a native way to implement this.
-  pointerUp(element, options = {}) {
-    const { pointerType = 'mouse' } = options;
-    fireEvent.pointerUp(element, options);
-    if (pointerType === 'mouse') {
-      fireEvent.mouseUp(element, options);
-    }
-    return Promise.resolve();
-  }
-
-  // @todo: look for a native way to implement this.
-  mouseDown(element, options = {}) {
-    return this.pointerDown(element, { ...options, pointerType: 'mouse' });
-  }
-
-  // @todo: look for a native way to implement this.
-  mouseUp(element, options = {}) {
-    return this.pointerUp(element, { ...options, pointerType: 'mouse' });
   }
 }
 
@@ -237,6 +217,91 @@ class Keyboard {
 }
 
 /**
+ * Events utility for mouse.
+ *
+ * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse.
+ */
+class Mouse {
+  /**
+   * @param {function():Promise} act
+   */
+  constructor(act) {
+    this._act = act;
+  }
+
+  /**
+   * A sequence of:
+   * - `type: 'down`: [mouse.down](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mousedownoptions).
+   * - `type: 'up'`: [mouse.up](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mouseupoptions).
+   * - `type: 'move'`: [mouse.move](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mousemovex-y-options).
+   * - `type: 'click'`: [mouse.click](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mouseclickx-y-options).
+   *
+   * @param {Array<{type: string, x: number, y: number, options: Object}>} array
+   * @return {!Promise} Yields when the event is processed.
+   */
+  seq(array) {
+    return this._act(() => karmaPuppeteer.mouse.seq(cleanupMouseEvents(array)));
+  }
+
+  /**
+   * The `mouse.click` API.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mouseclickx-y-options
+   *
+   * @param {number} x
+   * @param {number} y
+   * @param {Object} options
+   * @return {!Promise} Yields when the event is processed.
+   */
+  click(x, y, options = {}) {
+    const type = 'click';
+    return this.seq([{ type, x, y, options }]);
+  }
+
+  /**
+   * The `mouse.down` API.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mousedownoptions
+   *
+   * @param {Object} options Accepts `button` and `clickCount` options.
+   * @return {!Promise} Yields when the event is processed.
+   */
+  down(options = {}) {
+    const type = 'down';
+    return this.seq([{ type, options }]);
+  }
+
+  /**
+   * The `mouse.up` API.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mouseupoptions
+   *
+   * @param {Object} options Accepts `button` and `clickCount` options.
+   * @return {!Promise} Yields when the event is processed.
+   */
+  up(options = {}) {
+    const type = 'up';
+    return this.seq([{ type, options }]);
+  }
+
+  /**
+   * The `mouse.move` API.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mousemovex-y-options
+   *
+   * @param {number} x
+   * @param {number} y
+   * @param {Object} options Accepts `steps` option for the number of
+   * intermediate mousemove events.
+   * @return {!Promise} Yields when the event is processed.
+   */
+  move(x, y, options = {}) {
+    const type = 'move';
+    return this.seq([{ type, x, y, options }]);
+  }
+}
+
+/**
  * @param {Array<{type: string, key: string, options: Object}>} array
  * @return {Array<{type: string, key: string, options: Object}>} The cleaned
  * up array that can be accepted by the Puppeteer.
@@ -298,6 +363,28 @@ function parseShortcutToSeq(shortcut) {
     { type: 'press', key: last },
     ...up.map((key) => ({ type: 'up', key })),
   ];
+}
+
+/**
+ * @param {Array<{type: string, x: number, y: number, options: Object}>} array
+ * @return {Array<{type: string, x: number, y: number, options: Object}>} The cleaned
+ * up array that can be accepted by the Puppeteer.
+ */
+function cleanupMouseEvents(array) {
+  const { x: offsetX, y: offsetY } = window.frameElement
+    ? window.frameElement.getBoundingClientRect()
+    : { x: 0, y: 0 };
+  return array.map(({ type, x, y, options }) => {
+    const xy =
+      x !== undefined && y !== undefined
+        ? { x: x + offsetX, y: y + offsetY }
+        : {};
+    return {
+      type,
+      ...xy,
+      options: options || {},
+    };
+  });
 }
 
 export default FixtureEvents;

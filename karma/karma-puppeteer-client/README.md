@@ -37,3 +37,11 @@ Methods:
 - [`type(text, options)`](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardtypetext-options).
 - [`sendCharacter(text, options)`](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardsendcharacterchar).
 - `seq([{type: 'up'|'down'|'press', key, options}])` - a sequence of down/up/press.
+
+### karmaPuppeteer.mouse
+
+See [puppeteer.mouse](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse).
+
+Methods:
+
+- `seq([{type: 'up'|'down'|'press', x, y, options}])` - a sequence of move/down/up/click.
