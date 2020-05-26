@@ -139,7 +139,7 @@ function TemplateDetail() {
     }
 
     return orderedTemplates.findIndex((t) => t.id === template?.id);
-  }, [template, orderedTemplates]);
+  }, [orderedTemplates, template?.id]);
 
   const previewPages = useMemo(
     () =>
@@ -180,7 +180,7 @@ function TemplateDetail() {
         onClick={() => switchToTemplateByOffset(1)}
         disabled={
           !orderedTemplates?.length ||
-          activeTemplateIndex === orderedTemplates.length - 1
+          activeTemplateIndex === orderedTemplates?.length - 1
         }
       >
         <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
@@ -196,7 +196,12 @@ function TemplateDetail() {
           NextButton: Next,
           PrevButton: Previous,
         };
-  }, [isRTL, switchToTemplateByOffset, activeTemplateIndex, orderedTemplates]);
+  }, [
+    orderedTemplates?.length,
+    activeTemplateIndex,
+    isRTL,
+    switchToTemplateByOffset,
+  ]);
 
   if (!template) {
     return null;
