@@ -47,10 +47,29 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       defaultViewport: puppeteerOptions.defaultViewport,
     });
 
-    const page = await browser.newPage();
+    const page = await (async () => {
+      const pages = await browser.pages();
+      const lastPage = pages.length > 0 ? pages[pages.length - 1] : null;
+      if (lastPage && lastPage.url() === 'about:blank') {
+        return lastPage;
+      }
+      return browser.newPage();
+    })();
 
-    // Mouse functions.
+    // Test APIs.
     await exposeFunctions(page, puppeteerOptions);
+    browser.on('targetcreated', async (target) => {
+      if (target.type() !== 'page') {
+        // Not a page. E.g. a worker.
+        return;
+      }
+      const newPage = await target.page();
+      if (newPage === page) {
+        // An already handled page.
+        return;
+      }
+      await exposeFunctions(newPage, puppeteerOptions);
+    });
 
     await page.goto(url);
   };
@@ -207,7 +226,10 @@ async function exposeMouseFunctions(page) {
 }
 
 function getContextFrame(page) {
-  return page.frames().find((frame) => frame.name() === 'context');
+  return (
+    page.frames().find((frame) => frame.name() === 'context') ||
+    page.mainFrame()
+  );
 }
 
 async function extractSnapshot(frame, testName, snapshotName) {

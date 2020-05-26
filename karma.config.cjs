@@ -16,7 +16,10 @@
 
 'use strict';
 
-const webpackConfig = require('./webpack.config.test.cjs');
+/**
+ * Internal dependencies
+ */
+const webpackConfig = require('./webpack.config.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -83,6 +86,11 @@ module.exports = function (config) {
         headless: config.headless || false,
         slowMo: config.slowMo || 0,
         snapshots: config.snapshots || false,
+        // @todo: consider testing on a couple of canonical viewport sizes.
+        // Per Figma, the canonical sizes are:
+        // Desktop: 1920:1080
+        // iPad: 1024:680
+        defaultViewport: null,
       },
     },
 
