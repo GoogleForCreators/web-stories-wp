@@ -35,7 +35,7 @@ function useResizeEffect(ref, handler, deps = undefined) {
     () => {
       const node = ref?.current;
       if (!node) {
-        return null;
+        return undefined;
       }
 
       const observer = new ResizeObserver((entries) => {
