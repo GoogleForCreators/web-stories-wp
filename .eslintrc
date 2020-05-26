@@ -266,6 +266,7 @@
         "jest-puppeteer.config.cjs",
         "karma.config.cjs",
         "webpack.config.cjs",
+        ".storybook/*.cjs",
         ".storybook/*.js",
         "tests/js/*.js",
         "tests/e2e/*.js",
