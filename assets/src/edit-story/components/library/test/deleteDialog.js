@@ -67,7 +67,7 @@ describe('DeleteDialog', () => {
   it('should render', () => {
     const { queryByText, getByRole } = setup();
 
-    expect(queryByText('Delete image/video?')).toBeInTheDocument();
+    expect(queryByText('Delete Image?')).toBeInTheDocument();
     expect(getByRole('button', { name: /cancel/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /delete/i })).toBeInTheDocument();
   });
