@@ -25,8 +25,8 @@ import styled from 'styled-components';
  */
 import { Button } from '..';
 import { BUTTON_TYPES } from '../../constants';
-import usePagePreviewSize from '../../utils/usePagePreviewSize';
 import { resolveRoute } from '../../app/router';
+import { PageSizePropType } from '../../types';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
@@ -39,6 +39,9 @@ const PreviewPane = styled.div`
   overflow: hidden;
   z-index: -1;
 `;
+PreviewPane.propTypes = {
+  cardSize: PageSizePropType.isRequired,
+};
 
 const EditControls = styled.div`
   height: ${({ cardSize }) => `${cardSize.height}px`};
@@ -66,6 +69,9 @@ const EditControls = styled.div`
     }
   }
 `;
+EditControls.propTypes = {
+  cardSize: PageSizePropType.isRequired,
+};
 
 const ActionContainer = styled.div`
   padding: 20px;
@@ -84,9 +90,12 @@ const getActionAttributes = (targetAction) =>
     ? { href: resolveRoute(targetAction), isLink: true }
     : { onClick: targetAction };
 
-const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
-  const { pageSize } = usePagePreviewSize({ isGrid: true });
-
+const CardPreviewContainer = ({
+  centerAction,
+  bottomAction,
+  children,
+  pageSize,
+}) => {
   return (
     <>
       <PreviewPane cardSize={pageSize}>{children}</PreviewPane>
@@ -122,6 +131,7 @@ CardPreviewContainer.propTypes = {
   children: PropTypes.node.isRequired,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
+  pageSize: PageSizePropType.isRequired,
 };
 
 export default CardPreviewContainer;

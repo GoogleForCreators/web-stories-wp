@@ -39,6 +39,7 @@ import {
 } from '../../../components';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
 import { StoriesPropType, UsersPropType } from '../../../types';
+import { usePagePreviewSize } from '../../../utils';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -70,6 +71,7 @@ const StoryGridView = ({
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
+  const { pageSize } = usePagePreviewSize({ isGrid: true });
 
   const handleMenuItemSelected = useCallback(
     (sender, story) => {
@@ -120,10 +122,11 @@ const StoryGridView = ({
   );
 
   return (
-    <StoryGrid>
+    <StoryGrid pageSize={pageSize}>
       {stories.map((story) => (
         <CardGridItem key={story.id} isTemplate={isTemplate}>
           <CardPreviewContainer
+            pageSize={pageSize}
             centerAction={{
               targetAction: story.centerTargetAction,
               label: centerActionLabelByStatus[story.status],
