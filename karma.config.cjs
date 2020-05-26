@@ -19,7 +19,7 @@
 /**
  * Internal dependencies
  */
-const webpackConfig = require('./webpack.config.cjs');
+const webpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   config.set({
