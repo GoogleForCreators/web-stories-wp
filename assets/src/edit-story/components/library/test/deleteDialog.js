@@ -55,7 +55,7 @@ function setup() {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <DeleteDialog mediaId={123} onClose={() => {}} />
+          <DeleteDialog mediaId={123} type={'image'} onClose={() => {}} />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>

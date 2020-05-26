@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { Plain } from '../../../../components/button';
+import { Primary, Secondary } from '../../../../components/button';
 import Dialog from '../../../../components/dialog';
 import { useSnackbar } from '../../../../app/snackbar';
 import { useMedia } from '../../../../app/media';
@@ -44,15 +44,20 @@ const DialogBody = styled.div`
   color: ${({ theme }) => theme.colors.fg.v0};
 `;
 
+const Space = styled.div`
+  width: 8px;
+`;
+
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
  *
  * @param {Object} props Component props.
- * @param {number} props.mediaId Selected media element.
+ * @param {number} props.mediaId Selected media element's ID.
+ * @param {string} props.type Selected media element's type.
  * @param {function()} props.onClose Callback to toggle dialog display on close.
  * @return {null|*} The dialog element.
  */
-function DeleteDialog({ mediaId, onClose }) {
+function DeleteDialog({ mediaId, type, onClose }) {
   const {
     actions: { deleteMedia },
   } = useAPI();
@@ -73,27 +78,35 @@ function DeleteDialog({ mediaId, onClose }) {
     }
   }, [deleteMedia, deleteMediaElement, mediaId, onClose, showSnackbar]);
 
+  const imageDialogTitle = __('Delete Image?', 'web-stories');
+  const videoDialogTitle = __('Delete Video?', 'web-stories');
+  const imageDialogDescription = __(
+    'You are about to permanently delete this image from your site. ' +
+      'The image will appear broken in any WordPress content that uses it. ',
+    'web-stories'
+  );
+  const videoDialogDescription = __(
+    'You are about to permanently delete this video from your site. ' +
+      'The video will appear broken in any WordPress content that uses it. ',
+    'web-stories'
+  );
+
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <Dialog
       open={true}
-      onClose={() => onClose()}
-      title={__('Delete image/video?', 'web-stories')}
+      onClose={onClose}
+      title={type == 'image' ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
-          <Plain onClick={() => onClose()}>{__('Cancel', 'web-stories')}</Plain>
-          <Plain onClick={() => onDelete()}>
-            {__('Delete', 'web-stories')}
-          </Plain>
+          <Secondary onClick={onClose}>{__('Cancel', 'web-stories')}</Secondary>
+          <Space />
+          <Primary onClick={onDelete}>{__('Delete', 'web-stories')}</Primary>
         </>
       }
     >
       <DialogBody>
-        {__(
-          'You are about to permanently delete this image/video from your site. ' +
-            'The image/video will appear broken in any stories that uses it. ',
-          'web-stories'
-        )}
+        {type == 'image' ? imageDialogDescription : videoDialogDescription}
         <strong>{__('This action can not be undone.', 'web-stories')}</strong>
       </DialogBody>
     </Dialog>
@@ -101,8 +114,9 @@ function DeleteDialog({ mediaId, onClose }) {
 }
 
 DeleteDialog.propTypes = {
-  mediaId: PropTypes.number,
-  onClose: PropTypes.func,
+  mediaId: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default DeleteDialog;

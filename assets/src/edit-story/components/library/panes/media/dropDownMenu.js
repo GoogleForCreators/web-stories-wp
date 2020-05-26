@@ -123,7 +123,11 @@ function DropDownMenu({
           </>
         )}
         {showDeleteDialog && (
-          <DeleteDialog mediaId={resource.id} onClose={onDeleteDialogClose} />
+          <DeleteDialog
+            mediaId={resource.id}
+            type={resource.type}
+            onClose={onDeleteDialogClose}
+          />
         )}
       </div>
     )
