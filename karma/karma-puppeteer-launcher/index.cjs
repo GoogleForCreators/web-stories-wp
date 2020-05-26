@@ -116,34 +116,93 @@ async function exposeFunctions(page, config) {
     }
   );
 
-  // Click.
-  // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#frameclickselector-options.
+  // click.
+  // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#frameclickselector-options
   await exposeFunction(page, 'click', (frame, selector, options) => {
     return frame.click(selector, options);
   });
 
-  // Focus.
+  // focus.
   // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pagefocusselector
   await exposeFunction(page, 'focus', (frame, selector, options) => {
     return frame.focus(selector, options);
   });
 
-  // TODO:
-  // - frame.hover(selector)
-  // - frame.select(selector, ...values)
-  // - frame.tap(selector)
-  // - frame.type(selector, text[, options])
-  // - frame.waitFor(selectorOrFunctionOrTimeout[, options[, ...args]]) ?
-  // - frame.waitForSelector(selector[, options])
-  // - elementHandle.press(key[, options])
-  // - elementHandle.screenshot([options])
-  // - mouse (https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#class-mouse)
-  // - keyboard
+  // hover.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#framehoverselector
+  await exposeFunction(page, 'hover', (frame, selector, options) => {
+    return frame.hover(selector, options);
+  });
+
+  // select.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#frameselectselector-values
+  await exposeFunction(page, 'select', (frame, selector, values) => {
+    return frame.select(selector, ...values);
+  });
+
+  // keyboard.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard
+  await exposeKeyboardFunctions(page);
+
+  // mouse.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
+  await exposeMouseFunctions(page);
 }
 
 function exposeFunction(page, name, func) {
   return page.exposeFunction(`__karma_puppeteer_${name}`, (...args) => {
     return func(getContextFrame(page), ...args);
+  });
+}
+
+async function exposeKeyboardFunctions(page) {
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard
+  const { keyboard } = page;
+
+  function exposeKeyboardFunction(name, func) {
+    return exposeFunction(page, `keyboard_${name}`, func);
+  }
+
+  // Keyboard sequence.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard
+  await exposeKeyboardFunction('seq', (frame, seq) => {
+    return seq.reduce((promise, item) => {
+      const { type, key, options } = item;
+      return promise.then(() => keyboard[type](key, options));
+    }, Promise.resolve());
+  });
+
+  // Keyboard sendCharacter.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardsendcharacterchar
+  await exposeKeyboardFunction('sendCharacter', (frame, char) => {
+    return keyboard.sendCharacter(char);
+  });
+
+  // Keyboard type.
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardtypetext-options
+  await exposeKeyboardFunction('type', (frame, text, options) => {
+    return keyboard.type(text, options);
+  });
+}
+
+async function exposeMouseFunctions(page) {
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
+  const { mouse } = page;
+
+  function exposeMouseFunction(name, func) {
+    return exposeFunction(page, `mouse_${name}`, func);
+  }
+
+  // Mouse sequence of "down", "up", "move", and "click".
+  await exposeMouseFunction('seq', (frame, seq) => {
+    return seq.reduce((promise, item) => {
+      const { type, x, y, options } = item;
+      const acceptsXY = type === 'move' || type === 'click';
+      if (acceptsXY) {
+        return promise.then(() => mouse[type](x, y, options));
+      }
+      return promise.then(() => mouse[type](options));
+    }, Promise.resolve());
   });
 }
 
