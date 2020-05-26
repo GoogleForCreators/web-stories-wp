@@ -49,7 +49,7 @@ const DropTargetSVG = styled.svg`
 const DropTargetPath = styled.path`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
-  opacity: ${({ active }) => (active ? 0.5 : 0)};
+  opacity: ${({ active }) => (active ? 0.3 : 0)};
 `;
 
 function WithDropTarget({ element, children, hover }) {
