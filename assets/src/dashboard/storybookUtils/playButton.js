@@ -21,11 +21,28 @@ import { useStoryAnimationContext } from '../components/storyAnimation';
 
 const PlayButton = () => {
   const {
-    actions: { playWAAPIAnimations },
+    actions: { WAAPIAnimationMethods },
   } = useStoryAnimationContext();
 
-  const label = 'play';
-  return <button onClick={playWAAPIAnimations}>{label}</button>;
+  const label = {
+    play: 'play',
+    pause: 'pause',
+    reset: 'reset',
+  };
+  return (
+    <>
+      <button onClick={WAAPIAnimationMethods.play}>{label.play}</button>
+      <button onClick={WAAPIAnimationMethods.pause}>{label.pause}</button>
+      <button
+        onClick={() => {
+          WAAPIAnimationMethods.setCurrentTime(0);
+          WAAPIAnimationMethods.pause();
+        }}
+      >
+        {label.reset}
+      </button>
+    </>
+  );
 };
 
 export default PlayButton;

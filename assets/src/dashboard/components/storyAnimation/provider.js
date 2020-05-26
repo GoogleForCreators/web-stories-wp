@@ -116,7 +116,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
       pause: () => WAAPIAnimations.forEach((animation) => animation?.pause()),
       setCurrentTime: (time) =>
         WAAPIAnimations.forEach(
-          (animation) => animation && (animation.currentTime = time)
+          (animation) => animation && (animation.currentTime = time || 0)
         ),
     };
   }, [WAAPIAnimations]);
