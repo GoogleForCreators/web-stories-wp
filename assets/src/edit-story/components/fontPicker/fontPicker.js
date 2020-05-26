@@ -45,7 +45,7 @@ const Container = styled.div`
   font-family: ${({ theme }) => theme.fonts.body1.font};
 `;
 
-const FontPickerSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
+const FontPickerSelect = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -56,6 +56,7 @@ const FontPickerSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
+  border: 0;
 
   ${({ disabled }) =>
     disabled &&

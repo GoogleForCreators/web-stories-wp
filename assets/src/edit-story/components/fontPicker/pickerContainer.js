@@ -142,7 +142,6 @@ function FontPickerContainer({ value, onSelect, onClose }) {
       <>
         <Item
           fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
-          data-stuff={`'${name}' = '${value}'`}
           onClick={() => onSelect(name)}
         >
           {name === value && (
