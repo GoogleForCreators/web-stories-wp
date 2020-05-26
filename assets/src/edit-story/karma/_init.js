@@ -62,6 +62,11 @@ beforeAll(() => {
 
   // Make sure that testing iframe takes over the whole screen. This way, the
   // native events can be targetted precisely.
+  // The documented approach is to supply our own
+  // [client_with_context.html](https://github.com/karma-runner/karma/blob/master/static/client_with_context.html)
+  // file via [customClientContextFile](http://karma-runner.github.io/5.0/config/configuration-file.html)
+  // configuration option. But, IMHO, that'd make it a much more fragile
+  // dependency.
   withCleanupAll(() => {
     const frameElement = self.frameElement;
     if (!frameElement) {
