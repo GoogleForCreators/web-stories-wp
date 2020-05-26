@@ -44,8 +44,7 @@ function MultiSelectionMovable({ selectedElements }) {
   });
 
   const {
-    actions: { updateElementsById, setSelectedElementsById },
-    state: { currentPage },
+    actions: { updateElementsById },
   } = useStory();
   const {
     state: {
@@ -203,16 +202,11 @@ function MultiSelectionMovable({ selectedElements }) {
         eventTracker.current.coordinates
       )
     ) {
-      const clickedElement = Object.keys(nodesById).find(
-        (id) =>
-          currentPage.elements[0].id !== id &&
-          nodesById[id].contains(inputEvent.target)
+      const clickedElement = Object.keys(nodesById).find((id) =>
+        nodesById[id].contains(inputEvent.target)
       );
       if (clickedElement) {
         handleSelectElement(clickedElement, inputEvent);
-      } else if (!inputEvent.shiftKey) {
-        // Clear selection.
-        setSelectedElementsById({ elementIds: [] });
       }
       // Click was handled.
       return true;
