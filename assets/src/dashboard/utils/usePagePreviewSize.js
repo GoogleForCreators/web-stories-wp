@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { useEffect, useMemo, useState, useRef } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * Internal dependencies
@@ -51,10 +50,9 @@ const sizeFromWidth = (
   width,
   { bp, respectSetWidth, availableContainerSpace }
 ) => {
-  if (respectSetWidth) {
+  if (respectSetWidth || !bp) {
     return { width, height: width / PAGE_RATIO };
   }
-
   const itemsInRow = Math.floor(availableContainerSpace / width);
   const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
   const pageGutter = theme.standardViewContentGutter[bp] * 2;
@@ -71,7 +69,7 @@ const sizeFromWidth = (
 };
 
 // we want to set the size of story pages based on the available space
-const getTrueInnerWidth = (availableWindowWidth = window.innerWidth) => {
+const getTrueInnerWidth = (availableWindowWidth) => {
   if (availableWindowWidth >= theme.breakpoint.raw.tablet) {
     return availableWindowWidth - DASHBOARD_LEFT_NAV_WIDTH;
   } else {
@@ -85,13 +83,11 @@ export default function usePagePreviewSize(options = {}) {
     document.getElementById(TOP_LEVEL_DASHBOARD_APP_ID)
   );
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
-    getTrueInnerWidth(dashboardContainerRef.current?.offsetWidth)
+    getTrueInnerWidth(
+      dashboardContainerRef.current?.offsetWidth || window.innerWidth
+    )
   );
   const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
-
-  const [debounceAvailableContainerSpace] = useDebouncedCallback((newWidth) => {
-    setAvailableContainerSpace(newWidth);
-  }, 250);
 
   useEffect(() => {
     setBp(getCurrentBp(availableContainerSpace));
@@ -100,11 +96,11 @@ export default function usePagePreviewSize(options = {}) {
   useResizeEffect(
     dashboardContainerRef,
     (dashboardContainerRefCurrent) => {
-      debounceAvailableContainerSpace(
+      setAvailableContainerSpace(
         getTrueInnerWidth(dashboardContainerRefCurrent.width)
       );
     },
-    [debounceAvailableContainerSpace]
+    []
   );
 
   return useMemo(

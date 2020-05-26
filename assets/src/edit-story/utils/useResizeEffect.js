@@ -33,9 +33,9 @@ import { useEffect } from 'react';
 function useResizeEffect(ref, handler, deps = undefined) {
   useEffect(
     () => {
-      const node = ref.current;
+      const node = ref?.current;
       if (!node) {
-        return null;
+        return () => {};
       }
 
       const observer = new ResizeObserver((entries) => {
