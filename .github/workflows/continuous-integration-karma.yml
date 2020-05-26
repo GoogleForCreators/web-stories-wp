@@ -46,7 +46,7 @@ jobs:
         with:
           file: build/logs/karma-coverage/lcov.info
 
-#      - name: Uplaod Percy snapshots
-#        env:
-#          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-#        run: npm run percy
+      - name: Uplaod Percy snapshots
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+        run: npm run percy
