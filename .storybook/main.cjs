@@ -23,7 +23,8 @@ module.exports = {
   addons: [
     '@storybook/addon-a11y/register',
     '@storybook/addon-actions',
-    '@storybook/addon-docs',
+    // See https://github.com/storybookjs/storybook/issues/10752
+    //'@storybook/addon-docs',
     '@storybook/addon-knobs/register',
     '@storybook/addon-storysource/register',
     '@storybook/addon-viewport/register',

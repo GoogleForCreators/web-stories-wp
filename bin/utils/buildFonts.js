@@ -41,9 +41,16 @@ async function buildFonts(targetFile) {
   url.searchParams.append('key', process.env.GOOGLE_FONTS_API_KEY);
 
   const rawData = await fetch(url.toString());
-  const googleFonts = JSON.parse(rawData);
+  if (!rawData.length) {
+    return;
+  }
 
-  const fonts = [...SYSTEM_FONTS, ...googleFonts.map(normalizeFont)];
+  const googleFonts = JSON.parse(rawData);
+  if (!Object.prototype.hasOwnProperty.call(googleFonts, 'items')) {
+    return;
+  }
+
+  const fonts = [...SYSTEM_FONTS, ...googleFonts.items.map(normalizeFont)];
 
   fonts.sort((a, b) => a.family.localeCompare(b.family));
 

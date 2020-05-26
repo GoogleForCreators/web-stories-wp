@@ -29,18 +29,6 @@ import fetch from '../fetch';
 jest.mock('fs');
 jest.mock('../fetch');
 
-fetch.mockImplementation(() =>
-  Promise.resolve(
-    JSON.stringify([
-      {
-        family: 'ABeeZee',
-        variants: ['regular', 'italic'],
-        category: 'sans-serif',
-      },
-    ])
-  )
-);
-
 const ABEZEE_FONT_AFTER = {
   family: 'ABeeZee',
   fallbacks: ['sans-serif'],
@@ -63,10 +51,33 @@ describe('buildFonts', () => {
   });
 
   it('should combine system fonts with pre-existing list of Google Fonts', async () => {
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve(
+        JSON.stringify({
+          items: [
+            {
+              family: 'ABeeZee',
+              variants: ['regular', 'italic'],
+              category: 'sans-serif',
+            },
+          ],
+        })
+      )
+    );
+
     await buildFonts('/includes/data/fonts.json');
 
     const contentAfter = JSON.parse(readFileSync('/includes/data/fonts.json'));
     expect(contentAfter).toHaveLength(1 + SYSTEM_FONTS.length);
     expect(contentAfter).toContainEqual(ABEZEE_FONT_AFTER);
+  });
+
+  it('should bail on empty response', async () => {
+    fetch.mockImplementationOnce(() => Promise.resolve(''));
+
+    await buildFonts('/includes/data/fonts.json');
+
+    const contentAfter = readFileSync('/includes/data/fonts.json');
+    expect(contentAfter).toStrictEqual('');
   });
 });
