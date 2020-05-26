@@ -44,6 +44,7 @@ class Plugin {
 	public function register() {
 		add_action( 'init', [ Media::class, 'init' ], 9 );
 		add_action( 'init', [ Story_Post_Type::class, 'init' ] );
+		add_action( 'init', [ Template_Post_Type::class, 'init' ] );
 
 		// REST API endpoints.
 
