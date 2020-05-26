@@ -186,58 +186,60 @@ describe('StoryAnimation.Provider', () => {
     });
   });
 
-  describe('playWAAPIAnimations()', () => {
-    it('calls all hoisted Animation.play() methods when called', () => {
-      const { result } = renderHook(() => useStoryAnimationContext(), {
-        wrapper: createWrapperWithProps(StoryAnimation.Provider, {
-          animations: [],
-        }),
-      });
-
-      const numCalls = 10;
-      const play = jest.fn();
-      for (let i = 0; i < numCalls; i++) {
-        act(() => {
-          result.current.actions.hoistWAAPIAnimation(
-            mockWAAPIAnimation({ play })
-          );
+  describe('WAAPIAnimationMethods', () => {
+    describe('play()', () => {
+      it('calls all hoisted Animation.play() methods when called', () => {
+        const { result } = renderHook(() => useStoryAnimationContext(), {
+          wrapper: createWrapperWithProps(StoryAnimation.Provider, {
+            animations: [],
+          }),
         });
-      }
-      act(() => result.current.actions.playWAAPIAnimations());
-      expect(play).toHaveBeenCalledTimes(numCalls);
-    });
 
-    it('excludes cleaned up animation methods when called', () => {
-      const { result } = renderHook(() => useStoryAnimationContext(), {
-        wrapper: createWrapperWithProps(StoryAnimation.Provider, {
-          animations: [],
-        }),
-      });
-
-      const numAnims = 10;
-      const unhoistIndex = numAnims / 2;
-      const animations = Array.from({ length: numAnims }, () =>
-        mockWAAPIAnimation({
-          play: jest.fn(),
-        })
-      );
-      const unhoists = animations.map((animation) => {
-        let unhoist;
-        act(() => {
-          unhoist = result.current.actions.hoistWAAPIAnimation(animation);
-        });
-        return unhoist;
-      });
-      act(() => {
-        unhoists[unhoistIndex]();
-      });
-      act(() => result.current.actions.playWAAPIAnimations());
-      animations.map(({ play }, i) => {
-        if (i === unhoistIndex) {
-          expect(play).toHaveBeenCalledTimes(0);
-        } else {
-          expect(play).toHaveBeenCalledTimes(1);
+        const numCalls = 10;
+        const play = jest.fn();
+        for (let i = 0; i < numCalls; i++) {
+          act(() => {
+            result.current.actions.hoistWAAPIAnimation(
+              mockWAAPIAnimation({ play })
+            );
+          });
         }
+        act(() => result.current.actions.WAAPIAnimationMethods.play());
+        expect(play).toHaveBeenCalledTimes(numCalls);
+      });
+
+      it('excludes cleaned up animation methods when called', () => {
+        const { result } = renderHook(() => useStoryAnimationContext(), {
+          wrapper: createWrapperWithProps(StoryAnimation.Provider, {
+            animations: [],
+          }),
+        });
+
+        const numAnims = 10;
+        const unhoistIndex = numAnims / 2;
+        const animations = Array.from({ length: numAnims }, () =>
+          mockWAAPIAnimation({
+            play: jest.fn(),
+          })
+        );
+        const unhoists = animations.map((animation) => {
+          let unhoist;
+          act(() => {
+            unhoist = result.current.actions.hoistWAAPIAnimation(animation);
+          });
+          return unhoist;
+        });
+        act(() => {
+          unhoists[unhoistIndex]();
+        });
+        act(() => result.current.actions.WAAPIAnimationMethods.play());
+        animations.map(({ play }, i) => {
+          if (i === unhoistIndex) {
+            expect(play).toHaveBeenCalledTimes(0);
+          } else {
+            expect(play).toHaveBeenCalledTimes(1);
+          }
+        });
       });
     });
   });

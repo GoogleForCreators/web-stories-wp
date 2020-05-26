@@ -110,8 +110,15 @@ function Provider({ animations, children, onWAAPIFinish }) {
     };
   }, []);
 
-  const playWAAPIAnimations = useCallback(() => {
-    WAAPIAnimations.forEach((animation) => animation?.play());
+  const WAAPIAnimationMethods = useMemo(() => {
+    return {
+      play: () => WAAPIAnimations.forEach((animation) => animation?.play()),
+      pause: () => WAAPIAnimations.forEach((animation) => animation?.pause()),
+      setCurrentTime: (time) =>
+        WAAPIAnimations.forEach(
+          (animation) => animation && (animation.currentTime = time)
+        ),
+    };
   }, [WAAPIAnimations]);
 
   /**
@@ -155,7 +162,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
       actions: {
         getAnimationParts,
         hoistWAAPIAnimation,
-        playWAAPIAnimations,
+        WAAPIAnimationMethods,
       },
     }),
     [
@@ -163,7 +170,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
       getAnimationParts,
       animationTargets,
       hoistWAAPIAnimation,
-      playWAAPIAnimations,
+      WAAPIAnimationMethods,
     ]
   );
 
