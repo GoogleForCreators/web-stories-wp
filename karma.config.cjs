@@ -40,7 +40,7 @@ module.exports = function (config) {
     files: [{ pattern: '**/karma/**/*.js', watched: false }],
 
     // list of files / patterns to exclude
-    exclude: ['**/test/**/*.js', '**/*.test.js'],
+    exclude: ['**/test/**/*.js'],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
