@@ -29,7 +29,7 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
 /**
  * Internal dependencies
  */
-const webpackConfigArray = require('./webpack.config');
+const webpackConfigArray = require('./webpack.config.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -38,8 +38,8 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-sourcemap-loader',
       'karma-webpack',
-      require('./karma/karma-puppeteer-launcher'),
-      require('./karma/karma-puppeteer-client'),
+      require('./karma/karma-puppeteer-launcher/index.cjs'),
+      require('./karma/karma-puppeteer-client/index.cjs'),
     ],
 
     // Frameworks to use.
@@ -114,6 +114,11 @@ module.exports = function (config) {
         headless: config.headless || false,
         slowMo: config.slowMo || 0,
         snapshots: config.snapshots || false,
+        // @todo: consider testing on a couple of canonical viewport sizes.
+        // Per Figma, the canonical sizes are:
+        // Desktop: 1920:1080
+        // iPad: 1024:680
+        defaultViewport: null,
       },
     },
 
