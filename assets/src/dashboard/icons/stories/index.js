@@ -15,13 +15,13 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import styled from 'styled-components';
-/*eslint import/namespace: ['error', { allowComputed: true }]*/
+/**
+ * Internal dependencies
+ */
+/*eslint import/namespace: [2, { allowComputed: true }]*/
 import * as Icons from '..';
 
 export default {
