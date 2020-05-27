@@ -55,7 +55,7 @@ import {
 import { PAGE_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
-  ArrowSortAscending as ArrowIconSvg,
+  ArrowSortDescending as ArrowIconSvg,
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
 } from '../../../icons';
@@ -77,7 +77,8 @@ const PreviewContainer = styled.div`
 `;
 
 const ArrowIcon = styled.div`
-  height: ${({ theme }) => theme.table.headerContentSize}px;
+  width: ${({ theme }) => theme.table.headerContentSize}px;
+  height: 100%;
   display: inline-block;
   color: ${({ theme }) => theme.colors.gray900};
   vertical-align: middle;
@@ -89,7 +90,7 @@ const ArrowIcon = styled.div`
 `;
 
 const ArrowIconWithTitle = styled(ArrowIcon)`
-  display: ${({ active }) => (active ? 'inline' : 'none')};
+  display: ${({ active }) => (active ? 'inline-block' : 'none')};
   margin-left: 10px;
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
