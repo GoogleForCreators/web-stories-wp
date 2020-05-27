@@ -38,7 +38,11 @@ import {
   PreviewErrorBoundary,
 } from '../../../components';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import { StoriesPropType, UsersPropType } from '../../../types';
+import {
+  StoriesPropType,
+  UsersPropType,
+  PageSizePropType,
+} from '../../../types';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -67,6 +71,7 @@ const StoryGridView = ({
   duplicateStory,
   isTemplate,
   isSavedTemplate,
+  pageSize,
 }) => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -120,10 +125,11 @@ const StoryGridView = ({
   );
 
   return (
-    <StoryGrid>
+    <StoryGrid pageSize={pageSize}>
       {stories.map((story) => (
         <CardGridItem key={story.id} isTemplate={isTemplate}>
           <CardPreviewContainer
+            pageSize={pageSize}
             centerAction={{
               targetAction: story.centerTargetAction,
               label: centerActionLabelByStatus[story.status],
@@ -179,6 +185,7 @@ StoryGridView.propTypes = {
   updateStory: PropTypes.func,
   trashStory: PropTypes.func,
   duplicateStory: PropTypes.func,
+  pageSize: PageSizePropType.isRequired,
 };
 
 export default StoryGridView;
