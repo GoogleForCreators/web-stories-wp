@@ -44,21 +44,20 @@ fdescribe('Background Drop-Target integration', () => {
   });
 
   fdescribe('when there is an image on the canvas', () => {
-    let imageId;
+    let imageData;
 
     beforeEach(async () => {
-      const data = await addDummyImage(fixture);
-      imageId = data.id;
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000000;
+      imageData = await addDummyImage(fixture);
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000000;
     });
 
-    fit('should temp display image as background when dragging over droptarget edge', async () => {
-      // Find bg element
+    fit('should temp display image as background when dragging over bg edge', async () => {
+      // Find bg element dimensions
       const bgElement = await getCanvasBackgroundElement(fixture);
       const bgRect = bgElement.getBoundingClientRect();
 
-      // Find image element
-      const imageElement = getCanvasElementWrapperById(fixture, imageId);
+      // Find image element dimensions
+      const imageElement = getCanvasElementWrapperById(fixture, imageData.id);
       const imageRect = imageElement.getBoundingClientRect();
 
       const bgReplacementElement = await getCanvasBackgroundReplacement(
@@ -80,16 +79,20 @@ fdescribe('Background Drop-Target integration', () => {
         },
         {
           type: 'move',
-          x: bgRect.x + 7,
-          y: bgRect.y + 107,
+          x: bgRect.x + 5,
+          y: bgRect.y + 105,
         },
       ]);
 
       // Pause for 100 seconds
-      await new Promise((resolve) => setTimeout(resolve, 100000));
+      //await new Promise((resolve) => setTimeout(resolve, 10000000));
 
       // Verify that bg replacement is no longer empty
       expect(bgReplacementElement.innerHTML).not.toEqual('');
+
+      // Verify that img has correct source
+      const img = bgReplacementElement.querySelector('img');
+      expect(img.src).toEqual(imageData.resource.src);
     });
   });
 });
@@ -99,6 +102,7 @@ async function addDummyImage(fixture) {
   return fixture.act(() =>
     insertElement('image', {
       resource: {
+        type: 'image',
         src: 'http://localhost:9876/__static__/blue-marble.jpg',
         width: 600,
         height: 600,
@@ -128,12 +132,14 @@ async function getCanvasBackgroundElementWrapper(fixture) {
 
 function getCanvasBackgroundElement(fixture) {
   return getCanvasBackgroundElementWrapper(fixture).then((e) =>
+    // TODO fix this selector
     e.querySelector(`[class^="display__Element-"]`)
   );
 }
 
 function getCanvasBackgroundReplacement(fixture) {
   return getCanvasBackgroundElementWrapper(fixture).then((e) =>
+    // TODO fix this selector
     e.querySelector(`[class^="displayElement__ReplacementContainer-"]`)
   );
 }
