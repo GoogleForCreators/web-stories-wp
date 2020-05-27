@@ -122,6 +122,39 @@ describe('TextEdit integration', () => {
           '<span style="font-weight: 700">hello world!</span>'
         );
       });
+
+      it('should change content using composed characters, exit and save', async () => {
+        const draft = editor.querySelector('[contenteditable="true"]');
+
+        // Select all.
+        await fixture.events.click(draft, { clickCount: 3 });
+
+        await fixture.snapshot('before content changes');
+
+        await fixture.events.keyboard.type('こんにち');
+
+        await fixture.snapshot('after content changes');
+
+        // Exit edit mode by clicking right outside the editor.
+        // @todo: this API is a bit low level. would be good to add additional
+        // ways to do events relative to targets and each other. Maybe something
+        // like `move({relative: element, anchor: 'topleft', x: -10})`?
+        const { x, y } = editor.getBoundingClientRect();
+        await fixture.events.mouse.move(x - 10, y);
+        await fixture.events.mouse.down();
+
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+
+        // The element is still selected and updated.
+        const storyContext = await fixture.renderHook(() => useStory());
+        expect(storyContext.state.selectedElementIds).toEqual([element.id]);
+        expect(storyContext.state.selectedElements[0].content).toEqual(
+          'こんにち'
+        );
+
+        // The content is updated in the frame.
+        expect(frame.innerHTML).toEqual('こんにち');
+      });
     });
   });
 });
