@@ -13,7 +13,7 @@
  * Author: Google
  * Author URI: https://opensource.google.com/
  * Version: 1.0.0-alpha
- * Requires at least: 5.3
+ * Requires WP: 5.3
  * Requires PHP: 5.6
  * Text Domain: web-stories
  * Domain Path: /languages/
