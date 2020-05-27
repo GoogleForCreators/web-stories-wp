@@ -42,6 +42,7 @@ const StyledCardTitle = styled.div`
 `;
 
 const StyledTitle = styled(Paragraph2)`
+  margin: 0;
   color: ${({ theme }) => theme.colors.gray900};
   font-weight: ${({ theme }) => theme.typography.weight.bold};
   white-space: nowrap;
@@ -50,6 +51,7 @@ const StyledTitle = styled(Paragraph2)`
 `;
 
 const TitleBodyText = styled(Paragraph2)`
+  margin: 0;
   color: ${({ theme }) => theme.colors.gray500};
   font-weight: ${({ theme }) => theme.typography.weight.light};
 `;
