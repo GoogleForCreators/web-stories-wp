@@ -29,12 +29,12 @@ function reducePage({ elements, ...rest }) {
 }
 
 function updateElement({ isFill, ...rest }) {
-  const pageWidth = 440;
-  const pageHeight = 660;
-  const fullBleedRatio = 9 / 16;
-  const fullBleedHeight = pageWidth / fullBleedRatio;
-  const dangerZoneHeight = (fullBleedHeight - pageHeight) / 2;
   if (isFill) {
+    const pageWidth = 440;
+    const pageHeight = 660;
+    const fullBleedRatio = 9 / 16;
+    const fullBleedHeight = pageWidth / fullBleedRatio;
+    const dangerZoneHeight = (fullBleedHeight - pageHeight) / 2;
     return {
       ...rest,
       x: 0,
