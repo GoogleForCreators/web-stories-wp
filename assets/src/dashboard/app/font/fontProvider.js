@@ -54,7 +54,15 @@ function FontProvider({ children }) {
   );
 
   useEffect(() => {
-    getAllFonts().then(setFonts);
+    let mounted = true;
+    getAllFonts().then((newFonts) => {
+      if (mounted) {
+        setFonts(newFonts);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
   }, [getAllFonts]);
 
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
