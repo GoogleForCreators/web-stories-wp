@@ -127,7 +127,12 @@ function DropTargetsProvider({ children }) {
           })
         );
     },
-    [activeDropTargetId, currentPage, getDropTargetFromCursor, pushTransform]
+    [
+      activeDropTargetId,
+      currentPage?.elements,
+      getDropTargetFromCursor,
+      pushTransform,
+    ]
   );
 
   /**
@@ -175,9 +180,9 @@ function DropTargetsProvider({ children }) {
     },
     [
       activeDropTargetId,
-      currentPage,
-      dropTargets,
       combineElements,
+      currentPage?.elements,
+      dropTargets,
       pushTransform,
     ]
   );

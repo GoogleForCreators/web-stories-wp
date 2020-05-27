@@ -17,31 +17,39 @@
 /**
  * Internal dependencies
  */
-import { DIRECTION } from '../constants';
+import { ANIMATION_TYPES } from '../../constants';
+import SimpleAnimation from '../simpleAnimation';
 
-export default function (direction) {
-  const translateFrames = {
-    [DIRECTION.TOP_TO_BOTTOM]: {
-      transform: ['translateY(-100%)', 'translateY(0%)'],
-    },
-    [DIRECTION.BOTTOM_TO_TOP]: {
-      transform: ['translateY(100%)', 'translateY(0%)'],
-    },
-    [DIRECTION.LEFT_TO_RIGHT]: {
-      transform: ['translateX(-100%)', 'translateX(0%)'],
-    },
-    [DIRECTION.RIGHT_TO_LEFT]: {
-      transform: ['translateX(100%)', 'translateX(0%)'],
-    },
+const defaults = {
+  fill: 'forwards',
+  duration: 1000,
+};
+
+export function AnimationZoom({ zoomFrom = 0, zoomTo = 1, ...args }) {
+  const timings = {
+    ...defaults,
+    ...args,
   };
 
+  const animationName = `from-${zoomFrom}-to-${zoomTo}-${ANIMATION_TYPES.ZOOM}`;
   const keyframes = {
-    ...(translateFrames[direction] || translateFrames[DIRECTION.BOTTOM_TO_TOP]),
-    opacity: [0, 1],
+    transform: [`scale(${zoomFrom})`, `scale(${zoomTo})`],
   };
+
+  const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
+    animationName,
+    keyframes,
+    timings,
+    true
+  );
 
   return {
-    fill: 'forwards',
-    keyframes,
+    id,
+    WAAPIAnimation,
+    AMPTarget,
+    AMPAnimation,
+    generatedKeyframes: {
+      [animationName]: keyframes,
+    },
   };
 }

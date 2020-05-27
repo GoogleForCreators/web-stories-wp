@@ -195,6 +195,23 @@ function APIProvider({ children }) {
   );
 
   /**
+   * Delete existing media.
+   *
+   * @param  {number} mediaId
+   * @return {Promise} Media Object Promise.
+   */
+  const deleteMedia = useCallback(
+    (mediaId) => {
+      return apiFetch({
+        path: `${media}/${mediaId}`,
+        data: { force: true },
+        method: 'DELETE',
+      });
+    },
+    [media]
+  );
+
+  /**
    * Gets metadata (title, favicon, etc.) from
    * a provided URL.
    *
@@ -237,6 +254,7 @@ function APIProvider({ children }) {
       getAllUsers,
       uploadMedia,
       updateMedia,
+      deleteMedia,
     },
   };
 

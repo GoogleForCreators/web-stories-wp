@@ -33,6 +33,19 @@ describe('getLongestMediaElement', () => {
     });
   });
 
+  it('should ignore looping media', () => {
+    const elements = [
+      { type: 'video', resource: { length: 1 } },
+      { type: 'video', resource: { length: 10 } },
+      { type: 'video', resource: { length: 15 }, loop: true },
+    ];
+
+    expect(getLongestMediaElement(elements)).toStrictEqual({
+      type: 'video',
+      resource: { length: 10 },
+    });
+  });
+
   it('should ignore images', () => {
     const elements = [{ type: 'image' }];
 

@@ -19,15 +19,17 @@
  */
 import styled, { keyframes, css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { memo, useState, useRef, useMemo } from 'react';
+import { useEffect, useCallback, memo, useState, useRef, useMemo } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
 import { ReactComponent as Play } from '../../../../icons/play.svg';
+import DropDownMenu from './dropDownMenu';
 
 const styledTiles = css`
   width: 100%;
@@ -51,11 +53,12 @@ const Container = styled.div`
 
 const PlayIcon = styled(Play)`
   height: 24px;
-  position: absolute;
   width: 24px;
+  position: absolute;
   top: calc(50% - 12px);
   left: calc(50% - 12px);
 `;
+
 const Duration = styled.div`
   position: absolute;
   bottom: 12px;
@@ -127,6 +130,8 @@ const MediaElement = ({
     local,
     alt,
   } = resource;
+  const hasDropdownMenu = useFeature('mediaDropdownMenu');
+
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
@@ -134,6 +139,8 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
+  const [pointerEntered, setPointerEntered] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const {
     actions: { handleDrag, handleDrop, setDraggingResource },
@@ -171,6 +178,41 @@ const MediaElement = ({
     [setDraggingResource, resource, handleDrag, handleDrop]
   );
 
+  const onPointerEnter = useCallback(() => setPointerEntered(true), []);
+  const onPointerLeave = useCallback(() => setPointerEntered(false), []);
+  const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
+  const onMenuCancelled = useCallback(() => setIsMenuOpen(false), []);
+  const onMenuSelected = useCallback(() => {
+    setIsMenuOpen(false);
+    setPointerEntered(false);
+  }, []);
+
+  useEffect(() => {
+    if (type === 'video') {
+      if (isMenuOpen) {
+        if (mediaElement.current && !mediaElement.current.paused) {
+          // If it's a video, pause the preview while the dropdown menu is open.
+          mediaElement.current.pause();
+        }
+      } else {
+        if (pointerEntered) {
+          setShowVideoDetail(false);
+          if (mediaElement.current) {
+            // Pointer still in the media element, continue the video.
+            mediaElement.current.play();
+          }
+        } else {
+          setShowVideoDetail(true);
+          if (mediaElement.current) {
+            // Stop video and reset position.
+            mediaElement.current.pause();
+            mediaElement.current.currentTime = 0;
+          }
+        }
+      }
+    }
+  }, [isMenuOpen, pointerEntered, type]);
+
   const onClick = () => onInsert(resource, width, height);
 
   if (type === 'image') {
@@ -186,7 +228,12 @@ const MediaElement = ({
       }
     }
     return (
-      <Container data-testid="mediaElement" data-id={resourceId}>
+      <Container
+        data-testid="mediaElement"
+        data-id={resourceId}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
+      >
         <Image
           key={src}
           src={imageSrc}
@@ -208,32 +255,23 @@ const MediaElement = ({
             <UploadingIndicator />
           </CSSTransition>
         )}
+        {hasDropdownMenu && (
+          <DropDownMenu
+            resource={resource}
+            pointerEntered={pointerEntered}
+            isMenuOpen={isMenuOpen}
+            onMenuOpen={onMenuOpen}
+            onMenuCancelled={onMenuCancelled}
+            onMenuSelected={onMenuSelected}
+          />
+        )}
       </Container>
     );
   }
 
-  const pointerEnter = () => {
-    setShowVideoDetail(false);
-    if (mediaElement.current) {
-      mediaElement.current.play();
-    }
-  };
-
-  const pointerLeave = () => {
-    setShowVideoDetail(true);
-    if (mediaElement.current) {
-      mediaElement.current.pause();
-      mediaElement.current.currentTime = 0;
-    }
-  };
-
   const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <Container
-      onPointerEnter={pointerEnter}
-      onPointerLeave={pointerLeave}
-      onClick={onClick}
-    >
+    <Container onPointerEnter={onPointerEnter} onPointerLeave={onPointerLeave}>
       <Video
         key={src}
         ref={mediaElement}
@@ -242,6 +280,7 @@ const MediaElement = ({
         height={height}
         preload="none"
         muted
+        onClick={onClick}
         {...dropTargetsBindings}
       >
         <source src={src} type={mimeType} />
@@ -257,6 +296,16 @@ const MediaElement = ({
         >
           <UploadingIndicator />
         </CSSTransition>
+      )}
+      {hasDropdownMenu && (
+        <DropDownMenu
+          resource={resource}
+          pointerEntered={pointerEntered}
+          isMenuOpen={isMenuOpen}
+          onMenuOpen={onMenuOpen}
+          onMenuCancelled={onMenuCancelled}
+          onMenuSelected={onMenuSelected}
+        />
       )}
     </Container>
   );
