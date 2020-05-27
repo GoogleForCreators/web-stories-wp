@@ -102,6 +102,10 @@ export class Fixture {
     const { container } = render(
       <App key={Math.random()} config={this._config} />
     );
+    // The editor should always be given 100%:100% size. The testing-library
+    // renders an extra container so it should be given the same size.
+    container.style.width = '100%';
+    container.style.height = '100%';
     this._container = container;
 
     // @todo: find a stable way to wait for the story to fully render. Can be
