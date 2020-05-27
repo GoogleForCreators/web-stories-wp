@@ -62,9 +62,10 @@ describe('StoryAnimation.Provider', () => {
         actions: { getAnimationParts },
       } = result.current;
 
-      expect(getAnimationParts(target)).toHaveLength(3);
-      expect(getAnimationParts('other-target')).toHaveLength(2);
-      expect(getAnimationParts('not used target')).toHaveLength(0);
+      expect(getAnimationParts(target)).toStrictEqual('string');
+      // expect(getAnimationParts(target)).toHaveLength(3);
+      // expect(getAnimationParts('other-target')).toHaveLength(2);
+      // expect(getAnimationParts('not used target')).toHaveLength(0);
     });
 
     it('calls generators for a target in ascending order', () => {
