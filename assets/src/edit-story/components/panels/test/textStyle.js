@@ -108,7 +108,7 @@ Wrapper.propTypes = {
 describe('Panels/TextStyle', () => {
   let textElement, unlockPaddingTextElement;
   let controls;
-  const paddingRatioLockLabel = 'Padding ratio lock';
+  const paddingRatioLockLabel = 'Toggle padding ratio lock';
 
   beforeEach(() => {
     global.fetch.resetMocks();
