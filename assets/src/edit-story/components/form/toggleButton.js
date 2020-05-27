@@ -95,7 +95,6 @@ function ToggleButton({
   iconHeight,
   label,
   className,
-  ariaLabel,
   ...rest
 }) {
   value = value === MULTIPLE_VALUE ? '' : value;
@@ -111,7 +110,6 @@ function ToggleButton({
           checked={value}
           onChange={() => onChange(!value)}
           disabled={disabled}
-          aria-label={ariaLabel}
           {...rest}
         />
         <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
@@ -131,7 +129,6 @@ ToggleButton.propTypes = {
   iconHeight: PropTypes.number,
   iconWidth: PropTypes.number,
   className: PropTypes.string,
-  ariaLabel: PropTypes.string.isRequired,
 };
 
 ToggleButton.defaultProps = {

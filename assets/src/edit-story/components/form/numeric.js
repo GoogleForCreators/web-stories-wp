@@ -74,7 +74,6 @@ function Numeric({
   value,
   float,
   flexBasis,
-  ariaLabel,
   disabled,
   ...rest
 }) {
@@ -131,7 +130,6 @@ function Numeric({
             ? ''
             : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
         }
-        aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
         onChange={(evt) => {
@@ -178,7 +176,6 @@ Numeric.propTypes = {
   symbol: PropTypes.string,
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
-  ariaLabel: PropTypes.string.isRequired,
   float: PropTypes.bool,
 };
 

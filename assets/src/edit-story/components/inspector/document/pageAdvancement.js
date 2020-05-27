@@ -122,7 +122,7 @@ function PageAdvancementPanel() {
               symbol={_x('s', 'Seconds', 'web-stories')}
               value={duration}
               onChange={setDuration}
-              ariaLabel={__('Default page duration in seconds', 'web-stories')}
+              aria-label={__('Default page duration in seconds', 'web-stories')}
             />
           </Row>
         </>

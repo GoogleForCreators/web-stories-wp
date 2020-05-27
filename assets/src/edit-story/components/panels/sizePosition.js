@@ -204,10 +204,10 @@ function SizePositionPanel({
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
           disabled={isFill}
-          ariaLabel={__('Width', 'web-stories')}
+          aria-label={__('Width', 'web-stories')}
         />
         <Toggle
-          ariaLabel={__('Aspect ratio lock', 'web-stories')}
+          aria-label={__('Aspect ratio lock', 'web-stories')}
           title={__('Constrain proportions', 'web-stories')}
           icon={<StyledLocked />}
           uncheckedIcon={<StyledUnlocked />}
@@ -232,7 +232,7 @@ function SizePositionPanel({
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
           disabled={isFill}
-          ariaLabel={__('Height', 'web-stories')}
+          aria-label={__('Height', 'web-stories')}
         />
       </Row>
       {/** Rotation and Flipping */}
@@ -243,7 +243,7 @@ function SizePositionPanel({
           value={rotationAngle}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
           disabled={isFill}
-          ariaLabel={__('Rotation', 'web-stories')}
+          aria-label={__('Rotation', 'web-stories')}
         />
         {canFlip && (
           <FlipControls
@@ -257,7 +257,7 @@ function SizePositionPanel({
           <ToggleButton
             icon={<Fullbleed />}
             title={__('Fill', 'web-stories')}
-            ariaLabel={__('Fill', 'web-stories')}
+            aria-label={__('Fill', 'web-stories')}
             iconWidth={15}
             iconHeight={15}
             value={isFill}

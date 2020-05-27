@@ -53,7 +53,7 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) => pushUpdate({ opacity: value })}
           min="1"
           max="100"
-          ariaLabel={__('Opacity in percentage', 'web-stories')}
+          aria-label={__('Opacity in percentage', 'web-stories')}
         />
       </Row>
     </SimplePanel>

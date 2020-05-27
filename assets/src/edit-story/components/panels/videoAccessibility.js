@@ -70,7 +70,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           type={'image'}
-          ariaLabel={__('Edit: video poster', 'web-stories')}
+          aria-label={__('Edit: video poster', 'web-stories')}
         />
       </Row>
       <Row>
@@ -79,7 +79,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           value={title || ''}
           onChange={(value) => pushUpdate({ title: value || null })}
           clear
-          ariaLabel={__('Edit: Video title', 'web-stories')}
+          aria-label={__('Edit: Video title', 'web-stories')}
         />
       </Row>
       <Row>
@@ -88,7 +88,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
-          ariaLabel={__('Edit: Assistive text', 'web-stories')}
+          aria-label={__('Edit: Assistive text', 'web-stories')}
         />
       </Row>
       <Row>

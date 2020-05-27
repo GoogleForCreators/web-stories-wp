@@ -62,7 +62,7 @@ function FlipControls({ value, onChange, elementSpacing }) {
       <ToggleContainer margin={elementSpacing}>
         <Toggle
           title={__('Flip horizontally', 'web-stories')}
-          ariaLabel={__('Flip horizontally', 'web-stories')}
+          aria-label={__('Flip horizontally', 'web-stories')}
           icon={<FlipHorizontal />}
           value={value.horizontal === true}
           onChange={(horizontal) => onChange({ ...value, horizontal })}
@@ -71,7 +71,7 @@ function FlipControls({ value, onChange, elementSpacing }) {
       <ToggleContainer>
         <Toggle
           title={__('Flip vertically', 'web-stories')}
-          ariaLabel={__('Flip vertically', 'web-stories')}
+          aria-label={__('Flip vertically', 'web-stories')}
           icon={<FlipVertical />}
           value={value.vertical === true}
           onChange={(vertical) => onChange({ ...value, vertical })}

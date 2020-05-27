@@ -131,7 +131,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
             icon={<Icon />}
             value={backgroundTextMode === mode}
             label={label}
-            ariaLabel={sprintf(
+            aria-label={sprintf(
               /* translators: %s: Text background mode. */
               __('Set text background mode: %s', 'web-stories'),
               mode

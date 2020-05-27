@@ -87,7 +87,6 @@ function TextInput({
   label,
   value,
   flexBasis,
-  ariaLabel,
   disabled,
   clear,
   placeholder,
@@ -107,7 +106,6 @@ function TextInput({
         placeholder={placeholder}
         label={label}
         value={value}
-        aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
         onChange={(evt) => onChange(evt.target.value, evt)}
@@ -153,7 +151,6 @@ TextInput.propTypes = {
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
   clear: PropTypes.bool,
-  ariaLabel: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
 };
 

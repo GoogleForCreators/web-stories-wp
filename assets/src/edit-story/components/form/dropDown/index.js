@@ -84,7 +84,6 @@ function DropDown({
   value,
   onChange,
   disabled,
-  ariaLabel,
   lightMode = false,
   placeholder,
 }) {
@@ -148,7 +147,6 @@ function DropDown({
         <DropDownList
           handleCurrentValue={handleCurrentValue}
           value={activeItem && activeItem.value}
-          ariaLabel={ariaLabel}
           options={options}
           toggleOptions={toggleOptions}
         />
@@ -162,7 +160,6 @@ DropDown.propTypes = {
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  ariaLabel: PropTypes.string.isRequired,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
 };

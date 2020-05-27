@@ -45,7 +45,7 @@ function UnlockedPaddingControls({ padding, handleChange }) {
             horizontal: value,
           })
         }
-        ariaLabel={__('Edit: horizontal padding', 'web-stories')}
+        aria-label={__('Edit: horizontal padding', 'web-stories')}
       />
       <Space />
       <Toggle
@@ -63,7 +63,7 @@ function UnlockedPaddingControls({ padding, handleChange }) {
             true
           )
         }
-        ariaLabel={__('Toggle padding ratio lock', 'web-stories')}
+        aria-label={__('Toggle padding ratio lock', 'web-stories')}
       />
       <Space />
       <BoxedNumeric
@@ -75,7 +75,7 @@ function UnlockedPaddingControls({ padding, handleChange }) {
             vertical: value,
           })
         }
-        ariaLabel={__('Edit: vertical padding', 'web-stories')}
+        aria-label={__('Edit: vertical padding', 'web-stories')}
       />
     </>
   );

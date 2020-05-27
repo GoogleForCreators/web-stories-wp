@@ -60,7 +60,7 @@ function BackgroundOverlayPanel() {
               onChange={() => updateOverlay(type)}
               iconWidth={22}
               iconHeight={16}
-              ariaLabel={sprintf(
+              aria-label={sprintf(
                 /* translators: %s: Overlay type */
                 __('Set overlay: %s', 'web-stories'),
                 type
