@@ -88,10 +88,6 @@ const sharedConfig = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
-      {
-        test: require.resolve('web-animations-js/web-animations-next.min.js'),
-        use: 'imports-loader?this=>window',
-      },
     ].filter(Boolean),
   },
   plugins: [

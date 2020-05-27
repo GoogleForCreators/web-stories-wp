@@ -46,11 +46,6 @@ module.exports = {
       use: ['@svgr/webpack', 'url-loader', assetLoader],
     });
 
-    config.module.rules.push({
-      test: require.resolve('web-animations-js/web-animations-next.min.js'),
-      use: 'imports-loader?this=>window',
-    });
-
     // only the first matching rule is used when there is a match.
     config.module.rules = [{ oneOf: config.module.rules }];
 
