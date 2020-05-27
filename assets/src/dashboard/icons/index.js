@@ -16,6 +16,10 @@
 /**
  * Internal dependencies
  */
+export { ReactComponent as ArrowAlphaAscending } from './arrowAlphaAscending.svg';
+export { ReactComponent as ArrowAlphaDescending } from './arrowAlphaDescending.svg';
+export { ReactComponent as ArrowSortAscending } from './arrowSortAscending.svg';
+export { ReactComponent as ArrowSortDescending } from './arrowSortDescending.svg';
 export { ReactComponent as BookmarkFill } from './bookmarkFill.svg';
 export { ReactComponent as BookmarkOutline } from './bookmarkOutline.svg';
 export { ReactComponent as Checkmark } from './checkmark.svg';
