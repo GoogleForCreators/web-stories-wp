@@ -17,7 +17,11 @@
 /**
  * Internal dependencies
  */
-import { parentRoute, resolveRoute } from '../route';
+import {
+  parentRoute,
+  resolveRoute,
+  resolveRelatedTemplateRoute,
+} from '../route';
 
 describe('Route', function () {
   afterEach(() => {
@@ -58,5 +62,14 @@ describe('Route', function () {
 
   it('should create a route hash when the path is empty', function () {
     expect(resolveRoute('')).toBe('#/');
+  });
+
+  it('should create a route hash when the path is empty!', function () {
+    window.location.hash = '#/saved-templates/template-detail?id=2';
+    expect(
+      resolveRelatedTemplateRoute({
+        centerTargetAction: 'template-detail?id=1&local=false',
+      })
+    ).toBe('/saved-templates/template-detail?id=1&local=false');
   });
 });
