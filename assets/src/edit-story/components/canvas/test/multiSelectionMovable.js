@@ -92,7 +92,7 @@ describe('multiSelectionMovable', () => {
     );
   }
 
-  function performRotatation(rotateTo) {
+  function performRotation(rotateTo) {
     const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
     moveable.onRotateGroupStart({ events: [{ set: () => {} }] });
     moveable.onRotateGroup({
@@ -123,7 +123,7 @@ describe('multiSelectionMovable', () => {
     (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
 
-      performRotatation(rotateTo);
+      performRotation(rotateTo);
 
       const func = updateElementsById.mock.calls[0][0].properties;
       expect(func(element1)).toStrictEqual({
