@@ -180,7 +180,13 @@ const MediaElement = ({
 
   const onPointerEnter = useCallback(() => setPointerEntered(true), []);
   const onPointerLeave = useCallback(() => setPointerEntered(false), []);
-  const menuCallback = useCallback((isOpen) => setIsMenuOpen(isOpen), []);
+  const menuCallback = useCallback((isOpen) => {
+    setIsMenuOpen(isOpen);
+    if (!isOpen) {
+      // Menu has been closed, we should hide the More Icon.
+      setPointerEntered(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (type === 'video') {
