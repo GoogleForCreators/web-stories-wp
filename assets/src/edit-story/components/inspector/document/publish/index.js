@@ -107,7 +107,7 @@ function PublishPanel() {
             </FieldLabel>
             {isUsersLoading ? (
               <DropDown
-                labelledBy={authorLabelId}
+                aria-labelledby={authorLabelId}
                 placeholder={__('Loading…', 'web-stories')}
                 disabled
                 lightMode={true}
