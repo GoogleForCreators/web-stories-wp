@@ -75,7 +75,7 @@ function FontControls({ selectedElements, pushUpdate }) {
         <Row>
           <DropDown
             data-testid="font"
-            ariaLabel={__('Font family', 'web-stories')}
+            aria-label={__('Font family', 'web-stories')}
             options={fonts}
             value={fontFamily}
             onChange={async (value) => {
@@ -117,7 +117,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           <>
             <DropDown
               data-testid="font.weight"
-              ariaLabel={__('Font weight', 'web-stories')}
+              aria-label={__('Font weight', 'web-stories')}
               placeholder={__('(multiple)', 'web-stories')}
               options={fontWeights}
               value={fontWeight}

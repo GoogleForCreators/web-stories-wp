@@ -86,6 +86,7 @@ function DropDown({
   disabled,
   lightMode = false,
   placeholder,
+  ...rest
 }) {
   const selectRef = useRef();
 
@@ -132,6 +133,7 @@ function DropDown({
         ref={selectRef}
         aria-disabled={disabled}
         lightMode={lightMode}
+        {...rest}
       >
         <DropDownTitle>
           {(activeItem && activeItem.name) || placeholder}
@@ -149,6 +151,7 @@ function DropDown({
           value={activeItem && activeItem.value}
           options={options}
           toggleOptions={toggleOptions}
+          {...rest}
         />
       </Popup>
     </DropDownContainer>
@@ -162,6 +165,7 @@ DropDown.propTypes = {
   disabled: PropTypes.bool,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
+  labelledBy: PropTypes.string,
 };
 
 DropDown.defaultProps = {

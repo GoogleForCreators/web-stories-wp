@@ -59,7 +59,6 @@ function LockedPaddingControls({ padding, handleChange }) {
       />
       <Space />
       <Toggle
-        aria-label={__('Padding ratio lock', 'web-stories')}
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={true}

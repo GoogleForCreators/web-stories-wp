@@ -45,11 +45,10 @@ function UnlockedPaddingControls({ padding, handleChange }) {
             horizontal: value,
           })
         }
-        aria-label={__('Edit: horizontal padding', 'web-stories')}
+        aria-label={__('Edit: Horizontal padding', 'web-stories')}
       />
       <Space />
       <Toggle
-        aria-label={__('Padding ratio lock', 'web-stories')}
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={false}
@@ -75,7 +74,7 @@ function UnlockedPaddingControls({ padding, handleChange }) {
             vertical: value,
           })
         }
-        aria-label={__('Edit: vertical padding', 'web-stories')}
+        aria-label={__('Edit: Vertical padding', 'web-stories')}
       />
     </>
   );
