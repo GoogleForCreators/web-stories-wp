@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -50,10 +50,19 @@ const DropDownContainer = styled.div`
  * @param {Object} props.resource Selected media element's resource object.
  * @param {boolean} props.pointerEntered If the user's pointer is in the media element.
  * @param {boolean} props.isMenuOpen If the dropdown menu is open.
- * @param {function(boolean)} props.setIsMenuOpen Callback for when menu is opened / closed.
+ * @param {Function} props.onMenuOpen Callback for when menu is opened.
+ * @param {Function} props.onMenuCancelled Callback for when menu is closed without any selections.
+ * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function DropDownMenu({ resource, pointerEntered, isMenuOpen, setIsMenuOpen }) {
+function DropDownMenu({
+  resource,
+  pointerEntered,
+  isMenuOpen,
+  onMenuOpen,
+  onMenuCancelled,
+  onMenuSelected,
+}) {
   const options = [
     { name: __('Edit', 'web-stories'), value: 'edit' },
     { name: __('Delete', 'web-stories'), value: 'delete' },
@@ -61,12 +70,8 @@ function DropDownMenu({ resource, pointerEntered, isMenuOpen, setIsMenuOpen }) {
 
   const moreButtonRef = useRef();
 
-  const onClickMoreIcon = useCallback(() => setIsMenuOpen(true), [
-    setIsMenuOpen,
-  ]);
-
   const handleCurrentValue = (value) => {
-    setIsMenuOpen(false);
+    onMenuSelected();
     switch (value) {
       case 'edit':
         // TODO(#354): Edit Media Metadata via Media Library Hover Menu
@@ -79,11 +84,6 @@ function DropDownMenu({ resource, pointerEntered, isMenuOpen, setIsMenuOpen }) {
     }
   };
 
-  // On menu losing focus.
-  const toggleOptions = useCallback(() => setIsMenuOpen(false), [
-    setIsMenuOpen,
-  ]);
-
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     !resource.local && // Don't show menu if resource not uploaded to server yet.
@@ -93,7 +93,7 @@ function DropDownMenu({ resource, pointerEntered, isMenuOpen, setIsMenuOpen }) {
           ref={moreButtonRef}
           width="28"
           height="28"
-          onClick={onClickMoreIcon}
+          onClick={onMenuOpen}
           aria-pressed={isMenuOpen}
           aria-haspopup={true}
           aria-expanded={isMenuOpen}
@@ -104,7 +104,7 @@ function DropDownMenu({ resource, pointerEntered, isMenuOpen, setIsMenuOpen }) {
               handleCurrentValue={handleCurrentValue}
               options={options}
               value={options[0].value}
-              toggleOptions={toggleOptions}
+              toggleOptions={onMenuCancelled}
             />
           </DropDownContainer>
         </Popup>
@@ -114,10 +114,12 @@ function DropDownMenu({ resource, pointerEntered, isMenuOpen, setIsMenuOpen }) {
 }
 
 DropDownMenu.propTypes = {
-  resource: PropTypes.object,
-  pointerEntered: PropTypes.bool,
-  isMenuOpen: PropTypes.bool,
-  setIsMenuOpen: PropTypes.func,
+  resource: PropTypes.object.isRequired,
+  pointerEntered: PropTypes.bool.isRequired,
+  isMenuOpen: PropTypes.bool.isRequired,
+  onMenuOpen: PropTypes.func.isRequired,
+  onMenuCancelled: PropTypes.func.isRequired,
+  onMenuSelected: PropTypes.func.isRequired,
 };
 
 export default DropDownMenu;

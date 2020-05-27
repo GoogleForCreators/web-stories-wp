@@ -180,12 +180,11 @@ const MediaElement = ({
 
   const onPointerEnter = useCallback(() => setPointerEntered(true), []);
   const onPointerLeave = useCallback(() => setPointerEntered(false), []);
-  const menuCallback = useCallback((isOpen) => {
-    setIsMenuOpen(isOpen);
-    if (!isOpen) {
-      // Menu has been closed, we should hide the More Icon.
-      setPointerEntered(false);
-    }
+  const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
+  const onMenuCancelled = useCallback(() => setIsMenuOpen(false), []);
+  const onMenuSelected = useCallback(() => {
+    setIsMenuOpen(false);
+    setPointerEntered(false);
   }, []);
 
   useEffect(() => {
@@ -261,7 +260,9 @@ const MediaElement = ({
             resource={resource}
             pointerEntered={pointerEntered}
             isMenuOpen={isMenuOpen}
-            setIsMenuOpen={menuCallback}
+            onMenuOpen={onMenuOpen}
+            onMenuCancelled={onMenuCancelled}
+            onMenuSelected={onMenuSelected}
           />
         )}
       </Container>
@@ -301,7 +302,9 @@ const MediaElement = ({
           resource={resource}
           pointerEntered={pointerEntered}
           isMenuOpen={isMenuOpen}
-          setIsMenuOpen={menuCallback}
+          onMenuOpen={onMenuOpen}
+          onMenuCancelled={onMenuCancelled}
+          onMenuSelected={onMenuSelected}
         />
       )}
     </Container>
