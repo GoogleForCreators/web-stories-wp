@@ -38,8 +38,10 @@ describe('Multi-selection Movable integration', () => {
   describe('multi-selection', () => {
     let element1;
     let element2;
+    let element3;
     let frame1;
     let frame2;
+    let frame3;
 
     beforeEach(async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
@@ -63,6 +65,20 @@ describe('Multi-selection Movable integration', () => {
           width: 50,
           height: 50,
         })
+      );
+
+      element3 = await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: 'Text B',
+          x: element1.x + element1.width + 1,
+          y: element1.y + element1.height + 1,
+          width: 20,
+          height: 20,
+        })
+      );
+      frame3 = fixture.querySelector(
+        `[data-element-id="${element3.id}"] [data-testid="textFrame"]`
       );
 
       frame1 = fixture.querySelector(
@@ -105,18 +121,17 @@ describe('Multi-selection Movable integration', () => {
 
       it('should select one element when clicking in multi-selection', async () => {
         const { x, y } = safezone.getBoundingClientRect();
-        await fixture.events.mouse.move(x + element1.x + 1, y + element1.y + 1);
-        await fixture.events.mouse.down();
-        await fixture.events.mouse.up();
+        await fixture.events.mouse.click(
+          x + element1.x + 1,
+          y + element1.y + 1
+        );
         const storyContext = await fixture.renderHook(() => useStory());
         expect(storyContext.state.selectedElementIds).toEqual([element1.id]);
       });
 
       it('should select bg element when clicking out of the multi-selection', async () => {
         const { x, y } = safezone.getBoundingClientRect();
-        await fixture.events.mouse.move(x + 200, y + 200);
-        await fixture.events.mouse.down();
-        await fixture.events.mouse.up();
+        await fixture.events.mouse.click(x + 200, y + 200);
         const storyContext = await fixture.renderHook(() => useStory());
 
         // Let's assure we have the background element (the first element) in the selection now.
@@ -124,15 +139,32 @@ describe('Multi-selection Movable integration', () => {
         expect(storyContext.state.selectedElementIds).toEqual([
           background.getAttribute('data-element-id'),
         ]);
+        expect(
+          storyContext.state.selectedElementIds.includes(element1.id)
+        ).toBeFalse();
+        expect(
+          storyContext.state.selectedElementIds.includes(element2.id)
+        ).toBeFalse();
       });
 
       it('should de-select all elements when clicking out of the page', async () => {
         const { x, y } = safezone.getBoundingClientRect();
-        await fixture.events.mouse.move(x - 10, y - 10);
-        await fixture.events.mouse.down();
-        await fixture.events.mouse.up();
+        await fixture.events.mouse.click(x - 10, y - 10);
         const storyContext = await fixture.renderHook(() => useStory());
         expect(storyContext.state.selectedElementIds).toEqual([]);
+      });
+
+      it('should allow adding an element to selection in the middle of multi-selection', async () => {
+        await fixture.events.keyboard.down('Shift');
+        await fixture.events.click(frame3);
+        await fixture.events.keyboard.up('Shift');
+
+        const storyContext = await fixture.renderHook(() => useStory());
+        expect(storyContext.state.selectedElementIds).toEqual([
+          element1.id,
+          element2.id,
+          element3.id,
+        ]);
       });
     });
   });
