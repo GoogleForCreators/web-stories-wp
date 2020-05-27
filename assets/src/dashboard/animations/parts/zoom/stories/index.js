@@ -17,57 +17,74 @@
 /**
  * Internal dependencies
  */
-import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import StoryAnimation from '../../../../components/storyAnimation';
+import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/BlinkOn',
+  title: 'Dashboard/Animations/Zoom',
 };
 
 const animations = [
-  { targets: ['e1'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e2'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e3'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e4'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
+  {
+    targets: ['e1'],
+    type: ANIMATION_TYPES.ZOOM,
+    duration: 10000,
+    zoomFrom: 1,
+    zoomTo: 2,
+  },
+  {
+    targets: ['e2'],
+    type: ANIMATION_TYPES.ZOOM,
+    duration: 10000,
+    zoomFrom: 2,
+    zoomTo: 1,
+  },
 ];
 
 const elements = [
-  { id: 'e1', color: 'red' },
-  { id: 'e2', color: 'orange' },
-  { id: 'e3', color: 'blue' },
-  { id: 'e4', color: 'green' },
+  {
+    id: 'e1',
+    src: 'https://i.picsum.photos/id/1025/4951/3301.jpg',
+    transform: 'translate(0px, 100px) scale(2)',
+  },
+  {
+    id: 'e2',
+    src: 'https://i.picsum.photos/id/1062/5092/3395.jpg',
+  },
 ];
+
+const defaultStyles = {
+  width: '300px',
+  height: '200px',
+};
 
 export const _default = () => {
   return (
     <StoryAnimation.Provider animations={animations}>
       <PlayButton />
-      <div
-        style={{
-          display: 'flex',
-          width: '220px',
-          justifyContent: 'space-between',
-          marginTop: '20px',
-        }}
-      >
-        {elements.map(({ id, color }) => (
-          <div
-            key={id}
-            style={{ position: 'relative', width: '50px', height: '50px' }}
-          >
-            <StoryAnimation.WAAPIWrapper target={id}>
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: color,
-                }}
-              />
-            </StoryAnimation.WAAPIWrapper>
-          </div>
-        ))}
-      </div>
+      {elements.map(({ id, src, ...style }) => (
+        <div
+          key={id}
+          style={{
+            position: 'relative',
+            marginBottom: '20px',
+            ...defaultStyles,
+          }}
+        >
+          <StoryAnimation.WAAPIWrapper target={id}>
+            <img
+              alt=""
+              style={{
+                width: '100%',
+                height: '100%',
+                ...style,
+              }}
+              src={src}
+            />
+          </StoryAnimation.WAAPIWrapper>
+        </div>
+      ))}
     </StoryAnimation.Provider>
   );
 };
@@ -81,19 +98,21 @@ export const AMPStory = () => {
             <StoryAnimation.AMPKeyframes />
             <StoryAnimation.AMPAnimations />
 
-            <amp-story-grid-layer template="horizontal">
-              {elements.map(({ id, color }) => (
+            <amp-story-grid-layer template="vertical">
+              {elements.map(({ id, src, ...style }) => (
                 <StoryAnimation.AMPWrapper
                   key={id}
                   target={id}
-                  style={{ width: '50px', height: '50px' }}
+                  style={defaultStyles}
                 >
-                  <div
+                  <img
+                    alt=""
                     style={{
                       width: '100%',
                       height: '100%',
-                      backgroundColor: color,
+                      ...style,
                     }}
+                    src={src}
                   />
                 </StoryAnimation.AMPWrapper>
               ))}
