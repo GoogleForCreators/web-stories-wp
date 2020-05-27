@@ -191,7 +191,10 @@ function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
       setIsPlaying(false);
       setShowControls(true);
     } else {
-      videoNode.play().then(() => setIsPlaying(true));
+      const playPromise = videoNode.play();
+      if (playPromise) {
+        playPromise.then(() => setIsPlaying(true)).catch(() => {});
+      }
     }
   };
 
