@@ -28,9 +28,23 @@ function reducePage({ elements, ...rest }) {
   };
 }
 
-function updateElement(element) {
-  delete element.isFill;
-  return element;
+function updateElement({ isFill, ...rest }) {
+  const pageWidth = 440;
+  const pageHeight = 660;
+  const fullBleedRatio = 9 / 16;
+  const fullBleedHeight = pageWidth / fullBleedRatio;
+  const dangerZoneHeight = (fullBleedHeight - pageHeight) / 2;
+  if (isFill) {
+    return {
+      ...rest,
+      x: 0,
+      y: -dangerZoneHeight,
+      width: pageWidth,
+      height: pageWidth / fullBleedRatio,
+      rotationAngle: 0,
+    };
+  }
+  return rest;
 }
 
 export default isFillDeprecate;
