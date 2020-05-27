@@ -36,6 +36,7 @@ export const Content = styled.div`
 
 export const NavButton = styled(Button)`
   margin-bottom: 0;
+  margin-top: 0;
 `;
 
 export const NavList = styled.ul`
@@ -82,11 +83,16 @@ export const AppInfo = styled.div`
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
-export const LogoPlaceholder = styled.div(
-  ({ theme }) => `
-    height: 40px;
-    width: 145px;
-    margin: ${theme.leftRail.logoMargin};
-    background-color: ${theme.colors.gray100};
-  `
-);
+export const WebStoriesHeading = styled.h1`
+  width: 100%;
+  margin-bottom: 0;
+  font-family: ${({ theme }) => theme.typography.family.secondary};
+  line-height: 1em;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.gray900};
+  align-self: center;
+`;

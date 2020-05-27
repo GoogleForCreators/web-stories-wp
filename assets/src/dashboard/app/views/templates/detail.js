@@ -51,7 +51,7 @@ import {
 } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { StoryGridView } from '../shared';
-
+import { resolveRelatedTemplateRoute } from '../../router';
 import {
   ByLine,
   ColumnContainer,
@@ -69,6 +69,10 @@ import {
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
+  const [relatedTemplates, setRelatedTemplates] = useState([]);
+  const [orderedTemplates, setOrderedTemplates] = useState([]);
+  const [previewPages, setPreviewPages] = useState([]);
+
   const { pageSize } = usePagePreviewSize({ isGrid: true });
   const {
     state: {
@@ -91,33 +95,40 @@ function TemplateDetail() {
   const { isRTL } = useConfig();
 
   useEffect(() => {
+    setPreviewPages([]);
+
     if (!templateId) {
       return;
     }
 
     const id = parseInt(templateId);
     const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
+    const templateFetchFn = isLocalTemplate
+      ? fetchMyTemplateById
+      : fetchExternalTemplateById;
 
-    if (isLocalTemplate) {
-      fetchMyTemplateById(id).then((fetchedTemplate) =>
-        setTemplate(fetchedTemplate)
-      );
-    } else {
-      fetchExternalTemplateById(id).then((fetchedTemplate) =>
-        setTemplate(fetchedTemplate)
-      );
+    templateFetchFn(id).then(setTemplate);
+  }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
+
+  useEffect(() => {
+    if (!template) {
+      return;
     }
-  }, [fetchMyTemplateById, fetchExternalTemplateById, templateId, isLocal]);
-
-  const relatedTemplates = useMemo(() => {
-    return fetchRelatedTemplates();
-  }, [fetchRelatedTemplates]);
-
-  const orderedTemplates = useMemo(() => {
-    return templatesOrderById.map((templateByOrderId) => {
-      return templates[templateByOrderId];
-    });
-  }, [templatesOrderById, templates]);
+    setRelatedTemplates(
+      fetchRelatedTemplates().map((relatedTemplate) => ({
+        ...relatedTemplate,
+        centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
+      }))
+    );
+    setOrderedTemplates(
+      templatesOrderById.map(
+        (templateByOrderId) => templates[templateByOrderId]
+      )
+    );
+    setPreviewPages(
+      template.pages.map((page) => <PreviewPage key={page.id} page={page} />)
+    );
+  }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
@@ -139,14 +150,7 @@ function TemplateDetail() {
     }
 
     return orderedTemplates.findIndex((t) => t.id === template?.id);
-  }, [template, orderedTemplates]);
-
-  const previewPages = useMemo(
-    () =>
-      template &&
-      template.pages.map((page) => <PreviewPage key={page.id} page={page} />),
-    [template]
-  );
+  }, [orderedTemplates, template?.id]);
 
   const switchToTemplateByOffset = useCallback(
     (offset) => {
@@ -180,7 +184,7 @@ function TemplateDetail() {
         onClick={() => switchToTemplateByOffset(1)}
         disabled={
           !orderedTemplates?.length ||
-          activeTemplateIndex === orderedTemplates.length - 1
+          activeTemplateIndex === orderedTemplates?.length - 1
         }
       >
         <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
@@ -196,7 +200,12 @@ function TemplateDetail() {
           NextButton: Next,
           PrevButton: Previous,
         };
-  }, [isRTL, switchToTemplateByOffset, activeTemplateIndex, orderedTemplates]);
+  }, [
+    orderedTemplates?.length,
+    activeTemplateIndex,
+    isRTL,
+    switchToTemplateByOffset,
+  ]);
 
   if (!template) {
     return null;
