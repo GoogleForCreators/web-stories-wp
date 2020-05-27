@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+const PAGE_WIDTH = 440;
+const PAGE_HEIGHT = 660;
+const FULLBLEED_RATIO = 9 / 16;
+const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
+const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
+
 function isFillDeprecate({ pages, ...rest }) {
   return {
     pages: pages.map(reducePage),
@@ -30,17 +36,12 @@ function reducePage({ elements, ...rest }) {
 
 function updateElement({ isFill, ...rest }) {
   if (isFill) {
-    const pageWidth = 440;
-    const pageHeight = 660;
-    const fullBleedRatio = 9 / 16;
-    const fullBleedHeight = pageWidth / fullBleedRatio;
-    const dangerZoneHeight = (fullBleedHeight - pageHeight) / 2;
     return {
       ...rest,
       x: 0,
-      y: -dangerZoneHeight,
-      width: pageWidth,
-      height: pageWidth / fullBleedRatio,
+      y: -DANGER_ZONE_HEIGHT,
+      width: PAGE_WIDTH,
+      height: PAGE_WIDTH / FULLBLEED_RATIO,
       rotationAngle: 0,
     };
   }

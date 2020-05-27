@@ -19,13 +19,14 @@
  */
 import isFillDeprecate from '../v0020_isFillDeprecate';
 
+const PAGE_WIDTH = 440;
+const PAGE_HEIGHT = 660;
+const FULLBLEED_RATIO = 9 / 16;
+const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
+const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
+
 describe('isFillDeprecate', () => {
   it('should remove isFillBackground', () => {
-    const pageWidth = 440;
-    const pageHeight = 660;
-    const fullBleedRatio = 9 / 16;
-    const fullBleedHeight = pageWidth / fullBleedRatio;
-    const dangerZoneHeight = (fullBleedHeight - pageHeight) / 2;
     expect(
       isFillDeprecate({
         _test: 'story',
@@ -137,9 +138,9 @@ describe('isFillDeprecate', () => {
                 height: 345,
               },
               x: 0,
-              y: -dangerZoneHeight,
-              width: pageWidth,
-              height: pageWidth / fullBleedRatio,
+              y: -DANGER_ZONE_HEIGHT,
+              width: PAGE_WIDTH,
+              height: PAGE_WIDTH / FULLBLEED_RATIO,
               fontSize: 16,
               rotationAngle: 0,
             },
