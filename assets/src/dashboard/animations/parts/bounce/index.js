@@ -61,6 +61,14 @@ const keyframes = {
   ],
 };
 
+const remappedKeyframes = Object.keys(keyframes).reduce((accum, key) => {
+  keyframes[key].forEach((value, i) => {
+    accum[i] = accum[i] || {};
+    accum[i][key] = value;
+  });
+  return accum;
+}, []);
+
 const defaults = {
   fill: 'forwards',
   duration: 1500,
