@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -46,20 +46,25 @@ function DropTargetsProvider({ children }) {
     state: { currentPage },
   } = useStory();
 
+  const sortedDropTargetIds = useMemo(
+    () =>
+      (currentPage?.elements || [])
+        .filter(({ id }) => id in dropTargets)
+        .map(({ id }) => id)
+        .reverse(), // Sort by z-index
+    [dropTargets, currentPage?.elements]
+  );
+
   const getDropTargetFromCursor = useCallback(
     (x, y, ignoreId = null) => {
       const underCursor = document.elementsFromPoint(x, y);
-      const sortedDropTargetIds = (currentPage?.elements || [])
-        .filter(({ id }) => id in dropTargets)
-        .map(({ id }) => id)
-        .reverse(); // Sort by z-index
       return (
         sortedDropTargetIds.find(
           (id) => underCursor.includes(dropTargets[id]) && id !== ignoreId
         ) || null
       );
     },
-    [dropTargets, currentPage?.elements]
+    [sortedDropTargetIds, dropTargets]
   );
 
   /**
