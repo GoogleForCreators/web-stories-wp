@@ -54,7 +54,11 @@ import {
 } from '../../../constants';
 import { PAGE_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
-import { Download as ArrowIconSvg } from '../../../icons';
+import {
+  ArrowSortAscending as ArrowIconSvg,
+  ArrowAlphaAscending as ArrowAlphaAscendingSvg,
+  ArrowAlphaDescending as ArrowAlphaDescendingSvg,
+} from '../../../icons';
 import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
 
 const ListView = styled.div`
@@ -73,7 +77,6 @@ const PreviewContainer = styled.div`
 `;
 
 const ArrowIcon = styled.div`
-  width: ${({ theme }) => theme.table.headerContentSize}px;
   height: ${({ theme }) => theme.table.headerContentSize}px;
   display: inline-block;
   color: ${({ theme }) => theme.colors.gray900};
@@ -87,7 +90,7 @@ const ArrowIcon = styled.div`
 
 const ArrowIconWithTitle = styled(ArrowIcon)`
   display: ${({ active }) => (active ? 'inline' : 'none')};
-  margin-left: 15px;
+  margin-left: 10px;
 
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     margin-left: 5px;
@@ -139,11 +142,12 @@ export default function StoryListView({
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
-              <ArrowIcon
-                active={storySort === STORY_SORT_OPTIONS.NAME}
-                asc={sortDirection === SORT_DIRECTION.ASC}
-              >
-                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+              <ArrowIcon active={storySort === STORY_SORT_OPTIONS.NAME}>
+                {sortDirection === SORT_DIRECTION.DESC ? (
+                  <ArrowAlphaDescendingSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+                ) : (
+                  <ArrowAlphaAscendingSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+                )}
               </ArrowIcon>
             </TableTitleHeaderCell>
             <TableAuthorHeaderCell>
@@ -156,9 +160,12 @@ export default function StoryListView({
               </SelectableTitle>
               <ArrowIconWithTitle
                 active={storySort === STORY_SORT_OPTIONS.CREATED_BY}
-                asc={sortDirection === SORT_DIRECTION.ASC}
               >
-                <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+                {sortDirection === SORT_DIRECTION.DESC ? (
+                  <ArrowAlphaDescendingSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+                ) : (
+                  <ArrowAlphaAscendingSvg {...ICON_METRICS.UP_DOWN_ARROW} />
+                )}
               </ArrowIconWithTitle>
             </TableAuthorHeaderCell>
             <TableDateHeaderCell>
