@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from 'react';
+import classnames from 'classnames';
 
 /**
  * Internal dependencies
@@ -182,11 +183,15 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     selectedElement.width <= resizeRules.minWidth ||
     selectedElement.height <= resizeRules.minHeight;
 
+  const classNames = classnames('default-movable', {
+    'hide-handles': hideHandles,
+    'visually-hide-handles': visuallyHideHandles,
+    'type-text': selectedElement.type === 'text',
+  });
+
   return (
     <Movable
-      className={`default-movable ${hideHandles ? 'hide-handles' : ''} ${
-        visuallyHideHandles ? 'visually-hide-handles' : ''
-      } ${selectedElement.type === 'text' ? 'type-text' : ''}`}
+      className={classNames}
       zIndex={0}
       ref={moveable}
       target={targetEl}
