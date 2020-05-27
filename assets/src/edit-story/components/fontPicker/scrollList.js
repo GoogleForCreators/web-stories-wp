@@ -30,7 +30,7 @@ const List = styled.ul.attrs({ role: 'listbox' })`
 `;
 
 const Item = styled.li.attrs({
-  tabIndex: '0',
+  tabIndex: -1,
   role: 'option',
 })`
   overflow: hidden;
@@ -109,7 +109,7 @@ function ScrollList({
 
     const currentNode = itemRefs.current[currentOffset];
     currentNode.focus();
-    node.scrollTo(0, currentNode.offsetTop + node.clientHeight / 2);
+    node.scrollTo(0, currentNode.offsetTop - node.clientHeight / 2);
   }, [currentOffset]);
 
   // Trim to current length of list
