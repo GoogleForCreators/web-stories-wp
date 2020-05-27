@@ -103,6 +103,7 @@ function DropDownMenu({ resource, pointerEntered, isMenuOpen, setIsMenuOpen }) {
             <DropDownList
               handleCurrentValue={handleCurrentValue}
               options={options}
+              value={options[0].value}
               toggleOptions={toggleOptions}
             />
           </DropDownContainer>
