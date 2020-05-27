@@ -31,7 +31,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { useAPI } from '../../../../app/api';
 import Dialog from '../../../../components/dialog';
-import { Plain } from '../../../../components/button';
+import { Plain, Primary } from '../../../../components/button';
 import { useSnackbar } from '../../../../app/snackbar';
 import UseMedia from '../../../../app/media/useMedia';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
@@ -101,11 +101,11 @@ const DialogDescription = styled.div`
 const imageDialogTitle = __('Edit Image', 'web-stories');
 const videoDialogTitle = __('Edit Video', 'web-stories');
 const imageDialogDescription = __(
-  'Describe the appearance and function of an image. Leave empty if the image is purely decorative',
+  'Describe the appearance and function of the image. Leave empty if the image is purely decorative.',
   'web-stories'
 );
 const videoDialogDescription = __(
-  'Describe the appearance and function of a video. Leave empty if the video is purely decorative',
+  'Describe the appearance and function of the video. Leave empty if the video is purely decorative.',
   'web-stories'
 );
 
@@ -164,7 +164,9 @@ function MediaEditDialog({ resource, onClose }) {
       actions={
         <>
           <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Plain onClick={updateMediaItem}>{__('Save', 'web-stories')}</Plain>
+          <Primary onClick={updateMediaItem}>
+            {__('Save', 'web-stories')}
+          </Primary>
         </>
       }
     >
