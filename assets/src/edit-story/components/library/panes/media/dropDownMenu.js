@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
-import { useRef } from 'react';
-=======
 import { useCallback, useState, useRef } from 'react';
->>>>>>> 6a1ad5473... Call delete API in hover dropdown menu
 
 /**
  * WordPress dependencies
