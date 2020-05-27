@@ -51,7 +51,7 @@ export const _Image = () => {
   });
 
   return (
-    <FlagsProvider features={{ dropdownMenu: true }}>
+    <FlagsProvider features={{ mediaDropdownMenu: true }}>
       <Column>
         <MediaElement resource={resource} width={150} onInsert={() => {}} />
       </Column>
@@ -74,7 +74,7 @@ export const _Video = () => {
   });
 
   return (
-    <FlagsProvider features={{ dropdownMenu: true }}>
+    <FlagsProvider features={{ mediaDropdownMenu: true }}>
       <Column>
         <MediaElement resource={resource} width={150} onInsert={() => {}} />
       </Column>

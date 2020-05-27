@@ -130,7 +130,7 @@ const MediaElement = ({
     local,
     alt,
   } = resource;
-  const hasDropdownMenu = useFeature('dropdownMenu');
+  const hasDropdownMenu = useFeature('mediaDropdownMenu');
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
