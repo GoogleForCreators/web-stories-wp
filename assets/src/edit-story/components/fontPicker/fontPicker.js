@@ -88,7 +88,13 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const closeFontPicker = useCallback(() => setIsOpen(false), []);
+  const closeFontPicker = useCallback(() => {
+    setIsOpen(false);
+    // Restore focus
+    if (ref.current) {
+      ref.current.focus();
+    }
+  }, []);
   const toggleFontPicker = useCallback(() => setIsOpen((val) => !val), []);
   // Must be debounced to account for clicking the select box again
   // (closing in useFocusOut and then opening again in onClick)

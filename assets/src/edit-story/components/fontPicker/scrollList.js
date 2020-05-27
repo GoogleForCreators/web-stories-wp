@@ -20,11 +20,7 @@
 import { useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import debounce from '../../utils/debounce';
+import { useDebouncedCallback } from 'use-debounce';
 
 const List = styled.ul.attrs({ role: 'listbox' })`
   width: 100%;
@@ -48,17 +44,38 @@ function ScrollList({
   className,
 }) {
   const ref = useRef();
-  const itemOffsets = useRef([]);
+  const itemRefs = useRef([]);
   const numItems = items.length;
 
-  const setOffset = useCallback(
+  const setRef = useCallback(
     (index) => (node) => {
       if (!node) {
         return;
       }
-      itemOffsets.current[index] = node.offsetTop;
+      itemRefs.current[index] = node;
     },
     []
+  );
+
+  const [handleScroll] = useDebouncedCallback(
+    (evt) => {
+      if (!evt.target) {
+        return;
+      }
+      const {
+        target: { scrollTop, clientHeight },
+      } = evt;
+      const firstIndexInView = itemRefs.current.findIndex(
+        ({ offsetTop }) => offsetTop > scrollTop
+      );
+      const firstIndexOutOfView = itemRefs.current.findIndex(
+        ({ offsetTop }) => offsetTop > scrollTop + clientHeight
+      );
+      const lastIndexInView =
+        firstIndexOutOfView === -1 ? numItems : firstIndexOutOfView - 1;
+      onScroll(firstIndexInView, lastIndexInView);
+    },
+    [onScroll, numItems]
   );
 
   useEffect(() => {
@@ -67,44 +84,37 @@ function ScrollList({
       return undefined;
     }
 
-    const handleScroll = debounce((evt) => {
-      if (!evt.target) {
-        return;
-      }
-      const {
-        target: { scrollTop, clientHeight },
-      } = evt;
-      const firstIndexInView = itemOffsets.current.findIndex(
-        (y) => y > scrollTop
-      );
-      const firstIndexOutOfView = itemOffsets.current.findIndex(
-        (y) => y > scrollTop + clientHeight
-      );
-      const lastIndexInView =
-        firstIndexOutOfView === -1 ? numItems : firstIndexOutOfView - 1;
-      onScroll(firstIndexInView, lastIndexInView);
-    }, 100);
-
     // Invoke now
     handleScroll({ target: node });
     // And when scroll changes (but debounced)
     node.addEventListener('scroll', handleScroll);
     return () => node.removeEventListener('scroll', handleScroll);
-  }, [onScroll, numItems]);
+  }, [handleScroll]);
 
   // If current offset changes, scroll to that one
   useEffect(() => {
     const node = ref.current;
-    if (currentOffset === -1 || !node) {
+    if (!node) {
+      // Just focus first node
       return;
     }
-    const offset = itemOffsets.current[currentOffset];
-    node.scrollTo(0, -(offset + node.clientHeight / 2));
+
+    if (currentOffset === -1) {
+      // Just focus first node
+      if (itemRefs.current.length > 0) {
+        itemRefs.current[0].focus();
+      }
+      return;
+    }
+
+    const currentNode = itemRefs.current[currentOffset];
+    currentNode.focus();
+    node.scrollTo(0, currentNode.offsetTop + node.clientHeight / 2);
   }, [currentOffset]);
 
   // Trim to current length of list
   useEffect(() => {
-    itemOffsets.current = itemOffsets.current.slice(0, numItems);
+    itemRefs.current = itemRefs.current.slice(0, numItems);
   }, [numItems]);
 
   return (
@@ -115,7 +125,7 @@ function ScrollList({
       ref={ref}
     >
       {items.map((item, index) => (
-        <Item ref={setOffset(index)} key={index}>
+        <Item ref={setRef(index)} key={index}>
           {itemRenderer(item)}
         </Item>
       ))}
