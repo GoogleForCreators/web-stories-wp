@@ -63,7 +63,7 @@ function BackgroundOverlayPanel() {
               aria-label={sprintf(
                 /* translators: %s: Overlay type */
                 __('Set overlay: %s', 'web-stories'),
-                type
+                label
               )}
             />
           );

@@ -210,7 +210,6 @@ DropDownList.propTypes = {
   toggleOptions: PropTypes.func.isRequired,
   handleCurrentValue: PropTypes.func.isRequired,
   value: PropTypes.string,
-  labelledBy: PropTypes.string,
   options: PropTypes.array.isRequired,
 };
 

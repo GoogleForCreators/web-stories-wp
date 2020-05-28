@@ -134,7 +134,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
             aria-label={sprintf(
               /* translators: %s: Text background mode. */
               __('Set text background mode: %s', 'web-stories'),
-              mode
+              label
             )}
             onChange={(value) =>
               value &&
