@@ -129,6 +129,7 @@ export const RESULT_LABELS = {
 
 export * from './animation';
 export * from './direction';
+export * from './pageStructure';
 export * from './savedTemplates';
 export * from './stories';
 export * from './templates';

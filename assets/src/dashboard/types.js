@@ -78,3 +78,8 @@ export const TotalStoriesByStatusPropType = PropTypes.shape({
   draft: PropTypes.number,
   publish: PropTypes.number,
 });
+
+export const PageSizePropType = PropTypes.shape({
+  width: PropTypes.number,
+  height: PropTypes.number,
+});

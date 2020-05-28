@@ -45,10 +45,10 @@ import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
-  LogoPlaceholder,
   NavLink,
   Rule,
   NavButton,
+  WebStoriesHeading,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -133,7 +133,11 @@ export function LeftRail() {
       isOpen={sideBarVisible}
     >
       <div ref={upperContentRef}>
-        <LogoPlaceholder />
+        <Content>
+          <WebStoriesHeading>
+            {__('Web Stories', 'web-stories')}
+          </WebStoriesHeading>
+        </Content>
         <Content>
           <NavButton type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
             {__('Create New Story', 'web-stories')}

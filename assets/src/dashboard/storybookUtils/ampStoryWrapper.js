@@ -15,26 +15,28 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { ROTATION } from '../constants';
+import PropTypes from 'prop-types';
 
-export default function (type) {
-  const frames = {
-    [ROTATION.CLOCKWISE]: {
-      transform: ['rotateZ(0deg)', 'rotateZ(360deg)'],
-    },
-    [ROTATION.COUNTER_CLOCKWISE]: {
-      transform: ['rotateZ(0deg)', 'rotateZ(-360deg)'],
-    },
-    [ROTATION.PING_PONG]: {
-      transform: ['rotateZ(-45deg)', 'rotateZ(40deg)'],
-    },
-  };
-
-  const keyframes = frames[type] || frames[ROTATION.CLOCKWISE];
-
-  return {
-    keyframes,
-  };
+function AMPStoryWrapper({ children }) {
+  return (
+    <div style={{ width: '100%', height: '640px' }}>
+      <amp-story
+        standalone
+        title="My Story"
+        publisher="The AMP Team"
+        publisher-logo-src="https://example.com/logo/1x1.png"
+        poster-portrait-src="https://example.com/my-story/poster/3x4.jpg"
+      >
+        {children}
+      </amp-story>
+    </div>
+  );
 }
+
+AMPStoryWrapper.propTypes = {
+  children: PropTypes.node,
+};
+
+export default AMPStoryWrapper;

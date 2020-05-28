@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-export default function (config) {
-  const { from, to } = config;
+/**
+ * Internal dependencies
+ */
+import { useStoryAnimationContext } from '../components/storyAnimation';
 
-  return {
-    useContainer: true,
-    fill: 'forwards',
-    keyframes: {
-      transform: [`scale(${from})`, `scale(${to})`],
-    },
-  };
-}
+const PlayButton = () => {
+  const {
+    actions: { playWAAPIAnimations },
+  } = useStoryAnimationContext();
+
+  const label = 'play';
+  return <button onClick={playWAAPIAnimations}>{label}</button>;
+};
+
+export default PlayButton;
