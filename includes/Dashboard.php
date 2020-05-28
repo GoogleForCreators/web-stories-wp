@@ -166,11 +166,9 @@ class Dashboard {
 					'assetsURL'    => WEBSTORIES_ASSETS_URL,
 					'version'      => WEBSTORIES_VERSION,
 					'api'          => [
-						'stories'    => sprintf( '/wp/v2/%s', $rest_base ),
-						'users'      => '/wp/v2/users',
-						'tags'       => '/wp/v2/tags',
-						'categories' => '/wp/v2/categories',
-						'fonts'      => '/web-stories/v1/fonts',
+						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
+						'users'   => '/wp/v2/users',
+						'fonts'   => '/web-stories/v1/fonts',
 					],
 				],
 			]
@@ -182,7 +180,7 @@ class Dashboard {
 			[],
 			WEBSTORIES_VERSION
 		);
-		
+
 		wp_enqueue_style(
 			self::SCRIPT_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',

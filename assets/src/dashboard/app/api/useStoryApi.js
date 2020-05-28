@@ -48,9 +48,7 @@ export function reshapeStoryObject(editStoryURL) {
       title,
       modified,
       status,
-      tags,
       date,
-      categories,
       author,
       story_data: storyData,
     } = originalStoryData;
@@ -68,8 +66,6 @@ export function reshapeStoryObject(editStoryURL) {
       modified: moment(modified),
       created: moment(date),
       pages: storyData.pages,
-      tags,
-      categories,
       author,
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
