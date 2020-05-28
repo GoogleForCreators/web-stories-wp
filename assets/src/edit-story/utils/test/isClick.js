@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
-import isClick from '../isClick';
+import isMouseUpAClick from '../isMouseUpAClick';
 
-describe('isClick', () => {
+describe('isMouseUpAClick', () => {
   it('should detect a click correctly', () => {
     const evt = {
       clientX: 0,
@@ -30,7 +30,7 @@ describe('isClick', () => {
       y: 0,
     };
     const time = window.performance.now() + 1000; // Time in the future to be sure.
-    expect(isClick(evt, time, coordinates)).toBeTrue();
+    expect(isMouseUpAClick(evt, time, coordinates)).toBeTrue();
   });
 
   it('should not consider a very short movement a click if it takes long time', () => {
@@ -43,7 +43,7 @@ describe('isClick', () => {
       y: 1,
     };
     const time = window.performance.now() - 301;
-    expect(isClick(evt, time, coordinates)).toBeFalse();
+    expect(isMouseUpAClick(evt, time, coordinates)).toBeFalse();
   });
 
   it('should not consider a longer movement a click even if quick', () => {
@@ -56,6 +56,6 @@ describe('isClick', () => {
       y: 3,
     };
     const time = window.performance.now();
-    expect(isClick(evt, time, coordinates)).toBeFalse();
+    expect(isMouseUpAClick(evt, time, coordinates)).toBeFalse();
   });
 });

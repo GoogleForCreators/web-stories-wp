@@ -34,7 +34,7 @@ import {
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
-import isClick from '../../utils/isClick';
+import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import { generateParagraphTextStyle } from './util';
 
 const Element = styled.p`
@@ -104,7 +104,7 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     };
 
     const handleMouseUp = (evt) => {
-      if (!isClick(evt, clickTime, clickCoordinates)) {
+      if (!isMouseUpAClick(evt, clickTime, clickCoordinates)) {
         return;
       }
 

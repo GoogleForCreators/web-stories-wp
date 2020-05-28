@@ -30,7 +30,7 @@ import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
-import isClick from '../../utils/isClick';
+import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -196,7 +196,7 @@ function MultiSelectionMovable({ selectedElements }) {
   // @todo Add integration test for this!
   const clickHandled = (inputEvent) => {
     if (
-      isClick(
+      isMouseUpAClick(
         inputEvent,
         eventTracker.current.time,
         eventTracker.current.coordinates
