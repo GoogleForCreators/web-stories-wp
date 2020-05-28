@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\REST_API\Templates_Controller;
+
 /**
  * Class Template_Post_Type.
  */
@@ -46,7 +48,7 @@ class Template_Post_Type {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
-				'labels'       => [
+				'labels'                => [
 					'name'                     => _x( 'Templates', 'post type general name', 'web-stories' ),
 					'singular_name'            => _x( 'Template', 'post type singular name', 'web-stories' ),
 					'add_new'                  => _x( 'New', 'story', 'web-stories' ),
@@ -78,15 +80,16 @@ class Template_Post_Type {
 					'menu_name'                => _x( 'Templates', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Template', 'add new on admin bar', 'web-stories' ),
 				],
-				'supports'     => [
-					'title', // Used for amp-story[title].
+				'supports'              => [
+					'title',
 					'author',
 					'excerpt',
 					'thumbnail', // Used for poster images.
 				],
-				'public'       => false,
-				'show_ui'      => false,
-				'show_in_rest' => true,
+				'public'                => false,
+				'show_ui'               => false,
+				'show_in_rest'          => true,
+				'rest_controller_class' => Templates_Controller::class,
 			]
 		);
 	}
