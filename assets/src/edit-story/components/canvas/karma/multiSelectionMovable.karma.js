@@ -135,16 +135,8 @@ describe('Multi-selection Movable integration', () => {
         const storyContext = await fixture.renderHook(() => useStory());
 
         // Let's assure we have the background element (the first element) in the selection now.
-        const background = safezone.firstChild;
-        expect(storyContext.state.selectedElementIds).toEqual([
-          background.getAttribute('data-element-id'),
-        ]);
-        expect(
-          storyContext.state.selectedElementIds.includes(element1.id)
-        ).toBeFalse();
-        expect(
-          storyContext.state.selectedElementIds.includes(element2.id)
-        ).toBeFalse();
+        const background = storyContext.state.currentPage.elements[0];
+        expect(storyContext.state.selectedElementIds).toEqual([background.id]);
       });
 
       it('should de-select all elements when clicking out of the page', async () => {
