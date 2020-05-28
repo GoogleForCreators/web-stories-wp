@@ -53,6 +53,8 @@ const ScrollButton = styled.button`
 `;
 
 const DropUpArrowIcon = styled(ChevronLeft)`
+  top: -2px;
+  position: relative;
   transform: rotate(-90deg);
   width: 100%;
   height: 100%;

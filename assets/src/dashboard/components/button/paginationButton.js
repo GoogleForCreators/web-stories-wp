@@ -61,6 +61,8 @@ const NavButton = styled.button`
     }
     
     > svg {
+      ${rotateRight ? 'right: 2px;' : 'left: 2px;'}
+      position: relative;
       transform: ${rotateRight ? 'rotate(180deg)' : 'none'};
       height: 100%;
     }
