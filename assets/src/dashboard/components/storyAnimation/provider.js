@@ -111,13 +111,27 @@ function Provider({ animations, children, onWAAPIFinish }) {
   }, []);
 
   const WAAPIAnimationMethods = useMemo(() => {
+    const play = () =>
+      WAAPIAnimations.forEach((animation) => animation?.play());
+    const pause = () =>
+      WAAPIAnimations.forEach((animation) => animation?.pause());
+    const setCurrentTime = (time) =>
+      WAAPIAnimations.forEach((animation) => {
+        const { duration, delay } = animation.effect.timing;
+        const animationEndTime = (delay || 0) + (duration || 0);
+        animation.currentTime = time === 'end' ? animationEndTime : time;
+      });
+
     return {
-      play: () => WAAPIAnimations.forEach((animation) => animation?.play()),
-      pause: () => WAAPIAnimations.forEach((animation) => animation?.pause()),
-      setCurrentTime: (time) =>
-        WAAPIAnimations.forEach(
-          (animation) => animation && (animation.currentTime = time || 0)
-        ),
+      play,
+      pause,
+      setCurrentTime,
+      reset: () => {
+        pause();
+        requestAnimationFrame(() => {
+          setCurrentTime('end');
+        });
+      },
     };
   }, [WAAPIAnimations]);
 

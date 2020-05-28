@@ -41,7 +41,7 @@ const keyframes = [
 ];
 
 const defaults = {
-  fill: 'forwards',
+  fill: 'both',
   duration: 1500,
 };
 
