@@ -125,7 +125,7 @@ const CardPreviewContainer = ({
   const [cardState, dispatch] = useReducer(cardReducer, CARD_STATE.IDLE);
   const [pageIndex, setPageIndex] = useState(0);
   const containElem = useRef(null);
-  const storyPages = story.pages || [];
+  const storyPages = story?.pages || [];
 
   useFocusOut(containElem, () => dispatch(CARD_ACTION.DEACTIVATE), []);
 
