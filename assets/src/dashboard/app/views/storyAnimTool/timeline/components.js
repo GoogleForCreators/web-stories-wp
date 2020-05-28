@@ -80,7 +80,7 @@ export const CancelButton = styled.button`
 
 export const AnimationPanel = styled.div`
   padding: 20px;
-  width: 350px;
+  width: 400px;
   height: 100%;
   overflow: scroll;
 `;
@@ -90,6 +90,10 @@ export const FormField = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-bottom: 10px;
+
+  > label {
+    text-transform: capitalize;
+  }
 `;
 
 export const TimelineAnimation = styled.div(
