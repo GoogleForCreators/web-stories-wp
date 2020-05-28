@@ -46,14 +46,13 @@ function setupGridView() {
     },
     actions: { setCurrentPage, arrangePage },
   };
-  const { getByText, container } = renderWithTheme(
+  const { container } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <GridView />
     </StoryContext.Provider>
   );
   return {
     container,
-    getByText,
     setCurrentPage,
     arrangePage,
   };

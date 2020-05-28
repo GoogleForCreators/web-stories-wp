@@ -103,6 +103,7 @@ function TextInput({
       disabled={disabled}
     >
       <StyledInput
+        type="text"
         placeholder={placeholder}
         label={label}
         value={value}

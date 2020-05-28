@@ -120,6 +120,7 @@ function Numeric({
       {label}
       {prefix}
       <StyledInput
+        type="text"
         ref={ref}
         placeholder={placeholder}
         prefix={prefix}
