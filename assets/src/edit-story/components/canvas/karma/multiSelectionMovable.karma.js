@@ -77,35 +77,15 @@ describe('Multi-selection Movable integration', () => {
           height: 20,
         })
       );
-      frame3 = fixture.querySelector(
-        `[data-element-id="${element3.id}"] [data-testid="textFrame"]`
-      );
 
-      frame1 = fixture.querySelector(
-        `[data-element-id="${element1.id}"] [data-testid="textFrame"]`
-      );
-
-      frame2 = fixture.querySelector(
-        `[data-element-id="${element2.id}"] [data-testid="textFrame"]`
-      );
+      frame1 = getElementFrame(fixture, element1.id);
+      frame2 = getElementFrame(fixture, element2.id);
+      frame3 = getElementFrame(fixture, element3.id);
     });
 
     it('should render initial content', () => {
       expect(frame1.textContent).toEqual('Text A');
       expect(frame2.textContent).toEqual('Text B');
-    });
-
-    it('should multi-select elements on Shift + click', async () => {
-      await fixture.events.click(frame1);
-      await fixture.events.keyboard.down('Shift');
-      await fixture.events.click(frame2);
-      await fixture.events.keyboard.up('Shift');
-
-      const storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElementIds).toEqual([
-        element1.id,
-        element2.id,
-      ]);
     });
 
     describe('click interaction', () => {
@@ -117,6 +97,14 @@ describe('Multi-selection Movable integration', () => {
         await fixture.events.keyboard.up('Shift');
 
         safezone = fixture.querySelector('[data-testid="safezone"]');
+      });
+
+      it('should have multiple elements selected', async () => {
+        const storyContext = await fixture.renderHook(() => useStory());
+        expect(storyContext.state.selectedElementIds).toEqual([
+          element1.id,
+          element2.id,
+        ]);
       });
 
       it('should select one element when clicking in multi-selection', async () => {
@@ -161,3 +149,9 @@ describe('Multi-selection Movable integration', () => {
     });
   });
 });
+
+function getElementFrame(fixture, id) {
+  return fixture.querySelector(
+    `[data-element-id="${id}"] [data-testid="textFrame"]`
+  );
+}
