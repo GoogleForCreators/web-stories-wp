@@ -80,6 +80,7 @@ export const primaryPaths = [
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: __('Saved Templates', 'web-stories'),
+    inProgress: true,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
@@ -91,10 +92,12 @@ export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: __('Editor Settings', 'web-stories'),
+    inProgress: true,
   },
   {
     value: APP_ROUTES.SUPPORT,
     label: __('Support', 'web-stories'),
+    inProgress: true,
   },
 ];
 
