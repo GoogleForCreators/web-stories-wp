@@ -23,6 +23,8 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
+import objectPick from '../../../../utils/objectPick';
+import objectWithout from '../../../../utils/objectWithout';
 
 /**
  * Combine elements by taking properties from a first item and
@@ -79,41 +81,29 @@ function combineElements(state, { firstId, firstElement, secondId }) {
       }
     : {};
 
-  const {
-    resource,
-    scale = DEFAULT_ATTRIBUTES_FOR_MEDIA.scale,
-    focalX = DEFAULT_ATTRIBUTES_FOR_MEDIA.focalX,
-    focalY = DEFAULT_ATTRIBUTES_FOR_MEDIA.focalY,
-    isFill = DEFAULT_ATTRIBUTES_FOR_MEDIA.isFill,
-    flip = {},
-    width,
-    height,
-    x,
-    y,
-  } = element;
+  const mediaProps = objectPick(element, [
+    'type',
+    'resource',
+    'scale',
+    'focalX',
+    'focalY',
+    'isFill',
+    'flip',
+  ]);
+
+  const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
 
   const newElement = {
-    ...secondElement,
-    resource,
-    type: resource.type,
-    flip,
-    scale,
-    focalX,
-    focalY,
-    isFill,
-    // Only remember these for backgrounds, as they're ignored while being background
-    ...(secondElement.isBackground
-      ? {
-          width,
-          height,
-          x,
-          y,
-        }
-      : {}),
-    // Only unset if it was set
-    ...(secondElement.isDefaultBackground
-      ? { isDefaultBackground: false }
-      : {}),
+    // First copy everything from existing element except if it was default background
+    ...objectWithout(secondElement, ['isDefaultBackground']),
+    // Then set sensible default attributes
+    ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
+    flip: {},
+    // Then copy all media-related attributes from new element
+    ...mediaProps,
+    // Only copy position properties for backgrounds, as they're ignored while being background
+    // For non-backgrounds, elements should keep original positions from secondElement
+    ...(secondElement.isBackground ? positionProps : {}),
   };
 
   // Elements are now
