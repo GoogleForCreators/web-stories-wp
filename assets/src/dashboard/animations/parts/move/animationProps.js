@@ -21,11 +21,11 @@ import { FIELD_TYPES } from '../../constants';
 
 export default {
   offsetX: {
-    type: FIELD_TYPES.NUMBER,
+    type: FIELD_TYPES.FLOAT,
     defaultValue: 0,
   },
   offsetY: {
-    type: FIELD_TYPES.NUMBER,
+    type: FIELD_TYPES.FLOAT,
     defaultValue: 0,
   },
 };

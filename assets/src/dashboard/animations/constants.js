@@ -47,5 +47,6 @@ export const FIELD_TYPES = {
   DROPDOWN: 'dropdown',
   HIDDEN: 'hidden',
   NUMBER: 'number',
+  FLOAT: 'float',
   TEXT: 'text',
 };

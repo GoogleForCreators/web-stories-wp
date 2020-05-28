@@ -73,6 +73,17 @@ function renderFormField(name, type, value, options, onChange) {
         </select>
       );
 
+    case FIELD_TYPES.FLOAT:
+      return (
+        <input
+          name={name}
+          type="number"
+          value={value}
+          onFocus={handleInputFocus}
+          onChange={onChange}
+        />
+      );
+
     default:
       return (
         <input
@@ -85,6 +96,8 @@ function renderFormField(name, type, value, options, onChange) {
       );
   }
 }
+
+const animationTypes = Object.values(ANIMATION_TYPES);
 
 function Timeline({
   story,
@@ -99,11 +112,9 @@ function Timeline({
 }) {
   const [formFields, setFormFields] = useState({});
 
-  const animationTypes = useMemo(() => Object.values(ANIMATION_TYPES), []);
-
   const { type: selectedAnimationType, props: animationProps } = useMemo(
     () => AnimationProps(formFields.type || animationTypes[0]),
-    [formFields.type, animationTypes]
+    [formFields.type]
   );
 
   const defaultFieldValues = useMemo(
@@ -146,16 +157,21 @@ function Timeline({
       // defaultFieldValues will always have the correct
       // fields to save off, so using as the source of keys
       const animation = {
-        ...Object.keys(defaultFieldValues).reduce(
-          (acc, name) => ({
+        ...Object.keys(defaultFieldValues).reduce((acc, name) => {
+          const type = animationProps[name].type;
+          let formatter = (value) => value;
+
+          if (type === FIELD_TYPES.NUMBER) {
+            formatter = parseInt;
+          } else if (type === FIELD_TYPES.FLOAT) {
+            formatter = parseFloat;
+          }
+
+          return {
             ...acc,
-            [name]:
-              animationProps[name].type === FIELD_TYPES.NUMBER
-                ? parseInt(formFields[name])
-                : formFields[name],
-          }),
-          {}
-        ),
+            [name]: formatter(formFields[name]),
+          };
+        }, {}),
         // iterations can have numbers or the word 'infinity' as
         // valid values
         iterations: isNaN(parseInt(formFields.iterations))

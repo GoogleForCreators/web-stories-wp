@@ -22,12 +22,12 @@ import { FIELD_TYPES } from '../../constants';
 export default {
   zoomFrom: {
     tooltip: 'Valid values range from 0 to 1',
-    type: FIELD_TYPES.NUMBER,
+    type: FIELD_TYPES.FLOAT,
     defaultValue: 0,
   },
   zoomTo: {
     tooltip: 'Valid values range from 0 to 1',
-    type: FIELD_TYPES.NUMBER,
+    type: FIELD_TYPES.FLOAT,
     defaultValue: 1,
   },
 };
