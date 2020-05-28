@@ -142,6 +142,14 @@ describe('Multi-selection Movable integration', () => {
           element3.id,
         ]);
       });
+
+      it('should allow removing an element from multi-selection', async () => {
+        // Remove element2 from multi-selection.
+        await clickOnTarget(fixture, frame2, 'Shift');
+
+        const storyContext = await fixture.renderHook(() => useStory());
+        expect(storyContext.state.selectedElementIds).toEqual([element1.id]);
+      });
     });
   });
 });
