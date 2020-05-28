@@ -119,6 +119,7 @@ function Numeric({
     >
       {label}
       {prefix}
+      {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
         type="text"
         ref={ref}
