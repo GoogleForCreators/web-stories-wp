@@ -41,6 +41,8 @@ function CanvasProvider({ children }) {
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
 
+  const [isResizing, setIsResizing] = useState(false);
+
   const {
     nodesById,
     editingElement,
@@ -146,6 +148,7 @@ function CanvasProvider({ children }) {
         isEditing: Boolean(editingElement),
         lastSelectionEvent,
         pageSize,
+        isResizing,
       },
       actions: {
         setPageContainer,
@@ -157,6 +160,7 @@ function CanvasProvider({ children }) {
         handleSelectElement,
         selectIntersection,
         setPageSize,
+        setIsResizing,
       },
     }),
     [
@@ -176,6 +180,7 @@ function CanvasProvider({ children }) {
       handleSelectElement,
       selectIntersection,
       setPageSize,
+      isResizing,
     ]
   );
   return (

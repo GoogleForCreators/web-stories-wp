@@ -52,6 +52,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
     },
+    actions: { setIsResizing },
   } = useCanvas();
   const {
     actions: {
@@ -285,6 +286,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         frame.translate = drag.beforeTranslate;
         frame.updates = updates;
         setTransformStyle(target);
+        setIsResizing(true);
       }}
       onResizeEnd={({ target }) => {
         const [editorWidth, editorHeight] = frame.resize;
@@ -313,6 +315,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           updateSelectedElements({ properties });
         }
         resetMoveable(target);
+        setIsResizing(false);
       }}
       onRotateStart={({ set }) => {
         set(frame.rotate);

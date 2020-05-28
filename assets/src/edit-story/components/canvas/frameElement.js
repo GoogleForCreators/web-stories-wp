@@ -68,7 +68,7 @@ function FrameElement({ element }) {
 
   const {
     actions: { setNodeForElement, handleSelectElement },
-    state: { isEditing },
+    state: { isEditing, isResizing },
   } = useCanvas();
   const {
     state: { selectedElementIds, currentPage },
@@ -104,6 +104,7 @@ function FrameElement({ element }) {
       {!isEditing && Controls && (
         <Controls
           isDragged={Boolean(draggingResource)}
+          isResizing={isResizing}
           isSelected={isSelected}
           box={box}
           elementRef={elementRef}

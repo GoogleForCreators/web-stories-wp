@@ -91,13 +91,20 @@ const Pause = styled(PauseIcon)`
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
 
-function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
+function VideoControls({
+  box,
+  isSelected,
+  isDragged,
+  isResizing,
+  elementRef,
+  element,
+}) {
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
     element.height < PLAY_ABOVE_BREAKPOINT_HEIGHT;
   const [hovering, setHovering] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(!isDragged);
+  const [isPlaying, setIsPlaying] = useState(!isDragged && !isResizing);
   const { id } = element;
   const {
     state: { selectedElementIds },
@@ -126,11 +133,11 @@ function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
 
   useEffect(() => {
     const videoNode = getVideoNode();
-    if (videoNode && !videoNode.paused && isDragged) {
+    if (videoNode && !videoNode.paused && (isDragged || isResizing)) {
       videoNode.pause();
       setIsPlaying(false);
     }
-  }, [getVideoNode, isDragged]);
+  }, [getVideoNode, isDragged, isResizing]);
 
   useEffect(() => {
     const videoNode = getVideoNode();
@@ -175,7 +182,7 @@ function VideoControls({ box, isSelected, isDragged, elementRef, element }) {
     };
   }, [checkMouseInBBox]);
 
-  if (!isSelected || isDragged) {
+  if (!isSelected || isDragged || isResizing) {
     return null;
   }
 
@@ -231,6 +238,7 @@ VideoControls.propTypes = {
   box: StoryPropTypes.box.isRequired,
   isSelected: PropTypes.bool.isRequired,
   isDragged: PropTypes.bool.isRequired,
+  isResizing: PropTypes.bool.isRequired,
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
 };
