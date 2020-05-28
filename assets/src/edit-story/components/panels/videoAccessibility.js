@@ -70,7 +70,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           type={'image'}
-          aria-label={__('Edit: Video poster', 'web-stories')}
+          ariaLabel={__('Edit: Video poster', 'web-stories')}
         />
       </Row>
       <Row>

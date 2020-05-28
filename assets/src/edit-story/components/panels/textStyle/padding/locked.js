@@ -42,7 +42,6 @@ function LockedPaddingControls({ padding, handleChange }) {
   return (
     <>
       <FlexedBoxedNumeric
-        data-testid="padding.multiple"
         suffix={_x(
           `H\u00A0&\u00A0V`,
           'The Horizontal & Vertical padding',

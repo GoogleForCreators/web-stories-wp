@@ -37,7 +37,6 @@ function UnlockedPaddingControls({ padding, handleChange }) {
   return (
     <>
       <BoxedNumeric
-        data-testid="padding.horizontal"
         suffix={_x('H', 'The Horizontal padding', 'web-stories')}
         value={padding.horizontal}
         onChange={(value) =>
@@ -66,7 +65,6 @@ function UnlockedPaddingControls({ padding, handleChange }) {
       />
       <Space />
       <BoxedNumeric
-        data-testid="padding.vertical"
         suffix={_x('V', 'The Vertical padding', 'web-stories')}
         value={padding.vertical}
         onChange={(value) =>

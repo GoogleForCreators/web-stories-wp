@@ -139,7 +139,6 @@ function FontControls({ selectedElements, pushUpdate }) {
           </>
         )}
         <BoxedNumeric
-          data-testid="font.size"
           aria-label={__('Font size', 'web-stories')}
           value={fontSize}
           max={PAGE_HEIGHT}

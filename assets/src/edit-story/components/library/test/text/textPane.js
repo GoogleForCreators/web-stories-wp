@@ -59,7 +59,9 @@ describe('TextPane', () => {
 
       await getAllFontsPromise;
 
-      fireEvent.click(getByRole('button', { name: 'Add new text' }));
+      fireEvent.click(
+        getByRole('button', { name: 'Add new text', hidden: true })
+      );
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);
