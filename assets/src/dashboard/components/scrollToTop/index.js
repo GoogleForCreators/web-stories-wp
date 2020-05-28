@@ -26,7 +26,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ScrollUpArrow } from '../../icons';
+import { ChevronLeft } from '../../icons';
 import cssLerp from '../../utils/cssLerp';
 import { useLayoutContext, SQUISH_CSS_VAR } from '../layout';
 
@@ -36,6 +36,12 @@ const ScrollButton = styled.button`
   bottom: 40px;
   height: 50px;
   width: 50px;
+  display: flex;
+  align-self: center;
+  justify-content: space-around;
+  align-items: center;
+  contain: content;
+  padding: 8px;
   pointer-events: ${({ isVisible }) => (isVisible ? 'auto' : 'none')};
   cursor: pointer;
   border-radius: 50%;
@@ -46,9 +52,10 @@ const ScrollButton = styled.button`
   opacity: ${cssLerp(0, 1, SQUISH_CSS_VAR)};
 `;
 
-const DropUpArrowIcon = styled(ScrollUpArrow).attrs({ width: 30, height: 30 })`
-  margin: auto;
-  padding: 2px;
+const DropUpArrowIcon = styled(ChevronLeft)`
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
 `;
 
 const ScrollToTop = () => {

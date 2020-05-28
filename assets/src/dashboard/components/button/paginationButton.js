@@ -22,7 +22,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 
-import { PaginationArrowLeft } from '../../icons';
+import { ChevronLeft } from '../../icons';
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const NavButton = styled.button`
@@ -63,7 +63,7 @@ const NavButton = styled.button`
   `}
 `;
 
-const PaginationArrow = styled(PaginationArrowLeft)`
+const PaginationArrow = styled(ChevronLeft)`
   ${({ rotateRight }) => rotateRight && { transform: 'rotate(180deg)' }};
   height: 100%;
 `;
