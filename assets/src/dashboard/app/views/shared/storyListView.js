@@ -54,7 +54,7 @@ import {
 } from '../../../constants';
 import { PAGE_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
-import { ReactComponent as ArrowIconSvg } from '../../../icons/download.svg';
+import { Download as ArrowIconSvg } from '../../../icons';
 import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
 
 const ListView = styled.div`
