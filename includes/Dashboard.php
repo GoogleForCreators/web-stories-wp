@@ -171,6 +171,15 @@ class Dashboard {
 						'fonts'   => '/web-stories/v1/fonts',
 					],
 				],
+				'flags'  => [
+					/**
+					 * Description: Enables user facing animations.
+					 * Author: @littlemilkstudio
+					 * Issue: 1897
+					 * Creation date: 2020-05-21
+					 */
+					'enableAnimation' => false,
+				],
 			]
 		);
 
