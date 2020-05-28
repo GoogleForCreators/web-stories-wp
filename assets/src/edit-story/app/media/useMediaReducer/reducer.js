@@ -23,8 +23,6 @@ import * as types from './types';
 
 export const INITIAL_STATE = {
   media: [],
-  processing: [],
-  processed: [],
   pagingNum: 1,
   totalPages: 1,
   hasMore: true,
@@ -72,8 +70,6 @@ function reducer(state, { type, payload }) {
     case types.RESET_FILTERS: {
       return {
         ...INITIAL_STATE,
-        processing: [...state.processing],
-        processed: [...state.processed],
       };
     }
 
@@ -84,8 +80,6 @@ function reducer(state, { type, payload }) {
       }
       return {
         ...INITIAL_STATE,
-        processing: [...state.processing],
-        processed: [...state.processed],
         mediaType: state.mediaType,
         searchTerm,
       };
@@ -99,8 +93,6 @@ function reducer(state, { type, payload }) {
       return {
         ...INITIAL_STATE,
         media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
-        processing: [...state.processing],
-        processed: [...state.processed],
         searchTerm: state.searchTerm,
         mediaType,
       };
@@ -119,32 +111,6 @@ function reducer(state, { type, payload }) {
       return {
         ...state,
         media,
-      };
-    }
-
-    case types.ADD_PROCESSING: {
-      const { id } = payload;
-      if (!id || state.processing.includes(id)) {
-        return state;
-      }
-      return {
-        ...state,
-        processing: [...state.processing, id],
-      };
-    }
-
-    case types.REMOVE_PROCESSING: {
-      const { id } = payload;
-      if (!id || !state.processing.includes(id)) {
-        return state;
-      }
-      const currentProcessing = [...state.processing];
-      const processing = currentProcessing.filter((e) => e !== id);
-
-      return {
-        ...state,
-        processing,
-        processed: [...state.processed, id],
       };
     }
 
