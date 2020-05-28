@@ -31,10 +31,10 @@ import { __ } from '@wordpress/i18n';
 import addQueryArgs from '../../utils/addQueryArgs';
 import { useStory, useMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
-import { Outline, Plain, Primary } from '../button';
+import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
-import Dialog from '../dialog';
 import escapeHTML from '../../utils/escapeHTML';
+import PreviewDialog from './previewDialog';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -134,28 +134,18 @@ function PreviewButton() {
     evt.preventDefault();
   };
 
+  const onDialogClose = () => setPreviewLinkToOpenViaDialog(null);
+
   return (
     <>
       <Outline onClick={openPreviewLink} isDisabled={isSaving}>
         {__('Preview', 'web-stories')}
       </Outline>
-      <Dialog
+      <PreviewDialog
         open={Boolean(previewLinkToOpenViaDialog)}
-        onClose={() => setPreviewLinkToOpenViaDialog(null)}
-        title={__('Open preview', 'web-stories')}
-        actions={
-          <>
-            <Primary onClick={openPreviewLinkSync}>
-              {__('Try again', 'web-stories')}
-            </Primary>
-            <Plain onClick={() => setPreviewLinkToOpenViaDialog(null)}>
-              {__('Cancel', 'web-stories')}
-            </Plain>
-          </>
-        }
-      >
-        {__('The preview window failed to open.', 'web-stories')}
-      </Dialog>
+        onClose={onDialogClose}
+        onRetry={openPreviewLinkSync}
+      />
     </>
   );
 }
