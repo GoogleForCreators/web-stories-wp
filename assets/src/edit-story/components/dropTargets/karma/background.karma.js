@@ -39,7 +39,7 @@ describe('Background Drop-Target integration', () => {
     // Verify that it's empty
     expect(bgElement).toBeEmpty();
     // And that background color is white:
-    expect(bgElement).toHaveBackgroundColor('rgb(255, 255, 255)');
+    expect(bgElement).toHaveStyle('backgroundColor', 'rgb(255, 255, 255)');
   });
 
   describe('when there is an image on the canvas', () => {
@@ -65,7 +65,7 @@ describe('Background Drop-Target integration', () => {
 
       // Verify that replacement img has correct source
       const replaceImg = rep1.querySelector('img');
-      expect(replaceImg).toHaveSource(imageData.resource.src);
+      expect(replaceImg).toHaveProperty('src', imageData.resource.src);
 
       // Now drop the element
       await fixture.events.mouse.up();
@@ -73,7 +73,7 @@ describe('Background Drop-Target integration', () => {
       // Verify new background element has the correct image
       const bg = await getCanvasBackgroundElement(fixture);
       const bgImg = bg.querySelector('img');
-      expect(bgImg).toHaveSource(imageData.resource.src);
+      expect(bgImg).toHaveProperty('src', imageData.resource.src);
 
       // And verify that we no longer have a replacement element
       const rep2 = await getCanvasBackgroundReplacement(fixture);
@@ -144,27 +144,27 @@ const customMatchers = {
       };
     },
   }),
-  toHaveBackgroundColor: (util, customEqualityTesters) => ({
-    compare: function (actual, expected) {
-      const bgColor = getComputedStyle(actual).backgroundColor;
-      const pass = util.equals(bgColor, expected, customEqualityTesters);
+  toHaveStyle: (util, customEqualityTesters) => ({
+    compare: function (element, property, expected) {
+      const actual = getComputedStyle(element)[property];
+      const pass = util.equals(actual, expected, customEqualityTesters);
       return {
         pass,
         message: pass
           ? `Expected element to not have background color "${expected}"`
-          : `Expected element to have background color "${expected}" but found "${bgColor}"`,
+          : `Expected element to have background color "${expected}" but found "${actual}"`,
       };
     },
   }),
-  toHaveSource: (util, customEqualityTesters) => ({
-    compare: function (actual, expected) {
-      const src = actual?.src ?? '';
-      const pass = util.equals(src, expected, customEqualityTesters);
+  toHaveProperty: (util, customEqualityTesters) => ({
+    compare: function (element, property, expected) {
+      const actual = element?.[property] ?? '';
+      const pass = util.equals(actual, expected, customEqualityTesters);
       return {
         pass,
         message: pass
           ? `Expected element to not have src "${expected}"`
-          : `Expected element to have src "${expected}" but found "${src}"`,
+          : `Expected element to have src "${expected}" but found "${actual}"`,
       };
     },
   }),
