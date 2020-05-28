@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -68,7 +68,7 @@ function FrameElement({ element }) {
 
   const {
     actions: { setNodeForElement, handleSelectElement },
-    state: { isEditing, isResizing, isDragging },
+    state: { isEditing },
   } = useCanvas();
   const {
     state: { selectedElementIds, currentPage },
@@ -87,11 +87,14 @@ function FrameElement({ element }) {
   const box = getBox(element);
   const isBackground = currentPage?.elements[0].id === id;
 
+  const [isTransforming, setIsTransforming] = useState(false);
+
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
     if (transform?.dropTargets?.hover !== undefined) {
       target.style.opacity = transform.dropTargets.hover ? 0 : 1;
     }
+    setIsTransforming(transform !== null);
   });
 
   return (
@@ -103,8 +106,7 @@ function FrameElement({ element }) {
     >
       {!isEditing && Controls && (
         <Controls
-          isDragging={isDragging}
-          isResizing={isResizing}
+          isTransforming={isTransforming}
           isSelected={isSelected}
           box={box}
           elementRef={elementRef}

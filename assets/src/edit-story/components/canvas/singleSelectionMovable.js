@@ -41,6 +41,7 @@ const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const moveable = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
   const {
@@ -50,9 +51,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     state: {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
-      isDragging,
     },
-    actions: { setIsResizing, setIsDragging },
   } = useCanvas();
   const {
     actions: {
@@ -201,6 +200,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
+        setIsDragging(true);
+        if (isDropSource(selectedElement.type)) {
+          setDraggingResource(selectedElement.resource);
+        }
         frame.translate = beforeTranslate;
         setTransformStyle(target);
         if (isDropSource(selectedElement.type)) {
@@ -214,10 +217,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
-        setIsDragging(true);
-        if (isDropSource(selectedElement.type)) {
-          setDraggingResource(selectedElement.resource);
-        }
         set(frame.translate);
       }}
       onDragEnd={({ target }) => {
@@ -286,7 +285,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         frame.translate = drag.beforeTranslate;
         frame.updates = updates;
         setTransformStyle(target);
-        setIsResizing(true);
       }}
       onResizeEnd={({ target }) => {
         const [editorWidth, editorHeight] = frame.resize;
@@ -315,7 +313,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           updateSelectedElements({ properties });
         }
         resetMoveable(target);
-        setIsResizing(false);
       }}
       onRotateStart={({ set }) => {
         set(frame.rotate);
