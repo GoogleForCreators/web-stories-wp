@@ -56,14 +56,6 @@ export const setNextPage = (dispatch) => () => {
   dispatch({ type: types.SET_NEXT_PAGE });
 };
 
-export const setProcessing = (dispatch) => ({ id }) => {
-  dispatch({ type: types.ADD_PROCESSING, payload: { id } });
-};
-
-export const removeProcessing = (dispatch) => ({ id }) => {
-  dispatch({ type: types.REMOVE_PROCESSING, payload: { id } });
-};
-
 export const updateMediaElement = (dispatch) => ({ id, ...properties }) => {
   dispatch({
     type: types.UPDATE_MEDIA_ELEMENT,
