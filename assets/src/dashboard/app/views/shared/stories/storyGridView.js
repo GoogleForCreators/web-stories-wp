@@ -47,6 +47,7 @@ export const _default = () => {
       duplicateStory={action('duplicateStory button clicked')}
       isTemplate={boolean('isTemplate')}
       isSavedTemplate={boolean('isSavedTemplate')}
+      pageSize={{ width: 210, height: 316 }}
     />
   );
 };

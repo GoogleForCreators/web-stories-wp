@@ -24,3 +24,4 @@ export { default as useDashboardResultsLabel } from './useDashboardResultsLabel'
 export { default as usePagePreviewSize } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
 export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
+export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffect';
