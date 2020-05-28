@@ -42,3 +42,10 @@ export const AXIS = {
   X: 'x',
   Y: 'y',
 };
+
+export const FIELD_TYPES = {
+  DROPDOWN: 'dropdown',
+  HIDDEN: 'hidden',
+  NUMBER: 'number',
+  TEXT: 'text',
+};
