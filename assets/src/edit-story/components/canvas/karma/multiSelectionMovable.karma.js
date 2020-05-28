@@ -91,10 +91,8 @@ describe('Multi-selection Movable integration', () => {
     describe('click interaction', () => {
       let safezone;
       beforeEach(async () => {
-        await fixture.events.click(frame1);
-        await fixture.events.keyboard.down('Shift');
-        await fixture.events.click(frame2);
-        await fixture.events.keyboard.up('Shift');
+        await clickOnTarget(fixture, frame1);
+        await clickOnTarget(fixture, frame2, 'Shift');
 
         safezone = fixture.querySelector('[data-testid="safezone"]');
       });
@@ -135,9 +133,7 @@ describe('Multi-selection Movable integration', () => {
       });
 
       it('should allow adding an element to selection in the middle of multi-selection', async () => {
-        await fixture.events.keyboard.down('Shift');
-        await fixture.events.click(frame3);
-        await fixture.events.keyboard.up('Shift');
+        await clickOnTarget(fixture, frame3, 'Shift');
 
         const storyContext = await fixture.renderHook(() => useStory());
         expect(storyContext.state.selectedElementIds).toEqual([
@@ -154,4 +150,15 @@ function getElementFrame(fixture, id) {
   return fixture.querySelector(
     `[data-element-id="${id}"] [data-testid="textFrame"]`
   );
+}
+
+async function clickOnTarget(fixture, target, key = false) {
+  const { x, y, width, height } = target.getBoundingClientRect();
+  if (key) {
+    await fixture.events.keyboard.down(key);
+  }
+  await fixture.events.mouse.click(x + width / 2, y + height / 2);
+  if (key) {
+    await fixture.events.keyboard.up(key);
+  }
 }
