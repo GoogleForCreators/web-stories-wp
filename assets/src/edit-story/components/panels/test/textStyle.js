@@ -152,8 +152,8 @@ describe('Panels/TextStyle', () => {
   }
 
   it('should render <TextStyle /> panel', () => {
-    const { getByText } = renderTextStyle([textElement]);
-    const element = getByText('Style');
+    const { getByRole } = renderTextStyle([textElement]);
+    const element = getByRole('button', { name: 'Style' });
     expect(element).toBeDefined();
   });
 

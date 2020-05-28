@@ -49,7 +49,7 @@ describe('TextPane', () => {
       },
     };
     await act(async () => {
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <APIContext.Provider value={apiContextValue}>
           <FontProvider apiContextValue>
             <TextPane />
@@ -59,7 +59,7 @@ describe('TextPane', () => {
 
       await getAllFontsPromise;
 
-      fireEvent.click(getByText('Add new text'));
+      fireEvent.click(getByRole('button', { name: 'Add new text' }));
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);

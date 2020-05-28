@@ -188,7 +188,6 @@ function SizePositionPanel({
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
-          data-testid="width"
           suffix={_x('W', 'The Width dimension', 'web-stories')}
           value={width}
           onChange={(value) => {
@@ -216,7 +215,6 @@ function SizePositionPanel({
           disabled={isFill}
         />
         <BoxedNumeric
-          data-testid="height"
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={height}
           onChange={(value) => {
