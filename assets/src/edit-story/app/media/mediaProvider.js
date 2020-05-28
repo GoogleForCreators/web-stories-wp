@@ -108,7 +108,7 @@ function MediaProvider({ children }) {
           await uploadVideoFrame(id, src);
           processed.current.push(id);
         } finally {
-          processing.current.remove(id);
+          processing.current = processing.current.filter((e) => e !== id);
         }
       };
       process();
