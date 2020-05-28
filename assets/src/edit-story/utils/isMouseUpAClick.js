@@ -22,12 +22,12 @@
  * @return {boolean} If the event is considered a click.
  */
 function isMouseUpAClick(mouseUp, mouseDown) {
-  const timingDifference = mouseUp.timeStamp - mouseDown.timeStamp;
   if (undefined === mouseDown?.clientX || undefined === mouseDown?.clientY) {
     return false;
   }
 
-  const { clientX, clientY } = mouseDown;
+  const { clientX, clientY, timeStamp } = mouseDown;
+  const timingDifference = mouseUp.timeStamp - timeStamp;
 
   const distanceMoved =
     Math.abs(mouseUp.clientX - clientX) + Math.abs(mouseUp.clientY - clientY);
