@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { Primary, Secondary } from '../../../../components/button';
+import { Primary, Plain } from '../../../../components/button';
 import Dialog from '../../../../components/dialog';
 import { useSnackbar } from '../../../../app/snackbar';
 import { useMedia } from '../../../../app/media';
@@ -99,7 +99,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
       title={type == 'image' ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
-          <Secondary onClick={onClose}>{__('Cancel', 'web-stories')}</Secondary>
+          <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
           <Space />
           <Primary onClick={onDelete}>{__('Delete', 'web-stories')}</Primary>
         </>
