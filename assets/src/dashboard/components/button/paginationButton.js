@@ -26,7 +26,7 @@ import { ChevronLeft } from '../../icons';
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const NavButton = styled.button`
-  ${({ theme }) => `
+  ${({ theme, rotateRight }) => `
     display: flex;
     align-self: center;
     justify-content: space-around;
@@ -59,19 +59,22 @@ const NavButton = styled.button`
         opacity: 0.3;
         pointer-events: none;
     }
+    
+    > svg {
+      transform: ${rotateRight ? 'rotate(180deg)' : 'none'};
+      height: 100%;
+    }
 
   `}
 `;
-
-const PaginationArrow = styled(ChevronLeft)`
-  ${({ rotateRight }) => rotateRight && { transform: 'rotate(180deg)' }};
-  height: 100%;
-`;
+NavButton.propTypes = {
+  rotateRight: PropTypes.bool,
+};
 
 export default function PaginationButton({ rotateRight, ...rest }) {
   return (
-    <NavButton {...rest}>
-      <PaginationArrow aria-hidden rotateRight={rotateRight} />
+    <NavButton {...rest} rotateRight={rotateRight}>
+      <ChevronLeft aria-hidden="true" />
     </NavButton>
   );
 }

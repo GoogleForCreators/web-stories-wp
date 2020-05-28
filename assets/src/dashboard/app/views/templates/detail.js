@@ -165,7 +165,7 @@ function TemplateDetail() {
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
       <PaginationButton
-        rotateRight="true"
+        rotateRight={true}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => switchToTemplateByOffset(-1)}
         disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
