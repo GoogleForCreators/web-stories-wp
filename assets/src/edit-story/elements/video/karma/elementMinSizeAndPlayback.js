@@ -20,12 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useInsertElement } from '../../../components/canvas';
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 60 * 1000;
-
-fdescribe('Element min size and playback', () => {
+describe('Element min size and playback', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -63,7 +58,6 @@ fdescribe('Element min size and playback', () => {
         },
       };
       video1 = await fixture.act(() => insertElement('video', videoProps));
-      await sleep(100); // auto-play issue
       video2 = await fixture.act(() =>
         insertElement('video', { ...videoProps, x: 20, y: 20 })
       );
@@ -79,8 +73,6 @@ fdescribe('Element min size and playback', () => {
 
       await fixture.events.mouse.click(video1bb.x, video1bb.y);
 
-      await sleep(300); // can be wait for selector
-
       await fixture.events.mouse.click(
         video1bb.x + video1bb.width / 2,
         video1bb.y + video1bb.height / 2
@@ -92,7 +84,6 @@ fdescribe('Element min size and playback', () => {
 
       expect(video1isPlaying).toBe(true);
       expect(video2isPlaying).toBe(false);
-      // await sleep(25000);
     });
   });
 });
