@@ -24,11 +24,12 @@ describe('isMouseUpAClick', () => {
     const mouseUp = {
       clientX: 0,
       clientY: 0,
+      timeStamp: window.performance.now(),
     };
     const mouseDown = {
       clientX: 0,
       clientY: 0,
-      timestamp: window.performance.now() + 1000, // Time in the future to be sure.
+      timeStamp: window.performance.now() + 1000, // Time in the future to be sure.
     };
     expect(isMouseUpAClick(mouseUp, mouseDown)).toBeTrue();
   });
@@ -37,11 +38,12 @@ describe('isMouseUpAClick', () => {
     const mouseUp = {
       clientX: 0,
       clientY: 0,
+      timeStamp: window.performance.now(),
     };
     const mouseDown = {
       clientX: 1,
       clientY: 1,
-      timestamp: window.performance.now() - 301,
+      timeStamp: window.performance.now() - 1000,
     };
     expect(isMouseUpAClick(mouseUp, mouseDown)).toBeFalse();
   });
@@ -50,11 +52,12 @@ describe('isMouseUpAClick', () => {
     const mouseUp = {
       clientX: 0,
       clientY: 0,
+      timeStamp: window.performance.now(),
     };
     const mouseDown = {
       clientX: 3,
       clientY: 3,
-      timestamp: window.performance.now(),
+      timeStamp: window.performance.now(),
     };
     expect(isMouseUpAClick(mouseUp, mouseDown)).toBeFalse();
   });

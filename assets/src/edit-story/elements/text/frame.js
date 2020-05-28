@@ -96,7 +96,7 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     };
 
     const handleMouseDown = (evt) => {
-      clickTime = evt.timestamp;
+      clickTime = evt.timeStamp;
       clickCoordinates = {
         clientX: evt.clientX,
         clientY: evt.clientY,
@@ -106,7 +106,7 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     const handleMouseUp = (evt) => {
       if (
         !isMouseUpAClick(evt, {
-          timestamp: clickTime,
+          timeStamp: clickTime,
           ...clickCoordinates,
         })
       ) {

@@ -180,9 +180,9 @@ function MultiSelectionMovable({ selectedElements }) {
   };
 
   const startEventTracking = (evt) => {
-    const { timestamp, clientX, clientY } = evt;
+    const { timeStamp, clientX, clientY } = evt;
     eventTracker.current = {
-      timestamp,
+      timeStamp,
       clientX,
       clientY,
     };

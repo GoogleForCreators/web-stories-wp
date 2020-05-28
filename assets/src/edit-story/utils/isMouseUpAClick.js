@@ -22,7 +22,7 @@
  * @return {boolean} If the event is considered a click.
  */
 function isMouseUpAClick(mouseUp, mouseDown) {
-  const timingDifference = mouseUp.timestamp - mouseDown.timestamp;
+  const timingDifference = mouseUp.timeStamp - mouseDown.timeStamp;
   if (undefined === mouseDown?.clientX || undefined === mouseDown?.clientY) {
     return false;
   }
