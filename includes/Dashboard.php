@@ -177,16 +177,16 @@ class Dashboard {
 		);
 
 		wp_register_style(
-			'google-sans',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500',
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500|Roboto:400',
 			[],
 			WEBSTORIES_VERSION
 		);
-
+		
 		wp_enqueue_style(
 			self::SCRIPT_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
-			[ 'google-sans' ],
+			[ 'google-fonts' ],
 			$version
 		);
 

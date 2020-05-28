@@ -19,14 +19,20 @@
 import { ANIMATION_TYPES } from '../constants';
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
+import { AnimationFade } from './fade';
+import { AnimationFlip } from './flip';
+import { AnimationFloatOn } from './floatOn';
+import { AnimationMove } from './move';
+import { AnimationSpin } from './spin';
+import { AnimationZoom } from './zoom';
 
-function throughput() {
+export function throughput() {
   return {
     id: -1,
-    keyframes: {},
+    generatedKeyframes: {},
     WAAPIAnimation: ({ children }) => children,
-    AMPAnimation: ({ children }) => children,
-    AMPAnimator: () => {},
+    AMPTarget: ({ children }) => children,
+    AMPAnimation: () => {},
   };
 }
 
@@ -35,6 +41,12 @@ export function AnimationPart(type, args) {
     {
       [ANIMATION_TYPES.BOUNCE]: AnimationBounce,
       [ANIMATION_TYPES.BLINK_ON]: AnimationBlinkOn,
+      [ANIMATION_TYPES.FADE]: AnimationFade,
+      [ANIMATION_TYPES.FLIP]: AnimationFlip,
+      [ANIMATION_TYPES.FLOAT_ON]: AnimationFloatOn,
+      [ANIMATION_TYPES.MOVE]: AnimationMove,
+      [ANIMATION_TYPES.SPIN]: AnimationSpin,
+      [ANIMATION_TYPES.ZOOM]: AnimationZoom,
     }[type] || throughput;
 
   return generator(args);
