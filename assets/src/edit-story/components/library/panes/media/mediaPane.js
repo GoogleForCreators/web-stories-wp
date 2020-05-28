@@ -257,6 +257,9 @@ function MediaPane(props) {
   // "hovers" over content. As of May 2020 this cannot be achieved without
   // js (as the scrollbar-gutter prop is no yet ready).
   useEffect(() => {
+    if (!refContainer.current) {
+      return;
+    }
     const scrollBarWidth =
       refContainer.current.offsetWidth - refContainer.current.clientWidth;
     const currentPaddingLeft = parseFloat(
