@@ -96,15 +96,20 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     };
 
     const handleMouseDown = (evt) => {
-      clickTime = window.performance.now();
+      clickTime = evt.timestamp;
       clickCoordinates = {
-        x: evt.clientX,
-        y: evt.clientY,
+        clientX: evt.clientX,
+        clientY: evt.clientY,
       };
     };
 
     const handleMouseUp = (evt) => {
-      if (!isMouseUpAClick(evt, clickTime, clickCoordinates)) {
+      if (
+        !isMouseUpAClick(evt, {
+          timestamp: clickTime,
+          ...clickCoordinates,
+        })
+      ) {
         return;
       }
 

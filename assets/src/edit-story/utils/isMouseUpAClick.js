@@ -17,21 +17,21 @@
 /**
  * Determine if an event (mousedown + mouseup combination) is considered a click.
  *
- * @param {Object} evt         Event object.
- * @param {number} time        Initial time of the event,
- * @param {Object} coordinates Initial coordinates.
+ * @param {Object} mouseUp   MouseUp event object.
+ * @param {Object} mouseDown MouseDown event object.
  * @return {boolean} If the event is considered a click.
  */
-function isClick(evt, time, coordinates) {
-  const timingDifference = window.performance.now() - time;
-  if (undefined === coordinates?.x || undefined === coordinates?.y) {
+function isMouseUpAClick(mouseUp, mouseDown) {
+  const timingDifference = mouseUp.timestamp - mouseDown.timestamp;
+  if (undefined === mouseDown?.clientX || undefined === mouseDown?.clientY) {
     return false;
   }
 
-  const { x, y } = coordinates;
+  const { clientX, clientY } = mouseDown;
 
-  const distanceMoved = Math.abs(evt.clientX - x) + Math.abs(evt.clientY - y);
+  const distanceMoved =
+    Math.abs(mouseUp.clientX - clientX) + Math.abs(mouseUp.clientY - clientY);
   return !(timingDifference > 300 || distanceMoved > 4);
 }
 
-export default isClick;
+export default isMouseUpAClick;

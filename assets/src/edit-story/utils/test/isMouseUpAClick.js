@@ -21,41 +21,41 @@ import isMouseUpAClick from '../isMouseUpAClick';
 
 describe('isMouseUpAClick', () => {
   it('should detect a click correctly', () => {
-    const evt = {
+    const mouseUp = {
       clientX: 0,
       clientY: 0,
     };
-    const coordinates = {
-      x: 0,
-      y: 0,
+    const mouseDown = {
+      clientX: 0,
+      clientY: 0,
+      timestamp: window.performance.now() + 1000, // Time in the future to be sure.
     };
-    const time = window.performance.now() + 1000; // Time in the future to be sure.
-    expect(isMouseUpAClick(evt, time, coordinates)).toBeTrue();
+    expect(isMouseUpAClick(mouseUp, mouseDown)).toBeTrue();
   });
 
   it('should not consider a very short movement a click if it takes long time', () => {
-    const evt = {
+    const mouseUp = {
       clientX: 0,
       clientY: 0,
     };
-    const coordinates = {
-      x: 1,
-      y: 1,
+    const mouseDown = {
+      clientX: 1,
+      clientY: 1,
+      timestamp: window.performance.now() - 301,
     };
-    const time = window.performance.now() - 301;
-    expect(isMouseUpAClick(evt, time, coordinates)).toBeFalse();
+    expect(isMouseUpAClick(mouseUp, mouseDown)).toBeFalse();
   });
 
   it('should not consider a longer movement a click even if quick', () => {
-    const evt = {
+    const mouseUp = {
       clientX: 0,
       clientY: 0,
     };
-    const coordinates = {
-      x: 3,
-      y: 3,
+    const mouseDown = {
+      clientX: 3,
+      clientY: 3,
+      timestamp: window.performance.now(),
     };
-    const time = window.performance.now();
-    expect(isMouseUpAClick(evt, time, coordinates)).toBeFalse();
+    expect(isMouseUpAClick(mouseUp, mouseDown)).toBeFalse();
   });
 });

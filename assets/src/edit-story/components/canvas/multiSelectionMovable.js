@@ -38,10 +38,7 @@ const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 function MultiSelectionMovable({ selectedElements }) {
   const moveable = useRef();
 
-  const eventTracker = useRef({
-    time: 0,
-    coordinates: {},
-  });
+  const eventTracker = useRef({});
 
   const {
     actions: { updateElementsById },
@@ -183,10 +180,11 @@ function MultiSelectionMovable({ selectedElements }) {
   };
 
   const startEventTracking = (evt) => {
-    eventTracker.current.time = window.performance.now();
-    eventTracker.current.coordinates = {
-      x: evt.clientX,
-      y: evt.clientY,
+    const { timestamp, clientX, clientY } = evt;
+    eventTracker.current = {
+      timestamp,
+      clientX,
+      clientY,
     };
   };
 
@@ -195,13 +193,7 @@ function MultiSelectionMovable({ selectedElements }) {
   // and it can be captured here and not in the frame element.
   // @todo Add integration test for this!
   const clickHandled = (inputEvent) => {
-    if (
-      isMouseUpAClick(
-        inputEvent,
-        eventTracker.current.time,
-        eventTracker.current.coordinates
-      )
-    ) {
+    if (isMouseUpAClick(inputEvent, eventTracker.current)) {
       const clickedElement = Object.keys(nodesById).find((id) =>
         nodesById[id].contains(inputEvent.target)
       );
