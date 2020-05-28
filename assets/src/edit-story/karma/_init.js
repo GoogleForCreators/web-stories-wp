@@ -119,6 +119,21 @@ beforeEach(() => {
   document.body.appendChild(rootEl);
   const body = rootEl.querySelector('test-body');
 
+  let clientX = -100;
+  let clientY = -100;
+  const innerCursor = document.body.appendChild(document.createElement('div'));
+  innerCursor.style =
+    'width:0px; height:0px; border-left: 10px solid red; border-bottom: 10px solid transparent; position:absolute; top:0; left:0; z-index:999; pointer-events:none;';
+  document.addEventListener('mousemove', (e) => {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  });
+  const render = () => {
+    innerCursor.style.transform = `translate(${clientX}px,${clientY}px)`;
+    requestAnimationFrame(render);
+  };
+  requestAnimationFrame(render);
+
   spyOnProperty(document, 'documentElement', 'get').and.returnValue(rootEl);
   spyOnProperty(document, 'body', 'get').and.returnValue(body);
   // @todo: ideally we can find a way to use a new <head> for each test, but
