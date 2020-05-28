@@ -21,13 +21,13 @@ import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../../components/canvas';
 
-fdescribe('Background Drop-Target integration', () => {
+describe('Background Drop-Target integration', () => {
   let fixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
-
     await fixture.render();
+    jasmine.addMatchers(customMatchers);
   });
 
   afterEach(() => {
@@ -37,13 +37,12 @@ fdescribe('Background Drop-Target integration', () => {
   it('should by default have white background', async () => {
     const bgElement = await getCanvasBackgroundElement(fixture);
     // Verify that it's empty
-    expect(bgElement.innerHTML).toEqual('');
-    // And that the computed CSS background color is white:
-    const bgColor = getComputedStyle(bgElement).backgroundColor;
-    expect(bgColor).toEqual('rgb(255, 255, 255)');
+    expect(bgElement).toBeEmpty();
+    // And that background color is white:
+    expect(bgElement).toHaveBackgroundColor('rgb(255, 255, 255)');
   });
 
-  fdescribe('when there is an image on the canvas', () => {
+  describe('when there is an image on the canvas', () => {
     let imageData;
 
     beforeEach(async () => {
@@ -51,48 +50,34 @@ fdescribe('Background Drop-Target integration', () => {
       jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000000;
     });
 
-    fit('should temp display image as background when dragging over bg edge', async () => {
-      // Find bg element dimensions
-      const bgElement = await getCanvasBackgroundElement(fixture);
-      const bgRect = bgElement.getBoundingClientRect();
-
-      // Find image element dimensions
-      const imageElement = getCanvasElementWrapperById(fixture, imageData.id);
-      const imageRect = imageElement.getBoundingClientRect();
-
-      const bgReplacementElement = await getCanvasBackgroundReplacement(
-        fixture
-      );
+    it('should correctly handle image dropped on edge', async () => {
+      const backgroundId = await getBackgroundElementId(fixture);
 
       // Verify that bg replacement is empty
-      expect(bgReplacementElement.innerHTML).toEqual('');
+      const rep1 = await getCanvasBackgroundReplacement(fixture);
+      expect(rep1).toBeEmpty();
 
-      // Schedule a sequence of events by dragging from center of image to edge of bg
-      await fixture.events.mouse.seq([
-        {
-          type: 'move',
-          x: imageRect.x + imageRect.width / 2,
-          y: imageRect.y + imageRect.height / 2,
-        },
-        {
-          type: 'down',
-        },
-        {
-          type: 'move',
-          x: bgRect.x + 5,
-          y: bgRect.y + 105,
-        },
-      ]);
-
-      // Pause for 100 seconds
-      //await new Promise((resolve) => setTimeout(resolve, 10000000));
+      // Drag the image element to the background
+      await dragToDropTarget(fixture, imageData.id, backgroundId);
 
       // Verify that bg replacement is no longer empty
-      expect(bgReplacementElement.innerHTML).not.toEqual('');
+      expect(rep1).not.toBeEmpty();
 
-      // Verify that img has correct source
-      const img = bgReplacementElement.querySelector('img');
-      expect(img.src).toEqual(imageData.resource.src);
+      // Verify that replacement img has correct source
+      const replaceImg = rep1.querySelector('img');
+      expect(replaceImg).toHaveSource(imageData.resource.src);
+
+      // Now drop the element
+      await fixture.events.mouse.up();
+
+      // Verify new background element has the correct image
+      const bg = await getCanvasBackgroundElement(fixture);
+      const bgImg = bg.querySelector('img');
+      expect(bgImg).toHaveSource(imageData.resource.src);
+
+      // And verify that we no longer have a replacement element
+      const rep2 = await getCanvasBackgroundReplacement(fixture);
+      expect(rep2).toBeEmpty();
     });
   });
 });
@@ -115,11 +100,81 @@ async function addDummyImage(fixture) {
   );
 }
 
+async function dragToDropTarget(fixture, fromId, toId) {
+  // Find from element dimensions
+  const from = await getCanvasElementWrapperById(fixture, fromId);
+  const fromRect = from.getBoundingClientRect();
+
+  // Find to element dimensions
+  const to = getCanvasElementWrapperById(fixture, toId);
+  const toRect = to.getBoundingClientRect();
+
+  // Schedule a sequence of events by dragging from center of image to edge of bg
+  await fixture.events.mouse.seq([
+    {
+      type: 'move',
+      x: fromRect.x + fromRect.width / 2,
+      y: fromRect.y + fromRect.height / 2,
+    },
+    {
+      type: 'down',
+    },
+    {
+      type: 'move',
+      x: toRect.x + 3,
+      y: toRect.y + 103,
+      // I don't know why it needs this many steps.
+      // I tried 2, I tried moving it one pixel first
+      // and then all the way, but neither works. 10 does
+      options: { steps: 12 },
+    },
+  ]);
+}
+
+const customMatchers = {
+  toBeEmpty: () => ({
+    compare: function (actual) {
+      const innerHTML = actual?.innerHTML ?? '';
+      const pass = innerHTML === '';
+      return {
+        pass,
+        message: pass
+          ? `Expected element to not be empty`
+          : `Expected element to be empty`,
+      };
+    },
+  }),
+  toHaveBackgroundColor: (util, customEqualityTesters) => ({
+    compare: function (actual, expected) {
+      const bgColor = getComputedStyle(actual).backgroundColor;
+      const pass = util.equals(bgColor, expected, customEqualityTesters);
+      return {
+        pass,
+        message: pass
+          ? `Expected element to not have background color "${expected}"`
+          : `Expected element to have background color "${expected}" but found "${bgColor}"`,
+      };
+    },
+  }),
+  toHaveSource: (util, customEqualityTesters) => ({
+    compare: function (actual, expected) {
+      const src = actual?.src ?? '';
+      const pass = util.equals(src, expected, customEqualityTesters);
+      return {
+        pass,
+        message: pass
+          ? `Expected element to not have src "${expected}"`
+          : `Expected element to have src "${expected}" but found "${src}"`,
+      };
+    },
+  }),
+};
+
 function getCanvasElementWrapperById(fixture, id) {
   return fixture.querySelector(`[data-element-id="${id}"]`);
 }
 
-async function getCanvasBackgroundElementWrapper(fixture) {
+async function getBackgroundElementId(fixture) {
   const {
     state: {
       currentPage: {
@@ -127,20 +182,25 @@ async function getCanvasBackgroundElementWrapper(fixture) {
       },
     },
   } = await fixture.renderHook(() => useStory());
+  return id;
+}
+
+async function getCanvasBackgroundElementWrapper(fixture) {
+  const id = await getBackgroundElementId(fixture);
   return getCanvasElementWrapperById(fixture, id);
 }
 
-function getCanvasBackgroundElement(fixture) {
-  return getCanvasBackgroundElementWrapper(fixture).then((e) =>
-    // TODO fix this selector
-    e.querySelector(`[class^="display__Element-"]`)
-  );
+async function getCanvasBackgroundElement(fixture) {
+  const wrapper = await getCanvasBackgroundElementWrapper(fixture);
+  // TODO fix this selector
+  return wrapper.querySelector(`[class^="display__Element-"]`);
 }
 
-function getCanvasBackgroundReplacement(fixture) {
-  return getCanvasBackgroundElementWrapper(fixture).then((e) =>
-    // TODO fix this selector
-    e.querySelector(`[class^="displayElement__ReplacementContainer-"]`)
+async function getCanvasBackgroundReplacement(fixture) {
+  const wrapper = await getCanvasBackgroundElementWrapper(fixture);
+  // TODO fix this selector
+  return wrapper.querySelector(
+    `[class^="displayElement__ReplacementContainer-"]`
   );
 }
 
