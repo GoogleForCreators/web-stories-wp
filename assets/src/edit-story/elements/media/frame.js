@@ -32,7 +32,7 @@ const Element = styled.div`
   ${elementFillContent}
 `;
 
-function MediaFrame({ dataTestid, element: { id } }) {
+function MediaFrame({ element: { id } }) {
   const {
     actions: { setEditingElement },
   } = useCanvas();
@@ -42,7 +42,7 @@ function MediaFrame({ dataTestid, element: { id } }) {
     setEditingElement,
   ]);
   const getHandleClick = useDoubleClick(handleSingleClick, handleDoubleClick);
-  return <Element data-testid={dataTestid} onClick={getHandleClick(id)} />;
+  return <Element onClick={getHandleClick(id)} />;
 }
 
 MediaFrame.propTypes = {

@@ -77,7 +77,7 @@ function useInsertElement() {
           if (videoEl) {
             const playPromise = videoEl.play();
             if (playPromise) {
-              playPromise.catch(() => {})
+              playPromise.catch(() => {});
             }
           }
         }, 0);

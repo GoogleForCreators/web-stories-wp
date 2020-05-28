@@ -201,7 +201,7 @@ const MediaElement = ({
             // Pointer still in the media element, continue the video.
             const playPromise = mediaElement.current.play();
             if (playPromise) {
-              playPromise.catch(() => {})
+              playPromise.catch(() => {});
             }
           }
         } else {

@@ -21,7 +21,7 @@ import StoryPropTypes from '../../types';
 import MediaFrame from '../media/frame';
 
 function VideoFrame({ element }) {
-  return <MediaFrame dataTestid="videoFrame" element={element} />;
+  return <MediaFrame element={element} />;
 }
 
 VideoFrame.propTypes = {
