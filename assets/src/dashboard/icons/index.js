@@ -29,7 +29,6 @@ export { ReactComponent as List } from './list.svg';
 export { ReactComponent as Menu } from './menu.svg';
 export { ReactComponent as MoreVertical } from './moreVertical.svg';
 export { ReactComponent as PaginationArrowLeft } from './paginationArrowLeft.svg';
-export { ReactComponent as PaginationArrowRight } from './paginationArrowRight.svg';
 export { ReactComponent as PlayArrow } from './playArrow.svg';
 export { ReactComponent as RightArrow } from './rightArrow.svg';
 export { ReactComponent as ScrollUpArrow } from './scrollUpArrow.svg';

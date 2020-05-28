@@ -30,7 +30,6 @@ import { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import { useConfig } from '../../config';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ApiContext } from '../../api/apiProvider';
-import { PaginationArrowLeft, PaginationArrowRight } from '../../../icons';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
 
@@ -39,6 +38,7 @@ import {
   CardGallery,
   ColorList,
   DetailViewContentGutter,
+  PaginationButton,
   PreviewPage,
   Pill,
   TemplateNavBar,
@@ -55,15 +55,12 @@ import {
   DetailContainer,
   LargeDisplayPagination,
   MetadataContainer,
-  NavButton,
   RowContainer,
   SmallDisplayPagination,
   SubHeading,
   Text,
   Title,
 } from './components';
-
-const PAGINATION_ICON_SIZE = { height: 28, width: 28 };
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
@@ -167,26 +164,23 @@ function TemplateDetail() {
 
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
-      <NavButton
+      <PaginationButton
+        rotateRight="true"
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => switchToTemplateByOffset(-1)}
         disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
-      >
-        <PaginationArrowLeft {...PAGINATION_ICON_SIZE} aria-hidden={true} />
-      </NavButton>
+      />
     );
 
     const Next = (
-      <NavButton
+      <PaginationButton
         aria-label={__('View next template', 'web-stories')}
         onClick={() => switchToTemplateByOffset(1)}
         disabled={
           !orderedTemplates?.length ||
           activeTemplateIndex === orderedTemplates?.length - 1
         }
-      >
-        <PaginationArrowRight {...PAGINATION_ICON_SIZE} aria-hidden={true} />
-      </NavButton>
+      />
     );
 
     return isRTL
