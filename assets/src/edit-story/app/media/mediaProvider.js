@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -32,7 +32,14 @@ import { getResourceFromAttachment } from './utils';
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
-  const { media, pagingNum, mediaType, searchTerm } = state;
+  const {
+    processing,
+    processed,
+    media,
+    pagingNum,
+    mediaType,
+    searchTerm,
+  } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -42,6 +49,8 @@ function MediaProvider({ children }) {
     setMediaType,
     setSearchTerm,
     setNextPage,
+    setProcessing,
+    removeProcessing,
     updateMediaElement,
   } = actions;
   const {
@@ -72,6 +81,10 @@ function MediaProvider({ children }) {
   });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
+    setProcessing,
+    removeProcessing,
+    processing,
+    processed,
   });
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
@@ -95,25 +108,19 @@ function MediaProvider({ children }) {
     fetchMedia({ pagingNum, mediaType }, fetchMediaSuccess);
   }, [fetchMedia, fetchMediaSuccess, mediaType, pagingNum, searchTerm]);
 
-  const processing = useRef([]);
-  const processed = useRef([]);
   const uploadVideoPoster = useCallback(
     (id, src) => {
       const process = async () => {
-        if (processed.current.includes(id) || processing.current.includes(id)) {
+        if (processed.includes(id) || processing.includes(id)) {
           return;
         }
-        processing.current.push(id);
-        try {
-          await uploadVideoFrame(id, src);
-          processed.current.push(id);
-        } finally {
-          processing.current.remove(id);
-        }
+        setProcessing({ id });
+        await uploadVideoFrame(id, src);
+        removeProcessing({ id });
       };
       process();
     },
-    [uploadVideoFrame]
+    [processed, processing, setProcessing, uploadVideoFrame, removeProcessing]
   );
 
   const processor = useCallback(
