@@ -85,6 +85,10 @@ class Plugin {
 	 * @return array Modified configuration options.
 	 */
 	public function filter_site_kit_gtag_opt( $gtag_opt ) {
+		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+			return $gtag_opt;
+		}
+
 		$post = get_post();
 
 		if ( ! $post instanceof WP_Post ) {
