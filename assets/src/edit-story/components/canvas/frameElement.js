@@ -68,7 +68,7 @@ function FrameElement({ element }) {
 
   const {
     actions: { setNodeForElement, handleSelectElement },
-    state: { isEditing, isResizing },
+    state: { isEditing, isResizing, isDragging },
   } = useCanvas();
   const {
     state: { selectedElementIds, currentPage },
@@ -77,7 +77,7 @@ function FrameElement({ element }) {
     actions: { getBox },
   } = useUnits();
   const {
-    state: { activeDropTargetId, draggingResource },
+    state: { activeDropTargetId },
   } = useDropTargets();
 
   useLayoutEffect(() => {
@@ -103,7 +103,7 @@ function FrameElement({ element }) {
     >
       {!isEditing && Controls && (
         <Controls
-          isDragged={Boolean(draggingResource)}
+          isDragging={isDragging}
           isResizing={isResizing}
           isSelected={isSelected}
           box={box}

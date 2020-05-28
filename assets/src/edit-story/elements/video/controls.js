@@ -94,7 +94,7 @@ const Pause = styled(PauseIcon)`
 function VideoControls({
   box,
   isSelected,
-  isDragged,
+  isDragging,
   isResizing,
   elementRef,
   element,
@@ -104,7 +104,7 @@ function VideoControls({
     element.height < PLAY_ABOVE_BREAKPOINT_HEIGHT;
   const [hovering, setHovering] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(!isDragged && !isResizing);
+  const [isPlaying, setIsPlaying] = useState(!isDragging && !isResizing);
   const { id } = element;
   const {
     state: { selectedElementIds },
@@ -133,11 +133,11 @@ function VideoControls({
 
   useEffect(() => {
     const videoNode = getVideoNode();
-    if (videoNode && !videoNode.paused && (isDragged || isResizing)) {
+    if (videoNode && !videoNode.paused && (isDragging || isResizing)) {
       videoNode.pause();
       setIsPlaying(false);
     }
-  }, [getVideoNode, isDragged, isResizing]);
+  }, [getVideoNode, isDragging, isResizing]);
 
   useEffect(() => {
     const videoNode = getVideoNode();
@@ -182,7 +182,7 @@ function VideoControls({
     };
   }, [checkMouseInBBox]);
 
-  if (!isSelected || isDragged || isResizing) {
+  if (!isSelected || isDragging || isResizing) {
     return null;
   }
 
@@ -208,7 +208,9 @@ function VideoControls({
   const buttonTitle = isPlaying
     ? __('Click to pause', 'web-stories')
     : __('Click to play', 'web-stories');
-  const TransitionWrapper = isPlayAbove ? 'div' : CSSTransition;
+  const TransitionWrapper = isPlayAbove
+    ? ({ children }) => <div>{children}</div>
+    : CSSTransition;
 
   return (
     <Controls {...box}>
@@ -237,7 +239,7 @@ function VideoControls({
 VideoControls.propTypes = {
   box: StoryPropTypes.box.isRequired,
   isSelected: PropTypes.bool.isRequired,
-  isDragged: PropTypes.bool.isRequired,
+  isDragging: PropTypes.bool.isRequired,
   isResizing: PropTypes.bool.isRequired,
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,

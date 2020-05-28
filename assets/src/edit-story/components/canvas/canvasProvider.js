@@ -42,6 +42,7 @@ function CanvasProvider({ children }) {
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
 
   const [isResizing, setIsResizing] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const {
     nodesById,
@@ -149,6 +150,7 @@ function CanvasProvider({ children }) {
         lastSelectionEvent,
         pageSize,
         isResizing,
+        isDragging,
       },
       actions: {
         setPageContainer,
@@ -161,6 +163,7 @@ function CanvasProvider({ children }) {
         selectIntersection,
         setPageSize,
         setIsResizing,
+        setIsDragging,
       },
     }),
     [
@@ -181,6 +184,7 @@ function CanvasProvider({ children }) {
       selectIntersection,
       setPageSize,
       isResizing,
+      isDragging,
     ]
   );
   return (
