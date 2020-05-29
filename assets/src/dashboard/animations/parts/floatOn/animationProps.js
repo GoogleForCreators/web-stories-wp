@@ -17,19 +17,17 @@
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES } from '../constants';
-import getFadeConfig from './fade';
-import getFlipConfig from './flip';
-import getFloatOnConfig from './floatOn';
-import getMoveConfig from './move';
-import getSpinConfig from './spin';
-import getZoomConfig from './zoom';
+import { FIELD_TYPES, DIRECTION } from '../../constants';
 
 export default {
-  [ANIMATION_TYPES.FADE]: getFadeConfig,
-  [ANIMATION_TYPES.FLIP]: getFlipConfig,
-  [ANIMATION_TYPES.FLOAT_ON]: getFloatOnConfig,
-  [ANIMATION_TYPES.MOVE]: getMoveConfig,
-  [ANIMATION_TYPES.SPIN]: getSpinConfig,
-  [ANIMATION_TYPES.ZOOM]: getZoomConfig,
+  direction: {
+    type: FIELD_TYPES.DROPDOWN,
+    values: [
+      DIRECTION.TOP_TO_BOTTOM,
+      DIRECTION.BOTTOM_TO_TOP,
+      DIRECTION.LEFT_TO_RIGHT,
+      DIRECTION.RIGHT_TO_LEFT,
+    ],
+    defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  },
 };

@@ -30,8 +30,6 @@ import { useEffect, useState, useContext, useMemo, useCallback } from 'react';
 import { useConfig } from '../../config';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ApiContext } from '../../api/apiProvider';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
-import { ReactComponent as RightArrow } from '../../../icons/right-arrow.svg';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
 
@@ -40,18 +38,16 @@ import {
   CardGallery,
   ColorList,
   DetailViewContentGutter,
+  PaginationButton,
   PreviewPage,
   Pill,
   TemplateNavBar,
   Layout,
 } from '../../../components';
-import {
-  ICON_METRICS,
-  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
-} from '../../../constants';
+import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { StoryGridView } from '../shared';
-
+import { resolveRelatedTemplateRoute } from '../../router';
 import {
   ByLine,
   ColumnContainer,
@@ -59,7 +55,6 @@ import {
   DetailContainer,
   LargeDisplayPagination,
   MetadataContainer,
-  NavButton,
   RowContainer,
   SmallDisplayPagination,
   SubHeading,
@@ -69,6 +64,10 @@ import {
 
 function TemplateDetail() {
   const [template, setTemplate] = useState(null);
+  const [relatedTemplates, setRelatedTemplates] = useState([]);
+  const [orderedTemplates, setOrderedTemplates] = useState([]);
+  const [previewPages, setPreviewPages] = useState([]);
+
   const { pageSize } = usePagePreviewSize({ isGrid: true });
   const {
     state: {
@@ -91,33 +90,40 @@ function TemplateDetail() {
   const { isRTL } = useConfig();
 
   useEffect(() => {
+    setPreviewPages([]);
+
     if (!templateId) {
       return;
     }
 
     const id = parseInt(templateId);
     const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
+    const templateFetchFn = isLocalTemplate
+      ? fetchMyTemplateById
+      : fetchExternalTemplateById;
 
-    if (isLocalTemplate) {
-      fetchMyTemplateById(id).then((fetchedTemplate) =>
-        setTemplate(fetchedTemplate)
-      );
-    } else {
-      fetchExternalTemplateById(id).then((fetchedTemplate) =>
-        setTemplate(fetchedTemplate)
-      );
+    templateFetchFn(id).then(setTemplate);
+  }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
+
+  useEffect(() => {
+    if (!template) {
+      return;
     }
-  }, [fetchMyTemplateById, fetchExternalTemplateById, templateId, isLocal]);
-
-  const relatedTemplates = useMemo(() => {
-    return fetchRelatedTemplates();
-  }, [fetchRelatedTemplates]);
-
-  const orderedTemplates = useMemo(() => {
-    return templatesOrderById.map((templateByOrderId) => {
-      return templates[templateByOrderId];
-    });
-  }, [templatesOrderById, templates]);
+    setRelatedTemplates(
+      fetchRelatedTemplates().map((relatedTemplate) => ({
+        ...relatedTemplate,
+        centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
+      }))
+    );
+    setOrderedTemplates(
+      templatesOrderById.map(
+        (templateByOrderId) => templates[templateByOrderId]
+      )
+    );
+    setPreviewPages(
+      template.pages.map((page) => <PreviewPage key={page.id} page={page} />)
+    );
+  }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
@@ -141,13 +147,6 @@ function TemplateDetail() {
     return orderedTemplates.findIndex((t) => t.id === template?.id);
   }, [orderedTemplates, template?.id]);
 
-  const previewPages = useMemo(
-    () =>
-      template &&
-      template.pages.map((page) => <PreviewPage key={page.id} page={page} />),
-    [template]
-  );
-
   const switchToTemplateByOffset = useCallback(
     (offset) => {
       const index = clamp(activeTemplateIndex + offset, [
@@ -165,26 +164,23 @@ function TemplateDetail() {
 
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
-      <NavButton
+      <PaginationButton
+        rotateRight={true}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => switchToTemplateByOffset(-1)}
         disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
-      >
-        <LeftArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
-      </NavButton>
+      />
     );
 
     const Next = (
-      <NavButton
+      <PaginationButton
         aria-label={__('View next template', 'web-stories')}
         onClick={() => switchToTemplateByOffset(1)}
         disabled={
           !orderedTemplates?.length ||
           activeTemplateIndex === orderedTemplates?.length - 1
         }
-      >
-        <RightArrow {...ICON_METRICS.LEFT_RIGHT_ARROW} aria-hidden={true} />
-      </NavButton>
+      />
     );
 
     return isRTL
@@ -268,6 +264,7 @@ function TemplateDetail() {
                         }
                         bottomActionLabel={__('Use template', 'web-stories')}
                         isTemplate
+                        pageSize={pageSize}
                       />
                     </UnitsProvider>
                   </RowContainer>

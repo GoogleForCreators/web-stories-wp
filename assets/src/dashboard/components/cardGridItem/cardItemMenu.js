@@ -26,7 +26,7 @@ import { useCallback, useRef } from 'react';
  */
 import { STORY_CONTEXT_MENU_ITEMS } from '../../constants';
 import { StoryPropType } from '../../types';
-import { ReactComponent as MoreVerticalSvg } from '../../icons/moreVertical.svg';
+import { MoreVertical as MoreVerticalSvg } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
 import { PopoverMenuCard } from '../popoverMenu';
 

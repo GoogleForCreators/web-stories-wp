@@ -17,24 +17,17 @@
 /**
  * Internal dependencies
  */
-import { ROTATION } from '../constants';
+import { FIELD_TYPES, ROTATION, AXIS } from '../../constants';
 
-export default function (type) {
-  const frames = {
-    [ROTATION.CLOCKWISE]: {
-      transform: ['rotateZ(0deg)', 'rotateZ(360deg)'],
-    },
-    [ROTATION.COUNTER_CLOCKWISE]: {
-      transform: ['rotateZ(0deg)', 'rotateZ(-360deg)'],
-    },
-    [ROTATION.PING_PONG]: {
-      transform: ['rotateZ(-45deg)', 'rotateZ(40deg)'],
-    },
-  };
-
-  const keyframes = frames[type] || frames[ROTATION.CLOCKWISE];
-
-  return {
-    keyframes,
-  };
-}
+export default {
+  axis: {
+    type: FIELD_TYPES.DROPDOWN,
+    values: [AXIS.X, AXIS.Y],
+    defaultValue: AXIS.Y,
+  },
+  rotation: {
+    type: FIELD_TYPES.DROPDOWN,
+    values: [ROTATION.CLOCKWISE, ROTATION.COUNTER_CLOCKWISE],
+    defaultValue: ROTATION.CLOCKWISE,
+  },
+};

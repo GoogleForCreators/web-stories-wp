@@ -108,10 +108,6 @@ beforeEach(() => {
         height: 100%;
         margin: 0;
       }
-      test-body > div {
-        width: 100%;
-        height: 100%;
-      }
     </style>
     <test-body>
     </test-body>

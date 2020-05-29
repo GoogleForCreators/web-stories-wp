@@ -17,6 +17,8 @@
 /**
  * External dependencies
  */
+jest.mock('flagged');
+import { useFeature } from 'flagged';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
@@ -37,6 +39,8 @@ const mockWAAPIAnimation = (overrides = {}) => ({
 });
 
 describe('StoryAnimation.Provider', () => {
+  useFeature.mockImplementation(() => true);
+
   describe('getAnimationParts(target)', () => {
     it('gets all generated parts for a target', () => {
       const target = 'some-target';

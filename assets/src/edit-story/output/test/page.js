@@ -117,7 +117,7 @@ describe('Page output', () => {
             height: 1920,
             width: 1080,
             rotationAngle: 0,
-            loop: true,
+            loop: false,
             resource: {
               type: 'video',
               mimeType: 'video/mp4',
@@ -144,7 +144,6 @@ describe('Page output', () => {
         autoplay="autoplay"
         id="el-baz-media"
         layout="fill"
-        loop="loop"
         poster="https://example.com/poster.png"
       >
         <source
@@ -156,6 +155,46 @@ describe('Page output', () => {
     await expect(
       queryByAutoAdvanceAfter(container, 'el-baz-media')
     ).toBeInTheDocument();
+  });
+
+  it('should ignore looping video for auto-advance-after and set default instead', async () => {
+    const props = {
+      id: 'foo',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+      page: {
+        id: 'bar',
+        elements: [
+          {
+            id: 'baz',
+            type: 'video',
+            mimeType: 'video/mp4',
+            scale: 1,
+            origRatio: 9 / 16,
+            x: 50,
+            y: 100,
+            height: 1920,
+            width: 1080,
+            rotationAngle: 0,
+            loop: true,
+            resource: {
+              type: 'video',
+              mimeType: 'video/mp4',
+              id: 123,
+              src: 'https://example.com/video.mp4',
+              poster: 'https://example.com/poster.png',
+              height: 1920,
+              width: 1080,
+              length: 99,
+            },
+          },
+        ],
+      },
+      autoAdvance: true,
+      defaultPageDuration: 7,
+    };
+
+    const { container } = render(<PageOutput {...props} />);
+    await expect(queryByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
   });
 
   describe('AMP validation', () => {

@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-export default function (config) {
-  const { from, to } = config;
+const AMPToWAAPIProps = {
+  iterations: {
+    infinity: Infinity,
+  },
+};
 
-  return {
-    useContainer: true,
-    fill: 'forwards',
-    keyframes: {
-      transform: [`scale(${from})`, `scale(${to})`],
-    },
-  };
+function createKeyframeEffect(target, keyframes, timings) {
+  // Translate AMP timings to Web API timings
+  const convertedTimings = Object.keys(timings).reduce(
+    (acc, property) => ({
+      ...acc,
+      [property]:
+        (AMPToWAAPIProps[property] &&
+          AMPToWAAPIProps[property][timings[property]]) ||
+        timings[property],
+    }),
+    {}
+  );
+
+  return new KeyframeEffect(target, keyframes, convertedTimings);
 }
+
+export default createKeyframeEffect;

@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-export default function (config) {
-  const { offsetX = 0, offsetY = 0 } = config;
+/**
+ * Internal dependencies
+ */
+import { FIELD_TYPES } from '../../constants';
 
-  return {
-    fill: 'forwards',
-    keyframes: {
-      transform: [`translate(${offsetX}px, ${offsetY}px)`, 'translate(0%, 0%)'],
-    },
-  };
-}
+export default {
+  offsetX: {
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 0,
+  },
+  offsetY: {
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 0,
+  },
+};

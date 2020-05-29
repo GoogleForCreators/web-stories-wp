@@ -29,12 +29,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useCallback } from 'react';
-import {
-  CategoriesPropType,
-  StoriesPropType,
-  TagsPropType,
-  UsersPropType,
-} from '../../../types';
+import { StoriesPropType, UsersPropType } from '../../../types';
 import {
   PreviewPage,
   Table,
@@ -43,7 +38,6 @@ import {
   TableCell,
   TableDateHeaderCell,
   TableHeader,
-  TableHeaderCell,
   TablePreviewCell,
   TablePreviewHeaderCell,
   TableRow,
@@ -60,7 +54,7 @@ import {
 } from '../../../constants';
 import { PAGE_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
-import { ReactComponent as ArrowIconSvg } from '../../../icons/download.svg';
+import { Download as ArrowIconSvg } from '../../../icons';
 import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
 
 const ListView = styled.div`
@@ -118,18 +112,8 @@ export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
   sortDirection,
-  tags,
-  categories,
   users,
 }) {
-  const metadataStringForIds = useCallback((metadata, ids) => {
-    const metadataString = ids
-      .reduce((memo, current) => [...memo, metadata[current]?.name], [])
-      .filter(Boolean)
-      .join(', ');
-    return metadataString === '' ? '—' : metadataString;
-  }, []);
-
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -177,8 +161,6 @@ export default function StoryListView({
                 <ArrowIconSvg {...ICON_METRICS.UP_DOWN_ARROW} />
               </ArrowIconWithTitle>
             </TableAuthorHeaderCell>
-            <TableHeaderCell>{__('Categories', 'web-stories')}</TableHeaderCell>
-            <TableHeaderCell>{__('Tags', 'web-stories')}</TableHeaderCell>
             <TableDateHeaderCell>
               <SelectableTitle
                 onClick={() =>
@@ -224,10 +206,6 @@ export default function StoryListView({
               </TablePreviewCell>
               <TableCell>{story.title}</TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>
-                {metadataStringForIds(categories, story.categories)}
-              </TableCell>
-              <TableCell>{metadataStringForIds(tags, story.tags)}</TableCell>
               <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
               <TableCell>{getFormattedDisplayDate(story.modified)}</TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
@@ -246,8 +224,6 @@ export default function StoryListView({
 
 StoryListView.propTypes = {
   stories: StoriesPropType,
-  tags: TagsPropType,
-  categories: CategoriesPropType,
   users: UsersPropType.isRequired,
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,

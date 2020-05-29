@@ -23,21 +23,13 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryAnimation, { useStoryAnimationContext } from '../index.js';
+import StoryAnimation from '../index.js';
 import { ANIMATION_TYPES } from '../../../animations/constants';
+import PlayButton from '../../../storybookUtils/playButton';
 
 export default {
   title: 'Dashboard/Components/StoryAnimation',
   component: StoryAnimation,
-};
-
-const PlayButton = () => {
-  const {
-    actions: { playWAAPIAnimations },
-  } = useStoryAnimationContext();
-
-  const label = 'play';
-  return <button onClick={playWAAPIAnimations}>{label}</button>;
 };
 
 function ColorSquare({ color }) {
