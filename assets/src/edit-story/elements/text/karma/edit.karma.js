@@ -24,9 +24,19 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('TextEdit integration', () => {
   let fixture;
+  let exitEditor;
 
   beforeEach(async () => {
     fixture = new Fixture();
+    exitEditor = async (editor) => {
+      // Exit edit mode by clicking right outside the editor.
+      // @todo: this API is a bit low level. would be good to add additional
+      // ways to do events relative to targets and each other. Maybe something
+      // like `move({relative: element, anchor: 'topleft', x: -10})`?
+      const { x, y } = editor.getBoundingClientRect();
+      await fixture.events.mouse.move(x - 10, y);
+      await fixture.events.mouse.down();
+    };
 
     await fixture.render();
   });
@@ -100,13 +110,7 @@ describe('TextEdit integration', () => {
 
         expect(boldToggle.checked).toEqual(true);
 
-        // Exit edit mode by clicking right outside the editor.
-        // @todo: this API is a bit low level. would be good to add additional
-        // ways to do events relative to targets and each other. Maybe something
-        // like `move({relative: element, anchor: 'topleft', x: -10})`?
-        const { x, y } = editor.getBoundingClientRect();
-        await fixture.events.mouse.move(x - 10, y);
-        await fixture.events.mouse.down();
+        await exitEditor(editor);
 
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 
@@ -135,13 +139,7 @@ describe('TextEdit integration', () => {
 
         await fixture.snapshot('after content changes');
 
-        // Exit edit mode by clicking right outside the editor.
-        // @todo: this API is a bit low level. would be good to add additional
-        // ways to do events relative to targets and each other. Maybe something
-        // like `move({relative: element, anchor: 'topleft', x: -10})`?
-        const { x, y } = editor.getBoundingClientRect();
-        await fixture.events.mouse.move(x - 10, y);
-        await fixture.events.mouse.down();
+        await exitEditor(editor);
 
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 
