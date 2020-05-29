@@ -124,9 +124,9 @@ export class Fixture {
    *
    * Use sparingly. See `ComponentStub` for more info.
    *
+   * @param {Function} component
+   * @param {Function|undefined} matcher
    * @return {ComponentStub} The component's stub.
-   * @param component
-   * @param matcher
    */
   stubComponent(component, matcher) {
     const stub = new ComponentStub(this, component, matcher);
@@ -225,8 +225,8 @@ export class Fixture {
    * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
    * directory.
    *
+   * @param {string} name
    * @return {Promise} Yields when the snapshot is completed.
-   * @param name
    */
   snapshot(name) {
     return karmaSnapshot(name);
