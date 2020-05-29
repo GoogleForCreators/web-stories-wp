@@ -50,8 +50,8 @@ import PagePreview, {
 } from '../pagepreview';
 import useResizeEffect from '../../../utils/useResizeEffect';
 import {
-  COMPACT_CAROUSEL_BREAKPOINT,
   CAROUSEL_VERTICAL_PADDING,
+  MIN_CAROUSEL_THUMB_HEIGHT,
   COMPACT_THUMB_HEIGHT,
   COMPACT_THUMB_WIDTH,
 } from '../layout';
@@ -186,13 +186,18 @@ const GridViewContainer = styled.div`
   pointer-events: all;
 `;
 
-function calculatePageThumbSize(carouselSize) {
-  const aspectRatio = PAGE_WIDTH / PAGE_HEIGHT;
-  const availableHeight =
+function calculateThumbnailHeight(carouselSize) {
+  return (
     carouselSize.height -
     CAROUSEL_VERTICAL_PADDING * 2 -
-    CAROUSEL_BOTTOM_SCROLL_MARGIN;
-  const pageHeight = availableHeight - THUMB_FRAME_HEIGHT;
+    CAROUSEL_BOTTOM_SCROLL_MARGIN -
+    THUMB_FRAME_HEIGHT
+  );
+}
+
+function calculatePageThumbSize(carouselSize) {
+  const aspectRatio = PAGE_WIDTH / PAGE_HEIGHT;
+  const pageHeight = calculateThumbnailHeight(carouselSize);
   const pageWidth = pageHeight * aspectRatio;
   return [pageWidth + THUMB_FRAME_WIDTH, pageHeight + THUMB_FRAME_HEIGHT];
 }
@@ -213,7 +218,9 @@ function Carousel() {
     width: COMPACT_THUMB_WIDTH,
     height: COMPACT_THUMB_HEIGHT,
   });
-  const isCompact = carouselSize.height < COMPACT_CAROUSEL_BREAKPOINT;
+
+  const isCompact =
+    calculateThumbnailHeight(carouselSize) < MIN_CAROUSEL_THUMB_HEIGHT;
 
   const openModal = useCallback(() => setIsGridViewOpen(true), []);
   const closeModal = useCallback(() => setIsGridViewOpen(false), []);
