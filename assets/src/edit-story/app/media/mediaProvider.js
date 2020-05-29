@@ -52,6 +52,7 @@ function MediaProvider({ children }) {
     setProcessing,
     removeProcessing,
     updateMediaElement,
+    deleteMediaElement,
   } = actions;
   const {
     actions: { getMedia },
@@ -164,6 +165,7 @@ function MediaProvider({ children }) {
       uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
+      deleteMediaElement,
     },
   };
 

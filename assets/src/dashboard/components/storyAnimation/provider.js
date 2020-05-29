@@ -28,11 +28,12 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { AnimationPart } from '../../animations/parts';
+import { AnimationPart, throughput } from '../../animations/parts';
 
 const Context = createContext(null);
 
@@ -56,29 +57,33 @@ const createOnFinishPromise = (animation) => {
 };
 
 function Provider({ animations, children, onWAAPIFinish }) {
+  const enableAnimation = useFeature('enableAnimation');
   const animationPartsMap = useMemo(() => {
     return (animations || []).reduce((map, animation) => {
       const { targets, type, ...args } = animation;
 
       (targets || []).forEach((t) => {
         const generatedParts = map.get(t) || [];
-        map.set(t, [...generatedParts, AnimationPart(type, args)]);
+        map.set(t, [
+          ...generatedParts,
+          enableAnimation ? AnimationPart(type, args) : throughput(),
+        ]);
       });
 
       return map;
     }, new Map());
-  }, [animations]);
+  }, [animations, enableAnimation]);
 
   const providerId = useMemo(() => uuidv4(), []);
 
   const animationTargets = useMemo(
-    () => Array.from(animationPartsMap?.keys() || []),
+    () => Array.from(animationPartsMap.keys() || []),
     [animationPartsMap]
   );
 
   const getAnimationParts = useCallback(
     (target) => {
-      return animationPartsMap?.get(target) || [];
+      return animationPartsMap.get(target) || [];
     },
     [animationPartsMap]
   );
@@ -166,7 +171,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
 }
 
 Provider.propTypes = {
-  animations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  animations: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
 };

@@ -55,7 +55,7 @@ program
     console.log('  $ commander.js version 1.2.3');
     console.log('');
     console.log('  # Nightly build');
-    console.log('  $ commander.js build-plugin --nightly');
+    console.log('  $ commander.js version --nightly');
   })
   .action((version, { nightly }) => {
     const currentVersion = getCurrentVersionNumber(PLUGIN_FILE);
@@ -116,7 +116,7 @@ program
     rmdirSync(PLUGIN_BUILD_DIR, { recursive: true });
     mkdirSync(PLUGIN_BUILD_DIR, { recursive: true });
 
-    const build = bundlePlugin(PLUGIN_DIR, composer, zip, clean);
+    const build = bundlePlugin(PLUGIN_DIR, composer, zip, clean, cdn);
 
     console.log(`Plugin successfully built! Location: ${build}`);
   });
