@@ -67,6 +67,7 @@ export const _default = () => {
             label: 'Preview',
           }}
           pageSize={{ width: 210, height: 316 }}
+          story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
         </CardPreviewContainer>
@@ -97,6 +98,7 @@ export const _publishedStory = () => {
             label: 'Preview',
           }}
           pageSize={{ width: 210, height: 316 }}
+          story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
         </CardPreviewContainer>
@@ -129,6 +131,7 @@ export const _contextMenu = () => {
               label: 'Preview',
             }}
             pageSize={{ width: 210, height: 316 }}
+            story={{}}
           >
             <Card>{text('Sample Story Content', 'Sample Story')}</Card>
           </CardPreviewContainer>

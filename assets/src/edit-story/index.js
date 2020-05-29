@@ -39,7 +39,6 @@ const initialize = (id, config, flags) => {
 
   // see http://reactcommunity.org/react-modal/accessibility/
   Modal.setAppElement(appElement);
-
   render(
     <FlagsProvider features={flags}>
       <App config={config} />

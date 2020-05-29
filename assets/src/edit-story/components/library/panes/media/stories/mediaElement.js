@@ -25,6 +25,9 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import MediaElement from '../mediaElement';
+import ApiContext from '../../../../../app/api/context';
+import MediaContext from '../../../../../app/media/context';
+import SnackbarContext from '../../../../../app/snackbar/context';
 import testImage from './test-image.jpg';
 import testPoster from './test-poster.png';
 import testVideo from './test-video.mp4';
@@ -32,6 +35,10 @@ import testVideo from './test-video.mp4';
 const Column = styled.div`
   width: 150px;
 `;
+
+const snackbarValue = { showSnackbar: () => {} };
+const mediaValue = { actions: { deleteMediaElement: () => {} } };
+const apiValue = { actions: { deleteMedia: () => {} } };
 
 export default {
   title: 'Stories Editor/Components/Media Element',
@@ -51,11 +58,21 @@ export const _Image = () => {
   });
 
   return (
-    <FlagsProvider features={{ mediaDropdownMenu: true }}>
-      <Column>
-        <MediaElement resource={resource} width={150} onInsert={() => {}} />
-      </Column>
-    </FlagsProvider>
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <FlagsProvider features={{ mediaDropdownMenu: true }}>
+            <Column>
+              <MediaElement
+                resource={resource}
+                width={150}
+                onInsert={() => {}}
+              />
+            </Column>
+          </FlagsProvider>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
   );
 };
 
@@ -74,10 +91,20 @@ export const _Video = () => {
   });
 
   return (
-    <FlagsProvider features={{ mediaDropdownMenu: true }}>
-      <Column>
-        <MediaElement resource={resource} width={150} onInsert={() => {}} />
-      </Column>
-    </FlagsProvider>
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <FlagsProvider features={{ mediaDropdownMenu: true }}>
+            <Column>
+              <MediaElement
+                resource={resource}
+                width={150}
+                onInsert={() => {}}
+              />
+            </Column>
+          </FlagsProvider>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
   );
 };
