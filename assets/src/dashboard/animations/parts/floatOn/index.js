@@ -21,7 +21,7 @@ import { ANIMATION_TYPES, DIRECTION } from '../../constants';
 import SimpleAnimation from '../simpleAnimation';
 
 const defaults = {
-  fill: 'forwards',
+  fill: 'both',
   duration: 1000,
 };
 

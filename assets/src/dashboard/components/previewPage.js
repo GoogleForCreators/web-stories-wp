@@ -29,14 +29,22 @@ import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 
 function PreviewPageController({ page, animationState }) {
   const {
-    actions: { playWAAPIAnimations },
+    actions: { WAAPIAnimationMethods },
   } = useStoryAnimationContext();
 
   useEffect(() => {
-    if ('animate' === animationState) {
-      playWAAPIAnimations();
+    if (STORY_PAGE_STATE.ANIMATE === animationState) {
+      WAAPIAnimationMethods.play();
     }
-  }, [animationState, playWAAPIAnimations]);
+    if (STORY_PAGE_STATE.IDLE === animationState) {
+      WAAPIAnimationMethods.reset();
+    }
+  }, [animationState, WAAPIAnimationMethods]);
+
+  /**
+   * Reset everything on unmount;
+   */
+  useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
 
   return page.elements.map(({ id, ...rest }) => (
     <DisplayElement
@@ -48,7 +56,11 @@ function PreviewPageController({ page, animationState }) {
   ));
 }
 
-function PreviewPage({ page, animationState = 'idle', onAnimationComplete }) {
+function PreviewPage({
+  page,
+  animationState = STORY_PAGE_STATE.IDLE,
+  onAnimationComplete,
+}) {
   return (
     <StoryAnimation.Provider
       animations={page.animations}

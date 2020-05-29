@@ -46,8 +46,8 @@
     "prop-types": "^15.7.2",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
-    "react-color": "^2.18.1",
     "react-calendar": "^3.0.1",
+    "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
     "react-moveable": "^0.20.7",
@@ -59,7 +59,8 @@
     "use-debounce": "^3.4.2",
     "use-reduction": "^2.0.0",
     "uuid": "^8.1.0",
-    "valid-url": "^1.0.9"
+    "valid-url": "^1.0.9",
+    "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.4.0",

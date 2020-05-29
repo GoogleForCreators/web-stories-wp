@@ -23,6 +23,8 @@ import { addDecorator, addParameters } from '@storybook/react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { FlagsProvider } from 'flagged';
+import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
  * Internal dependencies
@@ -71,26 +73,30 @@ addDecorator((story, { id }) => {
 
   if (useDashboardTheme) {
     return (
-      <ThemeProvider theme={dashboardTheme}>
-        <ConfigProvider
-          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
-        >
-          <ApiProvider>
-            <DashboardGlobalStyle />
-            <DashboardKeyboardOnlyOutline />
-            {story()}
-          </ApiProvider>
-        </ConfigProvider>
-      </ThemeProvider>
+      <FlagsProvider features={{ enableAnimation: true }}>
+        <ThemeProvider theme={dashboardTheme}>
+          <ConfigProvider
+            config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
+          >
+            <ApiProvider>
+              <DashboardGlobalStyle />
+              <DashboardKeyboardOnlyOutline />
+              {story()}
+            </ApiProvider>
+          </ConfigProvider>
+        </ThemeProvider>
+      </FlagsProvider>
     );
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <CropMoveableGlobalStyle />
-      <ModalGlobalStyle />
-      {story()}
-    </ThemeProvider>
+    <FlagsProvider features={{ enableAnimation: true }}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <CropMoveableGlobalStyle />
+        <ModalGlobalStyle />
+        {story()}
+      </ThemeProvider>
+    </FlagsProvider>
   );
 });
