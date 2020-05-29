@@ -31,7 +31,6 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Fonts_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
-use WP_Screen;
 
 /**
  * Plugin class.
@@ -62,53 +61,16 @@ class Plugin {
 		$dashboard = new Dashboard();
 		add_action( 'init', [ $dashboard, 'init' ] );
 
-		// Migrations.
-		$database_upgrader = new Database_Upgrader();
-		add_action( 'admin_init', [ $database_upgrader, 'init' ] );
+		// Admin-related functionality.
+		$admin = new Admin();
+		add_action( 'admin_init', [ $admin, 'init' ] );
 
 		// Gutenberg Blocks.
 		$embed_block = new Embed_Block();
 		add_action( 'init', [ $embed_block, 'init' ] );
 
 		// Everything else.
-		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
 		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
-	}
-
-	/**
-	 * Filter the list of admin classes.
-	 *
-	 * Makes sure the admin menu is collapsed when accessing
-	 * the dashboard and the editor.
-	 *
-	 * @param string $class Current classes.
-	 *
-	 * @return string $class List of Classes.
-	 */
-	public static function admin_body_class( $class ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return $class;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
-			return $class;
-		}
-
-		// Default WordPress posts list table screen.
-		if ( 'edit' === $screen->base ) {
-			return $class;
-		}
-
-		$class .= ' edit-story';
-
-		// Overrides regular WordPress behavior by collapsing the admin menu by default.
-		if ( false === strpos( $class, 'folded' ) ) {
-			$class .= ' folded';
-		}
-
-		return $class;
 	}
 
 	/**
