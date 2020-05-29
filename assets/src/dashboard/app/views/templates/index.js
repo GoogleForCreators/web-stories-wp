@@ -160,6 +160,7 @@ function TemplatesGallery() {
             }
             bottomActionLabel={__('Use template', 'web-stories')}
             isTemplate
+            pageSize={pageSize}
           />
           <InfiniteScroller
             canLoadMore={!allPagesFetched}
@@ -179,6 +180,7 @@ function TemplatesGallery() {
     orderedTemplates,
     totalTemplates,
     typeaheadValue,
+    pageSize,
   ]);
 
   return (

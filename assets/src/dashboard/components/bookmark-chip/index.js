@@ -24,8 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR, CHIP_TYPES } from '../../constants';
-import { ReactComponent as BookmarkFill } from '../../icons/bookmark-fill.svg';
-import { ReactComponent as BookmarkOutline } from '../../icons/bookmark-outline.svg';
+import { BookmarkFill, BookmarkOutline } from '../../icons';
 
 const chipSize = {
   [CHIP_TYPES.STANDARD]: {

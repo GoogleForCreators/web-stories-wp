@@ -28,11 +28,12 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { AnimationPart } from '../../animations/animationParts';
+import { AnimationPart, throughput } from '../../animations/parts';
 
 const Context = createContext(null);
 
@@ -56,42 +57,33 @@ const createOnFinishPromise = (animation) => {
 };
 
 function Provider({ animations, children, onWAAPIFinish }) {
-  const { map: animationPartsMap, set: animationTypesSet } = useMemo(() => {
-    return (animations || []).reduce(
-      ({ map, set }, animation) => {
-        const { targets, type, ...args } = animation;
+  const enableAnimation = useFeature('enableAnimation');
+  const animationPartsMap = useMemo(() => {
+    return (animations || []).reduce((map, animation) => {
+      const { targets, type, ...args } = animation;
 
-        (targets || []).forEach((t) => {
-          const generatedParts = map.get(t) || [];
-          map.set(t, [...generatedParts, AnimationPart(type, args)]);
+      (targets || []).forEach((t) => {
+        const generatedParts = map.get(t) || [];
+        map.set(t, [
+          ...generatedParts,
+          enableAnimation ? AnimationPart(type, args) : throughput(),
+        ]);
+      });
 
-          // Gather unique animation types
-          set.add(type);
-        });
-
-        return { map, set };
-      },
-      {
-        map: new Map(),
-        set: new Set(),
-      }
-    );
-  }, [animations]);
+      return map;
+    }, new Map());
+  }, [animations, enableAnimation]);
 
   const providerId = useMemo(() => uuidv4(), []);
-  const animationTypes = useMemo(
-    () => Array.from(animationTypesSet?.keys() || []),
-    [animationTypesSet]
-  );
 
   const animationTargets = useMemo(
-    () => Array.from(animationPartsMap?.keys() || []),
+    () => Array.from(animationPartsMap.keys() || []),
     [animationPartsMap]
   );
 
   const getAnimationParts = useCallback(
     (target) => {
-      return animationPartsMap?.get(target) || [];
+      return animationPartsMap.get(target) || [];
     },
     [animationPartsMap]
   );
@@ -158,7 +150,6 @@ function Provider({ animations, children, onWAAPIFinish }) {
     () => ({
       state: {
         providerId,
-        animationTypes,
         animationTargets,
       },
       actions: {
@@ -170,7 +161,6 @@ function Provider({ animations, children, onWAAPIFinish }) {
     [
       providerId,
       getAnimationParts,
-      animationTypes,
       animationTargets,
       hoistWAAPIAnimation,
       playWAAPIAnimations,
@@ -181,7 +171,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
 }
 
 Provider.propTypes = {
-  animations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  animations: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
 };

@@ -173,6 +173,14 @@ function reducer(state, { type, payload }) {
       };
     }
 
+    case types.DELETE_MEDIA_ELEMENT: {
+      const { id } = payload;
+      return {
+        ...state,
+        media: state.media.filter((media) => media.id !== id),
+      };
+    }
+
     default:
       throw new Error(`Unknown media reducer action: ${type}`);
   }

@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useContext } from '../../../utils/context';
 
 /**
  * Internal dependencies

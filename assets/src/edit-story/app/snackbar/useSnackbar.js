@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
+import { identity, useContextSelector } from '../../utils/context';
 import Context from './context';
 
-function useSnackbar() {
-  return useContext(Context);
+function useSnackbar(selector) {
+  return useContextSelector(Context, selector ?? identity);
 }
 
 export default useSnackbar;
