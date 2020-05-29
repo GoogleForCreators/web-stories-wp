@@ -18,6 +18,7 @@
  * External dependencies
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
+import { FlagsProvider } from 'flagged';
 import { render, act } from '@testing-library/react';
 
 /**
@@ -44,6 +45,8 @@ const DEFAULT_CONFIG = {
 export class Fixture {
   constructor() {
     this._config = { ...DEFAULT_CONFIG };
+
+    this._flags = {};
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
@@ -98,9 +101,20 @@ export class Fixture {
     return stub;
   }
 
+  /**
+   * Set the feature flags. See `flags.js` for the list of flags.
+   *
+   * @param {Object} flags
+   */
+  setFlags(flags) {
+    this._flags = { ...flags };
+  }
+
   render() {
     const { container } = render(
-      <App key={Math.random()} config={this._config} />
+      <FlagsProvider features={this._flags}>
+        <App key={Math.random()} config={this._config} />
+      </FlagsProvider>
     );
     // The editor should always be given 100%:100% size. The testing-library
     // renders an extra container so it should be given the same size.
