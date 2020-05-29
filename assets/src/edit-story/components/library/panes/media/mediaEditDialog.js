@@ -98,6 +98,10 @@ const DialogDescription = styled.div`
   color: ${({ theme }) => theme.grayout};
 `;
 
+const Space = styled.div`
+  width: 8px;
+`;
+
 const imageDialogTitle = __('Edit Image', 'web-stories');
 const videoDialogTitle = __('Edit Video', 'web-stories');
 const imageDialogDescription = __(
@@ -164,6 +168,7 @@ function MediaEditDialog({ resource, onClose }) {
       actions={
         <>
           <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
+          <Space />
           <Primary onClick={updateMediaItem}>
             {__('Save', 'web-stories')}
           </Primary>
