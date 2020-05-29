@@ -111,6 +111,21 @@ class Keyboard {
    */
   constructor(act) {
     this._act = act;
+
+    this._events = {
+      down: (key, options = {}) => {
+        const type = 'down';
+        return { type, key, options };
+      },
+      up: (key, options = {}) => {
+        const type = 'up';
+        return { type, key, options };
+      },
+      press: (key, options = {}) => {
+        const type = 'press';
+        return { type, key, options };
+      },
+    };
   }
 
   /**
@@ -119,10 +134,14 @@ class Keyboard {
    * - `type: 'up'`: [keyboard.up](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardupkey).
    * - `type: 'press'`: [keyboard.press](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardpresskey-options).
    *
-   * @param {Array<{type: string, key: string, options: Object}>} array
+   * @param {Array<{type: string, key: string, options: Object}>|Array} arrayOrGenerator
    * @return {!Promise} Yields when the event is processed.
    */
-  seq(array) {
+  seq(arrayOrGenerator) {
+    const array =
+      typeof arrayOrGenerator === 'function'
+        ? arrayOrGenerator(this._events)
+        : arrayOrGenerator;
     return this._act(() => karmaPuppeteer.keyboard.seq(cleanupKeys(array)));
   }
 
@@ -151,8 +170,7 @@ class Keyboard {
    * @return {!Promise} Yields when the event is processed.
    */
   down(key, options = {}) {
-    const type = 'down';
-    return this.seq([{ type, key, options }]);
+    return this.seq([this._events.down(key, options)]);
   }
 
   /**
@@ -165,8 +183,7 @@ class Keyboard {
    * @return {!Promise} Yields when the event is processed.
    */
   up(key, options = {}) {
-    const type = 'up';
-    return this.seq([{ type, key, options }]);
+    return this.seq([this._events.up(key, options)]);
   }
 
   /**
@@ -179,8 +196,7 @@ class Keyboard {
    * @return {!Promise} Yields when the event is processed.
    */
   press(key, options = {}) {
-    const type = 'press';
-    return this.seq([{ type, key, options }]);
+    return this.seq([this._events.press(key, options)]);
   }
 
   /**
@@ -227,7 +243,69 @@ class Mouse {
    */
   constructor(act) {
     this._act = act;
-    this._mouseSeq = new MouseSeq();
+
+    this._xy = [0, 0];
+
+    const relToDelta = (rel, size) => {
+      if (!rel) {
+        return 0;
+      }
+      if (typeof rel === 'number') {
+        return rel;
+      }
+      if (rel.endsWidth('%')) {
+        const percent = parseFloat(rel) / 100;
+        return size * percent;
+      }
+      throw new Error('Unknown rel size: ' + rel);
+    };
+
+    const elementXY = (element, relX, relY) => {
+      const { x, y, width, height } = element.getBoundingClientRect();
+      const dx = relToDelta(relX, width);
+      const dy = relToDelta(relY, height);
+      return [x + dx, y + dy];
+    };
+
+    this._events = {
+      click: (x, y, options = {}) => {
+        this._xy = [x, y];
+        const type = 'click';
+        return { type, x, y, options };
+      },
+      down: (options = {}) => {
+        const type = 'down';
+        return { type, options };
+      },
+      up: (options = {}) => {
+        const type = 'up';
+        return { type, options };
+      },
+      move: (x, y, options = {}) => {
+        this._xy = [x, y];
+        const type = 'move';
+        return { type, x, y, options };
+      },
+
+      clickOn: (element, relX = 0, relY = 0, options = {}) => {
+        const [x, y] = elementXY(element, relX, relY);
+        this._xy = [x, y];
+        return this._events.click(x, y, options);
+      },
+
+      moveRel: (element, relX = 0, relY = 0, options = {}) => {
+        const [x, y] = elementXY(element, relX, relY);
+        this._xy = [x, y];
+        return this._events.move(x, y, options);
+      },
+
+      moveBy: (dx, dy, options = {}) => {
+        let [x, y] = this._xy;
+        x += dx;
+        y += dy;
+        return this._events.move(x, y, options);
+      },
+    };
   }
 
   /**
@@ -241,7 +319,10 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   seq(arrayOrGenerator) {
-    const array = typeof arrayOrGenerator === 'function' ? arrayOrGenerator(this._mouseSeq) : arrayOrGenerator;
+    const array =
+      typeof arrayOrGenerator === 'function'
+        ? arrayOrGenerator(this._events)
+        : arrayOrGenerator;
     return this._act(() => karmaPuppeteer.mouse.seq(cleanupMouseEvents(array)));
   }
 
@@ -256,7 +337,7 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   click(x, y, options = {}) {
-    return this.seq([this._mouseSeq.click(x, y, options)]);
+    return this.seq([this._events.click(x, y, options)]);
   }
 
   /**
@@ -268,7 +349,7 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   down(options = {}) {
-    return this.seq([this._mouseSeq.down(options)]);
+    return this.seq([this._events.down(options)]);
   }
 
   /**
@@ -280,7 +361,7 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   up(options = {}) {
-    return this.seq([this._mouseSeq.up(options)]);
+    return this.seq([this._events.up(options)]);
   }
 
   /**
@@ -295,43 +376,76 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   move(x, y, options = {}) {
-    return this.seq([this._mouseSeq.move(x, y, options)]);
+    return this.seq([this._events.move(x, y, options)]);
+  }
+
+  /**
+   * Moves the mouse pointer to a position relative to the specified element
+   * and calls `mouse.click` at that position.
+   *
+   * The position is calculated relative to the specified element. The
+   * `relX` and `relY` can be either:
+   * 1. A number specifying the pixel distance relative to the element's
+   * top-left corner.
+   * 2. A string with "%" suffix specifying the percent distance relative
+   * to the element's top-left corner.
+   *
+   * For instance, to click on the center of an element, call
+   * `clickOn(element, '50%', '50%')`.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mouseclickx-y-options
+   *
+   * @param {Element} element
+   * @param {number|string} relX A relative pixel or percent value. Default is 0.
+   * @param {number|string} relY A relative pixel or percent value. Default is 0.
+   * @param {Object} options
+   * @return {!Promise} Yields when the event is processed.
+   */
+  clickOn(element, relX = 0, relY = 0, options = {}) {
+    return this.seq([this._events.clickOn(element, relX, relY, options)]);
+  }
+
+  /**
+   * Moves the mouse pointer to a position relative to the specified element.
+   *
+   * The position is calculated relative to the specified element. The
+   * `relX` and `relY` can be either:
+   * 1. A number specifying the pixel distance relative to the element's
+   * top-left corner.
+   * 2. A string with "%" suffix specifying the percent distance relative
+   * to the element's top-left corner.
+   *
+   * For instance, to move pointer to the center of an element, call
+   * `moveRel(element, '50%', '50%')`.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mousemovex-y-options
+   *
+   * @param {Element} element
+   * @param {number|string} relX A relative pixel or percent value. Default is 0.
+   * @param {number|string} relY A relative pixel or percent value. Default is 0.
+   * @param {Object} options Accepts `steps` option for the number of
+   * intermediate mousemove events.
+   * @return {!Promise} Yields when the event is processed.
+   */
+  moveRel(element, relX = 0, relY = 0, options = {}) {
+    return this.seq([this._events.moveRel(element, relX, relY, options)]);
+  }
+
+  /**
+   * Moves the mouse pointer to a position relative to the last position.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mousemovex-y-options
+   *
+   * @param {number} dx A relative pixel value.
+   * @param {number} dy A relative pixel value.
+   * @param {Object} options Accepts `steps` option for the number of
+   * intermediate mousemove events.
+   * @return {!Promise} Yields when the event is processed.
+   */
+  moveBy(dx, dy, options = {}) {
+    return this.seq([this._events.moveBy(dx, dy, options)]);
   }
 }
-
-class MouseSeq {
-  constructor() {
-  }
-
-  click(x, y, options = {}) {
-    const type = 'click';
-    return { type, x, y, options };
-  }
-
-  down(options = {}) {
-    const type = 'down';
-    return { type, options };
-  }
-
-  up(options = {}) {
-    const type = 'up';
-    return { type, options };
-  }
-
-  move(x, y, options = {}) {
-    const type = 'move';
-    return { type, x, y, options };
-  }
-
-  moveTo(element, dx, dy, options = {}) {
-    const {x, y, width, height} = element.getBoundingClientRect();
-    // TODO
-  }
-
-  moveBy(dx, dy, options = {}) {
-    // TODO
-  }
-};
 
 /**
  * @param {Array<{type: string, key: string, options: Object}>} array

@@ -101,12 +101,10 @@ describe('TextEdit integration', () => {
         expect(boldToggle.checked).toEqual(true);
 
         // Exit edit mode by clicking right outside the editor.
-        await fixture.events.mouse.seq(
-          ({moveTo, moveBy, down}) => ([
-            moveTo(editor),
-            moveBy(-10, 0),
-            down(),
-          ]));
+        await fixture.events.mouse.seq(({ moveRel, down }) => [
+          moveRel(editor, -10),
+          down(),
+        ]);
 
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 
