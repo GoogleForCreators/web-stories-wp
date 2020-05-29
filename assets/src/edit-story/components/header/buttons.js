@@ -134,7 +134,10 @@ function PreviewButton() {
     evt.preventDefault();
   };
 
-  const onDialogClose = () => setPreviewLinkToOpenViaDialog(null);
+  const onDialogClose = useCallback(
+    () => setPreviewLinkToOpenViaDialog(null),
+    []
+  );
 
   return (
     <>
