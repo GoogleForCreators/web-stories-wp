@@ -95,7 +95,7 @@ class Plugin {
 			return $gtag_opt;
 		}
 
-		$title       = $post->post_title;
+		$title       = get_the_title( $post );
 		$story_id    = $post->ID;
 		$tracking_id = $gtag_opt['vars']['gtag_id'];
 
