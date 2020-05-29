@@ -227,6 +227,7 @@ class Mouse {
    */
   constructor(act) {
     this._act = act;
+    this._mouseSeq = new MouseSeq();
   }
 
   /**
@@ -236,10 +237,11 @@ class Mouse {
    * - `type: 'move'`: [mouse.move](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mousemovex-y-options).
    * - `type: 'click'`: [mouse.click](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#mouseclickx-y-options).
    *
-   * @param {Array<{type: string, x: number, y: number, options: Object}>} array
+   * @param {Array<{type: string, x: number, y: number, options: Object}>|Function} arrayOrGenerator
    * @return {!Promise} Yields when the event is processed.
    */
-  seq(array) {
+  seq(arrayOrGenerator) {
+    const array = typeof arrayOrGenerator === 'function' ? arrayOrGenerator(this._mouseSeq) : arrayOrGenerator;
     return this._act(() => karmaPuppeteer.mouse.seq(cleanupMouseEvents(array)));
   }
 
@@ -254,8 +256,7 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   click(x, y, options = {}) {
-    const type = 'click';
-    return this.seq([{ type, x, y, options }]);
+    return this.seq([this._mouseSeq.click(x, y, options)]);
   }
 
   /**
@@ -267,8 +268,7 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   down(options = {}) {
-    const type = 'down';
-    return this.seq([{ type, options }]);
+    return this.seq([this._mouseSeq.down(options)]);
   }
 
   /**
@@ -280,8 +280,7 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   up(options = {}) {
-    const type = 'up';
-    return this.seq([{ type, options }]);
+    return this.seq([this._mouseSeq.up(options)]);
   }
 
   /**
@@ -296,10 +295,43 @@ class Mouse {
    * @return {!Promise} Yields when the event is processed.
    */
   move(x, y, options = {}) {
-    const type = 'move';
-    return this.seq([{ type, x, y, options }]);
+    return this.seq([this._mouseSeq.move(x, y, options)]);
   }
 }
+
+class MouseSeq {
+  constructor() {
+  }
+
+  click(x, y, options = {}) {
+    const type = 'click';
+    return { type, x, y, options };
+  }
+
+  down(options = {}) {
+    const type = 'down';
+    return { type, options };
+  }
+
+  up(options = {}) {
+    const type = 'up';
+    return { type, options };
+  }
+
+  move(x, y, options = {}) {
+    const type = 'move';
+    return { type, x, y, options };
+  }
+
+  moveTo(element, dx, dy, options = {}) {
+    const {x, y, width, height} = element.getBoundingClientRect();
+    // TODO
+  }
+
+  moveBy(dx, dy, options = {}) {
+    // TODO
+  }
+};
 
 /**
  * @param {Array<{type: string, key: string, options: Object}>} array
