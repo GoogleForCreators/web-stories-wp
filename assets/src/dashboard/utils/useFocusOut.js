@@ -20,7 +20,7 @@
 import { useLayoutEffect, useRef } from 'react';
 
 function useFocusOut(ref, callback, deps) {
-  const mouseDownInsideTarget = useRef();
+  const isMouseDownInNode = useRef(false);
 
   useLayoutEffect(() => {
     const node = ref.current;
@@ -36,13 +36,13 @@ function useFocusOut(ref, callback, deps) {
     };
 
     const onMouseDown = (evt) => {
-      mouseDownInsideTarget.current = node.contains(evt.target);
+      isMouseDownInNode.current = node.contains(evt.target);
     };
 
     const onMouseUp = (evt) => {
       const isInDocument = node.ownerDocument.contains(evt.target);
       const isInNode = node.contains(evt.target);
-      if (!isInNode && isInDocument && !mouseDownInsideTarget.current) {
+      if (!isInNode && isInDocument && !isMouseDownInNode.current) {
         callback();
       }
     };

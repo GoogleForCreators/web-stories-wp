@@ -71,6 +71,10 @@ const DateHelperText = styled.span`
   }
 `;
 
+const RenameInput = styled(TextInput)`
+  max-width: 100%;
+`;
+
 const CardTitle = ({
   id,
   secondaryTitle,
@@ -102,12 +106,11 @@ const CardTitle = ({
   return (
     <StyledCardTitle>
       {editMode ? (
-        <InlineInputForm
-          onEditComplete={onEditComplete}
-          onEditCancel={onEditCancel}
-          value={title}
-          id={id}
-          label={__('Rename story', 'web-stories')}
+        <RenameInput
+          data-testid={'title-rename-input'}
+          value={newTitle}
+          onKeyDown={handleKeyPress}
+          onChange={handleChange}
         />
       ) : (
         <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
