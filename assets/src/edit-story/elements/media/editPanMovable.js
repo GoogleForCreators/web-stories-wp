@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -26,7 +26,11 @@ import { useEffect, useRef } from 'react';
 import Movable from '../../components/movable';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
+import { useKeyDownEffect } from '../../components/keyboard';
+import { useCanvas } from '../../components/canvas';
 import getFocalFromOffset from './getFocalFromOffset';
+
+const MOVE_COARSE_STEP = 10;
 
 function EditPanMovable({
   setProperties,
@@ -47,7 +51,11 @@ function EditPanMovable({
   const translateRef = useRef([0, 0]);
   const transformFlip = getTransformFlip(flip);
 
-  const update = () => {
+  const {
+    state: { framesLayer },
+  } = useCanvas();
+
+  const update = useCallback(() => {
     const [tx, ty] = translateRef.current;
     fullMedia.style.transform = `translate(${tx}px, ${ty}px) ${
       transformFlip ?? ''
@@ -55,12 +63,49 @@ function EditPanMovable({
     croppedMedia.style.transform = `translate(${tx}px, ${ty}px) ${
       transformFlip ?? ''
     }`;
-  };
+  }, [croppedMedia, fullMedia, transformFlip]);
 
   // Refresh moveables to ensure that the selection rect is always correct.
   useEffect(() => {
     moveableRef.current.updateRect();
   });
+
+  useKeyDownEffect(
+    framesLayer,
+    { key: ['up', 'down', 'left', 'right'], shift: true },
+    ({ key, shiftKey }) => {
+      const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
+      const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
+      const delta = shiftKey ? 1 : MOVE_COARSE_STEP;
+      let tx = delta * dirX;
+      let ty = delta * dirY;
+      if (flip?.vertical) {
+        ty = -ty;
+      }
+      if (flip?.horizontal) {
+        tx = -tx;
+      }
+      const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - tx);
+      const panFocalY = getFocalFromOffset(height, mediaHeight, offsetY - ty);
+      setProperties({
+        focalX: flip?.horizontal ? 100 - panFocalX : panFocalX,
+        focalY: flip?.vertical ? 100 - panFocalY : panFocalY,
+      });
+      update();
+    },
+    [
+      update,
+      flip?.horizontal,
+      flip?.vertical,
+      offsetX,
+      offsetY,
+      setProperties,
+      width,
+      height,
+      mediaHeight,
+      mediaWidth,
+    ]
+  );
 
   return (
     <Movable
@@ -71,10 +116,10 @@ function EditPanMovable({
       throttleDrag={0}
       onDrag={({ dist }) => {
         let [tx, ty] = dist;
-        if (flip.vertical) {
+        if (flip?.vertical) {
           ty = -ty;
         }
-        if (flip.horizontal) {
+        if (flip?.horizontal) {
           tx = -tx;
         }
         translateRef.current = [tx, ty];
@@ -116,6 +161,16 @@ function EditPanMovable({
       }
     />
   );
+}
+
+function getArrowDir(key, pos, neg) {
+  if (key === pos) {
+    return 1;
+  }
+  if (key === neg) {
+    return -1;
+  }
+  return 0;
 }
 
 EditPanMovable.propTypes = {

@@ -35,6 +35,7 @@ import { Layer, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
+import useCanvas from './useCanvas';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
@@ -73,8 +74,12 @@ function FramesLayer() {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
   } = useDropTargets();
+  const {
+    actions: { setFramesLayer },
+  } = useCanvas();
 
   const ref = useRef(null);
+  setFramesLayer(ref);
   useCanvasKeys(ref);
 
   return (

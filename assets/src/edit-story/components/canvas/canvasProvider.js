@@ -40,6 +40,7 @@ function CanvasProvider({ children }) {
   });
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
+  const [framesLayer, setFramesLayer] = useState(null);
 
   const {
     nodesById,
@@ -140,6 +141,7 @@ function CanvasProvider({ children }) {
       state: {
         pageContainer,
         fullbleedContainer,
+        framesLayer,
         nodesById,
         editingElement,
         editingElementState,
@@ -149,6 +151,7 @@ function CanvasProvider({ children }) {
       },
       actions: {
         setPageContainer,
+        setFramesLayer,
         setFullbleedContainer,
         setNodeForElement,
         setEditingElement: setEditingElementWithoutState,
@@ -161,6 +164,7 @@ function CanvasProvider({ children }) {
     }),
     [
       pageContainer,
+      framesLayer,
       fullbleedContainer,
       nodesById,
       editingElement,
@@ -168,6 +172,7 @@ function CanvasProvider({ children }) {
       lastSelectionEvent,
       pageSize,
       setPageContainer,
+      setFramesLayer,
       setFullbleedContainer,
       setNodeForElement,
       setEditingElementWithoutState,
