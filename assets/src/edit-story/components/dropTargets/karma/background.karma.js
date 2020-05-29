@@ -79,6 +79,27 @@ describe('Background Drop-Target integration', () => {
       const rep2 = await getCanvasBackgroundReplacement(fixture);
       expect(rep2).toBeEmpty();
     });
+
+    it('should correctly handle pressing "set as background"', async () => {
+      // Find element
+      const el = getCanvasElementWrapperById(fixture, imageData.id);
+      const rect = el.getBoundingClientRect();
+
+      // Click the element center
+      await fixture.events.mouse.click(
+        rect.x + rect.width / 2,
+        rect.y + rect.height / 2
+      );
+
+      // Click the "set as background" button
+      const setAsBackground = getButtonByText(fixture, 'Set as background');
+      await fixture.events.click(setAsBackground);
+
+      // Verify new background element has the correct image
+      const bg = await getCanvasBackgroundElement(fixture);
+      const bgImg = bg.querySelector('img');
+      expect(bgImg).toHaveProperty('src', imageData.resource.src);
+    });
   });
 });
 
@@ -169,6 +190,12 @@ const customMatchers = {
     },
   }),
 };
+
+function getButtonByText(fixture, buttonText) {
+  return Array.from(fixture.querySelectorAll('button')).find(
+    (el) => el.innerText === buttonText
+  );
+}
 
 function getCanvasElementWrapperById(fixture, id) {
   return fixture.querySelector(`[data-element-id="${id}"]`);
