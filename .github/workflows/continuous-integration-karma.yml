@@ -40,8 +40,8 @@ jobs:
 
       - name: Run integration tests
         run: npm run test:karma -- --headless --snapshots
-
-      - name: Uplaod Percy snapshots
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-        run: npm run percy
+      # Disabled until we have proper license.
+      # - name: Uplaod Percy snapshots
+      #   env:
+      #     PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+      #   run: npm run percy
