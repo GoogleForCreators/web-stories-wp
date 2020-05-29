@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { Plain, Primary } from '../button';
 import Dialog from '../dialog';
 
-function PreviewErrorDialog( { open, onClose, onRetry }) {
+function PreviewErrorDialog({ open, onClose, onRetry }) {
   return (
     <Dialog
       open={open}
