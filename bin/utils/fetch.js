@@ -37,7 +37,7 @@ function fetch(url) {
           reject(new Error('Error: ' + res.statusCode));
         }
 
-        res.on('data', data.push);
+        res.on('data', (chunk) => data.push(chunk));
         res.on('end', () => resolve(data.join('')));
       })
       .on('error', reject);

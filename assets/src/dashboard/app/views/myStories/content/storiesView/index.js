@@ -34,7 +34,10 @@ import {
   TagsPropType,
   UsersPropType,
 } from '../../../../../types';
-import { SortPropTypes } from '../../../../../utils/useStoryView';
+import {
+  SortPropTypes,
+  ViewPropTypes,
+} from '../../../../../utils/useStoryView';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
@@ -49,39 +52,33 @@ function StoriesView({
   stories,
   tags,
   users,
-  viewStyle = VIEW_STYLE.GRID,
+  view,
 }) {
-  switch (viewStyle) {
-    case VIEW_STYLE.GRID:
-      return (
-        <StoryGridView
-          trashStory={storyActions.trashStory}
-          updateStory={storyActions.updateStory}
-          createTemplateFromStory={storyActions.createTemplateFromStory}
-          duplicateStory={storyActions.duplicateStory}
-          stories={stories}
-          users={users}
-          centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
-          bottomActionLabel={__('Open in editor', 'web-stories')}
-        />
-      );
-    case VIEW_STYLE.LIST:
-      return (
-        <StoryListView
-          stories={stories}
-          storySort={sort.value}
-          storyStatus={filterValue}
-          sortDirection={sort.direction}
-          handleSortChange={sort.set}
-          handleSortDirectionChange={sort.setDirection}
-          tags={tags}
-          categories={categories}
-          users={users}
-        />
-      );
-    default:
-      return null;
-  }
+  return view.style === VIEW_STYLE.LIST ? (
+    <StoryListView
+      stories={stories}
+      storySort={sort.value}
+      storyStatus={filterValue}
+      sortDirection={sort.direction}
+      handleSortChange={sort.set}
+      handleSortDirectionChange={sort.setDirection}
+      tags={tags}
+      categories={categories}
+      users={users}
+    />
+  ) : (
+    <StoryGridView
+      trashStory={storyActions.trashStory}
+      updateStory={storyActions.updateStory}
+      createTemplateFromStory={storyActions.createTemplateFromStory}
+      duplicateStory={storyActions.duplicateStory}
+      stories={stories}
+      users={users}
+      centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
+      bottomActionLabel={__('Open in editor', 'web-stories')}
+      pageSize={view.pageSize}
+    />
+  );
 }
 
 StoriesView.propTypes = {
@@ -92,6 +89,6 @@ StoriesView.propTypes = {
   stories: StoriesPropType,
   tags: TagsPropType,
   users: UsersPropType,
-  viewStyle: PropTypes.oneOf(Object.values(VIEW_STYLE)),
+  view: ViewPropTypes,
 };
 export default StoriesView;

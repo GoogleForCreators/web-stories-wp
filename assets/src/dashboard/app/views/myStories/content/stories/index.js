@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { select, text } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 /**
@@ -60,7 +60,7 @@ const search = {
 const view = {
   style: VIEW_STYLE.GRID,
   toggleStyle: action('toggle view style'),
-  pageSize: { width: 309, height: 206 },
+  pageSize: { width: 210, height: 316 },
 };
 const page = {
   value: 1,
@@ -151,7 +151,7 @@ export const AllDataFetchedAsList = () => {
   );
 };
 
-export const _StoriesView = () => (
+export const _StoriesViewGrid = () => (
   <StoriesView
     categories={categories}
     filterValue={STORY_STATUS.ALL}
@@ -160,7 +160,20 @@ export const _StoriesView = () => (
     stories={formattedStoriesArray}
     tags={tags}
     users={formattedUsersObject}
-    viewStyle={select('viewStyle', VIEW_STYLE, VIEW_STYLE.GRID)}
+    view={view}
+  />
+);
+
+export const _StoriesViewList = () => (
+  <StoriesView
+    categories={categories}
+    filterValue={STORY_STATUS.ALL}
+    sort={sort}
+    storyActions={storyActions}
+    stories={formattedStoriesArray}
+    tags={tags}
+    users={formattedUsersObject}
+    view={{ ...view, style: VIEW_STYLE.LIST }}
   />
 );
 

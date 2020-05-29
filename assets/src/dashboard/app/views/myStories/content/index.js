@@ -80,7 +80,7 @@ function Content({
                   stories={stories}
                   tags={tags}
                   users={users}
-                  viewStyle={view.style}
+                  view={view}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}

@@ -72,13 +72,13 @@ function Provider({ animations, children, onWAAPIFinish }) {
   const providerId = useMemo(() => uuidv4(), []);
 
   const animationTargets = useMemo(
-    () => Array.from(animationPartsMap?.keys() || []),
+    () => Array.from(animationPartsMap.keys() || []),
     [animationPartsMap]
   );
 
   const getAnimationParts = useCallback(
     (target) => {
-      return animationPartsMap?.get(target) || [];
+      return animationPartsMap.get(target) || [];
     },
     [animationPartsMap]
   );

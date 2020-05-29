@@ -108,7 +108,7 @@ function CanvasProvider({ children }) {
     },
     [
       editingElement,
-      currentPage,
+      currentPage?.elements,
       clearEditing,
       toggleElementInSelection,
       setSelectedElementsById,
