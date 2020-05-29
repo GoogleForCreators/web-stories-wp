@@ -16,54 +16,33 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 17,
     pages: [
       {
         elements: [
           {
             type: 'shape',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             id: '95a99f3f-ccbd-4b61-b676-25a8dec8577b',
+            isDefaultBackground: true,
           },
           {
             type: 'image',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: true,
-            },
+            flip: { vertical: false, horizontal: true },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 51,
-                g: 51,
-                b: 51,
-                a: 0,
-              },
-            },
+            backgroundColor: { color: { r: 51, g: 51, b: 51, a: 0 } },
             isFill: false,
             x: 73,
             y: 71,
@@ -72,9 +51,7 @@ export default function (imageBaseUrl) {
             scale: 170,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             id: '6978fba6-59ce-46bc-b862-92ce2b9795bb',
             resource: {
               type: 'image',
@@ -98,28 +75,15 @@ export default function (imageBaseUrl) {
             },
             type: 'text',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             fontSize: 99,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 0.95,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: -190,
             y: 251,
             width: 610,
@@ -135,10 +99,7 @@ export default function (imageBaseUrl) {
           {
             type: 'image',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -171,7 +132,6 @@ export default function (imageBaseUrl) {
             id: '96d690d8-4cc5-4807-b646-d89cf6025a9a',
           },
         ],
-        backgroundElementId: '95a99f3f-ccbd-4b61-b676-25a8dec8577b',
         type: 'page',
         id: '1f51fc35-c1d6-46ea-9580-b38672124162',
       },
@@ -180,29 +140,19 @@ export default function (imageBaseUrl) {
           {
             type: 'shape',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             id: '6a6e5101-6d92-4c64-b1b6-124cf9cce0b1',
+            isDefaultBackground: true,
           },
           {
             font: {
@@ -212,28 +162,15 @@ export default function (imageBaseUrl) {
             },
             type: 'text',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 21,
             y: 11,
             width: 347,
@@ -254,28 +191,15 @@ export default function (imageBaseUrl) {
             },
             type: 'text',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 347,
             height: 91,
             scale: 100,
@@ -291,10 +215,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -329,10 +250,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -366,7 +284,6 @@ export default function (imageBaseUrl) {
             id: '99696270-286f-4c14-b062-aad2a021672a',
           },
         ],
-        backgroundElementId: '6a6e5101-6d92-4c64-b1b6-124cf9cce0b1',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'cda99980-6722-4141-9616-25e523a98722',
@@ -376,46 +293,27 @@ export default function (imageBaseUrl) {
           {
             type: 'shape',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
+            backgroundColor: { color: { r: 33, g: 33, b: 33 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             id: '589a577a-fcac-49cf-964e-96e092ecf511',
+            isDefaultBackground: true,
           },
           {
             type: 'image',
             opacity: 95,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: false,
-            backgroundColor: {
-              color: {
-                r: 51,
-                g: 51,
-                b: 51,
-              },
-            },
+            backgroundColor: { color: { r: 51, g: 51, b: 51 } },
             isFill: false,
             x: 1,
             y: 1,
@@ -424,9 +322,7 @@ export default function (imageBaseUrl) {
             scale: 170,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             id: '6cca5fcd-80d5-4181-b9e6-2979b80c2b99',
             resource: {
               type: 'image',
@@ -445,33 +341,14 @@ export default function (imageBaseUrl) {
           {
             type: 'shape',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: false,
             backgroundColor: {
               type: 'linear',
               stops: [
-                {
-                  color: {
-                    r: 33,
-                    g: 33,
-                    b: 33,
-                    a: 0.75,
-                  },
-                  position: 0,
-                },
-                {
-                  color: {
-                    r: 33,
-                    g: 33,
-                    b: 33,
-                    a: 0,
-                  },
-                  position: 1,
-                },
+                { color: { r: 33, g: 33, b: 33, a: 0.75 }, position: 0 },
+                { color: { r: 33, g: 33, b: 33, a: 0 }, position: 1 },
               ],
               rotation: 0.5,
             },
@@ -483,9 +360,7 @@ export default function (imageBaseUrl) {
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             id: '6fc327a4-8e5d-48e8-8285-899267ec1183',
           },
           {
@@ -496,28 +371,15 @@ export default function (imageBaseUrl) {
             },
             type: 'text',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             fontSize: 173,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 0.93,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 52,
             y: 1,
             width: 493,
@@ -538,28 +400,15 @@ export default function (imageBaseUrl) {
             },
             type: 'text',
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
             fontSize: 18,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.22,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 61,
             y: 509,
             width: 240,
@@ -574,10 +423,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -603,20 +449,10 @@ export default function (imageBaseUrl) {
               service: 'fonts.google.com',
             },
             fontSize: 15,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'center',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 140,
             y: 617,
             width: 160,
@@ -632,19 +468,10 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 255, b: 255 } },
             isFill: false,
             x: 206,
             y: 579,
@@ -653,18 +480,13 @@ export default function (imageBaseUrl) {
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             id: 'a2240997-ab2a-49ec-bafb-503d778122ca',
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -698,7 +520,6 @@ export default function (imageBaseUrl) {
             id: '504deaac-9943-4878-984a-c22cc3efd7cd',
           },
         ],
-        backgroundElementId: '589a577a-fcac-49cf-964e-96e092ecf511',
         backgroundOverlay: 'none',
         type: 'page',
         id: '99ae5466-855b-4d84-9379-c401969ade38',
@@ -707,37 +528,24 @@ export default function (imageBaseUrl) {
         elements: [
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             type: 'shape',
             id: '178de0c9-6a64-450e-bc47-5f38e6884665',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -763,20 +571,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 24,
             y: 32,
             width: 213,
@@ -792,10 +590,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -815,20 +610,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 16,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 24,
             y: 134,
             width: 174,
@@ -844,10 +629,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -873,20 +655,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 24,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'right',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 130,
             y: 243,
             width: 281,
@@ -902,10 +674,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -915,20 +684,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 120,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'right',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 181,
             y: 112,
             width: 237,
@@ -944,10 +703,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -957,20 +713,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 60,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 25,
             y: 261,
             width: 160,
@@ -986,10 +732,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1015,20 +758,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 24,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 28,
             y: 328,
             width: 237,
@@ -1044,10 +777,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1057,20 +787,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 60,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'right',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 160,
             height: 77,
             scale: 100,
@@ -1087,10 +807,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1116,20 +833,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 24,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'right',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 237,
             height: 30,
             scale: 100,
@@ -1146,10 +853,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1175,20 +879,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 24,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'left',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 281,
             height: 30,
             scale: 100,
@@ -1205,10 +899,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1218,20 +909,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 120,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'left',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 237,
             height: 156,
             scale: 100,
@@ -1248,10 +929,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1261,20 +939,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 60,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'right',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 160,
             height: 77,
             scale: 100,
@@ -1291,10 +959,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1320,20 +985,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 24,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'right',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 237,
             height: 30,
             scale: 100,
@@ -1349,7 +1004,6 @@ export default function (imageBaseUrl) {
               '<span style="letter-spacing: -0.0001em"><span style="color: rgba(33, 33, 33, 1)">EPI LEATHER</span></span>',
           },
         ],
-        backgroundElementId: '178de0c9-6a64-450e-bc47-5f38e6884665',
         backgroundOverlay: 'none',
         type: 'page',
         id: '22e2ed54-fa70-43c5-81e8-81ad672bd6ad',
@@ -1358,37 +1012,24 @@ export default function (imageBaseUrl) {
         elements: [
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
+            backgroundColor: { color: { r: 33, g: 33, b: 33 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             type: 'shape',
             id: 'db53e416-f618-4f22-9043-0e05f05094e1',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1398,20 +1039,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 120,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: -257,
             y: 319,
             width: 624,
@@ -1427,10 +1058,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1440,20 +1068,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 120,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 844,
             height: 156,
             scale: 100,
@@ -1470,10 +1088,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -1508,19 +1123,10 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 108, b: 74 } },
             isFill: false,
             x: 161,
             y: 41,
@@ -1529,18 +1135,13 @@ export default function (imageBaseUrl) {
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             id: 'ba9ff730-74e6-478a-943e-8aa33851048d',
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1550,20 +1151,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 22,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 162,
             y: 505,
             width: 160,
@@ -1579,10 +1170,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1602,20 +1190,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 22,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.25,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 160,
             height: 54,
             scale: 100,
@@ -1632,10 +1210,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1655,20 +1230,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 14,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.25,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 160,
             height: 17,
             scale: 100,
@@ -1685,10 +1250,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -1722,7 +1284,6 @@ export default function (imageBaseUrl) {
             id: '87ae3605-e8e2-4d0f-8700-f84de19e4f01',
           },
         ],
-        backgroundElementId: 'db53e416-f618-4f22-9043-0e05f05094e1',
         backgroundOverlay: 'none',
         type: 'page',
         id: '06f93f32-41a9-4fcd-9d03-08ea29f591e4',
@@ -1731,37 +1292,24 @@ export default function (imageBaseUrl) {
         elements: [
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             type: 'shape',
             id: 'dc3c80d7-8757-4231-826a-0d0c34f6e15e',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1771,20 +1319,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 20,
             y: 10,
             width: 344,
@@ -1800,10 +1338,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1829,20 +1364,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 229,
             height: 46,
             scale: 100,
@@ -1859,10 +1384,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1888,20 +1410,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 229,
             height: 46,
             scale: 100,
@@ -1918,10 +1430,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -1947,20 +1456,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 275,
             height: 46,
             scale: 100,
@@ -1977,10 +1476,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2006,20 +1502,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 159,
             height: 46,
             scale: 100,
@@ -2036,10 +1522,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2065,20 +1548,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 300,
             height: 46,
             scale: 100,
@@ -2095,10 +1568,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -2133,10 +1603,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2146,20 +1613,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 32,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'center',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 43,
             height: 32,
             scale: 100,
@@ -2176,10 +1633,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -2215,10 +1669,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2228,20 +1679,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 32,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'center',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 25,
             height: 32,
             scale: 100,
@@ -2258,10 +1699,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -2297,10 +1735,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2310,20 +1745,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 32,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'center',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 41,
             height: 32,
             scale: 100,
@@ -2340,10 +1765,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -2379,10 +1801,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2392,20 +1811,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 32,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'center',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 41,
             height: 32,
             scale: 100,
@@ -2422,10 +1831,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -2461,10 +1867,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2474,20 +1877,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 32,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'center',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 41,
             height: 32,
             scale: 100,
@@ -2503,7 +1896,6 @@ export default function (imageBaseUrl) {
               '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 108, 74, 1)">5</span></span>',
           },
         ],
-        backgroundElementId: 'dc3c80d7-8757-4231-826a-0d0c34f6e15e',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'e39c480a-e017-4c6e-b48c-4dc1ef00f6ab',
@@ -2512,46 +1904,27 @@ export default function (imageBaseUrl) {
         elements: [
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             type: 'shape',
             id: '68541aa4-d532-4f23-b89e-7dc34882f49b',
+            isDefaultBackground: true,
           },
           {
             opacity: 90,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 51,
-                g: 51,
-                b: 51,
-              },
-            },
+            backgroundColor: { color: { r: 51, g: 51, b: 51 } },
             isFill: false,
             x: 1,
             y: 0,
@@ -2560,9 +1933,7 @@ export default function (imageBaseUrl) {
             scale: 230,
             focalX: 46.85572257958338,
             focalY: 44.20206702632711,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             type: 'image',
             id: '7ecf93c5-2286-495d-86e9-30cdf0bf32b3',
             resource: {
@@ -2581,10 +1952,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2610,20 +1978,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 46,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 229,
             height: 46,
             scale: 100,
@@ -2640,10 +1998,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -2678,10 +2033,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2691,20 +2043,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 72,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1,
             textAlign: 'center',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 91,
             height: 72,
             scale: 100,
@@ -2721,10 +2063,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2744,20 +2083,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 16,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.25,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 28,
             y: 484,
             width: 399,
@@ -2773,10 +2102,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2796,20 +2122,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 14,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.25,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 160,
             height: 17,
             scale: 100,
@@ -2826,10 +2142,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -2863,7 +2176,6 @@ export default function (imageBaseUrl) {
             id: '08232848-6452-4121-8ffa-724c8e587687',
           },
         ],
-        backgroundElementId: '68541aa4-d532-4f23-b89e-7dc34882f49b',
         backgroundOverlay: 'none',
         type: 'page',
         id: '050444c7-6097-410f-8147-0c195b051a27',
@@ -2872,27 +2184,16 @@ export default function (imageBaseUrl) {
         elements: [
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: true,
-            },
+            flip: { vertical: false, horizontal: true },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 255,
-                b: 255,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 255, b: 255 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             type: 'image',
             id: 'a879eb64-3b0f-49f7-93de-e63359e6fb1a',
@@ -2915,10 +2216,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: -90,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -2928,20 +2226,10 @@ export default function (imageBaseUrl) {
               fallbacks: ['serif'],
             },
             fontSize: 120,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 897,
             height: 156,
             scale: 100,
@@ -2958,28 +2246,17 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             width: 22,
             height: 22,
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             basedOn: '06b9b1f3-3fdb-49b8-8efa-895081f2a0c6',
             id: '833449da-699c-4fac-aa52-cefc6c713423',
@@ -2988,19 +2265,10 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 108, b: 74 } },
             isFill: false,
             x: 175,
             y: 572,
@@ -3009,36 +2277,23 @@ export default function (imageBaseUrl) {
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             id: '06b9b1f3-3fdb-49b8-8efa-895081f2a0c6',
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             width: 22,
             height: 22,
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             basedOn: '833449da-699c-4fac-aa52-cefc6c713423',
             id: '5c3a77a7-f9c2-4bd5-bf8f-9d211c433af3',
@@ -3047,28 +2302,17 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 108, b: 74 } },
             isFill: false,
             width: 18,
             height: 18,
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             basedOn: '06b9b1f3-3fdb-49b8-8efa-895081f2a0c6',
             id: '1273a089-3c1f-44e2-a992-ee1c74571ce0',
@@ -3077,28 +2321,17 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             width: 22,
             height: 22,
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             basedOn: '5c3a77a7-f9c2-4bd5-bf8f-9d211c433af3',
             id: '67a25f3e-d47f-4b06-97e8-b315ef85e0e2',
@@ -3107,28 +2340,17 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 108, b: 74 } },
             isFill: false,
             width: 18,
             height: 18,
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             basedOn: '1273a089-3c1f-44e2-a992-ee1c74571ce0',
             id: '0ece7509-bf1e-479d-a146-8be2be2f0cee',
@@ -3137,28 +2359,17 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             width: 22,
             height: 22,
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             basedOn: '67a25f3e-d47f-4b06-97e8-b315ef85e0e2',
             id: 'f6443849-a102-4899-9be1-ba2651204712',
@@ -3167,28 +2378,17 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 108,
-                b: 74,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 108, b: 74 } },
             isFill: false,
             width: 18,
             height: 18,
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'circle',
-            },
+            mask: { type: 'circle' },
             type: 'shape',
             basedOn: '0ece7509-bf1e-479d-a146-8be2be2f0cee',
             id: '15da37bf-3d0f-42d6-bce1-c5cd63d92603',
@@ -3197,19 +2397,10 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: false,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             x: 94,
             y: 473,
@@ -3218,18 +2409,13 @@ export default function (imageBaseUrl) {
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             type: 'shape',
             id: 'e3507933-d80f-4ed2-b52a-02dea8a0779d',
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -3255,20 +2441,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 15,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             x: 104,
             y: 481,
             width: 92,
@@ -3283,10 +2459,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -3306,20 +2479,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 14,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 136,
             height: 17,
             scale: 100,
@@ -3336,10 +2499,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -3359,20 +2519,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 14,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.3,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 136,
             height: 17,
             scale: 100,
@@ -3388,10 +2538,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -3425,46 +2572,45 @@ export default function (imageBaseUrl) {
             id: '4446cc97-cd5a-45ea-8232-3a53e1df3d86',
           },
         ],
-        backgroundElementId: 'a879eb64-3b0f-49f7-93de-e63359e6fb1a',
         backgroundOverlay: 'none',
         type: 'page',
         id: '9e35d123-c307-4474-abd6-bb80a265bb2a',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: { type: 'rectangle' },
+          backgroundColor: { color: { r: 255, g: 255, b: 255, a: 1 } },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'c998d106-bc43-4e0b-9e13-4eed3e02e6f3',
+        },
       },
       {
         elements: [
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 255,
-                g: 236,
-                b: 227,
-              },
-            },
+            backgroundColor: { color: { r: 255, g: 236, b: 227 } },
             isFill: false,
             x: 1,
             y: 1,
             width: 1,
             height: 1,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             isBackground: true,
             type: 'shape',
             id: '55d761b2-f2ae-4878-8c07-57908d3ab5ca',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -3490,20 +2636,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 62,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 0.98,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 258,
             height: 120,
             scale: 100,
@@ -3520,10 +2656,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -3549,20 +2682,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 18,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 237,
             height: 38,
             scale: 100,
@@ -3579,10 +2702,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -3608,20 +2728,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 18,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 237,
             height: 38,
             scale: 100,
@@ -3638,10 +2748,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -3667,20 +2774,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 18,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.1,
             textAlign: 'initial',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 237,
             height: 38,
             scale: 100,
@@ -3697,19 +2794,10 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 10,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: false,
-            backgroundColor: {
-              color: {
-                r: 33,
-                g: 33,
-                b: 33,
-              },
-            },
+            backgroundColor: { color: { r: 33, g: 33, b: 33 } },
             isFill: false,
             x: 55,
             y: 513,
@@ -3718,27 +2806,16 @@ export default function (imageBaseUrl) {
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             type: 'shape',
             id: 'c330044d-44a1-4cee-91b3-51f2147914d7',
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 51,
-                g: 51,
-                b: 51,
-              },
-            },
+            backgroundColor: { color: { r: 51, g: 51, b: 51 } },
             isFill: false,
             x: 54,
             y: 183,
@@ -3747,9 +2824,7 @@ export default function (imageBaseUrl) {
             scale: 100,
             focalX: 50,
             focalY: 50,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             type: 'image',
             id: 'd01ae69c-43cc-455e-bb63-250642795201',
             resource: {
@@ -3768,28 +2843,17 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 51,
-                g: 51,
-                b: 51,
-              },
-            },
+            backgroundColor: { color: { r: 51, g: 51, b: 51 } },
             isFill: false,
             width: 86,
             height: 86,
             scale: 130,
             focalX: 41.611295124593894,
             focalY: 35.212817670108095,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             type: 'image',
             basedOn: 'd01ae69c-43cc-455e-bb63-250642795201',
             id: 'c77c788b-cba9-421d-8a9a-2e8b604e99b8',
@@ -3811,28 +2875,17 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
-            backgroundColor: {
-              color: {
-                r: 51,
-                g: 51,
-                b: 51,
-              },
-            },
+            backgroundColor: { color: { r: 51, g: 51, b: 51 } },
             isFill: false,
             width: 86,
             height: 86,
             scale: 220,
             focalX: 53.074903314458275,
             focalY: 63.289037207094864,
-            mask: {
-              type: 'rectangle',
-            },
+            mask: { type: 'rectangle' },
             type: 'image',
             basedOn: 'c77c788b-cba9-421d-8a9a-2e8b604e99b8',
             id: 'ba68ba92-edcd-4c5c-a4fe-5263fc994e2b',
@@ -3854,10 +2907,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             backgroundTextMode: 'NONE',
@@ -3883,20 +2933,10 @@ export default function (imageBaseUrl) {
               ],
             },
             fontSize: 24,
-            backgroundColor: {
-              color: {
-                r: 196,
-                g: 196,
-                b: 196,
-              },
-            },
+            backgroundColor: { color: { r: 196, g: 196, b: 196 } },
             lineHeight: 1.1,
             textAlign: 'center',
-            padding: {
-              vertical: 0,
-              horizontal: 0,
-              locked: true,
-            },
+            padding: { vertical: 0, horizontal: 0, locked: true },
             width: 237,
             height: 26,
             scale: 100,
@@ -3912,10 +2952,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -3950,10 +2987,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -3988,10 +3022,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -4026,10 +3057,7 @@ export default function (imageBaseUrl) {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
+            flip: { vertical: false, horizontal: false },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
@@ -4063,12 +3091,12 @@ export default function (imageBaseUrl) {
             id: '372a14f4-bc2c-493c-92e7-f7aa5d470289',
           },
         ],
-        backgroundElementId: '55d761b2-f2ae-4878-8c07-57908d3ab5ca',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'a9ed1626-720d-4b66-bfbd-40441c83390c',
       },
     ],
+    version: 19,
     autoAdvance: true,
     defaultPageDuration: 7,
   };
