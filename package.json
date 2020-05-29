@@ -209,7 +209,8 @@
     "workflow:copy-template-assets": "cp -R assets/images/templates build/storybook/plugin-assets/images/templates",
     "workflow:version": "./bin/commander.js version",
     "workflow:build-plugin": "./bin/commander.js build-plugin",
-    "workflow:fonts": "./bin/commander.js build-fonts"
+    "workflow:fonts": "./bin/commander.js build-fonts",
+    "workflow:templates": "./bin/commander.js update-templates"
   },
   "husky": {
     "hooks": {
