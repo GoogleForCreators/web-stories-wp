@@ -169,7 +169,7 @@
     "format:xml": "prettier --write '**/*.{xml,xml.dist}'",
     "format:yml": "prettier --write '**/*.yml'",
     "lint": "npm-run-all --parallel lint:*",
-    "lint:css": "stylelint \"**/*.(js|css)\"",
+    "lint:css": "stylelint \"**/*.js\" --syntax \"css-in-js\"; stylelint \"**/*.css\" --syntax \"css\"",
     "lint:css:fix": "npm run lint:css -- --fix",
     "lint:js": "eslint --ext .js,.md .",
     "lint:js:fix": "npm run lint:js -- --fix",
@@ -211,8 +211,11 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --fix",
-    "*.(js|css)": "stylelint --fix --allow-empty-input",
+    "*.js": [
+      "eslint --fix",
+      "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
+    ],
+    "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
     "*.md": [
       "eslint --fix",
       "markdownlint -f"
