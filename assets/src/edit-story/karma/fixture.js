@@ -18,6 +18,7 @@
  * External dependencies
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
+import { FlagsProvider } from 'flagged';
 import { render, act } from '@testing-library/react';
 
 /**
@@ -29,21 +30,43 @@ import APIContext from '../app/api/context';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
 import Layout from '../app/layout';
 import FixtureEvents from './fixtureEvents';
+import getMediaResponse from './db/getMediaResponse';
 
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
     image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-    video: ['video/mp4'],
+    video: ['video/mp4', 'video/ogg'],
   },
-  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
+  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'ogg'],
   capabilities: {},
 };
 
+/**
+ * The fixture mainly follows the `@testing-library/react` library pattern, but
+ * in the scope of the whole editor and the real browser. As such:
+ *
+ * - Call `set` and `stub` methods to configure the fixture before calling
+ * `render()` method.
+ * - Call the `fixture.render()` method much like `@testing-library/react`'s
+ * `render()` before doing the actual tests.
+ * - Call the `fixture.renderHook()` method much like `@testing-library/react`'s
+ * `renderHook()` to render a hook in the context of the whole editor. A more
+ * fine-grained `renderHook()` can also be called on component stubs. See
+ * `fixture.stubComponent()` for more info.
+ * - Call the `await fixture.act()` method much like `@testing-library/react`'s
+ * `act()` for any action. Notice that events automatically use `act()` and
+ * can be used without it in tests.
+ * - Call `await fixture.events.someEvent()` methods to drive the events similar
+ * to `@testing-library/react`'s `fireEvent`, except that these events will be
+ * executed natively on a real browser.
+ */
 export class Fixture {
   constructor() {
     this._config = { ...DEFAULT_CONFIG };
+
+    this._flags = {};
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
@@ -83,10 +106,29 @@ export class Fixture {
     return this._container;
   }
 
+  /**
+   * A fixture utility to fire native browser events. See `FixtureEvents` for
+   * more info.
+   *
+   * @return {FixtureEvents} fixture events that are executed on the native
+   * browser.
+   */
   get events() {
     return this._events;
   }
 
+  /**
+   * Stubs a component. Can be used to render hooks on this component's level
+   * or even to completely replace the implementation of the component.
+   *
+   * All components must be stubbed before the `fixture.render()` is called.
+   *
+   * Use sparingly. See `ComponentStub` for more info.
+   *
+   * @return {ComponentStub} The component's stub.
+   * @param component
+   * @param matcher
+   */
   stubComponent(component, matcher) {
     const stub = new ComponentStub(this, component, matcher);
     let stubs = this._componentStubs.get(component);
@@ -98,9 +140,36 @@ export class Fixture {
     return stub;
   }
 
+  /**
+   * Set the feature flags. See `flags.js` for the list of flags.
+   *
+   * For instance, to enable a flag in your test call `setFlags` before
+   * calling the `render()` method:
+   * ```
+   * beforeEach(async () => {
+   *   fixture = new Fixture();
+   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   await fixture.render();
+   * });
+   * ```
+   *
+   * @param {Object} flags
+   */
+  setFlags(flags) {
+    this._flags = { ...flags };
+  }
+
+  /**
+   * Renders the editor similarly to the `@testing-library/react`'s `render()`
+   * method.
+   *
+   * @return {Promise} Yields when the editor rendering is complete.
+   */
   render() {
     const { container } = render(
-      <App key={Math.random()} config={this._config} />
+      <FlagsProvider features={this._flags}>
+        <App key={Math.random()} config={this._config} />
+      </FlagsProvider>
     );
     // The editor should always be given 100%:100% size. The testing-library
     // renders an extra container so it should be given the same size.
@@ -113,18 +182,53 @@ export class Fixture {
     return Promise.resolve();
   }
 
+  /**
+   * Calls a hook in the context of the whole editor.
+   *
+   * Similar to the `@testing-library/react`'s `renderHook()` method.
+   *
+   * @param {Function} func The hook function. E.g. `useStory`.
+   * @return {Promise<Object>} Resolves when the hook is rendered with the
+   * value of the hook.
+   */
   renderHook(func) {
     return this._layoutStub.renderHook(func);
   }
 
+  /**
+   * Calls the specified callback and performs rendering actions on the
+   * whole editor.
+   *
+   * Similar to the `@testing-library/react`'s `act()` method.
+   *
+   * @param {Function} callback
+   * @return {Promise<Object>} Yields when the `act()` and all related
+   * editor rendering activity is complete. Resolves to the result of the
+   * callback.
+   */
   act(callback) {
     return actPromise(callback);
   }
 
+  /**
+   * To be deprecated.
+   *
+   * @param {string} selector
+   * @return {Element|null} The found element or null.
+   */
   querySelector(selector) {
     return this._container.querySelector(selector);
   }
 
+  /**
+   * Makes a DOM snapshot of the current editor state. Karma must be run
+   * with the `--snapshots` option for the snapshotting to be enabled. When
+   * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
+   * directory.
+   *
+   * @return {Promise} Yields when the snapshot is completed.
+   * @param name
+   */
   snapshot(name) {
     return karmaSnapshot(name);
   }
@@ -279,23 +383,29 @@ class APIProviderFixture {
         []
       );
 
-      const getAllFonts = useCallback(() => {
+      const getAllFonts = useCallback(
         // @todo: put actual data to __db__/
-        return asyncResponse(
-          [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
-            name: font.family,
-            value: font.family,
-            ...font,
-          }))
-        );
-      }, []);
+        () =>
+          asyncResponse(
+            [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
+              name: font.family,
+              value: font.family,
+              ...font,
+            }))
+          ),
+        []
+      );
 
-      // eslint-disable-next-line no-unused-vars
-      const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
+      const getMedia = useCallback(
         // @todo: arg support
-        // @todo: put actual data to __db__/
-        return asyncResponse({ data: [], headers: {} });
-      }, []);
+        // eslint-disable-next-line no-unused-vars
+        ({ mediaType, searchTerm, pagingNum }) =>
+          asyncResponse({
+            data: getMediaResponse,
+            headers: { get: () => 1 },
+          }),
+        []
+      );
       const uploadMedia = useCallback(
         () => jasmine.createSpy('uploadMedia'),
         []
