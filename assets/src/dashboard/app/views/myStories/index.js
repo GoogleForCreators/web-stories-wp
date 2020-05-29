@@ -45,8 +45,6 @@ function MyStories() {
         totalPages,
         totalStoriesByStatus,
       },
-      categories,
-      tags,
       users,
     },
   } = useContext(ApiContext);
@@ -96,7 +94,6 @@ function MyStories() {
 
       <Content
         allPagesFetched={allPagesFetched}
-        categories={categories}
         filter={filter}
         isLoading={isLoading}
         page={page}
@@ -109,7 +106,6 @@ function MyStories() {
           trashStory,
           updateStory,
         }}
-        tags={tags}
         users={users}
         view={view}
       />

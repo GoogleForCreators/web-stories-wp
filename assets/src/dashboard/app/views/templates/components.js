@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Button, TypographyPresets, Paragraph2 } from '../../../components';
+import { TypographyPresets, Paragraph2 } from '../../../components';
 
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
@@ -92,30 +92,6 @@ export const MetadataContainer = styled.fieldset`
   }
 `;
 
-export const NavButton = styled(Button)`
-  ${({ theme }) => `
-    display: block;
-    align-self: center;
-    min-width: 0;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    color: ${theme.colors.gray600};
-    background-color: transparent;
-    border: ${theme.borders.transparent};
-    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
-
-    &:hover, &:active, &:focus {
-      background-color: ${theme.colors.gray600};
-      color: ${theme.colors.white};
-      @media ${theme.breakpoint.largeDisplayPhone} {
-        color: ${theme.colors.gray900};
-        background-color: transparent;
-       }
-    }
-  `}
-`;
-
 export const RowContainer = styled.section`
   display: flex;
   flex-wrap: wrap;
@@ -145,7 +121,7 @@ export const SmallDisplayPagination = styled.div(
       width: 100%;
       display: flex;
       justify-content: flex-start;
-      margin: 0 0 10px;
+      margin: 0 10px 10px 0;
     }
   `
 );

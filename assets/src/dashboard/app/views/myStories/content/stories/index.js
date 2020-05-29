@@ -67,8 +67,6 @@ const page = {
   set: action('set page number'),
   requestNextPage: action('request next page clicked'),
 };
-const tags = {};
-const categories = {};
 const storyActions = {
   createTemplateFromStory: action('create template from story clicked'),
   duplicateStory: action('duplicate story clicked'),
@@ -78,7 +76,6 @@ const storyActions = {
 
 const defaultProps = {
   allPagesFetched: false,
-  categories: categories,
   filter: filter,
   isLoading: false,
   page: page,
@@ -86,7 +83,6 @@ const defaultProps = {
   sort: sort,
   stories: formattedStoriesArray,
   storyActions: storyActions,
-  tags: tags,
   users: formattedUsersObject,
   view: view,
 };
@@ -153,12 +149,10 @@ export const AllDataFetchedAsList = () => {
 
 export const _StoriesViewGrid = () => (
   <StoriesView
-    categories={categories}
     filterValue={STORY_STATUS.ALL}
     sort={sort}
     storyActions={storyActions}
     stories={formattedStoriesArray}
-    tags={tags}
     users={formattedUsersObject}
     view={view}
   />
@@ -166,12 +160,10 @@ export const _StoriesViewGrid = () => (
 
 export const _StoriesViewList = () => (
   <StoriesView
-    categories={categories}
     filterValue={STORY_STATUS.ALL}
     sort={sort}
     storyActions={storyActions}
     stories={formattedStoriesArray}
-    tags={tags}
     users={formattedUsersObject}
     view={{ ...view, style: VIEW_STYLE.LIST }}
   />
