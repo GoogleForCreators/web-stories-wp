@@ -110,7 +110,6 @@ export const VIEW_STYLE_LABELS = {
 
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
-  UP_DOWN_ARROW: { width: 16, height: 16 },
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
