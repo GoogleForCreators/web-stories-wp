@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+// Debug timeout is 1hr.
+const DEBUG_TIMEOUT = 3600000;
+
 // Make Jasmine just a tiny bit more like Jest and Mocha.
 self.describe.only = self.fdescribe;
 self.it.only = self.fit;
@@ -31,6 +34,60 @@ function withCleanupAll(callback) {
   cleanupsAll.push(callback());
 }
 
+function setupDebugMode() {
+  // The debug.html page always runs on the top window context, vs normal
+  // tests run in a context frame.
+  const isDebug = window === top;
+
+  if (isDebug) {
+    // In the debug mode, the timeout is extended to an hour.
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = DEBUG_TIMEOUT;
+  }
+
+  let resumeCallback = null;
+
+  self.karmaPause = () => {
+    if (!isDebug) {
+      //eslint-disable-next-line no-console
+      console.error(
+        'No pausing in a non-debug mode. ' +
+          'Go to http://localhost:9876/debug.html for debugging.'
+      );
+      return undefined;
+    }
+
+    if (resumeCallback) {
+      // Already paused.
+      //eslint-disable-next-line no-console
+      console.error('Karma is already paused. Call karmaResume() to resume.');
+      return undefined;
+    }
+
+    //eslint-disable-next-line no-console
+    console.info('Karma paused. Call karmaResume() to resume.');
+    return new Promise(function (resolve) {
+      resumeCallback = resolve;
+      setTimeout(function () {
+        resumeCallback = null;
+        resolve();
+      }, DEBUG_TIMEOUT);
+    });
+  };
+
+  self.karmaResume = () => {
+    if (!isDebug) {
+      return;
+    }
+    if (!resumeCallback) {
+      return;
+    }
+    resumeCallback();
+    resumeCallback = null;
+    //eslint-disable-next-line no-console
+    console.info('Karma resumed.');
+  };
+}
+
 beforeAll(() => {
   jasmine.getEnv().addReporter({
     specStarted(result) {
@@ -40,6 +97,8 @@ beforeAll(() => {
       currentSpec = null;
     },
   });
+
+  setupDebugMode();
 
   self.karmaSnapshot = (name) => {
     return karmaPuppeteer.saveSnapshot(currentSpec?.fullName, name);
