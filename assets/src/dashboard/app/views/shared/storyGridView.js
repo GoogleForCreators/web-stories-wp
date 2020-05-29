@@ -16,11 +16,10 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -30,12 +29,11 @@ import styled from 'styled-components';
 import {
   CardGrid,
   CardGridItem,
-  CardItemMenu,
   CardTitle,
   CardPreviewContainer,
   ActionLabel,
+  CardItemMenu,
 } from '../../../components';
-import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
 import {
   StoriesPropType,
   UsersPropType,
@@ -63,65 +61,12 @@ const StoryGridView = ({
   users,
   centerActionLabelByStatus,
   bottomActionLabel,
-  createTemplateFromStory,
-  updateStory,
-  trashStory,
-  duplicateStory,
   isTemplate,
   isSavedTemplate,
   pageSize,
+  storyMenu,
+  renameStory,
 }) => {
-  const [contextMenuId, setContextMenuId] = useState(-1);
-  const [titleRenameId, setTitleRenameId] = useState(-1);
-
-  const handleMenuItemSelected = useCallback(
-    (sender, story) => {
-      setContextMenuId(-1);
-      switch (sender.value) {
-        case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          window.location.href = story.bottomTargetAction;
-          break;
-        case STORY_CONTEXT_MENU_ACTIONS.RENAME:
-          setTitleRenameId(story.id);
-          break;
-
-        case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
-          duplicateStory(story);
-          break;
-
-        case STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE:
-          createTemplateFromStory(story);
-          break;
-
-        case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-          if (
-            window.confirm(
-              sprintf(
-                /* translators: %s: story title. */
-                __('Are you sure you want to delete "%s"?', 'web-stories'),
-                story.title
-              )
-            )
-          ) {
-            trashStory(story);
-          }
-          break;
-
-        default:
-          break;
-      }
-    },
-    [createTemplateFromStory, duplicateStory, trashStory]
-  );
-
-  const handleOnRenameStory = useCallback(
-    (story, newTitle) => {
-      setTitleRenameId(-1);
-      updateStory({ ...story, title: { raw: newTitle } });
-    },
-    [updateStory]
-  );
-
   return (
     <StoryGrid pageSize={pageSize}>
       {stories.map((story) => (
@@ -150,16 +95,17 @@ const StoryGridView = ({
                     : users[story.author]?.name
                 }
                 displayDate={story?.modified}
-                editMode={titleRenameId === story.id}
+                editMode={renameStory.id === story.id}
                 onEditComplete={(newTitle) =>
-                  handleOnRenameStory(story, newTitle)
+                  renameStory.handleOnRenameStory(story, newTitle)
                 }
-                onEditCancel={() => setTitleRenameId(-1)}
+                onEditCancel={renameStory.handleCancelRename}
               />
+
               <CardItemMenu
-                onMoreButtonSelected={setContextMenuId}
-                contextMenuId={contextMenuId}
-                onMenuItemSelected={handleMenuItemSelected}
+                onMoreButtonSelected={storyMenu.handleMenuToggle}
+                contextMenuId={storyMenu.contextMenuId}
+                onMenuItemSelected={storyMenu.handleMenuItemSelected}
                 story={story}
               />
             </DetailRow>
@@ -177,11 +123,17 @@ StoryGridView.propTypes = {
   users: UsersPropType,
   centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
   bottomActionLabel: ActionLabel,
-  createTemplateFromStory: PropTypes.func,
-  updateStory: PropTypes.func,
-  trashStory: PropTypes.func,
-  duplicateStory: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
+  storyMenu: PropTypes.shape({
+    handleMenuToggle: PropTypes.func.isRequired,
+    contextMenuId: PropTypes.number.isRequired,
+    handleMenuItemSelected: PropTypes.func.isRequired,
+  }),
+  renameStory: PropTypes.shape({
+    handleOnRenameStory: PropTypes.func,
+    id: PropTypes.number,
+    handleCancelRename: PropTypes.func,
+  }),
 };
 
 export default StoryGridView;

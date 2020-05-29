@@ -44,6 +44,7 @@ import {
   TableStatusCell,
   TableStatusHeaderCell,
   TableTitleHeaderCell,
+  CardItemMenu,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -110,12 +111,13 @@ const toggleSortLookup = {
 };
 
 export default function StoryListView({
-  stories,
-  storySort,
-  storyStatus,
   handleSortChange,
   handleSortDirectionChange,
   sortDirection,
+  stories,
+  storyMenu,
+  storySort,
+  storyStatus,
   users,
 }) {
   const onSortTitleSelected = useCallback(
@@ -212,7 +214,15 @@ export default function StoryListView({
                   </PreviewErrorBoundary>
                 </PreviewContainer>
               </TablePreviewCell>
-              <TableCell>{story.title}</TableCell>
+              <TableCell>
+                {story.title}
+                <CardItemMenu
+                  onMoreButtonSelected={storyMenu.handleMenuToggle}
+                  contextMenuId={storyMenu.contextMenuId}
+                  onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                  story={story}
+                />
+              </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
               <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
               <TableCell>{getFormattedDisplayDate(story.modified)}</TableCell>
@@ -231,11 +241,16 @@ export default function StoryListView({
 }
 
 StoryListView.propTypes = {
-  stories: StoriesPropType,
-  users: UsersPropType.isRequired,
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
+  sortDirection: PropTypes.string.isRequired,
+  storyMenu: PropTypes.shape({
+    handleMenuToggle: PropTypes.func.isRequired,
+    contextMenuId: PropTypes.number.isRequired,
+    handleMenuItemSelected: PropTypes.func.isRequired,
+  }),
   storySort: PropTypes.string.isRequired,
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
-  sortDirection: PropTypes.string.isRequired,
+  stories: StoriesPropType,
+  users: UsersPropType.isRequired,
 };
