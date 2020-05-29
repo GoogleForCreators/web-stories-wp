@@ -15,9 +15,6 @@
  */
 
 /**
- * * External dependencies
- */
-/**
  * External dependencies
  */
 import styled from 'styled-components';

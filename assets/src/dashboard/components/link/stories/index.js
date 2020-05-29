@@ -15,12 +15,13 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
 import { Link } from '../';
 
 export default {
