@@ -47,19 +47,19 @@ const DEFAULT_CONFIG = {
  * in the scope of the whole editor and the real browser. As such:
  *
  * - Call `set` and `stub` methods to configure the fixture before calling
- * `render()` method.
- * - Call the `fixture.render()` method much like `@testing-library/react`'s
- * `render()` before doing the actual tests.
- * - Call the `fixture.renderHook()` method much like `@testing-library/react`'s
- * `renderHook()` to render a hook in the context of the whole editor. A more
- * fine-grained `renderHook()` can also be called on component stubs. See
- * `fixture.stubComponent()` for more info.
- * - Call the `await fixture.act()` method much like `@testing-library/react`'s
- * `act()` for any action. Notice that events automatically use `act()` and
- * can be used without it in tests.
- * - Call `await fixture.events.someEvent()` methods to drive the events similar
- * to `@testing-library/react`'s `fireEvent`, except that these events will be
- * executed natively on a real browser.
+ * the `render()` method.
+ * - Call the `fixture.render()` method similarly to the
+ * `@testing-library/react`'s `render()` before doing the actual tests.
+ * - Call the `fixture.renderHook()` method similarly to the
+ * `@testing-library/react`'s `renderHook()` to render a hook in the context
+ * of the whole editor. A more fine-grained `renderHook()` can also be called
+ * on a component stub. See the `fixture.stubComponent()` for more info.
+ * - Call the `await fixture.act()` method similarly to the
+ * `@testing-library/react`'s `act()` method for any action. Notice that events
+ * automatically use `act()` internally.
+ * - Call the `await fixture.events` methods to drive the events similarly
+ * to the `@testing-library/react`'s `fireEvent`, except that these events will
+ * be executed natively in the browser.
  */
 export class Fixture {
   constructor() {
