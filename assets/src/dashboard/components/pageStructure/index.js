@@ -39,7 +39,6 @@ import {
   primaryPaths,
   secondaryPaths,
   Z_INDEX,
-  APP_ROUTES,
 } from '../../constants';
 
 import useFocusOut from '../../utils/useFocusOut';
