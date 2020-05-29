@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
 
 /**
@@ -34,15 +35,16 @@ export default {
 };
 
 const apiValue = {
-  actions: { deleteMedia: () => {} },
+  actions: { updateMedia: action('update server') },
 };
 const mediaValue = {
-  actions: { deleteMediaElement: () => {} },
+  actions: { updateMediaElement: action('update state') },
 };
-const snackbarValue = { showSnackbar: () => {} };
+const snackbarValue = { showSnackbar: action('show snackbar') };
 
 export const _default = () => {
   const resource = object('Image Resource', {
+    id: 123,
     type: 'image',
     mimeType: 'image/png',
     title: 'My Image :)',
@@ -58,7 +60,7 @@ export const _default = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <MediaEditDialog resource={resource} onClose={() => {}} />
+          <MediaEditDialog resource={resource} onClose={action('closed')} />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
