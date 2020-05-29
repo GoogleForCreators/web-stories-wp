@@ -46,6 +46,9 @@ function activate( $network_wide ) {
 		);
 	}
 
+	Story_Post_Type::init();
+	flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+
 	do_action( 'web_stories_activation', $network_wide );
 }
 
@@ -62,6 +65,9 @@ function deactivate( $network_wide ) {
 	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
 		return;
 	}
+
+	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
+	flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 
 	do_action( 'web_stories_deactivation', $network_wide );
 }
