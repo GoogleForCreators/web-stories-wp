@@ -48,6 +48,7 @@ const DEFAULT_CONFIG = {
  * in the scope of the whole editor and the real browser. As such:
  *
  * - Call `set` and `stub` methods to configure the fixture before calling
+<<<<<<< HEAD
  * `render()` method.
  * - Call the `fixture.render()` method much like `@testing-library/react`'s
  * `render()` before doing the actual tests.
@@ -61,6 +62,21 @@ const DEFAULT_CONFIG = {
  * - Call `await fixture.events.someEvent()` methods to drive the events similar
  * to `@testing-library/react`'s `fireEvent`, except that these events will be
  * executed natively on a real browser.
+=======
+ * the `render()` method.
+ * - Call the `fixture.render()` method similarly to the
+ * `@testing-library/react`'s `render()` before doing the actual tests.
+ * - Call the `fixture.renderHook()` method similarly to the
+ * `@testing-library/react`'s `renderHook()` to render a hook in the context
+ * of the whole editor. A more fine-grained `renderHook()` can also be called
+ * on a component stub. See the `fixture.stubComponent()` for more info.
+ * - Call the `await fixture.act()` method similarly to the
+ * `@testing-library/react`'s `act()` method for any action. Notice that events
+ * automatically use `act()` internally.
+ * - Call the `await fixture.events` methods to drive the events similarly
+ * to the `@testing-library/react`'s `fireEvent`, except that these events will
+ * be executed natively in the browser.
+>>>>>>> master
  */
 export class Fixture {
   constructor() {
@@ -125,9 +141,9 @@ export class Fixture {
    *
    * Use sparingly. See `ComponentStub` for more info.
    *
+   * @param {Function} component
+   * @param {Function|undefined} matcher
    * @return {ComponentStub} The component's stub.
-   * @param component
-   * @param matcher
    */
   stubComponent(component, matcher) {
     const stub = new ComponentStub(this, component, matcher);
@@ -226,8 +242,8 @@ export class Fixture {
    * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
    * directory.
    *
+   * @param {string} name
    * @return {Promise} Yields when the snapshot is completed.
-   * @param name
    */
   snapshot(name) {
     return karmaSnapshot(name);

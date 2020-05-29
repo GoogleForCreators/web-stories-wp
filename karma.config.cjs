@@ -95,6 +95,7 @@ module.exports = function (config) {
       puppeteer: {
         headless: config.headless || false,
         slowMo: config.slowMo || 0,
+        devtools: config.devtools || false,
         snapshots: config.snapshots || false,
         // @todo: consider testing on a couple of canonical viewport sizes.
         // Per Figma, the canonical sizes are:
