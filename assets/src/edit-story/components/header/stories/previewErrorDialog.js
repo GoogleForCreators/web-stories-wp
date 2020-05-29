@@ -22,16 +22,16 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import PreviewDialog from '../previewDialog';
+import PreviewErrorDialog from '../previewErrorDialog';
 
 export default {
-  title: 'Stories Editor/Components/PreviewDialog',
-  component: PreviewDialog,
+  title: 'Stories Editor/Components/PreviewErrorDialog',
+  component: PreviewErrorDialog,
 };
 
 export const _default = () => {
   return (
-    <PreviewDialog
+    <PreviewErrorDialog
       open
       onClose={action('closed')}
       onRetry={action('retried')}

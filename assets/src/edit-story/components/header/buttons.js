@@ -34,7 +34,7 @@ import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
 import escapeHTML from '../../utils/escapeHTML';
-import PreviewDialog from './previewDialog';
+import PreviewErrorDialog from './previewErrorDialog';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -141,7 +141,7 @@ function PreviewButton() {
       <Outline onClick={openPreviewLink} isDisabled={isSaving}>
         {__('Preview', 'web-stories')}
       </Outline>
-      <PreviewDialog
+      <PreviewErrorDialog
         open={Boolean(previewLinkToOpenViaDialog)}
         onClose={onDialogClose}
         onRetry={openPreviewLinkSync}
