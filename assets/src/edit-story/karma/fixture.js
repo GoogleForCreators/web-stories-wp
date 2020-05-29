@@ -104,6 +104,15 @@ export class Fixture {
   /**
    * Set the feature flags. See `flags.js` for the list of flags.
    *
+   * For instance, to enable a flag in your test, run:
+   * ```
+   * beforeEach(async () => {
+   *   fixture = new Fixture();
+   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   await fixture.render();
+   * });
+   * ```
+   *
    * @param {Object} flags
    */
   setFlags(flags) {
