@@ -134,7 +134,7 @@ class Keyboard {
    * - `type: 'up'`: [keyboard.up](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardupkey).
    * - `type: 'press'`: [keyboard.press](https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardpresskey-options).
    *
-   * @param {Array<{type: string, key: string, options: Object}>|Array} arrayOrGenerator
+   * @param {Array<{type: string, key: string, options: Object}>|Function} arrayOrGenerator
    * @return {!Promise} Yields when the event is processed.
    */
   seq(arrayOrGenerator) {
