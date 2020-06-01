@@ -28,7 +28,7 @@ import App from '../app/index';
 import APIProvider from '../app/api/apiProvider';
 import APIContext from '../app/api/context';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
-import Layout from '../app/layout';
+import { WorkspaceLayout } from '../components/workspace/layout';
 import FixtureEvents from './fixtureEvents';
 
 const DEFAULT_CONFIG = {
@@ -92,7 +92,7 @@ export class Fixture {
       this.apiProviderFixture_.Component
     );
 
-    this._layoutStub = this.stubComponent(Layout);
+    this._layoutStub = this.stubComponent(WorkspaceLayout);
 
     this._events = new FixtureEvents(this.act.bind(this));
 

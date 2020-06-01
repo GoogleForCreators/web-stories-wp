@@ -253,7 +253,7 @@ class Mouse {
       if (typeof rel === 'number') {
         return rel;
       }
-      if (rel.endsWidth('%')) {
+      if (rel.endsWith('%')) {
         const percent = parseFloat(rel) / 100;
         return size * percent;
       }
