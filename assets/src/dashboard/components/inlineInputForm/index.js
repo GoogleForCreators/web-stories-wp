@@ -23,9 +23,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 
 const Label = styled.label(visuallyHiddenStyles);
 
