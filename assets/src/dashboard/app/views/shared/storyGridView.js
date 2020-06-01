@@ -142,6 +142,7 @@ const StoryGridView = ({
             <DetailRow>
               <CardTitle
                 title={story.title}
+                titleLink={story.editStoryLink}
                 status={story?.status}
                 secondaryTitle={
                   isSavedTemplate
