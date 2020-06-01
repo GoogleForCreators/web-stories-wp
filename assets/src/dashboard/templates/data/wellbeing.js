@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 17,
+    version: 19,
     pages: [
       {
         elements: [
@@ -46,6 +46,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: 'df765066-cd07-49bf-8ef7-02ae6f2b3330',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -227,7 +228,6 @@ export default function (imageBaseUrl) {
             content: '<span style="color: rgba(251, 235, 186, 1)">Sleep</span>',
           },
         ],
-        backgroundElementId: 'df765066-cd07-49bf-8ef7-02ae6f2b3330',
         type: 'page',
         id: '80cd76d6-6c52-4892-98d7-f414dbb7619e',
       },
@@ -259,6 +259,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '56248b21-6e15-48fa-bc4b-ebd2163c4b6c',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -481,7 +482,6 @@ export default function (imageBaseUrl) {
             content: '<span style="color: rgba(43, 57, 62, 1)">“</span>',
           },
         ],
-        backgroundElementId: '56248b21-6e15-48fa-bc4b-ebd2163c4b6c',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'e96638f8-1f19-4f34-b7e6-963329aa12fd',
@@ -514,6 +514,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: 'c6e37b7e-ddb8-4028-a66f-dd280351af00',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -862,7 +863,6 @@ export default function (imageBaseUrl) {
             id: '74d501d3-4f54-4348-b718-fef474c789f2',
           },
         ],
-        backgroundElementId: 'c6e37b7e-ddb8-4028-a66f-dd280351af00',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'e6b3eacb-1032-4965-8e57-efe5dbe8b1b7',
@@ -967,7 +967,7 @@ export default function (imageBaseUrl) {
             type: 'shape',
             id: '3016e5bf-a0d2-4d9d-82f0-cb169b5e9189',
             link: {
-              url: `http://google.com`,
+              url: 'http://google.com',
               icon: null,
               desc: 'Lavendar',
             },
@@ -1032,7 +1032,7 @@ export default function (imageBaseUrl) {
             x: 75,
             y: 506,
             link: {
-              url: `http://google.com`,
+              url: 'http://google.com',
               icon: null,
               desc: null,
             },
@@ -1097,7 +1097,7 @@ export default function (imageBaseUrl) {
             x: 330,
             y: 472,
             link: {
-              url: `http://google.com`,
+              url: 'http://google.com',
               icon: null,
               desc: 'Vase',
             },
@@ -1182,10 +1182,31 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(253, 245, 220, 1)">Aroma Therapy</span>',
           },
         ],
-        backgroundElementId: '7744e075-8030-462f-bdd5-15dc4f1ab97d',
         backgroundOverlay: 'solid',
         type: 'page',
         id: '0fd64689-3e15-4e91-b9b3-d991204703b1',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'e4224ca8-e130-44df-a647-57d7a6dba4f4',
+        },
       },
       {
         elements: [
@@ -1215,6 +1236,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '970e7f88-c07d-4a78-81f9-e66bd4b2bebe',
+            isDefaultBackground: true,
           },
           {
             opacity: 50,
@@ -1537,7 +1559,6 @@ export default function (imageBaseUrl) {
             id: '49416c51-ae2e-4b5c-bad0-66da4b9247b4',
           },
         ],
-        backgroundElementId: '970e7f88-c07d-4a78-81f9-e66bd4b2bebe',
         backgroundOverlay: 'none',
         type: 'page',
         id: '1a57cf2b-d1d0-432c-8b97-3794c41e2098',
@@ -1757,10 +1778,31 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(31, 42, 46, 1)">A study found that taking a hot bath about 90 minutes before bed could help people fall asleep more quickly.</span>',
           },
         ],
-        backgroundElementId: '4aac4002-7c41-434c-ab44-7bc43f6e863c',
         backgroundOverlay: 'none',
         type: 'page',
         id: '41d961c4-f7af-4d93-a9a1-94bc28287078',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'aceee55e-9440-4b53-90b7-4480bb1722ee',
+        },
       },
       {
         elements: [
@@ -2055,10 +2097,31 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(251, 235, 186, 1)">Bedtime\nRoutine Tips</span>',
           },
         ],
-        backgroundElementId: 'f8dca448-520e-4b47-a0ee-f3aea1cd2e3d',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'b96f282e-4b4e-465d-a2ec-a7c904c3e5d8',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'fadc0093-2969-4c68-a93a-443622c08d81',
+        },
       },
       {
         elements: [
@@ -2088,6 +2151,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '18d986e5-e023-466d-b8fc-fce0393071b0',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -2322,7 +2386,7 @@ export default function (imageBaseUrl) {
             x: 120,
             y: 506,
             content:
-              '<span style="color: rgba(255, 255, 255, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit nula vel dui erat. Curabitur sit amet venenatis felis lorem.</span>',
+              '<span style="color: rgba(255, 255, 255, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit nula vel dui erat. Curabitur sit amet venenatis felis lorem.</span>',
           },
           {
             opacity: 100,
@@ -2488,7 +2552,6 @@ export default function (imageBaseUrl) {
             id: 'b2a8e955-e246-47af-ac4e-dca6161dd703',
           },
         ],
-        backgroundElementId: '18d986e5-e023-466d-b8fc-fce0393071b0',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'a3dd6d21-4f75-4d8a-bacb-ef9d14f61503',
@@ -2521,6 +2584,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: 'd982e67d-6773-46a8-81db-fb99f0ee69a1',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -2974,7 +3038,7 @@ export default function (imageBaseUrl) {
             x: 142,
             y: 313,
             content:
-              '<span style="color: rgba(43, 57, 62, 1)">Aro Ha, Glenorchy,\n New Zealand</span>',
+              '<span style="color: rgba(43, 57, 62, 1)">Aro Ha, Glenorchy,\nNew Zealand</span>',
           },
           {
             opacity: 100,
@@ -3201,7 +3265,6 @@ export default function (imageBaseUrl) {
             id: '045e16e6-0389-46fd-989c-ac9350b5054e',
           },
         ],
-        backgroundElementId: 'd982e67d-6773-46a8-81db-fb99f0ee69a1',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'd17e5002-9a42-41ea-a7fc-c2fddc7b58e6',
@@ -3234,6 +3297,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: 'fd455062-8efd-4332-ab36-5b66742ce5a1',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -3868,7 +3932,6 @@ export default function (imageBaseUrl) {
             id: 'ab69ec53-ab30-4a7a-861e-92444112f983',
           },
         ],
-        backgroundElementId: 'fd455062-8efd-4332-ab36-5b66742ce5a1',
         backgroundOverlay: 'none',
         type: 'page',
         id: '47783f6c-471c-427c-804e-532ace8261d1',

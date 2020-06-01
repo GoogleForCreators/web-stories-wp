@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 17,
+    version: 19,
     pages: [
       {
         elements: [
@@ -46,6 +46,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '900a850f-fb71-4262-84f0-d6b803224ac7',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -141,45 +142,7 @@ export default function (imageBaseUrl) {
             type: 'text',
             id: 'be108bc9-3a51-48c4-b495-24be6163e44c',
             content:
-              '<span style="font-weight: 700; color: #fff">Food &amp;  Stuff</span>',
-          },
-          {
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            lockAspectRatio: true,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/png',
-              src: `${imageBaseUrl}/images/templates/cooking/cooking_icon_logo.png`,
-              width: 56,
-              height: 12,
-              posterId: 0,
-              id: 466,
-              title: 'cooking_icon_logo',
-              alt: 'cooking_icon_logo',
-              local: false,
-              sizes: {},
-            },
-            x: 165,
-            y: 59,
-            width: 111,
-            height: 24,
-            mask: {
-              type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-            },
-            type: 'image',
-            id: '0134d8b1-1c28-47d3-b7ba-1649a629173f',
+              '<span style="font-weight: 700; color: #fff">Food &amp; Stuff</span>',
           },
           {
             opacity: 100,
@@ -301,8 +264,36 @@ export default function (imageBaseUrl) {
             x: 418,
             y: 19.5,
           },
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: false,
+            backgroundColor: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            isFill: false,
+            type: 'shape',
+            x: 164.5,
+            y: 59,
+            width: 111,
+            height: 24,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            mask: {
+              type: 'rectangle',
+            },
+            id: '6a95b60a-c661-409e-b983-ebfdc7464df6',
+          },
         ],
-        backgroundElementId: '900a850f-fb71-4262-84f0-d6b803224ac7',
         type: 'page',
         id: 'dd6a669f-ff4b-4633-8eb4-c601e98b40f1',
       },
@@ -334,6 +325,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             id: 'b8ea29e5-ce25-4204-8660-afe56bb6b952',
             type: 'shape',
+            isDefaultBackground: true,
           },
           {
             opacity: 15,
@@ -607,7 +599,6 @@ export default function (imageBaseUrl) {
             y: 19.5,
           },
         ],
-        backgroundElementId: 'b8ea29e5-ce25-4204-8660-afe56bb6b952',
         backgroundOverlay: 'none',
         type: 'page',
         id: '434c112e-3463-4dc6-aa8e-cb97f13a4e8e',
@@ -640,6 +631,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             id: '268f9f40-cce2-4d37-899e-ea2422f8df7b',
             type: 'shape',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -1135,7 +1127,6 @@ export default function (imageBaseUrl) {
             id: '6d8358b9-7bf1-4982-ae88-963409073fcf',
           },
         ],
-        backgroundElementId: '268f9f40-cce2-4d37-899e-ea2422f8df7b',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'a378f919-785d-4ff2-8f8c-e7922a221cbf',
@@ -1168,6 +1159,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             id: '10cd0ef0-78ac-41f8-9e90-810376fb7a0e',
             type: 'shape',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -1836,7 +1828,6 @@ export default function (imageBaseUrl) {
             y: 499,
           },
         ],
-        backgroundElementId: '10cd0ef0-78ac-41f8-9e90-810376fb7a0e',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'e6314f4e-5a59-425c-a6a3-b0a3ecff301c',
@@ -2266,10 +2257,31 @@ export default function (imageBaseUrl) {
             y: 106,
           },
         ],
-        backgroundElementId: '85bf1bf4-8ef0-4408-9fd1-755769555106',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'b08e5e3d-08c8-4865-b82f-20a04e8f6fc7',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'e59627e9-eb83-4ce5-bf83-17f22851ed1c',
+        },
       },
       {
         elements: [
@@ -2299,6 +2311,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             id: '353201ca-58e7-487f-b6f7-6360c5b72aa9',
             type: 'shape',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -3700,7 +3713,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 249, 238, 1)"><span style="font-weight: 700">recipes with\npersimmon</span></span>',
           },
         ],
-        backgroundElementId: '353201ca-58e7-487f-b6f7-6360c5b72aa9',
         backgroundOverlay: 'none',
         type: 'page',
         id: '4ce57acc-c58e-40ab-8a3d-87f6dc5fb106',
@@ -3733,6 +3745,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             id: '9b628714-3fa2-490a-b766-4cf019ebe394',
             type: 'shape',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -4078,7 +4091,7 @@ export default function (imageBaseUrl) {
             x: 41,
             y: 438,
             content:
-              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Squash Soup&nbsp;\n with Persimmon</span></span>',
+              '<span style="color: rgba(255, 146, 46, 1)"><span style="font-weight: 700">Squash Soup&nbsp;\nwith Persimmon</span></span>',
           },
           {
             opacity: 100,
@@ -4626,7 +4639,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(103, 100, 97, 1)">Beginner</span>',
           },
         ],
-        backgroundElementId: '9b628714-3fa2-490a-b766-4cf019ebe394',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'c0a40237-d827-4aa3-b3ca-01e668dc90aa',
@@ -4659,6 +4671,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             id: '7805eaf2-f323-4b3e-8c2b-a328f3e95056',
             type: 'shape',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -5048,7 +5061,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(103, 100, 97, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit integer auctor sollicitudin dolor, vel lacinia mi vehicula sed. Sed semper tortor est, et scelerisque lorem finibus efficitur maecenas vel aliquet nisl curabitur sollicitudin libero.</span>',
           },
         ],
-        backgroundElementId: '7805eaf2-f323-4b3e-8c2b-a328f3e95056',
         backgroundOverlay: 'none',
         type: 'page',
         id: '11f60c54-4345-4979-8f10-edf4b43c7f44',
@@ -5081,6 +5093,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             id: '25cbd8d2-adac-46e7-8cbb-24ef7536a9f5',
             type: 'shape',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -6033,7 +6046,7 @@ export default function (imageBaseUrl) {
             x: 143,
             y: 437,
             content:
-              '<span style="color: rgba(103, 100, 97, 1)">Easy brunch recipes that  will impress your guests</span>',
+              '<span style="color: rgba(103, 100, 97, 1)">Easy brunch recipes that will impress your guests</span>',
           },
           {
             opacity: 100,
@@ -6126,7 +6139,6 @@ export default function (imageBaseUrl) {
             y: 572.5,
           },
         ],
-        backgroundElementId: '25cbd8d2-adac-46e7-8cbb-24ef7536a9f5',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'e8a21c0b-1db7-4777-b25d-b7d9a51b10fe',

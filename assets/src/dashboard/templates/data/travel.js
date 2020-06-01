@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 17,
+    version: 19,
     pages: [
       {
         elements: [
@@ -168,48 +168,60 @@ export default function (imageBaseUrl) {
             id: '7de325ef-2490-4e19-9c9c-7031bffa4b05',
           },
           {
-            type: 'image',
             opacity: 100,
             flip: {
               vertical: false,
               horizontal: false,
             },
             rotationAngle: 0,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/png',
-              src: `${imageBaseUrl}/images/templates/travel/travel_page1_logo.png`,
-              width: 47,
-              height: 15,
-              poster: '',
-              posterId: 0,
-              id: 221,
-              title: 'travel_page1_logo',
-              alt: '',
-              local: false,
-              sizes: {},
+            lockAspectRatio: false,
+            backgroundColor: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
             },
-            x: 29,
+            isFill: false,
+            type: 'shape',
+            x: 28,
             y: 605,
             width: 94,
             height: 30,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
             mask: {
               type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
             },
-            id: 'd0b3b0de-e60d-4f1d-baa6-b72fe5d4daae',
+            id: '3eada2b4-499c-4964-ad82-deadabe8ae94',
           },
         ],
         type: 'page',
         id: 'fca5c47a-e26f-4feb-b2a3-f6d8b6c68996',
-        backgroundElementId: 'ca140433-52d1-4423-896f-2e5c856cb22f',
         backgroundOverlay: 'none',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'e36e376f-3cdb-43f8-b1c7-cdf3a0098132',
+        },
       },
       {
         elements: [
@@ -238,6 +250,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '143182cf-804b-4d71-93d8-d4a53c9e6ed6',
+            isDefaultBackground: true,
           },
           {
             type: 'shape',
@@ -430,7 +443,6 @@ export default function (imageBaseUrl) {
             },
           },
         ],
-        backgroundElementId: '143182cf-804b-4d71-93d8-d4a53c9e6ed6',
         backgroundOverlay: 'none',
         type: 'page',
         id: '3cdf0fde-f515-477d-8688-472c4cc5a8b3',
@@ -462,6 +474,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: 'b39e1373-e1d4-40ee-bd0c-298924b61a3e',
+            isDefaultBackground: true,
           },
           {
             type: 'shape',
@@ -654,7 +667,6 @@ export default function (imageBaseUrl) {
             },
           },
         ],
-        backgroundElementId: 'b39e1373-e1d4-40ee-bd0c-298924b61a3e',
         backgroundOverlay: 'none',
         type: 'page',
         id: '80b4f7b3-c54a-4e40-9a75-c937cedfed4b',
@@ -917,10 +929,31 @@ export default function (imageBaseUrl) {
             id: '3e017006-465b-461c-ae74-2c57c891f67a',
           },
         ],
-        backgroundElementId: 'a920881d-6fab-4d96-8884-0df9f0b6a8fd',
         backgroundOverlay: 'none',
         type: 'page',
         id: '6302fb0d-8f99-4498-91eb-bca15d67ae84',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: '3769638a-e9e5-4ff0-96dc-9b3df5d78215',
+        },
       },
       {
         elements: [
@@ -1232,10 +1265,31 @@ export default function (imageBaseUrl) {
             y: 591.5,
           },
         ],
-        backgroundElementId: '3b0ede46-334e-4bc5-abb7-f09dec3d6d48',
         backgroundOverlay: 'none',
         type: 'page',
         id: '22081c00-a02f-4085-84de-0f4a31253222',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: '4d03120b-e736-4b71-b5bc-81159357f030',
+        },
       },
       {
         elements: [
@@ -1453,10 +1507,31 @@ export default function (imageBaseUrl) {
             id: 'a518c941-56a4-4e2d-afcd-893c88dc31ae',
           },
         ],
-        backgroundElementId: '117a9caa-d0cc-47d0-b00e-ee623bbcd5fc',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'c2d56aca-cb1a-41eb-bbdc-41dc2c4f597c',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: '64ea1430-5f03-4155-be5d-16faaa4b098e',
+        },
       },
       {
         elements: [
@@ -1485,6 +1560,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '9012bef0-e5e3-4910-8412-a10ce18e23a6',
+            isDefaultBackground: true,
           },
           {
             type: 'shape',
@@ -1679,7 +1755,6 @@ export default function (imageBaseUrl) {
             },
           },
         ],
-        backgroundElementId: '9012bef0-e5e3-4910-8412-a10ce18e23a6',
         backgroundOverlay: 'none',
         type: 'page',
         id: '7b7d7662-fb1f-46b5-94e0-b01029a666a5',
@@ -1907,10 +1982,31 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">The main island hopping hubs are Phuket, Krabi, Koh Phi Phi, and Koh Lipe. Other favorites include Ko Tao, Ko Pha-Ngan, Ko Samui and Surat Thani.</span>',
           },
         ],
-        backgroundElementId: '3f23fce9-2fb5-4f17-acec-f0f6f524967d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '1659f169-eb29-498a-bd00-6aea80d7ace7',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: '6f8d6dec-a10b-43d5-a74f-0bac45722dab',
+        },
       },
       {
         elements: [
@@ -1939,6 +2035,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '55fcd4fb-1af4-4540-ac57-a783f94f6864',
+            isDefaultBackground: true,
           },
           {
             font: {
@@ -2679,7 +2776,6 @@ export default function (imageBaseUrl) {
             },
           },
         ],
-        backgroundElementId: '55fcd4fb-1af4-4540-ac57-a783f94f6864',
         backgroundOverlay: 'none',
         type: 'page',
         id: '78da0e6c-6bc7-4680-90a8-2b6bf6e98aaa',
@@ -2711,6 +2807,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '282588c3-fbc2-4b63-8260-2e58d0e63294',
+            isDefaultBackground: true,
           },
           {
             type: 'shape',
@@ -3214,7 +3311,6 @@ export default function (imageBaseUrl) {
             id: '675e2caa-2276-4b8b-9d80-0fcffd623d62',
           },
         ],
-        backgroundElementId: '282588c3-fbc2-4b63-8260-2e58d0e63294',
         backgroundOverlay: 'none',
         type: 'page',
         id: '9a45a0b2-0261-4298-aef7-c08b99771787',

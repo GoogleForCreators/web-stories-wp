@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 17,
+    version: 19,
     pages: [
       {
         elements: [
@@ -46,6 +46,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '17bad711-de31-4f09-8d30-f83ade1d6f2a',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -388,7 +389,6 @@ export default function (imageBaseUrl) {
             id: '5090769d-8a55-4ef6-aff3-544872d653e4',
           },
         ],
-        backgroundElementId: '17bad711-de31-4f09-8d30-f83ade1d6f2a',
         type: 'page',
         id: '04df622c-0d7f-4760-a06c-e88d9d9ac435',
       },
@@ -420,6 +420,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '7a27a752-537d-4dcd-9677-5926437c0e19',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -723,7 +724,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">New Artists</span>',
           },
         ],
-        backgroundElementId: '7a27a752-537d-4dcd-9677-5926437c0e19',
         backgroundOverlay: 'none',
         type: 'page',
         id: '9670b092-e11b-433e-aa8a-659e4ee982c9',
@@ -756,6 +756,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '03d49bf5-7b5e-4d7c-b09e-7c3ebde20c94',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -1148,7 +1149,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">– Miley Cyrus</span>',
           },
         ],
-        backgroundElementId: '03d49bf5-7b5e-4d7c-b09e-7c3ebde20c94',
         backgroundOverlay: 'none',
         type: 'page',
         id: '73e07f65-ae5a-4a85-8802-7ea5cfaa45b2',
@@ -1181,6 +1181,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '87fe44ec-dfa5-450c-8250-1859f8e4fe07',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -1485,7 +1486,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 700">SPOTLIGHT</span></span>',
           },
         ],
-        backgroundElementId: '87fe44ec-dfa5-450c-8250-1859f8e4fe07',
         backgroundOverlay: 'none',
         type: 'page',
         id: '582c5a25-6f17-4107-8e60-6ae4721c932f',
@@ -1518,6 +1518,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '923c69d0-84f6-4223-8f7e-8fd7f0d0363f',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -2135,7 +2136,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)"><span style="font-style: italic">3 out of 5</span></span>',
           },
         ],
-        backgroundElementId: '923c69d0-84f6-4223-8f7e-8fd7f0d0363f',
         backgroundOverlay: 'none',
         type: 'page',
         id: '7494b712-c8d0-4189-a85c-32aa52a22032',
@@ -2168,6 +2168,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '3fb75a52-ac04-4979-9a26-c28e725c3ed3',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -2665,7 +2666,6 @@ export default function (imageBaseUrl) {
             id: 'c8ed9d0e-4f8d-4549-80cc-a5b3dd9caa8e',
           },
         ],
-        backgroundElementId: '3fb75a52-ac04-4979-9a26-c28e725c3ed3',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'fd60f532-b619-4162-8df9-d8241cc88e45',
@@ -2698,6 +2698,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: 'f1d3853d-aa0a-4bfc-8b40-d09c94153814',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -3001,7 +3002,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus.</span>',
           },
         ],
-        backgroundElementId: 'f1d3853d-aa0a-4bfc-8b40-d09c94153814',
         backgroundOverlay: 'none',
         type: 'page',
         id: '877c2ef2-1faa-4a7b-9f5b-364dcfa3d856',
@@ -3034,6 +3034,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '777737d1-e79e-4f4e-9708-cf5a41962d77',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -3602,7 +3603,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">This summer’s must-see blockbusters</span>',
           },
         ],
-        backgroundElementId: '777737d1-e79e-4f4e-9708-cf5a41962d77',
         backgroundOverlay: 'none',
         type: 'page',
         id: '3d0dbbd3-70c0-4376-b1bf-c8015def1050',
@@ -3635,6 +3635,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: 'ffce028c-042d-4b3c-a489-3cc31162ed10',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -4640,7 +4641,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">See More</span>',
           },
         ],
-        backgroundElementId: 'ffce028c-042d-4b3c-a489-3cc31162ed10',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'f4ea7828-e328-47e6-bf9d-a786ab192ee1',

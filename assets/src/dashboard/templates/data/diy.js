@@ -16,7 +16,7 @@
 
 export default function (imageBaseUrl) {
   return {
-    version: 17,
+    version: 19,
     pages: [
       {
         elements: [
@@ -46,6 +46,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: 'acc2f8e0-b819-4adf-9b9f-7bf7c878d7b9',
+            isDefaultBackground: true,
           },
           {
             type: 'image',
@@ -343,7 +344,6 @@ export default function (imageBaseUrl) {
             id: 'a0f67513-d98a-43f4-bb0b-ad3383051452',
           },
         ],
-        backgroundElementId: 'acc2f8e0-b819-4adf-9b9f-7bf7c878d7b9',
         type: 'page',
         id: 'd47afc22-71b7-4303-9917-96f9a31ad38a',
         backgroundOverlay: 'none',
@@ -376,6 +376,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '6d60fa52-25c3-4207-acea-45c2c9680fcf',
+            isDefaultBackground: true,
           },
           {
             type: 'image',
@@ -508,7 +509,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 115, 36, 1)">THE OUTDOORS</span>',
           },
         ],
-        backgroundElementId: '6d60fa52-25c3-4207-acea-45c2c9680fcf',
         backgroundOverlay: 'none',
         type: 'page',
         id: '6a6ddf2d-7f98-405a-8c95-76b0440f9b30',
@@ -541,6 +541,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: 'a848ae15-78c1-488a-9c2f-befbc69a1fb3',
+            isDefaultBackground: true,
           },
           {
             type: 'image',
@@ -775,7 +776,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(250, 244, 234, 1)">Always pay particular attention to the terrain, soil and weather influences of your landscape.</span>',
           },
         ],
-        backgroundElementId: 'a848ae15-78c1-488a-9c2f-befbc69a1fb3',
         backgroundOverlay: 'none',
         type: 'page',
         id: '6a5fbd97-2e43-4f7a-a672-6b1b90f8a625',
@@ -808,6 +808,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '5249418e-8fb7-46d7-8af1-835671d52f2b',
+            isDefaultBackground: true,
           },
           {
             type: 'image',
@@ -840,7 +841,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg-1.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -940,7 +941,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 115, 36, 1)">THE\nFOUNDA\nTION</span>',
           },
         ],
-        backgroundElementId: '5249418e-8fb7-46d7-8af1-835671d52f2b',
         backgroundOverlay: 'none',
         type: 'page',
         id: '3164a2b3-10c7-42b8-bcea-38292c8427f5',
@@ -963,7 +963,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg-1.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -1014,7 +1014,7 @@ export default function (imageBaseUrl) {
             basedOn: '4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2',
             id: '969611ae-3a4b-45b5-b075-38ffb5abdce1',
             x: -1,
-            y: 490,
+            y: 491,
           },
           {
             type: 'shape',
@@ -1215,10 +1215,31 @@ export default function (imageBaseUrl) {
             id: 'e3adc9ce-fa17-45b6-a26b-6ec2fd532d3d',
           },
         ],
-        backgroundElementId: '486b6a5d-60f2-4e23-861c-0e16220e6c76',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'cb4d4a6b-5b3c-4513-8732-96e6e86751b2',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: '0f06a768-d7d7-48c3-94fd-0d200978ef7c',
+        },
       },
       {
         elements: [
@@ -1490,10 +1511,31 @@ export default function (imageBaseUrl) {
             id: 'a125ec6e-4254-4130-916d-e86d6d71aabb',
           },
         ],
-        backgroundElementId: '86db87f7-47d4-49e3-b714-8e28bf6c64e1',
         backgroundOverlay: 'none',
         type: 'page',
         id: '8f462228-45f9-459c-a091-da058c60bd62',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'f903e641-0485-4da0-be58-66e0cc614467',
+        },
       },
       {
         elements: [
@@ -1523,6 +1565,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '6f62cb45-cbe8-484a-9f9b-0204fd653ded',
+            isDefaultBackground: true,
           },
           {
             type: 'image',
@@ -1795,7 +1838,6 @@ export default function (imageBaseUrl) {
             id: '21029d0a-58a3-4719-a1f9-4d8f47b9da16',
           },
         ],
-        backgroundElementId: '6f62cb45-cbe8-484a-9f9b-0204fd653ded',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'eb4fdaf0-52c9-46bb-acb7-91408e671880',
@@ -1828,6 +1870,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '4ee0756d-c9b1-4914-a3cf-e0b41a442367',
+            isDefaultBackground: true,
           },
           {
             type: 'shape',
@@ -2417,7 +2460,6 @@ export default function (imageBaseUrl) {
             id: '60f07480-c8af-42f9-953a-98569b97ffe7',
           },
         ],
-        backgroundElementId: '4ee0756d-c9b1-4914-a3cf-e0b41a442367',
         backgroundOverlay: 'none',
         type: 'page',
         id: '7dc22ed5-579e-4988-9f9c-97b2cd2ff068',
@@ -2777,10 +2819,31 @@ export default function (imageBaseUrl) {
             },
           },
         ],
-        backgroundElementId: '1b7b64ba-ee71-4edf-be38-d30753ac39ef',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'd25a2dd8-b784-4818-81d3-cc70a6aad6ab',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'e982349a-5439-458d-937e-5a72701cfbad',
+        },
       },
       {
         elements: [
@@ -2810,6 +2873,7 @@ export default function (imageBaseUrl) {
             },
             isBackground: true,
             id: '82dea0d1-dbc5-41e5-9ed7-409bcb672830',
+            isDefaultBackground: true,
           },
           {
             type: 'shape',
@@ -3677,7 +3741,6 @@ export default function (imageBaseUrl) {
             id: '563f7eeb-2251-4191-b3be-a269c0d42158',
           },
         ],
-        backgroundElementId: '82dea0d1-dbc5-41e5-9ed7-409bcb672830',
         backgroundOverlay: 'none',
         type: 'page',
         id: '5c295574-87a0-4ae7-b548-699e0bd47fdf',
