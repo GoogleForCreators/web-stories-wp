@@ -36,8 +36,10 @@ import {
 } from '../../../components';
 import {
   StoriesPropType,
+  StoryMenuPropType,
   UsersPropType,
   PageSizePropType,
+  RenameStoryPropType,
 } from '../../../types';
 
 export const DetailRow = styled.div`
@@ -89,6 +91,7 @@ const StoryGridView = ({
                 title={story.title}
                 titleLink={story.editStoryLink}
                 status={story?.status}
+                id={story.id}
                 secondaryTitle={
                   isSavedTemplate
                     ? __('Google', 'web-stories')
@@ -124,16 +127,8 @@ StoryGridView.propTypes = {
   centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
   bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
-  storyMenu: PropTypes.shape({
-    handleMenuToggle: PropTypes.func.isRequired,
-    contextMenuId: PropTypes.number.isRequired,
-    handleMenuItemSelected: PropTypes.func.isRequired,
-  }),
-  renameStory: PropTypes.shape({
-    handleOnRenameStory: PropTypes.func,
-    id: PropTypes.number,
-    handleCancelRename: PropTypes.func,
-  }),
+  storyMenu: StoryMenuPropType.isRequired,
+  renameStory: RenameStoryPropType,
 };
 
 export default StoryGridView;

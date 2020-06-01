@@ -83,3 +83,15 @@ export const PageSizePropType = PropTypes.shape({
   width: PropTypes.number,
   height: PropTypes.number,
 });
+
+export const StoryMenuPropType = PropTypes.shape({
+  handleMenuToggle: PropTypes.func.isRequired,
+  contextMenuId: PropTypes.number.isRequired,
+  handleMenuItemSelected: PropTypes.func.isRequired,
+});
+
+export const RenameStoryPropType = PropTypes.shape({
+  handleOnRenameStory: PropTypes.func,
+  id: PropTypes.number,
+  handleCancelRename: PropTypes.func,
+});

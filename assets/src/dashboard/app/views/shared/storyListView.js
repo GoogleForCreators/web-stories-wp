@@ -29,7 +29,12 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useCallback } from 'react';
-import { StoriesPropType, UsersPropType } from '../../../types';
+import {
+  StoriesPropType,
+  UsersPropType,
+  RenameStoryPropType,
+  StoryMenuPropType,
+} from '../../../types';
 import {
   PreviewPage,
   Table,
@@ -276,17 +281,9 @@ export default function StoryListView({
 StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
-  renameStory: PropTypes.shape({
-    handleOnRenameStory: PropTypes.func,
-    id: PropTypes.number,
-    handleCancelRename: PropTypes.func,
-  }),
+  renameStory: RenameStoryPropType,
   sortDirection: PropTypes.string.isRequired,
-  storyMenu: PropTypes.shape({
-    handleMenuToggle: PropTypes.func.isRequired,
-    contextMenuId: PropTypes.number.isRequired,
-    handleMenuItemSelected: PropTypes.func.isRequired,
-  }),
+  storyMenu: StoryMenuPropType.isRequired,
   storySort: PropTypes.string.isRequired,
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
