@@ -14,4 +14,15 @@
  * limitations under the License.
  */
 
-export { default } from './dateTime';
+/**
+ * The flags that can be enabled on the editor for feature development
+ * and testing.
+ *
+ * @enum {string}
+ */
+const Flags = {
+  // Drop-down menu in the MediaElement.
+  MEDIA_DROPDOWN_MENU: 'mediaDropdownMenu',
+};
+
+export default Flags;
