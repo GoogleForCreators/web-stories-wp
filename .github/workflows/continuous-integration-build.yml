@@ -63,7 +63,6 @@ jobs:
 
       - name: Bundle plugin
         run: |
-          echo 'assets/images/templates' >> .distignore
           npm run build:js
           npm run workflow:version -- --nightly
           npm run workflow:build-plugin -- --cdn --composer --zip web-stories-composer.zip

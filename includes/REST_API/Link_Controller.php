@@ -69,10 +69,10 @@ class Link_Controller extends WP_REST_Controller {
 					'permission_callback' => [ $this, 'parse_link_permissions_check' ],
 					'args'                => [
 						'url' => [
-							'description'       => __( 'The URL to process.', 'web-stories' ),
-							'type'              => 'string',
-							'required'          => true,
-							'sanitize_callback' => 'esc_url_raw',
+							'description' => __( 'The URL to process.', 'web-stories' ),
+							'required'    => true,
+							'type'        => 'string',
+							'format'      => 'uri',
 						],
 					],
 				],
@@ -89,6 +89,10 @@ class Link_Controller extends WP_REST_Controller {
 	 */
 	public function parse_link( $request ) {
 		$url = untrailingslashit( $request['url'] );
+
+		if ( empty( $url ) ) {
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+		}
 
 		/**
 		 * Filters the link data TTL value.

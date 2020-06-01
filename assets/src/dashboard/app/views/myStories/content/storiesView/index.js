@@ -28,10 +28,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import {
-  CategoriesPropType,
   StoriesPropType,
   StoryActionsPropType,
-  TagsPropType,
   UsersPropType,
 } from '../../../../../types';
 import {
@@ -45,12 +43,10 @@ import {
 import { StoryGridView, StoryListView } from '../../../shared';
 
 function StoriesView({
-  categories,
   filterValue,
   sort,
   storyActions,
   stories,
-  tags,
   users,
   view,
 }) {
@@ -62,8 +58,6 @@ function StoriesView({
       sortDirection={sort.direction}
       handleSortChange={sort.set}
       handleSortDirectionChange={sort.setDirection}
-      tags={tags}
-      categories={categories}
       users={users}
     />
   ) : (
@@ -82,12 +76,10 @@ function StoriesView({
 }
 
 StoriesView.propTypes = {
-  categories: CategoriesPropType,
   filterValue: PropTypes.string,
   sort: SortPropTypes,
   storyActions: StoryActionsPropType,
   stories: StoriesPropType,
-  tags: TagsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
 };
