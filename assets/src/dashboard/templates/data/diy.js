@@ -841,7 +841,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg-1.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -963,7 +963,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg-1.jpg`,
+              src: `${imageBaseUrl}/images/templates/diy/diy_page4_page5_bg.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -1709,7 +1709,7 @@ export default function (imageBaseUrl) {
             x: 42,
             y: 399,
             content:
-              '<span style="color: rgba(255, 255, 255, 1)">DC390B 18V Circular Saw</span>',
+              '<span style="color: rgba(255, 255, 255, 1)">18V Circular Saw</span>',
           },
           {
             font: {
@@ -1753,7 +1753,7 @@ export default function (imageBaseUrl) {
             x: 42,
             y: 432,
             content:
-              '<span style="color: rgba(255, 255, 255, 1)">The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip blade to maintain sharpness, and high strength shoe and upper guard for increased durability.</span>',
+              '<span style="color: rgba(255, 255, 255, 1)">The 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip blade to maintain sharpness, and high strength shoe and upper guard for increased durability.</span>',
           },
           {
             font: {
@@ -2683,7 +2683,7 @@ export default function (imageBaseUrl) {
             link: {
               url: 'http://google.com',
               icon: null,
-              desc: 'DC390B 18V Circular Saw',
+              desc: '18V Circular Saw',
             },
           },
           {
@@ -2749,7 +2749,7 @@ export default function (imageBaseUrl) {
               url: 'http://google.com',
               icon: null,
               desc:
-                'The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip...',
+                'The 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip...',
             },
           },
           {
@@ -2815,7 +2815,7 @@ export default function (imageBaseUrl) {
               url: 'http://google.com',
               icon: null,
               desc:
-                'The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip...',
+                'The 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip...',
             },
           },
         ],
