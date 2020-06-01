@@ -119,6 +119,7 @@ function PublishTime() {
           aria-pressed={showDatePicker}
           aria-haspopup={true}
           aria-expanded={showDatePicker}
+          aria-label={__('Edit: Story publish time', 'web-stories')}
           onClick={(e) => {
             e.preventDefault();
             if (!showDatePicker) {

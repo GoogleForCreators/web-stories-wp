@@ -166,7 +166,7 @@ function MediaInput({
         <DefaultImage size={size} />
       )}
       {loading && <LoadingDots />}
-      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={title}>
+      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={ariaLabel}>
         <EditIcon />
       </EditBtn>
     </Container>
@@ -182,7 +182,7 @@ MediaInput.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.number,
   circle: PropTypes.bool,
-  ariaLabel: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
@@ -196,7 +196,6 @@ MediaInput.defaultProps = {
   flexBasis: 100,
   textCenter: false,
   circle: false,
-  ariaLabel: __('Standard input', 'web-stories'),
   size: null,
   type: 'image',
   buttonInsertText: __('Choose an image', 'web-stories'),
