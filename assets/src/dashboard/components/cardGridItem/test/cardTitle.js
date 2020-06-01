@@ -50,6 +50,7 @@ describe('CardTitle', () => {
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={true}
+        id="sampleStoryId"
       />
     );
 

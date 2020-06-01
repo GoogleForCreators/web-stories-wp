@@ -69,7 +69,7 @@ const InlineInputForm = ({
   );
   return (
     <div ref={inputContainerRef}>
-      <Label for={id}>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <TextInput
         id={id}
         data-testid={'inline-input-form'}
@@ -82,7 +82,7 @@ const InlineInputForm = ({
 };
 
 InlineInputForm.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
   onEditCancel: PropTypes.func.isRequired,
   onEditComplete: PropTypes.func.isRequired,

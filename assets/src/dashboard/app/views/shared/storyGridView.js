@@ -98,11 +98,14 @@ const StoryGridView = ({
                     : users[story.author]?.name
                 }
                 displayDate={story?.modified}
-                editMode={renameStory.id === story.id}
-                onEditComplete={(newTitle) =>
-                  renameStory.handleOnRenameStory(story, newTitle)
-                }
-                onEditCancel={renameStory.handleCancelRename}
+                {...(renameStory
+                  ? {
+                      editMode: renameStory?.id === story?.id,
+                      onEditComplete: (newTitle) =>
+                        renameStory?.handleOnRenameStory(story, newTitle),
+                      onEditCancel: renameStory?.handleCancelRename,
+                    }
+                  : {})}
               />
 
               <StoryMenu
