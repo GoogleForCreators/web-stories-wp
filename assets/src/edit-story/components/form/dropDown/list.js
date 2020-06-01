@@ -99,6 +99,12 @@ function DropDownList({
     [focusedValue, options]
   );
 
+  useEffect(() => {
+    // Hide dropdown menu on scroll.
+    document.addEventListener('scroll', toggleOptions, true);
+    return () => document.removeEventListener('scroll', toggleOptions, true);
+  }, [toggleOptions]);
+
   const handleMoveFocus = useCallback(
     (offset) => {
       if (

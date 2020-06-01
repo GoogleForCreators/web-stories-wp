@@ -148,7 +148,6 @@ function StoryAnimTool() {
   const handleAddOrUpdateAnimation = useCallback(
     (animation) => {
       const story = { ...activeStory };
-
       const animationWithTargets = {
         ...animation,
         targets: [...Object.values(selectedElementIds)],

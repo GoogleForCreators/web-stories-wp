@@ -24,7 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useLayoutEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -45,10 +45,12 @@ import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
-  LogoPlaceholder,
   NavLink,
   Rule,
   NavButton,
+  NavList,
+  NavListItem,
+  WebStoriesHeading,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -85,10 +87,11 @@ export const LeftRailContainer = styled.nav.attrs({
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.borders.gray50};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
-  transition: transform 0.25s ${BEZIER.outCubic}, visibility 0.25s linear;
+  transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     padding-left: 0;
+    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
     transform: translateX(${({ isOpen }) => (isOpen ? 'none' : `-100%`)});
   }
@@ -126,41 +129,60 @@ export function LeftRail() {
 
   useFocusOut(leftRailRef, handleSideBarClose, [sideBarVisible]);
 
+  useLayoutEffect(() => {
+    if (sideBarVisible && leftRailRef.current) {
+      leftRailRef.current.focus();
+    }
+  }, [sideBarVisible]);
+
   return (
     <LeftRailContainer
       onClickCapture={onContainerClickCapture}
       ref={leftRailRef}
       isOpen={sideBarVisible}
+      tabIndex={-1}
+      role="navigation"
+      aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
-        <LogoPlaceholder />
+        <Content>
+          <WebStoriesHeading>
+            {__('Web Stories', 'web-stories')}
+          </WebStoriesHeading>
+        </Content>
         <Content>
           <NavButton type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
             {__('Create New Story', 'web-stories')}
           </NavButton>
         </Content>
         <Content>
-          {primaryPaths.map((path) => (
-            <NavLink
-              active={path.value === state.currentPath}
-              key={path.value}
-              href={resolveRoute(path.value)}
-            >
-              {path.label}
-            </NavLink>
-          ))}
+          <NavList>
+            {primaryPaths.map((path) => (
+              <NavListItem key={path.value}>
+                <NavLink
+                  active={path.value === state.currentPath}
+                  href={resolveRoute(path.value)}
+                >
+                  {path.label}
+                </NavLink>
+              </NavListItem>
+            ))}
+          </NavList>
         </Content>
         <Rule />
         <Content>
-          {secondaryPaths.map((path) => (
-            <NavLink
-              active={path.value === state.currentPath}
-              key={path.value}
-              href={resolveRoute(path.value)}
-            >
-              {path.label}
-            </NavLink>
-          ))}
+          <NavList>
+            {secondaryPaths.map((path) => (
+              <NavListItem key={path.value}>
+                <NavLink
+                  active={path.value === state.currentPath}
+                  href={resolveRoute(path.value)}
+                >
+                  {path.label}
+                </NavLink>
+              </NavListItem>
+            ))}
+          </NavList>
         </Content>
       </div>
       <Content>

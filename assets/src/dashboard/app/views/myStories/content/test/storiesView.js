@@ -19,7 +19,11 @@
  */
 import { renderWithTheme } from '../../../../../testUtils';
 
-import { STORY_SORT_OPTIONS, SORT_DIRECTION } from '../../../../../constants';
+import {
+  STORY_SORT_OPTIONS,
+  SORT_DIRECTION,
+  VIEW_STYLE,
+} from '../../../../../constants';
 import StoriesView from '../storiesView';
 
 const fakeStories = [
@@ -50,7 +54,7 @@ const fakeStories = [
 ];
 
 describe('My Stories <StoriesView />', function () {
-  it('should render stories as a grid by default', function () {
+  it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
     const { getAllByTestId } = renderWithTheme(
       <StoriesView
         filterValue="all"
@@ -66,6 +70,10 @@ describe('My Stories <StoriesView />', function () {
         }}
         stories={fakeStories}
         users={{}}
+        view={{
+          style: VIEW_STYLE.GRID,
+          pageSize: { width: 210, height: 316 },
+        }}
       />
     );
 
