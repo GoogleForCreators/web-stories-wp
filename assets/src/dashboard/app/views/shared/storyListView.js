@@ -44,7 +44,7 @@ import {
   TableStatusCell,
   TableStatusHeaderCell,
   TableTitleHeaderCell,
-  CardItemMenu,
+  StoryMenu,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -216,7 +216,7 @@ export default function StoryListView({
               </TablePreviewCell>
               <TableCell>
                 {story.title}
-                <CardItemMenu
+                <StoryMenu
                   onMoreButtonSelected={storyMenu.handleMenuToggle}
                   contextMenuId={storyMenu.contextMenuId}
                   onMenuItemSelected={storyMenu.handleMenuItemSelected}

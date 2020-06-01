@@ -32,7 +32,7 @@ import {
   CardTitle,
   CardPreviewContainer,
   ActionLabel,
-  CardItemMenu,
+  StoryMenu,
 } from '../../../components';
 import {
   StoriesPropType,
@@ -102,7 +102,7 @@ const StoryGridView = ({
                 onEditCancel={renameStory.handleCancelRename}
               />
 
-              <CardItemMenu
+              <StoryMenu
                 onMoreButtonSelected={storyMenu.handleMenuToggle}
                 contextMenuId={storyMenu.contextMenuId}
                 onMenuItemSelected={storyMenu.handleMenuItemSelected}

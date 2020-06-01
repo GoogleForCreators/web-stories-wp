@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { MoreVerticalButton } from './cardItemMenu';
+import { MoreVerticalButton } from '../storyMenu';
 import { ActionLabel } from './types';
 
 const StyledCard = styled.div`
@@ -52,4 +52,3 @@ export default CardGridItem;
 export { default as CardPreviewContainer } from './cardPreview';
 export { ActionLabel };
 export { default as CardTitle } from './cardTitle';
-export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';

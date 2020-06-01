@@ -20,11 +20,9 @@ export { default as CardGallery } from './cardGallery';
 export { default as CardGrid } from './cardGrid';
 export {
   ActionLabel,
-  CardItemMenu,
   CardPreviewContainer,
   CardTitle,
   default as CardGridItem,
-  MoreVerticalButton,
 } from './cardGridItem';
 export {
   default as NavProvider,
@@ -52,6 +50,7 @@ export { default as PopoverPanel } from './popoverPanel';
 export { default as PreviewPage } from './previewPage';
 export { default as PreviewErrorBoundary } from './previewErrorBoundary';
 export { default as ScrollToTop } from './scrollToTop';
+export { default as StoryMenu, MoreVerticalButton } from './storyMenu';
 export {
   Table,
   TableBody,

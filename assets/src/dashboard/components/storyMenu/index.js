@@ -51,7 +51,7 @@ const MenuContainer = styled.div`
   margin-top: 12px;
 `;
 
-export default function CardItemMenu({
+export default function StoryMenu({
   contextMenuId,
   onMoreButtonSelected,
   onMenuItemSelected,
@@ -86,7 +86,7 @@ export default function CardItemMenu({
   );
 }
 
-CardItemMenu.propTypes = {
+StoryMenu.propTypes = {
   story: StoryPropType,
   onMoreButtonSelected: PropTypes.func.isRequired,
   onMenuItemSelected: PropTypes.func.isRequired,
