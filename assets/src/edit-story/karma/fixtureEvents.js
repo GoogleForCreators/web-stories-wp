@@ -303,6 +303,7 @@ class Mouse {
         let [x, y] = this._xy;
         x += dx;
         y += dy;
+        this._xy = [x, y];
         return this._events.move(x, y, options);
       },
     };
