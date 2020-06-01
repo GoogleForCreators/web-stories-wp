@@ -70,7 +70,7 @@ describe('Multi-selection Movable integration', () => {
       element3 = await fixture.act(() =>
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
-          content: 'Text B',
+          content: 'Text C',
           x: element1.x + element1.width + 1,
           y: element1.y + element1.height + 1,
           width: 20,
