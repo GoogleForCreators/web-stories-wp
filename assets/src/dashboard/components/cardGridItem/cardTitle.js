@@ -124,7 +124,7 @@ const CardTitle = ({
 };
 
 CardTitle.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string.isRequired,
   titleLink: PropTypes.string.isRequired,
   secondaryTitle: PropTypes.string,

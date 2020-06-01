@@ -38,12 +38,12 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(queryByTestId('title-rename-input')).toBeNull();
+    expect(queryByTestId('inline-input-form')).toBeNull();
     expect(getByText('Sample Story')).toBeDefined();
   });
 
   it('should render Card Title with an input field when edit mode is true', () => {
-    const { getByTestId } = renderWithTheme(
+    const { getByDisplayValue, getByLabelText } = renderWithTheme(
       <CardTitle
         title="Sample Story"
         displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
@@ -53,9 +53,11 @@ describe('CardTitle', () => {
         id="sampleStoryId"
       />
     );
+    const titleInput = getByDisplayValue('Sample Story');
+    const inputLabel = getByLabelText('Rename story');
 
-    expect(getByTestId('title-rename-input')).toBeDefined();
-    expect(getByTestId('title-rename-input')).toHaveFocus();
+    expect(inputLabel).toBeDefined();
+    expect(titleInput).toBeDefined();
   });
 
   it(`should prepend "draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
