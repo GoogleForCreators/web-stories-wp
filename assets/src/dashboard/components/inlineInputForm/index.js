@@ -71,6 +71,7 @@ const InlineInputForm = ({
     <div ref={inputContainerRef}>
       <Label htmlFor={id}>{label}</Label>
       <TextInput
+        type="text"
         id={id}
         data-testid={'inline-input-form'}
         value={newValue}
