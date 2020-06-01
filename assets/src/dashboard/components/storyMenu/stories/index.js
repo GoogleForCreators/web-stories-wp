@@ -26,8 +26,12 @@ import { useState } from 'react';
 import StoryMenu, { MoreVerticalButton } from '..';
 
 const Container = styled.div`
-  width: 250px;
+  margin: 0;
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
   border: 1px solid gray;
+
   &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
     opacity: 1;
   }

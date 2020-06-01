@@ -32,6 +32,10 @@ const StyledCard = styled.div`
   display: flex;
   flex-direction: column;
 
+  ${MoreVerticalButton} {
+    margin: 12px 0;
+  }
+
   &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
     opacity: 1;
   }

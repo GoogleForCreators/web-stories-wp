@@ -45,6 +45,8 @@ import {
   TableStatusHeaderCell,
   TableTitleHeaderCell,
   StoryMenu,
+  MoreVerticalButton,
+  InlineInputForm,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -105,6 +107,20 @@ const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
   cursor: pointer;
 `;
 
+const TitleTableCellContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  ${MoreVerticalButton} {
+    margin: 4px auto;
+  }
+
+  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
+    opacity: 1;
+  }
+`;
+
 const toggleSortLookup = {
   [SORT_DIRECTION.DESC]: SORT_DIRECTION.ASC,
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
@@ -113,6 +129,7 @@ const toggleSortLookup = {
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
+  renameStory,
   sortDirection,
   stories,
   storyMenu,
@@ -215,13 +232,29 @@ export default function StoryListView({
                 </PreviewContainer>
               </TablePreviewCell>
               <TableCell>
-                {story.title}
-                <StoryMenu
-                  onMoreButtonSelected={storyMenu.handleMenuToggle}
-                  contextMenuId={storyMenu.contextMenuId}
-                  onMenuItemSelected={storyMenu.handleMenuItemSelected}
-                  story={story}
-                />
+                <TitleTableCellContainer>
+                  {renameStory.id === story.id ? (
+                    <InlineInputForm
+                      onEditComplete={(newTitle) =>
+                        renameStory.handleOnRenameStory(story, newTitle)
+                      }
+                      onEditCancel={renameStory.handleCancelRename}
+                      value={story.title}
+                      id={story.id}
+                      label={__('Rename story', 'web-stories')}
+                    />
+                  ) : (
+                    <>
+                      <p>{story.title}</p>
+                      <StoryMenu
+                        onMoreButtonSelected={storyMenu.handleMenuToggle}
+                        contextMenuId={storyMenu.contextMenuId}
+                        onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                        story={story}
+                      />
+                    </>
+                  )}
+                </TitleTableCellContainer>
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
               <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
@@ -243,6 +276,11 @@ export default function StoryListView({
 StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
+  renameStory: PropTypes.shape({
+    handleOnRenameStory: PropTypes.func,
+    id: PropTypes.number,
+    handleCancelRename: PropTypes.func,
+  }),
   sortDirection: PropTypes.string.isRequired,
   storyMenu: PropTypes.shape({
     handleMenuToggle: PropTypes.func.isRequired,

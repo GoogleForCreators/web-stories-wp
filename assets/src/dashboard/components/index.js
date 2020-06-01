@@ -35,6 +35,7 @@ export {
 } from './contentGutter';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
+export { default as InlineInputForm } from './inlineInputForm';
 export { TextInput } from './input';
 export { default as Layout, useLayoutContext } from './layout';
 export { default as MultiPartPill } from './multiPartPill';

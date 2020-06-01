@@ -123,12 +123,13 @@ function StoriesView({
     <StoryListView
       handleSortChange={sort.set}
       handleSortDirectionChange={sort.setDirection}
-      users={users}
+      renameStory={renameStory}
       sortDirection={sort.direction}
       stories={stories}
       storyMenu={storyMenu}
       storySort={sort.value}
       storyStatus={filterValue}
+      users={users}
     />
   ) : (
     <StoryGridView
