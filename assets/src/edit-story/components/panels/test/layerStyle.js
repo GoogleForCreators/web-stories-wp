@@ -31,36 +31,32 @@ describe('Panels/LayerStyle', () => {
   }
 
   it('should render <LayerStyle /> panel', () => {
-    const { getByText } = renderLayerStyle([{ opacity: 100 }]);
-    const element = getByText('Layer');
+    const { getByRole } = renderLayerStyle([{ opacity: 100 }]);
+    const element = getByRole('button', { name: 'Layer' });
     expect(element).toBeDefined();
   });
 
   it('should set opacity to 100 if not set', () => {
-    const { getByText } = renderLayerStyle([{}]);
-    const element = getByText('Opacity');
-    const input = element.getElementsByTagName('input')[0];
+    const { getByRole } = renderLayerStyle([{}]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.value).toStrictEqual('100%');
   });
 
   it('should set opacity to 100 if set to 0', () => {
-    const { getByText } = renderLayerStyle([{ opacity: 0 }]);
-    const element = getByText('Opacity');
-    const input = element.getElementsByTagName('input')[0];
+    const { getByRole } = renderLayerStyle([{ opacity: 0 }]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.value).toStrictEqual('100%');
   });
 
   it('should set opacity to 49 if set to 49', () => {
-    const { getByText } = renderLayerStyle([{ opacity: 49 }]);
-    const element = getByText('Opacity');
-    const input = element.getElementsByTagName('input')[0];
+    const { getByRole } = renderLayerStyle([{ opacity: 49 }]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.value).toStrictEqual('49%');
   });
 
   it('should update opacity value on change', () => {
-    const { getByText, pushUpdate } = renderLayerStyle([{ opacity: 49 }]);
-    const element = getByText('Opacity');
-    const input = element.getElementsByTagName('input')[0];
+    const { getByRole, pushUpdate } = renderLayerStyle([{ opacity: 49 }]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
     fireEvent.change(input, { target: { value: '23' } });
     expect(pushUpdate).toHaveBeenCalledWith({ opacity: 23 });
   });

@@ -87,7 +87,6 @@ function TextInput({
   label,
   value,
   flexBasis,
-  ariaLabel,
   disabled,
   clear,
   placeholder,
@@ -103,11 +102,12 @@ function TextInput({
       flexBasis={flexBasis}
       disabled={disabled}
     >
+      {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
+        type="text"
         placeholder={placeholder}
         label={label}
         value={value}
-        aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
         onChange={(evt) => onChange(evt.target.value, evt)}
@@ -153,7 +153,6 @@ TextInput.propTypes = {
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
   clear: PropTypes.bool,
-  ariaLabel: PropTypes.string,
   placeholder: PropTypes.string,
 };
 
@@ -163,7 +162,6 @@ TextInput.defaultProps = {
   flexBasis: 100,
   textCenter: false,
   clear: false,
-  ariaLabel: __('Standard input', 'web-stories'),
   placeholder: null,
 };
 
