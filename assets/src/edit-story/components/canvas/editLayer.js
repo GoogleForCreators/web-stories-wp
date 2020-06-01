@@ -90,6 +90,7 @@ function EditLayerForElement({ element }) {
   return (
     <LayerWithGrayout
       ref={ref}
+      data-testid="editLayer"
       grayout={editModeGrayout}
       zIndex={Z_INDEX.EDIT}
       onPointerDown={(evt) => {
@@ -98,7 +99,7 @@ function EditLayerForElement({ element }) {
         }
       }}
     >
-      <EditPageArea ref={pageAreaRef}>
+      <EditPageArea ref={pageAreaRef} showOverflow={editModeGrayout}>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>

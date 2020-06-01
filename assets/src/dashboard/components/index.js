@@ -15,7 +15,7 @@
  */
 
 export { default as BookmarkChip } from './bookmark-chip';
-export { default as Button } from './button';
+export { default as Button, PaginationButton } from './button';
 export { default as CardGallery } from './cardGallery';
 export { default as CardGrid } from './cardGrid';
 export {
@@ -74,6 +74,13 @@ export { TemplateNavBar } from './templateNavBar';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';
-export { ViewHeader } from './typography';
+export {
+  DefaultParagraph1,
+  Heading1,
+  Heading2,
+  Paragraph1,
+  Paragraph2,
+  TypographyPresets,
+} from './typography';
 export { default as ViewStyleBar } from './viewStyleBar';
 export { default as Tooltip } from './tooltip';

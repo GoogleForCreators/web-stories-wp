@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -26,6 +27,13 @@ import {
   useRef,
 } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
+import { useFeature } from 'flagged';
+
+/**
+ * Internal dependencies
+ */
+import { AnimationPart, throughput } from '../../animations/parts';
 
 const Context = createContext(null);
 
@@ -49,24 +57,35 @@ const createOnFinishPromise = (animation) => {
 };
 
 function Provider({ animations, children, onWAAPIFinish }) {
-  const animationGeneratorMap = useMemo(() => {
+  const enableAnimation = useFeature('enableAnimation');
+  const animationPartsMap = useMemo(() => {
     return (animations || []).reduce((map, animation) => {
       const { targets, type, ...args } = animation;
 
       (targets || []).forEach((t) => {
-        const animationGenerators = map.get(t) || [];
-        map.set(t, [...animationGenerators, (fn) => fn(type, args)]);
+        const generatedParts = map.get(t) || [];
+        map.set(t, [
+          ...generatedParts,
+          enableAnimation ? AnimationPart(type, args) : throughput(),
+        ]);
       });
 
       return map;
     }, new Map());
-  }, [animations]);
+  }, [animations, enableAnimation]);
 
-  const getAnimationGenerators = useCallback(
+  const providerId = useMemo(() => uuidv4(), []);
+
+  const animationTargets = useMemo(
+    () => Array.from(animationPartsMap.keys() || []),
+    [animationPartsMap]
+  );
+
+  const getAnimationParts = useCallback(
     (target) => {
-      return animationGeneratorMap.get(target) || [];
+      return animationPartsMap.get(target) || [];
     },
-    [animationGeneratorMap]
+    [animationPartsMap]
   );
 
   /**
@@ -91,8 +110,29 @@ function Provider({ animations, children, onWAAPIFinish }) {
     };
   }, []);
 
-  const playWAAPIAnimations = useCallback(() => {
-    WAAPIAnimations.forEach((animation) => animation?.play());
+  const WAAPIAnimationMethods = useMemo(() => {
+    const play = () =>
+      WAAPIAnimations.forEach((animation) => animation?.play());
+    const pause = () =>
+      WAAPIAnimations.forEach((animation) => animation?.pause());
+    const setCurrentTime = (time) =>
+      WAAPIAnimations.forEach((animation) => {
+        const { duration, delay } = animation.effect.timing;
+        const animationEndTime = (delay || 0) + (duration || 0);
+        animation.currentTime = time === 'end' ? animationEndTime : time;
+      });
+
+    return {
+      play,
+      pause,
+      setCurrentTime,
+      reset: () => {
+        pause();
+        requestAnimationFrame(() => {
+          setCurrentTime('end');
+        });
+      },
+    };
   }, [WAAPIAnimations]);
 
   /**
@@ -130,21 +170,29 @@ function Provider({ animations, children, onWAAPIFinish }) {
   const value = useMemo(
     () => ({
       state: {
-        getAnimationGenerators,
+        providerId,
+        animationTargets,
       },
       actions: {
+        getAnimationParts,
         hoistWAAPIAnimation,
-        playWAAPIAnimations,
+        WAAPIAnimationMethods,
       },
     }),
-    [getAnimationGenerators, hoistWAAPIAnimation, playWAAPIAnimations]
+    [
+      providerId,
+      getAnimationParts,
+      animationTargets,
+      hoistWAAPIAnimation,
+      WAAPIAnimationMethods,
+    ]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 Provider.propTypes = {
-  animations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  animations: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
 };

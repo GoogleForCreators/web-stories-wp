@@ -25,6 +25,7 @@ import styled from 'styled-components';
  */
 import { KEYS } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
+import { TypographyPresets } from '../typography';
 
 export const MenuContainer = styled.ul`
   align-items: flex-start;
@@ -42,21 +43,17 @@ MenuContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const MenuItem = styled.li(
-  ({ theme, isDisabled, isHovering }) => `
+export const MenuItem = styled.li`
+  ${TypographyPresets.Small};
+  ${({ theme, isDisabled, isHovering }) => `
     padding: 5px 25px;
     background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
     color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     cursor: ${isDisabled ? 'default' : 'pointer'};
     display: flex;
-    font-family: ${theme.fonts.popoverMenu.family};
-    font-size: ${theme.fonts.popoverMenu.size}px;
-    line-height: ${theme.fonts.popoverMenu.lineHeight}px;
-    font-weight: ${theme.fonts.popoverMenu.weight};
-    letter-spacing: ${theme.fonts.popoverMenu.letterSpacing}em;
     width: 100%;
-  `
-);
+  `}
+`;
 
 MenuItem.propTypes = {
   isDisabled: PropTypes.bool,

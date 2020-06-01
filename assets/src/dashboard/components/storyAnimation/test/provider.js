@@ -13,20 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+jest.mock('flagged');
+import { useFeature } from 'flagged';
 import { renderHook, act } from '@testing-library/react-hooks';
+
 /**
  * Internal dependencies
  */
 import { createWrapperWithProps, flushPromiseQueue } from '../../../testUtils';
 import StoryAnimation, { useStoryAnimationContext } from '..';
+import * as animationParts from '../../../animations/parts';
 
 const defaultWAAPIAnimation = {
   onfinish: null,
   cancel: () => {},
   play: () => {},
+  effect: {
+    timing: {
+      duration: 0,
+      delay: 0,
+    },
+  },
 };
 const mockWAAPIAnimation = (overrides = {}) => ({
   ...defaultWAAPIAnimation,
@@ -34,8 +45,10 @@ const mockWAAPIAnimation = (overrides = {}) => ({
 });
 
 describe('StoryAnimation.Provider', () => {
-  describe('getAnimationGenerators(target)', () => {
-    it('calls all generators for a target', () => {
+  useFeature.mockImplementation(() => true);
+
+  describe('getAnimationParts(target)', () => {
+    it('gets all generated parts for a target', () => {
       const target = 'some-target';
       const targets = [target];
       const animations = [
@@ -52,12 +65,12 @@ describe('StoryAnimation.Provider', () => {
       });
 
       const {
-        state: { getAnimationGenerators },
+        actions: { getAnimationParts },
       } = result.current;
 
-      expect(getAnimationGenerators(target)).toHaveLength(3);
-      expect(getAnimationGenerators('other-target')).toHaveLength(2);
-      expect(getAnimationGenerators('not used target')).toHaveLength(0);
+      expect(getAnimationParts(target)).toHaveLength(3);
+      expect(getAnimationParts('other-target')).toHaveLength(2);
+      expect(getAnimationParts('not used target')).toHaveLength(0);
     });
 
     it('calls generators for a target in ascending order', () => {
@@ -71,6 +84,13 @@ describe('StoryAnimation.Provider', () => {
         { targets, type: type[2], ...args },
       ];
 
+      const AnimationPartMock = jest
+        .spyOn(animationParts, 'AnimationPart')
+        .mockImplementation((t, a) => ({
+          type: t,
+          args: a,
+        }));
+
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {
           animations,
@@ -78,14 +98,14 @@ describe('StoryAnimation.Provider', () => {
       });
 
       const {
-        state: { getAnimationGenerators },
+        actions: { getAnimationParts },
       } = result.current;
 
-      const sample = jest.fn();
-      getAnimationGenerators(target).forEach((generator, i) => {
-        generator(sample);
-        expect(sample).toHaveBeenCalledWith(type[i], args);
+      getAnimationParts(target).forEach((animationPart, i) => {
+        expect(animationPart).toStrictEqual({ type: type[i], args });
       });
+
+      AnimationPartMock.mockRestore();
     });
 
     it('calls generators for a target with propper args', () => {
@@ -103,6 +123,13 @@ describe('StoryAnimation.Provider', () => {
         { targets, type: type, ...args[2] },
       ];
 
+      const AnimationPartMock = jest
+        .spyOn(animationParts, 'AnimationPart')
+        .mockImplementation((t, a) => ({
+          type: t,
+          args: a,
+        }));
+
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {
           animations,
@@ -110,14 +137,14 @@ describe('StoryAnimation.Provider', () => {
       });
 
       const {
-        state: { getAnimationGenerators },
+        actions: { getAnimationParts },
       } = result.current;
 
-      const sample = jest.fn();
-      getAnimationGenerators(target).forEach((generator, i) => {
-        generator(sample);
-        expect(sample).toHaveBeenCalledWith(type, args[i]);
+      getAnimationParts(target).forEach((animationPart, i) => {
+        expect(animationPart).toStrictEqual({ type, args: { ...args[i] } });
       });
+
+      AnimationPartMock.mockRestore();
     });
   });
 
@@ -165,8 +192,8 @@ describe('StoryAnimation.Provider', () => {
     });
   });
 
-  describe('playWAAPIAnimations()', () => {
-    it('calls all hoisted Animation.play() methods when called', () => {
+  describe('WAAPIAnimationMethods', () => {
+    it('calls all hoisted Animation methods when called', () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {
           animations: [],
@@ -175,15 +202,26 @@ describe('StoryAnimation.Provider', () => {
 
       const numCalls = 10;
       const play = jest.fn();
-      for (let i = 0; i < numCalls; i++) {
+      const pause = jest.fn();
+      const animations = Array.from({ length: numCalls }, () => {
+        const animation = mockWAAPIAnimation({ play, pause, currentTime: 0 });
         act(() => {
-          result.current.actions.hoistWAAPIAnimation(
-            mockWAAPIAnimation({ play })
-          );
+          result.current.actions.hoistWAAPIAnimation(animation);
         });
-      }
-      act(() => result.current.actions.playWAAPIAnimations());
+        return animation;
+      });
+
+      act(() => result.current.actions.WAAPIAnimationMethods.play());
+      act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      act(() =>
+        result.current.actions.WAAPIAnimationMethods.setCurrentTime(200)
+      );
+
       expect(play).toHaveBeenCalledTimes(numCalls);
+      expect(pause).toHaveBeenCalledTimes(numCalls);
+      animations.forEach((animation) => {
+        expect(animation.currentTime).toStrictEqual(200);
+      });
     });
 
     it('excludes cleaned up animation methods when called', () => {
@@ -193,13 +231,19 @@ describe('StoryAnimation.Provider', () => {
         }),
       });
 
+      const initialTime = 0;
+      const newTime = 200;
+
       const numAnims = 10;
       const unhoistIndex = numAnims / 2;
       const animations = Array.from({ length: numAnims }, () =>
         mockWAAPIAnimation({
           play: jest.fn(),
+          pause: jest.fn(),
+          currentTime: initialTime,
         })
       );
+
       const unhoists = animations.map((animation) => {
         let unhoist;
         act(() => {
@@ -210,12 +254,22 @@ describe('StoryAnimation.Provider', () => {
       act(() => {
         unhoists[unhoistIndex]();
       });
-      act(() => result.current.actions.playWAAPIAnimations());
-      animations.map(({ play }, i) => {
+
+      act(() => result.current.actions.WAAPIAnimationMethods.play());
+      act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      act(() =>
+        result.current.actions.WAAPIAnimationMethods.setCurrentTime(newTime)
+      );
+
+      animations.map((animation, i) => {
         if (i === unhoistIndex) {
-          expect(play).toHaveBeenCalledTimes(0);
+          expect(animation.play).toHaveBeenCalledTimes(0);
+          expect(animation.pause).toHaveBeenCalledTimes(0);
+          expect(animation.currentTime).toStrictEqual(initialTime);
         } else {
-          expect(play).toHaveBeenCalledTimes(1);
+          expect(animation.play).toHaveBeenCalledTimes(1);
+          expect(animation.pause).toHaveBeenCalledTimes(1);
+          expect(animation.currentTime).toStrictEqual(newTime);
         }
       });
     });

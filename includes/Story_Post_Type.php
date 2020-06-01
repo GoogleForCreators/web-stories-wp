@@ -115,10 +115,6 @@ class Story_Post_Type {
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
 				],
 				'menu_icon'             => 'dashicons-book',
-				'taxonomies'            => [
-					'post_tag',
-					'category',
-				],
 				'supports'              => [
 					'title', // Used for amp-story[title].
 					'author',
@@ -385,12 +381,11 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'stories'  => sprintf( '/wp/v2/%s', $rest_base ),
-					'media'    => '/wp/v2/media',
-					'users'    => '/wp/v2/users',
-					'statuses' => '/wp/v2/statuses',
-					'fonts'    => '/web-stories/v1/fonts',
-					'link'     => '/web-stories/v1/link',
+					'stories' => sprintf( '/wp/v2/%s', $rest_base ),
+					'media'   => '/wp/v2/media',
+					'users'   => '/wp/v2/users',
+					'fonts'   => '/web-stories/v1/fonts',
+					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
 					'publisher'       => self::get_publisher_data(),
@@ -398,7 +393,15 @@ class Story_Post_Type {
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
-			'flags'  => [],
+			'flags'  => [
+				/**
+				 * Description: Flag for hover dropdown menu for media element in media library.
+				 * Author: @joannag6
+				 * Issue: #1319 and #354
+				 * Creation date: 2020-05-20
+				 */
+				'mediaDropdownMenu' => false,
+			],
 		];
 
 		return $settings;

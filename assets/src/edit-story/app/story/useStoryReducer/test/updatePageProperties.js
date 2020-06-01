@@ -63,7 +63,6 @@ describe('updatePageProperties', () => {
         x: 2,
         id: '333',
         elements: ['many'],
-        backgroundElementId: 'nothing',
       },
     });
 

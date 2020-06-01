@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Button } from '../../../components';
+import { TypographyPresets, Paragraph2 } from '../../../components';
 
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
@@ -61,34 +61,21 @@ export const Column = styled.div`
   `}
 `;
 
-export const Title = styled.h2`
-  ${({ theme }) => `
-    margin: 0;
-    font-family: ${theme.fonts.heading4.family};
-    font-size: ${theme.fonts.heading4.size}px;
-    font-weight: ${theme.fonts.heading4.weight};
-    line-height: ${theme.fonts.heading4.lineHeight}px;
-    color: ${theme.colors.gray900};
-  `}
+export const Title = styled.h1`
+  ${TypographyPresets.ExtraLarge};
+  color: ${({ theme }) => theme.colors.gray900};
 `;
 
-export const ByLine = styled.p`
-  ${({ theme }) => `
+export const ByLine = styled(Paragraph2)(
+  ({ theme }) => `
     margin: 0 0 20px;
-    font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size}px;
-    line-height: ${theme.fonts.body2.lineHeight}px;
     color: ${theme.colors.gray400};
-  `}
-`;
+  `
+);
 
-export const Text = styled.p`
+export const Text = styled(Paragraph2)`
   ${({ theme }) => `
     margin: 0 0 20px;
-    font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size}px;
-    line-height: ${theme.fonts.body2.lineHeight}px;
-    letter-spacing: ${theme.fonts.body2.letterSpacing}em;
     color: ${theme.colors.gray900};
   `}
 `;
@@ -105,30 +92,6 @@ export const MetadataContainer = styled.fieldset`
   }
 `;
 
-export const NavButton = styled(Button)`
-  ${({ theme }) => `
-    display: block;
-    align-self: center;
-    min-width: 0;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    color: ${theme.colors.gray600};
-    background-color: transparent;
-    border: ${theme.borders.transparent};
-    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
-
-    &:hover, &:active, &:focus {
-      background-color: ${theme.colors.gray600};
-      color: ${theme.colors.white};
-      @media ${theme.breakpoint.largeDisplayPhone} {
-        color: ${theme.colors.gray900};
-        background-color: transparent;
-       }
-    }
-  `}
-`;
-
 export const RowContainer = styled.section`
   display: flex;
   flex-wrap: wrap;
@@ -137,12 +100,9 @@ export const RowContainer = styled.section`
 `;
 
 export const SubHeading = styled.h2`
-  font-family: ${({ theme }) => theme.fonts.heading3.family};
-  font-size: ${({ theme }) => theme.fonts.heading3.size}px;
-  line-height: ${({ theme }) => theme.fonts.heading3.lineHeight}px;
-  letter-spacing: ${({ theme }) => theme.fonts.heading3.letterSpacing}em;
-  font-weight: 500;
-  margin: 0 0 20px 0;
+  ${TypographyPresets.Large};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  margin-bottom: 20px;
 `;
 
 export const LargeDisplayPagination = styled.div(
@@ -161,7 +121,7 @@ export const SmallDisplayPagination = styled.div(
       width: 100%;
       display: flex;
       justify-content: flex-start;
-      margin: 0 0 10px;
+      margin: 0 10px 10px 0;
     }
   `
 );

@@ -13,39 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+jest.mock('flagged');
 import { render } from '@testing-library/react';
+import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */
-import * as animationParts from '../../../animations/animationParts';
 import * as useStoryAnimationContext from '../useStoryAnimationContext';
 import StoryAnimation from '..';
 
 describe('StoryAnimation.WAAPIWrapper', () => {
+  useFeature.mockImplementation(() => true);
+
   it('renders composed animations top down', () => {
-    const WAAPIMock = jest.spyOn(animationParts, 'WAAPI');
     const useStoryAnimationContextMock = jest.spyOn(
       useStoryAnimationContext,
       'default'
     );
-    WAAPIMock.mockImplementation((type) => ({ children }) => (
+
+    const mock = (type) => ({ children }) => (
       <div data-testid={type}>{children}</div>
-    ));
-    useStoryAnimationContextMock.mockReturnValue({
-      state: {
-        getAnimationGenerators: () => [
-          (fn) => fn('anim-1', {}),
-          (fn) => fn('anim-2', {}),
-          (fn) => fn('anim-3', {}),
-        ],
-      },
+    );
+
+    useStoryAnimationContextMock.mockImplementation(() => ({
       actions: {
         hoistWAAPIAnimation: () => () => {},
+        getAnimationParts: () => [
+          { WAAPIAnimation: mock('anim-1') },
+          { WAAPIAnimation: mock('anim-2') },
+          { WAAPIAnimation: mock('anim-3') },
+        ],
       },
-    });
+    }));
 
     const { container } = render(
       <StoryAnimation.Provider animations={[]}>
@@ -79,7 +83,6 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       </div>
     `);
 
-    WAAPIMock.mockRestore();
     useStoryAnimationContextMock.mockRestore();
   });
 });

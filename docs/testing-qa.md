@@ -24,3 +24,7 @@ To make switching between individual PRs easier, there is a Web Stories Tester W
 2. Install plugin on your site by uploading it in WordPress
 3. Use the new menu item in the admin toolbar to switch between the master branch and individual PRs.  
     ![Web Stories Tester plugin in action](https://user-images.githubusercontent.com/841956/81189411-cfb84000-8fb6-11ea-80db-adddebb06ef2.png)
+
+## Sharing story data
+
+You can use [DevTools](./devtools.md) to share story data for debugging purposes.

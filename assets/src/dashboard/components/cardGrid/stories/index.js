@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import moment from 'moment';
 import { text } from '@storybook/addon-knobs';
 
 /**
@@ -51,6 +52,7 @@ const StorybookGridItem = (
         targetAction: '',
         label: 'Preview',
       }}
+      pageSize={{ width: 210, height: 316 }}
     >
       <Card>{text('Sample Story Content', 'Sample Story')}</Card>
     </CardPreviewContainer>
@@ -58,7 +60,9 @@ const StorybookGridItem = (
       title="Story Title"
       author={'Ron Weasley'}
       status={STORY_STATUS.DRAFT}
-      displayDate={'Modified 2 minutes ago'}
+      displayDate={moment().subtract(2, 'minutes')}
+      onEditCancel={() => {}}
+      onEditComplete={() => {}}
     />
   </CardGridItem>
 );
@@ -67,7 +71,7 @@ const itemArray = new Array(12).fill(StorybookGridItem);
 
 export const _default = () => {
   return (
-    <CardGrid>
+    <CardGrid pageSize={{ width: 210, height: 316 }}>
       {itemArray.map((gridItem, index) => (
         <div key={index}>{gridItem}</div>
       ))}

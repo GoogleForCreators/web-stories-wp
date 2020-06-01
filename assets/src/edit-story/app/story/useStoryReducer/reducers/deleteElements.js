@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { intersect } from './utils';
 
 /**
@@ -30,7 +29,8 @@ import { intersect } from './utils';
  *
  * If an empty list or a list of only unknown ids is given, state is unchanged.
  *
- * If any id to delete is the current background element, background element will be unset for the page.
+ * If any id to delete is the current background element, background element will be unset for the page,
+ * and default background element will be restored. Default background element cannot be removed.
  *
  * If any id to delete is in current selection, deleted ids are removed from selection.
  * Otherwise selection is unchanged.
@@ -53,30 +53,38 @@ function deleteElements(state, { elementIds }) {
 
   const oldPage = state.pages[pageIndex];
   const pageElementIds = oldPage.elements.map(({ id }) => id);
+  const backgroundElement = oldPage.elements[0];
+
+  const isDeletingBackground = idsToDelete.some(
+    (id) => id === backgroundElement.id
+  );
+  const backgroundIsDefault = backgroundElement.isDefaultBackground;
+
+  const validDeletionIds =
+    isDeletingBackground && backgroundIsDefault
+      ? idsToDelete.filter((id) => id !== backgroundElement.id)
+      : idsToDelete;
 
   // Nothing to delete?
-  const hasAnythingToDelete = intersect(pageElementIds, idsToDelete).length > 0;
+  const hasAnythingToDelete =
+    intersect(pageElementIds, validDeletionIds).length > 0;
   if (!hasAnythingToDelete) {
     return state;
   }
 
-  const filteredElements = oldPage.elements.filter(
-    (element) => !idsToDelete.includes(element.id)
+  let newElements = oldPage.elements.filter(
+    (element) => !validDeletionIds.includes(element.id)
   );
+
+  // Restore default background if non-default bg has been deleted.
+  if (isDeletingBackground && !backgroundIsDefault) {
+    newElements = [oldPage.defaultBackgroundElement, ...newElements];
+  }
 
   const newPage = {
     ...oldPage,
-    elements: filteredElements,
+    elements: newElements,
   };
-
-  // Clear background if it has been deleted.
-  if (
-    Boolean(oldPage.backgroundElementId) &&
-    idsToDelete.includes(oldPage.backgroundElementId)
-  ) {
-    newPage.backgroundElementId = null;
-    newPage.backgroundOverlay = OverlayType.NONE;
-  }
 
   const newPages = [
     ...state.pages.slice(0, pageIndex),
@@ -85,9 +93,10 @@ function deleteElements(state, { elementIds }) {
   ];
 
   // This check is to make sure not to modify the selection array if no update is necessary.
-  const wasAnySelected = intersect(state.selection, idsToDelete).length > 0;
+  const wasAnySelected =
+    intersect(state.selection, validDeletionIds).length > 0;
   const newSelection = wasAnySelected
-    ? state.selection.filter((id) => !idsToDelete.includes(id))
+    ? state.selection.filter((id) => !validDeletionIds.includes(id))
     : state.selection;
 
   return {

@@ -34,8 +34,12 @@ import {
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
-import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
+import {
+  getHTMLFormatters,
+  getHTMLInfo,
+} from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
+import stripHTML from '../../utils/stripHTML';
 import { getHighlightLineheight, generateParagraphTextStyle } from './util';
 
 const HighlightWrapperElement = styled.div`
@@ -101,6 +105,14 @@ function TextDisplay({
   } = useUnits();
 
   const { font } = rest;
+  const fontFaceSetConfigs = useMemo(() => {
+    const htmlInfo = getHTMLInfo(content);
+    return {
+      fontStyle: htmlInfo.isItalic ? 'italic' : 'normal',
+      fontWeight: htmlInfo.fontWeight,
+      content: stripHTML(content),
+    };
+  }, [content]);
 
   const props = {
     font,
@@ -115,10 +127,9 @@ function TextDisplay({
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-
   useEffect(() => {
-    maybeEnqueueFontStyle(font);
-  }, [font, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle([{ ...fontFaceSetConfigs, font }]);
+  }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   useTransformHandler(id, (transform) => {
     const target = ref.current;

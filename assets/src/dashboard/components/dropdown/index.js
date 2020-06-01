@@ -31,15 +31,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
  */
 import { DROPDOWN_TYPES } from '../../constants';
 import { PILL_LABEL_TYPES } from '../../constants/components';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
-import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
-import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
+import { DropDownArrow, DropUpArrow, Close as CloseIcon } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
 
 import { ColorDot } from '../colorDot';
 import PopoverMenu from '../popoverMenu';
 import PopoverPanel from '../popoverPanel';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
+import { TypographyPresets } from '../typography';
 
 const dropdownLabelType = {
   [DROPDOWN_TYPES.PANEL]: PILL_LABEL_TYPES.DEFAULT,
@@ -62,6 +61,7 @@ const Label = styled.label`
 `;
 
 export const InnerDropdown = styled.button`
+  ${TypographyPresets.Small};
   ${({ theme, disabled, type, isOpen, hasSelectedItems }) => `
     display: inline-flex;
     justify-content: center;
@@ -75,16 +75,10 @@ export const InnerDropdown = styled.button`
         ? theme.colors.blueLight
         : theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
     };
-
     border-radius: ${theme.dropdown[type].borderRadius}px;
     border: ${theme.dropdown[type].border};
     color: ${theme.colors.gray600};
     cursor: ${disabled ? 'inherit' : 'pointer'};
-    font-family: ${theme.fonts.dropdown.family};
-    font-size: ${theme.fonts.dropdown.size}px;
-    font-weight: ${theme.fonts.dropdown.weight};
-    letter-spacing: ${theme.fonts.dropdown.letterSpacing}em;
-    line-height: ${theme.fonts.dropdown.lineHeight}px;
 
     &:hover {
       background-color: ${

@@ -23,14 +23,16 @@ import { render } from '@testing-library/react';
  * Internal dependencies
  */
 import { TestDisplayElement } from '../../../components/canvas/test/_utils';
+import { OverlayType } from '../../../utils/backgroundOverlay';
 
 describe('MediaDisplay', () => {
-  let element;
+  let imageElement;
+  let videoElement;
   let storyContext;
   let refs;
 
   beforeEach(() => {
-    element = {
+    imageElement = {
       id: '1',
       type: 'image',
       x: 0,
@@ -49,6 +51,34 @@ describe('MediaDisplay', () => {
         height: 800,
       },
     };
+    videoElement = {
+      id: 'baz',
+      type: 'video',
+      mimeType: 'video/mp4',
+      scale: 1,
+      origRatio: 9 / 16,
+      x: 0,
+      y: 0,
+      height: 1920,
+      width: 1080,
+      rotationAngle: 0,
+      isBackground: false,
+      loop: true,
+      flip: {
+        vertical: false,
+        horizontal: false,
+      },
+      resource: {
+        type: 'video',
+        mimeType: 'video/mp4',
+        id: 123,
+        src: 'https://example.com/video.mp4',
+        poster: 'https://example.com/poster.png',
+        height: 1920,
+        width: 1080,
+        length: 99,
+      },
+    };
 
     storyContext = {};
     refs = {};
@@ -56,7 +86,7 @@ describe('MediaDisplay', () => {
 
   it('should render img with scale and focal point', () => {
     const { container } = render(
-      <TestDisplayElement storyContext={storyContext} element={element} />
+      <TestDisplayElement storyContext={storyContext} element={imageElement} />
     );
 
     const img = container.querySelector('img');
@@ -74,7 +104,7 @@ describe('MediaDisplay', () => {
       <TestDisplayElement
         refs={refs}
         storyContext={storyContext}
-        element={element}
+        element={imageElement}
       />
     );
 
@@ -88,7 +118,7 @@ describe('MediaDisplay', () => {
     expect(img.style.cssText).toBe('');
 
     // Resize to 100:80 (or 1:1 with the original size).
-    pushTransform(element.id, { resize: [100, 80] });
+    pushTransform(imageElement.id, { resize: [100, 80] });
     expect(img.style.cssText).not.toBe('');
     expect(img.style).toMatchObject({
       width: '100px',
@@ -98,7 +128,57 @@ describe('MediaDisplay', () => {
     });
 
     // Reset.
-    pushTransform(element.id, null);
+    pushTransform(imageElement.id, null);
     expect(img.style.cssText).toBe('');
+  });
+
+  it('should render flipped background video with overlay', () => {
+    const overlayCases = [
+      OverlayType.NONE,
+      OverlayType.SOLID,
+      OverlayType.LINEAR,
+      OverlayType.RADIAL,
+    ];
+    const flipCases = [
+      {
+        flip: { vertical: true, horizontal: false },
+        transform: 'scale3d(1, -1, 1)',
+      },
+      {
+        flip: { vertical: false, horizontal: true },
+        transform: 'scale3d(-1, 1, 1)',
+      },
+      {
+        flip: { vertical: true, horizontal: true },
+        transform: 'scale3d(-1, -1, 1)',
+      },
+    ];
+
+    overlayCases.forEach((backgroundOverlay) => {
+      flipCases.forEach(({ flip, transform }) => {
+        const flippedBackgroundVideo = {
+          ...videoElement,
+          isBackground: true,
+          flip,
+        };
+        const { container } = render(
+          <TestDisplayElement
+            storyContext={{
+              ...storyContext,
+              page: {
+                backgroundOverlay,
+              },
+            }}
+            element={flippedBackgroundVideo}
+          />
+        );
+
+        const element = container.querySelector('[data-element-id="baz"]')
+          .firstChild;
+        expect(window.getComputedStyle(element)).toMatchObject({
+          transform,
+        });
+      });
+    });
   });
 });

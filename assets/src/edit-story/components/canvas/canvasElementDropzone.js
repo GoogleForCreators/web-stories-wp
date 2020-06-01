@@ -80,7 +80,7 @@ function CanvasElementDropzone({ children }) {
     },
     [
       activeDropTargetId,
-      pageContainer,
+      pageContainer?.getBoundingClientRect,
       insertElement,
       editorToDataX,
       editorToDataY,

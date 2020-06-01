@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import moment from 'moment';
 import { actions } from '@storybook/addon-actions';
 
 /**
@@ -54,7 +55,7 @@ const Card = styled.div`
 
 export const _default = () => {
   return (
-    <CardGrid>
+    <CardGrid pageSize={{ width: 210, height: 316 }}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -65,14 +66,18 @@ export const _default = () => {
             targetAction: '',
             label: 'Preview',
           }}
+          pageSize={{ width: 210, height: 316 }}
+          story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
         </CardPreviewContainer>
         <CardTitle
           title="How to be a leader in the apocalpyse"
           author="Rick Grimes"
-          displayDate="4/4/2020"
+          displayDate={moment('04-04-2020', 'MM-DD-YYYY')}
           status={STORY_STATUS.DRAFT}
+          onEditCancel={() => {}}
+          onEditComplete={() => {}}
         />
       </CardGridItem>
     </CardGrid>
@@ -81,7 +86,7 @@ export const _default = () => {
 
 export const _publishedStory = () => {
   return (
-    <CardGrid>
+    <CardGrid pageSize={{ width: 210, height: 316 }}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -92,14 +97,18 @@ export const _publishedStory = () => {
             targetAction: '',
             label: 'Preview',
           }}
+          pageSize={{ width: 210, height: 316 }}
+          story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
         </CardPreviewContainer>
         <CardTitle
           title="The 6 fingered man"
           author="Inigo Moñtoya"
-          displayDate="4/19/2020"
+          displayDate={moment('04-19-2020', 'MM-DD-YYYY')}
           status={STORY_STATUS.PUBLISHED}
+          onEditCancel={() => {}}
+          onEditComplete={() => {}}
         />
       </CardGridItem>
     </CardGrid>
@@ -110,7 +119,7 @@ export const _contextMenu = () => {
   const [contextMenuId, setContextMenuId] = useState(-1);
   return (
     <Container>
-      <CardGrid>
+      <CardGrid pageSize={{ width: 210, height: 316 }}>
         <CardGridItem>
           <CardPreviewContainer
             bottomAction={{
@@ -121,6 +130,8 @@ export const _contextMenu = () => {
               targetAction: '',
               label: 'Preview',
             }}
+            pageSize={{ width: 210, height: 316 }}
+            story={{}}
           >
             <Card>{text('Sample Story Content', 'Sample Story')}</Card>
           </CardPreviewContainer>
@@ -129,7 +140,9 @@ export const _contextMenu = () => {
               title="Story Title"
               author="storybook author"
               status={STORY_STATUS.DRAFT}
-              displayDate={new Date()}
+              displayDate={moment('05-02-2020', 'MM-DD-YYYY')}
+              onEditCancel={() => {}}
+              onEditComplete={() => {}}
             />
             <CardItemMenu
               onMoreButtonSelected={setContextMenuId}

@@ -80,6 +80,13 @@ class Media {
 	const POSTER_POST_META_KEY = 'web_stories_is_poster';
 
 	/**
+	 * The poster id post meta key.
+	 *
+	 * @var string
+	 */
+	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
+
+	/**
 	 * Init.
 	 *
 	 * @return void
@@ -92,6 +99,19 @@ class Media {
 				'sanitize_callback' => 'rest_sanitize_boolean',
 				'type'              => 'boolean',
 				'description'       => __( 'Whether the attachment is a poster image.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+
+		register_meta(
+			'post',
+			self::POSTER_ID_POST_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'single'            => true,
 				'object_subtype'    => 'attachment',
@@ -116,6 +136,8 @@ class Media {
 		add_filter( 'wp_prepare_attachment_for_js', [ __CLASS__, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
 		add_filter( 'upload_mimes', [ __CLASS__, 'upload_mimes' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
+
+		add_action( 'delete_attachment', [ __CLASS__, 'delete_video_poster' ] );
 	}
 
 	/**
@@ -234,11 +256,10 @@ class Media {
 	 * @return array $response;
 	 */
 	public static function wp_prepare_attachment_for_js( $response, $attachment ) {
-
 		if ( 'video' === $response['type'] ) {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
-			if ( 0 === $thumbnail_id ) {
+			if ( 0 !== $thumbnail_id ) {
 				$image = self::get_thumbnail_data( $thumbnail_id );
 			}
 			$response['featured_media']     = $thumbnail_id;
@@ -272,5 +293,30 @@ class Media {
 	public static function upload_mimes( array $mime_types ) {
 		$mime_types['svg'] = 'image/svg+xml';
 		return $mime_types;
+	}
+
+	/**
+	 * Deletes associated poster image when a video is deleted.
+	 *
+	 * This prevents the poster image from becoming an orphan because it is not
+	 * displayed anywhere in WordPress or the story editor.
+	 *
+	 * @param int $attachment_id ID of the attachment to be deleted.
+	 *
+	 * @return void
+	 */
+	public static function delete_video_poster( $attachment_id ) {
+		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
+
+		if ( empty( $post_id ) ) {
+			return;
+		}
+
+		// Used in favor of slow meta queries.
+		$is_poster = (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
+
+		if ( $is_poster ) {
+			wp_delete_attachment( $post_id, true );
+		}
 	}
 }

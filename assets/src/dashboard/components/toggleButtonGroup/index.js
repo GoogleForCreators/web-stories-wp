@@ -32,6 +32,7 @@ import ResizeObserver from 'resize-observer-polyfill';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR, BEZIER } from '../../constants';
+import { TypographyPresets } from '../typography';
 
 const ToggleButtonContainer = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ AnimationBar.propTypes = {
 };
 
 const ToggleButton = styled.button`
+  ${TypographyPresets.Medium};
   cursor: pointer;
 
   ${({ theme, isActive }) => `
@@ -66,11 +68,7 @@ const ToggleButton = styled.button`
     border: none;
     padding: 0;
     margin: 0;
-    font-size: ${theme.fonts.body1.size}px;
-    font-family: ${theme.fonts.body1.family};
-    font-weight: ${theme.fonts.body1.weight}};
-    line-height: ${theme.fonts.body1.lineHeight}px;
-    letter-spacing: ${theme.fonts.body1.letterSpacing}em;
+    font-weight: ${theme.typography.weight.bold};
     color: ${isActive ? theme.colors.gray900 : theme.colors.gray600};
     background-color: transparent;
 

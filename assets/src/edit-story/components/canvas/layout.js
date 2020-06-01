@@ -117,8 +117,9 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   align-items: center;
 `;
 
-const PageAreaOverflowHidden = styled.div`
-  overflow: hidden;
+// Overflow is not hidden for media edit layer.
+const PageAreaWithOverflow = styled.div`
+  overflow: ${({ showOverflow }) => (showOverflow ? 'initial' : 'hidden')};
   position: relative;
   width: 100%;
   height: 100%;
@@ -213,20 +214,28 @@ function useLayoutParamsCssVars() {
 
 const PageArea = forwardRef(
   (
-    { children, showDangerZone, fullbleedRef = createRef(), overlay = [] },
+    {
+      children,
+      showDangerZone,
+      showOverflow = false,
+      fullbleedRef = createRef(),
+      overlay = [],
+    },
     ref
   ) => {
     return (
-      <PageAreaFullbleedContainer ref={fullbleedRef}>
-        <PageAreaOverflowHidden>
-          <PageAreaSafeZone ref={ref}>{children}</PageAreaSafeZone>
+      <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
+        <PageAreaWithOverflow showOverflow={showOverflow}>
+          <PageAreaSafeZone ref={ref} data-testid="safezone">
+            {children}
+          </PageAreaSafeZone>
           {showDangerZone && (
             <>
               <PageAreaDangerZoneTop />
               <PageAreaDangerZoneBottom />
             </>
           )}
-        </PageAreaOverflowHidden>
+        </PageAreaWithOverflow>
         {overlay}
       </PageAreaFullbleedContainer>
     );
@@ -237,6 +246,7 @@ PageArea.propTypes = {
   children: PropTypes.node,
   overlay: PropTypes.node,
   showDangerZone: PropTypes.bool,
+  showOverflow: PropTypes.bool,
 };
 
 export {

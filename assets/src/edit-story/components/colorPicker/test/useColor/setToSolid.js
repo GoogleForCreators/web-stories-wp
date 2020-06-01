@@ -24,14 +24,14 @@ describe('useColor({ action:"setToSolid" })', () => {
     const { load, setToSolid } = arrangeUseColor();
 
     const pattern = {
-      type: 'conic',
+      type: 'radial',
       stops: [
         { color: { r: 255, g: 0, b: 0, a: 1 }, position: 0 },
         { color: { r: 0, g: 0, b: 255, a: 1 }, position: 1 },
       ],
     };
 
-    // Initially load as conic gradient
+    // Initially load as radial gradient
     load(pattern);
 
     const result = setToSolid();
