@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 export default function (imageBaseUrl) {
   return {
-    version: 17,
+    version: 19,
     pages: [
       {
         elements: [
@@ -45,6 +46,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '40b3440b-fdf1-4969-8469-4af6e9d49cb2',
+            isDefaultBackground: true,
           },
           {
             opacity: 10,
@@ -85,46 +87,8 @@ export default function (imageBaseUrl) {
               title: 'fitness_page1_bg-alt',
               alt: 'fitness_page1_bg-alt',
               local: false,
-              sizes: {},
+              sizes: [],
             },
-          },
-          {
-            opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
-            rotationAngle: 0,
-            lockAspectRatio: true,
-            scale: 100,
-            focalX: 50,
-            focalY: 50,
-            isFill: false,
-            resource: {
-              type: 'image',
-              mimeType: 'image/png',
-              src: `${imageBaseUrl}/images/templates/fitness/fitness_page1_logo.png`,
-              width: 123,
-              height: 38,
-              posterId: 0,
-              id: 262,
-              title: 'fitness_page1_logo',
-              alt: 'fitness_page1_logo',
-              local: false,
-              sizes: {},
-            },
-            x: 1,
-            y: 1,
-            width: 123,
-            height: 38,
-            mask: {
-              type: 'rectangle',
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-            },
-            type: 'image',
-            id: '7b8c59d0-c5ed-47a9-81c6-24fd8f63d772',
           },
           {
             opacity: 100,
@@ -177,11 +141,62 @@ export default function (imageBaseUrl) {
             content:
               '<span style="letter-spacing: -0.0003em"><span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">NO\nDAYS\nOFF</span></span></span>',
           },
+          {
+            opacity: 100,
+            flip: {
+              vertical: false,
+              horizontal: false,
+            },
+            rotationAngle: 0,
+            lockAspectRatio: true,
+            backgroundColor: {
+              color: {
+                r: 255,
+                g: 255,
+                b: 255,
+              },
+            },
+            isFill: false,
+            type: 'shape',
+            x: -9,
+            y: -1,
+            width: 123,
+            height: 39,
+            scale: 100,
+            focalX: 50,
+            focalY: 50,
+            mask: {
+              type: 'rectangle',
+            },
+            id: '7a994fb8-7d8d-40d8-bf45-e57d8cd618c0',
+          },
         ],
-        backgroundElementId: '40b3440b-fdf1-4969-8469-4af6e9d49cb2',
         type: 'page',
         id: '2572f4a4-bb11-47e2-9f77-b8371aeabe49',
         backgroundOverlay: 'none',
+        animations: [
+          {
+            id: '44adfc51-ada9-4764-bfa2-351520f7a10a',
+            type: 'move',
+            duration: 1000,
+            delay: 0,
+            targets: ['7b8c59d0-c5ed-47a9-81c6-24fd8f63d772'],
+          },
+          {
+            id: '17cc40e3-2cb8-4779-bb48-235cf2f2caa7',
+            type: 'flip',
+            duration: 300,
+            delay: 1000,
+            targets: ['7b8c59d0-c5ed-47a9-81c6-24fd8f63d772'],
+          },
+          {
+            id: '9057c94e-cddc-41c0-9e69-31aeba23c8ef',
+            type: 'zoom',
+            duration: 2000,
+            delay: 1300,
+            targets: ['df4e89d1-b851-4c57-bfde-3503ce086e71'],
+          },
+        ],
       },
       {
         elements: [
@@ -211,6 +226,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '65bb259e-6b72-4009-af27-3c19ee9d34e7',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -235,7 +251,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page2_figure-formatted',
               alt: 'fitness_page2_figure-formatted',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 0,
             y: 0,
@@ -299,7 +315,7 @@ export default function (imageBaseUrl) {
             type: 'text',
             id: 'e44d4b12-221b-4fbf-96be-8a3c81e26f7c',
             content:
-              '<span style="letter-spacing: -0.0003em"><span style="color: rgba(255, 255, 255, 1)">“DON’T BE AFRAID TO GIVE UP THE GOOD\n TO GO FOR THE GREAT.”</span></span>',
+              '<span style="letter-spacing: -0.0003em"><span style="color: rgba(255, 255, 255, 1)">“DON’T BE AFRAID TO GIVE UP THE GOOD\n TO GO FOR THE GREAT.”</span></span>',
           },
           {
             opacity: 100,
@@ -354,7 +370,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">-STEVE PREFONTAINE</span>',
           },
         ],
-        backgroundElementId: '65bb259e-6b72-4009-af27-3c19ee9d34e7',
         backgroundOverlay: 'none',
         type: 'page',
         id: '708fbc22-f0ca-40ec-9a57-21d9eb0be6b7',
@@ -398,7 +413,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page3_bg',
               alt: 'fitness_page3_bg',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             scale: 150,
             focalX: 50,
@@ -557,7 +572,7 @@ export default function (imageBaseUrl) {
             type: 'text',
             id: '002f9bfc-2f7a-45b0-b900-78251f2746f1',
             content:
-              '<span style="color: rgba(136, 136, 136, 1)">Our lead editor shares tips on\nhow to best start running</span>',
+              '<span style="color: rgba(136, 136, 136, 1)">Our lead editor shares tips on how to best start running</span>',
           },
           {
             opacity: 100,
@@ -661,15 +676,16 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/images/templates/fitness/fitness_page3_arrow.png`,
+              src:
+                'http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_arrow.png',
               width: 7,
               height: 3,
               posterId: 0,
               id: 64,
-              title: 'fitness_page3_arrow',
-              alt: 'fitness_page3_arrow',
+              title: 'fashion_page3_arrow',
+              alt: 'fashion_page3_arrow',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 213,
             y: 600.5,
@@ -685,10 +701,31 @@ export default function (imageBaseUrl) {
             id: '7119765c-0597-4546-9b2b-77d88ab1fe33',
           },
         ],
-        backgroundElementId: 'dd764483-9e29-4aab-bb58-445d1f043d1a',
         backgroundOverlay: 'none',
         type: 'page',
         id: '2dbd86ab-dab1-4142-996a-5932a57797b3',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'c324efb7-dd3a-4cce-b780-f3fde3cc94f2',
+        },
       },
       {
         elements: [
@@ -718,6 +755,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '0ed58ad7-eed6-4f1a-80a5-7ce92991677f',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -756,7 +794,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page4_bg',
               alt: 'fitness_page4_bg',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             scale: 100,
             focalX: 49.97721576668946,
@@ -801,7 +839,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page4_bg',
               alt: 'fitness_page4_bg',
               local: false,
-              sizes: {},
+              sizes: [],
             },
           },
           {
@@ -957,10 +995,9 @@ export default function (imageBaseUrl) {
             x: 20,
             y: 544,
             content:
-              '<span style="color: rgba(255, 255, 255, 1)">Hit the trails with the latest and greatest\nlightweight mid-distance shoes for the season.</span>',
+              '<span style="color: rgba(255, 255, 255, 1)">Hit the trails with the latest and greatest lightweight mid-distance shoes for the season.</span>',
           },
         ],
-        backgroundElementId: '0ed58ad7-eed6-4f1a-80a5-7ce92991677f',
         backgroundOverlay: 'none',
         type: 'page',
         id: '97a844aa-4ff5-4875-aac0-682bd51b087e',
@@ -1004,7 +1041,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page5_bg',
               alt: 'fitness_page5_bg',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             scale: 100,
             focalX: 50,
@@ -1248,10 +1285,31 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">BUY NOW</span>',
           },
         ],
-        backgroundElementId: '19e74314-7e11-49dd-ab9f-42155fb93091',
         backgroundOverlay: 'none',
         type: 'page',
         id: '52b7935e-e379-4596-bfbc-3b1ea5ca3503',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: 'ff86e4bb-4a5c-446d-81c5-0bcd77bd8086',
+        },
       },
       {
         elements: [
@@ -1292,7 +1350,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page6_bg',
               alt: 'fitness_page6_bg',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             scale: 100,
             focalX: 50,
@@ -1321,7 +1379,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page6_watch',
               alt: 'fitness_page6_watch',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 28,
             y: -1,
@@ -1597,10 +1655,31 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(26, 26, 26, 1)">Whether you’re an elite athlete or you just want to track your daily activity, Apple Watch Series 5 helps you train smarter to get results faster.</span>',
           },
         ],
-        backgroundElementId: '05e35040-f294-42da-b67d-dfd39327b2d8',
         backgroundOverlay: 'none',
         type: 'page',
         id: '95ae824a-7060-46cb-a8d2-8d6a721ad1ff',
+        defaultBackgroundElement: {
+          type: 'shape',
+          x: 1,
+          y: 1,
+          width: 1,
+          height: 1,
+          rotationAngle: 0,
+          mask: {
+            type: 'rectangle',
+          },
+          backgroundColor: {
+            color: {
+              r: 255,
+              g: 255,
+              b: 255,
+              a: 1,
+            },
+          },
+          isBackground: true,
+          isDefaultBackground: true,
+          id: '506b7e72-d072-474a-9fd7-289c1ba8b707',
+        },
       },
       {
         elements: [
@@ -1630,6 +1709,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '1613baad-b2a9-42e7-b0a6-d2f4c6941f65',
+            isDefaultBackground: true,
           },
           {
             opacity: 10,
@@ -1670,7 +1750,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page7_bg-formatted',
               alt: 'fitness_page7_bg-formatted',
               local: false,
-              sizes: {},
+              sizes: [],
             },
           },
           {
@@ -2151,7 +2231,6 @@ export default function (imageBaseUrl) {
               '<span style="color: rgba(255, 255, 255, 1)">BUY NOW</span>',
           },
         ],
-        backgroundElementId: '1613baad-b2a9-42e7-b0a6-d2f4c6941f65',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'a30a33fc-d687-4e94-8a2c-0f9546a21efe',
@@ -2184,6 +2263,7 @@ export default function (imageBaseUrl) {
             isBackground: true,
             type: 'shape',
             id: '641d6b05-3e8c-4c1e-8e57-b1d1a528c119',
+            isDefaultBackground: true,
           },
           {
             opacity: 100,
@@ -2208,7 +2288,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_offsetblock',
               alt: 'fitness_page8_offsetblock',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 220,
             y: 483,
@@ -2246,7 +2326,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_story3-formatted',
               alt: 'fitness_page8_story3-formatted',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: -2,
             y: 412,
@@ -2284,7 +2364,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_story1-formatted',
               alt: 'fitness_page8_story1-formatted',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 0,
             y: 125,
@@ -2322,7 +2402,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_story2-formatted',
               alt: 'fitness_page8_story2-formatted',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: -3,
             y: 237,
@@ -2439,7 +2519,7 @@ export default function (imageBaseUrl) {
             x: 11,
             y: 67,
             content:
-              '<span style="font-weight: 600; color: #fff">STORIES</span>',
+              '<span style="letter-spacing: -0.0001em"><span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">STORIES</span></span></span>',
           },
           {
             opacity: 100,
@@ -2491,7 +2571,7 @@ export default function (imageBaseUrl) {
             x: 257,
             y: 168,
             content:
-              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">SWEAT RESISTENT\nEARBUDS</span></span>',
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">SWEAT RESISTENT\n EARBUDS</span></span>',
           },
           {
             opacity: 100,
@@ -2543,7 +2623,7 @@ export default function (imageBaseUrl) {
             x: 34,
             y: 339,
             content:
-              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">10 BEST CORE\nTRAINING EXERCISES</span></span>',
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">10 BEST CORE TRAINING EXERCISES</span></span>',
           },
           {
             opacity: 100,
@@ -2595,7 +2675,7 @@ export default function (imageBaseUrl) {
             x: 256,
             y: 463,
             content:
-              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">TRIATHLON TRAINING\nIN THE SUMMER</span></span>',
+              '<span style="color: rgba(255, 255, 255, 1)"><span style="font-weight: 600">TRIATHLON TRAINING IN THE SUMMER</span></span>',
           },
           {
             opacity: 100,
@@ -2672,7 +2752,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_Facebook',
               alt: 'fitness_page8_Facebook',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 264,
             y: 616.5,
@@ -2710,7 +2790,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_Instagram',
               alt: 'fitness_page8_Instagram',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 294,
             y: 616.5,
@@ -2748,7 +2828,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_Youtube',
               alt: 'fitness_page8_Youtube',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 337,
             y: 620,
@@ -2786,7 +2866,7 @@ export default function (imageBaseUrl) {
               title: 'fitness_page8_Twitter',
               alt: 'fitness_page8_Twitter',
               local: false,
-              sizes: {},
+              sizes: [],
             },
             x: 379,
             y: 617.5,
@@ -2802,7 +2882,6 @@ export default function (imageBaseUrl) {
             id: '6304b398-11fe-4ad6-ac0a-33e5154e7f6a',
           },
         ],
-        backgroundElementId: '641d6b05-3e8c-4c1e-8e57-b1d1a528c119',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'd65c11a1-5f71-48ff-8579-85d53f18d461',

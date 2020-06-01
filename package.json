@@ -6,12 +6,7 @@
   "author": "Google",
   "license": "Apache-2.0",
   "type": "module",
-  "keywords": [
-    "amp",
-    "stories",
-    "storytelling",
-    "wordpress"
-  ],
+  "keywords": ["amp", "stories", "storytelling", "wordpress"],
   "homepage": "https://github.com/google/web-stories-wp",
   "repository": {
     "type": "git",
@@ -175,6 +170,7 @@
     "format:php": "npm run lint:php:fix",
     "format:xml": "prettier --write '**/*.{xml,xml.dist}'",
     "format:yml": "prettier --write '**/*.yml'",
+    "generate-template": "node generate-template.js $TEMPLATE && eslint assets/src/dashboard/templates/data/$TEMPLATE.js --fix",
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "stylelint \"**/*.js\" --syntax \"css-in-js\"; stylelint \"**/*.css\" --syntax \"css\"",
     "lint:css:fix": "npm run lint:css -- --fix",
@@ -223,10 +219,7 @@
       "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
     ],
     "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
-    "*.md": [
-      "eslint --fix",
-      "markdownlint -f"
-    ],
+    "*.md": ["eslint --fix", "markdownlint -f"],
     "*.php": "npm run lint:php:fix",
     "*.(xml|xml.dist)": "prettier --write",
     "*.yml": "prettier --write"
