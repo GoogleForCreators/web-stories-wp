@@ -213,7 +213,7 @@ function TemplateDetail() {
                     <LargeDisplayPagination>
                       {PrevButton}
                     </LargeDisplayPagination>
-                    <CardGallery template={template} />
+                    <CardGallery story={template} />
                   </Column>
                   <Column>
                     <DetailContainer>

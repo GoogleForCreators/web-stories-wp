@@ -45,7 +45,7 @@ describe('CardGallery', () => {
     ]);
 
     const { getAllByTestId } = renderWithTheme(
-      <CardGallery template={template} />
+      <CardGallery story={template} />
     );
 
     // totalCards = childrenCount + activeCardCount (there is only 1 active card at a time)
@@ -62,7 +62,7 @@ describe('CardGallery', () => {
     ]);
 
     const { getAllByTestId } = renderWithTheme(
-      <CardGallery template={template} />
+      <CardGallery story={template} />
     );
 
     // The active child should always appear twice
@@ -78,7 +78,7 @@ describe('CardGallery', () => {
     ]);
 
     const { getAllByTestId } = renderWithTheme(
-      <CardGallery template={template} />
+      <CardGallery story={template} />
     );
 
     // When the child is not active, it should only appear once

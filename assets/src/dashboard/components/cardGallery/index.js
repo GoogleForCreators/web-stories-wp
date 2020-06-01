@@ -39,15 +39,15 @@ const MINI_CARD_WIDTH = 75;
 const CARD_GAP = 15;
 const CARD_WRAPPER_BUFFER = 12;
 
-function CardGallery({ template }) {
+function CardGallery({ story }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [pages, setPages] = useState([]);
   const containerRef = useRef();
 
   useEffect(() => {
-    setPages(template.pages || []);
-  }, [template]);
+    setPages(story.pages || []);
+  }, [story]);
 
   const metrics = useMemo(() => {
     if (!dimensionMultiplier) {
@@ -100,7 +100,7 @@ function CardGallery({ template }) {
 
   useEffect(() => {
     setActivePageIndex(0);
-  }, [template]);
+  }, [story]);
 
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
@@ -140,7 +140,7 @@ function CardGallery({ template }) {
 }
 
 CardGallery.propTypes = {
-  template: StoryPropType.isRequired,
+  story: StoryPropType.isRequired,
 };
 
 export default CardGallery;
