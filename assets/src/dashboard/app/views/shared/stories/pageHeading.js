@@ -25,6 +25,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { PageHeading } from '../';
+import { NavProvider, LeftRail } from '../../../../components';
 
 export default {
   title: 'Dashboard/Components/PageHeading',
@@ -39,14 +40,17 @@ const InnerContent = styled.div`
 
 export const _default = () => {
   return (
-    <PageHeading
-      centerContent={boolean('Center Inner Content', false)}
-      stories={[]}
-      handleTypeaheadChange={(value) => action('Search with value: ', value)}
-      defaultTitle={text('Page Heading', 'My Stories')}
-      searchPlaceholder={text('Search Placeholder', 'Find Stories')}
-    >
-      <InnerContent />
-    </PageHeading>
+    <NavProvider>
+      <LeftRail />
+      <PageHeading
+        centerContent={boolean('Center Inner Content', false)}
+        stories={[]}
+        handleTypeaheadChange={(value) => action('Search with value: ', value)}
+        defaultTitle={text('Page Heading', 'My Stories')}
+        searchPlaceholder={text('Search Placeholder', 'Find Stories')}
+      >
+        <InnerContent />
+      </PageHeading>
+    </NavProvider>
   );
 };

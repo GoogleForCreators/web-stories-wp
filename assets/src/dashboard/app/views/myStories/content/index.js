@@ -36,8 +36,6 @@ import {
 } from '../../../../components';
 import {
   UsersPropType,
-  TagsPropType,
-  CategoriesPropType,
   StoriesPropType,
   StoryActionsPropType,
 } from '../../../../types';
@@ -53,7 +51,6 @@ import EmptyView from './emptyView';
 
 function Content({
   allPagesFetched,
-  categories,
   filter,
   isLoading,
   page,
@@ -61,7 +58,6 @@ function Content({
   sort,
   stories,
   storyActions,
-  tags,
   users,
   view,
 }) {
@@ -73,14 +69,12 @@ function Content({
             {stories.length > 0 ? (
               <StandardViewContentGutter>
                 <StoriesView
-                  categories={categories}
                   filterValue={filter.value}
                   sort={sort}
                   storyActions={storyActions}
                   stories={stories}
-                  tags={tags}
                   users={users}
-                  viewStyle={view.style}
+                  view={view}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -100,7 +94,6 @@ function Content({
 }
 Content.propTypes = {
   allPagesFetched: PropTypes.bool,
-  categories: CategoriesPropType,
   filter: FilterPropTypes,
   isLoading: PropTypes.bool,
   page: PagePropTypes,
@@ -108,7 +101,6 @@ Content.propTypes = {
   sort: SortPropTypes,
   stories: StoriesPropType,
   storyActions: StoryActionsPropType,
-  tags: TagsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
 };

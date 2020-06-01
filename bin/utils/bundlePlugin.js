@@ -37,10 +37,17 @@ const composerArgs =
  * @param {string} source Path to the source directory.
  * @param {boolean} [composer=false] Create Composer-ready ZIP file without PHP autoloader.
  * @param {string|boolean} zip Whether a ZIP file should be generated. Pass a string to set a custom file name.
- * @param {boolean} [clean] whether to delete existing ZIP file.
+ * @param {boolean} [clean] Whether to delete existing ZIP file.
+ * @param {boolean} [cdn] Whether to use a CDN for assets or not.
  * @return {string} Path to the build directory or ZIP file.
  */
-function bundlePlugin(source, composer = false, zip = false, clean = false) {
+function bundlePlugin(
+  source,
+  composer = false,
+  zip = false,
+  clean = false,
+  cdn = false
+) {
   const pluginFile = `${source}/web-stories.php`;
   const buildDir = source + '/build';
   const pluginBuildDir = buildDir + '/web-stories';
@@ -53,6 +60,9 @@ function bundlePlugin(source, composer = false, zip = false, clean = false) {
   const ignoredFiles = getIgnoredFiles(source);
   if (composer) {
     ignoredFiles.push('vendor/');
+  }
+  if (cdn) {
+    ignoredFiles.push('assets/images/templates/');
   }
   copyFiles(source, pluginBuildDirPath, ignoredFiles);
 

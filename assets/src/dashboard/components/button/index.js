@@ -133,3 +133,4 @@ Button.propTypes = {
 };
 
 export default Button;
+export { default as PaginationButton } from './paginationButton';
