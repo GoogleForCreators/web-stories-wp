@@ -79,19 +79,17 @@ export function getPanels(elements) {
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [
-      { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
-    ];
-    // If the selected element's type is video / image , display accessibility panel, too.
-    if ('shape' === elements[0].type) {
-      panels.unshift({ type: SHAPE_STYLE, Panel: ShapeStylePanel });
-    } else {
-      panels.unshift({
+    const panels = [];
+
+    if (!elements[0].isDefaultBackground) {
+      panels.push({
         type: BACKGROUND_SIZE_POSITION,
         Panel: BackgroundSizePositionPanel,
       });
+      panels.push({ type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel });
     }
 
+    // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
       panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
       panels.push({
