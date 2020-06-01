@@ -131,8 +131,8 @@ CardTitle.propTypes = {
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
   displayDate: PropTypes.object,
-  onEditComplete: PropTypes.func.isRequired,
-  onEditCancel: PropTypes.func.isRequired,
+  onEditComplete: PropTypes.func,
+  onEditCancel: PropTypes.func,
 };
 
 export default CardTitle;

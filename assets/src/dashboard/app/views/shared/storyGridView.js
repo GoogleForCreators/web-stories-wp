@@ -130,7 +130,7 @@ StoryGridView.propTypes = {
   centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
   bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
-  storyMenu: StoryMenuPropType.isRequired,
+  storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
 };
 

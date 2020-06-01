@@ -26,7 +26,7 @@ import { useState } from 'react';
 import StoryMenu, { MoreVerticalButton } from '..';
 
 const Container = styled.div`
-  margin: 0;
+  margin: 200px 0 0 50px;
   width: 300px;
   display: flex;
   justify-content: space-between;
