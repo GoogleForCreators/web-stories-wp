@@ -175,15 +175,7 @@ function MultiSelectionMovable({ selectedElements }) {
     });
     updateElementsById({
       elementIds: Object.keys(updates),
-      properties: (currentProperties) => {
-        if (!updates[currentProperties.id]) {
-          return currentProperties;
-        }
-        return {
-          ...currentProperties,
-          ...updates[currentProperties.id],
-        };
-      },
+      properties: (currentProperties) => updates[currentProperties.id],
     });
     resetMoveable();
   };

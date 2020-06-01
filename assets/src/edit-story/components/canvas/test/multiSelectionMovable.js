@@ -127,11 +127,13 @@ describe('multiSelectionMovable', () => {
 
       const func = updateElementsById.mock.calls[0][0].properties;
       expect(func(element1)).toStrictEqual({
-        ...element1,
+        x: 0,
+        y: 0,
         rotationAngle: expectedRotationAngle,
       });
       expect(func(element2)).toStrictEqual({
-        ...element2,
+        x: 1,
+        y: 1,
         rotationAngle: expectedRotationAngle,
       });
       expect(updateElementsById).toHaveBeenCalledTimes(1);
