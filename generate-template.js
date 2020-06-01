@@ -68,42 +68,16 @@ function convert(template) {
    */
   const rootUrlRegex = new RegExp(rootImgUrl, 'g');
   const templateDataString = JSON.stringify(templateData, null, 2);
-  const rootUrlTemplateData = templateDataString.replace(
-    rootUrlRegex,
-    // eslint-disable-next-line no-template-curly-in-string
-    TEMPLATE_IMAGE_DIR + '/' + template
-  );
-
-  /**
-   * Make root url a template string.
-   */
-  const formattedTemplateData = rootUrlTemplateData.replace(
-    /"(\$\{imageBaseUrl\}.*)"/g,
-    '`$1`'
-  );
+  const formattedTemplateData = templateDataString
+    .replace(rootUrlRegex, TEMPLATE_IMAGE_DIR + '/' + template)
+    .replace(/"(\$\{imageBaseUrl\}.*)"/g, '`$1`');
 
   fs.writeFileSync(
     `${TEMPLATE_DATA_DIR}/${template}.js`,
-    `/*
-  * Copyright 2020 Google LLC
-  *
-  * Licensed under the Apache License, Version 2.0 (the "License");
-  * you may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at
-  *
-  *     https://www.apache.org/licenses/LICENSE-2.0
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  */
- 
+    `
  export default function (imageBaseUrl) {
    return ${formattedTemplateData};
  }
-
   `
   );
 }
