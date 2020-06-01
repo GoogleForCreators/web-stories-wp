@@ -23,7 +23,6 @@ import { renderWithTheme } from '../../../../testUtils';
 
 function setupPanel() {
   const updateStory = jest.fn();
-  const deleteStory = jest.fn();
 
   const storyContextValue = {
     state: {
@@ -36,7 +35,7 @@ function setupPanel() {
         },
       },
     },
-    actions: { updateStory, deleteStory },
+    actions: { updateStory },
   };
   const { getByRole } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
