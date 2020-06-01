@@ -52,6 +52,7 @@ import {
   StoryMenu,
   MoreVerticalButton,
   InlineInputForm,
+  Paragraph2,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -116,7 +117,6 @@ const TitleTableCellContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-
   ${MoreVerticalButton} {
     margin: 4px auto;
   }
@@ -250,7 +250,7 @@ export default function StoryListView({
                     />
                   ) : (
                     <>
-                      <p>{story.title}</p>
+                      <Paragraph2>{story.title}</Paragraph2>
                       <StoryMenu
                         onMoreButtonSelected={storyMenu.handleMenuToggle}
                         contextMenuId={storyMenu.contextMenuId}
