@@ -76,11 +76,8 @@ function FontControls({ selectedElements, pushUpdate }) {
         <Row>
           <FontPicker
             data-testid="font"
-<<<<<<< HEAD
             aria-label={__('Font family', 'web-stories')}
             options={fonts}
-=======
->>>>>>> add recent used fonts, update search
             value={fontFamily}
             onChange={async (value) => {
               const fontObj = fonts.find((item) => item.value === value);
