@@ -21,6 +21,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 const SearchField = styled.div`
   position: relative;
   display: flex;
@@ -63,6 +68,7 @@ export default function SearchInput({
         placeholder={placeholder}
         onChange={onChange}
         disabled={disabled}
+        aria-label={__('Search from library', 'web-stories')}
       />
     </SearchField>
   );

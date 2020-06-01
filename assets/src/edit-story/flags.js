@@ -15,27 +15,14 @@
  */
 
 /**
- * Internal dependencies
+ * The flags that can be enabled on the editor for feature development
+ * and testing.
+ *
+ * @enum {string}
  */
-import { useStoryAnimationContext } from '../components/storyAnimation';
-
-const PlayButton = () => {
-  const {
-    actions: { WAAPIAnimationMethods },
-  } = useStoryAnimationContext();
-
-  const label = {
-    play: 'play',
-    pause: 'pause',
-    reset: 'reset',
-  };
-  return (
-    <>
-      <button onClick={WAAPIAnimationMethods.play}>{label.play}</button>
-      <button onClick={WAAPIAnimationMethods.pause}>{label.pause}</button>
-      <button onClick={WAAPIAnimationMethods.reset}>{label.reset}</button>
-    </>
-  );
+const Flags = {
+  // Drop-down menu in the MediaElement.
+  MEDIA_DROPDOWN_MENU: 'mediaDropdownMenu',
 };
 
-export default PlayButton;
+export default Flags;

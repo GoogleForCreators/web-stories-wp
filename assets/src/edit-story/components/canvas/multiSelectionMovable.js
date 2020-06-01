@@ -144,6 +144,7 @@ function MultiSelectionMovable({ selectedElements }) {
 
   // Update elements once the event has ended.
   const onGroupEventEnd = ({ targets, isRotate, isResize }) => {
+    const updates = {};
     targets.forEach((target, i) => {
       // Update position in all cases.
       const frame = frames[i];
@@ -170,7 +171,11 @@ function MultiSelectionMovable({ selectedElements }) {
           );
         }
       }
-      updateElementsById({ elementIds: [element.id], properties });
+      updates[element.id] = properties;
+    });
+    updateElementsById({
+      elementIds: Object.keys(updates),
+      properties: (currentProperties) => updates[currentProperties.id],
     });
     resetMoveable();
   };

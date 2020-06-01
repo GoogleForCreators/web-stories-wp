@@ -13,44 +13,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
+import { object } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import DeleteDialog from '../deleteDialog';
+import MediaEditDialog from '../mediaEditDialog';
 import ApiContext from '../../../../../app/api/context';
 import MediaContext from '../../../../../app/media/context';
 import SnackbarContext from '../../../../../app/snackbar/context';
+import testImage from './test-image.jpg';
 
 export default {
-  title: 'Stories Editor/Components/Media Delete Dialog',
-  component: DeleteDialog,
+  title: 'Stories Editor/Components/Media Edit Dialog',
+  component: MediaEditDialog,
 };
 
+const apiValue = {
+  actions: { updateMedia: action('update server') },
+};
+const mediaValue = {
+  actions: { updateMediaElement: action('update state') },
+};
+const snackbarValue = { showSnackbar: action('show snackbar') };
+
 export const _default = () => {
-  const apiValue = {
-    actions: {
-      deleteMedia: action('delete from server'),
-    },
-  };
-  const mediaValue = {
-    actions: { deleteMediaElement: action('delete from state') },
-  };
-  const snackbarValue = { showSnackbar: action('show snackbar') };
+  const resource = object('Image Resource', {
+    id: 123,
+    type: 'image',
+    mimeType: 'image/png',
+    title: 'My Image :)',
+    src: testImage,
+    width: 910,
+    height: 675,
+    local: false,
+    alt: 'my image',
+    sizes: {},
+  });
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <DeleteDialog
-            mediaId={123}
-            type={'image'}
-            onClose={action('closed')}
-          />
+          <MediaEditDialog resource={resource} onClose={action('closed')} />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>

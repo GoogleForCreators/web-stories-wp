@@ -38,26 +38,27 @@ function setupPanel() {
     },
     actions: { updateStory, deleteStory },
   };
-  const { getByText } = renderWithTheme(
+  const { getByRole } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <SlugPanel />
     </StoryContext.Provider>
   );
   return {
-    getByText,
+    getByRole,
     updateStory,
   };
 }
 
 describe('SlugPanel', () => {
   it('should render Slug Panel', () => {
-    const { getByText } = setupPanel();
-    const element = getByText('Permalink');
+    const { getByRole } = setupPanel();
+    const element = getByRole('button', { name: 'Permalink' });
     expect(element).toBeDefined();
   });
 
   it('should display permalink', () => {
-    const { getByText } = setupPanel();
-    expect(getByText('https://example.com/foo')).toBeDefined();
+    const { getByRole } = setupPanel();
+    const url = getByRole('link', { name: 'https://example.com/foo' });
+    expect(url).toBeDefined();
   });
 });

@@ -30,6 +30,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       slowMo: 0,
       dumpio: true,
       headless: false,
+      devtools: false,
       defaultViewport: null,
       snapshots: false,
     };
@@ -44,6 +45,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       slowMo: puppeteerOptions.slowMo,
       dumpio: puppeteerOptions.dumpio,
       headless: puppeteerOptions.headless,
+      devtools: puppeteerOptions.devtools,
       defaultViewport: puppeteerOptions.defaultViewport,
     });
 

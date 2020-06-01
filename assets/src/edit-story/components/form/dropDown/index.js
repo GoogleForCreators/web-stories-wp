@@ -84,9 +84,9 @@ function DropDown({
   value,
   onChange,
   disabled,
-  ariaLabel,
   lightMode = false,
   placeholder,
+  ...rest
 }) {
   const selectRef = useRef();
 
@@ -133,6 +133,7 @@ function DropDown({
         ref={selectRef}
         aria-disabled={disabled}
         lightMode={lightMode}
+        {...rest}
       >
         <DropDownTitle>
           {(activeItem && activeItem.name) || placeholder}
@@ -148,9 +149,9 @@ function DropDown({
         <DropDownList
           handleCurrentValue={handleCurrentValue}
           value={activeItem && activeItem.value}
-          ariaLabel={ariaLabel}
           options={options}
           toggleOptions={toggleOptions}
+          {...rest}
         />
       </Popup>
     </DropDownContainer>
@@ -162,14 +163,13 @@ DropDown.propTypes = {
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  ariaLabel: PropTypes.string,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
+  labelledBy: PropTypes.string,
 };
 
 DropDown.defaultProps = {
   disabled: false,
-  ariaLabel: __('DropDown', 'web-stories'),
   value: '',
   onChange: () => {},
   options: [],
