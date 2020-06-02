@@ -392,25 +392,21 @@ class APIProviderFixture {
         []
       );
 
-      const getMedia = useCallback(
-        // @todo: arg support
-        ({ mediaType, searchTerm, pagingNum }) => {
-          const filterByMediaType = mediaType
-            ? ({ mime_type }) => mime_type.startsWith(mediaType)
-            : () => true;
-          const filterBySearchTerm = searchTerm
-            ? ({ alt_text }) => alt_text.includes(searchTerm)
-            : () => true;
-          return asyncResponse({
-            data: getMediaResponse
-              .slice((pagingNum - 1) * 20, 20)
-              .filter(filterByMediaType)
-              .filter(filterBySearchTerm),
-            headers: { get: () => 1 },
-          });
-        },
-        []
-      );
+      const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
+        const filterByMediaType = mediaType
+          ? ({ mime_type }) => mime_type.startsWith(mediaType)
+          : () => true;
+        const filterBySearchTerm = searchTerm
+          ? ({ alt_text }) => alt_text.includes(searchTerm)
+          : () => true;
+        return asyncResponse({
+          data: getMediaResponse
+            .slice((pagingNum - 1) * 20, 20)
+            .filter(filterByMediaType)
+            .filter(filterBySearchTerm),
+          headers: { get: () => 1 },
+        });
+      }, []);
       const uploadMedia = useCallback(
         () => jasmine.createSpy('uploadMedia'),
         []
