@@ -213,7 +213,7 @@ class Media {
 			'attachment',
 			'featured_media_src',
 			[
-				'get_callback' => static function ( $prepared, $field_name, $request ) {
+				'get_callback' => static function ( $prepared ) {
 
 					$id    = $prepared['featured_media'];
 					$image = [];
