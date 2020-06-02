@@ -1,4 +1,4 @@
-# Raw Story JSON Conversion
+# Template Generation From Raw Story JSON
 
 This folder is a dumping ground for raw story json outputted by the editor. To convert the json output of a story to a template function simply create a file here titled `<template_name>.json` and copy the raw json into it. Then from your command line, run:
 ```
