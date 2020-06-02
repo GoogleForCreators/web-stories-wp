@@ -51,6 +51,8 @@ class Discovery {
 		);
 
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
+		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
+		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
 
 		// @todo Check if there's something to skip in the new version.
 		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
@@ -138,6 +140,67 @@ class Discovery {
 		 * @param WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
+	}
+
+	/**
+	 * Prints Open Graph metadata.
+	 *
+	 * @return void
+	 */
+	public function print_open_graph_metadata() {
+		?>
+		<meta property="og:locale" content="<?php echo esc_attr( get_bloginfo( 'language' ) ); ?>" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="<?php the_title_attribute(); ?>" />
+		<meta property="og:url" content="<?php the_permalink(); ?>">
+		<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+		<?php
+		if ( ! get_post() ) {
+			return;
+		}
+		?>
+		<meta property="article:published_time" content="<?php echo esc_attr( (string) get_the_date( 'c' ) ); ?>">
+		<meta property="article:modified_time" content="<?php echo esc_attr( (string) get_the_modified_date( 'c' ) ); ?>">
+		<?php
+
+		if ( ! has_post_thumbnail() ) {
+			return;
+		}
+
+		$poster = wp_get_attachment_image_src( (int) get_post_thumbnail_id(), 'full' );
+
+		if ( ! $poster ) {
+			return;
+		}
+		?>
+		<meta property="og:image" content="<?php echo esc_url( $poster[0] ); ?>">
+		<meta property="og:image:width" content="<?php echo esc_attr( $poster[1] ); ?>">
+		<meta property="og:image:height" content="<?php echo esc_attr( $poster[2] ); ?>">
+		<?php
+	}
+
+	/**
+	 * Prints Twitter card metadata.
+	 *
+	 * @return void
+	 */
+	public function print_twitter_metadata() {
+		?>
+		<meta name="twitter:card" content="summary_large_image" />
+		<?php
+
+		if ( ! has_post_thumbnail() ) {
+			return;
+		}
+
+		$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id(), Media::STORY_POSTER_IMAGE_SIZE );
+
+		if ( ! $poster ) {
+			return;
+		}
+		?>
+		<meta property="twtter:image" content="<?php echo esc_url( $poster ); ?>">
+		<?php
 	}
 
 	/**
