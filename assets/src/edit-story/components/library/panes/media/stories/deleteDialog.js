@@ -27,7 +27,7 @@ import MediaContext from '../../../../../app/media/context';
 import SnackbarContext from '../../../../../app/snackbar/context';
 
 export default {
-  title: 'Stories Editor/Components/Media Delete Dialog',
+  title: 'Stories Editor/Components/Dialog/Delete Media',
   component: DeleteDialog,
 };
 

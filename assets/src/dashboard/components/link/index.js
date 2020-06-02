@@ -17,24 +17,27 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import PreviewErrorDialog from '../previewErrorDialog';
+import { TypographyPresets } from '../typography';
 
-export default {
-  title: 'Stories Editor/Components/Dialog/Preview Error',
-  component: PreviewErrorDialog,
-};
+export const Link = styled.a`
+  ${TypographyPresets.Small};
+  margin: 0;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.bluePrimary};
+  cursor: pointer;
+  border-bottom: ${({ theme }) => theme.borders.transparent};
 
-export const _default = () => {
-  return (
-    <PreviewErrorDialog
-      open
-      onClose={action('closed')}
-      onRetry={action('retried')}
-    />
-  );
-};
+  &:hover,
+  &:focus,
+  &:active {
+    color: currentColor;
+    box-shadow: none;
+    border-bottom: 1px solid currentColor;
+    outline: 0;
+  }
+`;

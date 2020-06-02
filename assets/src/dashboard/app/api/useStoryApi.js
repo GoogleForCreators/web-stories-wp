@@ -69,6 +69,7 @@ export function reshapeStoryObject(editStoryURL) {
       author,
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
+      editStoryLink: `${editStoryURL}&post=${id}`,
       originalStoryData,
     };
   };

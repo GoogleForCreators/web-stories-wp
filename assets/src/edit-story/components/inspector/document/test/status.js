@@ -33,7 +33,6 @@ function setupPanel(
   }
 ) {
   const updateStory = jest.fn();
-  const deleteStory = jest.fn();
   const loadUsers = jest.fn();
 
   const config = { timeFormat: 'g:i a', capabilities };
@@ -41,7 +40,7 @@ function setupPanel(
     state: {
       story: { status: 'draft', password: '' },
     },
-    actions: { updateStory, deleteStory },
+    actions: { updateStory },
   };
   const inspectorContextValue = {
     actions: { loadUsers },
@@ -60,7 +59,6 @@ function setupPanel(
     getByRole,
     queryByText,
     updateStory,
-    deleteStory,
   };
 }
 
@@ -93,15 +91,5 @@ describe('StatusPanel', () => {
         password: '',
       },
     });
-  });
-
-  it('should trigger deleting the story when clicking on delete button', () => {
-    const { deleteStory, getByRole } = setupPanel();
-
-    const deleteButton = getByRole('button', { name: 'Move to trash' });
-    expect(deleteButton).toBeDefined();
-
-    fireEvent.click(deleteButton);
-    expect(deleteStory).toHaveBeenCalledTimes(1);
   });
 });
