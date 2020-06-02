@@ -38,33 +38,52 @@ import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constan
 import {
   ViewPropTypes,
   PagePropTypes,
+  SearchPropTypes,
 } from '../../../../utils/useTemplateView';
 import { TemplatesPropType } from '../../../../types';
 import FontProvider from '../../../font/fontProvider';
 import { StoryGridView } from '../../shared';
+import EmptyView from './emptyView';
 
-function Content({ allPagesFetched, isLoading, page, templates, view }) {
+function Content({
+  allPagesFetched,
+  isLoading,
+  page,
+  templates,
+  view,
+  totalTemplates,
+  search,
+}) {
   return (
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
           <UnitsProvider pageSize={view.pageSize}>
             <StandardViewContentGutter>
-              <StoryGridView
-                stories={templates}
-                centerActionLabelByStatus={
-                  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
-                }
-                bottomActionLabel={__('Use template', 'web-stories')}
-                isTemplate
-                pageSize={view.pageSize}
-              />
-              <InfiniteScroller
-                canLoadMore={!allPagesFetched}
-                isLoading={isLoading}
-                allDataLoadedMessage={__('No more templates', 'web-stories')}
-                onLoadMore={page.requestNextPage}
-              />
+              {totalTemplates > 0 ? (
+                <>
+                  <StoryGridView
+                    stories={templates}
+                    centerActionLabelByStatus={
+                      TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+                    }
+                    bottomActionLabel={__('Use template', 'web-stories')}
+                    isTemplate
+                    pageSize={view.pageSize}
+                  />
+                  <InfiniteScroller
+                    canLoadMore={!allPagesFetched}
+                    isLoading={isLoading}
+                    allDataLoadedMessage={__(
+                      'No more templates',
+                      'web-stories'
+                    )}
+                    onLoadMore={page.requestNextPage}
+                  />
+                </>
+              ) : (
+                <EmptyView searchKeyword={search.keyword} />
+              )}
             </StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
@@ -78,6 +97,8 @@ Content.propTypes = {
   isLoading: PropTypes.bool,
   page: PagePropTypes,
   templates: TemplatesPropType,
+  totalTemplates: PropTypes.number,
+  search: SearchPropTypes,
   view: ViewPropTypes,
 };
 export default Content;

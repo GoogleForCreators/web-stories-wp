@@ -82,7 +82,7 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
       <PageHeading
         centerContent
         defaultTitle={__('Templates', 'web-stories')}
-        searchPlaceholder={__('Template Stories', 'web-stories')}
+        searchPlaceholder={__('Search Templates', 'web-stories')}
         stories={templates}
         handleTypeaheadChange={search.setKeyword}
         typeaheadValue={search.keyword}

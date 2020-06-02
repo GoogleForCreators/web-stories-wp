@@ -26,7 +26,6 @@ import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 
-import { NoResults } from '../shared';
 import Content from './content';
 import Header from './header';
 
@@ -71,18 +70,15 @@ function ExploreTemplates() {
         search={search}
         view={view}
       />
-      {totalTemplates > 0 ? (
-        <Content
-          isLoading={isLoading}
-          allPagesFetched={allPagesFetched}
-          page={page}
-          templates={orderedTemplates}
-          view={view}
-        />
-      ) : (
-        <NoResults typeaheadValue={search.keyword} />
-      )}
-
+      <Content
+        isLoading={isLoading}
+        allPagesFetched={allPagesFetched}
+        page={page}
+        templates={orderedTemplates}
+        totalTemplates={totalTemplates}
+        search={search}
+        view={view}
+      />
       <Layout.Fixed>
         <ScrollToTop />
       </Layout.Fixed>
