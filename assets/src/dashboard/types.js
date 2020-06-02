@@ -38,6 +38,8 @@ export const StoryPropType = PropTypes.shape({
   modified: PropTypes.object,
 });
 
+export const TemplatePropType = StoryPropType;
+
 export const TagPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
@@ -61,6 +63,7 @@ export const UserPropType = PropTypes.shape({
 });
 
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
 export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
 export const CategoriesPropType = PropTypes.objectOf(CategoryPropType)
   .isRequired;

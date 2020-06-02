@@ -23,24 +23,32 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
+import {
+  TEMPLATES_GALLERY_SORT_OPTIONS,
+  TEMPLATES_GALLERY_STATUS,
+  VIEW_STYLE,
+} from '../constants';
 import { PageSizePropType } from '../types';
 import { clamp, usePagePreviewSize } from './index';
 
-export default function useStoryView({ filters, totalPages }) {
-  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
-  const [filter, _setFilter] = useState(
-    filters.length > 0 ? filters[0].value : null
-  );
-  const [sortDirection, setSortDirection] = useState(SORT_DIRECTION.DESC);
-  const [page, setPage] = useState(1);
+export default function useTemplateView({ totalPages }) {
   const [searchKeyword, _setSearchKeyword] = useState('');
+  const [sort, _setSort] = useState(TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR);
+  const [page, setPage] = useState(1);
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
     isGrid: viewStyle === VIEW_STYLE.GRID,
   });
+
+  const handleToggleViewStyle = useCallback(() => {
+    if (viewStyle === VIEW_STYLE.LIST) {
+      setViewStyle(VIEW_STYLE.GRID);
+    } else {
+      setViewStyle(VIEW_STYLE.LIST);
+    }
+  }, [viewStyle]);
 
   const setPageClamped = useCallback(
     (newPage) => {
@@ -49,6 +57,10 @@ export default function useStoryView({ filters, totalPages }) {
     },
     [totalPages]
   );
+  const requestNextPage = useCallback(() => setPageClamped(page + 1), [
+    page,
+    setPageClamped,
+  ]);
 
   const setSort = useCallback(
     (newSort) => {
@@ -58,27 +70,6 @@ export default function useStoryView({ filters, totalPages }) {
     [setPageClamped]
   );
 
-  const setFilter = useCallback(
-    (newFilter) => {
-      _setFilter(newFilter);
-      setPageClamped(1);
-    },
-    [setPageClamped]
-  );
-
-  const toggleViewStyle = useCallback(() => {
-    if (viewStyle === VIEW_STYLE.LIST) {
-      setViewStyle(VIEW_STYLE.GRID);
-    } else {
-      setViewStyle(VIEW_STYLE.LIST);
-      if (sort === STORY_SORT_OPTIONS.NAME) {
-        setSortDirection(SORT_DIRECTION.ASC);
-      } else {
-        setSortDirection(SORT_DIRECTION.DESC);
-      }
-    }
-  }, [sort, viewStyle]);
-
   const setSearchKeyword = useCallback(
     (newSearchKeyword) => {
       setPageClamped(1);
@@ -87,27 +78,20 @@ export default function useStoryView({ filters, totalPages }) {
     [setPageClamped]
   );
 
-  const requestNextPage = useCallback(() => setPageClamped(page + 1), [
-    page,
-    setPageClamped,
-  ]);
-
   return useMemo(
     () => ({
       view: {
         style: viewStyle,
-        toggleStyle: toggleViewStyle,
         pageSize,
+        toggleStyle: handleToggleViewStyle,
       },
       sort: {
         value: sort,
-        direction: sortDirection,
         set: setSort,
-        setDirection: setSortDirection,
       },
       filter: {
-        value: filter,
-        set: setFilter,
+        value: TEMPLATES_GALLERY_STATUS.ALL,
+        set: () => {},
       },
       page: {
         value: page,
@@ -120,18 +104,16 @@ export default function useStoryView({ filters, totalPages }) {
       },
     }),
     [
-      viewStyle,
-      toggleViewStyle,
-      pageSize,
-      sort,
-      sortDirection,
-      setSort,
-      filter,
-      setFilter,
+      handleToggleViewStyle,
       page,
+      pageSize,
       requestNextPage,
       searchKeyword,
+      setPage,
+      setSort,
       setSearchKeyword,
+      sort,
+      viewStyle,
     ]
   );
 }
@@ -147,13 +129,6 @@ export const FilterPropTypes = PropTypes.shape({
   set: PropTypes.func,
 });
 
-export const SortPropTypes = PropTypes.shape({
-  value: PropTypes.oneOf(Object.values(STORY_SORT_OPTIONS)),
-  set: PropTypes.func,
-  direction: PropTypes.oneOf(Object.values(SORT_DIRECTION)),
-  setDirection: PropTypes.func,
-});
-
 export const PagePropTypes = PropTypes.shape({
   value: PropTypes.number,
   set: PropTypes.func,
@@ -163,4 +138,9 @@ export const PagePropTypes = PropTypes.shape({
 export const SearchPropTypes = PropTypes.shape({
   keyword: PropTypes.string,
   setKeyword: PropTypes.func,
+});
+
+export const SortPropTypes = PropTypes.shape({
+  value: PropTypes.oneOf(Object.values(TEMPLATES_GALLERY_SORT_OPTIONS)),
+  set: PropTypes.func,
 });
