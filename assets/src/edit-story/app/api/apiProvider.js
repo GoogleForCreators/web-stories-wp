@@ -105,22 +105,6 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const deleteStoryById = useCallback(
-    /**
-     * Fire REST API call to delete story.
-     *
-     * @param {number}   storyId Story post id.
-     * @return {Promise} Return apiFetch promise.
-     */
-    (storyId) => {
-      return apiFetch({
-        path: `${stories}/${storyId}`,
-        method: 'DELETE',
-      });
-    },
-    [stories]
-  );
-
   const getMedia = useCallback(
     ({ mediaType, searchTerm, pagingNum }) => {
       let apiPath = media;
@@ -249,7 +233,6 @@ function APIProvider({ children }) {
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      deleteStoryById,
       getAllFonts,
       getAllUsers,
       uploadMedia,

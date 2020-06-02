@@ -28,7 +28,9 @@ export default {
   title: 'Stories Editor/Components/RangeInput',
   component: RangeInput,
   parameters: {
-    backgrounds: [{ name: 'dark background', value: '#000', default: true }],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 
