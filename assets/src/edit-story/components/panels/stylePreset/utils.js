@@ -49,7 +49,7 @@ export function findMatchingStylePreset(preset, stylePresets) {
 export function generatePresetStyle(preset, prepareForCSS) {
   const { color, backgroundColor, font, backgroundTextMode } = preset;
   let style = {
-    fontFamily: generateFontFamily(font),
+    ...(font && { fontFamily: generateFontFamily(font) }),
     ...generatePatternStyles(color, 'color'),
   };
 
