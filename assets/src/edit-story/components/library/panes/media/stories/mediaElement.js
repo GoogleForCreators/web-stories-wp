@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
 import { FlagsProvider } from 'flagged';
 import styled from 'styled-components';
@@ -36,9 +37,19 @@ const Column = styled.div`
   width: 150px;
 `;
 
-const snackbarValue = { showSnackbar: () => {} };
-const mediaValue = { actions: { deleteMediaElement: () => {} } };
-const apiValue = { actions: { deleteMedia: () => {} } };
+const snackbarValue = { showSnackbar: action('snow snackbar') };
+const mediaValue = {
+  actions: {
+    deleteMediaElement: action('delete from state'),
+    updateMediaElement: action('update state'),
+  },
+};
+const apiValue = {
+  actions: {
+    deleteMedia: action('delete from server'),
+    updateMedia: action('update server'),
+  },
+};
 
 export default {
   title: 'Stories Editor/Components/Media Element',
@@ -47,8 +58,10 @@ export default {
 
 export const _Image = () => {
   const resource = object('Image Resource', {
+    id: 123,
     type: 'image',
     mimeType: 'image/png',
+    title: 'My Image :)',
     src: testImage,
     width: 910,
     height: 675,
@@ -66,7 +79,7 @@ export const _Image = () => {
               <MediaElement
                 resource={resource}
                 width={150}
-                onInsert={() => {}}
+                onInsert={action('insert into canvas')}
               />
             </Column>
           </FlagsProvider>
@@ -78,8 +91,10 @@ export const _Image = () => {
 
 export const _Video = () => {
   const resource = object('Video Resource', {
+    id: 456,
     type: 'video',
     mimeType: 'video/mp4',
+    title: 'My Video :)',
     src: testVideo,
     width: 640,
     height: 480,
@@ -99,7 +114,7 @@ export const _Video = () => {
               <MediaElement
                 resource={resource}
                 width={150}
-                onInsert={() => {}}
+                onInsert={action('insert into canvas')}
               />
             </Column>
           </FlagsProvider>

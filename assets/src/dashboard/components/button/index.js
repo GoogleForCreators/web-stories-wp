@@ -31,6 +31,7 @@ const StyledButton = styled.button`
 
   font-weight: ${({ theme }) => theme.typography.weight.bold};
   align-items: center;
+  justify-content: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   border: ${({ theme }) => theme.borders.transparent};
@@ -40,6 +41,7 @@ const StyledButton = styled.button`
   opacity: 0.75;
   padding: 4px 12px;
   text-decoration: none;
+  text-align: center;
 
   &:focus,
   &:active,

@@ -63,11 +63,10 @@ jobs:
 
       - name: Bundle plugin
         run: |
-          echo 'assets/images/templates' >> .distignore
           npm run build:js
-          npm run workflow:build-plugin -- --cdn
-          npm run workflow:bundle-plugin web-stories-composer.zip -- --composer --skip-delete
-          npm run workflow:bundle-plugin web-stories.zip -- --skip-delete
+          npm run workflow:version -- --nightly
+          npm run workflow:build-plugin -- --cdn --composer --zip web-stories-composer.zip
+          npm run workflow:build-plugin -- --cdn --zip web-stories.zip
 
       - name: Upload full bundle
         uses: actions/upload-release-asset@v1

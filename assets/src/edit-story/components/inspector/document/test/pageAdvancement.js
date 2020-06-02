@@ -37,23 +37,23 @@ function setupPanel() {
     },
     actions: { updateStory },
   };
-  const { getByText } = renderWithTheme(
+  const { getByRole } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <PageAdvancementPanel />
     </StoryContext.Provider>
   );
   return {
-    getByText,
+    getByRole,
     updateStory,
   };
 }
 
 describe('PageAdvancementPanel', () => {
   it('should render Page Advancement Panel', () => {
-    const { getByText, updateStory } = setupPanel();
-    const element = getByText('Page Advancement');
+    const { getByRole, updateStory } = setupPanel();
+    const element = getByRole('button', { name: 'Page Advancement' });
     expect(element).toBeDefined();
-    fireEvent.click(getByText('Auto'));
+    fireEvent.click(getByRole('radio', { name: 'Auto' }));
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
         autoAdvance: true,

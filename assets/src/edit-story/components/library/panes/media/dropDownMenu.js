@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,6 +33,7 @@ import { More } from '../../../../components/button';
 import DropDownList from '../../../../components/form/dropDown/list';
 import Popup from '../../../../components/popup';
 import DeleteDialog from './deleteDialog';
+import MediaEditDialog from './mediaEditDialog';
 
 const MoreButton = styled(More)`
   position: absolute;
@@ -70,13 +71,14 @@ function DropDownMenu({
   ];
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
 
   const handleCurrentValue = (value) => {
     onMenuSelected();
     switch (value) {
       case 'edit':
-        // TODO(#354): Edit Media Metadata via Media Library Hover Menu
+        setShowEditDialog(true);
         break;
       case 'delete':
         setShowDeleteDialog(true);
@@ -89,6 +91,11 @@ function DropDownMenu({
   // On Delete dialog closing.
   const onDeleteDialogClose = useCallback(() => setShowDeleteDialog(false), [
     setShowDeleteDialog,
+  ]);
+
+  // On Edit dialog closing.
+  const onEditDialogClose = useCallback(() => setShowEditDialog(false), [
+    setShowEditDialog,
   ]);
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
@@ -106,7 +113,7 @@ function DropDownMenu({
               aria-haspopup={true}
               aria-expanded={isMenuOpen}
             />
-            <Popup anchor={moreButtonRef} isOpen={isMenuOpen}>
+            <Popup anchor={moreButtonRef} isOpen={isMenuOpen} width={160}>
               <DropDownContainer>
                 <DropDownList
                   handleCurrentValue={handleCurrentValue}
@@ -124,6 +131,9 @@ function DropDownMenu({
             type={resource.type}
             onClose={onDeleteDialogClose}
           />
+        )}
+        {showEditDialog && (
+          <MediaEditDialog resource={resource} onClose={onEditDialogClose} />
         )}
       </div>
     )

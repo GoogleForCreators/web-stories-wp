@@ -61,7 +61,9 @@ export const outline = () => {
 
 outline.story = {
   parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 
@@ -73,7 +75,9 @@ export const undo = () => {
 
 undo.story = {
   parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 
@@ -85,7 +89,9 @@ export const redo = () => {
 
 redo.story = {
   parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 
@@ -97,7 +103,9 @@ export const gridView = () => {
 
 gridView.story = {
   parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 
@@ -109,7 +117,9 @@ export const close = () => {
 
 close.story = {
   parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 
@@ -121,6 +131,8 @@ export const eyedropper = () => {
 
 eyedropper.story = {
   parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };

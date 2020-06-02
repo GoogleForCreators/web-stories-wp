@@ -17,41 +17,37 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
-
+import { sprintf, __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useEffect, useState, useContext, useMemo, useCallback } from 'react';
-
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../config';
-import useRouteHistory from '../../router/useRouteHistory';
-import { ApiContext } from '../../api/apiProvider';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
-
-import FontProvider from '../../font/fontProvider';
 import {
   CardGallery,
   ColorList,
   DetailViewContentGutter,
+  Layout,
   PaginationButton,
-  PreviewPage,
   Pill,
   TemplateNavBar,
-  Layout,
 } from '../../../components';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
-import { StoryGridView } from '../shared';
+import { ApiContext } from '../../api/apiProvider';
+import { useConfig } from '../../config';
+import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
+import useRouteHistory from '../../router/useRouteHistory';
+import { StoryGridView } from '../shared';
 import {
   ByLine,
-  ColumnContainer,
   Column,
+  ColumnContainer,
   DetailContainer,
   LargeDisplayPagination,
   MetadataContainer,
@@ -66,15 +62,16 @@ function TemplateDetail() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
   const [orderedTemplates, setOrderedTemplates] = useState([]);
-  const [previewPages, setPreviewPages] = useState([]);
-
   const { pageSize } = usePagePreviewSize({ isGrid: true });
+  const { isRTL } = useConfig();
+
   const {
     state: {
       queryParams: { id: templateId, isLocal },
     },
     actions,
   } = useRouteHistory();
+
   const {
     state: {
       templates: { templates, templatesOrderById },
@@ -87,11 +84,8 @@ function TemplateDetail() {
       },
     },
   } = useContext(ApiContext);
-  const { isRTL } = useConfig();
 
   useEffect(() => {
-    setPreviewPages([]);
-
     if (!templateId) {
       return;
     }
@@ -119,9 +113,6 @@ function TemplateDetail() {
       templatesOrderById.map(
         (templateByOrderId) => templates[templateByOrderId]
       )
-    );
-    setPreviewPages(
-      template.pages.map((page) => <PreviewPage key={page.id} page={page} />)
     );
   }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
 
@@ -222,7 +213,7 @@ function TemplateDetail() {
                     <LargeDisplayPagination>
                       {PrevButton}
                     </LargeDisplayPagination>
-                    <CardGallery>{previewPages}</CardGallery>
+                    <CardGallery story={template} />
                   </Column>
                   <Column>
                     <DetailContainer>
