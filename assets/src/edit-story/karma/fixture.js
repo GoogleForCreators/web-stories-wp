@@ -398,12 +398,21 @@ class APIProviderFixture {
 
       const getMedia = useCallback(
         // @todo: arg support
-        // eslint-disable-next-line no-unused-vars
-        ({ mediaType, searchTerm, pagingNum }) =>
-          asyncResponse({
-            data: getMediaResponse,
+        ({ mediaType, searchTerm, pagingNum }) => {
+          const filterByMediaType = mediaType
+            ? ({ mime_type }) => mime_type.startsWith(mediaType)
+            : () => true;
+          const filterBySearchTerm = searchTerm
+            ? ({ alt_text }) => alt_text.includes(searchTerm)
+            : () => true;
+          return asyncResponse({
+            data: getMediaResponse
+              .slice((pagingNum - 1) * 20, 20)
+              .filter(filterByMediaType)
+              .filter(filterBySearchTerm),
             headers: { get: () => 1 },
-          }),
+          });
+        },
         []
       );
       const uploadMedia = useCallback(
