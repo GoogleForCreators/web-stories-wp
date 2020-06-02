@@ -84,8 +84,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
     <>
       <Row>
         <ExpandedNumeric
-          data-testid="text.lineHeight"
-          ariaLabel={__('Line-height', 'web-stories')}
+          aria-label={__('Line-height', 'web-stories')}
           float={true}
           value={lineHeight || 0}
           suffix={<VerticalOffset />}
@@ -93,8 +92,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
         />
         <Space />
         <ExpandedNumeric
-          data-testid="text.letterSpacing"
-          ariaLabel={__('Letter-spacing', 'web-stories')}
+          aria-label={__('Letter-spacing', 'web-stories')}
           value={letterSpacing}
           suffix={<HorizontalOffset />}
           symbol="%"
@@ -108,6 +106,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'left' : '' }, true)
           }
+          aria-label={__('Align: left', 'web-stories')}
         />
         <ToggleButton
           icon={<CenterAlign />}
@@ -115,6 +114,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'center' : '' }, true)
           }
+          aria-label={__('Align: center', 'web-stories')}
         />
         <ToggleButton
           icon={<RightAlign />}
@@ -122,6 +122,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'right' : '' }, true)
           }
+          aria-label={__('Align: right', 'web-stories')}
         />
         <ToggleButton
           icon={<MiddleAlign />}
@@ -129,6 +130,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'justify' : '' }, true)
           }
+          aria-label={__('Align: justify', 'web-stories')}
         />
         <ToggleButton
           data-testid="boldToggle"
@@ -137,6 +139,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           iconWidth={9}
           iconHeight={10}
           onChange={handleClickBold}
+          aria-label={__('Toggle: bold', 'web-stories')}
         />
         <ToggleButton
           icon={<ItalicIcon />}
@@ -156,6 +159,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
             );
             handleClickItalic(value);
           }}
+          aria-label={__('Toggle: italic', 'web-stories')}
         />
         <ToggleButton
           icon={<UnderlineIcon />}
@@ -163,6 +167,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           iconWidth={8}
           iconHeight={21}
           onChange={handleClickUnderline}
+          aria-label={__('Toggle: underline', 'web-stories')}
         />
       </Row>
     </>

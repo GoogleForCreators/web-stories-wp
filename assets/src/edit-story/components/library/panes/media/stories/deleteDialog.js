@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+
+/**
  * Internal dependencies
  */
 import DeleteDialog from '../deleteDialog';
@@ -22,24 +27,30 @@ import MediaContext from '../../../../../app/media/context';
 import SnackbarContext from '../../../../../app/snackbar/context';
 
 export default {
-  title: 'Stories Editor/Components/Media Delete Dialog',
+  title: 'Stories Editor/Components/Dialog/Delete Media',
   component: DeleteDialog,
 };
 
 export const _default = () => {
   const apiValue = {
-    actions: { deleteMedia: () => {} },
+    actions: {
+      deleteMedia: action('delete from server'),
+    },
   };
   const mediaValue = {
-    actions: { deleteMediaElement: () => {} },
+    actions: { deleteMediaElement: action('delete from state') },
   };
-  const snackbarValue = { showSnackbar: () => {} };
+  const snackbarValue = { showSnackbar: action('show snackbar') };
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <DeleteDialog mediaId={123} type={'image'} onClose={() => {}} />
+          <DeleteDialog
+            mediaId={123}
+            type={'image'}
+            onClose={action('closed')}
+          />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
