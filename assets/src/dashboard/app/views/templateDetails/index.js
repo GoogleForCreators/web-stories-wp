@@ -56,9 +56,9 @@ import {
   SubHeading,
   Text,
   Title,
-} from './components';
+} from '../templates/components';
 
-function TemplateDetail() {
+function TemplateDetails() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
   const [orderedTemplates, setOrderedTemplates] = useState([]);
@@ -269,4 +269,4 @@ function TemplateDetail() {
   );
 }
 
-export default TemplateDetail;
+export default TemplateDetails;

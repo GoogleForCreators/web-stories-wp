@@ -76,7 +76,7 @@ const HeadingDropdownsContainer = styled.div`
     }
   }
 `;
-function TemplatesGallery() {
+function ExploreTemplates() {
   const [typeaheadValue, setTypeaheadValue] = useState('');
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [currentPage, setCurrentPage] = useState(1);
@@ -240,4 +240,4 @@ function TemplatesGallery() {
   );
 }
 
-export default TemplatesGallery;
+export default ExploreTemplates;
