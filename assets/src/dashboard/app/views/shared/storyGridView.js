@@ -71,53 +71,57 @@ const StoryGridView = ({
 }) => {
   return (
     <StoryGrid pageSize={pageSize}>
-      {stories.map((story) => (
-        <CardGridItem key={story.id} isTemplate={isTemplate}>
-          <CardPreviewContainer
-            pageSize={pageSize}
-            story={story}
-            centerAction={{
-              targetAction: story.centerTargetAction,
-              label: centerActionLabelByStatus[story.status],
-            }}
-            bottomAction={{
-              targetAction: story.bottomTargetAction,
-              label: bottomActionLabel,
-            }}
-          />
-          {!isTemplate && (
-            <DetailRow>
-              <CardTitle
-                title={story.title}
-                titleLink={story.editStoryLink}
-                status={story?.status}
-                id={story.id}
-                secondaryTitle={
-                  isSavedTemplate
-                    ? __('Google', 'web-stories')
-                    : users[story.author]?.name
-                }
-                displayDate={story?.modified}
-                {...(renameStory
-                  ? {
-                      editMode: renameStory?.id === story?.id,
-                      onEditComplete: (newTitle) =>
-                        renameStory?.handleOnRenameStory(story, newTitle),
-                      onEditCancel: renameStory?.handleCancelRename,
-                    }
-                  : {})}
-              />
+      {stories.map((story) => {
+        const titleRenameProps = renameStory
+          ? {
+              editMode: renameStory?.id === story?.id,
+              onEditComplete: (newTitle) =>
+                renameStory?.handleOnRenameStory(story, newTitle),
+              onEditCancel: renameStory?.handleCancelRename,
+            }
+          : {};
 
-              <StoryMenu
-                onMoreButtonSelected={storyMenu.handleMenuToggle}
-                contextMenuId={storyMenu.contextMenuId}
-                onMenuItemSelected={storyMenu.handleMenuItemSelected}
-                story={story}
-              />
-            </DetailRow>
-          )}
-        </CardGridItem>
-      ))}
+        return (
+          <CardGridItem key={story.id} isTemplate={isTemplate}>
+            <CardPreviewContainer
+              pageSize={pageSize}
+              story={story}
+              centerAction={{
+                targetAction: story.centerTargetAction,
+                label: centerActionLabelByStatus[story.status],
+              }}
+              bottomAction={{
+                targetAction: story.bottomTargetAction,
+                label: bottomActionLabel,
+              }}
+            />
+            {!isTemplate && (
+              <DetailRow>
+                <CardTitle
+                  title={story.title}
+                  titleLink={story.editStoryLink}
+                  status={story?.status}
+                  id={story.id}
+                  secondaryTitle={
+                    isSavedTemplate
+                      ? __('Google', 'web-stories')
+                      : users[story.author]?.name
+                  }
+                  displayDate={story?.modified}
+                  {...titleRenameProps}
+                />
+
+                <StoryMenu
+                  onMoreButtonSelected={storyMenu.handleMenuToggle}
+                  contextMenuId={storyMenu.contextMenuId}
+                  onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                  story={story}
+                />
+              </DetailRow>
+            )}
+          </CardGridItem>
+        );
+      })}
     </StoryGrid>
   );
 };

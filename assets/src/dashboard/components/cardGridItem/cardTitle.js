@@ -126,7 +126,7 @@ const CardTitle = ({
 CardTitle.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string.isRequired,
-  titleLink: PropTypes.string.isRequired,
+  titleLink: PropTypes.string,
   secondaryTitle: PropTypes.string,
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
