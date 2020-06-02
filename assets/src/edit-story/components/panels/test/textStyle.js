@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { act, fireEvent } from '@testing-library/react';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -44,23 +45,40 @@ const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 function Wrapper({ children }) {
   return (
-    <FontContext.Provider
-      value={{
-        state: {
-          fonts: [
-            {
-              name: 'ABeeZee',
-              value: 'ABeeZee',
-              service: 'foo.bar.baz',
-              weights: [400],
-              styles: ['italic', 'regular'],
-              variants: [
-                [0, 400],
-                [1, 400],
-              ],
-              fallbacks: ['serif'],
-            },
-            {
+    <FlagsProvider features={{ newFontPicker: false }}>
+      <FontContext.Provider
+        value={{
+          state: {
+            fonts: [
+              {
+                name: 'ABeeZee',
+                value: 'ABeeZee',
+                service: 'foo.bar.baz',
+                weights: [400],
+                styles: ['italic', 'regular'],
+                variants: [
+                  [0, 400],
+                  [1, 400],
+                ],
+                fallbacks: ['serif'],
+              },
+              {
+                name: 'Neu Font',
+                value: 'Neu Font',
+                service: 'foo.bar.baz',
+                weights: [400],
+                styles: ['italic', 'regular'],
+                variants: [
+                  [0, 400],
+                  [1, 400],
+                ],
+                fallbacks: ['fallback1'],
+              },
+            ],
+          },
+          actions: {
+            maybeEnqueueFontStyle: () => Promise.resolve(),
+            getFontByName: () => ({
               name: 'Neu Font',
               value: 'Neu Font',
               service: 'foo.bar.baz',
@@ -71,32 +89,17 @@ function Wrapper({ children }) {
                 [1, 400],
               ],
               fallbacks: ['fallback1'],
-            },
-          ],
-        },
-        actions: {
-          maybeEnqueueFontStyle: () => Promise.resolve(),
-          getFontByName: () => ({
-            name: 'Neu Font',
-            value: 'Neu Font',
-            service: 'foo.bar.baz',
-            weights: [400],
-            styles: ['italic', 'regular'],
-            variants: [
-              [0, 400],
-              [1, 400],
-            ],
-            fallbacks: ['fallback1'],
-          }),
-        },
-      }}
-    >
-      <RichTextContext.Provider
-        value={{ state: {}, actions: { selectionActions: {} } }}
+            }),
+          },
+        }}
       >
-        {children}
-      </RichTextContext.Provider>
-    </FontContext.Provider>
+        <RichTextContext.Provider
+          value={{ state: {}, actions: { selectionActions: {} } }}
+        >
+          {children}
+        </RichTextContext.Provider>
+      </FontContext.Provider>
+    </FlagsProvider>
   );
 }
 
