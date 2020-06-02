@@ -52,6 +52,7 @@ function MediaProvider({ children }) {
     setProcessing,
     removeProcessing,
     updateMediaElement,
+    deleteMediaElement,
   } = actions;
   const {
     actions: { getMedia },
@@ -140,7 +141,7 @@ function MediaProvider({ children }) {
     [allowedVideoMimeTypes, uploadVideoPoster]
   );
 
-  const generatePoster = useCallback(() => {
+  useEffect(() => {
     const looper = async () => {
       await media.reduce((accumulatorPromise, el) => {
         return accumulatorPromise.then(() => el && processor(el));
@@ -149,9 +150,7 @@ function MediaProvider({ children }) {
     if (media) {
       looper();
     }
-  }, [media, processor]);
-
-  useEffect(generatePoster, [media, mediaType, searchTerm]);
+  }, [media, mediaType, searchTerm, processor]);
 
   const context = {
     state: { ...state, isUploading },
@@ -163,6 +162,8 @@ function MediaProvider({ children }) {
       uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
+      deleteMediaElement,
+      updateMediaElement,
     },
   };
 

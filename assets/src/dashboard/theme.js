@@ -43,7 +43,7 @@ export function useTheme() {
 
 const themeFonts = {
   primary: "'Google Sans', sans-serif",
-  secondary: 'Roboto',
+  secondary: "'Roboto', sans-serif",
 };
 
 const colors = {
@@ -150,7 +150,7 @@ const theme = {
   table: {
     headerCellPadding: 15,
     cellPadding: 15,
-    headerContentSize: 16,
+    headerContentSize: 20,
     border: borders.gray50,
   },
   cardItem: {

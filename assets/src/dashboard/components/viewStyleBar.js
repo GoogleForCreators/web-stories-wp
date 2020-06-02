@@ -29,8 +29,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 
-import { ReactComponent as GridSVG } from '../icons/grid.svg';
-import { ReactComponent as ListSVG } from '../icons/list.svg';
+import { Grid as GridSVG, List as ListSVG } from '../icons';
 import { ICON_METRICS, VIEW_STYLE, VIEW_STYLE_LABELS } from '../constants';
 import Tooltip from './tooltip';
 

@@ -40,13 +40,13 @@ function setupActions() {
     },
     actions: { updateStory },
   };
-  const { getByText } = renderWithTheme(
+  const { getByRole } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <ColorPresetActions color={{ color: { r: 1, g: 1, b: 1 } }} />
     </StoryContext.Provider>
   );
   return {
-    getByText,
+    getByRole,
     updateStory,
   };
 }
@@ -55,14 +55,14 @@ describe('Panels/StylePreset/ColorPresetActions', () => {
   const ADD_PRESET = '+ Add to Color Preset';
 
   it('should render color preset actions', () => {
-    const { getByText } = setupActions();
-    const element = getByText(ADD_PRESET);
+    const { getByRole } = setupActions();
+    const element = getByRole('button', { name: ADD_PRESET });
     expect(element).toBeDefined();
   });
 
   it('should update color presets', () => {
-    const { getByText, updateStory } = setupActions();
-    const element = getByText(ADD_PRESET);
+    const { getByRole, updateStory } = setupActions();
+    const element = getByRole('button', { name: ADD_PRESET });
     fireEvent.click(element);
     expect(updateStory).toHaveBeenCalledWith({
       properties: {

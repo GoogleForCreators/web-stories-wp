@@ -79,9 +79,9 @@ const availableKeysForSearch = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
 function DropDownList({
   handleCurrentValue,
   value,
-  ariaLabel,
   options,
   toggleOptions,
+  ...rest
 }) {
   const listContainerRef = useRef();
   const listRef = useRef();
@@ -98,6 +98,12 @@ function DropDownList({
       ),
     [focusedValue, options]
   );
+
+  useEffect(() => {
+    // Hide dropdown menu on scroll.
+    document.addEventListener('scroll', toggleOptions, true);
+    return () => document.removeEventListener('scroll', toggleOptions, true);
+  }, [toggleOptions]);
 
   const handleMoveFocus = useCallback(
     (offset) => {
@@ -185,10 +191,10 @@ function DropDownList({
   return (
     <ListContainer ref={listContainerRef}>
       <List
+        {...rest}
         aria-multiselectable={false}
         aria-required={false}
         aria-activedescendant={value || ''}
-        aria-labelledby={ariaLabel}
         ref={listRef}
       >
         {options.map(({ name, value: optValue }) => (
@@ -210,7 +216,6 @@ DropDownList.propTypes = {
   toggleOptions: PropTypes.func.isRequired,
   handleCurrentValue: PropTypes.func.isRequired,
   value: PropTypes.string,
-  ariaLabel: PropTypes.string,
   options: PropTypes.array.isRequired,
 };
 

@@ -38,15 +38,10 @@ function AutoSaveHandler() {
 
   const isDraft = 'draft' === status;
 
-  // If autoSaveInterval is set to 0 or not defined, don't.
-  if (!autoSaveInterval) {
-    return null;
-  }
-
   useEffect(() => {
     // @todo The isDraft check is temporary to ensure only draft gets auto-saved,
     // until the logic for other statuses has been decided.
-    if (!isDraft || !hasNewChanges) {
+    if (!isDraft || !hasNewChanges || !autoSaveInterval) {
       return undefined;
     }
     let timeout = setTimeout(() => {

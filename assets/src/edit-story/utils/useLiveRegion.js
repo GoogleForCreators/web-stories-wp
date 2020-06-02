@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * Add messages to an ARIA live region.
@@ -79,7 +79,7 @@ function useLiveRegion(politeness = 'polite') {
     };
   }, [politeness]);
 
-  useEffect(ensureContainerExists, [politeness]);
+  useEffect(ensureContainerExists, [ensureContainerExists]);
 
   const speak = (message) => {
     ensureContainerExists();

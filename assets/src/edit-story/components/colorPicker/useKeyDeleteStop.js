@@ -27,7 +27,7 @@ function useKeyDeleteStop(ref, onDelete) {
       ref.current.focus();
       onDelete();
     },
-    []
+    [onDelete, ref]
   );
 }
 

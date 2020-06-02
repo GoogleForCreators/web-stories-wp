@@ -23,7 +23,7 @@ import CardGrid from '../';
 describe('CardGrid', () => {
   it('should render CardGrid', () => {
     const { getAllByTestId } = renderWithTheme(
-      <CardGrid>
+      <CardGrid pageSize={{ width: 210, height: 316 }}>
         <div data-testid={'test-child'}>{'Item 1'}</div>
         <div data-testid={'test-child'}>{'Item 2'}</div>
         <div data-testid={'test-child'}>{'Item 3'}</div>
