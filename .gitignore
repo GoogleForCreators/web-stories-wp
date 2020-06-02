@@ -8,6 +8,7 @@ node_modules
 /assets/css
 /assets/js
 /assets/testjs
+/assets/src/dashboard/templates/raw/*.json
 /build
 /bin/local-env/data
 phpunit.xml
