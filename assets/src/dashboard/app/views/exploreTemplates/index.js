@@ -49,7 +49,7 @@ import {
   TEMPLATES_GALLERY_SORT_OPTIONS,
   TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../constants';
-import { clamp, usePagePreviewSize } from '../../../utils/';
+import { clamp, usePagePreviewSize } from '../../../utils';
 import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 
 import { ApiContext } from '../../api/apiProvider';

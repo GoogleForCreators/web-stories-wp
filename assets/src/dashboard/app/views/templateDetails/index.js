@@ -56,7 +56,7 @@ import {
   SubHeading,
   Text,
   Title,
-} from '../templates/components';
+} from './components';
 
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
