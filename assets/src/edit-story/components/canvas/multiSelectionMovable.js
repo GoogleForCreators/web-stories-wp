@@ -30,12 +30,15 @@ import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
+import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function MultiSelectionMovable({ selectedElements }) {
   const moveable = useRef();
+
+  const eventTracker = useRef({});
 
   const {
     actions: { updateElementsById },
@@ -45,6 +48,7 @@ function MultiSelectionMovable({ selectedElements }) {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
     },
+    actions: { handleSelectElement },
   } = useCanvas();
   const {
     actions: { editorToDataX, editorToDataY, dataToEditorY },
@@ -180,6 +184,34 @@ function MultiSelectionMovable({ selectedElements }) {
     resetMoveable();
   };
 
+  const startEventTracking = (evt) => {
+    const { timeStamp, clientX, clientY } = evt;
+    eventTracker.current = {
+      timeStamp,
+      clientX,
+      clientY,
+    };
+  };
+
+  // Let's check if we consider this a drag or a click, In case of a click handle click instead.
+  // We are doing this here in Moveable selection since it takes over the mouseup event
+  // and it can be captured here and not in the frame element.
+  // @todo Add integration test for this!
+  const clickHandled = (inputEvent) => {
+    if (isMouseUpAClick(inputEvent, eventTracker.current)) {
+      const clickedElement = Object.keys(nodesById).find((id) =>
+        nodesById[id].contains(inputEvent.target)
+      );
+      if (clickedElement) {
+        handleSelectElement(clickedElement, inputEvent);
+      }
+      // Click was handled.
+      return true;
+    }
+    // No click was found/handled.
+    return false;
+  };
+
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Movable
@@ -198,15 +230,18 @@ function MultiSelectionMovable({ selectedElements }) {
           setTransformStyle(element.id, target, sFrame);
         });
       }}
-      onDragGroupStart={({ events }) => {
+      onDragGroupStart={({ events, inputEvent }) => {
+        startEventTracking(inputEvent);
         if (!isDragging) {
           setIsDragging(true);
         }
         onGroupEventStart({ events, isDrag: true });
       }}
-      onDragGroupEnd={({ targets }) => {
+      onDragGroupEnd={({ targets, inputEvent }) => {
         setIsDragging(false);
-        onGroupEventEnd({ targets });
+        if (!clickHandled(inputEvent)) {
+          onGroupEventEnd({ targets });
+        }
       }}
       onRotateGroupStart={({ events }) => {
         onGroupEventStart({ events, isRotate: true });
