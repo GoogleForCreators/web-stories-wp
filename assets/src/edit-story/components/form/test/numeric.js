@@ -39,16 +39,16 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={0}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
 
     expect(input).toBeDefined();
   });
@@ -57,16 +57,16 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={0}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     arrowUp(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(1);
@@ -76,16 +76,16 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={0}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     altArrowUp(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(1);
@@ -95,17 +95,17 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={0.9}
         onChange={onChangeMock}
         onBlur={onBlurMock}
         float={true}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     altArrowUp(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(1);
@@ -115,17 +115,17 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={0}
         onChange={onChangeMock}
         onBlur={onBlurMock}
         float={true}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     altArrowUp(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(0.1);
@@ -135,17 +135,17 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={0.38934985}
         onChange={onChangeMock}
         onBlur={onBlurMock}
         float={true}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     altArrowUp(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(0.48934985);
@@ -155,16 +155,16 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={2}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     arrowDown(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(1);
@@ -174,16 +174,16 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={2}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     altArrowDown(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(1);
@@ -193,17 +193,17 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={2}
         onChange={onChangeMock}
         onBlur={onBlurMock}
         float={true}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     altArrowDown(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(1.9);
@@ -213,17 +213,17 @@ describe('Form/Numeric', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={2.34598345}
         onChange={onChangeMock}
         onBlur={onBlurMock}
         float={true}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
     altArrowDown(input);
 
     expect(onChangeMock).toHaveBeenCalledWith(2.24598345);

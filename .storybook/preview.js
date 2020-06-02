@@ -63,6 +63,13 @@ addParameters({
       ipad12p,
     },
   },
+  backgrounds: {
+    default: 'Light',
+    values: [
+      { name: 'Light', value: '#fff', default: true },
+      { name: 'Dark', value: 'rgba(0, 0, 0, 0.9)', default: true },
+    ],
+  },
 });
 
 addDecorator(withA11y);

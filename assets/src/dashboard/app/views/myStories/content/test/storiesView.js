@@ -34,6 +34,7 @@ const fakeStories = [
     pages: [{ id: '10' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
   {
     id: 2,
@@ -42,6 +43,7 @@ const fakeStories = [
     pages: [{ id: '20' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
   {
     id: 3,
@@ -50,6 +52,7 @@ const fakeStories = [
     pages: [{ id: '30' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
 ];
 
