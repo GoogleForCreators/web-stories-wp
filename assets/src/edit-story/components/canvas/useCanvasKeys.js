@@ -27,6 +27,7 @@ import { useGlobalKeyDownEffect, useKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
+import nativeEventHandlingExpected from '../../utils/nativeEventHandlingExpected';
 
 const MOVE_COARSE_STEP = 10;
 
@@ -71,9 +72,15 @@ function useCanvasKeys(ref) {
     };
   }, [ref]);
 
-  useKeyDownEffect(ref, 'delete', () => deleteSelectedElements(), [
-    deleteSelectedElements,
-  ]);
+  useGlobalKeyDownEffect(
+    'delete',
+    () => {
+      if (!nativeEventHandlingExpected()) {
+        deleteSelectedElements();
+      }
+    },
+    [deleteSelectedElements]
+  );
   useKeyDownEffect(ref, 'esc', () => clearSelection(), [clearSelection]);
 
   // Position (x/y) key handler.

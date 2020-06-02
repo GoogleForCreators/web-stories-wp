@@ -17,26 +17,26 @@
 /**
  * Internal dependencies
  */
-import nativeCopyPasteExpected from '../nativeCopyPasteExpected';
+import nativeEventHandlingExpected from '../nativeEventHandlingExpected';
 
-describe('nativeCopyPasteExpected', () => {
+describe('nativeEventHandlingExpected', () => {
   it('should detect selection correctly for different inputs', () => {
     const textArea = document.createElement('textarea');
     document.body.appendChild(textArea);
     textArea.focus();
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeEventHandlingExpected()).toBe(true);
 
     const textInput = document.createElement('input');
     textInput.type = 'text';
     document.body.appendChild(textInput);
     textInput.focus();
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeEventHandlingExpected()).toBe(true);
 
     const numberInput = document.createElement('input');
     numberInput.type = 'number';
     document.body.appendChild(numberInput);
     numberInput.focus();
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeEventHandlingExpected()).toBe(true);
 
     const originalWindow = { ...window };
     const windowSpy = jest.spyOn(global, 'window', 'get');
@@ -49,7 +49,7 @@ describe('nativeCopyPasteExpected', () => {
     incorrectInput.type = 'test';
     document.body.appendChild(incorrectInput);
     incorrectInput.focus();
-    expect(nativeCopyPasteExpected()).toBe(false);
+    expect(nativeEventHandlingExpected()).toBe(false);
 
     windowSpy.mockRestore();
   });
@@ -68,7 +68,7 @@ describe('nativeCopyPasteExpected', () => {
       },
     }));
 
-    expect(nativeCopyPasteExpected()).toBe(true);
+    expect(nativeEventHandlingExpected()).toBe(true);
 
     windowSpy.mockRestore();
   });

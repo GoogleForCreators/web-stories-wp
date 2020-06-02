@@ -20,7 +20,7 @@
  *
  * @return {boolean} If native handling is expected.
  */
-function nativeCopyPasteExpected() {
+function nativeEventHandlingExpected() {
   const { activeElement } = document;
   const { tagName, type, isContentEditable } = activeElement;
 
@@ -39,4 +39,4 @@ function nativeCopyPasteExpected() {
   return Boolean(range && !range.collapsed);
 }
 
-export default nativeCopyPasteExpected;
+export default nativeEventHandlingExpected;
