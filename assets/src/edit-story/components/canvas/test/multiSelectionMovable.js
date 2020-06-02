@@ -36,8 +36,8 @@ jest.mock('react-moveable', () => jest.fn(() => ({ children }) => children));
 
 const pageSize = { width: 100, height: 100 };
 
-const element1 = { id: '1', type: 'text' };
-const element2 = { id: '2', type: 'text' };
+const element1 = { id: '1', type: 'text', x: 0, y: 0 };
+const element2 = { id: '2', type: 'text', x: 1, y: 1 };
 
 const WrapperWithRef = ({ children }, ref) => (
   <div ref={ref}>
@@ -78,6 +78,7 @@ describe('multiSelectionMovable', () => {
           '2': target2,
         },
       },
+      actions: { handleSelectElement: jest.fn() },
     };
   });
 
@@ -92,7 +93,7 @@ describe('multiSelectionMovable', () => {
     );
   }
 
-  function performRotatation(rotateTo) {
+  function performRotation(rotateTo) {
     const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
     moveable.onRotateGroupStart({ events: [{ set: () => {} }] });
     moveable.onRotateGroup({
@@ -122,17 +123,21 @@ describe('multiSelectionMovable', () => {
     'should rotate %p',
     (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
-      performRotatation(rotateTo);
 
-      const anyN = expect.any(Number);
-      expect(updateElementsById).toHaveBeenCalledWith({
-        elementIds: ['1'],
-        properties: { rotationAngle: expectedRotationAngle, x: anyN, y: anyN },
+      performRotation(rotateTo);
+
+      const func = updateElementsById.mock.calls[0][0].properties;
+      expect(func(element1)).toStrictEqual({
+        x: 0,
+        y: 0,
+        rotationAngle: expectedRotationAngle,
       });
-      expect(updateElementsById).toHaveBeenCalledWith({
-        elementIds: ['2'],
-        properties: { rotationAngle: expectedRotationAngle, x: anyN, y: anyN },
+      expect(func(element2)).toStrictEqual({
+        x: 1,
+        y: 1,
+        rotationAngle: expectedRotationAngle,
       });
+      expect(updateElementsById).toHaveBeenCalledTimes(1);
     }
   );
 });
