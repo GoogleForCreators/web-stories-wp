@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
 import { memoize } from '../utils';
 import beauty from './raw/beauty.json';
+import cooking from './raw/cooking.json';
+import diy from './raw/diy.json';
+import entertainment from './raw/entertainment.json';
 import fashion from './raw/fashion.json';
 import fitness from './raw/fitness.json';
+import travel from './raw/travel.json';
+import wellbeing from './raw/wellbeing.json';
 
 function getImageFile(url) {
   const file = (url || '').split('/').slice(-1).join('');
@@ -50,13 +56,13 @@ export function loadTemplate(title, data, imageBaseUrl) {
 export function loadTemplates(imageBaseUrl) {
   return Object.entries({
     beauty,
-    cooking: {},
-    diy: {},
-    entertainment: {},
+    cooking,
+    diy,
+    entertainment,
     fashion,
     fitness,
-    travel: {},
-    wellbeing: {},
+    travel,
+    wellbeing,
   }).reduce(
     (accum, [title, data]) => ({
       ...accum,
