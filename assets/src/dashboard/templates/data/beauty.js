@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 export default function (imageBaseUrl) {
   return {
     version: 19,
@@ -704,7 +703,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/png',
-              src: `${imageBaseUrl}/images/templates/beauty/beauty_page3_brush-1.png`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page3_brush.png`,
               width: 220,
               height: 169,
               posterId: 0,
@@ -1925,7 +1924,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/images/templates/beauty/beauty_page5_figure-4.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page5_figure.jpg`,
               width: 220,
               height: 330,
               posterId: 0,
@@ -2664,7 +2663,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/images/templates/beauty/beauty_page7_product1-1.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page7_product1.jpg`,
               width: 220,
               height: 275,
               posterId: 0,
@@ -3970,8 +3969,8 @@ export default function (imageBaseUrl) {
             width: 107,
             height: 107,
             scale: 100,
-            focalX: 50,
-            focalY: 60.67200697812183,
+            focalX: 50.133512681795565,
+            focalY: 55.87449925401202,
             mask: {
               type: 'rectangle',
             },
@@ -3984,12 +3983,14 @@ export default function (imageBaseUrl) {
               type: 'image',
               mimeType: 'image/jpeg',
               src:
-                'blob:http://localhost:8899/9805fd71-59f9-4ca2-b48d-08c0f83e0d6b',
+                'http://localhost:8899/wp-content/uploads/2020/06/beauty_page9_story2-2.jpg',
               width: 352,
               height: 528,
+              id: 515,
               title: 'beauty_page9_story2',
               alt: 'beauty_page9_story2',
-              local: true,
+              local: false,
+              sizes: [],
             },
           },
           {
@@ -4024,7 +4025,7 @@ export default function (imageBaseUrl) {
             resource: {
               type: 'image',
               mimeType: 'image/jpeg',
-              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_story3-1.jpg`,
+              src: `${imageBaseUrl}/images/templates/beauty/beauty_page9_story3.jpg`,
               width: 220,
               height: 330,
               posterId: 0,

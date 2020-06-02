@@ -28,7 +28,7 @@ function convert(template) {
   const TEMPLATE_IMAGE_DIR = '${imageBaseUrl}/images/templates';
 
   /**
-   * Retrieve raw json
+   * Retrieve raw json file contents from `/raw` folder
    */
   const inputFile = `${TEMPLATE_RAW_DIR}/${template}.json`;
   if (!fs.existsSync(inputFile)) {
@@ -69,8 +69,12 @@ function convert(template) {
   const rootUrlRegex = new RegExp(rootImgUrl, 'g');
   const templateDataString = JSON.stringify(templateData, null, 2);
   const formattedTemplateData = templateDataString
+    /** replace host url with ${imageBaseUrl}/tempates/<template> */
     .replace(rootUrlRegex, TEMPLATE_IMAGE_DIR + '/' + template)
-    .replace(/"(\$\{imageBaseUrl\}.*)"/g, '`$1`');
+    /** "${imageBaseUrl}..." -> `${imageBaseUrl}...` */
+    .replace(/"(\$\{imageBaseUrl\}.*)"/g, '`$1`')
+    /** remove all `-x` file name suffixes from ${imageBaseUrl} prefixed strings */
+    .replace(/(?<=\$\{imageBaseUrl\}.*)-\d+(?!.*-\d+.*)/g, '');
 
   fs.writeFileSync(
     `${TEMPLATE_DATA_DIR}/${template}.js`,
