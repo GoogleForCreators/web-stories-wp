@@ -1,12 +1,12 @@
 # Template Generation From Raw Story JSON
 
-`templates/raw` is a dumping ground for raw story json output from the editor, which is then interpretted as a template.
+`templates/raw` is a dumping ground for raw story json output from the editor, which is then interpreted as a template.
 
 ## Getting The Raw Story JSON
 
 To get the raw story json, simply create a new story in the web story editor. Open your network tab and save the story. You should see a network request that contains a large json, this json should have a field in it named `story_data`.
 
-Right click `story_data` and click `Store as global variable`. The variable should now be saved as `temp1`. Go to the console and enter `copy(temp1)`. The story data should now be coppied to your clip board and ready to paste into a file in this folder `templates/raw/<template_name>.json`.
+Right click `story_data` and click `Store as global variable`. The variable should now be saved as `temp1`. Go to the console and enter `copy(temp1)`. The story data should now be copied to your clip board and ready to paste into a file in this folder `templates/raw/<template_name>.json`.
 
 ## Formatting Media Names In Story Creation
 

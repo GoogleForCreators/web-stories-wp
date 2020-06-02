@@ -4,4 +4,3 @@
 **/assets/src/dashboard/templates/raw/*.json
 build/*
 !.storybook
-generate-template.js
