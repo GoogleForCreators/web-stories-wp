@@ -377,10 +377,6 @@ class APIProviderFixture {
         () => jasmine.createSpy('saveStoryById'),
         []
       );
-      const deleteStoryById = useCallback(
-        () => jasmine.createSpy('deleteStoryById'),
-        []
-      );
 
       const getAllFonts = useCallback(() => {
         // @todo: put actual data to __db__/
@@ -429,7 +425,6 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           saveStoryById,
-          deleteStoryById,
           getAllFonts,
           getAllStatuses,
           getAllUsers,
