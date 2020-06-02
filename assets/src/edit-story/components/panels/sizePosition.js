@@ -39,9 +39,7 @@ import {
   MULTIPLE_VALUE,
 } from '../form';
 import { dataPixels } from '../../units';
-import { ReactComponent as Locked } from '../../icons/lock.svg';
-import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
-import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
+import { Lock as Locked, Unlock as Unlocked, Fullbleed } from '../../icons';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
