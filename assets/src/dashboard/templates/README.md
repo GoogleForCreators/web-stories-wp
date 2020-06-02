@@ -1,14 +1,6 @@
 # Template Generation From Raw Story JSON
 
-This folder is a dumping ground for raw story json outputted by the editor. To convert the json output of a story to a template function simply create a file here titled `<template_name>.json` and copy the raw json into it. Then from your command line, run:
-```
-TEMPLATE=<template_name> npm run generate-template
-```
-
-The generated javascript file containing the template function should appear in the sibling folder `/data/<template_name>.js`.
-
-**Note**
-This process may take several seconds to run as linting the several thousand line json can be pretty cpu intensive.
+`templates/raw` is a dumping ground for raw story json output from the editor, which is then interpretted as a template.
 
 ## Getting The Raw Story JSON
 
