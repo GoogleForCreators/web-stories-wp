@@ -35,20 +35,10 @@ export default function useTemplateView({ totalPages }) {
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [sort, _setSort] = useState(TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR);
   const [page, setPage] = useState(1);
-  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
 
   const { pageSize } = usePagePreviewSize({
-    thumbnailMode: viewStyle === VIEW_STYLE.LIST,
-    isGrid: viewStyle === VIEW_STYLE.GRID,
+    isGrid: true,
   });
-
-  const handleToggleViewStyle = useCallback(() => {
-    if (viewStyle === VIEW_STYLE.LIST) {
-      setViewStyle(VIEW_STYLE.GRID);
-    } else {
-      setViewStyle(VIEW_STYLE.LIST);
-    }
-  }, [viewStyle]);
 
   const setPageClamped = useCallback(
     (newPage) => {
@@ -81,9 +71,8 @@ export default function useTemplateView({ totalPages }) {
   return useMemo(
     () => ({
       view: {
-        style: viewStyle,
+        style: VIEW_STYLE.GRID,
         pageSize,
-        toggleStyle: handleToggleViewStyle,
       },
       sort: {
         value: sort,
@@ -104,7 +93,6 @@ export default function useTemplateView({ totalPages }) {
       },
     }),
     [
-      handleToggleViewStyle,
       page,
       pageSize,
       requestNextPage,
@@ -113,14 +101,12 @@ export default function useTemplateView({ totalPages }) {
       setSort,
       setSearchKeyword,
       sort,
-      viewStyle,
     ]
   );
 }
 
 export const ViewPropTypes = PropTypes.shape({
   style: PropTypes.oneOf(Object.values(VIEW_STYLE)),
-  toggleStyle: PropTypes.func,
   pageSize: PageSizePropType,
 });
 
