@@ -117,8 +117,9 @@ const TitleTableCellContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
   ${MoreVerticalButton} {
-    margin: 4px auto;
+    margin: 10px auto;
   }
 
   &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
@@ -256,6 +257,7 @@ export default function StoryListView({
                         contextMenuId={storyMenu.contextMenuId}
                         onMenuItemSelected={storyMenu.handleMenuItemSelected}
                         story={story}
+                        verticalAlign="center"
                       />
                     </>
                   )}
