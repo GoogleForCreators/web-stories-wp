@@ -56,6 +56,7 @@ function DisplayLayer() {
       <DisplayPageArea
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
+        background={currentPage?.backgroundColor}
       >
         {currentPage
           ? currentPage.elements.map(({ id, ...rest }) => {

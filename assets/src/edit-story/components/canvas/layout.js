@@ -33,6 +33,7 @@ import {
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import useResizeEffect from '../../utils/useResizeEffect';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import useCanvas from './useCanvas';
 
 /**
@@ -119,6 +120,7 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
 
 // Overflow is not hidden for media edit layer.
 const PageAreaWithOverflow = styled.div`
+  ${({ background }) => generatePatternStyles(background)}
   overflow: ${({ showOverflow }) => (showOverflow ? 'initial' : 'hidden')};
   position: relative;
   width: 100%;
@@ -220,12 +222,16 @@ const PageArea = forwardRef(
       showOverflow = false,
       fullbleedRef = createRef(),
       overlay = [],
+      background,
     },
     ref
   ) => {
     return (
       <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
-        <PageAreaWithOverflow showOverflow={showOverflow}>
+        <PageAreaWithOverflow
+          showOverflow={showOverflow}
+          background={background}
+        >
           <PageAreaSafeZone ref={ref} data-testid="safezone">
             {children}
           </PageAreaSafeZone>
