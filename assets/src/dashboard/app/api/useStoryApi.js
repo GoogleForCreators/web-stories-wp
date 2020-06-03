@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -213,7 +213,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
             style_presets,
             publisher_logo,
             title: {
-              raw: `${title.raw} ${__('(Copy)', 'web-stories')}`,
+              raw: sprintf(
+                /* translators: %s: story title */
+                __('%s (Copy)', 'web-stories'),
+                title.raw
+              ),
             },
             status: 'draft',
           },
