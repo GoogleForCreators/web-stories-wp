@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { MoreVerticalButton } from './cardItemMenu';
+import { MoreVerticalButton } from '../storyMenu';
 import { ActionLabel } from './types';
 
 const StyledCard = styled.div`
@@ -31,6 +31,10 @@ const StyledCard = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  ${MoreVerticalButton} {
+    margin: 12px 0;
+  }
 
   &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
     opacity: 1;
@@ -52,4 +56,3 @@ export default CardGridItem;
 export { default as CardPreviewContainer } from './cardPreview';
 export { ActionLabel };
 export { default as CardTitle } from './cardTitle';
-export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';
