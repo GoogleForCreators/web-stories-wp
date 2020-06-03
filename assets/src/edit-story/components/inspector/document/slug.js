@@ -74,6 +74,7 @@ function SlugPanel() {
           value={slug}
           onChange={handleChangeValue}
           placeholder={__('Enter slug', 'web-stories')}
+          aria-label={__('Edit: URL slug', 'web-stories')}
         />
       </Row>
       <HelperText>

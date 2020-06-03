@@ -63,7 +63,6 @@ jobs:
 
       - name: Bundle plugin
         run: |
-          echo 'assets/images/templates' >> .distignore
           npm run build:js
           npm run workflow:version -- --nightly
           npm run workflow:build-plugin -- --cdn --composer --zip web-stories-composer.zip
@@ -128,3 +127,56 @@ jobs:
           GIT_AUTHOR_NAME: ${{ github.actor }}
           GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_COMMITTER_NAME: ${{ github.actor }}
+
+  release-draft:
+    name: Update release changelog
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    steps:
+      - name: Draft release notes
+        id: release
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}.wiki
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download full bundle
+        uses: actions/download-artifact@v2
+        with:
+          name: web-stories
+          path: build
+
+      - name: Download composer bundle
+        uses: actions/download-artifact@v2
+        with:
+          name: web-stories-composer
+          path: build
+
+      - name: Upload full bundle
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: build/web-stories.zip
+          asset_name: web-stories
+          asset_content_type: application/zip
+        continue-on-error: true
+
+      - name: Upload composer bundle
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: build/web-stories-composer.zip
+          asset_name: web-stories-composer
+          asset_content_type: application/zip
+        continue-on-error: true

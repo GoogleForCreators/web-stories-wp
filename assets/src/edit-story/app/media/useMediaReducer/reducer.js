@@ -156,20 +156,28 @@ function reducer(state, { type, payload }) {
         return state;
       }
 
-      const updatedVideo = {
+      const updatedMediaElement = {
         ...state.media[mediaIndex],
         ...properties,
       };
 
       const newMedia = [
         ...state.media.slice(0, mediaIndex),
-        updatedVideo,
+        updatedMediaElement,
         ...state.media.slice(mediaIndex + 1),
       ];
 
       return {
         ...state,
         media: newMedia,
+      };
+    }
+
+    case types.DELETE_MEDIA_ELEMENT: {
+      const { id } = payload;
+      return {
+        ...state,
+        media: state.media.filter((media) => media.id !== id),
       };
     }
 

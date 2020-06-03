@@ -72,9 +72,9 @@ class Embed_Controller extends WP_REST_Controller {
 					'args'                => [
 						'url' => [
 							'description' => __( 'The URL for which to fetch embed data.', 'web-stories' ),
+							'required'    => true,
 							'type'        => 'string',
 							'format'      => 'uri',
-							'required'    => true,
 						],
 					],
 				],

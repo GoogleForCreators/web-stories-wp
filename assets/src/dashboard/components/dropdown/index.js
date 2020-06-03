@@ -31,9 +31,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
  */
 import { DROPDOWN_TYPES } from '../../constants';
 import { PILL_LABEL_TYPES } from '../../constants/components';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
-import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
-import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
+import { DropDownArrow, DropUpArrow, Close as CloseIcon } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
 
 import { ColorDot } from '../colorDot';

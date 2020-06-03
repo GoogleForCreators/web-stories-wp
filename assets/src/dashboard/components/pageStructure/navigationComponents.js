@@ -39,9 +39,21 @@ export const NavButton = styled(Button)`
   margin-top: 0;
 `;
 
+export const NavList = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
+
+export const NavListItem = styled.li`
+  margin: 8px 0;
+  padding: 0;
+  list-style-type: none;
+`;
+
 export const NavLink = styled.a`
   ${TypographyPresets.Medium};
   ${({ theme, active }) => `
+    display: block;
     padding: 4px 20px;
     margin: 4px 0;
     font-weight: ${theme.typography.weight[active ? 'bold' : 'normal']};
