@@ -86,6 +86,8 @@ class Discovery {
 	/**
 	 * Get schema.org metadata for the current query.
 	 *
+	 * @see https://developers.google.com/search/docs/guides/enable-web-stories
+	 *
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	protected function get_schemaorg_metadata() {
@@ -111,7 +113,7 @@ class Discovery {
 			$metadata = array_merge(
 				$metadata,
 				[
-					'@type'            => 'BlogPosting',
+					'@type'            => 'Article',
 					'mainEntityOfPage' => get_permalink( $post ),
 					'headline'         => get_the_title( $post ),
 					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
