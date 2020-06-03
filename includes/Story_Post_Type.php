@@ -375,6 +375,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-05-20
 				 */
 				'mediaDropdownMenu' => false,
+				/**
+				 * Description: Flag for new font picker with typeface previews in style panel.
+				 * Author: @carlos-kelly
+				 * Issue: #1300
+				 * Creation date: 2020-06-02
+				 */
+				'newFontPicker'     => false,
 			],
 		];
 
