@@ -68,7 +68,7 @@ describe('Element min size and playback', () => {
 
     it('hit play button on the covered element', async () => {
       // video1 is covered by video2
-      // select video1 hover on play button, hit play, verify that it's playing
+      // select video1, hover on play button, hit play, verify that it's playing
       const video1bb = video1Frame.getBoundingClientRect();
 
       await fixture.events.mouse.click(video1bb.x, video1bb.y);
