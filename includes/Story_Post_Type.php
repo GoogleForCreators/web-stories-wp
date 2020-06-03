@@ -407,7 +407,7 @@ class Story_Post_Type {
 				 * Issue: #1300
 				 * Creation date: 2020-06-02
 				 */
-				'newFontPicker' => false,
+				'newFontPicker'     => false,
 			],
 		];
 
