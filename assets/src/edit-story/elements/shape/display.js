@@ -31,12 +31,10 @@ const Element = styled.div`
 `;
 
 function ShapeDisplay({ element: { isDefaultBackground, backgroundColor } }) {
-  const props = isDefaultBackground
-    ? null
-    : {
-        backgroundColor,
-      };
-  return <Element {...props} />;
+  if (isDefaultBackground) {
+    return <Element />;
+  }
+  return <Element backgroundColor={backgroundColor} />;
 }
 
 ShapeDisplay.propTypes = {

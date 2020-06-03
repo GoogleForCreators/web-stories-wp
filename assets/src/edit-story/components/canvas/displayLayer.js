@@ -25,7 +25,7 @@ import { memo } from 'react';
 import { useStory } from '../../app';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
-import { Layer, PageArea as DisplayPageArea } from './layout';
+import { Layer, PageArea } from './layout';
 
 function DisplayLayer() {
   const {
@@ -38,7 +38,7 @@ function DisplayLayer() {
 
   return (
     <Layer pointerEvents="none">
-      <DisplayPageArea
+      <PageArea
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
         background={currentPage?.backgroundColor}
@@ -58,7 +58,7 @@ function DisplayLayer() {
               );
             })
           : null}
-      </DisplayPageArea>
+      </PageArea>
     </Layer>
   );
 }
