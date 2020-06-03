@@ -84,6 +84,7 @@ function FrameElement({ element }) {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const isSelected = selectedElementIds.includes(id);
+  const isSingleElement = selectedElementIds.length === 1;
   const box = getBox(element);
   const isBackground = currentPage?.elements[0].id === id;
 
@@ -104,7 +105,7 @@ function FrameElement({ element }) {
       dragging={Boolean(activeDropTargetId)}
       anchorRef={elementRef}
     >
-      {!isEditing && Controls && (
+      {!isEditing && isSingleElement && Controls && (
         <Controls
           isTransforming={isTransforming}
           isSelected={isSelected}
