@@ -26,14 +26,14 @@ export default function memoize(func, argsHash = (args) => args.join('-')) {
      */
     if (memoized.get(key) === undefined) {
       const value = func(...args);
-      memoized.set(key, value === undefined ? 'IS_VOID_FUNCTION' : value);
+      memoized.set(key, value === undefined ? 'IS_VOID' : value);
     }
     /**
-     * `IS_VOID_FUNCTION` is how we indicate that a function
+     * `IS_VOID` is how we indicate that a function
      * has been called with a given argument key, and the return
      * value of that call was undefined.
      */
-    if (memoized.get(key) === 'IS_VOID_FUNCTION') {
+    if (memoized.get(key) === 'IS_VOID') {
       return undefined;
     }
 
