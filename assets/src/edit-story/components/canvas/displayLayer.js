@@ -42,7 +42,6 @@ function DisplayLayer() {
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
         background={currentPage?.backgroundColor}
-        overflowAllowed={false}
         showDangerZone={true}
       >
         {currentPage
