@@ -43,7 +43,7 @@ const Submit = styled.input`
 `;
 
 function UpdateTemplateForm({ story }) {
-  const [includeAnimations, setIncludeAnimations] = useState(false);
+  const [includeAnimations, setIncludeAnimations] = useState(true);
   const [autoMigrateTemplate, setAutoMigrateTemplate] = useState(true);
 
   const toggleIncludeAnimations = useCallback(() => {
