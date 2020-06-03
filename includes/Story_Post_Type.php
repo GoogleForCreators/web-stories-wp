@@ -408,6 +408,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-02
 				 */
 				'newFontPicker'     => false,
+				/**
+				 * Description: Flag for new font picker with typeface previews in style panel.
+				 * Author: @dmmulroy
+				 * Issue: #2092
+				 * Creation date: 2020-06-03
+				 */
+				'animationTab'      => false,
 			],
 		];
 
