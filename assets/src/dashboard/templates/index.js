@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import getTemplates from './loadTemplate';
+import getTemplates from './getTemplates';
 
 export default function ({ assetsURL }) {
   const templates = getTemplates(assetsURL);

@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { getImageFile } from '../loadTemplate';
+import { getImageFile } from '../getTemplates';
 
 describe('getImageFile', () => {
   it('pulls the file name off the url', () => {
