@@ -22,7 +22,7 @@ import { useCallback } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -60,6 +60,11 @@ function BackgroundOverlayPanel() {
               onChange={() => updateOverlay(type)}
               iconWidth={22}
               iconHeight={16}
+              aria-label={sprintf(
+                /* translators: %s: Overlay type */
+                __('Set overlay: %s', 'web-stories'),
+                label
+              )}
             />
           );
         })}

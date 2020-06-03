@@ -26,6 +26,15 @@ import { AnimationMove } from './move';
 import { AnimationSpin } from './spin';
 import { AnimationZoom } from './zoom';
 
+import defaultAnimationProps from './defaultAnimationProps';
+import blinkOnProps from './blinkOn/animationProps';
+import fadeProps from './fade/animationProps';
+import flipProps from './flip/animationProps';
+import floatOnProps from './floatOn/animationProps';
+import moveProps from './move/animationProps';
+import spinProps from './spin/animationProps';
+import zoomProps from './zoom/animationProps';
+
 export function throughput() {
   return {
     id: -1,
@@ -50,4 +59,29 @@ export function AnimationPart(type, args) {
     }[type] || throughput;
 
   return generator(args);
+}
+
+export function AnimationProps(type) {
+  const customProps = {
+    [ANIMATION_TYPES.BLINK_ON]: blinkOnProps,
+    [ANIMATION_TYPES.FADE]: fadeProps,
+    [ANIMATION_TYPES.FLIP]: flipProps,
+    [ANIMATION_TYPES.FLOAT_ON]: floatOnProps,
+    [ANIMATION_TYPES.MOVE]: moveProps,
+    [ANIMATION_TYPES.SPIN]: spinProps,
+    [ANIMATION_TYPES.ZOOM]: zoomProps,
+  };
+
+  const { type: animationType, ...remaining } = defaultAnimationProps;
+
+  return {
+    type,
+    props: {
+      // This order is important.
+      // Type first, then custom props, then defaults.
+      type: animationType,
+      ...(customProps[type] || {}),
+      ...remaining,
+    },
+  };
 }

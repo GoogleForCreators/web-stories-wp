@@ -15,7 +15,7 @@
  */
 
 export { default as BookmarkChip } from './bookmark-chip';
-export { default as Button } from './button';
+export { default as Button, PaginationButton } from './button';
 export { default as CardGallery } from './cardGallery';
 export { default as CardGrid } from './cardGrid';
 export {

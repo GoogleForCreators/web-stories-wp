@@ -30,6 +30,7 @@ import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
+import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -37,22 +38,26 @@ const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 function MultiSelectionMovable({ selectedElements }) {
   const moveable = useRef();
 
+  const eventTracker = useRef({});
+
   const { updateElementsById } = useStory((state) => ({
     updateElementsById: state.actions.updateElementsById,
   }));
-  const { canvasWidth, canvasHeight, nodesById } = useCanvas(
+  const { canvasWidth, canvasHeight, nodesById, handleSelectElement } = useCanvas(
     ({
       state: {
         pageSize: { width: canvasWidth, height: canvasHeight },
         nodesById,
       },
-    }) => ({ canvasWidth, canvasHeight, nodesById })
+      actions: { handleSelectElement },
+    }) => ({ canvasWidth, canvasHeight, nodesById, handleSelectElement })
   );
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
     editorToDataX: state.actions.editorToDataX,
     editorToDataY: state.actions.editorToDataY,
     dataToEditorY: state.actions.dataToEditorY,
   }));
+
   const {
     actions: { pushTransform },
   } = useTransform();
@@ -148,6 +153,7 @@ function MultiSelectionMovable({ selectedElements }) {
 
   // Update elements once the event has ended.
   const onGroupEventEnd = ({ targets, isRotate, isResize }) => {
+    const updates = {};
     targets.forEach((target, i) => {
       // Update position in all cases.
       const frame = frames[i];
@@ -174,9 +180,41 @@ function MultiSelectionMovable({ selectedElements }) {
           );
         }
       }
-      updateElementsById({ elementIds: [element.id], properties });
+      updates[element.id] = properties;
+    });
+    updateElementsById({
+      elementIds: Object.keys(updates),
+      properties: (currentProperties) => updates[currentProperties.id],
     });
     resetMoveable();
+  };
+
+  const startEventTracking = (evt) => {
+    const { timeStamp, clientX, clientY } = evt;
+    eventTracker.current = {
+      timeStamp,
+      clientX,
+      clientY,
+    };
+  };
+
+  // Let's check if we consider this a drag or a click, In case of a click handle click instead.
+  // We are doing this here in Moveable selection since it takes over the mouseup event
+  // and it can be captured here and not in the frame element.
+  // @todo Add integration test for this!
+  const clickHandled = (inputEvent) => {
+    if (isMouseUpAClick(inputEvent, eventTracker.current)) {
+      const clickedElement = Object.keys(nodesById).find((id) =>
+        nodesById[id].contains(inputEvent.target)
+      );
+      if (clickedElement) {
+        handleSelectElement(clickedElement, inputEvent);
+      }
+      // Click was handled.
+      return true;
+    }
+    // No click was found/handled.
+    return false;
   };
 
   const hideHandles = isDragging || Boolean(draggingResource);
@@ -197,15 +235,18 @@ function MultiSelectionMovable({ selectedElements }) {
           setTransformStyle(element.id, target, sFrame);
         });
       }}
-      onDragGroupStart={({ events }) => {
+      onDragGroupStart={({ events, inputEvent }) => {
+        startEventTracking(inputEvent);
         if (!isDragging) {
           setIsDragging(true);
         }
         onGroupEventStart({ events, isDrag: true });
       }}
-      onDragGroupEnd={({ targets }) => {
+      onDragGroupEnd={({ targets, inputEvent }) => {
         setIsDragging(false);
-        onGroupEventEnd({ targets });
+        if (!clickHandled(inputEvent)) {
+          onGroupEventEnd({ targets });
+        }
       }}
       onRotateGroupStart={({ events }) => {
         onGroupEventStart({ events, isRotate: true });

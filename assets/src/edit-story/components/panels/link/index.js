@@ -166,6 +166,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           }
           value={link.url || ''}
           clear
+          aria-label={__('Edit: Element link', 'web-stories')}
         />
       </Row>
 
@@ -177,6 +178,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               handleChange({ desc: value }, !value /* submit */)
             }
             value={link.desc || ''}
+            aria-label={__('Edit: Link description', 'web-stories')}
           />
         </Row>
       )}

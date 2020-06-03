@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
 import { FlagsProvider } from 'flagged';
 import styled from 'styled-components';
@@ -25,6 +26,9 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import MediaElement from '../mediaElement';
+import ApiContext from '../../../../../app/api/context';
+import MediaContext from '../../../../../app/media/context';
+import SnackbarContext from '../../../../../app/snackbar/context';
 import testImage from './test-image.jpg';
 import testPoster from './test-poster.png';
 import testVideo from './test-video.mp4';
@@ -33,6 +37,20 @@ const Column = styled.div`
   width: 150px;
 `;
 
+const snackbarValue = { showSnackbar: action('snow snackbar') };
+const mediaValue = {
+  actions: {
+    deleteMediaElement: action('delete from state'),
+    updateMediaElement: action('update state'),
+  },
+};
+const apiValue = {
+  actions: {
+    deleteMedia: action('delete from server'),
+    updateMedia: action('update server'),
+  },
+};
+
 export default {
   title: 'Stories Editor/Components/Media Element',
   component: MediaElement,
@@ -40,8 +58,10 @@ export default {
 
 export const _Image = () => {
   const resource = object('Image Resource', {
+    id: 123,
     type: 'image',
     mimeType: 'image/png',
+    title: 'My Image :)',
     src: testImage,
     width: 910,
     height: 675,
@@ -51,18 +71,30 @@ export const _Image = () => {
   });
 
   return (
-    <FlagsProvider features={{ mediaDropdownMenu: true }}>
-      <Column>
-        <MediaElement resource={resource} width={150} onInsert={() => {}} />
-      </Column>
-    </FlagsProvider>
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <FlagsProvider features={{ mediaDropdownMenu: true }}>
+            <Column>
+              <MediaElement
+                resource={resource}
+                width={150}
+                onInsert={action('insert into canvas')}
+              />
+            </Column>
+          </FlagsProvider>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
   );
 };
 
 export const _Video = () => {
   const resource = object('Video Resource', {
+    id: 456,
     type: 'video',
     mimeType: 'video/mp4',
+    title: 'My Video :)',
     src: testVideo,
     width: 640,
     height: 480,
@@ -74,10 +106,20 @@ export const _Video = () => {
   });
 
   return (
-    <FlagsProvider features={{ mediaDropdownMenu: true }}>
-      <Column>
-        <MediaElement resource={resource} width={150} onInsert={() => {}} />
-      </Column>
-    </FlagsProvider>
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <FlagsProvider features={{ mediaDropdownMenu: true }}>
+            <Column>
+              <MediaElement
+                resource={resource}
+                width={150}
+                onInsert={action('insert into canvas')}
+              />
+            </Column>
+          </FlagsProvider>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
   );
 };
