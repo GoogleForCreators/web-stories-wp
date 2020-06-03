@@ -76,8 +76,8 @@ function TemplateDetails() {
       templates: { templates, templatesOrderById },
     },
     actions: {
+      storyApi: { createStoryFromTemplate },
       templateApi: {
-        createStoryFromTemplate,
         fetchMyTemplateById,
         fetchExternalTemplateById,
         fetchRelatedTemplates,

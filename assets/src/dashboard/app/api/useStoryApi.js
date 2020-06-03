@@ -193,6 +193,27 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     },
     [wpApi, dataAdapter]
   );
+  const createStoryFromTemplate = useCallback(async (template) => {
+    await template;
+    // try {
+    // const { pages, title } = template;
+    // const response = await dataAdapter.post(wpApi, {
+    //   data: {
+    //     content: {},
+    //     story_data: {
+    //       pages,
+    //     },
+    //     title,
+    //     status: 'draft',
+    //   },
+    // });
+    // console.log(response);
+    // redirect to new id: ${editStoryURL}&post=${id}
+    // } catch (e) {
+    //   // eslint-disable-next-line no-console
+    //   console.error(e);
+    // }
+  }, []);
 
   const duplicateStory = useCallback(
     async (story) => {
@@ -236,12 +257,19 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
 
   const api = useMemo(
     () => ({
+      duplicateStory,
+      fetchStories,
+      createStoryFromTemplate,
+      trashStory,
+      updateStory,
+    }),
+    [
+      createStoryFromTemplate,
+      duplicateStory,
+      trashStory,
       updateStory,
       fetchStories,
-      trashStory,
-      duplicateStory,
-    }),
-    [duplicateStory, trashStory, updateStory, fetchStories]
+    ]
   );
 
   return { stories: state, api };

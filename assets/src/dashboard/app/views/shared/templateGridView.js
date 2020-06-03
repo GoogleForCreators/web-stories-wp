@@ -60,7 +60,8 @@ const TemplateGridView = ({ pageSize, templates, templateActions }) => (
             label: TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[template.status],
           }}
           bottomAction={{
-            targetAction: templateActions.createStoryFromTemplate,
+            targetAction: () =>
+              templateActions.createStoryFromTemplate(template),
             label: __('Use template', 'web-stories'),
           }}
         />

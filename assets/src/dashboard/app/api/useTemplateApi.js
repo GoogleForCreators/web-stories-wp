@@ -63,10 +63,6 @@ const useTemplateApi = (dataAdapter, config) => {
 
   const { assetsURL } = config;
 
-  const createStoryFromTemplatePages = useCallback((pages) => {
-    return Promise.resolve({ success: true, storyId: -1 });
-  }, []);
-
   const fetchSavedTemplates = useCallback((filters) => {
     // Saved Templates = Bookmarked Templates + My Templates
     dispatch({
@@ -184,7 +180,6 @@ const useTemplateApi = (dataAdapter, config) => {
   const api = useMemo(
     () => ({
       bookmarkTemplateById,
-      createStoryFromTemplatePages,
       createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchExternalTemplates,
@@ -196,7 +191,6 @@ const useTemplateApi = (dataAdapter, config) => {
     }),
     [
       bookmarkTemplateById,
-      createStoryFromTemplatePages,
       createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,

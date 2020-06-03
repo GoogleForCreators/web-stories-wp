@@ -42,7 +42,8 @@ function ExploreTemplates() {
       },
     },
     actions: {
-      templateApi: { fetchExternalTemplates, createStoryFromTemplatePages },
+      storyApi: { createStoryFromTemplate },
+      templateApi: { fetchExternalTemplates },
     },
   } = useContext(ApiContext);
 
@@ -78,7 +79,7 @@ function ExploreTemplates() {
         totalTemplates={totalTemplates}
         search={search}
         view={view}
-        templateActions={{ createStoryFromTemplatePages }}
+        templateActions={{ createStoryFromTemplate }}
       />
       <Layout.Fixed>
         <ScrollToTop />
