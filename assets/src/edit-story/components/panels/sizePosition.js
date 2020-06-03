@@ -185,7 +185,6 @@ function SizePositionPanel({
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
-          data-testid="width"
           suffix={_x('W', 'The Width dimension', 'web-stories')}
           value={width}
           onChange={(value) => {
@@ -200,6 +199,7 @@ function SizePositionPanel({
             }
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
+          aria-label={__('Width', 'web-stories')}
         />
         <Toggle
           aria-label={__('Aspect ratio lock', 'web-stories')}
@@ -210,7 +210,6 @@ function SizePositionPanel({
           onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
         />
         <BoxedNumeric
-          data-testid="height"
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={height}
           onChange={(value) => {
@@ -225,6 +224,7 @@ function SizePositionPanel({
             }
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
+          aria-label={__('Height', 'web-stories')}
         />
       </Row>
       {/** Rotation and Flipping */}
@@ -234,6 +234,7 @@ function SizePositionPanel({
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
+          aria-label={__('Rotation', 'web-stories')}
         />
         {canFlip && (
           <FlipControls

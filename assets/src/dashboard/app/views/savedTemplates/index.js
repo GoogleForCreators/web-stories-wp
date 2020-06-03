@@ -100,6 +100,7 @@ function Content({ stories, view, page }) {
                   TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
                 }
                 bottomActionLabel={__('Use template', 'web-stories')}
+                pageSize={view.pageSize}
                 isSavedTemplate
               />
               <InfiniteScroller

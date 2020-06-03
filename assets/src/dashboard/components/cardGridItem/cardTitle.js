@@ -34,13 +34,18 @@ import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
 import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
+import { Link } from '../link';
 
 const StyledCardTitle = styled.div`
   padding-top: 12px;
-  max-width: 90%;
+  display: inline-block;
+  overflow: hidden;
 `;
 
-const StyledTitle = styled(Paragraph2)`
+const TitleStoryLink = styled(Link)`
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 2px;
   color: ${({ theme }) => theme.colors.gray900};
   font-weight: ${({ theme }) => theme.typography.weight.bold};
   white-space: nowrap;
@@ -49,6 +54,7 @@ const StyledTitle = styled(Paragraph2)`
 `;
 
 const TitleBodyText = styled(Paragraph2)`
+  margin: 0;
   color: ${({ theme }) => theme.colors.gray500};
   font-weight: ${({ theme }) => theme.typography.weight.light};
 `;
@@ -68,6 +74,7 @@ const DateHelperText = styled.span`
 const CardTitle = ({
   secondaryTitle,
   title,
+  titleLink,
   status,
   displayDate,
   editMode,
@@ -137,7 +144,7 @@ const CardTitle = ({
           />
         </div>
       ) : (
-        <StyledTitle>{title}</StyledTitle>
+        <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
       )}
       <TitleBodyText>
         {status === STORY_STATUS.DRAFT && (
@@ -152,6 +159,7 @@ const CardTitle = ({
 
 CardTitle.propTypes = {
   title: PropTypes.string.isRequired,
+  titleLink: PropTypes.string.isRequired,
   secondaryTitle: PropTypes.string,
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,

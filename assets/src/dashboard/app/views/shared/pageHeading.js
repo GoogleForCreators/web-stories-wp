@@ -26,7 +26,7 @@ import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
 import {
-  Heading1,
+  TypographyPresets,
   NavMenuButton,
   StandardViewContentGutter,
 } from '../../../components';
@@ -36,7 +36,9 @@ const Container = styled.div`
   padding: 10px 0 0;
 `;
 
-const StyledHeader = styled(Heading1)`
+const StyledHeader = styled.h2`
+  ${TypographyPresets.ExtraExtraLarge};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   display: flex;
   justify-content: flex-start;
   align-items: center;

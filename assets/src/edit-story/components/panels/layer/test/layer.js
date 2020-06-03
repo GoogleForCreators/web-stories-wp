@@ -48,7 +48,7 @@ function setupLayer({ layer }) {
     },
     actions: { setSelectedElementsById, toggleElementInSelection },
   };
-  const { getByText, container } = renderWithTheme(
+  const { container } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <Wrapper>
         <Layer layer={layer} />
@@ -58,7 +58,6 @@ function setupLayer({ layer }) {
 
   return {
     container,
-    getByText,
   };
 }
 

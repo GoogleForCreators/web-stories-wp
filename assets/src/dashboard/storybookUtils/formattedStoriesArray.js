@@ -95,6 +95,8 @@ const formattedStoriesArray = [
     centerTargetAction: '',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
+    editStoryLink:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
     originalStoryData: {
       id: 167,
       date: '2020-05-21T16:25:51',
@@ -381,6 +383,8 @@ const formattedStoriesArray = [
     author: 1,
     centerTargetAction: '',
     bottomTargetAction:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
+    editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
     originalStoryData: {
       id: 165,
@@ -814,6 +818,8 @@ const formattedStoriesArray = [
     author: 1,
     centerTargetAction: '',
     bottomTargetAction:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
+    editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
     originalStoryData: {
       id: 163,
@@ -1304,6 +1310,8 @@ const formattedStoriesArray = [
     author: 1,
     centerTargetAction: '',
     bottomTargetAction:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
+    editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
     originalStoryData: {
       id: 161,

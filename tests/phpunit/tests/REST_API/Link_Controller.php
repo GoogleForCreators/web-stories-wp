@@ -155,6 +155,18 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( $data['code'], 'rest_invalid_url' );
 	}
 
+	public function test_url_empty_string() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', '' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertEquals( 404, $response->get_status() );
+		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+	}
+
 	public function test_empty_url() {
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );

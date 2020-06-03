@@ -31,10 +31,10 @@ import { __ } from '@wordpress/i18n';
 import addQueryArgs from '../../utils/addQueryArgs';
 import { useStory, useMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
-import { Outline, Plain, Primary } from '../button';
+import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
-import Dialog from '../dialog';
 import escapeHTML from '../../utils/escapeHTML';
+import PreviewErrorDialog from './previewErrorDialog';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -71,7 +71,7 @@ function PreviewButton() {
   /**
    * Open a preview of the story in current window.
    */
-  const openPreviewLink = () => {
+  const openPreviewLink = useCallback(() => {
     // Display the actual link in case of a draft.
     const previewLink = isDraft
       ? addQueryArgs(link, { preview: 'true' })
@@ -124,38 +124,34 @@ function PreviewButton() {
       .catch(() => {
         setPreviewLinkToOpenViaDialog(previewLink);
       });
-  };
+  }, [autoSave, autoSaveLink, isDraft, link, saveStory]);
 
-  const openPreviewLinkSync = (evt) => {
-    setPreviewLinkToOpenViaDialog(null);
-    // Ensure that this method is as safe as possible and pass the random
-    // target in case the normal target is not openable.
-    window.open(previewLinkToOpenViaDialog, PREVIEW_TARGET + Math.random());
-    evt.preventDefault();
-  };
+  const openPreviewLinkSync = useCallback(
+    (evt) => {
+      setPreviewLinkToOpenViaDialog(null);
+      // Ensure that this method is as safe as possible and pass the random
+      // target in case the normal target is not openable.
+      window.open(previewLinkToOpenViaDialog, PREVIEW_TARGET + Math.random());
+      evt.preventDefault();
+    },
+    [previewLinkToOpenViaDialog]
+  );
+
+  const onDialogClose = useCallback(
+    () => setPreviewLinkToOpenViaDialog(null),
+    []
+  );
 
   return (
     <>
       <Outline onClick={openPreviewLink} isDisabled={isSaving}>
         {__('Preview', 'web-stories')}
       </Outline>
-      <Dialog
+      <PreviewErrorDialog
         open={Boolean(previewLinkToOpenViaDialog)}
-        onClose={() => setPreviewLinkToOpenViaDialog(null)}
-        title={__('Open preview', 'web-stories')}
-        actions={
-          <>
-            <Primary onClick={openPreviewLinkSync}>
-              {__('Try again', 'web-stories')}
-            </Primary>
-            <Plain onClick={() => setPreviewLinkToOpenViaDialog(null)}>
-              {__('Cancel', 'web-stories')}
-            </Plain>
-          </>
-        }
-      >
-        {__('The preview window failed to open.', 'web-stories')}
-      </Dialog>
+        onClose={onDialogClose}
+        onRetry={openPreviewLinkSync}
+      />
     </>
   );
 }
