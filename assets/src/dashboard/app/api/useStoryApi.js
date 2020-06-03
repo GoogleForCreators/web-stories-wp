@@ -193,26 +193,8 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     },
     [wpApi, dataAdapter]
   );
-  const createStoryFromTemplate = useCallback(async (template) => {
-    await template;
-    // try {
-    // const { pages, title } = template;
-    // const response = await dataAdapter.post(wpApi, {
-    //   data: {
-    //     content: {},
-    //     story_data: {
-    //       pages,
-    //     },
-    //     title,
-    //     status: 'draft',
-    //   },
-    // });
-    // console.log(response);
-    // redirect to new id: ${editStoryURL}&post=${id}
-    // } catch (e) {
-    //   // eslint-disable-next-line no-console
-    //   console.error(e);
-    // }
+  const createStoryFromTemplate = useCallback((template) => {
+    return Promise.resolve({ success: true, template });
   }, []);
 
   const duplicateStory = useCallback(
