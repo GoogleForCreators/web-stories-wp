@@ -28,7 +28,6 @@ export { default as LayerIcon } from './icon';
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundColor: createSolidFromString('#ffffff'),
-  isFill: false,
 };
 
 export const hasEditMode = false;
@@ -38,8 +37,6 @@ export const isMedia = false;
 export const canFlip = true;
 
 export const isMaskable = true;
-
-export const canFill = true;
 
 export const resizeRules = {
   vertical: true,

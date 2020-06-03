@@ -67,8 +67,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     objectWithout(nodesById, [selectedElement.id])
   );
 
-  const actionsEnabled =
-    !selectedElement.isFill && !selectedElement.isBackground;
+  const actionsEnabled = !selectedElement.isBackground;
 
   const latestEvent = useRef();
 
