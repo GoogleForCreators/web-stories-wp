@@ -34,6 +34,7 @@ import {
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
+import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import { generateParagraphTextStyle } from './util';
 
 const Element = styled.p`
@@ -95,24 +96,20 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     };
 
     const handleMouseDown = (evt) => {
-      clickTime = window.performance.now();
+      clickTime = evt.timeStamp;
       clickCoordinates = {
-        x: evt.clientX,
-        y: evt.clientY,
+        clientX: evt.clientX,
+        clientY: evt.clientY,
       };
     };
 
     const handleMouseUp = (evt) => {
-      const timingDifference = window.performance.now() - clickTime;
-      if (!clickCoordinates) {
-        return;
-      }
-
-      const distanceMoved =
-        Math.abs(evt.clientX - clickCoordinates.x) +
-        Math.abs(evt.clientY - clickCoordinates.y);
-      if (timingDifference > 300 || distanceMoved > 4) {
-        // Only enter edit mode in case of short clicks and (almost) without moving.
+      if (
+        !isMouseUpAClick(evt, {
+          timeStamp: clickTime,
+          ...clickCoordinates,
+        })
+      ) {
         return;
       }
 

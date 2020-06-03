@@ -30,15 +30,16 @@ import APIContext from '../app/api/context';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
 import Layout from '../app/layout';
 import FixtureEvents from './fixtureEvents';
+import getMediaResponse from './db/getMediaResponse';
 
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
     image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-    video: ['video/mp4'],
+    video: ['video/mp4', 'video/ogg'],
   },
-  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
+  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'ogg'],
   capabilities: {},
 };
 
@@ -377,27 +378,34 @@ class APIProviderFixture {
         () => jasmine.createSpy('saveStoryById'),
         []
       );
-      const deleteStoryById = useCallback(
-        () => jasmine.createSpy('deleteStoryById'),
+
+      const getAllFonts = useCallback(
+        // @todo: put actual data to __db__/
+        () =>
+          asyncResponse(
+            [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
+              name: font.family,
+              value: font.family,
+              ...font,
+            }))
+          ),
         []
       );
 
-      const getAllFonts = useCallback(() => {
-        // @todo: put actual data to __db__/
-        return asyncResponse(
-          [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
-            name: font.family,
-            value: font.family,
-            ...font,
-          }))
-        );
-      }, []);
-
-      // eslint-disable-next-line no-unused-vars
       const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
-        // @todo: arg support
-        // @todo: put actual data to __db__/
-        return asyncResponse({ data: [], headers: {} });
+        const filterByMediaType = mediaType
+          ? ({ mime_type }) => mime_type.startsWith(mediaType)
+          : () => true;
+        const filterBySearchTerm = searchTerm
+          ? ({ alt_text }) => alt_text.includes(searchTerm)
+          : () => true;
+        return asyncResponse({
+          data: getMediaResponse
+            .slice((pagingNum - 1) * 20, 20)
+            .filter(filterByMediaType)
+            .filter(filterBySearchTerm),
+          headers: { get: () => 1 },
+        });
       }, []);
       const uploadMedia = useCallback(
         () => jasmine.createSpy('uploadMedia'),
@@ -429,7 +437,6 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           saveStoryById,
-          deleteStoryById,
           getAllFonts,
           getAllStatuses,
           getAllUsers,

@@ -31,13 +31,19 @@ import useFocusOut from '../../utils/useFocusOut';
 import { PopoverMenuCard } from '../popoverMenu';
 
 export const MoreVerticalButton = styled.button`
+  display: flex;
   border: none;
   background: transparent;
   padding: 0 8px;
-  margin: 12px 0;
   opacity: ${({ menuOpen }) => (menuOpen ? 1 : 0)};
   transition: opacity ease-in-out 300ms;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.gray900};
+
+  & > svg {
+    width: 4px;
+    max-height: 100%;
+  }
 `;
 
 MoreVerticalButton.propTypes = {
@@ -46,16 +52,23 @@ MoreVerticalButton.propTypes = {
 
 const MenuContainer = styled.div`
   position: relative;
-  align-self: flex-start;
+  align-self: ${({ verticalAlign = 'flex-start' }) => verticalAlign};
   text-align: right;
-  margin-top: 12px;
-`;
 
-export default function CardItemMenu({
+  & > div {
+    margin: 0; /* 0 out margin that is needed by default on other instances of popover menus */
+  }
+`;
+MenuContainer.propTypes = {
+  verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
+};
+
+export default function StoryMenu({
   contextMenuId,
   onMoreButtonSelected,
   onMenuItemSelected,
   story,
+  verticalAlign,
 }) {
   const containerRef = useRef(null);
   const handleFocusOut = useCallback(() => {
@@ -68,17 +81,16 @@ export default function CardItemMenu({
   const isPopoverMenuOpen = contextMenuId === story.id;
 
   return (
-    <MenuContainer ref={containerRef}>
+    <MenuContainer ref={containerRef} verticalAlign={verticalAlign}>
       <MoreVerticalButton
         menuOpen={isPopoverMenuOpen}
         aria-label="More Options"
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
       >
-        <MoreVerticalSvg width={4} height={20} />
+        <MoreVerticalSvg />
       </MoreVerticalButton>
       <PopoverMenuCard
         isOpen={isPopoverMenuOpen}
-        framelessButton
         onSelect={(menuItem) => onMenuItemSelected(menuItem, story)}
         items={STORY_CONTEXT_MENU_ITEMS}
       />
@@ -86,9 +98,10 @@ export default function CardItemMenu({
   );
 }
 
-CardItemMenu.propTypes = {
+StoryMenu.propTypes = {
   story: StoryPropType,
   onMoreButtonSelected: PropTypes.func.isRequired,
   onMenuItemSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
+  verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
 };

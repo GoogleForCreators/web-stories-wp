@@ -30,7 +30,7 @@ import SnackbarContext from '../../../../../app/snackbar/context';
 import testImage from './test-image.jpg';
 
 export default {
-  title: 'Stories Editor/Components/Media Edit Dialog',
+  title: 'Stories Editor/Components/Dialog/Edit Media',
   component: MediaEditDialog,
 };
 
