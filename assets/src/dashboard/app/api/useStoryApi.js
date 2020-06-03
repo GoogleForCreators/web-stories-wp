@@ -40,6 +40,7 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
+import { getStoryPropsToSave } from '../../utils';
 
 export function reshapeStoryObject(editStoryURL) {
   return function (originalStoryData) {
@@ -193,9 +194,52 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     },
     [wpApi, dataAdapter]
   );
-  const createStoryFromTemplate = useCallback((template) => {
-    return Promise.resolve({ success: true, template });
-  }, []);
+  const createStoryFromTemplate = useCallback(
+    async (template) => {
+      try {
+        const { pages, title } = template;
+        const copyTemplateTitle = sprintf(
+          /* translators: %s: template title */
+          __('%s (Copy)', 'web-stories'),
+          title
+        );
+
+        const storyPropsToSave = await getStoryPropsToSave({
+          story: {
+            title: copyTemplateTitle,
+            author: null,
+            status: 'draft',
+            slug: '',
+            date: new Date(),
+            excerpt: '',
+            featuredMedia: 0,
+            password: '',
+          },
+          pages,
+          metadata: {
+            publisher: {
+              name: template.author,
+            },
+            logoPlaceholder: '',
+            fallbackPoster: '',
+          },
+        });
+        console.log('save props: ', storyPropsToSave);
+        console.log('TEMPLATE: ', template);
+        const response = await dataAdapter.post(wpApi, {
+          data: {
+            ...storyPropsToSave,
+            story_data: { pages },
+          },
+        });
+        console.log('RESPONSE??? ', response);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      }
+    },
+    [dataAdapter, wpApi]
+  );
 
   const duplicateStory = useCallback(
     async (story) => {
@@ -208,6 +252,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           featured_media,
           title,
         } = story.originalStoryData;
+        console.log('duplicate story data: ', story.originalStoryData);
         const response = await dataAdapter.post(wpApi, {
           data: {
             content,
