@@ -81,7 +81,10 @@ const StoryGridView = ({
           : {};
 
         return (
-          <CardGridItem key={story.id}>
+          <CardGridItem
+            key={story.id}
+            data-testid={`story-grid-item-${story.id}`}
+          >
             <CardPreviewContainer
               pageSize={pageSize}
               story={story}

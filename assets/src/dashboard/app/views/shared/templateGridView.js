@@ -51,7 +51,10 @@ const GridContainer = styled(CardGrid)`
 const TemplateGridView = ({ pageSize, templates, templateActions }) => (
   <GridContainer pageSize={pageSize}>
     {templates.map((template) => (
-      <CardGridItem key={template.id}>
+      <CardGridItem
+        key={template.id}
+        data-testid={`template-grid-item-${template.id}`}
+      >
         <CardPreviewContainer
           pageSize={pageSize}
           story={template}
