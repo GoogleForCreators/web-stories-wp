@@ -77,10 +77,17 @@ export const _default = () => {
 };
 
 export const AllTemplatesFetched = () => {
+  const { pageSize } = usePagePreviewSize({
+    isGrid: true,
+  });
   return (
     <Layout.Provider>
       <StorybookLayoutContainer>
-        <Content {...defaultProps} allPagesFetched={true} />
+        <Content
+          {...defaultProps}
+          allPagesFetched={true}
+          view={{ ...view, pageSize }}
+        />
       </StorybookLayoutContainer>
     </Layout.Provider>
   );
