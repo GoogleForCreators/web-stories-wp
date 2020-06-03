@@ -132,7 +132,7 @@ jobs:
     name: Update release changelog
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == ‘refs/heads/master’ && github.event_name == ‘push’
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
 
     steps:
       - name: Draft release notes
@@ -168,6 +168,7 @@ jobs:
           asset_path: build/web-stories.zip
           asset_name: web-stories
           asset_content_type: application/zip
+        continue-on-error: true
 
       - name: Upload composer bundle
         uses: actions/upload-release-asset@v1
@@ -178,3 +179,4 @@ jobs:
           asset_path: build/web-stories-composer.zip
           asset_name: web-stories-composer
           asset_content_type: application/zip
+        continue-on-error: true
