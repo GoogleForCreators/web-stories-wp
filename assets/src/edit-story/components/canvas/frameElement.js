@@ -105,10 +105,12 @@ function FrameElement({ element }) {
       dragging={Boolean(activeDropTargetId)}
       anchorRef={elementRef}
     >
-      {!isEditing && isSingleElement && Controls && (
+      {Controls && (
         <Controls
           isTransforming={isTransforming}
           isSelected={isSelected}
+          isSingleElement={isSingleElement}
+          isEditing={isEditing}
           box={box}
           elementRef={elementRef}
           element={element}

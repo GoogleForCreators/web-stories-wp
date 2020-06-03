@@ -94,6 +94,8 @@ const Pause = styled(PauseIcon)`
 function VideoControls({
   box,
   isSelected,
+  isSingleElement,
+  isEditing,
   isTransforming,
   elementRef,
   element,
@@ -116,9 +118,11 @@ function VideoControls({
 
   useEffect(() => {
     const videoNode = getVideoNode();
-    if (!isElementSelected && videoNode) {
-      videoNode.pause();
-      videoNode.currentTime = 0;
+    if (!isElementSelected || isEditing) {
+      if (videoNode) {
+        videoNode.pause();
+        videoNode.currentTime = 0;
+      }
       setIsPlaying(false);
       setShowControls(true);
     }
@@ -128,7 +132,7 @@ function VideoControls({
       }
     }, 0);
     return () => clearTimeout(syncTimer);
-  }, [getVideoNode, id, isElementSelected]);
+  }, [getVideoNode, id, isElementSelected, isEditing]);
 
   useEffect(() => {
     const videoNode = getVideoNode();
@@ -181,7 +185,7 @@ function VideoControls({
     };
   }, [checkMouseInBBox]);
 
-  if (!isSelected || isTransforming) {
+  if (!isSelected || isTransforming || !isSingleElement || isEditing) {
     return null;
   }
 
@@ -238,6 +242,8 @@ function VideoControls({
 VideoControls.propTypes = {
   box: StoryPropTypes.box.isRequired,
   isSelected: PropTypes.bool.isRequired,
+  isSingleElement: PropTypes.bool.isRequired,
+  isEditing: PropTypes.bool.isRequired,
   isTransforming: PropTypes.bool.isRequired,
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
