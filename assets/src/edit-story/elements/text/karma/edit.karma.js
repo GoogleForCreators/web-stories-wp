@@ -101,12 +101,10 @@ describe('TextEdit integration', () => {
         expect(boldToggle.checked).toEqual(true);
 
         // Exit edit mode by clicking right outside the editor.
-        // @todo: this API is a bit low level. would be good to add additional
-        // ways to do events relative to targets and each other. Maybe something
-        // like `move({relative: element, anchor: 'topleft', x: -10})`?
-        const { x, y } = editor.getBoundingClientRect();
-        await fixture.events.mouse.move(x - 10, y);
-        await fixture.events.mouse.down();
+        await fixture.events.mouse.seq(({ moveRel, down }) => [
+          moveRel(editor, -10),
+          down(),
+        ]);
 
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 
