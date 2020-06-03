@@ -14,27 +14,15 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
+function loadStylesheet(url) {
+  return new Promise((resolve, reject) => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = url;
+    link.addEventListener('load', resolve);
+    link.addEventListener('error', reject);
+    document.head.appendChild(link);
+  });
+}
 
-/**
- * Internal dependencies
- */
-import PreviewErrorDialog from '../previewErrorDialog';
-
-export default {
-  title: 'Stories Editor/Components/Dialog/Preview Error',
-  component: PreviewErrorDialog,
-};
-
-export const _default = () => {
-  return (
-    <PreviewErrorDialog
-      open
-      onClose={action('closed')}
-      onRetry={action('retried')}
-    />
-  );
-};
+export default loadStylesheet;

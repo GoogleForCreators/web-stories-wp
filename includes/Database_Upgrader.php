@@ -55,14 +55,18 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	public function init() {
-		$version  = get_option( self::OPTION, '0.0.0' );
 		$routines = [
 			'1.0.0' => 'upgrade_1',
 			'2.0.0' => 'v_2_replace_conic_style_presets',
 		];
 
+		$version = get_option( self::OPTION, '0.0.0' );
+
+		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {
+			return;
+		}
+
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
-		// @todo This should only update if there were actual updates. Otherwise, the `self::PREVIOUS_OPTION` will always be overwritten.
 		$this->finish_up( $version );
 	}
 

@@ -15,26 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
-import PreviewErrorDialog from '../previewErrorDialog';
-
-export default {
-  title: 'Stories Editor/Components/Dialog/Preview Error',
-  component: PreviewErrorDialog,
-};
-
-export const _default = () => {
-  return (
-    <PreviewErrorDialog
-      open
-      onClose={action('closed')}
-      onRetry={action('retried')}
-    />
-  );
-};
+export { default } from './fontPicker';
