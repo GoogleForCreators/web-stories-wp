@@ -23,21 +23,13 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryAnimation, { useStoryAnimationContext } from '../index.js';
+import StoryAnimation from '../index.js';
 import { ANIMATION_TYPES } from '../../../animations/constants';
+import PlayButton from '../../../storybookUtils/playButton';
 
 export default {
   title: 'Dashboard/Components/StoryAnimation',
   component: StoryAnimation,
-};
-
-const PlayButton = () => {
-  const {
-    actions: { playWAAPIAnimations },
-  } = useStoryAnimationContext();
-
-  const label = 'play';
-  return <button onClick={playWAAPIAnimations}>{label}</button>;
 };
 
 function ColorSquare({ color }) {
@@ -77,8 +69,10 @@ SquareWrapper.propTypes = {
 };
 
 const animations = [
-  { targets: ['some-id'], type: ANIMATION_TYPES.BOUNCE, duration: 1000 },
-  { targets: ['some-id'], type: ANIMATION_TYPES.BOUNCE, delay: 1000 },
+  { targets: ['some-id'], type: ANIMATION_TYPES.FADE },
+  { targets: ['some-id'], type: ANIMATION_TYPES.FLIP },
+  { targets: ['some-id'], type: ANIMATION_TYPES.SPIN },
+  { targets: ['some-id'], type: ANIMATION_TYPES.FLOAT_ON, duration: 1000 },
 ];
 
 export function _default() {
@@ -168,7 +162,7 @@ export function AMPStory() {
         <amp-story-page id={pages[0].id}>
           <StoryAnimation.Provider animations={pages[0].animations}>
             <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimators />
+            <StoryAnimation.AMPAnimations />
 
             <StoryAnimation.AMPWrapper
               target="el1"
@@ -185,7 +179,7 @@ export function AMPStory() {
         <amp-story-page id={pages[1].id}>
           <StoryAnimation.Provider animations={pages[1].animations}>
             <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimators />
+            <StoryAnimation.AMPAnimations />
 
             <div
               style={{
@@ -212,7 +206,7 @@ export function AMPStory() {
         <amp-story-page id={pages[2].id}>
           <StoryAnimation.Provider animations={pages[2].animations}>
             <StoryAnimation.AMPKeyframes />
-            <StoryAnimation.AMPAnimators />
+            <StoryAnimation.AMPAnimations />
 
             <amp-story-grid-layer template="vertical">
               {pages[2].elements.map((element) => (

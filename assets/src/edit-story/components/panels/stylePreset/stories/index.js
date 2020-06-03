@@ -28,12 +28,12 @@ import createSolid from '../../../../utils/createSolid';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 
 export default {
-  title: 'Stories Editor/Components/stylePreset/Presets',
+  title: 'Stories Editor/Components/Style Presets',
   component: Presets,
   parameters: {
-    backgrounds: [
-      { name: 'dark background', value: 'rgba(0, 0, 0, 0.8)', default: true },
-    ],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 
@@ -58,23 +58,28 @@ export const _default = () => {
         color: createSolid(0, 0, 0, 1),
         backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
         backgroundColor: createSolid(255, 0, 255, 0.5),
+        font: {},
       },
       {
         color: createSolid(255, 255, 0, 0.9),
         backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
         backgroundColor: createSolid(0, 0, 0, 1),
-        fontFamily: 'Princess Sofia',
-        fontFallback: ['cursive'],
+        font: {
+          family: 'Princess Sofia',
+          fallbacks: ['cursive'],
+        },
       },
       {
         color: createSolid(255, 255, 255, 0.9),
         backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
         backgroundColor: createSolid(0, 0, 0, 1),
+        font: {},
       },
       {
         color: createSolid(0, 0, 0, 1),
         backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
         backgroundColor: createSolid(255, 255, 255, 0.8),
+        font: {},
       },
     ],
     fillColors: [],

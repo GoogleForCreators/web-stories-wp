@@ -105,22 +105,6 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const deleteStoryById = useCallback(
-    /**
-     * Fire REST API call to delete story.
-     *
-     * @param {number}   storyId Story post id.
-     * @return {Promise} Return apiFetch promise.
-     */
-    (storyId) => {
-      return apiFetch({
-        path: `${stories}/${storyId}`,
-        method: 'DELETE',
-      });
-    },
-    [stories]
-  );
-
   const getMedia = useCallback(
     ({ mediaType, searchTerm, pagingNum }) => {
       let apiPath = media;
@@ -195,6 +179,23 @@ function APIProvider({ children }) {
   );
 
   /**
+   * Delete existing media.
+   *
+   * @param  {number} mediaId
+   * @return {Promise} Media Object Promise.
+   */
+  const deleteMedia = useCallback(
+    (mediaId) => {
+      return apiFetch({
+        path: `${media}/${mediaId}`,
+        data: { force: true },
+        method: 'DELETE',
+      });
+    },
+    [media]
+  );
+
+  /**
    * Gets metadata (title, favicon, etc.) from
    * a provided URL.
    *
@@ -232,11 +233,11 @@ function APIProvider({ children }) {
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      deleteStoryById,
       getAllFonts,
       getAllUsers,
       uploadMedia,
       updateMedia,
+      deleteMedia,
     },
   };
 

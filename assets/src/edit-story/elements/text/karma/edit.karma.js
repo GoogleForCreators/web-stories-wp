@@ -51,6 +51,9 @@ describe('TextEdit integration', () => {
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
           content: 'hello world!',
+          x: 40,
+          y: 40,
+          width: 250,
         })
       );
 
@@ -75,34 +78,33 @@ describe('TextEdit integration', () => {
         boldToggle = fixture.querySelector('[data-testid="boldToggle"]');
       });
 
-      it('should mount editor', () => {
+      it('should mount editor', async () => {
         expect(editor).toBeTruthy();
         expect(editLayer).toBeTruthy();
+        await fixture.snapshot();
       });
 
       it('should handle a commnad, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
-        await fixture.events.focus(draft);
 
         // Select all.
         await fixture.events.click(draft, { clickCount: 3 });
 
         expect(boldToggle.checked).toEqual(false);
 
-        // @todo: Linux uses ctrlKey.
-        // @todo: would be preferable to be more semantic here. E.g.
-        // `keys('mod+B')`.
-        await fixture.events.keyDown(draft, {
-          key: 'b',
-          code: 'KeyB',
-          keyCode: 66,
-          metaKey: true,
-        });
+        await fixture.snapshot('before mod+b');
+
+        await fixture.events.keyboard.shortcut('mod+b');
+
+        await fixture.snapshot('after mod+b');
 
         expect(boldToggle.checked).toEqual(true);
 
-        // Exit edit mode.
-        await fixture.events.mouseDown(editLayer);
+        // Exit edit mode by clicking right outside the editor.
+        await fixture.events.mouse.seq(({ moveRel, down }) => [
+          moveRel(editor, -10),
+          down(),
+        ]);
 
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 

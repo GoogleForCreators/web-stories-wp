@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
+import { identity, useContextSelector } from '../utils/context';
 import Context from './context';
 
-function useUnits() {
-  return useContext(Context);
+function useUnits(selector) {
+  return useContextSelector(Context, selector ?? identity);
 }
 
 export default useUnits;

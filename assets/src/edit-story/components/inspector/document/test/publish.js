@@ -54,7 +54,13 @@ function setupPanel(
     },
   };
 
-  const { getByText, getByRole, queryByText } = renderWithTheme(
+  const {
+    getByText,
+    getByRole,
+    queryByText,
+    getByLabelText,
+    queryByLabelText,
+  } = renderWithTheme(
     <ConfigContext.Provider value={config}>
       <StoryContext.Provider value={storyContextValue}>
         <InspectorContext.Provider value={inspectorContextValue}>
@@ -66,7 +72,10 @@ function setupPanel(
   return {
     getByText,
     getByRole,
+    getByLabelText,
     queryByText,
+    queryByLabelText,
+    updateStory,
   };
 }
 
@@ -81,8 +90,8 @@ describe('PublishPanel', () => {
   });
 
   it('should display Author field if authors available', () => {
-    const { getByText } = setupPanel();
-    const element = getByText('Author');
+    const { getByRole } = setupPanel();
+    const element = getByRole('button', { name: 'Author' });
     expect(element).toBeDefined();
   });
 
@@ -95,11 +104,97 @@ describe('PublishPanel', () => {
   });
 
   it('should open Date picker when clicking on date', () => {
-    const { getByText, getByRole } = setupPanel();
-    const element = getByText('01/01/2020');
+    const { getByRole } = setupPanel();
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
-    const calendar = getByRole('application');
+    const calendar = getByRole('button', { name: 'January 2020' });
     expect(calendar).toBeDefined();
+  });
+
+  it('should update the story when choosing a date from the calendar', () => {
+    const { getByRole, updateStory } = setupPanel();
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
+
+    fireEvent.click(element);
+    const firstOfJanuary = getByRole('button', { name: 'January 1, 2020' });
+    expect(firstOfJanuary).toBeDefined();
+
+    fireEvent.click(firstOfJanuary);
+    expect(updateStory).toHaveBeenCalledTimes(1);
+    const calledArg = updateStory.mock.calls[0][0];
+    const date = new Date(calledArg.properties.date);
+    expect(date.getMonth()).toStrictEqual(0);
+    expect(date.getDate()).toStrictEqual(1);
+    expect(date.getFullYear()).toStrictEqual(2020);
+  });
+
+  it('should update the story when choosing time', () => {
+    const { getByRole, getByLabelText, updateStory } = setupPanel();
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
+
+    fireEvent.click(element);
+    const hours = getByLabelText('Hours');
+    const minutes = getByLabelText('Minutes');
+    const am = getByRole('button', { name: 'AM' });
+
+    expect(minutes).toBeDefined();
+    expect(hours).toBeDefined();
+    expect(am).toBeDefined();
+
+    fireEvent.change(hours, { target: { value: '9' } });
+    fireEvent.blur(hours);
+
+    fireEvent.change(minutes, { target: { value: '59' } });
+    fireEvent.blur(minutes);
+
+    fireEvent.click(am);
+
+    expect(updateStory).toHaveBeenCalledTimes(3);
+    const calledArgs = updateStory.mock.calls;
+
+    // The original date was using PM.
+    const date1 = new Date(calledArgs[0][0].properties.date);
+    expect(date1.getHours()).toStrictEqual(21);
+
+    const date2 = new Date(calledArgs[1][0].properties.date);
+    expect(date2.getMinutes()).toStrictEqual(59);
+
+    // After choosing AM, the hours should be 9.
+    const date3 = new Date(calledArgs[2][0].properties.date);
+    expect(date3.getHours()).toStrictEqual(9);
+  });
+
+  it('should not update the date with incorrect times', () => {
+    const { getByRole, getByLabelText, updateStory } = setupPanel();
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
+
+    fireEvent.click(element);
+    const hours = getByLabelText('Hours');
+    const minutes = getByLabelText('Minutes');
+
+    fireEvent.change(hours, { target: { value: '30' } });
+    fireEvent.blur(hours);
+
+    fireEvent.change(minutes, { target: { value: '130' } });
+    fireEvent.blur(minutes);
+
+    expect(updateStory).toHaveBeenCalledTimes(0);
+  });
+
+  it('should open the calendar via keyboard events', () => {
+    const { getByRole, queryByLabelText } = setupPanel();
+
+    let dateInCalendar = queryByLabelText('January 1, 2020');
+    expect(dateInCalendar).toBeNull();
+
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
+    fireEvent.keyDown(element, {
+      key: 'Enter',
+      which: 13,
+    });
+
+    dateInCalendar = getByRole('button', { name: 'January 1, 2020' });
+    expect(dateInCalendar).toBeDefined();
   });
 });

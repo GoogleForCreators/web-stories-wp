@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import styled, { css } from 'styled-components';
@@ -23,7 +28,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ReactComponent as MenuSvg } from '../../icons/menu.svg';
+import { Menu as MenuSvg } from '../../icons';
 import { useNavContext } from '../navProvider';
 
 const MenuIcon = styled(MenuSvg).attrs({ width: 24, height: 24 })`
@@ -39,8 +44,12 @@ const TransparentButton = styled.button`
   height: 24px;
   padding: 0;
   margin-right: 16px;
-  border: none;
+  border: ${({ theme }) => theme.borders.transparent};
   background: transparent;
+
+  &:focus {
+    border: ${({ theme }) => theme.borders.action};
+  }
 
   ${({ showOnlyOnSmallViewport }) =>
     showOnlyOnSmallViewport &&
@@ -58,8 +67,9 @@ export default function NavMenuButton({ showOnlyOnSmallViewport }) {
     <TransparentButton
       onClick={actions.toggleSideBar}
       showOnlyOnSmallViewport={showOnlyOnSmallViewport}
+      aria-label={__('toggle main navigation', 'web-stories')}
     >
-      <MenuIcon />
+      <MenuIcon aria-hidden={true} />
     </TransparentButton>
   );
 }

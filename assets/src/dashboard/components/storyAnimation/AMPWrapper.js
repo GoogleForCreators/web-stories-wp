@@ -30,11 +30,11 @@ function ComposableWrapper({ animationParts, children, style }) {
     () =>
       animationParts.reduce(
         (Composable, animationPart) => {
-          const { AMPAnimation } = animationPart;
+          const { AMPTarget } = animationPart;
           const Composed = function (props) {
             return (
               <Composable>
-                <AMPAnimation style={style}>{props.children}</AMPAnimation>
+                <AMPTarget style={style}>{props.children}</AMPTarget>
               </Composable>
             );
           };

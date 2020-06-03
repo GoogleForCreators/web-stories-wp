@@ -115,10 +115,6 @@ class Story_Post_Type {
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
 				],
 				'menu_icon'             => 'dashicons-book',
-				'taxonomies'            => [
-					'post_tag',
-					'category',
-				],
 				'supports'              => [
 					'title', // Used for amp-story[title].
 					'author',
@@ -397,7 +393,22 @@ class Story_Post_Type {
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
-			'flags'  => [],
+			'flags'  => [
+				/**
+				 * Description: Flag for hover dropdown menu for media element in media library.
+				 * Author: @joannag6
+				 * Issue: #1319 and #354
+				 * Creation date: 2020-05-20
+				 */
+				'mediaDropdownMenu' => false,
+				/**
+				 * Description: Flag for new font picker with typeface previews in style panel.
+				 * Author: @carlos-kelly
+				 * Issue: #1300
+				 * Creation date: 2020-06-02
+				 */
+				'newFontPicker'     => false,
+			],
 		];
 
 		return $settings;
@@ -412,7 +423,7 @@ class Story_Post_Type {
 		$allowed_mime_types = self::get_allowed_mime_types();
 		$mime_types         = [];
 
-		foreach ( $allowed_mime_types as $type => $mimes ) {
+		foreach ( $allowed_mime_types as $mimes ) {
 			// Otherwise this throws a warning on PHP < 7.3.
 			if ( ! empty( $mimes ) ) {
 				array_push( $mime_types, ...$mimes );
