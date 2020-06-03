@@ -34,6 +34,7 @@ const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, elements, backgroundOverlay, backgroundColor } = page;
   const backgroundStyles = {
+    backgroundColor: 'white',
     ...generatePatternStyles(backgroundColor),
   };
   const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);

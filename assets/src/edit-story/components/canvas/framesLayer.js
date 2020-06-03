@@ -36,13 +36,6 @@ import FrameElement from './frameElement';
 import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
 
-const FramesPageArea = withOverlay(
-  styled(PageArea).attrs({
-    className: 'container web-stories-content',
-    pointerEvents: 'initial',
-  })``
-);
-
 const FrameSidebar = styled.div`
   position: absolute;
   left: -200px;
@@ -64,6 +57,8 @@ const Hint = styled.div`
   text-align: right;
   background-color: ${({ theme }) => theme.colors.bg.v1};
 `;
+
+const FramesPageArea = withOverlay(PageArea);
 
 function FramesLayer() {
   const {
