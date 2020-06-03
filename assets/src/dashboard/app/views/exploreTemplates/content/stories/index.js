@@ -59,7 +59,7 @@ const StorybookLayoutContainer = styled.div`
 `;
 
 export default {
-  title: 'Dashboard/Components/exploreTemplates/Content',
+  title: 'Dashboard/Views/ExploreTemplates/Content',
   component: Content,
 };
 export const _default = () => {

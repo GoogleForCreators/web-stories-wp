@@ -17,40 +17,28 @@
 /**
  * External dependencies
  */
-import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { PageHeading } from '../';
-import { NavProvider, LeftRail } from '../../../../components';
+
+import formattedTemplatesArray from '../../../../storybookUtils/formattedTemplatesArray';
+import TemplateGridView from '../templateGridView';
 
 export default {
-  title: 'Dashboard/Views/Shared/PageHeading',
-  component: PageHeading,
+  title: 'Dashboard/Views/Shared/TemplateGridView',
+  component: TemplateGridView,
 };
-
-const InnerContent = styled.div`
-  background-color: red;
-  width: 100%;
-  height: 50%;
-`;
 
 export const _default = () => {
   return (
-    <NavProvider>
-      <LeftRail />
-      <PageHeading
-        centerContent={boolean('Center Inner Content', false)}
-        stories={[]}
-        handleTypeaheadChange={(value) => action('Search with value: ', value)}
-        defaultTitle={text('Page Heading', 'My Stories')}
-        searchPlaceholder={text('Search Placeholder', 'Find Stories')}
-      >
-        <InnerContent />
-      </PageHeading>
-    </NavProvider>
+    <TemplateGridView
+      templates={formattedTemplatesArray}
+      pageSize={{ width: 210, height: 316 }}
+      templateActions={{
+        createStoryFromTemplate: action('create story from template clicked'),
+      }}
+    />
   );
 };
