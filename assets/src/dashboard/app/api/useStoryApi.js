@@ -69,6 +69,7 @@ export function reshapeStoryObject(editStoryURL) {
       author,
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
+      editStoryLink: `${editStoryURL}&post=${id}`,
       originalStoryData,
     };
   };
@@ -117,6 +118,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
 
         const response = await dataAdapter.get(path, {
           parse: false,
+          cache: 'no-cache',
         });
 
         const totalPages =

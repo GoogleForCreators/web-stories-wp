@@ -30,7 +30,6 @@ import useSaveStory from './actions/useSaveStory';
 import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
-import useDeleteStory from './actions/useDeleteStory';
 import useAutoSave from './actions/useAutoSave';
 
 function StoryProvider({ storyId, children }) {
@@ -108,7 +107,6 @@ function StoryProvider({ storyId, children }) {
     pages,
     story,
   });
-  const { deleteStory } = useDeleteStory({ storyId });
 
   const state = {
     state: {
@@ -130,7 +128,6 @@ function StoryProvider({ storyId, children }) {
       ...api,
       autoSave,
       saveStory,
-      deleteStory,
     },
     internal: { reducerState, restore },
   };
