@@ -27,7 +27,7 @@ import fitness from './raw/fitness.json';
 import travel from './raw/travel.json';
 import wellbeing from './raw/wellbeing.json';
 
-function getImageFile(url) {
+export function getImageFile(url) {
   const file = (url || '').split('/').slice(-1).join('');
   /** removes `-x` in some_file-x.jpg */
   return file.replace(/-\d+(?=.\w{3,4}$)/g, '');
