@@ -89,7 +89,6 @@ function MediaEdit({ element, box }) {
     flip,
     focalX,
     focalY,
-    isFill,
     isBackground,
     type,
   } = element;
@@ -172,7 +171,7 @@ function MediaEdit({ element, box }) {
         />
       )}
 
-      {!isFill && !isBackground && cropBox && croppedMedia && (
+      {!isBackground && cropBox && croppedMedia && (
         <EditCropMovable
           setProperties={setProperties}
           cropBox={cropBox}
