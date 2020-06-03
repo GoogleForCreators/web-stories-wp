@@ -29,7 +29,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { Color, Row } from '../form';
 import { useStory } from '../../app';
-import createSolid from '../../utils/createSolid';
 import { SimplePanel } from './panel';
 import getColorPickerActions from './utils/getColorPickerActions';
 
@@ -38,8 +37,7 @@ function PageStylePanel() {
     state: { currentPage },
     actions: { updateCurrentPageProperties },
   } = useStory();
-  const backgroundColor =
-    currentPage.backgroundColor || createSolid(255, 255, 255, 1);
+  const { backgroundColor } = currentPage;
 
   const updateBackgroundColor = useCallback(
     (value) => {
