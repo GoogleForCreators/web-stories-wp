@@ -1,0 +1,147 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { Layout } from '../../../../../components';
+import { VIEW_STYLE } from '../../../../../constants';
+import { usePagePreviewSize } from '../../../../../utils';
+import Content from '../index';
+
+const fakeTemplates = [
+  {
+    id: 1,
+    title: 'Beauty',
+    createdBy: 'Google Web Stories',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
+    status: 'template',
+    pages: [{ id: '10' }],
+    centerTargetAction: () => {},
+    bottomTargetAction: () => {},
+  },
+  {
+    id: 2,
+    title: 'Cooking',
+    createdBy: 'Google Web Stories',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
+    status: 'template',
+    pages: [{ id: '20' }],
+    centerTargetAction: () => {},
+    bottomTargetAction: () => {},
+  },
+  {
+    id: 3,
+    title: 'Fitness',
+    createdBy: 'Google Web Stories',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
+    status: 'template',
+    pages: [{ id: '30' }],
+    centerTargetAction: () => {},
+    bottomTargetAction: () => {},
+  },
+];
+
+const search = {
+  keyword: '',
+  setKeyword: action('set search'),
+};
+const view = {
+  style: VIEW_STYLE.GRID,
+  pageSize: { width: 210, height: 316 },
+};
+const page = {
+  value: 1,
+  set: action('set page number'),
+  requestNextPage: action('request next page clicked'),
+};
+
+const defaultProps = {
+  allPagesFetched: false,
+  isLoading: false,
+  page: page,
+  search: search,
+  templates: fakeTemplates,
+  view: view,
+  totalTemplates: 3,
+};
+
+const StorybookLayoutContainer = styled.div`
+  margin-top: 40px;
+  height: 100vh;
+`;
+
+export default {
+  title: 'Dashboard/Components/exploreTemplates/Content',
+  component: Content,
+};
+export const _default = () => {
+  const { pageSize } = usePagePreviewSize({
+    isGrid: true,
+  });
+
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Content {...defaultProps} view={{ ...view, pageSize }} />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
+};
+
+export const AllTemplatesFetched = () => {
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Content {...defaultProps} allPagesFetched={true} />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
+};
+
+export const NoTemplates = () => {
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Content {...defaultProps} allPagesFetched={true} totalTemplates={0} />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
+};
+
+export const NoSearchResults = () => {
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Content
+          {...defaultProps}
+          allPagesFetched={true}
+          totalTemplates={0}
+          search={{ ...search, keyword: 'polar bears' }}
+        />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
+};
