@@ -29,42 +29,8 @@ import {
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../../constants';
 import Header from '../index';
+import formattedTemplatesArray from '../../../../../storybookUtils/formattedTemplatesArray';
 
-const fakeTemplates = [
-  {
-    id: 1,
-    title: 'Beauty',
-    createdBy: 'Google Web Stories',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-    status: 'template',
-    pages: [{ id: '10' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-  {
-    id: 2,
-    title: 'Cooking',
-    createdBy: 'Google Web Stories',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-    status: 'template',
-    pages: [{ id: '20' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-  {
-    id: 3,
-    title: 'Fitness',
-    createdBy: 'Google Web Stories',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-    status: 'template',
-    pages: [{ id: '30' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-];
 const filter = {
   value: TEMPLATES_GALLERY_STATUS.ALL,
 };
@@ -91,7 +57,7 @@ const defaultProps = {
   isLoading: false,
   page: page,
   search: search,
-  templates: fakeTemplates,
+  templates: formattedTemplatesArray,
   sort: sort,
   filter: filter,
   view: view,
