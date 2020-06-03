@@ -35,7 +35,6 @@ describe('TextEdit integration', () => {
   afterEach(() => {
     fixture.restore();
   });
-  //d="M 0.5 0 L 1 1 L 0 1 Z" triangle.
 
   it('should render ok', () => {
     expect(
@@ -43,13 +42,12 @@ describe('TextEdit integration', () => {
     ).toBeTruthy();
   });
 
-  it('via clicking on shape preview', async () => {
+  it('add shape via clicking on shape preview', async () => {
     let shapes = await fixture.container.querySelectorAll(
       '[data-testid="safezone"] [d="M 0.5 0 L 1 1 L 0 1 Z"]'
     );
     expect(shapes.length).toBe(0);
 
-    //await karmaPause();
     await act(async () => {
       await fixture.events.click(
         fixture.querySelector(`[id="library-tab-shapes"]`)
@@ -65,7 +63,7 @@ describe('TextEdit integration', () => {
     expect(shapes.length).toBeGreaterThan(0);
   });
 
-  it('via dragging from shape preview', async () => {
+  it('add shape via dragging from shape preview', async () => {
     let shapes = await fixture.container.querySelectorAll(
       '[data-testid="safezone"] [d="M 0.5 0 L 1 1 L 0 1 Z"]'
     );
