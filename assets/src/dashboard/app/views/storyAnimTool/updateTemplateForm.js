@@ -23,6 +23,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import {
+  migrate,
+  DATA_VERSION,
+} from '../../../../edit-story/migration/migrate';
 import { StoryPropType } from '../../../types';
 
 const Title = styled.h2`
@@ -40,9 +44,16 @@ const Submit = styled.input`
 
 function UpdateTemplateForm({ story }) {
   const [includeAnimations, setIncludeAnimations] = useState(false);
+  const [autoMigrateTemplate, setAutoMigrateTemplate] = useState(true);
 
   const toggleIncludeAnimations = useCallback(() => {
     setIncludeAnimations((prevIncludeAnimations) => !prevIncludeAnimations);
+  }, []);
+
+  const toggleAutoMigrateTemplate = useCallback(() => {
+    setAutoMigrateTemplate(
+      (prevAutoMigrateTemplate) => !prevAutoMigrateTemplate
+    );
   }, []);
 
   const handleTemplateUpdate = useCallback(
@@ -57,27 +68,49 @@ function UpdateTemplateForm({ story }) {
           }, []);
 
       const { story_data } = story.originalStoryData;
-
-      // eslint-disable-next-line no-console
-      console.log({
+      const updatedStoryData = {
         ...story_data,
         pages,
-      });
+      };
+
+      const processedStoryData = autoMigrateTemplate
+        ? {
+            ...migrate(updatedStoryData, story_data.version),
+            version: DATA_VERSION,
+          }
+        : updatedStoryData;
+
+      // eslint-disable-next-line no-console
+      console.log(processedStoryData);
     },
-    [story, includeAnimations]
+    [story, includeAnimations, autoMigrateTemplate]
   );
 
   return (
     <Container>
       <form onSubmit={handleTemplateUpdate}>
         <Title>{story.title}</Title>
-        <label htmlFor="animation">{'Include Animations?'}</label>
-        <input
-          id="animation"
-          type="checkbox"
-          onClick={toggleIncludeAnimations}
-          value={includeAnimations}
-        />
+        <div>
+          <label htmlFor="animation">{'Include Animations?'}</label>
+          <input
+            id="animation"
+            type="checkbox"
+            onClick={toggleIncludeAnimations}
+            checked={includeAnimations}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="auto-migrate">
+            {'Migrate Template to latest version?'}
+          </label>
+          <input
+            id="auto-migrate"
+            type="checkbox"
+            onClick={toggleAutoMigrateTemplate}
+            checked={autoMigrateTemplate}
+          />
+        </div>
         <Submit type="submit" value="Log Story Data to Console" />
       </form>
     </Container>
