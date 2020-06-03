@@ -63,7 +63,6 @@ const StoryGridView = ({
   users,
   centerActionLabelByStatus,
   bottomActionLabel,
-  isTemplate,
   isSavedTemplate,
   pageSize,
   storyMenu,
@@ -82,7 +81,7 @@ const StoryGridView = ({
           : {};
 
         return (
-          <CardGridItem key={story.id} isTemplate={isTemplate}>
+          <CardGridItem key={story.id}>
             <CardPreviewContainer
               pageSize={pageSize}
               story={story}
@@ -95,30 +94,28 @@ const StoryGridView = ({
                 label: bottomActionLabel,
               }}
             />
-            {!isTemplate && (
-              <DetailRow>
-                <CardTitle
-                  title={story.title}
-                  titleLink={story.editStoryLink}
-                  status={story?.status}
-                  id={story.id}
-                  secondaryTitle={
-                    isSavedTemplate
-                      ? __('Google', 'web-stories')
-                      : users[story.author]?.name
-                  }
-                  displayDate={story?.modified}
-                  {...titleRenameProps}
-                />
+            <DetailRow>
+              <CardTitle
+                title={story.title}
+                titleLink={story.editStoryLink}
+                status={story?.status}
+                id={story.id}
+                secondaryTitle={
+                  isSavedTemplate
+                    ? __('Google', 'web-stories')
+                    : users[story.author]?.name
+                }
+                displayDate={story?.modified}
+                {...titleRenameProps}
+              />
 
-                <StoryMenu
-                  onMoreButtonSelected={storyMenu.handleMenuToggle}
-                  contextMenuId={storyMenu.contextMenuId}
-                  onMenuItemSelected={storyMenu.handleMenuItemSelected}
-                  story={story}
-                />
-              </DetailRow>
-            )}
+              <StoryMenu
+                onMoreButtonSelected={storyMenu.handleMenuToggle}
+                contextMenuId={storyMenu.contextMenuId}
+                onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                story={story}
+              />
+            </DetailRow>
           </CardGridItem>
         );
       })}
