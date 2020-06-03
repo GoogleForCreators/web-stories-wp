@@ -26,3 +26,4 @@ export { default as useDashboardResultsLabel } from './useDashboardResultsLabel'
 export { default as useFocusOut } from './useFocusOut';
 export { default as usePagePreviewSize } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
+export { default as useTemplateView } from './useTemplateView';
