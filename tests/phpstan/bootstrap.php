@@ -9,7 +9,7 @@ define( 'WEBSTORIES_ASSETS_URL', 'https://example.com/wp-content/plugins/web-sto
 define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6.0' );
 
 // WordPress.com VIP compatibility
-define( 'WPCOM_IS_VIP_ENV', false );
+define( 'WPCOM_IS_VIP_ENV', true );
 function wpcom_vip_url_to_postid( $url ) {
 	return 123;
 }
