@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { act } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma/fixture';
-import { act } from '@testing-library/react';
 
 describe('TextEdit integration', () => {
   let fixture;
-  const path = 'M 0.5 0 L 1 1 L 0 1 Z';
-  const label = 'Triangle';
-  const shapeInPageQuery = `[data-testid="safezone"] [d="${path}"`;
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -94,12 +94,9 @@ describe('TextEdit integration', () => {
         safezoneBox.x + safezoneBox.width / 2,
         safezoneBox.y + safezoneBox.height / 2
       );
-      await karmaPause();
 
       await fixture.events.mouse.up();
     });
-
-    await karmaPause();
 
     shapes = await fixture.container.querySelectorAll(
       '[data-testid="safezone"] [d="M 0.5 0 L 1 1 L 0 1 Z"]'
