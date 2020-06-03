@@ -41,10 +41,12 @@ function DropTargetsProvider({ children }) {
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    state: { currentPage },
-    actions: { combineElements },
-  } = useStory();
+  const { currentPage, combineElements } = useStory(
+    ({ state: { currentPage }, actions: { combineElements } }) => ({
+      currentPage,
+      combineElements,
+    })
+  );
 
   const getDropTargetFromCursor = useCallback(
     (x, y, ignoreId = null) => {

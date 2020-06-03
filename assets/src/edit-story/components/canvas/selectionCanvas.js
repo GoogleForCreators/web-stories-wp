@@ -57,10 +57,16 @@ const Lasso = styled.div`
 `;
 
 function SelectionCanvas({ children }) {
-  const {
-    state: { selectedElements, currentPage },
-    actions: { clearSelection },
-  } = useStory();
+  const { selectedElements, currentPage, clearSelection } = useStory(
+    ({
+      state: { selectedElements, currentPage },
+      actions: { clearSelection },
+    }) => ({
+      selectedElements,
+      currentPage,
+      clearSelection,
+    })
+  );
   const {
     fullbleedContainer,
     isEditing,
