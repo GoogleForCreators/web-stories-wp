@@ -112,8 +112,8 @@ class Discovery {
 				$metadata,
 				[
 					'@type'            => 'BlogPosting',
-					'mainEntityOfPage' => get_permalink(),
-					'headline'         => get_the_title(),
+					'mainEntityOfPage' => get_permalink( $post ),
+					'headline'         => get_the_title( $post ),
 					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
 					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
 				]
