@@ -201,7 +201,7 @@ function ThumbnailSizeControl({ value, onChange }) {
         disabled={value === max}
         aria-label={__('Increase thumbnail size', 'web-stories')}
       >
-        <Rectangle />
+        <RectangleIcon />
       </Rectangle>
     </RangeInputWrapper>
   );
