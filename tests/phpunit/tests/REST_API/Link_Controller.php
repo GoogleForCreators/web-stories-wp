@@ -151,8 +151,15 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
-		$this->assertEquals( 404, $response->get_status() );
-		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+		$this->assertEquals( 200, $response->get_status() );
+		$this->assertEqualSetsWithIndex(
+			[
+				'title'       => '',
+				'image'       => '',
+				'description' => '',
+			],
+			$data
+		);
 	}
 
 	public function test_url_empty_string() {
