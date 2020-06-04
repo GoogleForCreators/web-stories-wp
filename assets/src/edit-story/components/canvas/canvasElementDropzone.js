@@ -58,6 +58,8 @@ function CanvasElementDropzone({ children }) {
           x: editorToDataX(e.clientX - x - shapeData.width / 2),
           y: editorToDataY(e.clientY - y - shapeData.height / 2),
         });
+        e.stopPropagation();
+        e.preventDefault();
       }
       // Handles onDrop for media.
       else if (isDragType(e, 'resource/media') && !activeDropTargetId) {
@@ -74,9 +76,9 @@ function CanvasElementDropzone({ children }) {
           width: editorToDataX(offsetWidth),
           height: editorToDataY(offsetHeight),
         });
+        e.stopPropagation();
+        e.preventDefault();
       }
-      e.stopPropagation();
-      e.preventDefault();
     },
     [
       activeDropTargetId,
