@@ -52,7 +52,7 @@ function CanvasElementDropzone({ children }) {
       // Handles onDrop for shapes.
       if (isDragType(e, 'shape') && !activeDropTargetId) {
         const shapeData = JSON.parse(e.dataTransfer.getData('shape'));
-        const { x, y } = pageContainer?.getBoundingClientRect();
+        const { x, y } = pageContainer.getBoundingClientRect();
         insertElement('shape', {
           ...shapeData,
           x: editorToDataX(e.clientX - x - shapeData.width / 2),
@@ -67,7 +67,7 @@ function CanvasElementDropzone({ children }) {
           resource,
           offset: { x: offsetX, y: offsetY, w: offsetWidth, h: offsetHeight },
         } = JSON.parse(e.dataTransfer.getData('resource/media'));
-        const { x, y } = pageContainer?.getBoundingClientRect();
+        const { x, y } = pageContainer.getBoundingClientRect();
 
         insertElement(resource.type, {
           resource,
@@ -82,7 +82,7 @@ function CanvasElementDropzone({ children }) {
     },
     [
       activeDropTargetId,
-      pageContainer?.getBoundingClientRect,
+      pageContainer,
       insertElement,
       editorToDataX,
       editorToDataY,
