@@ -131,7 +131,7 @@ function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
           fill={true}
           box={box}
           style={{
-            opacity: opacity ? opacity / 100 : null,
+            opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
           }}
           previewMode={previewMode}
         >

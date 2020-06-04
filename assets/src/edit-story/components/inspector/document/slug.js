@@ -32,6 +32,14 @@ import { Row, TextInput, HelperText } from '../../form';
 import { useStory } from '../../../app/story';
 import { SimplePanel } from '../../panels/panel';
 import cleanForSlug from '../../../utils/cleanForSlug';
+import validateMinMax from '../../../utils/validateMinMax';
+
+const MIN_MAX = {
+  PERMALINK: {
+    MIN: 1,
+    MAX: 200,
+  },
+};
 
 const Permalink = styled.a`
   color: ${({ theme }) => theme.colors.link};
@@ -63,7 +71,7 @@ function SlugPanel() {
   );
 
   const displayLink =
-    slug && permalinkConfig
+    slug && permalinkConfig && validateMinMax(slug.length, MIN_MAX.PERMALINK)
       ? permalinkConfig.prefix + slug + permalinkConfig.suffix
       : link;
   return (
@@ -75,6 +83,8 @@ function SlugPanel() {
           onChange={handleChangeValue}
           placeholder={__('Enter slug', 'web-stories')}
           aria-label={__('Edit: URL slug', 'web-stories')}
+          minLength={MIN_MAX.PERMALINK.MIN}
+          maxLength={MIN_MAX.PERMALINK.MAX}
         />
       </Row>
       <HelperText>

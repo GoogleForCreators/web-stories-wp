@@ -38,8 +38,16 @@ import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
+import validateMinMax from '../../../utils/validateMinMax';
 import { useCanvas } from '../../canvas';
 import { ReactComponent as Close } from '../../../icons/close_icon.svg';
+
+const MIN_MAX = {
+  URL: {
+    MIN: 2,
+    MAX: 2048, // Based on IE url limits and sitemaps
+  },
+};
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -152,6 +160,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
+  const hasSomeLinkContent =
+    Boolean(link.url) && validateMinMax(link.url.length, MIN_MAX.URL);
+
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
@@ -167,45 +178,50 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           value={link.url || ''}
           clear
           aria-label={__('Edit: Element link', 'web-stories')}
+          minLength={MIN_MAX.URL.MIN}
+          maxLength={MIN_MAX.URL.MAX}
         />
       </Row>
 
-      {Boolean(link.url) && (
-        <Row>
-          <ExpandedTextInput
-            placeholder={__('Optional description', 'web-stories')}
-            onChange={(value) =>
-              handleChange({ desc: value }, !value /* submit */)
-            }
-            value={link.desc || ''}
-            aria-label={__('Edit: Link description', 'web-stories')}
-          />
-        </Row>
-      )}
-      {Boolean(link.url) && (
-        <Row spaceBetween={false}>
-          <Media
-            value={link.icon || ''}
-            onChange={handleChangeIcon}
-            title={__('Select as link icon', 'web-stories')}
-            buttonInsertText={__('Select as link icon', 'web-stories')}
-            type={'image'}
-            size={64}
-            loading={fetchingMetadata}
-            circle
-          />
-          <IconInfo>
-            <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
-            {link.icon && (
-              <IconRemoveButton
-                onClick={() => handleChange({ icon: null }, true /* submit */)}
-              >
-                <CloseIcon width={14} height={14} />
-                {__('Remove', 'web-stories')}
-              </IconRemoveButton>
-            )}
-          </IconInfo>
-        </Row>
+      {hasSomeLinkContent && (
+        <>
+          <Row>
+            <ExpandedTextInput
+              placeholder={__('Optional description', 'web-stories')}
+              onChange={(value) =>
+                handleChange({ desc: value }, !value /* submit */)
+              }
+              value={link.desc || ''}
+              aria-label={__('Edit: Link description', 'web-stories')}
+            />
+          </Row>
+
+          <Row spaceBetween={false}>
+            <Media
+              value={link.icon || ''}
+              onChange={handleChangeIcon}
+              title={__('Select as link icon', 'web-stories')}
+              buttonInsertText={__('Select as link icon', 'web-stories')}
+              type={'image'}
+              size={64}
+              loading={fetchingMetadata}
+              circle
+            />
+            <IconInfo>
+              <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
+              {link.icon && (
+                <IconRemoveButton
+                  onClick={() =>
+                    handleChange({ icon: null }, true /* submit */)
+                  }
+                >
+                  <CloseIcon width={14} height={14} />
+                  {__('Remove', 'web-stories')}
+                </IconRemoveButton>
+              )}
+            </IconInfo>
+          </Row>
+        </>
       )}
     </SimplePanel>
   );

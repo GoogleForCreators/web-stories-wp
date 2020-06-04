@@ -28,7 +28,8 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, Numeric } from '../form';
+import setMinMax from '../../utils/setMinMax';
+import { Row, Numeric, usePresubmitHandler } from '../form';
 import { SimplePanel } from './panel';
 import { getCommonValue } from './utils';
 
@@ -38,11 +39,26 @@ const BoxedNumeric = styled(Numeric)`
 `;
 
 function defaultOpacity({ opacity }) {
-  return opacity || 100;
+  return typeof opacity !== 'undefined' ? opacity : 100;
 }
+
+const MIN_MAX = {
+  OPACITY: {
+    MIN: 0,
+    MAX: 100,
+  },
+};
 
 function LayerStylePanel({ selectedElements, pushUpdate }) {
   const opacity = getCommonValue(selectedElements, defaultOpacity);
+
+  usePresubmitHandler(
+    ({ opacity: newOpacity }) => ({
+      opacity: setMinMax(newOpacity, MIN_MAX.OPACITY),
+    }),
+    []
+  );
+
   return (
     <SimplePanel name="layerStyle" title={__('Layer', 'web-stories')}>
       <Row expand={false} spaceBetween={true}>
@@ -51,8 +67,8 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
           symbol={_x('%', 'Percentage', 'web-stories')}
           value={opacity}
           onChange={(value) => pushUpdate({ opacity: value })}
-          min="1"
-          max="100"
+          min={MIN_MAX.OPACITY.MIN}
+          max={MIN_MAX.OPACITY.MAX}
           aria-label={__('Opacity in percentage', 'web-stories')}
         />
       </Row>

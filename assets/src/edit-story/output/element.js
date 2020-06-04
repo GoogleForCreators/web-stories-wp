@@ -44,7 +44,7 @@ function OutputElement({ element }) {
         width: `${width}%`,
         height: `${height}%`,
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
-        opacity: opacity ? opacity / 100 : null,
+        opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
       }}
     >
       <WithLink

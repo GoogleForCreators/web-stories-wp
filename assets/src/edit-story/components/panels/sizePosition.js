@@ -42,11 +42,26 @@ import { ReactComponent as Locked } from '../../icons/lock.svg';
 import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
+import setMinMax from '../../utils/setMinMax';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 import FlipControls from './shared/flipControls';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
+const MIN_MAX = {
+  ROTATION: {
+    MIN: 0,
+    MAX: 359,
+  },
+  WIDTH: {
+    MIN: 10,
+    MAX: 1000,
+  },
+  HEIGHT: {
+    MIN: 10,
+    MAX: 1000,
+  },
+};
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -142,10 +157,14 @@ function SizePositionPanel({
       if (lockAspectRatio) {
         const ratio = oldWidth / oldHeight;
         if (!isResizeWidth) {
-          return { width: dataPixels(newHeight * ratio) };
+          return {
+            width: setMinMax(dataPixels(newHeight * ratio), MIN_MAX.WIDTH),
+          };
         }
         if (!isResizeHeight) {
-          return { height: dataPixels(newWidth / ratio) };
+          return {
+            height: setMinMax(dataPixels(newWidth * ratio), MIN_MAX.HEIGHT),
+          };
         }
       }
 
@@ -155,8 +174,14 @@ function SizePositionPanel({
   );
 
   usePresubmitHandler(
-    ({ rotationAngle: newRotationAngle }) => ({
-      rotationAngle: newRotationAngle % 360,
+    ({
+      rotationAngle: newRotationAngle,
+      width: newWidth,
+      height: newHeight,
+    }) => ({
+      rotationAngle: setMinMax(newRotationAngle, MIN_MAX.ROTATION),
+      width: setMinMax(dataPixels(newWidth), MIN_MAX.WIDTH),
+      height: setMinMax(dataPixels(newHeight), MIN_MAX.HEIGHT),
     }),
     []
   );
@@ -199,6 +224,8 @@ function SizePositionPanel({
             }
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
+          min={MIN_MAX.WIDTH.MIN}
+          max={MIN_MAX.WIDTH.MAX}
           aria-label={__('Width', 'web-stories')}
         />
         <Toggle
@@ -212,6 +239,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={height}
+          min={MIN_MAX.HEIGHT.MIN}
+          max={MIN_MAX.HEIGHT.MAX}
           onChange={(value) => {
             const newHeight = value;
             let newWidth = width;
@@ -235,6 +264,8 @@ function SizePositionPanel({
           value={rotationAngle}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
           aria-label={__('Rotation', 'web-stories')}
+          min={MIN_MAX.ROTATION.MIN}
+          max={MIN_MAX.ROTATION.MAX}
         />
         {canFlip && (
           <FlipControls
