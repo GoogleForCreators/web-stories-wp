@@ -379,6 +379,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-02
 				 */
 				'newFontPicker'     => false,
+				/**
+				 * Description: Flag for hiding/enabling text sets.
+				 * Author: @dmmulroy
+				 * Issue: #2097
+				 * Creation date: 2020-06-04
+				 */
+				'showTextSets'      => false,
 			],
 		];
 

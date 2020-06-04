@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -40,6 +41,7 @@ function TextPane(props) {
   const {
     actions: { insertElement },
   } = useLibrary();
+  const { showTextSets } = useFeatures();
   return (
     <Pane id={paneId} {...props}>
       <SearchInput
@@ -65,9 +67,11 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      <Section title={__('Text Sets', 'web-stories')}>
-        <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
-      </Section>
+      {showTextSets && (
+        <Section title={__('Text Sets', 'web-stories')}>
+          <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
+        </Section>
+      )}
     </Pane>
   );
 }
