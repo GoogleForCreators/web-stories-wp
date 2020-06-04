@@ -89,6 +89,11 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
+		if ( in_array( 'featured_media_url', $fields, true ) ) {
+			$image                      = get_the_post_thumbnail_url( $post, 'medium' );
+			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
+		}
+
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
@@ -130,6 +135,15 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			'type'        => 'object',
 			'context'     => [ 'edit' ],
 			'default'     => [],
+		];
+
+		$schema['properties']['featured_media_url'] = [
+			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
+			'type'        => 'string',
+			'format'      => 'uri',
+			'context'     => [ 'view', 'edit', 'embed' ],
+			'readonly'    => true,
+			'default'     => '',
 		];
 
 		$this->schema = $schema;

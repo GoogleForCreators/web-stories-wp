@@ -62,12 +62,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
-		$schema   = $this->get_item_schema();
-
-		if ( in_array( 'featured_media_url', $fields, true ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, 'medium' );
-			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
-		}
 
 		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
 			$data['publisher_logo_url'] = Story_Post_Type::get_publisher_logo();
@@ -139,15 +133,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		$schema = parent::get_item_schema();
-
-		$schema['properties']['featured_media_url'] = [
-			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
-			'type'        => 'string',
-			'format'      => 'uri',
-			'context'     => [ 'view', 'edit', 'embed' ],
-			'readonly'    => true,
-			'default'     => '',
-		];
 
 		$schema['properties']['publisher_logo_url'] = [
 			'description' => __( 'Publisher logo URL.', 'web-stories' ),
