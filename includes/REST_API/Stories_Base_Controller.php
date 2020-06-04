@@ -146,6 +146,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			'default'     => '',
 		];
 
+		$schema['properties']['status']['enum'][] = 'auto-draft';
+
 		$this->schema = $schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
