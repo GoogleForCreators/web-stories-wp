@@ -200,7 +200,9 @@ function TemplateDetails() {
         <TransformProvider>
           <Layout.Provider>
             <Layout.Fixed>
-              <TemplateNavBar />
+              <TemplateNavBar
+                handleCta={() => createStoryFromTemplate(template)}
+              />
             </Layout.Fixed>
             <Layout.Scrollable>
               <DetailViewContentGutter>
