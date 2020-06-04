@@ -94,8 +94,10 @@ function SizePositionPanel({
     rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
 
   const {
-    actions: { setBackgroundElement },
+    state: { currentPage },
+    actions: { combineElements },
   } = useStory();
+  const currentBackgroundId = currentPage?.elements[0].id;
 
   const isSingleElement = selectedElements.length === 1;
   const { isMedia } = getDefinitionForType(selectedElements[0].type);
@@ -162,16 +164,11 @@ function SizePositionPanel({
   );
 
   const handleSetBackground = useCallback(() => {
-    pushUpdate(
-      {
-        isBackground: true,
-        opacity: 100,
-        overlay: null,
-      },
-      true
-    );
-    setBackgroundElement({ elementId: selectedElements[0].id });
-  }, [selectedElements, pushUpdate, setBackgroundElement]);
+    combineElements({
+      firstId: selectedElements[0].id,
+      secondId: currentBackgroundId,
+    });
+  }, [selectedElements, combineElements, currentBackgroundId]);
 
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
