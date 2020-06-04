@@ -46,6 +46,7 @@ const StyledButton = styled.button`
   &:focus,
   &:active,
   &:hover {
+    box-shadow: none;
     opacity: 1;
     outline: none;
     color: ${({ theme }) => theme.colors.white};

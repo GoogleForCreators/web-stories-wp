@@ -45,7 +45,6 @@ export { ReactComponent as FillHighlighted } from './fill_highlighted_icon.svg';
 export { ReactComponent as FillNone } from './fill_none_icon.svg';
 export { ReactComponent as FlipHorizontal } from './flip_horizontal.svg';
 export { ReactComponent as FlipVertical } from './flip_vertical.svg';
-export { ReactComponent as Fullbleed } from './fullbleed.svg';
 export { ReactComponent as GradientReverser } from './gradient_reverser.svg';
 export { ReactComponent as GradientRotator } from './gradient_rotator.svg';
 export { ReactComponent as GridView } from './grid_view.svg';

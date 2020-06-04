@@ -118,6 +118,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
 
         const response = await dataAdapter.get(path, {
           parse: false,
+          cache: 'no-cache',
         });
 
         const totalPages =

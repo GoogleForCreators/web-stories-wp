@@ -100,10 +100,15 @@ function DropDownList({
   );
 
   useEffect(() => {
+    // If the menu has more than a couple options it will shift into view
+    // which will immediately dismiss the menu making it unusable.
+    if (options.length > 4) {
+      return undefined;
+    }
     // Hide dropdown menu on scroll.
     document.addEventListener('scroll', toggleOptions, true);
     return () => document.removeEventListener('scroll', toggleOptions, true);
-  }, [toggleOptions]);
+  }, [toggleOptions, options]);
 
   const handleMoveFocus = useCallback(
     (offset) => {
