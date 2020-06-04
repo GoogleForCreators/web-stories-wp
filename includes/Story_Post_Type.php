@@ -409,12 +409,12 @@ class Story_Post_Type {
 				 */
 				'newFontPicker'     => false,
 				/**
-				 * Description: Flag for new font picker with typeface previews in style panel.
+				 * Description: Flag for displaying the animation tab/panel.
 				 * Author: @dmmulroy
 				 * Issue: #2092
-				 * Creation date: 2020-06-03
+				 * Creation date: 2020-06-04
 				 */
-				'animationTab'      => false,
+				'showAnimationTab'  => false,
 			],
 		];
 

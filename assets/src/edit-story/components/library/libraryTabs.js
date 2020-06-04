@@ -36,13 +36,13 @@ function LibraryTabs() {
     data: { tabs },
   } = useLibrary();
   const { isRTL } = useConfig();
-  const { animationTab } = useFeatures();
+  const { showAnimationTab } = useFeatures();
   const panes = useMemo(
     () =>
-      animationTab
+      showAnimationTab
         ? getPanes(tabs)
         : getPanes(tabs).filter(({ id }) => id !== tabs.ANIMATION),
-    [tabs, animationTab]
+    [tabs, showAnimationTab]
   );
   const ref = useRef();
   const handleNavigation = useCallback(
