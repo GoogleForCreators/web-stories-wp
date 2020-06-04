@@ -24,13 +24,9 @@ import { useCallback, useRef, useEffect, useState } from 'react';
  */
 import { useStory } from '../../../app/story';
 import stripHTML from '../../../utils/stripHTML';
-import objectWithout from '../../../utils/objectWithout';
 import { Panel } from '../panel';
 import useRichTextFormatting from '../textStyle/useRichTextFormatting';
-import {
-  COLOR_PRESETS_PER_ROW,
-  STYLE_PRESETS_PER_ROW,
-} from '../../../constants';
+import { COLOR_PRESETS_PER_ROW } from '../../../constants';
 import { getShapePresets, getTextPresets } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
@@ -46,7 +42,7 @@ function StylePresetPanel() {
     actions: { updateStory, updateElementsById },
   } = useStory();
 
-  const { fillColors, textColors, textStyles } = stylePresets;
+  const { fillColors, textColors } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
   const areAllType = (elType) => {
@@ -64,7 +60,7 @@ function StylePresetPanel() {
       updateStory({
         properties: {
           stylePresets: {
-            textStyles: textStyles.filter((style) => style !== toDelete),
+            ...stylePresets,
             fillColors: isText
               ? fillColors
               : fillColors.filter((color) => color !== toDelete),
@@ -75,7 +71,7 @@ function StylePresetPanel() {
         },
       });
     },
-    [textStyles, fillColors, isText, textColors, updateStory]
+    [fillColors, isText, stylePresets, textColors, updateStory]
   );
 
   const handleAddColorPreset = useCallback(
@@ -84,7 +80,6 @@ function StylePresetPanel() {
       let addedPresets = {
         fillColors: [],
         textColors: [],
-        textStyles: [],
       };
       if (isText) {
         addedPresets = {
@@ -100,13 +95,12 @@ function StylePresetPanel() {
       }
       if (
         addedPresets.fillColors?.length > 0 ||
-        addedPresets.textColors?.length > 0 ||
-        addedPresets.textStyles?.length > 0
+        addedPresets.textColors?.length > 0
       ) {
         updateStory({
           properties: {
             stylePresets: {
-              textStyles: [...textStyles, ...addedPresets.textStyles],
+              ...stylePresets,
               fillColors: [...fillColors, ...addedPresets.fillColors],
               textColors: [...textColors, ...addedPresets.textColors],
             },
@@ -116,7 +110,6 @@ function StylePresetPanel() {
     },
     [
       fillColors,
-      textStyles,
       textColors,
       isText,
       selectedElements,
@@ -147,16 +140,7 @@ function StylePresetPanel() {
   const handleApplyPreset = useCallback(
     (preset) => {
       if (isText) {
-        // @todo Determine this in a better way.
-        // Only style presets have background text mode set.
-        const isStylePreset = preset.backgroundTextMode !== undefined;
-        if (isStylePreset) {
-          extraPropsToAdd.current = objectWithout(preset, ['color']);
-          handleSetColor(preset.color);
-        } else {
-          extraPropsToAdd.current = null;
-          handleSetColor(preset);
-        }
+        handleSetColor(preset);
       } else {
         updateElementsById({
           elementIds: selectedElementIds,
@@ -168,8 +152,7 @@ function StylePresetPanel() {
   );
 
   const colorPresets = isText ? textColors : fillColors;
-  const hasColorPresets = colorPresets.length > 0;
-  const hasPresets = hasColorPresets || textStyles.length > 0;
+  const hasPresets = colorPresets.length > 0;
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
@@ -199,11 +182,7 @@ function StylePresetPanel() {
     colorPresets.length > 0
       ? Math.max(2, colorPresets.length / COLOR_PRESETS_PER_ROW)
       : 0;
-  const styleRows =
-    textStyles.length > 0 && isText
-      ? Math.max(2, textStyles.length / STYLE_PRESETS_PER_ROW)
-      : 0;
-  const initialHeight = (colorRows + styleRows) * rowHeight;
+  const initialHeight = colorRows * rowHeight;
 
   return (
     <Panel

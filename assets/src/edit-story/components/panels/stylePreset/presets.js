@@ -29,12 +29,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as Remove } from '../../../icons/remove.svg';
-import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
 import { StylePresetPropType } from '../../../types';
 import PresetGroup from './presetGroup';
-import { generatePresetStyle } from './utils';
 
 const REMOVE_ICON_SIZE = 18;
 const PRESET_HEIGHT = 30;
@@ -63,57 +61,11 @@ const Color = styled.button`
   ${({ color }) => generatePatternStyles(color)}
 `;
 
-const Style = styled.button`
-  ${presetCSS}
-  padding: 0 3px;
-  background: transparent;
-  ${({ styles }) => styles}
-  width: 72px;
-  border-radius: 4px;
-`;
-
-const TextWrapper = styled.div`
-  text-align: left;
-  line-height: ${PRESET_HEIGHT}px;
-  max-height: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-`;
-
-const HighLight = styled.span`
-  padding: 0 2px;
-  ${({ background }) => generatePatternStyles(background)}
-  box-decoration-break: clone;
-`;
-
-function Presets({
-  stylePresets,
-  handleOnClick,
-  isEditMode,
-  isText,
-  textContent = 'Text',
-}) {
-  const { fillColors, textColors, textStyles } = stylePresets;
-
-  const getStylePresetText = (preset) => {
-    const isHighLight =
-      preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
-    return (
-      <TextWrapper>
-        {isHighLight ? (
-          <HighLight background={preset.backgroundColor}>
-            {textContent}
-          </HighLight>
-        ) : (
-          textContent
-        )}
-      </TextWrapper>
-    );
-  };
+function Presets({ stylePresets, handleOnClick, isEditMode, isText }) {
+  const { fillColors, textColors } = stylePresets;
 
   const colorPresets = isText ? textColors : fillColors;
-  const hasColorPresets = colorPresets.length > 0;
-  const hasPresets = textStyles.length > 0 || hasColorPresets;
+  const hasPresets = colorPresets.length > 0;
 
   const colorPresetRenderer = (color, i, activeIndex) => {
     return (
@@ -135,47 +87,17 @@ function Presets({
     );
   };
 
-  const stylePresetRenderer = (style, i, activeIndex) => {
-    return (
-      <Style
-        tabIndex={activeIndex === i || (!activeIndex && i === 0) ? 0 : -1}
-        styles={generatePresetStyle(style, true)}
-        onClick={(e) => {
-          e.preventDefault();
-          handleOnClick(style);
-        }}
-        aria-label={
-          isEditMode
-            ? __('Delete style preset', 'web-stories')
-            : __('Apply style preset', 'web-stories')
-        }
-      >
-        {getStylePresetText(style)}
-        {isEditMode && <Remove />}
-      </Style>
-    );
-  };
-
   const colorLabel = isText
     ? __('Text colors', 'web-stories')
     : __('Colors', 'web-stories');
   return (
     <PanelContent isPrimary padding={hasPresets ? null : '0'}>
-      {hasColorPresets && (
+      {hasPresets && (
         <PresetGroup
           label={colorLabel}
           itemRenderer={colorPresetRenderer}
           presets={colorPresets}
           type={'color'}
-        />
-      )}
-      {/* Only texts support style presets currently */}
-      {textStyles.length > 0 && isText && (
-        <PresetGroup
-          label={__('Styles', 'web-stories')}
-          itemRenderer={stylePresetRenderer}
-          presets={textStyles}
-          type={'style'}
         />
       )}
     </PanelContent>
@@ -187,7 +109,6 @@ Presets.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   isText: PropTypes.bool.isRequired,
-  textContent: PropTypes.string,
 };
 
 export default Presets;

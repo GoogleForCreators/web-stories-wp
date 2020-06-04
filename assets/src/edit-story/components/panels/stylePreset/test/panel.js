@@ -91,7 +91,7 @@ describe('Panels/StylePreset', () => {
       b: 2,
     },
   };
-  const STYLE_PRESET = {
+  const BACKGROUND_PROPS = {
     backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
     backgroundColor: TEST_COLOR,
   };
@@ -149,13 +149,13 @@ describe('Panels/StylePreset', () => {
       expect(newEditButton).toBeDefined();
     });
 
-    it('should add a text color preset if other text styles are default or missing', () => {
+    it('should add a text color preset', () => {
       const extraStateProps = {
         selectedElements: [
           {
             id: '1',
             type: 'text',
-            content: '<span style="color: rgba(2, 2, 2)">Content</span>',
+            content: '<span style="color: rgb(2, 2, 2)">Content</span>',
             backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
             font: TEXT_ELEMENT_DEFAULT_FONT,
           },
@@ -187,14 +187,14 @@ describe('Panels/StylePreset', () => {
       });
     });
 
-    it('should add style preset from a Text with correct values', () => {
+    it('should add color preset from a Text with correct values when multiple styles have changed', () => {
       const extraStateProps = {
         selectedElements: [
           {
             id: '1',
             type: 'text',
-            content: '<span style="color: rgba(2, 2, 2)">Content</span>',
-            ...STYLE_PRESET,
+            content: '<span style="color: rgba(2, 2, 2, 1)">Content</span>',
+            ...BACKGROUND_PROPS,
           },
         ],
       };
@@ -205,7 +205,7 @@ describe('Panels/StylePreset', () => {
 
       getTextPresets.mockImplementation(() => {
         return {
-          textStyles: [{ color: TEST_COLOR_2, ...STYLE_PRESET }],
+          textColors: [TEST_COLOR_2],
         };
       });
 
@@ -216,9 +216,9 @@ describe('Panels/StylePreset', () => {
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           stylePresets: {
-            textColors: [],
+            textColors: [TEST_COLOR_2],
             fillColors: [],
-            textStyles: [{ color: TEST_COLOR_2, ...STYLE_PRESET }],
+            textStyles: [],
           },
         },
       });

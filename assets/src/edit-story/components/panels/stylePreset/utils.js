@@ -22,11 +22,8 @@ import convertToCSS from '../../../utils/convertToCSS';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
-import createSolid from '../../../utils/createSolid';
-import objectPick from '../../../utils/objectPick';
 import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = isText
@@ -63,40 +60,14 @@ export function generatePresetStyle(preset, prepareForCSS) {
   return style;
 }
 
-function hasStylePreset({ font, backgroundTextMode }) {
-  const { family } = font;
-  return (
-    TEXT_ELEMENT_DEFAULT_FONT.family !== family ||
-    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
-  );
-}
-
 export function getTextPresets(elements, stylePresets) {
   // @todo Fix: Currently when two selected elements have the same attributes, two presets are added.
   return {
     textColors: elements
-      .filter((text) => !hasStylePreset(text))
       .map(({ content }) => getHTMLInfo(content).color)
       .filter((color) => color !== MULTIPLE_VALUE)
       .filter((color) => !findMatchingColor(color, stylePresets, true)),
-    textStyles: elements
-      .filter((text) => hasStylePreset(text))
-      .map((text) => {
-        const extractedColor = getHTMLInfo(text.content).color;
-        const color =
-          extractedColor === MULTIPLE_VALUE
-            ? createSolid(0, 0, 0)
-            : extractedColor;
-        return {
-          color,
-          ...objectPick(text, [
-            'backgroundColor',
-            'backgroundTextMode',
-            'font',
-          ]),
-        };
-      })
-      .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
+    textStyles: [],
   };
 }
 

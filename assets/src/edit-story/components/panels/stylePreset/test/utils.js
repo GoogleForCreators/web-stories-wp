@@ -180,8 +180,8 @@ describe('Panels/StylePreset/utils', () => {
       fillColors: [],
     };
     const expected = {
-      textColors: [TEST_COLOR],
-      textStyles: [stylePreset],
+      textColors: [TEST_COLOR, TEST_COLOR_2],
+      textStyles: [],
     };
     const presets = getTextPresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
@@ -210,7 +210,9 @@ describe('Panels/StylePreset/utils', () => {
     expect(presets).toStrictEqual(expected);
   });
 
-  it('should use black color when adding text style preset for multi-color text fields', () => {
+  // Disable reason: feature temporarily removed from beta.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should use black color when adding text style preset for multi-color text fields', () => {
     const stylePreset = {
       ...STYLE_PRESET,
       font: {
@@ -273,8 +275,8 @@ describe('Panels/StylePreset/utils', () => {
       },
     ];
     const stylePresets = {
-      textStyles: [stylePreset],
-      textColors: [TEST_COLOR],
+      textStyles: [],
+      textColors: [TEST_COLOR, TEST_COLOR_2],
       fillColors: [],
     };
     const expected = {
