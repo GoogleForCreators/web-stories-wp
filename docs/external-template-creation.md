@@ -1,4 +1,4 @@
-# Creating a Template
+# Creating an External Template
 
 `src/dashbpard/templates/raw` is a dumping ground for raw story json output from the editor, which is then interpreted as a template.
 
@@ -12,7 +12,7 @@ copy(temp1)
 
 When you press enter the story data should now be copied to your clipboard and ready to paste where you need.
 
-**Note**`Command+Shift+Option+J / Control+Shift+Alt+J` open up a dialog you can copy/paste raw story json to/from. However this is missing some fields `story_data` contains.
+**Note**`Command+Shift+Option+J / Control+Shift+Alt+J` in the story editor opens up a dialog you can copy/paste raw story json to/from. However this is missing some fields `story_data` contains which are necessary for versioning the external templates.
 
 ## Formatting Media Names In Story Creation
 
