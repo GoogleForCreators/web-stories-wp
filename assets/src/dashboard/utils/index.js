@@ -27,5 +27,6 @@ export { default as usePagePreviewSize } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
 
+export { default as addQueryArgs } from '../../edit-story/utils/addQueryArgs';
 export { default as getStoryPropsToSave } from '../../edit-story/app/story/utils/getStoryPropsToSave';
 export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffect';

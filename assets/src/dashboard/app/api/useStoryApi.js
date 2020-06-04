@@ -40,7 +40,7 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
-import { getStoryPropsToSave } from '../../utils';
+import { getStoryPropsToSave, addQueryArgs } from '../../utils';
 
 export function reshapeStoryObject(editStoryURL) {
   return function (originalStoryData) {
@@ -147,7 +147,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
-          payload: true,
+          payload: { message: err.message, code: err.code },
         });
       } finally {
         dispatch({
@@ -194,15 +194,16 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     },
     [wpApi, dataAdapter]
   );
+
   const createStoryFromTemplate = useCallback(
     async (template) => {
+      dispatch({
+        type: STORY_ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE,
+        payload: true,
+      });
+
       try {
-        const { createdBy, pages, title, version } = template;
-        // const copyTemplateTitle = sprintf(
-        //   /* translators: %s: template title */
-        //   __('%s (Copy)', 'web-stories'),
-        //   title
-        // );
+        const { createdBy, pages, version } = template;
 
         const storyPropsToSave = await getStoryPropsToSave({
           story: {
@@ -227,10 +228,23 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           },
         });
 
-        return (window.location = `${editStoryURL}&post=${response.id}`);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
+        });
+
+        window.location = addQueryArgs(editStoryURL, {
+          post: response.id,
+        });
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
+          payload: { message: err.message, code: err.code },
+        });
+      } finally {
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE,
+          payload: false,
+        });
       }
     },
     [dataAdapter, editStoryURL, wpApi]
