@@ -27,26 +27,27 @@ import StoryPropTypes from '../../edit-story/types';
 import { STORY_PAGE_STATE } from '../constants';
 import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 
-function PreviewPageController({ page, animationState, scrubSubscription }) {
+function PreviewPageController({ page, animationState, subscribeGlobalTime }) {
   const {
     actions: { WAAPIAnimationMethods },
   } = useStoryAnimationContext();
 
   useEffect(() => {
-    if (STORY_PAGE_STATE.PLAY === animationState) {
+    if (STORY_PAGE_STATE.PLAYING === animationState) {
       WAAPIAnimationMethods.play();
     }
     if (STORY_PAGE_STATE.RESET === animationState) {
       WAAPIAnimationMethods.reset();
     }
     if (STORY_PAGE_STATE.SCRUBBING === animationState) {
-      return scrubSubscription?.subscribe(WAAPIAnimationMethods.setCurrentTime);
+      WAAPIAnimationMethods.pause();
+      return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
     }
     if (STORY_PAGE_STATE.PAUSED === animationState) {
       WAAPIAnimationMethods.pause();
     }
     return () => {};
-  }, [animationState, WAAPIAnimationMethods, scrubSubscription]);
+  }, [animationState, WAAPIAnimationMethods, subscribeGlobalTime]);
 
   /**
    * Reset everything on unmount;
@@ -65,9 +66,9 @@ function PreviewPageController({ page, animationState, scrubSubscription }) {
 
 function PreviewPage({
   page,
-  animationState = STORY_PAGE_STATE.PAUSED,
+  animationState = STORY_PAGE_STATE.RESET,
   onAnimationComplete,
-  scrubSubscription,
+  subscribeGlobalTime,
 }) {
   return (
     <StoryAnimation.Provider
@@ -78,7 +79,7 @@ function PreviewPage({
         page={page}
         animationState={animationState}
         onAnimationComplete={onAnimationComplete}
-        scrubSubscription={scrubSubscription}
+        subscribeGlobalTime={subscribeGlobalTime}
       />
     </StoryAnimation.Provider>
   );
@@ -88,7 +89,7 @@ PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
   onAnimationComplete: PropTypes.func,
-  scrubSubscription: PropTypes.func,
+  subscribeGlobalTime: PropTypes.func,
 };
 
 export default PreviewPage;

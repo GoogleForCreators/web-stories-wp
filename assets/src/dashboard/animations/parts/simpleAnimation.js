@@ -29,6 +29,11 @@ import createKeyframeEffect from '../utils/createKeyframeEffect';
 import { WAAPIAnimationProps, AMPAnimationProps } from './types';
 import FullSizeAbsolute from './components/fullSizeAbsolute';
 
+const sanitizeTimings = (timings) => ({
+  ...timings,
+  easing: timings.easing || 'linear',
+});
+
 function SimpleAnimation(
   animationName,
   keyframes,
@@ -44,7 +49,11 @@ function SimpleAnimation(
       if (!target.current) {
         return () => {};
       }
-      const effect = createKeyframeEffect(target.current, keyframes, timings);
+      const effect = createKeyframeEffect(
+        target.current,
+        keyframes,
+        sanitizeTimings(timings)
+      );
       return hoistAnimation(new Animation(effect, document.timeline));
     }, [hoistAnimation]);
 
