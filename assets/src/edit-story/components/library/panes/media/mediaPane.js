@@ -229,9 +229,9 @@ function MediaPane(props) {
   const resources = media.filter(filterResource);
 
   // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-  // Recalculates padding of Media Pane so it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
+
+  // State and callback ref necessary to recalculate the padding of the list
+  //  given the scrollbar width.
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   let container = null;
   const refContainer = (element) => {
@@ -242,8 +242,9 @@ function MediaPane(props) {
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
-  const refContainerFooter = useRef();
-
+  // Recalculates padding of Media Pane so it stays centered.
+  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
+  // prop is not yet ready).
   useLayoutEffect(() => {
     if (!scrollbarWidth) {
       return;
@@ -255,6 +256,7 @@ function MediaPane(props) {
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, container]);
 
+  const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
     {
