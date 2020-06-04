@@ -204,7 +204,6 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
 
       try {
         const { createdBy, pages, version } = template;
-
         const storyPropsToSave = await getStoryPropsToSave({
           story: {
             status: 'auto-draft',
