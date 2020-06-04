@@ -42,6 +42,7 @@ function ScrollList({
   onScroll,
   currentOffset,
   className,
+  onKeyDown,
 }) {
   const ref = useRef();
   const itemRefs = useRef([]);
@@ -122,6 +123,7 @@ function ScrollList({
       className={className}
       aria-multiselectable={false}
       aria-required={false}
+      onKeyDown={onKeyDown}
       ref={ref}
     >
       {items.map((item, index) => (
@@ -139,6 +141,7 @@ ScrollList.propTypes = {
   onScroll: PropTypes.func.isRequired,
   currentOffset: PropTypes.number,
   className: PropTypes.string,
+  onKeyDown: PropTypes.func,
 };
 
 export default ScrollList;
