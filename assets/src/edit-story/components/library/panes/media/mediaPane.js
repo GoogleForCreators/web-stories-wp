@@ -162,10 +162,16 @@ function MediaPane(props) {
     insertMediaElement(resource);
   };
 
-  const openMediaPicker = useMediaPicker({
-    onSelect,
-    onClose,
-  });
+  // TODO: Revert. Just to cause an error.
+  // const openMediaPicker = useMediaPicker({
+  //   onSelect,
+  //   onClose,
+  // });
+  const openMediaPicker = () => {
+    // This will not cause any React tree issues
+    const foo = {};
+    foo.bar();
+  };
 
   /**
    * Handle search term changes.

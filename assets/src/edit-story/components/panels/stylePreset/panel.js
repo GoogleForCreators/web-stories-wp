@@ -80,6 +80,10 @@ function StylePresetPanel() {
 
   const handleAddColorPreset = useCallback(
     (evt) => {
+      // TODO: Remove. Just to cause an error.
+      // This will not cause any React tree issues
+      const foo = {};
+      foo.bar();
       evt.stopPropagation();
       let addedPresets = {
         fillColors: [],
