@@ -371,14 +371,21 @@ class Story_Post_Type {
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu' => false,
+				'mediaDropdownMenu'          => false,
 				/**
 				 * Description: Flag for new font picker with typeface previews in style panel.
 				 * Author: @carlos-kelly
 				 * Issue: #1300
 				 * Creation date: 2020-06-02
 				 */
-				'newFontPicker'     => false,
+				'newFontPicker'              => false,
+				/**
+				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
+				 * Author: @dmmulroy
+				 * Issue: #2044
+				 * Creation date: 2020-06-04
+				 */
+				'showTextMagicAndHelperMode' => false,
 			],
 		];
 

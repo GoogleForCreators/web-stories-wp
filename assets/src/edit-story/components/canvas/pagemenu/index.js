@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -118,6 +119,7 @@ function PageMenu() {
     state: { pageSize },
   } = useCanvas();
   const { isRTL } = useConfig();
+  const { showTextMagicAndHelperMode } = useFeatures();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -205,15 +207,17 @@ function PageMenu() {
             </Icon>
           </WithTooltip>
         </Options>
-        <Options>
-          <Icon disabled>
-            <Layout />
-          </Icon>
-          <Space isDouble />
-          <Icon disabled>
-            <Text />
-          </Icon>
-        </Options>
+        {showTextMagicAndHelperMode && (
+          <Options>
+            <Icon disabled>
+              <Layout />
+            </Icon>
+            <Space isDouble />
+            <Icon disabled>
+              <Text />
+            </Icon>
+          </Options>
+        )}
       </Box>
     </Wrapper>
   );
