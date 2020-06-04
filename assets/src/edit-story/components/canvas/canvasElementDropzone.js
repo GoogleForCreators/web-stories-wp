@@ -52,7 +52,7 @@ function CanvasElementDropzone({ children }) {
       // Handles onDrop for shapes.
       if (isDragType(e, 'shape') && !activeDropTargetId) {
         const shapeData = JSON.parse(e.dataTransfer.getData('shape'));
-        const { x, y } = pageContainer.getBoundingClientRect();
+        const { x, y } = pageContainer?.getBoundingClientRect();
         insertElement('shape', {
           ...shapeData,
           x: editorToDataX(e.clientX - x - shapeData.width / 2),
