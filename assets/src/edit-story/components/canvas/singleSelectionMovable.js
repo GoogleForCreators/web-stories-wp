@@ -197,13 +197,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
       }}
       throttleDrag={0}
-      onDragStart={({ set, inputEvent }) => {
-        // Prevent dragging on right-click.
-        if (inputEvent.ctrlKey || 2 === inputEvent.button) {
-          return false;
-        }
+      onDragStart={({ set }) => {
         set(frame.translate);
-        return true;
       }}
       onDragEnd={({ target }) => {
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.

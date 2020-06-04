@@ -231,16 +231,11 @@ function MultiSelectionMovable({ selectedElements }) {
         });
       }}
       onDragGroupStart={({ events, inputEvent }) => {
-        // Prevent dragging on right-click.
-        if (inputEvent.ctrlKey || 2 === inputEvent.button) {
-          return false;
-        }
         startEventTracking(inputEvent);
         if (!isDragging) {
           setIsDragging(true);
         }
         onGroupEventStart({ events, isDrag: true });
-        return true;
       }}
       onDragGroupEnd={({ targets, inputEvent }) => {
         setIsDragging(false);
