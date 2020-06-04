@@ -50,6 +50,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     state: {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
+      pageContainer,
     },
   } = useCanvas();
   const {
@@ -169,6 +170,26 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
+  const isTargetOutOfCanvas = (target) => {
+    const { left, right, top, bottom } = target.getBoundingClientRect();
+    // pageContainer ref is safe-zone, we're checking against the whole Page Area.
+    const containerRect = pageContainer.parentNode.getBoundingClientRect();
+
+    if (left > containerRect.right) {
+      console.log('out from the right');
+    }
+    if (right < containerRect.left) {
+      console.log('out from the left');
+    }
+    if (bottom < containerRect.top) {
+      console.log('out from the top');
+    }
+    if (top > containerRect.bottom) {
+      console.log('out from the bottom');
+    }
+    console.log('------');
+  };
+
   return (
     <Movable
       className={`default-movable ${hideHandles ? 'hide-handles' : ''} ${
@@ -214,6 +235,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             handleDrop(selectedElement.resource, selectedElement.id);
           }
         }
+        isTargetOutOfCanvas(target);
         resetDragging(target);
       }}
       onResizeStart={({ setOrigin, dragStart, direction }) => {
