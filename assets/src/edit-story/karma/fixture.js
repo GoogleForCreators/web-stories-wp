@@ -221,6 +221,16 @@ export class Fixture {
   }
 
   /**
+   * To be deprecated?
+   *
+   * @param {string} selector
+   * @return {Array.<Element>} The potentially empty list of found elements.
+   */
+  querySelectorAll(selector) {
+    return this._container.querySelectorAll(selector);
+  }
+
+  /**
    * Makes a DOM snapshot of the current editor state. Karma must be run
    * with the `--snapshots` option for the snapshotting to be enabled. When
    * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`

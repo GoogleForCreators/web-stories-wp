@@ -28,7 +28,7 @@ import { renderPanel } from './_utils';
 jest.mock('../../../elements');
 
 describe('Panels/Alignment', () => {
-  let defaultElement, defaultText, defaultImage, fillElement;
+  let defaultElement, defaultText, defaultImage;
   const horizontalDistributionButtonLabel = 'Horizontal Distribution';
   const verticalDistributionButtonLabel = 'Vertical Distribution';
   const justifyLeftButtonLabel = 'Justify Left';
@@ -46,7 +46,6 @@ describe('Panels/Alignment', () => {
       y: 10,
       width: 100,
       height: 80,
-      isFill: false,
       rotationAngle: 0,
     };
     defaultText = {
@@ -56,10 +55,6 @@ describe('Panels/Alignment', () => {
     defaultImage = {
       ...defaultElement,
       type: 'image',
-    };
-    fillElement = {
-      ...defaultElement,
-      isFill: true,
     };
   });
 
@@ -126,28 +121,6 @@ describe('Panels/Alignment', () => {
       expect(justifyTopButton).toBeEnabled();
       expect(justifyMiddleButton).toBeEnabled();
       expect(justifyBottomButton).toBeEnabled();
-    });
-
-    it('should render disabled distribution, align and justify buttons for filled element', () => {
-      const {
-        horizontalDistributionButton,
-        verticalDistributionButton,
-        justifyLeftButton,
-        justifyCenterButton,
-        justifyRightButton,
-        justifyTopButton,
-        justifyMiddleButton,
-        justifyBottomButton,
-      } = renderAlignment([fillElement]);
-
-      expect(horizontalDistributionButton).toBeDisabled();
-      expect(verticalDistributionButton).toBeDisabled();
-      expect(justifyLeftButton).toBeDisabled();
-      expect(justifyCenterButton).toBeDisabled();
-      expect(justifyRightButton).toBeDisabled();
-      expect(justifyTopButton).toBeDisabled();
-      expect(justifyMiddleButton).toBeDisabled();
-      expect(justifyBottomButton).toBeDisabled();
     });
 
     it('should update element on alignleft button click', () => {

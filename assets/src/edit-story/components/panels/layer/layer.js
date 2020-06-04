@@ -27,7 +27,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Locked } from '../../../icons/lock.svg';
+import { Lock as Locked } from '../../../icons';
 
 /**
  * Internal dependencies
