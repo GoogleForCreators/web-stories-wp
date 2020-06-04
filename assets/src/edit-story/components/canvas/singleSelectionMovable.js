@@ -31,6 +31,7 @@ import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
+import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -44,7 +45,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
   const {
-    actions: { updateSelectedElements },
+    actions: { updateSelectedElements, deleteSelectedElements },
   } = useStory();
   const {
     state: {
@@ -170,24 +171,14 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
-  const isTargetOutOfCanvas = (target) => {
-    const { left, right, top, bottom } = target.getBoundingClientRect();
-    // pageContainer ref is safe-zone, we're checking against the whole Page Area.
-    const containerRect = pageContainer.parentNode.getBoundingClientRect();
-
-    if (left > containerRect.right) {
-      console.log('out from the right');
+  const wasElementDeleted = (target) => {
+    if (isTargetOutOfContainer(target, pageContainer.parentNode)) {
+      setIsDragging(false);
+      setDraggingResource(null);
+      deleteSelectedElements();
+      return true;
     }
-    if (right < containerRect.left) {
-      console.log('out from the left');
-    }
-    if (bottom < containerRect.top) {
-      console.log('out from the top');
-    }
-    if (top > containerRect.bottom) {
-      console.log('out from the bottom');
-    }
-    console.log('------');
+    return false;
   };
 
   return (
@@ -223,6 +214,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         set(frame.translate);
       }}
       onDragEnd={({ target }) => {
+        if (wasElementDeleted(target)) {
+          return;
+        }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
         if (deltaX !== 0 || deltaY !== 0) {
@@ -235,7 +229,6 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
             handleDrop(selectedElement.resource, selectedElement.id);
           }
         }
-        isTargetOutOfCanvas(target);
         resetDragging(target);
       }}
       onResizeStart={({ setOrigin, dragStart, direction }) => {
@@ -275,6 +268,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setTransformStyle(target);
       }}
       onResizeEnd={({ target }) => {
+        if (wasElementDeleted(target)) {
+          return;
+        }
         const [editorWidth, editorHeight] = frame.resize;
         if (editorWidth !== 0 && editorHeight !== 0) {
           const { direction } = frame;
@@ -310,6 +306,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setTransformStyle(target);
       }}
       onRotateEnd={({ target }) => {
+        if (wasElementDeleted(target)) {
+          return;
+        }
         const properties = { rotationAngle: Math.round(frame.rotate) };
         updateSelectedElements({ properties });
         resetMoveable(target);
