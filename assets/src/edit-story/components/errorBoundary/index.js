@@ -79,6 +79,6 @@ class ErrorBoundary extends Component {
 }
 const shouldDisableErrorBoundaries =
   process.env.DISABLE_ERROR_BOUNDARIES === 'true';
-export default shouldDisableErrorboundaries
+export default shouldDisableErrorBoundaries
   ? ({ children }) => children
   : ErrorBoundary;
