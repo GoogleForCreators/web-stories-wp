@@ -127,6 +127,25 @@ describe('Font Picker', () => {
     expect(onChangeFn).toHaveBeenCalledWith('Roboto Condensed');
   });
 
+  it('should close the menu when the Esc key is pressed.', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'Escape',
+      });
+    });
+
+    await waitFor(() => expect(fontsList).not.toBeInTheDocument());
+  });
+
   it('should select the previous font in the list when using the up arrow plus enter key', async () => {
     const onChangeFn = jest.fn();
     const { getByRole } = await getFontPicker({ onChange: onChangeFn });

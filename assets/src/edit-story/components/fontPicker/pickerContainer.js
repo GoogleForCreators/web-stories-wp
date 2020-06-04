@@ -85,6 +85,7 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   style: {
     fontFamily,
   },
+  tabIndex: 0,
 }))`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
   padding: 8px 12px 8px 26px;
@@ -194,6 +195,21 @@ function FontPickerContainer({ value, onSelect, onClose }) {
       }
     },
     [currentOffset, matchingFonts, onClose, onSelect]
+  );
+
+  const handleKeyPress = useCallback(
+    ({ nativeEvent: { code, shiftKey } }) => {
+      if (code === 'Escape') {
+        onClose();
+      } else if (code === 'Enter') {
+        onSelect(fonts[currentOffset].name);
+      } else if (code === 'ArrowUp' || (code === 'Tab' && shiftKey)) {
+        setCurrentOffset(Math.max(0, currentOffset - 1));
+      } else if (code === 'ArrowDown' || code === 'Tab') {
+        setCurrentOffset(Math.min(fonts.length - 1, currentOffset + 1));
+      }
+    },
+    [currentOffset, fonts, onClose, onSelect]
   );
 
   const itemRenderer = useCallback(
