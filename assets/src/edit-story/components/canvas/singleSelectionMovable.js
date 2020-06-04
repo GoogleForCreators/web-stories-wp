@@ -198,8 +198,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       }}
       throttleDrag={0}
       onDragStart={({ set, inputEvent }) => {
-        // If Ctrl key is down, let's not drag.
-        if (inputEvent.ctrlKey) {
+        // Prevent dragging on right-click.
+        if (inputEvent.ctrlKey || 2 === inputEvent.button) {
           return false;
         }
         set(frame.translate);

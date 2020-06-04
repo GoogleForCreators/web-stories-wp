@@ -231,8 +231,8 @@ function MultiSelectionMovable({ selectedElements }) {
         });
       }}
       onDragGroupStart={({ events, inputEvent }) => {
-        // If Ctrl key is down, let's not drag.
-        if (inputEvent.ctrlKey) {
+        // Prevent dragging on right-click.
+        if (inputEvent.ctrlKey || 2 === inputEvent.button) {
           return false;
         }
         startEventTracking(inputEvent);
