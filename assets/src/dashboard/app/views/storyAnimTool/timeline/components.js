@@ -91,12 +91,11 @@ export const LabelButton = styled.button(
     cursor: pointer;
 
     ${
-      isActive
-        ? `
-      color: ${theme.colors.bluePrimary};
-      font-weight: 700;
-    `
-        : ``
+      isActive &&
+      `
+        color: ${theme.colors.bluePrimary};
+        font-weight: 700;
+      `
     }
   `
 );
