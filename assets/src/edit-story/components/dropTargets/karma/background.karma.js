@@ -363,7 +363,7 @@ describe('Background Drop-Target integration', () => {
           // And flip it
           const flip = getInputByAriaLabel(fixture, 'Flip horizontally');
           const flipLabel = flip.parentElement;
-          await fixture.events.click(flipLabel);
+          flipLabel.click();
         });
 
         it('should correctly handle image dropped on edge with flip', async () => {
