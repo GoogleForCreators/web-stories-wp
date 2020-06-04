@@ -198,17 +198,15 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     async (template) => {
       try {
         const { createdBy, pages, title, version } = template;
-        const copyTemplateTitle = sprintf(
-          /* translators: %s: template title */
-          __('%s (Copy)', 'web-stories'),
-          title
-        );
+        // const copyTemplateTitle = sprintf(
+        //   /* translators: %s: template title */
+        //   __('%s (Copy)', 'web-stories'),
+        //   title
+        // );
 
         const storyPropsToSave = await getStoryPropsToSave({
           story: {
-            title: copyTemplateTitle,
-            status: 'draft',
-            date: new Date(),
+            status: 'auto-draft',
           },
           pages,
           metadata: {
