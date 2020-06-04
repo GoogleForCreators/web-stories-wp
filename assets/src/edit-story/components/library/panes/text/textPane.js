@@ -27,6 +27,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { useFeatures } from 'flagged';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
@@ -40,14 +41,17 @@ function TextPane(props) {
   const {
     actions: { insertElement },
   } = useLibrary();
+  const { showTextAndShapesSearchInput } = useFeatures();
   return (
     <Pane id={paneId} {...props}>
-      <SearchInput
-        value={''}
-        placeholder={__('Search', 'web-stories')}
-        onChange={() => {}}
-        disabled
-      />
+      {showTextAndShapesSearchInput && (
+        <SearchInput
+          value={''}
+          placeholder={__('Search', 'web-stories')}
+          onChange={() => {}}
+          disabled
+        />
+      )}
 
       <Section
         title={__('Presets', 'web-stories')}
