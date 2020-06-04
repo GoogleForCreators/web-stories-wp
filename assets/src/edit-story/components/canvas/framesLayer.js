@@ -31,7 +31,8 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
-import { Layer, PageArea } from './layout';
+import PageMenu from './pagemenu';
+import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
@@ -106,6 +107,13 @@ function FramesLayer() {
           })}
         <Selection />
       </FramesPageArea>
+      <MenuArea
+        pointerEvents="initial"
+        // Cancel lasso.
+        onMouseDown={(evt) => evt.stopPropagation()}
+      >
+        <PageMenu />
+      </MenuArea>
     </Layer>
   );
 }
