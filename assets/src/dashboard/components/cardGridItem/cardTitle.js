@@ -22,7 +22,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -30,10 +30,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { STORY_STATUS } from '../../constants';
-import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
-import { TextInput } from '../input';
+import { getFormattedDisplayDate } from '../../utils/';
 import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
+import InlineInputForm from '../inlineInputForm';
 import { Link } from '../link';
 
 const StyledCardTitle = styled.div`
@@ -72,6 +72,7 @@ const DateHelperText = styled.span`
 `;
 
 const CardTitle = ({
+  id,
   secondaryTitle,
   title,
   titleLink,
@@ -81,40 +82,6 @@ const CardTitle = ({
   onEditComplete,
   onEditCancel,
 }) => {
-  const inputContainerRef = useRef(null);
-  const [newTitle, setNewTitle] = useState(title);
-
-  useFocusOut(
-    inputContainerRef,
-    () => {
-      if (editMode) {
-        onEditCancel();
-      }
-    },
-    [editMode]
-  );
-
-  useEffect(() => {
-    if (inputContainerRef.current && editMode) {
-      inputContainerRef.current.firstChild?.focus();
-    }
-  }, [editMode]);
-
-  const handleChange = useCallback(({ target }) => {
-    setNewTitle(target.value);
-  }, []);
-
-  const handleKeyPress = useCallback(
-    ({ nativeEvent }) => {
-      if (nativeEvent.keyCode === 13) {
-        onEditComplete(newTitle);
-      } else if (nativeEvent.keyCode === 27) {
-        onEditCancel();
-      }
-    },
-    [newTitle, onEditComplete, onEditCancel]
-  );
-
   const displayDateText = useMemo(() => {
     if (!displayDate) {
       return null;
@@ -135,14 +102,13 @@ const CardTitle = ({
   return (
     <StyledCardTitle>
       {editMode ? (
-        <div ref={inputContainerRef}>
-          <TextInput
-            data-testid={'title-rename-input'}
-            value={newTitle}
-            onKeyDown={handleKeyPress}
-            onChange={handleChange}
-          />
-        </div>
+        <InlineInputForm
+          onEditComplete={onEditComplete}
+          onEditCancel={onEditCancel}
+          value={title}
+          id={id}
+          label={__('Rename story', 'web-stories')}
+        />
       ) : (
         <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
       )}
@@ -158,14 +124,15 @@ const CardTitle = ({
 };
 
 CardTitle.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string.isRequired,
-  titleLink: PropTypes.string.isRequired,
+  titleLink: PropTypes.string,
   secondaryTitle: PropTypes.string,
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
   displayDate: PropTypes.object,
-  onEditComplete: PropTypes.func.isRequired,
-  onEditCancel: PropTypes.func.isRequired,
+  onEditComplete: PropTypes.func,
+  onEditCancel: PropTypes.func,
 };
 
 export default CardTitle;

@@ -87,7 +87,6 @@ function combineElements(state, { firstId, firstElement, secondId }) {
     'scale',
     'focalX',
     'focalY',
-    'isFill',
     'flip',
   ]);
 

@@ -53,7 +53,6 @@ export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
   scale: 100,
   focalX: 50,
   focalY: 50,
-  isFill: false,
 };
 
 export const LAYER_DIRECTIONS = {

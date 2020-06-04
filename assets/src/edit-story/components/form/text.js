@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Close } from '../../icons/close_icon.svg';
+import { CloseAlt as Close } from '../../icons';
 import MULTIPLE_VALUE from './multipleValue';
 import { Input } from '.';
 

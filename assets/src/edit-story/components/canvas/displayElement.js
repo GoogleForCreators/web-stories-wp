@@ -90,7 +90,6 @@ function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
         focalX: replacement.focalX,
         focalY: replacement.focalY,
         flip: replacement.flip,
-        isFill: element.isFill,
       }
     : null;
 
