@@ -28,7 +28,7 @@ import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
-async function getFontPicker() {
+async function getFontPicker({ onChange } = {}) {
   const getAllFontsPromise = Promise.resolve(fontsListResponse);
   const apiContextValue = {
     actions: {
@@ -36,7 +36,7 @@ async function getFontPicker() {
     },
   };
   const props = {
-    onChange: jest.fn(),
+    onChange: onChange || jest.fn(),
     value: 'Roboto',
   };
 
@@ -101,5 +101,98 @@ describe('Font Picker', () => {
     // We can't really validate this number anyway in JSDom (no actual
     // layout is happening), so just expect it to be called
     expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
+  });
+
+  it('should select the next font in the list when using the down arrow plus enter key', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        code: 'ArrowDown',
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, { code: 'Enter' });
+    });
+
+    expect(onChangeFn).toHaveBeenCalledWith('Roboto Condensed');
+  });
+
+  it('should select the previous font in the list when using the up arrow plus enter key', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        code: 'ArrowUp',
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, { code: 'Enter' });
+    });
+
+    expect(onChangeFn).toHaveBeenCalledWith('Handlee');
+  });
+
+  it('should select the next font in the list when using the tab plus enter key', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        code: 'Tab',
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, { code: 'Enter' });
+    });
+
+    expect(onChangeFn).toHaveBeenCalledWith('Roboto Condensed');
+  });
+
+  it('should select the previous font in the list when using the shift tab plus enter keys', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        code: 'Tab',
+        shiftKey: true,
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, { code: 'Enter' });
+    });
+
+    expect(onChangeFn).toHaveBeenCalledWith('Handlee');
   });
 });

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -72,6 +72,7 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   style: {
     fontFamily,
   },
+  tabIndex: 0,
 }))`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
   padding: 8px 12px 8px 26px;
@@ -82,6 +83,7 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
   position: relative;
+  cursor: pointer;
 
   &:hover,
   &:focus {
@@ -132,10 +134,27 @@ function FontPickerContainer({ value, onSelect, onClose }) {
   useFocusOut(ref, onClose, [onClose]);
 
   // Scroll to offset for current value
-  const currentOffset = fonts.findIndex(({ name }) => name === value);
+  const [currentOffset, setCurrentOffset] = useState(
+    fonts.findIndex(({ name }) => name === value)
+  );
 
   // This is static for now, but with search and used fonts, this will change later
   const matchingFonts = fonts;
+
+  const handleKeyPress = useCallback(
+    ({ nativeEvent: { code, shiftKey } }) => {
+      if (code === 'Escape') {
+        onClose();
+      } else if (code === 'Enter') {
+        onSelect(fonts[currentOffset].name);
+      } else if (code === 'ArrowUp' || (code === 'Tab' && shiftKey)) {
+        setCurrentOffset(Math.max(0, currentOffset - 1));
+      } else if (code === 'ArrowDown' || code === 'Tab') {
+        setCurrentOffset(Math.min(fonts.length - 1, currentOffset + 1));
+      }
+    },
+    [currentOffset, fonts, onClose, onSelect]
+  );
 
   const itemRenderer = useCallback(
     ({ service, name, hasDivider }) => (
@@ -159,6 +178,7 @@ function FontPickerContainer({ value, onSelect, onClose }) {
     <PickerContainer ref={ref}>
       {matchingFonts.length ? (
         <List
+          onKeyDown={handleKeyPress}
           items={matchingFonts}
           onScroll={handleScroll}
           itemRenderer={itemRenderer}
