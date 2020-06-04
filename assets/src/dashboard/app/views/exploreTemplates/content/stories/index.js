@@ -43,6 +43,9 @@ const page = {
   requestNextPage: action('request next page clicked'),
 };
 
+const templateActions = {
+  createStoryFromTemplate: action('create story from template clicked'),
+};
 const defaultProps = {
   allPagesFetched: false,
   isLoading: false,
@@ -51,6 +54,7 @@ const defaultProps = {
   templates: formattedTemplatesArray,
   view: view,
   totalTemplates: 3,
+  templateActions,
 };
 
 const StorybookLayoutContainer = styled.div`
