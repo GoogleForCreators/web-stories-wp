@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Templates_Controller;
+use Google\Web_Stories\REST_API\Stories_Base_Controller;
 
 /**
  * Class Template_Post_Type.
@@ -89,7 +89,7 @@ class Template_Post_Type {
 				'public'                => false,
 				'show_ui'               => false,
 				'show_in_rest'          => true,
-				'rest_controller_class' => Templates_Controller::class,
+				'rest_controller_class' => Stories_Base_Controller::class,
 			]
 		);
 	}
