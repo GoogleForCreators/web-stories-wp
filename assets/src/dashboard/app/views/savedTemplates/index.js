@@ -38,7 +38,6 @@ import {
   DASHBOARD_VIEWS,
   SAVED_TEMPLATES_STATUSES,
   STORY_SORT_MENU_ITEMS,
-  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../constants';
 import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import useStoryView, {
@@ -53,7 +52,8 @@ import { StoriesPropType } from '../../../types';
 import { reshapeTemplateObject } from '../../api/useTemplateApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
-import { BodyViewOptions, PageHeading, StoryGridView } from '../shared';
+import { BodyViewOptions, PageHeading } from '../shared';
+import SavedTemplatesGridView from './savedTemplatesGridView';
 
 function Header({ filter, search, sort, stories, view }) {
   const resultsLabel = useDashboardResultsLabel({
@@ -94,15 +94,7 @@ function Content({ stories, view, page }) {
         <TransformProvider>
           <UnitsProvider pageSize={view.pageSize}>
             <StandardViewContentGutter>
-              <StoryGridView
-                stories={stories}
-                centerActionLabelByStatus={
-                  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
-                }
-                bottomActionLabel={__('Use template', 'web-stories')}
-                pageSize={view.pageSize}
-                isSavedTemplate
-              />
+              <SavedTemplatesGridView view={view} stories={stories} />
               <InfiniteScroller
                 allDataLoadedMessage={__('No more templates.', 'web-stories')}
                 isLoading={false}

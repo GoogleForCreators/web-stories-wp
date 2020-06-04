@@ -401,6 +401,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-05-20
 				 */
 				'mediaDropdownMenu' => false,
+				/**
+				 * Description: Flag for new font picker with typeface previews in style panel.
+				 * Author: @carlos-kelly
+				 * Issue: #1300
+				 * Creation date: 2020-06-02
+				 */
+				'newFontPicker'     => false,
 			],
 		];
 
@@ -416,7 +423,7 @@ class Story_Post_Type {
 		$allowed_mime_types = self::get_allowed_mime_types();
 		$mime_types         = [];
 
-		foreach ( $allowed_mime_types as $type => $mimes ) {
+		foreach ( $allowed_mime_types as $mimes ) {
 			// Otherwise this throws a warning on PHP < 7.3.
 			if ( ! empty( $mimes ) ) {
 				array_push( $mime_types, ...$mimes );

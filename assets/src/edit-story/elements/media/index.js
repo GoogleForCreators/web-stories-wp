@@ -54,7 +54,6 @@ export const MEDIA_DEFAULT_ATTRIBUTES = {
   scale: 100,
   focalX: 50,
   focalY: 50,
-  isFill: false,
   resource: {
     alt: '',
   },
@@ -65,8 +64,6 @@ export const hasEditMode = true;
 export const isMedia = true;
 
 export const canFlip = true;
-
-export const canFill = true;
 
 export const isMaskable = true;
 

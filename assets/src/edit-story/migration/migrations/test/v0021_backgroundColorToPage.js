@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import backgroundColorToPage from '../v0020_backgroundColorToPage';
+import backgroundColorToPage from '../v0021_backgroundColorToPage';
 
 describe('backgroundColorToPage', () => {
   it('should migrate background element color to page', () => {
