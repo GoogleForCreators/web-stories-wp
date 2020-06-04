@@ -115,7 +115,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
 	}
 
-	public function test_v_3_remove_old_text_styles() {
+	public function test_remove_broken_text_styles() {
 		$presets = [
 			'textStyles' => [
 				[
