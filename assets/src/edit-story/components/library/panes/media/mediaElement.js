@@ -155,7 +155,6 @@ const MediaElement = ({
       onDragStart: (e) => {
         setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
-        console.log(x, y);
         const offsetX = e.clientX - x;
         const offsetY = e.clientY - y;
         e.dataTransfer.setDragImage(mediaElement?.current, offsetX, offsetY);
