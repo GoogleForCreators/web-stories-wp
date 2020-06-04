@@ -197,8 +197,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
       }}
       throttleDrag={0}
-      onDragStart={({ set }) => {
+      onDragStart={({ set, inputEvent }) => {
+        // If Ctrl key is down, let's not drag.
+        if (inputEvent.ctrlKey) {
+          return false;
+        }
         set(frame.translate);
+        return true;
       }}
       onDragEnd={({ target }) => {
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.

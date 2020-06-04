@@ -231,11 +231,16 @@ function MultiSelectionMovable({ selectedElements }) {
         });
       }}
       onDragGroupStart={({ events, inputEvent }) => {
+        // If Ctrl key is down, let's not drag.
+        if (inputEvent.ctrlKey) {
+          return false;
+        }
         startEventTracking(inputEvent);
         if (!isDragging) {
           setIsDragging(true);
         }
         onGroupEventStart({ events, isDrag: true });
+        return true;
       }}
       onDragGroupEnd={({ targets, inputEvent }) => {
         setIsDragging(false);
