@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { rgba } from 'polished';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -228,13 +228,37 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  const refContainer = useRef();
+  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
+  // Recalculates padding of Media Pane so it stays centered.
+  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
+  // prop is not yet ready).
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  let container = null;
+  const refContainer = (element) => {
+    if (!element) {
+      return;
+    }
+    container = element;
+    setScrollbarWidth(element.offsetWidth - element.clientWidth);
+  };
+
   const refContainerFooter = useRef();
+
+  useLayoutEffect(() => {
+    if (!scrollbarWidth) {
+      return;
+    }
+    const currentPaddingLeft = parseFloat(
+      window.getComputedStyle(container, null).getPropertyValue('padding-left')
+    );
+    container.style['padding-right'] =
+      currentPaddingLeft - scrollbarWidth + 'px';
+  }, [scrollbarWidth, container]);
 
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: refContainer,
+      root: { current: container },
       rootMargin: '0px 0px 300px 0px',
     },
     (entry) => {
@@ -252,24 +276,6 @@ function MediaPane(props) {
     },
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
-
-  // The media pane is supposed to have a scrollbar that shows on focus and
-  // "hovers" over content. As of May 2020 this cannot be achieved without
-  // js (as the scrollbar-gutter prop is no yet ready).
-  useEffect(() => {
-    if (!refContainer.current) {
-      return;
-    }
-    const scrollBarWidth =
-      refContainer.current.offsetWidth - refContainer.current.clientWidth;
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
-    );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollBarWidth + 'px';
-  });
 
   return (
     <StyledPane id={paneId} {...props}>
