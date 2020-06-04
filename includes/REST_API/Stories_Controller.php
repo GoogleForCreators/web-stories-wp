@@ -149,6 +149,8 @@ class Stories_Controller extends Stories_Base_Controller {
 			'context'     => [ 'view', 'edit' ],
 		];
 
+		$schema['properties']['status']['enum'][] = 'auto-draft';
+
 		$this->schema = $schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
