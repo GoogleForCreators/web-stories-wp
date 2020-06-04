@@ -33,14 +33,16 @@ import { __ } from '@wordpress/i18n';
 import WithTooltip from '../../tooltip';
 import { useConfig } from '../../../app';
 import { useKeyDownEffect } from '../../keyboard';
-import { ReactComponent as AlignBottom } from '../../../icons/align_bottom.svg';
-import { ReactComponent as AlignTop } from '../../../icons/align_top.svg';
-import { ReactComponent as AlignCenter } from '../../../icons/align_center.svg';
-import { ReactComponent as AlignMiddle } from '../../../icons/align_middle.svg';
-import { ReactComponent as AlignLeft } from '../../../icons/align_left.svg';
-import { ReactComponent as AlignRight } from '../../../icons/align_right.svg';
-import { ReactComponent as HorizontalDistribute } from '../../../icons/horizontal_distribute.svg';
-import { ReactComponent as VerticalDistribute } from '../../../icons/vertical_distribute.svg';
+import {
+  AlignBottom,
+  AlignTop,
+  AlignMiddle,
+  AlignLeft,
+  AlignRight,
+  AlignCenter,
+  DistributeHorizontal,
+  DistributeVertical,
+} from '../../../icons';
 import getBoundRect, {
   calcRotatedObjectPositionAndSize,
 } from '../utils/getBoundRect';
@@ -225,7 +227,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
           id={alignmentButtonIds[0]}
           onFocus={() => setCurrentButton(alignmentButtonIds[0])}
         >
-          <HorizontalDistribute />
+          <DistributeHorizontal />
         </IconButton>
       </WithTooltip>
       <WithTooltip title={__('Distribute vertically', 'web-stories')}>
@@ -236,7 +238,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
           id={alignmentButtonIds[1]}
           onFocus={() => setCurrentButton(alignmentButtonIds[1])}
         >
-          <VerticalDistribute />
+          <DistributeVertical />
         </IconButton>
       </WithTooltip>
       <SeparateBorder />
