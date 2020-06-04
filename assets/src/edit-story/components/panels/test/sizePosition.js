@@ -42,7 +42,6 @@ describe('Panels/SizePosition', () => {
       isBackground: false,
       width: 100,
       height: 80,
-      isFill: false,
       rotationAngle: 0,
       lockAspectRatio: true,
     };
@@ -51,7 +50,6 @@ describe('Panels/SizePosition', () => {
       isBackground: false,
       width: 100,
       height: 80,
-      isFill: false,
       rotationAngle: 0,
       lockAspectRatio: false,
     };
@@ -67,7 +65,6 @@ describe('Panels/SizePosition', () => {
       return {
         isMedia: 'image' === type,
         canFlip: 'image' === type,
-        canFill: true,
       };
     });
   });
@@ -144,12 +141,6 @@ describe('Panels/SizePosition', () => {
         defaultFlip,
         true
       );
-    });
-
-    it('should update fill', () => {
-      const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
-      fireEvent.click(getByRole('checkbox', { name: 'Fill' }));
-      expect(pushUpdate).toHaveBeenCalledWith({ isFill: true }, true);
     });
 
     it('should update width with lock ratio', () => {

@@ -70,7 +70,10 @@ class Plugin {
 		$embed_block = new Embed_Block();
 		add_action( 'init', [ $embed_block, 'init' ] );
 
-		// Integrations.
+		// Frontend.
+		$discovery = new Discovery();
+		add_action( 'init', [ $discovery, 'init' ] );
+
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
 
 		// Everything else.

@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Discovery;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Query;
 use WP_Error;
@@ -64,7 +65,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$data     = $response->get_data();
 
 		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
-			$data['publisher_logo_url'] = Story_Post_Type::get_publisher_logo();
+			$data['publisher_logo_url'] = Discovery::get_publisher_logo();
 		}
 
 		if ( in_array( 'style_presets', $fields, true ) ) {
