@@ -67,7 +67,8 @@ const MediaDateText = styled.div`
   line-height: ${({ theme }) => theme.fonts.date.lineHeight};
   font-size: ${({ theme }) => theme.fonts.date.size};
   font-weight: ${({ theme }) => theme.fonts.date.weight};
-  color: ${({ theme }) => theme.colors.bg.v10};
+  color: ${({ theme }) => theme.grayout};
+  margin-bottom: 8px;
 `;
 
 const MediaTitleText = styled.div`
@@ -75,7 +76,7 @@ const MediaTitleText = styled.div`
   line-height: ${({ theme }) => theme.fonts.title.lineHeight};
   font-size: ${({ theme }) => theme.fonts.title.size};
   font-weight: ${({ theme }) => theme.fonts.title.weight};
-  color: ${({ theme }) => theme.colors.bg.v11};
+  color: ${({ theme }) => theme.colors.bg.v9};
 `;
 
 const MediaSizeText = styled.div`
@@ -193,15 +194,15 @@ function MediaEditDialog({ resource, onClose }) {
           </Video>
         )}
         <MetadataTextContainer>
-          <MediaDateText>
-            {__('Uploaded: ', 'web-stories') +
-              uploadDate.toLocaleDateString('en-US', {
-                // TODO(jo): get locale?
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-          </MediaDateText>
+          {uploadDate && (
+            <MediaDateText>
+              {sprintf(
+                /* translators: %s: upload date of media item. */
+                __('Uploaded: %s', 'web-stories'),
+                uploadDate.format('MMMM DD, YYYY')
+              )}
+            </MediaDateText>
+          )}
           <MediaTitleText>{title}</MediaTitleText>
           <MediaSizeText>
             {sprintf(

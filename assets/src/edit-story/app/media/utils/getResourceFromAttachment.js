@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { parse } from 'date-fns';
+import moment from 'moment';
 
 /**
  * Internal dependencies
@@ -54,10 +54,10 @@ function getResourceFromAttachment(attachment) {
     },
     alt_text: alt,
   } = attachment;
-  const parsedDate = parse(date, "yyyy-LL-cc'T'HH:mm:ss", new Date());
+  const parsedDate = moment(date);
   return createResource({
     mimeType,
-    uploadDate: parsedDate ? new Date(parsedDate) : null,
+    uploadDate: parsedDate.isValid() ? parsedDate : null,
     src,
     ...getResourceSize(
       width,

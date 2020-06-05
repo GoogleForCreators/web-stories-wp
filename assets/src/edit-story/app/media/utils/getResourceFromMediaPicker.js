@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import moment from 'moment';
 
 /**
  * Internal dependencies
@@ -36,6 +40,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     alt,
     description,
     height,
+    date,
     id,
     featured_media: posterId,
     featured_media_src: {
@@ -47,8 +52,10 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     fileLength: lengthFormatted,
     sizes,
   } = mediaPickerEl;
+  const parsedDate = moment(date);
   return createResource({
     mimeType,
+    uploadDate: parsedDate.isValid() ? parsedDate : null,
     src: url || src,
     ...getResourceSize(
       width,
