@@ -119,7 +119,7 @@ function VideoControls({
         videoNode.currentTime = 0;
       }
       setIsPlaying(false);
-      setShowControls(true);
+      setShowControls(false);
     }
     const syncTimer = setTimeout(() => {
       if (isSelected && videoNode && !videoNode.paused) {
