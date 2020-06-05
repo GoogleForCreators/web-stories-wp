@@ -32,6 +32,7 @@ import { ReactComponent as GridViewIcon } from '../../icons/grid_view.svg';
 import { ReactComponent as KeyboardIcon } from '../../icons/keyboard.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { ReactComponent as EyedropperIcon } from '../../icons/eyedropper.svg';
+import { ReactComponent as MoreIcon } from '../../icons/more_horiz.svg';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,
@@ -169,3 +170,9 @@ export const Eyedropper = (props) => (
     <EyedropperIcon />
   </StyledButton>
 );
+
+export const More = forwardRef((props, ref) => (
+  <StyledButton {...props} ref={ref}>
+    <MoreIcon />
+  </StyledButton>
+));

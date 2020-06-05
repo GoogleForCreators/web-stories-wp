@@ -28,6 +28,8 @@
 
 namespace Google\Web_Stories;
 
+use WP_Screen;
+
 /**
  * Dashboard class.
  */
@@ -54,6 +56,7 @@ class Dashboard {
 	public function init() {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 	}
 
 	/**
@@ -163,19 +166,33 @@ class Dashboard {
 					'assetsURL'    => WEBSTORIES_ASSETS_URL,
 					'version'      => WEBSTORIES_VERSION,
 					'api'          => [
-						'stories'    => sprintf( '/wp/v2/%s', $rest_base ),
-						'users'      => '/wp/v2/users',
-						'tags'       => '/wp/v2/tags',
-						'categories' => '/wp/v2/categories',
-						'fonts'      => '/web-stories/v1/fonts',
+						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
+						'users'   => '/wp/v2/users',
+						'fonts'   => '/web-stories/v1/fonts',
 					],
+				],
+				'flags'  => [
+					/**
+					 * Description: Enables user facing animations.
+					 * Author: @littlemilkstudio
+					 * Issue: 1897
+					 * Creation date: 2020-05-21
+					 */
+					'enableAnimation'       => false,
+					/**
+					 * Description: Enables in-progress views to be accessed.
+					 * Author: @carlos-kelly
+					 * Issue: 2081
+					 * Creation date: 2020-05-28
+					 */
+					'enableInProgressViews' => false,
 				],
 			]
 		);
 
 		wp_register_style(
-			'google-sans',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500',
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500|Roboto:400',
 			[],
 			WEBSTORIES_VERSION
 		);
@@ -183,7 +200,7 @@ class Dashboard {
 		wp_enqueue_style(
 			self::SCRIPT_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
-			[ 'google-sans' ],
+			[ 'google-fonts' ],
 			$version
 		);
 
@@ -192,5 +209,41 @@ class Dashboard {
 			wp_styles()->registered['wp-admin']->deps,
 			[ 'forms' ]
 		);
+	}
+
+	/**
+	 * Displays a link to the Web Stories dashboard on the WordPress list table view.
+	 *
+	 * @return void
+	 */
+	public function display_link_to_dashboard() {
+		$screen = get_current_screen();
+
+		if ( ! $screen instanceof WP_Screen ) {
+			return;
+		}
+
+		if ( 'edit' !== $screen->base ) {
+			return;
+		}
+
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
+			return;
+		}
+
+		$dashboard_url = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard',
+			],
+			admin_url( 'edit.php' )
+		)
+		?>
+		<div style="margin-top: 20px;">
+			<a href="<?php echo esc_url( $dashboard_url ); ?>">
+				<?php esc_html_e( '&larr; Return to Web Stories Dashboard', 'web-stories' ); ?>
+			</a>
+		</div>
+		<?php
 	}
 }

@@ -37,6 +37,7 @@ import { PreviewPage } from '../../../components';
 import { clamp } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
+import UpdateTemplateForm from './updateTemplateForm';
 import Timeline from './timeline';
 import {
   PageContainer,
@@ -148,7 +149,6 @@ function StoryAnimTool() {
   const handleAddOrUpdateAnimation = useCallback(
     (animation) => {
       const story = { ...activeStory };
-
       const animationWithTargets = {
         ...animation,
         targets: [...Object.values(selectedElementIds)],
@@ -315,6 +315,7 @@ function StoryAnimTool() {
                 </ElementInfo>
               ))}
             </ElementsContainer>
+            <UpdateTemplateForm story={activeStory} />
           </Container>
           <Timeline
             story={activeStory}

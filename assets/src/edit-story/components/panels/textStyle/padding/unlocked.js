@@ -37,7 +37,6 @@ function UnlockedPaddingControls({ padding, handleChange }) {
   return (
     <>
       <BoxedNumeric
-        data-testid="padding.horizontal"
         suffix={_x('H', 'The Horizontal padding', 'web-stories')}
         value={padding.horizontal}
         onChange={(value) =>
@@ -45,10 +44,10 @@ function UnlockedPaddingControls({ padding, handleChange }) {
             horizontal: value,
           })
         }
+        aria-label={__('Edit: Horizontal padding', 'web-stories')}
       />
       <Space />
       <Toggle
-        aria-label={__('Padding ratio lock', 'web-stories')}
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={false}
@@ -62,10 +61,10 @@ function UnlockedPaddingControls({ padding, handleChange }) {
             true
           )
         }
+        aria-label={__('Toggle padding ratio lock', 'web-stories')}
       />
       <Space />
       <BoxedNumeric
-        data-testid="padding.vertical"
         suffix={_x('V', 'The Vertical padding', 'web-stories')}
         value={padding.vertical}
         onChange={(value) =>
@@ -73,6 +72,7 @@ function UnlockedPaddingControls({ padding, handleChange }) {
             vertical: value,
           })
         }
+        aria-label={__('Edit: Vertical padding', 'web-stories')}
       />
     </>
   );

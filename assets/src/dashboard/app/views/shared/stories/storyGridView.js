@@ -27,6 +27,7 @@ import { action } from '@storybook/addon-actions';
 import StoryGridView from '../storyGridView';
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
+import { STORY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 
 export default {
   title: 'Dashboard/Components/StoryGridView',
@@ -38,14 +39,16 @@ export const _default = () => {
     <StoryGridView
       stories={formattedStoriesArray}
       users={formattedUsersObject}
-      centerActionLabel={text('centerActionLabel', 'Preview')}
+      centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
       bottomActionLabel={text('bottomActionLabel', 'MY CTA')}
-      createTemplateFromStory={boolean('createTemplateFromStory')}
-      updateStory={action('updateStory button clicked')}
-      trashStory={action('trashStory button clicked')}
-      duplicateStory={action('duplicateStory button clicked')}
+      storyMenu={{
+        handleMenuToggle: action('handleMenuToggle'),
+        contextMenuId: -1,
+        handleMenuItemSelected: action('handleMenuItemSelected'),
+      }}
       isTemplate={boolean('isTemplate')}
       isSavedTemplate={boolean('isSavedTemplate')}
+      pageSize={{ width: 210, height: 316 }}
     />
   );
 };

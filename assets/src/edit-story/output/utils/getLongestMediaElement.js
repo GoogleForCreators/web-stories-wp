@@ -27,9 +27,10 @@ import { getDefinitionForType } from '../../elements';
  */
 function getLongestMediaElement(elements) {
   return elements
-    .filter(({ type }) => {
+    .filter(({ type, loop }) => {
       const { isMedia } = getDefinitionForType(type);
-      return isMedia;
+      // Ensure looping media is not considered.
+      return isMedia && !loop;
     })
     .reduce((longest, element) => {
       if (!element?.resource?.length) {

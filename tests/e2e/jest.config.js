@@ -28,7 +28,7 @@ process.env.WP_USERNAME = WP_USERNAME;
 process.env.WP_PASSWORD = WP_PASSWORD;
 process.env.WP_BASE_URL = WP_BASE_URL;
 
-module.exports = {
+export default {
   preset: 'jest-puppeteer',
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',

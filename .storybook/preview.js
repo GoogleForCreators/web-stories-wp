@@ -23,6 +23,8 @@ import { addDecorator, addParameters } from '@storybook/react';
 import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { FlagsProvider } from 'flagged';
+import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
  * Internal dependencies
@@ -35,6 +37,8 @@ import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
 } from '../assets/src/dashboard/theme';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
+import { ConfigProvider } from '../assets/src/dashboard/app/config';
+import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -59,6 +63,13 @@ addParameters({
       ipad12p,
     },
   },
+  backgrounds: {
+    default: 'Light',
+    values: [
+      { name: 'Light', value: '#fff', default: true },
+      { name: 'Dark', value: 'rgba(0, 0, 0, 0.9)', default: true },
+    ],
+  },
 });
 
 addDecorator(withA11y);
@@ -69,20 +80,30 @@ addDecorator((story, { id }) => {
 
   if (useDashboardTheme) {
     return (
-      <ThemeProvider theme={dashboardTheme}>
-        <DashboardGlobalStyle />
-        <DashboardKeyboardOnlyOutline />
-        {story()}
-      </ThemeProvider>
+      <FlagsProvider features={{ enableAnimation: true }}>
+        <ThemeProvider theme={dashboardTheme}>
+          <ConfigProvider
+            config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
+          >
+            <ApiProvider>
+              <DashboardGlobalStyle />
+              <DashboardKeyboardOnlyOutline />
+              {story()}
+            </ApiProvider>
+          </ConfigProvider>
+        </ThemeProvider>
+      </FlagsProvider>
     );
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <CropMoveableGlobalStyle />
-      <ModalGlobalStyle />
-      {story()}
-    </ThemeProvider>
+    <FlagsProvider features={{ enableAnimation: true }}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <CropMoveableGlobalStyle />
+        <ModalGlobalStyle />
+        {story()}
+      </ThemeProvider>
+    </FlagsProvider>
   );
 });

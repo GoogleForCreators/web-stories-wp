@@ -79,7 +79,6 @@ function combineElements(state, { firstId, firstElement, secondId }) {
     scale = 100,
     focalX = 50,
     focalY = 50,
-    isFill = false,
     width,
     height,
     x,
@@ -93,7 +92,6 @@ function combineElements(state, { firstId, firstElement, secondId }) {
     scale,
     focalX,
     focalY,
-    isFill,
     // Only remember these for backgrounds, as they're ignored while being background
     ...(secondElement.isBackground
       ? {

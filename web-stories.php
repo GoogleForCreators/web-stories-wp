@@ -16,7 +16,6 @@
  * Requires at least: 5.3
  * Requires PHP: 5.6
  * Text Domain: web-stories
- * Domain Path: /languages/
  * License: Apache License 2.0
  * License URI: https://www.apache.org/licenses/LICENSE-2.0
  */
@@ -41,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WEBSTORIES_VERSION', '1.0.0-alpha+e601d64' );
+define( 'WEBSTORIES_VERSION', '1.0.0-alpha' );
 define( 'WEBSTORIES_DB_VERSION', '2.0.0' );
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
