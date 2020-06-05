@@ -99,6 +99,7 @@ const Area = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  ${({ zIndex }) => (zIndex !== undefined ? `z-index: ${zIndex}` : null)};
 `;
 
 // Page area is not `overflow:hidden` by default to allow different clipping
@@ -215,6 +216,7 @@ const PageArea = forwardRef(
       showOverflow = false,
       fullbleedRef = createRef(),
       overlay = [],
+      fullbleed = [],
     },
     ref
   ) => {
@@ -230,6 +232,7 @@ const PageArea = forwardRef(
               <PageAreaDangerZoneBottom />
             </>
           )}
+          {fullbleed}
         </PageAreaWithOverflow>
         {overlay}
       </PageAreaFullbleedContainer>
@@ -240,6 +243,7 @@ const PageArea = forwardRef(
 PageArea.propTypes = {
   children: PropTypes.node,
   overlay: PropTypes.node,
+  fullbleed: PropTypes.node,
   showDangerZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
 };

@@ -41,6 +41,7 @@ const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
     className: 'container web-stories-content',
     pointerEvents: 'initial',
+    showOverflow: true,
   })``
 );
 
@@ -100,15 +101,17 @@ function FramesLayer() {
             </FrameSidebar>
           )
         }
+        fullbleed={<Selection />}
       >
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             return <FrameElement key={id} element={{ id, ...rest }} />;
           })}
-        <Selection />
       </FramesPageArea>
       <MenuArea
         pointerEvents="initial"
+        // Make its own stacking context.
+        zIndex={1}
         // Cancel lasso.
         onMouseDown={(evt) => evt.stopPropagation()}
       >
