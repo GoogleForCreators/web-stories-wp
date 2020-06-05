@@ -55,7 +55,7 @@ export { ReactComponent as LayoutHelper } from './layout_helper.svg';
 export { ReactComponent as Link } from './link.svg';
 export { ReactComponent as LinkAlt } from './links.svg'; // todo: remove?
 export { ReactComponent as Lock } from './lock.svg';
-export { ReactComponent as Media } from './lock.svg';
+export { ReactComponent as Media } from './media.svg';
 export { ReactComponent as More } from './more_horiz.svg';
 export { ReactComponent as OffsetHorizontal } from './offset_horizontal.svg';
 export { ReactComponent as OffsetVertical } from './offset_vertical.svg';
