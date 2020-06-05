@@ -118,17 +118,16 @@ const PageAreaWithOverflow = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-top: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
+  padding-bottom: calc(
+    (var(--fullbleed-height-px) - var(--page-height-px)) / 2
+  );
 `;
 
 const PageAreaSafeZone = styled.div`
+  position: relative;
   width: 100%;
   height: var(--page-height-px);
-  overflow: visible;
-  position: relative;
-  margin: auto 0;
 `;
 
 const PageAreaDangerZone = styled.div`

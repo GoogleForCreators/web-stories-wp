@@ -31,8 +31,10 @@ const Overlay = styled.div`
   top: 0;
   /*! @noflip */
   left: 0;
-  width: 0;
-  height: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
   z-index: 1;
 `;
 
