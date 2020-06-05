@@ -69,8 +69,10 @@ SquareWrapper.propTypes = {
 };
 
 const animations = [
-  { targets: ['some-id'], type: ANIMATION_TYPES.BOUNCE, duration: 1000 },
-  { targets: ['some-id'], type: ANIMATION_TYPES.BOUNCE, delay: 1000 },
+  { targets: ['some-id'], type: ANIMATION_TYPES.FADE },
+  { targets: ['some-id'], type: ANIMATION_TYPES.FLIP },
+  { targets: ['some-id'], type: ANIMATION_TYPES.SPIN },
+  { targets: ['some-id'], type: ANIMATION_TYPES.FLOAT_ON, duration: 1000 },
 ];
 
 export function _default() {

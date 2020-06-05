@@ -40,7 +40,7 @@ const PLUGIN_FILE = `${PLUGIN_DIR}/web-stories.php`;
 const README_FILE = `${PLUGIN_DIR}/readme.txt`;
 const PLUGIN_BUILD_DIR = `${PLUGIN_DIR}/build/web-stories`;
 const FONTS_FILE = PLUGIN_DIR + '/includes/data/fonts.json';
-const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/data`;
+const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
 
 program
   .command('version')

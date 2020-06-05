@@ -166,6 +166,7 @@ function MediaProvider({ children }) {
       resetWithFetch,
       uploadVideoPoster,
       deleteMediaElement,
+      updateMediaElement,
     },
   };
 

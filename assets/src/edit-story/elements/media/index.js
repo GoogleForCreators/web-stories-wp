@@ -22,6 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
 import { PanelTypes } from '../../components/panels';
 
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
@@ -51,10 +52,7 @@ export const CropBox = styled.div`
 export const MEDIA_MASK_OPACITY = 0.4;
 
 export const MEDIA_DEFAULT_ATTRIBUTES = {
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
-  isFill: false,
+  ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
   resource: {
     alt: '',
   },
@@ -65,8 +63,6 @@ export const hasEditMode = true;
 export const isMedia = true;
 
 export const canFlip = true;
-
-export const canFill = true;
 
 export const isMaskable = true;
 
