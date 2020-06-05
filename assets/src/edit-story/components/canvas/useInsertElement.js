@@ -75,7 +75,10 @@ function useInsertElement() {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
-            videoEl.play();
+            const playPromise = videoEl.play();
+            if (playPromise) {
+              playPromise.catch(() => {});
+            }
           }
         }, 0);
       }

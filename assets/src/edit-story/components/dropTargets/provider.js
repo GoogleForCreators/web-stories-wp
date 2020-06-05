@@ -174,6 +174,23 @@ function DropTargetsProvider({ children }) {
         });
 
       setActiveDropTargetId(null);
+
+      // Auto-play video on drop
+      if (resource.type === 'video') {
+        // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+        setTimeout(() => {
+          const videoEl = document.getElementById(
+            `video-${activeDropTargetId}`
+          );
+          if (videoEl) {
+            videoEl.load();
+            const playPromise = videoEl.play();
+            if (playPromise) {
+              playPromise.catch(() => {});
+            }
+          }
+        }, 0);
+      }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );

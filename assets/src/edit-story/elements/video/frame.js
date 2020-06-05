@@ -124,7 +124,10 @@ function VideoFrame({ element, box }) {
       videoNode.pause();
       setIsPlaying(false);
     } else {
-      videoNode.play().then(() => setIsPlaying(true));
+      const playPromise = videoNode.play();
+      if (playPromise) {
+        playPromise.then(() => setIsPlaying(true)).catch(() => {});
+      }
     }
   };
 
