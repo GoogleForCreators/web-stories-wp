@@ -87,11 +87,35 @@ class Media {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * Key for media post type.
+	 *
+	 * @var string
+	 */
+	const STORY_MEDIA_TAXONOMY = 'web_story_media_source';
+
+	/**
 	 * Init.
 	 *
 	 * @return void
 	 */
 	public static function init() {
+
+		register_taxonomy(
+			self::STORY_MEDIA_TAXONOMY,
+			'attachment',
+			[
+				'labels'       => [
+					'name'          => esc_html__( 'Sources', 'web-stories' ),
+					'singular_name' => esc_html__( 'Source', 'web-stories' ),
+					'all_items'     => esc_html__( 'All Sources', 'web-stories' ),
+				],
+				'public'       => true,
+				'rewrite'      => false,
+				'hierarchical' => false,
+				'show_in_rest' => true,
+			]
+		);
+
 		register_meta(
 			'post',
 			self::POSTER_POST_META_KEY,
@@ -206,6 +230,33 @@ class Media {
 					'type'        => 'integer',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
+			]
+		);
+
+		register_rest_field(
+			'attachment',
+			'media_source',
+			[
+				'schema'          => [
+					'description' => __( 'Media source. ', 'web-stories' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'get_callback'    => static function ( $prepared ) {
+					$id = $prepared['id'];
+
+					$terms = wp_get_object_terms( $id, MEDIA::STORY_MEDIA_TAXONOMY );
+					if ( is_array( $terms ) && $terms ) {
+						$term = array_shift( $terms );
+
+						return $term->slug;
+					}
+
+					return '';
+				},
+				'update_callback' => static function ( $value, $object ) {
+					wp_set_object_terms( $object->ID, $value, MEDIA::STORY_MEDIA_TAXONOMY );
+				},
 			]
 		);
 
