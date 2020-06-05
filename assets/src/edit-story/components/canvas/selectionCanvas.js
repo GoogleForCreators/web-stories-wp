@@ -28,6 +28,7 @@ import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import InOverlay from '../overlay';
 import { useUnits } from '../../units';
+import { PAGE_RATIO } from '../../constants';
 import useCanvas from './useCanvas';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
@@ -150,8 +151,17 @@ function SelectionCanvas({ children }) {
   const onMouseUp = () => {
     if (lassoModeRef.current === LassoMode.ON) {
       const [lx, ly, lwidth, lheight] = getLassoBox();
-      const x = editorToDataX(lx - fullbleedContainer.offsetLeft);
-      const y = editorToDataY(ly - fullbleedContainer.offsetTop);
+      const {
+        offsetLeft,
+        offsetTop,
+        offsetHeight,
+        offsetWidth,
+      } = fullbleedContainer;
+      // Offset from the fullbleed to the safe zone.
+      const dx = offsetLeft;
+      const dy = offsetTop + (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
+      const x = editorToDataX(lx - dx);
+      const y = editorToDataY(ly - dy);
       const width = editorToDataX(lwidth);
       const height = editorToDataY(lheight);
       clearSelection();
