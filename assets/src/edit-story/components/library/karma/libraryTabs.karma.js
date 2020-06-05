@@ -21,10 +21,14 @@ import { Fixture } from '../../../karma';
 
 describe('LibraryTabs integration', () => {
   let fixture;
+  let libraryLayout;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    libraryLayout = fixture.container.querySelector(
+      '[data-testid="libraryLayout"]'
+    );
   });
 
   afterEach(() => {
@@ -37,39 +41,49 @@ describe('LibraryTabs integration', () => {
       await fixture.events.focus(textTab);
     });
 
-    it('should be on the media tab', async () => {
-      await fixture.waitOnScreen(
-        fixture.container.querySelector('#library-pane-media')
+    function getExpandedPanes() {
+      return Array.from(
+        libraryLayout.querySelectorAll('[aria-expanded="true"]')
       );
+    }
+
+    it('should be on the media tab', async () => {
+      const mediaPane = fixture.container.querySelector('#library-pane-media');
+      expect(getExpandedPanes()).toEqual([mediaPane]);
+      await fixture.waitOnScreen(mediaPane);
       await fixture.snapshot();
     });
 
-    fit('should switch tabs on left and right keys', async () => {
+    it('should switch tabs on left and right keys', async () => {
+      // Next: text pane.
       await fixture.events.keyboard.press('ArrowRight');
-
       // @todo: what's the best way to confirm switching of a tab?
-      await fixture.waitOnScreen(
-        fixture.container.querySelector('#library-pane-text')
-      );
+      const textPane = fixture.container.querySelector('#library-pane-text');
+      expect(getExpandedPanes()).toEqual([textPane]);
+      await fixture.waitOnScreen(textPane);
       await fixture.snapshot('on text pane');
 
+      // Next: shapes pane.
       await fixture.events.keyboard.press('ArrowRight');
-
-      await fixture.waitOnScreen(
-        fixture.container.querySelector('#library-pane-shapes')
+      const shapesPane = fixture.container.querySelector(
+        '#library-pane-shapes'
       );
+      expect(getExpandedPanes()).toEqual([shapesPane]);
+      await fixture.waitOnScreen(shapesPane);
       await fixture.snapshot('on text pane');
 
+      // Back: text pane.
       await fixture.events.keyboard.press('ArrowLeft');
-
+      expect(getExpandedPanes()).toEqual([textPane]);
       await fixture.waitOnScreen(
         fixture.container.querySelector('#library-pane-text')
       );
 
+      // Back: media pane.
       await fixture.events.keyboard.press('ArrowLeft');
-      await fixture.waitOnScreen(
-        fixture.container.querySelector('#library-pane-media')
-      );
+      const mediaPane = fixture.container.querySelector('#library-pane-media');
+      expect(getExpandedPanes()).toEqual([mediaPane]);
+      await fixture.waitOnScreen(mediaPane);
     });
   });
 });
