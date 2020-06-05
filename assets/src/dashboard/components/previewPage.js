@@ -33,20 +33,22 @@ function PreviewPageController({ page, animationState, subscribeGlobalTime }) {
   } = useStoryAnimationContext();
 
   useEffect(() => {
-    if (STORY_PAGE_STATE.PLAYING === animationState) {
-      WAAPIAnimationMethods.play();
+    switch (animationState) {
+      case STORY_PAGE_STATE.PLAYING:
+        WAAPIAnimationMethods.play();
+        return () => {};
+      case STORY_PAGE_STATE.RESET:
+        WAAPIAnimationMethods.reset();
+        return () => {};
+      case STORY_PAGE_STATE.SCRUBBING:
+        WAAPIAnimationMethods.pause();
+        return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
+      case STORY_PAGE_STATE.PAUSED:
+        WAAPIAnimationMethods.pause();
+        return () => {};
+      default:
+        return () => {};
     }
-    if (STORY_PAGE_STATE.RESET === animationState) {
-      WAAPIAnimationMethods.reset();
-    }
-    if (STORY_PAGE_STATE.SCRUBBING === animationState) {
-      WAAPIAnimationMethods.pause();
-      return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
-    }
-    if (STORY_PAGE_STATE.PAUSED === animationState) {
-      WAAPIAnimationMethods.pause();
-    }
-    return () => {};
   }, [animationState, WAAPIAnimationMethods, subscribeGlobalTime]);
 
   /**
