@@ -15,12 +15,23 @@
  */
 
 /**
- * @param {ClickEvent} evt
+ * @param {Event} evt
  * @return {boolean} True means that this event is triggered by a pointer, and
  * false means the click was triggered by the keyboard.
  */
-function isPointerClickEvent(evt) {
+export function isPointerClickEvent(evt) {
   return evt.detail > 0;
 }
 
-export default isPointerClickEvent;
+/**
+ * @param {Event} evt
+ */
+export function blurOnPointerClick(evt) {
+  if (
+    evt &&
+    isPointerClickEvent(evt) &&
+    document.activeElement === evt.currentTarget
+  ) {
+    evt.currentTarget.blur();
+  }
+}

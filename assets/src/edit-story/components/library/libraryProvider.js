@@ -24,7 +24,7 @@ import { useCallback, useMemo, useState } from 'react';
  * Internal dependencies
  */
 import { useInsertElement } from '../canvas';
-import isPointerClickEvent from '../../utils/isPointerClickEvent';
+import { blurOnPointerClick } from '../../utils/clickEvent';
 import Context from './context';
 
 const MEDIA = 'media';
@@ -47,8 +47,8 @@ function LibraryProvider({ children }) {
 
   const setTab = useCallback((tabId, evt) => {
     setTabState(tabId);
-    if (evt && isPointerClickEvent(evt)) {
-      evt.currentTarget.blur();
+    if (evt) {
+      blurOnPointerClick(evt);
     }
   }, []);
 
