@@ -27,7 +27,7 @@ import {
   DATA_VERSION,
 } from '../../assets/src/edit-story/migration/migrate.js';
 
-async function updateTemplates(templatesDir) {
+function updateTemplates(templatesDir) {
   const fileNamePattern = /^.*\.json$/;
   const templateFiles = readdirSync(templatesDir).filter((file) =>
     fileNamePattern.test(file)

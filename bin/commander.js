@@ -157,8 +157,8 @@ program
     console.log('  # Generate the web fonts list');
     console.log('  $ commander.js update-templates');
   })
-  .action(async () => {
-    await updateTemplates(TEMPLATES_DIR);
+  .action(() => {
+    updateTemplates(TEMPLATES_DIR);
 
     console.log('Templates updated!');
   });
