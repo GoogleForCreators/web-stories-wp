@@ -34,7 +34,13 @@ async function updateTemplates(templatesDir) {
   );
 
   for (const file of templateFiles) {
-    const template = JSON.parse(readFileSync(`${templatesDir}/${file}`, 'utf8'));
+    const template = JSON.parse(
+      readFileSync(`${templatesDir}/${file}`, 'utf8')
+    );
+
+    if (Number(template.version) === Number(DATA_VERSION)) {
+      return;
+    }
 
     const updatedTemplate = migrate(template, template.version);
     updatedTemplate.version = DATA_VERSION;
