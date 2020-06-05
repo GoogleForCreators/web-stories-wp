@@ -29,8 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DefaultImageSvg } from '../../icons/default_image.svg';
-import { ReactComponent as EditPencilSvg } from '../../icons/edit_pencil.svg';
+import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
 import { useMediaPicker } from '../mediaPicker';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -47,14 +46,14 @@ const Container = styled.div`
   ${({ circle }) => circle && 'border-radius: 50%;'}
 `;
 
-const DefaultImage = styled(DefaultImageSvg)`
+const DefaultImage = styled(DefaultImageIcon)`
   width: 100%;
   height: 100%;
   display: block;
   padding: ${({ size }) => (size ? size * 0.2 : 18)}px;
 `;
 
-const EditIcon = styled(EditPencilSvg)`
+const EditIcon = styled(EditPencil)`
   width: 100%;
   height: 100%;
   display: block;

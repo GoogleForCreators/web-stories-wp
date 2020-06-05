@@ -37,6 +37,7 @@ import { PreviewPage } from '../../../components';
 import { clamp } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
+import UpdateTemplateForm from './updateTemplateForm';
 import Timeline from './timeline';
 import {
   PageContainer,
@@ -314,6 +315,7 @@ function StoryAnimTool() {
                 </ElementInfo>
               ))}
             </ElementsContainer>
+            <UpdateTemplateForm story={activeStory} />
           </Container>
           <Timeline
             story={activeStory}

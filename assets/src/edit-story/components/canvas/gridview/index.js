@@ -31,7 +31,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { useStory } from '../../../app/story';
 import RangeInput from '../../rangeInput';
-import { ReactComponent as RectangleIcon } from '../../../icons/rectangle.svg';
+import { Rectangle as RectangleIcon } from '../../../icons';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
 import PagePreview, {
   THUMB_FRAME_HEIGHT,
