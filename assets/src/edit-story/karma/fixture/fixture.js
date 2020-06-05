@@ -33,6 +33,7 @@ import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
 import FixtureEvents from './events';
 import getMediaResponse from './db/getMediaResponse';
+import { Editor as EditorContainer } from './containers';
 
 const DEFAULT_CONFIG = {
   storyId: 1,
@@ -101,6 +102,8 @@ export class Fixture {
     this._events = new FixtureEvents(this.act.bind(this));
 
     this._container = null;
+
+    this._editor = null;
   }
 
   restore() {}
@@ -111,6 +114,10 @@ export class Fixture {
 
   get screen() {
     return this._screen;
+  }
+
+  get editor() {
+    return this._editor;
   }
 
   /**
@@ -181,7 +188,7 @@ export class Fixture {
    */
   render() {
     const root = document.querySelector('test-root');
-    const { container } = render(
+    const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />
       </FlagsProvider>,
@@ -195,6 +202,11 @@ export class Fixture {
     container.style.height = '100%';
     this._container = container;
     this._screen = screen;
+
+    this._editor = new EditorContainer(
+      getByRole('main', { name: 'Web Stories Editor' }),
+      'editor'
+    );
 
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.

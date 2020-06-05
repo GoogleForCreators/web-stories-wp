@@ -20,6 +20,11 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import Library from '../../components/library';
@@ -58,7 +63,7 @@ const Area = styled.div`
 
 function Layout() {
   return (
-    <Editor>
+    <Editor role="main" aria-label={__('Web Stories Editor', 'web-stories')}>
       <Area area="lib">
         <Library />
       </Area>

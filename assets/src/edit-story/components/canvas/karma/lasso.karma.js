@@ -55,12 +55,6 @@ describe('Lasso integration', () => {
     fixture.restore();
   });
 
-  function getFrame(elementId) {
-    return fixture.querySelector(
-      `[data-element-id="${elementId}"] [data-testid="textFrame"]`
-    );
-  }
-
   async function getSelection() {
     const storyContext = await fixture.renderHook(() => useStory());
     return storyContext.state.selectedElementIds;
@@ -71,9 +65,9 @@ describe('Lasso integration', () => {
   });
 
   it('should select right on the top-left corner', async () => {
-    const frame1 = getFrame(element1.id);
+    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id);
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, -20, -20),
+      moveRel(frame1.node, -20, -20),
       down(),
       moveBy(22, 22, { steps: 5 }),
       up(),
@@ -82,9 +76,9 @@ describe('Lasso integration', () => {
   });
 
   it('should select right on the bottom-right corner', async () => {
-    const frame1 = getFrame(element1.id);
+    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id);
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, '100%', '100%'),
+      moveRel(frame1.node, '100%', '100%'),
       moveBy(20, 20),
       down(),
       moveBy(-22, -22, { steps: 5 }),
@@ -94,13 +88,13 @@ describe('Lasso integration', () => {
   });
 
   it('should select two elements', async () => {
-    const frame1 = getFrame(element1.id);
-    const frame2 = getFrame(element2.id);
+    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id);
+    const frame2 = fixture.editor.canvas.framesLayer.frame(element2.id);
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, '100%', '100%'),
+      moveRel(frame1.node, '100%', '100%'),
       moveBy(2, -2),
       down(),
-      moveRel(frame2, '100%', 0, { steps: 5 }),
+      moveRel(frame2.node, '100%', 0, { steps: 5 }),
       moveBy(-2, 2),
       up(),
     ]);

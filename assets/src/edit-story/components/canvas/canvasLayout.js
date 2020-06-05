@@ -21,6 +21,11 @@ import styled from 'styled-components';
 import { memo, useRef } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import EditLayer from './editLayer';
@@ -47,7 +52,12 @@ function CanvasLayout() {
   const layoutParamsCss = useLayoutParamsCssVars();
 
   return (
-    <Background ref={backgroundRef} style={layoutParamsCss}>
+    <Background
+      ref={backgroundRef}
+      style={layoutParamsCss}
+      role="region"
+      aria-label={__('Canvas', 'web-stories')}
+    >
       <CanvasUploadDropTarget>
         <CanvasElementDropzone>
           <SelectionCanvas>
