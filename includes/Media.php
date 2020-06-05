@@ -109,7 +109,7 @@ class Media {
 					'singular_name' => esc_html__( 'Source', 'web-stories' ),
 					'all_items'     => esc_html__( 'All Sources', 'web-stories' ),
 				],
-				'public'       => true,
+				'public'       => true, // TODO make hidden before merge. Public for testing.
 				'rewrite'      => false,
 				'hierarchical' => false,
 				'show_in_rest' => true,
@@ -233,6 +233,7 @@ class Media {
 			]
 		);
 
+		// Custom field, as built in term update require term id and not slug. 
 		register_rest_field(
 			'attachment',
 			'media_source',
