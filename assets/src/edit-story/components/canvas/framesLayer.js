@@ -89,6 +89,7 @@ function FramesLayer() {
       tabIndex="-1"
     >
       <FramesPageArea
+        showOverflow
         overlay={
           Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&
@@ -100,15 +101,17 @@ function FramesLayer() {
             </FrameSidebar>
           )
         }
+        fullbleed={<Selection />}
       >
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             return <FrameElement key={id} element={{ id, ...rest }} />;
           })}
-        <Selection />
       </FramesPageArea>
       <MenuArea
         pointerEvents="initial"
+        // Make its own stacking context.
+        zIndex={1}
         // Cancel lasso.
         onMouseDown={(evt) => evt.stopPropagation()}
       >
