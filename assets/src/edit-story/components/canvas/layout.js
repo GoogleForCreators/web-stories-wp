@@ -118,10 +118,8 @@ const PageAreaWithOverflow = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  padding-top: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
-  padding-bottom: calc(
-    (var(--fullbleed-height-px) - var(--page-height-px)) / 2
-  );
+  padding-top: var(--danger-zone-height-px);
+  padding-bottom: var(--danger-zone-height-px);
 `;
 
 const PageAreaSafeZone = styled.div`
@@ -140,7 +138,7 @@ const PageAreaDangerZone = styled.div`
   );
   opacity: 0.05;
   width: 100%;
-  height: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
+  height: var(--danger-zone-height-px);
   z-index: 1;
 `;
 
@@ -203,6 +201,9 @@ function useLayoutParamsCssVars() {
     '--page-height-px': `${pageSize.height}px`,
     '--fullbleed-width-px': `${pageSize.width}px`,
     '--fullbleed-height-px': `${pageSize.width / FULLBLEED_RATIO}px`,
+    '--danger-zone-height-px': `${
+      (pageSize.width / FULLBLEED_RATIO - pageSize.height) / 2
+    }px`,
   };
 }
 
