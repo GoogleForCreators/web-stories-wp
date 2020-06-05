@@ -54,6 +54,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
+  const [isFreshlyPublished, setIsFreshlyPublished] = useState(false);
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
@@ -73,6 +74,10 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           updateStory({ properties });
 
           refreshPostEditURL();
+
+          setIsFreshlyPublished(
+            story.status !== 'publish' && post.status === 'publish'
+          );
         })
         .catch(() => {
           showSnackbar({
@@ -97,7 +102,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     ]
   );
 
-  return { saveStory, isSaving };
+  return { saveStory, isSaving, isFreshlyPublished };
 }
 
 export default useSaveStory;
