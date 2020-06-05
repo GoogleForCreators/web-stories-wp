@@ -24,12 +24,12 @@ import { render, act } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import App from '../app/index';
-import APIProvider from '../app/api/apiProvider';
-import APIContext from '../app/api/context';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
-import Layout from '../app/layout';
-import FixtureEvents from './fixtureEvents';
+import App from '../../app/index';
+import APIProvider from '../../app/api/apiProvider';
+import APIContext from '../../app/api/context';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import Layout from '../../app/layout';
+import FixtureEvents from './events';
 import getMediaResponse from './db/getMediaResponse';
 
 const DEFAULT_CONFIG = {
