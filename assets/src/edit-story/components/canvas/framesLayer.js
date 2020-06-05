@@ -41,6 +41,7 @@ const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
     className: 'container web-stories-content',
     pointerEvents: 'initial',
+    showOverflow: true,
   })``
 );
 
@@ -89,7 +90,6 @@ function FramesLayer() {
       tabIndex="-1"
     >
       <FramesPageArea
-        showOverflow
         overlay={
           Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&
