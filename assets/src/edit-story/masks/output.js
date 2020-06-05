@@ -45,7 +45,7 @@ export default function WithMask({
   style,
   children,
   box,
-  skipDefaultMask = false,
+  skipDefaultMask,
   ...rest
 }) {
   const mask = getElementMask(element);
@@ -115,4 +115,8 @@ WithMask.propTypes = {
   children: PropTypes.node.isRequired,
   box: StoryPropTypes.box.isRequired,
   skipDefaultMask: PropTypes.bool,
+};
+
+WithMask.defaultProps = {
+  skipDefaultMask: false,
 };
