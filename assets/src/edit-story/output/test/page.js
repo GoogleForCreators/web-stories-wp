@@ -25,9 +25,38 @@ import { render } from '@testing-library/react';
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
+import { OverlayType } from '../../utils/backgroundOverlay';
 
 describe('Page output', () => {
   describe('aspect-ratio markup', () => {
+    let backgroundElement;
+
+    beforeEach(() => {
+      backgroundElement = {
+        isBackground: true,
+        id: 'baz',
+        type: 'image',
+        mimeType: 'image/png',
+        scale: 1,
+        origRatio: 9 / 16,
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+        loop: true,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          id: 123,
+          src: 'https://example.com/image.png',
+          poster: 'https://example.com/poster.png',
+          height: 1920,
+          width: 1080,
+        },
+      };
+    });
+
     it('should render a single layer with no background', () => {
       const props = {
         id: '123',
@@ -56,37 +85,13 @@ describe('Page output', () => {
       );
     });
 
-    it('should render the layer for background', () => {
+    it('should render the layer for background with overlay', () => {
       const props = {
         id: '123',
         backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
-          elements: [
-            {
-              isBackground: true,
-              id: 'baz',
-              type: 'image',
-              mimeType: 'image/png',
-              scale: 1,
-              origRatio: 9 / 16,
-              x: 50,
-              y: 100,
-              height: 1920,
-              width: 1080,
-              rotationAngle: 0,
-              loop: true,
-              resource: {
-                type: 'image',
-                mimeType: 'image/png',
-                id: 123,
-                src: 'https://example.com/image.png',
-                poster: 'https://example.com/poster.png',
-                height: 1920,
-                width: 1080,
-              },
-            },
-          ],
+          elements: [backgroundElement],
         },
         autoAdvance: false,
         defaultPageDuration: 7,
@@ -100,12 +105,43 @@ describe('Page output', () => {
         'aspect-ratio',
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
-      expect(bgLayer.firstElementChild.className).toStrictEqual(
+      expect(bgLayer.children).toHaveLength(1);
+      expect(bgLayer.children[0].className).toStrictEqual(
         'page-fullbleed-area'
       );
-      expect(
-        bgLayer.firstElementChild.firstElementChild.className
-      ).toStrictEqual('page-safe-area');
+      expect(bgLayer.children[0].children[0].className).toStrictEqual(
+        'page-safe-area'
+      );
+    });
+
+    it('should render the layer for background', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [backgroundElement],
+          backgroundOverlay: OverlayType.LINEAR,
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const layers = container.querySelectorAll('amp-story-grid-layer');
+      expect(layers).toHaveLength(2);
+      const bgLayer = layers[0];
+      expect(bgLayer).toHaveAttribute(
+        'aspect-ratio',
+        `${PAGE_WIDTH}:${PAGE_HEIGHT}`
+      );
+      expect(bgLayer.children).toHaveLength(2);
+      expect(bgLayer.children[0].className).toStrictEqual(
+        'page-fullbleed-area'
+      );
+      expect(bgLayer.children[1].className).toStrictEqual(
+        'page-fullbleed-area'
+      );
     });
   });
 

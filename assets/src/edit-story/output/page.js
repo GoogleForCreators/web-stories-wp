@@ -41,10 +41,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     backgroundSize: '20px 20px',
     backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
   };
-  const backgroundOverlayStyles =
-    backgroundOverlay && backgroundOverlay !== OverlayType.NONE
-      ? generateOverlayStyles(backgroundOverlay)
-      : null;
+  const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
   const backgroundElements = elements.filter((element) => element.isBackground);
   const regularElements = elements.filter((element) => !element.isBackground);
   const longestMediaElement = getLongestMediaElement(elements);
@@ -58,18 +55,16 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
-      {(backgroundElements.length > 0 || backgroundOverlayStyles) && (
+      {backgroundElements.length > 0 && (
         <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
-          {backgroundElements.length > 0 && (
-            <div className="page-fullbleed-area" style={backgroundStyles}>
-              <div className="page-safe-area">
-                {backgroundElements.map((element) => (
-                  <OutputElement key={'el-' + element.id} element={element} />
-                ))}
-              </div>
+          <div className="page-fullbleed-area" style={backgroundStyles}>
+            <div className="page-safe-area">
+              {backgroundElements.map((element) => (
+                <OutputElement key={'el-' + element.id} element={element} />
+              ))}
             </div>
-          )}
-          {backgroundOverlayStyles && (
+          </div>
+          {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
             <div
               className="page-fullbleed-area"
               style={{ ...backgroundOverlayStyles }}
