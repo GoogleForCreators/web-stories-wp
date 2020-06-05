@@ -33,7 +33,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { ReactComponent as PlayIcon } from '../../icons/play.svg';
 import { ReactComponent as PauseIcon } from '../../icons/pause.svg';
-import { useStory } from '../../app/story';
 import StoryPropTypes from '../../types';
 
 const PLAY_BUTTON_SIZE = 48;
@@ -107,10 +106,6 @@ function VideoControls({
   const [showControls, setShowControls] = useState(true);
   const [isPlaying, setIsPlaying] = useState(!isTransforming);
   const { id } = element;
-  const {
-    state: { selectedElementIds },
-  } = useStory();
-  const isElementSelected = selectedElementIds.includes(id);
   const getVideoNode = useCallback(
     () => document.getElementById(`video-${id}`),
     [id]
@@ -118,7 +113,7 @@ function VideoControls({
 
   useEffect(() => {
     const videoNode = getVideoNode();
-    if (!isElementSelected || isEditing) {
+    if (!isSelected || isEditing) {
       if (videoNode) {
         videoNode.pause();
         videoNode.currentTime = 0;
@@ -127,12 +122,12 @@ function VideoControls({
       setShowControls(true);
     }
     const syncTimer = setTimeout(() => {
-      if (isElementSelected && videoNode && !videoNode.paused) {
+      if (isSelected && videoNode && !videoNode.paused) {
         setIsPlaying(true);
       }
     }, 0);
     return () => clearTimeout(syncTimer);
-  }, [getVideoNode, id, isElementSelected, isEditing]);
+  }, [getVideoNode, id, isSelected, isEditing]);
 
   useEffect(() => {
     const videoNode = getVideoNode();
