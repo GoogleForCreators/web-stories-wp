@@ -20,6 +20,7 @@ import styled from 'styled-components';
 
 export default styled.div`
   position: absolute;
+  overflow: hidden;
   top: 0;
   right: 0;
   bottom: 0;
