@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { parse } from 'date-fns';
 
 /**
  * Internal dependencies
@@ -29,6 +33,7 @@ import getResourceSize from './getResourceSize';
 function getResourceFromAttachment(attachment) {
   const {
     id,
+    date,
     guid: { rendered: src },
     media_details: {
       width,
@@ -49,8 +54,10 @@ function getResourceFromAttachment(attachment) {
     },
     alt_text: alt,
   } = attachment;
+  const parsedDate = parse(date, "yyyy-LL-cc'T'HH:mm:ss", new Date());
   return createResource({
     mimeType,
+    uploadDate: parsedDate ? new Date(parsedDate) : null,
     src,
     ...getResourceSize(
       width,

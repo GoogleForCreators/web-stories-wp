@@ -62,6 +62,14 @@ const MetadataTextContainer = styled.div`
   flex-direction: column;
 `;
 
+const MediaDateText = styled.div`
+  font-family: ${({ theme }) => theme.fonts.date.family};
+  line-height: ${({ theme }) => theme.fonts.date.lineHeight};
+  font-size: ${({ theme }) => theme.fonts.date.size};
+  font-weight: ${({ theme }) => theme.fonts.date.weight};
+  color: ${({ theme }) => theme.colors.bg.v10};
+`;
+
 const MediaTitleText = styled.div`
   font-family: ${({ theme }) => theme.fonts.title.family};
   line-height: ${({ theme }) => theme.fonts.title.lineHeight};
@@ -126,6 +134,7 @@ function MediaEditDialog({ resource, onClose }) {
     id,
     src,
     title,
+    uploadDate,
     width,
     height,
     type,
@@ -184,6 +193,15 @@ function MediaEditDialog({ resource, onClose }) {
           </Video>
         )}
         <MetadataTextContainer>
+          <MediaDateText>
+            {__('Uploaded: ', 'web-stories') +
+              uploadDate.toLocaleDateString('en-US', {
+                // TODO(jo): get locale?
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+          </MediaDateText>
           <MediaTitleText>{title}</MediaTitleText>
           <MediaSizeText>
             {sprintf(

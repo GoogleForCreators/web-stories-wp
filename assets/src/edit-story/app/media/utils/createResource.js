@@ -29,6 +29,7 @@ import getTypeFromMime from './getTypeFromMime';
  * "video" values are allowed. If not specified, will be calculated from the
  * mime-type.
  * @property {string} mimeType The MIME type.
+ * @property {Date|null} uploadDate Upload date.
  * @property {string} src The source URL.
  * @property {number} width The natural resource width.
  * @property {number} height The natural resource height.
@@ -55,6 +56,7 @@ import getTypeFromMime from './getTypeFromMime';
 function createResource({
   type,
   mimeType,
+  uploadDate,
   src,
   width,
   height,
@@ -71,6 +73,7 @@ function createResource({
   return {
     type: type || getTypeFromMime(mimeType),
     mimeType,
+    uploadDate,
     src,
     width,
     height,
