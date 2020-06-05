@@ -47,9 +47,6 @@ function CustomStyles() {
                 bottom: 0;
                 left: 0;
                 right: 0;
-              }
-
-              .page-fullbleed-area > .page-safe-area {
                 width: 100%;
                 height: calc(${fullToSafeRatio} * 100%);
                 margin: auto 0;

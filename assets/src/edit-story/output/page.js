@@ -41,7 +41,10 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     backgroundSize: '20px 20px',
     backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
   };
-  const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
+  const backgroundOverlayStyles =
+    backgroundOverlay && backgroundOverlay !== OverlayType.NONE
+      ? generateOverlayStyles(backgroundOverlay)
+      : null;
   const backgroundElements = elements.filter((element) => element.isBackground);
   const regularElements = elements.filter((element) => !element.isBackground);
   const longestMediaElement = getLongestMediaElement(elements);
@@ -55,21 +58,27 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
-      <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
-        <div className="page-fullbleed-area" style={backgroundStyles}>
+      {(backgroundElements.length > 0 || backgroundOverlayStyles) && (
+        <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
           {backgroundElements.length > 0 && (
-            <div className="page-safe-area">
-              {backgroundElements.map((element) => (
-                <OutputElement key={'el-' + element.id} element={element} />
-              ))}
+            <div className="page-fullbleed-area" style={backgroundStyles}>
+              <div className="page-safe-area">
+                {backgroundElements.map((element) => (
+                  <OutputElement key={'el-' + element.id} element={element} />
+                ))}
+              </div>
             </div>
           )}
-          {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
+          {backgroundOverlayStyles && (
             <div
-              className="page-safe-area"
+              className="page-fullbleed-area"
               style={{ ...backgroundOverlayStyles }}
             />
           )}
+        </amp-story-grid-layer>
+      )}
+      <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+        <div className="page-fullbleed-area">
           <div className="page-safe-area">
             {regularElements.map((element) => (
               <OutputElement key={'el-' + element.id} element={element} />
