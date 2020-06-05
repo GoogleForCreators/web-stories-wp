@@ -103,9 +103,10 @@ class Admin {
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		if ( $post_id && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post_id ) && current_user_can( 'read_post', $post_id ) ) {
-			$url        = get_the_permalink( $post_id );
-			$title      = get_the_title( $post_id );
+			$url        = (string) get_the_permalink( $post_id );
+			$title      = (string) get_the_title( $post_id );
 			$has_poster = has_post_thumbnail( $post_id );
+
 			ob_start();
 
 			if ( $has_poster ) {
@@ -132,7 +133,8 @@ class Admin {
 				<!-- /wp:web-stories/embed -->
 				<?php
 			}
-			return ob_get_clean();
+
+			return (string) ob_get_clean();
 		}
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
