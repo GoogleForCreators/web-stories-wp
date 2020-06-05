@@ -18,12 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useInsertElement } from '../canvas';
+import isPointerClickEvent from '../../utils/isPointerClickEvent';
 import Context from './context';
 
 const MEDIA = 'media';
@@ -41,8 +42,15 @@ const TABS = {
 };
 
 function LibraryProvider({ children }) {
-  const [tab, setTab] = useState(MEDIA);
+  const [tab, setTabState] = useState(MEDIA);
   const insertElement = useInsertElement();
+
+  const setTab = useCallback((tabId, evt) => {
+    setTabState(tabId);
+    if (evt && isPointerClickEvent(evt)) {
+      evt.currentTarget.blur();
+    }
+  }, []);
 
   const state = useMemo(
     () => ({
@@ -57,7 +65,7 @@ function LibraryProvider({ children }) {
         tabs: TABS,
       },
     }),
-    [tab, insertElement]
+    [tab, insertElement, setTab]
   );
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

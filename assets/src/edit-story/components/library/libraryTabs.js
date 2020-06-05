@@ -68,7 +68,7 @@ function LibraryTabs() {
           key={id}
           id={getTabId(id)}
           isActive={tab === id}
-          onClick={() => setTab(id)}
+          onClick={(evt) => setTab(id, evt)}
         />
       ))}
     </Tabs>
