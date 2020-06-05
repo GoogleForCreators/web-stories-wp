@@ -20,15 +20,14 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+/**
  * Internal dependencies
  */
 import { ReactComponent as Close } from '../../../icons/close.svg';
 import { TextInput } from '../../form';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 const SearchField = styled.div`
   position: relative;
