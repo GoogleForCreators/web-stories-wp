@@ -35,7 +35,7 @@ export const defaultTemplatesState = {
   allPagesFetched: false,
   error: {},
   isLoading: false,
-  savedTemplate: {},
+  savedTemplates: {},
   savedTemplatesOrderById: [],
   templates: {},
   templatesOrderById: [],
