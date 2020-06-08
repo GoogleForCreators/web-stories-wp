@@ -111,6 +111,7 @@ function PublishTime() {
     },
     [showDatePicker, updateStory]
   );
+
   return (
     <>
       <Row>
@@ -140,14 +141,18 @@ function PublishTime() {
         anchor={dateFieldRef}
         isOpen={showDatePicker}
         placement={'bottom-end'}
-        maxHeight={350}
       >
-        <DateTime
-          value={date}
-          onChange={handleDateChange}
-          is12Hour={use12HourFormat}
-          forwardedRef={dateTimeNode}
-        />
+        {({ propagateDimensionChange }) => (
+          <DateTime
+            value={date}
+            onChange={(value, close = false) => {
+              handleDateChange(value, close);
+              propagateDimensionChange();
+            }}
+            is12Hour={use12HourFormat}
+            forwardedRef={dateTimeNode}
+          />
+        )}
       </Popup>
     </>
   );

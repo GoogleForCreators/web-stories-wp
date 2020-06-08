@@ -22,11 +22,9 @@ import 'react-calendar/dist/Calendar.css';
 import { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
-  border-top: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
 `;
 
 function DatePicker({ currentDate, onChange }) {
