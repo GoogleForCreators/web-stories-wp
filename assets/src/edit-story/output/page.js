@@ -25,21 +25,17 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
+import generatePatternStyles from '../utils/generatePatternStyles';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const { id, elements, backgroundOverlay } = page;
+  const { id, elements, backgroundOverlay, backgroundColor } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
-    backgroundImage: `linear-gradient(45deg, #999999 25%, transparent 25%),
-      linear-gradient(-45deg, #999999 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, #999999 75%),
-      linear-gradient(-45deg, transparent 75%, #999999 75%)`,
-    backgroundSize: '20px 20px',
-    backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+    ...generatePatternStyles(backgroundColor),
   };
   const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
   const backgroundElements = elements.filter((element) => element.isBackground);
