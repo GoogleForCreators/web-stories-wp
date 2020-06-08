@@ -31,10 +31,17 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
-import { Layer, PageArea } from './layout';
+import PageMenu from './pagemenu';
+import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
+
+const FramesPageArea = withOverlay(
+  styled(PageArea).attrs({
+    showOverflow: true,
+  })``
+);
 
 const FrameSidebar = styled.div`
   position: absolute;
@@ -57,8 +64,6 @@ const Hint = styled.div`
   text-align: right;
   background-color: ${({ theme }) => theme.colors.bg.v1};
 `;
-
-const FramesPageArea = withOverlay(PageArea);
 
 function FramesLayer() {
   const {
@@ -94,13 +99,22 @@ function FramesLayer() {
             </FrameSidebar>
           )
         }
+        fullbleed={<Selection />}
       >
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
             return <FrameElement key={id} element={{ id, ...rest }} />;
           })}
-        <Selection />
       </FramesPageArea>
+      <MenuArea
+        pointerEvents="initial"
+        // Make its own stacking context.
+        zIndex={1}
+        // Cancel lasso.
+        onMouseDown={(evt) => evt.stopPropagation()}
+      >
+        <PageMenu />
+      </MenuArea>
     </Layer>
   );
 }

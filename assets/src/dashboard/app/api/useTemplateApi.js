@@ -40,6 +40,7 @@ export function reshapeTemplateObject(isLocal) {
     createdBy,
     description,
     pages,
+    version,
   }) => ({
     isLocal,
     id,
@@ -51,8 +52,8 @@ export function reshapeTemplateObject(isLocal) {
     tags,
     colors,
     pages,
+    version,
     centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
-    bottomTargetAction: () => {},
   });
 }
 
@@ -62,10 +63,6 @@ const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
   const { assetsURL } = config;
-
-  const createStoryFromTemplatePages = useCallback((pages) => {
-    return Promise.resolve({ success: true, storyId: -1 });
-  }, []);
 
   const fetchSavedTemplates = useCallback((filters) => {
     // Saved Templates = Bookmarked Templates + My Templates
@@ -184,7 +181,6 @@ const useTemplateApi = (dataAdapter, config) => {
   const api = useMemo(
     () => ({
       bookmarkTemplateById,
-      createStoryFromTemplatePages,
       createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchExternalTemplates,
@@ -196,7 +192,6 @@ const useTemplateApi = (dataAdapter, config) => {
     }),
     [
       bookmarkTemplateById,
-      createStoryFromTemplatePages,
       createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,

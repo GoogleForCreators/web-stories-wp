@@ -170,16 +170,16 @@ function MediaPane(props) {
   /**
    * Handle search term changes.
    *
-   * @param {Object} evt Doc Event
+   * @param {string} value the new search term.
    */
-  const onSearch = (evt) => {
-    setSearchTerm({ searchTerm: evt.target.value });
+  const onSearch = (value) => {
+    setSearchTerm({ searchTerm: value });
   };
 
   /**
    * Filter REST API calls and re-request API.
    *
-   * @param {string} filter Value that is passed to rest api to filter.
+   * @param {string} value that is passed to rest api to filter.
    */
   const onFilter = useCallback(
     (filter) => () => {
