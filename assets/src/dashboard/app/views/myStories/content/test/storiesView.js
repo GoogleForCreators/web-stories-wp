@@ -80,6 +80,6 @@ describe('My Stories <StoriesView />', function () {
       />
     );
 
-    expect(getAllByTestId('grid-item')).toHaveLength(fakeStories.length);
+    expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
   });
 });

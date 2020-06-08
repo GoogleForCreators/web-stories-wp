@@ -38,7 +38,7 @@ import StoriesView from '../storiesView';
 import EmptyView from '../emptyView';
 
 export default {
-  title: 'Dashboard/Components/myStories/Content',
+  title: 'Dashboard/Views/MyStories/Content',
   component: Content,
 };
 

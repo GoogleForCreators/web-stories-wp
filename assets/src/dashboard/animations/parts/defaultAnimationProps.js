@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES, FIELD_TYPES } from '../constants';
+import { ANIMATION_TYPES, FIELD_TYPES, BEZIER } from '../constants';
 
 export default {
   id: {
@@ -42,6 +42,12 @@ export default {
     type: FIELD_TYPES.DROPDOWN,
     values: ['normal', 'reverse', 'alternate', 'alternate-reverse'],
     defaultValue: 'normal',
+  },
+  easingPreset: {
+    label: 'Easing Presets',
+    type: FIELD_TYPES.DROPDOWN,
+    values: Object.keys(BEZIER),
+    defaultValue: Object.keys(BEZIER)[0],
   },
   easing: {
     type: FIELD_TYPES.TEXT,

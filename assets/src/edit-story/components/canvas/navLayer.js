@@ -23,13 +23,11 @@ import { memo } from 'react';
  * Internal dependencies
  */
 import Header from '../header';
-import PageMenu from './pagemenu';
 import PageNav from './pagenav';
 import Carousel from './carousel';
 import {
   Layer,
   HeadArea,
-  MenuArea,
   NavPrevArea,
   NavNextArea,
   CarouselArea,
@@ -46,9 +44,6 @@ function NavLayer() {
       <HeadArea pointerEvents="initial">
         <Header />
       </HeadArea>
-      <MenuArea pointerEvents="initial">
-        <PageMenu />
-      </MenuArea>
       <NavPrevArea>
         <PageNav isNext={false} />
       </NavPrevArea>

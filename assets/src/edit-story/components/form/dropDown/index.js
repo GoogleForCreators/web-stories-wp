@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
+import { Dropdown as DropdownIcon } from '../../../icons';
 import Popup from '../../popup';
 import DropDownList from './list';
 
@@ -138,7 +138,7 @@ function DropDown({
         <DropDownTitle>
           {(activeItem && activeItem.name) || placeholder}
         </DropDownTitle>
-        <DropDownIcon />
+        <DropdownIcon />
       </DropDownSelect>
       <Popup
         anchor={selectRef}

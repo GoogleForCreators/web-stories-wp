@@ -46,6 +46,8 @@ function DropTargetsProvider({ children }) {
     state: { currentPage },
   } = useStory();
 
+  const elements = currentPage?.elements || [];
+
   const getDropTargetFromCursor = useCallback(
     (x, y, ignoreId = null) => {
       const underCursor = document.elementsFromPoint(x, y);
@@ -82,11 +84,27 @@ function DropTargetsProvider({ children }) {
         return;
       }
 
+      const newElement = getElementProperties(resource.type, {
+        resource,
+      });
+
+      const existingElement = elements.find(({ id }) => id === selfId);
+
+      // Get these attributes from the existing element (if exists and is non-null)
+      // or get defaults from a new element of the same type
+      const scale = existingElement?.scale ?? newElement.scale;
+      const focalX = existingElement?.focalX ?? newElement.focalX;
+      const focalY = existingElement?.focalY ?? newElement.focalY;
+      const flip = existingElement?.flip ?? newElement.flip;
+
       const dropTargetId = getDropTargetFromCursor(x, y, selfId);
 
       if (dropTargetId && dropTargetId !== activeDropTargetId) {
         pushTransform(dropTargetId, {
-          dropTargets: { active: true, replacement: resource },
+          dropTargets: {
+            active: true,
+            replacement: { resource, scale, focalX, focalY, flip },
+          },
         });
         if (selfId) {
           pushTransform(selfId, {
@@ -101,7 +119,7 @@ function DropTargetsProvider({ children }) {
         }
       }
       setActiveDropTargetId(dropTargetId);
-      (currentPage?.elements || [])
+      elements
         .filter(({ id }) => id !== dropTargetId)
         .forEach((el) =>
           pushTransform(el.id, {
@@ -109,12 +127,7 @@ function DropTargetsProvider({ children }) {
           })
         );
     },
-    [
-      activeDropTargetId,
-      currentPage?.elements,
-      getDropTargetFromCursor,
-      pushTransform,
-    ]
+    [activeDropTargetId, elements, getDropTargetFromCursor, pushTransform]
   );
 
   /**
@@ -147,7 +160,7 @@ function DropTargetsProvider({ children }) {
       combineElements(combineArgs);
 
       // Reset styles on visisble elements
-      (currentPage?.elements || [])
+      elements
         .filter(({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId)
         .forEach((el) => {
           pushTransform(el.id, {
@@ -160,13 +173,7 @@ function DropTargetsProvider({ children }) {
 
       setActiveDropTargetId(null);
     },
-    [
-      activeDropTargetId,
-      combineElements,
-      currentPage?.elements,
-      dropTargets,
-      pushTransform,
-    ]
+    [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
 
   const state = {
