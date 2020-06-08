@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { Plain } from '../button';
 import Dialog from '../dialog';
+import Link from '../link';
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
   return (
@@ -47,9 +48,9 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
     >
       <p>
         {__('Your story has been successfully published!', 'web-stories')}{' '}
-        <a href={storyURL} target="_blank" rel="noreferrer">
+        <Link href={storyURL} target="_blank" rel="noopener noreferrer">
           {__('View story.', 'web-stories')}
-        </a>
+        </Link>
       </p>
       <p>{__('Would you like to include it on a new post?', 'web-stories')}</p>
     </Dialog>
