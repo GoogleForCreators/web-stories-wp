@@ -88,23 +88,40 @@ describe('Multi-selection Movable integration', () => {
       expect(frame2.textContent).toEqual('Text B');
     });
 
+    async function getSelection() {
+      const storyContext = await fixture.renderHook(() => useStory());
+      return storyContext.state.selectedElementIds;
+    }
+
     describe('deleting element', () => {
       beforeEach(async () => {
         await clickOnTarget(fixture, frame1);
         await clickOnTarget(fixture, frame2, 'Shift');
       });
 
-      // @todo Needs DND logic for testing.
-      xit('should delete element that gets dragged out of the canvas to left while in multi-selection', async () => {
-        // @todo Drag the multi-selection to the left by 80 so that it leaves element1 out of canvas.
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([element2.id]);
+      it('should delete element that gets dragged out of the canvas to left while in multi-selection', async () => {
+        await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+          moveRel(frame1, 5, 5),
+          down(),
+          moveBy(-60, 0, {
+            steps: 6,
+          }),
+          up(),
+        ]);
+        expect(await getSelection()).toEqual([element2.id]);
       });
 
-      xit('should delete element that gets dragged out of the canvas to right while in multi-selection', async () => {
-        // @todo Drag the multi-selection to the right so that it leaves element2 out of canvas.
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([element1.id]);
+      it('should delete element that gets dragged out of the canvas to right while in multi-selection', async () => {
+        const safezone = fixture.querySelector('[data-testid="safezone"]');
+        await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+          moveRel(frame2, 5, 5),
+          down(),
+          moveBy(safezone.getBoundingClientRect().width - element1.width, 0, {
+            steps: 10,
+          }),
+          up(),
+        ]);
+        expect(await getSelection()).toEqual([element1.id]);
       });
     });
 
@@ -118,11 +135,7 @@ describe('Multi-selection Movable integration', () => {
       });
 
       it('should have multiple elements selected', async () => {
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([
-          element1.id,
-          element2.id,
-        ]);
+        expect(await getSelection()).toEqual([element1.id, element2.id]);
       });
 
       it('should select one element when clicking in multi-selection', async () => {
@@ -131,8 +144,7 @@ describe('Multi-selection Movable integration', () => {
           x + element1.x + 1,
           y + element1.y + 1
         );
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([element1.id]);
+        expect(await getSelection()).toEqual([element1.id]);
       });
 
       it('should select bg element when clicking out of the multi-selection', async () => {
@@ -148,15 +160,12 @@ describe('Multi-selection Movable integration', () => {
       it('should de-select all elements when clicking out of the page', async () => {
         const { x, y } = safezone.getBoundingClientRect();
         await fixture.events.mouse.click(x - 10, y - 10);
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([]);
+        expect(await getSelection()).toEqual([]);
       });
 
       it('should allow adding an element to selection in the middle of multi-selection', async () => {
         await clickOnTarget(fixture, frame3, 'Shift');
-
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([
+        expect(await getSelection()).toEqual([
           element1.id,
           element2.id,
           element3.id,
@@ -167,8 +176,7 @@ describe('Multi-selection Movable integration', () => {
         // Remove element2 from multi-selection.
         await clickOnTarget(fixture, frame2, 'Shift');
 
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([element1.id]);
+        expect(await getSelection()).toEqual([element1.id]);
       });
     });
   });
