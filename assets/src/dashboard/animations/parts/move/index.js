@@ -25,7 +25,14 @@ const defaults = {
   duration: 1000,
 };
 
-export function AnimationMove({ offsetX = 0, offsetY = 0, ...args }) {
+const defaultPx = (input) => (/\d$/.test(input) ? `${input}px` : input);
+
+export function AnimationMove({
+  overflowHidden = false,
+  offsetX = 0,
+  offsetY = 0,
+  ...args
+}) {
   const timings = {
     ...defaults,
     ...args,
@@ -33,13 +40,17 @@ export function AnimationMove({ offsetX = 0, offsetY = 0, ...args }) {
 
   const animationName = `x-${offsetX}-y-${offsetY}-${ANIMATION_TYPES.MOVE}`;
   const keyframes = {
-    transform: [`translate(${offsetX}px, ${offsetY}px)`, 'translate(0%, 0%)'],
+    transform: [
+      `translate(${defaultPx(offsetX)}, ${defaultPx(offsetY)})`,
+      'translate(0%, 0%)',
+    ],
   };
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,
     keyframes,
-    timings
+    timings,
+    overflowHidden
   );
 
   return {

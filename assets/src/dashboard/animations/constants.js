@@ -51,4 +51,5 @@ export const FIELD_TYPES = {
   NUMBER: 'number',
   FLOAT: 'float',
   TEXT: 'text',
+  CHECKBOX: 'checkbox',
 };
