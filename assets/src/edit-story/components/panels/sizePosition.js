@@ -182,21 +182,31 @@ function SizePositionPanel({
     [rotationAngle]
   );
 
-  usePresubmitHandler(
-    ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
-      let w = dataPixels(newWidth);
-      if (lockAspectRatio && oldHeight !== oldWidth) {
-        const ratio = oldWidth / oldHeight;
-        if (w * ratio >= MIN_MAX.WIDTH.MAX) {
-          w = MIN_MAX.WIDTH.MAX * ratio;
-        }
-        return {
-          width: setMinMax(w, MIN_MAX.WIDTH),
-        };
+  const setDimensionMinMax = useCallback(
+    (size, dimension, ratio, oldWidth, oldHeight) => {
+      if (
+        lockAspectRatio &&
+        oldHeight !== oldWidth &&
+        size * ratio >= dimension.MAX
+      ) {
+        return setMinMax(dimension.MAX * ratio, dimension);
       }
 
+      return setMinMax(size, dimension);
+    },
+    [lockAspectRatio]
+  );
+
+  usePresubmitHandler(
+    ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
       return {
-        width: setMinMax(w, MIN_MAX.WIDTH),
+        width: setDimensionMinMax(
+          dataPixels(newWidth),
+          MIN_MAX.WIDTH,
+          oldWidth / oldHeight,
+          oldWidth,
+          oldHeight
+        ),
       };
     },
     [width, lockAspectRatio]
@@ -204,19 +214,14 @@ function SizePositionPanel({
 
   usePresubmitHandler(
     ({ height: newHeight }, { width: oldWidth, height: oldHeight }) => {
-      let h = dataPixels(newHeight);
-      if (lockAspectRatio && oldHeight !== oldWidth) {
-        const ratio = oldHeight / oldWidth;
-        if (h * ratio > MIN_MAX.HEIGHT.MAX) {
-          h = MIN_MAX.HEIGHT.MAX * ratio;
-        }
-        return {
-          height: setMinMax(h, MIN_MAX.HEIGHT),
-        };
-      }
-
       return {
-        height: setMinMax(h, MIN_MAX.HEIGHT),
+        height: setDimensionMinMax(
+          dataPixels(newHeight),
+          MIN_MAX.HEIGHT,
+          oldHeight / oldWidth,
+          oldWidth,
+          oldHeight
+        ),
       };
     },
     [height, lockAspectRatio]
