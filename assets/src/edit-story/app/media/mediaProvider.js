@@ -32,7 +32,14 @@ import { getResourceFromAttachment } from './utils';
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
-  const { media, pagingNum, mediaType, searchTerm } = state;
+  const {
+    processing,
+    processed,
+    media,
+    pagingNum,
+    mediaType,
+    searchTerm,
+  } = state;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -42,6 +49,8 @@ function MediaProvider({ children }) {
     setMediaType,
     setSearchTerm,
     setNextPage,
+    setProcessing,
+    removeProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = actions;
@@ -83,6 +92,10 @@ function MediaProvider({ children }) {
   const { uploadMedia, isUploading } = useUploadMedia({ media, setMedia });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
+    setProcessing,
+    removeProcessing,
+    processing,
+    processed,
   });
 
   const {
@@ -106,25 +119,19 @@ function MediaProvider({ children }) {
     fetchMedia({ searchTerm, pagingNum, mediaType }, fetchMediaSuccess);
   }, [fetchMedia, fetchMediaSuccess, mediaType, pagingNum, searchTerm]);
 
-  const processing = useRef([]);
-  const processed = useRef([]);
   const uploadVideoPoster = useCallback(
     (id, src) => {
       const process = async () => {
-        if (processed.current.includes(id) || processing.current.includes(id)) {
+        if (processed.includes(id) || processing.includes(id)) {
           return;
         }
-        processing.current.push(id);
-        try {
-          await uploadVideoFrame(id, src);
-          processed.current.push(id);
-        } finally {
-          processing.current = processing.current.filter((e) => e !== id);
-        }
+        setProcessing({ id });
+        await uploadVideoFrame(id, src);
+        removeProcessing({ id });
       };
       process();
     },
-    [uploadVideoFrame]
+    [processed, processing, setProcessing, uploadVideoFrame, removeProcessing]
   );
 
   const processor = useCallback(
