@@ -15,7 +15,6 @@
  */
 function isTargetOutOfContainer(target, container) {
   const { left, right, top, bottom } = target.getBoundingClientRect();
-  // pageContainer ref is safe-zone, we're checking against the whole Page Area.
   const containerRect = container.getBoundingClientRect();
   return (
     left > containerRect.right ||
