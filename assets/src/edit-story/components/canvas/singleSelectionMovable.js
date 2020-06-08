@@ -51,7 +51,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     state: {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
-      pageContainer,
+      fullbleedContainer,
     },
   } = useCanvas();
   const {
@@ -171,7 +171,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
   const wasElementDeleted = (target) => {
-    if (isTargetOutOfContainer(target, pageContainer.parentNode)) {
+    if (isTargetOutOfContainer(target, fullbleedContainer)) {
       setIsDragging(false);
       setDraggingResource(null);
       deleteSelectedElements();

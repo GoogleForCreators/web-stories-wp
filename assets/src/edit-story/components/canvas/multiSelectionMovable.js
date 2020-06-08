@@ -42,17 +42,13 @@ function MultiSelectionMovable({ selectedElements }) {
   const eventTracker = useRef({});
 
   const {
-    actions: {
-      updateElementsById,
-      deleteElementsById,
-      removeElementFromSelection,
-    },
+    actions: { updateElementsById, deleteElementsById },
   } = useStory();
   const {
     state: {
       pageSize: { width: canvasWidth, height: canvasHeight },
       nodesById,
-      pageContainer,
+      fullbleedContainer,
     },
     actions: { handleSelectElement },
   } = useCanvas();
@@ -158,8 +154,7 @@ function MultiSelectionMovable({ selectedElements }) {
     const toRemove = [];
     targets.forEach((target, i) => {
       const { element, updateForResizeEvent } = targetList[i];
-      if (isTargetOutOfContainer(target, pageContainer.parentNode)) {
-        removeElementFromSelection({ elementId: element.id });
+      if (isTargetOutOfContainer(target, fullbleedContainer)) {
         toRemove.push(element.id);
         return;
       }
