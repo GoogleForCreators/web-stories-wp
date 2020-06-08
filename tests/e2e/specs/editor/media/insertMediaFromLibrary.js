@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../../utils';
+import { createNewStory } from '../../../utils';
 
 describe('Inserting Media from Media Library', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
