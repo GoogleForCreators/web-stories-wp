@@ -34,12 +34,12 @@ describe('Background Drop-Target integration', () => {
   });
 
   describe('when there is nothing on the canvas', () => {
-    it('should by default have white background', async () => {
+    it('should by default have transparent background', async () => {
       const bgElement = await getCanvasBackgroundElement(fixture);
       // Verify that it's empty
       expect(bgElement).toBeEmpty();
-      // And that background color is white:
-      expect(bgElement).toHaveStyle('backgroundColor', 'rgb(255, 255, 255)');
+      // And that background color is transparent:
+      expect(bgElement).toHaveStyle('backgroundColor', 'rgba(0, 0, 0, 0)');
     });
 
     // Disable reason: For unknown reasons this (dragging from library) doesn't
