@@ -125,10 +125,11 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function create_item( $request ) {
-		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ], 10, 2 );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		$response = parent::create_item( $request );
-		kses_init();
+		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		return $response;
 	}
 
@@ -139,10 +140,11 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function update_item( $request ) {
-		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ], 10, 2 );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		$response = parent::update_item( $request );
-		kses_init();
+		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		return $response;
 	}
 
@@ -178,4 +180,180 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		return $this->add_additional_fields_schema( $this->schema );
 	}
+
+	/**
+	 * Filter the allowed tags for KSES to allow for amp-story children.
+	 *
+	 * @param array|string $allowed_tags Allowed tags.
+	 *
+	 * @return array|string Allowed tags.
+	 */
+	public function filter_kses_allowed_html( $allowed_tags ) {
+		if ( ! is_array( $allowed_tags ) ) {
+			return $allowed_tags;
+		}
+
+		$story_components = [
+			'html'                      => [
+				'amp'  => true,
+				'lang' => true,
+			],
+			'head'                      => [],
+			'body'                      => [],
+			'meta'                      => [
+				'name'    => true,
+				'content' => true,
+				'charset' => true,
+			],
+			'script'                    => [
+				'async'          => true,
+				'src'            => true,
+				'custom-element' => true,
+			],
+			'noscript'                  => [],
+			'link'                      => [
+				'href' => true,
+				'rel'  => true,
+			],
+			'style'                     => [
+				'type'            => true,
+				'amp-boilerplate' => true,
+				'amp-custom'      => true,
+			],
+			'amp-story'                 => [
+				'background-audio'     => true,
+				'live-story'           => true,
+				'live-story-disabled'  => true,
+				'poster-landscape-src' => true,
+				'poster-portrait-src'  => true,
+				'poster-square-src'    => true,
+				'publisher'            => true,
+				'publisher-logo-src'   => true,
+				'standalone'           => true,
+				'supports-landscape'   => true,
+				'title'                => true,
+			],
+			'amp-story-page'            => [
+				'auto-advance-after' => true,
+				'background-audio'   => true,
+				'id'                 => true,
+			],
+			'amp-story-page-attachment' => [
+				'theme' => true,
+			],
+			'amp-story-grid-layer'      => [
+				'aspect-ratio' => true,
+				'position'     => true,
+				'template'     => true,
+			],
+			'amp-story-cta-layer'       => [],
+			'amp-img'                   => [
+				'alt'                       => true,
+				'attribution'               => true,
+				'data-amp-bind-alt'         => true,
+				'data-amp-bind-attribution' => true,
+				'data-amp-bind-src'         => true,
+				'data-amp-bind-srcset'      => true,
+				'lightbox'                  => true,
+				'lightbox-thumbnail-id'     => true,
+				'media'                     => true,
+				'noloading'                 => true,
+				'object-fit'                => true,
+				'object-position'           => true,
+				'placeholder'               => true,
+				'src'                       => true,
+				'srcset'                    => true,
+			],
+			'amp-video'                 => [
+				'album'                      => true,
+				'alt'                        => true,
+				'artist'                     => true,
+				'artwork'                    => true,
+				'attribution'                => true,
+				'autoplay'                   => true,
+				'controls'                   => true,
+				'controlslist'               => true,
+				'crossorigin'                => true,
+				'data-amp-bind-album'        => true,
+				'data-amp-bind-alt'          => true,
+				'data-amp-bind-artist'       => true,
+				'data-amp-bind-artwork'      => true,
+				'data-amp-bind-attribution'  => true,
+				'data-amp-bind-controls'     => true,
+				'data-amp-bind-controlslist' => true,
+				'data-amp-bind-loop'         => true,
+				'data-amp-bind-poster'       => true,
+				'data-amp-bind-preload'      => true,
+				'data-amp-bind-src'          => true,
+				'data-amp-bind-title'        => true,
+				'disableremoteplayback'      => true,
+				'dock'                       => true,
+				'lightbox'                   => true,
+				'lightbox-thumbnail-id'      => true,
+				'loop'                       => true,
+				'media'                      => true,
+				'muted'                      => true,
+				'noaudio'                    => true,
+				'noloading'                  => true,
+				'object-fit'                 => true,
+				'object-position'            => true,
+				'placeholder'                => true,
+				'poster'                     => true,
+				'preload'                    => true,
+				'rotate-to-fullscreen'       => true,
+				'src'                        => true,
+			],
+			'img'                       => [
+				'alt'           => true,
+				'attribution'   => true,
+				'border'        => true,
+				'decoding'      => true,
+				'height'        => true,
+				'importance'    => true,
+				'intrinsicsize' => true,
+				'ismap'         => true,
+				'loading'       => true,
+				'longdesc'      => true,
+				'sizes'         => true,
+				'src'           => true,
+				'srcset'        => true,
+				'srcwidth'      => true,
+			],
+		];
+
+		$allowed_tags = array_merge( $allowed_tags, $story_components );
+
+		foreach ( $allowed_tags as &$allowed_tag ) {
+			$allowed_tag['animate-in']          = true;
+			$allowed_tag['animate-in-duration'] = true;
+			$allowed_tag['animate-in-delay']    = true;
+			$allowed_tag['animate-in-after']    = true;
+			$allowed_tag['layout']              = true;
+		}
+
+		return $allowed_tags;
+	}
+
+	/**
+	 * Filters list of allowed CSS attributes.
+	 *
+	 * @param string[] $attr Array of allowed CSS attributes.
+	 * @return array Filtered list of allowed CSS attributes.
+	 */
+	public function filter_safe_style_css( $attr ) {
+		$allowed_in_stories = [
+			'top',
+			'right',
+			'bottom',
+			'left',
+			'opacity',
+			'white-space',
+			'font-family',
+		];
+
+		array_push( $attr, ...$allowed_in_stories );
+
+		return $attr;
+	}
+
 }
