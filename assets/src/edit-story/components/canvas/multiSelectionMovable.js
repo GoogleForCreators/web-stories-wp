@@ -40,19 +40,34 @@ function MultiSelectionMovable({ selectedElements }) {
 
   const eventTracker = useRef({});
 
+  const { updateElementsById } = useStory((state) => ({
+    updateElementsById: state.actions.updateElementsById,
+  }));
   const {
-    actions: { updateElementsById },
-  } = useStory();
-  const {
-    state: {
-      pageSize: { width: canvasWidth, height: canvasHeight },
+    canvasWidth,
+    canvasHeight,
+    nodesById,
+    handleSelectElement,
+  } = useCanvas(
+    ({
+      state: {
+        pageSize: { width: canvasWidth, height: canvasHeight },
+        nodesById,
+      },
+      actions: { handleSelectElement },
+    }) => ({
+      canvasWidth,
+      canvasHeight,
       nodesById,
-    },
-    actions: { handleSelectElement },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY, dataToEditorY },
-  } = useUnits();
+      handleSelectElement,
+    })
+  );
+  const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
+
   const {
     actions: { pushTransform },
   } = useTransform();
