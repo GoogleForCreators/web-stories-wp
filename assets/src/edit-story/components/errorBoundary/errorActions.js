@@ -37,8 +37,7 @@ function ErrorActions({ reRender }) {
   };
 
   const reload = () => {
-    // saveStory(); // save & reload doesn't make much sense?
-    setTimeout(() => (window.location = window.location), 0);
+    window.location.reload(true);
   };
 
   return (
