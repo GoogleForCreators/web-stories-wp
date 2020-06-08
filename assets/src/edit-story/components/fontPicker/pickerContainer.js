@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -68,6 +68,18 @@ const Divider = styled.hr`
   border-width: 1px 0 0;
 `;
 
+const SearchInput = styled.input`
+  margin: 8px;
+  padding: 4px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.colors.bg.v5};
+  font-size: ${({ theme }) => theme.fonts.input.size};
+  line-height: ${({ theme }) => theme.fonts.input.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.input.weight};
+  font-family: ${({ theme }) => theme.fonts.input.family};
+`;
+
 const Item = styled.div.attrs(({ fontFamily }) => ({
   style: {
     fontFamily,
@@ -116,6 +128,7 @@ function FontPickerContainer({ value, onSelect, onClose }) {
   } = useFont();
 
   const ref = useRef();
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const handleScroll = useCallback(
     (startIndex, endIndex) => {
@@ -137,8 +150,22 @@ function FontPickerContainer({ value, onSelect, onClose }) {
     fonts.findIndex(({ name }) => name === value)
   );
 
-  // This is static for now, but with search and used fonts, this will change later
-  const matchingFonts = fonts;
+  const matchingFonts = useMemo(() => {
+    if (searchKeyword.trim() === '') {
+      return fonts;
+    }
+    const _matchingFonts = fonts.filter(({ name }) =>
+      name.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+    if (_matchingFonts.length === 0) {
+      setCurrentOffset(-1);
+    }
+    return _matchingFonts;
+  }, [fonts, searchKeyword]);
+
+  const handleSearchInputChanged = useCallback(({ nativeEvent }) => {
+    setSearchKeyword(nativeEvent.target.value);
+  }, []);
 
   const handleKeyPress = useCallback(
     ({ nativeEvent: { code } }) => {
@@ -175,6 +202,11 @@ function FontPickerContainer({ value, onSelect, onClose }) {
 
   return (
     <PickerContainer ref={ref}>
+      <SearchInput
+        type="text"
+        value={searchKeyword}
+        onChange={handleSearchInputChanged}
+      />
       {matchingFonts.length ? (
         <List
           onKeyDown={handleKeyPress}
