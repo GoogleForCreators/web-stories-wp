@@ -29,11 +29,11 @@ import { Tabs, getPanes } from './panes';
 import { getTabId } from './panes/shared';
 
 function LibraryTabs() {
-  const {
-    state: { tab },
-    actions: { setTab },
-    data: { tabs },
-  } = useLibrary();
+  const { tab, setTab, tabs } = useLibrary((state) => ({
+    tab: state.state.tab,
+    setTab: state.actions.setTab,
+    tabs: state.data.tabs,
+  }));
   const { isRTL } = useConfig();
   const panes = useMemo(() => getPanes(tabs), [tabs]);
   const ref = useRef();

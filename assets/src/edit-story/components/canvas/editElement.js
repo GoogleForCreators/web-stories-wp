@@ -43,9 +43,9 @@ const Wrapper = styled.div`
 
 function EditElement({ element }) {
   const { id, type } = element;
-  const {
-    actions: { getBox },
-  } = useUnits();
+  const { getBox } = useUnits((state) => ({
+    getBox: state.actions.getBox,
+  }));
 
   const { Edit } = getDefinitionForType(type);
   const box = getBox(element);
