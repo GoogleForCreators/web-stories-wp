@@ -201,9 +201,10 @@ class Dashboard {
 					'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 					'version'      => WEBSTORIES_VERSION,
 					'api'          => [
-						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
-						'users'   => '/wp/v2/users',
-						'fonts'   => '/web-stories/v1/fonts',
+						'stories'   => sprintf( '/wp/v2/%s', $rest_base ),
+						'users'     => '/wp/v2/users',
+						'fonts'     => '/web-stories/v1/fonts',
+						'templates' => '/wp/v2/web-story-template',
 					],
 				],
 				'flags'  => [

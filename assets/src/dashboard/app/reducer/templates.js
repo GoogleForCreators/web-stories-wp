@@ -24,6 +24,8 @@ export const ACTION_TYPES = {
   LOADING_TEMPLATES: 'loading_templates',
   FETCH_TEMPLATES_SUCCESS: 'fetch_templates_success',
   FETCH_TEMPLATES_FAILURE: 'fetch_templates_failure',
+  FETCH_MY_TEMPLATES_SUCCESS: 'fetch_my_templates_success',
+  FETCH_MY_TEMPLATES_FAILURE: 'fetch_my_templates_failure',
   PLACEHOLDER: 'placeholder',
 };
 
@@ -31,6 +33,8 @@ export const defaultTemplatesState = {
   allPagesFetched: false,
   isError: false,
   isLoading: false,
+  savedTemplate: {},
+  savedTemplatesOrderById: [],
   templates: {},
   templatesOrderById: [],
   totalTemplates: null,
@@ -48,11 +52,45 @@ function templateReducer(state, action) {
         isLoading: action.payload,
       };
     }
+
+    case ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE:
     case ACTION_TYPES.FETCH_TEMPLATES_FAILURE:
       return {
         ...state,
         isError: action.payload,
       };
+
+    case ACTION_TYPES.FETCH_MY_TEMPLATES_SUCCESS: {
+      const fetchedTemplatesById = action.payload.savedTemplates.map(
+        ({ id }) => id
+      );
+
+      const combinedTemplateIds =
+        action.payload.page === 1
+          ? fetchedTemplatesById
+          : [...state.savedTemplatesById, ...fetchedTemplatesById];
+
+      // we want to make sure that pagination is kept intact regardless of page number.
+      // we are using infinite scroll, not traditional pagination.
+      // this means we need to append our new templates to the bottom of our already existing templates.
+      // when we combine existing templates with the new ones we need to make sure we're not duplicating anything.
+      const uniqueTemplateIds = combinedTemplateIds.filter(
+        (templateId, index, templateIdsArray) => {
+          return templateIdsArray.indexOf(templateId) === index;
+        }
+      );
+
+      return {
+        ...state,
+        savedTemplates: {
+          ...state.savedTemplates,
+          ...groupBy(action.payload.savedTemplates, 'id'),
+        },
+        savedTemplatesOrderById: uniqueTemplateIds,
+        page: action.payload.page,
+        totalPages: action.payload.totalPages,
+      };
+    }
 
     case ACTION_TYPES.FETCH_TEMPLATES_SUCCESS: {
       const fetchedTemplatesById = action.payload.templates.map(({ id }) => id);

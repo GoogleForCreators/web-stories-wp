@@ -41,6 +41,7 @@ export default function ApiProvider({ children }) {
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
     assetsURL,
+    wpApi: api.templates,
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
