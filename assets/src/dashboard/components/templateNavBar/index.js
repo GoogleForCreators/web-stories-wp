@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -75,7 +76,7 @@ const CloseLink = styled.a`
   `}
 `;
 
-export function TemplateNavBar() {
+export function TemplateNavBar({ handleCta }) {
   return (
     <Nav>
       <Container>
@@ -83,10 +84,14 @@ export function TemplateNavBar() {
       </Container>
       <Container>
         <BookmarkToggle />
-        <Button type={BUTTON_TYPES.CTA} href={'#'} isLink={true}>
+        <Button type={BUTTON_TYPES.CTA} onClick={handleCta}>
           {__('USE TEMPLATE', 'web-stories')}
         </Button>
       </Container>
     </Nav>
   );
 }
+
+TemplateNavBar.propTypes = {
+  handleCta: PropTypes.func.isRequired,
+};

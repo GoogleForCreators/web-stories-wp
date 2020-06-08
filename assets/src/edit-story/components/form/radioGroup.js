@@ -26,8 +26,7 @@ import { useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Selected } from '../../icons/radio-selected.svg';
-import { ReactComponent as UnSelected } from '../../icons/radio.svg';
+import { Radio as Selected, RadioSelected as UnSelected } from '../../icons';
 
 const RadioButton = styled.label`
   display: block;

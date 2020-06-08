@@ -32,6 +32,7 @@ const fakeStories = [
     pages: [{ id: '10' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
   {
     id: 2,
@@ -40,6 +41,7 @@ const fakeStories = [
     pages: [{ id: '20' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
   {
     id: 3,
@@ -48,6 +50,7 @@ const fakeStories = [
     pages: [{ id: '30' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
 ];
 
@@ -86,7 +89,7 @@ describe('My Stories <Content />', function () {
       </LayoutProvider>
     );
 
-    expect(getAllByTestId('grid-item')).toHaveLength(fakeStories.length);
+    expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
   });
 
   it('should show "Create a story to get started!" if no stories are present.', function () {

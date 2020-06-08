@@ -35,12 +35,13 @@ import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
 import { generateOverlayStyles } from '../../utils/backgroundOverlay';
+import StoryAnimation from '../../../dashboard/components/storyAnimation';
 
 const Wrapper = styled.div`
-	${elementWithPosition}
-	${elementWithSize}
-	${elementWithRotation}
-	contain: layout paint;
+  ${elementWithPosition}
+  ${elementWithSize}
+  ${elementWithRotation}
+  contain: layout paint;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 
@@ -51,13 +52,29 @@ const BackgroundOverlay = styled.div`
   top: 0;
   left: 0;
 `;
+
 const ReplacementContainer = styled.div`
   transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
   pointer-events: none;
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
 `;
 
-function DisplayElement({ element, previewMode, page }) {
+function AnimationWrapper({ children, id, isAnimatable }) {
+  return isAnimatable ? (
+    <StoryAnimation.WAAPIWrapper target={id}>
+      {children}
+    </StoryAnimation.WAAPIWrapper>
+  ) : (
+    children
+  );
+}
+AnimationWrapper.propTypes = {
+  isAnimatable: PropTypes.bool.isRequired,
+  children: PropTypes.arrayOf(PropTypes.node),
+  id: PropTypes.string,
+};
+
+function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
   const {
     actions: { getBox },
   } = useUnits();
@@ -67,19 +84,19 @@ function DisplayElement({ element, previewMode, page }) {
   const replacementElement = replacement
     ? {
         ...element,
-        type: replacement.type,
-        resource: replacement,
-        scale: element.scale || 100,
-        focalX: element.focalX || 50,
-        focalY: element.focalY || 50,
-        isFill: element.isFill || false,
+        type: replacement.resource.type,
+        resource: replacement.resource,
+        scale: replacement.scale,
+        focalX: replacement.focalX,
+        focalY: replacement.focalY,
+        flip: replacement.flip,
       }
     : null;
 
   const { id, opacity, type, isBackground } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
-    getDefinitionForType(replacement?.type) || {};
+    getDefinitionForType(replacement?.resource.type) || {};
 
   const wrapperRef = useRef(null);
 
@@ -109,29 +126,41 @@ function DisplayElement({ element, previewMode, page }) {
 
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
-      <WithMask
-        element={element}
-        fill={true}
-        box={box}
-        style={{
-          opacity: opacity ? opacity / 100 : null,
-        }}
-        previewMode={previewMode}
-      >
-        <Display element={element} previewMode={previewMode} box={box} />
+      <AnimationWrapper id={id} isAnimatable={isAnimatable}>
+        <WithMask
+          element={element}
+          fill={true}
+          box={box}
+          style={{
+            opacity: opacity ? opacity / 100 : null,
+          }}
+          previewMode={previewMode}
+        >
+          <Display element={element} previewMode={previewMode} box={box} />
+        </WithMask>
         {!previewMode && (
           <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
             {replacementElement && (
-              <Replacement element={replacementElement} box={box} />
+              <WithMask
+                element={replacementElement}
+                fill={true}
+                box={box}
+                style={{
+                  opacity: opacity ? opacity / 100 : null,
+                }}
+                previewMode={previewMode}
+              >
+                <Replacement element={replacementElement} box={box} />
+              </WithMask>
             )}
           </ReplacementContainer>
         )}
-      </WithMask>
-      {Boolean(isBackground) && Boolean(page?.backgroundOverlay) && (
-        <BackgroundOverlay
-          style={generateOverlayStyles(page?.backgroundOverlay)}
-        />
-      )}
+        {Boolean(isBackground) && Boolean(page?.backgroundOverlay) && (
+          <BackgroundOverlay
+            style={generateOverlayStyles(page?.backgroundOverlay)}
+          />
+        )}
+      </AnimationWrapper>
     </Wrapper>
   );
 }
@@ -140,6 +169,7 @@ DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
   page: StoryPropTypes.page,
+  isAnimatable: PropTypes.bool,
 };
 
 export default DisplayElement;

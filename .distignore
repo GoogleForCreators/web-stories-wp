@@ -3,11 +3,13 @@
 .idea
 .storybook
 __mocks__
+__static__
 assets/src
 assets/testjs
 bin
 build
 docs
+karma
 node_modules
 patches
 tests
@@ -46,3 +48,5 @@ phpstan.neon.dist
 phpunit.xml.dist
 README.md
 webpack.config.cjs
+webpack.config.test.cjs
+assets/images/templates

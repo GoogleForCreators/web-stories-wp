@@ -109,7 +109,6 @@ function getElementProperties(
     scale = 100,
     focalX = 50,
     focalY = 50,
-    isFill = false,
     ...rest
   }
 ) {
@@ -191,7 +190,6 @@ function getElementProperties(
     scale,
     focalX,
     focalY,
-    isFill,
     ...(isMaskable
       ? {
           mask: mask || DEFAULT_MASK,

@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ReactComponent as CloseIconBase } from '../../../../icons/close.svg';
+import { Close as CloseIconBase } from '../../../../icons';
 
 export const Container = styled.div`
   display: flex;
@@ -32,12 +32,39 @@ export const Container = styled.div`
 
 export const AnimationList = styled.div(
   ({ theme }) => `
+    position: relative;
     width: 100%;
     height: 100%;
     overflow: scroll;
     background-color: ${theme.colors.gray25};
   `
 );
+
+export const ScrubBarContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 90px;
+  z-index: 10;
+  pointer-events: none;
+`;
+
+export const ScrubBar = styled.div`
+  position: absolute;
+  background-color: red;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: ${({ width }) => width}px;
+  z-index: 10;
+  transform-origin: 0% 0%;
+  pointer-events: auto;
+  cursor: ${({ isDragging }) => (isDragging ? 'grabbing' : 'grab')};
+  opacity: ${({ opacity }) => opacity};
+  transform: translateX(calc(var(--scrub-offset, 0) * 1px));
+  transition: opacity 0.2s linear;
+`;
 
 export const DeleteButton = styled.button`
   display: flex;
@@ -64,12 +91,11 @@ export const LabelButton = styled.button(
     cursor: pointer;
 
     ${
-      isActive
-        ? `
-      color: ${theme.colors.bluePrimary};
-      font-weight: 700;
-    `
-        : ``
+      isActive &&
+      `
+        color: ${theme.colors.bluePrimary};
+        font-weight: 700;
+      `
     }
   `
 );
@@ -80,7 +106,7 @@ export const CancelButton = styled.button`
 
 export const AnimationPanel = styled.div`
   padding: 20px;
-  width: 350px;
+  width: 400px;
   height: 100%;
   overflow: scroll;
 `;
@@ -90,6 +116,10 @@ export const FormField = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-bottom: 10px;
+
+  > label {
+    text-transform: capitalize;
+  }
 `;
 
 export const TimelineAnimation = styled.div(

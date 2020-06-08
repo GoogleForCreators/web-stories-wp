@@ -74,6 +74,10 @@ export const updateMediaElement = (dispatch) => ({ id, ...properties }) => {
   });
 };
 
+export const deleteMediaElement = (dispatch) => ({ id }) => {
+  dispatch({ type: types.DELETE_MEDIA_ELEMENT, payload: { id } });
+};
+
 export const setMedia = (dispatch) => ({ media }) => {
   dispatch({
     type: types.SET_MEDIA,

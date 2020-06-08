@@ -19,6 +19,7 @@
  */
 import { useCallback } from 'react';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -93,7 +94,7 @@ function PublishPanel() {
     [updateStory]
   );
 
-  const authorLabel = __('Author', 'web-stories');
+  const authorLabelId = `author-label-${uuidv4()}`;
   return (
     <Panel name="publishing">
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
@@ -101,17 +102,19 @@ function PublishPanel() {
         <PublishTime />
         {capabilities && capabilities.hasAssignAuthorAction && users && (
           <Row>
-            <FieldLabel>{authorLabel}</FieldLabel>
+            <FieldLabel id={authorLabelId}>
+              {__('Author', 'web-stories')}
+            </FieldLabel>
             {isUsersLoading ? (
               <DropDown
-                ariaLabel={authorLabel}
+                aria-labelledby={authorLabelId}
                 placeholder={__('Loading…', 'web-stories')}
                 disabled
                 lightMode={true}
               />
             ) : (
               <DropDown
-                ariaLabel={authorLabel}
+                aria-labelledby={authorLabelId}
                 options={users}
                 value={author}
                 disabled={isSaving}
@@ -135,6 +138,7 @@ function PublishPanel() {
               buttonInsertText={__('Select as publisher logo', 'web-stories')}
               type={'image'}
               size={80}
+              ariaLabel={__('Edit: Publisher logo', 'web-stories')}
             />
           </MediaWrapper>
         </Row>
@@ -150,6 +154,7 @@ function PublishPanel() {
               title={__('Select as cover image', 'web-stories')}
               buttonInsertText={__('Select as cover image', 'web-stories')}
               type={'image'}
+              ariaLabel={__('Edit: Cover image', 'web-stories')}
             />
           </MediaWrapper>
         </Row>

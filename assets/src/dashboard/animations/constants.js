@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+export { BEZIER } from '../constants';
+
 export const ANIMATION_TYPES = {
   BLINK_ON: 'blinkOn',
   BOUNCE: 'bounce',
@@ -41,4 +43,12 @@ export const DIRECTION = {
 export const AXIS = {
   X: 'x',
   Y: 'y',
+};
+
+export const FIELD_TYPES = {
+  DROPDOWN: 'dropdown',
+  HIDDEN: 'hidden',
+  NUMBER: 'number',
+  FLOAT: 'float',
+  TEXT: 'text',
 };

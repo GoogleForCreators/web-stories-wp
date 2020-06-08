@@ -38,8 +38,6 @@ jest.mock('../wpAdapter', () => ({
           {
             id: 123,
             status: 'published',
-            tags: [1, 2, 3],
-            categories: [4, 5, 6],
             author: 1,
             title: { rendered: 'Carlos', raw: 'Carlos' },
             story_data: { pages: [{ id: 1, elements: [] }] },
@@ -54,8 +52,6 @@ jest.mock('../wpAdapter', () => ({
       id: data.id || 456,
       status: 'published',
       title: { rendered: title, raw: title },
-      tags: [1, 2, 3],
-      categories: [4, 5, 6],
       author: 1,
       story_data: { pages: [{ id: 1, elements: [] }] },
       modified: '1970-01-01T00:00:00.000Z',
@@ -94,19 +90,16 @@ describe('ApiProvider', () => {
       '123': {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
+        editStoryLink: 'editStory&post=123',
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
         created: moment('1970-01-01T00:00:00.000Z'),
-        tags: [1, 2, 3],
-        categories: [4, 5, 6],
         author: 1,
         originalStoryData: {
           id: 123,
           modified: '1970-01-01T00:00:00.000Z',
           date: '1970-01-01T00:00:00.000Z',
           status: 'published',
-          tags: [1, 2, 3],
-          categories: [4, 5, 6],
           author: 1,
           story_data: {
             pages: [
@@ -168,19 +161,16 @@ describe('ApiProvider', () => {
       '123': {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
+        editStoryLink: 'editStory&post=123',
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
         created: moment('1970-01-01T00:00:00.000Z'),
-        tags: [1, 2, 3],
-        categories: [4, 5, 6],
         author: 1,
         originalStoryData: {
           id: 123,
           modified: '1970-01-01T00:00:00.000Z',
           date: '1970-01-01T00:00:00.000Z',
           status: 'published',
-          tags: [1, 2, 3],
-          categories: [4, 5, 6],
           author: 1,
           story_data: {
             pages: [
@@ -233,13 +223,9 @@ describe('ApiProvider', () => {
         ],
         status: 'published',
         title: 'Carlos',
-        tags: [1, 2, 3],
-        categories: [4, 5, 6],
         author: 1,
         originalStoryData: {
           story_data: {
-            tags: [1, 2, 3],
-            categories: [4, 5, 6],
             author: 1,
             pages: [
               {
@@ -259,19 +245,16 @@ describe('ApiProvider', () => {
       '123': {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
+        editStoryLink: 'editStory&post=123',
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
         created: moment('1970-01-01T00:00:00.000Z'),
-        tags: [1, 2, 3],
-        categories: [4, 5, 6],
         author: 1,
         originalStoryData: {
           id: 123,
           modified: '1970-01-01T00:00:00.000Z',
           date: '1970-01-01T00:00:00.000Z',
           status: 'published',
-          tags: [1, 2, 3],
-          categories: [4, 5, 6],
           author: 1,
           story_data: {
             pages: [
@@ -298,19 +281,16 @@ describe('ApiProvider', () => {
       '456': {
         bottomTargetAction: 'editStory&post=456',
         centerTargetAction: '',
+        editStoryLink: 'editStory&post=456',
         id: 456,
         modified: moment('1970-01-01T00:00:00.000Z'),
         created: moment('1970-01-01T00:00:00.000Z'),
-        tags: [1, 2, 3],
-        categories: [4, 5, 6],
         author: 1,
         originalStoryData: {
           id: 456,
           modified: '1970-01-01T00:00:00.000Z',
           date: '1970-01-01T00:00:00.000Z',
           status: 'published',
-          tags: [1, 2, 3],
-          categories: [4, 5, 6],
           author: 1,
           story_data: {
             pages: [

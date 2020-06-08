@@ -30,13 +30,15 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { useStory, useHistory, useConfig } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
-import { ReactComponent as Delete } from '../../../icons/delete_icon.svg';
-import { ReactComponent as Duplicate } from '../../../icons/duplicate_icon.svg';
-import { ReactComponent as LeftArrow } from '../../../icons/undo_icon.svg';
-import { ReactComponent as RightArrow } from '../../../icons/redo_icon.svg';
-import { ReactComponent as Add } from '../../../icons/add_page.svg';
-import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
-import { ReactComponent as Text } from '../../../icons/text_helper.svg';
+import {
+  Delete,
+  Duplicate,
+  UndoAlt as LeftArrow,
+  RedoAlt as RightArrow,
+  AddPage,
+  LayoutHelper,
+  Text,
+} from '../../../icons';
 import WithTooltip from '../../tooltip';
 import useCanvas from '../useCanvas';
 
@@ -179,7 +181,7 @@ function PageMenu() {
               onClick={handleAddPage}
               aria-label={__('Add New Page', 'web-stories')}
             >
-              <Add />
+              <AddPage />
             </Icon>
           </WithTooltip>
           <Space />
@@ -207,7 +209,7 @@ function PageMenu() {
         </Options>
         <Options>
           <Icon disabled>
-            <Layout />
+            <LayoutHelper />
           </Icon>
           <Space isDouble />
           <Icon disabled>

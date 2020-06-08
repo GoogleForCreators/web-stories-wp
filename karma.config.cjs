@@ -17,19 +17,9 @@
 'use strict';
 
 /**
- * External dependencies
- */
-const path = require('path');
-
-/**
- * WordPress dependencies
- */
-const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
-
-/**
  * Internal dependencies
  */
-const webpackConfigArray = require('./webpack.config');
+const webpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -38,19 +28,25 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-sourcemap-loader',
       'karma-webpack',
-      require('./karma/karma-puppeteer-launcher'),
-      require('./karma/karma-puppeteer-client'),
+      require('./karma/karma-puppeteer-launcher/index.cjs'),
+      require('./karma/karma-puppeteer-client/index.cjs'),
     ],
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine', 'karma-puppeteer-client'],
 
-    // Base path that will be used to resolve all patterns (eg. files, exclude).
-    basePath: 'assets/src/edit-story',
-
     // list of files / patterns to load in the browser
-    files: [{ pattern: '**/karma/**/*.js', watched: false }],
+    files: [
+      { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
+      {
+        pattern: '__static__/**/*',
+        watched: false,
+        included: false,
+        served: true,
+        nocache: false,
+      },
+    ],
 
     // list of files / patterns to exclude
     exclude: ['**/test/**/*.js'],
@@ -58,28 +54,14 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/karma/**/*.js': ['webpack', 'sourcemap'],
+      'assets/src/edit-story/**/karma/**/*.js': ['webpack', 'sourcemap'],
     },
 
-    webpack: webpackConfigArray
-      .filter((webpackConfig) => 'edit-story' in webpackConfig.entry)
-      .map((webpackConfig) => ({
-        ...webpackConfig,
-        // Karma watches the test entry points, so we don't need to specify
-        // them here. Webpack watches dependencies.
-        entry: null,
-        mode: 'development',
-        devtool: 'inline-source-map',
-        output: {
-          ...webpackConfig.output,
-          path: path.resolve(process.cwd(), 'assets', 'testjs'),
-        },
-        // WP's DependencyExtractionWebpackPlugin is not needed for tests and
-        // otherwise has some failures.
-        plugins: webpackConfig.plugins.filter(
-          (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
-        ),
-      }))[0],
+    proxies: {
+      '/__static__/': '/base/__static__/',
+    },
+
+    webpack: webpackConfig,
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
@@ -113,7 +95,13 @@ module.exports = function (config) {
       puppeteer: {
         headless: config.headless || false,
         slowMo: config.slowMo || 0,
+        devtools: config.devtools || false,
         snapshots: config.snapshots || false,
+        // @todo: consider testing on a couple of canonical viewport sizes.
+        // Per Figma, the canonical sizes are:
+        // Desktop: 1920:1080
+        // iPad: 1024:680
+        defaultViewport: null,
       },
     },
 
@@ -124,5 +112,8 @@ module.exports = function (config) {
     // Concurrency level
     // how many browsers should be started simultaneously
     concurrency: Infinity,
+
+    // Allow not having any tests
+    failOnEmptyTestSuite: false,
   });
 };

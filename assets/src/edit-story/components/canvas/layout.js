@@ -54,12 +54,7 @@ export const COMPACT_THUMB_WIDTH = 72;
 export const COMPACT_THUMB_HEIGHT = 8;
 
 const MAX_CAROUSEL_THUMB_HEIGHT = 128;
-// @todo: UX needed for min thumb size
-export const MIN_CAROUSEL_THUMB_HEIGHT = MAX_CAROUSEL_THUMB_HEIGHT / 3;
-
-// Below this available height switch to Compact mode.
-export const COMPACT_CAROUSEL_BREAKPOINT =
-  MIN_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
+export const MIN_CAROUSEL_THUMB_HEIGHT = 52;
 
 const MIN_CAROUSEL_HEIGHT =
   COMPACT_CAROUSEL_VERTICAL_PADDING * 2 + COMPACT_THUMB_HEIGHT;
@@ -104,6 +99,7 @@ const Area = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  ${({ zIndex }) => (zIndex !== undefined ? `z-index: ${zIndex}` : null)};
 `;
 
 // Page area is not `overflow:hidden` by default to allow different clipping
@@ -117,8 +113,9 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   align-items: center;
 `;
 
-const PageAreaOverflowHidden = styled.div`
-  overflow: hidden;
+// Overflow is not hidden for media edit layer.
+const PageAreaWithOverflow = styled.div`
+  overflow: ${({ showOverflow }) => (showOverflow ? 'initial' : 'hidden')};
   position: relative;
   width: 100%;
   height: 100%;
@@ -213,12 +210,19 @@ function useLayoutParamsCssVars() {
 
 const PageArea = forwardRef(
   (
-    { children, showDangerZone, fullbleedRef = createRef(), overlay = [] },
+    {
+      children,
+      showDangerZone,
+      showOverflow = false,
+      fullbleedRef = createRef(),
+      overlay = [],
+      fullbleed = [],
+    },
     ref
   ) => {
     return (
       <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
-        <PageAreaOverflowHidden>
+        <PageAreaWithOverflow showOverflow={showOverflow}>
           <PageAreaSafeZone ref={ref} data-testid="safezone">
             {children}
           </PageAreaSafeZone>
@@ -228,7 +232,8 @@ const PageArea = forwardRef(
               <PageAreaDangerZoneBottom />
             </>
           )}
-        </PageAreaOverflowHidden>
+          {fullbleed}
+        </PageAreaWithOverflow>
         {overlay}
       </PageAreaFullbleedContainer>
     );
@@ -238,7 +243,9 @@ const PageArea = forwardRef(
 PageArea.propTypes = {
   children: PropTypes.node,
   overlay: PropTypes.node,
+  fullbleed: PropTypes.node,
   showDangerZone: PropTypes.bool,
+  showOverflow: PropTypes.bool,
 };
 
 export {

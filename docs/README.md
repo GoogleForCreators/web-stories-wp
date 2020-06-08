@@ -15,6 +15,7 @@
 * [Development Tools](./devtools.md)
 * [Feature Flags](./feature-flags.md)
 * [Design Docs](./design-docs.md)
+* [External Template Creation](./external-template-creation.md)
 
 ## Testing
 

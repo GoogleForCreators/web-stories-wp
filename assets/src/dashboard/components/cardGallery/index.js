@@ -17,20 +17,20 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
-
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../../constants/pageStructure';
 import { UnitsProvider } from '../../../edit-story/units';
+import { PAGE_RATIO, STORY_PAGE_STATE } from '../../constants';
+import { StoryPropType } from '../../types';
+import PreviewPage from '../previewPage';
 import {
   ActiveCard,
   GalleryContainer,
+  MiniCard,
   MiniCardsContainer,
   MiniCardWrapper,
-  MiniCard,
 } from './components';
 
 const MAX_WIDTH = 680;
@@ -39,52 +39,41 @@ const MINI_CARD_WIDTH = 75;
 const CARD_GAP = 15;
 const CARD_WRAPPER_BUFFER = 12;
 
-function CardGallery({ children }) {
-  const [dimensionMultiplier, setDimensionMultiplier] = useState(1);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
-
+function CardGallery({ story }) {
+  const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
+  const [activePageIndex, setActivePageIndex] = useState(0);
+  const [pages, setPages] = useState([]);
   const containerRef = useRef();
 
-  const cards = useMemo(
-    () => (Array.isArray(children) ? [...children] : [children]),
-    [children]
-  );
+  useEffect(() => {
+    setPages(story.pages || []);
+  }, [story]);
 
-  const { activeCardWidth, miniCardWidth, gap } = useMemo(
-    () => ({
-      activeCardWidth: ACTIVE_CARD_WIDTH * dimensionMultiplier,
-      miniCardWidth: MINI_CARD_WIDTH * dimensionMultiplier,
+  const metrics = useMemo(() => {
+    if (!dimensionMultiplier) {
+      return {};
+    }
+    const activeCardWidth = ACTIVE_CARD_WIDTH * dimensionMultiplier;
+    const miniCardWidth = MINI_CARD_WIDTH * dimensionMultiplier;
+    return {
+      activeCardSize: {
+        width: activeCardWidth,
+        height: activeCardWidth / PAGE_RATIO,
+      },
+      miniCardSize: {
+        width: miniCardWidth,
+        height: miniCardWidth / PAGE_RATIO,
+      },
+      miniWrapperSize: {
+        width: miniCardWidth + CARD_WRAPPER_BUFFER,
+        height: miniCardWidth / PAGE_RATIO + CARD_WRAPPER_BUFFER,
+      },
       gap: CARD_GAP * dimensionMultiplier,
-    }),
-    [dimensionMultiplier]
-  );
-
-  const activeCardSize = useMemo(
-    () => ({
-      width: activeCardWidth,
-      height: activeCardWidth / PAGE_RATIO,
-    }),
-    [activeCardWidth]
-  );
-
-  const miniCardSize = useMemo(
-    () => ({
-      width: miniCardWidth,
-      height: miniCardWidth / PAGE_RATIO,
-    }),
-    [miniCardWidth]
-  );
-
-  const miniWrapperCardSize = useMemo(
-    () => ({
-      width: miniCardWidth + CARD_WRAPPER_BUFFER,
-      height: miniCardWidth / PAGE_RATIO + CARD_WRAPPER_BUFFER,
-    }),
-    [miniCardWidth]
-  );
+    };
+  }, [dimensionMultiplier]);
 
   const handleMiniCardClick = useCallback((index) => {
-    setActiveCardIndex(index);
+    setActivePageIndex(index);
   }, []);
 
   const updateContainerSize = useCallback(() => {
@@ -110,34 +99,48 @@ function CardGallery({ children }) {
   }, [updateContainerSize]);
 
   useEffect(() => {
-    setActiveCardIndex(0);
-  }, [children]);
+    setActivePageIndex(0);
+  }, [story]);
 
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
-      <UnitsProvider pageSize={miniCardSize}>
-        <MiniCardsContainer rowHeight={miniWrapperCardSize.height} gap={gap}>
-          {cards.map((card, index) => (
-            <MiniCardWrapper
-              key={index}
-              isSelected={index === activeCardIndex}
-              {...miniWrapperCardSize}
-              onClick={() => handleMiniCardClick(index)}
-            >
-              <MiniCard {...miniCardSize}>{card}</MiniCard>
-            </MiniCardWrapper>
-          ))}
-        </MiniCardsContainer>
-      </UnitsProvider>
-      <UnitsProvider pageSize={activeCardSize}>
-        <ActiveCard {...activeCardSize}>{cards[activeCardIndex]}</ActiveCard>
-      </UnitsProvider>
+      {metrics.miniCardSize && (
+        <UnitsProvider pageSize={metrics.miniCardSize}>
+          <MiniCardsContainer
+            rowHeight={metrics.miniWrapperSize.height}
+            gap={metrics.gap}
+          >
+            {pages.map((page, index) => (
+              <MiniCardWrapper
+                key={index}
+                isSelected={index === activePageIndex}
+                {...metrics.miniWrapperSize}
+                onClick={() => handleMiniCardClick(index)}
+              >
+                <MiniCard {...metrics.miniCardSize}>
+                  <PreviewPage page={page} />
+                </MiniCard>
+              </MiniCardWrapper>
+            ))}
+          </MiniCardsContainer>
+        </UnitsProvider>
+      )}
+      {metrics.activeCardSize && pages[activePageIndex] && (
+        <UnitsProvider pageSize={metrics.activeCardSize}>
+          <ActiveCard {...metrics.activeCardSize}>
+            <PreviewPage
+              page={pages[activePageIndex]}
+              animationState={STORY_PAGE_STATE.PLAY}
+            />
+          </ActiveCard>
+        </UnitsProvider>
+      )}
     </GalleryContainer>
   );
 }
 
 CardGallery.propTypes = {
-  children: PropTypes.node.isRequired,
+  story: StoryPropType.isRequired,
 };
 
 export default CardGallery;

@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Remove } from '../../../icons/remove.svg';
+import { Remove } from '../../../icons';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
@@ -113,6 +113,7 @@ function Presets({
 
   const colorPresets = isText ? textColors : fillColors;
   const hasColorPresets = colorPresets.length > 0;
+  const hasPresets = textStyles.length > 0 || hasColorPresets;
 
   const colorPresetRenderer = (color, i, activeIndex) => {
     return (
@@ -159,7 +160,7 @@ function Presets({
     ? __('Text colors', 'web-stories')
     : __('Colors', 'web-stories');
   return (
-    <PanelContent isPrimary padding={hasColorPresets ? null : '0'}>
+    <PanelContent isPrimary padding={hasPresets ? null : '0'}>
       {hasColorPresets && (
         <PresetGroup
           label={colorLabel}

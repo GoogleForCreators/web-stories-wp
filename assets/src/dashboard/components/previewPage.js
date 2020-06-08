@@ -13,21 +13,85 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import DisplayElement from '../../edit-story/components/canvas/displayElement';
 import StoryPropTypes from '../../edit-story/types';
+import { STORY_PAGE_STATE } from '../constants';
+import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 
-function PreviewPage({ page }) {
+function PreviewPageController({ page, animationState, subscribeGlobalTime }) {
+  const {
+    actions: { WAAPIAnimationMethods },
+  } = useStoryAnimationContext();
+
+  useEffect(() => {
+    switch (animationState) {
+      case STORY_PAGE_STATE.PLAYING:
+        WAAPIAnimationMethods.play();
+        return () => {};
+      case STORY_PAGE_STATE.RESET:
+        WAAPIAnimationMethods.reset();
+        return () => {};
+      case STORY_PAGE_STATE.SCRUBBING:
+        WAAPIAnimationMethods.pause();
+        return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
+      case STORY_PAGE_STATE.PAUSED:
+        WAAPIAnimationMethods.pause();
+        return () => {};
+      default:
+        return () => {};
+    }
+  }, [animationState, WAAPIAnimationMethods, subscribeGlobalTime]);
+
+  /**
+   * Reset everything on unmount;
+   */
+  useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
+
   return page.elements.map(({ id, ...rest }) => (
-    <DisplayElement key={id} page={page} element={{ id, ...rest }} />
+    <DisplayElement
+      key={id}
+      page={page}
+      element={{ id, ...rest }}
+      isAnimatable
+    />
   ));
+}
+
+function PreviewPage({
+  page,
+  animationState = STORY_PAGE_STATE.RESET,
+  onAnimationComplete,
+  subscribeGlobalTime,
+}) {
+  return (
+    <StoryAnimation.Provider
+      animations={page.animations}
+      onWAAPIFinish={onAnimationComplete}
+    >
+      <PreviewPageController
+        page={page}
+        animationState={animationState}
+        onAnimationComplete={onAnimationComplete}
+        subscribeGlobalTime={subscribeGlobalTime}
+      />
+    </StoryAnimation.Provider>
+  );
 }
 
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
+  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
+  onAnimationComplete: PropTypes.func,
+  subscribeGlobalTime: PropTypes.func,
 };
 
 export default PreviewPage;

@@ -80,6 +80,7 @@ export const primaryPaths = [
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: __('Saved Templates', 'web-stories'),
+    inProgress: true,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
@@ -91,10 +92,12 @@ export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: __('Editor Settings', 'web-stories'),
+    inProgress: true,
   },
   {
     value: APP_ROUTES.SUPPORT,
     label: __('Support', 'web-stories'),
+    inProgress: true,
   },
 ];
 
@@ -110,7 +113,6 @@ export const VIEW_STYLE_LABELS = {
 
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
-  UP_DOWN_ARROW: { width: 16, height: 16 },
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
@@ -129,6 +131,7 @@ export const RESULT_LABELS = {
 
 export * from './animation';
 export * from './direction';
+export * from './pageStructure';
 export * from './savedTemplates';
 export * from './stories';
 export * from './templates';
