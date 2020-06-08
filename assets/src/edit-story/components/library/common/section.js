@@ -27,7 +27,7 @@ const Container = styled.div`
   margin-bottom: 28px;
   border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
 
-  &:first-of-type {
+  &:first-child {
     margin-top: 0px;
   }
 `;
