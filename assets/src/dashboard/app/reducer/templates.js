@@ -20,7 +20,9 @@
 import groupBy from '../../utils/groupBy';
 
 export const ACTION_TYPES = {
-  CREATE_TEMPLATE_FROM_STORY: 'create_template_from_story',
+  CREATING_TEMPLATE_FROM_STORY: 'create_template_from_story',
+  CREATE_TEMPLATE_FROM_STORY_FAILURE: 'create_template_from_story_failure',
+  CREATE_TEMPLATE_FROM_STORY_SUCCESS: 'create_template_from_story_success',
   LOADING_TEMPLATES: 'loading_templates',
   FETCH_TEMPLATES_SUCCESS: 'fetch_templates_success',
   FETCH_TEMPLATES_FAILURE: 'fetch_templates_failure',
@@ -31,7 +33,7 @@ export const ACTION_TYPES = {
 
 export const defaultTemplatesState = {
   allPagesFetched: false,
-  isError: false,
+  error: {},
   isLoading: false,
   savedTemplate: {},
   savedTemplatesOrderById: [],
@@ -43,21 +45,26 @@ export const defaultTemplatesState = {
 
 function templateReducer(state, action) {
   switch (action.type) {
-    case ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY: {
-      return state;
-    }
-    case ACTION_TYPES.LOADING_TEMPLATES: {
+    case ACTION_TYPES.LOADING_TEMPLATES:
+    case ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY: {
       return {
         ...state,
         isLoading: action.payload,
       };
     }
 
-    case ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE:
-    case ACTION_TYPES.FETCH_TEMPLATES_FAILURE:
+    case ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_SUCCESS: {
       return {
         ...state,
-        isError: action.payload,
+      };
+    }
+
+    case ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE:
+    case ACTION_TYPES.FETCH_TEMPLATES_FAILURE:
+    case ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     case ACTION_TYPES.FETCH_MY_TEMPLATES_SUCCESS: {
@@ -112,7 +119,7 @@ function templateReducer(state, action) {
 
       return {
         ...state,
-        isError: false,
+        error: {},
         templatesOrderById: uniqueTemplateIds,
         templates: {
           ...state.templates,

@@ -244,6 +244,7 @@ const useTemplateApi = (dataAdapter, config) => {
     async (story) => {
       await dispatch({
         type: TEMPLATE_ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY,
+        payload: true,
       });
 
       try {
@@ -274,6 +275,11 @@ const useTemplateApi = (dataAdapter, config) => {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
           payload: { message: err.message, code: err.code },
+        });
+      } finally {
+        dispatch({
+          type: TEMPLATE_ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY,
+          payload: false,
         });
       }
     },
