@@ -110,9 +110,9 @@ class Admin {
 			ob_start();
 
 			if ( $has_poster ) {
-				$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
+				$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
 				?>
-				<!-- wp:web-stories/embed {"url":"<?php echo esc_js( $url ); ?>","title":"<?php echo esc_js( $title ); ?>","poster":"<?php echo esc_js( $poster ); ?>"} -->
+				<!-- wp:web-stories/embed {"url":"<?php echo esc_js( $url ); ?>","title":"<?php echo esc_js( $title ); ?>","poster":"<?php echo esc_url( $poster ); ?>"} -->
 				<div class="wp-block-web-stories-embed alignnone">
 					<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
 							href="<?php echo esc_url( $url ); ?>"
@@ -123,7 +123,7 @@ class Admin {
 				<?php
 			} else {
 				?>
-				<!-- wp:web-stories/embed {"url":"<?php echo esc_js( $url ); ?>","title":"<?php echo esc_js( $title ); ?>","poster":""} -->
+				<!-- wp:web-stories/embed {"url":"<?php echo esc_url( $url ); ?>","title":"<?php echo esc_js( $title ); ?>","poster":""} -->
 				<div class="wp-block-web-stories-embed alignnone">
 					<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
 							href="<?php echo esc_url( $url ); ?>"
