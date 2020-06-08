@@ -21,7 +21,7 @@ import StoryPropTypes from '../types';
 import WithMask from '../masks/output';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
-import WithLink from '../components/link/output';
+import WithLink from '../components/elementLink/output';
 
 function OutputElement({ element }) {
   const { id, opacity, type } = element;
