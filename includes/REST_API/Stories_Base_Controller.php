@@ -119,6 +119,34 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
+	 * Creates a single post.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function create_item( $request ) {
+		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		$response = parent::create_item( $request );
+		kses_init();
+		return $response;
+	}
+
+	/**
+	 * Updates a single post.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function update_item( $request ) {
+		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		$response = parent::update_item( $request );
+		kses_init();
+		return $response;
+	}
+
+	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
 	 *
 	 * @return array Item schema as an array.
