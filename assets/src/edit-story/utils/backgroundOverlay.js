@@ -22,10 +22,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as OverlayNoneIcon } from '../icons/overlay_none.svg';
-import { ReactComponent as OverlaySolidIcon } from '../icons/overlay_solid.svg';
-import { ReactComponent as OverlayLinearIcon } from '../icons/overlay_linear.svg';
-import { ReactComponent as OverlayRadialIcon } from '../icons/overlay_radial.svg';
+import {
+  OverlayNone,
+  OverlaySolid,
+  OverlayLinear,
+  OverlayRadial,
+} from '../icons/';
 import generatePatternStyles from './generatePatternStyles';
 
 export const OverlayType = {
@@ -38,19 +40,19 @@ export const OverlayType = {
 export const OverlayPreset = {
   [OverlayType.NONE]: {
     label: __('None', 'web-stories'),
-    icon: <OverlayNoneIcon />,
+    icon: <OverlayNone />,
   },
   [OverlayType.SOLID]: {
     label: __('Solid', 'web-stories'),
-    icon: <OverlaySolidIcon />,
+    icon: <OverlaySolid />,
   },
   [OverlayType.LINEAR]: {
     label: __('Linear', 'web-stories'),
-    icon: <OverlayLinearIcon />,
+    icon: <OverlayLinear />,
   },
   [OverlayType.RADIAL]: {
     label: __('Radial', 'web-stories'),
-    icon: <OverlayRadialIcon />,
+    icon: <OverlayRadial />,
   },
 };
 

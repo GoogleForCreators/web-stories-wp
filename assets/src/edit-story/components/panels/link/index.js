@@ -39,7 +39,7 @@ import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { useCanvas } from '../../canvas';
-import { ReactComponent as Close } from '../../../icons/close_icon.svg';
+import { Close } from '../../../icons';
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};

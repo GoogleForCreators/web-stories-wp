@@ -38,13 +38,7 @@ const LayerWithGrayout = styled(Layer)`
     grayout ? theme.colors.grayout : 'transparent'};
 `;
 
-const EditPageArea = withOverlay(styled(PageArea).attrs({
-  className: 'container web-stories-content',
-})`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`);
+const EditPageArea = withOverlay(PageArea);
 
 function EditLayer() {
   const {

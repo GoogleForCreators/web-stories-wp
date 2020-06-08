@@ -28,7 +28,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
-import { ReactComponent as Play } from '../../../../icons/play.svg';
+import { Play } from '../../../../icons';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from './dropDownMenu';
 
