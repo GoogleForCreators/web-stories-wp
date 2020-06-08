@@ -94,7 +94,7 @@ function templateReducer(state, action) {
           ...groupBy(action.payload.savedTemplates, 'id'),
         },
         savedTemplatesOrderById: uniqueTemplateIds,
-        page: action.payload.page,
+        totalTemplates: action.payload.totalTemplates,
         totalPages: action.payload.totalPages,
       };
     }
