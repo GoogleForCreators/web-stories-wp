@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -30,6 +31,13 @@ import { __ } from '@wordpress/i18n';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
+
+const Paragraph = styled.p`
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+`;
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
   return (
@@ -46,13 +54,15 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
         </>
       }
     >
-      <p>
+      <Paragraph>
         {__('Your story has been successfully published!', 'web-stories')}{' '}
         <Link href={storyURL} target="_blank" rel="noopener noreferrer">
           {__('View story.', 'web-stories')}
         </Link>
-      </p>
-      <p>{__('Would you like to include it on a new post?', 'web-stories')}</p>
+      </Paragraph>
+      <Paragraph>
+        {__('Would you like to include it on a new post?', 'web-stories')}
+      </Paragraph>
     </Dialog>
   );
 }
