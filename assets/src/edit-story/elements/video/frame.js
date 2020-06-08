@@ -110,7 +110,7 @@ function VideoFrame({ element, box }) {
       if (isElementSelected && videoNode && !videoNode.paused) {
         setIsPlaying(true);
       }
-    }, 0);
+    });
     return () => clearTimeout(syncTimer);
   }, [getVideoNode, id, isElementSelected]);
 

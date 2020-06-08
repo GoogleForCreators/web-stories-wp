@@ -189,7 +189,7 @@ function DropTargetsProvider({ children }) {
               playPromise.catch(() => {});
             }
           }
-        }, 0);
+        });
       }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]

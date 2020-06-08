@@ -80,7 +80,7 @@ function useInsertElement() {
               playPromise.catch(() => {});
             }
           }
-        }, 0);
+        });
       }
       focusCanvas();
       return element;
