@@ -17,9 +17,11 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 function useFocusOut(ref, callback, deps) {
+  const isMouseDownInNode = useRef(false);
+
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node) {
@@ -33,21 +35,26 @@ function useFocusOut(ref, callback, deps) {
       }
     };
 
-    const onDocumentClick = (evt) => {
-      // If something outside the target node is clicked, callback time!
+    const onMouseDown = (evt) => {
+      isMouseDownInNode.current = node.contains(evt.target);
+    };
+
+    const onMouseUp = (evt) => {
       const isInDocument = node.ownerDocument.contains(evt.target);
       const isInNode = node.contains(evt.target);
-      if (!isInNode && isInDocument) {
+      if (!isInNode && isInDocument && !isMouseDownInNode.current) {
         callback();
       }
     };
 
     node.addEventListener('focusout', onFocusOut);
-    node.ownerDocument.addEventListener('click', onDocumentClick);
+    node.ownerDocument.addEventListener('mousedown', onMouseDown);
+    node.ownerDocument.addEventListener('mouseup', onMouseUp);
 
     return () => {
       node.removeEventListener('focusout', onFocusOut);
-      node.ownerDocument.removeEventListener('click', onDocumentClick);
+      node.ownerDocument.removeEventListener('mousedown', onMouseDown);
+      node.ownerDocument.removeEventListener('mouseup', onMouseUp);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps || []);

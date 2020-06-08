@@ -29,7 +29,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getElementMask } from '.';
+import { getElementMask, DEFAULT_MASK } from '.';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -45,6 +45,7 @@ export default function WithMask({
   style,
   children,
   box,
+  skipDefaultMask,
   ...rest
 }) {
   const mask = getElementMask(element);
@@ -57,7 +58,11 @@ export default function WithMask({
       : transformFlip;
   }
 
-  if (!mask?.type || isBackground) {
+  if (
+    !mask?.type ||
+    (skipDefaultMask && mask.type === DEFAULT_MASK.type) ||
+    isBackground
+  ) {
     return (
       <div
         style={{
@@ -109,4 +114,9 @@ WithMask.propTypes = {
   fill: PropTypes.bool,
   children: PropTypes.node.isRequired,
   box: StoryPropTypes.box.isRequired,
+  skipDefaultMask: PropTypes.bool,
+};
+
+WithMask.defaultProps = {
+  skipDefaultMask: false,
 };

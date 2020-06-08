@@ -162,8 +162,8 @@ const CardPreviewContainer = ({
             page={storyPages[pageIndex]}
             animationState={
               CARD_STATE.ACTIVE === cardState
-                ? STORY_PAGE_STATE.ANIMATE
-                : STORY_PAGE_STATE.IDLE
+                ? STORY_PAGE_STATE.PLAYING
+                : STORY_PAGE_STATE.RESET
             }
           />
         </PreviewErrorBoundary>
