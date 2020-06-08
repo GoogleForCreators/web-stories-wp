@@ -39,8 +39,6 @@ import useCanvasKeys from './useCanvasKeys';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
-    className: 'container web-stories-content',
-    pointerEvents: 'initial',
     showOverflow: true,
   })``
 );

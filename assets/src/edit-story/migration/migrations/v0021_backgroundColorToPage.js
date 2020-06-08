@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import generatePatternStyles from '../../utils/generatePatternStyles';
-
-/**
- * Returns AMP HTML for saving into post content for displaying in the FE.
- */
-function ShapeOutput({ element: { backgroundColor, isDefaultBackground } }) {
-  const style = isDefaultBackground
-    ? null
-    : generatePatternStyles(backgroundColor);
-  return <div className="fill" style={style} />;
+function backgroundColorToPage({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
 }
 
-ShapeOutput.propTypes = {
-  element: StoryPropTypes.elements.shape.isRequired,
-};
+function reducePage(page) {
+  const { elements, defaultBackgroundElement } = page;
+  const defaultBackground = {
+    type: 'solid',
+    color: { r: 255, g: 255, b: 255 },
+  };
+  const backgroundColor = elements[0]?.isDefaultBackground
+    ? elements[0].backgroundColor
+    : defaultBackgroundElement?.backgroundColor;
+  return {
+    ...page,
+    backgroundColor: backgroundColor ? backgroundColor : defaultBackground,
+  };
+}
 
-export default ShapeOutput;
+export default backgroundColorToPage;
