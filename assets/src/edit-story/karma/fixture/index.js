@@ -13,20 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
 
-/**
- * Internal dependencies
- */
-import { TemplateNavBar } from '../';
-
-export default {
-  title: 'Dashboard/Components/TemplateNavBar',
-};
-
-export const _default = () => {
-  return <TemplateNavBar handleCta={action('handle cta clicked')} />;
-};
+export { Fixture } from './fixture';

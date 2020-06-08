@@ -133,6 +133,8 @@ export const STORY_VIEWING_LABELS = {
 };
 
 export const STORY_PAGE_STATE = {
-  IDLE: 'idle',
-  ANIMATE: 'animate',
+  RESET: 'reset',
+  PAUSED: 'paused',
+  SCRUBBING: 'scrubbing',
+  PLAYING: 'playing',
 };

@@ -17,30 +17,28 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
  */
-import { MoreVerticalButton } from '../storyMenu';
-import { ActionLabel } from './types';
 
-const CardGridItem = styled.div`
-  margin: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+import formattedTemplatesArray from '../../../../storybookUtils/formattedTemplatesArray';
+import TemplateGridView from '../templateGridView';
 
-  ${MoreVerticalButton} {
-    margin: 12px 0;
-  }
+export default {
+  title: 'Dashboard/Views/Shared/TemplateGridView',
+  component: TemplateGridView,
+};
 
-  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
-    opacity: 1;
-  }
-`;
-
-export default CardGridItem;
-export { default as CardPreviewContainer } from './cardPreview';
-export { ActionLabel };
-export { default as CardTitle } from './cardTitle';
+export const _default = () => {
+  return (
+    <TemplateGridView
+      templates={formattedTemplatesArray}
+      pageSize={{ width: 210, height: 316 }}
+      templateActions={{
+        createStoryFromTemplate: action('create story from template clicked'),
+      }}
+    />
+  );
+};

@@ -13,20 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
 
-/**
- * Internal dependencies
- */
-import { TemplateNavBar } from '../';
+function backgroundColorToPage({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
 
-export default {
-  title: 'Dashboard/Components/TemplateNavBar',
-};
+function reducePage(page) {
+  const { elements, defaultBackgroundElement } = page;
+  const defaultBackground = {
+    type: 'solid',
+    color: { r: 255, g: 255, b: 255 },
+  };
+  const backgroundColor = elements[0]?.isDefaultBackground
+    ? elements[0].backgroundColor
+    : defaultBackgroundElement?.backgroundColor;
+  return {
+    ...page,
+    backgroundColor: backgroundColor ? backgroundColor : defaultBackground,
+  };
+}
 
-export const _default = () => {
-  return <TemplateNavBar handleCta={action('handle cta clicked')} />;
-};
+export default backgroundColorToPage;

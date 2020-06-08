@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { migrate } from '../../edit-story/migration/migrate';
 import { memoize } from '../utils';
 import beauty from './raw/beauty.json';
 import cooking from './raw/cooking.json';
@@ -34,7 +35,7 @@ export function getImageFile(url) {
 }
 
 export function loadTemplate(title, data, imageBaseUrl) {
-  return {
+  const template = {
     ...data,
     pages: (data.pages || []).map((page) => ({
       ...page,
@@ -51,6 +52,10 @@ export function loadTemplate(title, data, imageBaseUrl) {
       }),
     })),
   };
+
+  const migratedTemplate = migrate(template, template.version);
+
+  return migratedTemplate;
 }
 
 export function loadTemplates(imageBaseUrl) {

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+export { BEZIER } from '../constants';
+
 export const ANIMATION_TYPES = {
   BLINK_ON: 'blinkOn',
   BOUNCE: 'bounce',

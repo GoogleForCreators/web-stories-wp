@@ -13,20 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
- * Internal dependencies
- */
-import { TemplateNavBar } from '../';
-
-export default {
-  title: 'Dashboard/Components/TemplateNavBar',
-};
-
-export const _default = () => {
-  return <TemplateNavBar handleCta={action('handle cta clicked')} />;
+export const emitter = () => {
+  const subscriptions = new Map();
+  return {
+    emit: (v) => subscriptions.forEach((subscriber) => subscriber(v)),
+    subscribe: (subscriber) => {
+      const key = Symbol();
+      subscriptions.set(key, subscriber);
+      return () => subscriptions.delete(key);
+    },
+  };
 };

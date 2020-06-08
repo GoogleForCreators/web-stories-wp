@@ -54,16 +54,15 @@ function useCanvasKeys(ref) {
 
     const doc = container.ownerDocument;
 
-    const handler = (evt) => {
-      if (!container.contains(evt.target)) {
-        // Make sure that no other component is trying to get the focus
-        // at this time.
-        setTimeout(() => {
-          if (doc.activeElement === doc.body) {
-            container.focus();
-          }
-        }, 300);
-      }
+    const handler = () => {
+      // Make sure that no other component is trying to get the focus
+      // at this time. We have to check all "focusout" events here because
+      // after DOM removal, the "focusout" events are all over the place.
+      setTimeout(() => {
+        if (doc.activeElement === doc.body) {
+          container.focus();
+        }
+      }, 300);
     };
     doc.addEventListener('focusout', handler, true);
     return () => {
