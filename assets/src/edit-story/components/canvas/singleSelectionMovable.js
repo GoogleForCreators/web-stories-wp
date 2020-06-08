@@ -170,7 +170,8 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
-  const wasElementDeleted = (target) => {
+  // Removes element if it's outside of canvas.
+  const handleElementOutOfCanvas = (target) => {
     if (isTargetOutOfContainer(target, fullbleedContainer)) {
       setIsDragging(false);
       setDraggingResource(null);
@@ -213,7 +214,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         set(frame.translate);
       }}
       onDragEnd={({ target }) => {
-        if (wasElementDeleted(target)) {
+        if (handleElementOutOfCanvas(target)) {
           return;
         }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
@@ -267,7 +268,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setTransformStyle(target);
       }}
       onResizeEnd={({ target }) => {
-        if (wasElementDeleted(target)) {
+        if (handleElementOutOfCanvas(target)) {
           return;
         }
         const [editorWidth, editorHeight] = frame.resize;
@@ -305,7 +306,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setTransformStyle(target);
       }}
       onRotateEnd={({ target }) => {
-        if (wasElementDeleted(target)) {
+        if (handleElementOutOfCanvas(target)) {
           return;
         }
         const properties = { rotationAngle: Math.round(frame.rotate) };
