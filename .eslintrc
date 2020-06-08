@@ -249,10 +249,14 @@
       "files": [
         "**/karma/**/*.js"
       ],
+      "extends": [
+        "plugin:jasmine/recommended"
+      ],
       "plugins": [
         "jsx-a11y",
         "header",
-        "testing-library"
+        "testing-library",
+        "jasmine"
       ],
       "env": {
         "jasmine": true
