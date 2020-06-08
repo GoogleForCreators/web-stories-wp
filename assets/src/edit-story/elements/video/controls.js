@@ -125,7 +125,7 @@ function VideoControls({
       if (isSelected && videoNode && !videoNode.paused) {
         setIsPlaying(true);
       }
-    }, 0);
+    });
     return () => clearTimeout(syncTimer);
   }, [getVideoNode, id, isSelected, isEditing]);
 
