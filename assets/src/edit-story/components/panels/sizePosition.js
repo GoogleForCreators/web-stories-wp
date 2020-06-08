@@ -174,16 +174,52 @@ function SizePositionPanel({
   );
 
   usePresubmitHandler(
-    ({
-      rotationAngle: newRotationAngle,
-      width: newWidth,
-      height: newHeight,
-    }) => ({
-      rotationAngle: setMinMax(newRotationAngle, MIN_MAX.ROTATION),
-      width: setMinMax(dataPixels(newWidth), MIN_MAX.WIDTH),
-      height: setMinMax(dataPixels(newHeight), MIN_MAX.HEIGHT),
-    }),
-    []
+    ({ rotationAngle: newRotationAngle }) => {
+      return {
+        rotationAngle: setMinMax(newRotationAngle, MIN_MAX.ROTATION),
+      };
+    },
+    [rotationAngle]
+  );
+
+  usePresubmitHandler(
+    ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
+      let w = dataPixels(newWidth);
+      if (lockAspectRatio && oldHeight !== oldWidth) {
+        const ratio = oldWidth / oldHeight;
+        if (w * ratio >= MIN_MAX.WIDTH.MAX) {
+          w = MIN_MAX.WIDTH.MAX * ratio;
+        }
+        return {
+          width: setMinMax(w, MIN_MAX.WIDTH),
+        };
+      }
+
+      return {
+        width: setMinMax(w, MIN_MAX.WIDTH),
+      };
+    },
+    [width, lockAspectRatio]
+  );
+
+  usePresubmitHandler(
+    ({ height: newHeight }, { width: oldWidth, height: oldHeight }) => {
+      let h = dataPixels(newHeight);
+      if (lockAspectRatio && oldHeight !== oldWidth) {
+        const ratio = oldHeight / oldWidth;
+        if (h * ratio > MIN_MAX.HEIGHT.MAX) {
+          h = MIN_MAX.HEIGHT.MAX * ratio;
+        }
+        return {
+          height: setMinMax(h, MIN_MAX.HEIGHT),
+        };
+      }
+
+      return {
+        height: setMinMax(h, MIN_MAX.HEIGHT),
+      };
+    },
+    [height, lockAspectRatio]
   );
 
   const handleSetBackground = useCallback(() => {
