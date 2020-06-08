@@ -20,7 +20,7 @@
 import groupBy from '../../utils/groupBy';
 
 export const ACTION_TYPES = {
-  CREATING_TEMPLATE_FROM_STORY: 'create_template_from_story',
+  CREATING_TEMPLATE_FROM_STORY: 'creating_template_from_story',
   CREATE_TEMPLATE_FROM_STORY_FAILURE: 'create_template_from_story_failure',
   CREATE_TEMPLATE_FROM_STORY_SUCCESS: 'create_template_from_story_success',
   LOADING_TEMPLATES: 'loading_templates',
