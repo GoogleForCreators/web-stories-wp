@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Embed_Block.
+ * Class KSES.
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
