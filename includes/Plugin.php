@@ -49,7 +49,7 @@ class Plugin {
 		add_action( 'init', [ Template_Post_Type::class, 'init' ] );
 
 		// REST API endpoints.
-		// High priority so it runs after create_initial_rest_routes()
+		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
 		// Dashboard.
