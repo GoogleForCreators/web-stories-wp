@@ -132,6 +132,27 @@ const PageAreaSafeZone = styled.div`
   overflow: visible;
   position: relative;
   margin: auto 0;
+
+  &::before {
+    content: '';
+    width: calc(var(--page-width-px) + 40px);
+    height: 1px;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    left: -20px;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    width: calc(var(--page-width-px) + 40px);
+    height: 1px;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    left: -20px;
+    bottom: 0px;
+    z-index: -1;
+  }
 `;
 
 const PageAreaDangerZone = styled.div`
@@ -232,9 +253,10 @@ const PageArea = forwardRef(
           <PageAreaSafeZone ref={ref} data-testid="safezone">
             {children}
           </PageAreaSafeZone>
+
           {showDangerZone && (
             <>
-              <PageAreaDangerZoneTop />
+              <PageAreaDangerZoneTop data-testid="danger-top" id="danger-top" />
               <PageAreaDangerZoneBottom />
             </>
           )}
