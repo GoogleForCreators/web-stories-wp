@@ -69,7 +69,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 
 		if ( $post_type_object instanceof \WP_Post_Type ) {
 			$parent_controller = $post_type_object->get_rest_controller();
-			$this->parent_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+			$this->parent_base = ! empty( $post_type_object->rest_base ) ? (string) $post_type_object->rest_base : $post_type_object->name;
 		}
 
 		if ( ! $parent_controller ) {
