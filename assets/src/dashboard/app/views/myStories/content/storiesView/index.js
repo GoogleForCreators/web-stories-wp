@@ -23,7 +23,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
 
 /**
@@ -38,11 +38,13 @@ import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
+import { Button, Dialog } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
+  BUTTON_TYPES,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
 
@@ -59,6 +61,15 @@ function StoriesView({
   const enableInProgressStoryActions = useFeature(
     'enableInProgressStoryActions'
   );
+  const [activeModal, setActiveModal] = useState('');
+  const [activeStory, setActiveStory] = useState(null);
+
+  useEffect(() => {
+    if (!activeModal) {
+      setActiveStory(null);
+    }
+  }, [activeModal, setActiveStory]);
+
   const handleOnRenameStory = useCallback(
     (story, newTitle) => {
       setTitleRenameId(-1);
@@ -87,17 +98,8 @@ function StoriesView({
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-          if (
-            window.confirm(
-              sprintf(
-                /* translators: %s: story title. */
-                __('Are you sure you want to delete "%s"?', 'web-stories'),
-                story.title
-              )
-            )
-          ) {
-            storyActions.trashStory(story);
-          }
+          setActiveModal('DELETE_STORY');
+          setActiveStory(story);
           break;
 
         default:
@@ -136,30 +138,70 @@ function StoriesView({
     };
   }, [handleOnRenameStory, setTitleRenameId, titleRenameId]);
 
-  return view.style === VIEW_STYLE.LIST ? (
-    <StoryListView
-      handleSortChange={sort.set}
-      handleSortDirectionChange={sort.setDirection}
-      renameStory={renameStory}
-      sortDirection={sort.direction}
-      stories={stories}
-      storyMenu={storyMenu}
-      storySort={sort.value}
-      storyStatus={filterValue}
-      users={users}
-    />
-  ) : (
-    <StoryGridView
-      bottomActionLabel={__('Open in editor', 'web-stories')}
-      centerActionLabelByStatus={
-        enableInProgressStoryActions && STORY_ITEM_CENTER_ACTION_LABELS
-      }
-      pageSize={view.pageSize}
-      renameStory={renameStory}
-      storyMenu={storyMenu}
-      stories={stories}
-      users={users}
-    />
+  const ActiveView =
+    view.style === VIEW_STYLE.LIST ? (
+      <StoryListView
+        handleSortChange={sort.set}
+        handleSortDirectionChange={sort.setDirection}
+        renameStory={renameStory}
+        sortDirection={sort.direction}
+        stories={stories}
+        storyMenu={storyMenu}
+        storySort={sort.value}
+        storyStatus={filterValue}
+        users={users}
+      />
+    ) : (
+      <StoryGridView
+        bottomActionLabel={__('Open in editor', 'web-stories')}
+        centerActionLabelByStatus={
+          enableInProgressStoryActions && STORY_ITEM_CENTER_ACTION_LABELS
+        }
+        pageSize={view.pageSize}
+        renameStory={renameStory}
+        storyMenu={storyMenu}
+        stories={stories}
+        users={users}
+      />
+    );
+
+  return (
+    <>
+      {ActiveView}
+      {activeModal === 'DELETE_STORY' && (
+        <Dialog
+          isOpen={true}
+          contentLabel={__('Modal to confirm deleting a story', 'web-stories')}
+          title={__('Delete Story', 'web-stories')}
+          onClose={() => setActiveModal('')}
+          actions={
+            <>
+              <Button
+                type={BUTTON_TYPES.DEFAULT}
+                onClick={() => setActiveModal('')}
+              >
+                {__('Cancel', 'web-stories')}
+              </Button>
+              <Button
+                type={BUTTON_TYPES.CTA}
+                onClick={() => {
+                  storyActions.trashStory(activeStory);
+                  setActiveModal('');
+                }}
+              >
+                {__('Delete', 'web-stories')}
+              </Button>
+            </>
+          }
+        >
+          {sprintf(
+            /* translators: %s: story title. */
+            __('Are you sure you want to delete "%s"?', 'web-stories'),
+            activeStory.title
+          )}
+        </Dialog>
+      )}
+    </>
   );
 }
 
