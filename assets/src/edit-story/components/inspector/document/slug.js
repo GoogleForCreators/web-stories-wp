@@ -63,8 +63,10 @@ function SlugPanel() {
   } = useStory();
   const handleChangeValue = useCallback(
     (value) => {
+      const newSlug = value.slice(0, MIN_MAX.PERMALINK.MAX);
+
       updateStory({
-        properties: { slug: cleanForSlug(value) },
+        properties: { slug: cleanForSlug(newSlug) },
       });
     },
     [updateStory]
@@ -74,6 +76,7 @@ function SlugPanel() {
     slug && permalinkConfig && validateMinMax(slug.length, MIN_MAX.PERMALINK)
       ? permalinkConfig.prefix + slug + permalinkConfig.suffix
       : link;
+
   return (
     <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
       <Row>
@@ -88,7 +91,12 @@ function SlugPanel() {
         />
       </Row>
       <HelperText>
-        <Permalink rel="noopener noreferrer" target="_blank" href={link}>
+        <Permalink
+          rel="noopener noreferrer"
+          target="_blank"
+          href={link}
+          data-testid="link"
+        >
           {displayLink}
         </Permalink>
       </HelperText>

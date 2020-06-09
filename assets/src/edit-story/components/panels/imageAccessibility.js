@@ -35,7 +35,6 @@ import { getCommonValue, useCommonObjectValue } from './utils';
 const DEFAULT_RESOURCE = { alt: null };
 const MIN_MAX = {
   ALT_TEXT: {
-    MIN: 0,
     MAX: 1000,
   },
 };

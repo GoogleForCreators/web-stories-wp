@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -25,7 +25,7 @@ import StoryContext from '../../../../app/story/context';
 import PageAdvancementPanel from '../pageAdvancement';
 import { renderWithTheme } from '../../../../testUtils';
 
-function setupPanel() {
+function setupPanel(configs = {}) {
   const updateStory = jest.fn();
 
   const storyContextValue = {
@@ -33,17 +33,19 @@ function setupPanel() {
       story: {
         autoAdvance: false,
         defaultPageDuration: 7,
+        ...configs,
       },
     },
     actions: { updateStory },
   };
-  const { getByRole } = renderWithTheme(
+  const { getByRole, getByAriaLabel } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <PageAdvancementPanel />
     </StoryContext.Provider>
   );
   return {
     getByRole,
+    getByAriaLabel,
     updateStory,
   };
 }
@@ -59,5 +61,51 @@ describe('PageAdvancementPanel', () => {
         autoAdvance: true,
       },
     });
+  });
+
+  it('should set Page Duration', async () => {
+    const { getByRole, getByAriaLabel, updateStory } = setupPanel({
+      autoAdvance: true,
+    });
+    const element = getByRole('button', { name: 'Page Advancement' });
+    expect(element).toBeDefined();
+
+    const slider = getByAriaLabel('Default Page Duration');
+
+    fireEvent.change(slider, {
+      target: { value: 0 },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          defaultPageDuration: 1,
+        },
+      })
+    );
+
+    fireEvent.change(slider, {
+      target: { value: 1 },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          defaultPageDuration: 1,
+        },
+      })
+    );
+
+    fireEvent.change(slider, {
+      target: { value: 21 },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          defaultPageDuration: 20,
+        },
+      })
+    );
   });
 });

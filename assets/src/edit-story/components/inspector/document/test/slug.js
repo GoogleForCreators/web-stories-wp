@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { fireEvent, waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
@@ -37,13 +42,15 @@ function setupPanel() {
     },
     actions: { updateStory },
   };
-  const { getByRole } = renderWithTheme(
+  const { getByRole, getByAriaLabel, getByTestId } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <SlugPanel />
     </StoryContext.Provider>
   );
   return {
     getByRole,
+    getByTestId,
+    getByAriaLabel,
     updateStory,
   };
 }
@@ -59,5 +66,39 @@ describe('SlugPanel', () => {
     const { getByRole } = setupPanel();
     const url = getByRole('link', { name: 'https://example.com/foo' });
     expect(url).toBeDefined();
+  });
+
+  it('should not display permalink', async () => {
+    const { getByAriaLabel, updateStory } = setupPanel();
+    const input = getByAriaLabel('Edit: URL slug');
+    expect(input).toBeDefined();
+
+    const bigSlug = [...Array(201)].map(() => '1').join('');
+
+    fireEvent.change(input, {
+      target: { value: bigSlug },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          // It will return only 200 even receiving 201+
+          slug:
+            '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111',
+        },
+      })
+    );
+
+    fireEvent.change(input, {
+      target: { value: '1234' },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          slug: '1234',
+        },
+      })
+    );
   });
 });

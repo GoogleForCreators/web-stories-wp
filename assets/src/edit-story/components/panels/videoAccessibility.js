@@ -28,16 +28,15 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Media, Row } from '../form';
+import { Media, Row, usePresubmitHandler } from '../form';
 import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 
 const DEFAULT_RESOURCE = { poster: null, title: null, alt: null };
-const MIN_MAX = {
+export const MIN_MAX = {
   ALT_TEXT: {
-    MIN: 0,
-    MAX: 1000,
+    MAX: 5,
   },
 };
 
@@ -62,6 +61,16 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
       );
     },
     [pushUpdate]
+  );
+
+  usePresubmitHandler(
+    ({ resource: newResource }) => ({
+      resource: {
+        ...newResource,
+        alt: newResource.alt.slice(0, MIN_MAX.ALT_TEXT.MAX),
+      },
+    }),
+    []
   );
 
   return (

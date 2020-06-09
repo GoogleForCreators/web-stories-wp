@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import VideoAccessibility from '../videoAccessibility';
+import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
 import { renderPanel } from './_utils';
 
 jest.mock('../../mediaPicker', () => ({
@@ -53,5 +53,18 @@ describe('Panels/VideoAccessibility', () => {
     fireEvent.click(element);
     expect(pushUpdate).toHaveBeenCalledTimes(1);
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
+  });
+
+  it('should set max to opacity value on change to max', () => {
+    const { getByPlaceholderText, submit } = renderVideoAccessibility([
+      { id: 1, resource: { posterId: 0, poster: '', alt: '' } },
+    ]);
+    const input = getByPlaceholderText('Assistive text');
+    const bigText = [...Array(1001)].map(() => '1').join('');
+    fireEvent.change(input, { target: { value: bigText } });
+    const submits = submit({
+      resource: { posterId: 0, poster: '', alt: bigText },
+    });
+    expect(submits[1].resource.alt).toHaveLength(MIN_MAX.ALT_TEXT.MAX);
   });
 });
