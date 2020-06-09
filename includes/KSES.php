@@ -38,11 +38,13 @@ class KSES {
 	 * @return void
 	 */
 	public function init() {
-		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
-		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		if ( ! current_user_can( 'unfiltered_html' ) ) {
+			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+			add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
+			add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
+			remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		}
 	}
 
 	/**
@@ -51,11 +53,13 @@ class KSES {
 	 * @return void
 	 */
 	public function remove_filters() {
-		remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-		remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10 );
-		remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-		remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
-		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		if ( ! current_user_can( 'unfiltered_html' ) ) {
+			remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+			remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10 );
+			remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
+			remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
+		}
+		kses_init();
 	}
 
 	/**
