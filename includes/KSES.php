@@ -251,6 +251,25 @@ class KSES {
 			'background-image',
 		];
 
+		/*
+		 * CSS attributes that accept color data types.
+		 *
+		 * This is in accordance to the CSS spec and unrelated to
+		 * the sub-set of supported attributes above.
+		 *
+		 * See: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+		 */
+		$css_color_data_types = [
+			'color',
+			'background',
+			'background-color',
+			'border-color',
+			'box-shadow',
+			'outline',
+			'outline-color',
+			'text-shadow',
+		];
+
 		if ( empty( $allowed_attr ) ) {
 			return $css;
 		}
@@ -266,6 +285,7 @@ class KSES {
 			$found           = false;
 			$url_attr        = false;
 			$gradient_attr   = false;
+			$color_attr      = false;
 			$transform_attr  = false;
 
 			$parts = explode( ':', $css_item, 2 );
@@ -279,6 +299,7 @@ class KSES {
 					$found          = true;
 					$url_attr       = in_array( $css_selector, $css_url_data_types, true );
 					$gradient_attr  = in_array( $css_selector, $css_gradient_data_types, true );
+					$color_attr     = in_array( $css_selector, $css_color_data_types, true );
 					$transform_attr = 'transform' === $css_selector;
 				}
 			}
@@ -313,6 +334,19 @@ class KSES {
 				if ( preg_match( '/^(repeating-)?(linear|radial|conic)-gradient\(([^()]|rgb[a]?\([^()]*\))*\)$/', $css_value ) ) {
 					// Remove the whole `gradient` bit that was matched above from the CSS.
 					$css_test_string = str_replace( $css_value, '', $css_test_string );
+				}
+			}
+
+			if ( $found && $color_attr ) {
+				// Simplified: matches the sequence `rgb(*)` and `rgba(*)`.
+				preg_match_all( '/rgba?\([^)]+\)/', $parts[1], $color_matches );
+
+				foreach ( $color_matches[0] as $color_match ) {
+					// Clean up the color from each of the matches above.
+					preg_match( '/^rgba?\([^)]*\)$/', $color_match, $color_pieces );
+
+					// Remove the whole `rgb(*)` / `rgba(*) bit that was matched above from the CSS.
+					$css_test_string = str_replace( $color_match, '', $css_test_string );
 				}
 			}
 

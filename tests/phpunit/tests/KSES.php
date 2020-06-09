@@ -215,15 +215,15 @@ class KSES extends \WP_UnitTestCase {
 				'css'      => 'height: expression( body.scrollTop + 50 + "px" )',
 				'expected' => '',
 			],
-			// RGB color values are not allowed.
+			// Other than in core, RGB color values ARE allowed.
 			[
 				'css'      => 'color: rgb( 100, 100, 100 )',
-				'expected' => '',
+				'expected' => 'color: rgb( 100, 100, 100 )',
 			],
-			// RGBA color values are not allowed.
+			// Other than in core, RGBA color values ARE allowed.
 			[
 				'css'      => 'color: rgb( 100, 100, 100, .4 )',
-				'expected' => '',
+				'expected' => 'color: rgb( 100, 100, 100, .4 )',
 			],
 		];
 	}
@@ -264,6 +264,11 @@ class KSES extends \WP_UnitTestCase {
 			[
 				'css'      => 'font-family: "Roboto", "Helvetica Neue", "Helvetica", sans-serif',
 				'expected' => 'font-family: "Roboto", "Helvetica Neue", "Helvetica", sans-serif',
+			],
+			// RGBA Background color.
+			[
+				'css'      => 'background-color:rgba(255,255,255,0.6);',
+				'expected' => 'background-color:rgba(255,255,255,0.6)',
 			],
 		];
 	}
