@@ -25,6 +25,7 @@ import { __ } from '@wordpress/i18n';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { createGlobalStyle } from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -57,7 +58,7 @@ const customStyles = {
     right: 0,
     bottom: 0,
     zIndex: 10,
-    backgroundColor: theme.colors.gray900,
+    backgroundColor: rgba(theme.colors.gray900, 0.96),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -66,7 +67,6 @@ const customStyles = {
     overflow: 'auto',
     outline: 'none',
     display: 'flex',
-    backgroundColor: theme.colors.white,
     maxHeight: '100%',
     justifyContent: 'center',
   },

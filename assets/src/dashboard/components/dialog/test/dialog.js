@@ -15,29 +15,48 @@
  */
 
 /**
+ * External dependencies
+ */
+import { fireEvent } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../testUtils/';
-import Modal from '../';
+import Dialog from '../';
 
-describe('Modal', () => {
-  it('should not render a modal by default', () => {
+describe('Dialog', () => {
+  it('should not render a dialog by default', () => {
     const { queryAllByRole } = renderWithTheme(
-      <Modal onClose={jest.fn}>
-        <p>{'modal child'}</p>
-      </Modal>
+      <Dialog onClose={jest.fn}>
+        <p>{'dialog child'}</p>
+      </Dialog>
     );
 
     expect(queryAllByRole('dialog', { hidden: true })).toHaveLength(0);
   });
 
-  it('should render a modal when isOpen is true', () => {
-    const { getByRole } = renderWithTheme(
-      <Modal onClose={jest.fn} isOpen={true}>
-        <p>{'modal child'}</p>
-      </Modal>
+  it('should render a dialog when isOpen is true', () => {
+    const mockButtonClick = jest.fn();
+    const ActionsNode = (
+      <button onClick={mockButtonClick}>{'dialog button'}</button>
+    );
+
+    const { getByRole, getByText } = renderWithTheme(
+      <Dialog
+        onClose={jest.fn}
+        isOpen={true}
+        title="dialog title"
+        actions={ActionsNode}
+      >
+        <p>{'dialog child'}</p>
+      </Dialog>
     );
 
     expect(getByRole('dialog')).toBeInTheDocument();
+    const dialogButton = getByText('dialog button');
+
+    fireEvent.click(dialogButton);
+    expect(mockButtonClick).toHaveBeenCalledTimes(1);
   });
 });
