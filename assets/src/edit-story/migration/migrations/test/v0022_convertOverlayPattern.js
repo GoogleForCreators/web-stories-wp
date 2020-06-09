@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import convertOverlayPattern from '../v0021_convertOverlayPattern';
+import convertOverlayPattern from '../v0022_convertOverlayPattern';
 
 describe('convertOverlayPattern', () => {
   it('should ignore missing overlays, non-media backgrounds and empty pages', () => {

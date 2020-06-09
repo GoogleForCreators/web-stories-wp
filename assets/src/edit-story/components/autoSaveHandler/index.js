@@ -29,12 +29,17 @@ function AutoSaveHandler() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const {
-    state: {
-      story: { status },
-    },
-    actions: { saveStory },
-  } = useStory();
+  const { status, saveStory } = useStory(
+    ({
+      state: {
+        story: { status },
+      },
+      actions: { saveStory },
+    }) => ({
+      status,
+      saveStory,
+    })
+  );
 
   const isDraft = 'draft' === status;
 

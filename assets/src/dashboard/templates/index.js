@@ -43,6 +43,7 @@ export default function ({ assetsURL }) {
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
       pages: templates.beauty.pages,
+      version: templates.beauty.version,
     },
     {
       id: 2,
@@ -59,6 +60,7 @@ export default function ({ assetsURL }) {
       description:
         'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
       pages: templates.cooking.pages,
+      version: templates.cooking.version,
     },
     {
       id: 3,
@@ -76,6 +78,7 @@ export default function ({ assetsURL }) {
       description:
         'Mauris placerat velit ut nunc ornare porta. Integer auctor hendrerit aliquam. Proin egestas nisi et nisl commodo.',
       pages: templates.diy.pages,
+      version: templates.diy.version,
     },
     {
       id: 4,
@@ -91,6 +94,7 @@ export default function ({ assetsURL }) {
       description:
         'Nam a tellus tortor. Aenean non mi porta quam feugiat vehicula in a lectus. Suspendisse eget justo ac quam.',
       pages: templates.entertainment.pages,
+      version: templates.entertainment.version,
     },
     {
       id: 5,
@@ -107,6 +111,7 @@ export default function ({ assetsURL }) {
       description:
         'Duis auctor libero vel dui tincidunt, at mattis nisi placerat. Nam id lacinia lectus.',
       pages: templates.fashion.pages,
+      version: templates.fashion.version,
     },
     {
       id: 6,
@@ -121,6 +126,7 @@ export default function ({ assetsURL }) {
       description:
         'Quisque dignissim urna id lectus ultricies blandit. Cras laoreet pharetra lectus. Nunc mollis suscipit feugiat.',
       pages: templates.fitness.pages,
+      version: templates.fitness.version,
     },
     {
       id: 7,
@@ -136,6 +142,7 @@ export default function ({ assetsURL }) {
       description:
         'Vestibulum lobortis quis nunc eget pulvinar. Duis auctor eros quis dignissim iaculis.',
       pages: templates.travel.pages,
+      version: templates.travel.version,
     },
     {
       id: 8,
@@ -153,6 +160,7 @@ export default function ({ assetsURL }) {
       description:
         'In lorem est, aliquam tempus justo nec, tincidunt aliquet diam. Fusce ut nisl ex. Nam mollis dolor non arcu.',
       pages: templates.wellbeing.pages,
+      version: templates.wellbeing.version,
     },
   ];
 }

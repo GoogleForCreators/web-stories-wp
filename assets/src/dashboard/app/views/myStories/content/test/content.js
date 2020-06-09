@@ -89,7 +89,7 @@ describe('My Stories <Content />', function () {
       </LayoutProvider>
     );
 
-    expect(getAllByTestId('grid-item')).toHaveLength(fakeStories.length);
+    expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
   });
 
   it('should show "Create a story to get started!" if no stories are present.', function () {

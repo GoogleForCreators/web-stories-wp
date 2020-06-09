@@ -24,13 +24,13 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 
-import StoryGridView from '../storyGridView';
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
 import { STORY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import StoryGridView from '../storyGridView';
 
 export default {
-  title: 'Dashboard/Components/StoryGridView',
+  title: 'Dashboard/Views/Shared/StoryGridView',
   component: StoryGridView,
 };
 

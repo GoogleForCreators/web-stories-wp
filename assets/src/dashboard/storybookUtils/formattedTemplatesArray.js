@@ -21,7 +21,7 @@ import moment from 'moment';
 
 const formattedTemplatesArray = [
   {
-    bottomTargetAction: () => {},
+    version: 2,
     centerTargetAction: 'template-detail?id=2&isLocal=false',
     createdBy: 'Google Web Stories',
     description:
@@ -212,7 +212,7 @@ const formattedTemplatesArray = [
     title: 'Cooking',
   },
   {
-    bottomTargetAction: () => {},
+    version: 2,
     centerTargetAction: 'template-detail?id=2&isLocal=false',
     createdBy: 'Google Web Stories',
     description:
@@ -403,7 +403,7 @@ const formattedTemplatesArray = [
     title: 'Cooking',
   },
   {
-    bottomTargetAction: () => {},
+    version: 2,
     centerTargetAction: 'template-detail?id=2&isLocal=false',
     createdBy: 'Google Web Stories',
     description:
@@ -594,7 +594,7 @@ const formattedTemplatesArray = [
     title: 'Cooking',
   },
   {
-    bottomTargetAction: () => {},
+    version: 2,
     centerTargetAction: 'template-detail?id=2&isLocal=false',
     createdBy: 'Google Web Stories',
     description:
@@ -785,7 +785,7 @@ const formattedTemplatesArray = [
     title: 'Cooking',
   },
   {
-    bottomTargetAction: () => {},
+    version: 2,
     centerTargetAction: 'template-detail?id=2&isLocal=false',
     createdBy: 'Google Web Stories',
     description:
@@ -976,7 +976,7 @@ const formattedTemplatesArray = [
     title: 'Cooking',
   },
   {
-    bottomTargetAction: () => {},
+    version: 2,
     centerTargetAction: 'template-detail?id=2&isLocal=false',
     createdBy: 'Google Web Stories',
     description:
@@ -1167,7 +1167,7 @@ const formattedTemplatesArray = [
     title: 'Cooking',
   },
   {
-    bottomTargetAction: () => {},
+    version: 2,
     centerTargetAction: 'template-detail?id=2&isLocal=false',
     createdBy: 'Google Web Stories',
     description:
@@ -1358,7 +1358,7 @@ const formattedTemplatesArray = [
     title: 'Cooking',
   },
   {
-    bottomTargetAction: () => {},
+    version: 2,
     centerTargetAction: 'template-detail?id=2&isLocal=false',
     createdBy: 'Google Web Stories',
     description:
