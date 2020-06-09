@@ -186,14 +186,14 @@ function FontPickerContainer({ value, onSelect, onClose }) {
       if (key === 'Escape') {
         onClose();
       } else if (key === 'Enter') {
-        onSelect(fonts[currentOffset].name);
+        onSelect(matchingFonts[currentOffset].name);
       } else if (key === 'ArrowUp') {
         setCurrentOffset(Math.max(0, currentOffset - 1));
       } else if (key === 'ArrowDown') {
-        setCurrentOffset(Math.min(fonts.length - 1, currentOffset + 1));
+        setCurrentOffset(Math.min(matchingFonts.length - 1, currentOffset + 1));
       }
     },
-    [currentOffset, fonts, onClose, onSelect]
+    [currentOffset, matchingFonts, onClose, onSelect]
   );
 
   const itemRenderer = useCallback(
