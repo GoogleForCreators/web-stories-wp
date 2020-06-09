@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\KSES;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -126,7 +127,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function create_item( $request ) {
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ], 10, 2 );
+		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
+		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		$response = parent::create_item( $request );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
@@ -141,7 +143,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function update_item( $request ) {
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ], 10, 2 );
+		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
+		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		$response = parent::update_item( $request );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
@@ -182,7 +185,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
-	 * Filter the allowed tags for KSES to allow for amp-story children.
+	 * Filter the allowed tags for KSES to allow for complete amp-story document markup.
 	 *
 	 * @param array|string $allowed_tags Allowed tags.
 	 *
@@ -247,6 +250,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 				'template'     => true,
 			],
 			'amp-story-cta-layer'       => [],
+			'amp-animation'             => [],
 			'amp-img'                   => [
 				'alt'                       => true,
 				'attribution'               => true,
@@ -335,25 +339,34 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
-	 * Filters list of allowed CSS attributes.
+	 * Temporarily renames the style attribute to data-temp-style.
 	 *
-	 * @param string[] $attr Array of allowed CSS attributes.
-	 * @return array Filtered list of allowed CSS attributes.
+	 * @param string $post_content Post content.
+	 * @return string Filtered post content.
 	 */
-	public function filter_safe_style_css( $attr ) {
-		$allowed_in_stories = [
-			'top',
-			'right',
-			'bottom',
-			'left',
-			'opacity',
-			'white-space',
-			'font-family',
-		];
-
-		array_push( $attr, ...$allowed_in_stories );
-
-		return $attr;
+	public function filter_content_save_pre_before_kses( $post_content ) {
+		return (string) preg_replace_callback(
+			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
+			static function ( $matches ) {
+				return $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'];
+			},
+			$post_content
+		);
 	}
 
+	/**
+	 * Renames data-temp-style back to style and applies custom KSES filtering.
+	 *
+	 * @param string $post_content Post content.
+	 * @return string Filtered post content.
+	 */
+	public function filter_content_save_pre_after_kses( $post_content ) {
+		return (string) preg_replace_callback(
+			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
+			static function ( $matches ) {
+				return sprintf( ' style="%s"', esc_attr( wp_slash( KSES::safecss_filter_attr( wp_unslash( $matches['styles'] ) ) ) ) );
+			},
+			$post_content
+		);
+	}
 }
