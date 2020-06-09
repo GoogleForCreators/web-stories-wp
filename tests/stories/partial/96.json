@@ -52,8 +52,8 @@
             "headline": "",
             "title": "\u5f9e6\u670821\u65e5\u8d77\u63a5\u53d7\u7533\u8acb\uff0c2\u5468\u5f8c\u53ef\u6536\u5230\u6b3e\u9805\uff0c\u6700\u5feb\u53ef\u4ee5\u57287\u67088\u65e5\u64a5\u5165\u9280\u884c\u5e33\u6236\u6216\u6536\u5230\u652f\u7968\u3002",
             "keywords": "\u6b3e\u9805 \u7533\u8acb \u9280\u884c\u5e33\u6236 \u652f\u7968",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1096,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -88,7 +88,7 @@
             "background": null,
             "headline": "",
             "title": "\u7533\u8acb\u5230\u64a5\u6b3e\u4f5c\u696d\u9700\u66422\u5468\uff0c\u6700\u5feb\u57287\u67088\u65e5\u5c31\u80fd\u6536\u5230\u9322\u3002",
-            "keywords": null,
+            "keywords": "ALL:\u64a5\u6b3e\u4f5c\u696d|QUERY:\u64a5\u6b3e\u4f5c\u696d",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "FOCUS"
@@ -116,8 +116,8 @@
             "headline": "",
             "title": "\u9673\u8302\u6ce2\u6307\u51fa\uff0c\u5c0d\u65bc\u672a\u4f86\u662f\u5426\u300c\u52a0\u78bc\u300d\u518d\u589e\u767c1\u842c\u6e2f\u5143\uff0c\u76ee\u524d\u9810\u8a08\u9999\u6e2f\u7d93\u6fdf\u4e0d\u666f\u6c23\uff0c\u6d3e\u9322\u662f\u7528\u65bc\u7a69\u4f4f\u7d93\u6fdf\uff0c\u4f46\u4e0d\u53ef\u55ae\u9760\u6d3e\u9322\u3002",
             "keywords": "\u9999\u6e2f\u7d93\u6fdf\u4e0d\u666f\u6c23 \u6d3e\u9322 \u7d93\u6fdf \u52a0\u78bc\u300d \u9673\u8302\u6ce2",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1346,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -143,8 +143,8 @@
             "headline": "",
             "title": "\u81f3\u65bc\u6d3e\u9322\u5f8c\u5982\u4f55\u523a\u6fc0\u5e02\u6c11\u6d88\u8cbb\uff0c\u9673\u8302\u6ce2\u7a31\u6e2f\u653f\u8207\u96f6\u552e\u53ca\u9910\u98f2\u696d\u7b49\u6709\u806f\u7e6b\uff0c\u5c07\u63a8\u51fa\u9f13\u52f5\u8a08\u5283\u3002",
             "keywords": "\u9910\u98f2\u696d \u5e02\u6c11\u6d88\u8cbb \u6e2f\u653f \u9f13\u52f5\u8a08\u5283 \u9673\u8302\u6ce2",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 636,
+            "focal_y": 540,
             "layout": "FOCUS"
         }
     ]

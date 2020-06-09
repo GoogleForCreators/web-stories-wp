@@ -79,8 +79,8 @@
             "headline": "",
             "title": "\u75be\u7ba1\u5c40\u8607\u76ca\u4ec1\u524d\u5c40\u9577\u4e5f\u63d0\u51fa\u4ed6\u7684\u770b\u6cd5\uff1a\u4ed6\u8a8d\u70ba\u53f0\u7063\u53ea\u91dd\u5c0d\u78ba\u8a3a\u63a5\u89f8\u7b49\u9ad8\u98a8\u96aa\u63a1\u6aa2\uff0c\u9019\u6a23\u7684\u6a21\u5f0f\u7121\u6cd5\u8b49\u660e\u793e\u5340\u5167\u6c92\u6709\u7121\u75c7\u72c0\u611f\u67d3\u8005\uff0c\u6240\u4ee5\u79d1\u5b78\u4e0a\u7121\u6cd5\u904e\u95dc\u3002",
             "keywords": "\u9ad8\u98a8\u96aa\u63a1\u6aa2 \u7121\u75c7\u72c0\u611f\u67d3\u8005 \u53f0\u7063 \u75be\u7ba1\u5c40\u8607\u76ca\u4ec1 \u78ba\u8a3a\u63a5\u89f8",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 559,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -88,7 +88,7 @@
             "background": null,
             "headline": "",
             "title": "\u6211\u60f350\u5e7e\u5929\u5df2\u7d93\u5920\u4e45\u3001\u592a\u4e45\u592a\u4e45\u4e86\u3002",
-            "keywords": null,
+            "keywords": "ALL:|QUERY:",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "FOCUS"
@@ -116,8 +116,8 @@
             "headline": "",
             "title": "\u9673\u6642\u4e2d\u90e8\u9577\u8aaa\u6c92\u6709\u570b\u5bb6\u6703\u4e0d\u76f8\u4fe1\u53f0\u7063\u7684\u6aa2\u75ab\u8cc7\u6599\uff0c\u662f\u9019\u6a23\u9ebc\uff1f\n\u90a3\u53f0\u7063\u7684\u653f\u5e9c\u76f8\u4fe1\u81ea\u5df1\u7684\u6aa2\u75ab\u8cc7\u6599\u8207\u9632\u75ab\u6210\u679c\u9ebc\uff1f\n\u53f0\u7063\u7684\u4eba\u6c11\u76f8\u4fe1\u653f\u5e9c\u7684\u6aa2\u75ab\u8cc7\u6599\u8207\u9632\u75ab\u6210\u679c\u9ebc\uff1f\n\u5728\u6211\u770b\u4f86\u7b54\u6848\u90fd\u662f\u5426\u5b9a\u7684\uff0c\u81f3\u5c11\u5f9e\u884c\u70ba\u4e0a\u4f86\u5224\u65b7\u662f\u9019\u6a23\u7684\u3002",
             "keywords": "\u653f\u5e9c \u9632\u75ab\u6210\u679c \u53f0\u7063 \u9673\u6642\u4e2d\u90e8\u9577 \u6aa2\u75ab\u8cc7\u6599",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1250,
+            "focal_y": 540,
             "layout": "QUOTE"
         },
         {
@@ -143,8 +143,8 @@
             "headline": "",
             "title": "\u5982\u679c\u653f\u5e9c\u76f8\u4fe1\u81ea\u5df1\u7684\u6578\u64da\u8207\u6210\u679c\uff0c\u70ba\u4f55\u5728\u5df2\u7d9330\u300140\u300150\u5929\u6c92\u6709\u672c\u571f\u75c5\u4f8b\u5f8c\uff0c\u9084\u662f\u9019\u500b\u7981\u3001\u90a3\u500b\u7981\uff0c\u6c92\u6234\u53e3\u7f69\u9084\u662f\u9019\u88e1\u4e0d\u80fd\u53bb\u3001\u90a3\u88e1\u4e0d\u80fd\u53bb\u5462\uff1f",
             "keywords": "\u53e3\u7f69 \u653f\u5e9c \u672c\u571f\u75c5\u4f8b",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1020,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -170,8 +170,8 @@
             "headline": "",
             "title": "\u4eba\u6c11\u5c0d\u9632\u75ab\u6210\u679c\u4f3c\u6709\u4fdd\u7559",
             "keywords": "\u4eba\u6c11 \u9632\u75ab\u6210\u679c",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 847,
+            "focal_y": 540,
             "layout": "QUOTE"
         },
         {
@@ -197,8 +197,8 @@
             "headline": "",
             "title": "\u5982\u679c\u4fe1\uff0c\u70ba\u4f55\u5927\u90e8\u5206\u7684\u4eba\u4e0d\u8ad6\u5230\u54ea\u90fd\u6234\u8457\u53e3\u7f69\uff0c\u5373\u4f7f\u5728\u865f\u7a31\u5df2\u7d9350\u5929\u6c92\u6709\u672c\u571f\u75c5\u4f8b\u5f8c\u5462\uff1f",
             "keywords": "\u53e3\u7f69 \u75c5\u4f8b",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 655,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -224,8 +224,8 @@
             "headline": "",
             "title": "\u53f0\u7063\u9019\u7a2e\u7121\u8655\u4e0d\u7f69\u3001\u7121\u6642\u4e0d\u7f69\u7684\u60c5\u6cc1\u53ef\u662f\u4e0a\u81f3\u653f\u5e9c\u9ad8\u5b98\u4e0b\u81f3\u4e00\u822c\u8001\u767e\u59d3\uff0c\u5728\u865f\u7a3150\u5e7e\u5929\u6c92\u6709\u672c\u571f\u75c5\u4f8b\u5f8c\uff0c\u9019\u4e0d\u8352\u7e46\u9ebc\uff1f",
             "keywords": "\u653f\u5e9c\u9ad8\u5b98 \u53f0\u7063 \u75c5\u4f8b \u7121\u6642\u4e0d\u7f69 \u7121\u8655\u4e0d\u7f69 \u8001\u767e\u59d3",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 559,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -251,8 +251,8 @@
             "headline": "",
             "title": "\u65b0\u805e\u7167\u7247\u4e2d\u5750\u4e86\u82f1\u570b\u4ee3\u8868\u3001\u7ffb\u8b6f\u3001\u8521\u7e3d\u7d71\u3001\u8207\u570b\u5b89\u6703\u79d8\u66f8\u9577\u56db\u500b\u4eba\uff0c\u6bcf\u500b\u4eba\u90fd\u76f8\u8ddd1-2\u516c\u5c3a\uff0c\u6709\u8da3\u7684\u662f\u6bcf\u500b\u4eba\u90fd\u6234\u4e86\u53e3\u7f69\uff01",
             "keywords": "\u8521\u7e3d\u7d71 \u65b0\u805e\u7167\u7247 \u82f1\u570b\u4ee3\u8868 \u53e3\u7f69 \u570b\u5b89\u6703\u79d8\u66f8\u9577 \u7ffb\u8b6f",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1173,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -278,8 +278,8 @@
             "headline": "",
             "title": "\u5982\u679c\u4ed6\u665a\u4e0a\u770b\u65b0\u805e\uff0c\u807d\u5230\u53f0\u7063\u5df2\u7d9350\u591a\u5929\u6c92\u6709\u65b0\u75c5\u4f8b\u4e86\uff0c\u4f60\u89ba\u5f97\u4ed6\u8a72\u4fe1\u9084\u662f\u4e0d\u4fe1\u5462\uff1f",
             "keywords": "\u53f0\u7063 \u65b0\u805e \u65b0\u75c5\u4f8b",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 616,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -305,8 +305,8 @@
             "headline": "",
             "title": "\u5c31\u500b\u4eba\u8a00\uff0c\u6216\u8a31\u6211\u5011\u7fd2\u6163\u5225\u4eba\u544a\u8a34\u6211\u5011\u600e\u9ebc\u505a\uff0c\u7fd2\u6163\u4ee5\u524d\u600e\u9ebc\u505a\uff0c\u800c\u4e0d\u662f\u601d\u8003\u73fe\u5728\u8a72\u600e\u9ebc\u505a\u5427\u3002",
             "keywords": "\u7fd2\u6163\u5225\u4eba \u7fd2\u6163",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1000,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -332,8 +332,8 @@
             "headline": "",
             "title": "\u4e8b\u5be6\u4e0a\uff0c\u500b\u4eba\u722d\u624e\u4e86\u5f88\u4e45\u624d\u6c7a\u5b9a\u5beb\u9019\u7bc7\u8207\u300c\u5927\u90e8\u5206\u6234\u53e3\u7f69\u7684\u53f0\u7063\u4eba\u300d\u70ba\u6575\u7684\u6587\u7ae0\uff0c\u9084\u662f\u53ea\u80fd\u8aaa\u4e8b\u5be6\u5c31\u662f\u4e8b\u5be6\u3002",
             "keywords": "\u6587\u7ae0 \u6234\u53e3\u7f69\u7684\u53f0\u7063\u4eba",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1288,
+            "focal_y": 540,
             "layout": "QUOTE"
         }
     ]

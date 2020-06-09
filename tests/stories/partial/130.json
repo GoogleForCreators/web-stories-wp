@@ -79,8 +79,8 @@
             "headline": "\u7cbe\u6e96\u6253\u626e\uff0c\u6436\u4f54\u5148\u6a5f\uff01",
             "title": "\u6240\u4ee5\u8aaa\uff0c\u6293\u4f4f\u5c0d\u65b9\u7684\u6ce8\u610f\u529b\uff0c\u4e26\u4e14\u4e0d\u8b93\u5c0d\u65b9\u6709\u885d\u7a81\u7684\u611f\u53d7\uff0c\u8b93\u4f60\u66f4\u5bb9\u6613\u5730\u8aaa\u670d\u5c0d\u65b9\uff01",
             "keywords": "\u7cbe\u6e96\u6253\u626e \u6436\u4f54\u5148\u6a5f \u5c0d\u65b9",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1116,
+            "focal_y": 540,
             "layout": "QUOTE"
         },
         {
@@ -106,8 +106,8 @@
             "headline": "\u4e0d\u8981\u518d\u6ed4\u6ed4\u4e0d\u7d55\uff01\n\u7528\u5fc3\u50be\u807d\u5c0b\u627e\u771f\u6b63\u9700\u6c42",
             "title": "\u4ee5\u4e0b\u6574\u7406\u51faLISTEN\u6cd5\u5247\u76846\u500b\u50be\u807d\u5c0f\u6487\u6b65\u3002",
             "keywords": "\u50be\u807d\u5c0f\u6487\u6b65 LISTEN\u6cd5\u5247 \u7528\u5fc3\u50be\u807d\u5c0b\u627e",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1346,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -115,7 +115,7 @@
             "background": null,
             "headline": "",
             "title": "everything else - \u5ffd\u7565\u5176\u4ed6\u4e8b",
-            "keywords": null,
+            "keywords": "ALL:|QUERY:",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "FOCUS"
@@ -143,8 +143,8 @@
             "headline": "",
             "title": "judgement - \u4e0d\u8981\u6253\u65b7\u4ed6\u4eba\uff0c\u5984\u81ea\u505a\u4e0b\u8a55\u65b7",
             "keywords": "judgement -",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1346,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -152,7 +152,7 @@
             "background": null,
             "headline": "",
             "title": "\u5f15\u5c0e\u5c0d\u65b9\u8aaa\u51fa\u60f3\u6cd5\uff0c\u4e0d\u8f15\u6613\u6253\u65b7",
-            "keywords": null,
+            "keywords": "ALL:|QUERY:",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "QUOTE"
@@ -180,8 +180,8 @@
             "headline": "",
             "title": "about it - \u4e0d\u8981\u7d93\u5e38\u628a\u300c\u53ef\u662f\u300d\u639b\u5634\u908a",
             "keywords": "about it \u53ef\u662f",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 981,
+            "focal_y": 540,
             "layout": "QUOTE"
         }
     ]
