@@ -93,13 +93,14 @@ function combineElements(state, { firstId, firstElement, secondId }) {
   const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
 
   const newElement = {
-    // First copy everything from existing element except if it was default background
-    ...objectWithout(secondElement, ['isDefaultBackground']),
+    // First copy everything from existing element except if it was default background and any overlay
+    ...objectWithout(secondElement, [
+      'isDefaultBackground',
+      'backgroundOverlay',
+    ]),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
     flip: {},
-    // Always clear overlay, as it follows the element, not the page
-    backgroundOverlay: null,
     // Then copy all media-related attributes from new element
     ...mediaProps,
     // Only copy position properties for backgrounds, as they're ignored while being background

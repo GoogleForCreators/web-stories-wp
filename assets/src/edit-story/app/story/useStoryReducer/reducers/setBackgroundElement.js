@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import objectWithout from '../../../../utils/objectWithout';
 import { moveArrayElement } from './utils';
 
 /**
@@ -57,11 +58,7 @@ function setBackgroundElement(state, { elementId }) {
     // Unset isBackground and backgroundOverlay for the element, too.
     const elementsWithoutBackground = page.elements.map((element) => {
       if (element.isBackground) {
-        return {
-          ...element,
-          backgroundOverlay: null,
-          isBackground: false,
-        };
+        return objectWithout(element, ['backgroundOverlay', 'isBackground']);
       }
       return element;
     });
