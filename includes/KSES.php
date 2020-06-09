@@ -402,7 +402,9 @@ class KSES {
 				'template'     => true,
 			],
 			'amp-story-cta-layer'       => [],
-			'amp-animation'             => [],
+			'amp-story-animation'       => [
+				'trigger' => true,
+			],
 			'amp-img'                   => [
 				'alt'                       => true,
 				'attribution'               => true,
