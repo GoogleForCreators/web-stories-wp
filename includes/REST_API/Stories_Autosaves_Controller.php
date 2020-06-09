@@ -64,10 +64,12 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		parent::__construct( $parent_post_type );
 
 		$post_type_object  = get_post_type_object( $parent_post_type );
+		$this->parent_base = $parent_post_type;
 		$parent_controller = null;
 
 		if ( $post_type_object instanceof \WP_Post_Type ) {
 			$parent_controller = $post_type_object->get_rest_controller();
+			$this->parent_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 		}
 
 		if ( ! $parent_controller ) {
@@ -75,7 +77,6 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		}
 
 		$this->parent_controller = $parent_controller;
-		$this->parent_base       = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 	}
 
 	/**
