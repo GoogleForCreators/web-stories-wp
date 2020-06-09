@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-async function previewStory( editorPage) {
+async function previewStory(editorPage) {
   let openTabs = await browser.pages();
   const expectedTabsCount = openTabs.length + 1;
   await expect(editorPage).toClick('button', { text: 'Preview' });
