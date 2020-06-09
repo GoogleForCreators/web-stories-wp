@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Numeric, Row, ToggleButton } from '../../form';
+import { Numeric, Row, ToggleButton, usePresubmitHandler } from '../../form';
 import { ReactComponent as VerticalOffset } from '../../../icons/offset_vertical.svg';
 import { ReactComponent as HorizontalOffset } from '../../../icons/offset_horizontal.svg';
 import { ReactComponent as LeftAlign } from '../../../icons/left_align.svg';
@@ -42,7 +43,20 @@ import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.s
 import { getCommonValue } from '../utils';
 import { useFont } from '../../../app/font';
 import stripHTML from '../../../utils/stripHTML';
+import setMinMax from '../../../utils/setMinMax';
+import validateMinMax from '../../../utils/validateMinMax';
 import useRichTextFormatting from './useRichTextFormatting';
+
+const MIN_MAX = {
+  LINE_HEIGHT: {
+    MIN: 0.5,
+    MAX: 10,
+  },
+  LETTER_SPACING: {
+    MIN: 0,
+    MAX: 300,
+  },
+};
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -80,15 +94,34 @@ function StylePanel({ selectedElements, pushUpdate }) {
     },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
+  const setLetterSpacingMinMax = useCallback(
+    (value) => {
+      if (!validateMinMax(value, MIN_MAX.LETTER_SPACING)) {
+        return handleSetLetterSpacing(setMinMax(value, MIN_MAX.LETTER_SPACING));
+      }
+
+      return handleSetLetterSpacing(value);
+    },
+    [handleSetLetterSpacing]
+  );
+
+  usePresubmitHandler(({ lineHeight: newLineHeight }) => {
+    return {
+      lineHeight: setMinMax(newLineHeight, MIN_MAX.LINE_HEIGHT),
+    };
+  }, []);
+
   return (
     <>
       <Row>
         <ExpandedNumeric
           aria-label={__('Line-height', 'web-stories')}
           float={true}
-          value={lineHeight || 0}
+          value={lineHeight}
           suffix={<VerticalOffset />}
           onChange={(value) => pushUpdate({ lineHeight: value })}
+          min={MIN_MAX.LINE_HEIGHT.MIN}
+          max={MIN_MAX.LINE_HEIGHT.MAX}
         />
         <Space />
         <ExpandedNumeric
@@ -96,7 +129,9 @@ function StylePanel({ selectedElements, pushUpdate }) {
           value={letterSpacing}
           suffix={<HorizontalOffset />}
           symbol="%"
-          onChange={handleSetLetterSpacing}
+          onChange={setLetterSpacingMinMax}
+          min={MIN_MAX.LETTER_SPACING.MIN}
+          max={MIN_MAX.LETTER_SPACING.MAX}
         />
       </Row>
       <Row>
