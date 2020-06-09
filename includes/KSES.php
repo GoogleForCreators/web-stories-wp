@@ -517,7 +517,7 @@ class KSES {
 		return (string) preg_replace_callback(
 			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
 			function ( $matches ) {
-				return sprintf( ' style="%s"', esc_attr( wp_slash( $this->safecss_filter_attr( wp_unslash( $matches['styles'] ) ) ) ) );
+				return sprintf( ' style="%s"', esc_attr( (string) wp_slash( $this->safecss_filter_attr( (string) wp_unslash( $matches['styles'] ) ) ) ) );
 			},
 			$post_content
 		);
