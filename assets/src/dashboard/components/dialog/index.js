@@ -73,7 +73,7 @@ const DialogActions = styled.div`
   padding: 0;
 
   & > button {
-    margin: 0 10px;
+    margin-right: 10px;
     &:last-of-type {
       margin-right: 0;
     }

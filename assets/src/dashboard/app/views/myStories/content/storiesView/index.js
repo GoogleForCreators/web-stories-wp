@@ -48,6 +48,7 @@ import {
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
 
+const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
   filterValue,
   sort,
@@ -61,14 +62,14 @@ function StoriesView({
   const enableInProgressStoryActions = useFeature(
     'enableInProgressStoryActions'
   );
-  const [activeModal, setActiveModal] = useState('');
+  const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
 
   useEffect(() => {
-    if (!activeModal) {
+    if (!activeDialog) {
       setActiveStory(null);
     }
-  }, [activeModal, setActiveStory]);
+  }, [activeDialog, setActiveStory]);
 
   const handleOnRenameStory = useCallback(
     (story, newTitle) => {
@@ -98,8 +99,8 @@ function StoriesView({
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-          setActiveModal('DELETE_STORY');
           setActiveStory(story);
+          setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
           break;
 
         default:
@@ -168,17 +169,17 @@ function StoriesView({
   return (
     <>
       {ActiveView}
-      {activeModal === 'DELETE_STORY' && (
+      {activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory && (
         <Dialog
           isOpen={true}
-          contentLabel={__('Modal to confirm deleting a story', 'web-stories')}
+          contentLabel={__('Dialog to confirm deleting a story', 'web-stories')}
           title={__('Delete Story', 'web-stories')}
-          onClose={() => setActiveModal('')}
+          onClose={() => setActiveDialog('')}
           actions={
             <>
               <Button
                 type={BUTTON_TYPES.DEFAULT}
-                onClick={() => setActiveModal('')}
+                onClick={() => setActiveDialog('')}
               >
                 {__('Cancel', 'web-stories')}
               </Button>
@@ -186,7 +187,7 @@ function StoriesView({
                 type={BUTTON_TYPES.CTA}
                 onClick={() => {
                   storyActions.trashStory(activeStory);
-                  setActiveModal('');
+                  setActiveDialog('');
                 }}
               >
                 {__('Delete', 'web-stories')}
