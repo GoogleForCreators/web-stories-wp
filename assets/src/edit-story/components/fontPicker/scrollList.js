@@ -101,10 +101,6 @@ function ScrollList({
     }
 
     if (currentOffset === -1) {
-      // Just focus first node
-      if (itemRefs.current.length > 0) {
-        itemRefs.current[0].focus();
-      }
       return;
     }
 
@@ -127,7 +123,13 @@ function ScrollList({
       ref={ref}
     >
       {items.map((item, index) => (
-        <Item ref={setRef(index)} key={index}>
+        <Item
+          ref={setRef(index)}
+          key={index}
+          aria-posinset={index + 1}
+          aria-selected={currentOffset === index}
+          aria-setsize={numItems}
+        >
           {itemRenderer(item)}
         </Item>
       ))}

@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useDebouncedCallback } from 'use-debounce/lib';
 import useFocusOut from '../../utils/useFocusOut';
 import { ReactComponent as Checkmark } from '../../icons/checkmark.svg';
 import { useFont } from '../../app/font';
@@ -150,21 +151,34 @@ function FontPickerContainer({ value, onSelect, onClose }) {
     fonts.findIndex(({ name }) => name === value)
   );
 
-  const matchingFonts = useMemo(() => {
-    if (searchKeyword.trim() === '') {
-      return fonts;
-    }
-    const _matchingFonts = fonts.filter(({ name }) =>
-      name.toLowerCase().includes(searchKeyword.toLowerCase())
-    );
-    if (_matchingFonts.length === 0) {
-      setCurrentOffset(-1);
-    }
-    return _matchingFonts;
-  }, [fonts, searchKeyword]);
+  const [matchingFonts, setMatchingFonts] = useState(fonts);
 
-  const handleSearchInputChanged = useCallback(({ target }) => {
-    setSearchKeyword(target.value);
+  const [updateMatchingFonts] = useDebouncedCallback(
+    () => {
+      if (searchKeyword.trim() === '') {
+        setMatchingFonts(fonts);
+        return;
+      }
+      const _matchingFonts = fonts.filter(({ name }) =>
+        name.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+      setMatchingFonts(_matchingFonts);
+    },
+    250,
+    {},
+    [searchKeyword, fonts]
+  );
+
+  const handleSearchInputChanged = useCallback(
+    ({ target }) => {
+      setSearchKeyword(target.value);
+      updateMatchingFonts();
+    },
+    [updateMatchingFonts]
+  );
+
+  const handleInputFocus = useCallback(() => {
+    setCurrentOffset(-1);
   }, []);
 
   const handleKeyPress = useCallback(
@@ -172,14 +186,14 @@ function FontPickerContainer({ value, onSelect, onClose }) {
       if (key === 'Escape') {
         onClose();
       } else if (key === 'Enter') {
-        onSelect(fonts[currentOffset].name);
+        onSelect(matchingFonts[currentOffset].name);
       } else if (key === 'ArrowUp') {
         setCurrentOffset(Math.max(0, currentOffset - 1));
       } else if (key === 'ArrowDown') {
-        setCurrentOffset(Math.min(fonts.length - 1, currentOffset + 1));
+        setCurrentOffset(Math.min(matchingFonts.length - 1, currentOffset + 1));
       }
     },
-    [currentOffset, fonts, onClose, onSelect]
+    [currentOffset, matchingFonts, onClose, onSelect]
   );
 
   const itemRenderer = useCallback(
@@ -204,13 +218,18 @@ function FontPickerContainer({ value, onSelect, onClose }) {
     <PickerContainer ref={ref}>
       <SearchInput
         type="search"
+        aria-expanded={Boolean(matchingFonts.length)}
+        aria-autocomplete="list"
+        aria-owns="editor-font-picker-list"
         value={searchKeyword}
         onKeyDown={handleKeyPress}
+        onFocus={handleInputFocus}
         placeholder={__('Search', 'web-stories')}
         onChange={handleSearchInputChanged}
       />
       {matchingFonts.length ? (
         <List
+          id="editor-font-picker-list"
           onKeyDown={handleKeyPress}
           items={matchingFonts}
           onScroll={handleScroll}
