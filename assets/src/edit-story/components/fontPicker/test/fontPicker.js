@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -159,12 +159,14 @@ describe('Font Picker', () => {
     expect(queryAllByRole('option')).toHaveLength(fontsListResponse.length);
 
     act(() => {
-      fireEvent.change(getByRole('textbox'), {
+      fireEvent.change(getByRole('combobox'), {
         target: { value: 'Yrsa' },
       });
     });
 
-    expect(queryAllByRole('option')).toHaveLength(1);
+    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(1), {
+      timeout: 500,
+    });
   });
 
   it('should show an empty list when the search keyword has no results.', async () => {
@@ -176,11 +178,13 @@ describe('Font Picker', () => {
     expect(queryAllByRole('option')).toHaveLength(fontsListResponse.length);
 
     act(() => {
-      fireEvent.change(getByRole('textbox'), {
+      fireEvent.change(getByRole('combobox'), {
         target: { value: 'Not a font!' },
       });
     });
 
-    expect(queryAllByRole('option')).toHaveLength(0);
+    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(0), {
+      timeout: 500,
+    });
   });
 });

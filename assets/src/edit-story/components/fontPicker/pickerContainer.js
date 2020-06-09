@@ -218,6 +218,7 @@ function FontPickerContainer({ value, onSelect, onClose }) {
     <PickerContainer ref={ref}>
       <SearchInput
         type="search"
+        role="combobox"
         aria-expanded={Boolean(matchingFonts.length)}
         aria-autocomplete="list"
         aria-owns="editor-font-picker-list"
