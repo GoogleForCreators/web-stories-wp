@@ -145,8 +145,6 @@ class Media {
 	 *
 	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
 	 *
-	 * @since 1.2.1
-	 *
 	 * @param int|\WP_Post|null $post Post.
 	 * @return string[] Images.
 	 */
@@ -374,8 +372,6 @@ class Media {
 		 *
 		 * This can be used to add additionally supported formats, for example by plugins
 		 * that do video transcoding.
-		 *
-		 * @since 1.3
 		 *
 		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */

@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Fonts_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
+use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
 use WP_Post;
 
 /**
@@ -48,15 +49,8 @@ class Plugin {
 		add_action( 'init', [ Template_Post_Type::class, 'init' ] );
 
 		// REST API endpoints.
-
-		$fonts_controller = new Fonts_Controller();
-		add_action( 'rest_api_init', [ $fonts_controller, 'register_routes' ] );
-
-		$link_controller = new Link_Controller();
-		add_action( 'rest_api_init', [ $link_controller, 'register_routes' ] );
-
-		$embed_controller = new Embed_Controller();
-		add_action( 'rest_api_init', [ $embed_controller, 'register_routes' ] );
+		// High priority so it runs after create_initial_rest_routes()
+		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
 		// Dashboard.
 		$dashboard = new Dashboard();
@@ -75,6 +69,28 @@ class Plugin {
 		add_action( 'init', [ $discovery, 'init' ] );
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+	}
+
+	/**
+	 * Registers REST API routes.
+	 *
+	 * @return void
+	 */
+	public function register_rest_routes() {
+		$fonts_controller = new Fonts_Controller();
+		$fonts_controller->register_routes();
+
+		$link_controller = new Link_Controller();
+		$link_controller->register_routes();
+
+		$embed_controller = new Embed_Controller();
+		$embed_controller->register_routes();
+
+		$templates_autosaves = new Stories_Autosaves_Controller( Template_Post_Type::POST_TYPE_SLUG );
+		$templates_autosaves->register_routes();
+
+		$stories_autosaves = new Stories_Autosaves_Controller( Story_Post_Type::POST_TYPE_SLUG );
+		$stories_autosaves->register_routes();
 	}
 
 	/**

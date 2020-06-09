@@ -33,6 +33,30 @@ namespace Google\Web_Stories;
  */
 class KSES {
 	/**
+	 * Initializes KSES filters for stories.
+	 *
+	 * @return void
+	 */
+	public function init() {
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
+		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+	}
+
+	/**
+	 * Restores original KSES behavior.
+	 *
+	 * @return void
+	 */
+	public function remove_filters() {
+		remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10 );
+		remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
+		remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
+		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+	}
+
+	/**
 	 * Filters an inline style attribute and removes disallowed rules.
 	 *
 	 * This is equivalent to the WordPress core function of the same name,

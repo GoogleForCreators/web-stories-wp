@@ -128,12 +128,9 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function create_item( $request ) {
 		$kses = new KSES();
-		add_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ], 10, 2 );
-		add_filter( 'content_save_pre', [ $kses, 'filter_content_save_pre_before_kses' ], 0 );
-		add_filter( 'content_save_pre', [ $kses, 'filter_content_save_pre_after_kses' ], 20 );
-		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		$kses->init();
 		$response = parent::create_item( $request );
-		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		$kses->remove_filters();
 		return $response;
 	}
 
@@ -146,12 +143,9 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function update_item( $request ) {
 		$kses = new KSES();
-		add_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ], 10, 2 );
-		add_filter( 'content_save_pre', [ $kses, 'filter_content_save_pre_before_kses' ], 0 );
-		add_filter( 'content_save_pre', [ $kses, 'filter_content_save_pre_after_kses' ], 20 );
-		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		$kses->init();
 		$response = parent::update_item( $request );
-		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		$kses->remove_filters();
 		return $response;
 	}
 
