@@ -32,8 +32,8 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useAPI } from '../../../../app/api';
 import Dialog from '../../../../components/dialog';
 import { Plain, Primary } from '../../../../components/button';
+import { useMedia } from '../../../../app/media';
 import { useSnackbar } from '../../../../app/snackbar';
-import UseMedia from '../../../../app/media/useMedia';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 
 const styledMediaThumbnail = css`
@@ -136,9 +136,9 @@ function MediaEditDialog({ resource, onClose }) {
   const {
     actions: { updateMedia },
   } = useAPI();
-  const {
-    actions: { updateMediaElement },
-  } = UseMedia();
+  const { updateMediaElement } = useMedia((state) => ({
+    updateMediaElement: state.actions.updateMediaElement,
+  }));
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
 

@@ -44,19 +44,34 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
+  const { updateSelectedElements, deleteSelectedElements } = useStory(
+    (state) => ({
+      updateSelectedElements: state.actions.updateSelectedElements,
+      deleteSelectedElements: state.actions.deleteSelectedElements,
+    })
+  );
   const {
-    actions: { updateSelectedElements, deleteSelectedElements },
-  } = useStory();
-  const {
-    state: {
-      pageSize: { width: canvasWidth, height: canvasHeight },
-      nodesById,
-      fullbleedContainer,
-    },
-  } = useCanvas();
-  const {
-    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
-  } = useUnits();
+    canvasWidth,
+    canvasHeight,
+    nodesById,
+    fullbleedContainer,
+  } = useCanvas(
+    ({
+      state: {
+        pageSize: { width: canvasWidth, height: canvasHeight },
+        nodesById,
+        fullbleedContainer,
+      },
+    }) => ({ canvasWidth, canvasHeight, nodesById, fullbleedContainer })
+  );
+  const { getBox, editorToDataX, editorToDataY, dataToEditorY } = useUnits(
+    ({ actions: { getBox, editorToDataX, editorToDataY, dataToEditorY } }) => ({
+      getBox,
+      editorToDataX,
+      editorToDataY,
+      dataToEditorY,
+    })
+  );
   const {
     actions: { pushTransform },
   } = useTransform();

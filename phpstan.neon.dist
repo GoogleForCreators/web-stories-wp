@@ -6,7 +6,7 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - includes/
-  autoload_files:
+  bootstrapFiles:
     - tests/phpstan/bootstrap.php
     - includes/namespace.php
   ignoreErrors:
