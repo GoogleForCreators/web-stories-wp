@@ -261,10 +261,10 @@ function MediaPane(props) {
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   let container = null;
   const refContainer = (element) => {
+    container = element;
     if (!element) {
       return;
     }
-    container = element;
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
@@ -286,7 +286,7 @@ function MediaPane(props) {
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: { current: container },
+      root: container,
       rootMargin: '0px 0px 300px 0px',
     },
     (entry) => {
