@@ -18,14 +18,13 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
+import { defaultUnit } from '../../utils/defaultUnit';
 import SimpleAnimation from '../simpleAnimation';
 
 const defaults = {
   fill: 'forwards',
   duration: 1000,
 };
-
-const defaultPx = (input) => (/\d$/.test(input) ? `${input}px` : input);
 
 export function AnimationMove({
   overflowHidden = false,
@@ -41,7 +40,7 @@ export function AnimationMove({
   const animationName = `x-${offsetX}-y-${offsetY}-${ANIMATION_TYPES.MOVE}`;
   const keyframes = {
     transform: [
-      `translate(${defaultPx(offsetX)}, ${defaultPx(offsetY)})`,
+      `translate(${defaultUnit(offsetX, 'px')}, ${defaultUnit(offsetY, 'px')})`,
       'translate(0%, 0%)',
     ],
   };

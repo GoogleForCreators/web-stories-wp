@@ -34,6 +34,12 @@ export const DIRECTION = {
   RIGHT_TO_LEFT: 'rightToLeft',
 };
 
+export const ROTATION = {
+  CLOCKWISE: 'clockwise',
+  COUNTER_CLOCKWISE: 'counterClockwise',
+  PING_PONG: 'pingPong',
+};
+
 export const AXIS = {
   X: 'x',
   Y: 'y',

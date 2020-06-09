@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
+import { defaultUnit } from '../../utils/defaultUnit';
 import SimpleAnimation from '../simpleAnimation';
 
 const defaults = {
@@ -33,8 +34,8 @@ export function AnimationSpin({ rotation = 0, ...args }) {
 
   const animationName = `rot-${rotation}-${ANIMATION_TYPES.SPIN}`;
   const keyframes = [
+    { transform: `rotateZ(${defaultUnit(rotation, 'deg')})` },
     { transform: 'rotateZ(0deg)' },
-    { transform: `rotateZ(${rotation}deg)` },
   ];
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
