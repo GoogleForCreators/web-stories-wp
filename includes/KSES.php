@@ -47,7 +47,7 @@ class KSES {
 	 *
 	 * @return string Filtered string of CSS rules.
 	 */
-	public static function safecss_filter_attr( $css ) {
+	public function safecss_filter_attr( $css ) {
 		$css = wp_kses_no_null( $css );
 		$css = str_replace( [ "\n", "\r", "\t" ], '', $css );
 
@@ -238,7 +238,7 @@ class KSES {
 	 *
 	 * @return array|string Allowed tags.
 	 */
-	public static function filter_kses_allowed_html( $allowed_tags ) {
+	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! is_array( $allowed_tags ) ) {
 			return $allowed_tags;
 		}
@@ -383,5 +383,38 @@ class KSES {
 		}
 
 		return $allowed_tags;
+	}
+
+
+	/**
+	 * Temporarily renames the style attribute to data-temp-style in full story markup.
+	 *
+	 * @param string $post_content Post content.
+	 * @return string Filtered post content.
+	 */
+	public function filter_content_save_pre_before_kses( $post_content ) {
+		return (string) preg_replace_callback(
+			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
+			static function ( $matches ) {
+				return $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'];
+			},
+			$post_content
+		);
+	}
+
+	/**
+	 * Renames data-temp-style back to style  in full story markup and applies custom KSES filtering.
+	 *
+	 * @param string $post_content Post content.
+	 * @return string Filtered post content.
+	 */
+	public function filter_content_save_pre_after_kses( $post_content ) {
+		return (string) preg_replace_callback(
+			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
+			static function ( $matches ) {
+				return sprintf( ' style="%s"', esc_attr( wp_slash( KSES::safecss_filter_attr( wp_unslash( $matches['styles'] ) ) ) ) );
+			},
+			$post_content
+		);
 	}
 }

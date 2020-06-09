@@ -127,9 +127,10 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function create_item( $request ) {
-		add_filter( 'wp_kses_allowed_html', [ KSES::class, 'filter_kses_allowed_html' ], 10, 2 );
-		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
+		$kses = new KSES();
+		add_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'content_save_pre', [ $kses, 'filter_content_save_pre_before_kses' ], 0 );
+		add_filter( 'content_save_pre', [ $kses, 'filter_content_save_pre_after_kses' ], 20 );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		$response = parent::create_item( $request );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
@@ -144,9 +145,10 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function update_item( $request ) {
-		add_filter( 'wp_kses_allowed_html', [ KSES::class, 'filter_kses_allowed_html' ], 10, 2 );
-		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
+		$kses = new KSES();
+		add_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'content_save_pre', [ $kses, 'filter_content_save_pre_before_kses' ], 0 );
+		add_filter( 'content_save_pre', [ $kses, 'filter_content_save_pre_after_kses' ], 20 );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		$response = parent::update_item( $request );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
@@ -184,37 +186,5 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$this->schema = $schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
-	}
-
-	/**
-	 * Temporarily renames the style attribute to data-temp-style.
-	 *
-	 * @param string $post_content Post content.
-	 * @return string Filtered post content.
-	 */
-	public function filter_content_save_pre_before_kses( $post_content ) {
-		return (string) preg_replace_callback(
-			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
-			static function ( $matches ) {
-				return $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'];
-			},
-			$post_content
-		);
-	}
-
-	/**
-	 * Renames data-temp-style back to style and applies custom KSES filtering.
-	 *
-	 * @param string $post_content Post content.
-	 * @return string Filtered post content.
-	 */
-	public function filter_content_save_pre_after_kses( $post_content ) {
-		return (string) preg_replace_callback(
-			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
-			static function ( $matches ) {
-				return sprintf( ' style="%s"', esc_attr( wp_slash( KSES::safecss_filter_attr( wp_unslash( $matches['styles'] ) ) ) ) );
-			},
-			$post_content
-		);
 	}
 }
