@@ -1,0 +1,100 @@
+{
+    "author": 1,
+    "director": "StoryDirector",
+    "pages": [
+        {
+            "id": 342,
+            "background": {
+                "id": 3726201,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/1617c471a3ca5865a8ae52aea05cfa9ced5ef330.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 477,
+                "height": 358,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/1617c471a3ca5865a8ae52aea05cfa9ced5ef330.jpg",
+                "url": "https://imgcdn.cna.com.tw/www/webphotos/WebCover/800/20200608/477x358_938653274298.jpg",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u9ec3\u8377\u5a77\u5c07\u4efb\u4ea4\u901a\u90e8\u4e3b\u79d8  20\u5e74\u4f86\u9996\u540d\u5973\u6027",
+            "keywords": null,
+            "focal_x": 211,
+            "focal_y": 179,
+            "layout": "COVER"
+        },
+        {
+            "id": 343,
+            "background": null,
+            "headline": "",
+            "title": "\u4ea4\u901a\u90e8\u4eba\u4e8b\u7570\u52d5\u62cd\u677f\uff0c\u4ea4\u901a\u90e8\u8868\u793a\uff0c\u4e3b\u79d8\u5c07\u7531\u9ec3\u8377\u5a77\u8abf\u4efb\uff0c\u6210\u70ba\u4ea4\u901a\u90e8\u8fd120\u5e74\u4f86\u9996\u540d\u5973\u6027\u4e3b\u79d8\uff0c\u7e3d\u52d9\u53f8\u9577\u7531\u9ec3\u5b9a\u74b0\u8abf\u4efb\uff0c\u76f8\u95dc\u4eba\u4e8b\u6848\u5df2\u7372\u884c\u653f\u9662\u6838\u5b9a\uff0c\u660e\u5929\u8d77\u6b63\u5f0f\u751f\u6548\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 344,
+            "background": {
+                "id": 3724573,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/1617c471a3ca5865a8ae52aea05cfa9ced5ef330.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 477,
+                "height": 358,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/1617c471a3ca5865a8ae52aea05cfa9ced5ef330.jpg",
+                "url": "https://imgcdn.cna.com.tw/www/webphotos/WebCover/800/20200608/477x358_938653274298.jpg",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u9ec3\u8377\u5a77\u73fe\u5e7446\u6b72\uff0c\u570b\u7acb\u4e2d\u8208\u5927\u5b78\u6cd5\u5f8b\u7814\u7a76\u6240\u78a9\u58eb\uff0c87\u5e74\u516c\u52d9\u4eba\u54e1\u9ad8\u7b49\u8003\u8a66\u4e09\u7d1a\u8003\u8a66\u6cd5\u5236\u985e\u79d1\u53ca\u683c\uff0c\u6b77\u4efb\u52de\u52d5\u90e8\u526f\u53f8\u9577\u3001\u53f0\u4e2d\u5e02\u653f\u5e9c\u52de\u5de5\u5c40\u9577\u3001\u7d93\u6fdf\u90e8\u6295\u8cc7\u5be9\u8b70\u59d4\u54e1\u6703\u526f\u57f7\u884c\u79d8\u66f8\u3001\u4ea4\u901a\u90e8\u53c3\u4e8b\u53ca\u7e3d\u52d9\u53f8\u9577\u7b49\u8077\u52d9\u3002",
+            "keywords": null,
+            "focal_x": 211,
+            "focal_y": 179,
+            "layout": "FOCUS"
+        },
+        {
+            "id": 345,
+            "background": null,
+            "headline": "",
+            "title": "\u64d4\u4efb\u4ea4\u901a\u90e8\u53c3\u4e8b\u671f\u9593\uff0c\u4e3b\u8cac\u52de\u8cc7\u95dc\u4fc2\uff0c\u5354\u52a9\u4ea4\u901a\u90e8\u8207\u8f44\u4e0b\u4e2d\u83ef\u90f5\u653f\u3001\u4e2d\u83ef\u96fb\u4fe1\u3001\u53f0\u9435\u3001\u6843\u6a5f\u516c\u53f8\u3001\u6e2f\u52d9\u516c\u53f8\u3001\u83ef\u822a\u3001\u9ad8\u9435\u3001\u4e16\u66e6\u7b49\u4e8b\u696d\u55ae\u4f4d\u4f01\u696d\u5de5\u6703\u6e9d\u901a\uff0c\u5316\u89e3\u9577\u5e74\u722d\u8b70\uff0c\u4e26\u722d\u53d6\u54e1\u5de5\u5f85\u9047\u5408\u7406\u5316\u53ca\u63d0\u9ad8\u798f\u5229\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        },
+        {
+            "id": 346,
+            "background": null,
+            "headline": "",
+            "title": "\u4ea4\u901a\u90e8\u5b98\u54e1\u8aaa\uff0c\u9ec3\u8377\u5a77\u66fe\u4efb\u7d93\u6fdf\u90e8\u6295\u5be9\u6703\u526f\u57f7\u884c\u79d8\u66f8\uff0c\u4e26\u65bc\u64d4\u4efb\u4ea4\u901a\u90e8\u53c3\u4e8b\u53ca\u7e3d\u52d9\u53f8\u9577\u4efb\u5167\uff0c\u517c\u4efb\u4ea4\u901a\u79d1\u6280\u7522\u696d\u6703\u5831\u526f\u57f7\u79d8\uff0c\u63a8\u52d5\u8de8\u55ae\u4f4d\u5408\u4f5c\u3001\u7522\u696d\u4ea4\u6d41\u767c\u5c55\u53ca\u91cd\u5927\u5efa\u8a2d\u6216\u6295\u8cc7\u7522\u696d\u7684\u62db\u5546\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 347,
+            "background": null,
+            "headline": "",
+            "title": "\u9ec3\u5b9a\u74b0\u73fe\u5e7459\u6b72\uff0c\u6771\u5433\u5927\u5b78\u6b77\u53f2\u5b78\u7cfb\u7562\u696d\uff0c76\u5e74\u7279\u7a2e\u8003\u8a66\u6cd5\u52d9\u90e8\u8abf\u67e5\u5c40\u8abf\u67e5\u4eba\u54e1\u8003\u8a66\u4e59\u7b49\u8003\u8a66\u8abf\u67e5\u4eba\u54e1\u985e\u79d1\u53ca\u683c\uff0c\u6b77\u4efb\u4ea4\u901a\u90e8\u79d8\u66f8\u3001\u4ea4\u901a\u90e8\u96fb\u4fe1\u7e3d\u5c40\u5c08\u9580\u59d4\u54e1\u3001\u570b\u5bb6\u901a\u8a0a\u50b3\u64ad\u59d4\u54e1\u6703\u5c08\u9580\u59d4\u54e1\u3001\u4ea4\u901a\u90e8\u526f\u53f8\u9577\u53ca\u53c3\u4e8b\u7b49\u8077\u52d9\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        }
+    ]
+}

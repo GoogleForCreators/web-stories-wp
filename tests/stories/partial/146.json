@@ -1,0 +1,100 @@
+{
+    "author": 1,
+    "director": "StoryDirector",
+    "pages": [
+        {
+            "id": 1520,
+            "background": {
+                "id": 3726682,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/196e09f3a1c1f06f170a8e931bbaf991132a3cca.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 1080,
+                "height": 648,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/196e09f3a1c1f06f170a8e931bbaf991132a3cca.jpg",
+                "url": "https://image6.thenewslens.com/2020/6/3fu0fdd8jehwbsw3603dlz8zvsfupt.png?auto=compress&fit=crop&h=648&q=85&updated_at=2020-06-05-17-46-42&w=1080",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u4fd7\u6c11\u7f8e\u98df\u300c\u6d77\u5357\u96de\u6252\u300d\u767c\u660e\u7684\u80cc\u5f8c\uff0c\u627f\u8f09\u8457\u6d77\u5357\u4eba\u5728\u99ac\u4f86\u4e9e\u843d\u5730\u751f\u6839\u7684\u79fb\u6c11\u8a18\u61b6",
+            "keywords": null,
+            "focal_x": 692,
+            "focal_y": 324,
+            "layout": "COVER"
+        },
+        {
+            "id": 1521,
+            "background": null,
+            "headline": "",
+            "title": "\u7531\u65bc\u6d77\u5357\u4eba\u6bd4\u8f03\u665a\u79fb\u6c11\u5230\u99ac\u4f86\u4e9e\uff0c\u5728\u5404\u7c4d\u8cab\u7684\u83ef\u4eba\u5df2\u4f54\u64da\u5404\u884c\u696d\u7684\u60c5\u6cc1\u4e0b\uff0c\u8a31\u591a\u6d77\u5357\u4eba\u9078\u64c7\u5230\u82f1\u570b\u6b96\u6c11\u8005\u5b98\u54e1\u7684\u5bb6\u88e1\u7576\u5eda\u5e2b\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 1522,
+            "background": null,
+            "headline": "",
+            "title": "\u5728\u9019\u6a23\u7684\u6b77\u53f2\u8108\u7d61\u4e0b\uff0c\u8a31\u591a\u6d77\u5357\u4eba\u4e5f\u958b\u9910\u5ef3\u5275\u696d\uff0c\u5c07\u82f1\u570b\u4eba\u7684\u98f2\u98df\u6587\u5316\u878d\u6703\u8cab\u901a\uff0c\u5275\u9020\u4e86\u6d77\u5357\u5496\u5561\u3001\u6d77\u5357\u9eb5\u5305\uff0c\u4ee5\u53ca\u6d77\u5357\u96de\u6252\u7b49\u7f8e\u98df\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 1523,
+            "background": {
+                "id": 3725851,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/196e09f3a1c1f06f170a8e931bbaf991132a3cca.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 1080,
+                "height": 648,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/196e09f3a1c1f06f170a8e931bbaf991132a3cca.jpg",
+                "url": "https://image6.thenewslens.com/2020/6/3fu0fdd8jehwbsw3603dlz8zvsfupt.png?auto=compress&fit=crop&h=648&q=85&updated_at=2020-06-05-17-46-42&w=1080",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u300a\u5cf6\u57ce\u5922\u83ef\u9304\u300b\u662f\u7531\u4e00\u7fa4\u4f86\u81ea\u99ac\u4f86\u897f\u4e9e\u6ab3\u57ce\u7684\u83ef\u4eba\u9752\u5e74\u6240\u7d44\u6210\u7684\u5718\u968a\uff0c\u4ed6\u5011\u8a66\u5716\u4ee5\u5f71\u50cf\u7559\u8a18\u9304\u6ab3\u57ce\u7684\u6587\u5316\u3002",
+            "keywords": null,
+            "focal_x": 692,
+            "focal_y": 324,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 1524,
+            "background": null,
+            "headline": "",
+            "title": "\u5728\u9019\u4e00\u96c6\u7bc0\u76ee\u7576\u4e2d\uff0c\u4e3b\u6301\u4eba\u5085\u653f\u701a\u63d0\u5230\uff0c\u5176\u5be6\u6d77\u5357\u96de\u6252\u4e26\u975e\u6b63\u5b97\u7684\u897f\u9910\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 1525,
+            "background": null,
+            "headline": "",
+            "title": "\u81f3\u65bc\u70ba\u4f55\u4e0d\u662f\u88fd\u4f5c\u82f1\u570b\u4eba\u559c\u6b61\u5403\u7684\u7f8a\u6252\u6216\u725b\u6252\uff0c\u662f\u56e0\u70ba\u8a31\u591a\u83ef\u4eba\u56e0\u5b97\u6559\u56e0\u7d20\u4e0d\u5403\u725b\uff0c\u4e5f\u4e0d\u559c\u6b61\u7f8a\u8089\u7684\u9a37\u5473\uff0c\u56e0\u6b64\u7aae\u5247\u8b8a\uff0c\u8b8a\u5247\u901a\uff0c\u800c\u9078\u64c7\u4e86\u5927\u773e\u63a5\u53d7\u7a0b\u5ea6\u8f03\u9ad8\u7684\u96de\u8089\uff0c\u518d\u52a0\u4e0a\u7368\u5275\u7684\u91ac\u6c41\uff0c\u6d77\u5357\u96de\u6252\u5c31\u9019\u6a23\u8a95\u751f\u4e86\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        }
+    ]
+}
