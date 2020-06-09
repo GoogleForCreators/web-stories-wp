@@ -62,7 +62,7 @@ describe('Story output', () => {
               height: 1920,
               width: 1080,
               rotationAngle: 0,
-              content: 'Hello World',
+              content: '<span style="font-style: italic">Hello World</span>',
               color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
               padding: {
                 horizontal: 0,
@@ -76,7 +76,6 @@ describe('Story output', () => {
                   [1, 400],
                 ],
               },
-              fontStyle: 'italic',
             },
             {
               type: 'text',
@@ -86,7 +85,7 @@ describe('Story output', () => {
               height: 1920,
               width: 1080,
               rotationAngle: 0,
-              content: 'Hello World',
+              content: '<span style="font-weight: 400">Hello World</span>',
               color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
               padding: {
                 horizontal: 0,
@@ -100,7 +99,6 @@ describe('Story output', () => {
                   [1, 400],
                 ],
               },
-              fontWeight: 400,
             },
           ],
         },
