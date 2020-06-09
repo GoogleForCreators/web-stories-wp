@@ -508,7 +508,7 @@ class KSES {
 	}
 
 	/**
-	 * Renames data-temp-style back to style  in full story markup and applies custom KSES filtering.
+	 * Renames data-temp-style back to style in full story markup.
 	 *
 	 * @param string $post_content Post content.
 	 * @return string Filtered post content.
@@ -517,7 +517,8 @@ class KSES {
 		return (string) preg_replace_callback(
 			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
 			function ( $matches ) {
-				return sprintf( ' style="%s"', esc_attr( (string) wp_slash( $this->safecss_filter_attr( (string) wp_unslash( $matches['styles'] ) ) ) ) );
+				$styles = str_replace( '&quot;', '\"', $matches['styles'] );
+				return sprintf( ' style="%s"', esc_attr( $this->safecss_filter_attr( wp_kses_stripslashes( $styles ) ) ) );
 			},
 			$post_content
 		);
