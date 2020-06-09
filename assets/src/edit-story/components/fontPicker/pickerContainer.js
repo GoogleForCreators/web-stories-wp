@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback, useState, useMemo } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
