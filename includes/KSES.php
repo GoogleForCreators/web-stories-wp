@@ -38,6 +38,7 @@ class KSES {
 	 * @return void
 	 */
 	public function init() {
+		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
 		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
@@ -50,10 +51,34 @@ class KSES {
 	 * @return void
 	 */
 	public function remove_filters() {
+		remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
 		remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10 );
 		remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
 		remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+	}
+
+	/**
+	 * Filters list of allowed CSS attributes.
+	 *
+	 * @param string[] $attr Array of allowed CSS attributes.
+	 *
+	 * @return array Filtered list of CSS attributes.
+	 */
+	public function filter_safe_style_css( $attr ) {
+		$additional = [
+			'display',
+			'opacity',
+			'position',
+			'top',
+			'left',
+			'transform',
+			'white-space',
+		];
+
+		array_push( $attr, ...$additional );
+
+		return $attr;
 	}
 
 	/**
@@ -62,7 +87,7 @@ class KSES {
 	 * This is equivalent to the WordPress core function of the same name,
 	 * except that this does not remove CSS with parentheses in it.
 	 *
-	 * Also, it adds a few more allowed attributes.
+	 * A few more allowed attributes are added via the safe_style_css filter.
 	 *
 	 * @see safecss_filter_attr()
 	 * @todo Use safe_style_disallowed_chars filter once WP 5.5+ is required.
@@ -79,7 +104,7 @@ class KSES {
 
 		$css_array = explode( ';', trim( $css ) );
 
-		/** This filter is documented in wp-includes/kses.php */
+		/* This filter is documented in wp-includes/kses.php */
 		$allowed_attr = apply_filters(
 			'safe_style_css',
 			[
@@ -87,8 +112,12 @@ class KSES {
 				'background-color',
 				'background-image',
 				'background-position',
+				'background-size',
+				'background-attachment',
+				'background-blend-mode',
 
 				'border',
+				'border-radius',
 				'border-width',
 				'border-color',
 				'border-style',
@@ -112,6 +141,14 @@ class KSES {
 				'border-spacing',
 				'border-collapse',
 				'caption-side',
+
+				'columns',
+				'column-count',
+				'column-fill',
+				'column-gap',
+				'column-rule',
+				'column-span',
+				'column-width',
 
 				'color',
 				'font',
@@ -148,9 +185,30 @@ class KSES {
 				'padding-top',
 
 				'flex',
+				'flex-basis',
+				'flex-direction',
+				'flex-flow',
 				'flex-grow',
 				'flex-shrink',
-				'flex-basis',
+
+				'grid-template-columns',
+				'grid-auto-columns',
+				'grid-column-start',
+				'grid-column-end',
+				'grid-column-gap',
+				'grid-template-rows',
+				'grid-auto-rows',
+				'grid-row-start',
+				'grid-row-end',
+				'grid-row-gap',
+				'grid-gap',
+
+				'justify-content',
+				'justify-items',
+				'justify-self',
+				'align-content',
+				'align-items',
+				'align-self',
 
 				'clear',
 				'cursor',
@@ -159,18 +217,8 @@ class KSES {
 				'overflow',
 				'vertical-align',
 				'list-style-type',
-				'grid-template-columns',
 			]
 		);
-
-		// Add some more allowed attributes.
-		$allowed_attr[] = 'display';
-		$allowed_attr[] = 'opacity';
-		$allowed_attr[] = 'position';
-		$allowed_attr[] = 'top';
-		$allowed_attr[] = 'left';
-		$allowed_attr[] = 'transform';
-		$allowed_attr[] = 'white-space';
 
 		/*
 		 * CSS attributes that accept URL data types.
@@ -190,6 +238,15 @@ class KSES {
 			'list-style-image',
 		];
 
+		/*
+		 * CSS attributes that accept gradient data types.
+		 *
+		 */
+		$css_gradient_data_types = [
+			'background',
+			'background-image',
+		];
+
 		if ( empty( $allowed_attr ) ) {
 			return $css;
 		}
@@ -204,16 +261,21 @@ class KSES {
 			$css_test_string = $css_item;
 			$found           = false;
 			$url_attr        = false;
+			$gradient_attr   = false;
+			$transform_attr  = false;
+
+			$parts = explode( ':', $css_item, 2 );
 
 			if ( strpos( $css_item, ':' ) === false ) {
 				$found = true;
 			} else {
-				$parts        = explode( ':', $css_item, 2 );
 				$css_selector = trim( $parts[0] );
 
 				if ( in_array( $css_selector, $allowed_attr, true ) ) {
-					$found    = true;
-					$url_attr = in_array( $css_selector, $css_url_data_types, true );
+					$found          = true;
+					$url_attr       = in_array( $css_selector, $css_url_data_types, true );
+					$gradient_attr  = in_array( $css_selector, $css_gradient_data_types, true );
+					$transform_attr = 'transform' === $css_selector;
 				}
 			}
 
@@ -242,12 +304,31 @@ class KSES {
 				}
 			}
 
-			if ( $found ) {
-				if ( '' !== $css ) {
-					$css .= ';';
+			if ( $found && $gradient_attr ) {
+				$css_value = trim( $parts[1] );
+				if ( preg_match( '/^(repeating-)?(linear|radial|conic)-gradient\(([^()]|rgb[a]?\([^()]*\))*\)$/', $css_value ) ) {
+					// Remove the whole `gradient` bit that was matched above from the CSS.
+					$css_test_string = str_replace( $css_value, '', $css_test_string );
 				}
+			}
 
-				$css .= $css_item;
+			if ( $found && $transform_attr ) {
+				$css_value = trim( $parts[1] );
+				if ( preg_match( '/^((matrix|matrix3d|perspective|rotate|rotate3d|rotateX|rotateY|rotateZ|translate|translateX|translatY|translatZ|scale|scale3d|scalX|scaleY|scaleZ|skew|skewX|skeY)\(([^()])*\) ?)+$/', $css_value ) ) {
+					// Remove the whole `gradient` bit that was matched above from the CSS.
+					$css_test_string = str_replace( $css_value, '', $css_test_string );
+				}
+			}
+
+			if ( $found ) {
+				/* This filter is documented in wp-includes/kses.php */
+				$disallowed_chars = apply_filters( 'safe_style_disallowed_chars', '%[\\\(&=}]|/\*%', $css_test_string );
+				if ( ! preg_match( $disallowed_chars, $css_test_string ) ) {
+					if ( '' !== $css ) {
+						$css .= ';';
+					}
+					$css .= $css_item;
+				}
 			}
 		}
 
