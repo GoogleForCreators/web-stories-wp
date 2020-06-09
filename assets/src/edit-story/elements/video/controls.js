@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { CSSTransition } from 'react-transition-group';
@@ -34,6 +34,7 @@ import { __ } from '@wordpress/i18n';
 import { ReactComponent as PlayIcon } from '../../icons/play.svg';
 import { ReactComponent as PauseIcon } from '../../icons/pause.svg';
 import StoryPropTypes from '../../types';
+import Popup from '../../components/popup';
 
 const PLAY_BUTTON_SIZE = 48;
 const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
@@ -49,10 +50,14 @@ const Controls = styled.div`
 `;
 
 const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
-  position: absolute;
-  top: ${({ isAbove }) => (isAbove ? `-52px` : `50%`)};
-  left: 50%;
-  transform: translate(-50%, -50%);
+  ${({ isAbove }) =>
+    !isAbove &&
+    css`
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    `}
   cursor: pointer;
   pointer-events: initial;
   width: ${PLAY_BUTTON_SIZE}px;
@@ -89,6 +94,10 @@ const Pause = styled(PauseIcon)`
   opacity: 0.84;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
+
+const playAboveSpacing = {
+  y: 28,
+};
 
 function VideoControls({
   box,
@@ -207,7 +216,17 @@ function VideoControls({
     ? __('Click to pause', 'web-stories')
     : __('Click to play', 'web-stories');
   const TransitionWrapper = isPlayAbove
-    ? ({ children }) => <div>{children}</div>
+    ? ({ children }) => (
+        <Popup
+          anchor={elementRef}
+          showOverflow
+          isOpen
+          placement="top"
+          spacing={playAboveSpacing}
+        >
+          {children}
+        </Popup>
+      )
     : CSSTransition;
 
   return (
