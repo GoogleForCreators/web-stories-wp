@@ -24,8 +24,8 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import Dialog from '..';
 import Button from '../../button';
+import Dialog from '..';
 
 export default {
   title: 'Dashboard/Components/Dialog',
@@ -35,7 +35,7 @@ export default {
 export const _default = () => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
-  const ActionNode = (
+  const ActionsNode = (
     <Button
       onClick={() => {
         action('button clicked');
@@ -58,7 +58,7 @@ export const _default = () => {
         isOpen={toggleDialog}
         title={text('title', 'Dialog title')}
         contentLabel={'Dialog content Label for modal'}
-        actions={ActionNode}
+        actions={ActionsNode}
       >
         <p>
           {text(
@@ -74,7 +74,7 @@ export const _default = () => {
 export const With2Actions = () => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
-  const ActionNode = (
+  const ActionsNode = (
     <>
       <Button
         onClick={() => {
@@ -106,7 +106,7 @@ export const With2Actions = () => {
         isOpen={toggleDialog}
         title={text('title', 'Dialog title')}
         contentLabel={'Dialog content Label for modal'}
-        actions={ActionNode}
+        actions={ActionsNode}
       >
         <p>
           {text(

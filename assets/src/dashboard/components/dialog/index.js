@@ -29,26 +29,26 @@ import Modal from '../modal';
 // Shadow styles ported from @material-ui/Dialog
 const DialogBox = styled.div(
   ({ theme: { colors } }) => `
-  display: flex;
-  position: relative;
-  overflow-y: auto;
-  max-width: 920px;
-  max-height: calc(100% - 64px);
-  margin: 32px;
-  padding: 24px;
-  flex-direction: column;
-  background-color: ${colors.white};
-  border-radius: 4px;
-  box-shadow: ${`0px 11px 15px -7px ${rgba(
-    colors.gray900,
-    0.2
-  )}, 0px 24px 38px 3px ${rgba(colors.gray900, 0.14)}, 0px 9px 46px 8px ${rgba(
-    colors.gray900,
-    0.12
-  )}`};
-  color: ${colors.gray800};
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-`
+    display: flex;
+    position: relative;
+    overflow-y: auto;
+    max-width: 920px;
+    max-height: calc(100% - 64px);
+    margin: 32px;
+    padding: 24px;
+    flex-direction: column;
+    background-color: ${colors.white};
+    border-radius: 4px;
+    box-shadow: ${`0px 11px 15px -7px ${rgba(
+      colors.gray900,
+      0.2
+    )}, 0px 24px 38px 3px ${rgba(
+      colors.gray900,
+      0.14
+    )}, 0px 9px 46px 8px ${rgba(colors.gray900, 0.12)}`};
+    color: ${colors.gray800};
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  `
 );
 
 const DialogTitle = styled.h1`
