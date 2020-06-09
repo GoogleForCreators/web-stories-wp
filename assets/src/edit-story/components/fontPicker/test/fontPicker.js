@@ -28,7 +28,7 @@ import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
-async function getFontPicker({ onChange } = {}) {
+async function getFontPicker(options) {
   const getAllFontsPromise = Promise.resolve(fontsListResponse);
   const apiContextValue = {
     actions: {
@@ -36,8 +36,9 @@ async function getFontPicker({ onChange } = {}) {
     },
   };
   const props = {
-    onChange: onChange || jest.fn(),
+    onChange: jest.fn(),
     value: 'Roboto',
+    ...options,
   };
 
   const accessors = renderWithTheme(
@@ -115,12 +116,12 @@ describe('Font Picker', () => {
 
     act(() => {
       fireEvent.keyDown(fontsList, {
-        code: 'ArrowDown',
+        key: 'ArrowDown',
       });
     });
 
     act(() => {
-      fireEvent.keyDown(fontsList, { code: 'Enter' });
+      fireEvent.keyDown(fontsList, { key: 'Enter' });
     });
 
     expect(onChangeFn).toHaveBeenCalledWith('Roboto Condensed');
@@ -138,14 +139,48 @@ describe('Font Picker', () => {
 
     act(() => {
       fireEvent.keyDown(fontsList, {
-        code: 'ArrowUp',
+        key: 'ArrowUp',
       });
     });
 
     act(() => {
-      fireEvent.keyDown(fontsList, { code: 'Enter' });
+      fireEvent.keyDown(fontsList, { key: 'Enter' });
     });
 
     expect(onChangeFn).toHaveBeenCalledWith('Handlee');
+  });
+
+  it('should search and filter the list to match the results.', async () => {
+    const { getByRole, queryAllByRole } = await getFontPicker();
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    expect(queryAllByRole('option')).toHaveLength(fontsListResponse.length);
+
+    act(() => {
+      fireEvent.change(getByRole('textbox'), {
+        target: { value: 'Yrsa' },
+      });
+    });
+
+    expect(queryAllByRole('option')).toHaveLength(1);
+  });
+
+  it('should show an empty list when the search keyword has no results.', async () => {
+    const { getByRole, queryAllByRole } = await getFontPicker();
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    expect(queryAllByRole('option')).toHaveLength(fontsListResponse.length);
+
+    act(() => {
+      fireEvent.change(getByRole('textbox'), {
+        target: { value: 'Not a font!' },
+      });
+    });
+
+    expect(queryAllByRole('option')).toHaveLength(0);
   });
 });

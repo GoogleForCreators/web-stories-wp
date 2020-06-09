@@ -163,19 +163,19 @@ function FontPickerContainer({ value, onSelect, onClose }) {
     return _matchingFonts;
   }, [fonts, searchKeyword]);
 
-  const handleSearchInputChanged = useCallback(({ nativeEvent }) => {
-    setSearchKeyword(nativeEvent.target.value);
+  const handleSearchInputChanged = useCallback(({ target }) => {
+    setSearchKeyword(target.value);
   }, []);
 
   const handleKeyPress = useCallback(
-    ({ nativeEvent: { code } }) => {
-      if (code === 'Escape') {
+    ({ key }) => {
+      if (key === 'Escape') {
         onClose();
-      } else if (code === 'Enter') {
+      } else if (key === 'Enter') {
         onSelect(fonts[currentOffset].name);
-      } else if (code === 'ArrowUp') {
+      } else if (key === 'ArrowUp') {
         setCurrentOffset(Math.max(0, currentOffset - 1));
-      } else if (code === 'ArrowDown') {
+      } else if (key === 'ArrowDown') {
         setCurrentOffset(Math.min(fonts.length - 1, currentOffset + 1));
       }
     },
@@ -203,8 +203,10 @@ function FontPickerContainer({ value, onSelect, onClose }) {
   return (
     <PickerContainer ref={ref}>
       <SearchInput
-        type="text"
+        type="search"
         value={searchKeyword}
+        onKeyDown={handleKeyPress}
+        placeholder={__('Search', 'web-stories')}
         onChange={handleSearchInputChanged}
       />
       {matchingFonts.length ? (
