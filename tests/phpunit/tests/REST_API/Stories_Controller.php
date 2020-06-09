@@ -64,6 +64,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$user_id );
+		self::delete_user( self::$author_id );
 	}
 
 	public function setUp() {

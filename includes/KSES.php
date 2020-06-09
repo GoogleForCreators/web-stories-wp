@@ -435,8 +435,8 @@ class KSES {
 	public function filter_content_save_pre_after_kses( $post_content ) {
 		return (string) preg_replace_callback(
 			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
-			static function ( $matches ) {
-				return sprintf( ' style="%s"', esc_attr( wp_slash( KSES::safecss_filter_attr( wp_unslash( $matches['styles'] ) ) ) ) );
+			function ( $matches ) {
+				return sprintf( ' style="%s"', esc_attr( wp_slash( $this->safecss_filter_attr( wp_unslash( $matches['styles'] ) ) ) ) );
 			},
 			$post_content
 		);
