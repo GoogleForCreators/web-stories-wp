@@ -54,11 +54,11 @@ const MIN_MAX = {
     MAX: 359,
   },
   WIDTH: {
-    MIN: 10,
+    MIN: 1,
     MAX: 1000,
   },
   HEIGHT: {
-    MIN: 10,
+    MIN: 1,
     MAX: 1000,
   },
 };

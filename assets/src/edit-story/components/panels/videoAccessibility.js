@@ -37,7 +37,7 @@ const DEFAULT_RESOURCE = { poster: null, title: null, alt: null };
 const MIN_MAX = {
   ALT_TEXT: {
     MIN: 0,
-    MAX: 200,
+    MAX: 1000,
   },
 };
 
