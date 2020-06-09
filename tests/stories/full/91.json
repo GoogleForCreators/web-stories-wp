@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 869,
+            "id": 2509,
             "background": {
-                "id": 3726413,
+                "id": 3741680,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/340040f93018cbeffd6734038eeb4fe7f782dafd.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/340040f93018cbeffd6734038eeb4fe7f782dafd.jpg",
                 "url": "https://1.bp.blogspot.com/-ptuN9t4WzH8/XjvqoPb_TDI/AAAAAAAAiks/wJtaIRZPUQ0DVGaxsoQJpclC3Aj0OwoqgCLcBGAsYHQ/w1200-h630-p-k-no-nu/gameguardian-banner.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u300aGameGuardian\u300bv98.0 \u904a\u6232\u5b88\u8b77\u8005\uff0c\u65b0\u4e00\u4ee3\u624b\u6a5fGG\u4fee\u6539\u5668\uff0c\u53e6\u52a0\u7368\u5bb6\u6a21\u64ec\u5668\u7279\u5225\u7248\uff01",
+            "headline": "\u300aGameGuardian\u300bv98.0 \u904a\u6232\u5b88\u8b77\u8005\uff0c\u65b0\u4e00\u4ee3\u624b\u6a5fGG\u4fee\u6539\u5668\uff0c\u53e6\u52a0\u7368\u5bb6\u6a21\u64ec\u5668\u7279\u5225\u7248\uff01",
+            "title": "",
             "keywords": null,
-            "focal_x": 156,
+            "focal_x": 298,
             "focal_y": 156,
             "layout": "COVER"
         },
         {
-            "id": 870,
+            "id": 2510,
             "background": {
-                "id": 3725219,
+                "id": 3740447,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/6ecbd343ee4bc7c6817aca63d8ec4de8da9f6398.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/6ecbd343ee4bc7c6817aca63d8ec4de8da9f6398.jpg",
                 "url": "https://1.bp.blogspot.com/-ptuN9t4WzH8/XjvqoPb_TDI/AAAAAAAAiks/wJtaIRZPUQ0DVGaxsoQJpclC3Aj0OwoqgCLcBGAsYHQ/s1600/gameguardian-banner.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "Android \u7cfb\u7d71\u6301\u7e8c\u5347\u7d1a\uff0c\u5230\u4e86 Android5.0/6.0 \u71d2\u9905\u5df2\u7d93\u4e0d\u80fd\u5728\u4f7f\u7528\uff0c\u516b\u9580\u53c8\u9700\u8981\u7834\u89e3\uff0c\u53ea\u80fd\u5237\u624b\u6a5f\u964d\u7248\u81f3 Android4.X \u53bb\u958b\u71d2\u9905\uff0c\u73fe\u5728\u4f60\u53ef\u4ee5\u4f7f\u7528 GameGuardian \u8f15\u9b06\u7121\u8ca0\u64d4\u7684\u4fee\u6539\u904a\u6232\u3002",
             "keywords": null,
-            "focal_x": 156,
+            "focal_x": 320,
             "focal_y": 156,
             "layout": "NORMAL"
         },
         {
-            "id": 871,
+            "id": 2511,
             "background": {
-                "id": 3725219,
+                "id": 3740447,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/6ecbd343ee4bc7c6817aca63d8ec4de8da9f6398.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/6ecbd343ee4bc7c6817aca63d8ec4de8da9f6398.jpg",
                 "url": "https://1.bp.blogspot.com/-ptuN9t4WzH8/XjvqoPb_TDI/AAAAAAAAiks/wJtaIRZPUQ0DVGaxsoQJpclC3Aj0OwoqgCLcBGAsYHQ/s1600/gameguardian-banner.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u3010\u8edf\u9ad4\u8a9e\u8a00\u3011-\u4e2d\u6587\n\u3010\u8edf\u9ad4\u540d\u7a31\u3011-GameGuardian\n\u3010\u7248\u672c\u8cc7\u8a0a\u3011-v98.0\n\u3010\u8edf\u9ad4\u5927\u5c0f\u3011-19 MB (APK)\n\u3010\u66f4\u65b0\u65e5\u671f\u3011-2020-06-08\n\u3010\u4f7f\u7528\u6b0a\u9650\u3011-\u514d\u8cbb,\u9700ROOT\n\u3010\u7cfb\u7d71\u652f\u6301\u3011-\u652f\u6301 Android 2.3.3 \u4ee5\u4e0a\u7248\u672c",
             "keywords": null,
-            "focal_x": 156,
+            "focal_x": 320,
             "focal_y": 156,
             "layout": "FOCUS"
         },
         {
-            "id": 872,
+            "id": 2513,
             "background": {
-                "id": 3725222,
+                "id": 3740451,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1cd90ef4ca77b0b04261200a23ad2668d9a3cb52.png",
@@ -101,46 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1cd90ef4ca77b0b04261200a23ad2668d9a3cb52.png",
                 "url": "https://1.bp.blogspot.com/-EBuyCpvu0Zc/XjvqmulDwqI/AAAAAAAAilI/EsdaQWjp0bsWXH-5YWhb6uK0EurIWJyJACEwYBhgL/s1600/Screenshot_2018-10-17-03-20-22.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5b89\u88dd GameGuardian \u5f8c\uff0c\u53ef\u4ee5\u8b93\u61c9\u7528\u7a0b\u5e8f\u5728\u5f8c\u53f0\u904b\u884c\u6642\u4f7f\u7528\u534a\u900f\u660e\u5716\u6a19\uff0c\u53ef\u4ee5\u96a8\u6642\u5728\u5c4f\u5e55\u4e0a\u770b\u5230\u8a72\u5716\u6a19\u3002",
             "keywords": null,
-            "focal_x": 236,
-            "focal_y": 180,
-            "layout": "NORMAL"
-        },
-        {
-            "id": 873,
-            "background": {
-                "id": 3725223,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/36a73206c09570e6059b84a23423fdb44ec73281.png",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/png",
-                "description": "",
-                "width": 640,
-                "height": 360,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/36a73206c09570e6059b84a23423fdb44ec73281.png",
-                "url": "https://1.bp.blogspot.com/-9uxDQgsx62g/XjvqnVlWJNI/AAAAAAAAikk/RV0t_e1nmW8AmbrOZlef56HuTyCF-LvmwCEwYBhgL/s1600/Screenshot_2018-10-17-03-20-30.png",
-                "source": ""
-            },
-            "headline": "",
-            "title": "\u7576\u904b\u884c\u904a\u6232\u6642\uff0c\u53ef\u4ee5\u6253\u958b GameGuardian \u4e26\u9078\u64c7\u8981\u4fee\u6539\u7684\u61c9\u7528\u7a0b\u5e8f\u7684\u904e\u7a0b\u3002",
-            "keywords": null,
-            "focal_x": 212,
+            "focal_x": 197,
             "focal_y": 180,
             "layout": "FOCUS"
         },
         {
-            "id": 874,
+            "id": 2515,
             "background": {
-                "id": 3725223,
+                "id": 3740452,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/36a73206c09570e6059b84a23423fdb44ec73281.png",
@@ -155,14 +128,41 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/36a73206c09570e6059b84a23423fdb44ec73281.png",
                 "url": "https://1.bp.blogspot.com/-9uxDQgsx62g/XjvqnVlWJNI/AAAAAAAAikk/RV0t_e1nmW8AmbrOZlef56HuTyCF-LvmwCEwYBhgL/s1600/Screenshot_2018-10-17-03-20-30.png",
-                "source": ""
+                "source": "User"
+            },
+            "headline": "",
+            "title": "\u7576\u904b\u884c\u904a\u6232\u6642\uff0c\u53ef\u4ee5\u6253\u958b GameGuardian \u4e26\u9078\u64c7\u8981\u4fee\u6539\u7684\u61c9\u7528\u7a0b\u5e8f\u7684\u904e\u7a0b\u3002",
+            "keywords": null,
+            "focal_x": 253,
+            "focal_y": 180,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 2517,
+            "background": {
+                "id": 3740452,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/36a73206c09570e6059b84a23423fdb44ec73281.png",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/png",
+                "description": "",
+                "width": 640,
+                "height": 360,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/36a73206c09570e6059b84a23423fdb44ec73281.png",
+                "url": "https://1.bp.blogspot.com/-9uxDQgsx62g/XjvqnVlWJNI/AAAAAAAAikk/RV0t_e1nmW8AmbrOZlef56HuTyCF-LvmwCEwYBhgL/s1600/Screenshot_2018-10-17-03-20-30.png",
+                "source": "User"
             },
             "headline": "",
             "title": "\u4f8b\u5982\uff0c\u5982\u679c\u5728\u904a\u6232\u4e2d\u53ea\u6709\u4e00\u5b9a\u6578\u91cf\u7684\u751f\u547d\uff0c\u53ef\u4ee5\u4f7f\u7528 GameGuardian \u7684\u5341\u516d\u9032\u5236\u7de8\u8f2f\u5668\u641c\u7d22\u6b64\u6578\u5b57\u4e26\u5c07\u5176\u66ff\u63db\u70ba\u60f3\u8981\u7684\u4efb\u4f55\u6578\u5b57\u3002",
             "keywords": null,
-            "focal_x": 212,
+            "focal_x": 253,
             "focal_y": 180,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         }
     ]
 }

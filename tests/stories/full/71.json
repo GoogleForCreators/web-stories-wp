@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 688,
+            "id": 2313,
             "background": {
-                "id": 3726266,
+                "id": 3741601,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/fe634e4397eca1faacd34140310bd54c94e365e7.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/fe634e4397eca1faacd34140310bd54c94e365e7.jpg",
                 "url": "https://images.zi.org.tw/japancosmelab/2020/03/30174127/1585561287-c4fb987f48298967ed4991229f920c76.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "iPhone\u8df3\u5230\u65e5\u672c \u73a9 iPhone\u8de8\u5340\u4e0b\u8f09\u6d77\u5916APP \u5230\u65e5\u672c\u4e0b\u8f09\u5340\u57df\u9650\u5b9a\u8edf\u9ad4",
+            "headline": "iPhone\u8df3\u5230\u65e5\u672c \u73a9 iPhone\u8de8\u5340\u4e0b\u8f09\u6d77\u5916APP \u5230\u65e5\u672c\u4e0b\u8f09\u5340\u57df\u9650\u5b9a\u8edf\u9ad4",
+            "title": "",
             "keywords": null,
             "focal_x": 480,
-            "focal_y": 504,
+            "focal_y": 500,
             "layout": "COVER"
         },
         {
-            "id": 689,
+            "id": 2314,
             "background": {
-                "id": 3724954,
+                "id": 3740155,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/39177799e49b91f10c4bf66ccccbbadfcfcb4f66.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/39177799e49b91f10c4bf66ccccbbadfcfcb4f66.jpg",
                 "url": "https://images.zi.org.tw/japancosmelab/2020/03/30172910/1585560549-4ad07ce424c4e470f6e677ad78db7c93-554x1200.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "iPhone\u8df3\u5230\u65e5\u672c \u6559\u5b78",
             "title": "2.\u9078\u64c7\u5e33\u865f\u53f3\u65b9\u7684>",
             "keywords": null,
             "focal_x": 277,
-            "focal_y": 861,
-            "layout": "QUOTE"
+            "focal_y": 979,
+            "layout": "NORMAL"
         },
         {
-            "id": 690,
+            "id": 2315,
             "background": {
-                "id": 3724958,
+                "id": 3740159,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/617cad357d565cc71cdfd436c4199a29e9708053.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/617cad357d565cc71cdfd436c4199a29e9708053.jpg",
                 "url": "https://images.zi.org.tw/japancosmelab/2020/03/30172922/1585560562-a698b354fb8a19375b570ed8792ba1e4-554x1200.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "5.\u540c\u610f\u4f7f\u7528\u898f\u7bc4\u3002",
             "keywords": null,
             "focal_x": 277,
-            "focal_y": 901,
-            "layout": "FOCUS"
+            "focal_y": 899,
+            "layout": "QUOTE"
         },
         {
-            "id": 691,
+            "id": 2316,
             "background": {
-                "id": 3724959,
+                "id": 3740160,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/037a4836a5d6cf20d1b6e83771e96a2081013e0e.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/037a4836a5d6cf20d1b6e83771e96a2081013e0e.jpg",
                 "url": "https://images.zi.org.tw/japancosmelab/2020/03/30172934/1585560573-536cd073efd22f9e7538b1f87d373a6f-554x1200.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e0b\u9762\u7684\u59d3\u540d\u8cc7\u8a0a\u548c\u4f4f\u5740\u586b\u5beb\u5b8c\u7562\u5c31\u6309\u4e0b\u4e00\u6b65\u6b21\u3078\"",
             "keywords": null,
             "focal_x": 277,
-            "focal_y": 309,
+            "focal_y": 600,
             "layout": "QUOTE"
         },
         {
-            "id": 692,
+            "id": 2317,
             "background": {
-                "id": 3724960,
+                "id": 3740161,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1a5bb15ff16cc200d95dcbcfea324f6d4e9445f7.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1a5bb15ff16cc200d95dcbcfea324f6d4e9445f7.jpg",
                 "url": "https://images.zi.org.tw/japancosmelab/2020/03/30172937/1585560576-8f08facc259a57c28e39285f25ab4691-554x1200.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "7.\u9ede\u9078\u5b8c\u6210\u3002",
             "keywords": null,
             "focal_x": 277,
-            "focal_y": 597,
+            "focal_y": 723,
             "layout": "QUOTE"
         },
         {
-            "id": 693,
+            "id": 2318,
             "background": {
-                "id": 3724963,
+                "id": 3740164,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1d841787128c26ba0b1286ca63b53f75f45b7266.png",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1d841787128c26ba0b1286ca63b53f75f45b7266.png",
                 "url": "https://images.zi.org.tw/japancosmelab/2020/03/10173208/1586511128-20d73186652d99d2ef99bf813793fc35.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "android\u7684\u670b\u53cb\u5225\u50b7\u5fc3",
             "title": "\u800c\u4e14\u66f4\u7c21\u55ae@@",
             "keywords": null,
             "focal_x": 100,
             "focal_y": 100,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 694,
+            "id": 2319,
             "background": {
-                "id": 3724963,
+                "id": 3740164,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1d841787128c26ba0b1286ca63b53f75f45b7266.png",
@@ -182,14 +182,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1d841787128c26ba0b1286ca63b53f75f45b7266.png",
                 "url": "https://images.zi.org.tw/japancosmelab/2020/03/10173208/1586511128-20d73186652d99d2ef99bf813793fc35.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u60f3\u8981\u4e0b\u8f09\u5916\u570bapp\u4e0d\u7528\u518d\u8a3b\u518a\u4e00\u5806\u5e33\u865f\u4e86",
             "keywords": null,
             "focal_x": 100,
             "focal_y": 100,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         }
     ]
 }

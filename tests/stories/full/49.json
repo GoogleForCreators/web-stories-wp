@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 466,
+            "id": 2109,
             "background": {
-                "id": 3726223,
+                "id": 3741488,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/eb2db9865c2348952e973d1bb9d764f13ac1a470.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/eb2db9865c2348952e973d1bb9d764f13ac1a470.jpg",
                 "url": "https://img.eprice.com.tw/img/news/29901/fb.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u5343\u5143\u4ee5\u4e0b\u9001\u79ae\u7d55\u9078 ZenPower 10000 QC3.0 \u73a9\u51fa\u65b0\u8272\uff0c\u6642\u5c1a\u96a8\u884c - \u624b\u6a5f\u54c1\u724c\u65b0\u805e",
+            "headline": "\u5343\u5143\u4ee5\u4e0b\u9001\u79ae\u7d55\u9078 ZenPower 10000 QC3.0 \u73a9\u51fa\u65b0\u8272\uff0c\u6642\u5c1a\u96a8\u884c - \u624b\u6a5f\u54c1\u724c\u65b0\u805e",
+            "title": "",
             "keywords": null,
-            "focal_x": 220,
+            "focal_x": 360,
             "focal_y": 188,
             "layout": "COVER"
         },
         {
-            "id": 467,
+            "id": 2110,
             "background": {
-                "id": 3724768,
+                "id": 3739953,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/5d481db80fb626457eab76ff61906ee2e9fdd1b3.png",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/5d481db80fb626457eab76ff61906ee2e9fdd1b3.png",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/02-1-1024x576.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u65b0\u63a8\u51fa\u7684\u5169\u500b\u984f\u8272\u90fd\u975e\u5e38\u597d\u770b\uff0cZenPower \u517c\u5177\u5be6\u7528\u8207\u7f8e\u578b\uff0c\u662f\u9001\u79ae\u7684\u597d\u9078\u64c7\u3002",
             "keywords": null,
-            "focal_x": 728,
+            "focal_x": 818,
             "focal_y": 288,
             "layout": "QUOTE"
         },
         {
-            "id": 468,
+            "id": 2111,
             "background": {
-                "id": 3724769,
+                "id": 3739954,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/eef8eddfc24727ac88d5657a487e122f90728ef7.jpeg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/eef8eddfc24727ac88d5657a487e122f90728ef7.jpeg",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/03-1024x576.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "ZenPower 10000 \u7e96\u8584\u3001\u7cbe\u5de7\u4e14\u91cd\u91cf\u50c5 190g\uff0c\u7576\u60a8\u8cbc\u9f4a\u624b\u6a5f\u4f7f\u7528\u6216\u653e\u5165\u53e3\u888b\uff0c\u96e3\u4ee5\u5bdf\u89ba\u5b83\u7684\u5b58\u5728\u3002",
             "keywords": null,
-            "focal_x": 288,
+            "focal_x": 266,
             "focal_y": 288,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 469,
+            "id": 2112,
             "background": {
-                "id": 3724770,
+                "id": 3739955,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/78d106e6fd977e3e6bfa57205473d9dd8e806dcf.jpeg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/78d106e6fd977e3e6bfa57205473d9dd8e806dcf.jpeg",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/04-1024x576.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u53bb\u5e74 10 \u6708\u9996\u63a8\u4f4e\u8abf\u6c89\u7a69\u7684 ZenPower 10000\u300c\u70ab\u5149\u9ed1\u300d\uff0c\u4e0a\u5e02\u5f8c\u7372\u5f97\u71b1\u92b7\u597d\u8a55\u4e0d\u65b7\u3002",
             "keywords": null,
-            "focal_x": 296,
+            "focal_x": 512,
             "focal_y": 288,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 470,
+            "id": 2113,
             "background": {
-                "id": 3724771,
+                "id": 3739956,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/44fdefc60ba8809cc32f90876f7d14d62c104791.jpeg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/44fdefc60ba8809cc32f90876f7d14d62c104791.jpeg",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/05-1024x576.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4eca\u6625\u518d\u63a8\u5167\u6582\u5962\u83ef\u7684\u300c\u661f\u7a7a\u85cd\u300d\u53ca\u73fe\u6b63\u7576\u7d05\u7684\u300c\u6668\u9727\u7c89\u300d\u3002",
             "keywords": null,
-            "focal_x": 736,
+            "focal_x": 512,
             "focal_y": 288,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 471,
+            "id": 2114,
             "background": {
-                "id": 3724774,
+                "id": 3739960,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8aa4f38717593d63469417e404880b1632087547.png",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8aa4f38717593d63469417e404880b1632087547.png",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/08-1024x576.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u80cc\u9762\u5927\u5927\u7684\u5370\u8457 10000 \u7684\u5bb9\u91cf\u6a19\u793a\u3002",
             "keywords": null,
-            "focal_x": 560,
+            "focal_x": 530,
             "focal_y": 288,
             "layout": "QUOTE"
         },
         {
-            "id": 472,
+            "id": 2115,
             "background": {
-                "id": 3724773,
+                "id": 3739959,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9e0ae2d5518993ed5108dd8775ade006785b1755.png",
@@ -182,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9e0ae2d5518993ed5108dd8775ade006785b1755.png",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/07-1-1024x576.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "ZenPower 10000 \u73a9\u51fa\u65b0\u8272\uff0c\u6642\u5c1a\u96a8\u884c\u3002",
             "keywords": null,
-            "focal_x": 392,
+            "focal_x": 512,
             "focal_y": 288,
             "layout": "QUOTE"
         },
         {
-            "id": 473,
+            "id": 2116,
             "background": {
-                "id": 3724775,
+                "id": 3739961,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3b4afa37d29b370ede3a5f65e4ebb026c4bdbd3e.png",
@@ -209,19 +209,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3b4afa37d29b370ede3a5f65e4ebb026c4bdbd3e.png",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/09-1-1024x576.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "ZenPower 10000 \u63a5\u53d7\u91cd\u91cd\u8003\u9a57\uff0c\u52dd\u4efb\u6bcf\u65e5\u7684\u7e41\u91cd\u4f7f\u7528\u3002",
             "keywords": null,
-            "focal_x": 560,
+            "focal_x": 658,
             "focal_y": 288,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 474,
+            "id": 2117,
             "background": {
-                "id": 3724781,
+                "id": 3739967,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b8325f1bc251155f3adc6514735bf4a95b336073.png",
@@ -236,19 +236,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b8325f1bc251155f3adc6514735bf4a95b336073.png",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/15-1-1024x576.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6668\u9727\u7c89 ZenPower \u642d\u914d\u73ab\u7470\u91d1 j5create JMLC10 \u4e8c\u5408\u4e00\u5145\u96fb\u7dda\uff0c\u6eff\u8db3 Lightning \u548c microUSB \u7528\u6236\u7684\u5145\u96fb\u9700\u6c42\u3002",
             "keywords": null,
-            "focal_x": 648,
+            "focal_x": 810,
             "focal_y": 288,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 475,
+            "id": 2118,
             "background": {
-                "id": 3724784,
+                "id": 3739970,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/4c56bf0b0b7d5cd18926eea73a3a5a9fea58555b.png",
@@ -263,19 +263,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/4c56bf0b0b7d5cd18926eea73a3a5a9fea58555b.png",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/18-1024x576.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "ZenPower 10000 \u7684\u5b89\u5168\u6027\u3001\u96fb\u78c1\u5e72\u64fe\u7b49\u7d1a\u8207\u5145\u96fb\u6548\u80fd\u901a\u904e\u4e94\u5927\u570b\u969b\u6e2c\u8a66\u6a5f\u69cb\u7684\u8a8d\u8b49\uff0c\u66f4\u7b26\u5408\u570b\u969b\u96fb\u5de5\u59d4\u54e1\u6703\u6a19\u6e96\uff0c\u7121\u6642\u7121\u523b\uff0c\u5168\u7136\u53ef\u9760\uff01",
             "keywords": null,
-            "focal_x": 728,
+            "focal_x": 818,
             "focal_y": 288,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 476,
+            "id": 2119,
             "background": {
-                "id": 3724784,
+                "id": 3739970,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/4c56bf0b0b7d5cd18926eea73a3a5a9fea58555b.png",
@@ -290,14 +290,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/4c56bf0b0b7d5cd18926eea73a3a5a9fea58555b.png",
                 "url": "http://enterbox.tw/wp-content/uploads/2020/06/18-1024x576.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u83ef\u78a9\u79c9\u6301\u5c0d\u54c1\u8cea\u6e2c\u8a66\u7684\u8981\u6c42\uff0cZenPower 10000 \u6b77\u7d93 5000 \u6b21 USB \u63d2\u62d4\u6e2c\u8a66\u3001\u6975\u7aef\u6eab\u5ea6\u6e2c\u8a66\uff0c\u4ee5\u53ca 80cm \u9ad8\u8655\u91cd\u8907\u6389\u843d\u6e2c\u8a66\u3002",
             "keywords": null,
-            "focal_x": 728,
+            "focal_x": 818,
             "focal_y": 288,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         }
     ]
 }

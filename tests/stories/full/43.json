@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 420,
+            "id": 2058,
             "background": {
-                "id": 3726217,
+                "id": 3741439,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f52656c32a1211872c034eb6f6d8e6a2d3fdd933.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f52656c32a1211872c034eb6f6d8e6a2d3fdd933.jpg",
                 "url": "https://www.dramaqueen.com.tw/images/news/2020060816042995884d52887b55f20b13baa68e7a2eaf3a23.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u8209\u724c\u300c\u767d\u4eba\u6c89\u9ed8\u5373\u662f\u66b4\u529b\u300d\u6297\u8b70\u88ab\u6279\uff01\u8607\u83f2\u7279\u7d0d\u56de\u64ca\u7db2\u53cb\u7559\u8a00",
+            "headline": "\u8209\u724c\u300c\u767d\u4eba\u6c89\u9ed8\u5373\u662f\u66b4\u529b\u300d\u6297\u8b70\u88ab\u6279\uff01\u8607\u83f2\u7279\u7d0d\u56de\u64ca\u7db2\u53cb\u7559\u8a00",
+            "title": "",
             "keywords": null,
-            "focal_x": 624,
+            "focal_x": 562,
             "focal_y": 232,
             "layout": "COVER"
         },
         {
-            "id": 421,
+            "id": 2059,
             "background": {
-                "id": 3724727,
+                "id": 3739906,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1e12f8f3c523b33134c584259d0811b78fbc3716.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1e12f8f3c523b33134c584259d0811b78fbc3716.jpg",
                 "url": "https://www.dramaqueen.com.tw/upload/images/121.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5169\u4eba\u7686\u5728 Instagram \u4e0a\u767c\u5e03\u7576\u6642\u7684\u60c5\u666f\uff0c\u8607\u83f2\u7279\u7d0d\u5728\u8cbc\u6587\u4e2d\u5beb\u9053\uff1a\u300c\u6c92\u6709\u6b63\u7fa9\u5c31\u6c92\u6709\u548c\u5e73\u3002\u300d",
             "keywords": null,
-            "focal_x": 589,
+            "focal_x": 429,
             "focal_y": 293,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 422,
+            "id": 2060,
             "background": {
-                "id": 3724727,
+                "id": 3739906,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1e12f8f3c523b33134c584259d0811b78fbc3716.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1e12f8f3c523b33134c584259d0811b78fbc3716.jpg",
                 "url": "https://www.dramaqueen.com.tw/upload/images/121.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e26\u9644\u4e0a\u300c\u9ed1\u4eba\u7684\u547d\u4e5f\u662f\u547d\u300d\u7684\u6a19\u8a3b\u3002",
             "keywords": null,
-            "focal_x": 589,
+            "focal_x": 429,
             "focal_y": 293,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 423,
+            "id": 2061,
             "background": {
-                "id": 3724728,
+                "id": 3739907,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/30d03bc574d9c5d122ee5b94c2c9dad7f946155d.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/30d03bc574d9c5d122ee5b94c2c9dad7f946155d.jpg",
                 "url": "https://www.dramaqueen.com.tw/upload/images/53453453453.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6b64\u5916\uff0c\u5979\u5728\u73fe\u5834\u4e5f\u9ad8\u8209\u5beb\u6709\u300c\u767d\u4eba\u6c89\u9ed8\u5373\u662f\u66b4\u529b\u300d\u7684\u724c\u5b50\uff0c\u529b\u633a\u6709\u8272\u4eba\u7a2e\u3002",
             "keywords": null,
-            "focal_x": 318,
+            "focal_x": 277,
             "focal_y": 294,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 424,
+            "id": 2062,
             "background": {
-                "id": 3724728,
+                "id": 3739907,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/30d03bc574d9c5d122ee5b94c2c9dad7f946155d.jpg",
@@ -128,40 +128,40 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/30d03bc574d9c5d122ee5b94c2c9dad7f946155d.jpg",
                 "url": "https://www.dramaqueen.com.tw/upload/images/53453453453.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5118\u7ba1\u591a\u6578\u7c89\u7d72\u652f\u6301\u8457\u5979\u7684\u8209\u52d5\uff0c\u4f46\u4e5f\u6709\u90e8\u5206\u7db2\u53cb\u6279\u8a55\u5979\u7684\u505a\u6cd5\uff0c\u5176\u4e2d\u4e00\u4f4d\u7db2\u53cb\u7559\u8a00\u5beb\u8457\uff1a\u300c\u4ed6\u5011\u5df2\u7d93\u906d\u5230\u902e\u6355\uff0c\u4e26\u88ab\u4ee5\u8b00\u6bba\u7f6a\u8d77\u8a34\uff0c\u9019\u5c31\u662f\u6b63\u7fa9\u4e86\u5440\uff0c\u90a3\u6211\u5011\u73fe\u5728\u53ef\u4ee5\u6062\u5fa9\u548c\u5e73\u4e86\u55ce\uff1f\u300d",
             "keywords": null,
-            "focal_x": 318,
+            "focal_x": 277,
             "focal_y": 294,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         },
         {
-            "id": 425,
+            "id": 2063,
             "background": {
-                "id": 3724726,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/f52656c32a1211872c034eb6f6d8e6a2d3fdd933.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
+                "id": 3741480,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/f6c268c66b7ba21c8212a29e36141d8706fdbcd5.mp4",
+                "title": "\u4f2a\u88c5\uff0c\u89c6\u9891\u52a8\u753b",
+                "duration": 20.02,
+                "mime": "video/mp4",
                 "description": "",
-                "width": 865,
-                "height": 465,
+                "width": 1920,
+                "height": 1080,
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/f52656c32a1211872c034eb6f6d8e6a2d3fdd933.jpg",
-                "url": "https://www.dramaqueen.com.tw/images/news/2020060816042995884d52887b55f20b13baa68e7a2eaf3a23.jpg",
+                "thumbnail": "https://static-gstudio.gliacloud.com/65de7e2e2827265b83e077a70fddca9ea6db71b5.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/QIAQ9Rd/camouflage-video-animation_4jtzzfl2__6791122e8145afb69898176b745515c1__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591722174197&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=808824&resolution=180p&searchId=006fb6ea-5e70-4a01-a6b9-c842e2f300ef&searchPageId=affd5053-ad47-4072-ac8a-914901fb9d24#gliadriver=StoryBlocksVideoZH&key=808824",
                 "source": ""
             },
             "headline": "",
             "title": "\u76ee\u524d\u672a\u77e5\u5979\u7684\u9810\u7522\u671f\u70ba\u4f55\u6642\uff0c\u4f46\u5728\u62cd\u5b8c\u96fb\u5f71\u300aBroken Soldier\u300b\u5f8c\uff0c\u5979\u5c31\u672a\u5ba3\u5e03\u4e0b\u4e00\u90e8\u65b0\u4f5c\u9805\u76ee\uff0c\u770b\u4f86\u6b63\u70ba\u5f85\u7522\u597d\u597d\u505a\u8db3\u6e96\u5099\u3002",
-            "keywords": null,
-            "focal_x": 624,
-            "focal_y": 232,
+            "keywords": "ALL:Broken Soldier\u300b \u96fb\u5f71|QUERY:Broken Soldier\u300b \u96fb\u5f71",
+            "focal_x": 956,
+            "focal_y": 540,
             "layout": "FOCUS"
         }
     ]

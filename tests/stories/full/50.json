@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 477,
+            "id": 2104,
             "background": {
-                "id": 3726224,
+                "id": 3741487,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/5109322b2ab3ad3b97c32a49d84086547c966bdc.jpg",
@@ -20,46 +20,46 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/5109322b2ab3ad3b97c32a49d84086547c966bdc.jpg",
                 "url": "https://img.eprice.com.tw/img/news/29900/fb.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "Nokia \u50b3\u5c07\u63a8\u51fa\u642d\u8f09\u5929\u74a3 800 \u7cfb\u5217\u8655\u7406\u5668\u7684\u5e73\u50f9 5G \u624b\u6a5f - \u624b\u6a5f\u54c1\u724c\u65b0\u805e",
+            "headline": "Nokia \u50b3\u5c07\u63a8\u51fa\u642d\u8f09\u5929\u74a3 800 \u7cfb\u5217\u8655\u7406\u5668\u7684\u5e73\u50f9 5G \u624b\u6a5f - \u624b\u6a5f\u54c1\u724c\u65b0\u805e",
+            "title": "",
             "keywords": null,
-            "focal_x": 196,
+            "focal_x": 193,
             "focal_y": 188,
             "layout": "COVER"
         },
         {
-            "id": 478,
+            "id": 2105,
             "background": {
-                "id": 3724785,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/5109322b2ab3ad3b97c32a49d84086547c966bdc.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
+                "id": 3741492,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/27e468c4cfdbac66c013450b4858ff11755b72b5.mp4",
+                "title": "\u4f7f\u7528\u667a\u80fd\u624b\u673a\u5173\u95ed\u4e86\u7537\u4eba\u7684\u624b",
+                "duration": 10.978,
+                "mime": "video/mp4",
                 "description": "",
-                "width": 720,
-                "height": 376,
+                "width": 1920,
+                "height": 1080,
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/5109322b2ab3ad3b97c32a49d84086547c966bdc.jpg",
-                "url": "https://img.eprice.com.tw/img/news/29900/fb.jpg",
+                "thumbnail": "https://static-gstudio.gliacloud.com/7f0ab8855552f9387253d44318f002830b896560.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/videoblocks-close-up-man-hand-using-smartphone_bxoudiqzof__9f328480a314451c97f8994300265ba4__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591722238125&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=6019893&resolution=180p&searchId=21bcdc57-5052-4ecc-a255-930eb065e29d&searchPageId=a8b913a6-9157-4877-997a-4cb9e690b92f#gliadriver=StoryBlocksVideoZH&key=6019893",
                 "source": ""
             },
             "headline": "",
             "title": "HMD Global \u5148\u524d\u63a8\u51fa\u4e86\u65d7\u4e0b\u7684\u7b2c\u4e00\u6b3e 5G \u624b\u6a5f\uff1aNokia 8.3 5G\uff0c\u70ba\u4e86\u884c\u92b7\u9084\u8207 007 \u7cfb\u5217\u96fb\u5f71\u300a\u751f\u6b7b\u4ea4\u6230\u300b\u5408\u4f5c\uff0c\u5c07\u624b\u6a5f\u7f6e\u5165\u5230\u96fb\u5f71\u88e1\u3002",
-            "keywords": null,
-            "focal_x": 196,
-            "focal_y": 188,
-            "layout": "QUOTE"
+            "keywords": "ALL:Nokia 8.3 5G HMD Global \u624b\u6a5f 007 5G \u624b\u6a5f \u751f\u6b7b\u4ea4\u6230|QUERY:\u624b\u6a5f",
+            "focal_x": 802,
+            "focal_y": 540,
+            "layout": "FOCUS"
         },
         {
-            "id": 479,
+            "id": 2106,
             "background": {
-                "id": 3724786,
+                "id": 3739972,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/7f8836c359237f4e13e4148ce2a63805a17c6cfc.jpg",
@@ -74,46 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/7f8836c359237f4e13e4148ce2a63805a17c6cfc.jpg",
                 "url": "https://timgm.eprice.com.tw/tw/mobile/img/2020-06/08/5527323/tunacat_1_f91bb6bc51f84b9d7e9cde4a4b11ef12.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u800c\u96d6\u7136 Nokia 8.3 5G \u4e26\u975e\u65d7\u8266\u6a5f\u7a2e\uff0c\u800c\u662f\u642d\u8f09\u9ad8\u901a S765G \u8655\u7406\u5668\u7684\u4e2d\u9ad8\u968e\u6b3e\u5f0f\uff0c\u4e0d\u904e\u73fe\u5728\u4e5f\u50b3\u51fa HMD \u5c07\u63a8\u51fa\u66f4\u5e73\u50f9\u7684 5G \u624b\u6a5f\u6b3e\u5f0f\uff0c\u4e26\u4e14\u5c07\u63a1\u7528\u806f\u767c\u79d1\u7684\u5929\u74a3 800 \u6216 820 \u8655\u7406\u5668\u3002",
             "keywords": null,
-            "focal_x": 256,
-            "focal_y": 240,
-            "layout": "FOCUS"
-        },
-        {
-            "id": 480,
-            "background": {
-                "id": 3724786,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/7f8836c359237f4e13e4148ce2a63805a17c6cfc.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
-                "description": "",
-                "width": 720,
-                "height": 480,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/7f8836c359237f4e13e4148ce2a63805a17c6cfc.jpg",
-                "url": "https://timgm.eprice.com.tw/tw/mobile/img/2020-06/08/5527323/tunacat_1_f91bb6bc51f84b9d7e9cde4a4b11ef12.jpg",
-                "source": ""
-            },
-            "headline": "",
-            "title": "\u96d6\u7136\u5148\u524d\u66fe\u7d93\u50b3\u51fa\u904e HMD \u4e5f\u6703\u6709\u4e00\u53f0\u8f03\u5e73\u50f9\u7684 5G \u624b\u6a5f Nokia 7.3\uff0c\u4f46\u6839\u64da\u5916\u5a92\u300aNokia Power User\u300b\u7684\u6d88\u606f\u4f86\u6e90\u6307\u51fa\uff0cNokia 7.3 \u61c9\u8a72\u540c\u6a23\u4e5f\u6703\u63a1\u7528\u9ad8\u901a\u8655\u7406\u5668\uff0c\u6240\u4ee5\u9019\u53f0\u642d\u8f09\u5929\u74a3\u8655\u7406\u5668\u7684\u6b3e\u5f0f\u53ef\u80fd\u53e6\u6709\u5176\u6a5f\u3002",
-            "keywords": null,
-            "focal_x": 256,
+            "focal_x": 360,
             "focal_y": 240,
             "layout": "NORMAL"
         },
         {
-            "id": 481,
+            "id": 2107,
             "background": {
-                "id": 3724786,
+                "id": 3739972,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/7f8836c359237f4e13e4148ce2a63805a17c6cfc.jpg",
@@ -128,14 +101,41 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/7f8836c359237f4e13e4148ce2a63805a17c6cfc.jpg",
                 "url": "https://timgm.eprice.com.tw/tw/mobile/img/2020-06/08/5527323/tunacat_1_f91bb6bc51f84b9d7e9cde4a4b11ef12.jpg",
-                "source": ""
+                "source": "User"
+            },
+            "headline": "",
+            "title": "\u96d6\u7136\u5148\u524d\u66fe\u7d93\u50b3\u51fa\u904e HMD \u4e5f\u6703\u6709\u4e00\u53f0\u8f03\u5e73\u50f9\u7684 5G \u624b\u6a5f Nokia 7.3\uff0c\u4f46\u6839\u64da\u5916\u5a92\u300aNokia Power User\u300b\u7684\u6d88\u606f\u4f86\u6e90\u6307\u51fa\uff0cNokia 7.3 \u61c9\u8a72\u540c\u6a23\u4e5f\u6703\u63a1\u7528\u9ad8\u901a\u8655\u7406\u5668\uff0c\u6240\u4ee5\u9019\u53f0\u642d\u8f09\u5929\u74a3\u8655\u7406\u5668\u7684\u6b3e\u5f0f\u53ef\u80fd\u53e6\u6709\u5176\u6a5f\u3002",
+            "keywords": null,
+            "focal_x": 360,
+            "focal_y": 240,
+            "layout": "FOCUS"
+        },
+        {
+            "id": 2108,
+            "background": {
+                "id": 3739972,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/7f8836c359237f4e13e4148ce2a63805a17c6cfc.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 720,
+                "height": 480,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/7f8836c359237f4e13e4148ce2a63805a17c6cfc.jpg",
+                "url": "https://timgm.eprice.com.tw/tw/mobile/img/2020-06/08/5527323/tunacat_1_f91bb6bc51f84b9d7e9cde4a4b11ef12.jpg",
+                "source": "User"
             },
             "headline": "",
             "title": "\u6d88\u606f\u6307\u51fa\uff0c\u642d\u8f09\u5929\u74a3\u8655\u7406\u5668\u7684 Nokia \u624b\u6a5f\u53ef\u80fd\u6703\u5728\u660e(2021)\u5e74\u521d\u767c\u8868\uff0c\u6216\u8a31\u4e0d\u6703\u51fa\u73fe\u5728 Nokia \u4e0b\u534a\u5e74\u5c07\u767c\u8868\u7684\u65b0\u6a5f\u884c\u5217\u4e2d\u3002",
             "keywords": null,
-            "focal_x": 256,
+            "focal_x": 360,
             "focal_y": 240,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         }
     ]
 }

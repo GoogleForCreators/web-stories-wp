@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 842,
+            "id": 2484,
             "background": {
-                "id": 3726409,
+                "id": 3741672,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/37b7d79e71f6f53a4f1b390217e5c77dfc03387e.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/37b7d79e71f6f53a4f1b390217e5c77dfc03387e.jpg",
                 "url": "https://lalatai.com/sites/default/files/field_image/2020-06/%E9%A1%98%E4%B8%96%E7%95%8C%E5%A6%82%E5%BD%A9%E8%99%B9%E8%88%AC%E7%B5%A2%E7%88%9B%EF%BC%81New%20Balance%E5%8F%B0%E7%81%A32020%E5%B9%B4%E9%A6%96%E5%BC%95%E9%80%B2Pride%E5%95%86%E5%93%81%E6%AD%A1%E6%85%B6%E9%A9%95%E5%82%B2%E5%90%8C%E5%BF%97%E6%9C%88%20.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u9858\u4e16\u754c\u5982\u5f69\u8679\u822c\u7d62\u721b\uff01New Balance\u53f0\u70632020\u5e74\u9996\u5f15\u9032Pride\u5546\u54c1\u6b61\u6176\u9a55\u50b2\u540c\u5fd7\u6708",
+            "headline": "\u9858\u4e16\u754c\u5982\u5f69\u8679\u822c\u7d62\u721b\uff01New Balance\u53f0\u70632020\u5e74\u9996\u5f15\u9032Pride\u5546\u54c1\u6b61\u6176\u9a55\u50b2\u540c\u5fd7\u6708",
+            "title": "",
             "keywords": null,
-            "focal_x": 323,
+            "focal_x": 600,
             "focal_y": 315,
             "layout": "COVER"
         },
         {
-            "id": 843,
+            "id": 2486,
             "background": {
-                "id": 3725203,
+                "id": 3740426,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/0a31346335691aecea7699557d11fd0e6692d393.jpeg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/0a31346335691aecea7699557d11fd0e6692d393.jpeg",
                 "url": "https://lalatai.com/sites/default/files/image/2020/43516/1.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6bcf\u5e74\u7684\u516d\u6708\u4efd\u70ba\u540c\u5fd7\u9a55\u50b2\u6708\uff0cNew Balance\u53f0\u7063\u9996\u6b21\u8207\u7f8e\u570b\u540c\u6b65\u63a8\u51fa\u300cPride Pack\u300d\u7cfb\u5217\u5546\u54c1\uff0c\u6253\u9020\u4e00\u7cfb\u5217327\u3001FUELCELL ECHO LUCENT\u3001\u62d6\u978b\u53ca\u670d\u98fe\uff0c\u4e26\u4ee5\u5f69\u8679\u70ba\u6838\u5fc3\u50f9\u503c\u8cab\u5fb9\u5546\u54c1\u8a2d\u8a08\uff0c\u7121\u8ad6\u819a\u8272\u3001\u6027\u5225\u8207\u80cc\u666f\uff0cNew Balance\u8207\u60a8\u5171\u540c\u6176\u795d\u5dee\u7570\u8207\u591a\u6a23\u6027\u3002",
             "keywords": null,
-            "focal_x": 598,
+            "focal_x": 611,
             "focal_y": 390,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 844,
+            "id": 2488,
             "background": {
-                "id": 3725204,
+                "id": 3740427,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8c7d3b1d2331437658b5a84c95cac625692c3591.jpeg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8c7d3b1d2331437658b5a84c95cac625692c3591.jpeg",
                 "url": "https://lalatai.com/sites/default/files/image/2020/43517/3.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u63a8\u51fa\u4e00\u7cfb\u5217\u8f15\u91cf\u900f\u6c23\u7684FuelCell Echo\u7537\u5973\u978b\u6b3e\uff0c\u4eba\u6c23\u8d85\u9ad8\u7684New Balance 327\u4e5f\u88ab\u9078\u70ba\u5f69\u8679\u9650\u5b9a\u5546\u54c1\u4e4b\u4e00\uff0c\u9a55\u50b2\u7cfb\u5217\u5546\u54c1\u4ee5\u5f69\u8679\u65d7\u8272\u5f69\u4f5c\u70ba\u767c\u60f3\u3002",
             "keywords": null,
-            "focal_x": 633,
+            "focal_x": 598,
             "focal_y": 409,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 845,
+            "id": 2490,
             "background": {
-                "id": 3725204,
+                "id": 3740427,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8c7d3b1d2331437658b5a84c95cac625692c3591.jpeg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8c7d3b1d2331437658b5a84c95cac625692c3591.jpeg",
                 "url": "https://lalatai.com/sites/default/files/image/2020/43517/3.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "Pride Pack\u7cfb\u5217-327\u9650\u5b9a\u6b3e\u4ee5\u4e03\u96f6\u5e74\u4ee3\u70ba\u9748\u611f\uff0c\u4ee5\u5fa9\u53e4\u5f69\u8abf\u8a6e\u91cb\u516d\u8272\uff0c\u978b\u8eab\u63a1\u7528\u7db2\u5e03\u8207\u9e82\u76ae\u7570\u6750\u8cea\u62fc\u63a5\u5275\u9020\u51fa\u8c50\u5bcc\u7684\u8996\u89ba\u5c64\u6b21\uff0c\u978b\u820c\u4e0a\u5247\u6709\u5c0f\u9762\u5f69\u8679\u65d7\u5e5f\uff0c\u524d\u65b9\u5c0f\u6a19\u5247\u6709\u5c0f\u5de7\u53ef\u611b\u7684\u611b\u5fc3\u5716\u6a23\u58d3\u4e0a\u767d\u8272logo\uff0c\u8c61\u5fb5\u5f69\u8679\u7406\u5ff5\u3002",
             "keywords": null,
-            "focal_x": 633,
+            "focal_x": 598,
             "focal_y": 409,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 846,
+            "id": 2492,
             "background": {
-                "id": 3725205,
+                "id": 3740428,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/328fdb2916b9eeb77663c1d04433592dfba4f716.jpeg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/328fdb2916b9eeb77663c1d04433592dfba4f716.jpeg",
                 "url": "https://lalatai.com/sites/default/files/image/2020/43518/5.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e00\u6a23\u8207New Balance 327\u6709\u611b\u5fc3\u5716\u6a23\u8207\u5f69\u8679\u978b\u5e36\u56fa\u5b9a\u74b0\uff0c\u5169\u8005\u7684\u978b\u588a\u90fd\u6709\u300clove since 1906\u300d\u7684\u5b57\u6a23\u8a2d\u8a08\uff0c\u8868\u9054\u5176\u54c1\u724c\u6b77\u53f2\u3002",
             "keywords": null,
-            "focal_x": 688,
+            "focal_x": 841,
             "focal_y": 600,
             "layout": "NORMAL"
         },
         {
-            "id": 847,
+            "id": 2494,
             "background": {
-                "id": 3725205,
+                "id": 3740428,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/328fdb2916b9eeb77663c1d04433592dfba4f716.jpeg",
@@ -155,12 +155,12 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/328fdb2916b9eeb77663c1d04433592dfba4f716.jpeg",
                 "url": "https://lalatai.com/sites/default/files/image/2020/43518/5.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u540c\u7cfb\u5217\u4e5f\u63a8\u51fa\u7537\u5973\u62d6\u978b\uff0c\u8000\u773c\u9280\u8272\u978b\u9762\u6298\u5c04\u51fa\u7d62\u721b\u9713\u5149\uff0c\u5728\u8fd1\u671f\u6885\u96e8\u5b63\u7bc0\u8b93\u4f60\u4e5f\u80fd\u6e05\u6dbc\u6176\u795d\u9a55\u50b2\u540c\u5fd7\u6708\u3002",
             "keywords": null,
-            "focal_x": 688,
+            "focal_x": 841,
             "focal_y": 600,
             "layout": "QUOTE"
         }

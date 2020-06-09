@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 174,
+            "id": 1819,
             "background": {
-                "id": 3726177,
+                "id": 3740397,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9aedde00a519aad64031d0859ea786502b7d20b7.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9aedde00a519aad64031d0859ea786502b7d20b7.jpg",
                 "url": "https://www.cmmedia.com.tw/file/37806/1591355983_100097_main_05\u7814\u9999\u6240\u4e0b\u5348\u8336\u5957\u9910.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u5357\u5317\u5477\u98fd\u90a3\u53f0\u4e2d\u5462\uff1f\u9664\u4e86\u592a\u967d\u9905 \u6c92\u5403\u904e\u9019\u4e9b\u5225\u8aaa\u4f60\u5230\u904e\u53f0\u4e2d",
+            "headline": "\u5357\u5317\u5477\u98fd\u90a3\u53f0\u4e2d\u5462\uff1f\u9664\u4e86\u592a\u967d\u9905 \u6c92\u5403\u904e\u9019\u4e9b\u5225\u8aaa\u4f60\u5230\u904e\u53f0\u4e2d",
+            "title": "",
             "keywords": null,
-            "focal_x": 1272,
+            "focal_x": 1368,
             "focal_y": 640,
             "layout": "COVER"
         },
         {
-            "id": 175,
+            "id": 1820,
             "background": {
-                "id": 3724531,
+                "id": 3739684,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9aedde00a519aad64031d0859ea786502b7d20b7.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9aedde00a519aad64031d0859ea786502b7d20b7.jpg",
                 "url": "https://www.cmmedia.com.tw/file/37806/1591355983_100097_main_05%E7%A0%94%E9%A6%99%E6%89%80%E4%B8%8B%E5%8D%88%E8%8C%B6%E5%A5%97%E9%A4%90.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u5357\u5317\u5477\u98fd\u90a3\u53f0\u4e2d\u5462\uff1f\n\u9664\u4e86\u592a\u967d\u9905 \u6c92\u5403\u904e\u9019\u4e9b\u5225\u8aaa\u4f60\u5230\u904e\u53f0\u4e2d",
             "title": "\u53f0\u4e2d\u7cd5\u9905\u5168\u53f0\u77e5\u540d\u3002",
             "keywords": null,
-            "focal_x": 1272,
+            "focal_x": 1368,
             "focal_y": 640,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 176,
+            "id": 1821,
             "background": {
-                "id": 3724531,
+                "id": 3739684,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9aedde00a519aad64031d0859ea786502b7d20b7.jpg",
@@ -74,50 +74,50 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9aedde00a519aad64031d0859ea786502b7d20b7.jpg",
                 "url": "https://www.cmmedia.com.tw/file/37806/1591355983_100097_main_05%E7%A0%94%E9%A6%99%E6%89%80%E4%B8%8B%E5%8D%88%E8%8C%B6%E5%A5%97%E9%A4%90.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6642\u81f3\u4eca\u65e5\uff0c\u9019\u4e9b\u53f0\u4e2d\u8001\u9905\u5e97\uff0c\u4e0d\u4f46\u52aa\u529b\u5c07\u50b3\u7d71\u53e3\u5473\u50b3\u627f\u4e0b\u53bb\uff0c\u4e5f\u767c\u63ee\u5275\u610f\u3001\u529b\u6c42\u8f49\u578b\uff0c\u4e0d\u50c5\u672a\u96a8\u5149\u9670\u800c\u51cb\u96f6\uff0c\u53cd\u800c\u4fdd\u7559\u73cd\u8cb4\u7684\u50f9\u503c\uff0c\u5448\u73fe\u51fa\u65b0\u820a\u4e26\u5b58\u7684\u6587\u5316\u610f\u6db5\u3002",
             "keywords": null,
-            "focal_x": 1272,
-            "focal_y": 640,
-            "layout": "QUOTE"
-        },
-        {
-            "id": 177,
-            "background": {
-                "id": 3724531,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/9aedde00a519aad64031d0859ea786502b7d20b7.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
-                "description": "",
-                "width": 1920,
-                "height": 1280,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/9aedde00a519aad64031d0859ea786502b7d20b7.jpg",
-                "url": "https://www.cmmedia.com.tw/file/37806/1591355983_100097_main_05%E7%A0%94%E9%A6%99%E6%89%80%E4%B8%8B%E5%8D%88%E8%8C%B6%E5%A5%97%E9%A4%90.jpg",
-                "source": ""
-            },
-            "headline": "",
-            "title": "\u60f3\u4e86\u89e3\u592a\u967d\u9905\u7684\u6b77\u53f2\u8207\u88fd\u4f5c\u904e\u7a0b\uff0c\u53ef\u9020\u8a2a\u5168\u5b89\u5802\u300c\u592a\u967d\u9905\u535a\u7269 \u9928\u300d\u4e00\u63a2\u7a76\u7adf\u3002",
-            "keywords": null,
-            "focal_x": 1272,
+            "focal_x": 1368,
             "focal_y": 640,
             "layout": "FOCUS"
         },
         {
-            "id": 178,
+            "id": 1822,
             "background": {
-                "id": 3737315,
+                "id": 3740445,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/768e12644f2ef328addc64a0b4d7305b1bc5ca8b.mp4",
+                "title": "\u592a\u9633\u5728\u57c3\u53ca\u5f00\u7f57\u9644\u8fd1\u7684\u5409\u8428\u5927\u91d1\u5b57\u5854\u4e0a",
+                "duration": 12.013,
+                "mime": "video/mp4",
+                "description": "",
+                "width": 1920,
+                "height": 1080,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/ef6e3820891981a33d08b412548817c430be2e1a.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/49_20HQOeijh9fog1/videoblocks-sun-over-great-pyramids-at-giza-near-cairo-egypt_het-zb_m8__5bc09b071d80093fcc342fbf5fe15b68__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721620048&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=10856589&resolution=180p&searchId=8f4fbc99-0e47-48aa-953b-3355ef86fb94&searchPageId=5d11cc21-0ae2-40aa-ae4c-637bd1e558b5#gliadriver=StoryBlocksVideoZH&key=10856589",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u60f3\u4e86\u89e3\u592a\u967d\u9905\u7684\u6b77\u53f2\u8207\u88fd\u4f5c\u904e\u7a0b\uff0c\u53ef\u9020\u8a2a\u5168\u5b89\u5802\u300c\u592a\u967d\u9905\u535a\u7269 \u9928\u300d\u4e00\u63a2\u7a76\u7adf\u3002",
+            "keywords": "ALL:\u5168\u5b89\u5802 \u592a\u967d\u9905 \u592a\u967d\u9905\u535a\u7269 \u9928|QUERY:\u5168\u5b89\u5802 \u592a\u967d\u9905 \u592a\u967d\u9905\u535a\u7269 \u9928",
+            "focal_x": 726,
+            "focal_y": 540,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 1823,
+            "background": {
+                "id": 3740457,
                 "type": "video",
                 "license": "Creative Common",
                 "file": "https://static-gstudio.gliacloud.com/c7d0b94440f42f0f266a14dadc9d6c3d1259aa95.mp4",
-                "title": "",
+                "title": "\u4f4e\u89d2\u5ea6\u89c2\u7684\u65b0\u52a0\u5761\u4e2d\u592e\u5546\u52a1\u533a\uff0c\u4e2d\u592e\u5546\u52a1\u533a\uff0c\u65b0\u52a0\u5761\uff0c\u4e1c\u5357\u4e9a\uff0c\u65f6\u95f4\u6d41\u901d\u7684\u94f6\u884c\u548c\u5546\u4e1a\u5efa\u7b51",
                 "duration": 14.08,
                 "mime": "video/mp4",
                 "description": "",
@@ -127,24 +127,24 @@
                 "end": 0.0,
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/d02674af63a728d1f3de7846dea49ebead6cb4dc.jpg",
-                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/GTYSdDW/low-angle-view-of-banks-and-commercial-buildings-in-singapores-cbd-central-_zkfdnly4h__PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591692195596&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=122199&resolution=180p&searchId=7ae26930-1cd0-4654-8e36-ef5ff8c1a4db&searchPageId=5cdeade8-3776-4b6b-9802-7e8497a43f20#gliadriver=StoryBlocksVideoZH&key=122199",
+                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/GTYSdDW/low-angle-view-of-banks-and-commercial-buildings-in-singapores-cbd-central-_zkfdnly4h__PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721625253&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=122199&resolution=180p&searchId=9227f950-e7ae-4532-916b-6a2b2e1ed8ea&searchPageId=3a4c4d9f-d93f-48f6-b090-83e5fd200b5b#gliadriver=StoryBlocksVideoZH&key=122199",
                 "source": ""
             },
             "headline": "",
             "title": "\u300c\u592a\u967d\u9905\u535a\u7269\u9928\u300d\u7684\u5efa\u7bc9\u672c\u8eab\u5c31\u662f\u4e00\u4ef6\u4fdd\u5b58\u826f\u597d\u7684\u767e\u5e74\u6b77\u53f2\u7470\u5bf6\uff0c\u5916\u89c0\u662f\u96c4\u5049\u83ef\u9e97\u7684\u5df4\u6d1b\u514b\u5efa\u7bc9\u7acb\u9762\uff0c\u8207\u8a31\u591a\u53f0\u7063\u8001\u5f0f\u5b98\u65b9\u5efa\u7bc9\u4e00\u6a23\u90fd\u662f\u300c\u8fb0\u91ce\u5f0f\u300d\u98a8\u683c\u3002",
-            "keywords": null,
-            "focal_x": 559,
+            "keywords": "ALL:\u5efa\u7bc9 \u592a\u967d\u9905\u535a\u7269\u9928|QUERY:\u5efa\u7bc9 \u592a\u967d\u9905\u535a\u7269\u9928",
+            "focal_x": 591,
             "focal_y": 540,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 179,
+            "id": 1824,
             "background": {
-                "id": 3737318,
+                "id": 3740467,
                 "type": "video",
                 "license": "Creative Common",
                 "file": "https://static-gstudio.gliacloud.com/7a0a07a262515452d19ca6532562fb0262dc04f1.mp4",
-                "title": "",
+                "title": "\u571f\u5730\u4e0a\u7684\u5411\u65e5\u8475\u79cd\u5b50",
                 "duration": 11.52,
                 "mime": "video/mp4",
                 "description": "",
@@ -154,35 +154,25 @@
                 "end": 0.0,
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/976d693db4c271b79272813be6932ca4ee681bff.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/BneeLTZeWj2kb7os5/videoblocks-sunflower-seeds-in-the-palms-of-the-agrarian_sii3pma8b__b8b328a33c4045f9b4588f7c501a9e0b__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591692199942&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=4702499&resolution=180p&searchId=a5725984-cf60-4f81-a375-0edcfe19779b&searchPageId=57879c7b-9823-442a-ad3a-96b4670bfeef#gliadriver=StoryBlocksVideoZH&key=4702499",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/BneeLTZeWj2kb7os5/videoblocks-sunflower-seeds-in-the-palms-of-the-agrarian_sii3pma8b__b8b328a33c4045f9b4588f7c501a9e0b__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721633246&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=4702499&resolution=180p&searchId=12c77400-1b0e-4e4b-baed-a9a73c19f882&searchPageId=6e967acf-d04e-44c1-afeb-e8b8822ab66c#gliadriver=StoryBlocksVideoZH&key=4702499",
                 "source": ""
             },
             "headline": "",
             "title": "\u800c\u535a\u7269\u9928\u524d\u8eab\u300c\u5168\u5b89\u5802\u300d\u6700\u65e9\u4f5c\u70ba\u85e5\u92ea\u4f7f\u7528\uff0c\u5f8c\u7531\u592a\u967d\u9905\u767c\u660e\u4eba\u300c\u963f\u660e\u5e2b\u300d\u9b4f\u6e05\u6d77\u8001\u5e2b\u5085\u5728\u6b64\u5c07\u592a\u967d\u9905\u767c\u63da\u5149\u5927\uff0c\u7d9360\u5e74\u4e09\u4ee3\u904b\u71df\uff0c\u73fe\u5df2\u6539\u70ba\u5168\u5b89\u5802\u300c\u592a\u967d\u9905\u535a\u7269\u9928\u300d\uff0c\u535a\u7269\u9928\u5167\u7cbe\u5fc3\u6536\u85cf\u592a\u967d\u9905\u76f8\u95dc\u6587\u7269\u7528\u5177\u53ca\u4e92\u52d5\u5f71\u97f3\u5a92\u9ad4\uff0c\u5728\u767e\u5e74\u53e4\u8e5f\u7a7a\u9593\u4e2d\u5c55\u51fa\u53f0\u4e2d\u6700\u503c\u5f97\u9a55\u50b2\u7684\u592a\u967d\u9905\u7cd5\u9905\u6587\u5316\u3002",
-            "keywords": null,
-            "focal_x": 1212,
+            "keywords": "ALL:\u592a\u967d\u9905\u535a\u7269\u9928 \u592a\u967d\u9905 \u592a\u967d\u9905\u7cd5\u9905 \u9b4f\u6e05\u6d77 \u5168\u5b89\u5802 \u535a\u7269\u9928|QUERY:\u592a\u967d\u9905\u535a\u7269\u9928 \u592a\u967d\u9905 \u592a\u967d\u9905\u7cd5\u9905 \u9b4f\u6e05\u6d77 \u5168\u5b89\u5802 \u535a\u7269\u9928",
+            "focal_x": 1417,
             "focal_y": 540,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         },
         {
-            "id": 180,
-            "background": null,
-            "headline": "",
-            "title": "\u9019\u66fe\u70ba\u300c\u53f0\u4e2d \u7b2c\u4e00\u8857\u300d\u7684\u5357\u5c6f\u8001\u8857\uff0c\u6709\u5bb6\u5275\u7acb\u65bc 1866 \u5e74\u7684\u767e\u5e74\u8001\u9905\u8216\u300c\u6797\u91d1\u751f\u9999\u300d\uff0c\u5c08\u8ce3\u53e4\u65e9\u5473\u5927\u9905\u3001\u559c\u9905\u3001\u7da0\u8c46\u692a\u3001\u991e\u9f95\u7cd5\u3001\u72c0\u5143\u7cd5\u3001\u9ebb\u829b\u6708\u9905\u7b49\uff0c\u56e0\u8457\u5730\u5229\u4e4b\u4fbf\uff0c\u81e8\u8fd1\u842c\u548c\u5bae\u5abd\u7956\u5edf\uff0c\u8a31\u591a\u8207\u5edf\u6703\u3001\u796d\u7940\u6709\u95dc\u7684 \u6d3b\u52d5\uff0c\u70ba\u300c\u6797\u91d1\u751f\u9999\u300d\u5e36\u9032\u4e86\u7cd5\u9905\u751f\u610f\uff0c\u4e5f\u5e36\u52d5\u53f0\u4e2d\u7b2c\u4e00\u8857\u8207\u53f0\u4e2d\u7cd5\u9905\u6587\u5316\u7522\u696d\u3002",
-            "keywords": "ALL:\u6797\u91d1\u751f\u9999 \u53f0\u4e2d \u7b2c\u4e00\u8857 \u53f0\u4e2d\u7cd5\u9905 \u5357\u5c6f\u8001\u8857 \u53f0\u4e2d\u7b2c\u4e00\u8857|QUERY:\u53f0\u4e2d\u7b2c\u4e00\u8857",
-            "focal_x": -1,
-            "focal_y": -1,
-            "layout": "NORMAL"
-        },
-        {
-            "id": 181,
+            "id": 1825,
             "background": {
-                "id": 3737324,
+                "id": 3740481,
                 "type": "video",
                 "license": "Creative Common",
-                "file": "https://static-gstudio.gliacloud.com/5bfff353f44f03f3d1bc7dd15a3aa38223398439.mp4",
-                "title": "",
-                "duration": 8.8,
+                "file": "https://static-gstudio.gliacloud.com/f5e823e1bd1c973b011c2ae2f60b767f5a4245b7.mp4",
+                "title": "\u9762\u5305\u67dc\u53f0",
+                "duration": 5.8,
                 "mime": "video/mp4",
                 "description": "",
                 "width": 1920,
@@ -190,26 +180,53 @@
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/1a4c6367db63427c15a36b10e311550a00928b8b.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/NdHffr7_eijh7icah/videoblocks-beautiful-wedding-cake-displayed-on-table-as-guests-dance-in-the-background_bwvs_h2dz__956caf1243e1e2283d1c3bc2d4261091__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591692225602&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=4881048&resolution=180p&searchId=1740d440-4a1b-4fc8-8146-7120584318d3&searchPageId=3f6926bd-c35b-4343-b4da-8b46dd868e2b#gliadriver=StoryBlocksVideoZH&key=4881048",
+                "thumbnail": "https://static-gstudio.gliacloud.com/ef7de641a94e43390d225da2dd64d308b690556c.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/VN__8Q8ueijkccu5c/videoblocks-the-counter-with-bread_hvbeh6ute__c29e98a43993c1453806125e0dd54fc5__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721636865&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=3988796&resolution=180p&searchId=c8f8aa2a-8679-4bcc-9ec9-6acbc263af8c&searchPageId=c030f634-cfb8-4591-a656-3af908780021#gliadriver=StoryBlocksVideoZH&key=3988796",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u9019\u66fe\u70ba\u300c\u53f0\u4e2d \u7b2c\u4e00\u8857\u300d\u7684\u5357\u5c6f\u8001\u8857\uff0c\u6709\u5bb6\u5275\u7acb\u65bc 1866 \u5e74\u7684\u767e\u5e74\u8001\u9905\u8216\u300c\u6797\u91d1\u751f\u9999\u300d\uff0c\u5c08\u8ce3\u53e4\u65e9\u5473\u5927\u9905\u3001\u559c\u9905\u3001\u7da0\u8c46\u692a\u3001\u991e\u9f95\u7cd5\u3001\u72c0\u5143\u7cd5\u3001\u9ebb\u829b\u6708\u9905\u7b49\uff0c\u56e0\u8457\u5730\u5229\u4e4b\u4fbf\uff0c\u81e8\u8fd1\u842c\u548c\u5bae\u5abd\u7956\u5edf\uff0c\u8a31\u591a\u8207\u5edf\u6703\u3001\u796d\u7940\u6709\u95dc\u7684 \u6d3b\u52d5\uff0c\u70ba\u300c\u6797\u91d1\u751f\u9999\u300d\u5e36\u9032\u4e86\u7cd5\u9905\u751f\u610f\uff0c\u4e5f\u5e36\u52d5\u53f0\u4e2d\u7b2c\u4e00\u8857\u8207\u53f0\u4e2d\u7cd5\u9905\u6587\u5316\u7522\u696d\u3002",
+            "keywords": "ALL:\u53f0\u4e2d\u7cd5\u9905 \u5357\u5c6f\u8001\u8857 \u53f0\u4e2d \u7b2c\u4e00\u8857 \u53f0\u4e2d\u7b2c\u4e00\u8857 \u6797\u91d1\u751f\u9999|QUERY:\u53f0\u4e2d\u7cd5\u9905 \u5357\u5c6f\u8001\u8857 \u53f0\u4e2d \u7b2c\u4e00\u8857 \u53f0\u4e2d\u7b2c\u4e00\u8857 \u6797\u91d1\u751f\u9999",
+            "focal_x": 1494,
+            "focal_y": 540,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 1826,
+            "background": {
+                "id": 3740491,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/35808288035f89fe535f5e4ae1113fee1bfe2d60.mp4",
+                "title": "\u63a8\u51fa\u8106\u997c\u9762\u56e2\u65f6\uff0c\u5b69\u5b50\u4eec\u5206\u4eabrolling\u9762\u6756\u7684\u624b",
+                "duration": 19.8,
+                "mime": "video/mp4",
+                "description": "",
+                "width": 1920,
+                "height": 1080,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/998d04505d3c6a0c31697af24a761cff8f510d66.jpg",
+                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/MPaEbz-/hands-of-kids-sharing-rolling-pin-while-rolling-out-shortbread-dough_vku2q6r3__SB_PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721648182&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=648509&resolution=180p&searchId=09adcea5-4019-4605-a61e-28538ab7bb29&searchPageId=26c3daca-7474-4c8c-b088-d3f663a264f8#gliadriver=StoryBlocksVideoZH&key=648509",
                 "source": ""
             },
             "headline": "",
             "title": "\u5976\u6cb9\u9165\u9905\u4e00\u76f4\u4ee5\u4f86\u90fd\u662f\u5927\u7532\u50b3\u7d71\u7684\u559c\u9905\u4e4b\u4e00\uff0c\u540c\u6642\u6bcf\u9022\u5abd\u7956\u8a95\u8fb0\uff0c\u9165\u9905\u4e5f\u6210\u70ba\u796d\u62dc\u4f9b\u54c1\u4e0d\u53ef\u6216\u7f3a\u7684\u9078\u64c7\uff0c\u4f46\u50b3\u7d71\u9165\u9905\u662f\u4ee5\u8c6c\u6cb9\u88fd\u4f5c\uff0c\u8a31\u591a\u8339\u7d20\u7684\u9999\u5ba2\u7121\u6cd5\u98df\u7528\uff0c\u56e0\u6b64\u8001\u9905\u5e97\u300c\u88d5\u73cd\u99a8\u300d\u4ee5\u5976\u6cb9\u53d6\u4ee3\u8c6c\u6cb9\uff0c\u53f0\u5f0f\u7f8e\u5473\u52a0\u4e0a\u897f\u5f0f\u5976\u6cb9\u7684\u5976\u6cb9\u9165\u9905\u5927\u53d7\u6b61\u8fce\uff0c50\u591a\u5e74\u4f86\u6b77\u7d93\u7cbe\u7dfb\u5316\u3001\u7f8e\u5473\u5316\u3001\u5065\u5eb7\u5316\u7684\u6539\u9769\u904e\u7a0b\uff0c\u5960\u5b9a\u5982\u4eca\u5927\u7532\u4f34\u624b\u79ae\u7684\u5730\u4f4d\u3002",
-            "keywords": null,
-            "focal_x": 924,
+            "keywords": "ALL:\u88d5\u73cd\u99a8 \u9165\u9905 \u5976\u6cb9 \u559c\u9905 \u8c6c\u6cb9 \u5927\u7532 \u5976\u6cb9\u9165\u9905|QUERY:\u88d5\u73cd\u99a8 \u9165\u9905 \u5976\u6cb9 \u559c\u9905 \u8c6c\u6cb9 \u5927\u7532 \u5976\u6cb9\u9165\u9905",
+            "focal_x": 956,
             "focal_y": 540,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         },
         {
-            "id": 182,
+            "id": 1827,
             "background": {
-                "id": 3737340,
+                "id": 3740545,
                 "type": "video",
                 "license": "Creative Common",
-                "file": "https://static-gstudio.gliacloud.com/43d7887595969d93edaa926f5690890d0f1923f4.mp4",
-                "title": "",
-                "duration": 12.179,
+                "file": "https://static-gstudio.gliacloud.com/792dcd463331dad38d3b1af2c3880a09a74d883d.mp4",
+                "title": "\u6162\u52a8\u4f5c\u5728\u73bb\u7483\u5382\u91cc\u4e70\u4e00\u676f\u6709\u5438\u5f15\u529b\u7684\u8001\u4eba",
+                "duration": 12.75,
                 "mime": "video/mp4",
                 "description": "",
                 "width": 1920,
@@ -217,16 +234,16 @@
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/419548905f740e6b8588733fcd3d55c449eb5650.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/rZJIMvhmliwmde8a6/videoblocks-cupcakes-with-icing-small-appetizing-desserts-with-cherry-on-top-pastry-and-food-concept_hxhpol04x__2f284b6766114d7cc2fa46242eaaefcb__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591692236199&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=7260620&resolution=180p&searchId=8aca490e-99a6-4919-bdf2-75bc313c1c05&searchPageId=eb482d87-17b1-40c3-86bf-74c803ba7870#gliadriver=StoryBlocksVideoZH&key=7260620",
+                "thumbnail": "https://static-gstudio.gliacloud.com/567546ceab52ef7ccd4069ea94f2cc954a48de27.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/YZoSC5o/videoblocks-an-attractive-senior-man-shopping-for-a-glass-in-a-glass-factory-in-slow-motion_r2g0-xg7w__c120adf87b2f05f1eb05f9c21fe8a0dd__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721651550&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=4693525&resolution=180p&searchId=58cbe31c-990e-48eb-8cd5-01f7e54fd065&searchPageId=551f4b2b-e6b8-4440-a1bf-8e0732f88d00#gliadriver=StoryBlocksVideoZH&key=4693525",
                 "source": ""
             },
             "headline": "",
             "title": "\u6b64\u5916\uff0c\u5e97\u5167\u7684\u5176\u4ed6\u7cd5\u9905\u98df\u54c1\uff0c\u5982\u7da0\u8c46\u7cd5\u3001\u6f22\u5f0f\u559c\u9905\u3001\u5f4c\u6708\u86cb\u7cd5\u3001\u8001\u5a46\u9905\u3001\u592a\u967d\u9905\u7b49\uff0c\u90fd\u662f\u6700\u4f73\u7684\u4f34\u624b\u79ae\u9078\u64c7\u3002",
-            "keywords": null,
-            "focal_x": 943,
+            "keywords": "ALL:\u4f34\u624b\u79ae\u9078\u64c7 \u7cd5\u9905\u98df\u54c1 \u5f4c\u6708\u86cb\u7cd5 \u6f22\u5f0f\u559c\u9905 \u592a\u967d\u9905 \u7da0\u8c46\u7cd5 \u8001\u5a46\u9905|QUERY:\u4f34\u624b\u79ae\u9078\u64c7 \u7cd5\u9905\u98df\u54c1 \u5f4c\u6708\u86cb\u7cd5 \u6f22\u5f0f\u559c\u9905 \u592a\u967d\u9905 \u7da0\u8c46\u7cd5 \u8001\u5a46\u9905",
+            "focal_x": 879,
             "focal_y": 540,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         }
     ]
 }

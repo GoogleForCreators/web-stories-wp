@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 278,
+            "id": 1923,
             "background": {
-                "id": 3726195,
+                "id": 3740844,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/35d1565cd7186243433c89a100a70e158d7ac72e.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/35d1565cd7186243433c89a100a70e158d7ac72e.jpg",
                 "url": "https://images.chinatimes.com/newsphoto/2020-06-07/900/20200607002044.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u597d\u5e02\u591a\u534a\u719f\u9eb5\u5305\u88ab\u5a46\u5a46\u62ff\u53bb... \u7adf\u6bd4\u70e4\u7bb1\u70e4\u5f97\u597d\u5403 - \u6642\u4e8b",
+            "headline": "\u597d\u5e02\u591a\u534a\u719f\u9eb5\u5305\u88ab\u5a46\u5a46\u62ff\u53bb... \u7adf\u6bd4\u70e4\u7bb1\u70e4\u5f97\u597d\u5403 - \u751f\u6d3b",
+            "title": "",
             "keywords": null,
-            "focal_x": 280,
+            "focal_x": 450,
             "focal_y": 280,
             "layout": "COVER"
         },
         {
-            "id": 279,
+            "id": 1924,
             "background": {
-                "id": 3724547,
+                "id": 3739701,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
                 "url": "https://images.chinatimes.com/newsphoto/2020-06-07/900/20200607002046.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u539fPO\u7684\u5a46\u5a46\u628a\u534a\u719f\u9eb5\u5305\u8aa4\u8a8d\u6210\u9945\u982d\u62ff\u53bb\u84b8\u3002",
             "keywords": null,
-            "focal_x": 561,
+            "focal_x": 429,
             "focal_y": 337,
             "layout": "QUOTE"
         },
         {
-            "id": 280,
+            "id": 1925,
             "background": {
-                "id": 3724547,
+                "id": 3739701,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
                 "url": "https://images.chinatimes.com/newsphoto/2020-06-07/900/20200607002046.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e00\u540d\u7db2\u53cb\u6628\u5929\u597d\u4e0d\u5bb9\u6613\u8cb7\u5230\u50b3\u8aaa\u4e2d\u7684\u534a\u719f\u9eb5\u5305\uff0c\u653e\u684c\u4e0a\u7b49\u9694\u5929\u70e4\u4f86\u5403\uff0c\u7d50\u679c\u65e9\u4e0a\u8d77\u5e8a\u5a46\u5a46\u5df2\u6436\u5148\u4e00\u6b65\u628a\u534a\u719f\u9eb5\u5305\u62ff\u53bb\u84b8\uff0c\u610f\u5916\u767c\u73fe\u534a\u719f\u9eb5\u5305\u7684\u300c\u65b0\u8eab\u4efd\u300d\uff0c\u9023\u5a46\u5a46\u90fd\u60f3\u8cb7\u4e86\u3002",
             "keywords": null,
-            "focal_x": 561,
+            "focal_x": 429,
             "focal_y": 337,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         },
         {
-            "id": 281,
+            "id": 1926,
             "background": {
-                "id": 3724547,
+                "id": 3739701,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
@@ -101,46 +101,46 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
                 "url": "https://images.chinatimes.com/newsphoto/2020-06-07/900/20200607002046.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u9019\u540d\u7db2\u53cb\u5728\u81c9\u66f8\u300cCostco\u597d\u5e02\u591a \u5546\u54c1\u7d93\u9a57\u8001\u5be6\u8aaa\u300dPO\u6587\uff0c\u5a46\u5a46\u4e00\u5927\u65e9\u628a\u5979\u8cb7\u7684\u534a\u719f\u9eb5\u5305\u7576\u6210\u9945\u982d\uff0c\u62ff\u53bb\u96fb\u934b\u84b8\u597d\u4e86\uff0c\u5403\u4e86\u4e4b\u5f8c\u9084\u554f\u539fPO\u9019\u9945\u982d\u591a\u5c11\u9322\u300c\u633a\u597d\u5403\u7684\uff01\u300d\u8b93\u539fPO\u807d\u4e86\u54ed\u7b11\u4e0d\u5f97\u3002",
             "keywords": null,
-            "focal_x": 561,
+            "focal_x": 429,
             "focal_y": 337,
             "layout": "FOCUS"
         },
         {
-            "id": 282,
+            "id": 1927,
             "background": {
-                "id": 3724547,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/png",
+                "id": 3741095,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/8e8a2bdc4935d28f5c85c8abf8662a68fb12e6ef.mp4",
+                "title": "\u6912\u76d0\u8106\u997c\u5728\u67b6\u5b50\u4e0a\u65cb\u8f6c",
+                "duration": 13.481,
+                "mime": "video/mp4",
                 "description": "",
-                "width": 900,
-                "height": 675,
+                "width": 1920,
+                "height": 1080,
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
-                "url": "https://images.chinatimes.com/newsphoto/2020-06-07/900/20200607002046.png",
+                "thumbnail": "https://static-gstudio.gliacloud.com/3917497841e284e014459841e6a9f93f7dfe6c92.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/48byXia/pretzels-rotating-on-rack_4yfuf7jh__2735c9884de3676537c81a449c45b123__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721845680&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=405358&resolution=180p&searchId=5ac6c0c9-5e39-4263-9a34-d758b9f51b77&searchPageId=3aef8115-c1f8-4920-9625-3fa3e52101b3#gliadriver=StoryBlocksVideoZH&key=405358",
                 "source": ""
             },
             "headline": "",
             "title": "\u5c0d\u6b64\uff0c\u7db2\u53cb\u5011\u4e5f\u7d1b\u7d1b\u7559\u8a00\uff0c\u81ea\u5df1\u5728\u5bb6\u4e5f\u6703\u84b8\u534a\u719f\u9eb5\u5305\uff0c\u300c\u5a46\u5a46\u7a81\u7834\u76f2\u9ede\u4e86\uff0c\u771f\u7684\u5f88\u50cf\u9945\u982d\uff01\u300d",
-            "keywords": null,
-            "focal_x": 561,
-            "focal_y": 337,
+            "keywords": "ALL:\u534a\u719f\u9eb5\u5305 \u9945\u982d \u5a46\u5a46|QUERY:\u534a\u719f\u9eb5\u5305 \u9945\u982d \u5a46\u5a46",
+            "focal_x": 649,
+            "focal_y": 540,
             "layout": "QUOTE"
         },
         {
-            "id": 283,
+            "id": 1928,
             "background": {
-                "id": 3724547,
+                "id": 3739701,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
@@ -155,14 +155,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f93fdd7bbc3cfad2151dc3dc862a6a10640d60b3.png",
                 "url": "https://images.chinatimes.com/newsphoto/2020-06-07/900/20200607002046.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u3001\u300c\u6211\u7239\u4e5f\u662f\u653e\u96fb\u934b\u84b8\u22ef\u300d\u3001\u300c\u6211\u4e5f\u662f\u7576\u9945\u982d\u84b8\u4e86\u5403\uff0c\u6bd4\u70e4\u7bb1\u70e4\u597d\u5403\u54e9\uff01\u9023\u8c9d\u679c\u4e5f\u559c\u6b61\u7528\u84b8\u7684\u300d\u3001\u300c\u597d\u5e02\u591a\u8cb7\u98df\u7269\u771f\u7684\u8a72\u9644\u8d08\u963f\u5b24\uff01\u300d",
             "keywords": null,
-            "focal_x": 561,
+            "focal_x": 429,
             "focal_y": 337,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         }
     ]
 }

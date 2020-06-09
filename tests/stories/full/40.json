@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 397,
+            "id": 2173,
             "background": {
-                "id": 3726210,
+                "id": 3741436,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/e7c8da059235a4968eaf20e4f804acc1d3e5f4a7.png",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/e7c8da059235a4968eaf20e4f804acc1d3e5f4a7.png",
                 "url": "https://images.zi.org.tw/dennyli/2020/04/27133141/1587965501-32d711f04ae579fec8872ec99d32d934.png",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u3010Pokemon GO\u3011\u81ea\u7206\u78c1\u602a",
+            "headline": "\u3010Pokemon GO\u3011\u81ea\u7206\u78c1\u602a",
+            "title": "",
             "keywords": null,
-            "focal_x": 875,
+            "focal_x": 921,
             "focal_y": 315,
             "layout": "COVER"
         },
         {
-            "id": 398,
+            "id": 2175,
             "background": {
-                "id": 3724695,
+                "id": 3739869,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/d3a339c3f12b459a99795a741ce36634a162dfe1.png",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/d3a339c3f12b459a99795a741ce36634a162dfe1.png",
                 "url": "https://images.zi.org.tw/dennyli/2020/04/27133114/1587965473-563851674f4fd0d84b4012e65d6002f2-1200x899.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u80fd\u529b\u5206\u6790",
             "title": "\u81ea\u7206\u78c1\u602a\u5728Pokemon GO\u904a\u6232\u88e1\u7684\u8cc7\u6599\uff1a",
             "keywords": null,
-            "focal_x": 745,
+            "focal_x": 932,
             "focal_y": 449,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 399,
+            "id": 2176,
             "background": {
-                "id": 3724696,
+                "id": 3739870,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f883a724f5821955f1febeb85f932ad85bdfd1e4.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f883a724f5821955f1febeb85f932ad85bdfd1e4.jpg",
                 "url": "https://images.zi.org.tw/dennyli/2020/04/27133149/1587965509-8fd51e1e899c8546fb20e7faeefccfc1.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u62db\u5f0f\u7d44\u5408\u5247\u53ea\u6709\u96fb\u7cfb\u8207\u92fc\u7cfb\uff0c\u5f9e\u5c6c\u6027\u58d3\u5236\u7684\u9762\u4e0a\u6bd4\u8f03\u4fb7\u9650\u4e00\u9ede\uff0c\u96d6\u7136\u5728\u8d85\u7d1a\u806f\u76df\u6392\u540d\u53ea\u6709100\uff0c\u4f46\u4e39\u5c3c\u9084\u883b\u559c\u6b61\u5728\u9019\u806f\u76df\u4f7f\u7528\u81ea\u7206\u78c1\u602a\uff0c\u53ef\u4ee5\u58d3\u5236\u746a\u529b\u9732\u9e97\u8207\u76d4\u7532\u9ce5\u3002",
             "keywords": null,
-            "focal_x": 117,
+            "focal_x": 111,
             "focal_y": 69,
             "layout": "FOCUS"
         },
         {
-            "id": 400,
+            "id": 2177,
             "background": {
-                "id": 3724697,
+                "id": 3739871,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9dc92ec6783a5e578a7e96841adfad93c935dc47.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9dc92ec6783a5e578a7e96841adfad93c935dc47.jpg",
                 "url": "https://images.zi.org.tw/dennyli/2020/04/14092200/1589419320-787e5e1de31d98fee28d3732b10be6f8.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u3010\u62db\u5f0f\u9078\u64c7\u8207\u5c0d\u6230\u4f7f\u7528\u3011",
             "keywords": null,
-            "focal_x": 122,
+            "focal_x": 432,
             "focal_y": 114,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 401,
+            "id": 2178,
             "background": {
-                "id": 3724700,
+                "id": 3739874,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/e9d40af59b7b616d936af4ce633d70d7eaf98af7.png",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/e9d40af59b7b616d936af4ce633d70d7eaf98af7.png",
                 "url": "https://images.zi.org.tw/dennyli/2020/04/27133153/1587965512-4a8579cf36c1171f1f2f7ec212ef554f-1200x496.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u3010\u5f31\u9ede\u8207\u6297\u6027\u5c6c\u6027\u3011",
             "keywords": null,
-            "focal_x": 752,
+            "focal_x": 691,
             "focal_y": 248,
             "layout": "QUOTE"
         },
         {
-            "id": 402,
+            "id": 2179,
             "background": {
-                "id": 3724701,
+                "id": 3739875,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/5964ba109bbbf7bc1fde28b0c03b0d0745ce374f.png",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/5964ba109bbbf7bc1fde28b0c03b0d0745ce374f.png",
                 "url": "https://images.zi.org.tw/dennyli/2020/04/27133213/1587965532-0c06ddd84944d3926cab842d837d344c-1200x590.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u96fb\u7cfb\u5bf6\u53ef\u5922\u6bd4\u8f03",
             "title": "\u9996\u5148\u5f9e\u96fb\u7cfb\u9032\u884c\u6bd4\u8f03\uff0c\u5148\u4f86\u770b\u770b\u4e09\u570d\u6578\u503c\uff1a",
             "keywords": null,
-            "focal_x": 303,
+            "focal_x": 600,
             "focal_y": 295,
             "layout": "NORMAL"
         },
         {
-            "id": 403,
+            "id": 2180,
             "background": {
-                "id": 3724702,
+                "id": 3739876,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8962ed6fb57135ab22fc7bc102f6b6e191430764.jpg",
@@ -182,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8962ed6fb57135ab22fc7bc102f6b6e191430764.jpg",
                 "url": "https://images.zi.org.tw/dennyli/2020/03/02135225/1583128345-b0f95f22ce1e88d77972725eaee0f33a.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u81ea\u7206\u78c1\u602a\u5728\u96fb\u7cfb\u6392\u884c\u7b2c\u56db\u540d\uff0c\u672c\u8eab\u7684\u9ad8\u9632\u79a6\u529b\u662f\u76ee\u524d\u96fb\u7cfb\u6700\u5f37\uff0c\u6574\u9ad4\u4f86\u8aaa\u9664\u4e86\u8840\u91cf\u7f3a\u9ede\u5916\uff0c\u9ad4\u8cea\u8868\u73fe\u5728\u96fb\u7cfb\u7b97\u883b\u597d\u7528\u7684\u3002",
             "keywords": null,
-            "focal_x": 130,
+            "focal_x": 341,
             "focal_y": 114,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         },
         {
-            "id": 404,
+            "id": 2181,
             "background": {
-                "id": 3724708,
+                "id": 3739882,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/d0430c0f46cc86009794b328bfc0d0f2df5cfc2b.png",
@@ -209,19 +209,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/d0430c0f46cc86009794b328bfc0d0f2df5cfc2b.png",
                 "url": "https://images.zi.org.tw/dennyli/2020/04/27133134/1587965493-487f660c208028a270b6ceac6b330a8f-1200x1074.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u92fc\u7cfb\u5bf6\u53ef\u5922\u6bd4\u8f03",
             "title": "\u81ea\u7206\u78c1\u602a\u6c92\u6709\u92fc\u7cfb\u5c0f\u62db\uff0c\u5c31\u76f4\u63a5\u8b1b\u89e3\u92fc\u7cfb\u5927\u62db\u7684\u90e8\u5206\uff0c\u92fc\u7cfb\u5927\u62db\u6709\u52a0\u8fb2\u5149\u70ae\u8ddf\u93e1\u5149\u5c04\u64ca\uff0c\u57fa\u672c\u5c31\u662f\u9078\u64c7\u77ed\u80fd\u91cf\u7684\u93e1\u5149\u5c04\u64ca\uff0c\u4e0d\u50c5\u9a19\u76fe\u53c8\u80fd\u5e36\u964d\u5c0d\u624b\u653b\u64ca\u7b97\u662f\u5f88\u5be6\u7528\u3002",
             "keywords": null,
-            "focal_x": 649,
+            "focal_x": 600,
             "focal_y": 537,
             "layout": "NORMAL"
         },
         {
-            "id": 405,
+            "id": 2182,
             "background": {
-                "id": 3724709,
+                "id": 3739883,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/66c64810a5abd663381b4f1443e2597a2ae3d388.png",
@@ -236,13 +236,13 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/66c64810a5abd663381b4f1443e2597a2ae3d388.png",
                 "url": "https://images.zi.org.tw/dennyli/2020/04/27133054/1587965453-45f49198e84742b3fee63ced468bd9b9-988x1200.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "IV\u8868",
             "title": "IV\u8868\u63d0\u4f9b\u7d66\u73a9\u5bb6\u5011\u53c3\u8003\uff1a",
             "keywords": null,
             "focal_x": 494,
-            "focal_y": 502,
+            "focal_y": 600,
             "layout": "NORMAL"
         }
     ]

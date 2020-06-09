@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1679,
+            "id": 3203,
             "background": {
-                "id": 3726904,
+                "id": 3741965,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b78aacc6b57d478566a98b3920b994c0afa3c091.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b78aacc6b57d478566a98b3920b994c0afa3c091.jpg",
                 "url": "https://s.zimedia.com.tw/c/uuAIJn",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u8089\u61f7\u98df| \u5168\u53f0\u9996\u5bb6CAB Prime\u7d1a\u9ed1\u725b\u6fb3\u6d32\u548c\u725b\u7b499\u7a2e\u5922\u5e7b\u8089\u54c1\u7121\u9650\u653e\u984c\u9084\u6709\u5564\u9152\u66a2\u98f2 \u5546\u59ae\u5403\u559d\u904a\u6a02",
+            "headline": "\u8089\u61f7\u98df| \u5168\u53f0\u9996\u5bb6CAB Prime\u7d1a\u9ed1\u725b\u6fb3\u6d32\u548c\u725b\u7b499\u7a2e\u5922\u5e7b\u8089\u54c1\u7121\u9650\u653e\u984c\u9084\u6709\u5564\u9152\u66a2\u98f2 \u5546\u59ae\u5403\u559d\u904a\u6a02",
+            "title": "",
             "keywords": null,
-            "focal_x": 228,
+            "focal_x": 365,
             "focal_y": 196,
             "layout": "COVER"
         },
         {
-            "id": 1680,
+            "id": 3204,
             "background": {
-                "id": 3725983,
+                "id": 3741208,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b78aacc6b57d478566a98b3920b994c0afa3c091.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b78aacc6b57d478566a98b3920b994c0afa3c091.jpg",
                 "url": "https://s.zimedia.com.tw/s/uuAIJn-0",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "9\u6b3e\u5922\u5e7b\u8089\u54c1\u3001\u5564\u9152\u3001\u751f\u9bae\u852c\u83dc\u3001\u83c7\u985e\u3001\u706b\u934b\u6599\u3001\u98f2\u6599\u751c\u9ede\u9084\u6709\u548c\u725b\u6ef7\u8089\u98ef\u2026\u901a\u901a\u7121\u9650\u653e\u984c\u5403\u5230\u98fd!",
             "keywords": null,
-            "focal_x": 228,
+            "focal_x": 365,
             "focal_y": 196,
             "layout": "QUOTE"
         },
         {
-            "id": 1681,
+            "id": 3205,
             "background": {
-                "id": 3725988,
+                "id": 3741213,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c1838f4927c248d322fdb06c51148946cd36f9d2.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c1838f4927c248d322fdb06c51148946cd36f9d2.jpg",
                 "url": "https://s.zimedia.com.tw/s/uuAIJn-5",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6fb3\u6d32\u548c\u725b\u7121\u9650\u653e\u984c 1599\u5143\uff0c9\u7a2e\u8089\u54c1+\u5168\u83dc\u55ae\u5403\u5230\u98fd\u3002",
             "keywords": null,
-            "focal_x": 362,
+            "focal_x": 354,
             "focal_y": 274,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1682,
+            "id": 3206,
             "background": {
-                "id": 3725989,
+                "id": 3741214,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f49c815b57789706e3e1db93ca06f76751e50f6e.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f49c815b57789706e3e1db93ca06f76751e50f6e.jpg",
                 "url": "https://s.zimedia.com.tw/s/uuAIJn-6",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u8089\u61f7\u98df\u7121\u9650\u653e\u984c 1280\u5143\uff0c7\u7a2e\u8089\u54c1+\u5168\u83dc\u55ae\u5403\u5230\u98fd\u3002",
             "keywords": null,
-            "focal_x": 282,
+            "focal_x": 365,
             "focal_y": 258,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1683,
+            "id": 3207,
             "background": {
-                "id": 3725990,
+                "id": 3741215,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f470d2d2ad0034ea2c78bfbf9b73c709bb1133b8.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f470d2d2ad0034ea2c78bfbf9b73c709bb1133b8.jpg",
                 "url": "https://s.zimedia.com.tw/s/uuAIJn-7",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u8089\u61f7\u98df\u5957\u9910599\u5143\uff0c\u542b7\u7a2e\u8089\u54c1\u3001\u548c\u725b\u6ef7\u8089\u98ef\u3001\u852c\u83dc\u62fc\u76e4\u53ca\u751c\u9ede\u3001\u98f2\u54c1\u3002",
             "keywords": null,
-            "focal_x": 244,
+            "focal_x": 305,
             "focal_y": 244,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1684,
+            "id": 3208,
             "background": {
-                "id": 3725990,
+                "id": 3741215,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f470d2d2ad0034ea2c78bfbf9b73c709bb1133b8.jpg",
@@ -155,12 +155,12 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f470d2d2ad0034ea2c78bfbf9b73c709bb1133b8.jpg",
                 "url": "https://s.zimedia.com.tw/s/uuAIJn-7",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "1280\u5143\u8089\u61f7\u98df\u7121\u9650\u653e\u984c9\u6708\u5e95\u524d\u512a\u60e0\u50f9\u53ea\u8981888\u5143\u76f8\u7576\u8d85\u503c!",
             "keywords": null,
-            "focal_x": 244,
+            "focal_x": 305,
             "focal_y": 244,
             "layout": "QUOTE"
         }

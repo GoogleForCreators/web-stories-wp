@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 854,
+            "id": 2496,
             "background": {
-                "id": 3726411,
+                "id": 3741675,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c2ca523b46af9d22c6ce0c44ef9321cff8caca57.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c2ca523b46af9d22c6ce0c44ef9321cff8caca57.jpg",
                 "url": "http://s2.lookforward.cc/uploads/71/0/129206/thumb_800x417_254.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "52\u6b72\u300c\u85cd\u5fc3\u6e44\u300d\u958b\u5fc3\u5e36\u7238\u7238\u51fa\u904a\uff01\u8001\u7236\u537b\u56e0\u300c\u5305\u8457\u7d19 \u5c3f \u5e03\u300d\u611f\u5230\u4e0d\u597d\u610f\u601d\u8b93\u5979\u77ac\u9593\u6dda\u5d29",
+            "headline": "52\u6b72\u300c\u85cd\u5fc3\u6e44\u300d\u958b\u5fc3\u5e36\u7238\u7238\u51fa\u904a\uff01\u8001\u7236\u537b\u56e0\u300c\u5305\u8457\u7d19 \u5c3f \u5e03\u300d\u611f\u5230\u4e0d\u597d\u610f\u601d\u8b93\u5979\u77ac\u9593\u6dda\u5d29",
+            "title": "",
             "keywords": null,
-            "focal_x": 280,
+            "focal_x": 400,
             "focal_y": 208,
             "layout": "COVER"
         },
         {
-            "id": 855,
+            "id": 2497,
             "background": {
-                "id": 3725208,
+                "id": 3740433,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/0c1dafc9b96d1b24f1f04269b76329d2e8a74b7e.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/0c1dafc9b96d1b24f1f04269b76329d2e8a74b7e.jpg",
                 "url": "http://s2.lookforward.cc/uploads/71/0/129206/14967248388568.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u70ba\u4eba\u5b50\u5973\u4e00\u5b9a\u8981\u597d\u597d\u5b5d\u9806\u7236\u6bcd~",
             "keywords": null,
-            "focal_x": 337,
+            "focal_x": 372,
             "focal_y": 249,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 856,
+            "id": 2498,
             "background": {
-                "id": 3725209,
+                "id": 3740434,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1691c1a74ed859ad8ef8356eb0db416d7cfa38c0.png",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1691c1a74ed859ad8ef8356eb0db416d7cfa38c0.png",
                 "url": "http://s2.lookforward.cc/uploads/71/0/129206/14967253626745.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u3010\u5b8c\u6574\u5f71\u7247\u5728\u6587\u7ae0\u6700\u4e0b\u65b9\u3011",
             "keywords": null,
             "focal_x": 148,
-            "focal_y": 156,
-            "layout": "FOCUS"
+            "focal_y": 195,
+            "layout": "QUOTE"
         },
         {
-            "id": 857,
+            "id": 2499,
             "background": {
-                "id": 3725208,
+                "id": 3740433,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/0c1dafc9b96d1b24f1f04269b76329d2e8a74b7e.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/0c1dafc9b96d1b24f1f04269b76329d2e8a74b7e.jpg",
                 "url": "http://s2.lookforward.cc/uploads/71/0/129206/14967248388568.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u85dd\u4eba\u85cd\u5fc3\u6e44\u8207\u7236\u6bcd\u611f\u60c5\u76f8\u7576\u597d\uff0c\u65e5\u524d\u5979\u900f\u9732\u5e36\u7238\u7238\u53bb\u65e5\u672c\u4eac\u90fd\u73a9\uff0c\u8001\u7236\u56e0\u70ba\u7a7f\u8457\u7d19 \u5c3f \u5e03\u611f\u5230\u4e0d\u597d\u610f\u601d\uff0c\u8aaa\u8457\u8aaa\u8457\u7adf\u6dda\u7051\u651d\u5f71\u68da\uff0c\u8b93\u4e0d\u5c11\u7db2\u53cb\u5fc3\u6709\u621a\u621a\u7109\uff01",
             "keywords": null,
-            "focal_x": 337,
+            "focal_x": 372,
             "focal_y": 249,
             "layout": "NORMAL"
         },
         {
-            "id": 858,
+            "id": 2500,
             "background": {
-                "id": 3725209,
+                "id": 3740434,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1691c1a74ed859ad8ef8356eb0db416d7cfa38c0.png",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1691c1a74ed859ad8ef8356eb0db416d7cfa38c0.png",
                 "url": "http://s2.lookforward.cc/uploads/71/0/129206/14967253626745.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u85cd\u5fc3\u6e44\u8868\u793a\uff0c\u96d6\u7136\u73fe\u5728\u5df2\u7d93\u5e74\u904e\u534a\u767e\uff0c\u4f46\u7238\u7238\u9084\u662f\u628a\u5979\u7576\u6210\u5c0f\u5b69\u5b50\uff0c\u5979\u7e3d\u6703\u8ddf\u7236\u6bcd\u8aaa\uff1a\u300c\u6211\u90fd\u5df2\u7d9350\u6b72\u4e86\uff01\u4f60\u5011\u4e0d\u8981\u64d4\u5fc3\u6211\u5566\uff01\u300d",
             "keywords": null,
             "focal_x": 148,
-            "focal_y": 156,
-            "layout": "NORMAL"
+            "focal_y": 195,
+            "layout": "FOCUS"
         },
         {
-            "id": 859,
+            "id": 2501,
             "background": {
-                "id": 3725210,
+                "id": 3740435,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9d2fb25f06096545d881488b92f229955a03cedc.jpg",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9d2fb25f06096545d881488b92f229955a03cedc.jpg",
                 "url": "http://s2.lookforward.cc/uploads/71/0/129206/14967248386047.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u65e5\u524d\uff0c\u85cd\u5fc3\u6e44\u5e36\u8457\u7238\u7238\u53bb\u4eac\u90fd\u73a9\uff0c\u7236\u89aa\u56e0\u70ba\u5e74\u7d00\u5927\u4e0d\u592a\u80fd\u8d70\u3001\u4e5f\u4e0d\u592a\u80fd\u54ac\u98df\u7269\uff0c\u7576\u5979\u727d\u8457\u7238\u7238\u53bb\u5ec1\u6240\u6642\uff0c\u7238\u7238\u56e0\u70ba\u7a7f\u8457\u7d19 \u5c3f \u5e03\u89ba\u5f97\u4e0d\u597d\u610f\u601d\uff0c\u8981\u5979\u4e0d\u8981\u770b\u4ed6\uff0c\u9019\u4e00\u77ac\u9593\u8b93\u85cd\u5fc3\u6e44\u4e0d\u6368\uff0c\u8aaa\uff1a\u300c\u4ee5\u524d\u4f60\u5e6b\u6211\u5011\u63db\u5c3f \u5e03\uff0c\u73fe\u5728\u6211\u5e6b\u4f60\u63db\u5c3f \u5e03\uff0c\u4e0d\u7ba1\u4f60\u5e7e\u6b72\u6211\u90fd\u611b\u4f60\u3002\u300d",
             "keywords": null,
             "focal_x": 265,
-            "focal_y": 297,
-            "layout": "NORMAL"
+            "focal_y": 320,
+            "layout": "FOCUS"
         },
         {
-            "id": 860,
+            "id": 2502,
             "background": {
-                "id": 3725210,
+                "id": 3740435,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9d2fb25f06096545d881488b92f229955a03cedc.jpg",
@@ -182,14 +182,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9d2fb25f06096545d881488b92f229955a03cedc.jpg",
                 "url": "http://s2.lookforward.cc/uploads/71/0/129206/14967248386047.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u85cd\u5fc3\u6e44\u8aaa\u8457\u8aaa\u8457\u6dda\u7051\u651d\u5f71\u68da\uff0c\u8b93\u5728\u5834\u4eba\u54e1\u4e5f\u90fd\u8ddf\u8457\u6389\u6dda\u3002",
             "keywords": null,
             "focal_x": 265,
-            "focal_y": 297,
-            "layout": "FOCUS"
+            "focal_y": 320,
+            "layout": "QUOTE"
         }
     ]
 }

@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1423,
+            "id": 2952,
             "background": {
-                "id": 3726670,
+                "id": 3741849,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1b72de03dc9af4d830e4df13dbe92c1614b6996a.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1b72de03dc9af4d830e4df13dbe92c1614b6996a.jpg",
                 "url": "https://img.sportsv.net/img/article/cover/1/74671/fit-jYfYKd94ys-670x350.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u6c92\u6709Triple C\u7684135 lbs \u91cf\u7d1a\u770b\u8d77\u4f86\u9084\u662f\u5f88\u6d3b\u7d61",
+            "headline": "\u6c92\u6709Triple C\u7684135 lbs \u91cf\u7d1a\u770b\u8d77\u4f86\u9084\u662f\u5f88\u6d3b\u7d61",
+            "title": "",
             "keywords": null,
-            "focal_x": 327,
+            "focal_x": 282,
             "focal_y": 175,
             "layout": "COVER"
         },
         {
-            "id": 1424,
+            "id": 2953,
             "background": {
-                "id": 3725632,
+                "id": 3740819,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9bf36b99cf3bf6401961eb9cf5fa3b5f3134cb40.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9bf36b99cf3bf6401961eb9cf5fa3b5f3134cb40.jpg",
                 "url": "https://cdn-images-1.medium.com/max/1000/0*Nr7QI9R1zCmoQZnr",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u800cAljamain Sterling\uff0c\u5f9e\u4ed6\u904e\u5f80\u7684\u6bd4\u8cfd\u4f86\u770b\uff0c\u901a\u5e38\u662f\u6253\u5f97\u6bd4\u8f03\u4e0d\u885d\u52d5\uff0c\u6253\u9ede\u5f97\u5206\u7684\u985e\u578b\uff0c\u6bd4\u8f03\u51b7\u975c\u8070\u660e\u7684\u6253\u6cd5\uff0c\u9019\u6b21\u7684\u78ba\u662f\u6bd4\u8f03\u4e0d\u4e00\u6a23\u7684\u7b56\u7565\uff0c\u986f\u7136\u6210\u6548\u4e0d\u932f\u3002",
             "keywords": null,
-            "focal_x": 167,
+            "focal_x": 389,
             "focal_y": 167,
             "layout": "FOCUS"
         },
         {
-            "id": 1425,
+            "id": 2954,
             "background": {
-                "id": 3725633,
+                "id": 3740820,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/96930adcd8cc7d86fc42fd385b2b53221027ecee.gif",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/96930adcd8cc7d86fc42fd385b2b53221027ecee.gif",
                 "url": "https://cdn-images-1.medium.com/max/1000/0*UXTcznpzDvDwh-If.gif",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6709\u4ec0\u9ebc\u6bd4\u5728\u9019\u6a23\u7684\u60c5\u6cc1\u4e0b\uff0c\u5316\u60b2\u50b7\u70ba\u529b\u91cf\uff0c\u62ff\u4e0b\u52dd\u5229\u66f4\u4ee4\u4eba\u611f\u52d5\u53c8\u96e3\u904e\u7684\u5462\uff1f",
             "keywords": null,
-            "focal_x": 205,
+            "focal_x": 270,
             "focal_y": 125,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1426,
+            "id": 2955,
             "background": {
-                "id": 3725635,
+                "id": 3740822,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/16bf81cf1cdb0e5d5f9eabea8585a80d3ee8f446.gif",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/16bf81cf1cdb0e5d5f9eabea8585a80d3ee8f446.gif",
                 "url": "https://cdn-images-1.medium.com/max/1000/0*8r4LDR85LUILesZI.gif",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u7136\u800c\uff0c\u963f\u5e79\u4ed6\u9047\u5230TJ \u5c31\u662f\u4e0d\u51b7\u975c\uff0c\u53c8\u518d\u88abKO\uff0c......\u3002",
             "keywords": null,
-            "focal_x": 229,
+            "focal_x": 246,
             "focal_y": 125,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1427,
+            "id": 2956,
             "background": {
-                "id": 3725636,
+                "id": 3740823,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/224d76e0f05a2ea5714bfc7e6297aa93384d92b9.gif",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/224d76e0f05a2ea5714bfc7e6297aa93384d92b9.gif",
                 "url": "https://cdn-images-1.medium.com/max/1000/0*OpXv5x2UXSkgw0r6",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6c89\u5bc2\u4e86\u4e00\u9663\u5b50\uff0c\u8b93\u4ed6\u6253\u6392\u540d\u9078\u624bPedro Munhoz\uff0c\u9019\u56de\u6c92\u6709\u4ec7\u6068\u61c9\u8a72\u4e0d\u6703\u518d\u90a3\u9ebc\u885d\u52d5\u4e86\u5427\uff1f",
             "keywords": null,
-            "focal_x": 264,
+            "focal_x": 239,
             "focal_y": 112,
             "layout": "QUOTE"
         },
         {
-            "id": 1428,
+            "id": 2957,
             "background": {
-                "id": 3725637,
+                "id": 3740824,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/efdc31fbb03e40285f30509e972fb6e0f1f145ed.gif",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/efdc31fbb03e40285f30509e972fb6e0f1f145ed.gif",
                 "url": "https://cdn-images-1.medium.com/max/1000/0*nUnzIBha4Gr6f6Wd.gif",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u90a3\u500b\u53c8\u56c2\u5f35\u53c8\u5f37\u7684Cody Garbrandt \u53c8\u56de\u4f86\u4e86\uff01",
             "keywords": null,
-            "focal_x": 351,
+            "focal_x": 376,
             "focal_y": 143,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 1429,
+            "id": 2958,
             "background": {
-                "id": 3725627,
+                "id": 3740814,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/525a84da3fa429d2d25688c57677bd65f93834b1.jpg",
@@ -182,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/525a84da3fa429d2d25688c57677bd65f93834b1.jpg",
                 "url": "https://cdn-images-1.medium.com/max/1000/0*BepFveDXHfWiEUkE",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u671f\u5f85\u4ed6\u5728\u5c0d\u4e0a\u4e00\u5834top 5\u5c0d\u624b\u5c31\u53ef\u4ee5\u518d\u5ea6\u554f\u9f0e\u51a0\u8ecd\uff01",
             "keywords": null,
-            "focal_x": 408,
+            "focal_x": 366,
             "focal_y": 224,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 1430,
+            "id": 2959,
             "background": {
-                "id": 3725637,
+                "id": 3740824,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/efdc31fbb03e40285f30509e972fb6e0f1f145ed.gif",
@@ -209,19 +209,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/efdc31fbb03e40285f30509e972fb6e0f1f145ed.gif",
                 "url": "https://cdn-images-1.medium.com/max/1000/0*nUnzIBha4Gr6f6Wd.gif",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u53e6\u4e00\u500b\u503c\u5f97\u6ce8\u610f\u7684\u9078\u624b\uff0cSean O'Malley\uff0c\u64c1\u6709\u83ef\u9e97\u7684\u7ad9\u7acb\u6280\uff0c\u975e\u5e38\u6709\u660e\u661f\u6c23\u606f\uff0c\u5169\u5e74\u524d\u52a0\u5165UFC\uff0c\u4f46\u662f\u624d\u6c92\u6253\u5e7e\u5834\u5c31\u56e0\u70ba\u7981\u85e5\u554f\u984c\u4f11\u606f\u5230\u4eca\u5e74\uff0c\u4f46\u662f\u4eca\u5e74\u7684\u5169\u5834\u90fd\u8b93\u5927\u5bb6\u8033\u76ee\u4e00\u65b0\uff0c\u4e5f\u66f4\u671f\u5f85\u4ed6\u4e4b\u5f8c\u7684\u8868\u73fe\u3002",
             "keywords": null,
-            "focal_x": 351,
+            "focal_x": 376,
             "focal_y": 143,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 1431,
+            "id": 2960,
             "background": {
-                "id": 3725638,
+                "id": 3740825,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/ec745e82f4b07a34dc407a743851e5d66be4e98f.png",
@@ -236,14 +236,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/ec745e82f4b07a34dc407a743851e5d66be4e98f.png",
                 "url": "https://cdn-images-1.medium.com/max/1000/0*Nefo5myyGiTbUWxV.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u73fe\u5728\u5c0dO'Malley\u5c31\u662f\u7a69\u5b9a\u7684\u57f9\u990a\uff0c\u6162\u6162\u7d66\u4ed6\u6253\u4e00\u4e9b\u6709\u540d\u7684\u8001\u5c07\uff0c\u78e8\u7df4\u6280\u8853\u4e26\u7d2f\u7a4d\u4eba\u6c23\uff0c\u5bcc\u7238\u7238\u5df2\u7d93\u7f69\u4f60\u4e86\uff0c\u5269\u4e0b\u5c31\u8981\u770bO'Malley\u81ea\u5df1\u722d\u4e0d\u722d\u6c23\u4e86\uff01",
             "keywords": null,
-            "focal_x": 431,
+            "focal_x": 500,
             "focal_y": 423,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         }
     ]
 }

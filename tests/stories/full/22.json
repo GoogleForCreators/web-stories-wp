@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 262,
+            "id": 1907,
             "background": {
-                "id": 3726193,
+                "id": 3740832,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cbc979dc3be20e3d0f1c9d8fbadec0f9465110b3.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cbc979dc3be20e3d0f1c9d8fbadec0f9465110b3.jpg",
                 "url": "https://static.ctwant.com/images/cover/44/55544/md-7d6ed273dceac29dd1f9fa40924e6b6c.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u6efe\u6efe\u6d2a\u6c34\u300c\u6c96\u8d70\u611b\u8eca\u300d\uff01\u5927\u9678\u5357\u65b9\u906d\u66b4\u96e8\u8972\u64ca\u2026\u5317\u65b9\u98c6\u783441\u5ea6\u9ad8\u6eab",
+            "headline": "\u6efe\u6efe\u6d2a\u6c34\u300c\u6c96\u8d70\u611b\u8eca\u300d\uff01\u5927\u9678\u5357\u65b9\u906d\u66b4\u96e8\u8972\u64ca\u2026\u5317\u65b9\u98c6\u783441\u5ea6\u9ad8\u6eab",
+            "title": "",
             "keywords": null,
-            "focal_x": 498,
+            "focal_x": 463,
             "focal_y": 226,
             "layout": "COVER"
         },
         {
-            "id": 263,
+            "id": 1908,
             "background": {
-                "id": 3724542,
+                "id": 3739697,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/0e3cf8f97737be991032800fc1ed9430bd6616ea.jpg",
@@ -47,46 +47,46 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/0e3cf8f97737be991032800fc1ed9430bd6616ea.jpg",
                 "url": "https://static.ctwant.com/images/cover/44/55544/sm-7d6ed273dceac29dd1f9fa40924e6b6c.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5927\u9678\u5357\u65b9\u906d\u66b4\u96e8\u8972\u64ca\u2026\u5317\u65b9\u98c6\u783441\u5ea6\u9ad8\u6eab",
             "keywords": null,
-            "focal_x": 226,
+            "focal_x": 207,
             "focal_y": 98,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 264,
+            "id": 1909,
             "background": {
-                "id": 3724542,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/0e3cf8f97737be991032800fc1ed9430bd6616ea.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
+                "id": 3740891,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/bd06394b8d14627b8740a61a6ea9ce985e68ed20.mp4",
+                "title": "\u5b8f\u89c2\u6162\u52a8\u4f5c\uff1a\u66b4\u96e8\u4e2d\u7684\u96e8\u843d\u5728\u5e38\u7eff\u7684\u6811\u679d\u4e0a",
+                "duration": 27.732,
+                "mime": "video/mp4",
                 "description": "",
-                "width": 375,
-                "height": 197,
+                "width": 1920,
+                "height": 1080,
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/0e3cf8f97737be991032800fc1ed9430bd6616ea.jpg",
-                "url": "https://static.ctwant.com/images/cover/44/55544/sm-7d6ed273dceac29dd1f9fa40924e6b6c.jpg",
+                "thumbnail": "https://static-gstudio.gliacloud.com/d0cf3effc31756deafedba2264a5ad3d839f39e9.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/BrltVHefQjiwahyhy/videoblocks-macro-slow-motion-rain-pounds-an-evergreen-branch-in-a-heavy-rain-storm_rwg8yrwt3m__92703beefdbb67eafd6ca58c5c1c37a4__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721819510&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=8202345&resolution=180p&searchId=c8094f99-74c1-4ffd-aceb-d6b6373e1b45&searchPageId=17d195de-2166-4af7-acf4-ff734b54e9fe#gliadriver=StoryBlocksVideoZH&key=8202345",
                 "source": ""
             },
             "headline": "",
             "title": "\u5927\u9678\u8fd1\u65e5\u53d7\u5230\u66b4\u96e8\u8972\u64ca\uff0c\u5357\u65b9\u5404\u7701\u63a5\u9023\u767c\u751f\u6d2a\u707d\uff0c\u570b\u5bb6\u9632\u6c5b\u6297\u65f1\u7e3d\u6307\u63ee\u90e8\u65bc7\u65e5\u555f\u52d54\u7d1a\u61c9\u6025\uff0c\u4e26\u52d5\u54e1\u5927\u6279\u4eba\u529b\u8d74\u707d\u5340\u8996\u5bdf\u9632\u6c5b\u5de5\u4f5c\u3002",
-            "keywords": null,
-            "focal_x": 226,
-            "focal_y": 98,
+            "keywords": "ALL:\u570b\u5bb6\u9632\u6c5b\u6297\u65f1\u7e3d\u6307\u63ee\u90e8 \u5927\u9678 \u66b4\u96e8\u8972\u64ca \u6d2a\u707d \u9632\u6c5b\u5de5\u4f5c|QUERY:\u570b\u5bb6\u9632\u6c5b\u6297\u65f1\u7e3d\u6307\u63ee\u90e8 \u5927\u9678 \u66b4\u96e8\u8972\u64ca \u6d2a\u707d \u9632\u6c5b\u5de5\u4f5c",
+            "focal_x": 1417,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
-            "id": 265,
+            "id": 1910,
             "background": {
-                "id": 3724542,
+                "id": 3739697,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/0e3cf8f97737be991032800fc1ed9430bd6616ea.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/0e3cf8f97737be991032800fc1ed9430bd6616ea.jpg",
                 "url": "https://static.ctwant.com/images/cover/44/55544/sm-7d6ed273dceac29dd1f9fa40924e6b6c.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e0d\u904e\u5404\u5730\u707d\u60c5\u4e0d\u65b7\u5411\u5916\u64f4\u5927\uff0c\u5ee3\u677115\u500b\u57ce\u5e02\u76ee\u524d\u5df2\u5ba3\u5e03\u505c\u8ab2\uff0c\u6c34\u5229\u90e8\u7dca\u6025\u5c07\u6c34\u65f1\u707d\u5bb3\u9632\u79a6\u63d0\u5347\u81f33\u7d1a\uff0c\u521d\u4f30\u81f3\u5c1170 \u842c\u4eba\u906d\u5230\u5f71\u97ff\u3002",
             "keywords": null,
-            "focal_x": 226,
+            "focal_x": 207,
             "focal_y": 98,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 266,
+            "id": 1911,
             "background": {
-                "id": 3724542,
+                "id": 3739697,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/0e3cf8f97737be991032800fc1ed9430bd6616ea.jpg",
@@ -128,41 +128,41 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/0e3cf8f97737be991032800fc1ed9430bd6616ea.jpg",
                 "url": "https://static.ctwant.com/images/cover/44/55544/sm-7d6ed273dceac29dd1f9fa40924e6b6c.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u7d9c\u5408\u9678\u5a92\u5831\u5c0e\uff0c\u5927\u9678\u5357\u65b9\u81ea\u672c\u6708\u521d\u8fce\u4f86\u6c5b\u671f\u6700\u5f37\u8c6a\u96e8\uff0c\u5305\u62ec\u5ee3\u897f\u3001\u5ee3\u6771\u3001\u798f\u5efa\u3001\u8cb4\u5dde\u3001\u6c5f\u897f\u53ca\u6d59\u6c5f\u7b49\u7701\u5206\uff0c\u5171\u670952\u689d\u6cb3\u6d41\u51fa\u73fe\u8d85\u8b66\u60c5\u6cc1\uff0c\u5404\u5730\u6d2a\u6c34\u6c3e\u6feb\u6210\u707d\uff0c\u90e8\u5206\u5730\u5340\u7684\u6c34\u6df1\u5df2\u7d93\u5230\u9054\u819d\u84cb\u3002",
             "keywords": null,
-            "focal_x": 226,
+            "focal_x": 207,
             "focal_y": 98,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 267,
+            "id": 1912,
             "background": {
-                "id": 3724541,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/cbc979dc3be20e3d0f1c9d8fbadec0f9465110b3.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
+                "id": 3741049,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/33abe9391f303f8df9ea5bb2ca59cbf2b9e26869.mp4",
+                "title": "\u6545\u5bab\u7684\u58eb\u5175",
+                "duration": 9.141667,
+                "mime": "video/mp4",
                 "description": "",
-                "width": 858,
-                "height": 452,
+                "width": 1920,
+                "height": 1080,
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/cbc979dc3be20e3d0f1c9d8fbadec0f9465110b3.jpg",
-                "url": "https://static.ctwant.com/images/cover/44/55544/md-7d6ed273dceac29dd1f9fa40924e6b6c.jpg",
+                "thumbnail": "https://static-gstudio.gliacloud.com/ef4eb252c3c07af18cf66621c487b0e75837ba08.jpg",
+                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/GTYSdDW/soldier-in-forbidden-city_z1e7qk-br__PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721830582&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=118776&resolution=180p&searchId=599d32f3-b171-4a9f-9552-1c0c72ded461&searchPageId=420ad1ac-5fb7-4ada-8ba5-2d965c7af640#gliadriver=StoryBlocksVideoZH&key=118776",
                 "source": ""
             },
             "headline": "",
             "title": "\u76f8\u8f03\u5357\u65b9\u6d2a\u6c34\u6210\u707d\uff0c\u5927\u9678\u5317\u65b9\u5247\u662f\u9ad8\u6eab\u72c2\u98c6\uff0c\u5317\u4eac\u4eca\u65e5\u6c23\u6eab\u905438\u5ea6\uff0c\u5167\u8499\u53e4\u901a\u907c\u6050\u98c6\u783441\u5ea6\uff0c\u5275\u9ad8\u6eab\u7d00\u9304\u3002",
-            "keywords": null,
-            "focal_x": 498,
-            "focal_y": 226,
-            "layout": "FOCUS"
+            "keywords": "ALL:\u5317\u4eac \u5167\u8499\u53e4\u901a\u907c \u9ad8\u6eab\u7d00\u9304 \u5357\u65b9\u6d2a\u6c34\u6210\u707d \u9ad8\u6eab\u72c2\u98c6 \u6c23\u6eab \u5927\u9678\u5317\u65b9|QUERY:\u5317\u4eac",
+            "focal_x": 1033,
+            "focal_y": 540,
+            "layout": "QUOTE"
         }
     ]
 }

@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 665,
+            "id": 2297,
             "background": {
-                "id": 3726263,
+                "id": 3741596,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/395dea8723696b93af847d1716584f654c9f4858.jpeg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/395dea8723696b93af847d1716584f654c9f4858.jpeg",
                 "url": "https://share.ipetgroup.com/photo/original/9/d6a3bd5c726cb230cc2ecaf8b0b817f3_0.jpeg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u7da0\u8272\u767d\u8272\uff1f\u50bb\u50bb\u5206\u4e0d\u6e05\uff01\u72d7\u72d7\u6700\u654f\u611f\u7684\u984f\u8272\u662f\u4ec0\u9ebc\u4f60\u77e5\u9053\u55ce\uff1f",
+            "headline": "\u7da0\u8272\u767d\u8272\uff1f\u50bb\u50bb\u5206\u4e0d\u6e05\uff01\u72d7\u72d7\u6700\u654f\u611f\u7684\u984f\u8272\u662f\u4ec0\u9ebc\u4f60\u77e5\u9053\u55ce\uff1f",
+            "title": "",
             "keywords": null,
-            "focal_x": 413,
+            "focal_x": 480,
             "focal_y": 157,
             "layout": "COVER"
         },
         {
-            "id": 666,
+            "id": 2298,
             "background": {
-                "id": 3724878,
+                "id": 3740076,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f7377a78406b9497012e44ee406ed76d10758fa7.jpeg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f7377a78406b9497012e44ee406ed76d10758fa7.jpeg",
                 "url": "https://ipetgroup.com/photo/169862_0_1024.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5f88\u591a\u93df\u5c4e\u5b98\u90fd\u77e5\u9053\uff0c\u72d7\u72d7\u773c\u4e2d\u7684\u4e16\u754c\u8ddf\u6211\u5011\u773c\u4e2d\u7684\u4e16\u754c\u662f\u4e0d\u4e00\u6a23\u7684\uff0c\u4f46\u5177\u9ad4\u600e\u6a23\u500b\u4e0d\u4e00\u6a23\uff0c\u53ef\u80fd\u5f88\u591a\u4eba\u4e5f\u6c92\u8fa6\u6cd5\u8aaa\u6e05\u695a\u3002",
             "keywords": null,
             "focal_x": 250,
             "focal_y": 250,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 667,
+            "id": 2299,
             "background": {
-                "id": 3724878,
+                "id": 3740076,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f7377a78406b9497012e44ee406ed76d10758fa7.jpeg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f7377a78406b9497012e44ee406ed76d10758fa7.jpeg",
                 "url": "https://ipetgroup.com/photo/169862_0_1024.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u638c\u63e1\u4e86\u9019\u4e9b\u77e5\u8b58\uff0c\u4e5f\u80fd\u61c9\u7528\u5728\u751f\u6d3b\u4e2d\u7684\u65b9\u65b9\u9762\u9762\u54e6\u3002",
             "keywords": null,
             "focal_x": 250,
             "focal_y": 250,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 668,
+            "id": 2300,
             "background": {
-                "id": 3724879,
+                "id": 3740077,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/e106b6b28b897b6aeb98b8af5a05e916cc4e8e38.jpeg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/e106b6b28b897b6aeb98b8af5a05e916cc4e8e38.jpeg",
                 "url": "https://ipetgroup.com/photo/169863_0_1024.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e0b\u9762\u5c31\u8ddf\u8457\u5e03\u9b6f\u7de8\u4e00\u8d77\u5b78\u7fd2\u5427~",
             "keywords": null,
-            "focal_x": 217,
+            "focal_x": 250,
             "focal_y": 209,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 669,
+            "id": 2301,
             "background": {
-                "id": 3724880,
+                "id": 3740078,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/82154d9c82a93720ea795a41c0d851b460294918.jpeg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/82154d9c82a93720ea795a41c0d851b460294918.jpeg",
                 "url": "https://ipetgroup.com/photo/169864_0_1024.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e0d\u904e\u96d6\u7136\u72d7\u72d7\u7684\u773c\u775b\u770b\u4e0d\u5230\u8f03\u9060\u7684\u4e8b\u7269\uff0c\u4f46\u7260\u5011\u537b\u53ef\u4ee5\u5728\u8f03\u6697\u7684\u74b0\u5883\u4e2d\u770b\u6e05\u5468\u570d\u7684\u4e8b\u7269\uff0c\u4ee5\u53ca\u5c0d\u52d5\u614b\u4e8b\u7269\u6709\u8d85\u5f37\u7684\u6355\u6349\u80fd\u529b\uff0c\u9019\u78ba\u5be6\u4eba\u773c\u8fa6\u4e0d\u5230\u7684\u3002",
             "keywords": null,
-            "focal_x": 312,
+            "focal_x": 287,
             "focal_y": 256,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         },
         {
-            "id": 670,
+            "id": 2302,
             "background": {
-                "id": 3724881,
+                "id": 3740079,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/bf7c80f65e8d25cbd9eb01328a1665bdaa3151c4.jpeg",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/bf7c80f65e8d25cbd9eb01328a1665bdaa3151c4.jpeg",
                 "url": "https://ipetgroup.com/photo/169867_0_1024.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u53ea\u4e0d\u904e\u7260\u5011\u773c\u88e1\u770b\u5230\u7684\u984f\u8272\uff0c\u8ddf\u4eba\u985e\u8089\u773c\u6240\u898b\u7684\u6709\u6240\u4e0d\u540c\uff0c\u5b58\u5728\u4e00\u5b9a\u7684\u300c\u8272\u5dee\u300d\uff0c\u6bd4\u5982\u6211\u5011\u773c\u4e2d\u7684\u7d05\u8272\uff0c\u5728\u72d7\u72d7\u773c\u4e2d\u5c31\u662f\u9ed1\u8272\uff0c\u53ef\u4ee5\u53c3\u7167\u4e0b\u9762\u9019\u5f35\u5716\u7247\u4f86\u5340\u5206\u3002",
             "keywords": null,
-            "focal_x": 371,
+            "focal_x": 397,
             "focal_y": 123,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 671,
+            "id": 2303,
             "background": {
-                "id": 3724883,
+                "id": 3740081,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/425b2c58e163f65ee4b883bb5283c1fabe84c757.jpeg",
@@ -182,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/425b2c58e163f65ee4b883bb5283c1fabe84c757.jpeg",
                 "url": "https://ipetgroup.com/photo/169869_0_1024.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6240\u4ee5\u4ee5\u5f8c\u7d66\u72d7\u72d7\u8cb7\u6771\u897f\uff0c\u8a18\u5f97\u591a\u6311\u9078\u85cd\u8272\u6216\u9ec3\u8272\u7684\uff0c\u9019\u624d\u662f\u72d7\u72d7\u80fd\u770b\u898b\u7684\u984f\u8272\u54e6\uff01",
             "keywords": null,
-            "focal_x": 444,
+            "focal_x": 450,
             "focal_y": 436,
             "layout": "QUOTE"
         },
         {
-            "id": 672,
+            "id": 2304,
             "background": {
-                "id": 3724884,
+                "id": 3740082,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3a52a8a6f8c181154143453495091d397fa4aa8c.jpeg",
@@ -209,12 +209,12 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3a52a8a6f8c181154143453495091d397fa4aa8c.jpeg",
                 "url": "https://ipetgroup.com/photo/169870_0_1024.jpeg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u672c\u6587\u7372\u5fae\u4fe1\u516c\u773e\u865f @\u516b\u516c\u53d4\u53d4 \u6388\u6b0a\u4f7f\u7528\uff0c\u5fae\u4fe1\u865f\uff1abagognshushu",
             "keywords": null,
-            "focal_x": 562,
+            "focal_x": 546,
             "focal_y": 218,
             "layout": "QUOTE"
         }

@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1663,
+            "id": 3145,
             "background": {
-                "id": 3726701,
+                "id": 3741960,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cc0cd560a40f8f869d80083c686679b5e72c58d3.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cc0cd560a40f8f869d80083c686679b5e72c58d3.jpg",
                 "url": "http://cdns.worldscreen.com.tw/uploadfile/202006/goods_023154_310953.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u70ba\u9322\u5f12\u5152\uff1f\u9ec3\u79cb\u751f\u3001\u6797\u5609\u6b23\u3010\u6b7b\u56e0\u7121\u53ef\u7591\u3011\u626e\u6050\u6016\u592b\u59bb\u884c\u5f91\u8d85\u6bdb",
+            "headline": "\u70ba\u9322\u5f12\u5152\uff1f\u9ec3\u79cb\u751f\u3001\u6797\u5609\u6b23\u3010\u6b7b\u56e0\u7121\u53ef\u7591\u3011\u626e\u6050\u6016\u592b\u59bb\u884c\u5f91\u8d85\u6bdb",
+            "title": "",
             "keywords": null,
-            "focal_x": 344,
+            "focal_x": 384,
             "focal_y": 200,
             "layout": "COVER"
         },
         {
-            "id": 1664,
+            "id": 3146,
             "background": {
-                "id": 3725977,
+                "id": 3741201,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cc0cd560a40f8f869d80083c686679b5e72c58d3.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cc0cd560a40f8f869d80083c686679b5e72c58d3.jpg",
                 "url": "http://cdns.worldscreen.com.tw/uploadfile/202006/goods_023154_310953.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6050\u6016\u96fb\u5f71\u300a\u6b7b\u56e0\u7121\u53ef\u7591\u300b\u7531\u9999\u6e2f\u5c0e\u6f14\u8881\u528d\u5049\u57f7\u5c0e\uff0c\u91d1\u734e\u5e1d\u540e\u9ec3\u79cb\u751f\u8207\u6797\u5609\u6b23\u806f\u624b\uff0c\u6f14\u51fa\u6bd4\u9b3c\u7247\u66f4\u53ef\u6015\u7684\u4f5c\u54c1\uff0c\u96fb\u5f71\u6539\u7de8\u81ea\u65e5\u672c\u6050\u6016\u5c0f\u8aaa\u5927\u8cde\u9996\u734e\u4f5c\u54c1\u300a\u9ed1\u6697\u4e4b\u5bb6\u300b\uff0c\u6545\u4e8b\u805a\u7126\u65bc\u4fdd\u96aa\u8a50\u9818\u6848\u4ef6\uff0c\u5f71\u5e1d\u9ec3\u79cb\u751f\u3001\u5f71\u540e\u6797\u5609\u6b23\uff0c\u5149\u9760\u773c\u795e\u5c31\u8b93\u4eba\u4e0d\u5bd2\u800c\u6144\uff01",
             "keywords": null,
-            "focal_x": 344,
+            "focal_x": 384,
             "focal_y": 200,
             "layout": "NORMAL"
         },
         {
-            "id": 1665,
+            "id": 3147,
             "background": {
-                "id": 3725978,
+                "id": 3741202,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2245d78a616a1bc783ce0cb5483a3c6aaae9bfcb.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2245d78a616a1bc783ce0cb5483a3c6aaae9bfcb.jpg",
                 "url": "http://cdns.worldscreen.com.tw/uploadfile/202006/goods_023154_310954.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u9999\u6e2f\u6050\u6016\u96fb\u5f71\u300a\u6b7b\u56e0\u7121\u53ef\u7591\u300b\u6539\u7de8\u81ea\u65e5\u672c\u77e5\u540d\u4f5c\u5bb6\u8cb4\u5fd7\u7950\u4ecb\u7684\u4ee3\u8868\u4f5c\u54c1\u300a\u9ed1\u6697\u4e4b\u5bb6\u300b\uff0c\u300a\u9ed1\u6697\u4e4b\u5bb6\u300b\u7372\u5f97\u7b2c4\u5c46\u65e5\u672c\u6050\u6016\u5c0f\u8aaa\u5927\u8cde\u9996\u734e\uff0c\u4e26\u72c2\u8ce3\u767e\u842c\u518a\uff0c\u8cb4\u5fd7\u7950\u4ecb\u6649\u5347\u70ba\u66a2\u92b7\u4f5c\u5bb6\uff0c\u4ed6\u5728\u5beb\u5c0f\u8aaa\u4e4b\u524d\u66fe\u5728\u4fdd\u96aa\u516c\u53f8\u5de5\u4f5c\uff0c\u6240\u4ee5\u805a\u7126\u65bc\u8a50\u9818\u4fdd\u96aa\u91d1\u7684\u793e\u6703\u6848\u4ef6\uff0c\u5beb\u5be6\u63cf\u7e6a\u8caa\u5a6a\u617e\u671b\uff0c\u6545\u4e8b\u53cd\u8f49\u885d\u64ca\u4e0d\u65b7\u3002",
             "keywords": null,
-            "focal_x": 413,
+            "focal_x": 300,
             "focal_y": 181,
             "layout": "FOCUS"
         },
         {
-            "id": 1666,
+            "id": 3148,
             "background": {
-                "id": 3725979,
+                "id": 3741203,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/0faea8469f034a55b943c15a336b3163eb452ae7.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/0faea8469f034a55b943c15a336b3163eb452ae7.jpg",
                 "url": "http://cdns.worldscreen.com.tw/uploadfile/202006/goods_023154_310955.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5c0e\u6f14\u8881\u528d\u5049\u662f\u9999\u6e2f\u77e5\u540d\u7684MV\u53ca\u97f3\u6a02\u7bc0\u76ee\u5c0e\u6f14\uff0c2016\u5e74\u63a8\u51fa\u500b\u4eba\u9996\u90e8\u96fb\u5f71\u4f5c\u54c1\u300a\u6697\u8272\u5929\u5802\u300b\uff0c\u7372\u5f97\u597d\u8a55\u3002",
             "keywords": null,
-            "focal_x": 272,
+            "focal_x": 224,
             "focal_y": 200,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1667,
+            "id": 3149,
             "background": {
-                "id": 3725979,
+                "id": 3741203,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/0faea8469f034a55b943c15a336b3163eb452ae7.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/0faea8469f034a55b943c15a336b3163eb452ae7.jpg",
                 "url": "http://cdns.worldscreen.com.tw/uploadfile/202006/goods_023154_310955.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u300a\u6b7b\u56e0\u7121\u53ef\u7591\u300b\u4e2d\uff0c\u6797\u5609\u6b23\u8207\u9ec3\u79cb\u751f\u626e\u6f14\u4e00\u5c0d\u751f\u6d3b\u56f0\u9813\u7684\u4f4e\u4e0b\u968e\u5c64\u592b\u59bb\uff0c\u6797\u5609\u6b23\u518d\u5ea6\u8207\u8001\u516c\u8881\u528d\u5049\u5408\u4f5c\uff0c\u4e00\u6539\u5e73\u65e5\u751c\u7f8e\u89aa\u5207\u6a21\u6a23\uff0c\u6f14\u51fa\u778e\u4e86\u4e00\u96bb\u773c\u4e26\u7638\u817f\u7684\u6b98\u969c\u4eba\u58eb\uff0c\u5728\u5979\u8207\u9ec3\u79cb\u751f\u7684\u5152\u5b50\u81ea\u6bba\u5f8c\uff0c\u5169\u592b\u59bb\u548c\u4fdd\u96aa\u516c\u53f8\u70ba\u4e86\u5152\u5b50\u7684\u4fdd\u96aa\u7406\u8ce0\u885d\u7a81\u4e0d\u65b7\uff0c\u5f15\u767c\u4e00\u9023\u4e32\u7684\u99ed\u4eba\u6050\u6016\u4e8b\u4ef6\u3002",
             "keywords": null,
-            "focal_x": 272,
+            "focal_x": 224,
             "focal_y": 200,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 1668,
+            "id": 3150,
             "background": {
-                "id": 3725980,
+                "id": 3741204,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/fde10a489309eb5359bc9639173c0ea8de4cc20b.jpg",
@@ -155,14 +155,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/fde10a489309eb5359bc9639173c0ea8de4cc20b.jpg",
                 "url": "http://cdns.worldscreen.com.tw/uploadfile/202006/goods_023154_310956.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6797\u5609\u6b23\u662f\u9996\u4f4d\u91d1\u99ac\u734e\u5927\u6eff\u8cab\u5f97\u4e3b\uff0c\u5f9e\u65b0\u4eba\u3001\u5973\u914d\u89d2\u5230\u5f71\u540e\u62ff\u4e0b3\u5ea7\u91d1\u99ac\u734e\uff0c\u800c\u9ec3\u79cb\u751f\u4e5f\u66fe3\u5ea6\u7372\u5f97\u91d1\u99ac\u734e\u6700\u4f73\u7537\u914d\u89d2\u7684\u80af\u5b9a\uff0c\u5169\u4eba\u6f14\u51fa\u6050\u6016\u6f14\u6280\u7684\u529f\u529b\u6df1\u539a\uff0c\u5149\u9760\u773c\u795e\u5c31\u53ef\u4ee5\u8b93\u89c0\u773e\u5fc3\u5e95\u767c\u5bd2\uff0c\u5408\u4f5c\u300a\u6b7b\u56e0\u7121\u53ef\u7591\u300b\u4ee5\u6f14\u6280\u8b93\u96fb\u5f71\u7684\u6050\u6016\u7a0b\u5ea6\u66f4\u4e0a\u5c64\u6a13\u3002",
             "keywords": null,
             "focal_x": 300,
-            "focal_y": 548,
-            "layout": "QUOTE"
+            "focal_y": 592,
+            "layout": "FOCUS"
         }
     ]
 }

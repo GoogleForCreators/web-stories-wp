@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 725,
+            "id": 2357,
             "background": {
-                "id": 3726275,
+                "id": 3741622,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/de28749313ed81e1b12edef12963b4f13e9a907d.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/de28749313ed81e1b12edef12963b4f13e9a907d.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774384-98afb8bd59f8e5b4b4aca154bbfff220.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u3010\u7da0\u5cf6\u9019\u6a23\u73a9\u3011\u5957\u88dd\u884c\u7a0b\u61f6\u4eba\u5305\uff0c\u4e00\u6b21\u641e\u5b9a\u4ea4\u901a\u4f4f\u5bbf\u3001\u666f\u9ede\u7f8e\u98df\u61f6\u4eba\u5305\uff3b2019\u66f4\u65b0\uff3d - \u65c5\u884c\u5c65\u884c\u4e2d / \u4e00\u65e5\u904a\u3001\u61f6\u4eba\u5305\u3001\u666f\u9ede\u3001\u7f8e\u98df\u3001\u4f4f\u5bbf",
+            "headline": "\u3010\u7da0\u5cf6\u9019\u6a23\u73a9\u3011\u5957\u88dd\u884c\u7a0b\u61f6\u4eba\u5305\uff0c\u4e00\u6b21\u641e\u5b9a\u4ea4\u901a\u4f4f\u5bbf\u3001\u666f\u9ede\u7f8e\u98df\u61f6\u4eba\u5305\uff3b2019\u66f4\u65b0\uff3d - \u65c5\u884c\u5c65\u884c\u4e2d / \u4e00\u65e5\u904a\u3001\u61f6\u4eba\u5305\u3001\u666f\u9ede\u3001\u7f8e\u98df\u3001\u4f4f\u5bbf",
+            "title": "",
             "keywords": null,
-            "focal_x": 638,
+            "focal_x": 770,
             "focal_y": 318,
             "layout": "COVER"
         },
         {
-            "id": 726,
+            "id": 2358,
             "background": {
-                "id": 3725001,
+                "id": 3740207,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/de28749313ed81e1b12edef12963b4f13e9a907d.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/de28749313ed81e1b12edef12963b4f13e9a907d.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774384-98afb8bd59f8e5b4b4aca154bbfff220.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u590f\u5929\u5c31\u9069\u5408\u9078\u4e0a\u4e00\u5ea7\u6d77\u5cf6\uff0c\u611c\u610f\u5ea6\u5047\u73a9\u6c34\uff0c\u96a8\u8457\u89c0\u5149\u767c\u5c55\uff0c\u7da0\u5cf6\u4e5f\u767c\u5c55\u4e00\u7cfb\u5217\u7684\u76e3\u7344\u89c0\u5149\u6587\u5316\uff0c\u4e0d\u5c11\u9910\u5ef3\u3001\u5e97\u5bb6\u90fd\u4ee5\u76e3\u7344\u70ba\u4e3b\u984c\uff0c\u8fd1\u5e74\u4f86\u7da0\u5cf6\u6f5b\u6c34\u66f4\u662f\u53d7\u5230\u77da\u76ee\uff0c\u5438\u5f15\u6d77\u5167\u5916\u611b\u597d\u6f5b\u6c34\u7684\u65c5\u5ba2\u524d\u5f80\uff0c\u4f46\u5176\u5be6\u73a9\u7da0\u5cf6\u4e26\u4e0d\u56f0\u96e3\uff0c\u53ea\u8981\u9078\u597d\u6c11\u5bbf\u3001\u898f\u5283\u5957\u88dd\u884c\u7a0b\uff0c\u5c31\u53ef\u4ee5\u8f15\u9b06\u9020\u8a2a\u4e86\uff01",
             "keywords": null,
-            "focal_x": 638,
+            "focal_x": 770,
             "focal_y": 318,
             "layout": "NORMAL"
         },
         {
-            "id": 727,
+            "id": 2359,
             "background": {
-                "id": 3725002,
+                "id": 3740208,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8e51ae0063289cffd526c5ca15652fde1b25c5c9.png",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8e51ae0063289cffd526c5ca15652fde1b25c5c9.png",
                 "url": "https://images.zi.org.tw/jatraveling/2018/08/06114329/1580960608-fd2fb745e5db10715bc1b1a890c7e74a.png",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7c89\u7d72\u7368\u4eab\u4f4f\u5bbf\u512a\u60e0",
             "title": "\u53f0\u5357\u4f4f\u5bbf / \u9ad8\u96c4\u4f4f\u5bbf / \u58be\u4e01\u4f4f\u5bbf",
             "keywords": null,
-            "focal_x": 703,
+            "focal_x": 736,
             "focal_y": 143,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 728,
+            "id": 2360,
             "background": {
-                "id": 3725004,
+                "id": 3740211,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/bbb126b55262080e5fb220c26622ab70b958afd2.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/bbb126b55262080e5fb220c26622ab70b958afd2.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774392-d0096ec6c83575373e3a21d129ff8fef.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7da0\u5cf6\u71c8\u5854\uff1a",
             "title": "\u96fb\u8a71\uff1a08 967 2540\u3002",
             "keywords": null,
-            "focal_x": 797,
+            "focal_x": 799,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 729,
+            "id": 2361,
             "background": {
-                "id": 3725004,
+                "id": 3740211,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/bbb126b55262080e5fb220c26622ab70b958afd2.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/bbb126b55262080e5fb220c26622ab70b958afd2.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774392-d0096ec6c83575373e3a21d129ff8fef.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6642\u9593\uff1a09:30-17:00\uff0c\u5468\u4e00\u516c\u4f11",
             "keywords": null,
-            "focal_x": 797,
+            "focal_x": 799,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 730,
+            "id": 2362,
             "background": {
-                "id": 3725006,
+                "id": 3740213,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/6b0ca7904a61f8a2898bc05a40e8e8f24ab5d5a0.jpg",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/6b0ca7904a61f8a2898bc05a40e8e8f24ab5d5a0.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774400-032b2cc936860b03048302d991c3498f.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7da0\u5cf6\u76e3\u7344",
             "title": "\u96fb\u8a71\uff1a08 967 2502\u3002",
             "keywords": null,
-            "focal_x": 405,
+            "focal_x": 600,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 731,
+            "id": 2363,
             "background": {
-                "id": 3725006,
+                "id": 3740213,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/6b0ca7904a61f8a2898bc05a40e8e8f24ab5d5a0.jpg",
@@ -182,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/6b0ca7904a61f8a2898bc05a40e8e8f24ab5d5a0.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774400-032b2cc936860b03048302d991c3498f.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5099\u8a3b\uff1a\u73fe\u884c\u76e3\u7344\uff0c\u50c5\u5916\u89c0\u53c3\u89c0",
             "keywords": null,
-            "focal_x": 405,
+            "focal_x": 600,
             "focal_y": 397,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 732,
+            "id": 2364,
             "background": {
-                "id": 3725007,
+                "id": 3740214,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/202075c75509ca140999e90252601e50485cc547.jpg",
@@ -209,19 +209,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/202075c75509ca140999e90252601e50485cc547.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774404-18e2999891374a475d0687ca9f989d83.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u67f4\u53e3\u5929\u5802\u8def\uff1a",
             "title": "\u5099\u8a3b\uff1a\u6ce8\u610f\u6f6e\u6c50\u53ca\u81ea\u8eab\u5b89\u5168",
             "keywords": null,
-            "focal_x": 773,
+            "focal_x": 759,
             "focal_y": 397,
             "layout": "NORMAL"
         },
         {
-            "id": 733,
+            "id": 2365,
             "background": {
-                "id": 3725009,
+                "id": 3740216,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/e645a6c7e597d26337a7aa74116bc5ae088f3ac4.jpg",
@@ -236,19 +236,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/e645a6c7e597d26337a7aa74116bc5ae088f3ac4.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774411-8cda81fc7ad906927144235dda5fdf15.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7da0\u5cf6\u4eba\u6b0a\u516c\u5712\uff1a",
             "title": "\u96fb\u8a71\uff1a08 967 1095\u3002",
             "keywords": null,
-            "focal_x": 405,
+            "focal_x": 519,
             "focal_y": 397,
             "layout": "NORMAL"
         },
         {
-            "id": 734,
+            "id": 2366,
             "background": {
-                "id": 3725010,
+                "id": 3740217,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/24b93e94e5af0a6bc3a17c6d8a62e792f5c4862e.jpg",
@@ -263,19 +263,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/24b93e94e5af0a6bc3a17c6d8a62e792f5c4862e.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774413-30e62fddc14c05988b44e7c02788e187.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7da0\u5cf6\u4eba\u6b0a\u6587\u5316\u5712\u5340\u7da0\u6d32\u5c71\u838a\uff1a",
             "title": "\u96fb\u8a71\uff1a08 967 1095\u3002",
             "keywords": null,
-            "focal_x": 517,
+            "focal_x": 695,
             "focal_y": 397,
             "layout": "NORMAL"
         },
         {
-            "id": 735,
+            "id": 2367,
             "background": {
-                "id": 3725013,
+                "id": 3740220,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/93d02dd1113769a73c7e0e024e0c3872f68b2cb4.jpg",
@@ -290,19 +290,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/93d02dd1113769a73c7e0e024e0c3872f68b2cb4.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774428-8df7b73a7820f4aef47864f2a6c5fccf.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u67da\u5b50\u6e56",
             "title": "\u5099\u8a3b\uff1a\u6ce8\u610f\u6f6e\u6c50\u53ca\u81ea\u8eab\u5b89\u5168",
             "keywords": null,
-            "focal_x": 405,
+            "focal_x": 600,
             "focal_y": 397,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 736,
+            "id": 2368,
             "background": {
-                "id": 3725015,
+                "id": 3740222,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b53710e6fe693399e8e436d2c16b1a2ddb051ac4.jpg",
@@ -317,19 +317,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b53710e6fe693399e8e436d2c16b1a2ddb051ac4.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774441-edab7ba7e203cd7576d1200465194ea8.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u85cd\u6d1e",
             "title": "\u5099\u8a3b\uff1a\u6ce8\u610f\u6f6e\u6c50\u53ca\u81ea\u8eab\u5b89\u5168",
             "keywords": null,
-            "focal_x": 789,
+            "focal_x": 447,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 737,
+            "id": 2369,
             "background": {
-                "id": 3725017,
+                "id": 3740224,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f0cb86cc26b425de874d5ad741b4704706b0ed42.jpg",
@@ -344,19 +344,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f0cb86cc26b425de874d5ad741b4704706b0ed42.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774465-85b6f89b41cae26786ac72365fff771b.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u671d\u65e5\u6eab\u6cc9",
             "title": "\u96fb\u8a71\uff1a08 967 1133\u3002",
             "keywords": null,
-            "focal_x": 789,
+            "focal_x": 799,
             "focal_y": 397,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 738,
+            "id": 2370,
             "background": {
-                "id": 3725020,
+                "id": 3740227,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/5ba7cf7f8fc34bfc7c564fffc6799c3952d7a183.jpg",
@@ -371,19 +371,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/5ba7cf7f8fc34bfc7c564fffc6799c3952d7a183.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774368-e89666feb714ab9c3946f28f00c5d8c4.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u975e\u7092\u4e0d\u53ef\u6d77\u9bae\u98df\u5802",
             "title": "\u96fb\u8a71\uff1a0988 384 323\u3002",
             "keywords": null,
-            "focal_x": 789,
+            "focal_x": 959,
             "focal_y": 397,
             "layout": "NORMAL"
         },
         {
-            "id": 739,
+            "id": 2371,
             "background": {
-                "id": 3725021,
+                "id": 3740228,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/26a5b8843c427a2a22dacc08810b31c1b4182bf8.jpg",
@@ -398,19 +398,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/26a5b8843c427a2a22dacc08810b31c1b4182bf8.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774371-ca538c343179bf0fbdfab6cd10469afd.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u963f\u5b24\u7684\u8525\u6cb9\u9905",
             "title": "\u96fb\u8a71\uff1a08 967 1575\u3002",
             "keywords": null,
-            "focal_x": 405,
+            "focal_x": 600,
             "focal_y": 397,
             "layout": "NORMAL"
         },
         {
-            "id": 740,
+            "id": 2372,
             "background": {
-                "id": 3725022,
+                "id": 3740229,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/7840913ceb4f39e752296b8d966b01a3aa094f56.jpg",
@@ -425,19 +425,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/7840913ceb4f39e752296b8d966b01a3aa094f56.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774374-030d7e8e966169ab4c7f67c291c333f4.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u6885\u82b1\u9e7f\u5c08\u8ce3\u5e97",
             "title": "\u96fb\u8a71\uff1a0960 351 217\u3002",
             "keywords": null,
-            "focal_x": 565,
+            "focal_x": 479,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 741,
+            "id": 2373,
             "background": {
-                "id": 3725023,
+                "id": 3740230,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/d688b1529e8ee750254179175b07725f89cac8c5.jpg",
@@ -452,19 +452,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/d688b1529e8ee750254179175b07725f89cac8c5.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774377-134ce63057f068a219a0df338fb0b723.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7da0\u5cf6\u5927\u8857\u51b0\u9928",
             "title": "\u96fb\u8a71\uff1a08 967 1668\u3002",
             "keywords": null,
-            "focal_x": 789,
+            "focal_x": 903,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 742,
+            "id": 2374,
             "background": {
-                "id": 3725024,
+                "id": 3740231,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/34654b796ea4b31c9254139452634245757f15cc.jpg",
@@ -479,19 +479,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/34654b796ea4b31c9254139452634245757f15cc.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774381-648b9906a614a4bb30c20591243c65ec.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7da0\u5cf6\u54c8\u72d7\u5e97MR.HOT DOG",
             "title": "\u96fb\u8a71\uff1a08 967 1711\u3002",
             "keywords": null,
-            "focal_x": 613,
+            "focal_x": 600,
             "focal_y": 397,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 743,
+            "id": 2375,
             "background": {
-                "id": 3725024,
+                "id": 3740231,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/34654b796ea4b31c9254139452634245757f15cc.jpg",
@@ -506,19 +506,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/34654b796ea4b31c9254139452634245757f15cc.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774381-648b9906a614a4bb30c20591243c65ec.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6642\u9593\uff1a10:30-00:30",
             "keywords": null,
-            "focal_x": 613,
+            "focal_x": 600,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 744,
+            "id": 2376,
             "background": {
-                "id": 3725025,
+                "id": 3740232,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8a76f5a43a85d56b97dedc14ed38f3373526631b.jpg",
@@ -533,14 +533,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8a76f5a43a85d56b97dedc14ed38f3373526631b.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/07/1530774914-adaf0ad2e085c835a82b2f021fe236ae.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7da0\u6d77\u57ce\u5821\uff1a",
             "title": "\u96fb\u8a71\uff1a08 967 1023",
             "keywords": null,
-            "focal_x": 749,
+            "focal_x": 639,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         }
     ]
 }

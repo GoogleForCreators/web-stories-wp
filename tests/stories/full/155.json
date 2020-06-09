@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1584,
+            "id": 3106,
             "background": {
-                "id": 3726691,
+                "id": 3741935,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c40893dc336df4ebf343f8be3b72c40db701fc3e.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c40893dc336df4ebf343f8be3b72c40db701fc3e.jpg",
                 "url": "http://images.wealth.com.tw/uploads/article/image/25975/0002.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u8b1d\u91d1\u6cb3\uff1a\u77f3\u7887\u5343\u5cf6\u6e56\u7554\u7684\u53e4\u8336\u6cb9\u62cc\u9eb5\u7dda - \u8ca1\u8a0a\u96d9\u9031\u520a",
+            "headline": "\u8b1d\u91d1\u6cb3\uff1a\u77f3\u7887\u5343\u5cf6\u6e56\u7554\u7684\u53e4\u8336\u6cb9\u62cc\u9eb5\u7dda - \u8ca1\u8a0a\u96d9\u9031\u520a",
+            "title": "",
             "keywords": null,
-            "focal_x": 537,
+            "focal_x": 430,
             "focal_y": 225,
             "layout": "COVER"
         },
         {
-            "id": 1585,
+            "id": 3107,
             "background": {
-                "id": 3725889,
+                "id": 3741103,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c053a596dfeb5aa9b65439204e2dca87302e8f60.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c053a596dfeb5aa9b65439204e2dca87302e8f60.jpg",
                 "url": "https://images.wealth.com.tw/uploads/article/image/25975/rect_1200_600_0002.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e00\u8d77\u722c\u5c71\u76845\u500b\u597d\u670b\u53cb\uff0c\u4eca\u5929\u5927\u5bb6\u4e00\u8d77\u6c7a\u8b70\u8981\u53bb\u77f3\u7887\u5343\u5cf6\u6e56\u770b\u770b\uff0c\u9019\u88e1\u7684\u6b65\u9053\u6211\u4e0d\u662f\u5f88\u719f\u6089\uff0c\u8eca\u5b50\u505c\u597d\uff0c\u5c31\u9806\u8457\u8def\u908a\u7684\u6a19\u793a\uff0c\u5148\u5f9e\u5343\u5cf6\u6e56\u8d70\u53bb\u3002",
             "keywords": null,
-            "focal_x": 572,
+            "focal_x": 560,
             "focal_y": 300,
             "layout": "NORMAL"
         },
         {
-            "id": 1586,
+            "id": 3108,
             "background": {
-                "id": 3725890,
+                "id": 3741104,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/56c868ef7bae468280f0ee3c5bdba02f108d21f6.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/56c868ef7bae468280f0ee3c5bdba02f108d21f6.jpg",
                 "url": "https://images.wealth.com.tw/uploads/image/file/12522/0003.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6211\u5011\u4e00\u884c\u4eba\u6cbf\u8457\u7522\u696d\u9053\u8def\uff0c\u5176\u9593\u7a7f\u68ad\u5e7e\u500b\u8336\u5712\uff0c\u4e00\u8def\u4e0b\u5230\u7345\u5b50\u982d\u5751\u5df7\u8def\u5e95\u3002",
             "keywords": null,
-            "focal_x": 665,
+            "focal_x": 750,
             "focal_y": 225,
             "layout": "QUOTE"
         },
         {
-            "id": 1587,
+            "id": 3109,
             "background": {
-                "id": 3725890,
+                "id": 3741104,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/56c868ef7bae468280f0ee3c5bdba02f108d21f6.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/56c868ef7bae468280f0ee3c5bdba02f108d21f6.jpg",
                 "url": "https://images.wealth.com.tw/uploads/image/file/12522/0003.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6211\u5011\u56db\u5468\u90fd\u8d70\u4e00\u904d\uff0c\u539f\u4f86\u9019\u662f\u6f6d\u5e95\uff0c\u7121\u8def\u524d\u884c\uff0c\u53ea\u597d\u539f\u8def\u6298\u8fd4\uff0c\u9019\u500b\u4f86\u56de\uff0c\u5c31\u8d70\u4e868\u516c\u91cc\u591a\u3002",
             "keywords": null,
-            "focal_x": 665,
+            "focal_x": 750,
             "focal_y": 225,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 1588,
+            "id": 3110,
             "background": {
-                "id": 3725891,
+                "id": 3741105,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/a91585cd8c972bd757603282c45fc043690832ca.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/a91585cd8c972bd757603282c45fc043690832ca.jpg",
                 "url": "https://images.wealth.com.tw/uploads/image/file/12523/0004.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u56de\u5230\u539f\u9ede\uff0c\u6642\u9593\u9084\u65e9\uff0c\u53c8\u5f80\u5857\u6f6d\u7522\u696d\u9053\u8def\u8d70\u4e0b\uff0c\u518d\u5f9e\u6c38\u5b89\u666f\u89c0\u6b65\u9053\u8d70\u56de\u4f86\uff0c\u56de\u7a0b\u5f9e\u6f6d\u5e95\u5f80\u4e0a\u8d70\uff0c\u6709\u4e00\u9ede\u5403\u529b\u3002",
             "keywords": null,
-            "focal_x": 377,
+            "focal_x": 398,
             "focal_y": 225,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 1589,
+            "id": 3111,
             "background": {
-                "id": 3725891,
+                "id": 3741105,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/a91585cd8c972bd757603282c45fc043690832ca.jpg",
@@ -155,14 +155,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/a91585cd8c972bd757603282c45fc043690832ca.jpg",
                 "url": "https://images.wealth.com.tw/uploads/image/file/12523/0004.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u8d70\u5b8c\u5343\u5cf6\u6e56\uff0c\u5c31\u8fd1\u5728\u963f\u725b\u5c0f\u5403\u5403\u5348\u9910\uff0c\u6211\u5011\u6bcf\u500b\u4eba\u4e00\u7897\u8336\u8336\u6cb9\u62cc\u9eb5\u7dda\uff0c\u9ede\u4e86\u5e7e\u9053\u9752\u83dc\uff0c\u52a0\u4e86\u4e00\u9053\u82e6\u8336\u6cb9\u96de\u8089\uff0c\u4e00\u500b\u9dc4\u6e6f\uff0c\u5c45\u7136\u53ea\u82b1\u4e861250\u5143\uff0c\u4eca\u5929\u5750\u5728\u6e56\u7554\uff0c\u5403\u8d77\u82e6\u8336\u6cb9\u9eb5\u7dda\uff0c\u4e5f\u582a\u7a31\u662f\u4eba\u9593\u7f8e\u5473\u4e86\uff01",
             "keywords": null,
-            "focal_x": 377,
+            "focal_x": 398,
             "focal_y": 225,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         }
     ]
 }

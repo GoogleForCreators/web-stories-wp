@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 705,
+            "id": 2337,
             "background": {
-                "id": 3726268,
+                "id": 3741613,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cd0599b9cf14a209bfb136bcb517b19ab348a386.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cd0599b9cf14a209bfb136bcb517b19ab348a386.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2018/12/03163953/1543826393-1febd92644a5aeed3fbd0771f48202aa.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u3010\u53f0\u4e2d\u9019\u6a23\u73a9\u3011\u767e\u5927\u666f\u9ede\u61f6\u4eba\u5305\uff0c\u60f3\u73a9\u54ea\u88e1\u90fd\u53ef\u4ee5\uff3b2019\u66f4\u65b0\uff3d - \u65c5\u884c\u5c65\u884c\u4e2d / \u4e00\u65e5\u904a\u3001\u61f6\u4eba\u5305\u3001\u666f\u9ede\u3001\u7f8e\u98df\u3001\u4f4f\u5bbf",
+            "headline": "\u3010\u53f0\u4e2d\u9019\u6a23\u73a9\u3011\u767e\u5927\u666f\u9ede\u61f6\u4eba\u5305\uff0c\u60f3\u73a9\u54ea\u88e1\u90fd\u53ef\u4ee5\uff3b2019\u66f4\u65b0\uff3d - \u65c5\u884c\u5c65\u884c\u4e2d / \u4e00\u65e5\u904a\u3001\u61f6\u4eba\u5305\u3001\u666f\u9ede\u3001\u7f8e\u98df\u3001\u4f4f\u5bbf",
+            "title": "",
             "keywords": null,
-            "focal_x": 342,
+            "focal_x": 418,
             "focal_y": 318,
             "layout": "COVER"
         },
         {
-            "id": 706,
+            "id": 2338,
             "background": {
-                "id": 3724976,
+                "id": 3740181,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8baf36389314b0ae4250ed18f1d29d75688d04d8.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8baf36389314b0ae4250ed18f1d29d75688d04d8.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2018/12/04112555/1543893955-edf5c40699b76519c190876245f6ce6d.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u300c\u53f0\u4e2d\u4e16\u754c\u82b1\u5349\u535a\u89bd\u6703\u300d\u6b63\u5f0f\u958b\u8dd1\uff0c\u4e0d\u5c11\u670b\u53cb\u6703\u554f\u6211\u5011\uff0c\n\u53f0\u4e2d\u5230\u5e95\u600e\u9ebc\u73a9\uff1f",
             "keywords": null,
-            "focal_x": 478,
+            "focal_x": 354,
             "focal_y": 318,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 707,
+            "id": 2339,
             "background": {
-                "id": 3724989,
+                "id": 3740194,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2c570bb80815ecf25bead811b6402758c1dddf57.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2c570bb80815ecf25bead811b6402758c1dddf57.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2019/12/11174009/1576057208-2d4e25885d161f5bb52cd6ab162b6dc8.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "Sqoyaw\u5929\u7a7a-\u8a69\u6b4c\u8b20\u5929\u7a7a\uff1a",
             "title": "\u5730\u5740\uff1a424\u53f0\u4e2d\u5e02\u548c\u5e73\u5340\u4e2d\u8208\u8def\u4e09\u6bb5\u81e842-2\u865f",
             "keywords": null,
-            "focal_x": 800,
+            "focal_x": 600,
             "focal_y": 400,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 708,
+            "id": 2340,
             "background": {
-                "id": 3724989,
+                "id": 3740194,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2c570bb80815ecf25bead811b6402758c1dddf57.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2c570bb80815ecf25bead811b6402758c1dddf57.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2019/12/11174009/1576057208-2d4e25885d161f5bb52cd6ab162b6dc8.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u96fb\u8a71\uff1a04 2580 2428",
             "keywords": null,
-            "focal_x": 800,
+            "focal_x": 600,
             "focal_y": 400,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 709,
+            "id": 2341,
             "background": {
-                "id": 3724990,
+                "id": 3740195,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/69de04896b86beff2e2daa36f0169db43b170a53.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/69de04896b86beff2e2daa36f0169db43b170a53.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2019/11/06191734/1573039053-6e87ae3394e59bb90344bcc3af5606b8.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u9ed1\u91d1\u6587\u65c5\uff1a",
             "title": "\u96fb\u8a71\uff1a04 2221 1175",
             "keywords": null,
-            "focal_x": 640,
+            "focal_x": 473,
             "focal_y": 400,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 710,
+            "id": 2342,
             "background": {
-                "id": 3724991,
+                "id": 3740196,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c8d0f3f43e9480a0ea5b91a878181dd2d4dbc1de.jpg",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c8d0f3f43e9480a0ea5b91a878181dd2d4dbc1de.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2019/07/31162157/1564561317-d0ba20e67ff41b993755b623a57b0db0.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u82ad\u857e\u57ce\u5e02\u6e21\u5047\u65c5\u5e97\uff1a",
             "title": "\u5730\u5740\uff1a408\u53f0\u4e2d\u5e02\u5357\u5c6f\u5340\u5411\u4e0a\u8def\u4e09\u6bb5221\u865f",
             "keywords": null,
-            "focal_x": 472,
+            "focal_x": 600,
             "focal_y": 400,
             "layout": "NORMAL"
         },
         {
-            "id": 711,
+            "id": 2343,
             "background": {
-                "id": 3724991,
+                "id": 3740196,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c8d0f3f43e9480a0ea5b91a878181dd2d4dbc1de.jpg",
@@ -182,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c8d0f3f43e9480a0ea5b91a878181dd2d4dbc1de.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2019/07/31162157/1564561317-d0ba20e67ff41b993755b623a57b0db0.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u96fb\u8a71\uff1a04 2383 2888",
             "keywords": null,
-            "focal_x": 472,
+            "focal_x": 600,
             "focal_y": 400,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 712,
+            "id": 2344,
             "background": {
-                "id": 3724992,
+                "id": 3740197,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9d0c25338d2f55f741237ca24fed24c72f715de8.jpg",
@@ -209,100 +209,73 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9d0c25338d2f55f741237ca24fed24c72f715de8.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2019/07/16190420/1563275060-e4d037e45d2bf5d3b3de0a5b7e4ff03d.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u7f8e\u597d\u5e74\u4ee3Belle \u00c9poque\uff1a",
             "title": "\u96fb\u8a71\uff1a04 2302 0330",
             "keywords": null,
-            "focal_x": 760,
-            "focal_y": 400,
-            "layout": "FOCUS"
-        },
-        {
-            "id": 713,
-            "background": {
-                "id": 3724993,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/ccd2ba77085360f1f65439627e8c818135185799.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
-                "description": "",
-                "width": 1200,
-                "height": 800,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/ccd2ba77085360f1f65439627e8c818135185799.jpg",
-                "url": "https://images.zi.org.tw/jatraveling/2019/07/05161059/1562314258-02dcf9b7730394bf9c411710ddd4f91a.jpg",
-                "source": ""
-            },
-            "headline": "MINI HOTELS\u53f0\u4e2d\u706b\u8eca\u7ad9\u9928\uff1a",
-            "title": "\u5730\u5740\uff1a401\u53f0\u4e2d\u5e02\u6771\u5340\u5927\u52c7\u885769\u865f",
-            "keywords": null,
-            "focal_x": 560,
-            "focal_y": 400,
-            "layout": "FOCUS"
-        },
-        {
-            "id": 714,
-            "background": {
-                "id": 3724993,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/ccd2ba77085360f1f65439627e8c818135185799.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
-                "description": "",
-                "width": 1200,
-                "height": 800,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/ccd2ba77085360f1f65439627e8c818135185799.jpg",
-                "url": "https://images.zi.org.tw/jatraveling/2019/07/05161059/1562314258-02dcf9b7730394bf9c411710ddd4f91a.jpg",
-                "source": ""
-            },
-            "headline": "",
-            "title": "\u96fb\u8a71\uff1a04 2225 9966",
-            "keywords": null,
-            "focal_x": 560,
-            "focal_y": 400,
-            "layout": "FOCUS"
-        },
-        {
-            "id": 715,
-            "background": {
-                "id": 3724994,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/fb8a402ff1d1a566ec91e437f6681ae33f386541.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
-                "description": "",
-                "width": 1200,
-                "height": 800,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/fb8a402ff1d1a566ec91e437f6681ae33f386541.jpg",
-                "url": "https://images.zi.org.tw/jatraveling/2019/07/05124008/1562301607-075c15ef6b8ce773c7ec2758a4322bb0.jpg",
-                "source": ""
-            },
-            "headline": "MINI HOTELS\u9022\u7532\u9928\uff1a",
-            "title": "\u5730\u5740\uff1a407\u53f0\u4e2d\u5e02\u897f\u5c6f\u5340\u798f\u661f\u5317\u4e00\u885715\u865f",
-            "keywords": null,
-            "focal_x": 464,
+            "focal_x": 569,
             "focal_y": 400,
             "layout": "NORMAL"
         },
         {
-            "id": 716,
+            "id": 2345,
             "background": {
-                "id": 3724994,
+                "id": 3740198,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/ccd2ba77085360f1f65439627e8c818135185799.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 1200,
+                "height": 800,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/ccd2ba77085360f1f65439627e8c818135185799.jpg",
+                "url": "https://images.zi.org.tw/jatraveling/2019/07/05161059/1562314258-02dcf9b7730394bf9c411710ddd4f91a.jpg",
+                "source": "User"
+            },
+            "headline": "MINI HOTELS\u53f0\u4e2d\u706b\u8eca\u7ad9\u9928\uff1a",
+            "title": "\u5730\u5740\uff1a401\u53f0\u4e2d\u5e02\u6771\u5340\u5927\u52c7\u885769\u865f",
+            "keywords": null,
+            "focal_x": 505,
+            "focal_y": 400,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 2346,
+            "background": {
+                "id": 3740198,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/ccd2ba77085360f1f65439627e8c818135185799.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 1200,
+                "height": 800,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/ccd2ba77085360f1f65439627e8c818135185799.jpg",
+                "url": "https://images.zi.org.tw/jatraveling/2019/07/05161059/1562314258-02dcf9b7730394bf9c411710ddd4f91a.jpg",
+                "source": "User"
+            },
+            "headline": "",
+            "title": "\u96fb\u8a71\uff1a04 2225 9966",
+            "keywords": null,
+            "focal_x": 505,
+            "focal_y": 400,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 2347,
+            "background": {
+                "id": 3740199,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/fb8a402ff1d1a566ec91e437f6681ae33f386541.jpg",
@@ -317,19 +290,46 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/fb8a402ff1d1a566ec91e437f6681ae33f386541.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2019/07/05124008/1562301607-075c15ef6b8ce773c7ec2758a4322bb0.jpg",
-                "source": ""
+                "source": "User"
+            },
+            "headline": "MINI HOTELS\u9022\u7532\u9928\uff1a",
+            "title": "\u5730\u5740\uff1a407\u53f0\u4e2d\u5e02\u897f\u5c6f\u5340\u798f\u661f\u5317\u4e00\u885715\u865f",
+            "keywords": null,
+            "focal_x": 600,
+            "focal_y": 400,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 2348,
+            "background": {
+                "id": 3740199,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/fb8a402ff1d1a566ec91e437f6681ae33f386541.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 1200,
+                "height": 800,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/fb8a402ff1d1a566ec91e437f6681ae33f386541.jpg",
+                "url": "https://images.zi.org.tw/jatraveling/2019/07/05124008/1562301607-075c15ef6b8ce773c7ec2758a4322bb0.jpg",
+                "source": "User"
             },
             "headline": "",
             "title": "\u96fb\u8a71\uff1a04 2707 3777",
             "keywords": null,
-            "focal_x": 464,
+            "focal_x": 600,
             "focal_y": 400,
             "layout": "QUOTE"
         },
         {
-            "id": 717,
+            "id": 2349,
             "background": {
-                "id": 3724995,
+                "id": 3740200,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/158b0ab4097e091e458f63b092ff57af24f6899c.jpg",
@@ -344,19 +344,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/158b0ab4097e091e458f63b092ff57af24f6899c.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/05/1525849744-40266a771dfe0704263f5fdddfbe8559.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "1969\u85cd\u5929\u98ef\u5e97\uff1a",
             "title": "\u96fb\u8a71\uff1a04 2223 0577",
             "keywords": null,
-            "focal_x": 531,
+            "focal_x": 414,
             "focal_y": 339,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 718,
+            "id": 2350,
             "background": {
-                "id": 3724996,
+                "id": 3740201,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2b17be9891ba78cd1b82e8c124b4dbaec4a7eb25.jpg",
@@ -371,19 +371,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2b17be9891ba78cd1b82e8c124b4dbaec4a7eb25.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/05/1525850939-b8a24ec4523b26e91a2a2235f39060ec.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "StrayBirds\u6f02\u9ce5\uff1a",
             "title": "\u5730\u5740\uff1a40360\u53f0\u4e2d\u5e02\u897f\u5340\u516c\u76ca\u8def201\u865f8\u6a13",
             "keywords": null,
-            "focal_x": 483,
+            "focal_x": 830,
             "focal_y": 339,
             "layout": "NORMAL"
         },
         {
-            "id": 719,
+            "id": 2351,
             "background": {
-                "id": 3724996,
+                "id": 3740201,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2b17be9891ba78cd1b82e8c124b4dbaec4a7eb25.jpg",
@@ -398,19 +398,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2b17be9891ba78cd1b82e8c124b4dbaec4a7eb25.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/05/1525850939-b8a24ec4523b26e91a2a2235f39060ec.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u96fb\u8a71\uff1a04 2301 5518",
             "keywords": null,
-            "focal_x": 483,
+            "focal_x": 830,
             "focal_y": 339,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 720,
+            "id": 2352,
             "background": {
-                "id": 3724997,
+                "id": 3740202,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3c033c6087d085bf6bb7eed69ddc8b82ab020e35.jpg",
@@ -425,19 +425,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3c033c6087d085bf6bb7eed69ddc8b82ab020e35.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/05/1525856184-bfebc914f472d7a23190b9fce7965257.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "LUMI\u5149\u4e4b\u65c5\u5e97\uff1a",
             "title": "\u5730\u5740\uff1a407\u53f0\u4e2d\u5e02\u897f\u5c6f\u5340\u798f\u661f\u897f\u8def39\u865f",
             "keywords": null,
-            "focal_x": 363,
+            "focal_x": 512,
             "focal_y": 339,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 721,
+            "id": 2353,
             "background": {
-                "id": 3724997,
+                "id": 3740202,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3c033c6087d085bf6bb7eed69ddc8b82ab020e35.jpg",
@@ -452,19 +452,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3c033c6087d085bf6bb7eed69ddc8b82ab020e35.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/05/1525856184-bfebc914f472d7a23190b9fce7965257.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u96fb\u8a71\uff1a04 2707 5286",
             "keywords": null,
-            "focal_x": 363,
+            "focal_x": 512,
             "focal_y": 339,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 722,
+            "id": 2354,
             "background": {
-                "id": 3724998,
+                "id": 3740203,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/ac53bdd2aa0fbff2ccd8d8e4daad64ec2dffae14.jpg",
@@ -479,19 +479,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/ac53bdd2aa0fbff2ccd8d8e4daad64ec2dffae14.jpg",
                 "url": "https://jatraveling.tw/wp-content/uploads/2018/05/1525857940-af379367742e40a67b63de9ac1f56ec9.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "Trans Inn \u50b3\u601d\u6587\u65c5\uff1a",
             "title": "\u96fb\u8a71\uff1a0908 183 885",
             "keywords": null,
-            "focal_x": 675,
+            "focal_x": 510,
             "focal_y": 339,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 723,
+            "id": 2355,
             "background": {
-                "id": 3724999,
+                "id": 3740204,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2ce5897eb4438de20c41b82341d0993971cb9f8b.jpg",
@@ -506,19 +506,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2ce5897eb4438de20c41b82341d0993971cb9f8b.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2018/09/07162334/1536308614-22ac8fcc4243846086a2f18a6face1ff.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u53f0\u4e2d\u798f\u83ef\u5927\u98ef\u5e97\uff1a",
             "title": "\u5730\u5740\uff1a407\u53f0\u4e2d\u5e02\u897f\u5c6f\u5340\u5b89\u548c\u8def129\u865f",
             "keywords": null,
-            "focal_x": 789,
+            "focal_x": 959,
             "focal_y": 397,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 724,
+            "id": 2356,
             "background": {
-                "id": 3724999,
+                "id": 3740204,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2ce5897eb4438de20c41b82341d0993971cb9f8b.jpg",
@@ -533,12 +533,12 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2ce5897eb4438de20c41b82341d0993971cb9f8b.jpg",
                 "url": "https://images.zi.org.tw/jatraveling/2018/09/07162334/1536308614-22ac8fcc4243846086a2f18a6face1ff.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u96fb\u8a71\uff1a04 2463 2323",
             "keywords": null,
-            "focal_x": 789,
+            "focal_x": 959,
             "focal_y": 397,
             "layout": "QUOTE"
         }

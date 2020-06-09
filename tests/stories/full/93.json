@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 881,
+            "id": 2535,
             "background": {
-                "id": 3726430,
+                "id": 3741684,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c0c3402f2190558bf03cec4535925469dd91be2a.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c0c3402f2190558bf03cec4535925469dd91be2a.jpg",
                 "url": "https://s3-ap-southeast-1.amazonaws.com/mababy-production/knowledge/9dfb0835-b0c3-46f2-83c7-db7b3aa46f21",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u5b89\u5fc3\u65c5\u904a\u88dc\u52a97/1\u4e0a\u8def\uff0c\u81ea\u7531\u884c\u3001\u5718\u9ad4\u901a\u901a\u6709\uff01\u4e94\u5927\u65b9\u6848\u4e00\u6b21\u770b",
+            "headline": "\u5b89\u5fc3\u65c5\u904a\u88dc\u52a97/1\u4e0a\u8def\uff0c\u81ea\u7531\u884c\u3001\u5718\u9ad4\u901a\u901a\u6709\uff01\u4e94\u5927\u65b9\u6848\u4e00\u6b21\u770b",
+            "title": "",
             "keywords": null,
-            "focal_x": 233,
+            "focal_x": 379,
             "focal_y": 225,
             "layout": "COVER"
         },
         {
-            "id": 882,
+            "id": 2536,
             "background": {
-                "id": 3725227,
+                "id": 3740458,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c0c3402f2190558bf03cec4535925469dd91be2a.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c0c3402f2190558bf03cec4535925469dd91be2a.jpg",
                 "url": "https://s3-ap-southeast-1.amazonaws.com/mababy-production/knowledge/9dfb0835-b0c3-46f2-83c7-db7b3aa46f21",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u5b89\u5fc3\u65c5\u904a\u88dc\u52a97/1\u4e0a\u8def\uff0c\u81ea\u7531\u884c\u3001\u5718\u9ad4\u901a\u901a\u6709\uff01\n\u4e94\u5927\u65b9\u6848\u4e00\u6b21\u770b",
             "title": "\u5b89\u5fc3\u65c5\u904a\u88dc\u52a9\u8d70\u8d77\uff01",
             "keywords": null,
-            "focal_x": 233,
+            "focal_x": 379,
             "focal_y": 225,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 883,
+            "id": 2537,
             "background": {
-                "id": 3725227,
+                "id": 3740458,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/c0c3402f2190558bf03cec4535925469dd91be2a.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/c0c3402f2190558bf03cec4535925469dd91be2a.jpg",
                 "url": "https://s3-ap-southeast-1.amazonaws.com/mababy-production/knowledge/9dfb0835-b0c3-46f2-83c7-db7b3aa46f21",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5bb6\u9577\u8d95\u5feb\u5e36\u60b6\u58de\u7684\u5b69\u5b50\u4f86\u8d9f\u5feb\u6a02\u7684\u89aa\u5b50\u4e4b\u65c5\u5427\uff01",
             "keywords": null,
-            "focal_x": 233,
+            "focal_x": 379,
             "focal_y": 225,
             "layout": "QUOTE"
         },
         {
-            "id": 884,
+            "id": 2538,
             "background": {
-                "id": 3725230,
+                "id": 3740461,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/724885f14e1794c1bc448b0ac55ff723a77db4f0.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/724885f14e1794c1bc448b0ac55ff723a77db4f0.jpg",
                 "url": "https://s3-ap-southeast-1.amazonaws.com/mababy-production/ck-knowledge/772c8d93-5b48-4020-a718-67e39b426285",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u4e09\u3001\u89c0\u5149\u904a\u6a02\u5712\u5165\u5712\u512a\u60e0",
             "title": "\u8a73\u60c5\u53c3\u898b\u300c\u5168\u81fa\u6a02\u5712\u5730\u5716\u300d",
             "keywords": null,
-            "focal_x": 425,
+            "focal_x": 479,
             "focal_y": 169,
             "layout": "NORMAL"
         },
         {
-            "id": 885,
+            "id": 2539,
             "background": {
-                "id": 3725230,
+                "id": 3740461,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/724885f14e1794c1bc448b0ac55ff723a77db4f0.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/724885f14e1794c1bc448b0ac55ff723a77db4f0.jpg",
                 "url": "https://s3-ap-southeast-1.amazonaws.com/mababy-production/ck-knowledge/772c8d93-5b48-4020-a718-67e39b426285",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u5be6\u65bd\u671f\u9650",
             "title": "2020\u5e747\u67081\u65e5\u81f38\u670831\u65e5\u4e0d\u9650\u6b21\u6578\uff0c\u5e73\u5047\u65e5\u5747\u9069\u7528\u3002",
             "keywords": null,
-            "focal_x": 425,
+            "focal_x": 479,
             "focal_y": 169,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 886,
+            "id": 2540,
             "background": {
-                "id": 3725231,
+                "id": 3740462,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/dd15a345060b29da69a04b4ea85174a06adc5dec.jpg",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/dd15a345060b29da69a04b4ea85174a06adc5dec.jpg",
                 "url": "https://s3-ap-southeast-1.amazonaws.com/mababy-production/ck-knowledge/c8f2b284-6c20-498b-80de-2ca9032392fc",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u4e94\u3001\u88dc\u52a9\u5730\u65b9\u653f\u5e9c\u8fa6\u7406\u5728\u5730\u7279\u8272\u89c0\u5149\u6d3b\u52d5",
             "title": "<\u5716\u7247\u4f86\u6e90/\u89c0\u5149\u5c40>",
             "keywords": null,
-            "focal_x": 265,
+            "focal_x": 223,
             "focal_y": 169,
             "layout": "NORMAL"
         },
         {
-            "id": 887,
+            "id": 2541,
             "background": {
-                "id": 3725232,
+                "id": 3740463,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cf60e26319c387baf69d591c858cea4061fa632e.jpg",
@@ -182,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cf60e26319c387baf69d591c858cea4061fa632e.jpg",
                 "url": "https://s3-ap-southeast-1.amazonaws.com/mababy-production/ck-knowledge/f5625e04-ad28-4174-bd25-5dbc35988db3",
-                "source": ""
+                "source": "User"
             },
             "headline": "Q4.\u81ea\u7531\u884c\u4f4f\u5bbf\u88dc\u52a91000\u5143\uff0c\u96e2\u5cf6\u52a0\u78bc1000\u5143\uff0c\u90a3\u6211\u53ef\u4ee5\u76f4\u63a5\u5728\u96e2\u5cf6\u4f7f\u75282000\u5143\u55ce\uff1f",
             "title": "<\u5716\u7247\u4f86\u6e90/\u89c0\u5149\u5c40>",
             "keywords": null,
-            "focal_x": 417,
+            "focal_x": 415,
             "focal_y": 169,
             "layout": "NORMAL"
         },
         {
-            "id": 888,
+            "id": 2542,
             "background": {
-                "id": 3725232,
+                "id": 3740463,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cf60e26319c387baf69d591c858cea4061fa632e.jpg",
@@ -209,14 +209,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cf60e26319c387baf69d591c858cea4061fa632e.jpg",
                 "url": "https://s3-ap-southeast-1.amazonaws.com/mababy-production/ck-knowledge/f5625e04-ad28-4174-bd25-5dbc35988db3",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5f9e\u73fe\u5728\u8d77\uff0c\u5bb6\u9577\u5011\u53ef\u4ee5\u6162\u6162\u958b\u59cb\u898f\u5283\u89aa\u5b50\u65c5\u904a\u4e86\uff0c\u628a\u4e0a\u534a\u5e74\u6c92\u73a9\u5230\u7684\u901a\u901a\u88dc\u56de\u4f86\u5427~",
             "keywords": null,
-            "focal_x": 417,
+            "focal_x": 415,
             "focal_y": 169,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         }
     ]
 }

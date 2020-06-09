@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 221,
+            "id": 1863,
             "background": {
-                "id": 3726182,
+                "id": 3740572,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b9b334c51af88500c6f801b7736a510746a0a99e.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b9b334c51af88500c6f801b7736a510746a0a99e.jpg",
                 "url": "https://www.cmmedia.com.tw/file/37863/1591604410_357_cropped_24_1591604069_357_main_catcher_baseball_youth_sport_ball_player_game_athlete-1234361.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u65b0\u7af9\u68d2\u7403\u968a\u6027\u4fb5\u6848\u300b\u6797\u667a\u5805\u958b\u9358 \u6559\u80b2\u8655\u9577\u4e1f\u5b98\u3001\u7403\u968a\u89e3\u6563\u3001\u6559\u7df4\u89e3\u8058\u3001\u6821\u9577\u4e3b\u4efb\u8a18\u904e",
+            "headline": "\u65b0\u7af9\u68d2\u7403\u968a\u6027\u4fb5\u6848\u300b\u6797\u667a\u5805\u958b\u9358 \u6559\u80b2\u8655\u9577\u4e1f\u5b98\u3001\u7403\u968a\u89e3\u6563\u3001\u6559\u7df4\u89e3\u8058\u3001\u6821\u9577\u4e3b\u4efb\u8a18\u904e",
+            "title": "",
             "keywords": null,
-            "focal_x": 733,
+            "focal_x": 590,
             "focal_y": 637,
             "layout": "COVER"
         },
         {
-            "id": 222,
+            "id": 1866,
             "background": {
-                "id": 3724535,
+                "id": 3739690,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b9b334c51af88500c6f801b7736a510746a0a99e.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b9b334c51af88500c6f801b7736a510746a0a99e.jpg",
                 "url": "https://www.cmmedia.com.tw/file/37863/1591604410_357_cropped_24_1591604069_357_main_catcher_baseball_youth_sport_ball_player_game_athlete-1234361.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u65b0\u7af9\u68d2\u7403\u968a\u6027\u4fb5\u6848\u300b\u6797\u667a\u5805\u958b\u9358 \u6559\u80b2\u8655\u9577\u4e1f\u5b98\u3001\u7403\u968a\u89e3\u6563\u3001\u6559\u7df4\u89e3\u8058\u3001\u6821\u9577\u4e3b\u4efb\u8a18\u904e",
             "title": "\u7af9\u5e02\u67d0\u570b\u4e2d\u68d2\u7403\u968a\u7206\u767c\u6027\u4fb5\u6848\uff0c\u65b0\u7af9\u5e02\u5e9c\u4eca\u5929\u958b\u9358\uff0c\u4e0d\u53ea\u6559\u7df4\u89e3\u8058\uff0c\u6821\u9577\u3001\u4e3b\u4efb\u8a18\u904e\uff0c\u9023\u6559\u80b2\u8655\u9577\u90fd\u4e1f\u4e86\u5b98\u8077\u3002",
             "keywords": null,
-            "focal_x": 733,
+            "focal_x": 590,
             "focal_y": 637,
             "layout": "NORMAL"
         },
         {
-            "id": 223,
+            "id": 1868,
             "background": {
-                "id": 3724535,
+                "id": 3739690,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b9b334c51af88500c6f801b7736a510746a0a99e.jpg",
@@ -74,60 +74,23 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b9b334c51af88500c6f801b7736a510746a0a99e.jpg",
                 "url": "https://www.cmmedia.com.tw/file/37863/1591604410_357_cropped_24_1591604069_357_main_catcher_baseball_youth_sport_ball_player_game_athlete-1234361.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5716\u70ba\u793a\u610f\u5716\uff0c\u975e\u672c\u6b21\u4e8b\u4ef6\u3002",
             "keywords": null,
-            "focal_x": 733,
+            "focal_x": 590,
             "focal_y": 637,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 224,
+            "id": 1869,
             "background": {
-                "id": 3724535,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/b9b334c51af88500c6f801b7736a510746a0a99e.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
-                "description": "",
-                "width": 1913,
-                "height": 1275,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/b9b334c51af88500c6f801b7736a510746a0a99e.jpg",
-                "url": "https://www.cmmedia.com.tw/file/37863/1591604410_357_cropped_24_1591604069_357_main_catcher_baseball_youth_sport_ball_player_game_athlete-1234361.jpg",
-                "source": ""
-            },
-            "headline": "",
-            "title": "\u4e0a\u9031\u4e00\u5834\u8a18\u8005\u6703\u9a5a\u7206\u65b0\u7af9\u5e02\u67d0\u570b\u4e2d\u68d2\u7403\u968a\u767c\u751f\u6027\u4fb5\u4e8b\u4ef6\u3002",
-            "keywords": null,
-            "focal_x": 733,
-            "focal_y": 637,
-            "layout": "FOCUS"
-        },
-        {
-            "id": 225,
-            "background": null,
-            "headline": "",
-            "title": "\u5e02\u5e9c\u4eba\u58eb\u6307\u51fa\uff0c\u5e02\u9577\u6797\u667a\u5805\u7372\u6089\u7576\u4e0b\u6df1\u611f\u9707\u6012\uff0c\u96a8\u5373\u7d44\u6210\u5c08\u6848\u5c0f\u7d44\u8655\u7406\uff0c\u4eca\u5929\u4e0b\u5348\u4e26\u516c\u5e03\u61f2\u8655\u7d50\u679c\uff0c\u6559\u80b2\u8655\u9577\u9ec3\u9326\u80fd\u8acb\u8fad\u7372\u51c6\uff0c\u7403\u968a\u6559\u7df4\u89e3\u8058\uff0c\u6821\u9577\u3001\u4e3b\u4efb\u5206\u5225\u8a18\u904e\u8655\u5206\u3002",
-            "keywords": "ALL:\u9ec3\u9326\u80fd \u5c08\u6848\u5c0f\u7d44 \u5e02\u9577\u6797\u667a\u5805|QUERY:\u5e02\u9577\u6797\u667a\u5805",
-            "focal_x": -1,
-            "focal_y": -1,
-            "layout": "FOCUS"
-        },
-        {
-            "id": 226,
-            "background": {
-                "id": 3737303,
+                "id": 3740652,
                 "type": "video",
                 "license": "Creative Common",
                 "file": "https://static-gstudio.gliacloud.com/a06031904d609c3e6335e22edb30792eeb4caaed.mp4",
-                "title": "",
+                "title": "\u516c\u5f00\u7ed3\u675f\u9a9a\u6270\u8650\u5f85\u88ad\u51fb\u653e\u5927\u955c3D\u52a8\u753b",
                 "duration": 8.067,
                 "mime": "video/mp4",
                 "description": "",
@@ -137,62 +100,35 @@
                 "end": 0.0,
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b2d191d5690104a158e62909ab88ffd9b7a4bb9a.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qEue9C6/videoblocks-expose-end-harassment-abuse-assault-magnifying-glass-3-d-animation_b3mjnyslz__532b377fab54f8287f1964e568c3e7e5__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591692147569&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=5498132&resolution=180p&searchId=17907bf3-1246-4eec-9723-c16a193683be&searchPageId=a9d0283b-dab2-4137-ae79-08ee8790b92b#gliadriver=StoryBlocksVideoZH&key=5498132",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qEue9C6/videoblocks-expose-end-harassment-abuse-assault-magnifying-glass-3-d-animation_b3mjnyslz__532b377fab54f8287f1964e568c3e7e5__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721704666&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=5498132&resolution=180p&searchId=1e543a5a-9217-4494-975c-8340768672c5&searchPageId=5b058a22-1127-4e15-95e6-d77e796a35fb#gliadriver=StoryBlocksVideoZH&key=5498132",
                 "source": ""
             },
             "headline": "",
-            "title": "\u81f3\u65bc\u53d7\u5bb3\u5bb6\u5c6c\u6240\u8a00\u906d\u53d7\u6027\u4fb5\u3001\u809b\u4ea4\u4e00\u4e8b\uff0c\u5e02\u5e9c\u4eba\u58eb\u6307\u51fa\uff0c\u672c\u6848\u5df2\u9032\u5165\u53f8\u6cd5\u7a0b\u5e8f\u7531\u5c11\u5e74\u6cd5\u5ead\u5be9\u7406\uff0c\u96d6\u7136\u4e5f\u6709\u807d\u805e\u4e0d\u540c\u7684\u8aaa\u6cd5\uff0c\u4f46\u9084\u662f\u4ea4\u7531\u53f8\u6cd5\u6a5f\u95dc\u6309\u7167\u6cd5\u5f8b\u9032\u884c\u5224\u65b7\u3002",
-            "keywords": null,
-            "focal_x": 559,
+            "title": "\u4e0a\u9031\u4e00\u5834\u8a18\u8005\u6703\u9a5a\u7206\u65b0\u7af9\u5e02\u67d0\u570b\u4e2d\u68d2\u7403\u968a\u767c\u751f\u6027\u4fb5\u4e8b\u4ef6\u3002",
+            "keywords": "ALL:\u6027\u4fb5\u4e8b\u4ef6 \u65b0\u7af9\u5e02 \u570b\u4e2d\u68d2\u7403\u968a|QUERY:\u6027\u4fb5\u4e8b\u4ef6",
+            "focal_x": 1494,
             "focal_y": 540,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 227,
-            "background": {
-                "id": 3737305,
-                "type": "video",
-                "license": "Creative Common",
-                "file": "https://static-gstudio.gliacloud.com/d51ad306437cc4d83baca2fc4434a4b3cb7a3392.mp4",
-                "title": "",
-                "duration": 58.225,
-                "mime": "video/mp4",
-                "description": "",
-                "width": 1920,
-                "height": 1080,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/aa5c149794a975f1514e1c57d478e7a184d8372f.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/UsHIP34/videoblocks-view-on-colorful-umbrellas-in-the-city-sunny-day-in-summer-season_hcfzy5fjy__ca214ed31780031b55095363379ad909__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591692158337&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=4870695&resolution=180p&searchId=81a235d5-0b8a-46db-9913-22acd291b322&searchPageId=077e128e-7919-40fa-9e27-11669baae594#gliadriver=StoryBlocksVideoZH&key=4870695",
-                "source": ""
-            },
-            "headline": "",
-            "title": "\u672c\u8d77\u4e8b\u4ef6\u4e0a\u9031\u624d\u7d93\u7acb\u59d4\u53ca\u53d7\u5bb3\u5bb6\u5c6c\u53ec\u958b\u8a18\u8005\u6703\u62ab\u9732\uff0c\u4e00\u500b\u661f\u671f\u5f8c\uff0c\u65b0\u7af9\u5e02\u5e9c\u4eca(8)\u65e5\u5c31\u5b8c\u6210\u884c\u653f\u8abf\u67e5\u5831\u544a\uff0c\u78ba\u8a8d\u6821\u65b9\u5728\u7403\u968a\u7ba1\u7406\u5de5\u4f5c\u65b9\u9762\u78ba\u6709\u758f\u5931\uff0c\u56e0\u6b64\u6559\u80b2\u8655\u9577\u9ec3\u9326\u80fd\u8acb\u8fad\u7372\u51c6\uff0c\u800c\u8a72\u6821\u6559\u7df4\u672a\u5584\u76e1\u8f14\u5c0e\u5b78\u7ae5\u53ca\u901a\u5831\u4e4b\u8cac\uff0c\u4e0a\u9031\u5e02\u5e9c\u5df2\u5c07\u6559\u7df4\u89e3\u8058\uff0c\u6821\u9577\u3001\u4e3b\u4efb\u4ea6\u5206\u5225\u8a18\u904e\u8655\u5206\u3002",
-            "keywords": null,
-            "focal_x": 1000,
-            "focal_y": 540,
-            "layout": "NORMAL"
-        },
-        {
-            "id": 228,
+            "id": 1870,
             "background": null,
             "headline": "",
-            "title": "\u672c\u67081\u65e5\u570b\u6c11\u9ee8\u7acb\u59d4\u912d\u6b63\u9210\u966a\u540c\u5bb6\u5c6c\u53ec\u958b\u8a18\u8005\u6703\uff0c\u4eca\u5929\u4ed6\u7684\u5e55\u50da\u8868\u793a\uff0c\u59d4\u54e1\u5c07\u6301\u7e8c\u95dc\u6ce8\u672c\u8d77\u4e8b\u4ef6\uff0c\u65e5\u5f8c\u66f4\u6703\u627e\u6642\u9593\u4e0b\u9109\u95dc\u61f7\u53d7\u5bb3\u7403\u54e1\u53ca\u5176\u5bb6\u5c6c\uff0c\u4e26\u6301\u7e8c\u76e3\u7763\u653f\u5e9c\u76f8\u95dc\u90e8\u9580\u5f8c\u7e8c\u8655\u7406\u9032\u5ea6\u3002",
-            "keywords": "ALL:\u570b\u6c11\u9ee8 \u912d\u6b63\u9210|QUERY:\u912d\u6b63\u9210",
+            "title": "\u5e02\u5e9c\u4eba\u58eb\u6307\u51fa\uff0c\u5e02\u9577\u6797\u667a\u5805\u7372\u6089\u7576\u4e0b\u6df1\u611f\u9707\u6012\uff0c\u96a8\u5373\u7d44\u6210\u5c08\u6848\u5c0f\u7d44\u8655\u7406\uff0c\u4eca\u5929\u4e0b\u5348\u4e26\u516c\u5e03\u61f2\u8655\u7d50\u679c\uff0c\u6559\u80b2\u8655\u9577\u9ec3\u9326\u80fd\u8acb\u8fad\u7372\u51c6\uff0c\u7403\u968a\u6559\u7df4\u89e3\u8058\uff0c\u6821\u9577\u3001\u4e3b\u4efb\u5206\u5225\u8a18\u904e\u8655\u5206\u3002",
+            "keywords": "ALL:\u5e02\u9577\u6797\u667a\u5805 \u9ec3\u9326\u80fd \u5c08\u6848\u5c0f\u7d44|QUERY:None",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "NORMAL"
         },
         {
-            "id": 229,
+            "id": 1871,
             "background": {
-                "id": 3737311,
+                "id": 3740660,
                 "type": "video",
                 "license": "Creative Common",
-                "file": "https://static-gstudio.gliacloud.com/3430fb5064cd9fc2b3b8715e3bc9cf922b94debc.mp4",
-                "title": "",
-                "duration": 30.0,
+                "file": "https://static-gstudio.gliacloud.com/a06031904d609c3e6335e22edb30792eeb4caaed.mp4",
+                "title": "\u516c\u5f00\u7ed3\u675f\u9a9a\u6270\u8650\u5f85\u88ad\u51fb\u653e\u5927\u955c3D\u52a8\u753b",
+                "duration": 8.067,
                 "mime": "video/mp4",
                 "description": "",
                 "width": 1920,
@@ -200,16 +136,80 @@
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/fbabb7eb7a20b924b216fed7e4d3ff6891bef382.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/Vv03xyNwg/videoblocks-meteorite-rain-on-a-blue-green-wall-of-light_bekvo_l7q__ef1392c9a0fe31005a95531a957b1e26__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591692179763&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=7175319&resolution=180p&searchId=cf85b609-d725-428e-8e65-ad1f5964f67e&searchPageId=930f85b5-bf48-4cac-ac25-ce5ddadd0029#gliadriver=StoryBlocksVideoZH&key=7175319",
+                "thumbnail": "https://static-gstudio.gliacloud.com/b2d191d5690104a158e62909ab88ffd9b7a4bb9a.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qEue9C6/videoblocks-expose-end-harassment-abuse-assault-magnifying-glass-3-d-animation_b3mjnyslz__532b377fab54f8287f1964e568c3e7e5__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721723441&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=5498132&resolution=180p&searchId=6a660e1f-a328-4031-8782-5492780887c2&searchPageId=9dec77ad-fffd-4925-a2fe-d9784d628022#gliadriver=StoryBlocksVideoZH&key=5498132",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u81f3\u65bc\u53d7\u5bb3\u5bb6\u5c6c\u6240\u8a00\u906d\u53d7\u6027\u4fb5\u3001\u809b\u4ea4\u4e00\u4e8b\uff0c\u5e02\u5e9c\u4eba\u58eb\u6307\u51fa\uff0c\u672c\u6848\u5df2\u9032\u5165\u53f8\u6cd5\u7a0b\u5e8f\u7531\u5c11\u5e74\u6cd5\u5ead\u5be9\u7406\uff0c\u96d6\u7136\u4e5f\u6709\u807d\u805e\u4e0d\u540c\u7684\u8aaa\u6cd5\uff0c\u4f46\u9084\u662f\u4ea4\u7531\u53f8\u6cd5\u6a5f\u95dc\u6309\u7167\u6cd5\u5f8b\u9032\u884c\u5224\u65b7\u3002",
+            "keywords": "ALL:\u672c\u6848 \u5c11\u5e74\u6cd5\u5ead \u6027\u4fb5\u3001\u809b\u4ea4 \u53f8\u6cd5\u7a0b\u5e8f \u53f8\u6cd5\u6a5f\u95dc \u53d7\u5bb3\u5bb6\u5c6c|QUERY:\u672c\u6848 \u5c11\u5e74\u6cd5\u5ead \u6027\u4fb5\u3001\u809b\u4ea4 \u53f8\u6cd5\u7a0b\u5e8f \u53f8\u6cd5\u6a5f\u95dc \u53d7\u5bb3\u5bb6\u5c6c",
+            "focal_x": 1494,
+            "focal_y": 540,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 1872,
+            "background": {
+                "id": 3740689,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/bb853c9bf0d2c198cf67a87c30c55fd968d41da0.mp4",
+                "title": "\u5546\u4eba\u7814\u8ba8\u4f1a\u4f1a\u8bae\u4f1a\u8bae\u529e\u516c\u5ba4\u8bad\u7ec3\u6982\u5ff54k\u3002",
+                "duration": 6.955,
+                "mime": "video/mp4",
+                "description": "",
+                "width": 1920,
+                "height": 1080,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/5374734f422176573fcb2ae4c3bcec957b689bb0.jpg",
+                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/V1xq1AADx/business-people-seminar-conference-meeting-office-training-concept-4k_rbbesqpdg__PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721732673&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=3572024&resolution=180p&searchId=ececc9e2-2ca2-44b0-a803-2eff0a697570&searchPageId=7faf9781-6b0b-4151-a611-17b96e07957a#gliadriver=StoryBlocksVideoZH&key=3572024",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u672c\u8d77\u4e8b\u4ef6\u4e0a\u9031\u624d\u7d93\u7acb\u59d4\u53ca\u53d7\u5bb3\u5bb6\u5c6c\u53ec\u958b\u8a18\u8005\u6703\u62ab\u9732\uff0c\u4e00\u500b\u661f\u671f\u5f8c\uff0c\u65b0\u7af9\u5e02\u5e9c\u4eca(8)\u65e5\u5c31\u5b8c\u6210\u884c\u653f\u8abf\u67e5\u5831\u544a\uff0c\u78ba\u8a8d\u6821\u65b9\u5728\u7403\u968a\u7ba1\u7406\u5de5\u4f5c\u65b9\u9762\u78ba\u6709\u758f\u5931\uff0c\u56e0\u6b64\u6559\u80b2\u8655\u9577\u9ec3\u9326\u80fd\u8acb\u8fad\u7372\u51c6\uff0c\u800c\u8a72\u6821\u6559\u7df4\u672a\u5584\u76e1\u8f14\u5c0e\u5b78\u7ae5\u53ca\u901a\u5831\u4e4b\u8cac\uff0c\u4e0a\u9031\u5e02\u5e9c\u5df2\u5c07\u6559\u7df4\u89e3\u8058\uff0c\u6821\u9577\u3001\u4e3b\u4efb\u4ea6\u5206\u5225\u8a18\u904e\u8655\u5206\u3002",
+            "keywords": "ALL:\u9ec3\u9326\u80fd \u65b0\u7af9\u5e02\u5e9c \u6559\u7df4 \u4e8b\u4ef6|QUERY:\u9ec3\u9326\u80fd \u65b0\u7af9\u5e02\u5e9c \u6559\u7df4 \u4e8b\u4ef6",
+            "focal_x": 879,
+            "focal_y": 540,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 1873,
+            "background": null,
+            "headline": "",
+            "title": "\u672c\u67081\u65e5\u570b\u6c11\u9ee8\u7acb\u59d4\u912d\u6b63\u9210\u966a\u540c\u5bb6\u5c6c\u53ec\u958b\u8a18\u8005\u6703\uff0c\u4eca\u5929\u4ed6\u7684\u5e55\u50da\u8868\u793a\uff0c\u59d4\u54e1\u5c07\u6301\u7e8c\u95dc\u6ce8\u672c\u8d77\u4e8b\u4ef6\uff0c\u65e5\u5f8c\u66f4\u6703\u627e\u6642\u9593\u4e0b\u9109\u95dc\u61f7\u53d7\u5bb3\u7403\u54e1\u53ca\u5176\u5bb6\u5c6c\uff0c\u4e26\u6301\u7e8c\u76e3\u7763\u653f\u5e9c\u76f8\u95dc\u90e8\u9580\u5f8c\u7e8c\u8655\u7406\u9032\u5ea6\u3002",
+            "keywords": "ALL:\u570b\u6c11\u9ee8 \u912d\u6b63\u9210|QUERY:None",
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 1874,
+            "background": {
+                "id": 3740706,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/5ff5a2042b37f4f4df65e2b06967835ed985e06f.mp4",
+                "title": "\u4e0e\u8f7b\u591a\u5f69\u76843D\u7a7a\u95f4\u7684\u661f\u661f\u7403\u98de\u8fc7\u65e0\u7f1d\u73af\u84dd\u7eff\u8272\u9752\u7eff\u8272\u7eff\u677e\u77f3",
+                "duration": 10.0,
+                "mime": "video/mp4",
+                "description": "",
+                "width": 1920,
+                "height": 1080,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/2086934ba955f2b6dcaef85bf8cebb9f20c164b3.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/yRF5c-O/videoblocks-fly-through-with-stars-orbs-of-light-colorful-3d-space-seamless-loop-blue-green-cyan-turquoise_rbcybbj___2bcd7e528445c7b1e96299a9a24e00de__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591721752293&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=5045976&resolution=180p&searchId=a2a3b080-066b-4173-b6bc-95ee8d708947&searchPageId=2c2e6789-7a14-4874-bd2f-ebcf448de923#gliadriver=StoryBlocksVideoZH&key=5045976",
                 "source": ""
             },
             "headline": "",
             "title": "\u9577\u671f\u95dc\u6ce8\u89aa\u5b50\u3001\u6587\u5316\u53ca\u9752\u5e74\u8b70\u984c\u7684\u6c11\u9032\u9ee8\u65b0\u7af9\u5e02\u8b70\u54e1\u674e\u598d\u6167\u4e5f\u8aaa\uff1a\u300c\u6027\u4fb5\u3001\u9738\u51cc\u662f\u7d55\u5c0d\u932f\u8aa4\u7684\u4e8b\u60c5\uff0c\u4e0d\u5206\u85cd\u7da0\u4e00\u5b9a\u90fd\u540c\u8072\u8b74\u8cac\u300d\uff0c\u81ea\u5df1\u5728\u5a92\u9ad4\u5831\u5c0e\u4e4b\u5f8c\uff0c\u4e5f\u96a8\u5373\u5728\u5e02\u8b70\u6703\u516c\u958b\u63d0\u51fa\u8cea\u8a62\uff0c\u8981\u6c42\u5e02\u5e9c\u6559\u80b2\u8655\u3001\u6821\u65b9\u5728\u8655\u7406\u985e\u4f3c\u6821\u5712\u6848\u4f8b\u6642\uff0c\u5fc5\u9808\u6709\u66f4\u6b63\u78ba\u3001\u7d30\u7dfb\u7684\u614b\u5ea6\u3002",
-            "keywords": null,
-            "focal_x": 1365,
+            "keywords": "ALL:\u85cd\u7da0 \u6c11\u9032\u9ee8\u65b0\u7af9\u5e02\u8b70\u54e1\u674e\u598d\u6167 \u6027\u4fb5\u3001\u9738\u51cc \u6559\u80b2\u8655|QUERY:\u85cd\u7da0",
+            "focal_x": 960,
             "focal_y": 540,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         }
     ]
 }

@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1062,
+            "id": 2581,
             "background": {
-                "id": 3726467,
+                "id": 3741700,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/640aa270a2dce5a8cbabb9e3700dd2dd8b84ee0b.jpg",
@@ -20,60 +20,60 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/640aa270a2dce5a8cbabb9e3700dd2dd8b84ee0b.jpg",
                 "url": "https://i0.wp.com/mummy.com.tw/wp-content/uploads/2020/05/\u526f\u98df\u54c1-\u7389\u7c73\u7ca5.jpg?fit=1440%2C1080&ssl=1",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u3010\u56db\u500b\u6708\u5b30\u5152\u526f\u98df\u54c1\u3011\u7389\u7c73\u7ca5",
+            "headline": "\u3010\u56db\u500b\u6708\u5b30\u5152\u526f\u98df\u54c1\u3011\u7389\u7c73\u7ca5",
+            "title": "",
             "keywords": null,
-            "focal_x": 892,
+            "focal_x": 1095,
             "focal_y": 540,
             "layout": "COVER"
         },
         {
-            "id": 1063,
+            "id": 2582,
             "background": {
-                "id": 3725359,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/640aa270a2dce5a8cbabb9e3700dd2dd8b84ee0b.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
+                "id": 3741710,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/30724e3ef80161787a7105d1bea97d2356ba1b69.mp4",
+                "title": "\u8d1d\u514b\u624b\u63c9\u9762\u7c89\u5728\u684c\u4e0a\u7684\u9762\u56e2",
+                "duration": 15.0,
+                "mime": "video/mp4",
                 "description": "",
-                "width": 1440,
+                "width": 1920,
                 "height": 1080,
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/640aa270a2dce5a8cbabb9e3700dd2dd8b84ee0b.jpg",
-                "url": "https://i0.wp.com/mummy.com.tw/wp-content/uploads/2020/05/\u526f\u98df\u54c1-\u7389\u7c73\u7ca5.jpg?fit=1440%2C1080&ssl=1",
+                "thumbnail": "https://static-gstudio.gliacloud.com/7fd40d2f979cbfb6667a9cd8c8adf5601f60045b.jpg",
+                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/kx2d2Jf/baker-hands-kneading-dough-in-flour-on-table_nkko9e7f__PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591723075421&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=357181&resolution=180p&searchId=f1fa9fac-b460-48ff-8c2d-9fe8bb00527a&searchPageId=43276fa0-1380-45fe-8213-684df79134eb#gliadriver=StoryBlocksVideoZH&key=357181",
                 "source": ""
             },
             "headline": "",
             "title": "\u6211\u5011\u5bb6\u96d9\u5bf6\u7684\u7b2c\u4e94\u9053\u526f\u98df\u54c1\u7389\u7c73\u7ca5\uff0c\u9019\u4e00\u6b21\u662f\u4f7f\u7528\u6fb1\u7c89\u985e\u7684\u98df\u6750\u6240\u4ee5\u6574\u500b\u88fd\u4f5c\u7684\u6fc3\u5ea6\u6709\u50cf8\u500d\u7ca5\u7684\u611f\u89ba\uff0c\u5927\u5bb6\u53ef\u4ee5\u659f\u914c\u770b\u5c0f\u5b69\u7684\u5480\u56bc\u80fd\u529b \u5982\u679c\u5b69\u5b50\u7684\u5480\u56bc\u80fd\u529b\u9084\u4e0d\u8db3\u7684\u8a71\u6211\u5011\u53ef\u4ee5\u518d\u52a0\u4e00\u9ede\u6c34\u628a\u5b83\u8abf\u7a00\u4e00\u9ede\u5594\uff01\uff01",
-            "keywords": null,
-            "focal_x": 892,
+            "keywords": "ALL:\u5480\u56bc\u80fd\u529b \u98df\u6750 \u526f\u98df\u54c1\u7389\u7c73\u7ca5 \u5bb6\u96d9\u5bf6 \u6fb1\u7c89\u985e|QUERY:\u5480\u56bc\u80fd\u529b \u98df\u6750 \u526f\u98df\u54c1\u7389\u7c73\u7ca5 \u5bb6\u96d9\u5bf6 \u6fb1\u7c89\u985e",
+            "focal_x": 960,
             "focal_y": 540,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 1064,
+            "id": 2583,
             "background": null,
             "headline": "",
             "title": "\u7c7320ml",
-            "keywords": "ALL:|QUERY:",
+            "keywords": "ALL:|QUERY:None",
             "focal_x": -1,
             "focal_y": -1,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 1065,
+            "id": 2584,
             "background": {
-                "id": 3735235,
+                "id": 3741711,
                 "type": "video",
                 "license": "Creative Common",
                 "file": "https://static-gstudio.gliacloud.com/81a84eb68086e614219809f6c20b00500223298b.mp4",
-                "title": "",
+                "title": "\u4e13\u4e1a\u7684\u5496\u5561\u5e08\u7684\u7167\u7247\uff0c\u4e0d\u5012\u6c34\u5012\u5165\u5496\u5561\u6d53\u7f29\u6cd5\u5f0f\u8fc7\u6ee4\u5496\u5561\u58f6\uff0c\u76f4\u7acb\u653e\u7f6e\uff0c\u51b2\u6ce1\u80fd\u91cf\u5496\u5561\u56e0\u996e\u6599\uff0c\u84b8\u6c7d\u5192\u51fa",
                 "duration": 7.84,
                 "mime": "video/mp4",
                 "description": "",
@@ -83,24 +83,24 @@
                 "end": 0.0,
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b7d13d7d562bb01d3f9b9fe4e5f9591661e99a69.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/videoblocks-cinemagraph-of-professional-barista-pourng-not-boiling-water-into-coffee-espresso-french-filter-coffee-pot-stands-on-scale-brewing-energy-caffeine-drink-steam-comes-out_rdxjlubfhw__8fef53d729cc17117eb4766837a087b2__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591677171223&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=5154337&resolution=180p&searchId=93f01093-e9e8-4472-9224-29892cd0de8e&searchPageId=016e3052-c107-43aa-a7dd-b32985ef4216#gliadriver=StoryBlocksVideoZH&key=5154337",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/videoblocks-cinemagraph-of-professional-barista-pourng-not-boiling-water-into-coffee-espresso-french-filter-coffee-pot-stands-on-scale-brewing-energy-caffeine-drink-steam-comes-out_rdxjlubfhw__8fef53d729cc17117eb4766837a087b2__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591723084318&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=5154337&resolution=180p&searchId=6ba52e69-d7de-4706-8a7c-eee46470a4dd&searchPageId=1121e040-842a-49ea-a8d4-f22ad0ba2ef1#gliadriver=StoryBlocksVideoZH&key=5154337",
                 "source": ""
             },
             "headline": "",
             "title": "\u5916\u934b\u4e00\u676f\u6c34",
-            "keywords": "\u5916\u934b\u4e00\u676f\u6c34.",
-            "focal_x": 1192,
+            "keywords": "ALL:\u5916\u934b\u4e00\u676f\u6c34.|QUERY:\u5916\u934b\u4e00\u676f\u6c34.",
+            "focal_x": 1436,
             "focal_y": 540,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1066,
+            "id": 2585,
             "background": {
-                "id": 3735236,
+                "id": 3741713,
                 "type": "video",
                 "license": "Creative Common",
                 "file": "https://static-gstudio.gliacloud.com/8f8cf1e0cb1e91afb5bbe3a4a15e1ff9797bad6d.mp4",
-                "title": "",
+                "title": "\u5973\u624b\u7684\u7279\u5199\u955c\u5934\u89e6\u53ca\u751f\u957f\u4e2d\u7684\u672a\u6210\u719f\u6c34\u7a3b\u5728\u7a3b\u7530",
                 "duration": 17.284,
                 "mime": "video/mp4",
                 "description": "",
@@ -110,24 +110,24 @@
                 "end": 0.0,
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/7e0167416456602b6ee85d2eac254fc3f3ec4024.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/rnIdPf4Piqlaar11/videoblocks-close-up-of-female-hand-is-touching-a-growing-unripe-rice-at-rice-field_hnf1xhopg__3e142247ddaf142dcb08f0264f57f7d6__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591677174714&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=6662944&resolution=180p&searchId=3c10775b-9b61-49ec-9d83-e7ab528116e4&searchPageId=2b23f68e-5008-47c0-adb8-4722ecea9bf7#gliadriver=StoryBlocksVideoZH&key=6662944",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/rnIdPf4Piqlaar11/videoblocks-close-up-of-female-hand-is-touching-a-growing-unripe-rice-at-rice-field_hnf1xhopg__3e142247ddaf142dcb08f0264f57f7d6__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591723087100&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=6662944&resolution=180p&searchId=c3d8ecaf-c5bc-4fc6-9853-8191b5aa17dc&searchPageId=06fef9f3-40d7-4942-9c3c-7e4c4c0b1326#gliadriver=StoryBlocksVideoZH&key=6662944",
                 "source": ""
             },
             "headline": "",
             "title": "\u5148\u5c0720\u514b\u7684\u7c73\u6d17\u597d\u6ce1\u5728200ml\u7684\u6c34\u5167",
-            "keywords": "\u7c73\u6d17\u597d\u6ce1",
-            "focal_x": 559,
+            "keywords": "ALL:\u7c73\u6d17\u597d\u6ce1|QUERY:\u7c73\u6d17\u597d\u6ce1",
+            "focal_x": 572,
             "focal_y": 540,
             "layout": "QUOTE"
         },
         {
-            "id": 1067,
+            "id": 2586,
             "background": {
-                "id": 3735237,
+                "id": 3741715,
                 "type": "video",
                 "license": "Creative Common",
                 "file": "https://static-gstudio.gliacloud.com/29375573d3b1c0ea311fbd986d319909226e9508.mp4",
-                "title": "",
+                "title": "\u53a8\u5e08\u6253\u5f00\u706b\u7089\uff0c\u70ed\u9505\uff0c\u6cb9\u70b8\u548c\u70e7\u70e4\uff0c\u70e7\u70e4\u98df\u7269\uff0c\u70f9\u996a\u98df\u7269\uff0c\u53a8\u623f\u53a8\u5e08\uff0c\u70f9\u996a\u89c6\u9891",
                 "duration": 9.425,
                 "mime": "video/mp4",
                 "description": "",
@@ -137,24 +137,24 @@
                 "end": 0.0,
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/426fde85fe51e423c7f8b3196ab0f7ce316b525f.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/EPYigw0Ux/videoblocks-the-cook-turns-on-the-stove-hot-pan-friyng-and-grilling-roasted-food-cooking-food-chef-at-the-kitchen-cooking-videos_h5giojfr4b__57fbc86cac75c5f252b64979554feade__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591677178840&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=4562167&resolution=180p&searchId=c3d52d91-1459-442d-86a4-2a996bf47bac&searchPageId=f2b4f9bb-42c5-4bb3-ab5e-01b0650b9a4e#gliadriver=StoryBlocksVideoZH&key=4562167",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/EPYigw0Ux/videoblocks-the-cook-turns-on-the-stove-hot-pan-friyng-and-grilling-roasted-food-cooking-food-chef-at-the-kitchen-cooking-videos_h5giojfr4b__57fbc86cac75c5f252b64979554feade__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591723091921&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=4562167&resolution=180p&searchId=5b307213-45db-4bb7-bc83-60b312c432fe&searchPageId=d950bf65-6271-4d5f-9261-82dc40d05e17#gliadriver=StoryBlocksVideoZH&key=4562167",
                 "source": ""
             },
             "headline": "",
             "title": "\u6309\u4e0b\u96fb\u934b\u7b49\u96fb\u934b\u8df3\u8d77",
-            "keywords": "\u96fb\u934b \u96fb\u934b\u8df3\u8d77",
-            "focal_x": 1212,
+            "keywords": "ALL:\u96fb\u934b \u96fb\u934b\u8df3\u8d77|QUERY:\u96fb\u934b \u96fb\u934b\u8df3\u8d77",
+            "focal_x": 1263,
             "focal_y": 540,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 1068,
+            "id": 2587,
             "background": {
-                "id": 3735238,
+                "id": 3741716,
                 "type": "video",
                 "license": "Creative Common",
                 "file": "https://static-gstudio.gliacloud.com/0d8617a3b2f732d9661336a0a02d87ac517017ba.mp4",
-                "title": "",
+                "title": "\u5728\u91d1\u5c5e\u683c\u6805\u540e\u7684\u5de5\u4e1a\u7231\u597d\u8005\u3002\u5de5\u4e1a\u901a\u98ce\u3002\u98df\u54c1\u5de5\u4e1a\u4e2d\u7684\u7a7a\u6c14\u51b7\u5374\u3002\u529b\u91cf\u5de5\u4e1a\u9002\u5e94\u7684\u7279\u5199\u955c\u5934\u3002\u98ce\u6247\u5439\u51b7\u7a7a\u6c14\u3002\u5de5\u4e1a\u7a7a\u8c03\u7cfb\u7edf\u3002\u5de5\u4e1a\u8bbe\u5907",
                 "duration": 10.24,
                 "mime": "video/mp4",
                 "description": "",
@@ -164,15 +164,15 @@
                 "end": 0.0,
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/134d5e703b7042d22d458544a01f5d82d496a04d.jpg",
-                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/Vd3bj2jPe/industrial-fan-behind-metal-grille-industry-ventilation-air-cooling-at-food-industry-power-industrial-conditioning-closeup-fan-blow-cool-air-industrial-air-conditioner-system-industrial-equipment_nxl88n6pe__SB_PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591677184219&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=1259753&resolution=180p&searchId=2967eb7e-94a5-4577-99c8-a91813f93799&searchPageId=5aefc102-e01b-4137-bae3-2e69d95db536#gliadriver=StoryBlocksVideoZH&key=1259753",
+                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/Vd3bj2jPe/industrial-fan-behind-metal-grille-industry-ventilation-air-cooling-at-food-industry-power-industrial-conditioning-closeup-fan-blow-cool-air-industrial-air-conditioner-system-industrial-equipment_nxl88n6pe__SB_PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591723096290&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=1259753&resolution=180p&searchId=4ee1724e-b660-4065-9fd5-89e522599c50&searchPageId=9b6978e1-099c-471b-b9f5-3b6e6d8e8ff6#gliadriver=StoryBlocksVideoZH&key=1259753",
                 "source": ""
             },
             "headline": "",
             "title": "\u7528\u98df\u7269\u8abf\u7406\u6a5f\u628a \u7389\u7c73\u7ca5\u6253\u6210\u6ce5",
-            "keywords": "\u7389\u7c73\u7ca5 \u98df\u7269\u8abf\u7406\u6a5f",
-            "focal_x": 693,
+            "keywords": "ALL:\u7389\u7c73\u7ca5 \u98df\u7269\u8abf\u7406\u6a5f|QUERY:\u7389\u7c73\u7ca5 \u98df\u7269\u8abf\u7406\u6a5f",
+            "focal_x": 1494,
             "focal_y": 540,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         }
     ]
 }

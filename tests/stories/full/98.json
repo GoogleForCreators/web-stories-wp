@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1025,
+            "id": 2543,
             "background": {
-                "id": 3726462,
+                "id": 3741687,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/5b01296958c19c6d3e9ac7e2e4bcfef8d352d4a2.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/5b01296958c19c6d3e9ac7e2e4bcfef8d352d4a2.jpg",
                 "url": "https://fs1.shop123.com.tw/a000072/upload/article/1591605824813b573335422.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "men's uno Taiwan-\u75ab\u60c5\u5fc3\u60c5\u4e0d\u4f4e\u843d\uff01\u65e5\u672c\u300cVber Macho\u300d\u808c\u8089\u7537\u5916\u9001\u4e0a\u9580",
+            "headline": "men's uno Taiwan-\u75ab\u60c5\u5fc3\u60c5\u4e0d\u4f4e\u843d\uff01\u65e5\u672c\u300cVber Macho\u300d\u808c\u8089\u7537\u5916\u9001\u4e0a\u9580",
+            "title": "",
             "keywords": null,
-            "focal_x": 626,
+            "focal_x": 512,
             "focal_y": 314,
             "layout": "COVER"
         },
         {
-            "id": 1026,
+            "id": 2544,
             "background": {
-                "id": 3725338,
+                "id": 3740469,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b1e9798917903de6df6051f5b20859d4ea4e8d55.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b1e9798917903de6df6051f5b20859d4ea4e8d55.jpg",
                 "url": "http://hk.mensuno.asia/sites/default/shared_files/styles/wysiwyg_inline_image/public/sites/default/files/main_01_02.jpg?itok=6nGBybce",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "ASSISTANT DIGITAL CREATIVE CONTENT MANAGER",
             "keywords": null,
             "focal_x": 420,
-            "focal_y": 564,
+            "focal_y": 404,
             "layout": "QUOTE"
         },
         {
-            "id": 1027,
+            "id": 2545,
             "background": {
-                "id": 3725338,
+                "id": 3740469,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/b1e9798917903de6df6051f5b20859d4ea4e8d55.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/b1e9798917903de6df6051f5b20859d4ea4e8d55.jpg",
                 "url": "http://hk.mensuno.asia/sites/default/shared_files/styles/wysiwyg_inline_image/public/sites/default/files/main_01_02.jpg?itok=6nGBybce",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u540d\u53e4\u5c4b\u6709\u959370\u5e74\u8001\u92ea\u58fd\u53f8\u5e97\u300c\u4eca\u58fd\u53f8\u300d\u793e\u9577\uff0c\u70ba\u4e86\u5728\u75ab\u60c5\u4e0b\u63d0\u9ad8\u9910\u5ef3\u7af6\u722d\uff0c\u65bc\u662f\u5c31\u63a8\u51fa\u4e86\u808c\u8089\u7537\u7684\u5916\u9001\u670d\u52d9\u300cVber Macho\u300d\uff0c\u7531\u65bc\u793e\u9577\u672c\u8eab\u66fe\u53c3\u52a0\u5065\u7f8e\u5927\u8cfd\uff0c\u662f\u4e00\u4f4d\u5065\u8eab\u8ff7\uff0c\u65bc\u662f\u5c31\u60f3\u5c07\u808c\u8089\u8ddf\u5916\u8ce3\u52a0\u8d77\u4f86\u3002",
             "keywords": null,
             "focal_x": 420,
-            "focal_y": 564,
-            "layout": "QUOTE"
+            "focal_y": 404,
+            "layout": "NORMAL"
         },
         {
-            "id": 1028,
+            "id": 2546,
             "background": {
-                "id": 3725339,
+                "id": 3740470,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/6f7225a580ba5b6b162cac9fc40982bbfbc86012.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/6f7225a580ba5b6b162cac9fc40982bbfbc86012.jpg",
                 "url": "http://hk.mensuno.asia/sites/default/shared_files/styles/wysiwyg_inline_image/public/sites/default/files/5b1d0407817bd3ef273dda2395839efb.jpg?itok=MBrUimGu",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u793e\u9577\u627e\u4e86\u5e7e\u5408\u5728\u5065\u7f8e\u5927\u8cfd\u4e0a\u8a8d\u8b58\u7684\u670b\u670b\uff0c\u5305\u62ec\u81ea\u5df1\u300cVber Macho\u300d\u4e00\u5171\u67096\u4f4d\u300c\u808c\u8089\u5916\u9001\u54e1\u300d\u4f86\u63d0\u4f9b\u670d\u52d9\uff0c\u4ed6\u5011\u9664\u4e86\u9001\u5916\u8ce3\u4e0a\u9580\u4e4b\u5916\uff0c\u9867\u5ba2\u66f4\u53ef\u8981\u6c42\u4ed6\u5011\u64fa\u51fa\u4f60\u60f3\u770b\u7684\u808c\u8089POSE\uff0c\u66f4\u53ef\u8207\u4ed6\u5011\u4e00\u540c\u5408\u7167\uff01",
             "keywords": null,
-            "focal_x": 274,
+            "focal_x": 420,
             "focal_y": 266,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 1029,
+            "id": 2547,
             "background": {
-                "id": 3725340,
+                "id": 3740471,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3619ac01112038ea6908e6c42eda2a8d82d2323c.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3619ac01112038ea6908e6c42eda2a8d82d2323c.jpg",
                 "url": "http://hk.mensuno.asia/sites/default/shared_files/styles/wysiwyg_inline_image/public/sites/default/files/main_01_08.jpg?itok=FRJc9-La",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "PHOTO / delivery-nagoya.com",
             "keywords": null,
             "focal_x": 420,
-            "focal_y": 444,
-            "layout": "FOCUS"
+            "focal_y": 503,
+            "layout": "QUOTE"
         },
         {
-            "id": 1030,
+            "id": 2548,
             "background": {
-                "id": 3725340,
+                "id": 3740471,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3619ac01112038ea6908e6c42eda2a8d82d2323c.jpg",
@@ -155,14 +155,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3619ac01112038ea6908e6c42eda2a8d82d2323c.jpg",
                 "url": "http://hk.mensuno.asia/sites/default/shared_files/styles/wysiwyg_inline_image/public/sites/default/files/main_01_08.jpg?itok=FRJc9-La",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u7576\u7136\u9019\u500b\u670d\u52d9\u5f15\u767c\u4e0d\u5c11\u7db2\u53cb\u7684\u71b1\u70c8\u8a0e\u8ad6\uff0c\u66f4\u6709\u4eba\u8868\u793a\u53ef\u80fd\u6703\u6210\u70baAV\u6210\u4eba\u7247\u7684\u60c5\u7bc0\u5462\uff01",
             "keywords": null,
             "focal_x": 420,
-            "focal_y": 444,
-            "layout": "NORMAL"
+            "focal_y": 503,
+            "layout": "QUOTE"
         }
     ]
 }

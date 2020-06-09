@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 508,
+            "id": 2146,
             "background": {
-                "id": 3726225,
+                "id": 3741517,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/5e8f34b85a523fb7b5e90a5444efe680471ee245.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/5e8f34b85a523fb7b5e90a5444efe680471ee245.jpg",
                 "url": "https://eznewlife.com/focus_photos/54801.jpg?tt=20200608_163249",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u300c\u771f\u4e0d\u61c2\u516c\u5ec1\u9019\u7a2e\u639b\u52fe\u5e79\u561b\u7528\u7684\uff1f\u300d\u4ed6\u767c\u6587\u6028\u639b\u5305\u5305\u4e00\u76f4\u6389\uff0c\u6839\u672c\u4e0d\u597d\u7528\uff01\u5c08\u696d\u7db2\u53cb\u4e00\u770b\uff1a\u9019\u6839\u672c\u4e0d\u662f\u639b\u6771\u897f\u7684\u554a\uff01",
+            "headline": "\u300c\u771f\u4e0d\u61c2\u516c\u5ec1\u9019\u7a2e\u639b\u52fe\u5e79\u561b\u7528\u7684\uff1f\u300d\u4ed6\u767c\u6587\u6028\u639b\u5305\u5305\u4e00\u76f4\u6389\uff0c\u6839\u672c\u4e0d\u597d\u7528\uff01\u5c08\u696d\u7db2\u53cb\u4e00\u770b\uff1a\u9019\u6839\u672c\u4e0d\u662f\u639b\u6771\u897f\u7684\u554a\uff01",
+            "title": "",
             "keywords": null,
-            "focal_x": 282,
+            "focal_x": 268,
             "focal_y": 250,
             "layout": "COVER"
         },
         {
-            "id": 509,
+            "id": 2147,
             "background": {
-                "id": 3724794,
+                "id": 3739981,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/6c42cb816887f656e3243b8db9ef19a31970b267.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/6c42cb816887f656e3243b8db9ef19a31970b267.jpg",
                 "url": "https://eznewlife.com/uploads/202006/08/1625_IYi7x.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5f88\u591a\u4eba\u5728\u5916\u9762\u901b\u8857\u3001\u4e0a\u73ed\u6216\u662f\u4e0a\u8ab2\uff0c\u90fd\u96e3\u514d\u6703\u6709\u300c\u88ab\u5927\u81ea\u7136\u547c\u559a\u300d\u7684\u6642\u5019\uff0c\u5c31\u662f\u60f3\u8981\u4e0a\u500b\u5ec1\u6240\uff0c\u9019\u6642\u5019\u53c8\u4e0d\u5728\u5bb6\u88e1\uff0c\u56e0\u6b64\u7121\u8ad6\u662f\u9910\u5ef3\u6216\u662f\u6377\u904b\u3001\u516c\u5712\u7684\u516c\u5171\u5ec1\u6240\uff0c\u4e0d\u904e\u65b9\u4fbf\u6b78\u65b9\u4fbf\uff0c\u6709\u6c92\u6709\u4eba\u767c\u73fe\uff0c\u6bcf\u4e00\u9593\u5ec1\u6240\u7684\u9580\u4e0a\u9762\uff0c\u90fd\u6703\u6709\u4e00\u7a2e\u300c\u5169\u6bb5\u5f0f\u639b\u52fe\u300d\uff0c\u5f88\u591a\u4eba\u90fd\u89ba\u5f97\uff0c\u9019\u61c9\u8a72\u662f\u62ff\u4f86\u639b\u5305\u5305\u3001\u639b\u8863\u670d\u8932\u5b50\u7684\uff0c\u4e0d\u904e\u5be6\u969b\u8d70\u8a2a\u4e86\u88fd\u9020\u516c\u53f8\u5f8c\uff0c\u624d\u767c\u73fe\u6839\u672c\u4e0d\u662f\uff01",
             "keywords": null,
-            "focal_x": 240,
+            "focal_x": 285,
             "focal_y": 208,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 510,
+            "id": 2148,
             "background": {
-                "id": 3724795,
+                "id": 3739982,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/a860618966576daecfc38506a38ce88663110e9f.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/a860618966576daecfc38506a38ce88663110e9f.jpg",
                 "url": "https://eznewlife.com/uploads/202006/08/1625_mbh21.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u64da\u300a\u7db2\u8def\u6eab\u5ea6\u8a08\u300b\u5831\u5c0e\uff0c\u5f88\u591a\u4eba\u5728\u516c\u7528\u5ec1\u6240\u90fd\u6703\u767c\u73fe\uff0c\u9580\u4e0a\u9762\u6709\u4e00\u500b\u300c\u5169\u6bb5\u5f0f\u639b\u52fe\u300d\uff0c\u5176\u4e2d\u4e00\u500b\u6709\u500b\u5012\u9264\uff0c\u53ef\u4ee5\u7262\u7262\u5730\u628a\u6771\u897f\u6293\u597d\uff0c\u4f46\u662f\u4e0a\u9762\u53c8\u5ef6\u4f38\u51fa\u53e6\u5916\u4e00\u6839\u9577\u67f1\uff0c\u96d6\u7136\u8aaa\u4e5f\u662f\u53ef\u4ee5\u639b\u6771\u897f\uff0c\u53ef\u662f\u6709\u6642\u5019\u56e0\u70ba\u592a\u904e\u5e73\u6ed1\uff0c\u9084\u662f\u6703\u6389\u4e0b\u4f86\uff0c\u56e0\u6b64\u6709\u4e0d\u5c11\u6c11\u773e\u90fd\u57cb\u6028\uff1a\u300c\u597d\u50cf\u6c92\u9019\u9ebc\u597d\u7528\u8036\uff01\u300d",
             "keywords": null,
-            "focal_x": 333,
+            "focal_x": 470,
             "focal_y": 325,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         },
         {
-            "id": 511,
+            "id": 2149,
             "background": {
-                "id": 3724794,
+                "id": 3739981,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/6c42cb816887f656e3243b8db9ef19a31970b267.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/6c42cb816887f656e3243b8db9ef19a31970b267.jpg",
                 "url": "https://eznewlife.com/uploads/202006/08/1625_IYi7x.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u3001\u300c\u9019\u7a2e\u5169\u6bb5\u5f0f\u639b\u52fe\u8d85\u96e3\u7528\uff0c\u4e0d\u61c2\u8a2d\u8a08\u4f86\u5e79\u9ebb\u7684\uff01\u300d",
             "keywords": null,
-            "focal_x": 240,
+            "focal_x": 285,
             "focal_y": 208,
             "layout": "QUOTE"
         },
         {
-            "id": 512,
+            "id": 2150,
             "background": {
-                "id": 3724796,
+                "id": 3739983,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3fa3c7011c5d7c1a1486edb22dd562e5d3bc5614.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3fa3c7011c5d7c1a1486edb22dd562e5d3bc5614.jpg",
                 "url": "https://eznewlife.com/uploads/202006/08/1625_yT9z9.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e0d\u904e\u5c31\u6709\u7db2\u53cb\u6307\u51fa\uff0c\u5176\u5be6\u9019\u500b\u639b\u52fe\uff0c\u771f\u6b63\u7684\u7528\u610f\u4e26\u4e0d\u662f\u300c\u62ff\u4f86\u639b\u7684\u300d\uff0c\u61c9\u8a72\u662f\u70ba\u4e86\u300c\u9632\u6b62\u7aca\u76dc\u300d\u624d\u6703\u505a\u7684\u8a2d\u8a08\uff0c\u9019\u6a23\u7684\u8aaa\u6cd5\u5728\u7db2\u8def\u4e0a\u4e5f\u5f15\u8d77\u5f88\u591a\u8a0e\u8ad6\uff0c\u5c31\u6709\u5a92\u9ad4\u5be6\u969b\u8d70\u8a2a\u8a2d\u8a08\u516c\u53f8\uff0c\u7d50\u679c\u8a2a\u67e5\u51fa\u4f86\u7684\u771f\u76f8\uff0c\u7adf\u7136\u662f\u5169\u8005\u7686\u975e\uff01",
             "keywords": null,
-            "focal_x": 450,
+            "focal_x": 445,
             "focal_y": 266,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 513,
+            "id": 2151,
             "background": {
-                "id": 3724796,
+                "id": 3739983,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3fa3c7011c5d7c1a1486edb22dd562e5d3bc5614.jpg",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3fa3c7011c5d7c1a1486edb22dd562e5d3bc5614.jpg",
                 "url": "https://eznewlife.com/uploads/202006/08/1625_yT9z9.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u65e5\u672c\u7684\u88fd\u9020\u5546\u900f\u9732\uff0c\u5176\u5be6\u9019\u7a2e\u51f8\u51fa\u4f86\u7684\u687f\u5b50\uff0c\u662f\u4f5c\u70ba\u300c\u9580\u64cb\u300d\u4f7f\u7528\uff0c\u5c24\u5176\u524d\u9762\u4e5f\u653e\u4e86\u7de9\u885d\u7528\u7684\u9ed1\u8272\u8edf\u588a\uff0c\u5c31\u53ef\u4ee5\u907f\u514d\u5ec1\u6240\u9580\u88ab\u6233\u51fa\u4e00\u500b\u6d1e\uff0c\u4e0d\u904e\u53e6\u5916\u4e00\u9593\u88fd\u9020\u5546\u5247\u89e3\u91cb\uff0c\u4e00\u958b\u59cb\u7684\u639b\u52fe\uff0c\u5176\u5be6\u5c31\u662f\u4e00\u500b\u687f\u5b50\u7684\u6a23\u5b50\uff0c\u517c\u9867\u300c\u9580\u64cb\u300d\u8ddf\u300c\u639b\u52fe\u300d\u7684\u529f\u80fd\uff0c\u4e0d\u904e\u56e0\u70ba\u7576\u6642\u7aca\u76dc\u7387\u5927\u589e\uff0c\u5f88\u591a\u4e0d\u8096\u4eba\u58eb\uff0c\u7d93\u904e\u4e4b\u5f8c\uff0c\u5c31\u9806\u624b\u628a\u639b\u8457\u7684\u5305\u5305\u62ce\u8d70\uff0c\u5f15\u8d77\u5f88\u591a\u56f0\u64fe\uff0c\u56e0\u6b64\u624d\u591a\u8a2d\u8a08\u4e00\u500b\u639b\u52fe\uff0c\u88ab\u64cb\u5728\u300c\u9580\u64cb\u4e0b\u65b9\u300d\uff0c\u85c9\u6b64\u591a\u4e86\u9632\u76dc\u529f\u80fd\uff0c\u56e0\u6b64\u624d\u6709\u300c\u9632\u76dc\u687f\u300d\u4e00\u8aaa\u3002",
             "keywords": null,
-            "focal_x": 450,
+            "focal_x": 445,
             "focal_y": 266,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 514,
+            "id": 2152,
             "background": {
-                "id": 3724797,
+                "id": 3739984,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/ad3602c9e60750843f26b8b7958afc5cbb7a6b1a.jpg",
@@ -182,12 +182,12 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/ad3602c9e60750843f26b8b7958afc5cbb7a6b1a.jpg",
                 "url": "https://eznewlife.com/uploads/202006/08/1625_qZynn.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u539f\u4f86\u662f\u9580\u64cb\u554a\uff0c\u5c0f\u7de8\u4ee5\u524d\u9084\u89ba\u5f97\uff0c\u9019\u7a2e\u639b\u52fe\u600e\u9ebc\u9019\u9ebc\u96e3\u7528\u554a\uff0c\u5176\u5be6\u4e00\u76f4\u90fd\u662f\u8aa4\u6703\u554a\uff01",
             "keywords": null,
-            "focal_x": 286,
+            "focal_x": 255,
             "focal_y": 198,
             "layout": "QUOTE"
         }

@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1044,
+            "id": 2563,
             "background": {
-                "id": 3726465,
+                "id": 3741698,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/46168999ebf79753a6fe40796c92529d72e509f1.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/46168999ebf79753a6fe40796c92529d72e509f1.jpg",
                 "url": "https://www.mook.com.tw/images/upload/article/24024/A24024_1591601184_1.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u53e4\u57ce\u5efa\u7bc9\u73a9\u8f49\u4e2d\u6b63\uff01\u4e00\u65e5\u6f2b\u904a\u5c0f\u93ae\u8d85\u6709\u8da3",
+            "headline": "\u53e4\u57ce\u5efa\u7bc9\u73a9\u8f49\u4e2d\u6b63\uff01\u4e00\u65e5\u6f2b\u904a\u5c0f\u93ae\u8d85\u6709\u8da3",
+            "title": "",
             "keywords": null,
-            "focal_x": 376,
+            "focal_x": 480,
             "focal_y": 200,
             "layout": "COVER"
         },
         {
-            "id": 1045,
+            "id": 2565,
             "background": {
-                "id": 3725351,
+                "id": 3740483,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/46168999ebf79753a6fe40796c92529d72e509f1.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/46168999ebf79753a6fe40796c92529d72e509f1.jpg",
                 "url": "https://mook-aws.hmgcdn.com/images/upload/article/24024/A24024_1591601184_1.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4e2d\u6b63\u4f4d\u65bc\u53f0\u5317\u4e2d\u5fc3\u5730\u5e36\uff0c\u5883\u5167\u6709\u8a31\u591a\u58ef\u89c0\u7684\u653f\u5e9c\u6a5f\u95dc\uff0c\u7686\u662f\u64c1\u6709\u60a0\u4e45\u7684\u6b77\u53f2\u53e4\u8e5f\u5efa\u7bc9\uff0c\u4e14\u570b\u5bb6\u97f3\u6a02\u5ef3\u3001\u6232\u5287\u9662\u4ee5\u53ca\u5404\u5f0f\u7d00\u5ff5\u516c\u5712\u3001\u7d00\u5ff5\u5834\u9928\u7686\u5ea7\u843d\u65bc\u6b64\uff0c\u627e\u500b\u6642\u9593\u5e36\u8457\u5bb6\u4eba\u5230\u516b\u5fb7\u8d70\u8d70\u5427\uff01",
             "keywords": null,
-            "focal_x": 376,
+            "focal_x": 480,
             "focal_y": 200,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 1046,
+            "id": 2568,
             "background": {
-                "id": 3725352,
+                "id": 3740484,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/646b21b4566f5cf9a07f44076efb154a5dd88eb1.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/646b21b4566f5cf9a07f44076efb154a5dd88eb1.jpg",
                 "url": "https://mook-aws.hmgcdn.com/images/upload/article/24024/A24024_1591601184_2.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u7d00\u5dde\u5eb5\u6587\u5b78\u68ee\u6797\u7d50\u5408\u57ce\u5357\u6587\u5b78\u516c\u5712\uff0c\u63d0\u4f9b\u8b80\u8005\u8212\u9069\u5b9c\u4eba\u7684\u7a7a\u9593\uff0c\u8b93\u6587\u53cb\u5011\u53ef\u4ee5\u5728\u5ba4\u5167\u3001\u6236\u5916\u95b1\u8b80\u3001\u5beb\u4f5c\u3001\u559d\u8336\u3001\u555c\u5496\u5561\u3001\u8207\u540c\u597d\u8ac7\u5929\u3002",
             "keywords": null,
-            "focal_x": 640,
+            "focal_x": 780,
             "focal_y": 320,
             "layout": "NORMAL"
         },
         {
-            "id": 1047,
+            "id": 2570,
             "background": {
-                "id": 3725352,
+                "id": 3740484,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/646b21b4566f5cf9a07f44076efb154a5dd88eb1.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/646b21b4566f5cf9a07f44076efb154a5dd88eb1.jpg",
                 "url": "https://mook-aws.hmgcdn.com/images/upload/article/24024/A24024_1591601184_2.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u96b1\u8eab\u5728\u81fa\u5317\u5e02\u89d2\u843d\u7684\u5bf6\u85cf\u5dd6\uff0c\u5982\u540c\u57ce\u5e02\u4e2d\u7684\u4e00\u76de\u5149\uff0c\u6307\u5f15\u5608\u96dc\u90fd\u5e02\u4e2d\u7684\u4eba\u5011\u8ffd\u5c0b\u672a\u66fe\u907a\u5fd8\u7684\u5922\u60f3\u8207\u5bf6\u85cf\u3002",
             "keywords": null,
-            "focal_x": 640,
+            "focal_x": 780,
             "focal_y": 320,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1048,
+            "id": 2572,
             "background": {
-                "id": 3725353,
+                "id": 3740485,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cbe9a6ce234393153a2a7e7f4c996a2497586c0d.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cbe9a6ce234393153a2a7e7f4c996a2497586c0d.jpg",
                 "url": "https://mook-aws.hmgcdn.com/images/upload/article/24024/A24024_1591601184_3.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u975c\u8b10\u7684\u7a7a\u9593\u80fd\u6b23\u8cde\u65b0\u5e97\u6eaa\u7684\u591c\u8272\uff0c\u5927\u7247\u7684\u7da0\u5730\u690d\u683d\u8b93\u4eba\u5fc3\u66e0\u795e\u6021\uff0c\u800c\u9032\u99d0\u7684\u85dd\u8853\u5bb6\u5011\u70ba\u7a7a\u9593\u611f\u589e\u6dfb\u4e86\u7279\u5225\u7684\u6c23\u606f\uff0c\u6709\u7a2e\u907a\u4e16\u7368\u7acb\u4e4b\u611f\u3002",
             "keywords": null,
-            "focal_x": 360,
+            "focal_x": 320,
             "focal_y": 200,
             "layout": "FOCUS"
         },
         {
-            "id": 1049,
+            "id": 2574,
             "background": {
-                "id": 3725354,
+                "id": 3740486,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8d5159ef5cd9c58eb09c4f779bfe7df0bb3e57f1.jpg",
@@ -155,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8d5159ef5cd9c58eb09c4f779bfe7df0bb3e57f1.jpg",
                 "url": "https://mook-aws.hmgcdn.com/images/upload/article/24024/A24024_1591601184_4.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5169\u5ef3\u9662\u70ba\u53f0\u7063\u9996\u5ea7\u570b\u5bb6\u7d1a\u5225\u7684\u6587\u5316\u5712\u5340\uff0c\u65c5\u4eba\u5011\u4e0d\u50c5\u53ef\u4ee5\u5728\u56db\u5ea7\u8868\u6f14\u5ef3\u8046\u8cde\u4e16\u754c\u6700\u9802\u5c16\u7684\u8868\u6f14\uff0c\u9084\u53ef\u5f9c\u904a\u5728\u6587\u5316\u85dd\u5eca\u53ca\u8868\u6f14\u85dd\u8853\u5716\u66f8\u9928\uff0c\u9ad4\u9a57\u97f3\u6a02\u3001\u6232\u5287\u3001\u821e\u8e48\u3002",
             "keywords": null,
-            "focal_x": 335,
+            "focal_x": 352,
             "focal_y": 199,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 1050,
+            "id": 2577,
             "background": {
-                "id": 3725353,
+                "id": 3740485,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cbe9a6ce234393153a2a7e7f4c996a2497586c0d.jpg",
@@ -182,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cbe9a6ce234393153a2a7e7f4c996a2497586c0d.jpg",
                 "url": "https://mook-aws.hmgcdn.com/images/upload/article/24024/A24024_1591601184_3.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5169\u5ef3\u9662\u4e5f\u63d0\u4f9b\u5c0e\u89bd\u6d3b\u52d5\uff0c\u900f\u904e\u5c08\u4eba\u89e3\u8aaa\u63ed\u958b\u5169\u5ef3\u9662\u795e\u79d8\u7684\u9762\u7d17\uff0c\u6b23\u8cde\u7f8e\u9e97\u7684\u76f4\u7acb\u5f0f\u82b1\u5712\u3002",
             "keywords": null,
-            "focal_x": 360,
+            "focal_x": 320,
             "focal_y": 200,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 1051,
+            "id": 2579,
             "background": {
-                "id": 3725355,
+                "id": 3740487,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/7c6d333967d1ac4944f094712cf90b928903c9f0.jpg",
@@ -209,19 +209,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/7c6d333967d1ac4944f094712cf90b928903c9f0.jpg",
                 "url": "https://mook-aws.hmgcdn.com/images/upload/article/24024/A24024_1591601184_5.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u9928\u5167\u6709\u4e8c\u4e8c\u516b\u4e8b\u4ef6\u5e38\u614b\u5c55\u5340\u3001\u7279\u5c55\u5340\u3001\u85dd\u6587\u7a7a\u9593\u53ca\u591a\u529f\u80fd\u5c55\u6f14\u5ef3\uff0c\u9664\u6b77\u53f2\u6559\u80b2\u76f8\u95dc\u5c55\u793a\u5916\uff0c\u4ea6\u8fa6\u7406\u6c11\u4e3b\u4eba\u6b0a\u76f8\u95dc\u6d3b\u52d5\uff0c\u85c9\u4ee5\u4ecb\u7d39\u4e8c\u4e8c\u516b\u4e8b\u4ef6\u8207\u8fd1\u4ee3\u6c11\u4e3b\u9032\u7a0b\uff0c\u4e26\u63d0\u4f9b\u4eba\u6b0a\u6559\u80b2\u7684\u5b78\u7fd2\u7ba1\u9053\u3002",
             "keywords": null,
-            "focal_x": 392,
+            "focal_x": 448,
             "focal_y": 200,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 1052,
+            "id": 2580,
             "background": {
-                "id": 3725356,
+                "id": 3740488,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/9f32dff9f29fc0795537842db335aed5a516c0d1.jpg",
@@ -236,12 +236,12 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/9f32dff9f29fc0795537842db335aed5a516c0d1.jpg",
                 "url": "https://mook-aws.hmgcdn.com/images/upload/article/24024/A24024_1591601184_6.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u81ea\u4f86\u6c34\u535a\u7269\u9928\u8fc4\u4eca\u5df2\u6709\u767e\u5e74\u6b77\u53f2\uff0c\u5176\u5efa\u7bc9\u6700\u5927\u7279\u8272\u662f\u63a1\u65b0\u53e4\u5178\u4e3b\u7fa9\u70ba\u4e3b\u8ef8\u7684\u5df4\u6d1b\u514b\u5f0f\u5efa\u7bc9\u98a8\u683c\uff0c\u5167\u90e8\u7684\u9673\u8a2d\u66f4\u5177\u6709\u6b77\u53f2\u610f\u7fa9\uff0c\u6bcf\u4e00\u90e8\u6a5f\u7d44\u8a2d\u5099\u7686\u4ee3\u8868\u81ea\u4f86\u6c34\u7684\u6f14\u9032\u6b77\u7a0b\uff0c\u860a\u542b\u8457\u8c50\u5bcc\u4eba\u6587\u50f9\u503c\u3002",
             "keywords": null,
-            "focal_x": 280,
+            "focal_x": 320,
             "focal_y": 200,
             "layout": "NORMAL"
         }

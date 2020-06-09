@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1169,
+            "id": 2710,
             "background": {
-                "id": 3726481,
+                "id": 3741761,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/702eee2beffc9cd6f273691641c9aac2843be190.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/702eee2beffc9cd6f273691641c9aac2843be190.jpg",
                 "url": "http://s2.omgnews.cc/imgs/thumbnail/20180424/681251524550734.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u6e05\u6f54\u5de5\u4e0a\u53f0\u300c\u60f3\u8868\u6f14\u9ea5\u53ef\u5091\u514b\u68ee\u300d\u88ab\u5927\u5bb6\u770b\u4e0d\u8d77\uff01\u63a5\u4e0b\u4f86\u300c\u4ed6\u4e00\u812b\u6389\u5e3d\u5b50\u300d\u7cbe\u5f69\u7d50\u5c3e\u5168\u5834\u6cb8\u9a30",
+            "headline": "\u6e05\u6f54\u5de5\u4e0a\u53f0\u300c\u60f3\u8868\u6f14\u9ea5\u53ef\u5091\u514b\u68ee\u300d\u88ab\u5927\u5bb6\u770b\u4e0d\u8d77\uff01\u63a5\u4e0b\u4f86\u300c\u4ed6\u4e00\u812b\u6389\u5e3d\u5b50\u300d\u7cbe\u5f69\u7d50\u5c3e\u5168\u5834\u6cb8\u9a30",
+            "title": "",
             "keywords": null,
-            "focal_x": 208,
+            "focal_x": 400,
             "focal_y": 208,
             "layout": "COVER"
         },
         {
-            "id": 1170,
+            "id": 2711,
             "background": {
-                "id": 3725467,
+                "id": 3740609,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f7113bd175a6a4b71f411a4b5693eeba8b9340f6.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f7113bd175a6a4b71f411a4b5693eeba8b9340f6.jpg",
                 "url": "http://s2.omgnews.cc/imgs/201804/24/2/15245498497886.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6709\u4e00\u4f4d\u6e05\u6f54\u5de5\u5230\u4e2d\u570b\u4e00\u7bc0\u76ee\u6311\u6230\u300c\u9ea5\u53ef\u5091\u514b\u68ee\u8868\u6f14\u300d\uff0c\u7531\u65bc\u4ed6\u7684\u7a7f\u8457\u7070\u8272\u6e05\u6f54\u5de5\u5916\u5957\uff0c\u7576\u6642\u8b93\u8a31\u591a\u89c0\u773e\u751a\u81f3\u8a55\u5be9\uff0c\u5c0d\u4ed6\u4e0d\u62b1\u6709\u4efb\u4f55\u671f\u5f85\uff0c\u591a\u6578\u4eba\u90fd\u5c0d\u4ed6\u4eba\u6709\u8457\u5916\u8c8c\u6216\u5de5\u4f5c\u82db\u677f\u5370\u8c61\uff0c\u9019\u4e00\u5f71\u7247\u4e5f\u518d\u5ea6\u5f15\u8d77\u5927\u5bb6\u8a0e\u8ad6\u300c\u9ad8\u624b\u5728\u6c11\u9593\u300d\u9019\u53e5\u8a71\uff01",
             "keywords": null,
-            "focal_x": 151,
+            "focal_x": 290,
             "focal_y": 151,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 1171,
+            "id": 2712,
             "background": {
-                "id": 3725467,
+                "id": 3740609,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f7113bd175a6a4b71f411a4b5693eeba8b9340f6.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f7113bd175a6a4b71f411a4b5693eeba8b9340f6.jpg",
                 "url": "http://s2.omgnews.cc/imgs/201804/24/2/15245498497886.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5716\u7247\u4f86\u6e90\uff1a\u79d2\u62cd",
             "keywords": null,
-            "focal_x": 151,
+            "focal_x": 290,
             "focal_y": 151,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 1172,
+            "id": 2713,
             "background": {
-                "id": 3725468,
+                "id": 3740610,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/a898f25231cdb9fab403c5132fa1a24c41347bc2.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/a898f25231cdb9fab403c5132fa1a24c41347bc2.jpg",
                 "url": "http://s2.omgnews.cc/imgs/201804/24/2/15245499364861.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5f71\u7247\u4e2d\u53ef\u4ee5\u770b\u5230\uff0c\u6e05\u6f54\u5de5\u81c9\u4e0a\u76e1\u662f\u9766\u8146\u7b11\u5bb9\uff0c\u50c5\u77ed\u77ed\u8aaa\u4e00\u53e5\u300c\u6211\u662f\u4f86\u8868\u6f14\u4e00\u6bb5\u821e\u8e48\u7684\u300d\uff0c\u8a55\u5be9\u4e5f\u6c92\u592a\u5927\u53cd\u61c9\u76f4\u5207\u8acb\u4ed6\u958b\u59cb\uff0c\u97f3\u6a02\u4e00\u4e0b\u4ed6\u5148\u662f\u812b\u6389\u5916\u5957\uff0c\u66f4\u6234\u4e0a\u4e86\u4e00\u9802\u9ea5\u53ef\u5091\u514b\u68ee\u7684\u6a19\u8a8c\u6027\u9ed1\u5e3d\u5b50\uff0c\u4e0b\u4e00\u79d2\u4ed6\u7a81\u7136\u8f49\u8eab\uff0c\u958b\u59cb\u9748\u6d3b\u7684\u8df3\u8d77\u821e\u4f86\uff0c\u6bcf\u4e00\u500b\u52d5\u4f5c\u5e7e\u4e4e\u5b8c\u7f8e\u5230\u4f4d\uff01",
             "keywords": null,
-            "focal_x": 146,
+            "focal_x": 282,
             "focal_y": 146,
-            "layout": "QUOTE"
+            "layout": "FOCUS"
         },
         {
-            "id": 1173,
+            "id": 2714,
             "background": {
-                "id": 3725468,
+                "id": 3740610,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/a898f25231cdb9fab403c5132fa1a24c41347bc2.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/a898f25231cdb9fab403c5132fa1a24c41347bc2.jpg",
                 "url": "http://s2.omgnews.cc/imgs/201804/24/2/15245499364861.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5716\u7247\u4f86\u6e90\uff1a\u79d2\u62cd",
             "keywords": null,
-            "focal_x": 146,
+            "focal_x": 282,
             "focal_y": 146,
             "layout": "QUOTE"
         },
         {
-            "id": 1174,
+            "id": 2715,
             "background": {
-                "id": 3725469,
+                "id": 3740611,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/8ca568a567042a895a55181bc5ec90ba2bc51844.jpg",
@@ -155,24 +155,24 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/8ca568a567042a895a55181bc5ec90ba2bc51844.jpg",
                 "url": "http://s2.omgnews.cc/imgs/201804/24/2/15245499937761.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4ed6\u7684\u8868\u6f14\u7acb\u523b\u5f15\u8d77\u8a55\u5be9\u9a5a\u547c\uff0c\u6bcf\u500b\u4eba\u90fd\u775c\u5927\u96d9\u773c\u6440\u8457\u5634\u5df4\uff0c\u4e0d\u6562\u76f8\u4fe1\u773c\u524d\u7684\u6e05\u6f54\u5de5\u5927\u53d4\u821e\u6280\u7adf\u7136\u5982\u6b64\u9ad8\u5f37\uff0c\u671f\u9593\u4ed6\u9084\u5b8c\u7f8e\u8907\u88fd\u4e86\u9ea5\u53ef\u5091\u514b\u68ee\u7684\u300c\u6708\u7403\u6f2b\u6b65\u300d\uff0c\u81c9\u4e0a\u8868\u60c5\u8d85\u7d1a\u6709\u81ea\u4fe1\u5149\u5f69\u903c\u4eba\uff0c\u611f\u67d3\u5230\u8a55\u5be9\u5750\u8457\u4e5f\u958b\u59cb\u8ddf\u8457\u4ed6\u4e00\u8d77\u6253\u62cd\u5b50\u626d\u52d5\u8eab\u9ad4\u3002",
             "keywords": null,
-            "focal_x": 344,
+            "focal_x": 381,
             "focal_y": 152,
             "layout": "NORMAL"
         },
         {
-            "id": 1175,
+            "id": 2717,
             "background": {
-                "id": 3735281,
+                "id": 3741770,
                 "type": "video",
                 "license": "Creative Common",
-                "file": "https://static-gstudio.gliacloud.com/2bb14018f682c639fb884adbddf55227bb23d44e.mp4",
-                "title": "",
-                "duration": 15.92,
+                "file": "https://static-gstudio.gliacloud.com/f41b67a4ff11eeca5189bb2e2a1654a5f999fbd7.mp4",
+                "title": "\u5e74\u8f7b\u7684\u975e\u6d32\u88d4\u7f8e\u56fd\u4eba\u5efa\u7b51\u5de5\u4eba\u4e0e\u89d2\u78e8\u673a\u673a\u6234\u5b89\u5168\u8033\u7f69\u548c\u683c\u5b50\u886c\u886b\u7684\u5de5\u4f5c\u670d\u5236\u670d\uff0c\u7ad9\u5728\u767d\u5899\u548c\u5fae\u7b11",
+                "duration": 8.68,
                 "mime": "video/mp4",
                 "description": "",
                 "width": 1920,
@@ -180,21 +180,21 @@
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/6ded1b4602991ed69e56f543d5e9ece69da19596.jpg",
-                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/NL0L5N5Rgimkt8edi/videoblocks-two-men-workers-in-red-and-yellow-work-clothes-cleaning-the-exterior-windows-of-a-skyscraper-industrial-alpinism_b5-vuabur__d55a689314796653fcf3d02e2036a95e__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591678071895&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=10784421&resolution=180p&searchId=b54566df-05ff-4aa8-8bf9-fa567e6371d2&searchPageId=4c928927-22f2-481c-a168-c1ab45d045b8#gliadriver=StoryBlocksVideoZH&key=10784421",
+                "thumbnail": "https://static-gstudio.gliacloud.com/87ee5041661f86043f46a6634168f10a203c230d.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/videoblocks-young-african-american-man-construction-worker-with-angle-grinder-machine-wearing-safety-ear-muffs-and-checked-shirt-with-overalls-uniform-standing-against-white-wall-and-smiling_bwwc3wrre__ab29aa43207f5c1d7fd080d522155dc1__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591723225455&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=4015532&resolution=180p&searchId=754c4394-d050-4a5f-830a-ccc7c7a9426f&searchPageId=e592b704-c106-4a84-bbdc-b1309808ecb7#gliadriver=StoryBlocksVideoZH&key=4015532",
                 "source": ""
             },
             "headline": "",
             "title": "\u6700\u5f8c\u4ed6\u628a\u5de5\u4f5c\u670d\u4e5f\u812b\u6389\uff0c\u53ea\u7a7f\u8457\u4e00\u4ef6\u9ed1\u8272\u4e0a\u8863\uff0c\u6bcf\u4e00\u500b\u821e\u8e48\u9813\u9ede\u90fd\u76f8\u7576\u6709\u529b\uff0c\u7d50\u5c3e\u6642\u4ed6\u812b\u6389\u5e3d\u5b50\uff0c\u96d9\u8173\u4ea4\u53c9\u505a\u51fa\u4e86\u9ea5\u53ef\u751f\u524d\u8868\u6f14\u5230\u6700\u5f8c\u7684\u52d5\u4f5c\uff0c\u6574\u6bb5\u8868\u6f14\u53d7\u5230\u5168\u5834\u7684\u76db\u8b9a\uff0c\u8a31\u591a\u4eba\u751a\u81f3\u8d77\u7acb\u9f13\u638c\uff0c\u4e00\u958b\u59cb\u6e05\u6f54\u5de5\u662f\u88ab\u5c0f\u770b\u7684\uff0c\u4f46\u662f\u53ea\u662f\u56e0\u70ba\u300c\u8077\u696d\u300d\uff0c\u9019\u5f71\u7247\u4e5f\u8b93\u7db2\u53cb\u8aaa\u300c\u771f\u7684\u4e0d\u80fd\u5c0f\u770b\u4ed6\u4eba\uff0c\u6bcf\u500b\u4eba\u90fd\u5f88\u6709\u6f5b\u529b\uff01\u300d\uff01\u3002",
-            "keywords": "\u6e05\u6f54\u5de5 \u5de5\u4f5c\u670d \u821e\u8e48 \u9ea5\u53ef \u9ed1\u8272\u4e0a\u8863",
-            "focal_x": 616,
+            "keywords": "ALL:\u9ea5\u53ef \u5de5\u4f5c\u670d \u6e05\u6f54\u5de5 \u9ed1\u8272\u4e0a\u8863 \u821e\u8e48|QUERY:\u9ea5\u53ef \u5de5\u4f5c\u670d \u6e05\u6f54\u5de5 \u9ed1\u8272\u4e0a\u8863 \u821e\u8e48",
+            "focal_x": 1033,
             "focal_y": 540,
-            "layout": "NORMAL"
+            "layout": "FOCUS"
         },
         {
-            "id": 1176,
+            "id": 2718,
             "background": {
-                "id": 3725471,
+                "id": 3740613,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/d732e2d2e137167d391bb23919944cb8c5077fbc.jpg",
@@ -209,19 +209,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/d732e2d2e137167d391bb23919944cb8c5077fbc.jpg",
                 "url": "http://s2.omgnews.cc/imgs/201804/24/2/15245501054712.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5716\u7247\u4f86\u6e90\uff1a\u79d2\u62cd",
             "keywords": null,
-            "focal_x": 348,
+            "focal_x": 291,
             "focal_y": 148,
             "layout": "QUOTE"
         },
         {
-            "id": 1177,
+            "id": 2720,
             "background": {
-                "id": 3725470,
+                "id": 3740612,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2f38530dbea51b74ccd21afb374a39656c5c9fd3.jpg",
@@ -236,14 +236,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2f38530dbea51b74ccd21afb374a39656c5c9fd3.jpg",
                 "url": "http://s2.omgnews.cc/imgs/201804/24/2/15245500723927.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u4f86\u770b\u770b\u3010\u6e05\u6f54\u5de5\u6a21\u4eff\u9ea5\u53ef\u5091\u514b\u68ee\uff0c\u5168\u5834\u66b4\u52d5\u6b61\u547c\u3011\u5f71\u7247\uff1a",
             "keywords": null,
-            "focal_x": 215,
+            "focal_x": 420,
             "focal_y": 151,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         }
     ]
 }

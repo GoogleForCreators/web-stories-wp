@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 536,
+            "id": 2191,
             "background": {
-                "id": 3726228,
+                "id": 3741522,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/aa0f7433a6c1e8fb25f179b69ad5503bfcfdcb33.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/aa0f7433a6c1e8fb25f179b69ad5503bfcfdcb33.jpg",
                 "url": "https://foodpicks.tw/wp-content/uploads/collage20200602.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u3010\u53f0\u5317\u5f8c\u706b\u8eca\u7ad9\u884c\u5bb6\u5fc5\u5403\u7f8e\u98df\u61f6\u4eba\u5305\u3011- \u9109\u6c11\u98df\u5802\u63a8\u85a6\u5341\u5927\u7cbe\u9078\u53f0\u5317\u5f8c\u706b\u8eca\u7ad9\u53e3\u7891\u7f8e\u98df\uff01",
+            "headline": "\u3010\u53f0\u5317\u5f8c\u706b\u8eca\u7ad9\u884c\u5bb6\u5fc5\u5403\u7f8e\u98df\u61f6\u4eba\u5305\u3011- \u9109\u6c11\u98df\u5802\u63a8\u85a6\u5341\u5927\u7cbe\u9078\u53f0\u5317\u5f8c\u706b\u8eca\u7ad9\u53e3\u7891\u7f8e\u98df\uff01",
+            "title": "",
             "keywords": null,
-            "focal_x": 874,
+            "focal_x": 904,
             "focal_y": 314,
             "layout": "COVER"
         },
         {
-            "id": 537,
+            "id": 2192,
             "background": {
-                "id": 3724810,
+                "id": 3739999,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/a0dd7b01c9fa963929a35a5243a8787544f7b174.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/a0dd7b01c9fa963929a35a5243a8787544f7b174.jpg",
                 "url": "https://foodpicks.tw/wp-content/uploads/collage20200602-696x364.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u53f0\u5317\u5f8c\u8eca\u7ad9\uff0c\u5404\u7a2e\u8d85\u7d1a\u8001\u5e97\u7f8e\u98df\u8207\u8001\u5b57\u865f\u5e97\u5bb6\u805a\u96c6\u4e4b\u9ede\uff0c\u4e8c\u4e09\u5341\u5e74\u90fd\u4e0d\u7b97\u8001\u5e97",
             "title": "\u53f0\u5317\u5f8c\u8eca\u7ad9\uff0c\u7b97\u662f\u4e00\u500b\u5145\u6eff\u4e86\u904e\u53bb\u7e41\u83ef\u7684\u5730\u65b9\uff0c\u5f9e\u8d85\u7d1a\u6709\u540d\u7684\u624b\u5de5\u98fe\u54c1\u6750\u6599\u5546\u5708\uff0c\u5230\u8001\u5b57\u865f\u7684\u83ef\u9670\u8857\u6216\u518d\u904e\u53bb\u7684\u5713\u74b0\uff0c\u4e4b\u5f8c\u56e0\u70ba\u8a31\u8a31\u591a\u591a\u7684\u8fd4\u9109\u904a\u5b50 \u6703\u5728\u9019\u908a\u5750\u5927\u5ba2 \u8eca\u56de\u5bb6\uff0c\u6240\u884d\u751f\u51fa\u4f86\u7684\u7f8e\u98df\u53ef\u662f\u76f8\u7576\u6709\u5e95\u860a\u7684\u3002",
             "keywords": null,
-            "focal_x": 510,
+            "focal_x": 502,
             "focal_y": 182,
-            "layout": "FOCUS"
+            "layout": "NORMAL"
         },
         {
-            "id": 538,
+            "id": 2193,
             "background": {
-                "id": 3724810,
+                "id": 3739999,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/a0dd7b01c9fa963929a35a5243a8787544f7b174.jpg",
@@ -74,19 +74,73 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/a0dd7b01c9fa963929a35a5243a8787544f7b174.jpg",
                 "url": "https://foodpicks.tw/wp-content/uploads/collage20200602-696x364.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5728\u9019\u88e1\uff0c\u8981\u81ea\u7a31\u8001\u5e97\u4f60\u8aaa\u4f60\u6709\u500b20-30\u5e74\u5927\u6982\u6703\u88ab\u4eba\u7b11\uff0c\u7136\u5f8c\u7d05\u7684\u5e97\u5c31\u7b97\u4ea4\u901a\u4e0d\u4fbf\u4e5f\u53ef\u4ee5\u7d66\u4f60\u6392\u968a\u6392\u5230\u54ed\u3002",
             "keywords": null,
-            "focal_x": 510,
+            "focal_x": 502,
             "focal_y": 182,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 2194,
+            "background": {
+                "id": 3740000,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/2cbe7b5a355a5e4c279e94df526ab384829093c5.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 800,
+                "height": 651,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/2cbe7b5a355a5e4c279e94df526ab384829093c5.jpg",
+                "url": "https://farm66.static.flickr.com/65535/49700464478_4797c19b3d_c.jpg",
+                "source": "User"
+            },
+            "headline": "\u25cf69\u5e74\u8001\u5e97\u9eb5\u6524",
+            "title": "\u9019\u9593\u88ab\u7a31\u70ba69\u5e74\u8001\u5e97\u9eb5\u6524\u7684\u8001\u5e97\uff0c\u6709\u807d\u5230\u4e00\u500b\u7d93\u5e38\u5728\u5f8c\u8eca\u7ad9\u5750\u5df4\u58eb\u56de\u4e2d\u5357\u90e8\u7684\u670b\u53cb\u63d0\u5230\uff0c\u9019\u9593\u5e97\u5c0d\u8a31\u591a\u8fd4\u9109\u904a\u5b50\u4f86\u8aaa\u662f\u6eab\u6696\u597d\u5403\u53c8\u80fd\u586b \u98fd\u809a\u5b50\u7684\u6240\u5728\uff0c\u5b83\u6700\u68d2\u7684\u5c31\u662f\u90a3\u934b\u6e6f\u982d\uff0c\u71ac\u716e\u4e86\u8a31\u591a\u9ed1\u767d\u5207\u98df\u6750\u7684\u5b83\uff0c\u5df2\u7d93\u662f\u4e73\u767d\u8272\uff0c\u8d85\u9bae\u7f8e\u3002",
+            "keywords": null,
+            "focal_x": 400,
+            "focal_y": 325,
             "layout": "NORMAL"
         },
         {
-            "id": 539,
+            "id": 2195,
             "background": {
-                "id": 3724814,
+                "id": 3740000,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/2cbe7b5a355a5e4c279e94df526ab384829093c5.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 800,
+                "height": 651,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/2cbe7b5a355a5e4c279e94df526ab384829093c5.jpg",
+                "url": "https://farm66.static.flickr.com/65535/49700464478_4797c19b3d_c.jpg",
+                "source": "User"
+            },
+            "headline": "",
+            "title": "\u914d\u4e0a\u7f8e\u5473\u7684\u5317\u90e8\u5c08\u5c6c\u7c97\u7c73\u7c89\uff0c\u597d\u5403\u6975\u4e86\u3002",
+            "keywords": null,
+            "focal_x": 400,
+            "focal_y": 325,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 2196,
+            "background": {
+                "id": 3740003,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/87e6607efa2f5d88c896a829b03799a64afa9ba8.jpg",
@@ -101,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/87e6607efa2f5d88c896a829b03799a64afa9ba8.jpg",
                 "url": "https://farm5.static.flickr.com/4035/4584145420_8683126162.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u25cf\u82e6\u8336\u4e4b\u5bb6",
             "title": "\u9019\u9593\u5e97\u5f9e\u6c11\u570b\u5341\u516b\u5e74\u5c31\u5b58\u5728\u4e86\uff0c\u53ef\u4ee5\u8aaa\u662f\u771f\u7684\u898b\u8b49\u4e86\u53f0\u7063\u8a31\u4e45\u7684\u6b77\u53f2\uff0c\u5c0f\u7de8\u5c0f\u6642\u5019\u966a\u8457\u5bb6\u4eba\u901b\u9019\u908a\uff0c\u6700\u5f8c\u90fd\u6703\u5e36\u53bb\u9019\u88e1\u559d\u676f\u8336\u6216\u5403\u500b\u751c\u9ede\u3002",
             "keywords": null,
-            "focal_x": 251,
+            "focal_x": 193,
             "focal_y": 187,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 540,
+            "id": 2197,
             "background": {
-                "id": 3724815,
+                "id": 3740004,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f75259d884f0db15e9520439d1c0912c6f0d17b3.jpg",
@@ -128,19 +182,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f75259d884f0db15e9520439d1c0912c6f0d17b3.jpg",
                 "url": "https://farm9.staticflickr.com/8195/8423336385_714a3341a5_b.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u25cf\u65b0\u9189\u7d05\u6a13\u83dc\u9928",
             "title": "\u800c\u4e14\u751a\u81f3\u4ee5\u524d\u807d\u8aaa\u904e\uff0c\u5728\u9019\u5e74\u4ee3\u4f60\u5982\u679c\u5728\u9019\u88e1\u6709\u5305\u5ec2\u4ee5\u4e0a\uff0c\u4eba\u5920\u591a\u9084\u53ef\u4ee5\u8acb\u90a3\u5361\u897f\u4f86\uff0c\u4eab\u53d7\u771f\u6b63\u9152\u5bb6\u83dc\u7684\u98a8\u60c5",
             "keywords": null,
             "focal_x": 512,
             "focal_y": 512,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         },
         {
-            "id": 541,
+            "id": 2198,
             "background": {
-                "id": 3724816,
+                "id": 3740005,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/42b27ee9c5791c0f8d3f3a5a23a5b5e551b3e57e.jpg",
@@ -155,14 +209,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/42b27ee9c5791c0f8d3f3a5a23a5b5e551b3e57e.jpg",
                 "url": "https://farm8.staticflickr.com/7414/10909503846_a46a8b6387_b.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u25cf\u4e09\u591a\u5c4b\u7238\u7238\u5634",
             "title": "\u9019\u88e1\u7684\u9b5a\u6599\u771f\u7684\u7d66\u7684\u5f88\u591a\uff0c\u5473\u589e\u6e6f\u4e5f\u76f8\u7576\u597d\u559d",
             "keywords": null,
-            "focal_x": 392,
+            "focal_x": 328,
             "focal_y": 384,
-            "layout": "QUOTE"
+            "layout": "NORMAL"
         }
     ]
 }

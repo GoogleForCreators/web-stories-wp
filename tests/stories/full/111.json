@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 1155,
+            "id": 2681,
             "background": {
-                "id": 3726475,
+                "id": 3741753,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/3a9f90ebdc7d3afd5150abca0b132b4ec41db940.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/3a9f90ebdc7d3afd5150abca0b132b4ec41db940.jpg",
                 "url": "http://s2.nowlooker.com/uploads/thumbnail/20180329/1512631522318768.jpg_800x417.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u5927\u5abd\u5b8c\u5168\u4e0d\u904b\u52d5\u300c3\u500b\u6708\u537b\u72c2\u752931\u516c\u65a4\u300d\u8fa3\u7ffb\uff01\u773c\u5c16\u7db2\u53cb\u4e00\u770b\u300c\u767c\u73fe\u8d85\u5927\u7834\u7dbb\u300d\u6012\u8f5f\uff1a\u7121\u6065\uff01",
+            "headline": "\u5927\u5abd\u5b8c\u5168\u4e0d\u904b\u52d5\u300c3\u500b\u6708\u537b\u72c2\u752931\u516c\u65a4\u300d\u8fa3\u7ffb\uff01\u773c\u5c16\u7db2\u53cb\u4e00\u770b\u300c\u767c\u73fe\u8d85\u5927\u7834\u7dbb\u300d\u6012\u8f5f\uff1a\u7121\u6065\uff01",
+            "title": "",
             "keywords": null,
-            "focal_x": 216,
+            "focal_x": 221,
             "focal_y": 208,
             "layout": "COVER"
         },
         {
-            "id": 1156,
+            "id": 2682,
             "background": {
-                "id": 3725444,
+                "id": 3740586,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/bc223cf85d9a4afef9c7396e94779785e7492686.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/bc223cf85d9a4afef9c7396e94779785e7492686.jpg",
                 "url": "http://s2.nowlooker.com/uploads/201803/29/3/152231016158144.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u5927\u5abd\u5b8c\u5168\u4e0d\u904b\u52d5\u300c3\u500b\u6708\u537b\u72c2\u752931\u516c\u65a4\u300d\u8fa3\u7ffb\uff01\n\u773c\u5c16\u7db2\u53cb\u4e00\u770b\u300c\u767c\u73fe\u8d85\u5927\u7834\u7dbb\u300d\u6012\u8f5f\uff1a\u7121\u6065\uff01",
             "title": "\u64c1\u67092\u500b\u5c0f\u5b69\u53ca5\u500b\u5b6b\u5b50\u7684\u5b89\u5a1c\uff0c\u9577\u6642\u9593\u98fd\u53d7\u80a5\u80d6\u6240\u82e6\uff0c\u8eab\u4e0a\u5168\u90fd\u662f\u8d05\u8089\uff0c\u9019\u4e5f\u8b93\u5979\u56e0\u70ba\u8eab\u6750\u8b8a\u5f97\u6c92\u81ea\u4fe1\uff0c\u751f\u6d3b\u4e2d\u4e5f\u51fa\u73fe\u4e86\u5404\u5f0f\u5404\u6a23\u7684\u56f0\u64fe\uff0c\u300c\u6211\u4e0d\u6562\u8a8d\u8b58\u65b0\u670b\u53cb\uff0c\u4e5f\u627e\u4e0d\u5230\u80fd\u7a7f\u7684\u8863\u670d\uff0c\u4e00\u5207\u7684\u4e00\u5207\u90fd\u662f\u9019\u9ebc\u7684\u5c37\u5c2c\u3002\u300d",
             "keywords": null,
             "focal_x": 153,
-            "focal_y": 161,
+            "focal_y": 259,
             "layout": "NORMAL"
         },
         {
-            "id": 1157,
+            "id": 2683,
             "background": {
-                "id": 3725445,
+                "id": 3740587,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/7fd3e7b130ec06d7a9830a82779be7c0c5cc26ec.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/7fd3e7b130ec06d7a9830a82779be7c0c5cc26ec.jpg",
                 "url": "http://s2.nowlooker.com/uploads/201803/29/3/152231020425537.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u67d0\u4e00\u5929\u5979\u5728\u770b\u5230\u5973\u5152\u62cd\u4e0b\u81ea\u5df1\u7684\u7167\u7247\u5f8c\uff0c\u66f4\u5fb9\u5fb9\u5e95\u5e95\u88ab\u5687\u58de\uff0c\u300c\u6211\u7121\u6cd5\u76f8\u4fe1\u6211\u7684\u6a23\u5b50\uff0c\u6211\u5728\u9019\u500b\u6642\u5019\u751a\u81f3\u7121\u6cd5\u8d70\u4e0a\u6a13\u68af\uff0c\u4e5f\u6c92\u8fa6\u6cd5\u64e6\u8173\u8dbe\u7532\u6cb9\uff0c\u9019\u771f\u7684\u592a\u53ef\u6015\u4e86\uff01\u300d",
             "keywords": null,
             "focal_x": 153,
-            "focal_y": 153,
+            "focal_y": 155,
             "layout": "FOCUS"
         },
         {
-            "id": 1158,
+            "id": 2684,
             "background": {
-                "id": 3725448,
+                "id": 3740590,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/cfc8413235c93fe2c53f21f0a960018ce5611ce2.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/cfc8413235c93fe2c53f21f0a960018ce5611ce2.jpg",
                 "url": "http://s2.nowlooker.com/uploads/201803/29/3/15223103959941.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5979\u63d0\u5230\uff1a\u300c\u8a31\u591a\u4eba\u90fd\u8a8d\u70ba\u7bc0\u98df\u6703\u5b8c\u5168\u9650\u5236\u4f60\u7684\u98f2\u98df\uff0c\u4f46\u4e8b\u5be6\u4e0a\u4e26\u975e\u5982\u6b64\uff0c\u5728\u6574\u500b\u904e\u7a0b\u7576\u4e2d\uff0c\u6211\u5805\u6301\u65e9\u9910\u5403\u6c34\u679c\uff0c\u50cf\u662f\u860b\u679c\u548c\u8349\u8393\uff0c\u9084\u6709\u4e00\u4e9b\u512a\u683c\uff0c\u5348\u9910\u5247\u662f\u6703\u5403\u4e00\u4e9b\u86cb\u767d\u8cea\u548c\u852c\u83dc\u6c99\u62c9\uff0c\u665a\u9910\u6211\u5403\u4e86\u5f88\u591a\u725b\u6392\u8ddf\u9b5a\u3002\u6211\u5f9e\u4f86\u6c92\u6709\u60f3\u904e\u81ea\u5df1\u6703\u4ee5\u9019\u7a2e\u65b9\u5f0f\uff0c\u8b8a\u6210\u6211\u671f\u671b\u4e2d\u7684\u6a23\u5b50\uff0c\u6211\u771f\u7684\u5f88\u958b\u5fc3\uff0c\u4e0d\u50c5\u5728\u8eab\u9ad4\u4e0a\uff0c\u800c\u4e14\u5728\u7cbe\u795e\u4e0a\u4e5f\u662f\uff0c\u9019\u5b8c\u5168\u6539\u8b8a\u4e86\u6211\u7684\u751f\u6d3b\u3002\u300d",
             "keywords": null,
             "focal_x": 153,
-            "focal_y": 161,
+            "focal_y": 258,
             "layout": "NORMAL"
         },
         {
-            "id": 1159,
+            "id": 2685,
             "background": {
-                "id": 3725450,
+                "id": 3740592,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/f2c51cf737c36287cba921e4bf6b86811f5d1411.jpg",
@@ -128,46 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/f2c51cf737c36287cba921e4bf6b86811f5d1411.jpg",
                 "url": "https://www.nowlooker.com/uploads/201803/29/3/1522310221837.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u5c31\u9019\u6a23\u5979\u5728\u9019\u9593\u516c\u53f8\u7684\u5e6b\u5fd9\u4e0b\uff0c\u6162\u6162\u7626\u4e86\u4e0b\u4f86\uff0c\u5728\u77ed\u77ed\u76843\u500b\u6708\u5167\u5c31\u6e1b\u6389\u4e8631.5\u516c\u65a4\uff0c\u8b93\u5979\u518d\u5ea6\u91cd\u62fe\u81ea\u4fe1\u5fc3\uff0c\u300c\u6211\u5df2\u7d93\u5f9e\u4e00\u500b\u975e\u5e38\u6cae\u55aa\u7684\u72c0\u614b\u4e2d\u8d70\u51fa\u4f86\uff0c\u611f\u89ba\u81ea\u5df1\u5f88\u6709\u7cbe\u795e\u548c\u81ea\u4fe1\uff0c\u6b63\u5982\u6211\u7684\u5b6b\u5b50\u5011\u6240\u8aaa\u7684\uff0c\u6211\u662f\u500b\u5f88\u68d2\u768450\u6b72\u5976\u5976\u3002\u300d",
             "keywords": null,
             "focal_x": 153,
-            "focal_y": 153,
-            "layout": "FOCUS"
-        },
-        {
-            "id": 1160,
-            "background": {
-                "id": 3725451,
-                "type": "image",
-                "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/a09b0ec1d492f8df9d24dd2f6a9eece4c04a85fd.jpg",
-                "title": "",
-                "duration": 0.0,
-                "mime": "image/jpeg",
-                "description": "",
-                "width": 634,
-                "height": 476,
-                "start": 0.0,
-                "end": 0.0,
-                "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/a09b0ec1d492f8df9d24dd2f6a9eece4c04a85fd.jpg",
-                "url": "https://www.nowlooker.com/uploads/201803/29/3/152231023525733.jpg",
-                "source": ""
-            },
-            "headline": "",
-            "title": "\u53ea\u4e0d\u904e\u5b89\u5a1c\u7684\u6e1b\u80a5\u7d93\u6b77\u66dd\u5149\u5f8c\uff0c\u537b\u7acb\u523b\u5f15\u767c\u71b1\u70c8\u8a0e\u8ad6\uff0c\u96d6\u7136\u6709\u4e0d\u5c11\u4eba\u89ba\u5f97\u5979\u5f88\u52aa\u529b\u4e5f\u5f88\u52f5\u5fd7\uff0c\u4f46\u4e5f\u6709\u8a31\u591a\u4eba\u89ba\u5f97\u9019\u4e00\u5207\u90fd\u662f\u6e1b\u80a5\u516c\u53f8\u6240\u9020\u5047\u7684\u6848\u4f8b\u3002",
-            "keywords": null,
-            "focal_x": 310,
-            "focal_y": 238,
+            "focal_y": 155,
             "layout": "NORMAL"
         },
         {
-            "id": 1161,
+            "id": 2686,
             "background": {
-                "id": 3725452,
+                "id": 3740594,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/08340cf3e5dd861ce813e7501c2aa19ad6719904.jpg",
@@ -182,19 +155,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/08340cf3e5dd861ce813e7501c2aa19ad6719904.jpg",
                 "url": "http://s2.nowlooker.com/uploads/201803/29/3/152231028581121.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u53e6\u5916\uff0c\u9084\u6709\u7db2\u53cb\u9a5a\u8a1d\u5730\u8aaa\uff1a\u300c\u6e1b\u80a5\u524d\u5f8c\u6839\u672c\u4e0d\u50cf\u662f\u540c\u4e00\u500b\u4eba\u554a\uff01\u300d\uff01\u3002",
             "keywords": null,
             "focal_x": 153,
-            "focal_y": 161,
-            "layout": "NORMAL"
+            "focal_y": 414,
+            "layout": "QUOTE"
         },
         {
-            "id": 1162,
+            "id": 2687,
             "background": {
-                "id": 3725453,
+                "id": 3740595,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/df37ee0759cd05583f0e34b3f2597d38c4fe4c0f.jpg",
@@ -209,13 +182,13 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/df37ee0759cd05583f0e34b3f2597d38c4fe4c0f.jpg",
                 "url": "http://s2.nowlooker.com/uploads/201803/29/3/152231025815228.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u7a76\u7adf\u771f\u76f8\u5230\u5e95\u662f\u4ec0\u9ebc\uff0c\u5927\u6982\u53ea\u6709\u6e1b\u80a5\u516c\u53f8\u548c\u5b89\u5a1c\u672c\u4eba\u624d\u6703\u77e5\u9053\u4e86\uff0c\u96d6\u7136\u4e26\u4e0d\u662f\u6bcf\u500b\u4eba\u90fd\u76f8\u4fe1\u5b89\u5a1c\u7684\u8aaa\u6cd5\uff0c\u4f46\u81f3\u5c11\u6e1b\u80a5\u516c\u53f8\u5df2\u7d93\u9054\u5230\u60f3\u8981\u7684\u5ba3\u50b3\u6548\u679c\u4e86\uff01",
             "keywords": null,
             "focal_x": 153,
-            "focal_y": 377,
+            "focal_y": 446,
             "layout": "NORMAL"
         }
     ]

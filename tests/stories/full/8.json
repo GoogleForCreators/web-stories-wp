@@ -3,9 +3,9 @@
     "director": "StoryDirector",
     "pages": [
         {
-            "id": 112,
+            "id": 1757,
             "background": {
-                "id": 3726153,
+                "id": 3739731,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1b362cd95885f49248975b0818f6268a019bd3f1.jpg",
@@ -20,19 +20,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1b362cd95885f49248975b0818f6268a019bd3f1.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195538-ad76e099683880daefe806cb739a2ac2.jpg",
-                "source": ""
+                "source": "User"
             },
-            "headline": "",
-            "title": "\u6aaf\u71c8\u958b\u7bb1\u5be6\u6e2cPART7 : BenQ WiT",
+            "headline": "\u6aaf\u71c8\u958b\u7bb1\u5be6\u6e2cPART7 : BenQ WiT",
+            "title": "",
             "keywords": null,
-            "focal_x": 444,
+            "focal_x": 496,
             "focal_y": 300,
             "layout": "COVER"
         },
         {
-            "id": 113,
+            "id": 1758,
             "background": {
-                "id": 3724489,
+                "id": 3739644,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/60d2abbd0c187853359f943be3be4b3b48d6fda5.jpg",
@@ -47,19 +47,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/60d2abbd0c187853359f943be3be4b3b48d6fda5.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195691-a02822555f4bbad2491fe0df72b973f4.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "\u5149\u7dda\u54c1\u8cea",
             "title": "\u6f14\u8272\uff1a97.5\uff0c\u5c0d\u65bcR9\u7d05\u5149\u7684\u6f14\u8272\u7d0495",
             "keywords": null,
-            "focal_x": 412,
+            "focal_x": 528,
             "focal_y": 300,
             "layout": "NORMAL"
         },
         {
-            "id": 114,
+            "id": 1759,
             "background": {
-                "id": 3724490,
+                "id": 3739645,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/e76eb40658a0360df6b4eb33278d84637a41d964.jpg",
@@ -74,19 +74,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/e76eb40658a0360df6b4eb33278d84637a41d964.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195688-10790e00e0bcebd4fe48e9fc740b19c9.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u983b\u7387\u8d85\u904e29,000Hz\uff0c\u983b\u9583\u6df1\u5ea60.8%\uff0c\u5b89\u5168\u4e0a\u6c92\u554f\u984c",
             "keywords": null,
-            "focal_x": 500,
+            "focal_x": 464,
             "focal_y": 300,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 115,
+            "id": 1760,
             "background": {
-                "id": 3724492,
+                "id": 3739647,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/32a5fe0674171e46c1ab9e750047b59b3a550aa6.jpg",
@@ -101,19 +101,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/32a5fe0674171e46c1ab9e750047b59b3a550aa6.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195683-4f3211e0d38f498fad53618832fdc364.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u800c\u5728\u9ec3\u5149\u4e0b\u7684\u8868\u73fe\u540c\u6a23\u76f8\u7576\u8b9a",
             "keywords": null,
-            "focal_x": 340,
+            "focal_x": 464,
             "focal_y": 300,
             "layout": "QUOTE"
         },
         {
-            "id": 116,
+            "id": 1761,
             "background": {
-                "id": 3724493,
+                "id": 3739648,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/1f9bdee311b36333a0e3b77a1a90d76524b1df4d.jpg",
@@ -128,19 +128,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/1f9bdee311b36333a0e3b77a1a90d76524b1df4d.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195667-c746e62c89e893e8af28f0c89eccf029.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u6f14\u8272\uff1a98\uff0c\u5c0d\u65bcR9\u7d05\u5149\u7684\u6f14\u8272\u7d0496\u7684\u6c34\u6e96",
             "keywords": null,
-            "focal_x": 468,
+            "focal_x": 528,
             "focal_y": 300,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 117,
+            "id": 1762,
             "background": {
-                "id": 3724494,
+                "id": 3739649,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/5ae6782d2bb0f5fc9a3fdb1c27ecec87976e284d.jpg",
@@ -155,19 +155,46 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/5ae6782d2bb0f5fc9a3fdb1c27ecec87976e284d.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195670-40b865c1e882ea080146caeb78021f6b.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "\u983b\u7387\u8d85\u904e29,000Hz\uff0c\u983b\u9583\u6df1\u5ea60.8%\uff0c\u6c92\u6709\u5b89\u5168\u554f\u984c",
             "keywords": null,
-            "focal_x": 460,
+            "focal_x": 400,
+            "focal_y": 300,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 1763,
+            "background": {
+                "id": 3739650,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/9bc753ebf12b7597fec43fa528231e4561aee02d.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 800,
+                "height": 600,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/9bc753ebf12b7597fec43fa528231e4561aee02d.jpg",
+                "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195672-a8e787afc96f46dd932e505539840ba7.jpg",
+                "source": "User"
+            },
+            "headline": "",
+            "title": "\u800c\u5149\u7dda\u54c1\u8cea\u7684\u53e6\u4e00\u500b\u91cd\u9ede\u5247\u5728\u65bc\u7167\u5ea6\u662f\u5426\u8db3\u5920\u4e14\u5747\u52fb\uff0c\u5c0d\u6b64\u5c0f\u4e8c\u540c\u6642\u53c3\u914c\u4e2d\u570b\u7684GB/T 9437-2016\u8b80\u5beb\u6aaf\u71c8\u4f5c\u696d\u898f\u7bc4\u8207\u53f0\u7063\u7684CNS 16048\u5c0d\u65bc\u7167\u5ea6\u7684\u6a19\u6e96\u8a2d\u5b9a\uff1a",
+            "keywords": null,
+            "focal_x": 528,
             "focal_y": 300,
             "layout": "FOCUS"
         },
         {
-            "id": 118,
+            "id": 1764,
             "background": {
-                "id": 3724501,
+                "id": 3739656,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/895de8b507de98932ff4a12c97e9680c3ea10d25.jpg",
@@ -182,22 +209,22 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/895de8b507de98932ff4a12c97e9680c3ea10d25.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195589-c15807fdcddef0e23ffc6cea91a8abd6-150x150.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "30cm\u8655\u5e73\u5747\u7167\u5ea6\u5247\u9054950lux\uff0c\u5404\u9ede\u70ba\uff1a",
             "keywords": null,
             "focal_x": 75,
             "focal_y": 75,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 119,
+            "id": 1765,
             "background": {
-                "id": 3724503,
+                "id": 3739657,
                 "type": "image",
                 "license": "User",
-                "file": "https://static-gstudio.gliacloud.com/c8172cb99b073b4cc0ae9b1ae44ef018c6a56f6b.jpg",
+                "file": "https://static-gstudio.gliacloud.com/c2752e46b8d8cd084cd480271b2a4f34f8e8d436.jpg",
                 "title": "",
                 "duration": 0.0,
                 "mime": "image/jpeg",
@@ -207,21 +234,21 @@
                 "start": 0.0,
                 "end": 0.0,
                 "scale": 1.0,
-                "thumbnail": "https://static-gstudio.gliacloud.com/c8172cb99b073b4cc0ae9b1ae44ef018c6a56f6b.jpg",
-                "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195574-8503354eb6f19afec83f343e7b103091-150x150.jpg",
-                "source": ""
+                "thumbnail": "https://static-gstudio.gliacloud.com/c2752e46b8d8cd084cd480271b2a4f34f8e8d436.jpg",
+                "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195577-e81b8d0e7f07dda8e0b0106eabf2089a-150x150.jpg",
+                "source": "User"
             },
             "headline": "",
             "title": "940 lux",
             "keywords": null,
             "focal_x": 75,
             "focal_y": 75,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 120,
+            "id": 1766,
             "background": {
-                "id": 3724507,
+                "id": 3739662,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/4f7a0be0cd3d632d79f48e289fdb90456b19803c.jpg",
@@ -236,19 +263,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/4f7a0be0cd3d632d79f48e289fdb90456b19803c.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195612-f5a0cd995b5385c6960165aece91502c.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "50cm\u8655\u5e73\u5747\u7d04320lux\uff0c\u5404\u9ede\u70ba\uff1a",
             "keywords": null,
-            "focal_x": 300,
+            "focal_x": 304,
             "focal_y": 300,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         },
         {
-            "id": 121,
+            "id": 1767,
             "background": {
-                "id": 3724512,
+                "id": 3739667,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/2c26806bb701f783e4f340f53bac2a5d99866d6d.jpg",
@@ -263,19 +290,19 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/2c26806bb701f783e4f340f53bac2a5d99866d6d.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195644-734586e99cafb8c11d1a80f473fcdf7d-150x150.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "30cm\u8655\u5e73\u5747\u7d04840 lux\uff0c\u5404\u9ede\u70ba\uff1a",
             "keywords": null,
             "focal_x": 75,
             "focal_y": 75,
-            "layout": "NORMAL"
+            "layout": "QUOTE"
         },
         {
-            "id": 122,
+            "id": 1768,
             "background": {
-                "id": 3724513,
+                "id": 3739668,
                 "type": "image",
                 "license": "User",
                 "file": "https://static-gstudio.gliacloud.com/a7788fc244273bda0affd16d0c26243f694f8863.jpg",
@@ -290,14 +317,14 @@
                 "scale": 1.0,
                 "thumbnail": "https://static-gstudio.gliacloud.com/a7788fc244273bda0affd16d0c26243f694f8863.jpg",
                 "url": "https://img.zi.org.tw/applianceinsight/2020/06/1591195638-92429b29588a7c68e4b50c88538fd066-150x150.jpg",
-                "source": ""
+                "source": "User"
             },
             "headline": "",
             "title": "815 lux",
             "keywords": null,
             "focal_x": 75,
             "focal_y": 75,
-            "layout": "FOCUS"
+            "layout": "QUOTE"
         }
     ]
 }
