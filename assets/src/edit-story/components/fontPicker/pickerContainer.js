@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback, useState, useMemo } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -186,25 +186,10 @@ function FontPickerContainer({ value, onSelect, onClose }) {
       if (key === 'Escape') {
         onClose();
       } else if (key === 'Enter') {
-        onSelect(matchingFonts[currentOffset].name);
+        onSelect(fonts[currentOffset].name);
       } else if (key === 'ArrowUp') {
         setCurrentOffset(Math.max(0, currentOffset - 1));
       } else if (key === 'ArrowDown') {
-        setCurrentOffset(Math.min(matchingFonts.length - 1, currentOffset + 1));
-      }
-    },
-    [currentOffset, matchingFonts, onClose, onSelect]
-  );
-
-  const handleKeyPress = useCallback(
-    ({ nativeEvent: { code } }) => {
-      if (code === 'Escape') {
-        onClose();
-      } else if (code === 'Enter') {
-        onSelect(fonts[currentOffset].name);
-      } else if (code === 'ArrowUp') {
-        setCurrentOffset(Math.max(0, currentOffset - 1));
-      } else if (code === 'ArrowDown') {
         setCurrentOffset(Math.min(fonts.length - 1, currentOffset + 1));
       }
     },
