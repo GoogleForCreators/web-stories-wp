@@ -27,12 +27,6 @@ export const ANIMATION_TYPES = {
   ZOOM: 'zoom',
 };
 
-export const ROTATION = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
-
 export const DIRECTION = {
   TOP_TO_BOTTOM: 'topToBottom',
   BOTTOM_TO_TOP: 'bottomToTop',
