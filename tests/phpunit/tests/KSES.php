@@ -42,7 +42,7 @@ class KSES extends \WP_UnitTestCase {
 	 * @param string $css      A string of CSS rules.
 	 * @param string $expected Expected string of CSS rules.
 	 */
-	public function test_safecss_filter_attr_transform_attributes( $css, $expected ) {
+	public function test_safecss_filter_attr_extended( $css, $expected ) {
 		$kses = new \Google\Web_Stories\KSES();
 		add_filter( 'safe_style_css', [ $kses, 'filter_safe_style_css' ] );
 		$this->assertSame( $expected, $kses->safecss_filter_attr( $css ) );
@@ -229,7 +229,7 @@ class KSES extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Data Provider for test_safecss_filter_attr_transform_attributes().
+	 * Data Provider for test_safecss_filter_attr_extended().
 	 *
 	 * @return array {
 	 *     @type array {
@@ -259,6 +259,11 @@ class KSES extends \WP_UnitTestCase {
 			[
 				'css'      => 'transform: inherit;',
 				'expected' => 'transform: inherit',
+			],
+			// Multiple fonts.
+			[
+				'css'      => 'font-family: "Roboto", "Helvetica Neue", "Helvetica", sans-serif',
+				'expected' => 'font-family: "Roboto", "Helvetica Neue", "Helvetica", sans-serif',
 			],
 		];
 	}
