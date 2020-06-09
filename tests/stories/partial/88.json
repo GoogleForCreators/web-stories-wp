@@ -1,0 +1,100 @@
+{
+    "author": 1,
+    "director": "StoryDirector",
+    "pages": [
+        {
+            "id": 848,
+            "background": {
+                "id": 3726410,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/1265f574457bfbf48286c12a255d24f0e98bf20d.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 800,
+                "height": 417,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/1265f574457bfbf48286c12a255d24f0e98bf20d.jpg",
+                "url": "http://s2.lookforward.cc/imgs/thumbnail/20180418/1837161524024656.jpg",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u65b0\u4efb\u5e97\u9577\u300c\u5047\u88dd\u9867\u5ba2\u300d\u8996\u5bdf\u5e97\u5167\uff0c\u537b\u767c\u73fe\u300c\u54e1\u5de5\u7adf\u5077\u5077\u5728\u80cc\u5f8c...\u300d\u6c23\u5f97\u5979\u7576\u5834\u958b\u9664\uff01",
+            "keywords": null,
+            "focal_x": 232,
+            "focal_y": 208,
+            "layout": "COVER"
+        },
+        {
+            "id": 849,
+            "background": null,
+            "headline": "",
+            "title": "\u5f71\u7247\u4e2d\u4e00\u540d\u6253\u626e\u6642\u9ae6\u7684\u9867\u5ba2\u8d70\u9032\u4e00\u9593\u670d\u88dd\u5e97\uff0c\u537b\u9047\u5230\u8a72\u5e97\u9ad8\u50b2\u7684\u54e1\u5de5\u8d70\u51fa\u4f86\u6642\u6545\u610f\u649e\u5979\uff0c\u539f\u672c\u5fc3\u60c5\u53d7\u5230\u5f71\u97ff\u7684\u5979\uff0c\u518d\u770b\u5230\u88e1\u9762\u53e6\u4e00\u540d\u5e97\u54e1\u71b1\u5fc3\u63a5\u5f85\u5f8c\uff0c\u4fbf\u4e0d\u518d\u8ffd\u7a76\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 850,
+            "background": null,
+            "headline": "",
+            "title": "\u7576\u516c\u53f8\u4e0a\u5c64\u5411\u5979\u8868\u793a\uff0c\u6839\u672c\u6c92\u63a5\u7372\u5237\u5361\u6a5f\u5831\u4fee\u901a\u77e5\uff0c\u8b93\u5979\u6c23\u5f97\u8d95\u7dca\u8dd1\u56de\u5e97\u5167\uff0c\u6c92\u60f3\u5230\uff0c\u537b\u770b\u898b\u525b\u525b\u90a3\u540d\u54e1\u5de5\u6b63\u5728\u7528\u81ea\u5df1\u7684\u4fe1\u7528\u5361\u88dc\u5237\u525b\u525b\u90a3\u4e00\u7b46\u4ea4\u6613\uff0c\u66f4\u4ee4\u4eba\u50bb\u773c\u7684\u662f\u8a72\u5e97\u54e1\u9084\u5077\u5077\u7528\u5e97\u5167VIP\u6298\u6263\uff0c\u5f9e\u4e2d\u8cfa\u53d6\u5dee\u50f9\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        },
+        {
+            "id": 851,
+            "background": null,
+            "headline": "Advertisements",
+            "title": "\u6700\u5f8c\u76ee\u7779\u6240\u6709\u4e00\u5207\u7684\u5e97\u9577\uff0c\u4e8c\u8a71\u4e0d\u8aaa\u76f4\u63a5\u958b\u9664\u8a72\u54e1\u5de5\uff0c\u540c\u6642\u8981\u525b\u525b\u649e\u5012\u5979\u7684\u90a3\u540d\u54e1\u5de5\u597d\u597d\u5730\u5b89\u5206\u4e0a\u73ed\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        },
+        {
+            "id": 852,
+            "background": null,
+            "headline": "",
+            "title": "\u51fa\u4e4e\u610f\u6599\u7684\u7d50\u5c40\u66dd\u5149\u5f8c\uff0c\u5f15\u767c\u7db2\u53cb\u71b1\u70c8\u8a0e\u8ad6\uff1a\u300c\u516c\u53f8\u6700\u6015\u8acb\u5230\u9019\u7a2e\u54e1\u5de5\u300d\u3001\u300c\u7d66\u5e97\u9577\u4e00\u500b\u8b9a\u300d\u3001\u300c\u54e1\u5de5\u884c\u70ba\u4e0d\u53ef\u53d6\u300d\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        },
+        {
+            "id": 853,
+            "background": {
+                "id": 3725206,
+                "type": "image",
+                "license": "User",
+                "file": "https://static-gstudio.gliacloud.com/1265f574457bfbf48286c12a255d24f0e98bf20d.jpg",
+                "title": "",
+                "duration": 0.0,
+                "mime": "image/jpeg",
+                "description": "",
+                "width": 800,
+                "height": 417,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/1265f574457bfbf48286c12a255d24f0e98bf20d.jpg",
+                "url": "http://s2.lookforward.cc/imgs/thumbnail/20180418/1837161524024656.jpg",
+                "source": ""
+            },
+            "headline": "",
+            "title": "\u5343\u842c\u5225\u8caa\u4e00\u6642\u7684\u4fbf\u5b9c\u800c\u4e1f\u6389\u98ef\u7897\uff0c\u4e0d\u7ba1\u4efb\u4f55\u8077\u696d\u7684\u54e1\u5de5\u90fd\u61c9\u8b39\u8a18\u5728\u5fc3~",
+            "keywords": null,
+            "focal_x": 232,
+            "focal_y": 208,
+            "layout": "NORMAL"
+        }
+    ]
+}

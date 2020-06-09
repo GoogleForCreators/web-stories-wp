@@ -1,0 +1,76 @@
+{
+    "author": 1,
+    "director": "StoryDirector",
+    "pages": [
+        {
+            "id": 335,
+            "background": null,
+            "headline": "",
+            "title": "\u6d89\u5c0d\u4e2d\u570b\u6642\u5831\u5927\u6a13\u5674\u6f06\u6050\u5687  \u8b1d\u548c\u5f26\u8a8d\u7f6a",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "COVER"
+        },
+        {
+            "id": 336,
+            "background": null,
+            "headline": "",
+            "title": "\u6b4c\u624b\u8b1d\u548c\u5f26\u6d89\u5acc\u65bc\u53bb\u5e7412\u6708\u9593\u5169\u5ea6\u5230\u4e2d\u570b\u6642\u5831\u5674\u6f06\uff0c\u4e26\u5728\u81c9\u66f8\u4e0aPO\u6587\u300c\u9019\u6b21\u5674\u6f06\uff0c\u4e0b\u6b21\u5c31\u653e\u706b\u56c9\u300d\uff0c\u88ab\u53f0\u5317\u5730\u6aa2\u7f72\u8d77\u8a34\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        },
+        {
+            "id": 337,
+            "background": null,
+            "headline": "",
+            "title": "\u9762\u5c0d\u8a62\u554f\u6642\u4e0d\u767c\u4e00\u8a9e\uff0c\u50c5\u96d9\u624b\u5408\u5341\u5411\u5a92\u9ad4\u4e00\u97a0\u8eac\uff0c\u5728\u7b49\u5f85\u96fb\u68af\u6642\u624b\u6307\u6bd4\u611b\u5fc3\u624b\u52e2\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        },
+        {
+            "id": 338,
+            "background": null,
+            "headline": "",
+            "title": "\u8b1d\u548c\u5f26\u5728\u6cd5\u5b98\u8a62\u554f\u6642\u8a8d\u7f6a\uff0c\u8868\u793a\u5674\u6f06\u4e26\u975e\u91dd\u5c0d\u4e2d\u6642\u54e1\u5de5\uff0c\u81c9\u66f8PO\u6587\u300c\u653e\u706b\u300d\u4e0d\u662f\u771f\u7684\u8981\u653e\u706b\uff0c\u800c\u662f\u81ea\u711a\uff0c\u4ed6\u7576\u6642\u8e81\u9b31\u75c7\u767c\u4f5c\uff0c\u300c\u60f3\u5b78\u912d\u5357\u6995\uff0c\u71c3\u71d2\u81ea\u5df1\u7167\u4eae\u5225\u4eba\u300d\uff0c\u4f46\u7d93\u904e\u4e00\u500b\u591a\u6708\u52d2\u6212\uff0c\u8e81\u9b31\u75c7\u5df2\u7d93\u5b8c\u5168\u597d\u4e86\uff0c\u73fe\u5728\u5f88\u6b63\u5e38\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "QUOTE"
+        },
+        {
+            "id": 339,
+            "background": null,
+            "headline": "",
+            "title": "\u8b1d\u548c\u5f26\u88ab\u63a7\u65bc\u53bb\u5e7412\u670814\u65e5\u51cc\u66685\u6642\u8a31\u5230\u4f4d\u65bc\u53f0\u5317\u5e02\u842c\u83ef\u5340\u7684\u4e2d\u570b\u6642\u5831\u5927\u6a13\u5674\u6f06\u5beb\u9ad2\u8a71\uff0c\u8b66\u65b9\u7372\u5831\u5f8c\uff0c\u5c07\u4ed6\u5e36\u56de\u6d3e\u51fa\u6240\u5075\u8a0a\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 340,
+            "background": null,
+            "headline": "",
+            "title": "\u8b1d\u548c\u5f26\u505a\u5b8c\u7b46\u9304\u5f8c\uff0c\u7576\u5929\u4e0a\u534811\u6642\u8a31\u524d\u5f80\u4e2d\u6642\u5927\u6a13\u518d\u5ea6\u5674\u6f06\uff0c\u96a8\u5f8c\u4ee5\u624b\u6a5f\u5728\u81c9\u66f8\u4e0aPO\u6587\u300c\u54c8\u56c9\uff0c\u9019\u6b21\u5674\u6f06\uff0c\u4e0b\u6b21\u5c31\u653e\u706b\u56c9\u300d\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "NORMAL"
+        },
+        {
+            "id": 341,
+            "background": null,
+            "headline": "",
+            "title": "\u53f0\u5317\u5730\u6aa2\u7f72\u5075\u8fa6\u5f8c\uff0c\u8a8d\u5b9a\u8b1d\u548c\u5f26\u6d89\u72af\u516c\u7136\u4fae\u8fb1\u53ca\u6050\u5687\u516c\u773e\u7f6a\u5acc\uff0c\u4eca\u5e745\u6708\u9593\u5c07\u4ed6\u63d0\u8d77\u516c\u8a34\u3002",
+            "keywords": null,
+            "focal_x": -1,
+            "focal_y": -1,
+            "layout": "FOCUS"
+        }
+    ]
+}
