@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { loginUser } from '@wordpress/e2e-test-utils';
+import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 
 /**
  * Internal dependencies
@@ -37,8 +37,8 @@ async function openPreviewPage(editorPage) {
     /* eslint-enable no-await-in-loop */
   }
 
-  const previewPage = openTabs.length - 1;
-  await previewPage.waitForSelector('amp-story-player');
+  const previewPage = openTabs[openTabs.length - 1];
+  await previewPage.waitForSelector('amp-story');
   return previewPage;
 }
 
@@ -47,16 +47,74 @@ describe('Author User', () => {
     await loginUser('author', 'password');
   });
 
-  it('should be able to save a story without markup being stripped', async () => {
+  afterAll(async () => {
+    await switchUserToAdmin();
+  });
+
+  it('should be able to directly preview a story without markup being stripped', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await page.type(
+      'input[placeholder="Add title"]',
+      'Previewing without Publishing'
+    );
+
     await expect(page).toClick('button[aria-label="Add new text element"]');
     await expect(page).toMatch('Fill in some text');
-    await expect(page).toClick('input[aria-label="Toggle: bold"]');
 
     const editorPage = page;
     const previewPage = await openPreviewPage(editorPage);
     await expect(previewPage).toMatch('Fill in some text');
+    await previewPage.close();
+    await editorPage.bringToFront();
+  });
+
+  it('should be able to publish a story without markup being stripped', async () => {
+    await createNewStory();
+
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await page.type(
+      'input[placeholder="Add title"]',
+      'Publishing and Previewing'
+    );
+
+    // Make some changes before publishing the story.
+    await expect(page).toClick('button[aria-label="Add new text element"]');
+    await expect(page).toMatch('Fill in some text');
+
+    // Publish story.
+    await expect(page).toClick('button', { text: 'Publish' });
+    await expect(page).toMatchElement('button', { text: 'Update' });
+
+    const editorPage = page;
+    const previewPage = await openPreviewPage(editorPage);
+    await expect(previewPage).toMatch('Fill in some text');
+    await previewPage.close();
+    await editorPage.bringToFront();
+  });
+
+  it('should be able to publish and preview a story without markup being stripped', async () => {
+    await createNewStory();
+
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await page.type(
+      'input[placeholder="Add title"]',
+      'Autosaving and Previewing'
+    );
+
+    // Publish story.
+    await expect(page).toClick('button', { text: 'Publish' });
+    await expect(page).toMatchElement('button', { text: 'Update' });
+
+    // Make some changes after publishing so previewing will cause an autosave.
+    await expect(page).toClick('button[aria-label="Add new text element"]');
+    await expect(page).toMatch('Fill in some text');
+
+    const editorPage = page;
+    const previewPage = await openPreviewPage(editorPage);
+    await expect(previewPage).toMatch('Fill in some text');
+    await previewPage.close();
+    await editorPage.bringToFront();
   });
 });
