@@ -22,6 +22,12 @@ import { styleToNumeric } from './formatters/util';
 import { getAllStyleSetsInSelection } from './draftUtils';
 import { getSelectAllStateFromHTML } from './htmlManipulation';
 
+/**
+ * Gets font styles for a characters, considers italic and weight only.
+ *
+ * @param {Object} styles Set of styles.
+ * @return {[]} Array of found styles for the character.
+ */
 function getFontStylesForCharacter(styles) {
   return styles
     .toArray()
@@ -29,7 +35,14 @@ function getFontStylesForCharacter(styles) {
     .filter((style) => style.startsWith(ITALIC) || style.startsWith(WEIGHT));
 }
 
-export function getVariantsInSelection(editorState) {
+/**
+ * Gets an array of all found font variants (unique).
+ * Font variants are in the format of [italic, weight] where italic is 0 or 1.
+ *
+ * @param {Object} editorState Editor state.
+ * @return {[]} Array of variants.
+ */
+function getVariants(editorState) {
   const styleSets = getAllStyleSetsInSelection(editorState);
   if (styleSets.length === 0) {
     return [getFontStylesForCharacter(editorState.getCurrentInlineStyle())];
@@ -51,7 +64,7 @@ export function getVariantsInSelection(editorState) {
 
 export default function getFontVariants(html) {
   const htmlState = getSelectAllStateFromHTML(html);
-  return getVariantsInSelection(htmlState)
+  return getVariants(htmlState)
     .filter((variant) => variant.length)
     .map((variant) => {
       const weight = variant.find((val) => val.startsWith(WEIGHT));

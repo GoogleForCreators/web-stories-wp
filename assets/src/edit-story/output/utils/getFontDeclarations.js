@@ -63,14 +63,12 @@ const getFontDeclarations = (pages) => {
       const contentVariants = getFontVariants(content);
 
       if (variants.length > 0) {
-        for (const [italic, weight] of contentVariants) {
-          // A variant ("axis tuple" in Google Fonts terms) is a combination
-          // of font style and weight for a given font.
-          // The first item is a flag for italic.
-          // The second item is the numeric font weight.
-          // Example: [1, 700] for italic + bold
-          const variant = [Number(italic), weight || 400];
-
+        // A variant ("axis tuple" in Google Fonts terms) is a combination
+        // of font style and weight for a given font.
+        // The first item is a flag for italic.
+        // The second item is the numeric font weight.
+        // Example: [1, 700] for italic + bold
+        for (const variant of contentVariants) {
           // Use closest variant as fallback and let browser do the math if needed.
           // Examples:
           // - If only [ [ 0, 200 ], [ 0, 400 ] ] exist, and
