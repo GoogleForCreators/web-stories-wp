@@ -43,8 +43,8 @@ async function openPreviewPage(editorPage) {
 }
 
 describe('Author User', () => {
-  beforeAll(() => {
-    loginUser('author', 'password');
+  beforeAll(async () => {
+    await loginUser('author', 'password');
   });
 
   it('should be able to save a story without markup being stripped', async () => {
