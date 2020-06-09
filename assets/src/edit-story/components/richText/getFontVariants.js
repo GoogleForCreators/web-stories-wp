@@ -64,11 +64,13 @@ function getVariants(editorState) {
 
 export default function getFontVariants(html) {
   const htmlState = getSelectAllStateFromHTML(html);
-  return getVariants(htmlState)
+  const variants = getVariants(htmlState)
     .filter((variant) => variant.length)
     .map((variant) => {
       const weight = variant.find((val) => val.startsWith(WEIGHT));
       const italic = variant.find((val) => val.startsWith(ITALIC));
       return [italic ? 1 : 0, weight ? styleToNumeric(WEIGHT, weight) : 400];
     });
+  // Return default variant or the found variants.
+  return variants.length > 0 ? variants : [[0, 400]];
 }
