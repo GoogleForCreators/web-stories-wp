@@ -43,6 +43,8 @@ import {
 import paneId from './paneId';
 import MediaElement from './mediaElement';
 
+export const ROOT_MARGIN_TOP = 300;
+
 const Container = styled.div`
   grid-area: infinitescroll;
   display: grid;
@@ -289,7 +291,7 @@ function MediaPane(props) {
     refContainerFooter,
     {
       root: refContainer,
-      rootMargin: '0px 0px 300px 0px',
+      rootMargin: `0px 0px ${ROOT_MARGIN_TOP}px 0px`,
     },
     (entry) => {
       if (!isMediaLoaded || isMediaLoading) {
@@ -337,7 +339,7 @@ function MediaPane(props) {
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
-          <Container ref={refCallbackContainer}>
+          <Container data-testid="mediaLibrary" ref={refCallbackContainer}>
             <Column>
               {resources
                 .filter((_, index) => isEven(index))

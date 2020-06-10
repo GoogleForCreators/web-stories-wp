@@ -260,7 +260,11 @@ const MediaElement = ({
 
   const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <Container onPointerEnter={onPointerEnter} onPointerLeave={onPointerLeave}>
+    <Container
+      data-testid="mediaElement"
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+    >
       <Video
         key={src}
         ref={mediaElement}
