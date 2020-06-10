@@ -371,30 +371,23 @@ class Story_Post_Type {
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu'     => false,
+				'mediaDropdownMenu'           => false,
 				/**
 				 * Description: Flag for new font picker with typeface previews in style panel.
 				 * Author: @carlos-kelly
 				 * Issue: #1300
 				 * Creation date: 2020-06-02
 				 */
-				'newFontPicker'         => false,
+				'newFontPicker'               => false,
 				/**
-				 * Description: Flag for hiding/enabling text sets.
+				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
 				 * Author: @dmmulroy
-				 * Issue: #2097
+				 * Issue: #2094
 				 * Creation date: 2020-06-04
 				 */
-				'showTextSets'          => false,
-				/**
-						 * Description: Flag for hiding/enabling the pre publish tab.
-						 * Author: @dmmulroy
-						 * Issue: #2095
-						 * Creation date: 2020-06-04
-						 */
-					'showPrePublishTab' => false,
-
+				'showKeyboardShortcutsButton' => false,
 			],
+
 		];
 
 		return $settings;
