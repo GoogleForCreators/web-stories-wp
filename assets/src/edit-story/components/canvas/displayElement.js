@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
   ${elementWithRotation}
-  contain: layout paint;
+  contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 
@@ -75,9 +75,9 @@ AnimationWrapper.propTypes = {
 };
 
 function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
-  const {
-    actions: { getBox },
-  } = useUnits();
+  const { getBox } = useUnits((state) => ({
+    getBox: state.actions.getBox,
+  }));
 
   const [replacement, setReplacement] = useState(null);
 

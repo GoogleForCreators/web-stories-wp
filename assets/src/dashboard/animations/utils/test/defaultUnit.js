@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { defaultUnit } from '../defaultUnit';
 
-function useLayers() {
-  const { currentPage } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-  }));
+describe('defaultUnit(input, unit)', () => {
+  it('appends the default unit if the input value ends in a digit', () => {
+    const input = 123456;
+    const unit = 'px';
+    expect(defaultUnit(input, unit)).toStrictEqual(`${input}${unit}`);
+  });
 
-  if (!currentPage) {
-    return [];
-  }
-
-  const layers = currentPage.elements.map((layer, index) => ({
-    ...layer,
-    position: index,
-  }));
-  layers.reverse();
-  return layers;
-}
-
-export default useLayers;
+  it('doesnt append the default unit if the input value ends in a non-digit', () => {
+    const input = '123456%';
+    const unit = 'px';
+    expect(defaultUnit(input, unit)).toStrictEqual(input);
+  });
+});

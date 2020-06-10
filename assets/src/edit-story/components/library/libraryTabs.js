@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useMemo, useRef, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -29,16 +30,23 @@ import { Tabs, getPanes } from './panes';
 import { getTabId } from './panes/shared';
 
 function LibraryTabs() {
-  const {
-    state: { tab },
-    actions: { setTab },
-    data: { tabs },
-  } = useLibrary();
+  const { tab, setTab, tabs } = useLibrary((state) => ({
+    tab: state.state.tab,
+    setTab: state.actions.setTab,
+    tabs: state.data.tabs,
+  }));
   const { isRTL } = useConfig();
-  const panes = useMemo(() => getPanes(tabs), [tabs]);
+  const { showAnimationTab } = useFeatures();
+  const panes = useMemo(
+    () =>
+      showAnimationTab
+        ? getPanes(tabs)
+        : getPanes(tabs).filter(({ id }) => id !== tabs.ANIMATION),
+    [tabs, showAnimationTab]
+  );
   const ref = useRef();
   const handleNavigation = useCallback(
-    (direction) => () => {
+    (direction) => {
       const currentIndex = panes.findIndex(({ id }) => id === tab);
       const nextPane = panes[currentIndex + direction];
       if (!nextPane) {

@@ -52,9 +52,23 @@ function CanvasProvider({ children }) {
   } = useEditingElement();
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { toggleElementInSelection, setSelectedElementsById },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    toggleElementInSelection,
+    setSelectedElementsById,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementIds },
+      actions: { toggleElementInSelection, setSelectedElementsById },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        toggleElementInSelection,
+        setSelectedElementsById,
+      };
+    }
+  );
 
   const handleSelectElement = useCallback(
     (elId, evt) => {

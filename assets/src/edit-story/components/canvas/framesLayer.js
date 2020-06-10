@@ -67,9 +67,9 @@ const Hint = styled.div`
 `;
 
 function FramesLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
   const {
     state: { showSafeZone },
   } = useCanvas();

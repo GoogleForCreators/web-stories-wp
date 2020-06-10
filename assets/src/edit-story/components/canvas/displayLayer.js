@@ -28,13 +28,20 @@ import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 
 function DisplayLayer() {
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
   const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement },
-    actions: { setPageContainer, setFullbleedContainer },
-  } = useCanvas();
+    editingElement,
+    setPageContainer,
+    setFullbleedContainer,
+  } = useCanvas(
+    ({
+      state: { editingElement },
+      actions: { setPageContainer, setFullbleedContainer },
+    }) => ({ editingElement, setPageContainer, setFullbleedContainer })
+  );
+
   return (
     <Layer data-testid="DisplayLayer" pointerEvents="none">
       <PageArea

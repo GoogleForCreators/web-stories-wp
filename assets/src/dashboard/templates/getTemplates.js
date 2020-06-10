@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { migrate } from '../../edit-story/migration/migrate';
-import { memoize } from '../utils';
 import beauty from './raw/beauty.json';
 import cooking from './raw/cooking.json';
 import diy from './raw/diy.json';
@@ -77,4 +76,4 @@ export function loadTemplates(imageBaseUrl) {
   );
 }
 
-export default memoize(loadTemplates);
+export default loadTemplates;
