@@ -38,10 +38,6 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
-function defaultOpacity({ opacity }) {
-  return typeof opacity !== 'undefined' ? opacity : 100;
-}
-
 const MIN_MAX = {
   OPACITY: {
     MIN: 0,
@@ -49,15 +45,22 @@ const MIN_MAX = {
   },
 };
 
+function defaultOpacity({ opacity }) {
+  return typeof opacity !== 'undefined' ? opacity : MIN_MAX.OPACITY.MAX;
+}
+
 function LayerStylePanel({ selectedElements, pushUpdate }) {
   const opacity = getCommonValue(selectedElements, defaultOpacity);
 
-  usePresubmitHandler(
-    ({ opacity: newOpacity }) => ({
-      opacity: setMinMax(newOpacity, MIN_MAX.OPACITY),
-    }),
-    []
-  );
+  usePresubmitHandler(({ opacity: newOpacity }, { opacity: oldOpacity }) => {
+    const value =
+      typeof opacity === 'undefined' || typeof oldOpacity === 'undefined'
+        ? MIN_MAX.OPACITY.MAX
+        : newOpacity;
+    return {
+      opacity: setMinMax(value, MIN_MAX.OPACITY),
+    };
+  }, []);
 
   return (
     <SimplePanel name="layerStyle" title={__('Layer', 'web-stories')}>
