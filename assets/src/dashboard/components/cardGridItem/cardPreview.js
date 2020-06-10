@@ -178,7 +178,7 @@ const CardPreviewContainer = ({
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
       >
         <EmptyActionContainer />
-        {centerAction && !centerAction.inProgress && (
+        {centerAction?.label && (
           <ActionContainer>
             <Button
               type={BUTTON_TYPES.SECONDARY}
@@ -201,7 +201,7 @@ const CardPreviewContainer = ({
 const ActionButtonPropType = PropTypes.shape({
   targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
-  label: ActionLabel.isRequired,
+  label: ActionLabel,
 });
 
 CardPreviewContainer.propTypes = {

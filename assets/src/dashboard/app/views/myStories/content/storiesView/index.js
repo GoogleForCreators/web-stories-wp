@@ -24,7 +24,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import PropTypes from 'prop-types';
 import { useState, useCallback, useMemo } from 'react';
-
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -41,6 +41,7 @@ import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
+  STORY_CONTEXT_MENU_ITEMS,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
 
@@ -54,7 +55,9 @@ function StoriesView({
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
-
+  const enableInProgressStoryActions = useFeature(
+    'enableInProgressStoryActions'
+  );
   const handleOnRenameStory = useCallback(
     (story, newTitle) => {
       setTitleRenameId(-1);
@@ -103,13 +106,26 @@ function StoriesView({
     [storyActions]
   );
 
+  const enabledMenuItems = useMemo(() => {
+    if (enableInProgressStoryActions) {
+      return STORY_CONTEXT_MENU_ITEMS;
+    }
+    return STORY_CONTEXT_MENU_ITEMS.filter((item) => !item.inProgress);
+  }, [enableInProgressStoryActions]);
+
   const storyMenu = useMemo(() => {
     return {
       handleMenuToggle: setContextMenuId,
       contextMenuId,
       handleMenuItemSelected,
+      menuItems: enabledMenuItems,
     };
-  }, [setContextMenuId, contextMenuId, handleMenuItemSelected]);
+  }, [
+    setContextMenuId,
+    contextMenuId,
+    handleMenuItemSelected,
+    enabledMenuItems,
+  ]);
 
   const renameStory = useMemo(() => {
     return {
@@ -134,7 +150,9 @@ function StoriesView({
   ) : (
     <StoryGridView
       bottomActionLabel={__('Open in editor', 'web-stories')}
-      centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
+      centerActionLabelByStatus={
+        enableInProgressStoryActions && STORY_ITEM_CENTER_ACTION_LABELS
+      }
       pageSize={view.pageSize}
       renameStory={renameStory}
       storyMenu={storyMenu}

@@ -127,8 +127,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
 
   const renderMenuItem = useCallback(
     (item, index) => {
-      const itemIsDisabled =
-        (!item.value && item.value !== 0) || item.inProgress;
+      const itemIsDisabled = !item.value && item.value !== 0;
       return (
         <MenuItem
           key={`${item.value}_${index}`}
