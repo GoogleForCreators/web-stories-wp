@@ -140,25 +140,32 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
 		$initial_orderby = 'foo bar';
+		$initial_join    = 'foo baz';
 
 		$query = new \WP_Query();
 		$query->set( 'post_type', 'foo' );
 		$query->set( 'orderby', 'story_author' );
 
 		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
+		$join    = $controller->filter_posts_join( $initial_join, $query );
 		$this->assertEquals( $orderby, $initial_orderby );
+		$this->assertEquals( $join, $initial_join );
 
 		$query->set( 'post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$query->set( 'orderby', 'author' );
 
 		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
+		$join    = $controller->filter_posts_join( $initial_join, $query );
 		$this->assertEquals( $orderby, $initial_orderby );
+		$this->assertEquals( $join, $initial_join );
 
 		$query->set( 'orderby', 'story_author' );
 		wp_set_current_user( 0 );
 
 		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
+		$join    = $controller->filter_posts_join( $initial_join, $query );
 		$this->assertEquals( $orderby, $initial_orderby );
+		$this->assertEquals( $join, $initial_join );
 
 		// Registered during init.
 		unregister_block_type( 'web-stories/embed' );

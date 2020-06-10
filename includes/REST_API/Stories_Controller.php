@@ -165,18 +165,47 @@ class Stories_Controller extends Stories_Base_Controller {
 	 */
 	public function filter_posts_orderby( $orderby, $query ) {
 		global $wpdb;
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
+		if ( ! $this->should_filter_query( $query ) ) {
 			return $orderby;
 		}
-		if ( 'story_author' !== $query->get( 'orderby' ) ) {
-			return $orderby;
+		$order = $query->get( 'order' );
+
+		return "$wpdb->users.display_name $order, $wpdb->posts.post_modified $order"; // phpcs:ignore WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
+	}
+
+	/**
+	 * Filters the join query to filter first all the current user's posts and then the rest.
+	 *
+	 * @param string    $join Join clause.
+	 * @param \WP_Query $query WP_Query object.
+	 * @return string Join clause.
+	 */
+	public function filter_posts_join( $join, $query ) {
+		global $wpdb;
+		if ( ! $this->should_filter_query( $query ) ) {
+			return $join;
 		}
 
-		$current_user = get_current_user_id();
-		if ( ! $current_user ) {
-			return $orderby;
+		$join .= " LEFT JOIN $wpdb->users ON ($wpdb->posts.post_author = $wpdb->users.ID) "; // phpcs:ignore WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
+
+		return $join;
+	}
+
+	/**
+	 * Check if query should be filtered.
+	 *
+	 * @param \WP_Query $query WP_Query object.
+	 * @return bool
+	 */
+	public function should_filter_query( $query ) {
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
+			return false;
 		}
-		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_author DESC, wp_posts.post_modified DESC', $current_user );
+		if ( 'story_author' !== $query->get( 'orderby' ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -187,8 +216,10 @@ class Stories_Controller extends Stories_Base_Controller {
 	 */
 	public function get_items( $request ) {
 		add_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10, 2 );
+		add_filter( 'posts_join', [ $this, 'filter_posts_join' ], 10, 2 );
 		$response = parent::get_items( $request );
 		remove_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10 );
+		remove_filter( 'posts_join', [ $this, 'filter_posts_join' ], 10 );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;
