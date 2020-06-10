@@ -407,6 +407,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-04
 				 */
 				'showAnimationTab'            => false,
+				/**
+				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
+				 * Author: @dmmulroy
+				 * Issue: #2044
+				 * Creation date: 2020-06-04
+				 */
+				'showTextMagicAndHelperMode'  => false,
 			],
 
 		];
