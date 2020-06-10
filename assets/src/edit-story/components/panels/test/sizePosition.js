@@ -386,5 +386,22 @@ describe('Panels/SizePosition', () => {
       );
       expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: true });
     });
+
+    it('should update height with lock ratio and extrapolated size and reset to max allowed', () => {
+      const { getByRole, pushUpdate, submit } = renderSizePosition([image]);
+      const input = getByRole('textbox', { name: 'Height' });
+      fireEvent.change(input, { target: { value: '2000' } });
+      expect(pushUpdate).toHaveBeenCalledWith({
+        height: 2000,
+        width: 2000 * (100 / 80),
+      });
+
+      const submits = submit({ height: 2000, width: 2000 * (100 / 80) });
+      expect(submits[image.id]).toStrictEqual({
+        rotationAngle: 0,
+        height: 1000 / (100 / 80),
+        width: 1000,
+      });
+    });
   });
 });

@@ -152,7 +152,12 @@ function SizePositionPanel({
       const { updateForResizeEvent } = getDefinitionForType(type);
       if (updateForResizeEvent) {
         const direction = [isResizeWidth ? 1 : 0, isResizeHeight ? 1 : 0];
-        return updateForResizeEvent(newElement, direction, newWidth, newHeight);
+        return updateForResizeEvent(
+          newElement,
+          direction,
+          setMinMax(newWidth, MIN_MAX.WIDTH),
+          setMinMax(newHeight, MIN_MAX.HEIGHT)
+        );
       }
 
       // Fallback to ratio.
@@ -165,7 +170,7 @@ function SizePositionPanel({
         }
         if (!isResizeHeight) {
           return {
-            height: setMinMax(dataPixels(newWidth * ratio), MIN_MAX.HEIGHT),
+            height: setMinMax(dataPixels(newWidth / ratio), MIN_MAX.HEIGHT),
           };
         }
       }
@@ -185,48 +190,40 @@ function SizePositionPanel({
   );
 
   const setDimensionMinMax = useCallback(
-    (size, dimension, ratio, oldWidth, oldHeight) => {
-      if (
-        lockAspectRatio &&
-        oldHeight !== oldWidth &&
-        size * ratio >= dimension.MAX
-      ) {
-        return setMinMax(dimension.MAX * ratio, dimension);
+    (ratio, value, minmax) => {
+      if (lockAspectRatio && value >= minmax.MAX) {
+        return setMinMax(minmax.MAX * ratio, minmax);
       }
 
-      return setMinMax(size, dimension);
+      return setMinMax(value, minmax);
     },
     [lockAspectRatio]
-  );
-
-  usePresubmitHandler(
-    ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
-      return {
-        width: setDimensionMinMax(
-          dataPixels(newWidth),
-          MIN_MAX.WIDTH,
-          oldWidth / oldHeight,
-          oldWidth,
-          oldHeight
-        ),
-      };
-    },
-    [width, lockAspectRatio]
   );
 
   usePresubmitHandler(
     ({ height: newHeight }, { width: oldWidth, height: oldHeight }) => {
       return {
         height: setDimensionMinMax(
-          dataPixels(newHeight),
-          MIN_MAX.HEIGHT,
           oldHeight / oldWidth,
-          oldWidth,
-          oldHeight
+          dataPixels(newHeight),
+          MIN_MAX.HEIGHT
         ),
       };
     },
     [height, lockAspectRatio]
+  );
+
+  usePresubmitHandler(
+    ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
+      return {
+        width: setDimensionMinMax(
+          oldWidth / oldHeight,
+          dataPixels(newWidth),
+          MIN_MAX.WIDTH
+        ),
+      };
+    },
+    [width, lockAspectRatio]
   );
 
   const handleSetBackground = useCallback(() => {
@@ -262,8 +259,6 @@ function SizePositionPanel({
             }
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
-          min={MIN_MAX.WIDTH.MIN}
-          max={MIN_MAX.WIDTH.MAX}
           aria-label={__('Width', 'web-stories')}
         />
         <Toggle
@@ -277,8 +272,6 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={height}
-          min={MIN_MAX.HEIGHT.MIN}
-          max={MIN_MAX.HEIGHT.MAX}
           onChange={(value) => {
             const newHeight = value;
             let newWidth = width;
@@ -302,8 +295,6 @@ function SizePositionPanel({
           value={rotationAngle}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
           aria-label={__('Rotation', 'web-stories')}
-          min={MIN_MAX.ROTATION.MIN}
-          max={MIN_MAX.ROTATION.MAX}
         />
         {canFlip && (
           <FlipControls
