@@ -428,7 +428,7 @@ class Story_Post_Type {
 				 * Issue: #2095
 				 * Creation date: 2020-06-04
 				 */
-					'showPrePublishTab'       => false,
+				'showPrePublishTab'           => false,
 				/**
 				 * Description: Flag for displaying the animation tab/panel.
 				 * Author: @dmmulroy
