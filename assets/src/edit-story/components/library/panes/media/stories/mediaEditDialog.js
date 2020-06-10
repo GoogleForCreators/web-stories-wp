@@ -48,7 +48,7 @@ export const _default = () => {
     type: 'image',
     mimeType: 'image/png',
     title: 'My Image :)',
-    uploadDate: Date.now(),
+    uploadDate: Date.now().toString(),
     src: testImage,
     width: 910,
     height: 675,
