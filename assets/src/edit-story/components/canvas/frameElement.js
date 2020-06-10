@@ -66,11 +66,13 @@ function FrameElement({ element }) {
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
 
-  const { setNodeForElement, handleSelectElement } = useCanvas((state) => ({
-    setNodeForElement: state.actions.setNodeForElement,
-    handleSelectElement: state.actions.handleSelectElement,
-    isEditing: state.state.isEditing,
-  }));
+  const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
+    (state) => ({
+      setNodeForElement: state.actions.setNodeForElement,
+      handleSelectElement: state.actions.handleSelectElement,
+      isEditing: state.state.isEditing,
+    })
+  );
   const { selectedElementIds, currentPage } = useStory((state) => ({
     selectedElementIds: state.state.selectedElementIds,
     currentPage: state.state.currentPage,

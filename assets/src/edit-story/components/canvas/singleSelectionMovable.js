@@ -65,8 +65,22 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       },
     }) => ({ canvasWidth, canvasHeight, nodesById, fullbleedContainer })
   );
-  const { getBox, editorToDataX, editorToDataY, dataToEditorY } = useUnits(
-    ({ actions: { getBox, editorToDataX, editorToDataY, dataToEditorY, dataToEditorX } }) => ({
+  const {
+    getBox,
+    editorToDataX,
+    editorToDataY,
+    dataToEditorY,
+    dataToEditorX,
+  } = useUnits(
+    ({
+      actions: {
+        getBox,
+        editorToDataX,
+        editorToDataY,
+        dataToEditorY,
+        dataToEditorX,
+      },
+    }) => ({
       getBox,
       editorToDataX,
       editorToDataY,
