@@ -90,8 +90,11 @@ describe('Publishing Flow', () => {
     await publishPostWithPrePublishChecksDisabled();
     await enablePrePublishChecks();
 
-    await expect(page).toClick('a', { text: 'View post' });
-    await page.waitForNavigation();
+    const postPermalink = await page.evaluate(() =>
+      wp.data.select('core/editor').getPermalink()
+    );
+
+    await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
 
     await expect(page).toMatch('Publishing Flow Test');
     await expect(page).toMatchElement('amp-story-player');
