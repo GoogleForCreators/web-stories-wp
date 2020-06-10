@@ -172,6 +172,12 @@ describe('Panels/TextStyle', () => {
     expect(submits[textElement.id]).toStrictEqual({
       fontSize: 70,
       height: 171,
+      lineHeight: NaN,
+      padding: {
+        horizontal: 0,
+        locked: true,
+        vertical: 0,
+      },
       x: dx,
       y: dy,
     });
