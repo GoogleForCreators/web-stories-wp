@@ -205,9 +205,16 @@ function calculatePageThumbSize(carouselSize) {
 
 function Carousel() {
   const {
-    state: { pages, currentPageId },
-    actions: { setCurrentPage, arrangePage },
-  } = useStory();
+    pages,
+    currentPageId,
+    setCurrentPage,
+    arrangePage,
+  } = useStory(
+    ({
+      state: { pages, currentPageId },
+      actions: { setCurrentPage, arrangePage },
+    }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
+  );
   const { isRTL } = useConfig();
   const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);

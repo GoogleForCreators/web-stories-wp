@@ -33,7 +33,7 @@ import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useConfig } from '../../../../app/config';
 import { useStory } from '../../../../app/story';
-import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
+import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../keyboard';
 import useFocusOut from '../../../../utils/useFocusOut';
 import { getReadableDate, getReadableTime, is12Hour } from './utils';
@@ -78,12 +78,17 @@ const StyledToggleIcon = styled(ToggleIcon)`
 `;
 
 function PublishTime() {
-  const {
-    state: {
-      story: { date },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { date, updateStory } = useStory(
+    ({
+      state: {
+        story: { date },
+      },
+      actions: { updateStory },
+    }) => ({
+      date,
+      updateStory,
+    })
+  );
   const { timeFormat } = useConfig();
   const use12HourFormat = is12Hour(timeFormat);
 

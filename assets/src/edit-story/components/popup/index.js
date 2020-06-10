@@ -69,7 +69,7 @@ const Container = styled.div.attrs(
     maxHeight > 0 ? maxHeight + 'px' : 'initial'};
   overflow-y: auto;
   position: fixed;
-  z-index: 2147483646;
+  z-index: 2;
   ${({ placement }) => getTransforms(placement)}
 
   /*

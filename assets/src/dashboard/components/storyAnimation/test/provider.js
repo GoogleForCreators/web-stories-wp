@@ -204,7 +204,17 @@ describe('StoryAnimation.Provider', () => {
       const play = jest.fn();
       const pause = jest.fn();
       const animations = Array.from({ length: numCalls }, () => {
-        const animation = mockWAAPIAnimation({ play, pause, currentTime: 0 });
+        const animation = mockWAAPIAnimation({
+          play,
+          pause,
+          currentTime: 0,
+          effect: {
+            timing: {
+              duration: 300,
+              delay: 0,
+            },
+          },
+        });
         act(() => {
           result.current.actions.hoistWAAPIAnimation(animation);
         });
@@ -241,6 +251,12 @@ describe('StoryAnimation.Provider', () => {
           play: jest.fn(),
           pause: jest.fn(),
           currentTime: initialTime,
+          effect: {
+            timing: {
+              duration: 300,
+              delay: 0,
+            },
+          },
         })
       );
 

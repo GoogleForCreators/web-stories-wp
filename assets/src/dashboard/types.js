@@ -76,6 +76,10 @@ export const StoryActionsPropType = PropTypes.shape({
   updateStory: PropTypes.func,
 });
 
+export const TemplateActionsPropType = PropTypes.shape({
+  createStoryFromTemplate: PropTypes.func,
+});
+
 export const TotalStoriesByStatusPropType = PropTypes.shape({
   all: PropTypes.number,
   draft: PropTypes.number,

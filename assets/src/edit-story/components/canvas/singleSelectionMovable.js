@@ -31,6 +31,7 @@ import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
+import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -43,18 +44,34 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
+  const { updateSelectedElements, deleteSelectedElements } = useStory(
+    (state) => ({
+      updateSelectedElements: state.actions.updateSelectedElements,
+      deleteSelectedElements: state.actions.deleteSelectedElements,
+    })
+  );
   const {
-    actions: { updateSelectedElements },
-  } = useStory();
-  const {
-    state: {
-      pageSize: { width: canvasWidth, height: canvasHeight },
-      nodesById,
-    },
-  } = useCanvas();
-  const {
-    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
-  } = useUnits();
+    canvasWidth,
+    canvasHeight,
+    nodesById,
+    fullbleedContainer,
+  } = useCanvas(
+    ({
+      state: {
+        pageSize: { width: canvasWidth, height: canvasHeight },
+        nodesById,
+        fullbleedContainer,
+      },
+    }) => ({ canvasWidth, canvasHeight, nodesById, fullbleedContainer })
+  );
+  const { getBox, editorToDataX, editorToDataY, dataToEditorY } = useUnits(
+    ({ actions: { getBox, editorToDataX, editorToDataY, dataToEditorY } }) => ({
+      getBox,
+      editorToDataX,
+      editorToDataY,
+      dataToEditorY,
+    })
+  );
   const {
     actions: { pushTransform },
   } = useTransform();
@@ -168,6 +185,17 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
 
+  // Removes element if it's outside of canvas.
+  const handleElementOutOfCanvas = (target) => {
+    if (isTargetOutOfContainer(target, fullbleedContainer)) {
+      setIsDragging(false);
+      setDraggingResource(null);
+      deleteSelectedElements();
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Movable
       className={`default-movable ${hideHandles ? 'hide-handles' : ''} ${
@@ -201,6 +229,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         set(frame.translate);
       }}
       onDragEnd={({ target }) => {
+        if (handleElementOutOfCanvas(target)) {
+          return;
+        }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
         if (deltaX !== 0 || deltaY !== 0) {
@@ -252,6 +283,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setTransformStyle(target);
       }}
       onResizeEnd={({ target }) => {
+        if (handleElementOutOfCanvas(target)) {
+          return;
+        }
         const [editorWidth, editorHeight] = frame.resize;
         if (editorWidth !== 0 && editorHeight !== 0) {
           const { direction } = frame;
@@ -287,6 +321,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setTransformStyle(target);
       }}
       onRotateEnd={({ target }) => {
+        if (handleElementOutOfCanvas(target)) {
+          return;
+        }
         const properties = { rotationAngle: Math.round(frame.rotate) };
         updateSelectedElements({ properties });
         resetMoveable(target);

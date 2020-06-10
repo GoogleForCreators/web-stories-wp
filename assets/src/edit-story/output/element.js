@@ -46,6 +46,7 @@ function OutputElement({ element }) {
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
         opacity: opacity ? opacity / 100 : null,
       }}
+      skipDefaultMask
     >
       <WithLink
         element={element}
