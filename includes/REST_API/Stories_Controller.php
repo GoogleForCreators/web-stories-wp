@@ -162,7 +162,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param string[] $clauses Associative array of the clauses for the query.
 	 * @param WP_Query $query   The WP_Query instance.
 	 *
-	 * @return string Filtered query clauses.
+	 * @return array Filtered query clauses.
 	 */
 	public function filter_posts_clauses( $clauses, $query ) {
 		global $wpdb;
