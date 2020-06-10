@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { createNewStory } from './create-new-story';
+export { default as createNewStory } from './createNewStory';
