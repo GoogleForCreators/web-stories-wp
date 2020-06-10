@@ -52,7 +52,7 @@ function getResourceFromAttachment(attachment) {
   } = attachment;
   return createResource({
     mimeType,
-    uploadDate: date,
+    createTime: date,
     src,
     ...getResourceSize(
       width,
