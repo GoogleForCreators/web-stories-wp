@@ -92,3 +92,22 @@ export function getPagePreset(page, stylePresets) {
     ),
   };
 }
+
+function colorHasTransparency(color) {
+  return color.a && color.a < 1;
+}
+
+export function presetHasOpacity(preset) {
+  const { color, stops } = preset;
+  if (color) {
+    return colorHasTransparency(color);
+  }
+  let opacityFound = false;
+  for (const colorStop of stops) {
+    if (colorHasTransparency(colorStop.color)) {
+      opacityFound = true;
+      break;
+    }
+  }
+  return opacityFound;
+}

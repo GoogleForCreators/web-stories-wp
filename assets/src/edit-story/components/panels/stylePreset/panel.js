@@ -23,7 +23,6 @@ import { useCallback, useRef, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
-import stripHTML from '../../../utils/stripHTML';
 import { Panel } from '../panel';
 import useRichTextFormatting from '../textStyle/useRichTextFormatting';
 import { COLOR_PRESETS_PER_ROW } from '../../../constants';
@@ -241,7 +240,7 @@ function StylePresetPanel() {
         stylePresets={stylePresets}
         handleOnClick={handlePresetClick}
         isText={isText}
-        textContent={isText ? stripHTML(selectedElements[0].content) : ''}
+        isBackground={isBackground}
       />
       <Resize />
     </Panel>

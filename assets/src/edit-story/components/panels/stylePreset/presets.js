@@ -32,7 +32,9 @@ import { Remove } from '../../../icons';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
 import { StylePresetPropType } from '../../../types';
+import WithTooltip from '../../tooltip';
 import PresetGroup from './presetGroup';
+import { presetHasOpacity } from './utils';
 
 const REMOVE_ICON_SIZE = 18;
 const PRESET_HEIGHT = 30;
@@ -61,29 +63,44 @@ const Color = styled.button`
   ${({ color }) => generatePatternStyles(color)}
 `;
 
-function Presets({ stylePresets, handleOnClick, isEditMode, isText }) {
+function Presets({
+  stylePresets,
+  handleOnClick,
+  isEditMode,
+  isText,
+  isBackground,
+}) {
   const { fillColors, textColors } = stylePresets;
 
   const colorPresets = isText ? textColors : fillColors;
   const hasPresets = colorPresets.length > 0;
 
   const colorPresetRenderer = (color, i, activeIndex) => {
+    const disabled = isBackground && presetHasOpacity(color);
+    // @todo The correct text here should be: Page background colors can not have an opacity.
+    // However, due to bug with Tooltips/Popup, the text flows out of the screen.
+    const title = disabled
+      ? __('Opacity not allowed for Page', 'web-stories')
+      : null;
     return (
-      <Color
-        tabIndex={activeIndex === i ? 0 : -1}
-        color={color}
-        onClick={(e) => {
-          e.preventDefault();
-          handleOnClick(color);
-        }}
-        aria-label={
-          isEditMode
-            ? __('Delete color preset', 'web-stories')
-            : __('Apply color preset', 'web-stories')
-        }
-      >
-        {isEditMode && <Remove />}
-      </Color>
+      <WithTooltip title={title}>
+        <Color
+          tabIndex={activeIndex === i ? 0 : -1}
+          color={color}
+          onClick={(e) => {
+            e.preventDefault();
+            !disabled && handleOnClick(color);
+          }}
+          disabled={disabled}
+          aria-label={
+            isEditMode
+              ? __('Delete color preset', 'web-stories')
+              : __('Apply color preset', 'web-stories')
+          }
+        >
+          {isEditMode && <Remove />}
+        </Color>
+      </WithTooltip>
     );
   };
 
@@ -109,6 +126,7 @@ Presets.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   isText: PropTypes.bool.isRequired,
+  isBackground: PropTypes.bool.isRequired,
 };
 
 export default Presets;
