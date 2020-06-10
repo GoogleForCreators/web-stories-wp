@@ -179,9 +179,9 @@ const CarouselArea = styled(Area).attrs({
  * @param {!{current: ?Element}} containerRef
  */
 function useLayoutParams(containerRef) {
-  const {
-    actions: { setPageSize },
-  } = useCanvas();
+  const { setPageSize } = useCanvas((state) => ({
+    setPageSize: state.actions.setPageSize,
+  }));
 
   useResizeEffect(containerRef, ({ width, height }) => {
     // See Layer's `grid` CSS above. Per the layout, the maximum available
@@ -199,9 +199,9 @@ function useLayoutParams(containerRef) {
 }
 
 function useLayoutParamsCssVars() {
-  const {
-    state: { pageSize },
-  } = useCanvas();
+  const { pageSize } = useCanvas((state) => ({
+    pageSize: state.state.pageSize,
+  }));
   return {
     '--page-width-px': `${pageSize.width}px`,
     '--page-height-px': `${pageSize.height}px`,

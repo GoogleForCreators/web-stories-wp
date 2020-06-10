@@ -48,12 +48,14 @@ function StatusPanel() {
     actions: { loadUsers },
   } = useInspector();
 
-  const {
-    state: {
-      story: { status, password },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { status, password, updateStory } = useStory(
+    ({
+      state: {
+        story: { status, password },
+      },
+      actions: { updateStory },
+    }) => ({ status, password, updateStory })
+  );
 
   const { capabilities } = useConfig();
 

@@ -24,9 +24,13 @@ import { renderHook, act } from '@testing-library/react-hooks';
  */
 import useUploadMedia from '../useUploadMedia';
 
+const mockUploadFile = jest.fn();
+const mockIsValidType = jest.fn();
+
 jest.mock('../../uploader', () => ({
   useUploader: jest.fn(() => ({
-    uploadFile: jest.fn(),
+    uploadFile: mockUploadFile,
+    isValidType: mockIsValidType,
   })),
 }));
 
@@ -48,7 +52,10 @@ jest.mock('../../config', () => ({
 }));
 
 jest.mock('../../../app/media/utils');
-import { getResourceFromLocalFile } from '../../../app/media/utils';
+import {
+  getResourceFromLocalFile,
+  getResourceFromAttachment,
+} from '../../../app/media/utils';
 
 function setup() {
   const media = [
@@ -57,17 +64,11 @@ function setup() {
     { type: 'image/jpeg', src: 'image3.jpg' },
   ];
 
-  const pagingNum = 1;
-  const mediaType = undefined;
   const setMedia = jest.fn();
-  const fetchMedia = jest.fn();
 
   const { result } = renderHook(() =>
     useUploadMedia({
       media,
-      pagingNum,
-      mediaType,
-      fetchMedia,
       setMedia,
     })
   );
@@ -75,53 +76,100 @@ function setup() {
   const { uploadMedia } = result.current;
   return {
     uploadMedia,
-    fetchMedia,
     setMedia,
     media,
   };
 }
 
+const supportedLocalResourceTypes = ['image', 'video'];
+
+function isLocalResourceSupported(resource) {
+  return supportedLocalResourceTypes.some((type) =>
+    resource.type.startsWith(type)
+  );
+}
+
 describe('useUploadMedia', () => {
+  beforeEach(() => {
+    mockUploadFile.mockReset();
+    mockIsValidType.mockReset();
+    getResourceFromLocalFile.mockReset();
+    getResourceFromAttachment.mockReset();
+
+    // Simple implementation of getResourceFromLocalFile that will return
+    // null on unsupported resources.
+    getResourceFromLocalFile.mockImplementation((e) =>
+      isLocalResourceSupported(e) ? e : null
+    );
+
+    mockIsValidType.mockImplementation(() => true);
+    getResourceFromAttachment.mockImplementation((file) => file);
+  });
+
   it('should not execute file upload process without files', async () => {
-    const { uploadMedia, fetchMedia, setMedia } = setup();
+    const { uploadMedia, setMedia } = setup();
     await act(() => uploadMedia([]));
 
     expect(setMedia).toHaveBeenCalledTimes(0);
-    expect(fetchMedia).toHaveBeenCalledTimes(0);
   });
 
   it('should only setMedia for files supported by getResourceFromLocalFile', async () => {
     const { uploadMedia, setMedia, media } = setup();
-
-    const supportedLocalResource = ['image', 'video'];
-
-    // Simple implementation of getResourceFromLocalFile that will return
-    // null on unsupported resources.
-    getResourceFromLocalFile.mockImplementation((e) => {
-      if (supportedLocalResource.includes(e.type)) {
-        return e;
-      } else {
-        return null;
-      }
-    });
 
     const newFiles = [
       { type: 'video/mp4', src: 'video1.mp4' },
       { type: 'text/plain', src: 'text.txt' }, // Unsupported File Format
       { type: 'image/jpeg', src: 'image5.jpg' },
     ];
-    const expectedSetMediaArgs = [
-      ...media,
-      ...newFiles.filter(({ type }) => supportedLocalResource.includes(type)),
-    ];
-
     await act(() => uploadMedia(newFiles));
 
-    expect(setMedia).toHaveBeenCalledTimes(1);
+    // Should have skipped each unsupported file.
+    expect(setMedia).toHaveBeenCalledTimes(2);
+    expect(setMedia.mock.calls[0][0].media).toIncludeSameMembers([
+      ...newFiles.filter(isLocalResourceSupported),
+      ...media,
+    ]);
+  });
 
-    const setMediaArgs = setMedia.mock.calls[0][0].media;
+  it('before upload should setMedia for local version of resource', async () => {
+    const { uploadMedia, setMedia, media } = setup();
 
-    // Should have skipped every unsupported file.
-    expect(setMediaArgs).toIncludeSameMembers(expectedSetMediaArgs);
+    const newFiles = [
+      { type: 'video/mp4', src: 'video1.mp4' },
+      { type: 'image/jpeg', src: 'image5.jpg' },
+    ];
+    await act(() => uploadMedia(newFiles));
+
+    // Should have added each local file to be uploaded.
+    expect(setMedia).toHaveBeenCalledTimes(2);
+    expect(setMedia.mock.calls[0][0].media).toIncludeSameMembers([
+      ...newFiles,
+      ...media,
+    ]);
+  });
+
+  it('after upload should setMedia for remote version of resource', async () => {
+    const { uploadMedia, setMedia, media } = setup();
+
+    mockUploadFile.mockImplementation((file) => {
+      return {
+        ...file,
+        title: `title of ${file.src}`,
+      };
+    });
+
+    const newFiles = [
+      { type: 'image/jpeg', src: 'image5.jpg' },
+      { type: 'video/mp4', src: 'video1.mp4' },
+    ];
+    await act(() => uploadMedia(newFiles));
+
+    // Should have updated each uploaded file with the remote version.
+    expect(setMedia).toHaveBeenCalledTimes(2);
+    expect(setMedia.mock.calls[1][0].media).toIncludeSameMembers([
+      { type: 'image/jpeg', src: 'image5.jpg', title: 'title of image5.jpg' },
+      { type: 'video/mp4', src: 'video1.mp4', title: 'title of video1.mp4' },
+      ...media,
+    ]);
   });
 });
