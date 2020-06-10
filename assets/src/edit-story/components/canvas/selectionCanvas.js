@@ -28,6 +28,7 @@ import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import InOverlay from '../overlay';
 import { useUnits } from '../../units';
+import { PAGE_RATIO } from '../../constants';
 import useCanvas from './useCanvas';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
@@ -57,17 +58,40 @@ const Lasso = styled.div`
 `;
 
 function SelectionCanvas({ children }) {
+  const { selectedElements, currentPage, clearSelection } = useStory(
+    ({
+      state: { selectedElements, currentPage },
+      actions: { clearSelection },
+    }) => ({
+      selectedElements,
+      currentPage,
+      clearSelection,
+    })
+  );
   const {
-    actions: { clearSelection },
-    state: { selectedElements, currentPage },
-  } = useStory();
-  const {
-    state: { fullbleedContainer, isEditing, nodesById },
-    actions: { clearEditing, selectIntersection },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY },
-  } = useUnits();
+    fullbleedContainer,
+    isEditing,
+    nodesById,
+    clearEditing,
+    selectIntersection,
+  } = useCanvas(
+    ({
+      state: { fullbleedContainer, isEditing, nodesById },
+      actions: { clearEditing, selectIntersection },
+    }) => {
+      return {
+        fullbleedContainer,
+        isEditing,
+        nodesById,
+        clearEditing,
+        selectIntersection,
+      };
+    }
+  );
+  const { editorToDataX, editorToDataY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+  }));
 
   const overlayRef = useRef(null);
   const lassoRef = useRef(null);
@@ -150,8 +174,17 @@ function SelectionCanvas({ children }) {
   const onMouseUp = () => {
     if (lassoModeRef.current === LassoMode.ON) {
       const [lx, ly, lwidth, lheight] = getLassoBox();
-      const x = editorToDataX(lx - fullbleedContainer.offsetLeft);
-      const y = editorToDataY(ly - fullbleedContainer.offsetTop);
+      const {
+        offsetLeft,
+        offsetTop,
+        offsetHeight,
+        offsetWidth,
+      } = fullbleedContainer;
+      // Offset from the fullbleed to the safe zone.
+      const dx = offsetLeft;
+      const dy = offsetTop + (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
+      const x = editorToDataX(lx - dx);
+      const y = editorToDataY(ly - dy);
       const width = editorToDataX(lwidth);
       const height = editorToDataY(lheight);
       clearSelection();

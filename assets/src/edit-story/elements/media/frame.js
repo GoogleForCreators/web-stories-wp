@@ -33,9 +33,9 @@ const Element = styled.div`
 `;
 
 function MediaFrame({ element: { id } }) {
-  const {
-    actions: { setEditingElement },
-  } = useCanvas();
+  const { setEditingElement } = useCanvas((state) => ({
+    setEditingElement: state.actions.setEditingElement,
+  }));
   const handleSingleClick = useCallback(() => {}, []);
   const handleDoubleClick = useCallback(() => setEditingElement(id), [
     id,

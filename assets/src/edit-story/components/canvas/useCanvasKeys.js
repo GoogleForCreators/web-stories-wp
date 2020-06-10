@@ -35,15 +35,33 @@ const MOVE_COARSE_STEP = 10;
  */
 function useCanvasKeys(ref) {
   const {
-    actions: {
-      addElements,
-      arrangeSelection,
-      clearSelection,
-      deleteSelectedElements,
-      updateSelectedElements,
-    },
-    state: { selectedElements },
-  } = useStory();
+    selectedElements,
+    addElements,
+    arrangeSelection,
+    clearSelection,
+    deleteSelectedElements,
+    updateSelectedElements,
+  } = useStory(
+    ({
+      state: { selectedElements },
+      actions: {
+        addElements,
+        arrangeSelection,
+        clearSelection,
+        deleteSelectedElements,
+        updateSelectedElements,
+      },
+    }) => {
+      return {
+        selectedElements,
+        addElements,
+        arrangeSelection,
+        clearSelection,
+        deleteSelectedElements,
+        updateSelectedElements,
+      };
+    }
+  );
 
   // Return focus back to the canvas when another section loses the focus.
   useEffect(() => {
@@ -54,16 +72,15 @@ function useCanvasKeys(ref) {
 
     const doc = container.ownerDocument;
 
-    const handler = (evt) => {
-      if (!container.contains(evt.target)) {
-        // Make sure that no other component is trying to get the focus
-        // at this time.
-        setTimeout(() => {
-          if (doc.activeElement === doc.body) {
-            container.focus();
-          }
-        }, 300);
-      }
+    const handler = () => {
+      // Make sure that no other component is trying to get the focus
+      // at this time. We have to check all "focusout" events here because
+      // after DOM removal, the "focusout" events are all over the place.
+      setTimeout(() => {
+        if (doc.activeElement === doc.body) {
+          container.focus();
+        }
+      }, 300);
     };
     doc.addEventListener('focusout', handler, true);
     return () => {

@@ -25,21 +25,17 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
+import generatePatternStyles from '../utils/generatePatternStyles';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const { id, elements, backgroundOverlay } = page;
+  const { id, elements, backgroundOverlay, backgroundColor } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
-    backgroundImage: `linear-gradient(45deg, #999999 25%, transparent 25%),
-      linear-gradient(-45deg, #999999 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, #999999 75%),
-      linear-gradient(-45deg, transparent 75%, #999999 75%)`,
-    backgroundSize: '20px 20px',
-    backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+    ...generatePatternStyles(backgroundColor),
   };
   const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
   const backgroundElements = elements.filter((element) => element.isBackground);
@@ -56,29 +52,29 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
       {backgroundElements.length > 0 && (
-        <amp-story-grid-layer template="vertical">
-          <div className="page-background-area" style={backgroundStyles}>
-            {backgroundElements.map((element) => (
+        <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+          <div className="page-fullbleed-area" style={backgroundStyles}>
+            <div className="page-safe-area">
+              {backgroundElements.map((element) => (
+                <OutputElement key={'el-' + element.id} element={element} />
+              ))}
+            </div>
+          </div>
+          {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
+            <div
+              className="page-fullbleed-area"
+              style={{ ...backgroundOverlayStyles }}
+            />
+          )}
+        </amp-story-grid-layer>
+      )}
+      <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+        <div className="page-fullbleed-area">
+          <div className="page-safe-area">
+            {regularElements.map((element) => (
               <OutputElement key={'el-' + element.id} element={element} />
             ))}
           </div>
-        </amp-story-grid-layer>
-      )}
-
-      {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
-        <amp-story-grid-layer template="vertical">
-          <div
-            className="page-background-overlay-area"
-            style={{ ...backgroundOverlayStyles }}
-          />
-        </amp-story-grid-layer>
-      )}
-
-      <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
-        <div className="page-safe-area">
-          {regularElements.map((element) => (
-            <OutputElement key={'el-' + element.id} element={element} />
-          ))}
         </div>
       </amp-story-grid-layer>
     </amp-story-page>
