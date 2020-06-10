@@ -41,15 +41,6 @@ class Discovery {
 	 * @return void
 	 */
 	public function init() {
-		add_action(
-			'web_stories_story_head',
-			static function () {
-				// Theme support for title-tag is implied for stories. See _wp_render_title_tag().
-				echo '<title>' . esc_html( wp_get_document_title() ) . '</title>' . "\n";
-			},
-			1
-		);
-
 		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
@@ -74,10 +65,15 @@ class Discovery {
 	/**
 	 * Prints general metadata on the single story template.
 	 *
+	 * Theme support for title tag is implied for stories.
+	 *
+	 * @see _wp_render_title_tag().
+	 *
 	 * @return void
 	 */
 	public function print_metadata() {
 		?>
+		<title><?php echo esc_html( wp_get_document_title() ); ?></title>
 		<meta name="description" content="<?php echo esc_attr( wp_strip_all_tags( get_the_excerpt() ) ); ?>" />
 		<?php
 	}
