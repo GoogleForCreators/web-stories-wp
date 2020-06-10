@@ -37,7 +37,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   },
   {
     label: __('Preview', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.PREVIEW,
+    value: false, // STORY_CONTEXT_MENU_ACTIONS.PREVIEW,
   },
   { label: null, value: false, separator: true },
   {
@@ -50,7 +50,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   },
   {
     label: __('Create Template', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE,
+    value: false, // STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE,
   },
   { label: null, value: false, separator: true },
   {
