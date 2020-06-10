@@ -83,3 +83,12 @@ export function getShapePresets(elements, stylePresets) {
       ),
   };
 }
+
+export function getPagePreset(page, stylePresets) {
+  // Page only supports fillColors.
+  return {
+    fillColors: [page.backgroundColor].filter(
+      (color) => color && !findMatchingColor(color, stylePresets, false)
+    ),
+  };
+}

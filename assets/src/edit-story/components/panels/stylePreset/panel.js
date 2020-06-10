@@ -27,33 +27,38 @@ import stripHTML from '../../../utils/stripHTML';
 import { Panel } from '../panel';
 import useRichTextFormatting from '../textStyle/useRichTextFormatting';
 import { COLOR_PRESETS_PER_ROW } from '../../../constants';
-import { getShapePresets, getTextPresets } from './utils';
+import { getPagePreset, getShapePresets, getTextPresets } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
 
 function StylePresetPanel() {
   const {
+    currentPage,
     selectedElementIds,
     selectedElements,
     stylePresets,
     updateStory,
     updateElementsById,
+    updateCurrentPageProperties,
   } = useStory(
     ({
       state: {
+        currentPage,
         selectedElementIds,
         selectedElements,
         story: { stylePresets },
       },
-      actions: { updateStory, updateElementsById },
+      actions: { updateStory, updateElementsById, updateCurrentPageProperties },
     }) => {
       return {
+        currentPage,
         selectedElementIds,
         selectedElements,
         stylePresets,
         updateStory,
         updateElementsById,
+        updateCurrentPageProperties,
       };
     }
   );
@@ -70,6 +75,7 @@ function StylePresetPanel() {
 
   const isText = areAllType('text');
   const isShape = areAllType('shape');
+  const isBackground = (selectedElements[0].id = currentPage.elements[0].id);
 
   const handleDeletePreset = useCallback(
     (toDelete) => {
@@ -102,6 +108,11 @@ function StylePresetPanel() {
           ...addedPresets,
           ...getTextPresets(selectedElements, stylePresets),
         };
+      } else if (isBackground) {
+        addedPresets = {
+          ...addedPresets,
+          ...getPagePreset(currentPage, stylePresets),
+        };
       } else {
         // Currently, shape only supports fillColors.
         addedPresets = {
@@ -125,6 +136,8 @@ function StylePresetPanel() {
       }
     },
     [
+      currentPage,
+      isBackground,
       fillColors,
       textColors,
       isText,
@@ -157,6 +170,10 @@ function StylePresetPanel() {
     (preset) => {
       if (isText) {
         handleSetColor(preset);
+      } else if (isBackground) {
+        updateCurrentPageProperties({
+          properties: { backgroundColor: preset },
+        });
       } else {
         updateElementsById({
           elementIds: selectedElementIds,
@@ -164,7 +181,14 @@ function StylePresetPanel() {
         });
       }
     },
-    [isText, handleSetColor, selectedElementIds, updateElementsById]
+    [
+      isBackground,
+      updateCurrentPageProperties,
+      isText,
+      handleSetColor,
+      selectedElementIds,
+      updateElementsById,
+    ]
   );
 
   const colorPresets = isText ? textColors : fillColors;
