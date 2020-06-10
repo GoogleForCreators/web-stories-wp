@@ -121,6 +121,9 @@ function MediaProvider({ children }) {
 
   const uploadVideoPoster = useCallback(
     (id, src) => {
+      // eslint-disable-next-line no-shadow
+      const { processed, processing } = stateRef.current;
+
       const process = async () => {
         if (processed.includes(id) || processing.includes(id)) {
           return;
@@ -131,7 +134,7 @@ function MediaProvider({ children }) {
       };
       process();
     },
-    [processed, processing, setProcessing, uploadVideoFrame, removeProcessing]
+    [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
   const processor = useCallback(
