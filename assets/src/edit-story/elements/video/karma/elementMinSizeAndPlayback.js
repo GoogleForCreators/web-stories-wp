@@ -58,6 +58,8 @@ describe('Element min size and playback', () => {
         },
       };
       video1 = await fixture.act(() => insertElement('video', videoProps));
+      // fix flaky tests
+      await new Promise((r) => setTimeout(r));
       video2 = await fixture.act(() =>
         insertElement('video', { ...videoProps, x: 20, y: 20 })
       );
