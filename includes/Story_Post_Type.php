@@ -380,6 +380,41 @@ class Story_Post_Type {
 				 */
 				'newFontPicker'                => false,
 				/**
+				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
+				 * Author: @dmmulroy
+				 * Issue: #2094
+				 * Creation date: 2020-06-04
+				 */
+				'showKeyboardShortcutsButton'  => false,
+				/**
+				 * Description: Flag for hiding/enabling text sets.
+				 * Author: @dmmulroy
+				 * Issue: #2097
+				 * Creation date: 2020-06-04
+				 */
+				'showTextSets'                 => false,
+				/**
+				 * Description: Flag for hiding/enabling the pre publish tab.
+				 * Author: @dmmulroy
+				 * Issue: #2095
+				 * Creation date: 2020-06-04
+				 */
+				'showPrePublishTab'            => false,
+				/**
+				 * Description: Flag for displaying the animation tab/panel.
+				 * Author: @dmmulroy
+				 * Issue: #2092
+				 * Creation date: 2020-06-04
+				 */
+				'showAnimationTab'             => false,
+				/**
+				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
+				 * Author: @dmmulroy
+				 * Issue: #2044
+				 * Creation date: 2020-06-04
+				 */
+				'showTextMagicAndHelperMode'   => false,
+				/**
 				 * Description: Flag for hiding/enabling the search input on the text and shapes panes.
 				 * Author: @dmmulroy
 				 * Issue: #2098
@@ -387,6 +422,7 @@ class Story_Post_Type {
 				 */
 				'showTextAndShapesSearchInput' => false,
 			],
+
 		];
 
 		return $settings;

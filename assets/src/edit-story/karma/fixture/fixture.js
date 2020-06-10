@@ -236,6 +236,24 @@ export class Fixture {
   }
 
   /**
+   * @param {Element} element
+   * @return {Promise} Yields when the element is displayed on the screen.
+   */
+  waitOnScreen(element) {
+    return new Promise((resolve) => {
+      const io = new IntersectionObserver((records) => {
+        records.forEach((record) => {
+          if (record.isIntersecting) {
+            resolve();
+            io.disconnect();
+          }
+        });
+      });
+      io.observe(element);
+    });
+  }
+
+  /**
    * Makes a DOM snapshot of the current editor state. Karma must be run
    * with the `--snapshots` option for the snapshotting to be enabled. When
    * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
