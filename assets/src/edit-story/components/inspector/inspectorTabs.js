@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -87,11 +88,17 @@ function InspectorTabs() {
       tabs: { DESIGN, DOCUMENT, PREPUBLISH },
     },
   } = useInspector();
+  const { showPrePublishTab } = useFeatures();
+
   const tabs = [
     [DESIGN, __('Design', 'web-stories')],
     [DOCUMENT, __('Document', 'web-stories')],
-    [PREPUBLISH, __('Prepublish', 'web-stories')],
   ];
+
+  if (showPrePublishTab) {
+    tabs.push([PREPUBLISH, __('Prepublish', 'web-stories')]);
+  }
+
   return (
     <Tabs>
       {tabs.map(([id, Text]) => (
