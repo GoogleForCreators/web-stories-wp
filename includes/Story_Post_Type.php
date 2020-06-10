@@ -85,7 +85,7 @@ class Story_Post_Type {
 				'labels'                => [
 					'name'                     => _x( 'Stories', 'post type general name', 'web-stories' ),
 					'singular_name'            => _x( 'Story', 'post type singular name', 'web-stories' ),
-					'add_new'                  => _x( 'New', 'story', 'web-stories' ),
+					'add_new'                  => _x( 'Add New', 'story', 'web-stories' ),
 					'add_new_item'             => __( 'Add New Story', 'web-stories' ),
 					'edit_item'                => __( 'Edit Story', 'web-stories' ),
 					'new_item'                 => __( 'New Story', 'web-stories' ),

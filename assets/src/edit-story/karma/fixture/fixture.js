@@ -24,12 +24,12 @@ import { render, act } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import App from '../app/index';
-import APIProvider from '../app/api/apiProvider';
-import APIContext from '../app/api/context';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
-import Layout from '../app/layout';
-import FixtureEvents from './fixtureEvents';
+import App from '../../app/index';
+import APIProvider from '../../app/api/apiProvider';
+import APIContext from '../../app/api/context';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import Layout from '../../app/layout';
+import FixtureEvents from './events';
 import getMediaResponse from './db/getMediaResponse';
 
 const DEFAULT_CONFIG = {
@@ -70,6 +70,7 @@ export class Fixture {
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
+    //eslint-disable-next-line jasmine/no-unsafe-spy
     spyOn(React, 'createElement').and.callFake((type, props, ...children) => {
       if (!props?._wrapped) {
         const stubs = this._componentStubs.get(type);
@@ -166,10 +167,14 @@ export class Fixture {
    * @return {Promise} Yields when the editor rendering is complete.
    */
   render() {
+    const root = document.querySelector('test-root');
     const { container } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />
-      </FlagsProvider>
+      </FlagsProvider>,
+      {
+        container: root,
+      }
     );
     // The editor should always be given 100%:100% size. The testing-library
     // renders an extra container so it should be given the same size.
@@ -218,6 +223,16 @@ export class Fixture {
    */
   querySelector(selector) {
     return this._container.querySelector(selector);
+  }
+
+  /**
+   * To be deprecated?
+   *
+   * @param {string} selector
+   * @return {Array.<Element>} The potentially empty list of found elements.
+   */
+  querySelectorAll(selector) {
+    return this._container.querySelectorAll(selector);
   }
 
   /**
@@ -303,9 +318,10 @@ class ComponentStub {
       );
 
       return (
-        <HookExecutor key={refresher} hooks={hooks}>
+        <>
+          <HookExecutor key={refresher} hooks={hooks} />
           <Impl _wrapped={true} ref={ref} {...props} />
-        </HookExecutor>
+        </>
       );
     });
     Wrapper.displayName = `Mock(${
@@ -337,11 +353,14 @@ class ComponentStub {
   }
 }
 
-function HookExecutor({ hooks, children }) {
+/* eslint-disable react/prop-types, react/jsx-no-useless-fragment */
+function HookExecutor({ hooks }) {
   hooks.forEach((func) => func());
-  return children;
+  return <></>;
 }
+/* eslint-enable react/prop-types, react/jsx-no-useless-fragment */
 
+/* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
   constructor() {
     // eslint-disable-next-line react/prop-types
@@ -456,6 +475,7 @@ class APIProviderFixture {
     return this._comp;
   }
 }
+/* eslint-enable jasmine/no-unsafe-spy */
 
 /**
  * Wraps a fixture response in a promise. May additionally add `act()` calls as

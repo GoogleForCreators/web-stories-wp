@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Close } from '../../icons/close_icon.svg';
+import { CloseAlt as Close } from '../../icons';
 import MULTIPLE_VALUE from './multipleValue';
 import { Input } from '.';
 
@@ -63,13 +63,12 @@ const ClearBtn = styled.button`
   position: absolute;
   right: 8px;
   appearance: none;
-  background: ${({ theme }) => rgba(theme.colors.fg.v0, 0.54)};
-  width: 16px;
-  height: 16px;
+  background-color: ${({ theme, showBackground }) =>
+    showBackground ? rgba(theme.colors.fg.v0, 0.54) : `transparent`};
   border: none;
-  padding: 0px;
+  padding: 4px;
   border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -89,12 +88,26 @@ function TextInput({
   flexBasis,
   disabled,
   clear,
+  clearIcon,
+  showClearIconBackground,
   placeholder,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
   placeholder = isMultiple ? __('multiple', 'web-stories') : placeholder;
+
+  const onClear = (evt) => {
+    onChange('');
+    if (evt.target.form) {
+      evt.target.form.dispatchEvent(
+        new window.Event('submit', { cancelable: true })
+      );
+    }
+    if (onBlur) {
+      onBlur();
+    }
+  };
 
   return (
     <Container
@@ -123,20 +136,8 @@ function TextInput({
         }}
       />
       {Boolean(value) && clear && (
-        <ClearBtn
-          onClick={(evt) => {
-            onChange('');
-            if (evt.target.form) {
-              evt.target.form.dispatchEvent(
-                new window.Event('submit', { cancelable: true })
-              );
-            }
-            if (onBlur) {
-              onBlur();
-            }
-          }}
-        >
-          <CloseIcon />
+        <ClearBtn onClick={onClear} showBackground={showClearIconBackground}>
+          {clearIcon ?? <CloseIcon />}
         </ClearBtn>
       )}
     </Container>
@@ -153,6 +154,8 @@ TextInput.propTypes = {
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
   clear: PropTypes.bool,
+  clearIcon: PropTypes.any,
+  showClearIconBackground: PropTypes.bool,
   placeholder: PropTypes.string,
 };
 
@@ -162,6 +165,7 @@ TextInput.defaultProps = {
   flexBasis: 100,
   textCenter: false,
   clear: false,
+  showClearIconBackground: true,
   placeholder: null,
 };
 

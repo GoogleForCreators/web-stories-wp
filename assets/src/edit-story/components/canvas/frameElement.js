@@ -66,15 +66,17 @@ function FrameElement({ element }) {
   const { Frame, isMaskable } = getDefinitionForType(type);
   const elementRef = useRef();
 
-  const {
-    actions: { setNodeForElement, handleSelectElement },
-  } = useCanvas();
-  const {
-    state: { selectedElementIds, currentPage },
-  } = useStory();
-  const {
-    actions: { getBox },
-  } = useUnits();
+  const { setNodeForElement, handleSelectElement } = useCanvas((state) => ({
+    setNodeForElement: state.actions.setNodeForElement,
+    handleSelectElement: state.actions.handleSelectElement,
+  }));
+  const { selectedElementIds, currentPage } = useStory((state) => ({
+    selectedElementIds: state.state.selectedElementIds,
+    currentPage: state.state.currentPage,
+  }));
+  const { getBox } = useUnits((state) => ({
+    getBox: state.actions.getBox,
+  }));
   const {
     state: { activeDropTargetId },
   } = useDropTargets();

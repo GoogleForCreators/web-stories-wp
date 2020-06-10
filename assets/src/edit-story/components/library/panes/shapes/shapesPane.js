@@ -61,9 +61,9 @@ const Path = styled.path`
 `;
 
 function ShapesPane(props) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
   const { showTextAndShapesSearchInput } = useFeatures();
   return (
     <Pane id={paneId} {...props}>
