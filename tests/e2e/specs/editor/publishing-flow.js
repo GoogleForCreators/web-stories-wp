@@ -64,9 +64,20 @@ describe('Publishing Flow', () => {
     await expect(page).toClick('a', { text: 'Add to new post' });
     await page.waitForNavigation();
 
-    await expect(page).toMatchElement('textarea', {
-      text: 'Publishing Flow Test',
-    });
+    // Disable Gutenberg's Welcome Guide if existing.
+    const isWelcomeGuideActive = await page.evaluate(() =>
+      wp.data.select('core/edit-post').isFeatureActive('welcomeGuide')
+    );
+
+    //eslint-disable-next-line jest/no-if
+    if (isWelcomeGuideActive) {
+      await page.evaluate(() =>
+        wp.data.dispatch('core/edit-post').toggleFeature('welcomeGuide')
+      );
+    }
+
+    await expect(page).toMatch('Publishing Flow Test');
+
     expect(await getEditedPostContent()).toMatchSnapshot();
 
     const werePrePublishChecksEnabled = await arePrePublishChecksEnabled();
@@ -80,6 +91,7 @@ describe('Publishing Flow', () => {
     await enablePrePublishChecks();
 
     await expect(page).toClick('a', { text: 'View post' });
+    await page.waitForNavigation();
 
     await expect(page).toMatch('Publishing Flow Test');
     await expect(page).toMatchElement('amp-story-player');
