@@ -33,7 +33,7 @@ import formattedStoriesArray from '../../../../../storybookUtils/formattedStorie
 import { Layout } from '../../../../../components';
 
 export default {
-  title: 'Dashboard/Components/myStories/Header',
+  title: 'Dashboard/Views/MyStories/Header',
   component: Header,
 };
 

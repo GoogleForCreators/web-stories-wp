@@ -29,10 +29,10 @@ export const PAGE_NAV_BUTTON_WIDTH = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_WIDTH;
 
 export const PAGE_RATIO = 2 / 3;
-export const PAGE_WIDTH = 440;
-export const PAGE_HEIGHT = 660;
+export const PAGE_WIDTH = 412;
+export const PAGE_HEIGHT = 618;
 
-export const ALLOWED_EDITOR_PAGE_WIDTHS = [440, 280, 240];
+export const ALLOWED_EDITOR_PAGE_WIDTHS = [412, 268, 223];
 
 export const FULLBLEED_RATIO = 9 / 16;
 
@@ -48,6 +48,12 @@ export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
 // @todo Confirm real min-max font sizes.
 export const MIN_FONT_SIZE = 30;
 export const MAX_FONT_SIZE = 200;
+
+export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
+};
 
 export const LAYER_DIRECTIONS = {
   FRONT: 'FRONT',

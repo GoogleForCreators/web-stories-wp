@@ -80,9 +80,9 @@ function VideoFrame({ element, box }) {
   const { id } = element;
   const [hovering, setHovering] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const {
-    state: { selectedElementIds },
-  } = useStory();
+  const { selectedElementIds } = useStory((state) => ({
+    selectedElementIds: state.state.selectedElementIds,
+  }));
   const isElementSelected = selectedElementIds.includes(id);
   const getVideoNode = useCallback(
     () => document.getElementById(`video-${id}`),
