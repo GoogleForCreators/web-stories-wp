@@ -35,6 +35,7 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
+  SafeMode as SafeModeButton,
   Plain,
 } from '../../button';
 import {
@@ -57,6 +58,7 @@ import {
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 
+import useCanvas from '../useCanvas';
 import CompactIndicator from './compactIndicator';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
@@ -208,12 +210,14 @@ function Carousel() {
     actions: { setCurrentPage, arrangePage },
   } = useStory();
   const { isRTL } = useConfig();
+  const {
+    actions: { setShowSafeZone },
+  } = useCanvas();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
   const pageRefs = useRef([]);
-
   const [carouselSize, setCarouselSize] = useState({
     width: COMPACT_THUMB_WIDTH,
     height: COMPACT_THUMB_HEIGHT,
@@ -421,6 +425,12 @@ function Carousel() {
                 aria-label={__('Keyboard Shortcuts', 'web-stories')}
               />
             </OverflowButtons>
+            <SafeModeButton
+              width="24"
+              height="24"
+              onClick={() => setShowSafeZone((showSafeZone) => !showSafeZone)}
+              aria-label={__('Safe Mode', 'web-stories')}
+            />
             <GridViewButton
               width="24"
               height="24"
