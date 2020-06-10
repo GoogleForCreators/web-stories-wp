@@ -75,7 +75,7 @@ function StylePresetPanel() {
 
   const isText = areAllType('text');
   const isShape = areAllType('shape');
-  const isBackground = (selectedElements[0].id = currentPage.elements[0].id);
+  const isBackground = selectedElements[0].id === currentPage.elements[0].id;
 
   const handleDeletePreset = useCallback(
     (toDelete) => {
