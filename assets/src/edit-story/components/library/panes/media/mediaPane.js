@@ -291,6 +291,9 @@ function MediaPane(props) {
     refContainerFooter,
     {
       root: refContainer,
+      // This rootMargin is added so that we load an extra page when the
+      // "loading" footer is "close" to the bottom of the container, even if
+      // it's not yet visible.
       rootMargin: `0px 0px ${ROOT_MARGIN_TOP}px 0px`,
     },
     (entry) => {
