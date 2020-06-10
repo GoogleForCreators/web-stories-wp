@@ -19,7 +19,7 @@
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
-import { render, act } from '@testing-library/react';
+import { render, act, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -106,6 +106,10 @@ export class Fixture {
     return this._container;
   }
 
+  get screen() {
+    return this._screen;
+  }
+
   /**
    * A fixture utility to fire native browser events. See `FixtureEvents` for
    * more info.
@@ -180,6 +184,7 @@ export class Fixture {
     container.style.width = '100%';
     container.style.height = '100%';
     this._container = container;
+    this._screen = screen;
 
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
