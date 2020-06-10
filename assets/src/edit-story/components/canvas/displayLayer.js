@@ -35,14 +35,12 @@ function DisplayLayer() {
     state: { editingElement },
     actions: { setPageContainer, setFullbleedContainer },
   } = useCanvas();
-
   return (
-    <Layer pointerEvents="none">
+    <Layer data-testid="DisplayLayer" pointerEvents="none">
       <PageArea
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
         background={currentPage?.backgroundColor}
-        showDangerZone={true}
       >
         {currentPage
           ? currentPage.elements.map(({ id, ...rest }) => {

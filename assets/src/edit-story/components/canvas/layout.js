@@ -133,48 +133,28 @@ const PageAreaSafeZone = styled.div`
   position: relative;
   margin: auto 0;
 
-  &::before {
-    content: '';
-    width: calc(var(--page-width-px) + 40px);
-    height: 1px;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.4);
-    left: -20px;
-    z-index: -1;
-  }
-
-  &::after {
-    content: '';
-    width: calc(var(--page-width-px) + 40px);
-    height: 1px;
-    position: absolute;
-    background: rgba(255, 255, 255, 0.4);
-    left: -20px;
-    bottom: 0px;
-    z-index: -1;
-  }
-`;
-
-const PageAreaDangerZone = styled.div`
-  pointer-events: none;
+  ${({ showSafeZone }) =>
+    showSafeZone &&
+    `&::before {
+  content: '';
+  width: 20px;
+  height: var(--page-height-px);
   position: absolute;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent 0 10px,
-    black 10px 20px
-  );
-  opacity: 0.05;
-  width: 100%;
-  height: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
-  z-index: 1;
-`;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  left: -20px;
+}
 
-const PageAreaDangerZoneTop = styled(PageAreaDangerZone)`
-  top: 0;
-`;
-
-const PageAreaDangerZoneBottom = styled(PageAreaDangerZone)`
-  bottom: 0;
+&::after {
+  content: '';
+  width: 20px;
+  height: var(--page-height-px);
+  position: absolute;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  right: -20px;
+}
+`}
 `;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
@@ -235,7 +215,7 @@ const PageArea = forwardRef(
   (
     {
       children,
-      showDangerZone,
+      showSafeZone,
       showOverflow = false,
       fullbleedRef = createRef(),
       overlay = [],
@@ -250,16 +230,13 @@ const PageArea = forwardRef(
           showOverflow={showOverflow}
           background={background}
         >
-          <PageAreaSafeZone ref={ref} data-testid="safezone">
+          <PageAreaSafeZone
+            ref={ref}
+            data-testid="safezone"
+            showSafeZone={showSafeZone}
+          >
             {children}
           </PageAreaSafeZone>
-
-          {showDangerZone && (
-            <>
-              <PageAreaDangerZoneTop data-testid="danger-top" id="danger-top" />
-              <PageAreaDangerZoneBottom />
-            </>
-          )}
           {fullbleed}
         </PageAreaWithOverflow>
         {overlay}
@@ -272,7 +249,7 @@ PageArea.propTypes = {
   children: PropTypes.node,
   overlay: PropTypes.node,
   fullbleed: PropTypes.node,
-  showDangerZone: PropTypes.bool,
+  showSafeZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
 };
 

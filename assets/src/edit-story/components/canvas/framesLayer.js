@@ -36,6 +36,7 @@ import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
+import useCanvas from './useCanvas';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
@@ -70,6 +71,9 @@ function FramesLayer() {
     state: { currentPage },
   } = useStory();
   const {
+    state: { showSafeZone },
+  } = useCanvas();
+  const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
   } = useDropTargets();
@@ -88,6 +92,7 @@ function FramesLayer() {
       tabIndex="-1"
     >
       <FramesPageArea
+        showSafeZone={showSafeZone}
         overlay={
           Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&

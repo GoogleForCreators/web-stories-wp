@@ -145,6 +145,7 @@ function CanvasProvider({ children }) {
         editingElementState,
         isEditing: Boolean(editingElement),
         lastSelectionEvent,
+        showSafeZone: true,
         pageSize,
       },
       actions: {
