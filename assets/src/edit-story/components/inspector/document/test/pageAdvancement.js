@@ -64,13 +64,13 @@ describe('PageAdvancementPanel', () => {
   });
 
   it('should set Page Duration', async () => {
-    const { getByRole, getByAriaLabel, updateStory } = setupPanel({
+    const { getByRole, updateStory } = setupPanel({
       autoAdvance: true,
     });
     const element = getByRole('button', { name: 'Page Advancement' });
     expect(element).toBeDefined();
 
-    const slider = getByAriaLabel('Default Page Duration');
+    const slider = getByRole('slider', { name: 'Default Page Duration' });
 
     fireEvent.change(slider, {
       target: { value: 0 },

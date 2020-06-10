@@ -33,21 +33,20 @@ jest.mock('../../mediaPicker', () => ({
 }));
 
 describe('Panels/VideoAccessibility', () => {
+  const defaultElement = { resource: { posterId: 0, poster: '', alt: '' } };
   function renderVideoAccessibility(...args) {
     return renderPanel(VideoAccessibility, ...args);
   }
 
   it('should render <VideoAccessibility /> panel', () => {
-    const { getByRole } = renderVideoAccessibility([
-      { resource: { posterId: 0, poster: '' } },
-    ]);
+    const { getByRole } = renderVideoAccessibility([defaultElement]);
     const element = getByRole('button', { name: 'Edit: Video poster' });
     expect(element).toBeDefined();
   });
 
   it('should simulate a click on <VideoAccessibility />', () => {
     const { getByRole, pushUpdate } = renderVideoAccessibility([
-      { resource: { posterId: 0, poster: '' } },
+      defaultElement,
     ]);
     const element = getByRole('button', { name: 'Edit: Video poster' });
     fireEvent.click(element);
@@ -57,7 +56,7 @@ describe('Panels/VideoAccessibility', () => {
 
   it('should set max to opacity value on change to max', () => {
     const { getByPlaceholderText, submit } = renderVideoAccessibility([
-      { id: 1, resource: { posterId: 0, poster: '', alt: '' } },
+      defaultElement,
     ]);
     const input = getByPlaceholderText('Assistive text');
     const bigText = [...Array(1001)].map(() => '1').join('');
@@ -65,6 +64,8 @@ describe('Panels/VideoAccessibility', () => {
     const submits = submit({
       resource: { posterId: 0, poster: '', alt: bigText },
     });
-    expect(submits[1].resource.alt).toHaveLength(MIN_MAX.ALT_TEXT.MAX);
+    expect(submits[defaultElement.id].resource.alt).toHaveLength(
+      MIN_MAX.ALT_TEXT.MAX
+    );
   });
 });

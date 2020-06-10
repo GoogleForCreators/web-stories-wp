@@ -34,7 +34,7 @@ import { SimplePanel } from '../../panels/panel';
 import cleanForSlug from '../../../utils/cleanForSlug';
 import validateMinMax from '../../../utils/validateMinMax';
 
-const MIN_MAX = {
+export const MIN_MAX = {
   PERMALINK: {
     MIN: 1,
     MAX: 200,
@@ -93,12 +93,7 @@ function SlugPanel() {
         />
       </Row>
       <HelperText>
-        <Permalink
-          rel="noopener noreferrer"
-          target="_blank"
-          href={link}
-          data-testid="link"
-        >
+        <Permalink rel="noopener noreferrer" target="_blank" href={link}>
           {displayLink}
         </Permalink>
       </HelperText>

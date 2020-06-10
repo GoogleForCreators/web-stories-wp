@@ -23,7 +23,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
-import SlugPanel from '../slug';
+import SlugPanel, { MIN_MAX } from '../slug';
 import { renderWithTheme } from '../../../../testUtils';
 
 function setupPanel() {
@@ -42,14 +42,13 @@ function setupPanel() {
     },
     actions: { updateStory },
   };
-  const { getByRole, getByAriaLabel, getByTestId } = renderWithTheme(
+  const { getByRole, getByAriaLabel } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <SlugPanel />
     </StoryContext.Provider>
   );
   return {
     getByRole,
-    getByTestId,
     getByAriaLabel,
     updateStory,
   };
@@ -69,8 +68,8 @@ describe('SlugPanel', () => {
   });
 
   it('should not display permalink', async () => {
-    const { getByAriaLabel, updateStory } = setupPanel();
-    const input = getByAriaLabel('Edit: URL slug');
+    const { getByRole, updateStory } = setupPanel();
+    const input = getByRole('textbox', { name: 'Edit: URL slug' });
     expect(input).toBeDefined();
 
     const bigSlug = [...Array(201)].map(() => '1').join('');
@@ -83,8 +82,7 @@ describe('SlugPanel', () => {
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           // It will return only 200 even receiving 201+
-          slug:
-            '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111',
+          slug: bigSlug.slice(0, MIN_MAX.PERMALINK.MAX),
         },
       })
     );

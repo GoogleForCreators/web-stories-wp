@@ -36,7 +36,7 @@ import { getCommonValue, useCommonObjectValue } from './utils';
 const DEFAULT_RESOURCE = { poster: null, title: null, alt: null };
 export const MIN_MAX = {
   ALT_TEXT: {
-    MAX: 5,
+    MAX: 1000,
   },
 };
 
