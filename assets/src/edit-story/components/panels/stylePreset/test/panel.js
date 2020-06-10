@@ -28,6 +28,7 @@ import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { getShapePresets, getTextPresets } from '../utils';
 import { renderWithTheme } from '../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
+import createSolid from '../../../../utils/createSolid';
 
 jest.mock('../utils');
 
@@ -41,6 +42,14 @@ function setupPanel(extraStylePresets, extraStateProps) {
   };
   const storyContextValue = {
     state: {
+      currentPage: {
+        elements: [
+          {
+            id: 'bg',
+            backgroundColor: createSolid(1, 1, 1, 1),
+          },
+        ],
+      },
       selectedElementIds: ['1'],
       selectedElements: [textElement],
       ...extraStateProps,

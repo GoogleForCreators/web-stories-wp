@@ -78,7 +78,7 @@ const ColorWrapper = styled.div`
   border-radius: 15px;
   overflow: hidden;
   position: relative;
-  ${({ disabled }) => (disabled ? 'opacity: 0.5;' : '')}
+  ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
 `;
 
 const Color = styled.button`
