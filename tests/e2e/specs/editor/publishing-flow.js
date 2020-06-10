@@ -28,9 +28,27 @@ import {
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../../utils';
+import { createNewStory, useRequestInterception } from '../../utils';
 
 describe('Publishing Flow', () => {
+  beforeAll(async () => {
+    await page.setRequestInterception(true);
+    useRequestInterception((request) => {
+      if (request.url().startsWith('https://cdn.ampproject.org/')) {
+        request.respond({
+          status: 200,
+          body: '',
+        });
+      } else {
+        request.continue();
+      }
+    });
+  });
+
+  afterAll(async () => {
+    await page.setRequestInterception(false);
+  });
+
   it('should guide me towards creating a new post to embed my story', async () => {
     await createNewStory();
 
