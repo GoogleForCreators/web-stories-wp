@@ -100,7 +100,7 @@ function colorHasTransparency(color) {
 export function presetHasOpacity(preset) {
   const { color, stops } = preset;
   if (color) {
-    return colorHasTransparency(color);
+    return Boolean(colorHasTransparency(color));
   }
   let opacityFound = false;
   for (const colorStop of stops) {

@@ -22,6 +22,7 @@ import {
   findMatchingStylePreset,
   getShapePresets,
   getTextPresets,
+  presetHasOpacity,
 } from '../utils';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import objectWithout from '../../../../utils/objectWithout';
@@ -308,5 +309,30 @@ describe('Panels/StylePreset/utils', () => {
     };
     const presets = getShapePresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
+  });
+
+  it('should detect opacity in preset correctly', () => {
+    expect(presetHasOpacity(TEST_COLOR)).toBeFalse();
+    const preset1 = {
+      color: {
+        r: 1,
+        g: 1,
+        b: 1,
+        a: 0.5,
+      },
+    };
+    expect(presetHasOpacity(preset1)).toBeTrue();
+
+    const preset2 = {
+      type: 'linear',
+      stops: [TEST_COLOR, preset1],
+    };
+    expect(presetHasOpacity(preset2)).toBeTrue();
+
+    const preset3 = {
+      type: 'linear',
+      stops: [TEST_COLOR, TEST_COLOR_2],
+    };
+    expect(presetHasOpacity(preset3)).toBeFalse();
   });
 });
