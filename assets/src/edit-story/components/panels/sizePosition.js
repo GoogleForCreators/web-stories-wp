@@ -93,10 +93,10 @@ function SizePositionPanel({
   const lockAspectRatio =
     rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
 
-  const {
-    state: { currentPage },
-    actions: { combineElements },
-  } = useStory();
+  const { currentPage, combineElements } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+    combineElements: state.actions.combineElements,
+  }));
   const currentBackgroundId = currentPage?.elements[0].id;
 
   const isSingleElement = selectedElements.length === 1;

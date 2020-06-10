@@ -75,9 +75,9 @@ AnimationWrapper.propTypes = {
 };
 
 function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
-  const {
-    actions: { getBox },
-  } = useUnits();
+  const { getBox } = useUnits((state) => ({
+    getBox: state.actions.getBox,
+  }));
 
   const [replacement, setReplacement] = useState(null);
 
