@@ -65,10 +65,8 @@ function StoriesView({
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
 
-  const isActiveDeleteStoryDialog = useMemo(
-    () => activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory,
-    [activeDialog, activeStory]
-  );
+  const isActiveDeleteStoryDialog =
+    activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
 
   useEffect(() => {
     if (!activeDialog) {
