@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -44,8 +44,14 @@ function useUploadMedia({ media, setMedia }) {
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
 
+  const mediaRef = useRef();
+  mediaRef.current = media;
+
   const uploadMedia = useCallback(
     async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
+      // eslint-disable-next-line no-shadow
+      const media = mediaRef.current;
+
       // If there are no files passed, don't try to upload.
       if (!files || files.length === 0) {
         return;
@@ -155,7 +161,6 @@ function useUploadMedia({ media, setMedia }) {
     },
     [
       setMedia,
-      media,
       showSnackbar,
       allowedFileTypes,
       uploadFile,
