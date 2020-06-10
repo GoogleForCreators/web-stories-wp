@@ -75,6 +75,9 @@ const CloseLink = styled.a`
     color: ${theme.colors.gray700};
   `}
 `;
+const CapitalizedButton = styled(Button)`
+  text-transform: uppercase;
+`;
 
 export function TemplateNavBar({ handleCta }) {
   return (
@@ -84,9 +87,9 @@ export function TemplateNavBar({ handleCta }) {
       </Container>
       <Container>
         <BookmarkToggle />
-        <Button type={BUTTON_TYPES.CTA} onClick={handleCta}>
-          {__('USE TEMPLATE', 'web-stories')}
-        </Button>
+        <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
+          {__('use template', 'web-stories')}
+        </CapitalizedButton>
       </Container>
     </Nav>
   );

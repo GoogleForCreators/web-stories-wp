@@ -34,13 +34,29 @@ import Resize from './resize';
 
 function StylePresetPanel() {
   const {
-    state: {
-      selectedElementIds,
-      selectedElements,
-      story: { stylePresets },
-    },
-    actions: { updateStory, updateElementsById },
-  } = useStory();
+    selectedElementIds,
+    selectedElements,
+    stylePresets,
+    updateStory,
+    updateElementsById,
+  } = useStory(
+    ({
+      state: {
+        selectedElementIds,
+        selectedElements,
+        story: { stylePresets },
+      },
+      actions: { updateStory, updateElementsById },
+    }) => {
+      return {
+        selectedElementIds,
+        selectedElements,
+        stylePresets,
+        updateStory,
+        updateElementsById,
+      };
+    }
+  );
 
   const { fillColors, textColors } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);

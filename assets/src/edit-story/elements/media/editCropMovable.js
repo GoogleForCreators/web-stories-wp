@@ -45,9 +45,10 @@ function EditCropMovable({
   mediaWidth,
   mediaHeight,
 }) {
-  const {
-    actions: { editorToDataX, editorToDataY },
-  } = useUnits();
+  const { editorToDataX, editorToDataY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+  }));
 
   const moveableRef = useRef();
   const cropRef = useRef([0, 0, 0, 0, 0, 0]);
