@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import moment from 'moment';
-
-/**
  * Internal dependencies
  */
 import createResource from './createResource';
@@ -52,10 +47,9 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     fileLength: lengthFormatted,
     sizes,
   } = mediaPickerEl;
-  const parsedDate = moment(date);
   return createResource({
     mimeType,
-    uploadDate: parsedDate.isValid() ? parsedDate : null,
+    uploadDate: date,
     src: url || src,
     ...getResourceSize(
       width,

@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
+import moment from 'moment';
 
 /**
  * WordPress dependencies
@@ -151,6 +152,7 @@ function MediaEditDialog({ resource, onClose }) {
   }));
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
+  const parsedDate = moment(uploadDate);
 
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
@@ -194,12 +196,12 @@ function MediaEditDialog({ resource, onClose }) {
           </Video>
         )}
         <MetadataTextContainer>
-          {uploadDate && (
+          {parsedDate.isValid() && (
             <MediaDateText>
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
-                uploadDate.format('MMMM DD, YYYY')
+                parsedDate.format('MMMM DD, YYYY')
               )}
             </MediaDateText>
           )}

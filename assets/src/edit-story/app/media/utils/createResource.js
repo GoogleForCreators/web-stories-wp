@@ -29,7 +29,7 @@ import getTypeFromMime from './getTypeFromMime';
  * "video" values are allowed. If not specified, will be calculated from the
  * mime-type.
  * @property {string} mimeType The MIME type.
- * @property {Date|null} uploadDate Upload date.
+ * @property {string|null} uploadDate Upload date.
  * @property {string} src The source URL.
  * @property {number} width The natural resource width.
  * @property {number} height The natural resource height.

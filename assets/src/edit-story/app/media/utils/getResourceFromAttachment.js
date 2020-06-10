@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import moment from 'moment';
-
-/**
  * Internal dependencies
  */
 import createResource from './createResource';
@@ -54,10 +49,9 @@ function getResourceFromAttachment(attachment) {
     },
     alt_text: alt,
   } = attachment;
-  const parsedDate = moment(date);
   return createResource({
     mimeType,
-    uploadDate: parsedDate.isValid() ? parsedDate : null,
+    uploadDate: date,
     src,
     ...getResourceSize(
       width,
