@@ -104,12 +104,8 @@ class Media {
 			self::STORY_MEDIA_TAXONOMY,
 			'attachment',
 			[
-				'labels'       => [
-					'name'          => esc_html__( 'Sources', 'web-stories' ),
-					'singular_name' => esc_html__( 'Source', 'web-stories' ),
-					'all_items'     => esc_html__( 'All Sources', 'web-stories' ),
-				],
-				'public'       => true, // TODO make hidden before merge. Public for testing.
+				'label'        => __( 'Source', 'web-stories' ),
+				'public'       => false,
 				'rewrite'      => false,
 				'hierarchical' => false,
 				'show_in_rest' => true,
@@ -247,7 +243,7 @@ class Media {
 				'get_callback'    => static function ( $prepared ) {
 					$id = $prepared['id'];
 
-					$terms = wp_get_object_terms( $id, MEDIA::STORY_MEDIA_TAXONOMY );
+					$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
 					if ( is_array( $terms ) && $terms ) {
 						$term = array_shift( $terms );
 
@@ -257,7 +253,7 @@ class Media {
 					return '';
 				},
 				'update_callback' => static function ( $value, $object ) {
-					wp_set_object_terms( $object->ID, $value, MEDIA::STORY_MEDIA_TAXONOMY );
+					wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
 				},
 			]
 		);
