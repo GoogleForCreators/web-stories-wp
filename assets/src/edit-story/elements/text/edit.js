@@ -105,8 +105,20 @@ function TextEdit({
   }, [content]);
 
   const {
-    actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
-  } = useUnits();
+    dataToEditorX,
+    dataToEditorY,
+    editorToDataX,
+    editorToDataY,
+  } = useUnits(
+    ({
+      actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
+    }) => ({
+      dataToEditorX,
+      dataToEditorY,
+      editorToDataX,
+      editorToDataY,
+    })
+  );
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     font,
@@ -126,9 +138,9 @@ function TextEdit({
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-  const {
-    actions: { updateElementById },
-  } = useStory();
+  const { updateElementById } = useStory((state) => ({
+    updateElementById: state.actions.updateElementById,
+  }));
 
   const setProperties = useCallback(
     (properties) => updateElementById({ elementId: id, properties }),

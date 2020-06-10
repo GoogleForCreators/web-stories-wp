@@ -55,12 +55,14 @@ const BoxedTextInput = styled(TextInput)`
 `;
 
 function SlugPanel() {
-  const {
-    state: {
-      story: { slug, link, permalinkConfig },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { slug, link, permalinkConfig, updateStory } = useStory(
+    ({
+      state: {
+        story: { slug, link, permalinkConfig },
+      },
+      actions: { updateStory },
+    }) => ({ slug, link, permalinkConfig, updateStory })
+  );
   const handleChangeValue = useCallback(
     (value) => {
       const newSlug = value.slice(0, MIN_MAX.PERMALINK.MAX);

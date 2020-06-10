@@ -40,7 +40,7 @@ import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import validateMinMax from '../../../utils/validateMinMax';
 import { useCanvas } from '../../canvas';
-import { ReactComponent as Close } from '../../../icons/close_icon.svg';
+import { Close } from '../../../icons';
 
 const MIN_MAX = {
   URL: {
@@ -75,9 +75,9 @@ const CloseIcon = styled(Close)`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const selectedElement = selectedElements[0];
   const defaultLink = useMemo(

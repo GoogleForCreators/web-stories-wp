@@ -14,7 +14,7 @@
 ############################################################
 
 # Global owners, default owners for everything in the repo
-*                                                                 @swissspidy
+#*                                                                 @swissspidy
 
 # General Infrastructure
 __mocks__                                                         @swissspidy @spacedmonkey
@@ -49,7 +49,7 @@ docs/                                                             @swissspidy
 CONTRIBUTING.md                                                   @swissspidy
 
 # Dashboard
-# assets/src/dashboard/                                             @carlos-kelly @BrittanyIRL @mariano-formidable @littlemilkstudio
+#assets/src/dashboard/                                             @carlos-kelly @BrittanyIRL @mariano-formidable @littlemilkstudio
 
 # Stories Editor
 #assets/src/edit-story/                                            @dvoytenko @wassgha @barklund @miina @obetomuniz @ndev1991 @merapi
