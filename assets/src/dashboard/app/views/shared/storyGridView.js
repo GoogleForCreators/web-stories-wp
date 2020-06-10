@@ -91,7 +91,6 @@ const StoryGridView = ({
               centerAction={{
                 targetAction: story.centerTargetAction,
                 label: centerActionLabelByStatus[story.status],
-                inProgress: true,
               }}
               bottomAction={{
                 targetAction: story.bottomTargetAction,
