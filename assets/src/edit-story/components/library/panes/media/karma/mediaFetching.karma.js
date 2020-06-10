@@ -19,7 +19,7 @@
  */
 
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../karma/fixture';
-import { ROOT_MARGIN_TOP } from '../mediaPane';
+import { ROOT_MARGIN } from '../mediaPane';
 
 fdescribe('MediaPane fetching', () => {
   let fixture;
@@ -41,7 +41,7 @@ fdescribe('MediaPane fetching', () => {
 
     mediaLibrary.scrollTo(
       0,
-      mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN_TOP
+      mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
     );
     await new Promise((r) => setTimeout(r, 10));
 

@@ -43,7 +43,7 @@ import {
 import paneId from './paneId';
 import MediaElement from './mediaElement';
 
-export const ROOT_MARGIN_TOP = 300;
+export const ROOT_MARGIN = 300;
 
 const Container = styled.div`
   grid-area: infinitescroll;
@@ -294,7 +294,7 @@ function MediaPane(props) {
       // This rootMargin is added so that we load an extra page when the
       // "loading" footer is "close" to the bottom of the container, even if
       // it's not yet visible.
-      rootMargin: `0px 0px ${ROOT_MARGIN_TOP}px 0px`,
+      rootMargin: `0px 0px ${ROOT_MARGIN}px 0px`,
     },
     (entry) => {
       if (!isMediaLoaded || isMediaLoading) {
