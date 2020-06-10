@@ -110,7 +110,11 @@ class Discovery {
 			'publisher' => [
 				'@type' => 'Organization',
 				'name'  => $publisher['name'],
-				'logo'  => $publisher['logo'],
+				// @todo: Provide width, height, caption, et al.
+				'logo'  => [
+					'@type' => 'ImageObject',
+					'url'   => $publisher['logo'],
+				],
 			],
 		];
 
