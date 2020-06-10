@@ -178,7 +178,7 @@ const CardPreviewContainer = ({
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
       >
         <EmptyActionContainer />
-        {centerAction && (
+        {centerAction && !centerAction.inProgress && (
           <ActionContainer>
             <Button
               type={BUTTON_TYPES.SECONDARY}

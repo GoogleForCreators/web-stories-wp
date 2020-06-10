@@ -61,7 +61,7 @@ const StoryGrid = styled(CardGrid)`
 const StoryGridView = ({
   stories,
   users,
-  // centerActionLabelByStatus,
+  centerActionLabelByStatus,
   bottomActionLabel,
   isSavedTemplate,
   pageSize,
@@ -88,10 +88,11 @@ const StoryGridView = ({
             <CardPreviewContainer
               pageSize={pageSize}
               story={story}
-              // centerAction={{
-              //   targetAction: story.centerTargetAction,
-              //   label: centerActionLabelByStatus[story.status],
-              // }}
+              centerAction={{
+                targetAction: story.centerTargetAction,
+                label: centerActionLabelByStatus[story.status],
+                inProgress: true,
+              }}
               bottomAction={{
                 targetAction: story.bottomTargetAction,
                 label: bottomActionLabel,
