@@ -259,7 +259,8 @@
       },
       "rules": {
         "testing-library/no-debug": "error",
-        "testing-library/no-dom-import": "error"
+        "testing-library/no-dom-import": "error",
+        "jest/no-focused-tests": "error"
       },
       "globals": {
         "karmaPuppeteer": "readonly",

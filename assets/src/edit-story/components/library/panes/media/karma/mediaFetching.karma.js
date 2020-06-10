@@ -21,7 +21,7 @@
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-fdescribe('MediaPane fetching', () => {
+describe('MediaPane fetching', () => {
   let fixture;
 
   beforeEach(async () => {
