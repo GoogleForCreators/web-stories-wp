@@ -77,15 +77,7 @@ function templateReducer(state, action) {
           ? fetchedTemplatesById
           : [...state.savedTemplatesById, ...fetchedTemplatesById];
 
-      // we want to make sure that pagination is kept intact regardless of page number.
-      // we are using infinite scroll, not traditional pagination.
-      // this means we need to append our new templates to the bottom of our already existing templates.
-      // when we combine existing templates with the new ones we need to make sure we're not duplicating anything.
-      const uniqueTemplateIds = combinedTemplateIds.filter(
-        (templateId, index, templateIdsArray) => {
-          return templateIdsArray.indexOf(templateId) === index;
-        }
-      );
+      const uniqueTemplateIds = [...new Set(combinedTemplateIds)];
 
       return {
         ...state,
@@ -107,15 +99,7 @@ function templateReducer(state, action) {
           ? fetchedTemplatesById
           : [...state.templatesOrderById, ...fetchedTemplatesById];
 
-      // we want to make sure that pagination is kept intact regardless of page number.
-      // we are using infinite scroll, not traditional pagination.
-      // this means we need to append our new templates to the bottom of our already existing templates.
-      // when we combine existing templates with the new ones we need to make sure we're not duplicating anything.
-      const uniqueTemplateIds = combinedTemplateIds.filter(
-        (templateId, index, templateIdsArray) => {
-          return templateIdsArray.indexOf(templateId) === index;
-        }
-      );
+      const uniqueTemplateIds = [...new Set(combinedTemplateIds)];
 
       return {
         ...state,
