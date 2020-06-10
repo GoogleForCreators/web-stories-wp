@@ -259,9 +259,9 @@ function MediaPane(props) {
   // State and callback ref necessary to recalculate the padding of the list
   //  given the scrollbar width.
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  let container = null;
-  const refContainer = (element) => {
-    container = element;
+  const refContainer = useRef();
+  const refCallbackContainer = (element) => {
+    refContainer.current = element;
     if (!element) {
       return;
     }
@@ -276,17 +276,19 @@ function MediaPane(props) {
       return;
     }
     const currentPaddingLeft = parseFloat(
-      window.getComputedStyle(container, null).getPropertyValue('padding-left')
+      window
+        .getComputedStyle(refContainer.current, null)
+        .getPropertyValue('padding-left')
     );
-    container.style['padding-right'] =
+    refContainer.current.style['padding-right'] =
       currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, container]);
+  }, [scrollbarWidth, refContainer]);
 
   const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: container,
+      root: refContainer,
       rootMargin: '0px 0px 300px 0px',
     },
     (entry) => {
@@ -335,7 +337,7 @@ function MediaPane(props) {
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
-          <Container ref={refContainer}>
+          <Container ref={refCallbackContainer}>
             <Column>
               {resources
                 .filter((_, index) => isEven(index))

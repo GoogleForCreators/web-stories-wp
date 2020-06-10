@@ -21,7 +21,7 @@ import { useEffect } from 'react';
 
 /**
  * @param {!{current: ?Element}} ref Target node ref.
- * @param {?Object} options The IntersectionObserver options, root is a node.
+ * @param {?Object} options The IntersectionObserver options, root is a ref not node.
  * @param {function(IntersectionObserverEntry)} handler The intersection
  * handler.
  * @param {!Array=} deps The effect's dependencies.
@@ -30,7 +30,11 @@ function useIntersectionEffect(ref, options = {}, handler, deps = undefined) {
   useEffect(
     () => {
       const node = ref.current;
-      if (!node) {
+      const usingRoot = 'root' in options;
+      if (usingRoot) {
+        options.root = options.root.current;
+      }
+      if (!node || (usingRoot && !options.root)) {
         return;
       }
 
