@@ -120,7 +120,7 @@ class Story_Renderer {
 	 * @return string Filtered markup.
 	 */
 	protected function add_publisher_logo( $content ) {
-		$publisher_logo = Story_Post_Type::get_publisher_logo();
+		$publisher_logo = Discovery::get_publisher_logo();
 		return str_replace( Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER, $publisher_logo, $content );
 	}
 

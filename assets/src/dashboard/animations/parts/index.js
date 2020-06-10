@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES } from '../constants';
+import { ANIMATION_TYPES, BEZIER } from '../constants';
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
 import { AnimationFade } from './fade';
@@ -57,6 +57,9 @@ export function AnimationPart(type, args) {
       [ANIMATION_TYPES.SPIN]: AnimationSpin,
       [ANIMATION_TYPES.ZOOM]: AnimationZoom,
     }[type] || throughput;
+
+  args.easing = args.easing || BEZIER[args.easingPreset];
+  args.easingPreset = undefined;
 
   return generator(args);
 }

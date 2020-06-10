@@ -62,9 +62,9 @@ function DeleteDialog({ mediaId, type, onClose }) {
     actions: { deleteMedia },
   } = useAPI();
   const { showSnackbar } = useSnackbar();
-  const {
-    actions: { deleteMediaElement },
-  } = useMedia();
+  const { deleteMediaElement } = useMedia((state) => ({
+    deleteMediaElement: state.actions.deleteMediaElement,
+  }));
 
   const onDelete = useCallback(async () => {
     onClose();

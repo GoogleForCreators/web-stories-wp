@@ -30,11 +30,11 @@ import { Tabs, getPanes } from './panes';
 import { getTabId } from './panes/shared';
 
 function LibraryTabs() {
-  const {
-    state: { tab },
-    actions: { setTab },
-    data: { tabs },
-  } = useLibrary();
+  const { tab, setTab, tabs } = useLibrary((state) => ({
+    tab: state.state.tab,
+    setTab: state.actions.setTab,
+    tabs: state.data.tabs,
+  }));
   const { isRTL } = useConfig();
   const { showAnimationTab } = useFeatures();
   const panes = useMemo(
@@ -46,7 +46,7 @@ function LibraryTabs() {
   );
   const ref = useRef();
   const handleNavigation = useCallback(
-    (direction) => () => {
+    (direction) => {
       const currentIndex = panes.findIndex(({ id }) => id === tab);
       const nextPane = panes[currentIndex + direction];
       if (!nextPane) {
