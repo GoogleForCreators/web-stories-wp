@@ -38,7 +38,7 @@ function LibraryTabs() {
   const panes = useMemo(() => getPanes(tabs), [tabs]);
   const ref = useRef();
   const handleNavigation = useCallback(
-    (direction) => () => {
+    (direction) => {
       const currentIndex = panes.findIndex(({ id }) => id === tab);
       const nextPane = panes[currentIndex + direction];
       if (!nextPane) {
