@@ -41,15 +41,7 @@ class Discovery {
 	 * @return void
 	 */
 	public function init() {
-		add_action(
-			'web_stories_story_head',
-			static function () {
-				// Theme support for title-tag is implied for stories. See _wp_render_title_tag().
-				echo '<title>' . esc_html( wp_get_document_title() ) . '</title>' . "\n";
-			},
-			1
-		);
-
+		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ], 1 );
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
@@ -68,6 +60,21 @@ class Discovery {
 		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
 		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
+	}
+
+	/**
+	 * Prints general metadata on the single story template.
+	 *
+	 * Theme support for title tag is implied for stories.
+	 *
+	 * @see _wp_render_title_tag().
+	 *
+	 * @return void
+	 */
+	public function print_metadata() {
+		?>
+		<title><?php echo esc_html( wp_get_document_title() ); ?></title>
+		<?php
 	}
 
 	/**
