@@ -37,7 +37,13 @@ const DateTimeWrapper = styled.div`
   padding: 4px;
 `;
 
-function DateTime({ value, onChange, is12Hour = true, forwardedRef }) {
+function DateTime({
+  value,
+  onChange,
+  onViewChange,
+  is12Hour = true,
+  forwardedRef,
+}) {
   const selectedTime = value ? new Date(value) : new Date();
   const initialHours = selectedTime.getHours();
   const [localData, setLocalData] = useState({
@@ -54,13 +60,18 @@ function DateTime({ value, onChange, is12Hour = true, forwardedRef }) {
         onChange={onChange}
         is12Hour={is12Hour}
       />
-      <DatePicker currentDate={value} onChange={onChange} />
+      <DatePicker
+        currentDate={value}
+        onChange={onChange}
+        onViewChange={onViewChange}
+      />
     </DateTimeWrapper>
   );
 }
 
 DateTime.propTypes = {
   onChange: PropTypes.func.isRequired,
+  onViewChange: PropTypes.func.isRequired,
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
   forwardedRef: PropTypes.object,

@@ -147,8 +147,9 @@ function PublishTime() {
             value={date}
             onChange={(value, close = false) => {
               handleDateChange(value, close);
-              propagateDimensionChange();
+
             }}
+            onViewChange={() => propagateDimensionChange()}
             is12Hour={use12HourFormat}
             forwardedRef={dateTimeNode}
           />
