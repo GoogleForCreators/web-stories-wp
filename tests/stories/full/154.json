@@ -58,12 +58,29 @@
         },
         {
             "id": 1580,
-            "background": null,
+            "background": {
+                "id": 3737050,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/aad113d1174f8ac805615bb347d3ec2b979388e6.mp4",
+                "title": "",
+                "duration": 10.033333,
+                "mime": "video/mp4",
+                "description": "",
+                "width": 1920,
+                "height": 1080,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/b69a48d8aafea88032ad650242a266a84010695a.jpg",
+                "url": "https://d2v9y0dukr6mq2.cloudfront.net/video/preview/UD7CEz6/house-price-chart-graphic-animation-chart-arrow_7jmipu2p__SB_PM.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591690653659&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=127504&resolution=180p&searchId=b54c7d79-6e3d-47ea-9ef8-d2ba840b8b53&searchPageId=bf0abba4-dcd6-4c49-93d1-2b380098732a#gliadriver=StoryBlocksVideoZH&key=127504",
+                "source": ""
+            },
             "headline": "",
             "title": "\u5176\u4e2d\u88fd\u9020\u696d\u7684\u71df\u6536\u5e74\u6e1b\u738716.1%\uff0c\u5be6\u73fe\u5229\u6f64\u5e74\u6e1b\u738738.9%\uff0c\u63a1\u7926\u696d\u7684\u71df\u6536\u5e74\u6e1b\u73879.2%\uff0c\u5be6\u73fe\u5229\u6f64\u5e74\u6e1b\u738727.5%\u3002",
-            "keywords": null,
-            "focal_x": -1,
-            "focal_y": -1,
+            "keywords": "\u71df\u6536\u5e74\u6e1b\u7387 \u5229\u6f64\u5e74\u6e1b\u7387 \u88fd\u9020\u696d \u63a1\u7926\u696d",
+            "focal_x": 885,
+            "focal_y": 540,
             "layout": "QUOTE"
         },
         {
@@ -122,12 +139,29 @@
         },
         {
             "id": 1583,
-            "background": null,
+            "background": {
+                "id": 3737053,
+                "type": "video",
+                "license": "Creative Common",
+                "file": "https://static-gstudio.gliacloud.com/05406047caffa096a80b5a7c27ecd625dabfad7d.mp4",
+                "title": "",
+                "duration": 11.479,
+                "mime": "video/mp4",
+                "description": "",
+                "width": 1920,
+                "height": 1080,
+                "start": 0.0,
+                "end": 0.0,
+                "scale": 1.0,
+                "thumbnail": "https://static-gstudio.gliacloud.com/d8716fd877ce6cf761418cecf831556c1e83b304.jpg",
+                "url": "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/VZpg_YkTgilrvkdxa/videoblocks-euro-bills-spinning-close-up-of-money-euro-currency-coins-stacked-on-each-other-in-different-positions-money-concept_bzw8pmmwm__01127950de02fed5c0c4391e0b8f4072__P360.mp4?type=preview&origin=VIDEOBLOCKS&timestamp_ms=1591690660603&publicKey=xC4NP5XgEfQOXGGzdxlHGZ3TAiqwipiuzrk5fQ4FTvCKbnUC3KhSgWeNn37O9aMR&organizationId=103570&apiVersion=1.0&stockItemId=6044262&resolution=180p&searchId=0e872375-f53b-417d-bf9a-45498128015a&searchPageId=95f90f9a-3133-4fa2-95fd-e5b9ababab7c#gliadriver=StoryBlocksVideoZH&key=6044262",
+                "source": ""
+            },
             "headline": "",
             "title": "\u81f3\u65bc\u5916\u5546\u53ca\u6e2f\u6fb3\u53f0\u5546\u6295\u8cc7\u4f01\u696d\u5be6\u73fe\u5229\u6f64\u70ba1672\u5104\u5143\uff0c\u5e74\u6e1b\u738746.9%\u3002",
-            "keywords": null,
-            "focal_x": -1,
-            "focal_y": -1,
+            "keywords": "\u5916\u5546 \u5229\u6f64 \u6e2f\u6fb3\u53f0\u5546\u6295\u8cc7\u4f01\u696d",
+            "focal_x": 1346,
+            "focal_y": 540,
             "layout": "FOCUS"
         }
     ]

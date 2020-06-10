@@ -25,8 +25,8 @@
             "headline": "",
             "title": "\u53f0\u6771\u7f8e\u98df \u5ba2\u4f86\u5403\u6a02~\u50b3\u627f3\u4ee3\u5927\u8178\u86b5\u4ed4\u9eb5\u7dda\u3001\u98c4\u999950\u5e74\u9ed1\u7cd6\u7da0\u8c46\u849c\uff0c\u9435\u82b1\u6751\u65c1\u4eba\u6c23\u5c0f\u5403\uff01",
             "keywords": "\u5927\u8178\u86b5\u4ed4\u9eb5\u7dda \u53f0\u6771\u7f8e\u98df \u5ba2\u4f86\u5403\u6a02 \u9435\u82b1\u6751 \u9ed1\u7cd6\u7da0\u8c46\u849c",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 751,
+            "focal_y": 540,
             "layout": "COVER"
         },
         {
@@ -52,8 +52,8 @@
             "headline": "",
             "title": "\u8981\u4f86\u53f0\u6771\u65c5\u904a\u524d\uff0c\u525b\u597d\u770b\u5230\u597d\u53cb\u5728\u5ba2\u4f86\u5403\u6a02\u6253\u5361\uff0c\u624d\u77e5\u9053\u539f\u4f86\u9435\u82b1\u6751\u9644\u8fd1\u6709\u9019\u9593\u5e73\u50f9\u5c0f\u5403\uff0c\u4e3b\u6253\u5927\u8178\u86b5\u4ed4\u9eb5\u7dda\u8207\u9ed1\u7cd6\u7da0\u8c46\u7b97\uff0c\u64da\u8aaa\u662f\u5df2\u7d93\u9023\u8ce33\u4ee3\u7684\u7f8e\u98df\u8001\u5e97\uff0c\u9023\u53f0\u6771\u5728\u5730\u4eba\u90fd\u7d61\u7e79\u4e0d\u7d55\u3002",
             "keywords": "\u53f0\u6771\u65c5\u904a \u9435\u82b1\u6751 \u6a02\u6253\u5361 \u5e73\u50f9\u5c0f\u5403 \u5927\u8178\u86b5\u4ed4\u9eb5\u7dda \u53f0\u6771 \u9ed1\u7cd6\u7da0\u8c46\u7b97",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1269,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -79,8 +79,8 @@
             "headline": "",
             "title": "\u4f86\u4e86\u624d\u767c\u73fe\u539f\u4f86\u5b83\u5c31\u5728The gaya Hotel\u5c0d\u9762\uff0c\u53ef\u4ee5\u5148\u4f86\u5ba2\u4f86\u5403\u6a02\u5403\u7897\u4efd\u91cf\u5341\u8db3\u7684\u9eb5\u7dda\u7fb9\uff0c\u518d\u9ede\u4e00\u7897\u50b3\u7d71\u7684\u9ed1\u7cd6\u7da0\u8c46\u7b97\u751c\u9ede\uff0c\u5403\u98fd\u5f8c\u518d\u53bb\u9435\u82b1\u6751\u597d\u597d\u6563\u6b65\u6d88\u5316\uff0c\u5b8c\u5168\u525b\u525b\u597d\u3002",
             "keywords": "The gaya Hotel \u9ed1\u7cd6\u7da0\u8c46 \u9eb5\u7dda\u7fb9 \u9435\u82b1\u6751",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1096,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -88,7 +88,7 @@
             "background": null,
             "headline": "",
             "title": "\u300a\u67e5AGODA\u6700\u4f4e\u4f4f\u5bbf\u623f\u50f9\u300b\u3001\u300a\u627e\u53f0\u6771Booking.com\u4f4f\u5bbf\u512a\u60e0\u300b",
-            "keywords": null,
+            "keywords": "ALL:AGODA\u6700\u4f4e\u4f4f\u5bbf\u623f\u50f9 \u627e\u53f0\u6771Booking.com\u4f4f\u5bbf\u512a\u60e0|QUERY:\u627e\u53f0\u6771Booking.com\u4f4f\u5bbf\u512a\u60e0",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "NORMAL"
@@ -98,7 +98,7 @@
             "background": null,
             "headline": "",
             "title": "<\u5feb\u52a0\u5165Line\u8ddf\u5de6\u8c6a\u54e51\u5c0d1\u8aaa\u6084\u6084\u8a71>",
-            "keywords": null,
+            "keywords": "ALL:|QUERY:",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "FOCUS"
@@ -126,8 +126,8 @@
             "headline": "",
             "title": "\u5167\u5bb9\u76ee\u9304 \u5ba2\u4f86\u5403\u6a02\u4f4d\u7f6e \u5ba2\u4f86\u5403\u6a02\u83dc\u55ae \u5927\u8178\u86b5\u4ed4\u9eb5\u7dda \u9ed1\u7cd6\u7da0\u8c46\u7b97 \u5ba2\u4f86\u5403\u6a02\u71df\u696d\u8cc7\u8a0a \u66f4\u591a\u53f0\u6771\u56db\u5929\u4e09\u591c\u61f6\u4eba\u5305 The GAYA HOTEL\u6f6e\u6e21\u5047\u9152\u5e97 \u53f0\u6771\u5730\u666f\u6fa4\u884c\u9928 \u53f0\u6771\u6842\u7530\u559c\u4f86\u767b\u9152\u5e97 \u53f0\u6771\u6021\u975c\u6c11\u5bbf \u53f0\u6771\u5bcc\u91ce\u6eab\u6cc9\u4f11\u9592\u6703\u9928 \u53f0\u6771\u65c5\u4eba\u9a5b\u7ad9",
             "keywords": "\u5403\u6a02 \u9ed1\u7cd6\u7da0\u8c46\u7b97 \u5ba2 \u86b5\u4ed4\u9eb5 \u53f0\u6771 \u5403\u6a02\u4f4d\u7f6e",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 559,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -153,8 +153,8 @@
             "headline": "\u5ba2\u4f86\u5403\u6a02\u4f4d\u7f6e",
             "title": "\u4f86\u9019\u9593\u5ba2\u4f86\u5403\u6a02\u8001\u5be6\u8b1b\u62db\u724c\u4e0d\u592a\u660e\u986f\uff0c\u540c\u4e00\u689d\u8def\u6211\u932f\u904e\u4e09\u6b21\uff0c\u624d\u627e\u5230\u5b83\u7684\u4f4d\u7f6e\uff01",
             "keywords": "\u62db\u724c \u5ba2\u4f86\u5403\u6a02\u8001\u5be6 \u5ba2\u4f86\u5403\u6a02\u4f4d\u7f6e",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1173,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -180,8 +180,8 @@
             "headline": "",
             "title": "\u4e3b\u8981\u56e0\u70ba\u5b83\u7684\u9580\u9762\u8d70\u6df1\u8272\u7cfb\uff0c\u8def\u904e\u771f\u7684\u5f88\u5bb9\u6613\u6c92\u6709\u767c\u73fe\uff0c\u5c0e\u822a\u8acb\u8a2d\u5b9a\uff1a\u53f0\u6771\u7e23\u53f0\u6771\u5e02\u65b0\u751f\u8def222\u865f\u3002",
             "keywords": "\u9580\u9762\u8d70\u6df1\u8272\u7cfb \u53f0\u6771\u7e23\u53f0\u6771\u5e02\u65b0\u751f\u8def222\u865f",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 943,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -207,8 +207,8 @@
             "headline": "\u5ba2\u4f86\u5403\u6a02\u83dc\u55ae",
             "title": "\u5e97\u88e1\u4e3b\u8981\u5c31\u8ca9\u552e\u5927\u8178\u86b5\u4ed4\u9eb5\u7dda\u3001\u9ed1\u7cd6\u6842\u5713\u7da0\u8c46\u7b97\u3001\u7da0\u8c46\u7b97\u5228\u51b0\u7b49\u5e73\u6c11\u5c0f\u5403\uff0c\u53b2\u5bb3\u7684\u5e97\u807d\u8aaa\u83dc\u55ae\u4e0d\u7528\u591a\uff0c\u53ea\u8981\u5e7e\u6a23\u4e5f\u80fd\u71b1\u8ce320\u5e74\u4ee5\u4e0a\u3002",
             "keywords": "\u5403\u6a02\u83dc\u55ae \u5e73\u6c11\u5c0f\u5403 \u83dc\u55ae \u5927\u8178\u86b5\u4ed4\u9eb5\u7dda \u7da0\u8c46\u7b97\u5228\u51b0 \u9ed1\u7cd6\u6842\u5713\u7da0\u8c46\u7b97",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1058,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -216,7 +216,7 @@
             "background": null,
             "headline": "",
             "title": "\u672c\u4f86\u60f3\u9ede\u7da0\u8c46\u7b97\u5228\u51b0\uff0c\u4e0d\u904e\u53ea\u57286\u6708\u4efd\u624d\u958b\u8ce3\uff0c\u62115\u6708\u4f86\u5c31\u9ede\u4e0d\u5230\uff0c\u53ea\u80fd\u7559\u8457\u65e5\u5f8c\u518d\u4f86\u3002",
-            "keywords": null,
+            "keywords": "ALL:\u9ede\u7da0\u8c46\u7b97\u5228\u51b0|QUERY:\u9ede\u7da0\u8c46\u7b97\u5228\u51b0",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "QUOTE"
@@ -244,8 +244,8 @@
             "headline": "\u5927\u8178\u86b5\u4ed4\u9eb5\u7dda",
             "title": "\u86b5\u4ed4\u5403\u8d77\u4f86\u6c92\u6709\u8165\u5473\uff0c\u9084\u883b\u6dae\u5634\u7684\u3002",
             "keywords": "\u5927\u8178\u86b5\u4ed4\u9eb5\u7dda \u86b5\u4ed4",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 751,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -271,8 +271,8 @@
             "headline": "",
             "title": "\u53e6\u5916\u9084\u6709\u6ef7\u904e\u7684\u5927\u8178\u8207\u7c89\u8178\uff0c\u5403\u8d77\u4f86\u9084\u662f\u5f88\u5f48\u5ae9\uff0c\u5927\u53e3\u559d\u6696\u6696\u7684\u9eb5\u7dda\uff0c\u8fc5\u901f\u7684\u586b\u98fd\u809a\u5b50\u3002",
             "keywords": "\u5927\u8178\u8207\u7c89\u8178 \u9eb5\u7dda",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1058,
+            "focal_y": 540,
             "layout": "QUOTE"
         },
         {
@@ -298,8 +298,8 @@
             "headline": "\u9ed1\u7cd6\u7da0\u8c46\u7b97",
             "title": "\u672c\u4f86\u60f3\u9ede\u5228\u51b0\uff0c\u4e0d\u904e\u4f9b\u61c9\u7684\u6642\u9593\u9084\u6c92\u958b\u59cb\uff0c\u65bc\u662f\u6539\u9ede\u5c6c\u65bc\u71b1\u751c\u9ede\u7684\u9ed1\u7cd6\u7da0\u8c46\u7b97\uff0c\u8ddf\u8eca\u57ce\u7684\u77e5\u540d\u751c\u9ede\u300c\u7da0\u8c46\u849c\u300d\u6709\u9ede\u76f8\u4f3c\u3002",
             "keywords": "\u7da0\u8c46\u849c \u9ed1\u7cd6\u7da0\u8c46\u7b97",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 559,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -325,8 +325,8 @@
             "headline": "",
             "title": "\u9023\u5c0f\u6ce1\u83dc\u90fd\u559c\u6b61\u7684\u5ba2\u4f86\u5403\u6a02\uff0c\u662f\u500b\u5168\u5bb6\u5927\u5c0f\u8fc5\u901f\u4e0a\u9580\u5c31\u80fd\u586b\u98fd\u809a\u5b50\u7684\u597d\u5730\u65b9\uff0c\u5f9e\u9435\u82b1\u6751\u8d70\u904e\u4f86\u4e0d\u75282\u5206\u9418\u7684\u4eba\u6c23\u5c0f\u5403\uff0c\u6709\u4f86\u9435\u82b1\u6751\u60f3\u8981\u5e73\u50f9\u7f8e\u98df\uff0c\u5ba2\u4f86\u5403\u6a02\u5feb\u8a18\u5230\u53e3\u888b\u540d\u55ae\u5427\uff01",
             "keywords": "\u5ba2\u4f86\u5403\u6a02 \u5c0f\u6ce1\u83dc \u9435\u82b1\u6751 \u5c0f\u5403",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1154,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -352,8 +352,8 @@
             "headline": "The GAYA HOTEL\u6f6e\u6e21\u5047\u9152\u5e97",
             "title": "\u9435\u82b1\u6751\u5c31\u5728\u65c1\u908a\u6b65\u884c1\u5206\u9418\u5c31\u5230\u9054\uff0c\u53f0\u6771\u89c0\u5149\u591c\u5e02\u4e5f\u53ea\u8981\u7d045\u5206\u9418\uff0c\u5e02\u5340\u7f8e\u98df\u5ba2\u4f86\u5403\u6a02\u5927\u8178\u86b5\u4ed4\u9eb5\u7dda\u3001\u85cd\u873b\u8713\u70b8\u96de\u3001\u963f\u92d0\u70b8\u96de\u3001\u5bf6\u6851\u6e6f\u5713\u3001\u6995\u6a39\u4e0b\u7c73\u82d4\u76ee\u9644\u7b49\u7b49\u7f8e\u98df\u90fd\u5728\u5468\u908a\u4e0d\u9060\u3001\u9084\u6709\u8a31\u591a\u5546\u5bb6\u8d70\u901b\u4e0d\u7121\u804a\uff01",
             "keywords": "\u7f8e\u98df\u5ba2 \u53f0\u6771\u89c0\u5149\u591c\u5e02 The GAYA HOTEL\u6f6e\u6e21\u5047\u9152\u5e97 \u9435\u82b1\u6751 \u7f8e\u98df",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1173,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -379,8 +379,8 @@
             "headline": "",
             "title": "\u300aAgoda\u8a02\u623f\u512a\u60e0\u67e5\u8a62\u300b\u3008Booking.com\u8a02\u623f\u512a\u60e0\u67e5\u8a62\u3009",
             "keywords": "Agoda\u8a02\u623f\u512a\u60e0\u67e5\u8a62 Booking.com\u8a02\u623f\u512a\u60e0\u67e5\u8a62",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 559,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -406,8 +406,8 @@
             "headline": "\u5730\u666f\u6fa4\u884c\u9928 THE SUITES TAITUNG",
             "title": "\u67e5\u8a62\u623f\u50f9\u512a\u60e0\u300a\u67e5AgodaK\u4fbf\u5b9c\u623f\u50f9\u300b\u3008Booking.com\u8a02\u623f\u512a\u60e0\u3009",
             "keywords": "Booking.com\u8a02\u623f\u512a\u60e0 \u623f\u50f9\u512a\u60e0 \u5730\u666f\u6fa4\u884c\u9928 AgodaK\u4fbf\u5b9c\u623f\u50f9",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 559,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -415,7 +415,7 @@
             "background": null,
             "headline": "\u53f0\u6771\u6842\u7530\u559c\u4f86\u767b\u9152\u5e97",
             "title": "\u96fb\u8a71\uff1a(08) 932-8858",
-            "keywords": null,
+            "keywords": "ALL:\u53f0\u6771\u6842\u7530\u559c\u4f86\u767b\u9152\u5e97|QUERY:\u53f0\u6771\u6842\u7530\u559c\u4f86\u767b\u9152\u5e97",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "NORMAL"
@@ -443,8 +443,8 @@
             "headline": "",
             "title": "\u67e5\u8a62\u623f\u50f9\u512a\u60e0\u300a\u67e5AgodaK\u4fbf\u5b9c\u623f\u50f9\u300b\u3008Booking.com\u8a02\u623f\u512a\u60e0\u3009",
             "keywords": "\u67e5\u8a62\u623f\u50f9\u512a\u60e0 Booking.com\u8a02\u623f\u512a\u60e0 \u67e5AgodaK\u4fbf\u5b9c\u623f\u50f9",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 578,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -470,8 +470,8 @@
             "headline": "\u53f0\u6771\u65c5\u4eba\u9a5b\u7ad9",
             "title": "\u5730\u5740:\u53f0\u6771\u5e02\u4e2d\u6b63\u8def392\u5df715\u865f\u3001\u5c0e\u822a\u5730\u5740:\u53f0\u6771\u5e02\u5bf6\u6851\u8def399\u5df720\u865f",
             "keywords": "\u53f0\u6771\u65c5\u4eba\u9a5b\u7ad9 \u53f0\u6771\u5e02",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1346,
+            "focal_y": 540,
             "layout": "NORMAL"
         }
     ]

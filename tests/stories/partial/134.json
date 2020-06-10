@@ -115,7 +115,7 @@
             "background": null,
             "headline": "",
             "title": "\u8a00\u60c5-\u63a8\u85a6\u66f8\u55ae",
-            "keywords": null,
+            "keywords": "ALL:\u8a00\u60c5-\u63a8\u85a6\u66f8\u55ae.|QUERY:\u8a00\u60c5-\u63a8\u85a6\u66f8\u55ae.",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "QUOTE"
@@ -125,7 +125,7 @@
             "background": null,
             "headline": "",
             "title": "\u53e4\u4ee3\u7e3d\u8868 \u53e4\u4ee3\u7a7f\u8d8a \u53e4\u4ee3\u91cd\u751f",
-            "keywords": null,
+            "keywords": "ALL:\u53e4\u4ee3\u7e3d\u8868 \u53e4\u4ee3\u7a7f\u8d8a \u53e4\u4ee3\u91cd\u751f.|QUERY:\u53e4\u4ee3\u7e3d\u8868 \u53e4\u4ee3\u7a7f\u8d8a \u53e4\u4ee3\u91cd\u751f.",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "QUOTE"
@@ -153,8 +153,8 @@
             "headline": "",
             "title": "\u7834\u93e1\u91cd\u5713 \u5973\u626e\u7537\u88dd \u61f8\u7591\u8a00\u60c5",
             "keywords": "\u7834\u93e1\u91cd\u5713 \u5973\u626e\u7537\u88dd \u61f8\u7591\u8a00\u60c5",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1077,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -180,8 +180,8 @@
             "headline": "",
             "title": "\u77ed\u7bc7\u8a00\u60c5 \u9577\u7bc7\u8a00\u60c5 ABO\u6587",
             "keywords": "\u77ed\u7bc7\u8a00\u60c5 \u9577\u7bc7\u8a00\u60c5 ABO\u6587.",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1346,
+            "focal_y": 540,
             "layout": "FOCUS"
         }
     ]

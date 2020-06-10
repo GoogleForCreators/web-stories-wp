@@ -79,8 +79,8 @@
             "headline": "",
             "title": "\u6295\u7a3f\u4fe1\u4ef6\u8acb\u9644\u4e0a\uff1a",
             "keywords": "\u6295\u7a3f\u4fe1\u4ef6",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1058,
+            "focal_y": 540,
             "layout": "QUOTE"
         },
         {
@@ -88,7 +88,7 @@
             "background": null,
             "headline": "",
             "title": "\u767c\u6587\u66b1\u7a31",
-            "keywords": null,
+            "keywords": "ALL:\u767c\u6587\u66b1\u7a31.|QUERY:\u767c\u6587\u66b1\u7a31.",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "FOCUS"
@@ -98,7 +98,7 @@
             "background": null,
             "headline": "",
             "title": "\u4e0d\u5efa\u8b70\u4e00\u7a3f\u591a\u6295\u3002",
-            "keywords": null,
+            "keywords": "ALL:|QUERY:",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "FOCUS"
@@ -108,7 +108,7 @@
             "background": null,
             "headline": "",
             "title": "\u82e5\u4e00\u7a3f\u591a\u6295\uff0c\u8acb\u8a3b\u660e\u3002",
-            "keywords": null,
+            "keywords": "ALL:|QUERY:",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "QUOTE"
@@ -136,8 +136,8 @@
             "headline": "",
             "title": "\u2661\u4eba\u2661",
             "keywords": "\u4eba.",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 847,
+            "focal_y": 540,
             "layout": "QUOTE"
         }
     ]

@@ -61,7 +61,7 @@
             "background": null,
             "headline": "",
             "title": "\u7c7320ml",
-            "keywords": null,
+            "keywords": "ALL:|QUERY:",
             "focal_x": -1,
             "focal_y": -1,
             "layout": "NORMAL"
@@ -89,8 +89,8 @@
             "headline": "",
             "title": "\u5916\u934b\u4e00\u676f\u6c34",
             "keywords": "\u5916\u934b\u4e00\u676f\u6c34.",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1192,
+            "focal_y": 540,
             "layout": "FOCUS"
         },
         {
@@ -116,8 +116,8 @@
             "headline": "",
             "title": "\u5148\u5c0720\u514b\u7684\u7c73\u6d17\u597d\u6ce1\u5728200ml\u7684\u6c34\u5167",
             "keywords": "\u7c73\u6d17\u597d\u6ce1",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 559,
+            "focal_y": 540,
             "layout": "QUOTE"
         },
         {
@@ -143,8 +143,8 @@
             "headline": "",
             "title": "\u6309\u4e0b\u96fb\u934b\u7b49\u96fb\u934b\u8df3\u8d77",
             "keywords": "\u96fb\u934b \u96fb\u934b\u8df3\u8d77",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 1212,
+            "focal_y": 540,
             "layout": "NORMAL"
         },
         {
@@ -170,8 +170,8 @@
             "headline": "",
             "title": "\u7528\u98df\u7269\u8abf\u7406\u6a5f\u628a \u7389\u7c73\u7ca5\u6253\u6210\u6ce5",
             "keywords": "\u7389\u7c73\u7ca5 \u98df\u7269\u8abf\u7406\u6a5f",
-            "focal_x": -1,
-            "focal_y": -1,
+            "focal_x": 693,
+            "focal_y": 540,
             "layout": "NORMAL"
         }
     ]
