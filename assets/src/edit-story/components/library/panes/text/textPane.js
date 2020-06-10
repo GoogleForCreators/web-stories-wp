@@ -38,10 +38,11 @@ import { PRESETS, DEFAULT_PRESET } from './textPresets';
 const SectionContent = styled.p``;
 
 function TextPane(props) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
   const { showTextSets } = useFeatures();
+
   return (
     <Pane id={paneId} {...props}>
       <SearchInput

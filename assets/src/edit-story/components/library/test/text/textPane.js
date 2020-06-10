@@ -35,11 +35,13 @@ import useLibrary from '../../useLibrary';
 describe('TextPane', () => {
   const insertElement = jest.fn();
   beforeAll(() => {
-    useLibrary.mockImplementation(() => ({
-      actions: {
-        insertElement: insertElement,
-      },
-    }));
+    useLibrary.mockImplementation((selector) =>
+      selector({
+        actions: {
+          insertElement: insertElement,
+        },
+      })
+    );
   });
 
   it('should insert text with default text style on pressing quick action', async () => {
