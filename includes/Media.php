@@ -233,7 +233,7 @@ class Media {
 			]
 		);
 
-		// Custom field, as built in term update require term id and not slug. 
+		// Custom field, as built in term update require term id and not slug.
 		register_rest_field(
 			'attachment',
 			'media_source',
@@ -241,6 +241,7 @@ class Media {
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
+					'enum'        => [ 'editor' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'get_callback'    => static function ( $prepared ) {
