@@ -148,9 +148,11 @@ class Database_Upgrader {
 
 	/**
 	 * Add the editor term, to make sure it exists.
+	 *
+	 * @return void
 	 */
 	protected function v_2_add_term() {
-		wp_insert_term( 'editor', MEDIA::STORY_MEDIA_TAXONOMY );
+		wp_insert_term( 'editor', Media::STORY_MEDIA_TAXONOMY );
 	}
 
 	/**
