@@ -56,12 +56,28 @@ function PublishPanel() {
   } = useInspector();
 
   const {
-    state: {
-      meta: { isSaving },
-      story: { author, featuredMediaUrl, publisherLogoUrl },
-    },
-    actions: { updateStory },
-  } = useStory();
+    isSaving,
+    author,
+    featuredMediaUrl,
+    publisherLogoUrl,
+    updateStory,
+  } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+        story: { author, featuredMediaUrl, publisherLogoUrl },
+      },
+      actions: { updateStory },
+    }) => {
+      return {
+        isSaving,
+        author,
+        featuredMediaUrl,
+        publisherLogoUrl,
+        updateStory,
+      };
+    }
+  );
 
   const { capabilities } = useConfig();
 

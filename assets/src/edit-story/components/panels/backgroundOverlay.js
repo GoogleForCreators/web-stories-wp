@@ -33,10 +33,10 @@ import { OverlayPreset, OverlayType } from '../../utils/backgroundOverlay';
 import { SimplePanel } from './panel';
 
 function BackgroundOverlayPanel() {
-  const {
-    state: { currentPage },
-    actions: { updateCurrentPageProperties },
-  } = useStory();
+  const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+    updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
+  }));
   const overlay = currentPage.backgroundOverlay || OverlayType.NONE;
 
   const updateOverlay = useCallback(

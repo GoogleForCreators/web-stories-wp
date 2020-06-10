@@ -13,27 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-import { useStory } from '../../../app';
-
-function useLayers() {
-  const { currentPage } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-  }));
-
-  if (!currentPage) {
-    return [];
-  }
-
-  const layers = currentPage.elements.map((layer, index) => ({
-    ...layer,
-    position: index,
-  }));
-  layers.reverse();
-  return layers;
+function isTargetOutOfContainer(target, container) {
+  const { left, right, top, bottom } = target.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  return (
+    left > containerRect.right ||
+    right < containerRect.left ||
+    bottom < containerRect.top ||
+    top > containerRect.bottom
+  );
 }
 
-export default useLayers;
+export default isTargetOutOfContainer;

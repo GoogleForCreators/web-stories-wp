@@ -70,6 +70,7 @@ export class Fixture {
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
+    //eslint-disable-next-line jasmine/no-unsafe-spy
     spyOn(React, 'createElement').and.callFake((type, props, ...children) => {
       if (!props?._wrapped) {
         const stubs = this._componentStubs.get(type);
@@ -359,6 +360,7 @@ function HookExecutor({ hooks }) {
 }
 /* eslint-enable react/prop-types, react/jsx-no-useless-fragment */
 
+/* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
   constructor() {
     // eslint-disable-next-line react/prop-types
@@ -473,6 +475,7 @@ class APIProviderFixture {
     return this._comp;
   }
 }
+/* eslint-enable jasmine/no-unsafe-spy */
 
 /**
  * Wraps a fixture response in a promise. May additionally add `act()` calls as

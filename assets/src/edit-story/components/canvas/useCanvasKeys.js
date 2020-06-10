@@ -35,15 +35,33 @@ const MOVE_COARSE_STEP = 10;
  */
 function useCanvasKeys(ref) {
   const {
-    actions: {
-      addElements,
-      arrangeSelection,
-      clearSelection,
-      deleteSelectedElements,
-      updateSelectedElements,
-    },
-    state: { selectedElements },
-  } = useStory();
+    selectedElements,
+    addElements,
+    arrangeSelection,
+    clearSelection,
+    deleteSelectedElements,
+    updateSelectedElements,
+  } = useStory(
+    ({
+      state: { selectedElements },
+      actions: {
+        addElements,
+        arrangeSelection,
+        clearSelection,
+        deleteSelectedElements,
+        updateSelectedElements,
+      },
+    }) => {
+      return {
+        selectedElements,
+        addElements,
+        arrangeSelection,
+        clearSelection,
+        deleteSelectedElements,
+        updateSelectedElements,
+      };
+    }
+  );
 
   // Return focus back to the canvas when another section loses the focus.
   useEffect(() => {
