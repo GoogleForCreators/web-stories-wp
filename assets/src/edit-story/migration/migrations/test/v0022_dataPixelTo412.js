@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import dataPixelTo412 from '../v0021_dataPixelTo412';
+import dataPixelTo412 from '../v0022_dataPixelTo412';
 
 describe('dataPixelTo412', () => {
   it('should convert all pixel props', () => {
