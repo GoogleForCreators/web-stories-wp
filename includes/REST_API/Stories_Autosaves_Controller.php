@@ -186,25 +186,12 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
 
-		$schema = parent::get_item_schema();
+		$autosaves_schema = parent::get_item_schema();
+		$stories_schema   = $this->parent_controller->get_item_schema();
 
-		$schema['properties']['story_data'] = [
-			'description' => __( 'Story data stored as a JSON object. Stored in post_content_filtered field.', 'web-stories' ),
-			'type'        => 'object',
-			'context'     => [ 'edit' ],
-			'default'     => [],
-		];
+		$autosaves_schema['properties']['story_data'] = $stories_schema['properties']['story_data'];
 
-		$schema['properties']['featured_media_url'] = [
-			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
-			'type'        => 'string',
-			'format'      => 'uri',
-			'context'     => [ 'view', 'edit', 'embed' ],
-			'readonly'    => true,
-			'default'     => '',
-		];
-
-		$this->schema = $schema;
+		$this->schema = $autosaves_schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
 	}
