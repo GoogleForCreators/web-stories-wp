@@ -13,12 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import Provider from './provider';
-import Container from './container';
-import { Wrapper } from './components';
-import useAlertContext from './useAlertContext';
+import { TypographyPresets } from '../typography';
 
-export const Alert = { Provider, Container, useAlertContext, Wrapper };
+export const Wrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 300px;
+  min-width: 30vw;
+  background-color: lime;
+`;
+
+export const AlertContainer = styled.div`
+  width: 100%;
+  padding: 10px;
+  color: black;
+  display: flex;
+`;
+
+export const AlertText = styled.p`
+  ${TypographyPresets.Medium};
+`;
+
+export const AlertIcon = styled.div``;

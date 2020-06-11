@@ -17,27 +17,30 @@
 /**
  * External dependencies
  */
+import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import { boolean, select, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Wrapper } from '../alertContainer';
-import Container from '../container';
+import ErrorQueue from '../';
+import { Alert } from '../../../../components/alert';
+import { ApiContext } from '../../../api/apiProvider';
 
 export default {
-  title: 'Dashboard/Components/Alert',
-  component: Alert,
+  title: 'Dashboard/Views/ErrorQueue',
+  component: ErrorQueue,
 };
 
 export const _default = () => {
   return (
-    <Wrapper>
-      <Container message="this is an error" severity="error" />
-      <Container message="this is a warning" severity="warning" />
-      <Container message="this is informational" severity="info" />
-    </Wrapper>
+    <ApiContext.Provider
+      value={{ state: { stories: { error: { message: 'i am an error' } } } }}
+    >
+      <Alert.Provider>
+        <ErrorQueue />
+      </Alert.Provider>
+    </ApiContext.Provider>
   );
 };

@@ -13,12 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { useContext } from 'react';
 /**
  * Internal dependencies
  */
-import Provider from './provider';
-import Container from './container';
-import { Wrapper } from './components';
-import useAlertContext from './useAlertContext';
+import { AlertContext } from './provider';
 
-export const Alert = { Provider, Container, useAlertContext, Wrapper };
+const useAlertContext = () => {
+  const context = useContext(AlertContext);
+  if (!context) {
+    throw new Error(
+      'useAlertContext() must be used within a <Alert.Provider />'
+    );
+  }
+  return context;
+};
+
+export default useAlertContext;

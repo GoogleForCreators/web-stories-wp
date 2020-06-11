@@ -13,12 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
-import Provider from './provider';
-import Container from './container';
-import { Wrapper } from './components';
-import useAlertContext from './useAlertContext';
+import {
+  AlertContainer,
+  AlertIcon,
+  AlertText,
+  DismissButton,
+} from './components';
 
-export const Alert = { Provider, Container, useAlertContext, Wrapper };
+const Container = ({ message, severity, handleClick }) => (
+  <AlertContainer severity={severity}>
+    <AlertIcon />
+    <AlertText>{message}</AlertText>
+    <DismissButton onClick={handleClick}>x</DismissButton>
+  </AlertContainer>
+);
+
+Container.propTypes = {
+  message: PropTypes.string.isRequired,
+  severity: PropTypes.oneOf(['error', 'warning', 'info']),
+  handleClick: PropTypes.func,
+};
+
+export default Container;
