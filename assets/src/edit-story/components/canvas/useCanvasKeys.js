@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, MutableRefObject } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -31,7 +31,7 @@ import { getPastedCoordinates } from '../../utils/copyPaste';
 const MOVE_COARSE_STEP = 10;
 
 /**
- * @param {{current: Node}} ref
+ * @param {MutableRefObject<HTMLElement | null>} ref
  */
 function useCanvasKeys(ref) {
   const {
@@ -63,25 +63,41 @@ function useCanvasKeys(ref) {
     }
   );
 
-  // Return focus back to the canvas when another section loses the focus.
+  /**
+   * Sets default focus node from body to the ref element.
+   */
   useEffect(() => {
     const container = ref.current;
     if (!container) {
       return undefined;
     }
-
+    /**
+     * If node loses focus, wait to see if another node gains it.
+     * if not focus default element.
+     */
     const doc = container.ownerDocument;
-
     const handler = () => {
-      // Make sure that no other component is trying to get the focus
-      // at this time. We have to check all "focusout" events here because
-      // after DOM removal, the "focusout" events are all over the place.
+      /**
+       * setTimeout places callback in the back of the IO queue after
+       * any postential focusin events are queued.
+       */
       setTimeout(() => {
         if (doc.activeElement === doc.body) {
           container.focus();
         }
-      }, 300);
+      }, 0);
     };
+    /**
+     * This is necessary on first load as no events will fire and
+     * we need to check to see if we need to swap out the default
+     * focus element.
+     */
+    handler();
+    /**
+     * focusout is the only reliable event to listen to here
+     * as focusin is not fired when the body gains focus after
+     * another node loses it.
+     */
     doc.addEventListener('focusout', handler, true);
     return () => {
       doc.removeEventListener('focusout', handler, true);
