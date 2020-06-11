@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useMemo, useRef, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -35,10 +36,17 @@ function LibraryTabs() {
     tabs: state.data.tabs,
   }));
   const { isRTL } = useConfig();
-  const panes = useMemo(() => getPanes(tabs), [tabs]);
+  const { showAnimationTab } = useFeatures();
+  const panes = useMemo(
+    () =>
+      showAnimationTab
+        ? getPanes(tabs)
+        : getPanes(tabs).filter(({ id }) => id !== tabs.ANIMATION),
+    [tabs, showAnimationTab]
+  );
   const ref = useRef();
   const handleNavigation = useCallback(
-    (direction) => () => {
+    (direction) => {
       const currentIndex = panes.findIndex(({ id }) => id === tab);
       const nextPane = panes[currentIndex + direction];
       if (!nextPane) {
