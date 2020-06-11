@@ -27,6 +27,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 // By default, the element should be 50% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+// @todo Once none of the elements are placed randomly, default x can be moved to text/index.js
 const DEFAULT_LEFT_MARGIN = 40;
 
 const DEFAULT_PRESET = {
@@ -40,6 +41,7 @@ const DEFAULT_PRESET = {
   width: 160,
   x: DEFAULT_LEFT_MARGIN,
   y: PAGE_HEIGHT / 2 - dataFontEm(1) / 2,
+  textAlign: 'center',
 };
 
 const PRESETS = [
@@ -51,7 +53,7 @@ const PRESETS = [
       'web-stories'
     )}</span>`,
     fontSize: dataFontEm(2),
-    x: 40,
+    x: DEFAULT_LEFT_MARGIN,
     y: PAGE_HEIGHT / 2 - dataFontEm(2) / 2,
     font: TEXT_ELEMENT_DEFAULT_FONT,
     width: DEFAULT_ELEMENT_WIDTH,
