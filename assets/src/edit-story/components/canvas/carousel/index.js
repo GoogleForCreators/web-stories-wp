@@ -36,7 +36,7 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
-  SafeMode as SafeModeButton,
+  SafeMode,
   Plain,
 } from '../../button';
 import {
@@ -97,6 +97,9 @@ const PlainStyled = styled(Plain)`
 `;
 
 const MenuIconsWrapper = styled.div`
+  & > * {
+    margin-bottom: 18px;
+  }
   ${({ isCompact }) =>
     isCompact
       ? css`
@@ -189,6 +192,10 @@ const GridViewContainer = styled.div`
   pointer-events: all;
 `;
 
+const SafeModeButton = styled(SafeMode)`
+  ${({ active }) => active && `background: rgba(255,255,255, 0.1)`}
+`;
+
 function calculateThumbnailHeight(carouselSize) {
   return (
     carouselSize.height -
@@ -219,6 +226,7 @@ function Carousel() {
   );
   const { isRTL } = useConfig();
   const {
+    state: { showSafeZone },
     actions: { setShowSafeZone },
   } = useCanvas();
   const { showKeyboardShortcutsButton } = useFeatures();
@@ -439,7 +447,8 @@ function Carousel() {
             <SafeModeButton
               width="24"
               height="24"
-              onClick={() => setShowSafeZone((showSafeZone) => !showSafeZone)}
+              active={showSafeZone}
+              onClick={() => setShowSafeZone((current) => !current)}
               aria-label={__('Safe Mode', 'web-stories')}
             />
             <GridViewButton
