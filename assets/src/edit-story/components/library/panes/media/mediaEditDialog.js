@@ -136,7 +136,7 @@ function MediaEditDialog({ resource, onClose }) {
     id,
     src,
     title,
-    createTime,
+    creationDate,
     width,
     height,
     type,
@@ -152,7 +152,7 @@ function MediaEditDialog({ resource, onClose }) {
   }));
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
-  const parsedDate = moment(createTime);
+  const parsedDate = moment(creationDate);
 
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
