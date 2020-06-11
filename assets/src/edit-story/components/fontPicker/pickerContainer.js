@@ -132,15 +132,22 @@ const NoResult = styled.span`
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 `;
 
-function FontPickerContainer({ value, onSelect, onClose }) {
+function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const {
     state: { fonts },
     actions: { ensureMenuFontsLoaded },
   } = useFont();
 
   const ref = useRef();
+  const inputRef = useRef();
   const [searchKeyword, setSearchKeyword] = useState('');
   const [matchingFonts, setMatchingFonts] = useState(fonts);
+
+  useEffect(() => {
+    if (isOpen) {
+      inputRef?.current?.focus();
+    }
+  }, [isOpen]);
 
   const handleScroll = useCallback(
     (startIndex, endIndex) => {
@@ -228,6 +235,7 @@ function FontPickerContainer({ value, onSelect, onClose }) {
   return (
     <PickerContainer ref={ref}>
       <SearchInput
+        ref={inputRef}
         aria-expanded={Boolean(matchingFonts.length)}
         value={searchKeyword}
         onKeyDown={handleKeyPress}
@@ -251,6 +259,7 @@ function FontPickerContainer({ value, onSelect, onClose }) {
 }
 
 FontPickerContainer.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
