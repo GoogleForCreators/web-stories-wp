@@ -92,9 +92,9 @@ export function reshapeSavedTemplates({
 const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
-  const { assetsURL, wpApi } = config;
+  const { assetsURL, templateApi } = config;
 
-  const fetchSavedTemplates = useCallback((filters) => {
+  const fetchSavedTemplates = useCallback(() => {
     // Saved Templates = Bookmarked Templates + My Templates
     dispatch({
       type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
@@ -127,7 +127,7 @@ const useTemplateApi = (dataAdapter, config) => {
         payload: true,
       });
 
-      if (!wpApi) {
+      if (!templateApi) {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
           payload: { message: 'unable to connect to data', code: '' },
@@ -142,7 +142,7 @@ const useTemplateApi = (dataAdapter, config) => {
 
       try {
         const path = queryString.stringifyUrl({
-          url: wpApi,
+          url: templateApi,
           query,
         });
         const response = await dataAdapter.get(path, {
@@ -183,7 +183,7 @@ const useTemplateApi = (dataAdapter, config) => {
         });
       }
     },
-    [dataAdapter, wpApi]
+    [dataAdapter, templateApi]
   );
 
   const fetchMyTemplateById = useCallback((templateId) => {
@@ -257,7 +257,7 @@ const useTemplateApi = (dataAdapter, config) => {
           title,
         } = story.originalStoryData;
 
-        await dataAdapter.post(wpApi, {
+        await dataAdapter.post(templateApi, {
           data: {
             content,
             story_data,
@@ -283,7 +283,7 @@ const useTemplateApi = (dataAdapter, config) => {
         });
       }
     },
-    [dataAdapter, wpApi]
+    [dataAdapter, templateApi]
   );
 
   const fetchRelatedTemplates = useCallback(() => {

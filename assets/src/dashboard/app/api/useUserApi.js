@@ -26,13 +26,13 @@ import queryString from 'query-string';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
-export default function useUsersApi(dataAdapter, { wpApi }) {
+export default function useUserApi(dataAdapter, { userApi }) {
   const [users, setUsers] = useState({});
   const fetchUsers = useCallback(async () => {
     try {
       const response = await dataAdapter.get(
         queryString.stringifyUrl({
-          url: wpApi,
+          url: userApi,
           query: { per_page: 100 },
         }),
         {
@@ -43,7 +43,7 @@ export default function useUsersApi(dataAdapter, { wpApi }) {
       const usersJson = await fetchAllFromTotalPages(
         response,
         dataAdapter,
-        wpApi
+        userApi
       );
 
       setUsers(
@@ -55,7 +55,7 @@ export default function useUsersApi(dataAdapter, { wpApi }) {
     } catch (e) {
       setUsers({});
     }
-  }, [dataAdapter, wpApi]);
+  }, [dataAdapter, userApi]);
 
   useEffect(() => {
     fetchUsers();
