@@ -25,6 +25,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import { useState, useCallback, useMemo } from 'react';
 import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */

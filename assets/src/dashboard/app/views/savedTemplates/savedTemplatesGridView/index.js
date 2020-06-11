@@ -24,6 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useState, useCallback, useMemo } from 'react';
 import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */
