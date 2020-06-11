@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use WP_Post;
 use WP_Screen;
 
 /**
@@ -93,52 +94,66 @@ class Admin {
 	 * @return string Pre-filled post content if applicable, or the default content otherwise.
 	 */
 	public static function prefill_post_content( $content ) {
-		$embed_story = isset( $_GET['from-web-story'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-		if ( ! $embed_story ) {
+		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
 
-		$post_id = absint( $_GET['from-web-story'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$post_id = absint( sanitize_text_field( wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		if ( $post_id && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post_id ) && current_user_can( 'read_post', $post_id ) ) {
-			$url        = (string) get_the_permalink( $post_id );
-			$title      = (string) get_the_title( $post_id );
-			$has_poster = has_post_thumbnail( $post_id );
-
-			ob_start();
-
-			if ( $has_poster ) {
-				$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
-				?>
-				<!-- wp:web-stories/embed {"url":"<?php echo esc_js( $url ); ?>","title":"<?php echo esc_js( $title ); ?>","poster":"<?php echo esc_url( $poster ); ?>"} -->
-				<div class="wp-block-web-stories-embed alignnone">
-					<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
-							href="<?php echo esc_url( $url ); ?>"
-							style="--story-player-poster:url('<?php echo esc_url( $poster ); ?>')"><?php echo $title; ?></a>
-					</amp-story-player>
-				</div>
-				<!-- /wp:web-stories/embed -->
-				<?php
-			} else {
-				?>
-				<!-- wp:web-stories/embed {"url":"<?php echo esc_url( $url ); ?>","title":"<?php echo esc_js( $title ); ?>","poster":""} -->
-				<div class="wp-block-web-stories-embed alignnone">
-					<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
-							href="<?php echo esc_url( $url ); ?>"
-							><?php echo $title; ?></a>
-					</amp-story-player>
-				</div>
-				<!-- /wp:web-stories/embed -->
-				<?php
-			}
-
-			return (string) ob_get_clean();
+		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
+			return $content;
 		}
-		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		return $content;
+		if ( ! current_user_can( 'read_post', $post_id ) ) {
+			return $content;
+		}
+
+		$block_markup_with_poster = <<<BLOCK
+<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":"%3\$s"} -->
+<div class="wp-block-web-stories-embed alignnone">
+	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
+			href="%1\$s"
+			style="--story-player-poster:url('%3\$s')">%4\$s</a>
+	</amp-story-player>
+</div>
+<!-- /wp:web-stories/embed -->
+BLOCK;
+
+		$block_markup_without_poster = <<<BLOCK
+<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":""} -->
+<div class="wp-block-web-stories-embed alignnone">
+	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
+			href="%1\$s"
+			>%3\$s</a>
+	</amp-story-player>
+</div>
+<!-- /wp:web-stories/embed -->
+BLOCK;
+
+		$url        = (string) get_the_permalink( $post_id );
+		$title      = (string) get_the_title( $post_id );
+		$has_poster = has_post_thumbnail( $post_id );
+
+		ob_start();
+
+		if ( $has_poster ) {
+			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
+
+			return sprintf(
+				$block_markup_with_poster,
+				esc_url( $url ),
+				esc_js( $title ),
+				esc_url( $poster ),
+				esc_html( $title )
+			);
+		}
+
+		return sprintf(
+			$block_markup_without_poster,
+			esc_url( $url ),
+			esc_js( $title ),
+			esc_html( $title )
+		);
 	}
 
 	/**
@@ -160,7 +175,7 @@ class Admin {
 		if ( $post_id && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post_id ) && current_user_can( 'read_post', $post_id ) ) {
 			$post = get_post( $post_id );
 
-			if ( $post instanceof \WP_Post ) {
+			if ( $post instanceof WP_Post ) {
 				return $post->post_title;
 			}
 		}
