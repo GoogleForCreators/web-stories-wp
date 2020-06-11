@@ -21,12 +21,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH } from '../../../../constants';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 import { dataFontEm } from '../../../../units';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 // By default, the element should be 50% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+const DEFAULT_LEFT_MARGIN = 40;
 
 const DEFAULT_PRESET = {
   id: 'default-text',
@@ -36,7 +37,9 @@ const DEFAULT_PRESET = {
   )}</span>`,
   fontSize: dataFontEm(1),
   font: TEXT_ELEMENT_DEFAULT_FONT,
-  width: 160, // Approximately spans the text inside it.
+  width: 160,
+  x: DEFAULT_LEFT_MARGIN,
+  y: PAGE_HEIGHT / 2 - dataFontEm(1) / 2,
 };
 
 const PRESETS = [
@@ -48,6 +51,8 @@ const PRESETS = [
       'web-stories'
     )}</span>`,
     fontSize: dataFontEm(2),
+    x: 40,
+    y: PAGE_HEIGHT / 2 - dataFontEm(2) / 2,
     font: TEXT_ELEMENT_DEFAULT_FONT,
     width: DEFAULT_ELEMENT_WIDTH,
   },
@@ -59,6 +64,8 @@ const PRESETS = [
       'web-stories'
     )}</span>`,
     fontSize: dataFontEm(1.5),
+    x: DEFAULT_LEFT_MARGIN,
+    y: PAGE_HEIGHT / 2 - dataFontEm(1.5) / 2,
     font: TEXT_ELEMENT_DEFAULT_FONT,
     width: DEFAULT_ELEMENT_WIDTH,
   },
@@ -70,6 +77,8 @@ const PRESETS = [
       'web-stories'
     ),
     fontSize: dataFontEm(1.1),
+    x: DEFAULT_LEFT_MARGIN,
+    y: PAGE_HEIGHT / 2 - dataFontEm(1.1) / 2,
     font: TEXT_ELEMENT_DEFAULT_FONT,
     width: DEFAULT_ELEMENT_WIDTH,
   },
