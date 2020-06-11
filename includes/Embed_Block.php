@@ -50,8 +50,7 @@ class Embed_Block {
 	 * @return void
 	 */
 	public function init() {
-		// TOOD: Replace with https://cdn.ampproject.org/amp-story-player-v0.js once this updated version of the script is on prod.
-		wp_register_script( 'amp-story-player', 'https://stamp-animation.web.app/dist/amp-story-player.js', [], 'v0', false );
+		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
 		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::SCRIPT_HANDLE . '.asset.php';
