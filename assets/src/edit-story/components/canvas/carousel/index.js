@@ -98,7 +98,7 @@ const PlainStyled = styled(Plain)`
 
 const MenuIconsWrapper = styled.div`
   & > * {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
   }
   ${({ isCompact }) =>
     isCompact

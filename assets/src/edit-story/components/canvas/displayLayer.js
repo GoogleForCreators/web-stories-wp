@@ -43,7 +43,7 @@ function DisplayLayer() {
   );
 
   return (
-    <Layer data-testid="DisplayLayer" pointerEvents="none">
+    <Layer pointerEvents="none">
       <PageArea
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
