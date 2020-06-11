@@ -20,7 +20,11 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-const Button = styled.button.attrs(({ type }) => ({ type: type || 'button' }))`
+// Class should contain "mousetrap" to enable keyboard shortcuts on buttons.
+const Button = styled.button.attrs(({ type }) => ({
+  type: type || 'button',
+  className: 'mousetrap',
+}))`
   background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
   border: none;
