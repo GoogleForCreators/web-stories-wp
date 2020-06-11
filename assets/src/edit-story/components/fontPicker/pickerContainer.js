@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -69,7 +69,12 @@ const Divider = styled.hr`
   border-width: 1px 0 0;
 `;
 
-const SearchInput = styled.input`
+const SearchInput = styled.input.attrs({
+  type: 'search',
+  role: 'combobox',
+  ['aria-autocomplete']: 'list',
+  ['aria-owns']: 'editor-font-picker-list',
+})`
   margin: 8px;
   padding: 4px;
   width: 100%;
@@ -79,6 +84,11 @@ const SearchInput = styled.input`
   line-height: ${({ theme }) => theme.fonts.input.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.input.weight};
   font-family: ${({ theme }) => theme.fonts.input.family};
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.selection};
+  }
 `;
 
 const Item = styled.div.attrs(({ fontFamily }) => ({
@@ -130,18 +140,19 @@ function FontPickerContainer({ value, onSelect, onClose }) {
 
   const ref = useRef();
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [matchingFonts, setMatchingFonts] = useState(fonts);
 
   const handleScroll = useCallback(
     (startIndex, endIndex) => {
       const startFrom = Math.max(0, startIndex - 2);
-      const endAt = Math.min(fonts.length - 1, endIndex + 2);
-      const visibleFontNames = fonts
+      const endAt = Math.min(matchingFonts.length - 1, endIndex + 2);
+      const visibleFontNames = matchingFonts
         .slice(startFrom, endAt)
         .filter(({ service }) => service === 'fonts.google.com')
         .map(({ name }) => name);
       ensureMenuFontsLoaded(visibleFontNames);
     },
-    [ensureMenuFontsLoaded, fonts]
+    [ensureMenuFontsLoaded, matchingFonts]
   );
 
   useFocusOut(ref, onClose, [onClose]);
@@ -150,8 +161,6 @@ function FontPickerContainer({ value, onSelect, onClose }) {
   const [currentOffset, setCurrentOffset] = useState(
     fonts.findIndex(({ name }) => name === value)
   );
-
-  const [matchingFonts, setMatchingFonts] = useState(fonts);
 
   const [updateMatchingFonts] = useDebouncedCallback(
     () => {
@@ -177,9 +186,11 @@ function FontPickerContainer({ value, onSelect, onClose }) {
     [updateMatchingFonts]
   );
 
-  const handleInputFocus = useCallback(() => {
-    setCurrentOffset(-1);
-  }, []);
+  useEffect(() => {
+    if (searchKeyword.trim().length > 0) {
+      setCurrentOffset(-1);
+    }
+  }, [searchKeyword]);
 
   const handleKeyPress = useCallback(
     ({ key }) => {
@@ -217,14 +228,9 @@ function FontPickerContainer({ value, onSelect, onClose }) {
   return (
     <PickerContainer ref={ref}>
       <SearchInput
-        type="search"
-        role="combobox"
         aria-expanded={Boolean(matchingFonts.length)}
-        aria-autocomplete="list"
-        aria-owns="editor-font-picker-list"
         value={searchKeyword}
         onKeyDown={handleKeyPress}
-        onFocus={handleInputFocus}
         placeholder={__('Search', 'web-stories')}
         onChange={handleSearchInputChanged}
       />

@@ -37,6 +37,7 @@ const Item = styled.li.attrs({
 `;
 
 function ScrollList({
+  id,
   items,
   itemRenderer,
   onScroll,
@@ -101,13 +102,14 @@ function ScrollList({
     }
 
     if (currentOffset === -1) {
+      node.scrollTo(0, 0);
       return;
     }
 
     const currentNode = itemRefs.current[currentOffset];
     currentNode.focus();
     node.scrollTo(0, currentNode.offsetTop - node.clientHeight / 2);
-  }, [currentOffset]);
+  }, [currentOffset, numItems]);
 
   // Trim to current length of list
   useEffect(() => {
@@ -116,6 +118,7 @@ function ScrollList({
 
   return (
     <List
+      id={id}
       className={className}
       aria-multiselectable={false}
       aria-required={false}
@@ -138,6 +141,7 @@ function ScrollList({
 }
 
 ScrollList.propTypes = {
+  id: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
   itemRenderer: PropTypes.func.isRequired,
   onScroll: PropTypes.func.isRequired,
