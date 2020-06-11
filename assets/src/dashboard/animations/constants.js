@@ -27,17 +27,17 @@ export const ANIMATION_TYPES = {
   ZOOM: 'zoom',
 };
 
-export const ROTATION = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
-
 export const DIRECTION = {
   TOP_TO_BOTTOM: 'topToBottom',
   BOTTOM_TO_TOP: 'bottomToTop',
   LEFT_TO_RIGHT: 'leftToRight',
   RIGHT_TO_LEFT: 'rightToLeft',
+};
+
+export const ROTATION = {
+  CLOCKWISE: 'clockwise',
+  COUNTER_CLOCKWISE: 'counterClockwise',
+  PING_PONG: 'pingPong',
 };
 
 export const AXIS = {
@@ -51,4 +51,5 @@ export const FIELD_TYPES = {
   NUMBER: 'number',
   FLOAT: 'float',
   TEXT: 'text',
+  CHECKBOX: 'checkbox',
 };

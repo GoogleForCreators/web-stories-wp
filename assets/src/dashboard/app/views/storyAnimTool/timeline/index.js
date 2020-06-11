@@ -65,6 +65,17 @@ function renderFormField(name, type, value, options, onChange) {
         )
       );
 
+    case FIELD_TYPES.CHECKBOX:
+      return (
+        <input
+          name={name}
+          readOnly
+          type={FIELD_TYPES.CHECKBOX}
+          onChange={onChange}
+          defaultChecked={value}
+        />
+      );
+
     case FIELD_TYPES.DROPDOWN:
       return (
         <select name={name} value={value} onBlur={onChange} onChange={onChange}>
@@ -237,14 +248,17 @@ function Timeline({
     ]
   );
 
-  const handleOnChange = useCallback((e) => {
-    const { name, value } = e.target;
+  const createHandleOnChange = useCallback(
+    (isCheckbox = false) => (e) => {
+      const { name, value, checked } = e.target;
 
-    setFormFields((prevFormFields) => ({
-      ...prevFormFields,
-      [name]: value,
-    }));
-  }, []);
+      setFormFields((prevFormFields) => ({
+        ...prevFormFields,
+        [name]: isCheckbox ? checked : value,
+      }));
+    },
+    []
+  );
 
   const handleToggleTargetSelect = useCallback(
     (e) => {
@@ -341,7 +355,7 @@ function Timeline({
           {Object.keys(formFields).length > 0 && (
             <form onSubmit={handleAnimationSubmit}>
               {Object.keys(animationProps).map((name) => (
-                <FormField key={name}>
+                <FormField key={formFields.id + name}>
                   {animationProps[name].type !== FIELD_TYPES.HIDDEN && (
                     <label title={animationProps[name].tooltip}>
                       {animationProps[name].label || name}
@@ -352,7 +366,9 @@ function Timeline({
                     animationProps[name].type,
                     formFields[name],
                     animationProps[name].values,
-                    handleOnChange
+                    createHandleOnChange(
+                      animationProps[name].type === FIELD_TYPES.CHECKBOX
+                    )
                   )}
                 </FormField>
               ))}
