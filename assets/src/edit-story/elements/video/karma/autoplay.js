@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { getBackgroundElementId } from '../../../components/dropTargets/karma/background.karma';
 
-fdescribe('Autoplay video', () => {
+describe('Autoplay video', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -45,8 +45,8 @@ fdescribe('Autoplay video', () => {
       selector: 'button',
     });
     await fixture.events.mouse.clickOn(videoFilter);
-    const videos = fixture.screen.getAllByTestId('mediaElement');
-    await fixture.events.mouse.clickOn(videos[0]);
+    const video = fixture.screen.getByRole('application', { name: 'ranger9' });
+    await fixture.events.mouse.clickOn(video);
     const frames = fixture.screen.getAllByTestId('frameElement');
     const videoFrame = frames[1];
     const videoId = videoFrame.dataset.elementId;

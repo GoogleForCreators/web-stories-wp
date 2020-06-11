@@ -275,6 +275,8 @@ const MediaElement = ({
         width={width}
         height={height}
         preload="none"
+        role="application"
+        aria-label={alt}
         muted
         onClick={onClick}
         {...dropTargetsBindings}
