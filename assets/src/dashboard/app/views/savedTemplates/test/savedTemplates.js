@@ -22,7 +22,7 @@
  */
 import { fireEvent } from '@testing-library/react';
 import { SavedTemplatesContent, SavedTemplatesHeader } from '../index';
-import { renderWithTheme } from '../../../../testUtils';
+import { renderWithThemeAndFlagsProvider } from '../../../../testUtils';
 import {
   STORY_SORT_OPTIONS,
   VIEW_STYLE,
@@ -68,7 +68,7 @@ describe('<SavedTemplates />', function () {
   });
 
   it('should render with the correct count label and search keyword.', function () {
-    const { getByPlaceholderText, getByText } = renderWithTheme(
+    const { getByPlaceholderText, getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <SavedTemplatesHeader
           filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
@@ -80,7 +80,8 @@ describe('<SavedTemplates />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
     expect(getByPlaceholderText('Search Templates').value).toBe('Harry Potter');
     expect(getByText('3 results')).toBeInTheDocument();
@@ -88,7 +89,7 @@ describe('<SavedTemplates />', function () {
 
   it('should call the set keyword function when new text is searched', function () {
     const setKeywordFn = jest.fn();
-    const { getByPlaceholderText } = renderWithTheme(
+    const { getByPlaceholderText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <SavedTemplatesHeader
           filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
@@ -100,7 +101,8 @@ describe('<SavedTemplates />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
     fireEvent.change(getByPlaceholderText('Search Templates'), {
       target: { value: 'Hermione Granger' },
@@ -110,7 +112,7 @@ describe('<SavedTemplates />', function () {
 
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithTheme(
+    const { getAllByText, getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <SavedTemplatesHeader
           filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
@@ -122,7 +124,8 @@ describe('<SavedTemplates />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
     fireEvent.click(getAllByText('Created by')[0].parentElement);
     fireEvent.click(getByText('Last modified'));
@@ -131,7 +134,7 @@ describe('<SavedTemplates />', function () {
   });
 
   it('should render the content grid with the correct story count.', function () {
-    const { getAllByText } = renderWithTheme(
+    const { getAllByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <SavedTemplatesContent
           stories={fakeStories}
@@ -143,7 +146,8 @@ describe('<SavedTemplates />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
 
     expect(getAllByText('Use template')).toHaveLength(fakeStories.length);
