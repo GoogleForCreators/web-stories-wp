@@ -61,6 +61,11 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const saveStory = useCallback(
     (props) => {
       setIsSaving(true);
+
+      const isStoryAlreadyPublished = ['publish', 'future'].includes(
+        story.status
+      );
+
       return saveStoryById({
         storyId,
         ...getStoryPropsToSave({ story, pages, metadata }),
@@ -75,9 +80,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
           refreshPostEditURL();
 
-          setIsFreshlyPublished(
-            story.status !== 'publish' && post.status === 'publish'
-          );
+          const isStoryPublished = ['publish', 'future'].includes(post.status);
+          setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
         .catch(() => {
           showSnackbar({
