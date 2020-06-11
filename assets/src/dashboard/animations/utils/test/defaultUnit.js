@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../../constants';
+import { defaultUnit } from '../defaultUnit';
 
-export default {
-  overflowHidden: {
-    type: FIELD_TYPES.CHECKBOX,
-    defaultValue: false,
-  },
-  offsetX: {
-    type: FIELD_TYPES.TEXT,
-    defaultValue: 0,
-  },
-  offsetY: {
-    type: FIELD_TYPES.TEXT,
-    defaultValue: 0,
-  },
-};
+describe('defaultUnit(input, unit)', () => {
+  it('appends the default unit if the input value ends in a digit', () => {
+    const input = 123456;
+    const unit = 'px';
+    expect(defaultUnit(input, unit)).toStrictEqual(`${input}${unit}`);
+  });
+
+  it('doesnt append the default unit if the input value ends in a non-digit', () => {
+    const input = '123456%';
+    const unit = 'px';
+    expect(defaultUnit(input, unit)).toStrictEqual(input);
+  });
+});
