@@ -13,23 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-import { FIELD_TYPES } from '../../constants';
-
-export default {
-  overflowHidden: {
-    type: FIELD_TYPES.CHECKBOX,
-    defaultValue: false,
-  },
-  offsetX: {
-    type: FIELD_TYPES.TEXT,
-    defaultValue: 0,
-  },
-  offsetY: {
-    type: FIELD_TYPES.TEXT,
-    defaultValue: 0,
-  },
-};
+export const defaultUnit = (input, unit) =>
+  /\d$/.test(input) ? `${input}${unit}` : input;

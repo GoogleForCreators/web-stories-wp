@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
+import { defaultUnit } from '../../utils/defaultUnit';
 import SimpleAnimation from '../simpleAnimation';
 
 const defaults = {
@@ -25,7 +26,12 @@ const defaults = {
   duration: 1000,
 };
 
-export function AnimationMove({ offsetX = 0, offsetY = 0, ...args }) {
+export function AnimationMove({
+  overflowHidden = false,
+  offsetX = 0,
+  offsetY = 0,
+  ...args
+}) {
   const timings = {
     ...defaults,
     ...args,
@@ -33,13 +39,17 @@ export function AnimationMove({ offsetX = 0, offsetY = 0, ...args }) {
 
   const animationName = `x-${offsetX}-y-${offsetY}-${ANIMATION_TYPES.MOVE}`;
   const keyframes = {
-    transform: [`translate(${offsetX}px, ${offsetY}px)`, 'translate(0%, 0%)'],
+    transform: [
+      `translate(${defaultUnit(offsetX, 'px')}, ${defaultUnit(offsetY, 'px')})`,
+      'translate(0%, 0%)',
+    ],
   };
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,
     keyframes,
-    timings
+    timings,
+    overflowHidden
   );
 
   return {
