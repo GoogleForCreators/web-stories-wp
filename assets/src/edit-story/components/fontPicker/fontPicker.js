@@ -109,8 +109,21 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
     [onChange]
   );
 
+  const handleKeyPress = useCallback(
+    ({ key }) => {
+      if (
+        !isOpen &&
+        key === 'ArrowDown' &&
+        document.activeElement === ref.current
+      ) {
+        setIsOpen(true);
+      }
+    },
+    [isOpen]
+  );
+
   return (
-    <Container>
+    <Container onKeyDown={handleKeyPress}>
       <FontPickerSelect
         onClick={toggleFontPicker}
         aria-pressed={isOpen}
