@@ -26,13 +26,13 @@ import queryString from 'query-string';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
-export default function useCategoriesApi(dataAdapter, { wpApi }) {
+export default function useCategoriesApi(dataAdapter, { categoryApi }) {
   const [categories, setCategories] = useState({});
   const fetchCategories = useCallback(async () => {
     try {
       const response = await dataAdapter.get(
         queryString.stringifyUrl({
-          url: wpApi,
+          url: categoryApi,
           query: { per_page: 100 },
         }),
         {
@@ -43,7 +43,7 @@ export default function useCategoriesApi(dataAdapter, { wpApi }) {
       const categoriesJson = await fetchAllFromTotalPages(
         response,
         dataAdapter,
-        wpApi
+        categoryApi
       );
 
       setCategories(
@@ -55,7 +55,7 @@ export default function useCategoriesApi(dataAdapter, { wpApi }) {
     } catch (e) {
       setCategories({});
     }
-  }, [dataAdapter, wpApi]);
+  }, [dataAdapter, categoryApi]);
 
   useEffect(() => {
     fetchCategories();

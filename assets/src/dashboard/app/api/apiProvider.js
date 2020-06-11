@@ -49,7 +49,7 @@ export default function ApiProvider({ children }) {
     storyApi: api.stories,
   });
 
-  const { api: fontApi } = useFontApi(dataAdapter, { wpApi: api.fonts });
+  const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
 
   const value = useMemo(
     () => ({

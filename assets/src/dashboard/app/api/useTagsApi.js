@@ -26,13 +26,13 @@ import queryString from 'query-string';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
-export default function useTagsApi(dataAdapter, { wpApi }) {
+export default function useTagsApi(dataAdapter, { tagsApi }) {
   const [tags, setTags] = useState({});
   const fetchTags = useCallback(async () => {
     try {
       const response = await dataAdapter.get(
         queryString.stringifyUrl({
-          url: wpApi,
+          url: tagsApi,
           query: { per_page: 100 },
         }),
         {
@@ -43,7 +43,7 @@ export default function useTagsApi(dataAdapter, { wpApi }) {
       const tagsJson = await fetchAllFromTotalPages(
         response,
         dataAdapter,
-        wpApi
+        tagsApi
       );
 
       setTags(
@@ -55,7 +55,7 @@ export default function useTagsApi(dataAdapter, { wpApi }) {
     } catch (e) {
       setTags({});
     }
-  }, [dataAdapter, wpApi]);
+  }, [dataAdapter, tagsApi]);
 
   useEffect(() => {
     fetchTags();
