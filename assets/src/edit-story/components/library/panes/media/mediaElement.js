@@ -199,10 +199,7 @@ const MediaElement = ({
           setShowVideoDetail(false);
           if (mediaElement.current) {
             // Pointer still in the media element, continue the video.
-            const playPromise = mediaElement.current.play();
-            if (playPromise) {
-              playPromise.catch(() => {});
-            }
+            mediaElement.current.play().catch(() => {});
           }
         } else {
           setShowVideoDetail(true);

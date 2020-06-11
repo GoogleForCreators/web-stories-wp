@@ -184,10 +184,7 @@ function DropTargetsProvider({ children }) {
           );
           if (videoEl) {
             videoEl.load();
-            const playPromise = videoEl.play();
-            if (playPromise) {
-              playPromise.catch(() => {});
-            }
+            videoEl.play().catch(() => {});
           }
         });
       }
