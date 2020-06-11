@@ -70,9 +70,9 @@ function FramesLayer() {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
-  const {
-    state: { showSafeZone },
-  } = useCanvas();
+  const { showSafeZone } = useCanvas(({ state: { showSafeZone } }) => ({
+    showSafeZone,
+  }));
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },

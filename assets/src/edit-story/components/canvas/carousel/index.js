@@ -225,10 +225,12 @@ function Carousel() {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
   const { isRTL } = useConfig();
-  const {
-    state: { showSafeZone },
-    actions: { setShowSafeZone },
-  } = useCanvas();
+  const { showSafeZone, setShowSafeZone } = useCanvas(
+    ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
+      showSafeZone,
+      setShowSafeZone,
+    })
+  );
   const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
