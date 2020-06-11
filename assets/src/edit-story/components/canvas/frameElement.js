@@ -108,7 +108,7 @@ function FrameElement({ element }) {
         {...box}
         onMouseDown={(evt) => {
           if (isSelected) {
-            elementRef.current.focus();
+            elementRef.current.focus({ preventScroll: true });
           } else {
             handleSelectElement(id, evt);
           }
