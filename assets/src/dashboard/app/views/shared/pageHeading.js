@@ -112,16 +112,18 @@ const PageHeading = ({
           {defaultTitle}
         </StyledHeader>
         <Content centerContent={centerContent}>{children}</Content>
-        <SearchContainer>
-          <SearchInner>
-            <TypeaheadSearch
-              placeholder={searchPlaceholder}
-              currentValue={typeaheadValue}
-              stories={stories}
-              handleChange={handleTypeaheadChange}
-            />
-          </SearchInner>
-        </SearchContainer>
+        {Boolean(handleTypeaheadChange) && (
+          <SearchContainer>
+            <SearchInner>
+              <TypeaheadSearch
+                placeholder={searchPlaceholder}
+                currentValue={typeaheadValue}
+                stories={stories}
+                handleChange={handleTypeaheadChange}
+              />
+            </SearchInner>
+          </SearchContainer>
+        )}
       </HeadingBodyWrapper>
     </Container>
   );

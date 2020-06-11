@@ -88,7 +88,7 @@ export default function BodyViewOptions({
       <DisplayFormatContainer>
         <Label>{resultsLabel}</Label>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && (
+          {layoutStyle === VIEW_STYLE.GRID && Boolean(handleSortChange) && (
             <StorySortDropdownContainer>
               <SortDropdown
                 alignment="flex-end"

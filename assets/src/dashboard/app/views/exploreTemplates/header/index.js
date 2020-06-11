@@ -24,6 +24,8 @@ import { __ } from '@wordpress/i18n';
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -61,6 +63,10 @@ const HeadingDropdownsContainer = styled.div`
   }
 `;
 function Header({ filter, totalTemplates, search, templates, sort, view }) {
+  const enableInProgressTemplateActions = useFeature(
+    'enableInProgressTemplateActions'
+  );
+
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
     totalResults: totalTemplates,
@@ -77,16 +83,9 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
     clearAllColors,
   } = useTemplateFilters();
 
-  return (
-    <Layout.Squishable>
-      <PageHeading
-        centerContent
-        defaultTitle={__('Templates', 'web-stories')}
-        searchPlaceholder={__('Search Templates', 'web-stories')}
-        stories={templates}
-        handleTypeaheadChange={search.setKeyword}
-        typeaheadValue={search.keyword}
-      >
+  const TemplateFilters = useMemo(() => {
+    if (enableInProgressTemplateActions) {
+      return (
         <HeadingDropdownsContainer>
           <Dropdown
             ariaLabel={__('Category Dropdown', 'web-stories')}
@@ -105,6 +104,32 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
             onChange={onNewColorSelected}
           />
         </HeadingDropdownsContainer>
+      );
+    }
+    return null;
+  }, [
+    enableInProgressTemplateActions,
+    selectedCategories,
+    clearAllCategories,
+    onNewCategorySelected,
+    selectedColors,
+    clearAllColors,
+    onNewColorSelected,
+  ]);
+
+  return (
+    <Layout.Squishable>
+      <PageHeading
+        centerContent
+        defaultTitle={__('Templates', 'web-stories')}
+        searchPlaceholder={__('Search Templates', 'web-stories')}
+        stories={templates}
+        handleTypeaheadChange={
+          enableInProgressTemplateActions && search.setKeyword
+        }
+        typeaheadValue={search.keyword}
+      >
+        {TemplateFilters}
       </PageHeading>
       <BodyViewOptions
         resultsLabel={resultsLabel}
@@ -112,7 +137,7 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={TEMPLATES_GALLERY_SORT_MENU_ITEMS}
-        handleSortChange={sort.set}
+        handleSortChange={enableInProgressTemplateActions && sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
