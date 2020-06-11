@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 
@@ -43,9 +48,10 @@ describe('MediaPane fetching', () => {
       0,
       mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
     );
-    await new Promise((r) => setTimeout(r, 10));
 
-    mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
-    expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
+    await waitFor(() => {
+      mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
+      expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
+    });
   });
 });
