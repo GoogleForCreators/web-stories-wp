@@ -180,8 +180,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		// phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
-		$order              = strtoupper( $query->get( 'order' ) );
-		$order              = 'DESC' === $order ? 'DESC' : 'ASC';
+		$order              = $query->get( 'order' );
 		$clauses['join']   .= " LEFT JOIN {$wpdb->users} ON {$wpdb->posts}.post_author={$wpdb->users}.ID";
 		$clauses['orderby'] = "{$wpdb->users}.display_name $order, " . $clauses['orderby'];
 		// phpcs:enable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
