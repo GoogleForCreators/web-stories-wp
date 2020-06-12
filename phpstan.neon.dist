@@ -14,4 +14,3 @@ parameters:
     - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
     # False positives for WPCOM_IS_VIP_ENV check.
     - '#^Strict comparison using === between false and true will always evaluate to false.$#'
-    - '#^Right side of && is always true.$#'
