@@ -190,6 +190,6 @@ describe('Explore Templates <Header />', function () {
       </LayoutProvider>,
       { enableInProgressTemplateActions: false }
     );
-    expect(queryAllByRole('input')).toHaveLength(0);
+    expect(queryAllByRole('textbox')).toHaveLength(0);
   });
 });

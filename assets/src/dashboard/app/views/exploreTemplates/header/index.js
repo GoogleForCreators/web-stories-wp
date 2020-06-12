@@ -125,7 +125,7 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
         searchPlaceholder={__('Search Templates', 'web-stories')}
         stories={templates}
         handleTypeaheadChange={
-          enableInProgressTemplateActions && search.setKeyword
+          enableInProgressTemplateActions ? search.setKeyword : undefined
         }
         typeaheadValue={search.keyword}
       >
@@ -137,7 +137,9 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={TEMPLATES_GALLERY_SORT_MENU_ITEMS}
-        handleSortChange={enableInProgressTemplateActions && sort.set}
+        handleSortChange={
+          enableInProgressTemplateActions ? sort.set : undefined
+        }
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'

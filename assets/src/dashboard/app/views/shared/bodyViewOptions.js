@@ -123,7 +123,7 @@ export default function BodyViewOptions({
 BodyViewOptions.propTypes = {
   currentSort: PropTypes.string.isRequired,
   handleLayoutSelect: PropTypes.func,
-  handleSortChange: PropTypes.func.isRequired,
+  handleSortChange: PropTypes.func,
   layoutStyle: PropTypes.string.isRequired,
   resultsLabel: PropTypes.string.isRequired,
   wpListURL: PropTypes.string,
