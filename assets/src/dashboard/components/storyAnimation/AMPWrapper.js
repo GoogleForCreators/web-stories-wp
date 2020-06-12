@@ -25,7 +25,17 @@ import PropTypes from 'prop-types';
  */
 import useStoryAnimationContext from './useStoryAnimationContext';
 
-function ComposableWrapper({ animationParts, children, style }) {
+const fullSizeAbsoluteStyles = {
+  width: '100%',
+  height: '100%',
+  display: 'block',
+  position: 'absolute',
+  pointerEvents: 'none',
+  top: 0,
+  left: 0,
+};
+
+function ComposableWrapper({ animationParts, children }) {
   const ComposedWrapper = useMemo(
     () =>
       animationParts.reduce(
@@ -34,7 +44,9 @@ function ComposableWrapper({ animationParts, children, style }) {
           const Composed = function (props) {
             return (
               <Composable>
-                <AMPTarget style={style}>{props.children}</AMPTarget>
+                <AMPTarget style={fullSizeAbsoluteStyles}>
+                  {props.children}
+                </AMPTarget>
               </Composable>
             );
           };
@@ -43,7 +55,7 @@ function ComposableWrapper({ animationParts, children, style }) {
         },
         (props) => props.children
       ),
-    [animationParts, style]
+    [animationParts]
   );
 
   return <ComposedWrapper>{children}</ComposedWrapper>;
@@ -52,16 +64,15 @@ function ComposableWrapper({ animationParts, children, style }) {
 ComposableWrapper.propTypes = {
   animationParts: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.node.isRequired,
-  style: PropTypes.object,
 };
 
-function AMPWrapper({ target, children, style }) {
+function AMPWrapper({ target, children }) {
   const {
     actions: { getAnimationParts },
   } = useStoryAnimationContext();
 
   return (
-    <ComposableWrapper style={style} animationParts={getAnimationParts(target)}>
+    <ComposableWrapper animationParts={getAnimationParts(target)}>
       {children}
     </ComposableWrapper>
   );
@@ -70,7 +81,6 @@ function AMPWrapper({ target, children, style }) {
 AMPWrapper.propTypes = {
   target: PropTypes.string,
   children: PropTypes.node,
-  style: PropTypes.object,
 };
 
 export default AMPWrapper;
