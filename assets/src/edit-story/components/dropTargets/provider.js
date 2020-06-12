@@ -26,6 +26,7 @@ import { useState, useCallback } from 'react';
 import { useStory } from '../../app';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
+import { getDefinitionForType } from '../../elements';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
@@ -177,6 +178,11 @@ function DropTargetsProvider({ children }) {
         });
 
       setActiveDropTargetId(null);
+
+      const { onDropHandler } = getDefinitionForType(resource.type);
+      if (onDropHandler) {
+        onDropHandler(activeDropTargetId);
+      }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
