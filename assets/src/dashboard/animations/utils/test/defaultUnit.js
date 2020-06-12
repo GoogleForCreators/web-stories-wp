@@ -13,9 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as flushPromiseQueue } from './flushPromiseQueue';
-export {
-  default as renderWithTheme,
-  renderWithThemeAndFlagsProvider,
-} from './renderWithTheme';
-export { default as createWrapperWithProps } from './createWrapperWithProps';
+/**
+ * Internal dependencies
+ */
+import { defaultUnit } from '../defaultUnit';
+
+describe('defaultUnit(input, unit)', () => {
+  it('appends the default unit if the input value ends in a digit', () => {
+    const input = 123456;
+    const unit = 'px';
+    expect(defaultUnit(input, unit)).toStrictEqual(`${input}${unit}`);
+  });
+
+  it('doesnt append the default unit if the input value ends in a non-digit', () => {
+    const input = '123456%';
+    const unit = 'px';
+    expect(defaultUnit(input, unit)).toStrictEqual(input);
+  });
+});
