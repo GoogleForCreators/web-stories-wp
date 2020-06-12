@@ -180,17 +180,14 @@ function SizePositionPanel({
     [lockAspectRatio]
   );
 
-  usePresubmitHandler(
-    ({ rotationAngle: newRotationAngle }) => {
-      return {
-        rotationAngle: setMinMax(newRotationAngle, MIN_MAX.ROTATION),
-      };
-    },
-    [rotationAngle]
-  );
+  usePresubmitHandler(({ rotationAngle: newRotationAngle }) => {
+    return {
+      rotationAngle: setMinMax(newRotationAngle, MIN_MAX.ROTATION),
+    };
+  }, []);
 
   const setDimensionMinMax = useCallback(
-    (ratio, value, minmax) => {
+    (value, ratio, minmax) => {
       if (lockAspectRatio && value >= minmax.MAX) {
         return setMinMax(minmax.MAX * ratio, minmax);
       }
@@ -202,26 +199,30 @@ function SizePositionPanel({
 
   usePresubmitHandler(
     ({ height: newHeight }, { width: oldWidth, height: oldHeight }) => {
-      return {
-        height: setDimensionMinMax(
-          oldHeight / oldWidth,
-          dataPixels(newHeight),
-          MIN_MAX.HEIGHT
-        ),
-      };
+      const ratio = oldHeight / oldWidth;
+      if (isNum(ratio)) {
+        return {
+          height: setDimensionMinMax(
+            dataPixels(newHeight),
+            ratio,
+            MIN_MAX.HEIGHT
+          ),
+        };
+      }
+      return null;
     },
     [height, lockAspectRatio]
   );
 
   usePresubmitHandler(
     ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
-      return {
-        width: setDimensionMinMax(
-          oldWidth / oldHeight,
-          dataPixels(newWidth),
-          MIN_MAX.WIDTH
-        ),
-      };
+      const ratio = oldWidth / oldHeight;
+      if (isNum(ratio)) {
+        return {
+          width: setDimensionMinMax(dataPixels(newWidth), ratio, MIN_MAX.WIDTH),
+        };
+      }
+      return null;
     },
     [width, lockAspectRatio]
   );
