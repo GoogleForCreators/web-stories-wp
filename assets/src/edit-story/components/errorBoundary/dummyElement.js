@@ -26,19 +26,29 @@ import { useRef } from 'react';
 import { useUnits } from '../../units';
 import { Wrapper } from '../../components/canvas/displayElement';
 import { useTransformHandler } from '../transform';
-import { ReactComponent as Cross } from './cross.svg';
 
 const GrayBox = styled.div`
-  background: #ccc;
-  svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+  width: 100%;
+  height: 100%;
+  border: 1px solid #000;
+  background: linear-gradient(
+      to top left,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) calc(50% - 0.8px),
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) calc(50% + 0.8px),
+      rgba(0, 0, 0, 0) 100%
+    ),
+    linear-gradient(
+      to top right,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) calc(50% - 0.8px),
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0) calc(50% + 0.8px),
+      rgba(0, 0, 0, 0) 100%
+    ),
+    #ccc;
 `;
-const CrossIcon = styled(Cross)``;
 
 function DummyElement({ element }) {
   const {
@@ -72,9 +82,7 @@ function DummyElement({ element }) {
   const box = getBox(element);
   return (
     <Wrapper ref={wrapperRef} {...box}>
-      <GrayBox>
-        <CrossIcon />
-      </GrayBox>
+      <GrayBox />
     </Wrapper>
   );
 }
