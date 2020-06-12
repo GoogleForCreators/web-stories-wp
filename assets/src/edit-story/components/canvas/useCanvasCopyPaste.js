@@ -89,8 +89,7 @@ function useCanvasGlobalKeys() {
   const elementPasteHandler = useCallback(
     (content) => {
       const elements = processPastedElements(content, currentPage);
-      const foundElements = elements.length > 0;
-      if (!foundElements) {
+      if (!elements.length > 0) {
         return false;
       }
 
@@ -126,8 +125,10 @@ function useCanvasGlobalKeys() {
       const nonBackgroundElements = elements.filter(
         ({ isBackground }) => !isBackground
       );
-      addElements({ elements: nonBackgroundElements });
-      return foundElements;
+      if (nonBackgroundElements.length) {
+        addElements({ elements: nonBackgroundElements });
+      }
+      return true;
     },
     [
       addElements,
