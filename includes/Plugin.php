@@ -62,6 +62,9 @@ class Plugin {
 		$dashboard = new Dashboard();
 		add_action( 'init', [ $dashboard, 'init' ] );
 
+        $gliacloud = new Gliacloud();
+		add_action( 'init', [ $gliacloud, 'init' ] );
+
 		// Admin-related functionality.
 		$admin = new Admin();
 		add_action( 'admin_init', [ $admin, 'init' ] );
