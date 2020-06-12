@@ -24,7 +24,7 @@
  * @param  {Function} callback Function to handle requests.
  * @return {Function} Function that can be called to remove the added handler function from the page.
  */
-function useRequestInterception(callback) {
+function addRequestInterception(callback) {
   const requestHandler = (request) => {
     // Prevent errors for requests that happen after interception is disabled.
     if (!request._allowInterception) {
@@ -41,4 +41,4 @@ function useRequestInterception(callback) {
   };
 }
 
-export default useRequestInterception;
+export default addRequestInterception;

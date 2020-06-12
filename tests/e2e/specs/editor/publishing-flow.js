@@ -28,12 +28,14 @@ import {
 /**
  * Internal dependencies
  */
-import { createNewStory, useRequestInterception } from '../../utils';
+import { createNewStory, addRequestInterception } from '../../utils';
 
 describe('Publishing Flow', () => {
+  let stopRequestInterception;
+
   beforeAll(async () => {
     await page.setRequestInterception(true);
-    useRequestInterception((request) => {
+    stopRequestInterception = addRequestInterception((request) => {
       if (request.url().startsWith('https://cdn.ampproject.org/')) {
         request.respond({
           status: 200,
@@ -47,6 +49,7 @@ describe('Publishing Flow', () => {
 
   afterAll(async () => {
     await page.setRequestInterception(false);
+    stopRequestInterception();
   });
 
   it('should guide me towards creating a new post to embed my story', async () => {

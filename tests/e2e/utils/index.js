@@ -15,4 +15,4 @@
  */
 
 export { default as createNewStory } from './createNewStory';
-export { default as useRequestInterception } from './useRequestInterception';
+export { default as addRequestInterception } from './addRequestInterception';
