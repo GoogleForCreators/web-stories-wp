@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef } from 'react';
 
@@ -135,26 +135,27 @@ const PageAreaSafeZone = styled.div`
 
   ${({ showSafeZone }) =>
     showSafeZone &&
-    `&::before {
-  content: '';
-  width: 20px;
-  height: var(--page-height-px);
-  position: absolute;
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  left: -20px;
-}
+    css`
+      &::before {
+        content: '';
+        width: 20px;
+        height: var(--page-height-px);
+        position: absolute;
+        border-top: 1px solid rgba(255, 255, 255, 0.4);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        left: -20px;
+      }
 
-&::after {
-  content: '';
-  width: 20px;
-  height: var(--page-height-px);
-  position: absolute;
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  right: -20px;
-}
-`}
+      &::after {
+        content: '';
+        width: 20px;
+        height: var(--page-height-px);
+        position: absolute;
+        border-top: 1px solid rgba(255, 255, 255, 0.4);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        right: -20px;
+      }
+    `}
 `;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
