@@ -84,17 +84,20 @@ describe('PageAdvancementPanel', () => {
       })
     );
 
+    updateStory.mockClear();
+    
     fireEvent.change(slider, {
       target: { value: 1 },
     });
 
-    await waitFor(() =>
+    await waitFor(() => {
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           defaultPageDuration: 1,
         },
-      })
-    );
+      });
+      expect(updateStory).toHaveBeenCalledTimes(1);
+    });
 
     fireEvent.change(slider, {
       target: { value: 21 },
