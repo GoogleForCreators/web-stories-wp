@@ -77,9 +77,9 @@ jobs:
 
       - name: Build plugin
         run: npm run build:js
-          env:
-            # TODO: remove eventually
-            DISABLE_PREVENT: true
+        env:
+          # TODO: remove eventually
+          DISABLE_PREVENT: true
 
       - name: Start Docker environment
         run: npm run env:start
