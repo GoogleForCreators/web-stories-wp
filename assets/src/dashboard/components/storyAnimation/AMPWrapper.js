@@ -30,7 +30,6 @@ const fullSizeAbsoluteStyles = {
   height: '100%',
   display: 'block',
   position: 'absolute',
-  pointerEvents: 'none',
   top: 0,
   left: 0,
 };
