@@ -53,14 +53,16 @@ describe('Autoplay video', () => {
     const video1El = fixture.querySelector(`#video-${videoId}`);
     expect(video1El.paused).toBe(false);
 
-    // TODO: After #1948 is merged we can check if video is paused during a drag
     const safezone = fixture.screen.getAllByTestId('safezone')[0];
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(videoFrame, '50%', '50%', { steps: 12 }),
+      moveRel(videoFrame, '10%', '10%', { steps: 12 }),
       down(),
       moveRel(safezone, 10, 10, { steps: 12 }),
       up(),
     ]);
+    // should not play during the drag
+    expect(video1El.paused).toBe(true);
+    await fixture.events.mouse.up();
     const backgroundId = await getBackgroundElementId(fixture);
     const backgroundElVideo = fixture.querySelector(`#video-${backgroundId}`);
     expect(backgroundElVideo.paused).toBe(false);
