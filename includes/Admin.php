@@ -164,22 +164,20 @@ BLOCK;
 	 * @return string Pre-filled post title if applicable, or the default title otherwise.
 	 */
 	public static function prefill_post_title( $title ) {
-		$embed_story = isset( $_GET['from-web-story'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-		if ( ! $embed_story ) {
+		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $title;
 		}
 
-		$post_id = absint( $_GET['from-web-story'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		if ( $post_id && Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post_id ) && current_user_can( 'read_post', $post_id ) ) {
-			$post = get_post( $post_id );
-
-			if ( $post instanceof WP_Post ) {
-				return $post->post_title;
-			}
+		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
+			return $title;
 		}
 
-		return $title;
+		if ( ! current_user_can( 'read_post', $post_id ) ) {
+			return $title;
+		}
+
+		return (string) get_the_title( $post_id );
 	}
 }
