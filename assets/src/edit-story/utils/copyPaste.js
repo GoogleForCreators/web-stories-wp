@@ -120,10 +120,11 @@ export function processPastedElements(content, currentPage) {
 /**
  * Processes copied/cut content for preparing elements to add to clipboard.
  *
+ * @param {Object} page Page which all the elements belongs to.
  * @param {Array} elements Array of story elements.
  * @param {Object} evt Copy/cut event object.
  */
-export function addElementsToClipboard(elements, evt) {
+export function addElementsToClipboard(page, elements, evt) {
   if (!elements.length || !evt) {
     return;
   }
