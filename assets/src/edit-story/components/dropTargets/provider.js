@@ -143,6 +143,9 @@ function DropTargetsProvider({ children }) {
       }
 
       if (!activeDropTargetId || activeDropTargetId === selfId) {
+        Object.keys(dropTargets)
+          .filter((id) => id !== selfId)
+          .map((id) => pushTransform(id, null));
         return;
       }
 

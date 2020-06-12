@@ -18,6 +18,7 @@
  */
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -25,7 +26,16 @@ import PropTypes from 'prop-types';
 import DisplayElement from '../../edit-story/components/canvas/displayElement';
 import StoryPropTypes from '../../edit-story/types';
 import { STORY_PAGE_STATE } from '../constants';
+import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
 import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
+
+const PreviewWrapper = styled.div`
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  ${({ background }) => generatePatternStyles(background)};
+`;
 
 function PreviewPageController({ page, animationState, subscribeGlobalTime }) {
   const {
@@ -56,14 +66,19 @@ function PreviewPageController({ page, animationState, subscribeGlobalTime }) {
    */
   useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
 
-  return page.elements.map(({ id, ...rest }) => (
-    <DisplayElement
-      key={id}
-      page={page}
-      element={{ id, ...rest }}
-      isAnimatable
-    />
-  ));
+  return (
+    <PreviewWrapper background={page.backgroundColor}>
+      {page.elements.map(({ id, ...rest }) => (
+        <DisplayElement
+          previewMode
+          key={id}
+          page={page}
+          element={{ id, ...rest }}
+          isAnimatable
+        />
+      ))}
+    </PreviewWrapper>
+  );
 }
 
 function PreviewPage({
@@ -91,6 +106,12 @@ PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
   onAnimationComplete: PropTypes.func,
+  subscribeGlobalTime: PropTypes.func,
+};
+
+PreviewPageController.propTypes = {
+  page: StoryPropTypes.page.isRequired,
+  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
   subscribeGlobalTime: PropTypes.func,
 };
 
