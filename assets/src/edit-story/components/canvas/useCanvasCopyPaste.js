@@ -30,6 +30,7 @@ import {
   processPastedElements,
   processPastedNodeList,
 } from '../../utils/copyPaste';
+import useBatchingCallback from '../../utils/useBatchingCallback';
 import useInsertElement from './useInsertElement';
 import useUploadWithPreview from './useUploadWithPreview';
 
@@ -86,7 +87,7 @@ function useCanvasGlobalKeys() {
     [currentPage, deleteSelectedElements, selectedElements]
   );
 
-  const elementPasteHandler = useCallback(
+  const elementPasteHandler = useBatchingCallback(
     (content) => {
       const elements = processPastedElements(content, currentPage);
       if (elements.length === 0) {
