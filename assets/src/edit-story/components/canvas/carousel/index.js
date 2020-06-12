@@ -451,7 +451,11 @@ function Carousel() {
               height="24"
               active={showSafeZone}
               onClick={() => setShowSafeZone((current) => !current)}
-              aria-label={__('Safe Mode', 'web-stories')}
+              aria-label={
+                showSafeZone
+                  ? __('Disable Safe Mode', 'web-stories')
+                  : __('Enable Safe Mode', 'web-stories')
+              }
             />
             <GridViewButton
               width="24"
