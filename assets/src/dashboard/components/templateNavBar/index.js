@@ -96,6 +96,6 @@ export function TemplateNavBar({ handleCta, handleBookmarkClick }) {
 }
 
 TemplateNavBar.propTypes = {
-  handleBookmarkClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+  handleBookmarkClick: PropTypes.func,
   handleCta: PropTypes.func.isRequired,
 };

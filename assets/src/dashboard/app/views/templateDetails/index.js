@@ -193,6 +193,8 @@ function TemplateDetails() {
     switchToTemplateByOffset,
   ]);
 
+  const handleBookmarkClickSelected = useCallback(() => {}, []);
+
   if (!template) {
     return null;
   }
@@ -205,7 +207,9 @@ function TemplateDetails() {
             <Layout.Fixed>
               <TemplateNavBar
                 handleCta={() => createStoryFromTemplate(template)}
-                handleBookmarkClick={enableBookmarks}
+                handleBookmarkClick={
+                  enableBookmarks ? handleBookmarkClickSelected : undefined
+                }
               />
             </Layout.Fixed>
             <Layout.Scrollable>
