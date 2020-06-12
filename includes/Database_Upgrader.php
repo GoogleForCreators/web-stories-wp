@@ -58,6 +58,7 @@ class Database_Upgrader {
 		$routines = [
 			'1.0.0' => 'upgrade_1',
 			'2.0.0' => 'v_2_replace_conic_style_presets',
+			'2.0.1' => 'v_2_add_term',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -143,6 +144,15 @@ class Database_Upgrader {
 			'textStyles' => $text_styles,
 		];
 		update_option( Stories_Controller::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Add the editor term, to make sure it exists.
+	 *
+	 * @return void
+	 */
+	protected function v_2_add_term() {
+		wp_insert_term( 'editor', Media::STORY_MEDIA_TAXONOMY );
 	}
 
 	/**
