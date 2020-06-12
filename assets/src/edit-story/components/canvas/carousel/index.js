@@ -97,9 +97,6 @@ const PlainStyled = styled(Plain)`
 `;
 
 const MenuIconsWrapper = styled.div`
-  & > * {
-    margin-bottom: 12px;
-  }
   ${({ isCompact }) =>
     isCompact
       ? css`
@@ -193,7 +190,12 @@ const GridViewContainer = styled.div`
 `;
 
 const SafeModeButton = styled(SafeMode)`
-  ${({ active }) => active && `background: rgba(255,255,255, 0.1)`}
+  ${({ active }) =>
+    active &&
+    css`
+      background: rgba(255, 255, 255, 0.1);
+    `}
+  margin-bottom: 12px;
 `;
 
 function calculateThumbnailHeight(carouselSize) {
