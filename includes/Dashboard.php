@@ -178,21 +178,35 @@ class Dashboard {
 					 * Issue: 1897
 					 * Creation date: 2020-05-21
 					 */
-					'enableAnimation'              => false,
+					'enableAnimation'                 => false,
 					/**
 					 * Description: Enables in-progress views to be accessed.
 					 * Author: @carlos-kelly
 					 * Issue: 2081
 					 * Creation date: 2020-05-28
 					 */
-					'enableInProgressViews'        => false,
+					'enableInProgressViews'           => false,
 					/**
 					 * Description: Enables in-progress story actions.
 					 * Author: @brittanyirl
 					 * Issue: 2344
 					 * Creation date: 2020-06-10
 					 */
-					'enableInProgressStoryActions' => false,
+					'enableInProgressStoryActions'    => false,
+					/**
+					 * Description: Enables in-progress template actions.
+					 * Author: @brittanyirl
+					 * Issue: 2381
+					 * Creation date: 2020-06-11
+					 */
+					'enableInProgressTemplateActions' => false,
+					/**
+					 * Description: Enables bookmark actions.
+					 * Author: @brittanyirl
+					 * Issue: 2292
+					 * Creation date: 2020-06-11
+					 */
+					'enableBookmarkActions'           => false,
 				],
 			]
 		);
