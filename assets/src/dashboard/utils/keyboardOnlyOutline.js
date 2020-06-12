@@ -19,13 +19,14 @@
 /**
  * External dependencies
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { KEYBOARD_USER_CLASS } from '../constants';
+import useIsUsingKeyboard from './useIsUsingKeyboard';
 
 export const OutlineStyles = createGlobalStyle`
     *:focus {
@@ -33,41 +34,10 @@ export const OutlineStyles = createGlobalStyle`
     }
 `;
 
-const ACCEPTED_KEYS = [
-  'ArrowUp',
-  'ArrowDown',
-  'ArrowLeft',
-  'ArrowRight',
-  'Tab',
-];
-
 const KeyboardOnlyOutline = () => {
-  const [usingKeyboard, setUsingKeyboard] = useState(false);
-  const handleKeydown = (e) => {
-    if (!usingKeyboard && ACCEPTED_KEYS.includes(e.key)) {
-      setUsingKeyboard(true);
-    }
-  };
-
-  const handleMousedown = () => {
-    if (usingKeyboard) {
-      setUsingKeyboard(false);
-    }
-  };
-
-  document.addEventListener('keydown', handleKeydown);
-  document.addEventListener('mousedown', handleMousedown);
-
-  useEffect(() => {
-    return function cleanup() {
-      document.removeEventListener('keydown', handleKeydown);
-      document.removeEventListener('mousedown', handleMousedown);
-    };
+  const usingKeyboard = useIsUsingKeyboard((isUsingKeyboard) => {
+    document.body.classList.toggle(KEYBOARD_USER_CLASS, isUsingKeyboard);
   });
-
-  useEffect(() => {
-    document.body.classList.toggle(KEYBOARD_USER_CLASS, usingKeyboard);
-  }, [usingKeyboard]);
 
   return !usingKeyboard ? <OutlineStyles /> : null;
 };

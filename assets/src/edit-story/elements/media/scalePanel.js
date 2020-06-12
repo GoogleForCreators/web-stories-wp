@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
 import InOverlay from '../../components/overlay';
 import RangeInput from '../../components/rangeInput';
 import { Z_INDEX_CANVAS } from '../../constants';
+import useIsUsingKeyboard from '../../utils/useIsUsingKeyboard';
 
 const MIN_WIDTH = 165;
 const HEIGHT = 28;
@@ -71,14 +72,26 @@ const ResetButton = styled.button`
   padding: 1px 8px 0 8px;
 `;
 
+const ACCEPTED_KEYS = [
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'PageUp',
+  'PageDown',
+];
+
 function ScalePanel({ setProperties, width, height, x, y, scale }) {
+  // Handle different step size for mouse and keyboard users
+  const usingKeyboard = useIsUsingKeyboard(null, ACCEPTED_KEYS);
+
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
         <RangeInput
           min={100}
           max={MAX_SCALE}
-          step={10}
+          step={usingKeyboard ? 10 : null}
           value={scale}
           onChange={(evt) => setProperties({ scale: evt.target.valueAsNumber })}
         />
