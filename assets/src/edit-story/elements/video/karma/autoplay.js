@@ -45,8 +45,10 @@ describe('Autoplay video', () => {
       selector: 'button',
     });
     await fixture.events.mouse.clickOn(videoFilter);
-    const video = fixture.screen.getByRole('application', { name: 'ranger9' });
-    await fixture.events.mouse.clickOn(video);
+    const video = fixture.screen.getAllByLabelText('ranger9', {
+      selector: 'video',
+    });
+    await fixture.events.mouse.clickOn(video[0]);
     const frames = fixture.screen.getAllByTestId('frameElement');
     const videoFrame = frames[1];
     const videoId = videoFrame.dataset.elementId;
