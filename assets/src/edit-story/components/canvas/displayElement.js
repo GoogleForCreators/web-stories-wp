@@ -37,7 +37,7 @@ import WithMask from '../../masks/display';
 import { generateOverlayStyles } from '../../utils/backgroundOverlay';
 import StoryAnimation from '../../../dashboard/components/storyAnimation';
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
 	${elementWithRotation}

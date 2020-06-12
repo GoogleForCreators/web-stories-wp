@@ -13,29 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { useHistory } from '../../app/history';
-import { useStory } from '../../app/story';
 
-function ErrorActions({ reRender }) {
-  // Disable auto-save?
-  const {
-    state: { canUndo },
-    actions: { undo },
-  } = useHistory();
-  const {
-    actions: { saveStory },
-  } = useStory();
-
-  const tryRecover = () => {
-    if (canUndo) {
-      undo();
-    }
-    setTimeout(reRender, 0);
-  };
-
+function ErrorActions() {
   const reload = () => {
     window.location.reload(true);
   };
@@ -45,17 +24,8 @@ function ErrorActions({ reRender }) {
       <h3 className="loading-message" style={{ padding: 40 }}>
         Editor has crashed.
         <br />
-        {canUndo ? (
-          <>
-            Try to recover with{' '}
-            <button onClick={tryRecover}>undo & re-render</button>.
-          </>
-        ) : (
-          <>
-            Try <button onClick={reload}>reload</button> if that doesn't help,
-            wait for a fix.
-          </>
-        )}
+        Try <button onClick={reload}>reload</button> if that doesn't help, wait
+        for a fix.
       </h3>
     </div>
   );

@@ -19,10 +19,12 @@
  */
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
 import ErrorActions from './errorActions';
+import DummyElement from './dummyElement';
 
 class ErrorBoundary extends Component {
   static propTypes = {
@@ -31,28 +33,20 @@ class ErrorBoundary extends Component {
 
   state = {
     hasError: false,
-    counter: 0,
-  };
-
-  reRender = () => {
-    this.setState((state) => ({
-      ...state,
-      counter: state.counter + 1,
-      hasError: false,
-    }));
   };
 
   static getDerivedStateFromError() {
     return { hasError: true };
   }
 
+  // eslint-disable-next-line no-unused-vars
   onError(evt) {
-    console.log('onerror', evt, evt.error instanceof TypeError);
+    // In the future we will take some action here
   }
 
+  // eslint-disable-next-line no-unused-vars
   onUnhandledRejection(evt) {
-    // Should not crash the editor, more for developers, so we can remove it from here
-    console.log('onunhandledrejection', evt);
+    // In the future we might take some action here
   }
 
   componentDidMount() {
@@ -65,18 +59,20 @@ class ErrorBoundary extends Component {
     window.removeEventListener('unhandledrejection', this.onError);
   }
 
+  // eslint-disable-next-line no-unused-vars
   componentDidCatch(error, errorInfo) {
-    // eslint-disable-next-line no-console
-    console.log('componentDidCatch', error, errorInfo);
+    // In the future we will take some action here
   }
 
   render() {
     if (this.state.hasError) {
-      return <ErrorActions reRender={this.reRender} />;
+      const { element } = this.props;
+      return element ? <DummyElement element={element} /> : <ErrorActions />;
     }
     return this.props.children;
   }
 }
+
 const shouldDisableErrorBoundaries =
   process.env.DISABLE_ERROR_BOUNDARIES === 'true';
 export default shouldDisableErrorBoundaries
