@@ -63,7 +63,7 @@ const Area = styled.div`
 
 function Layout() {
   return (
-    <Editor role="main" aria-label={__('Web Stories Editor', 'web-stories')}>
+    <Editor role="region" aria-label={__('Web Stories Editor', 'web-stories')}>
       <Area area="lib">
         <Library />
       </Area>

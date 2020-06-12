@@ -204,7 +204,7 @@ export class Fixture {
     this._screen = screen;
 
     this._editor = new EditorContainer(
-      getByRole('main', { name: 'Web Stories Editor' }),
+      getByRole('region', { name: 'Web Stories Editor' }),
       'editor'
     );
 
