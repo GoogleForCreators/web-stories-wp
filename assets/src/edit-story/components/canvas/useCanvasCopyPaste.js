@@ -89,7 +89,7 @@ function useCanvasGlobalKeys() {
   const elementPasteHandler = useCallback(
     (content) => {
       const elements = processPastedElements(content, currentPage);
-      if (!elements.length > 0) {
+      if (elements.length === 0) {
         return false;
       }
 
