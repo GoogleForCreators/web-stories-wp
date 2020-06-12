@@ -85,7 +85,6 @@ describe('PageAdvancementPanel', () => {
     );
 
     updateStory.mockClear();
-    
     fireEvent.change(slider, {
       target: { value: 1 },
     });
