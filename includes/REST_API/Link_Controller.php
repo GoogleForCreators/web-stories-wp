@@ -105,7 +105,7 @@ class Link_Controller extends WP_REST_Controller {
 
 		$data = get_transient( $cache_key );
 		if ( ! empty( $data ) ) {
-			return rest_ensure_response( json_decode( $data, true ) );
+			return rest_ensure_response( $data );
 		}
 
 		$data = [
