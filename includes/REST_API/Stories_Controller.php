@@ -174,11 +174,6 @@ class Stories_Controller extends Stories_Base_Controller {
 			return $clauses;
 		}
 
-		// Usage of users/usermeta tables is highly discouraged in VIP context.
-		if ( defined( '\WPCOM_IS_VIP_ENV' ) && \WPCOM_IS_VIP_ENV ) {
-			return $clauses;
-		}
-
 		// phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
 		$order              = $query->get( 'order' );
 		$clauses['join']   .= " LEFT JOIN {$wpdb->users} ON {$wpdb->posts}.post_author={$wpdb->users}.ID";
