@@ -23,9 +23,6 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 /**
- * Internal depedencies
- */
-/**
  * Internal dependencies
  */
 import useIsUsingKeyboard from './useIsUsingKeyboard';
