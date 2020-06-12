@@ -200,6 +200,13 @@ class Dashboard {
 					 * Creation date: 2020-06-11
 					 */
 					'enableInProgressTemplateActions' => false,
+					/**
+					 * Description: Enables bookmark actions.
+					 * Author: @brittanyirl
+					 * Issue: 2292
+					 * Creation date: 2020-06-11
+					 */
+					'enableBookmarkActions'           => false,
 				],
 			]
 		);
