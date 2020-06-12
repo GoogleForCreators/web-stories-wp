@@ -26,7 +26,11 @@ import { Fragment } from 'react';
  */
 import WithTooltip from '../tooltip';
 
-const CheckBoxInput = styled.input.attrs({ type: 'checkbox' })`
+// Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
+const CheckBoxInput = styled.input.attrs({
+  type: 'checkbox',
+  className: 'mousetrap',
+})`
   position: absolute;
   opacity: 0;
   height: 0 !important;

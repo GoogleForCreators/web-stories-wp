@@ -68,6 +68,8 @@ function LibraryTabs() {
     handleNavigation,
     isRTL,
   ]);
+  // Empty up/down handlers for consistency with left/right.
+  useKeyDownEffect(ref, ['up', 'down'], () => {}, []);
 
   return (
     <Tabs ref={ref}>
