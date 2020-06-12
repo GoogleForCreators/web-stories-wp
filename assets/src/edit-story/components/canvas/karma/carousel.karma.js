@@ -26,7 +26,6 @@ import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
-import { createPage } from '../../../elements';
 import createSolid from '../../../utils/createSolid';
 
 describe('Carousel integration', () => {
@@ -37,24 +36,16 @@ describe('Carousel integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setPages([
+      { backgroundColor: createSolid(255, 255, 255) },
+      { backgroundColor: createSolid(255, 0, 0) },
+      { backgroundColor: createSolid(0, 255, 0) },
+      { backgroundColor: createSolid(0, 0, 255) },
+    ]);
     await fixture.render();
-
-    const {
-      actions: { addPage, setCurrentPage },
-    } = await fixture.renderHook(() => useStory());
-    await fixture.act(() =>
-      addPage({ page: createPage({ backgroundColor: createSolid(255, 0, 0) }) })
-    );
-    await fixture.act(() =>
-      addPage({ page: createPage({ backgroundColor: createSolid(0, 255, 0) }) })
-    );
-    await fixture.act(() =>
-      addPage({ page: createPage({ backgroundColor: createSolid(0, 0, 255) }) })
-    );
 
     [page1, page2, page3, page4] = await getPageIds();
 
-    await setCurrentPage({ pageId: page1 });
     const insertElement = await fixture.renderHook(() => useInsertElement());
     element1 = await fixture.act(() =>
       insertElement('text', {

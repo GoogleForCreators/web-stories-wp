@@ -29,6 +29,8 @@ import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import Layout from '../../app/layout';
+import { DATA_VERSION } from '../../migration';
+import { createPage } from '../../elements';
 import FixtureEvents from './events';
 import getMediaResponse from './db/getMediaResponse';
 
@@ -162,6 +164,13 @@ export class Fixture {
    */
   setFlags(flags) {
     this._flags = { ...flags };
+  }
+
+  /**
+   * @param {Array<Object>} pages
+   */
+  setPages(pages) {
+    this.apiProviderFixture_.setPages(pages);
   }
 
   /**
@@ -386,6 +395,8 @@ function HookExecutor({ hooks }) {
 /* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
   constructor() {
+    this._pages = [];
+
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
       const getStoryById = useCallback(
@@ -400,7 +411,10 @@ class APIProviderFixture {
             modified: '2020-05-06T22:32:37',
             excerpt: { raw: '' },
             link: 'http://stories.local/?post_type=web-story&p=1',
-            story_data: [],
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
             featured_media: 0,
             featured_media_url: '',
             publisher_logo_url:
@@ -492,6 +506,13 @@ class APIProviderFixture {
     };
     Comp.displayName = 'Fixture(APIProvider)';
     this._comp = Comp;
+  }
+
+  /**
+   * @param {Array<Object>} pages
+   */
+  setPages(pages) {
+    this._pages = pages.map((page) => createPage(page));
   }
 
   get Component() {
