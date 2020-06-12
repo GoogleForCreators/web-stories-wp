@@ -36,6 +36,7 @@ import {
   ORDER_BY_SORT,
   ITEMS_PER_PAGE,
 } from '../../constants';
+import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
@@ -60,13 +61,19 @@ export function reshapeStoryObject(editStoryURL) {
     ) {
       return null;
     }
+
+    const updatedStoryData = {
+      ...migrate(storyData, storyData.version),
+      version: DATA_VERSION,
+    };
+
     return {
       id,
       status,
       title: title.raw,
       modified: moment(modified),
       created: moment(date),
-      pages: storyData.pages,
+      pages: updatedStoryData.pages,
       author,
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
