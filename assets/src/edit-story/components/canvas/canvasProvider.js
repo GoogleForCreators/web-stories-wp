@@ -88,7 +88,7 @@ function CanvasProvider({ children }) {
       } else {
         setSelectedElementsById({ elementIds: [elId] });
       }
-      evt.currentTarget.focus();
+      evt.currentTarget.focus({ preventScroll: true });
       if (currentPage?.elements[0].id !== elId) {
         evt.stopPropagation();
       }

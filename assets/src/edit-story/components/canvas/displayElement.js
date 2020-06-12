@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
   ${elementWithRotation}
-  contain: layout paint;
+  contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 

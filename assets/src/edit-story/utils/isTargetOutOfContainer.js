@@ -13,9 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as flushPromiseQueue } from './flushPromiseQueue';
-export {
-  default as renderWithTheme,
-  renderWithThemeAndFlagsProvider,
-} from './renderWithTheme';
-export { default as createWrapperWithProps } from './createWrapperWithProps';
+function isTargetOutOfContainer(target, container) {
+  const { left, right, top, bottom } = target.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  return (
+    left > containerRect.right ||
+    right < containerRect.left ||
+    bottom < containerRect.top ||
+    top > containerRect.bottom
+  );
+}
+
+export default isTargetOutOfContainer;
