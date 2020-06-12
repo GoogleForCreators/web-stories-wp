@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -204,10 +205,18 @@ function calculatePageThumbSize(carouselSize) {
 
 function Carousel() {
   const {
-    state: { pages, currentPageId },
-    actions: { setCurrentPage, arrangePage },
-  } = useStory();
+    pages,
+    currentPageId,
+    setCurrentPage,
+    arrangePage,
+  } = useStory(
+    ({
+      state: { pages, currentPageId },
+      actions: { setCurrentPage, arrangePage },
+    }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
+  );
   const { isRTL } = useConfig();
+  const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -413,14 +422,16 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            <OverflowButtons>
-              <KeyboardShortcutsButton
-                width="24"
-                height="24"
-                isDisabled
-                aria-label={__('Keyboard Shortcuts', 'web-stories')}
-              />
-            </OverflowButtons>
+            {showKeyboardShortcutsButton && (
+              <OverflowButtons>
+                <KeyboardShortcutsButton
+                  width="24"
+                  height="24"
+                  isDisabled
+                  aria-label={__('Keyboard Shortcuts', 'web-stories')}
+                />
+              </OverflowButtons>
+            )}
             <GridViewButton
               width="24"
               height="24"

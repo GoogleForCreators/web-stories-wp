@@ -29,9 +29,23 @@ function useLayerSelection(layer) {
   const { id: elementId } = layer;
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { setSelectedElementsById, toggleElementInSelection },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    setSelectedElementsById,
+    toggleElementInSelection,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementIds },
+      actions: { setSelectedElementsById, toggleElementInSelection },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        setSelectedElementsById,
+        toggleElementInSelection,
+      };
+    }
+  );
 
   const focusCanvas = useFocusCanvas();
 

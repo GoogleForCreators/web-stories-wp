@@ -65,7 +65,7 @@ const defaultProps = {
 };
 
 export default {
-  title: 'Dashboard/Components/exploreTemplates/Header',
+  title: 'Dashboard/Views/ExploreTemplates/Header',
   component: Header,
 };
 

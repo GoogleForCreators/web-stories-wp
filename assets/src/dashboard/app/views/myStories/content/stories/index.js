@@ -20,6 +20,8 @@
 import { text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
+import { FlagsProvider } from 'flagged';
+
 /**
  * Internal dependencies
  */
@@ -38,7 +40,7 @@ import StoriesView from '../storiesView';
 import EmptyView from '../emptyView';
 
 export default {
-  title: 'Dashboard/Components/myStories/Content',
+  title: 'Dashboard/Views/MyStories/Content',
   component: Content,
 };
 
@@ -97,11 +99,13 @@ export const _default = () => {
   });
 
   return (
-    <Layout.Provider>
-      <StorybookLayoutContainer>
-        <Content {...defaultProps} view={{ ...view, pageSize }} />
-      </StorybookLayoutContainer>
-    </Layout.Provider>
+    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content {...defaultProps} view={{ ...view, pageSize }} />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </FlagsProvider>
   );
 };
 
@@ -118,15 +122,17 @@ export const AllDataFetched = () => {
     isGrid: true,
   });
   return (
-    <Layout.Provider>
-      <StorybookLayoutContainer>
-        <Content
-          {...defaultProps}
-          allPagesFetched={true}
-          view={{ ...view, pageSize }}
-        />
-      </StorybookLayoutContainer>
-    </Layout.Provider>
+    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content
+            {...defaultProps}
+            allPagesFetched={true}
+            view={{ ...view, pageSize }}
+          />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </FlagsProvider>
   );
 };
 
@@ -135,38 +141,44 @@ export const AllDataFetchedAsList = () => {
     thumbnailMode: true,
   });
   return (
-    <Layout.Provider>
-      <StorybookLayoutContainer>
-        <Content
-          {...defaultProps}
-          allPagesFetched={true}
-          view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
-        />
-      </StorybookLayoutContainer>
-    </Layout.Provider>
+    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content
+            {...defaultProps}
+            allPagesFetched={true}
+            view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
+          />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </FlagsProvider>
   );
 };
 
 export const _StoriesViewGrid = () => (
-  <StoriesView
-    filterValue={STORY_STATUS.ALL}
-    sort={sort}
-    storyActions={storyActions}
-    stories={formattedStoriesArray}
-    users={formattedUsersObject}
-    view={view}
-  />
+  <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+    <StoriesView
+      filterValue={STORY_STATUS.ALL}
+      sort={sort}
+      storyActions={storyActions}
+      stories={formattedStoriesArray}
+      users={formattedUsersObject}
+      view={view}
+    />
+  </FlagsProvider>
 );
 
 export const _StoriesViewList = () => (
-  <StoriesView
-    filterValue={STORY_STATUS.ALL}
-    sort={sort}
-    storyActions={storyActions}
-    stories={formattedStoriesArray}
-    users={formattedUsersObject}
-    view={{ ...view, style: VIEW_STYLE.LIST }}
-  />
+  <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+    <StoriesView
+      filterValue={STORY_STATUS.ALL}
+      sort={sort}
+      storyActions={storyActions}
+      stories={formattedStoriesArray}
+      users={formattedUsersObject}
+      view={{ ...view, style: VIEW_STYLE.LIST }}
+    />
+  </FlagsProvider>
 );
 
 export const _EmptyView = () => (

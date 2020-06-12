@@ -19,11 +19,14 @@ export { default as getCurrentYAxis } from './getCurrentYAxis';
 export { default as getFormattedDisplayDate } from './getFormattedDisplayDate';
 export { default as groupBy } from './groupBy';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
+export { default as memoize } from './memoize';
 export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
-export { default as useFocusOut } from './useFocusOut';
 export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
+export { default as useFocusOut } from './useFocusOut';
 export { default as usePagePreviewSize } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
 
+export { default as addQueryArgs } from '../../edit-story/utils/addQueryArgs';
+export { default as getStoryPropsToSave } from '../../edit-story/app/story/utils/getStoryPropsToSave';
 export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffect';
