@@ -101,6 +101,7 @@ const PageHeading = ({
   searchPlaceholder,
   centerContent = false,
   stories = [],
+  showTypeahead = true,
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
@@ -112,7 +113,7 @@ const PageHeading = ({
           {defaultTitle}
         </StyledHeader>
         <Content centerContent={centerContent}>{children}</Content>
-        {Boolean(handleTypeaheadChange) && (
+        {showTypeahead && (
           <SearchContainer>
             <SearchInner>
               <TypeaheadSearch
@@ -138,6 +139,7 @@ PageHeading.propTypes = {
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
   stories: StoriesPropType,
+  showTypeahead: PropTypes.bool,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
 };

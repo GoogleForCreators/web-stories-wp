@@ -25,7 +25,6 @@ import { __ } from '@wordpress/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
-import { useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -83,39 +82,26 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
     clearAllColors,
   } = useTemplateFilters();
 
-  const TemplateFilters = useMemo(() => {
-    if (enableInProgressTemplateActions) {
-      return (
-        <HeadingDropdownsContainer>
-          <Dropdown
-            ariaLabel={__('Category Dropdown', 'web-stories')}
-            type={DROPDOWN_TYPES.PANEL}
-            placeholder={__('Category', 'web-stories')}
-            items={selectedCategories}
-            onClear={clearAllCategories}
-            onChange={onNewCategorySelected}
-          />
-          <Dropdown
-            ariaLabel={__('Color Dropdown', 'web-stories')}
-            type={DROPDOWN_TYPES.COLOR_PANEL}
-            placeholder={__('Color', 'web-stories')}
-            items={selectedColors}
-            onClear={clearAllColors}
-            onChange={onNewColorSelected}
-          />
-        </HeadingDropdownsContainer>
-      );
-    }
-    return null;
-  }, [
-    enableInProgressTemplateActions,
-    selectedCategories,
-    clearAllCategories,
-    onNewCategorySelected,
-    selectedColors,
-    clearAllColors,
-    onNewColorSelected,
-  ]);
+  const TemplateFilters = enableInProgressTemplateActions ? (
+    <HeadingDropdownsContainer>
+      <Dropdown
+        ariaLabel={__('Category Dropdown', 'web-stories')}
+        type={DROPDOWN_TYPES.PANEL}
+        placeholder={__('Category', 'web-stories')}
+        items={selectedCategories}
+        onClear={clearAllCategories}
+        onChange={onNewCategorySelected}
+      />
+      <Dropdown
+        ariaLabel={__('Color Dropdown', 'web-stories')}
+        type={DROPDOWN_TYPES.COLOR_PANEL}
+        placeholder={__('Color', 'web-stories')}
+        items={selectedColors}
+        onClear={clearAllColors}
+        onChange={onNewColorSelected}
+      />
+    </HeadingDropdownsContainer>
+  ) : null;
 
   return (
     <Layout.Squishable>
@@ -124,8 +110,9 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
         defaultTitle={__('Templates', 'web-stories')}
         searchPlaceholder={__('Search Templates', 'web-stories')}
         stories={templates}
+        showTypeahead={enableInProgressTemplateActions}
         handleTypeaheadChange={
-          enableInProgressTemplateActions ? search.setKeyword : undefined
+          enableInProgressTemplateActions ? search.setKeyword : () => {}
         }
         typeaheadValue={search.keyword}
       >
@@ -137,9 +124,7 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={TEMPLATES_GALLERY_SORT_MENU_ITEMS}
-        handleSortChange={
-          enableInProgressTemplateActions ? sort.set : undefined
-        }
+        handleSortChange={enableInProgressTemplateActions ? sort.set : () => {}}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'
