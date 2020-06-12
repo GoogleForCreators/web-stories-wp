@@ -3306,7 +3306,7 @@
           "isFill": false,
           "type": "text",
           "id": "ceda6811-72ee-421e-9778-5711edabdfc3",
-          "content": "<span style=\"color: rgba(251, 235, 186, 1)\">Bedtime\n Routine Tips</span>"
+          "content": "<span style=\"color: rgba(251, 235, 186, 1)\">Bedtime\nRoutine Tips</span>"
         }
       ],
       "backgroundOverlay": "none",
@@ -3778,7 +3778,7 @@
           "id": "c832531d-efa9-455f-9cb3-6d9669392c02",
           "x": 120,
           "y": 506,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Lorem ipsum dolor sit amet, consectetur adipiscing elit nula vel dui erat. Curabitur sit amet venenatis felis lorem.</span>"
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Lorem ipsum dolor sit amet, consectetur adipiscing elit nulavel dui erat. Curabitur sit amet venenatis felis lorem.</span>"
         },
         {
           "opacity": 100,
@@ -4168,7 +4168,7 @@
           "id": "e34fa932-2407-4d18-8586-e08e1f0d360f",
           "x": 48,
           "y": 30,
-          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">Top 5\nwellness retreats\n in the world</span>"
+          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">Top 5\nwellness retreats\nin the world</span>"
         },
         {
           "opacity": 100,
@@ -4764,7 +4764,7 @@
           "id": "e33ab4b1-8411-42c7-a407-b2d85756ff6f",
           "x": 142,
           "y": 313,
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Aro Ha, Glenorchy,\n New Zealand</span>"
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Aro Ha, Glenorchy,\nNew Zealand</span>"
         },
         {
           "opacity": 100,

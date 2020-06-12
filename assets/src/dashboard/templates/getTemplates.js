@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { migrate } from '../../edit-story/migration/migrate';
+import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
 import beauty from './raw/beauty.json';
 import cooking from './raw/cooking.json';
 import diy from './raw/diy.json';
@@ -52,7 +52,10 @@ export function loadTemplate(title, data, imageBaseUrl) {
     })),
   };
 
-  const migratedTemplate = migrate(template, template.version);
+  const migratedTemplate = {
+    ...migrate(template, template.version),
+    version: DATA_VERSION,
+  };
 
   return migratedTemplate;
 }
