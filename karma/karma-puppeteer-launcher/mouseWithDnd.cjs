@@ -252,15 +252,17 @@ class DndClientBinding {
         }
 
         _getDraggable(clientX, clientY) {
-          const elements = document.elementsFromPoint(clientX, clientY);
-          for (let i = 0; i < elements.length; i++) {
-            const element = elements[i];
-            const draggableAttr = element.getAttribute('draggable');
-            if (draggableAttr === 'false') {
-              continue;
-            }
-            if (element.tagName === 'IMG' || draggableAttr === 'true') {
-              return element;
+          const topElement = document.elementFromPoint(clientX, clientY);
+          if (topElement) {
+            for (let n = topElement; n; n = n.parentElement) {
+              const element = n;
+              const draggableAttr = element.getAttribute('draggable');
+              if (draggableAttr === 'false') {
+                continue;
+              }
+              if (element.tagName === 'IMG' || draggableAttr === 'true') {
+                return element;
+              }
             }
           }
           return null;
