@@ -25,7 +25,6 @@ import { render } from '@testing-library/react';
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
-import { OverlayType } from '../../utils/backgroundOverlay';
 
 describe('Page output', () => {
   describe('aspect-ratio markup', () => {
@@ -60,7 +59,7 @@ describe('Page output', () => {
     it('should render a single layer with no background', () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -85,10 +84,10 @@ describe('Page output', () => {
       );
     });
 
-    it('should render the layer for background with overlay', () => {
+    it('should render the layer for background', () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [backgroundElement],
@@ -114,34 +113,28 @@ describe('Page output', () => {
       );
     });
 
-    it('should render the layer for background', () => {
+    it('should render the layer for background with overlay', () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
-          elements: [backgroundElement],
-          backgroundOverlay: OverlayType.LINEAR,
+          elements: [
+            {
+              ...backgroundElement,
+              backgroundOverlay: { color: { r: 0, g: 255, b: 0, a: 0.4 } },
+            },
+          ],
         },
         autoAdvance: false,
         defaultPageDuration: 7,
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const layers = container.querySelectorAll('amp-story-grid-layer');
-      expect(layers).toHaveLength(2);
-      const bgLayer = layers[0];
-      expect(bgLayer).toHaveAttribute(
-        'aspect-ratio',
-        `${PAGE_WIDTH}:${PAGE_HEIGHT}`
+      const overlayLayer = container.querySelector(
+        '.page-background-overlay-area'
       );
-      expect(bgLayer.children).toHaveLength(2);
-      expect(bgLayer.children[0].className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(bgLayer.children[1].className).toStrictEqual(
-        'page-fullbleed-area'
-      );
+      expect(overlayLayer).toBeInTheDocument();
     });
   });
 
@@ -149,7 +142,7 @@ describe('Page output', () => {
     it('should use default value for auto-advance-after', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -167,7 +160,7 @@ describe('Page output', () => {
     it('should use default duration for auto-advance-after', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -185,7 +178,7 @@ describe('Page output', () => {
     it('should use default duration for images', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [
@@ -226,7 +219,7 @@ describe('Page output', () => {
     it('should use video element ID for auto-advance-after', async () => {
       const props = {
         id: 'foo',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
           elements: [
@@ -284,7 +277,7 @@ describe('Page output', () => {
     it('should ignore looping video for auto-advance-after and set default instead', async () => {
       const props = {
         id: 'foo',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
           elements: [
@@ -328,7 +321,7 @@ describe('Page output', () => {
     it('should produce valid AMP output', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -343,7 +336,7 @@ describe('Page output', () => {
     it('should produce valid AMP output with manual page advancement', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -358,7 +351,7 @@ describe('Page output', () => {
       it('should produce valid output with media elements', async () => {
         const props = {
           id: '123',
-          backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           page: {
             id: '123',
             elements: [

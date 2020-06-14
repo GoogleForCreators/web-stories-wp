@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from 'react';
+import classnames from 'classnames';
 
 /**
  * Internal dependencies
@@ -64,12 +65,27 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       },
     }) => ({ canvasWidth, canvasHeight, nodesById, fullbleedContainer })
   );
-  const { getBox, editorToDataX, editorToDataY, dataToEditorY } = useUnits(
-    ({ actions: { getBox, editorToDataX, editorToDataY, dataToEditorY } }) => ({
+  const {
+    getBox,
+    editorToDataX,
+    editorToDataY,
+    dataToEditorY,
+    dataToEditorX,
+  } = useUnits(
+    ({
+      actions: {
+        getBox,
+        editorToDataX,
+        editorToDataY,
+        dataToEditorY,
+        dataToEditorX,
+      },
+    }) => ({
       getBox,
       editorToDataX,
       editorToDataY,
       dataToEditorY,
+      dataToEditorX,
     })
   );
   const {
@@ -196,11 +212,23 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     return false;
   };
 
+  const minWidth = dataToEditorX(resizeRules.minWidth);
+  const minHeight = dataToEditorY(resizeRules.minHeight);
+  const aspectRatio = selectedElement.width / selectedElement.height;
+
+  const visuallyHideHandles =
+    selectedElement.width <= resizeRules.minWidth ||
+    selectedElement.height <= resizeRules.minHeight;
+
+  const classNames = classnames('default-movable', {
+    'hide-handles': hideHandles,
+    'visually-hide-handles': visuallyHideHandles,
+    'type-text': selectedElement.type === 'text',
+  });
+
   return (
     <Movable
-      className={`default-movable ${hideHandles ? 'hide-handles' : ''} ${
-        selectedElement.type === 'text' ? 'type-text' : ''
-      }`}
+      className={classNames}
       zIndex={0}
       ref={moveable}
       target={targetEl}
@@ -260,9 +288,24 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
       }}
       onResize={({ target, direction, width, height, drag }) => {
-        const newWidth = width;
+        let newWidth = width;
         let newHeight = height;
         let updates = null;
+
+        if (isResizingFromCorner) {
+          if (newWidth < minWidth) {
+            newWidth = minWidth;
+            newHeight = newWidth / aspectRatio;
+          }
+          if (newHeight < minHeight) {
+            newHeight = minHeight;
+            newWidth = minHeight * aspectRatio;
+          }
+        } else {
+          newHeight = Math.max(newHeight, minHeight);
+          newWidth = Math.max(newWidth, minWidth);
+        }
+
         if (updateForResizeEvent) {
           updates = updateForResizeEvent(
             selectedElement,
@@ -274,6 +317,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         if (updates && updates.height) {
           newHeight = dataToEditorY(updates.height);
         }
+
         target.style.width = `${newWidth}px`;
         target.style.height = `${newHeight}px`;
         frame.direction = direction;
