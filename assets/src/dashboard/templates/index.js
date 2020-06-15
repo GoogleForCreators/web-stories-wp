@@ -17,10 +17,13 @@
 /**
  * Internal dependencies
  */
+import { memoize } from '../utils';
 import getTemplates from './getTemplates';
 
+const memoizedGetTemplates = memoize(getTemplates);
+
 export default function ({ assetsURL }) {
-  const templates = getTemplates(assetsURL);
+  const templates = memoizedGetTemplates(assetsURL);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',

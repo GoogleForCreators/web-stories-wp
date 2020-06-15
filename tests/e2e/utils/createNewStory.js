@@ -22,6 +22,8 @@ import { visitAdminPage } from '@wordpress/e2e-test-utils';
 /**
  * Creates a new story.
  */
-export async function createNewStory() {
+async function createNewStory() {
   await visitAdminPage('post-new.php', 'post_type=web-story');
 }
+
+export default createNewStory;

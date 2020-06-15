@@ -117,6 +117,7 @@ const StoryGridView = ({
                 contextMenuId={storyMenu.contextMenuId}
                 onMenuItemSelected={storyMenu.handleMenuItemSelected}
                 story={story}
+                menuItems={storyMenu.menuItems}
               />
             </DetailRow>
           </CardGridItem>
@@ -131,7 +132,10 @@ StoryGridView.propTypes = {
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
   users: UsersPropType,
-  centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
+  centerActionLabelByStatus: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.bool,
+  ]),
   bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,

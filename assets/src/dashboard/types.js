@@ -95,6 +95,12 @@ export const StoryMenuPropType = PropTypes.shape({
   handleMenuToggle: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
   handleMenuItemSelected: PropTypes.func.isRequired,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.oneOfType[(PropTypes.string, PropTypes.bool)],
+    })
+  ),
 });
 
 export const RenameStoryPropType = PropTypes.shape({

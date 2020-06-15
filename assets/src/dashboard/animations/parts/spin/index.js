@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES, ROTATION } from '../../constants';
+import { ANIMATION_TYPES } from '../../constants';
+import { defaultUnit } from '../../utils/defaultUnit';
 import SimpleAnimation from '../simpleAnimation';
 
 const defaults = {
@@ -25,26 +26,17 @@ const defaults = {
   duration: 1000,
 };
 
-const keyframesLookup = {
-  [ROTATION.CLOCKWISE]: {
-    transform: ['rotateZ(0deg)', 'rotateZ(360deg)'],
-  },
-  [ROTATION.COUNTER_CLOCKWISE]: {
-    transform: ['rotateZ(0deg)', 'rotateZ(-360deg)'],
-  },
-  [ROTATION.PING_PONG]: {
-    transform: ['rotateZ(-45deg)', 'rotateZ(45deg)'],
-  },
-};
-
-export function AnimationSpin({ rotation = ROTATION.CLOCKWISE, ...args }) {
+export function AnimationSpin({ rotation = 0, ...args }) {
   const timings = {
     ...defaults,
     ...args,
   };
 
   const animationName = `rot-${rotation}-${ANIMATION_TYPES.SPIN}`;
-  const keyframes = keyframesLookup[rotation];
+  const keyframes = [
+    { transform: `rotateZ(${defaultUnit(rotation, 'deg')})` },
+    { transform: 'rotateZ(0deg)' },
+  ];
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,

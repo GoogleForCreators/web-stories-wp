@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use Google\Web_Stories\Tests\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;
 
@@ -26,6 +27,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	protected static $user_id;
 	protected static $user2_id;
 	protected static $user3_id;
+
+	protected static $author_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
@@ -46,6 +49,12 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			[
 				'role'         => 'administrator',
 				'display_name' => 'Zane Doe',
+			]
+		);
+
+		self::$author_id = $factory->user->create(
+			[
+				'role' => 'author',
 			]
 		);
 
@@ -92,6 +101,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		self::delete_user( self::$user_id );
 		self::delete_user( self::$user2_id );
 		self::delete_user( self::$user3_id );
+		self::delete_user( self::$author_id );
 	}
 
 	public function setUp() {
@@ -117,7 +127,6 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( '/wp/v2/web-story', $routes );
 		$this->assertCount( 2, $routes['/wp/v2/web-story'] );
 	}
-
 
 	public function test_get_items() {
 		wp_set_current_user( self::$user_id );
@@ -217,5 +226,51 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 
 		$orderby = $controller->filter_posts_clauses( $initial_clauses, $query );
 		$this->assertEquals( $orderby, $initial_clauses );
+	}
+
+	public function test_create_item_as_author_should_not_strip_markup() {
+		wp_set_current_user( self::$author_id );
+
+		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
+		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
+
+		$request = new WP_REST_Request( 'POST', '/wp/v2/web-story' );
+		$request->set_body_params(
+			[
+				'content'    => $unsanitized_content,
+				'story_data' => $unsanitized_story_data,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$new_data = $response->get_data();
+		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+	}
+
+	public function test_update_item_as_author_should_not_strip_markup() {
+		wp_set_current_user( self::$author_id );
+
+		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
+		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
+
+		$story = self::factory()->post->create(
+			[
+				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+			]
+		);
+
+		$request = new WP_REST_Request( 'PUT', '/wp/v2/web-story/' . $story );
+		$request->set_body_params(
+			[
+				'content'    => $unsanitized_content,
+				'story_data' => $unsanitized_story_data,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$new_data = $response->get_data();
+		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
 	}
 }
