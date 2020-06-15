@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-/**
- * Environment variables
- */
-const {
-  PUPPETEER_DEVTOOLS = false,
-  PUPPETEER_HEADLESS = true,
-  PUPPETEER_PRODUCT = 'chrome',
-  PUPPETEER_SLOWMO = 0,
-} = process.env;
+async function previewStory(editorPage) {
+  let openTabs = await browser.pages();
+  const expectedTabsCount = openTabs.length + 1;
+  await expect(editorPage).toClick('button', { text: 'Preview' });
 
-module.exports = {
-  launch: {
-    devtools: PUPPETEER_DEVTOOLS === 'true',
-    headless: PUPPETEER_HEADLESS !== 'false',
-    slowMo: Number(PUPPETEER_SLOWMO) || 0,
-    product: PUPPETEER_PRODUCT,
-    args: ['--window-size=1680,948'],
-  },
-};
+  // Wait for the new tab to open.
+  while (openTabs.length < expectedTabsCount) {
+    /* eslint-disable no-await-in-loop */
+    await editorPage.waitFor(1);
+    openTabs = await browser.pages();
+    /* eslint-enable no-await-in-loop */
+  }
+
+  const previewPage = openTabs[openTabs.length - 1];
+  await previewPage.waitForSelector('amp-story');
+  return previewPage;
+}
+
+export default previewStory;
