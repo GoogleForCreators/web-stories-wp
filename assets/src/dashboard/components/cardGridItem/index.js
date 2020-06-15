@@ -35,7 +35,12 @@ const CardGridItem = styled.div`
     margin: 12px 0;
   }
 
-  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
+  &:hover
+    ${MoreVerticalButton},
+    &:active
+    ${MoreVerticalButton},
+    &:focus-within
+    ${MoreVerticalButton} {
     opacity: 1;
   }
 `;

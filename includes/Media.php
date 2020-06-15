@@ -87,11 +87,31 @@ class Media {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * Key for media post type.
+	 *
+	 * @var string
+	 */
+	const STORY_MEDIA_TAXONOMY = 'web_story_media_source';
+
+	/**
 	 * Init.
 	 *
 	 * @return void
 	 */
 	public static function init() {
+
+		register_taxonomy(
+			self::STORY_MEDIA_TAXONOMY,
+			'attachment',
+			[
+				'label'        => __( 'Source', 'web-stories' ),
+				'public'       => false,
+				'rewrite'      => false,
+				'hierarchical' => false,
+				'show_in_rest' => true,
+			]
+		);
+
 		register_meta(
 			'post',
 			self::POSTER_POST_META_KEY,
@@ -144,8 +164,6 @@ class Media {
 	 * Get story meta images.
 	 *
 	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
-	 *
-	 * @since 1.2.1
 	 *
 	 * @param int|\WP_Post|null $post Post.
 	 * @return string[] Images.
@@ -206,6 +224,35 @@ class Media {
 					'type'        => 'integer',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
+			]
+		);
+
+		// Custom field, as built in term update require term id and not slug.
+		register_rest_field(
+			'attachment',
+			'media_source',
+			[
+				'schema'          => [
+					'description' => __( 'Media source. ', 'web-stories' ),
+					'type'        => 'string',
+					'enum'        => [ 'editor' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'get_callback'    => static function ( $prepared ) {
+					$id = $prepared['id'];
+
+					$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
+					if ( is_array( $terms ) && $terms ) {
+						$term = array_shift( $terms );
+
+						return $term->slug;
+					}
+
+					return '';
+				},
+				'update_callback' => static function ( $value, $object ) {
+					wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
+				},
 			]
 		);
 
@@ -374,8 +421,6 @@ class Media {
 		 *
 		 * This can be used to add additionally supported formats, for example by plugins
 		 * that do video transcoding.
-		 *
-		 * @since 1.3
 		 *
 		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */
