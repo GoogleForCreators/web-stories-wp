@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext, useMemo, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -30,7 +30,6 @@ import { Alert } from '../../../components/alert';
 // render queue
 // provider must be above this
 function ErrorQueue() {
-  console.log('trying to render');
   const {
     state: {
       stories: { error },
@@ -43,10 +42,22 @@ function ErrorQueue() {
   } = Alert.useAlertContext();
 
   useEffect(() => {
-    if (error?.message) {
+    if (error) {
       addAlert({ message: error.message, severity: 'error' });
     }
-  });
+  }, [error, addAlert]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (activeAlerts.length) {
+        removeAlert(0);
+      }
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [activeAlerts, removeAlert]);
 
   return (
     <Alert.Wrapper>
@@ -55,7 +66,7 @@ function ErrorQueue() {
           key={`alert_${index}`}
           message={activeAlert.message}
           severity={activeAlert.severity}
-          onDismissClick={() => removeAlert(index)}
+          handleDismissClick={() => removeAlert(index)}
         />
       ))}
     </Alert.Wrapper>

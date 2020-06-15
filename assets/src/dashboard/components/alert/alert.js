@@ -29,18 +29,20 @@ import {
   DismissButton,
 } from './components';
 
-const Container = ({ message, severity, handleClick }) => (
-  <AlertContainer severity={severity}>
-    <AlertIcon />
-    <AlertText>{message}</AlertText>
-    <DismissButton onClick={handleClick}>x</DismissButton>
-  </AlertContainer>
-);
-
-Container.propTypes = {
-  message: PropTypes.string.isRequired,
-  severity: PropTypes.oneOf(['error', 'warning', 'info']),
-  handleClick: PropTypes.func,
+const Alert = ({ message, severity, handleDismissClick }) => {
+  return (
+    <AlertContainer severity={severity}>
+      <AlertIcon />
+      <AlertText>{message}</AlertText>
+      <DismissButton onClick={handleDismissClick}>{'x'}</DismissButton>
+    </AlertContainer>
+  );
 };
 
-export default Container;
+Alert.propTypes = {
+  message: PropTypes.string.isRequired,
+  severity: PropTypes.oneOf(['error', 'warning', 'info']),
+  handleDismissClick: PropTypes.func,
+};
+
+export default Alert;

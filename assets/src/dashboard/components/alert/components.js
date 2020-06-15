@@ -48,3 +48,5 @@ export const AlertText = styled.p`
 `;
 
 export const AlertIcon = styled.div``;
+
+export const DismissButton = styled.button``;

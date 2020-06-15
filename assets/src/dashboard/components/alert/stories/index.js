@@ -24,8 +24,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Wrapper } from '../alertContainer';
-import Container from '../container';
+import { Wrapper } from '../components';
+import Alert from '../alert';
 
 export default {
   title: 'Dashboard/Components/Alert',
@@ -35,9 +35,9 @@ export default {
 export const _default = () => {
   return (
     <Wrapper>
-      <Container message="this is an error" severity="error" />
-      <Container message="this is a warning" severity="warning" />
-      <Container message="this is informational" severity="info" />
+      <Alert message="this is an error" severity="error" />
+      <Alert message="this is a warning" severity="warning" />
+      <Alert message="this is informational" severity="info" />
     </Wrapper>
   );
 };

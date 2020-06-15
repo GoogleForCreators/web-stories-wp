@@ -34,14 +34,26 @@ export const AlertContext = createContext(null);
 const Provider = ({ children }) => {
   const [activeAlerts, setActiveAlerts] = useState([]);
 
-  const removeAlert = useCallback((index) => {
-    const alertIndex = activeAlerts.findIndex(index);
-    setActiveAlerts(activeAlerts.splice(alertIndex, 1));
-  });
+  const removeAlert = useCallback(
+    (index) => {
+      console.log('removing: ', index, activeAlerts.splice(index, 1));
+      setActiveAlerts([...activeAlerts.splice(index, 1)]);
+    },
+    [activeAlerts]
+  );
 
-  const addAlert = useCallback(({ message, severity }) => {
-    setActiveAlerts([...activeAlerts, { message, severity }]);
-  });
+  const addAlert = useCallback(
+    ({ message, severity }) => {
+      const newAlert = activeAlerts.reduce((_, activeAlert) => {
+        return activeAlert?.message !== message;
+      }, []);
+
+      if (newAlert) {
+        setActiveAlerts([...activeAlerts, { message, severity }]);
+      }
+    },
+    [activeAlerts]
+  );
 
   const value = useMemo(
     () => ({
