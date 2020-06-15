@@ -44,6 +44,7 @@ describe('Background Drop-Target integration', () => {
 
     // Disable reason: For unknown reasons this (dragging from library) doesn't
     // work in the regular runner, only in debug runner.
+    //eslint-disable-next-line jasmine/no-disabled-tests
     xit('should correctly handle image dragged from library straight to edge', async () => {
       const backgroundId = await getBackgroundElementId(fixture);
 
@@ -161,6 +162,7 @@ describe('Background Drop-Target integration', () => {
 
     // Disable reason: For unknown reasons this (dragging from library) doesn't
     // work in the regular runner, only in debug runner.
+    //eslint-disable-next-line jasmine/no-disabled-tests
     xit('should correctly handle image dragged from library straight to edge replacing old image', async () => {
       const backgroundId = await getBackgroundElementId(fixture);
 
@@ -530,7 +532,7 @@ function getCanvasElementWrapperById(fixture, id) {
   return fixture.querySelector(`[data-element-id="${id}"]`);
 }
 
-async function getBackgroundElementId(fixture) {
+export async function getBackgroundElementId(fixture) {
   const {
     state: {
       currentPage: {

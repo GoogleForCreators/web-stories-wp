@@ -20,10 +20,14 @@ const KEY_MAP = {
   CMD: 'Meta',
   CONTROL: 'Control',
   CNTRL: 'Control',
+  DOWN: 'ArrowDown',
   ESC: 'Escape',
+  LEFT: 'ArrowLeft',
   META: 'Meta',
+  RIGHT: 'ArrowRight',
   SHIFT: 'Shift',
   TAB: 'Tab',
+  UP: 'ArrowUp',
 };
 
 /**

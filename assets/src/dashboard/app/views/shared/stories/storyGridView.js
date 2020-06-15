@@ -26,7 +26,10 @@ import { action } from '@storybook/addon-actions';
 
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
-import { STORY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import {
+  STORY_ITEM_CENTER_ACTION_LABELS,
+  STORY_CONTEXT_MENU_ITEMS,
+} from '../../../../constants';
 import StoryGridView from '../storyGridView';
 
 export default {
@@ -44,6 +47,7 @@ export const _default = () => {
       storyMenu={{
         handleMenuToggle: action('handleMenuToggle'),
         contextMenuId: -1,
+        menuItems: STORY_CONTEXT_MENU_ITEMS,
         handleMenuItemSelected: action('handleMenuItemSelected'),
       }}
       isTemplate={boolean('isTemplate')}

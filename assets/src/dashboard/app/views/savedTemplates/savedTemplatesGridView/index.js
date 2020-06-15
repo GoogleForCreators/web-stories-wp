@@ -23,29 +23,49 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import { useState, useCallback, useMemo } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import {
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
+  STORY_CONTEXT_MENU_ITEMS,
+} from '../../../../constants';
 import { ViewPropTypes } from '../../../../utils/useStoryView';
 import { StoriesPropType } from '../../../../types';
 import { StoryGridView } from '../../shared';
 
 function SavedTemplatesGridView({ stories, view }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
+  const enableInProgressStoryActions = useFeature(
+    'enableInProgressStoryActions'
+  );
 
   const handleMenuItemSelected = useCallback(() => {
     setContextMenuId(-1);
   }, []);
+
+  const enabledMenuItems = useMemo(() => {
+    if (enableInProgressStoryActions) {
+      return STORY_CONTEXT_MENU_ITEMS;
+    }
+    return STORY_CONTEXT_MENU_ITEMS.filter((item) => !item.inProgress);
+  }, [enableInProgressStoryActions]);
 
   const storyMenu = useMemo(() => {
     return {
       handleMenuToggle: setContextMenuId,
       contextMenuId,
       handleMenuItemSelected,
+      menuItems: enabledMenuItems,
     };
-  }, [setContextMenuId, contextMenuId, handleMenuItemSelected]);
+  }, [
+    setContextMenuId,
+    contextMenuId,
+    handleMenuItemSelected,
+    enabledMenuItems,
+  ]);
 
   return (
     <StoryGridView

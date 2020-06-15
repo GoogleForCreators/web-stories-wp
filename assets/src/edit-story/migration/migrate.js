@@ -39,6 +39,8 @@ import defaultBackgroundElement from './migrations/v0018_defaultBackgroundElemen
 import conicToLinear from './migrations/v0019_conicToLinear';
 import isFillDeprecate from './migrations/v0020_isFillDeprecate';
 import backgroundColorToPage from './migrations/v0021_backgroundColorToPage';
+import dataPixelTo412 from './migrations/v0022_dataPixelTo412';
+import convertOverlayPattern from './migrations/v0023_convertOverlayPattern';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -62,6 +64,8 @@ const MIGRATIONS = {
   19: [conicToLinear],
   20: [isFillDeprecate],
   21: [backgroundColorToPage],
+  22: [dataPixelTo412],
+  23: [convertOverlayPattern],
 };
 
 export const DATA_VERSION = Math.max.apply(

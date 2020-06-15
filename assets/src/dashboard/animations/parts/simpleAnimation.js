@@ -58,7 +58,7 @@ function SimpleAnimation(
     }, [hoistAnimation]);
 
     return useClippingContainer ? (
-      <FullSizeAbsolute style={{ overflow: 'hidden' }}>
+      <FullSizeAbsolute overflowHidden={useClippingContainer}>
         <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
       </FullSizeAbsolute>
     ) : (

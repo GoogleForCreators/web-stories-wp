@@ -56,6 +56,30 @@ const VisualPreview = styled.div`
   padding: 0;
   background: transparent;
   cursor: pointer;
+  position: relative;
+`;
+
+const CurrentColor = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const Transparent = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: conic-gradient(
+    #fff 0.25turn,
+    #d3d4d4 0turn 0.5turn,
+    #fff 0turn 0.75turn,
+    #d3d4d4 0turn 1turn
+  );
+  background-size: 66.67% 66.67%;
 `;
 
 const TextualPreview = styled.div`
@@ -156,7 +180,10 @@ function ColorPreview({
         // If editable, only the visual preview component is a button
         // And the text is an input field
         <Preview ref={previewRef}>
-          <VisualPreview role="status" style={previewStyle} {...buttonProps} />
+          <VisualPreview {...buttonProps}>
+            <Transparent />
+            <CurrentColor role="status" style={previewStyle} />
+          </VisualPreview>
           <TextualInput
             type="text"
             aria-label={`${inputLabel}: ${label}`}
@@ -168,7 +195,10 @@ function ColorPreview({
       ) : (
         // If not editable, the whole component is a button
         <Preview ref={previewRef} {...buttonProps}>
-          <VisualPreview role="status" style={previewStyle} />
+          <VisualPreview>
+            <Transparent />
+            <CurrentColor role="status" style={previewStyle} />
+          </VisualPreview>
           <TextualPreview>
             {isMultiple
               ? __('Multiple', 'web-stories')
