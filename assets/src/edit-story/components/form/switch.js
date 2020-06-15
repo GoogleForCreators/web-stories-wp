@@ -50,9 +50,11 @@ const SwitchContainer = styled.div`
   border: none;
 `;
 
+// Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
 const RadioButton = styled.input.attrs(({ checked, value, id }) => ({
   type: 'radio',
   name: 'switch',
+  className: 'mousetrap',
   checked,
   value,
   id,

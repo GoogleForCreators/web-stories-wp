@@ -22,6 +22,7 @@ import { fireEvent } from '@testing-library/react';
  */
 import { renderWithTheme } from '../../../testUtils';
 import StoryMenu from '../';
+import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
 
 describe('StoryMenu', () => {
   it('should render a button by default', () => {
@@ -30,6 +31,7 @@ describe('StoryMenu', () => {
         onMoreButtonSelected={jest.fn}
         contextMenuId={1}
         onMenuItemSelected={jest.fn}
+        menuItems={STORY_CONTEXT_MENU_ITEMS}
         story={{ id: 1, status: 'publish', title: 'Sample Story' }}
       />
     );
@@ -46,6 +48,7 @@ describe('StoryMenu', () => {
         onMoreButtonSelected={mockOnMoreButtonSelected}
         contextMenuId={1}
         onMenuItemSelected={jest.fn}
+        menuItems={STORY_CONTEXT_MENU_ITEMS}
         story={{ id: 1, status: 'publish', title: 'Sample Story' }}
       />
     );
@@ -63,6 +66,7 @@ describe('StoryMenu', () => {
         onMoreButtonSelected={jest.fn}
         contextMenuId={1}
         onMenuItemSelected={mockMenuItemSelected}
+        menuItems={STORY_CONTEXT_MENU_ITEMS}
         story={{ id: 1, status: 'publish', title: 'Sample Story' }}
       />
     );

@@ -28,5 +28,10 @@ export default {
 };
 
 export const _default = () => {
-  return <TemplateNavBar handleCta={action('handle cta clicked')} />;
+  return (
+    <TemplateNavBar
+      handleCta={action('handle cta clicked')}
+      handleBookmarkClick={action('handle bookmark clicked')}
+    />
+  );
 };
