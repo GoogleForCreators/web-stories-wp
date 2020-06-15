@@ -198,8 +198,8 @@ describe('Carousel integration', () => {
     await fixture.events.mouse.clickOn(getThumbnail(0), 5, 5);
     await fixture.events.keyboard.down('del');
     await fixture.events.keyboard.up('del');
-    expect(await getCurrentPageId()).toEqual('page2');
     expect(await getPageIds()).toEqual(['page2', 'page3', 'page4']);
+    expect(await getCurrentPageId()).toEqual('page2');
   });
 
   it('should delete the second page', async () => {
