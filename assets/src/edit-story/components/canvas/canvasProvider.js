@@ -48,6 +48,7 @@ function CanvasProvider({ children }) {
     setEditingElementWithState,
     setEditingElementWithoutState,
     clearEditing,
+    getNodeForElement,
     setNodeForElement,
   } = useEditingElement();
 
@@ -164,6 +165,7 @@ function CanvasProvider({ children }) {
       actions: {
         setPageContainer,
         setFullbleedContainer,
+        getNodeForElement,
         setNodeForElement,
         setEditingElement: setEditingElementWithoutState,
         setEditingElementWithState,
@@ -183,6 +185,7 @@ function CanvasProvider({ children }) {
       pageSize,
       setPageContainer,
       setFullbleedContainer,
+      getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
       setEditingElementWithState,
