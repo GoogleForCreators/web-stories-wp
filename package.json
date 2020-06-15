@@ -38,7 +38,7 @@
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.3.0",
     "flagged": "^1.1.0",
-    "history": "^4.10.1",
+    "history": "^5.0.0",
     "mockdate": "^3.0.2",
     "moment": "^2.26.0",
     "mousetrap": "^1.6.5",
