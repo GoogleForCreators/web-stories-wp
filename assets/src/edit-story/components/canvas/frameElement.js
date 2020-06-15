@@ -25,7 +25,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory, useDropTargets } from '../../app';
+import { useStory } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -65,6 +65,10 @@ function FrameElement({ element }) {
   const { id, type } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
+  const [hovering, setHovering] = useState(false);
+
+  const onPointerEnter = () => setHovering(true);
+  const onPointerLeave = () => setHovering(false);
 
   const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
     (state) => ({
@@ -80,9 +84,6 @@ function FrameElement({ element }) {
   const { getBox } = useUnits((state) => ({
     getBox: state.actions.getBox,
   }));
-  const {
-    state: { activeDropTargetId },
-  } = useDropTargets();
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
@@ -105,8 +106,7 @@ function FrameElement({ element }) {
   return (
     <WithLink
       element={element}
-      active={selectedElementIds.length === 1 && isSelected}
-      dragging={Boolean(activeDropTargetId)}
+      active={!isSelected && hovering}
       anchorRef={elementRef}
     >
       {Controls && (
@@ -139,6 +139,8 @@ function FrameElement({ element }) {
             handleSelectElement(id, evt);
           }
         }}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
