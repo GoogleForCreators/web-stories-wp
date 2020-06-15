@@ -119,7 +119,6 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
     "eslint-plugin-testing-library": "^3.3.0",
-    "eslint-utils": "^2.0.0",
     "husky": "^4.2.5",
     "jasmine-core": "^3.5.0",
     "jest": "^25.5.4",
