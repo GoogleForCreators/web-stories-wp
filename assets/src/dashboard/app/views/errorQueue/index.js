@@ -22,13 +22,9 @@ import { useContext, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-
 import { ApiContext } from '../../api/apiProvider';
 import { Alert } from '../../../components/alert';
 
-// get error and add it to queue.
-// render queue
-// provider must be above this
 function ErrorQueue() {
   const {
     state: {
@@ -41,6 +37,7 @@ function ErrorQueue() {
     state: { activeAlerts },
   } = Alert.useAlertContext();
 
+  // Todo: add in more than just errors
   useEffect(() => {
     if (error) {
       addAlert({ message: error.message, severity: 'error' });
@@ -49,7 +46,7 @@ function ErrorQueue() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (activeAlerts.length) {
+      if (activeAlerts.length > 0) {
         removeAlert(0);
       }
     }, 10000);

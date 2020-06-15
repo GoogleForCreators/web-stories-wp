@@ -16,18 +16,8 @@
 /**
  * External dependencies
  */
-import {
-  createContext,
-  useMemo,
-  useRef,
-  useLayoutEffect,
-  useCallback,
-  useState,
-} from 'react';
+import { createContext, useMemo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
 
 export const AlertContext = createContext(null);
 
@@ -36,8 +26,9 @@ const Provider = ({ children }) => {
 
   const removeAlert = useCallback(
     (index) => {
-      console.log('removing: ', index, activeAlerts.splice(index, 1));
-      setActiveAlerts([...activeAlerts.splice(index, 1)]);
+      const alertsCopy = JSON.parse(JSON.stringify(activeAlerts));
+      alertsCopy.splice(index, 1);
+      setActiveAlerts(alertsCopy);
     },
     [activeAlerts]
   );

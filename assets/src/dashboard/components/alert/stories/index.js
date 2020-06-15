@@ -17,27 +17,38 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, select, text } from '@storybook/addon-knobs';
-import styled from 'styled-components';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
 import { Wrapper } from '../components';
-import Alert from '../alert';
+import AlertContainer from '../container';
 
 export default {
   title: 'Dashboard/Components/Alert',
-  component: Alert,
+  component: AlertContainer,
 };
 
 export const _default = () => {
   return (
     <Wrapper>
-      <Alert message="this is an error" severity="error" />
-      <Alert message="this is a warning" severity="warning" />
-      <Alert message="this is informational" severity="info" />
+      <AlertContainer
+        message={text('errorMessage', 'this is an error')}
+        severity="error"
+      />
+      <AlertContainer
+        message={text('warningMessage', 'this is a warning')}
+        severity="warning"
+      />
+      <AlertContainer
+        message={text('infoMessage', 'this is informational')}
+        severity="info"
+      />
+      <AlertContainer
+        message={text('successMessage', 'this is successful')}
+        severity="success"
+      />
     </Wrapper>
   );
 };

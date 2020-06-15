@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { boolean, text } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
-import styled from 'styled-components';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import ErrorQueue from '../';
 import { Alert } from '../../../../components/alert';
 import { ApiContext } from '../../../api/apiProvider';
+import ErrorQueue from '../';
 
 export default {
   title: 'Dashboard/Views/ErrorQueue',
@@ -34,10 +31,17 @@ export default {
 };
 
 export const _default = () => {
+  const [error, setError] = useState();
+
   return (
-    <ApiContext.Provider
-      value={{ state: { stories: { error: { message: 'i am an error' } } } }}
-    >
+    <ApiContext.Provider value={{ state: { stories: { error } } }}>
+      <button
+        onClick={() => {
+          setError({ message: 'i am an error' });
+        }}
+      >
+        {'Add Error'}
+      </button>
       <Alert.Provider>
         <ErrorQueue />
       </Alert.Provider>

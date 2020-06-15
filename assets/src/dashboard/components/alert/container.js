@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -22,19 +27,23 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {
-  AlertContainer,
-  AlertIcon,
-  AlertText,
-  DismissButton,
-} from './components';
+import { Close } from '../../icons';
+import { AlertContainer, AlertText, DismissButton } from './components';
 
 const Alert = ({ message, severity, handleDismissClick }) => {
   return (
-    <AlertContainer severity={severity}>
-      <AlertIcon />
+    <AlertContainer
+      severity={severity}
+      role="alert"
+      aria-label={__('alert notification', 'web-stories')}
+    >
       <AlertText>{message}</AlertText>
-      <DismissButton onClick={handleDismissClick}>{'x'}</DismissButton>
+      <DismissButton
+        onClick={handleDismissClick}
+        ariaLabel={__('dismiss alert', 'web-stories')}
+      >
+        <Close />
+      </DismissButton>
     </AlertContainer>
   );
 };

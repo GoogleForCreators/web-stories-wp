@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import Provider from './provider';
-import Container from './alert';
+import Container from './container';
 import { Wrapper } from './components';
 import useAlertContext from './useAlertContext';
 

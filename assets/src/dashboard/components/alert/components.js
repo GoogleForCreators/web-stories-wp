@@ -17,12 +17,33 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 import { TypographyPresets } from '../typography';
+
+const slideIn = keyframes`
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+`;
+
+const getColor = (severity = 'default') => {
+  const alertBackgrounds = {
+    error: 'danger',
+    warning: 'warning',
+    info: 'bluePrimary',
+    success: 'success',
+    default: 'bluePrimary',
+  };
+  return alertBackgrounds[severity];
+};
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -32,21 +53,39 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   max-width: 300px;
-  min-width: 30vw;
-  background-color: lime;
+  min-width: 40vw;
 `;
 
 export const AlertContainer = styled.div`
-  width: 100%;
-  padding: 10px;
-  color: black;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 20px;
+  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme, severity }) =>
+    theme.colors[getColor(severity)]};
+  border-radius: 5px;
+  animation: 0.5s ${slideIn} ease-in;
 `;
 
 export const AlertText = styled.p`
   ${TypographyPresets.Medium};
+  width: calc(100% - 25px);
+  display: inline;
 `;
 
-export const AlertIcon = styled.div``;
+export const DismissButton = styled.button`
+  align-self: center;
+  margin: 0 0 0 auto;
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.white};
+  border: ${({ theme }) => theme.borders.transparent};
+  cursor: pointer;
 
-export const DismissButton = styled.button``;
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    border-color: ${({ theme }) => theme.colors.action};
+  }
+`;
