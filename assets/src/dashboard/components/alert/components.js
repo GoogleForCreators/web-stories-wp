@@ -22,7 +22,7 @@ import styled, { keyframes } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { KEYBOARD_USER_SELECTOR } from '../../constants';
+import { KEYBOARD_USER_SELECTOR, Z_INDEX } from '../../constants';
 import { TypographyPresets } from '../typography';
 
 const slideIn = keyframes`
@@ -66,6 +66,7 @@ export const AlertContainer = styled.div`
   background-color: ${({ theme, severity }) =>
     theme.colors[getColor(severity)]};
   border-radius: 5px;
+  z-index: ${Z_INDEX.ALERT};
   animation: 0.5s ${slideIn} ease-in;
 `;
 
