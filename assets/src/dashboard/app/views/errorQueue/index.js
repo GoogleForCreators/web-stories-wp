@@ -39,7 +39,7 @@ function ErrorQueue() {
 
   // Todo: add in more than just errors
   useEffect(() => {
-    if (error) {
+    if (error?.message) {
       addAlert({ message: error.message, severity: 'error' });
     }
   }, [error, addAlert]);

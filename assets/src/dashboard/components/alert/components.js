@@ -47,7 +47,7 @@ const getColor = (severity = 'default') => {
 
 export const Wrapper = styled.div`
   position: fixed;
-  bottom: 0;
+  bottom: 40px;
   right: 0;
   display: flex;
   flex-direction: column;
