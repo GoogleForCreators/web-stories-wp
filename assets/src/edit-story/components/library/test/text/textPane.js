@@ -53,7 +53,12 @@ describe('TextPane', () => {
     };
     await act(async () => {
       const { getByRole } = renderWithTheme(
-        <FlagsProvider features={{ showTextSets: false }}>
+        <FlagsProvider
+          features={{
+            showTextSets: false,
+            showTextAndShapesSearchInput: false,
+          }}
+        >
           <APIContext.Provider value={apiContextValue}>
             <FontProvider apiContextValue>
               <TextPane isActive={true} />

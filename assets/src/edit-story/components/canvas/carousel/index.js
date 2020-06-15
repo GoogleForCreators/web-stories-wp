@@ -61,6 +61,7 @@ import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 
 import useCanvas from '../useCanvas';
 import CompactIndicator from './compactIndicator';
+import useCarouselKeys from './useCarouselKeys';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 
@@ -241,6 +242,8 @@ function Carousel() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
   const pageRefs = useRef([]);
+  const wrapperRef = useRef(null);
+
   const [carouselSize, setCarouselSize] = useState({
     width: COMPACT_THUMB_WIDTH,
     height: COMPACT_THUMB_HEIGHT,
@@ -351,9 +354,11 @@ function Carousel() {
     [pages, isCompact, arrangePage, setCurrentPage]
   );
 
+  useCarouselKeys(wrapperRef, pageRefs, isRTL);
+
   return (
     <>
-      <Wrapper>
+      <Wrapper ref={wrapperRef} data-testid="PageCarousel">
         <NavArea area="space" />
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton

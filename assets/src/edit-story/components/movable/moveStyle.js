@@ -76,4 +76,13 @@ export const GlobalStyle = createGlobalStyle`
 	.default-movable.hide-handles .moveable-line.moveable-direction {
 		display: none;
 	}
+
+  .default-movable.visually-hide-handles .moveable-control.moveable-e,
+  .default-movable.visually-hide-handles .moveable-control.moveable-w,
+  .default-movable.visually-hide-handles .moveable-control.moveable-s,
+  .default-movable.visually-hide-handles .moveable-control.moveable-ne,
+  .default-movable.visually-hide-handles .moveable-control.moveable-nw,
+  .default-movable.visually-hide-handles .moveable-control.moveable-sw {
+	  opacity: 0;
+	}
 `;

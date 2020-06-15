@@ -48,6 +48,7 @@ function CanvasProvider({ children }) {
     setEditingElementWithState,
     setEditingElementWithoutState,
     clearEditing,
+    getNodeForElement,
     setNodeForElement,
   } = useEditingElement();
 
@@ -88,7 +89,7 @@ function CanvasProvider({ children }) {
       } else {
         setSelectedElementsById({ elementIds: [elId] });
       }
-      evt.currentTarget.focus();
+      evt.currentTarget.focus({ preventScroll: true });
       if (currentPage?.elements[0].id !== elId) {
         evt.stopPropagation();
       }
@@ -165,6 +166,7 @@ function CanvasProvider({ children }) {
       actions: {
         setPageContainer,
         setFullbleedContainer,
+        getNodeForElement,
         setNodeForElement,
         setEditingElement: setEditingElementWithoutState,
         setEditingElementWithState,
@@ -186,6 +188,7 @@ function CanvasProvider({ children }) {
       showSafeZone,
       setPageContainer,
       setFullbleedContainer,
+      getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
       setEditingElementWithState,

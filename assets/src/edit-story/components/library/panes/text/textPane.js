@@ -41,16 +41,18 @@ function TextPane(props) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
-  const { showTextSets } = useFeatures();
+  const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
 
   return (
     <Pane id={paneId} {...props}>
-      <SearchInput
-        value={''}
-        placeholder={__('Search', 'web-stories')}
-        onChange={() => {}}
-        disabled
-      />
+      {showTextAndShapesSearchInput && (
+        <SearchInput
+          value={''}
+          placeholder={__('Search', 'web-stories')}
+          onChange={() => {}}
+          disabled
+        />
+      )}
 
       <Section
         title={__('Presets', 'web-stories')}

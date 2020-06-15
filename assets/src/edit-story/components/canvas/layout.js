@@ -89,6 +89,7 @@ const Layer = styled.div`
     )
     / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
     ${PAGE_NAV_WIDTH}px 1fr;
+  height: 100%;
 `;
 
 const Area = styled.div`

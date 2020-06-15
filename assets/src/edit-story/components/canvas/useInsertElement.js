@@ -75,9 +75,9 @@ function useInsertElement() {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
-            videoEl.play();
+            videoEl.play().catch(() => {});
           }
-        }, 0);
+        });
       }
       focusCanvas();
       return element;
