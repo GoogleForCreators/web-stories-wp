@@ -81,7 +81,7 @@ const ColorWrapper = styled.div`
   ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
 `;
 
-const Color = styled.button`
+const Color = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
 `;
@@ -99,6 +99,9 @@ function Presets({
   const hasPresets = colorPresets.length > 0;
 
   const colorPresetRenderer = (color, i, activeIndex) => {
+    if (!color) {
+      return null;
+    }
     const disabled = isBackground && !isEditMode && presetHasOpacity(color);
     // @todo The correct text here should be: Page background colors can not have an opacity.
     // However, due to bug with Tooltips/Popup, the text flows out of the screen.
@@ -112,10 +115,7 @@ function Presets({
           <Color
             tabIndex={activeIndex === i ? 0 : -1}
             color={color}
-            onClick={(e) => {
-              e.preventDefault();
-              !disabled && handleOnClick(color);
-            }}
+            onClick={() => handleOnClick(color)}
             disabled={disabled}
             aria-label={
               isEditMode

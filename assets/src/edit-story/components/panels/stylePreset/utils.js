@@ -66,7 +66,9 @@ export function getTextPresets(elements, stylePresets) {
     textColors: elements
       .map(({ content }) => getHTMLInfo(content).color)
       .filter((color) => color !== MULTIPLE_VALUE)
-      .filter((color) => !findMatchingColor(color, stylePresets, true)),
+      .filter(
+        (color) => color && !findMatchingColor(color, stylePresets, true)
+      ),
     textStyles: [],
   };
 }
