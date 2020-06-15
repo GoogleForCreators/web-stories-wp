@@ -18,13 +18,20 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory, useFont } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
+import { getHTMLInfo } from '../../components/richText/htmlManipulation';
 import { useUnits } from '../../units';
 import {
   elementFillContent,
@@ -36,6 +43,7 @@ import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import useUnmount from '../../utils/useUnmount';
 import createSolid from '../../utils/createSolid';
+import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
@@ -86,10 +94,30 @@ function TextEdit({
   box: { x, y, height, rotationAngle },
 }) {
   const { font } = rest;
+  const fontFaceSetConfigs = useMemo(() => {
+    const htmlInfo = getHTMLInfo(content);
+    return {
+      fontStyle: htmlInfo.isItalic ? 'italic' : 'normal',
+      fontWeight: htmlInfo.fontWeight,
+      content: stripHTML(content),
+    };
+  }, [content]);
 
   const {
-    actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
-  } = useUnits();
+    dataToEditorX,
+    dataToEditorY,
+    editorToDataX,
+    editorToDataY,
+  } = useUnits(
+    ({
+      actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
+    }) => ({
+      dataToEditorX,
+      dataToEditorY,
+      editorToDataX,
+      editorToDataY,
+    })
+  );
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     font,
@@ -109,9 +137,9 @@ function TextEdit({
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-  const {
-    actions: { updateElementById },
-  } = useStory();
+  const { updateElementById } = useStory((state) => ({
+    updateElementById: state.actions.updateElementById,
+  }));
 
   const setProperties = useCallback(
     (properties) => updateElementById({ elementId: id, properties }),
@@ -121,8 +149,15 @@ function TextEdit({
   const wrapperRef = useRef(null);
   const textBoxRef = useRef(null);
   const editorRef = useRef(null);
+  const boxRef = useRef();
   const contentRef = useRef();
   const editorHeightRef = useRef(0);
+
+  // x, y, height, rotationAngle changes should not update the content while in edit mode.
+  // updateContent should be only called on unmount.
+  useEffect(() => {
+    boxRef.current = { x, y, height, rotationAngle };
+  }, [x, y, height, rotationAngle]);
 
   // Make sure to allow the user to click in the text box while working on the text.
   const onClick = (evt) => {
@@ -150,27 +185,19 @@ function TextEdit({
       // Recalculate the new height and offset.
       if (newHeight) {
         const [dx, dy] = calcRotatedResizeOffset(
-          rotationAngle,
+          boxRef.current.rotationAngle,
           0,
           0,
           0,
-          newHeight - height
+          newHeight - boxRef.current.height
         );
         properties.height = editorToDataY(newHeight);
-        properties.x = editorToDataX(x + dx);
-        properties.y = editorToDataY(y + dy);
+        properties.x = editorToDataX(boxRef.current.x + dx);
+        properties.y = editorToDataY(boxRef.current.y + dy);
       }
       setProperties(properties);
     }
-  }, [
-    editorToDataX,
-    editorToDataY,
-    height,
-    rotationAngle,
-    setProperties,
-    x,
-    y,
-  ]);
+  }, [editorToDataX, editorToDataY, setProperties]);
 
   // Update content for element on unmount.
   useUnmount(updateContent);
@@ -191,14 +218,19 @@ function TextEdit({
     [handleResize]
   );
   // Also invoke if the raw element height ever changes
-  useEffect(handleResize, [elementHeight]);
+  useEffect(handleResize, [elementHeight, handleResize]);
 
   useEffect(() => {
-    maybeEnqueueFontStyle(font);
-  }, [font, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle([
+      {
+        ...fontFaceSetConfigs,
+        font,
+      },
+    ]);
+  }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   return (
-    <Wrapper ref={wrapperRef} onClick={onClick}>
+    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
       <TextBox ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}

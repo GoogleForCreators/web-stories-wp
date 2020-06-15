@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
+import { PageSizePropType } from '../types';
 import { clamp, usePagePreviewSize } from './index';
 
 export default function useStoryView({ filters, totalPages }) {
@@ -138,14 +139,11 @@ export default function useStoryView({ filters, totalPages }) {
 export const ViewPropTypes = PropTypes.shape({
   style: PropTypes.oneOf(Object.values(VIEW_STYLE)),
   toggleStyle: PropTypes.func,
-  pageSize: PropTypes.shape({
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }),
+  pageSize: PageSizePropType,
 });
 
 export const FilterPropTypes = PropTypes.shape({
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   set: PropTypes.func,
 });
 

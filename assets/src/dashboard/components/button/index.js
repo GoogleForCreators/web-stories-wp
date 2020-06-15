@@ -24,27 +24,29 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
+import { TypographyPresets } from '../typography';
 
 const StyledButton = styled.button`
-  font-family: ${({ theme }) => theme.fonts.button.family};
-  font-size: ${({ theme }) => theme.fonts.button.size}px;
-  font-weight: ${({ theme }) => theme.fonts.button.weight};
-  line-height: ${({ theme }) => theme.fonts.button.lineHeight}px;
+  ${TypographyPresets.Small};
+
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   align-items: center;
+  justify-content: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   border: ${({ theme }) => theme.borders.transparent};
   border-radius: ${({ theme }) => theme.button.borderRadius}px;
   display: flex;
-  height: 40px;
   min-width: 100px;
   opacity: 0.75;
-  padding: 0 10px;
+  padding: 4px 12px;
   text-decoration: none;
+  text-align: center;
 
   &:focus,
   &:active,
   &:hover {
+    box-shadow: none;
     opacity: 1;
     outline: none;
     color: ${({ theme }) => theme.colors.white};
@@ -71,6 +73,7 @@ const CtaButton = styled(StyledButton)`
 `;
 
 const SecondaryButton = styled(StyledButton)`
+  border-radius: 0px;
   background-color: transparent;
   text-shadow: ${({ theme }) => theme.text.shadow};
 
@@ -87,7 +90,14 @@ const StyledChildren = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border-bottom: ${({ isSecondary }) =>
+    isSecondary ? '0.1em solid currentColor' : 'none'};
 `;
+
+StyledChildren.propTypes = {
+  isSecondary: PropTypes.bool,
+};
 
 const Button = ({
   children,
@@ -110,7 +120,9 @@ const Button = ({
       disabled={isDisabled}
       {...rest}
     >
-      <StyledChildren>{children}</StyledChildren>
+      <StyledChildren isSecondary={type === BUTTON_TYPES.SECONDARY}>
+        {children}
+      </StyledChildren>
     </StyledButtonByType>
   );
 };
@@ -124,3 +136,4 @@ Button.propTypes = {
 };
 
 export default Button;
+export { default as PaginationButton } from './paginationButton';

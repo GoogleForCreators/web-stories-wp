@@ -22,7 +22,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -30,31 +30,33 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { STORY_STATUS } from '../../constants';
-import { getFormattedDisplayDate, useFocusOut } from '../../utils/';
-import { TextInput } from '../input';
+import { getFormattedDisplayDate } from '../../utils/';
+import { DashboardStatusesPropType } from '../../types';
+import { Paragraph2 } from '../typography';
+import InlineInputForm from '../inlineInputForm';
+import { Link } from '../link';
 
 const StyledCardTitle = styled.div`
-  font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
-  font-size: ${({ theme }) => theme.fonts.storyGridItem.size}px;
-  font-weight: 500;
-  letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing}em;
-  line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight}px;
   padding-top: 12px;
-  max-width: 90%;
+  display: inline-block;
+  overflow: hidden;
 `;
 
-const StyledTitle = styled.p`
+const TitleStoryLink = styled(Link)`
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 2px;
   color: ${({ theme }) => theme.colors.gray900};
-  margin: 0;
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-const TitleBodyText = styled.p`
+const TitleBodyText = styled(Paragraph2)`
   margin: 0;
   color: ${({ theme }) => theme.colors.gray500};
-  font-weight: 300;
+  font-weight: ${({ theme }) => theme.typography.weight.light};
 `;
 
 const DateHelperText = styled.span`
@@ -70,49 +72,20 @@ const DateHelperText = styled.span`
 `;
 
 const CardTitle = ({
-  author,
+  id,
+  secondaryTitle,
   title,
+  titleLink,
   status,
   displayDate,
   editMode,
   onEditComplete,
   onEditCancel,
 }) => {
-  const inputContainerRef = useRef(null);
-  const [newTitle, setNewTitle] = useState(title);
-
-  useFocusOut(
-    inputContainerRef,
-    () => {
-      if (editMode) {
-        onEditCancel();
-      }
-    },
-    [editMode]
-  );
-
-  useEffect(() => {
-    if (inputContainerRef.current && editMode) {
-      inputContainerRef.current.firstChild?.focus();
-    }
-  }, [editMode]);
-
-  const handleChange = useCallback(({ target }) => {
-    setNewTitle(target.value);
-  }, []);
-
-  const handleKeyPress = useCallback(
-    ({ nativeEvent }) => {
-      if (nativeEvent.keyCode === 13) {
-        onEditComplete(newTitle);
-      } else if (nativeEvent.keyCode === 27) {
-        onEditCancel();
-      }
-    },
-    [newTitle, onEditComplete, onEditCancel]
-  );
-
   const displayDateText = useMemo(() => {
+    if (!displayDate) {
+      return null;
+    }
     return status === STORY_STATUS.PUBLISHED
       ? sprintf(
           /* translators: %s: last modified date */
@@ -129,16 +102,15 @@ const CardTitle = ({
   return (
     <StyledCardTitle>
       {editMode ? (
-        <div ref={inputContainerRef}>
-          <TextInput
-            data-testid={'title-rename-input'}
-            value={newTitle}
-            onKeyDown={handleKeyPress}
-            onChange={handleChange}
-          />
-        </div>
+        <InlineInputForm
+          onEditComplete={onEditComplete}
+          onEditCancel={onEditCancel}
+          value={title}
+          id={id}
+          label={__('Rename story', 'web-stories')}
+        />
       ) : (
-        <StyledTitle>{title}</StyledTitle>
+        <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
       )}
       <TitleBodyText>
         {status === STORY_STATUS.DRAFT && (
@@ -146,19 +118,21 @@ const CardTitle = ({
         )}
         {displayDateText}
       </TitleBodyText>
-      {author && <TitleBodyText>{author}</TitleBodyText>}
+      {secondaryTitle && <TitleBodyText>{secondaryTitle}</TitleBodyText>}
     </StyledCardTitle>
   );
 };
 
 CardTitle.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string.isRequired,
-  author: PropTypes.string,
-  status: PropTypes.oneOf(Object.values(STORY_STATUS)),
+  titleLink: PropTypes.string,
+  secondaryTitle: PropTypes.string,
+  status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
-  displayDate: PropTypes.object.isRequired,
-  onEditComplete: PropTypes.func.isRequired,
-  onEditCancel: PropTypes.func.isRequired,
+  displayDate: PropTypes.object,
+  onEditComplete: PropTypes.func,
+  onEditCancel: PropTypes.func,
 };
 
 export default CardTitle;

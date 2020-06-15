@@ -18,12 +18,13 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-import { useContext, useEffect, createRef, useState } from 'react';
+import { useEffect, createRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import useBatchingCallback from '../../utils/useBatchingCallback';
+import { useContext } from '../../utils/context';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';
@@ -64,6 +65,7 @@ function useKeyEffectInternal(
   deps = undefined
 ) {
   const { keys } = useContext(Context);
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   const batchingCallback = useBatchingCallback(callback, deps || []);
   useEffect(
     () => {
@@ -82,7 +84,7 @@ function useKeyEffectInternal(
       }
       const mousetrap = getOrCreateMousetrap(node);
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
-      const handler = createKeyHandler(keySpec, batchingCallback);
+      const handler = createKeyHandler(node, keySpec, batchingCallback);
       mousetrap.bind(keySpec.key, handler, type);
       return () => {
         mousetrap.unbind(keySpec.key);
@@ -111,6 +113,7 @@ export function useKeyEffect(
   callback,
   deps = undefined
 ) {
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyEffectInternal(refOrNode, keyNameOrSpec, undefined, callback, deps);
 }
 
@@ -126,6 +129,7 @@ export function useKeyDownEffect(
   callback,
   deps = undefined
 ) {
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keydown', callback, deps);
 }
 
@@ -141,6 +145,7 @@ export function useKeyUpEffect(
   callback,
   deps = undefined
 ) {
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyEffectInternal(refOrNode, keyNameOrSpec, 'keyup', callback, deps);
 }
 
@@ -152,7 +157,9 @@ export function useKeyUpEffect(
  */
 export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
   const [isKeyPressed, setIsKeyPressed] = useState(false);
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyDownEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(true), deps);
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyUpEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(false), deps);
   return isKeyPressed;
 }
@@ -168,6 +175,7 @@ export function useGlobalKeyDownEffect(
   deps = undefined
 ) {
   setGlobalRef();
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyDownEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
@@ -182,6 +190,7 @@ export function useGlobalKeyUpEffect(
   deps = undefined
 ) {
   setGlobalRef();
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   useKeyUpEffect(globalRef, keyNameOrSpec, callback, deps);
 }
 
@@ -210,6 +219,7 @@ export function useEscapeToBlurEffect(ref, deps = undefined) {
         activeElement.blur();
       }
     },
+    //eslint-disable-next-line react-hooks/exhaustive-deps
     deps
   );
 }
@@ -237,13 +247,14 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     shift = false,
     repeat = true,
     editable = false,
+    dialog = false,
   } = keySpec;
   const mappedKeys = []
     .concat(keyOrArray)
     .map((key) => keyDict[key] || key)
     .flat();
   const allKeys = addMods(mappedKeys, shift);
-  return { key: allKeys, shift, repeat, editable };
+  return { key: allKeys, shift, repeat, editable, dialog };
 }
 
 function addMods(keys, shift) {
@@ -254,7 +265,8 @@ function addMods(keys, shift) {
 }
 
 function createKeyHandler(
-  { repeat: repeatAllowed, editable: editableAllowed },
+  keyTarget,
+  { repeat: repeatAllowed, editable: editableAllowed, dialog: dialogAllowed },
   callback
 ) {
   return (evt) => {
@@ -263,6 +275,9 @@ function createKeyHandler(
       return undefined;
     }
     if (!editableAllowed && isEditableTarget(target)) {
+      return undefined;
+    }
+    if (!dialogAllowed && crossesDialogBoundary(target, keyTarget)) {
       return undefined;
     }
     callback(evt);
@@ -283,6 +298,18 @@ function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
     return !NON_EDITABLE_INPUT_TYPES.includes(type);
   }
   return false;
+}
+
+function crossesDialogBoundary(target, keyTarget) {
+  if (target.nodeType !== 1) {
+    // Not an element. Most likely a document node. The dialog search
+    // does not apply.
+    return false;
+  }
+  // Check if somewhere between `keyTarget` and `target` there's a
+  // dialog boundary.
+  const dialog = target.closest('dialog,[role="dialog"]');
+  return dialog && keyTarget !== dialog && keyTarget.contains(dialog);
 }
 
 /**

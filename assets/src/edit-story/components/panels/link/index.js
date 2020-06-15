@@ -39,7 +39,7 @@ import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { useCanvas } from '../../canvas';
-import { ReactComponent as Close } from '../../../icons/close_icon.svg';
+import { Close } from '../../../icons';
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -67,9 +67,9 @@ const CloseIcon = styled(Close)`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const selectedElement = selectedElements[0];
   const defaultLink = useMemo(
@@ -166,6 +166,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           }
           value={link.url || ''}
           clear
+          aria-label={__('Edit: Element link', 'web-stories')}
         />
       </Row>
 
@@ -177,6 +178,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               handleChange({ desc: value }, !value /* submit */)
             }
             value={link.desc || ''}
+            aria-label={__('Edit: Link description', 'web-stories')}
           />
         </Row>
       )}

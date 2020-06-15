@@ -23,12 +23,15 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { BUTTON_TYPES, APP_ROUTES } from '../../constants';
+import { BUTTON_TYPES } from '../../constants';
 import { BookmarkChip, Button } from '../../components';
+import { parentRoute } from '../../app/router/route';
+import { TypographyPresets } from '../typography';
 
 const Nav = styled.nav`
   ${({ theme }) => `
@@ -42,21 +45,17 @@ const Nav = styled.nav`
   width: 100%;
   height: ${theme.navBar.height}px;
 
-  padding: 0 ${theme.pageGutter.large.desktop}px;
+  padding: 0 ${theme.detailViewContentGutter.desktop}px;
 
   @media ${theme.breakpoint.tablet} {
-    padding: 0 ${theme.pageGutter.large.tablet}px;
+    padding: 0 ${theme.detailViewContentGutter.tablet}px;
   }
 
   @media ${theme.breakpoint.smallDisplayPhone} {
     flex-wrap: wrap;
-    padding: 0 ${theme.pageGutter.small.min}px;
+    padding: 0 ${theme.detailViewContentGutter.min}px;
   }
   `}
-`;
-
-const ActionLink = styled(Button)`
-  padding: 0 24px;
 `;
 
 const Container = styled.div`
@@ -69,31 +68,34 @@ const BookmarkToggle = styled(BookmarkChip)`
 `;
 
 const CloseLink = styled.a`
+  ${TypographyPresets.Medium};
   ${({ theme }) => `
-    font-family: ${theme.fonts.body1.family};
-    font-size: ${theme.fonts.body1.size}px;
-    font-weight: ${theme.fonts.body1.weight};
-    line-height: ${theme.fonts.body1.lineHeight}px;
-    letter-spacing: ${theme.fonts.body1.letterSpacing}em;
     text-decoration: none;
+    font-weight: ${theme.typography.weight.bold};
     color: ${theme.colors.gray700};
   `}
 `;
+const CapitalizedButton = styled(Button)`
+  text-transform: uppercase;
+`;
 
-export function TemplateNavBar() {
+export function TemplateNavBar({ handleCta, handleBookmarkClick }) {
   return (
     <Nav>
       <Container>
-        <CloseLink href={`#${APP_ROUTES.TEMPLATES_GALLERY}`}>
-          {__('Close', 'web-stories')}
-        </CloseLink>
+        <CloseLink href={parentRoute()}>{__('Close', 'web-stories')}</CloseLink>
       </Container>
       <Container>
-        <BookmarkToggle />
-        <ActionLink type={BUTTON_TYPES.CTA} href={'#'} isLink={true}>
-          {__('USE TEMPLATE', 'web-stories')}
-        </ActionLink>
+        {handleBookmarkClick && <BookmarkToggle />}
+        <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
+          {__('use template', 'web-stories')}
+        </CapitalizedButton>
       </Container>
     </Nav>
   );
 }
+
+TemplateNavBar.propTypes = {
+  handleBookmarkClick: PropTypes.func,
+  handleCta: PropTypes.func.isRequired,
+};

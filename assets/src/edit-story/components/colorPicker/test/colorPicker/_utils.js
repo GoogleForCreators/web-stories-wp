@@ -54,7 +54,6 @@ function arrange(customProps = {}) {
   const getSolidButton = () => queryByLabelText(/solid pattern/i);
   const getLinearButton = () => queryByLabelText(/linear gradient pattern/i);
   const getRadialButton = () => queryByLabelText(/radial gradient pattern/i);
-  const getConicButton = () => queryByLabelText(/conic gradient pattern/i);
   const getCloseButton = () => queryByLabelText(/close/i);
   const getEditableHexElement = () => queryByLabelText(/edit hex/i);
   const getEditableAlphaElement = () => queryByLabelText(/edit opacity/i);
@@ -78,7 +77,6 @@ function arrange(customProps = {}) {
     getSolidButton,
     getLinearButton,
     getRadialButton,
-    getConicButton,
     getCloseButton,
     getEditableHexElement,
     getEditableAlphaElement,

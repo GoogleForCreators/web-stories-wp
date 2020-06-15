@@ -25,10 +25,10 @@ describe('useColor({ action:"setToGradient" })', () => {
 
     const pattern = { color: { r: 255, g: 0, b: 0, a: 1 } };
 
-    // Initially load as conic gradient
+    // Initially load as radial gradient
     load(pattern);
 
-    const result = setToGradient('conic');
+    const result = setToGradient('radial');
 
     expect(result).toMatchObject({
       currentColor: { r: 255, g: 0, b: 0, a: 1 },
@@ -36,7 +36,7 @@ describe('useColor({ action:"setToGradient" })', () => {
         { color: { r: 255, g: 0, b: 0, a: 1 }, position: 0 },
         { color: { r: 255, g: 0, b: 0, a: 1 }, position: 1 },
       ],
-      type: 'conic',
+      type: 'radial',
     });
   });
 
@@ -51,7 +51,7 @@ describe('useColor({ action:"setToGradient" })', () => {
       ],
     };
 
-    // Initially load as conic gradient as select stop 1
+    // Initially load as linear gradient as select stop 1
     load(pattern);
     selectStop(1);
 

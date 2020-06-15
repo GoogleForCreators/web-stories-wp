@@ -25,13 +25,15 @@ import { useEffect, useRef, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { TypographyPresets } from '../typography';
+
 const ScrollMessage = styled.div`
+  ${TypographyPresets.Small};
   width: 100%;
   margin: 40px auto;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size}px;
-  font-weight: ${({ theme }) => theme.fonts.body2.weight};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight}px;
   text-align: center;
   color: ${({ theme }) => theme.colors.gray500};
 `;

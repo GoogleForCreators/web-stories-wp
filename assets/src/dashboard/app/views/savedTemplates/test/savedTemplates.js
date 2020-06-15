@@ -22,8 +22,12 @@
  */
 import { fireEvent } from '@testing-library/react';
 import { SavedTemplatesContent, SavedTemplatesHeader } from '../index';
-import { renderWithTheme } from '../../../../testUtils';
-import { STORY_SORT_OPTIONS, VIEW_STYLE } from '../../../../constants';
+import { renderWithThemeAndFlagsProvider } from '../../../../testUtils';
+import {
+  STORY_SORT_OPTIONS,
+  VIEW_STYLE,
+  SAVED_TEMPLATES_STATUSES,
+} from '../../../../constants';
 import LayoutProvider from '../../../../components/layout/provider';
 
 const fakeStories = [
@@ -64,9 +68,10 @@ describe('<SavedTemplates />', function () {
   });
 
   it('should render with the correct count label and search keyword.', function () {
-    const { getByPlaceholderText, getByText } = renderWithTheme(
+    const { getByPlaceholderText, getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <SavedTemplatesHeader
+          filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
@@ -75,17 +80,19 @@ describe('<SavedTemplates />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
     expect(getByPlaceholderText('Search Templates').value).toBe('Harry Potter');
-    expect(getByText('3 total templates')).toBeInTheDocument();
+    expect(getByText('3 results')).toBeInTheDocument();
   });
 
   it('should call the set keyword function when new text is searched', function () {
     const setKeywordFn = jest.fn();
-    const { getByPlaceholderText } = renderWithTheme(
+    const { getByPlaceholderText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <SavedTemplatesHeader
+          filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: setKeywordFn }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
@@ -94,7 +101,8 @@ describe('<SavedTemplates />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
     fireEvent.change(getByPlaceholderText('Search Templates'), {
       target: { value: 'Hermione Granger' },
@@ -104,27 +112,29 @@ describe('<SavedTemplates />', function () {
 
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithTheme(
+    const { getAllByText, getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <SavedTemplatesHeader
+          filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
-          sort={{ value: STORY_SORT_OPTIONS.NAME, set: setSortFn }}
+          sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
-    fireEvent.click(getAllByText('Name')[0].parentElement);
+    fireEvent.click(getAllByText('Created by')[0].parentElement);
     fireEvent.click(getByText('Last modified'));
 
     expect(setSortFn).toHaveBeenCalledWith('modified');
   });
 
   it('should render the content grid with the correct story count.', function () {
-    const { getAllByText } = renderWithTheme(
+    const { getAllByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <SavedTemplatesContent
           stories={fakeStories}
@@ -136,7 +146,8 @@ describe('<SavedTemplates />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
 
     expect(getAllByText('Use template')).toHaveLength(fakeStories.length);

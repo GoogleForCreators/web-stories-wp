@@ -29,8 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DefaultImageSvg } from '../../icons/default_image.svg';
-import { ReactComponent as EditPencilSvg } from '../../icons/edit_pencil.svg';
+import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
 import { useMediaPicker } from '../mediaPicker';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -47,14 +46,14 @@ const Container = styled.div`
   ${({ circle }) => circle && 'border-radius: 50%;'}
 `;
 
-const DefaultImage = styled(DefaultImageSvg)`
+const DefaultImage = styled(DefaultImageIcon)`
   width: 100%;
   height: 100%;
   display: block;
   padding: ${({ size }) => (size ? size * 0.2 : 18)}px;
 `;
 
-const EditIcon = styled(EditPencilSvg)`
+const EditIcon = styled(EditPencil)`
   width: 100%;
   height: 100%;
   display: block;
@@ -166,7 +165,7 @@ function MediaInput({
         <DefaultImage size={size} />
       )}
       {loading && <LoadingDots />}
-      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={title}>
+      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={ariaLabel}>
         <EditIcon />
       </EditBtn>
     </Container>
@@ -182,7 +181,7 @@ MediaInput.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.number,
   circle: PropTypes.bool,
-  ariaLabel: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
@@ -196,7 +195,6 @@ MediaInput.defaultProps = {
   flexBasis: 100,
   textCenter: false,
   circle: false,
-  ariaLabel: __('Standard input', 'web-stories'),
   size: null,
   type: 'image',
   buttonInsertText: __('Choose an image', 'web-stories'),

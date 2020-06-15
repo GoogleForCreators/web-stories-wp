@@ -17,20 +17,31 @@
 /**
  * WordPress dependencies
  */
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
-import { InfiniteScroller, Layout } from '../../../components';
+import {
+  InfiniteScroller,
+  Layout,
+  StandardViewContentGutter,
+} from '../../../components';
+import {
+  DASHBOARD_VIEWS,
+  SAVED_TEMPLATES_STATUSES,
+  STORY_SORT_MENU_ITEMS,
+} from '../../../constants';
+import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import useStoryView, {
+  FilterPropTypes,
   PagePropTypes,
   SearchPropTypes,
   SortPropTypes,
@@ -41,24 +52,17 @@ import { StoriesPropType } from '../../../types';
 import { reshapeTemplateObject } from '../../api/useTemplateApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
-import {
-  BodyViewOptions,
-  BodyWrapper,
-  PageHeading,
-  StoryGridView,
-} from '../shared';
+import { BodyViewOptions, PageHeading } from '../shared';
+import SavedTemplatesGridView from './savedTemplatesGridView';
 
-function Header({ search, stories, view, sort }) {
-  const listBarLabel = sprintf(
-    /* translators: %s: number of templates */
-    _n(
-      '%s total template',
-      '%s total templates',
-      stories.length,
-      'web-stories'
-    ),
-    stories.length
-  );
+function Header({ filter, search, sort, stories, view }) {
+  const resultsLabel = useDashboardResultsLabel({
+    isActiveSearch: Boolean(search.keyword),
+    currentFilter: filter.value,
+    totalResults: stories.length,
+    view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
+  });
+
   return (
     <Layout.Squishable>
       <PageHeading
@@ -69,9 +73,10 @@ function Header({ search, stories, view, sort }) {
         typeaheadValue={search.keyword}
       />
       <BodyViewOptions
-        listBarLabel={listBarLabel}
+        resultsLabel={resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
+        pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={sort.set}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
@@ -88,20 +93,15 @@ function Content({ stories, view, page }) {
       <FontProvider>
         <TransformProvider>
           <UnitsProvider pageSize={view.pageSize}>
-            <BodyWrapper>
-              <StoryGridView
-                stories={stories}
-                centerActionLabel={__('View', 'web-stories')}
-                bottomActionLabel={__('Use template', 'web-stories')}
-                isTemplate
-              />
+            <StandardViewContentGutter>
+              <SavedTemplatesGridView view={view} stories={stories} />
               <InfiniteScroller
                 allDataLoadedMessage={__('No more templates.', 'web-stories')}
                 isLoading={false}
                 canLoadMore={false}
                 onLoadMore={page.requestNextPage}
               />
-            </BodyWrapper>
+            </StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>
@@ -111,37 +111,34 @@ function Content({ stories, view, page }) {
 
 function SavedTemplates() {
   const config = useConfig();
-  const { search, view, page, sort } = useStoryView({
-    filters: [],
+  const { filter, page, sort, search, view } = useStoryView({
+    filters: SAVED_TEMPLATES_STATUSES,
     totalPages: 1,
   });
 
-  /**
-   * A placeholder to just have template data in the view for now.
-   */
-  const mockTemplates = useRef(
-    getAllTemplates(config).map(reshapeTemplateObject(false))
-  );
+  const [mockTemplates, setMockTemplates] = useState([]);
+
+  useEffect(() => {
+    const templates = getAllTemplates(config).map(reshapeTemplateObject(false));
+    setMockTemplates(templates);
+  }, [config]);
 
   return (
     <Layout.Provider>
       <Header
+        filter={filter}
         view={view}
         search={search}
-        stories={mockTemplates.current}
+        stories={mockTemplates}
         sort={sort}
       />
-      <Content
-        view={view}
-        page={page}
-        sort={sort}
-        stories={mockTemplates.current}
-      />
+      <Content view={view} page={page} sort={sort} stories={mockTemplates} />
     </Layout.Provider>
   );
 }
 
 Header.propTypes = {
+  filter: FilterPropTypes.isRequired,
   view: ViewPropTypes.isRequired,
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,

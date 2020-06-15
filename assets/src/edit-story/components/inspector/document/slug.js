@@ -47,12 +47,14 @@ const BoxedTextInput = styled(TextInput)`
 `;
 
 function SlugPanel() {
-  const {
-    state: {
-      story: { slug, link, permalinkConfig },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { slug, link, permalinkConfig, updateStory } = useStory(
+    ({
+      state: {
+        story: { slug, link, permalinkConfig },
+      },
+      actions: { updateStory },
+    }) => ({ slug, link, permalinkConfig, updateStory })
+  );
   const handleChangeValue = useCallback(
     (value) => {
       updateStory({
@@ -74,6 +76,7 @@ function SlugPanel() {
           value={slug}
           onChange={handleChangeValue}
           placeholder={__('Enter slug', 'web-stories')}
+          aria-label={__('Edit: URL slug', 'web-stories')}
         />
       </Row>
       <HelperText>

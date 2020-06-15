@@ -21,13 +21,103 @@ import storyReducer, { ACTION_TYPES } from '../stories';
 
 describe('storyReducer', () => {
   const initialState = {
-    isError: false,
+    error: {},
     isLoading: false,
     stories: {},
     storiesOrderById: [],
-    totalStories: null,
+    totalStoriesByStatus: {},
     totalPages: null,
   };
+
+  it(`should update stories state when ${ACTION_TYPES.TRASH_STORY} is called`, () => {
+    const result = storyReducer(
+      {
+        ...initialState,
+        storiesOrderById: [94, 65, 78, 12],
+        stories: {
+          94: { id: 94, status: 'draft', title: 'my test story 1' },
+          65: { id: 65, status: 'publish', title: 'my test story 2' },
+          78: { id: 78, status: 'draft', title: 'my test story 3' },
+          12: { id: 12, status: 'draft', title: 'my test story 4' },
+        },
+        totalStoriesByStatus: {
+          all: 44,
+          draft: 40,
+          publish: 4,
+        },
+        totalPages: 4,
+      },
+      {
+        type: ACTION_TYPES.TRASH_STORY,
+        payload: {
+          id: 65,
+          storyStatus: 'publish',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {},
+      storiesOrderById: [94, 78, 12],
+      stories: {
+        94: { id: 94, status: 'draft', title: 'my test story 1' },
+        78: { id: 78, status: 'draft', title: 'my test story 3' },
+        12: { id: 12, status: 'draft', title: 'my test story 4' },
+      },
+      totalStoriesByStatus: {
+        all: 43,
+        draft: 40,
+        publish: 3,
+      },
+      totalPages: 4,
+    });
+  });
+
+  it(`should update stories state when ${ACTION_TYPES.DUPLICATE_STORY} is called`, () => {
+    const result = storyReducer(
+      {
+        ...initialState,
+        storiesOrderById: [94, 65, 78, 12],
+        stories: {
+          94: { id: 94, status: 'draft', title: 'my test story 1' },
+          65: { id: 65, status: 'publish', title: 'my test story 2' },
+          78: { id: 78, status: 'draft', title: 'my test story 3' },
+          12: { id: 12, status: 'draft', title: 'my test story 4' },
+        },
+        totalStoriesByStatus: {
+          all: 44,
+          draft: 40,
+          publish: 4,
+        },
+        totalPages: 4,
+      },
+      {
+        type: ACTION_TYPES.DUPLICATE_STORY,
+        payload: { id: 95, status: 'draft', title: 'my test story 1 - copy' },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {},
+      storiesOrderById: [95, 94, 65, 78, 12],
+      stories: {
+        94: { id: 94, status: 'draft', title: 'my test story 1' },
+        95: { id: 95, status: 'draft', title: 'my test story 1 - copy' },
+        65: { id: 65, status: 'publish', title: 'my test story 2' },
+        78: { id: 78, status: 'draft', title: 'my test story 3' },
+        12: { id: 12, status: 'draft', title: 'my test story 4' },
+      },
+      totalStoriesByStatus: {
+        all: 45,
+        draft: 41,
+        publish: 4,
+      },
+      totalPages: 4,
+    });
+  });
+
   it(`should update stories state when ${ACTION_TYPES.FETCH_STORIES_SUCCESS} is called`, () => {
     const result = storyReducer(initialState, {
       type: ACTION_TYPES.FETCH_STORIES_SUCCESS,
@@ -35,26 +125,34 @@ describe('storyReducer', () => {
         page: 1,
         stories: [
           { id: 94, status: 'draft', title: 'my test story 1' },
-          { id: 65, status: 'published', title: 'my test story 2' },
+          { id: 65, status: 'publish', title: 'my test story 2' },
           { id: 78, status: 'draft', title: 'my test story 3' },
           { id: 12, status: 'draft', title: 'my test story 4' },
         ],
-        totalStories: 33,
+        totalStoriesByStatus: {
+          all: 44,
+          draft: 40,
+          publish: 4,
+        },
         totalPages: 4,
       },
     });
 
     expect(result).toMatchObject({
       ...initialState,
-      isError: false,
+      error: {},
       storiesOrderById: [94, 65, 78, 12],
       stories: {
         94: { id: 94, status: 'draft', title: 'my test story 1' },
-        65: { id: 65, status: 'published', title: 'my test story 2' },
+        65: { id: 65, status: 'publish', title: 'my test story 2' },
         78: { id: 78, status: 'draft', title: 'my test story 3' },
         12: { id: 12, status: 'draft', title: 'my test story 4' },
       },
-      totalStories: 33,
+      totalStoriesByStatus: {
+        all: 44,
+        draft: 40,
+        publish: 4,
+      },
       totalPages: 4,
       allPagesFetched: false,
     });
@@ -69,11 +167,15 @@ describe('storyReducer', () => {
           page: 2,
           stories: [
             { id: 94, status: 'draft', title: 'my test story 1' },
-            { id: 65, status: 'published', title: 'my test story 2' },
+            { id: 65, status: 'publish', title: 'my test story 2' },
             { id: 78, status: 'draft', title: 'my test story 3' },
             { id: 12, status: 'draft', title: 'my test story 4' },
           ],
-          totalStories: 8,
+          totalStoriesByStatus: {
+            all: 18,
+            draft: 14,
+            publish: 4,
+          },
           totalPages: 2,
         },
       }
@@ -84,11 +186,15 @@ describe('storyReducer', () => {
       storiesOrderById: [55, 99, 10, 3, 94, 65, 78, 12],
       stories: {
         94: { id: 94, status: 'draft', title: 'my test story 1' },
-        65: { id: 65, status: 'published', title: 'my test story 2' },
+        65: { id: 65, status: 'publish', title: 'my test story 2' },
         78: { id: 78, status: 'draft', title: 'my test story 3' },
         12: { id: 12, status: 'draft', title: 'my test story 4' },
       },
-      totalStories: 8,
+      totalStoriesByStatus: {
+        all: 18,
+        draft: 14,
+        publish: 4,
+      },
       totalPages: 2,
       allPagesFetched: true,
     });
@@ -109,18 +215,62 @@ describe('storyReducer', () => {
     });
   });
 
-  it(`should update isError when ${ACTION_TYPES.FETCH_STORIES_FAILURE} is called`, () => {
+  it(`should update isLoading when ${ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE} is called`, () => {
     const result = storyReducer(
       { ...initialState },
       {
-        type: ACTION_TYPES.FETCH_STORIES_FAILURE,
+        type: ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE,
         payload: true,
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      isError: true,
+      isLoading: true,
+    });
+  });
+
+  it(`should update error to empty object when ${ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {},
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.FETCH_STORIES_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.FETCH_STORIES_FAILURE,
+        payload: { message: 'my error message', code: 'my_error_code' },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: { message: 'my error message', code: 'my_error_code' },
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
+        payload: { message: 'my error message', code: 'my_error_code' },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: { message: 'my error message', code: 'my_error_code' },
     });
   });
 
@@ -130,14 +280,14 @@ describe('storyReducer', () => {
         ...initialState,
         stories: {
           94: { id: 94, status: 'draft', title: 'my test story 1' },
-          65: { id: 65, status: 'published', title: 'my test story 2' },
+          65: { id: 65, status: 'publish', title: 'my test story 2' },
           78: { id: 78, status: 'draft', title: 'my test story 3' },
           12: { id: 12, status: 'draft', title: 'my test story 4' },
         },
       },
       {
         type: ACTION_TYPES.UPDATE_STORY,
-        payload: { id: 65, status: 'published', title: 'new title for story' },
+        payload: { id: 65, status: 'publish', title: 'new title for story' },
       }
     );
 
@@ -145,7 +295,7 @@ describe('storyReducer', () => {
       ...initialState,
       stories: {
         94: { id: 94, status: 'draft', title: 'my test story 1' },
-        65: { id: 65, status: 'published', title: 'new title for story' },
+        65: { id: 65, status: 'publish', title: 'new title for story' },
         78: { id: 78, status: 'draft', title: 'my test story 3' },
         12: { id: 12, status: 'draft', title: 'my test story 4' },
       },

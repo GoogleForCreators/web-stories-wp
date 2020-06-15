@@ -29,13 +29,9 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
-import { useMedia } from '../media';
 import createError from '../../utils/createError';
 
-function useUploader(refreshLibrary = true) {
-  const {
-    actions: { resetWithFetch },
-  } = useMedia();
+function useUploader() {
   const {
     actions: { uploadMedia },
   } = useAPI();
@@ -67,6 +63,11 @@ function useUploader(refreshLibrary = true) {
     [maxUpload]
   );
 
+  /**
+   * Uploads a file.
+   *
+   * @param {Object} file File object.
+   */
   const uploadFile = (file) => {
     if (!hasUploadMediaAction) {
       const message = __(
@@ -114,13 +115,10 @@ function useUploader(refreshLibrary = true) {
 
     const additionalData = {
       post: storyId,
+      media_source: 'editor',
     };
 
-    const promise = uploadMedia(file, additionalData);
-    if (refreshLibrary) {
-      promise.finally(resetWithFetch);
-    }
-    return promise;
+    return uploadMedia(file, additionalData);
   };
 
   return {

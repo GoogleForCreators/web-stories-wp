@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import { useContext } from 'react';
 import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
 import { SCROLLBAR_WIDTH } from './constants';
+import { identity, useContextSelector } from './utils/context';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -76,8 +76,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export function useTheme() {
-  return useContext(ThemeContext);
+export function useTheme(selector) {
+  return useContextSelector(ThemeContext, selector ?? identity);
 }
 
 const theme = {
@@ -135,6 +135,12 @@ const theme = {
     },
   },
   fonts: {
+    title: {
+      family: 'Roboto',
+      size: '18px',
+      lineHeight: '24px',
+      weight: 'bold',
+    },
     body1: {
       family: 'Roboto',
       size: '16px',
@@ -159,11 +165,23 @@ const theme = {
       lineHeight: '18px',
       weight: '400',
     },
+    input: {
+      family: 'Roboto',
+      size: '15px',
+      lineHeight: '18px',
+      weight: '400',
+    },
     duration: {
       family: 'Roboto',
       size: '12px',
       lineHeight: '1',
       weight: '500',
+    },
+    description: {
+      family: 'Roboto',
+      weight: 'normal',
+      size: '13px',
+      lineHeight: '16px',
     },
   },
 };

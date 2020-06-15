@@ -31,6 +31,26 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 				'role' => 'administrator',
 			]
 		);
+
+		$post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
+
+		$factory->post->create_many(
+			7,
+			[
+				'post_status' => 'publish',
+				'post_author' => self::$user_id,
+				'post_type'   => $post_type,
+			]
+		);
+
+		$factory->post->create_many(
+			3,
+			[
+				'post_status' => 'draft',
+				'post_author' => self::$user_id,
+				'post_type'   => $post_type,
+			]
+		);
 	}
 
 	public static function wpTearDownAfterClass() {
@@ -61,6 +81,29 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertCount( 2, $routes['/wp/v2/web-story'] );
 	}
 
+
+	public function test_get_items() {
+		wp_set_current_user( self::$user_id );
+		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request->set_param( 'author', self::$user_id );
+		$request->set_param( 'status', [ 'draft' ] );
+		$request->set_param( 'context', 'edit' );
+		$response       = rest_get_server()->dispatch( $request );
+		$headers        = $response->get_headers();
+		$statues        = $headers['X-WP-TotalByStatus'];
+		$statues_decode = json_decode( $statues, true );
+
+		$this->assertArrayHasKey( 'all', $statues_decode );
+		$this->assertArrayHasKey( 'publish', $statues_decode );
+		$this->assertArrayHasKey( 'draft', $statues_decode );
+
+		$this->assertEquals( 10, $statues_decode['all'] );
+		$this->assertEquals( 7, $statues_decode['publish'] );
+		$this->assertEquals( 3, $statues_decode['draft'] );
+
+		$this->assertEquals( 3, $headers['X-WP-Total'] );
+	}
+
 	public function test_get_item_schema() {
 		$request  = new WP_REST_Request( 'OPTIONS', '/wp/v2/web-story' );
 		$response = rest_get_server()->dispatch( $request );
@@ -86,7 +129,10 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 
 		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
 
-		$this->assertEquals( $orderby, "wp_posts.post_author = '" . self::$user_id . "' DESC, wp_posts.post_author DESC" );
+		$this->assertEquals( $orderby, "wp_posts.post_author = '" . self::$user_id . "' DESC, wp_posts.post_author DESC, wp_posts.post_modified DESC" );
+
+		// Registered during init.
+		unregister_block_type( 'web-stories/embed' );
 	}
 
 	public function test_filter_posts_orderby_irrelevant_query() {
@@ -114,5 +160,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
 		$this->assertEquals( $orderby, $initial_orderby );
 
+		// Registered during init.
+		unregister_block_type( 'web-stories/embed' );
 	}
 }

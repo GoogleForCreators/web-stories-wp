@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -48,13 +48,28 @@ function CanvasProvider({ children }) {
     setEditingElementWithState,
     setEditingElementWithoutState,
     clearEditing,
+    getNodeForElement,
     setNodeForElement,
   } = useEditingElement();
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { toggleElementInSelection, setSelectedElementsById },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    toggleElementInSelection,
+    setSelectedElementsById,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementIds },
+      actions: { toggleElementInSelection, setSelectedElementsById },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        toggleElementInSelection,
+        setSelectedElementsById,
+      };
+    }
+  );
 
   const handleSelectElement = useCallback(
     (elId, evt) => {
@@ -74,8 +89,8 @@ function CanvasProvider({ children }) {
       } else {
         setSelectedElementsById({ elementIds: [elId] });
       }
-      evt.currentTarget.focus();
-      if (currentPage?.backgroundElementId !== elId) {
+      evt.currentTarget.focus({ preventScroll: true });
+      if (currentPage?.elements[0].id !== elId) {
         evt.stopPropagation();
       }
 
@@ -94,7 +109,7 @@ function CanvasProvider({ children }) {
     },
     [
       editingElement,
-      currentPage,
+      currentPage?.elements,
       clearEditing,
       toggleElementInSelection,
       setSelectedElementsById,
@@ -104,7 +119,7 @@ function CanvasProvider({ children }) {
   const selectIntersection = useCallback(
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const newSelectedElementIds = currentPage.elements
-        .filter(({ isFill, isBackground }) => !isFill && !isBackground)
+        .filter(({ isBackground }) => !isBackground)
         .filter(({ x, y, width, height }) => {
           return (
             x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
@@ -135,30 +150,51 @@ function CanvasProvider({ children }) {
 
   useCanvasCopyPaste();
 
-  const state = {
-    state: {
+  const state = useMemo(
+    () => ({
+      state: {
+        pageContainer,
+        fullbleedContainer,
+        nodesById,
+        editingElement,
+        editingElementState,
+        isEditing: Boolean(editingElement),
+        lastSelectionEvent,
+        pageSize,
+      },
+      actions: {
+        setPageContainer,
+        setFullbleedContainer,
+        getNodeForElement,
+        setNodeForElement,
+        setEditingElement: setEditingElementWithoutState,
+        setEditingElementWithState,
+        clearEditing,
+        handleSelectElement,
+        selectIntersection,
+        setPageSize,
+      },
+    }),
+    [
       pageContainer,
       fullbleedContainer,
       nodesById,
       editingElement,
       editingElementState,
-      isEditing: Boolean(editingElement),
       lastSelectionEvent,
       pageSize,
-    },
-    actions: {
       setPageContainer,
       setFullbleedContainer,
+      getNodeForElement,
       setNodeForElement,
-      setEditingElement: setEditingElementWithoutState,
+      setEditingElementWithoutState,
       setEditingElementWithState,
       clearEditing,
       handleSelectElement,
       selectIntersection,
       setPageSize,
-    },
-  };
-
+    ]
+  );
   return (
     <Context.Provider value={state}>
       <UnitsProvider pageSize={pageSize}>{children}</UnitsProvider>

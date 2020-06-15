@@ -24,14 +24,17 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { ReactComponent as UndoIcon } from '../../icons/undo.svg';
-import { ReactComponent as RedoIcon } from '../../icons/redo.svg';
-import { ReactComponent as LeftArrowIcon } from '../../icons/arrow_left.svg';
-import { ReactComponent as RightArrowIcon } from '../../icons/arrow_right.svg';
-import { ReactComponent as GridViewIcon } from '../../icons/grid_view.svg';
-import { ReactComponent as KeyboardIcon } from '../../icons/keyboard.svg';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
-import { ReactComponent as EyedropperIcon } from '../../icons/eyedropper.svg';
+import {
+  Undo as UndoIcon,
+  Redo as RedoIcon,
+  ArrowLeft as ArrowLeftIcon,
+  ArrowRight as ArrowRightIcon,
+  GridView as GridViewIcon,
+  Keyboard as KeyboardIcon,
+  Close as CloseIcon,
+  Eyedropper as EyedropperIcon,
+  More as MoreIcon,
+} from '../../icons';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,
@@ -124,13 +127,13 @@ export const Plain = styled(Base)`
 
 export const LeftArrow = (props) => (
   <StyledButtonWithOpacity {...props}>
-    <LeftArrowIcon />
+    <ArrowLeftIcon />
   </StyledButtonWithOpacity>
 );
 
 export const RightArrow = (props) => (
   <StyledButtonWithOpacity {...props}>
-    <RightArrowIcon />
+    <ArrowRightIcon />
   </StyledButtonWithOpacity>
 );
 
@@ -169,3 +172,9 @@ export const Eyedropper = (props) => (
     <EyedropperIcon />
   </StyledButton>
 );
+
+export const More = forwardRef((props, ref) => (
+  <StyledButton {...props} ref={ref}>
+    <MoreIcon />
+  </StyledButton>
+));

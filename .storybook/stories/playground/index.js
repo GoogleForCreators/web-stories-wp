@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { FlagsProvider } from 'flagged';
+
+/**
  * Internal dependencies
  */
 import App from '../../../assets/src/edit-story/app';
@@ -55,6 +60,8 @@ const config = {
   },
 };
 
-export const _default = () => {
-  return <App config={config} />;
-};
+export const _default = () => (
+  <FlagsProvider features={{}}>
+    <App config={config} />
+  </FlagsProvider>
+);

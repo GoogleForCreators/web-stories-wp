@@ -20,6 +20,9 @@
 import groupBy from '../../utils/groupBy';
 
 export const ACTION_TYPES = {
+  CREATING_STORY_FROM_TEMPLATE: 'creating_story_from_template',
+  CREATE_STORY_FROM_TEMPLATE_SUCCESS: 'create_story_from_template_success',
+  CREATE_STORY_FROM_TEMPLATE_FAILURE: 'create_story_from_template_failure',
   LOADING_STORIES: 'loading_stories',
   FETCH_STORIES_SUCCESS: 'fetch_stories_success',
   FETCH_STORIES_FAILURE: 'fetch_stories_failure',
@@ -29,27 +32,38 @@ export const ACTION_TYPES = {
 };
 
 export const defaultStoriesState = {
-  isError: false,
+  error: {},
   isLoading: false,
   stories: {},
   storiesOrderById: [],
-  totalStories: null,
+  totalStoriesByStatus: {},
   totalPages: null,
 };
 
 function storyReducer(state, action) {
   switch (action.type) {
-    case ACTION_TYPES.LOADING_STORIES: {
+    case ACTION_TYPES.LOADING_STORIES:
+    case ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE: {
       return {
         ...state,
         isLoading: action.payload,
       };
     }
-    case ACTION_TYPES.FETCH_STORIES_FAILURE:
+
+    case ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE:
+    case ACTION_TYPES.FETCH_STORIES_FAILURE: {
       return {
         ...state,
-        isError: action.payload,
+        error: action.payload,
       };
+    }
+
+    case ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS: {
+      return {
+        ...state,
+        error: {},
+      };
+    }
 
     case ACTION_TYPES.UPDATE_STORY:
       return {
@@ -66,7 +80,12 @@ function storyReducer(state, action) {
         storiesOrderById: state.storiesOrderById.filter(
           (id) => id !== action.payload.id
         ),
-        totalStories: state.totalStories - 1,
+        totalStoriesByStatus: {
+          ...state.totalStoriesByStatus,
+          all: state.totalStoriesByStatus.all - 1,
+          [action.payload.storyStatus]:
+            state.totalStoriesByStatus[action.payload.storyStatus] - 1,
+        },
         stories: Object.keys(state.stories).reduce((memo, storyId) => {
           if (parseInt(storyId) !== action.payload.id) {
             memo[storyId] = state.stories[storyId];
@@ -79,7 +98,12 @@ function storyReducer(state, action) {
       return {
         ...state,
         storiesOrderById: [action.payload.id, ...state.storiesOrderById],
-        totalStories: state.totalStories + 1,
+        totalStoriesByStatus: {
+          ...state.totalStoriesByStatus,
+          all: state.totalStoriesByStatus.all + 1,
+          [action.payload.status]:
+            state.totalStoriesByStatus[action.payload.status] + 1,
+        },
         stories: {
           ...state.stories,
           [action.payload.id]: action.payload,
@@ -106,11 +130,11 @@ function storyReducer(state, action) {
 
       return {
         ...state,
-        isError: false,
+        error: {},
         storiesOrderById: uniqueStoryIds,
         stories: { ...state.stories, ...groupBy(action.payload.stories, 'id') },
         totalPages: action.payload.totalPages,
-        totalStories: action.payload.totalStories,
+        totalStoriesByStatus: action.payload.totalStoriesByStatus,
         allPagesFetched: action.payload.page >= action.payload.totalPages,
       };
     }

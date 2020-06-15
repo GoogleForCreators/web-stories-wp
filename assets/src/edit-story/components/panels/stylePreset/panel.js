@@ -38,13 +38,29 @@ import Resize from './resize';
 
 function StylePresetPanel() {
   const {
-    state: {
-      selectedElementIds,
-      selectedElements,
-      story: { stylePresets },
-    },
-    actions: { updateStory, updateElementsById },
-  } = useStory();
+    selectedElementIds,
+    selectedElements,
+    stylePresets,
+    updateStory,
+    updateElementsById,
+  } = useStory(
+    ({
+      state: {
+        selectedElementIds,
+        selectedElements,
+        story: { stylePresets },
+      },
+      actions: { updateStory, updateElementsById },
+    }) => {
+      return {
+        selectedElementIds,
+        selectedElements,
+        stylePresets,
+        updateStory,
+        updateElementsById,
+      };
+    }
+  );
 
   const { fillColors, textColors, textStyles } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
@@ -191,7 +207,7 @@ function StylePresetPanel() {
     }
   };
 
-  const rowHeight = 35;
+  const rowHeight = 40;
 
   // Assume at least 2 rows if there's at least 1 preset:
   // One for presets, one for the label.
@@ -200,7 +216,7 @@ function StylePresetPanel() {
       ? Math.max(2, colorPresets.length / COLOR_PRESETS_PER_ROW)
       : 0;
   const styleRows =
-    textStyles.length > 0
+    textStyles.length > 0 && isText
       ? Math.max(2, textStyles.length / STYLE_PRESETS_PER_ROW)
       : 0;
   const initialHeight = (colorRows + styleRows) * rowHeight;

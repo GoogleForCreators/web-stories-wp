@@ -30,12 +30,12 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
-import { useConfig } from '../';
+import { useConfig } from '../config';
 import Context from './context';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, fonts, link, users, statuses },
+    api: { stories, media, fonts, link, users },
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -103,22 +103,6 @@ function APIProvider({ children }) {
         path: `${stories}/${storyId}/autosaves`,
         data: getStorySaveData(story),
         method: 'POST',
-      });
-    },
-    [stories]
-  );
-
-  const deleteStoryById = useCallback(
-    /**
-     * Fire REST API call to delete story.
-     *
-     * @param {number}   storyId Story post id.
-     * @return {Promise} Return apiFetch promise.
-     */
-    (storyId) => {
-      return apiFetch({
-        path: `${stories}/${storyId}`,
-        method: 'DELETE',
       });
     },
     [stories]
@@ -198,6 +182,23 @@ function APIProvider({ children }) {
   );
 
   /**
+   * Delete existing media.
+   *
+   * @param  {number} mediaId
+   * @return {Promise} Media Object Promise.
+   */
+  const deleteMedia = useCallback(
+    (mediaId) => {
+      return apiFetch({
+        path: `${media}/${mediaId}`,
+        data: { force: true },
+        method: 'DELETE',
+      });
+    },
+    [media]
+  );
+
+  /**
    * Gets metadata (title, favicon, etc.) from
    * a provided URL.
    *
@@ -224,11 +225,6 @@ function APIProvider({ children }) {
     );
   }, [fonts]);
 
-  const getAllStatuses = useCallback(() => {
-    const path = addQueryArgs(statuses, { context: `edit` });
-    return apiFetch({ path });
-  }, [statuses]);
-
   const getAllUsers = useCallback(() => {
     return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
@@ -240,12 +236,11 @@ function APIProvider({ children }) {
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      deleteStoryById,
       getAllFonts,
-      getAllStatuses,
       getAllUsers,
       uploadMedia,
       updateMedia,
+      deleteMedia,
     },
   };
 

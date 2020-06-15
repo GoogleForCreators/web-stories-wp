@@ -42,14 +42,13 @@ function setupLayer({ layer }) {
   const storyContextValue = {
     state: {
       currentPage: {
-        backgroundElementId: 'foobar',
-        elements: [],
+        elements: [{ id: '123' }],
       },
       selectedElementIds: [],
     },
     actions: { setSelectedElementsById, toggleElementInSelection },
   };
-  const { getByText, container } = renderWithTheme(
+  const { container } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <Wrapper>
         <Layer layer={layer} />
@@ -59,7 +58,6 @@ function setupLayer({ layer }) {
 
   return {
     container,
-    getByText,
   };
 }
 
@@ -88,6 +86,6 @@ describe('Layer', () => {
         failureThreshold: 0.01,
         failureThresholdType: 'percent',
       });
-    });
+    }, 10000);
   });
 });

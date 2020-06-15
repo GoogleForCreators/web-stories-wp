@@ -42,7 +42,7 @@ const ActionsWrapper = styled.div`
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.fg.v7, 0.84)};
   cursor: pointer;
   padding: 12px 0px;
   line-height: 18px;
@@ -50,13 +50,15 @@ const AddColorPreset = styled.button`
 `;
 
 function ColorPresetActions({ color }) {
-  const {
-    state: {
-      selectedElements,
-      story: { stylePresets },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { selectedElements, stylePresets, updateStory } = useStory(
+    ({
+      state: {
+        selectedElements,
+        story: { stylePresets },
+      },
+      actions: { updateStory },
+    }) => ({ selectedElements, stylePresets, updateStory })
+  );
 
   const { fillColors, textColors } = stylePresets;
 
@@ -95,7 +97,7 @@ function ColorPresetActions({ color }) {
     linkRef,
     { key: ['space', 'enter'] },
     () => handleAddColorPreset(color),
-    [color]
+    [color, handleAddColorPreset]
   );
 
   return (

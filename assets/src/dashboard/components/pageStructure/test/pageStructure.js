@@ -15,13 +15,15 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { useState } from 'react';
 import { fireEvent } from '@testing-library/react';
+import { FlagsProvider } from 'flagged';
+
+/**
+ * Internal dependencies
+ */
 import { renderWithTheme } from '../../../testUtils';
 import { LeftRail } from '../index';
 import NavProvider, { NavContext } from '../../navProvider';
@@ -30,9 +32,11 @@ import { primaryPaths } from '../../../constants';
 describe('<LeftRail />', () => {
   it('should be visible by default in a regular viewport.', () => {
     const wrapper = renderWithTheme(
-      <NavProvider>
-        <LeftRail />
-      </NavProvider>
+      <FlagsProvider features={{ enableInProgressViews: false }}>
+        <NavProvider>
+          <LeftRail />
+        </NavProvider>
+      </FlagsProvider>
     );
 
     const leftRail = wrapper.getByTestId('dashboard-left-rail');
@@ -59,9 +63,11 @@ describe('<LeftRail />', () => {
       );
     };
     const wrapper = renderWithTheme(
-      <MockedNavProvider toggleSideBar={toggleSideBarFn}>
-        <LeftRail />
-      </MockedNavProvider>
+      <FlagsProvider features={{ enableInProgressViews: false }}>
+        <MockedNavProvider toggleSideBar={toggleSideBarFn}>
+          <LeftRail />
+        </MockedNavProvider>
+      </FlagsProvider>
     );
 
     expect(toggleSideBarFn).not.toHaveBeenCalled();

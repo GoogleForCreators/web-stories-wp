@@ -31,6 +31,10 @@ export const GlobalStyle = createGlobalStyle`
 	*::before {
 		box-sizing: border-box;
     }
+    
+  h1, h2, h3, h4, h5, h6, p, a {
+    margin: 0;
+  }
 `;
 
 export function useTheme() {
@@ -39,7 +43,7 @@ export function useTheme() {
 
 const themeFonts = {
   primary: "'Google Sans', sans-serif",
-  secondary: 'Roboto',
+  secondary: "'Roboto', sans-serif",
 };
 
 const colors = {
@@ -89,7 +93,6 @@ const theme = {
       borderRadius: 40,
       border: borders.gray50,
       arrowColor: colors.bluePrimary,
-      height: 48,
     },
     [DROPDOWN_TYPES.COLOR_PANEL]: {
       background: 'transparent',
@@ -97,29 +100,16 @@ const theme = {
       borderRadius: 40,
       border: borders.gray50,
       arrowColor: colors.bluePrimary,
-      height: 48,
     },
     [DROPDOWN_TYPES.MENU]: {
-      background: colors.gray25,
-      activeBackground: colors.gray25,
-      borderRadius: 4,
-      border: 'none',
-      arrowColor: colors.gray300,
-      height: 48,
-    },
-    [DROPDOWN_TYPES.TRANSPARENT_MENU]: {
       background: 'transparent',
       activeBackground: 'transparent',
-      borderRadius: 0,
-      border: 'none',
+      borderRadius: 4,
+      border: borders.transparent,
       arrowColor: colors.gray300,
-      height: 40,
     },
   },
   leftRail: {
-    border: borders.gray50,
-    contentPadding: 20,
-    inset: 8,
     logoMargin: '75px auto 20px',
   },
   text: {
@@ -142,6 +132,15 @@ const theme = {
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
+  storyPreview: {
+    shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
+    border: `1px solid ${colors.gray75}`,
+    borderRadius: 4,
+  },
+  tooltip: {
+    background: colors.gray900,
+    color: colors.white,
+  },
   navBar: {
     height: 64,
   },
@@ -151,7 +150,7 @@ const theme = {
   table: {
     headerCellPadding: 15,
     cellPadding: 15,
-    headerContentSize: 16,
+    headerContentSize: 20,
     border: borders.gray50,
   },
   cardItem: {
@@ -162,133 +161,63 @@ const theme = {
     desktopWidth: 595,
     tabletWidth: 395,
   },
-  fonts: {
-    heading1: {
-      family: themeFonts.primary,
-      size: 26,
-      minSize: 18,
-      lineHeight: 53,
-      minLineHeight: 43,
-      letterSpacing: -0.005,
-      minLetterSpacing: -0.01,
+  typography: {
+    family: { ...themeFonts },
+    weight: {
+      normal: '400',
+      light: '300',
+      bold: '500',
+      bolder: '700',
     },
-    heading3: {
-      family: themeFonts.primary,
-      size: 20,
-      lineHeight: 28,
-      letterSpacing: -0.01,
-      weight: 500,
-    },
-    heading4: {
-      family: themeFonts.primary,
-      size: 28,
-      lineHeight: 35,
-      weight: 500,
-    },
-    body1: {
-      family: themeFonts.primary,
-      size: 16,
-      weight: 500,
-      lineHeight: 22,
-      letterSpacing: 0.001,
-    },
-    body2: {
-      family: themeFonts.primary,
-      size: 14,
-      lineHeight: 22,
-      letterSpacing: 0.015,
-    },
-    tab: {
-      family: themeFonts.primary,
-      size: 16,
-      minSize: 12,
-      lineHeight: 20,
-      letterSpacing: 0.01,
-      weight: '500',
-    },
-    smallLabel: {
-      family: themeFonts.primary,
-      size: 12,
-      minSize: 10,
-      letterSpacing: '0.01em',
-    },
-    button: {
-      family: themeFonts.primary,
-      size: 14,
-      lineHeight: 20,
-      weight: '500',
-    },
-    pill: {
-      family: themeFonts.primary,
-      weight: 400,
-      size: 14,
-      lineHeight: 20,
-      letterSpacing: 0.01,
-    },
-    popoverMenu: {
-      family: themeFonts.primary,
-      size: 14,
-      lineHeight: 20,
-      weight: '400',
-      letterSpacing: 0.01,
-    },
-    dropdown: {
-      family: themeFonts.primary,
-      size: 14,
-      lineHeight: 20,
-      weight: '400',
-      letterSpacing: 0.01,
-    },
-    textInput: {
-      family: themeFonts.primary,
-      size: 13,
-      border: borders.gray100,
-      activeBorder: borders.bluePrimary,
-      weight: '400',
-      letterSpacing: 0.01,
-      padding: '1px 8px',
-    },
-    storyGridItem: {
-      family: themeFonts.primary,
-      size: 14,
-      lineHeight: 20,
-      letterSpacing: 0.01,
-    },
-    table: {
-      family: themeFonts.primary,
-      size: 14,
-      weight: 'normal',
-      letterSpacing: 0.01,
-    },
-    typeaheadInput: {
-      family: themeFonts.primary,
-      size: 14,
-      lineHeight: 20,
-      weight: '500',
-      letterSpacing: 0.01,
-    },
-    typeaheadOptions: {
-      family: themeFonts.primary,
-      size: 14,
-      lineHeight: 20,
-      weight: '400',
-      letterSpacing: 0.01,
+    presets: {
+      xxl: {
+        family: themeFonts.primary,
+        size: 32,
+        minSize: 18,
+        lineHeight: 53,
+        minLineHeight: 43,
+        letterSpacing: -0.005,
+        minLetterSpacing: -0.01,
+      },
+      xl: {
+        family: themeFonts.primary,
+        size: 28,
+        lineHeight: 35,
+        letterSpacing: -0.01,
+      },
+      l: {
+        family: themeFonts.primary,
+        size: 20,
+        lineHeight: 28,
+        letterSpacing: -0.01,
+      },
+      m: {
+        family: themeFonts.primary,
+        size: 16,
+        lineHeight: 22,
+        letterSpacing: 0.01,
+        minSize: 12,
+      },
+      s: {
+        family: themeFonts.primary,
+        size: 14,
+        lineHeight: 20,
+        letterSpacing: 0.01,
+      },
+      xs: {
+        family: themeFonts.primary,
+        size: 12,
+        minSize: 10,
+        letterSpacing: 0.01,
+      },
     },
   },
-  pageGutter: {
-    small: {
-      desktop: 20,
-      min: 10,
-      largeDisplayPhone: 10,
-      smallDisplayPhone: 10,
-    },
-    // specific to detail template
-    large: {
-      desktop: 80,
-      tablet: 40,
-    },
+  detailViewContentGutter: {
+    desktop: 80,
+    tablet: 40,
+    min: 10,
   },
-  pageHorizontalGutter: {
+  standardViewContentGutter: {
     desktop: 20,
     tablet: 20,
     largeDisplayPhone: 10,

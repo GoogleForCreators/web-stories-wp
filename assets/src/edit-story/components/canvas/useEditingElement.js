@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useCallback, useState } from 'react';
+import { useReducer, useRef, useCallback, useMemo, useState } from 'react';
 
 function useEditingElement() {
   const [state, dispatch] = useReducer(reducer, {
@@ -43,16 +43,34 @@ function useEditingElement() {
     [setNodesById]
   );
 
+  // Immutable frame lookup for imperative actions.
+  const nodesByIdRef = useRef(null);
+  nodesByIdRef.current = nodesById;
+  const getNodeForElement = useCallback((id) => nodesByIdRef.current[id], []);
+
   const { editingElement, editingElementState } = state;
-  return {
-    nodesById,
-    editingElement,
-    editingElementState,
-    setEditingElementWithState,
-    setEditingElementWithoutState,
-    clearEditing,
-    setNodeForElement,
-  };
+  return useMemo(
+    () => ({
+      nodesById,
+      editingElement,
+      editingElementState,
+      setEditingElementWithState,
+      setEditingElementWithoutState,
+      clearEditing,
+      getNodeForElement,
+      setNodeForElement,
+    }),
+    [
+      nodesById,
+      editingElement,
+      editingElementState,
+      setEditingElementWithState,
+      setEditingElementWithoutState,
+      clearEditing,
+      getNodeForElement,
+      setNodeForElement,
+    ]
+  );
 }
 
 function reducer(state, { editingElement, editingElementState = {} }) {

@@ -15,8 +15,8 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { createContext } from 'react';
+import { createContext } from '../../utils/context';
 
 export default createContext({ tabs: {} });

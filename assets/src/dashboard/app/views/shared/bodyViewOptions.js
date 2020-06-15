@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import styled from 'styled-components';
@@ -23,13 +28,13 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Dropdown, ViewStyleBar } from '../../../components';
 import {
-  STORY_SORT_MENU_ITEMS,
-  DROPDOWN_TYPES,
-  VIEW_STYLE,
-} from '../../../constants';
-import BodyWrapper from './bodyWrapper';
+  Dropdown,
+  StandardViewContentGutter,
+  ViewStyleBar,
+  TypographyPresets,
+} from '../../../components';
+import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 
 const DisplayFormatContainer = styled.div`
   height: ${({ theme }) => theme.formatContainer.height}px;
@@ -39,7 +44,7 @@ const DisplayFormatContainer = styled.div`
 `;
 
 const StorySortDropdownContainer = styled.div`
-  margin: auto 0 auto auto;
+  margin: auto 8px;
   align-self: flex-end;
 `;
 
@@ -50,59 +55,84 @@ const SortDropdown = styled(Dropdown)`
 const ControlsContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const Label = styled.span`
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing}em;
-  font-size: ${({ theme }) => theme.fonts.body2.size}px;
+  ${TypographyPresets.Small};
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
-const BodyViewOptions = ({
+const ExternalLink = styled.a`
+  ${TypographyPresets.Small};
+  margin-right: 15px;
+  color: ${({ theme }) => theme.colors.bluePrimary};
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+`;
+
+export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
   handleSortChange,
-  listBarLabel,
+  resultsLabel,
   layoutStyle,
+  pageSortOptions = [],
   showGridToggle,
   sortDropdownAriaLabel,
-}) => (
-  <BodyWrapper>
-    <DisplayFormatContainer>
-      <Label>{listBarLabel}</Label>
-      <ControlsContainer>
-        {layoutStyle === VIEW_STYLE.GRID && (
-          <StorySortDropdownContainer>
-            <SortDropdown
-              alignment="flex-end"
-              ariaLabel={sortDropdownAriaLabel}
-              items={STORY_SORT_MENU_ITEMS}
-              type={DROPDOWN_TYPES.TRANSPARENT_MENU}
-              value={currentSort}
-              onChange={(newSort) => handleSortChange(newSort.value)}
-            />
-          </StorySortDropdownContainer>
-        )}
-        {showGridToggle && (
-          <ViewStyleBar
-            label={listBarLabel}
-            layoutStyle={layoutStyle}
-            onPress={handleLayoutSelect}
-          />
-        )}
-      </ControlsContainer>
-    </DisplayFormatContainer>
-  </BodyWrapper>
-);
+  wpListURL,
+}) {
+  return (
+    <StandardViewContentGutter>
+      <DisplayFormatContainer>
+        <Label>{resultsLabel}</Label>
+        <ControlsContainer>
+          {layoutStyle === VIEW_STYLE.GRID && Boolean(handleSortChange) && (
+            <StorySortDropdownContainer>
+              <SortDropdown
+                alignment="flex-end"
+                ariaLabel={sortDropdownAriaLabel}
+                items={pageSortOptions}
+                type={DROPDOWN_TYPES.MENU}
+                value={currentSort}
+                onChange={(newSort) => handleSortChange(newSort.value)}
+              />
+            </StorySortDropdownContainer>
+          )}
+          {showGridToggle && (
+            <ControlsContainer>
+              {layoutStyle === VIEW_STYLE.LIST && wpListURL && (
+                <ExternalLink href={wpListURL}>
+                  {__('See classic WP list view', 'web-stories')}
+                </ExternalLink>
+              )}
+              <ViewStyleBar
+                label={resultsLabel}
+                layoutStyle={layoutStyle}
+                onPress={handleLayoutSelect}
+              />
+            </ControlsContainer>
+          )}
+        </ControlsContainer>
+      </DisplayFormatContainer>
+    </StandardViewContentGutter>
+  );
+}
 
 BodyViewOptions.propTypes = {
   currentSort: PropTypes.string.isRequired,
   handleLayoutSelect: PropTypes.func,
-  handleSortChange: PropTypes.func.isRequired,
+  handleSortChange: PropTypes.func,
   layoutStyle: PropTypes.string.isRequired,
-  listBarLabel: PropTypes.string.isRequired,
+  resultsLabel: PropTypes.string.isRequired,
+  wpListURL: PropTypes.string,
+  pageSortOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string,
+    })
+  ),
   showGridToggle: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
 };
-export default BodyViewOptions;

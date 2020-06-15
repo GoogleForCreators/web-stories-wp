@@ -17,21 +17,23 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('clearBackgroundElement', () => {
   it('should clear the background element', () => {
     const { restore, clearBackgroundElement } = setupReducer();
 
-    // Set an initial state with a current page and some elements.
+    // Set an initial state with a current page, some elements and a default background element
     restore({
       pages: [
         {
           id: '111',
-          elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
-          backgroundElementId: '123',
-          backgroundOverlay: OverlayType.NONE,
+          defaultBackgroundElement: {
+            id: '123',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
+          elements: [{ id: '456', isBackground: true }, { id: '789' }],
         },
       ],
       current: '111',
@@ -40,15 +42,18 @@ describe('clearBackgroundElement', () => {
 
     const result = clearBackgroundElement();
 
-    expect(result.pages[0]).toStrictEqual({
-      id: '111',
-      backgroundElementId: null,
-      backgroundOverlay: OverlayType.NONE,
-      elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
-    });
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '123',
+        isDefaultBackground: true,
+        isBackground: true,
+      },
+      { id: '456' },
+      { id: '789' },
+    ]);
   });
 
-  it('should do nothing if there is no background', () => {
+  it('should do nothing if background is default', () => {
     const { restore, clearBackgroundElement } = setupReducer();
 
     // Set an initial state with a current page and some elements.
@@ -56,8 +61,11 @@ describe('clearBackgroundElement', () => {
       pages: [
         {
           id: '111',
-          elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
-          backgroundElementId: null,
+          elements: [
+            { id: '123', isDefaultBackground: true, isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
         },
       ],
       current: '111',
@@ -67,5 +75,41 @@ describe('clearBackgroundElement', () => {
     const result = clearBackgroundElement();
 
     expect(result).toStrictEqual(initialState);
+  });
+
+  it('should unset overlay if present', () => {
+    const { restore, clearBackgroundElement } = setupReducer();
+
+    // Set an initial state with a current page, some elements and a default background element
+    restore({
+      pages: [
+        {
+          id: '111',
+          defaultBackgroundElement: {
+            id: '123',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
+          elements: [
+            { id: '456', isBackground: true, backgroundOverlay: {} },
+            { id: '789' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    const result = clearBackgroundElement();
+
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '123',
+        isDefaultBackground: true,
+        isBackground: true,
+      },
+      { id: '456' },
+      { id: '789' },
+    ]);
   });
 });

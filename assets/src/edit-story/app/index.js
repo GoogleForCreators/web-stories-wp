@@ -32,9 +32,9 @@ import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
-import { GlobalStyle as CalendarGlobalStyle } from '../components/form/dateTime/calendarStyle';
 import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
 import { useTransform, TransformProvider } from '../components/transform';
+import DevTools from '../components/devTools';
 import AutoSaveHandler from '../components/autoSaveHandler';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
@@ -61,10 +61,10 @@ function App({ config }) {
                       <TransformProvider>
                         <DropTargetsProvider>
                           <GlobalStyle />
+                          <DevTools />
                           <DefaultMoveableGlobalStyle />
                           <CropMoveableGlobalStyle />
                           <ModalGlobalStyle />
-                          <CalendarGlobalStyle />
                           <KeyboardOnlyOutlines />
                           <Layout />
                         </DropTargetsProvider>

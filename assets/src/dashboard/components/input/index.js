@@ -19,12 +19,18 @@
  */
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { TypographyPresets } from '../typography';
+
 export const TextInput = styled.input`
+  ${TypographyPresets.Small};
   margin: 0;
-  padding: ${({ theme }) => theme.fonts.textInput.padding};
+  padding: 1px 8px;
   border-radius: 6px;
-  border: ${({ theme }) => theme.fonts.textInput.border};
-  font-family: ${({ theme }) => theme.fonts.textInput.family};
-  font-size: ${({ theme }) => theme.fonts.textInput.size}px;
-  letter-spacing: ${({ theme }) => theme.fonts.textInput.letterSpacing}em;
+  border: ${({ theme }) => theme.borders.gray100};
+  &:active {
+    border: ${({ theme }) => theme.borders.action};
+  }
 `;

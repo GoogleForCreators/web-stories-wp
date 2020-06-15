@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { act, fireEvent } from '@testing-library/react';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -29,6 +30,7 @@ import RichTextContext from '../../richText/context';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
 import DropDown from '../../form/dropDown';
+import FontPicker from '../../fontPicker';
 import ColorInput from '../../form/color/color';
 import createSolid from '../../../utils/createSolid';
 import { MULTIPLE_VALUE } from '../../form';
@@ -36,29 +38,47 @@ import { renderPanel } from './_utils';
 
 jest.mock('../../../utils/textMeasurements');
 jest.mock('../../form/dropDown');
+jest.mock('../../fontPicker');
 jest.mock('../../form/color/color');
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 function Wrapper({ children }) {
   return (
-    <FontContext.Provider
-      value={{
-        state: {
-          fonts: [
-            {
-              name: 'ABeeZee',
-              value: 'ABeeZee',
-              service: 'foo.bar.baz',
-              weights: [400],
-              styles: ['italic', 'regular'],
-              variants: [
-                [0, 400],
-                [1, 400],
-              ],
-              fallbacks: ['serif'],
-            },
-            {
+    <FlagsProvider features={{ newFontPicker: false }}>
+      <FontContext.Provider
+        value={{
+          state: {
+            fonts: [
+              {
+                name: 'ABeeZee',
+                value: 'ABeeZee',
+                service: 'foo.bar.baz',
+                weights: [400],
+                styles: ['italic', 'regular'],
+                variants: [
+                  [0, 400],
+                  [1, 400],
+                ],
+                fallbacks: ['serif'],
+              },
+              {
+                name: 'Neu Font',
+                value: 'Neu Font',
+                service: 'foo.bar.baz',
+                weights: [400],
+                styles: ['italic', 'regular'],
+                variants: [
+                  [0, 400],
+                  [1, 400],
+                ],
+                fallbacks: ['fallback1'],
+              },
+            ],
+          },
+          actions: {
+            maybeEnqueueFontStyle: () => Promise.resolve(),
+            getFontByName: () => ({
               name: 'Neu Font',
               value: 'Neu Font',
               service: 'foo.bar.baz',
@@ -69,31 +89,17 @@ function Wrapper({ children }) {
                 [1, 400],
               ],
               fallbacks: ['fallback1'],
-            },
-          ],
-        },
-        actions: {
-          getFontByName: () => ({
-            name: 'Neu Font',
-            value: 'Neu Font',
-            service: 'foo.bar.baz',
-            weights: [400],
-            styles: ['italic', 'regular'],
-            variants: [
-              [0, 400],
-              [1, 400],
-            ],
-            fallbacks: ['fallback1'],
-          }),
-        },
-      }}
-    >
-      <RichTextContext.Provider
-        value={{ state: {}, actions: { selectionActions: {} } }}
+            }),
+          },
+        }}
       >
-        {children}
-      </RichTextContext.Provider>
-    </FontContext.Provider>
+        <RichTextContext.Provider
+          value={{ state: {}, actions: { selectionActions: {} } }}
+        >
+          {children}
+        </RichTextContext.Provider>
+      </FontContext.Provider>
+    </FlagsProvider>
   );
 }
 
@@ -107,7 +113,7 @@ Wrapper.propTypes = {
 describe('Panels/TextStyle', () => {
   let textElement, unlockPaddingTextElement;
   let controls;
-  const paddingRatioLockLabel = 'Padding ratio lock';
+  const paddingRatioLockLabel = 'Toggle padding ratio lock';
 
   beforeEach(() => {
     global.fetch.resetMocks();
@@ -134,6 +140,7 @@ describe('Panels/TextStyle', () => {
 
     controls = {};
     DropDown.mockImplementation(FakeControl);
+    FontPicker.mockImplementation(FakeControl);
     ColorInput.mockImplementation(FakeControl);
   });
 
@@ -151,8 +158,8 @@ describe('Panels/TextStyle', () => {
   }
 
   it('should render <TextStyle /> panel', () => {
-    const { getByText } = renderTextStyle([textElement]);
-    const element = getByText('Style');
+    const { getByRole } = renderTextStyle([textElement]);
+    const element = getByRole('button', { name: 'Style' });
     expect(element).toBeDefined();
   });
 
@@ -198,15 +205,17 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should render default padding controls', () => {
-      const { getByTestId, getByLabelText } = renderTextStyle([textElement]);
-      const multi = getByTestId('padding.multiple');
-      const lock = getByLabelText(paddingRatioLockLabel);
+      const { getByRole } = renderTextStyle([textElement]);
+      const multi = getByRole('textbox', {
+        name: 'Edit: Horizontal & Vertical padding',
+      });
+      const lock = getByRole('checkbox', { name: paddingRatioLockLabel });
       expect(multi.value).toBe('0');
       expect(lock).toBeChecked();
     });
 
     it('should render specified padding controls', () => {
-      const { getByTestId } = renderTextStyle([
+      const { getByRole } = renderTextStyle([
         {
           ...textElement,
           padding: {
@@ -216,17 +225,17 @@ describe('Panels/TextStyle', () => {
           },
         },
       ]);
-      const horiz = getByTestId('padding.horizontal');
-      const vert = getByTestId('padding.vertical');
+      const horiz = getByRole('textbox', { name: 'Edit: Horizontal padding' });
+      const vert = getByRole('textbox', { name: 'Edit: Vertical padding' });
       expect(horiz.value).toBe('11');
       expect(vert.value).toBe('12');
     });
 
     it('should update horizontal padding with lock', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
-      ]);
-      const input = getByTestId('padding.multiple');
+      const { getByRole, pushUpdateForObject } = renderTextStyle([textElement]);
+      const input = getByRole('textbox', {
+        name: 'Edit: Horizontal & Vertical padding',
+      });
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -237,10 +246,10 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should update horizontal padding without lock', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject } = renderTextStyle([
         unlockPaddingTextElement,
       ]);
-      const input = getByTestId('padding.horizontal');
+      const input = getByRole('textbox', { name: 'Edit: Horizontal padding' });
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -251,10 +260,10 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should update vertical padding without lock', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject } = renderTextStyle([
         unlockPaddingTextElement,
       ]);
-      const input = getByTestId('padding.vertical');
+      const input = getByRole('textbox', { name: 'Edit: Vertical padding' });
       fireEvent.change(input, { target: { value: '12' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -265,10 +274,10 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should update empty horizontal padding with lock', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
-        textElement,
-      ]);
-      const input = getByTestId('padding.multiple');
+      const { getByRole, pushUpdateForObject } = renderTextStyle([textElement]);
+      const input = getByRole('textbox', {
+        name: 'Edit: Horizontal & Vertical padding',
+      });
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -279,11 +288,13 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should update multi padding with lock and same padding', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject } = renderTextStyle([
         textElement,
         textSamePadding,
       ]);
-      const input = getByTestId('padding.multiple');
+      const input = getByRole('textbox', {
+        name: 'Edit: Horizontal & Vertical padding',
+      });
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -294,11 +305,13 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should update multi padding with lock and different padding', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject } = renderTextStyle([
         textElement,
         textDifferentPadding,
       ]);
-      const input = getByTestId('padding.multiple');
+      const input = getByRole('textbox', {
+        name: 'Edit: Horizontal & Vertical padding',
+      });
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -309,11 +322,11 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should update multi padding without lock and same padding', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject } = renderTextStyle([
         unlockPaddingTextElement,
         unlockPaddingTextSamePadding,
       ]);
-      const input = getByTestId('padding.horizontal');
+      const input = getByRole('textbox', { name: 'Edit: Horizontal padding' });
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -324,11 +337,11 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should update multi padding without lock and different padding', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject } = renderTextStyle([
         unlockPaddingTextElement,
         unlockPaddingTextDifferentPadding,
       ]);
-      const input = getByTestId('padding.horizontal');
+      const input = getByRole('textbox', { name: 'Edit: Horizontal padding' });
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -339,11 +352,11 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should correctly update only horizontal padding when multiple elements with different padding lock settings are selected', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject } = renderTextStyle([
         textElement,
         unlockPaddingTextDifferentPadding,
       ]);
-      const input = getByTestId('padding.horizontal');
+      const input = getByRole('textbox', { name: 'Edit: Horizontal padding' });
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -354,11 +367,11 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should correctly update only vertical padding when multiple elements with different padding lock settings are selected', () => {
-      const { getByTestId, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject } = renderTextStyle([
         textElement,
         unlockPaddingTextDifferentPadding,
       ]);
-      const input = getByTestId('padding.vertical');
+      const input = getByRole('textbox', { name: 'Edit: Vertical padding' });
       fireEvent.change(input, { target: { value: '11' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
@@ -420,9 +433,9 @@ describe('Panels/TextStyle', () => {
   });
 
   describe('FontControls', () => {
-    it('should select font', () => {
+    it('should select font', async () => {
       const { pushUpdate } = renderTextStyle([textElement]);
-      act(() => controls.font.onChange('Neu Font'));
+      await act(() => controls.font.onChange('Neu Font'));
       expect(pushUpdate).toHaveBeenCalledWith(
         {
           font: {
@@ -441,9 +454,9 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should select font weight', () => {
+    it('should select font weight', async () => {
       const { pushUpdate } = renderTextStyle([textElement]);
-      act(() => controls['font.weight'].onChange('300'));
+      await act(() => controls['font.weight'].onChange('300'));
       const updatingFunction = pushUpdate.mock.calls[0][0];
       const resultOfUpdating = updatingFunction({ content: 'Hello world' });
       expect(resultOfUpdating).toStrictEqual(
@@ -454,39 +467,40 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should select font size', () => {
-      const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
-      const input = getByTestId('font.size');
-      fireEvent.change(input, { target: { value: '32' } });
+    it('should select font size', async () => {
+      const { getByRole, pushUpdate } = renderTextStyle([textElement]);
+      const input = getByRole('textbox', { name: 'Font size' });
+
+      await fireEvent.change(input, { target: { value: '32' } });
       expect(pushUpdate).toHaveBeenCalledWith({ fontSize: 32 });
     });
 
-    it('should select font size to empty value', () => {
-      const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
-      const input = getByTestId('font.size');
-      fireEvent.change(input, { target: { value: '' } });
+    it('should select font size to empty value', async () => {
+      const { getByRole, pushUpdate } = renderTextStyle([textElement]);
+      const input = getByRole('textbox', { name: 'Font size' });
+      await fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ fontSize: '' });
     });
   });
 
   describe('TextStyleControls', () => {
     it('should set lineHeight', () => {
-      const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
-      const input = getByTestId('text.lineHeight');
+      const { getByRole, pushUpdate } = renderTextStyle([textElement]);
+      const input = getByRole('textbox', { name: 'Line-height' });
       fireEvent.change(input, { target: { value: '1.5' } });
       expect(pushUpdate).toHaveBeenCalledWith({ lineHeight: 1.5 });
     });
 
     it('should set lineHeight to empty', () => {
-      const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
-      const input = getByTestId('text.lineHeight');
+      const { getByRole, pushUpdate } = renderTextStyle([textElement]);
+      const input = getByRole('textbox', { name: 'Line-height' });
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ lineHeight: '' });
     });
 
     it('should set letterSpacing', () => {
-      const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
-      const input = getByTestId('text.letterSpacing');
+      const { getByRole, pushUpdate } = renderTextStyle([textElement]);
+      const input = getByRole('textbox', { name: 'Letter-spacing' });
       fireEvent.change(input, { target: { value: '150' } });
       const updatingFunction = pushUpdate.mock.calls[0][0];
       const resultOfUpdating = updatingFunction({ content: 'Hello world' });
@@ -499,8 +513,8 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should set letterSpacing to empty', () => {
-      const { getByTestId, pushUpdate } = renderTextStyle([textElement]);
-      const input = getByTestId('text.letterSpacing');
+      const { getByRole, pushUpdate } = renderTextStyle([textElement]);
+      const input = getByRole('textbox', { name: 'Letter-spacing' });
       fireEvent.change(input, { target: { value: '' } });
       const updatingFunction = pushUpdate.mock.calls[0][0];
       const resultOfUpdating = updatingFunction({

@@ -34,8 +34,12 @@ import {
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { useTransformHandler } from '../../components/transform';
-import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
+import {
+  getHTMLFormatters,
+  getHTMLInfo,
+} from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
+import stripHTML from '../../utils/stripHTML';
 import { getHighlightLineheight, generateParagraphTextStyle } from './util';
 
 const HighlightWrapperElement = styled.div`
@@ -52,6 +56,7 @@ const HighlightElement = styled.p`
   line-height: inherit;
   margin: 0;
   position: absolute;
+  width: 100%;
 `;
 
 const MarginedElement = styled.span`
@@ -95,11 +100,20 @@ function TextDisplay({
 }) {
   const ref = useRef(null);
 
-  const {
-    actions: { dataToEditorY, dataToEditorX },
-  } = useUnits();
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
 
   const { font } = rest;
+  const fontFaceSetConfigs = useMemo(() => {
+    const htmlInfo = getHTMLInfo(content);
+    return {
+      fontStyle: htmlInfo.isItalic ? 'italic' : 'normal',
+      fontWeight: htmlInfo.fontWeight,
+      content: stripHTML(content),
+    };
+  }, [content]);
 
   const props = {
     font,
@@ -114,10 +128,9 @@ function TextDisplay({
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-
   useEffect(() => {
-    maybeEnqueueFontStyle(font);
-  }, [font, maybeEnqueueFontStyle]);
+    maybeEnqueueFontStyle([{ ...fontFaceSetConfigs, font }]);
+  }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   useTransformHandler(id, (transform) => {
     const target = ref.current;

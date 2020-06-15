@@ -27,16 +27,18 @@ import PropTypes from 'prop-types';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-import { APP_ROUTES } from '../constants';
+import { APP_ROUTES, NESTED_APP_ROUTES } from '../constants';
+
 import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider, RouterContext, matchPath } from './router';
 import { ConfigProvider } from './config';
 import {
   MyStoriesView,
-  TemplateDetail,
-  TemplatesGalleryView,
+  TemplateDetailsView,
+  ExploreTemplatesView,
   SavedTemplatesView,
+  StoryAnimTool,
 } from './views';
 
 const AppContent = () => {
@@ -44,7 +46,9 @@ const AppContent = () => {
     state: { currentPath },
   } = useContext(RouterContext);
 
-  const hideLeftRail = matchPath(currentPath, APP_ROUTES.TEMPLATE_DETAIL);
+  const hideLeftRail =
+    matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
+    matchPath(currentPath, NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL);
 
   return (
     <AppFrame>
@@ -56,16 +60,26 @@ const AppContent = () => {
           component={<MyStoriesView />}
         />
         <Route
-          path={APP_ROUTES.TEMPLATE_DETAIL}
-          component={<TemplateDetail />}
-        />
-        <Route
+          exact
           path={APP_ROUTES.TEMPLATES_GALLERY}
-          component={<TemplatesGalleryView />}
+          component={<ExploreTemplatesView />}
         />
         <Route
+          path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
+          component={<TemplateDetailsView />}
+        />
+        <Route
+          exact
           path={APP_ROUTES.SAVED_TEMPLATES}
           component={<SavedTemplatesView />}
+        />
+        <Route
+          path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
+          component={<TemplateDetailsView />}
+        />
+        <Route
+          path={APP_ROUTES.STORY_ANIM_TOOL}
+          component={<StoryAnimTool />}
         />
       </PageContent>
     </AppFrame>

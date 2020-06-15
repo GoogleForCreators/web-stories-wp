@@ -1,0 +1,24 @@
+{
+  "env": {
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "client.js"
+      ],
+      "env": {
+        "browser": true,
+        "es6": false
+      },
+      "rules": {
+        "no-unused-vars": "off",
+        "prefer-rest-params": "off",
+        "prefer-spread": "off"
+      },
+      "globals": {
+        "karmaPuppeteer": "writable"
+      }
+    }
+  ]
+}

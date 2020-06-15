@@ -25,15 +25,20 @@ import PropTypes from 'prop-types';
 import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
-import { ViewHeader, NavMenuButton } from '../../../components';
-import BodyWrapper from './bodyWrapper';
+import {
+  TypographyPresets,
+  NavMenuButton,
+  StandardViewContentGutter,
+} from '../../../components';
 import TypeaheadSearch from './typeaheadSearch';
 
 const Container = styled.div`
   padding: 10px 0 0;
 `;
 
-const StyledHeader = styled(ViewHeader)`
+const StyledHeader = styled.h2`
+  ${TypographyPresets.ExtraExtraLarge};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -60,7 +65,7 @@ const SearchContainer = styled.div`
   width: 100%;
   height: 29px;
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) => `${theme.pageGutter.small.min}px`};
+    left: ${({ theme }) => `${theme.standardViewContentGutter.min}px`};
     max-width: 100%;
     justify-content: flex-start;
   }
@@ -75,7 +80,7 @@ const SearchInner = styled.div`
   justify-content: flex-end;
 `;
 
-const HeadingBodyWrapper = styled(BodyWrapper)`
+const HeadingBodyWrapper = styled(StandardViewContentGutter)`
   display: grid;
   grid-template-columns: 25% 50% 1fr;
   align-items: center;
@@ -96,6 +101,7 @@ const PageHeading = ({
   searchPlaceholder,
   centerContent = false,
   stories = [],
+  showTypeahead = true,
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
@@ -107,16 +113,18 @@ const PageHeading = ({
           {defaultTitle}
         </StyledHeader>
         <Content centerContent={centerContent}>{children}</Content>
-        <SearchContainer>
-          <SearchInner>
-            <TypeaheadSearch
-              placeholder={searchPlaceholder}
-              currentValue={typeaheadValue}
-              stories={stories}
-              handleChange={handleTypeaheadChange}
-            />
-          </SearchInner>
-        </SearchContainer>
+        {showTypeahead && (
+          <SearchContainer>
+            <SearchInner>
+              <TypeaheadSearch
+                placeholder={searchPlaceholder}
+                currentValue={typeaheadValue}
+                stories={stories}
+                handleChange={handleTypeaheadChange}
+              />
+            </SearchInner>
+          </SearchContainer>
+        )}
       </HeadingBodyWrapper>
     </Container>
   );
@@ -131,6 +139,7 @@ PageHeading.propTypes = {
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
   stories: StoriesPropType,
+  showTypeahead: PropTypes.bool,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
 };
