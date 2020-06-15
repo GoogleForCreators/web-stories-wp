@@ -32,7 +32,7 @@ function getFontStylesForCharacter(styles) {
   return styles
     .toArray()
     .map((style) => style.style ?? style)
-    .filter((style) => style.startsWith(ITALIC) || style.startsWith(WEIGHT));
+    .filter((style) => style === ITALIC || style.startsWith(WEIGHT));
 }
 
 /**
@@ -68,8 +68,10 @@ export default function getFontVariants(html) {
     .filter((variant) => variant.length)
     .map((variant) => {
       const weight = variant.find((val) => val.startsWith(WEIGHT));
-      const italic = variant.find((val) => val.startsWith(ITALIC));
-      return [italic ? 1 : 0, weight ? styleToNumeric(WEIGHT, weight) : 400];
+      return [
+        Number(variant.includes(ITALIC)),
+        weight ? styleToNumeric(WEIGHT, weight) : 400,
+      ];
     });
   // Return default variant or the found variants.
   return variants.length > 0 ? variants : [[0, 400]];
