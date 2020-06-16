@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -28,11 +29,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import PropTypes from 'prop-types';
-import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
-import { ReactComponent as Add } from '../../../icons/add_page.svg';
-import { PanelTitle } from '../panel';
+import { AddPage, EditPencil } from '../../../icons';
 import { StylePresetPropType } from '../../../types';
+import { PanelTitle } from '../panel';
 
 const buttonCSS = css`
   border: none;
@@ -76,9 +75,8 @@ function PresetsHeader({
   setIsEditMode,
   stylePresets,
 }) {
-  const { fillColors, textColors, textStyles } = stylePresets;
-  const hasPresets =
-    fillColors.length > 0 || textColors.length > 0 || textStyles.length > 0;
+  const { fillColors, textColors } = stylePresets;
+  const hasPresets = fillColors.length > 0 || textColors.length > 0;
 
   const getActions = () => {
     return !isEditMode ? (
@@ -91,14 +89,14 @@ function PresetsHeader({
             }}
             aria-label={__('Edit presets', 'web-stories')}
           >
-            <Edit />
+            <EditPencil />
           </EditModeButton>
         )}
         <AddColorPresetButton
           onClick={handleAddColorPreset}
           aria-label={__('Add preset', 'web-stories')}
         >
-          <Add />
+          <AddPage />
         </AddColorPresetButton>
       </>
     ) : (

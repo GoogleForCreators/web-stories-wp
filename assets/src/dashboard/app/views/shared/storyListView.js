@@ -29,7 +29,12 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useCallback } from 'react';
-import { StoriesPropType, UsersPropType } from '../../../types';
+import {
+  StoriesPropType,
+  UsersPropType,
+  RenameStoryPropType,
+  StoryMenuPropType,
+} from '../../../types';
 import {
   PreviewPage,
   Table,
@@ -44,6 +49,10 @@ import {
   TableStatusCell,
   TableStatusHeaderCell,
   TableTitleHeaderCell,
+  StoryMenu,
+  MoreVerticalButton,
+  InlineInputForm,
+  Paragraph2,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -104,18 +113,34 @@ const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
   cursor: pointer;
 `;
 
+const TitleTableCellContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  ${MoreVerticalButton} {
+    margin: 10px auto;
+  }
+
+  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
+    opacity: 1;
+  }
+`;
+
 const toggleSortLookup = {
   [SORT_DIRECTION.DESC]: SORT_DIRECTION.ASC,
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
 export default function StoryListView({
-  stories,
-  storySort,
-  storyStatus,
   handleSortChange,
   handleSortDirectionChange,
+  renameStory,
   sortDirection,
+  stories,
+  storyMenu,
+  storySort,
+  storyStatus,
   users,
 }) {
   const onSortTitleSelected = useCallback(
@@ -212,7 +237,33 @@ export default function StoryListView({
                   </PreviewErrorBoundary>
                 </PreviewContainer>
               </TablePreviewCell>
-              <TableCell>{story.title}</TableCell>
+              <TableCell>
+                <TitleTableCellContainer>
+                  {renameStory.id === story.id ? (
+                    <InlineInputForm
+                      onEditComplete={(newTitle) =>
+                        renameStory.handleOnRenameStory(story, newTitle)
+                      }
+                      onEditCancel={renameStory.handleCancelRename}
+                      value={story.title}
+                      id={story.id}
+                      label={__('Rename story', 'web-stories')}
+                    />
+                  ) : (
+                    <>
+                      <Paragraph2>{story.title}</Paragraph2>
+                      <StoryMenu
+                        onMoreButtonSelected={storyMenu.handleMenuToggle}
+                        contextMenuId={storyMenu.contextMenuId}
+                        onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                        story={story}
+                        menuItems={storyMenu.menuItems}
+                        verticalAlign="center"
+                      />
+                    </>
+                  )}
+                </TitleTableCellContainer>
+              </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
               <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
               <TableCell>{getFormattedDisplayDate(story.modified)}</TableCell>
@@ -231,11 +282,13 @@ export default function StoryListView({
 }
 
 StoryListView.propTypes = {
-  stories: StoriesPropType,
-  users: UsersPropType.isRequired,
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
+  renameStory: RenameStoryPropType,
+  sortDirection: PropTypes.string.isRequired,
+  storyMenu: StoryMenuPropType.isRequired,
   storySort: PropTypes.string.isRequired,
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
-  sortDirection: PropTypes.string.isRequired,
+  stories: StoriesPropType,
+  users: UsersPropType.isRequired,
 };

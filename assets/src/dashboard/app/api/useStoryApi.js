@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -36,10 +36,12 @@ import {
   ORDER_BY_SORT,
   ITEMS_PER_PAGE,
 } from '../../constants';
+import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
+import { getStoryPropsToSave, addQueryArgs } from '../../utils';
 
 export function reshapeStoryObject(editStoryURL) {
   return function (originalStoryData) {
@@ -59,16 +61,23 @@ export function reshapeStoryObject(editStoryURL) {
     ) {
       return null;
     }
+
+    const updatedStoryData = {
+      ...migrate(storyData, storyData.version),
+      version: DATA_VERSION,
+    };
+
     return {
       id,
       status,
       title: title.raw,
       modified: moment(modified),
       created: moment(date),
-      pages: storyData.pages,
+      pages: updatedStoryData.pages,
       author,
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
+      editStoryLink: `${editStoryURL}&post=${id}`,
       originalStoryData,
     };
   };
@@ -117,6 +126,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
 
         const response = await dataAdapter.get(path, {
           parse: false,
+          cache: 'no-cache',
         });
 
         const totalPages =
@@ -144,7 +154,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
-          payload: true,
+          payload: { message: err.message, code: err.code },
         });
       } finally {
         dispatch({
@@ -192,6 +202,60 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
     [wpApi, dataAdapter]
   );
 
+  const createStoryFromTemplate = useCallback(
+    async (template) => {
+      dispatch({
+        type: STORY_ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE,
+        payload: true,
+      });
+
+      try {
+        const { createdBy, pages, version } = template;
+        const storyPropsToSave = await getStoryPropsToSave({
+          story: {
+            status: 'auto-draft',
+          },
+          pages,
+          metadata: {
+            publisher: {
+              name: createdBy,
+            },
+          },
+        });
+        const response = await dataAdapter.post(wpApi, {
+          data: {
+            ...storyPropsToSave,
+            story_data: {
+              pages,
+              version,
+              autoAdvance: true,
+              defaultPageDuration: 7,
+            },
+          },
+        });
+
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
+        });
+
+        window.location = addQueryArgs(editStoryURL, {
+          post: response.id,
+        });
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
+          payload: { message: err.message, code: err.code },
+        });
+      } finally {
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE,
+          payload: false,
+        });
+      }
+    },
+    [dataAdapter, editStoryURL, wpApi]
+  );
+
   const duplicateStory = useCallback(
     async (story) => {
       try {
@@ -203,6 +267,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           featured_media,
           title,
         } = story.originalStoryData;
+
         const response = await dataAdapter.post(wpApi, {
           data: {
             content,
@@ -211,7 +276,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
             style_presets,
             publisher_logo,
             title: {
-              raw: `${title.raw} ${__('(Copy)', 'web-stories')}`,
+              raw: sprintf(
+                /* translators: %s: story title */
+                __('%s (Copy)', 'web-stories'),
+                title.raw
+              ),
             },
             status: 'draft',
           },
@@ -230,12 +299,19 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
 
   const api = useMemo(
     () => ({
+      duplicateStory,
+      fetchStories,
+      createStoryFromTemplate,
+      trashStory,
+      updateStory,
+    }),
+    [
+      createStoryFromTemplate,
+      duplicateStory,
+      trashStory,
       updateStory,
       fetchStories,
-      trashStory,
-      duplicateStory,
-    }),
-    [duplicateStory, trashStory, updateStory, fetchStories]
+    ]
   );
 
   return { stories: state, api };

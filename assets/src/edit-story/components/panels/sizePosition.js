@@ -34,14 +34,12 @@ import {
   Row,
   Numeric,
   Toggle,
-  ToggleButton,
   usePresubmitHandler,
   MULTIPLE_VALUE,
 } from '../form';
 import { dataPixels } from '../../units';
-import { ReactComponent as Locked } from '../../icons/lock.svg';
-import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
-import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
+import { Lock as Locked, Unlock as Unlocked } from '../../icons';
+
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
@@ -78,7 +76,6 @@ function SizePositionPanel({
 }) {
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
-  const isFill = getCommonValue(selectedElements, 'isFill', false);
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
 
@@ -96,12 +93,14 @@ function SizePositionPanel({
   const lockAspectRatio =
     rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
 
-  const {
-    actions: { setBackgroundElement },
-  } = useStory();
+  const { currentPage, combineElements } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+    combineElements: state.actions.combineElements,
+  }));
+  const currentBackgroundId = currentPage?.elements[0].id;
 
   const isSingleElement = selectedElements.length === 1;
-  const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
+  const { isMedia } = getDefinitionForType(selectedElements[0].type);
 
   const canFlip = selectedElements.every(
     ({ type }) => getDefinitionForType(type).canFlip
@@ -165,16 +164,11 @@ function SizePositionPanel({
   );
 
   const handleSetBackground = useCallback(() => {
-    pushUpdate(
-      {
-        isBackground: true,
-        opacity: 100,
-        overlay: null,
-      },
-      true
-    );
-    setBackgroundElement({ elementId: selectedElements[0].id });
-  }, [selectedElements, pushUpdate, setBackgroundElement]);
+    combineElements({
+      firstId: selectedElements[0].id,
+      secondId: currentBackgroundId,
+    });
+  }, [selectedElements, combineElements, currentBackgroundId]);
 
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
@@ -202,7 +196,6 @@ function SizePositionPanel({
             }
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
-          disabled={isFill}
           aria-label={__('Width', 'web-stories')}
         />
         <Toggle
@@ -212,7 +205,6 @@ function SizePositionPanel({
           uncheckedIcon={<StyledUnlocked />}
           value={lockAspectRatio}
           onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
-          disabled={isFill}
         />
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
@@ -229,7 +221,6 @@ function SizePositionPanel({
             }
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
-          disabled={isFill}
           aria-label={__('Height', 'web-stories')}
         />
       </Row>
@@ -240,7 +231,6 @@ function SizePositionPanel({
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
-          disabled={isFill}
           aria-label={__('Rotation', 'web-stories')}
         />
         {canFlip && (
@@ -249,17 +239,6 @@ function SizePositionPanel({
               pushUpdateForObject('flip', value, DEFAULT_FLIP, true)
             }
             value={flip}
-          />
-        )}
-        {canFill && isSingleElement && (
-          <ToggleButton
-            icon={<Fullbleed />}
-            title={__('Fill', 'web-stories')}
-            aria-label={__('Fill', 'web-stories')}
-            iconWidth={15}
-            iconHeight={15}
-            value={isFill}
-            onChange={(value) => pushUpdate({ isFill: value }, true)}
           />
         )}
       </Row>

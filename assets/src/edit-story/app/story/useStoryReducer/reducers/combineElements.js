@@ -20,6 +20,13 @@
 import { v4 as uuidv4 } from 'uuid';
 
 /**
+ * Internal dependencies
+ */
+import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
+import objectPick from '../../../../utils/objectPick';
+import objectWithout from '../../../../utils/objectWithout';
+
+/**
  * Combine elements by taking properties from a first item and
  * adding them to the given second item, then remove first item.
  *
@@ -74,39 +81,31 @@ function combineElements(state, { firstId, firstElement, secondId }) {
       }
     : {};
 
-  const {
-    resource,
-    scale = 100,
-    focalX = 50,
-    focalY = 50,
-    isFill = false,
-    width,
-    height,
-    x,
-    y,
-  } = element;
+  const mediaProps = objectPick(element, [
+    'type',
+    'resource',
+    'scale',
+    'focalX',
+    'focalY',
+    'flip',
+  ]);
+
+  const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
 
   const newElement = {
-    ...secondElement,
-    resource,
-    type: resource.type,
-    scale,
-    focalX,
-    focalY,
-    isFill,
-    // Only remember these for backgrounds, as they're ignored while being background
-    ...(secondElement.isBackground
-      ? {
-          width,
-          height,
-          x,
-          y,
-        }
-      : {}),
-    // Only unset if it was set
-    ...(secondElement.isDefaultBackground
-      ? { isDefaultBackground: false }
-      : {}),
+    // First copy everything from existing element except if it was default background and any overlay
+    ...objectWithout(secondElement, [
+      'isDefaultBackground',
+      'backgroundOverlay',
+    ]),
+    // Then set sensible default attributes
+    ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
+    flip: {},
+    // Then copy all media-related attributes from new element
+    ...mediaProps,
+    // Only copy position properties for backgrounds, as they're ignored while being background
+    // For non-backgrounds, elements should keep original positions from secondElement
+    ...(secondElement.isBackground ? positionProps : {}),
   };
 
   // Elements are now

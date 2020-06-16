@@ -19,31 +19,23 @@
  */
 import styled from 'styled-components';
 import moment from 'moment';
-import { actions } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
 import { text } from '@storybook/addon-knobs';
 import {
   CardGrid,
   CardGridItem,
-  CardItemMenu,
   CardPreviewContainer,
   CardTitle,
 } from '../../';
-import { DetailRow } from '../../../app/views/shared/storyGridView';
 import { STORY_STATUS } from '../../../constants';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
   component: CardGridItem,
 };
-
-const Container = styled.div`
-  width: 250px;
-`;
 
 const Card = styled.div`
   display: flex;
@@ -112,50 +104,5 @@ export const _publishedStory = () => {
         />
       </CardGridItem>
     </CardGrid>
-  );
-};
-
-export const _contextMenu = () => {
-  const [contextMenuId, setContextMenuId] = useState(-1);
-  return (
-    <Container>
-      <CardGrid pageSize={{ width: 210, height: 316 }}>
-        <CardGridItem>
-          <CardPreviewContainer
-            bottomAction={{
-              targetAction: 'https://www.google.com',
-              label: 'Open in Editor',
-            }}
-            centerAction={{
-              targetAction: '',
-              label: 'Preview',
-            }}
-            pageSize={{ width: 210, height: 316 }}
-            story={{}}
-          >
-            <Card>{text('Sample Story Content', 'Sample Story')}</Card>
-          </CardPreviewContainer>
-          <DetailRow>
-            <CardTitle
-              title="Story Title"
-              author="storybook author"
-              status={STORY_STATUS.DRAFT}
-              displayDate={moment('05-02-2020', 'MM-DD-YYYY')}
-              onEditCancel={() => {}}
-              onEditComplete={() => {}}
-            />
-            <CardItemMenu
-              onMoreButtonSelected={setContextMenuId}
-              contextMenuId={contextMenuId}
-              onMenuItemSelected={(item, story) => {
-                actions('onClick ', item.label, story.id);
-                setContextMenuId(-1);
-              }}
-              story={{ id: 1, status: 'publish', title: 'Sample Story' }}
-            />
-          </DetailRow>
-        </CardGridItem>
-      </CardGrid>
-    </Container>
   );
 };

@@ -89,7 +89,6 @@ function MediaEdit({ element, box }) {
     flip,
     focalX,
     focalY,
-    isFill,
     isBackground,
     type,
   } = element;
@@ -98,9 +97,9 @@ function MediaEdit({ element, box }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
 
-  const {
-    actions: { updateElementById },
-  } = useStory();
+  const { updateElementById } = useStory((state) => ({
+    updateElementById: state.actions.updateElementById,
+  }));
   const setProperties = useCallback(
     (properties) => updateElementById({ elementId: id, properties }),
     [id, updateElementById]
@@ -172,7 +171,7 @@ function MediaEdit({ element, box }) {
         />
       )}
 
-      {!isFill && !isBackground && cropBox && croppedMedia && (
+      {!isBackground && cropBox && croppedMedia && (
         <EditCropMovable
           setProperties={setProperties}
           cropBox={cropBox}

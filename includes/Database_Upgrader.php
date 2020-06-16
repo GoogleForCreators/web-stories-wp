@@ -55,14 +55,20 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	public function init() {
-		$version  = get_option( self::OPTION, '0.0.0' );
 		$routines = [
 			'1.0.0' => 'upgrade_1',
 			'2.0.0' => 'v_2_replace_conic_style_presets',
+			'2.0.1' => 'v_2_add_term',
+			'2.0.2' => 'remove_broken_text_styles',
 		];
 
+		$version = get_option( self::OPTION, '0.0.0' );
+
+		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {
+			return;
+		}
+
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
-		// @todo This should only update if there were actual updates. Otherwise, the `self::PREVIOUS_OPTION` will always be overwritten.
 		$this->finish_up( $version );
 	}
 
@@ -135,6 +141,45 @@ class Database_Upgrader {
 
 		$updated_style_presets = [
 			'fillColors' => $fill_colors,
+			'textColors' => $style_presets['textColors'],
+			'textStyles' => $text_styles,
+		];
+		update_option( Stories_Controller::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Add the editor term, to make sure it exists.
+	 *
+	 * @return void
+	 */
+	protected function v_2_add_term() {
+		wp_insert_term( 'editor', Media::STORY_MEDIA_TAXONOMY );
+	}
+
+	/**
+	 * Removes broken text styles (with color.r|g|b structure).
+	 *
+	 * @return void
+	 */
+	protected function remove_broken_text_styles() {
+		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
+		// Nothing to do if style presets don't exist.
+		if ( ! $style_presets || ! is_array( $style_presets ) ) {
+			return;
+		}
+
+		$text_styles = [];
+		if ( ! empty( $style_presets['textStyles'] ) ) {
+			foreach ( $style_presets['textStyles'] as $preset ) {
+				if ( isset( $preset['color']['r'] ) ) {
+					continue;
+				}
+				$text_styles[] = $preset;
+			}
+		}
+
+		$updated_style_presets = [
+			'fillColors' => $style_presets['fillColors'],
 			'textColors' => $style_presets['textColors'],
 			'textStyles' => $text_styles,
 		];

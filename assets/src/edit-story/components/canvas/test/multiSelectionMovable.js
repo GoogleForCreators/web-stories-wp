@@ -77,7 +77,9 @@ describe('multiSelectionMovable', () => {
           '1': target1,
           '2': target2,
         },
+        fullbleedContainer: document.body,
       },
+      actions: { handleSelectElement: jest.fn() },
     };
   });
 

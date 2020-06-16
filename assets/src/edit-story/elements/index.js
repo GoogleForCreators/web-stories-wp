@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import createSolid from '../utils/createSolid';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
@@ -46,7 +47,7 @@ export const createNewElement = (type, attributes = {}) => {
   };
 };
 
-export const createPage = () => {
+export const createPage = (pageProps = null) => {
   const backgroundElementProps = {
     // The values of x, y, width, height are irrelevant here, however, need to be set.
     x: 1,
@@ -63,6 +64,8 @@ export const createPage = () => {
 
   const newAttributes = {
     elements: [backgroundElement],
+    backgroundColor: createSolid(255, 255, 255),
+    ...pageProps,
   };
 
   return createNewElement('page', newAttributes);

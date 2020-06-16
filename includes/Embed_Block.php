@@ -144,28 +144,27 @@ class Embed_Block {
 	 *
 	 * @return string Rendered block type output.
 	 */
-	public function render_block( array $attributes, $content ) {
+	public function render_block( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		// The only 2 mandatory attributes.
 		if ( empty( $attributes['url'] ) || empty( $attributes['title'] ) ) {
 			return '';
 		}
 
 		if ( is_feed() ) {
-			return $this->render_block_feed( $attributes, $content );
+			return $this->render_block_feed( $attributes );
 		}
 
-		return $this->render_block_html( $attributes, $content );
+		return $this->render_block_html( $attributes );
 	}
 
 	/**
 	 * Renders the block type output in default context.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $attributes Block attributes.
 	 *
 	 * @return string Rendered block type output.
 	 */
-	protected function render_block_html( array $attributes, $content ) {
+	protected function render_block_html( array $attributes ) {
 		$url          = (string) $attributes['url'];
 		$title        = (string) $attributes['title'];
 		$poster       = ! empty( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
@@ -198,12 +197,11 @@ class Embed_Block {
 	/**
 	 * Renders the block type output in an RSS feed context.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $attributes Block attributes.
 	 *
 	 * @return string Rendered block type output.
 	 */
-	protected function render_block_feed( array $attributes, $content ) {
+	protected function render_block_feed( array $attributes ) {
 		$url   = (string) $attributes['url'];
 		$title = (string) $attributes['title'];
 

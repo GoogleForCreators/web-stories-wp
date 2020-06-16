@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { rgba } from 'polished';
-import { useCallback, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -49,7 +49,8 @@ const Container = styled.div`
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
   overflow: auto;
-  padding: 1em 1.5em 0 1.5em;
+  padding: 0 1.5em 0 1.5em;
+  margin-top: 1em;
 `;
 
 const Column = styled.div`
@@ -127,16 +128,42 @@ const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
   const {
-    state: {
-      hasMore,
-      media,
-      isMediaLoading,
-      isMediaLoaded,
-      mediaType,
-      searchTerm,
-    },
-    actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
-  } = useMedia();
+    hasMore,
+    media,
+    isMediaLoading,
+    isMediaLoaded,
+    mediaType,
+    searchTerm,
+    setNextPage,
+    resetWithFetch,
+    setMediaType,
+    setSearchTerm,
+  } = useMedia(
+    ({
+      state: {
+        hasMore,
+        media,
+        isMediaLoading,
+        isMediaLoaded,
+        mediaType,
+        searchTerm,
+      },
+      actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
+    }) => {
+      return {
+        hasMore,
+        media,
+        isMediaLoading,
+        isMediaLoaded,
+        mediaType,
+        searchTerm,
+        setNextPage,
+        resetWithFetch,
+        setMediaType,
+        setSearchTerm,
+      };
+    }
+  );
 
   const {
     allowedMimeTypes: {
@@ -145,9 +172,9 @@ function MediaPane(props) {
     },
   } = useConfig();
 
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
 
   const onClose = resetWithFetch;
 
@@ -169,16 +196,16 @@ function MediaPane(props) {
   /**
    * Handle search term changes.
    *
-   * @param {Object} evt Doc Event
+   * @param {string} value the new search term.
    */
-  const onSearch = (evt) => {
-    setSearchTerm({ searchTerm: evt.target.value });
+  const onSearch = (value) => {
+    setSearchTerm({ searchTerm: value });
   };
 
   /**
    * Filter REST API calls and re-request API.
    *
-   * @param {string} filter Value that is passed to rest api to filter.
+   * @param {string} value that is passed to rest api to filter.
    */
   const onFilter = useCallback(
     (filter) => () => {
@@ -227,13 +254,39 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  const refContainer = useRef();
-  const refContainerFooter = useRef();
+  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
 
+  // State and callback ref necessary to recalculate the padding of the list
+  //  given the scrollbar width.
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  let container = null;
+  const refContainer = (element) => {
+    if (!element) {
+      return;
+    }
+    container = element;
+    setScrollbarWidth(element.offsetWidth - element.clientWidth);
+  };
+
+  // Recalculates padding of Media Pane so it stays centered.
+  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
+  // prop is not yet ready).
+  useLayoutEffect(() => {
+    if (!scrollbarWidth) {
+      return;
+    }
+    const currentPaddingLeft = parseFloat(
+      window.getComputedStyle(container, null).getPropertyValue('padding-left')
+    );
+    container.style['padding-right'] =
+      currentPaddingLeft - scrollbarWidth + 'px';
+  }, [scrollbarWidth, container]);
+
+  const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: refContainer,
+      root: { current: container },
       rootMargin: '0px 0px 300px 0px',
     },
     (entry) => {

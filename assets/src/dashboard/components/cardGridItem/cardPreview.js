@@ -162,8 +162,8 @@ const CardPreviewContainer = ({
             page={storyPages[pageIndex]}
             animationState={
               CARD_STATE.ACTIVE === cardState
-                ? STORY_PAGE_STATE.ANIMATE
-                : STORY_PAGE_STATE.IDLE
+                ? STORY_PAGE_STATE.PLAYING
+                : STORY_PAGE_STATE.RESET
             }
           />
         </PreviewErrorBoundary>
@@ -178,7 +178,7 @@ const CardPreviewContainer = ({
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
       >
         <EmptyActionContainer />
-        {centerAction && (
+        {centerAction?.label && (
           <ActionContainer>
             <Button
               type={BUTTON_TYPES.SECONDARY}
@@ -201,7 +201,7 @@ const CardPreviewContainer = ({
 const ActionButtonPropType = PropTypes.shape({
   targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
-  label: ActionLabel.isRequired,
+  label: ActionLabel,
 });
 
 CardPreviewContainer.propTypes = {

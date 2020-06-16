@@ -29,8 +29,7 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Toggle } from '../../../form';
-import { ReactComponent as Locked } from '../../../../icons/lock.svg';
-import { ReactComponent as Unlocked } from '../../../../icons/unlock.svg';
+import { Lock as Locked, Unlock as Unlocked } from '../../../../icons';
 import { PaddingPropType } from '../../../../types';
 import { BoxedNumeric, Space } from './common';
 

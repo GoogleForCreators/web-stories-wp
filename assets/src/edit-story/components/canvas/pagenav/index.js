@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
@@ -45,11 +45,32 @@ const Wrapper = styled.div`
   }
 `;
 
+const pageNavButtonsStyle = css`
+  &:focus {
+    opacity: 0.3;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+`;
+
+const LeftNavButton = styled(LeftArrow)`
+  ${pageNavButtonsStyle}
+`;
+
+const RightNavButton = styled(RightArrow)`
+  ${pageNavButtonsStyle}
+`;
+
 function PageNav({ isNext }) {
-  const {
-    state: { pages, currentPageIndex },
-    actions: { setCurrentPage },
-  } = useStory();
+  const { pages, currentPageIndex, setCurrentPage } = useStory(
+    ({ state: { pages, currentPageIndex }, actions: { setCurrentPage } }) => ({
+      pages,
+      currentPageIndex,
+      setCurrentPage,
+    })
+  );
   const { isRTL } = useConfig();
   const handleClick = useCallback(() => {
     const newPage = isNext
@@ -73,8 +94,8 @@ function PageNav({ isNext }) {
     height: PAGE_NAV_BUTTON_WIDTH,
   };
 
-  const PrevButton = isRTL ? RightArrow : LeftArrow;
-  const NextButton = isRTL ? LeftArrow : RightArrow;
+  const PrevButton = isRTL ? RightNavButton : LeftNavButton;
+  const NextButton = isRTL ? LeftNavButton : RightNavButton;
 
   if (isNext) {
     return (

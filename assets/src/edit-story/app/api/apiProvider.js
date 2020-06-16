@@ -30,7 +30,7 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
-import { useConfig } from '../';
+import { useConfig } from '../config';
 import Context from './context';
 
 function APIProvider({ children }) {
@@ -100,22 +100,6 @@ function APIProvider({ children }) {
         path: `${stories}/${storyId}/autosaves`,
         data: getStorySaveData(story),
         method: 'POST',
-      });
-    },
-    [stories]
-  );
-
-  const deleteStoryById = useCallback(
-    /**
-     * Fire REST API call to delete story.
-     *
-     * @param {number}   storyId Story post id.
-     * @return {Promise} Return apiFetch promise.
-     */
-    (storyId) => {
-      return apiFetch({
-        path: `${stories}/${storyId}`,
-        method: 'DELETE',
       });
     },
     [stories]
@@ -249,7 +233,6 @@ function APIProvider({ children }) {
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      deleteStoryById,
       getAllFonts,
       getAllUsers,
       uploadMedia,

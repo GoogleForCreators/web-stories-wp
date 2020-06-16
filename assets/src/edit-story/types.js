@@ -153,7 +153,6 @@ const StoryElementPropTypes = {
   height: PropTypes.number.isRequired,
   flip: StoryPropTypes.flip,
   rotationAngle: PropTypes.number.isRequired,
-  isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
   link: StoryPropTypes.link,
   opacity: PropTypes.number,

@@ -25,7 +25,7 @@ import { action } from '@storybook/addon-actions';
 import PreviewErrorDialog from '../previewErrorDialog';
 
 export default {
-  title: 'Stories Editor/Components/PreviewErrorDialog',
+  title: 'Stories Editor/Components/Dialog/Preview Error',
   component: PreviewErrorDialog,
 };
 

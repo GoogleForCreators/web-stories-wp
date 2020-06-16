@@ -16,11 +16,10 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -30,16 +29,17 @@ import styled from 'styled-components';
 import {
   CardGrid,
   CardGridItem,
-  CardItemMenu,
   CardTitle,
   CardPreviewContainer,
   ActionLabel,
+  StoryMenu,
 } from '../../../components';
-import { STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
 import {
   StoriesPropType,
+  StoryMenuPropType,
   UsersPropType,
   PageSizePropType,
+  RenameStoryPropType,
 } from '../../../types';
 
 export const DetailRow = styled.div`
@@ -63,108 +63,66 @@ const StoryGridView = ({
   users,
   centerActionLabelByStatus,
   bottomActionLabel,
-  createTemplateFromStory,
-  updateStory,
-  trashStory,
-  duplicateStory,
-  isTemplate,
   isSavedTemplate,
   pageSize,
+  storyMenu,
+  renameStory,
 }) => {
-  const [contextMenuId, setContextMenuId] = useState(-1);
-  const [titleRenameId, setTitleRenameId] = useState(-1);
-
-  const handleMenuItemSelected = useCallback(
-    (sender, story) => {
-      setContextMenuId(-1);
-      switch (sender.value) {
-        case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          window.location.href = story.bottomTargetAction;
-          break;
-        case STORY_CONTEXT_MENU_ACTIONS.RENAME:
-          setTitleRenameId(story.id);
-          break;
-
-        case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
-          duplicateStory(story);
-          break;
-
-        case STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE:
-          createTemplateFromStory(story);
-          break;
-
-        case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-          if (
-            window.confirm(
-              sprintf(
-                /* translators: %s: story title. */
-                __('Are you sure you want to delete "%s"?', 'web-stories'),
-                story.title
-              )
-            )
-          ) {
-            trashStory(story);
-          }
-          break;
-
-        default:
-          break;
-      }
-    },
-    [createTemplateFromStory, duplicateStory, trashStory]
-  );
-
-  const handleOnRenameStory = useCallback(
-    (story, newTitle) => {
-      setTitleRenameId(-1);
-      updateStory({ ...story, title: { raw: newTitle } });
-    },
-    [updateStory]
-  );
-
   return (
     <StoryGrid pageSize={pageSize}>
-      {stories.map((story) => (
-        <CardGridItem key={story.id} isTemplate={isTemplate}>
-          <CardPreviewContainer
-            pageSize={pageSize}
-            story={story}
-            centerAction={{
-              targetAction: story.centerTargetAction,
-              label: centerActionLabelByStatus[story.status],
-            }}
-            bottomAction={{
-              targetAction: story.bottomTargetAction,
-              label: bottomActionLabel,
-            }}
-          />
-          {!isTemplate && (
+      {stories.map((story) => {
+        const titleRenameProps = renameStory
+          ? {
+              editMode: renameStory?.id === story?.id,
+              onEditComplete: (newTitle) =>
+                renameStory?.handleOnRenameStory(story, newTitle),
+              onEditCancel: renameStory?.handleCancelRename,
+            }
+          : {};
+
+        return (
+          <CardGridItem
+            key={story.id}
+            data-testid={`story-grid-item-${story.id}`}
+          >
+            <CardPreviewContainer
+              pageSize={pageSize}
+              story={story}
+              centerAction={{
+                targetAction: story.centerTargetAction,
+                label: centerActionLabelByStatus[story.status],
+              }}
+              bottomAction={{
+                targetAction: story.bottomTargetAction,
+                label: bottomActionLabel,
+              }}
+            />
             <DetailRow>
               <CardTitle
                 title={story.title}
+                titleLink={story.editStoryLink}
                 status={story?.status}
+                id={story.id}
                 secondaryTitle={
                   isSavedTemplate
                     ? __('Google', 'web-stories')
                     : users[story.author]?.name
                 }
                 displayDate={story?.modified}
-                editMode={titleRenameId === story.id}
-                onEditComplete={(newTitle) =>
-                  handleOnRenameStory(story, newTitle)
-                }
-                onEditCancel={() => setTitleRenameId(-1)}
+                {...titleRenameProps}
               />
-              <CardItemMenu
-                onMoreButtonSelected={setContextMenuId}
-                contextMenuId={contextMenuId}
-                onMenuItemSelected={handleMenuItemSelected}
+
+              <StoryMenu
+                onMoreButtonSelected={storyMenu.handleMenuToggle}
+                contextMenuId={storyMenu.contextMenuId}
+                onMenuItemSelected={storyMenu.handleMenuItemSelected}
                 story={story}
+                menuItems={storyMenu.menuItems}
               />
             </DetailRow>
-          )}
-        </CardGridItem>
-      ))}
+          </CardGridItem>
+        );
+      })}
     </StoryGrid>
   );
 };
@@ -174,13 +132,14 @@ StoryGridView.propTypes = {
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
   users: UsersPropType,
-  centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
+  centerActionLabelByStatus: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.bool,
+  ]),
   bottomActionLabel: ActionLabel,
-  createTemplateFromStory: PropTypes.func,
-  updateStory: PropTypes.func,
-  trashStory: PropTypes.func,
-  duplicateStory: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
+  storyMenu: StoryMenuPropType,
+  renameStory: RenameStoryPropType,
 };
 
 export default StoryGridView;

@@ -20,26 +20,24 @@ export { default as CardGallery } from './cardGallery';
 export { default as CardGrid } from './cardGrid';
 export {
   ActionLabel,
-  CardItemMenu,
   CardPreviewContainer,
   CardTitle,
   default as CardGridItem,
-  MoreVerticalButton,
 } from './cardGridItem';
-export {
-  default as NavProvider,
-  useNavContext,
-} from '../components/navProvider';
 export { default as ColorList } from './colorList';
 export {
   DetailViewContentGutter,
   StandardViewContentGutter,
 } from './contentGutter';
+export { default as Dialog } from './dialog';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
+export { default as InlineInputForm } from './inlineInputForm';
 export { TextInput } from './input';
 export { default as Layout, useLayoutContext } from './layout';
+export { default as Modal } from './modal';
 export { default as MultiPartPill } from './multiPartPill';
+export { default as NavProvider, useNavContext } from './navProvider';
 export {
   AppFrame,
   LeftRail,
@@ -52,6 +50,7 @@ export { default as PopoverPanel } from './popoverPanel';
 export { default as PreviewPage } from './previewPage';
 export { default as PreviewErrorBoundary } from './previewErrorBoundary';
 export { default as ScrollToTop } from './scrollToTop';
+export { default as StoryMenu, MoreVerticalButton } from './storyMenu';
 export {
   Table,
   TableBody,

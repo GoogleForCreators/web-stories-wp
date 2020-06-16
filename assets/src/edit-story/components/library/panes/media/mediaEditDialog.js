@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
+import moment from 'moment';
 
 /**
  * WordPress dependencies
@@ -32,8 +33,8 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useAPI } from '../../../../app/api';
 import Dialog from '../../../../components/dialog';
 import { Plain, Primary } from '../../../../components/button';
+import { useMedia } from '../../../../app/media';
 import { useSnackbar } from '../../../../app/snackbar';
-import UseMedia from '../../../../app/media/useMedia';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 
 const styledMediaThumbnail = css`
@@ -62,12 +63,21 @@ const MetadataTextContainer = styled.div`
   flex-direction: column;
 `;
 
+const MediaDateText = styled.div`
+  font-family: ${({ theme }) => theme.fonts.date.family};
+  line-height: ${({ theme }) => theme.fonts.date.lineHeight};
+  font-size: ${({ theme }) => theme.fonts.date.size};
+  font-weight: ${({ theme }) => theme.fonts.date.weight};
+  color: ${({ theme }) => theme.grayout};
+  margin-bottom: 8px;
+`;
+
 const MediaTitleText = styled.div`
   font-family: ${({ theme }) => theme.fonts.title.family};
   line-height: ${({ theme }) => theme.fonts.title.lineHeight};
   font-size: ${({ theme }) => theme.fonts.title.size};
   font-weight: ${({ theme }) => theme.fonts.title.weight};
-  color: ${({ theme }) => theme.colors.bg.v11};
+  color: ${({ theme }) => theme.colors.bg.v9};
 `;
 
 const MediaSizeText = styled.div`
@@ -126,6 +136,7 @@ function MediaEditDialog({ resource, onClose }) {
     id,
     src,
     title,
+    creationDate,
     width,
     height,
     type,
@@ -136,11 +147,12 @@ function MediaEditDialog({ resource, onClose }) {
   const {
     actions: { updateMedia },
   } = useAPI();
-  const {
-    actions: { updateMediaElement },
-  } = UseMedia();
+  const { updateMediaElement } = useMedia((state) => ({
+    updateMediaElement: state.actions.updateMediaElement,
+  }));
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
+  const parsedDate = moment(creationDate);
 
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
@@ -184,6 +196,15 @@ function MediaEditDialog({ resource, onClose }) {
           </Video>
         )}
         <MetadataTextContainer>
+          {parsedDate.isValid() && (
+            <MediaDateText>
+              {sprintf(
+                /* translators: %s: upload date of media item. */
+                __('Uploaded: %s', 'web-stories'),
+                parsedDate.format('MMMM DD, YYYY')
+              )}
+            </MediaDateText>
+          )}
           <MediaTitleText>{title}</MediaTitleText>
           <MediaSizeText>
             {sprintf(

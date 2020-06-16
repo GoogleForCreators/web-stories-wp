@@ -26,8 +26,7 @@ import PropTypes from 'prop-types';
  */
 import { useMemo, useState } from 'react';
 import StoryPropTypes from '../../types';
-import { ReactComponent as Link } from '../../icons/link.svg';
-import { ReactComponent as External } from '../../icons/external.svg';
+import { Link, External } from '../../icons';
 import Popup from '../popup';
 import { useTransformHandler } from '../transform';
 import { getLinkFromElement } from './index';
