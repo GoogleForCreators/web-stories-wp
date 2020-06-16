@@ -36,8 +36,6 @@ $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_b
 // Preload common data.
 $preload_paths = [
 	sprintf( '/wp/v2/%s/%s?context=edit', $rest_base, $post->ID ),
-	// TODO Implement preloading media. '/wp/v2/media?context=edit&per_page=100&page=1'.
-	// TODO Implement preloading users. '/wp/v2/users?per_page=-1'.
 	'/web-stories/v1/fonts',
 ];
 
