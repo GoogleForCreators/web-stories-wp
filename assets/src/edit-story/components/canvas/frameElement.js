@@ -103,10 +103,16 @@ function FrameElement({ element }) {
     setIsTransforming(transform !== null);
   });
 
+  const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
+
+  useTransformHandler('*', (transform) => {
+    setIsAnythingTransforming(transform !== null);
+  });
+
   return (
     <WithLink
       element={element}
-      active={!isSelected && hovering}
+      active={!isSelected && hovering && !isAnythingTransforming}
       anchorRef={elementRef}
     >
       {Controls && (

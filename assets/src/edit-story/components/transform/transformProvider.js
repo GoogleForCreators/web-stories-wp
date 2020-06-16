@@ -43,6 +43,10 @@ function TransformProvider({ children }) {
     if (handlerList) {
       handlerList.forEach((handler) => handler(transform));
     }
+    const globalHandlerList = handlerListMap['*'];
+    if (globalHandlerList) {
+      globalHandlerList.forEach((handler) => handler(transform));
+    }
   }, []);
 
   const state = {
