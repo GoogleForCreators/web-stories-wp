@@ -63,7 +63,7 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const {
     state: { fonts },
-    actions: { maybeEnqueueFontStyle, getFontByName, updateRecentFonts },
+    actions: { maybeEnqueueFontStyle, getFontByName },
   } = useFont();
   const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
     getFontByName,
@@ -99,7 +99,6 @@ function FontControls({ selectedElements, pushUpdate }) {
       );
 
       pushUpdate({ font: newFont }, true);
-      updateRecentFonts();
     },
     [
       fontStyle,
@@ -108,7 +107,6 @@ function FontControls({ selectedElements, pushUpdate }) {
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
-      updateRecentFonts,
     ]
   );
 

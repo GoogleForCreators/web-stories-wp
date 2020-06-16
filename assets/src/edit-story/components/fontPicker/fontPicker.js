@@ -33,6 +33,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { ReactComponent as DropDownIcon } from '../../icons/dropdown.svg';
 import Popup from '../popup';
+import { useFont } from '../../app/font';
 import FontPickerContainer from './pickerContainer';
 
 const DEFAULT_WIDTH = 240;
@@ -84,6 +85,9 @@ const FontPickerTitle = styled.span`
 `;
 
 function FontPicker({ onChange, lightMode = false, placeholder, value }) {
+  const { updateRecentFonts } = useFont((state) => ({
+    updateRecentFonts: state.actions.updateRecentFonts,
+  }));
   const ref = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -103,10 +107,11 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
   const handleSelect = useCallback(
     (option) => {
       onChange(option);
+      updateRecentFonts();
       setIsOpen(false);
       ref.current.focus();
     },
-    [onChange]
+    [onChange, updateRecentFonts]
   );
 
   return (

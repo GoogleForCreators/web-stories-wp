@@ -62,6 +62,7 @@ function FontProvider({ children }) {
     const { pageCount, elementCount } = countRef.current;
     if (
       currentPage?.elements &&
+      pages &&
       (pages.length !== pageCount ||
         currentPage.elements.filter(({ type }) => type === 'text').length !==
           elementCount)
@@ -72,7 +73,7 @@ function FontProvider({ children }) {
       elementCount: currentPage?.elements?.length
         ? currentPage.elements.filter(({ type }) => type === 'text').length
         : 0,
-      pageCount: pages.length,
+      pageCount: pages?.length || 1,
     };
   }, [currentPage, pages, fonts, getRecentFonts]);
 
