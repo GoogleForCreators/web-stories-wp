@@ -83,7 +83,7 @@ const ACCEPTED_KEYS = [
 
 function ScalePanel({ setProperties, width, height, x, y, scale }) {
   // Handle different step size for mouse and keyboard users
-  const usingKeyboard = useIsUsingKeyboard(null, ACCEPTED_KEYS);
+  const usingKeyboard = useIsUsingKeyboard(ACCEPTED_KEYS);
 
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
@@ -91,7 +91,7 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
         <RangeInput
           min={100}
           max={MAX_SCALE}
-          step={usingKeyboard ? 10 : null}
+          step={usingKeyboard ? 10 : 1}
           value={scale}
           onChange={(evt) => setProperties({ scale: evt.target.valueAsNumber })}
         />

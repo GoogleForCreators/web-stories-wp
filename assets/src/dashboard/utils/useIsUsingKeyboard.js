@@ -19,6 +19,11 @@
  */
 import { useEffect, useState } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import useBatchingCallback from './useBatchingCallback';
+
 const DEFAULT_ACCEPTED_KEYS = [
   'ArrowUp',
   'ArrowDown',
@@ -27,36 +32,35 @@ const DEFAULT_ACCEPTED_KEYS = [
   'Tab',
 ];
 
-function useIsUsingKeyboard(callback, acceptedKeys = DEFAULT_ACCEPTED_KEYS) {
+function useIsUsingKeyboard(acceptedKeys = DEFAULT_ACCEPTED_KEYS) {
   const [usingKeyboard, setUsingKeyboard] = useState(false);
-  const handleKeydown = (e) => {
-    if (!usingKeyboard && acceptedKeys.includes(e.key)) {
-      setUsingKeyboard(true);
-    }
-  };
+  const handleKeydown = useBatchingCallback(
+    (e) => {
+      if (!usingKeyboard && acceptedKeys.includes(e.key)) {
+        setUsingKeyboard(true);
+      }
+    },
+    [usingKeyboard, acceptedKeys]
+  );
 
-  const handleMousedown = () => {
+  const handleMousedown = useBatchingCallback(() => {
     if (usingKeyboard) {
       setUsingKeyboard(false);
     }
-  };
-
-  document.addEventListener('keydown', handleKeydown);
-  document.addEventListener('mousedown', handleMousedown);
+  }, [usingKeyboard]);
 
   useEffect(() => {
+    document.addEventListener('keydown', handleKeydown, true /** useCapture */);
+    document.addEventListener(
+      'mousedown',
+      handleMousedown,
+      true /** useCapture */
+    );
     return function cleanup() {
       document.removeEventListener('keydown', handleKeydown);
       document.removeEventListener('mousedown', handleMousedown);
     };
   });
-
-  useEffect(() => {
-    if (!callback) {
-      return;
-    }
-    callback(usingKeyboard);
-  }, [usingKeyboard, callback]);
 
   return usingKeyboard;
 }

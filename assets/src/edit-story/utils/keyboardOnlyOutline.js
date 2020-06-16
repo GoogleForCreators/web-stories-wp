@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 /**
@@ -37,9 +37,11 @@ const OutlineStyles = createGlobalStyle`
 `;
 
 const KeyboardOnlyOutline = () => {
-  useIsUsingKeyboard((usingKeyboard) => {
+  const usingKeyboard = useIsUsingKeyboard();
+
+  useEffect(() => {
     document.body.classList.toggle(KEYBOARD_USER_CLASS, usingKeyboard);
-  });
+  }, [usingKeyboard]);
 
   return <OutlineStyles />;
 };
