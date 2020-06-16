@@ -27,6 +27,7 @@ import { TransformProvider } from '../../../../edit-story/components/transform';
 import stripHTML from '../../../../edit-story/utils/stripHTML';
 import VisibleImage from '../../../../edit-story/elements/media/visibleImage';
 import ShapeLayerContent from '../../../../edit-story/elements/shape/layer';
+import getStoryMarkup from '../../../../edit-story/output/utils/getStoryMarkup';
 import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
@@ -217,6 +218,46 @@ function StoryAnimTool() {
     [activeStory, activePageIndex, saveActiveStoryUpdates]
   );
 
+  const handlePreviewClick = useCallback(() => {
+    const story = {
+      ...activeStory.originalStoryData,
+      title: activeStory.title,
+      excerpt: '',
+      featuredMedia: 0,
+      story_data: {
+        ...activeStory.originalStoryData.story_data,
+        pages: {
+          ...activeStory.pages,
+        },
+      },
+    };
+
+    const storyMarkup = getStoryMarkup(story, activeStory.pages, {
+      fallbackPoster: '',
+      logoPlaceholder: '',
+      publisher: {
+        name: 'Demo',
+      },
+    });
+
+    const popup = window.open('about:blank', '_blank');
+
+    popup.document.write('<!DOCTYPE html><html><head>');
+    popup.document.write(`<title>${activeStory.title}</title>`);
+    popup.document.write('</head><body style="width: 100%; height: 100vh;">');
+    popup.document.write(
+      '<iframe id="content" width="100%" height="100%" frameBorder="0"></iframe>'
+    );
+    popup.document.write('</body></html>');
+
+    const iframe = popup.document.querySelector('#content');
+    const iframeDoc = iframe.contentDocument;
+
+    iframeDoc.open();
+    iframeDoc.write(storyMarkup.toString());
+    iframeDoc.close();
+  }, [activeStory]);
+
   useEffect(() => {
     setSelectedElementIds(
       (activeAnimation.targets || []).reduce(
@@ -270,6 +311,7 @@ function StoryAnimTool() {
 
       {activeStory && (
         <>
+          <button onClick={handlePreviewClick}>{'Preview Story'}</button>
           <Container>
             <div>
               <FontProvider>

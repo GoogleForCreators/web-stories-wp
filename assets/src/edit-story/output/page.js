@@ -24,7 +24,6 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
-import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
@@ -32,14 +31,12 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const { id, elements, backgroundOverlay, backgroundColor } = page;
+  const { id, elements, backgroundColor } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
     ...generatePatternStyles(backgroundColor),
   };
-  const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
-  const backgroundElements = elements.filter((element) => element.isBackground);
-  const regularElements = elements.filter((element) => !element.isBackground);
+  const [backgroundElement, ...regularElements] = elements;
   const longestMediaElement = getLongestMediaElement(elements);
 
   const autoAdvanceAfter = longestMediaElement?.id
@@ -51,23 +48,24 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
-      {backgroundElements.length > 0 && (
+      {backgroundElement && (
         <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
           <div className="page-fullbleed-area" style={backgroundStyles}>
             <div className="page-safe-area">
-              {backgroundElements.map((element) => (
-                <OutputElement key={'el-' + element.id} element={element} />
-              ))}
+              <OutputElement element={backgroundElement} />
+              {backgroundElement.backgroundOverlay && (
+                <div
+                  className="page-background-overlay-area"
+                  style={generatePatternStyles(
+                    backgroundElement.backgroundOverlay
+                  )}
+                />
+              )}
             </div>
           </div>
-          {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
-            <div
-              className="page-fullbleed-area"
-              style={{ ...backgroundOverlayStyles }}
-            />
-          )}
         </amp-story-grid-layer>
       )}
+
       <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
         <div className="page-fullbleed-area">
           <div className="page-safe-area">

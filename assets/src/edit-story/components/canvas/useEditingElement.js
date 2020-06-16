@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useCallback, useMemo, useState } from 'react';
+import { useReducer, useRef, useCallback, useMemo, useState } from 'react';
 
 function useEditingElement() {
   const [state, dispatch] = useReducer(reducer, {
@@ -43,6 +43,11 @@ function useEditingElement() {
     [setNodesById]
   );
 
+  // Immutable frame lookup for imperative actions.
+  const nodesByIdRef = useRef(null);
+  nodesByIdRef.current = nodesById;
+  const getNodeForElement = useCallback((id) => nodesByIdRef.current[id], []);
+
   const { editingElement, editingElementState } = state;
   return useMemo(
     () => ({
@@ -52,6 +57,7 @@ function useEditingElement() {
       setEditingElementWithState,
       setEditingElementWithoutState,
       clearEditing,
+      getNodeForElement,
       setNodeForElement,
     }),
     [
@@ -61,6 +67,7 @@ function useEditingElement() {
       setEditingElementWithState,
       setEditingElementWithoutState,
       clearEditing,
+      getNodeForElement,
       setNodeForElement,
     ]
   );

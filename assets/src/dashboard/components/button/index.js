@@ -66,6 +66,20 @@ const PrimaryButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
 `;
 
+const DefaultButton = styled(StyledButton)(
+  ({ theme }) => `
+    background-color: ${theme.colors.white};
+    color: ${theme.colors.gray800};
+    border: ${theme.borders.gray800};
+    &:focus,
+    &:active,
+    &:hover {
+      color: ${theme.colors.gray900};
+      border-color: ${theme.colors.gray900};
+    }
+  `
+);
+
 // TODO: address CTA active styling
 const CtaButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
@@ -110,6 +124,7 @@ const Button = ({
     [BUTTON_TYPES.PRIMARY]: PrimaryButton,
     [BUTTON_TYPES.SECONDARY]: SecondaryButton,
     [BUTTON_TYPES.CTA]: CtaButton,
+    [BUTTON_TYPES.DEFAULT]: DefaultButton,
   };
 
   const StyledButtonByType = ButtonOptions[type];
