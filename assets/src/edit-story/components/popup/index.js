@@ -66,7 +66,7 @@ const Container = styled.div.attrs(
   })
 )`
   position: fixed;
-  z-index: 2147483646;
+  z-index: 2;
   ${({ placement }) => getTransforms(placement)}
 
   /*

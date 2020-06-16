@@ -24,11 +24,11 @@ import { useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { STORY_CONTEXT_MENU_ITEMS } from '../../constants';
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
 import { PopoverMenuCard } from '../popoverMenu';
+import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 
 export const MoreVerticalButton = styled.button`
   display: flex;
@@ -69,8 +69,10 @@ export default function StoryMenu({
   onMenuItemSelected,
   story,
   verticalAlign,
+  menuItems,
 }) {
   const containerRef = useRef(null);
+
   const handleFocusOut = useCallback(() => {
     if (contextMenuId === story.id) {
       onMoreButtonSelected(-1);
@@ -92,7 +94,7 @@ export default function StoryMenu({
       <PopoverMenuCard
         isOpen={isPopoverMenuOpen}
         onSelect={(menuItem) => onMenuItemSelected(menuItem, story)}
-        items={STORY_CONTEXT_MENU_ITEMS}
+        items={menuItems}
       />
     </MenuContainer>
   );
@@ -103,5 +105,6 @@ StoryMenu.propTypes = {
   onMoreButtonSelected: PropTypes.func.isRequired,
   onMenuItemSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
+  menuItems: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
   verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
 };

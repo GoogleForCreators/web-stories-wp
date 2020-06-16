@@ -41,10 +41,12 @@ function DropTargetsProvider({ children }) {
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    actions: { combineElements },
-    state: { currentPage },
-  } = useStory();
+  const { currentPage, combineElements } = useStory(
+    ({ state: { currentPage }, actions: { combineElements } }) => ({
+      currentPage,
+      combineElements,
+    })
+  );
 
   const elements = currentPage?.elements || [];
 
@@ -140,6 +142,9 @@ function DropTargetsProvider({ children }) {
       }
 
       if (!activeDropTargetId || activeDropTargetId === selfId) {
+        Object.keys(dropTargets)
+          .filter((id) => id !== selfId)
+          .map((id) => pushTransform(id, null));
         return;
       }
 

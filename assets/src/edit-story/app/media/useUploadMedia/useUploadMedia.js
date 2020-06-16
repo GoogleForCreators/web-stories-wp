@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -37,20 +37,27 @@ import {
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
 import createError from '../../../utils/createError';
 
-function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
+function useUploadMedia({ media, setMedia }) {
   const { uploadFile, isValidType } = useUploader();
   const { showSnackbar } = useSnackbar();
   const { allowedFileTypes } = useConfig();
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
 
+  const mediaRef = useRef();
+  mediaRef.current = media;
+
   const uploadMedia = useCallback(
     async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
+      // eslint-disable-next-line no-shadow
+      const media = mediaRef.current;
+
       // If there are no files passed, don't try to upload.
       if (!files || files.length === 0) {
         return;
       }
       let localFiles;
+      let updatedMedia;
       try {
         setIsUploading(true);
         setPreventUnload('upload', true);
@@ -87,12 +94,11 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
             return { localResource, file, element };
           });
         }
-        setMedia({
-          media: [
-            ...localFiles.map(({ localResource }) => localResource),
-            ...media,
-          ],
-        });
+        updatedMedia = [
+          ...localFiles.map(({ localResource }) => localResource),
+          ...media,
+        ];
+        setMedia({ media: updatedMedia });
       } catch (e) {
         setMedia({ media });
 
@@ -104,24 +110,37 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
       }
 
       try {
-        const uploadingFiles = await Promise.all(
+        const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => ({
             ...localFile,
-            fileUploaded: await uploadFile(localFile.file),
+            fileUploaded: getResourceFromAttachment(
+              await uploadFile(localFile.file)
+            ),
           }))
         );
 
         setIsUploading(false);
 
         if (onUploadedFile) {
-          uploadingFiles.forEach(({ element, fileUploaded }) => {
+          uploadedFiles.forEach(({ element, fileUploaded }) => {
             onUploadedFile({
-              resource: getResourceFromAttachment(fileUploaded),
+              resource: fileUploaded,
               element,
             });
           });
         }
-        fetchMedia({ pagingNum, mediaType }, setMedia);
+
+        const uploadedFilesMap = new Map(
+          uploadedFiles.map(({ localResource, fileUploaded }) => [
+            localResource,
+            fileUploaded,
+          ])
+        );
+        setMedia({
+          media: updatedMedia.map((resource) => {
+            return uploadedFilesMap.get(resource) ?? resource;
+          }),
+        });
       } catch (e) {
         showSnackbar({
           message: e.message,
@@ -142,12 +161,8 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
     },
     [
       setMedia,
-      media,
       showSnackbar,
       allowedFileTypes,
-      fetchMedia,
-      pagingNum,
-      mediaType,
       uploadFile,
       isValidType,
       setPreventUnload,

@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { _n, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -244,7 +244,12 @@ const Dropdown = ({
                 {selectedItems.length > 1 &&
                   sprintf(
                     /* translators: %s: number selected */
-                    __(' + %s', 'web-stories'),
+                    _n(
+                      ' + %s',
+                      ' + %s',
+                      (selectedItems.length - 1).toString(10),
+                      'web-stories'
+                    ),
                     (selectedItems.length - 1).toString(10)
                   )}
               </>

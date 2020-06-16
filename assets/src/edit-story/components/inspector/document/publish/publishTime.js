@@ -78,12 +78,17 @@ const StyledToggleIcon = styled(ToggleIcon)`
 `;
 
 function PublishTime() {
-  const {
-    state: {
-      story: { date },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { date, updateStory } = useStory(
+    ({
+      state: {
+        story: { date },
+      },
+      actions: { updateStory },
+    }) => ({
+      date,
+      updateStory,
+    })
+  );
   const { timeFormat } = useConfig();
   const use12HourFormat = is12Hour(timeFormat);
 

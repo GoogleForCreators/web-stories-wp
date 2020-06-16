@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
 /**
@@ -27,23 +28,20 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, ToggleButton } from '../form';
-import { useStory } from '../../app';
-import { OverlayPreset, OverlayType } from '../../utils/backgroundOverlay';
-import { SimplePanel } from './panel';
+import { Row, ToggleButton, Color, Label } from '../../form';
+import { OverlayPreset, OverlayType } from '../../../utils/backgroundOverlay';
+import { SimplePanel } from '../panel';
+import convertOverlay from './convertOverlay';
 
-function BackgroundOverlayPanel() {
-  const {
-    state: { currentPage },
-    actions: { updateCurrentPageProperties },
-  } = useStory();
-  const overlay = currentPage.backgroundOverlay || OverlayType.NONE;
+function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
+  const overlay = selectedElements[0].backgroundOverlay || null;
+
+  const overlayType =
+    overlay === null ? OverlayType.NONE : overlay.type || OverlayType.SOLID;
 
   const updateOverlay = useCallback(
-    (value) => {
-      updateCurrentPageProperties({ properties: { backgroundOverlay: value } });
-    },
-    [updateCurrentPageProperties]
+    (value) => pushUpdate({ backgroundOverlay: value }, true),
+    [pushUpdate]
   );
 
   return (
@@ -56,8 +54,10 @@ function BackgroundOverlayPanel() {
               key={type}
               icon={icon}
               label={label}
-              value={overlay === type}
-              onChange={() => updateOverlay(type)}
+              value={overlayType === type}
+              onChange={() =>
+                updateOverlay(convertOverlay(overlay, overlayType, type))
+              }
               iconWidth={22}
               iconHeight={16}
               aria-label={sprintf(
@@ -69,10 +69,19 @@ function BackgroundOverlayPanel() {
           );
         })}
       </Row>
+      {overlayType !== OverlayType.NONE && (
+        <Row>
+          <Label>{__('Color', 'web-stories')}</Label>
+          <Color value={overlay} onChange={updateOverlay} hasGradient />
+        </Row>
+      )}
     </SimplePanel>
   );
 }
 
-BackgroundOverlayPanel.propTypes = {};
+BackgroundOverlayPanel.propTypes = {
+  selectedElements: PropTypes.array.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
+};
 
 export default BackgroundOverlayPanel;

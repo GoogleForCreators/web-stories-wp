@@ -47,17 +47,18 @@ const Element = styled.p`
 `;
 
 function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
-  const {
-    actions: { dataToEditorX, dataToEditorY },
-  } = useUnits();
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
   const props = generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY);
-  const {
-    state: { selectedElementIds },
-  } = useStory();
+  const { selectedElementIds } = useStory((state) => ({
+    selectedElementIds: state.state.selectedElementIds,
+  }));
 
-  const {
-    actions: { setEditingElementWithState },
-  } = useCanvas();
+  const { setEditingElementWithState } = useCanvas((state) => ({
+    setEditingElementWithState: state.actions.setEditingElementWithState,
+  }));
   const isElementSelected = selectedElementIds.includes(id);
   const isElementOnlySelection =
     isElementSelected && selectedElementIds.length === 1;
@@ -81,17 +82,15 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
         return;
       }
 
-      if (evt.key === 'Enter') {
-        // Enter editing without writing or selecting anything
+      if (evt.key === 'Enter' || /^\w$/.test(evt.key)) {
+        // TODO: in above check all printable characters across alphabets, no just a-z0-9 as \w regex is
+        // Enter on editing mode. When inserting content, first letter will be correctly inserted from keyup
         setEditingElementWithState(id, { selectAll: true });
         evt.stopPropagation();
         // Make sure no actual Enter is pressed
-        evt.preventDefault();
-      } else if (/^\w$/.test(evt.key)) {
-        // TODO: in above check all printable characters across alphabets, no just a-z0-9 as \w is
-        // Enter editing and clear content (first letter will be correctly inserted from keyup)
-        setEditingElementWithState(id, { clearContent: true });
-        evt.stopPropagation();
+        if (evt.key === 'Enter') {
+          evt.preventDefault();
+        }
       }
     };
 

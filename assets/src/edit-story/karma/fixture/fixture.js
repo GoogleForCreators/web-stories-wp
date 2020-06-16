@@ -19,7 +19,7 @@
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
-import { render, act } from '@testing-library/react';
+import { render, act, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -70,6 +70,7 @@ export class Fixture {
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
+    //eslint-disable-next-line jasmine/no-unsafe-spy
     spyOn(React, 'createElement').and.callFake((type, props, ...children) => {
       if (!props?._wrapped) {
         const stubs = this._componentStubs.get(type);
@@ -104,6 +105,10 @@ export class Fixture {
 
   get container() {
     return this._container;
+  }
+
+  get screen() {
+    return this._screen;
   }
 
   /**
@@ -180,6 +185,7 @@ export class Fixture {
     container.style.width = '100%';
     container.style.height = '100%';
     this._container = container;
+    this._screen = screen;
 
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
@@ -232,6 +238,24 @@ export class Fixture {
    */
   querySelectorAll(selector) {
     return this._container.querySelectorAll(selector);
+  }
+
+  /**
+   * @param {Element} element
+   * @return {Promise} Yields when the element is displayed on the screen.
+   */
+  waitOnScreen(element) {
+    return new Promise((resolve) => {
+      const io = new IntersectionObserver((records) => {
+        records.forEach((record) => {
+          if (record.isIntersecting) {
+            resolve();
+            io.disconnect();
+          }
+        });
+      });
+      io.observe(element);
+    });
   }
 
   /**
@@ -359,6 +383,7 @@ function HookExecutor({ hooks }) {
 }
 /* eslint-enable react/prop-types, react/jsx-no-useless-fragment */
 
+/* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
   constructor() {
     // eslint-disable-next-line react/prop-types
@@ -473,6 +498,7 @@ class APIProviderFixture {
     return this._comp;
   }
 }
+/* eslint-enable jasmine/no-unsafe-spy */
 
 /**
  * Wraps a fixture response in a promise. May additionally add `act()` calls as

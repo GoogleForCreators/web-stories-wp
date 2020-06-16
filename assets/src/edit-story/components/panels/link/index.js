@@ -67,9 +67,9 @@ const CloseIcon = styled(Close)`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const selectedElement = selectedElements[0];
   const defaultLink = useMemo(
