@@ -66,7 +66,7 @@ const Hint = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v1};
 `;
 
-function useCanvasSelector({ state: { showSafeZone } }) {
+function safeZoneSelector({ state: { showSafeZone } }) {
   return { showSafeZone };
 }
 
@@ -74,7 +74,7 @@ function FramesLayer() {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
-  const { showSafeZone } = useCanvas(useCanvasSelector);
+  const { showSafeZone } = useCanvas(safeZoneSelector);
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
