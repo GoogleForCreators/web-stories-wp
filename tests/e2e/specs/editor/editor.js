@@ -24,21 +24,12 @@ import { percySnapshot } from '@percy/puppeteer';
  */
 import { createNewStory } from '../../utils';
 
-describe('Inserting Media from Media Library', () => {
-  // Uses the existence of the element's frame element as an indicator for successful insertion.
-  it('should insert an image by clicking on it', async () => {
+describe('Story Editor', () => {
+  it('should be able to create a blank story', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    // Clicking will only act on the first element.
-    await expect(page).toClick('[data-testid="mediaElement"]');
-
-    // First match is for the background element, second for the image.
-    await expect(page).toMatchElement(
-      '[data-testid="frameElement"]:nth-of-type(2)'
-    );
-
-    await percySnapshot(page, 'E2E: Inserting Media from Media Library');
+    await percySnapshot(page, 'E2E: Empty Editor');
   });
 });

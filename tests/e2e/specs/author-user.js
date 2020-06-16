@@ -55,7 +55,10 @@ describe('Author User', () => {
 
     await expect(previewPage).toMatch('Fill in some text');
 
-    await percySnapshot(previewPage, this.test.fullTitle());
+    await percySnapshot(
+      previewPage,
+      'E2E: Author previewing without publishing'
+    );
 
     await editorPage.bringToFront();
     await previewPage.close();
@@ -83,7 +86,7 @@ describe('Author User', () => {
 
     await expect(previewPage).toMatch('Fill in some text');
 
-    await percySnapshot(previewPage, this.test.fullTitle());
+    await percySnapshot(previewPage, 'E2E: Author previewing after publishing');
 
     await editorPage.bringToFront();
     await previewPage.close();
@@ -111,7 +114,7 @@ describe('Author User', () => {
 
     await expect(previewPage).toMatch('Fill in some text');
 
-    await percySnapshot(previewPage, this.test.fullTitle());
+    await percySnapshot(previewPage, 'E2E: Autosaving and previewing');
 
     await editorPage.bringToFront();
     await previewPage.close();

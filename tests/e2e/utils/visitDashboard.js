@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
-export { default as createNewStory } from './createNewStory';
-export { default as previewStory } from './previewStory';
-export { default as visitDashboard } from './visitDashboard';
+/**
+ * WordPress dependencies
+ */
+import { visitAdminPage } from '@wordpress/e2e-test-utils';
+
+/**
+ * Creates a new story.
+ */
+async function visitDashboard() {
+  await visitAdminPage('edit.php', 'post_type=web-story&page=stories-dashboard');
+}
+
+export default visitDashboard;

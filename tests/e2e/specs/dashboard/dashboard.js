@@ -22,14 +22,14 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../utils';
+import { visitDashboard } from '../../utils';
 
-describe('Example Spec', () => {
-  it('should be able to create a blank story', async () => {
-    await createNewStory();
+describe('Stories Dashboard', () => {
+  it('should be able to open the dashboard', async () => {
+    await visitDashboard();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await expect(page).toMatcch('My stories');
 
-    await percySnapshot(page, this.test.fullTitle());
+    await percySnapshot(page, 'E2E: Stories Dashboard');
   });
 });
