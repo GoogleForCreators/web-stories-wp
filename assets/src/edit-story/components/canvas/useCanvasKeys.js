@@ -17,16 +17,17 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect, useKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
+import useCanvas from './useCanvas';
 
 const MOVE_COARSE_STEP = 10;
 
@@ -35,15 +36,41 @@ const MOVE_COARSE_STEP = 10;
  */
 function useCanvasKeys(ref) {
   const {
-    actions: {
-      addElements,
-      arrangeSelection,
-      clearSelection,
-      deleteSelectedElements,
-      updateSelectedElements,
-    },
-    state: { selectedElements },
-  } = useStory();
+    selectedElementIds,
+    selectedElements,
+    addElements,
+    arrangeSelection,
+    clearSelection,
+    deleteSelectedElements,
+    updateSelectedElements,
+  } = useStory(
+    ({
+      state: { selectedElementIds, selectedElements },
+      actions: {
+        addElements,
+        arrangeSelection,
+        clearSelection,
+        deleteSelectedElements,
+        updateSelectedElements,
+      },
+    }) => {
+      return {
+        selectedElementIds,
+        selectedElements,
+        addElements,
+        arrangeSelection,
+        clearSelection,
+        deleteSelectedElements,
+        updateSelectedElements,
+      };
+    }
+  );
+
+  const getNodeForElement = useCanvas(
+    ({ actions: { getNodeForElement } }) => getNodeForElement
+  );
+  const selectedElementIdsRef = useRef(null);
+  selectedElementIdsRef.current = selectedElementIds;
 
   // Return focus back to the canvas when another section loses the focus.
   useEffect(() => {
@@ -60,7 +87,18 @@ function useCanvasKeys(ref) {
       // after DOM removal, the "focusout" events are all over the place.
       setTimeout(() => {
         if (doc.activeElement === doc.body) {
-          container.focus();
+          // For a single selection, select the frame of this element.
+          // If none or multiple selection, select the container.
+          const currentSelectedIds = selectedElementIdsRef.current;
+          const selectedFrame =
+            currentSelectedIds?.length === 1
+              ? getNodeForElement(currentSelectedIds[0])
+              : null;
+          if (selectedFrame) {
+            selectedFrame.focus({ preventScroll: true });
+          } else {
+            container.focus({ preventScroll: true });
+          }
         }
       }, 300);
     };
@@ -68,16 +106,15 @@ function useCanvasKeys(ref) {
     return () => {
       doc.removeEventListener('focusout', handler, true);
     };
-  }, [ref]);
+  }, [ref, getNodeForElement]);
 
-  useKeyDownEffect(ref, 'delete', () => deleteSelectedElements(), [
+  useGlobalKeyDownEffect('delete', () => deleteSelectedElements(), [
     deleteSelectedElements,
   ]);
-  useKeyDownEffect(ref, 'esc', () => clearSelection(), [clearSelection]);
+  useGlobalKeyDownEffect('esc', () => clearSelection(), [clearSelection]);
 
   // Position (x/y) key handler.
-  useKeyDownEffect(
-    ref,
+  useGlobalKeyDownEffect(
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
       const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
@@ -94,11 +131,20 @@ function useCanvasKeys(ref) {
   );
 
   // Layer up/down.
-  useKeyDownEffect(
-    ref,
-    { key: ['mod+up', 'mod+down'], shift: true },
-    ({ key, shiftKey }) =>
-      arrangeSelection({ position: getLayerDirection(key, shiftKey) }),
+  useGlobalKeyDownEffect(
+    { key: ['mod+up', 'mod+down', 'mod+left', 'mod+right'], shift: true },
+    (evt) => {
+      const { key, shiftKey } = evt;
+
+      // Cancel the default behavior of the event: it's very jarring to run
+      // into mod+left/right triggering the browser's back/forward navigation.
+      evt.preventDefault();
+
+      const layerDir = getLayerDirection(key, shiftKey);
+      if (layerDir) {
+        arrangeSelection({ position: layerDir });
+      }
+    },
     [arrangeSelection]
   );
 

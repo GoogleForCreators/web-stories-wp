@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -56,8 +57,8 @@ import {
   COMPACT_THUMB_WIDTH,
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
-
 import CompactIndicator from './compactIndicator';
+import useCarouselKeys from './useCarouselKeys';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 
@@ -204,15 +205,24 @@ function calculatePageThumbSize(carouselSize) {
 
 function Carousel() {
   const {
-    state: { pages, currentPageId },
-    actions: { setCurrentPage, arrangePage },
-  } = useStory();
+    pages,
+    currentPageId,
+    setCurrentPage,
+    arrangePage,
+  } = useStory(
+    ({
+      state: { pages, currentPageId },
+      actions: { setCurrentPage, arrangePage },
+    }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
+  );
   const { isRTL } = useConfig();
+  const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
   const pageRefs = useRef([]);
+  const wrapperRef = useRef(null);
 
   const [carouselSize, setCarouselSize] = useState({
     width: COMPACT_THUMB_WIDTH,
@@ -324,9 +334,11 @@ function Carousel() {
     [pages, isCompact, arrangePage, setCurrentPage]
   );
 
+  useCarouselKeys(wrapperRef, pageRefs, isRTL);
+
   return (
     <>
-      <Wrapper>
+      <Wrapper ref={wrapperRef} data-testid="PageCarousel">
         <NavArea area="space" />
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
@@ -413,14 +425,16 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            <OverflowButtons>
-              <KeyboardShortcutsButton
-                width="24"
-                height="24"
-                isDisabled
-                aria-label={__('Keyboard Shortcuts', 'web-stories')}
-              />
-            </OverflowButtons>
+            {showKeyboardShortcutsButton && (
+              <OverflowButtons>
+                <KeyboardShortcutsButton
+                  width="24"
+                  height="24"
+                  isDisabled
+                  aria-label={__('Keyboard Shortcuts', 'web-stories')}
+                />
+              </OverflowButtons>
+            )}
             <GridViewButton
               width="24"
               height="24"

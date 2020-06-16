@@ -75,9 +75,8 @@ function PresetsHeader({
   setIsEditMode,
   stylePresets,
 }) {
-  const { fillColors, textColors, textStyles } = stylePresets;
-  const hasPresets =
-    fillColors.length > 0 || textColors.length > 0 || textStyles.length > 0;
+  const { fillColors, textColors } = stylePresets;
+  const hasPresets = fillColors.length > 0 || textColors.length > 0;
 
   const getActions = () => {
     return !isEditMode ? (

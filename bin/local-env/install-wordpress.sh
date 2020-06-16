@@ -117,8 +117,8 @@ wp plugin activate web-stories --quiet
 echo -e $(status_message "Installing and activating RTL Tester plugin...")
 wp plugin install rtl-tester --activate --force --quiet
 
-echo -e $(status_message "Installing and activating Gutenberg plugin...")
-wp plugin install gutenberg --activate --force --quiet
+echo -e $(status_message "Installing Gutenberg plugin...")
+wp plugin install gutenberg --force --quiet
 
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")

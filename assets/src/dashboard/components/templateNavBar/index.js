@@ -75,23 +75,27 @@ const CloseLink = styled.a`
     color: ${theme.colors.gray700};
   `}
 `;
+const CapitalizedButton = styled(Button)`
+  text-transform: uppercase;
+`;
 
-export function TemplateNavBar({ handleCta }) {
+export function TemplateNavBar({ handleCta, handleBookmarkClick }) {
   return (
     <Nav>
       <Container>
         <CloseLink href={parentRoute()}>{__('Close', 'web-stories')}</CloseLink>
       </Container>
       <Container>
-        <BookmarkToggle />
-        <Button type={BUTTON_TYPES.CTA} onClick={handleCta}>
-          {__('USE TEMPLATE', 'web-stories')}
-        </Button>
+        {handleBookmarkClick && <BookmarkToggle />}
+        <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
+          {__('use template', 'web-stories')}
+        </CapitalizedButton>
       </Container>
     </Nav>
   );
 }
 
 TemplateNavBar.propTypes = {
+  handleBookmarkClick: PropTypes.func,
   handleCta: PropTypes.func.isRequired,
 };

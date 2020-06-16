@@ -39,8 +39,6 @@ import useCanvasKeys from './useCanvasKeys';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
-    className: 'container web-stories-content',
-    pointerEvents: 'initial',
     showOverflow: true,
   })``
 );
@@ -68,9 +66,9 @@ const Hint = styled.div`
 `;
 
 function FramesLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },

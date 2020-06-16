@@ -48,7 +48,7 @@ describe('clearBackgroundElement', () => {
         isDefaultBackground: true,
         isBackground: true,
       },
-      { id: '456', isBackground: false },
+      { id: '456' },
       { id: '789' },
     ]);
   });
@@ -75,5 +75,41 @@ describe('clearBackgroundElement', () => {
     const result = clearBackgroundElement();
 
     expect(result).toStrictEqual(initialState);
+  });
+
+  it('should unset overlay if present', () => {
+    const { restore, clearBackgroundElement } = setupReducer();
+
+    // Set an initial state with a current page, some elements and a default background element
+    restore({
+      pages: [
+        {
+          id: '111',
+          defaultBackgroundElement: {
+            id: '123',
+            isDefaultBackground: true,
+            isBackground: true,
+          },
+          elements: [
+            { id: '456', isBackground: true, backgroundOverlay: {} },
+            { id: '789' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    const result = clearBackgroundElement();
+
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '123',
+        isDefaultBackground: true,
+        isBackground: true,
+      },
+      { id: '456' },
+      { id: '789' },
+    ]);
   });
 });
