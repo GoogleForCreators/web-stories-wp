@@ -29,9 +29,19 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
  */
 const webpackConfigArray = require('./webpack.config.cjs');
 
-module.exports = webpackConfigArray
-  .filter((webpackConfig) => 'edit-story' in webpackConfig.entry)
-  .map((webpackConfig) => ({
+function entryToCamelCase(entry) {
+  if ('edit-story' in entry) {
+    return 'editStory';
+  } else if ('stories-dashboard' in entry) {
+    return 'storiesDashboard';
+  } else {
+    return entry;
+  }
+}
+
+// exports { editStory: ...webpackConfig, storiesDashboard: ...webpackConfig}
+module.exports = webpackConfigArray.reduce((acc, webpackConfig) => {
+  acc[entryToCamelCase(webpackConfig.entry)] = {
     ...webpackConfig,
     // Karma watches the test entry points, so we don't need to specify
     // them here. Webpack watches dependencies.
@@ -47,4 +57,7 @@ module.exports = webpackConfigArray
     plugins: webpackConfig.plugins.filter(
       (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
     ),
-  }))[0];
+  };
+
+  return acc;
+}, {});

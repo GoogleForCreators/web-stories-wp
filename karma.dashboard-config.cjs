@@ -19,7 +19,9 @@
 /**
  * Internal dependencies
  */
-const { editStory: webpackConfig } = require('./webpack.config.test.cjs');
+const {
+  storiesDashboard: webpackConfig,
+} = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -38,7 +40,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
+      { pattern: 'assets/src/dashboard/**/karma/**/*.js', watched: false },
       {
         pattern: '__static__/**/*',
         watched: false,
@@ -54,7 +56,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'assets/src/edit-story/**/karma/**/*.js': ['webpack', 'sourcemap'],
+      'assets/src/dashboard/**/karma/**/*.js': ['webpack', 'sourcemap'],
     },
 
     proxies: {
