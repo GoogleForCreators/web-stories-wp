@@ -71,7 +71,7 @@ function DateTime({
 
 DateTime.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onViewChange: PropTypes.func.isRequired,
+  onViewChange: PropTypes.func,
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
   forwardedRef: PropTypes.object,
