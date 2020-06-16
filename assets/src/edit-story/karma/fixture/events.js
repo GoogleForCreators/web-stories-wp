@@ -37,6 +37,7 @@ class FixtureEvents {
     this._act = act;
     this._keyboard = new Keyboard(act);
     this._mouse = new Mouse(act);
+    this._clipBoard = new ClipBoard(this._keyboard);
   }
 
   get keyboard() {
@@ -45,6 +46,10 @@ class FixtureEvents {
 
   get mouse() {
     return this._mouse;
+  }
+
+  get clipBoard() {
+    return this._clipBoard;
   }
 
   /**
@@ -446,6 +451,38 @@ class Mouse {
    */
   moveBy(dx, dy, options = {}) {
     return this.seq([this._events.moveBy(dx, dy, options)]);
+  }
+}
+
+/**
+ * Events utility for clipboard.
+ */
+class ClipBoard {
+  /**
+   * @param {Object} keyboard
+   */
+  constructor(keyboard) {
+    this._keyboard = keyboard;
+  }
+
+  /**
+   * Copy whatever is currently selected to the clipboard
+   *
+   * @return {!Promise} Resolves when operation completes with a boolean success flag
+   */
+  async copy() {
+    await this._keyboard.shortcut('mod+c');
+    return document.execCommand('copy');
+  }
+
+  /**
+   * Paste whatever is in the clipboard to the currently active target
+   *
+   * @return {!Promise} Yields when the event is processed.
+   */
+  async paste() {
+    await this._keyboard.shortcut('mod+v');
+    return document.execCommand('paste');
   }
 }
 
