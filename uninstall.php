@@ -1,0 +1,100 @@
+<?php
+/**
+ * Plugin uninstall handler.
+ *
+ * @package   Google\Web_Stories
+ * @copyright 2020 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
+ */
+
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Template_Post_Type;
+
+/**
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	return;
+}
+
+/**
+ * Filters whether data should be erased when uninstalling the plugin.
+ *
+ * @param bool $erase Whether to erase data. Default false.
+ */
+$erase = (bool) apply_filters( 'web_stories_erase_data_on_uninstall', false );
+
+if ( false === $erase ) {
+	return;
+}
+
+global $wpdb;
+
+$prefix = 'web_stories\_%';
+
+// Delete options and transients.
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+$wpdb->query(
+	$wpdb->prepare(
+		"DELETE FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s",
+		$prefix,
+		'_transient_' . $prefix,
+		'_transient_timeout_' . $prefix
+	)
+);
+
+// Clear network data if multisite.
+if ( is_multisite() ) {
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM $wpdb->sitemeta WHERE meta_key LIKE %s OR meta_key LIKE %s OR meta_key LIKE %s",
+			$prefix,
+			'_site_transient_' . $prefix,
+			'_site_transient_timeout_' . $prefix
+		)
+	);
+}
+
+// Delete post meta.
+delete_post_meta_by_key( 'web_stories_is_poster' );
+delete_post_meta_by_key( 'web_stories_poster_id' );
+
+// Delete all stories.
+$stories = get_posts(
+	[
+		'post_type'      => Story_Post_Type::POST_TYPE_SLUG,
+		'posts_per_page' => - 1,
+	]
+);
+foreach ( $stories as $story_post ) {
+	wp_delete_post( $story_post->ID, true );
+}
+
+// Delete all template.
+$templates = get_posts(
+	[
+		'post_type'      => Template_Post_Type::POST_TYPE_SLUG,
+		'posts_per_page' => - 1,
+	]
+);
+foreach ( $templates as $template_post ) {
+	wp_delete_post( $template_post->ID, true );
+}
+
+// Clear options cache.
+wp_cache_flush();
