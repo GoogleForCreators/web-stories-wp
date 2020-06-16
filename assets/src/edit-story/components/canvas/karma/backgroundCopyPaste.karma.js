@@ -36,7 +36,7 @@ describe('Background Copy Paste integration', () => {
   });
 
   // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy pattern background to page with pattern background', async () => {
+  fit('should correctly copy pattern background to page with pattern background', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -60,9 +60,14 @@ describe('Background Copy Paste integration', () => {
     // Act: Copy background from page 1 to page 2
     await gotoPage(1);
     await clickBackgroundElement();
-    await fixture.events.clipBoard.copy();
+    await fixture.events.clipboard.copy();
     await gotoPage(2);
-    await fixture.events.clipBoard.paste();
+
+    await karmaPause();
+
+    await fixture.events.clipboard.paste();
+
+    await karmaPause();
 
     // Assert - validate that page 2 now has the correct background color and only 1 element
     await gotoPage(2);
@@ -71,6 +76,8 @@ describe('Background Copy Paste integration', () => {
       'rgb(255, 0, 0)'
     );
     expect(await getNumElements()).toBe(1);
+
+    await karmaPause();
   });
 
   // eslint-disable-next-line jasmine/no-disabled-tests
@@ -100,9 +107,9 @@ describe('Background Copy Paste integration', () => {
     // Act: Copy background from page 1 to page 2
     await gotoPage(1);
     await clickBackgroundElement();
-    await fixture.events.clipBoard.copy();
+    await fixture.events.clipboard.copy();
     await gotoPage(2);
-    await fixture.events.clipBoard.paste();
+    await fixture.events.clipboard.paste();
 
     // Assert - validate that page 2 now has the correct background color, no image and only 1 element
     await gotoPage(2);
@@ -141,9 +148,9 @@ describe('Background Copy Paste integration', () => {
     // Act: Copy background from page 1 to page 2
     await gotoPage(1);
     await clickBackgroundElement();
-    await fixture.events.clipBoard.copy();
+    await fixture.events.clipboard.copy();
     await gotoPage(2);
-    await fixture.events.clipBoard.paste();
+    await fixture.events.clipboard.paste();
 
     // Assert - validate that page 2 now has the correct image and only 1 element
     await gotoPage(2);
@@ -197,9 +204,9 @@ describe('Background Copy Paste integration', () => {
     // Act: Copy background from page 1 to page 2
     await gotoPage(1);
     await clickBackgroundElement();
-    await fixture.events.clipBoard.copy();
+    await fixture.events.clipboard.copy();
     await gotoPage(2);
-    await fixture.events.clipBoard.paste();
+    await fixture.events.clipboard.paste();
 
     // Assert - validate that page 2 now has the correct image and overlay and only 1 element
     await gotoPage(2);
