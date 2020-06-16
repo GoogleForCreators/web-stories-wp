@@ -24,7 +24,7 @@ import { useCallback } from 'react';
 import { useStory } from '../story';
 
 function useGetRecentFonts() {
-  const { pages = [] } = useStory((state) => ({
+  const { pages } = useStory((state) => ({
     pages: state.state.pages,
   }));
 

@@ -395,6 +395,7 @@
   },
   {
     "name": "Space Mono",
+    "family": "Space Mono",
     "value": "Space Mono",
     "fallbacks": ["monospace"],
     "service": "fonts.google.com",
