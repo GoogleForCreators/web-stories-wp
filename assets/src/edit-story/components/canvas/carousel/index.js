@@ -117,6 +117,19 @@ const OverflowButtons = styled.div`
   }
 `;
 
+const buttonDimensions = { width: '24', height: '24' };
+
+const StyledGridViewButton = styled(GridViewButton).attrs(buttonDimensions)``;
+
+const SafeModeButton = styled(SafeMode).attrs(buttonDimensions)`
+  ${({ active }) =>
+    active &&
+    css`
+      background: rgba(255, 255, 255, 0.1);
+    `}
+  margin-bottom: 12px;
+`;
+
 const PageList = styled(Reorderable).attrs({
   area: 'carousel',
   role: 'listbox',
@@ -188,15 +201,6 @@ const GridViewContainer = styled.div`
   flex: 1;
   margin: 70px 170px 70px 170px;
   pointer-events: all;
-`;
-
-const SafeModeButton = styled(SafeMode)`
-  ${({ active }) =>
-    active &&
-    css`
-      background: rgba(255, 255, 255, 0.1);
-    `}
-  margin-bottom: 12px;
 `;
 
 function calculateThumbnailHeight(carouselSize) {
@@ -456,8 +460,6 @@ function Carousel() {
               </OverflowButtons>
             )}
             <SafeModeButton
-              width="24"
-              height="24"
               active={showSafeZone}
               onClick={() => setShowSafeZone((current) => !current)}
               aria-label={
@@ -466,9 +468,7 @@ function Carousel() {
                   : __('Enable Safe Zone', 'web-stories')
               }
             />
-            <GridViewButton
-              width="24"
-              height="24"
+            <StyledGridViewButton
               onClick={openModal}
               aria-label={__('Grid View', 'web-stories')}
             />
