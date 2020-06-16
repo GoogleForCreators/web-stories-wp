@@ -23,22 +23,70 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import loadStylesheet from '../../utils/loadStylesheet';
+import { useStory } from '../story';
 import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
+import useGetRecentFonts from './useGetRecentFonts';
 
 const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
+  const { currentPage, pages } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+    pages: state.state.pages,
+  }));
   const [fonts, setFonts] = useState([]);
 
+  const getRecentFonts = useGetRecentFonts();
+  const [recentFonts, setRecentFonts] = useState([]);
+
+  const countRef = useRef({
+    elementCount: currentPage?.elements?.length
+      ? currentPage.elements.filter(({ type }) => type === 'text').length
+      : 0,
+    pageCount: pages?.length || 1,
+  });
+
+  /*
+   * This effect checks if the number of text elements on the current page has changed
+   * or if a page has been added/removed and updates the recent fonts if yes.
+   */
+  useEffect(() => {
+    const { pageCount, elementCount } = countRef.current;
+    if (
+      currentPage?.elements &&
+      (pages.length !== pageCount ||
+        currentPage.elements.filter(({ type }) => type === 'text').length !==
+          elementCount)
+    ) {
+      setRecentFonts(getRecentFonts(fonts));
+    }
+    countRef.current = {
+      elementCount: currentPage?.elements?.length
+        ? currentPage.elements.filter(({ type }) => type === 'text').length
+        : 0,
+      pageCount: pages.length,
+    };
+  }, [currentPage, pages, fonts, getRecentFonts]);
+
+  useEffect(() => {
+    if (fonts.length) {
+      setRecentFonts(getRecentFonts(fonts));
+    }
+  }, [fonts, getRecentFonts]);
+
   useLoadFonts({ fonts, setFonts });
+
+  const updateRecentFonts = useCallback(() => {
+    setRecentFonts(getRecentFonts(fonts));
+  }, [getRecentFonts, fonts]);
 
   const getFontBy = useCallback(
     (key, value) => {
@@ -126,6 +174,7 @@ function FontProvider({ children }) {
   const state = {
     state: {
       fonts,
+      recentFonts,
     },
     actions: {
       getFontByName,
@@ -133,6 +182,7 @@ function FontProvider({ children }) {
       getFontWeight,
       getFontFallback,
       ensureMenuFontsLoaded,
+      updateRecentFonts,
     },
   };
 

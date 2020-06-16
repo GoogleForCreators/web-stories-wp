@@ -110,7 +110,7 @@ const NoResult = styled.span`
 
 function FontPickerContainer({ value, onSelect, onClose }) {
   const {
-    state: { fonts },
+    state: { fonts, recentFonts },
     actions: { ensureMenuFontsLoaded },
   } = useFont();
 
@@ -131,14 +131,15 @@ function FontPickerContainer({ value, onSelect, onClose }) {
 
   useFocusOut(ref, onClose, [onClose]);
 
-  // Scroll to offset for current value
-  const currentOffset = fonts.findIndex(({ name }) => name === value);
+  // Add divider to the last item of the recent fonts.
+  const dividerIndex = recentFonts.length - 1;
+  const matchingFonts = [...recentFonts, ...fonts];
 
-  // This is static for now, but with search and used fonts, this will change later
-  const matchingFonts = fonts;
+  // Scroll to offset for current value
+  const currentOffset = matchingFonts.findIndex(({ name }) => name === value);
 
   const itemRenderer = useCallback(
-    ({ service, name, hasDivider }) => (
+    ({ service, name }, index) => (
       <>
         <Item
           fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
@@ -149,10 +150,10 @@ function FontPickerContainer({ value, onSelect, onClose }) {
           )}
           {name}
         </Item>
-        {hasDivider && <Divider />}
+        {index === dividerIndex && <Divider />}
       </>
     ),
-    [onSelect, value]
+    [dividerIndex, onSelect, value]
   );
 
   return (

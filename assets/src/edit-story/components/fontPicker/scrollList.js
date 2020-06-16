@@ -126,7 +126,7 @@ function ScrollList({
     >
       {items.map((item, index) => (
         <Item ref={setRef(index)} key={index}>
-          {itemRenderer(item)}
+          {itemRenderer(item, index)}
         </Item>
       ))}
     </List>
