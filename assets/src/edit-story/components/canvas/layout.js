@@ -213,7 +213,7 @@ const PageArea = forwardRef(
   (
     {
       children,
-      showSafeZone,
+      showSafeZone = false,
       showOverflow = false,
       fullbleedRef = createRef(),
       overlay = [],
