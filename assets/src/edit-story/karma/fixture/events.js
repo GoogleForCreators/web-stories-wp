@@ -461,7 +461,7 @@ class Clipboard {
   /**
    * @param {function():Promise} act
    */
-  constructor(act, keyboard) {
+  constructor(act) {
     this._act = act;
   }
 
@@ -470,7 +470,7 @@ class Clipboard {
    *
    * @return {!Promise} Resolves when operation completes with a boolean success flag
    */
-  async copy() {
+  copy() {
     return this._act(() => karmaPuppeteer.clipboard.copy());
   }
 
@@ -479,7 +479,7 @@ class Clipboard {
    *
    * @return {!Promise} Yields when the event is processed.
    */
-  async paste() {
+  paste() {
     return this._act(() => karmaPuppeteer.clipboard.paste());
   }
 }
