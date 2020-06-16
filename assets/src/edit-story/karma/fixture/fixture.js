@@ -19,17 +19,19 @@
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
-import { render, act } from '@testing-library/react';
+import { render, act, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import App from '../app/index';
-import APIProvider from '../app/api/apiProvider';
-import APIContext from '../app/api/context';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
-import Layout from '../app/layout';
-import FixtureEvents from './fixtureEvents';
+import App from '../../app/index';
+import APIProvider from '../../app/api/apiProvider';
+import APIContext from '../../app/api/context';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import Layout from '../../app/layout';
+import { DATA_VERSION } from '../../migration';
+import { createPage } from '../../elements';
+import FixtureEvents from './events';
 import getMediaResponse from './db/getMediaResponse';
 
 const DEFAULT_CONFIG = {
@@ -70,6 +72,7 @@ export class Fixture {
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
+    //eslint-disable-next-line jasmine/no-unsafe-spy
     spyOn(React, 'createElement').and.callFake((type, props, ...children) => {
       if (!props?._wrapped) {
         const stubs = this._componentStubs.get(type);
@@ -104,6 +107,10 @@ export class Fixture {
 
   get container() {
     return this._container;
+  }
+
+  get screen() {
+    return this._screen;
   }
 
   /**
@@ -160,22 +167,34 @@ export class Fixture {
   }
 
   /**
+   * @param {Array<Object>} pages
+   */
+  setPages(pages) {
+    this.apiProviderFixture_.setPages(pages);
+  }
+
+  /**
    * Renders the editor similarly to the `@testing-library/react`'s `render()`
    * method.
    *
    * @return {Promise} Yields when the editor rendering is complete.
    */
   render() {
+    const root = document.querySelector('test-root');
     const { container } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />
-      </FlagsProvider>
+      </FlagsProvider>,
+      {
+        container: root,
+      }
     );
     // The editor should always be given 100%:100% size. The testing-library
     // renders an extra container so it should be given the same size.
     container.style.width = '100%';
     container.style.height = '100%';
     this._container = container;
+    this._screen = screen;
 
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
@@ -228,6 +247,24 @@ export class Fixture {
    */
   querySelectorAll(selector) {
     return this._container.querySelectorAll(selector);
+  }
+
+  /**
+   * @param {Element} element
+   * @return {Promise} Yields when the element is displayed on the screen.
+   */
+  waitOnScreen(element) {
+    return new Promise((resolve) => {
+      const io = new IntersectionObserver((records) => {
+        records.forEach((record) => {
+          if (record.isIntersecting) {
+            resolve();
+            io.disconnect();
+          }
+        });
+      });
+      io.observe(element);
+    });
   }
 
   /**
@@ -313,9 +350,10 @@ class ComponentStub {
       );
 
       return (
-        <HookExecutor key={refresher} hooks={hooks}>
+        <>
+          <HookExecutor key={refresher} hooks={hooks} />
           <Impl _wrapped={true} ref={ref} {...props} />
-        </HookExecutor>
+        </>
       );
     });
     Wrapper.displayName = `Mock(${
@@ -347,13 +385,18 @@ class ComponentStub {
   }
 }
 
-function HookExecutor({ hooks, children }) {
+/* eslint-disable react/prop-types, react/jsx-no-useless-fragment */
+function HookExecutor({ hooks }) {
   hooks.forEach((func) => func());
-  return children;
+  return <></>;
 }
+/* eslint-enable react/prop-types, react/jsx-no-useless-fragment */
 
+/* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
   constructor() {
+    this._pages = [];
+
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
       const getStoryById = useCallback(
@@ -368,7 +411,10 @@ class APIProviderFixture {
             modified: '2020-05-06T22:32:37',
             excerpt: { raw: '' },
             link: 'http://stories.local/?post_type=web-story&p=1',
-            story_data: [],
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
             featured_media: 0,
             featured_media_url: '',
             publisher_logo_url:
@@ -462,10 +508,25 @@ class APIProviderFixture {
     this._comp = Comp;
   }
 
+  /**
+   * @param {Array<Object>} pages
+   */
+  setPages(pages) {
+    this._pages = pages.map((page) => {
+      const result = createPage(page);
+      // Overwrite ID used in testing.
+      if (page.id !== undefined) {
+        result.id = page.id;
+      }
+      return result;
+    });
+  }
+
   get Component() {
     return this._comp;
   }
 }
+/* eslint-enable jasmine/no-unsafe-spy */
 
 /**
  * Wraps a fixture response in a promise. May additionally add `act()` calls as

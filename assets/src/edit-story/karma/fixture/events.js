@@ -20,10 +20,14 @@ const KEY_MAP = {
   CMD: 'Meta',
   CONTROL: 'Control',
   CNTRL: 'Control',
+  DOWN: 'ArrowDown',
   ESC: 'Escape',
+  LEFT: 'ArrowLeft',
   META: 'Meta',
+  RIGHT: 'ArrowRight',
   SHIFT: 'Shift',
   TAB: 'Tab',
+  UP: 'ArrowUp',
 };
 
 /**
@@ -142,7 +146,8 @@ class Keyboard {
       typeof arrayOrGenerator === 'function'
         ? arrayOrGenerator(this._events)
         : arrayOrGenerator;
-    return this._act(() => karmaPuppeteer.keyboard.seq(cleanupKeys(array)));
+    const keys = cleanupKeys(array);
+    return this._act(() => karmaPuppeteer.keyboard.seq(keys));
   }
 
   /**
@@ -478,7 +483,7 @@ function cleanupKey(key) {
     return isApple ? 'Meta' : 'Control';
   }
   if (upperKey === 'DEL') {
-    return isApple ? 'Delete' : 'Backspace';
+    return isApple ? 'Backspace' : 'Delete';
   }
   if (upperKey.length === 1 && /[A-Z]/.test(upperKey)) {
     return `Key${upperKey}`;

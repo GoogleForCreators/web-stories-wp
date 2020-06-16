@@ -76,6 +76,10 @@ export const StoryActionsPropType = PropTypes.shape({
   updateStory: PropTypes.func,
 });
 
+export const TemplateActionsPropType = PropTypes.shape({
+  createStoryFromTemplate: PropTypes.func,
+});
+
 export const TotalStoriesByStatusPropType = PropTypes.shape({
   all: PropTypes.number,
   draft: PropTypes.number,
@@ -91,6 +95,12 @@ export const StoryMenuPropType = PropTypes.shape({
   handleMenuToggle: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
   handleMenuItemSelected: PropTypes.func.isRequired,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.oneOfType[(PropTypes.string, PropTypes.bool)],
+    })
+  ),
 });
 
 export const RenameStoryPropType = PropTypes.shape({

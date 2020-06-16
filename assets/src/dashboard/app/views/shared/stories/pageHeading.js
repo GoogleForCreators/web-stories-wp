@@ -28,7 +28,7 @@ import { PageHeading } from '../';
 import { NavProvider, LeftRail } from '../../../../components';
 
 export default {
-  title: 'Dashboard/Components/PageHeading',
+  title: 'Dashboard/Views/Shared/PageHeading',
   component: PageHeading,
 };
 

@@ -26,6 +26,7 @@ import { useState, useCallback } from 'react';
 import { useStory } from '../../app';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
+import { getDefinitionForType } from '../../elements';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
@@ -41,10 +42,12 @@ function DropTargetsProvider({ children }) {
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    actions: { combineElements },
-    state: { currentPage },
-  } = useStory();
+  const { currentPage, combineElements } = useStory(
+    ({ state: { currentPage }, actions: { combineElements } }) => ({
+      currentPage,
+      combineElements,
+    })
+  );
 
   const elements = currentPage?.elements || [];
 
@@ -140,6 +143,9 @@ function DropTargetsProvider({ children }) {
       }
 
       if (!activeDropTargetId || activeDropTargetId === selfId) {
+        Object.keys(dropTargets)
+          .filter((id) => id !== selfId)
+          .map((id) => pushTransform(id, null));
         return;
       }
 
@@ -172,6 +178,11 @@ function DropTargetsProvider({ children }) {
         });
 
       setActiveDropTargetId(null);
+
+      const { onDropHandler } = getDefinitionForType(resource.type);
+      if (onDropHandler) {
+        onDropHandler(activeDropTargetId);
+      }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );

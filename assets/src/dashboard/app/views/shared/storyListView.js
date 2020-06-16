@@ -257,6 +257,7 @@ export default function StoryListView({
                         contextMenuId={storyMenu.contextMenuId}
                         onMenuItemSelected={storyMenu.handleMenuItemSelected}
                         story={story}
+                        menuItems={storyMenu.menuItems}
                         verticalAlign="center"
                       />
                     </>

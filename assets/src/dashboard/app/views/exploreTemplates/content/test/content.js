@@ -87,8 +87,9 @@ describe('Explore Templates <Content />', function () {
       </LayoutProvider>
     );
 
-    // update this to be regex
-    expect(getAllByTestId('grid-item')).toHaveLength(fakeTemplates.length);
+    const useButtons = getAllByTestId(/^template-grid-item/);
+
+    expect(useButtons).toHaveLength(fakeTemplates.length);
   });
 
   it('should show "No templates currently available" if no templates are present.', function () {
