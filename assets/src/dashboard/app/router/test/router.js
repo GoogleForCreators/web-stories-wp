@@ -49,7 +49,7 @@ describe('RouterProvider', () => {
 
     jest.spyOn(history, 'push').mockImplementation((sender) => {
       listeners.forEach((l) => {
-        l({ search: '', pathname: sender });
+        l({ location: { search: '', pathname: sender } });
       });
     });
 
@@ -84,7 +84,7 @@ describe('RouterProvider', () => {
 
     jest.spyOn(history, 'push').mockImplementation((sender) => {
       listeners.forEach((l) => {
-        l({ search: '', pathname: sender });
+        l({ location: { search: '', pathname: sender } });
       });
     });
 
