@@ -54,6 +54,7 @@ function OutputStory({
         <CustomCSS />
         {/* Everything between these markers can be replaced server-side. */}
         <meta name="web-stories-replace-head-start" />
+        <title>{title}</title>
         <link rel="canonical" href={link} />
         <meta name="web-stories-replace-head-end" />
       </head>

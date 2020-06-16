@@ -124,6 +124,11 @@ function observeConsoleLogging() {
       return;
     }
 
+    // Another Firefox warning.
+    if (text.includes('Layout was forced before the page was fully loaded')) {
+      return;
+    }
+
     const logFunction = OBSERVED_CONSOLE_MESSAGE_TYPES[type];
 
     // As of Puppeteer 1.6.1, `message.text()` wrongly returns an object of
