@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-const fs = require('fs').promises;
+/**
+ * External dependencies
+ */
 const path = require('path');
+const fs = require('fs').promises;
 const puppeteer = require('puppeteer');
+
+/**
+ * Internal dependencies
+ */
+const MouseWithDnd = require('./mouseWithDnd.cjs');
 
 function puppeteerBrowser(baseBrowserDecorator, config) {
   baseBrowserDecorator(this);
@@ -208,7 +216,14 @@ async function exposeKeyboardFunctions(page) {
 
 async function exposeMouseFunctions(page) {
   // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
-  const { mouse } = page;
+  const mouseForFrame = new Map();
+
+  function getMouse(frame) {
+    if (!mouseForFrame.has(frame)) {
+      mouseForFrame.set(frame, new MouseWithDnd(page, frame));
+    }
+    return mouseForFrame.get(frame);
+  }
 
   function exposeMouseFunction(name, func) {
     return exposeFunction(page, `mouse_${name}`, func);
@@ -216,6 +231,7 @@ async function exposeMouseFunctions(page) {
 
   // Mouse sequence of "down", "up", "move", and "click".
   await exposeMouseFunction('seq', (frame, seq) => {
+    const mouse = getMouse(frame);
     return seq.reduce((promise, item) => {
       const { type, x, y, options } = item;
       const acceptsXY = type === 'move' || type === 'click';
@@ -243,6 +259,8 @@ async function extractSnapshot(frame, testName, snapshotName) {
     };
   });
 
+  const localizeUrls = (s) => s.replace(/http:\/\/localhost:9876\//gi, '/');
+
   return `<!DOCTYPE html>
     <html>
     <head>
@@ -256,10 +274,10 @@ async function extractSnapshot(frame, testName, snapshotName) {
           height: 100vh;
         }
       </style>
-      ${head}
+      ${localizeUrls(head)}
     </head>
     <body>
-      ${body}
+      ${localizeUrls(body)}
     </body>
     </html>
   `;
