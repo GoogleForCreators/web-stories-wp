@@ -51,7 +51,11 @@ describe('MediaPane fetching', () => {
 
     await waitFor(() => {
       mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
-      expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
+      if (!(mediaElements.length === MEDIA_PER_PAGE * 2)) {
+        throw new Error('2nd page not yet loaded');
+      }
     });
+    
+    expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
   });
 });
