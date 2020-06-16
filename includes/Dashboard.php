@@ -88,6 +88,8 @@ class Dashboard {
 
 	/**
 	 * Preload api requests in the dashboard.
+	 *
+	 * @return void
 	 */
 	public function load_stories_dashboard() {
 		// Preload common data.
