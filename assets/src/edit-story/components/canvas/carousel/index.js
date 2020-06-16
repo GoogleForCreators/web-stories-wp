@@ -462,8 +462,8 @@ function Carousel() {
               onClick={() => setShowSafeZone((current) => !current)}
               aria-label={
                 showSafeZone
-                  ? __('Disable Safe Mode', 'web-stories')
-                  : __('Enable Safe Mode', 'web-stories')
+                  ? __('Disable Safe Zone', 'web-stories')
+                  : __('Enable Safe Zone', 'web-stories')
               }
             />
             <GridViewButton
