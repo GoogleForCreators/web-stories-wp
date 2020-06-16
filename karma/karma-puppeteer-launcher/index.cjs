@@ -259,7 +259,7 @@ async function extractSnapshot(frame, testName, snapshotName) {
     };
   });
 
-  const localizeUrls = (s) => s.replace(/http\:\/\/localhost\:9876\//gi, '/');
+  const localizeUrls = (s) => s.replace(/http:\/\/localhost:9876\//gi, '/');
 
   return `<!DOCTYPE html>
     <html>
