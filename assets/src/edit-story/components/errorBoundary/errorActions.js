@@ -15,9 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
+const Message = styled.p`
+  color: #fff;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+  padding: 20px;
+`;
 
 function ErrorActions() {
   const reload = () => {
@@ -25,18 +38,13 @@ function ErrorActions() {
   };
 
   return (
-    <div>
-      <h3 className="loading-message" style={{ padding: 40 }}>
-        {__('Editor has crashed.', 'web-stories')}
-        <br />
-        {__(
-          "Try to reload if that doesn't help, wait for a fix.",
-          'web-stories'
-        )}
-        <br />
-        <button onClick={reload}>{__('Reload', 'web-stories')}</button>
-      </h3>
-    </div>
+    <Message>
+      {__('Editor has crashed.', 'web-stories')}
+      <br />
+      {__("Try to reload if that doesn't help, wait for a fix.", 'web-stories')}
+      <br />
+      <button onClick={reload}>{__('Reload', 'web-stories')}</button>
+    </Message>
   );
 }
 
