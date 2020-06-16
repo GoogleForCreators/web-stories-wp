@@ -121,6 +121,8 @@ module.exports = function (config) {
 };
 
 /**
+ * Returns a viewport object for  a given flag.
+ *
  * The following viewports are supported:
  * - default: no special viewport is used.
  * - 1600:1000: empirical laptop size. Also used for screenshots.
@@ -128,9 +130,12 @@ module.exports = function (config) {
  * A custom W:H viewport is intentionally not supported to reduce number of
  * test variations.
  *
- * @todo: Support the viewport sizes from Figma:
+ * Todo: Support the viewport sizes from Figma:
  * - 1920:1080: the canonical desktop size.
  * - 1024:680: the canonical iPad size.
+ *
+ * @param {string} flag Viewport flag.
+ * @return {{width: number, height: number}|null} Viewport.
  */
 function getViewport(flag) {
   if (!flag) {
