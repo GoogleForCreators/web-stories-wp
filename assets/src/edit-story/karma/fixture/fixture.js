@@ -512,7 +512,14 @@ class APIProviderFixture {
    * @param {Array<Object>} pages
    */
   setPages(pages) {
-    this._pages = pages.map((page) => createPage(page));
+    this._pages = pages.map((page) => {
+      const result = createPage(page);
+      // Overwrite ID used in testing.
+      if (page.id !== undefined) {
+        result.id = page.id;
+      }
+      return result;
+    });
   }
 
   get Component() {

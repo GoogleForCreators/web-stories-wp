@@ -259,6 +259,8 @@ async function extractSnapshot(frame, testName, snapshotName) {
     };
   });
 
+  const localizeUrls = (s) => s.replace(/http:\/\/localhost:9876\//gi, '/');
+
   return `<!DOCTYPE html>
     <html>
     <head>
@@ -272,10 +274,10 @@ async function extractSnapshot(frame, testName, snapshotName) {
           height: 100vh;
         }
       </style>
-      ${head}
+      ${localizeUrls(head)}
     </head>
     <body>
-      ${body}
+      ${localizeUrls(body)}
     </body>
     </html>
   `;
