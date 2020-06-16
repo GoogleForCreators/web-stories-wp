@@ -35,7 +35,7 @@ function RouterProvider({ children, ...props }) {
   );
 
   useEffect(() => {
-    return history.current.listen((location) => {
+    return history.current.listen(({ location }) => {
       setQueryParams(queryString.parse(location.search));
       setCurrentPath(location.pathname);
     });
