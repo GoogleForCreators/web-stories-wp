@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+export { BEZIER } from '../constants';
+
 export const ANIMATION_TYPES = {
   BLINK_ON: 'blinkOn',
   BOUNCE: 'bounce',
@@ -25,12 +27,6 @@ export const ANIMATION_TYPES = {
   ZOOM: 'zoom',
 };
 
-export const ROTATION = {
-  CLOCKWISE: 'clockwise',
-  COUNTER_CLOCKWISE: 'counterClockwise',
-  PING_PONG: 'pingPong',
-};
-
 export const DIRECTION = {
   TOP_TO_BOTTOM: 'topToBottom',
   BOTTOM_TO_TOP: 'bottomToTop',
@@ -38,7 +34,22 @@ export const DIRECTION = {
   RIGHT_TO_LEFT: 'rightToLeft',
 };
 
+export const ROTATION = {
+  CLOCKWISE: 'clockwise',
+  COUNTER_CLOCKWISE: 'counterClockwise',
+  PING_PONG: 'pingPong',
+};
+
 export const AXIS = {
   X: 'x',
   Y: 'y',
+};
+
+export const FIELD_TYPES = {
+  DROPDOWN: 'dropdown',
+  HIDDEN: 'hidden',
+  NUMBER: 'number',
+  FLOAT: 'float',
+  TEXT: 'text',
+  CHECKBOX: 'checkbox',
 };

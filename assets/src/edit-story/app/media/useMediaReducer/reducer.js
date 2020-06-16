@@ -79,7 +79,9 @@ function reducer(state, { type, payload }) {
 
     case types.SET_SEARCH_TERM: {
       const { searchTerm } = payload;
-      if (searchTerm === state.searchTerm) return state;
+      if (searchTerm === state.searchTerm) {
+        return state;
+      }
       return {
         ...INITIAL_STATE,
         processing: [...state.processing],
@@ -91,7 +93,9 @@ function reducer(state, { type, payload }) {
 
     case types.SET_MEDIA_TYPE: {
       const { mediaType } = payload;
-      if (mediaType === state.mediaType) return state;
+      if (mediaType === state.mediaType) {
+        return state;
+      }
       return {
         ...INITIAL_STATE,
         media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
@@ -145,28 +149,35 @@ function reducer(state, { type, payload }) {
     }
 
     case types.UPDATE_MEDIA_ELEMENT: {
-      const { id, posterId, poster } = payload;
+      const { id, ...properties } = payload;
 
       const mediaIndex = state.media.findIndex((media) => media.id === id);
       if (mediaIndex === -1) {
         return state;
       }
 
-      const updatedVideo = {
+      const updatedMediaElement = {
         ...state.media[mediaIndex],
-        posterId,
-        poster,
+        ...properties,
       };
 
       const newMedia = [
         ...state.media.slice(0, mediaIndex),
-        updatedVideo,
+        updatedMediaElement,
         ...state.media.slice(mediaIndex + 1),
       ];
 
       return {
         ...state,
         media: newMedia,
+      };
+    }
+
+    case types.DELETE_MEDIA_ELEMENT: {
+      const { id } = payload;
+      return {
+        ...state,
+        media: state.media.filter((media) => media.id !== id),
       };
     }
 

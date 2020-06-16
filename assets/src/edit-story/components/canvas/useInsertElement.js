@@ -24,20 +24,20 @@ import { useCallback } from 'react';
  */
 import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
-import useFocusCanvas from '../../components/canvas/useFocusCanvas';
 import { dataPixels } from '../../units';
 import { useMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
+import useFocusCanvas from './useFocusCanvas';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 function useInsertElement() {
-  const {
-    actions: { addElement },
-  } = useStory();
-  const {
-    actions: { uploadVideoPoster },
-  } = useMedia();
+  const { addElement } = useStory((state) => ({
+    addElement: state.actions.addElement,
+  }));
+  const { uploadVideoPoster } = useMedia((state) => ({
+    uploadVideoPoster: state.actions.uploadVideoPoster,
+  }));
 
   /**
    * @param {Object} resource The resource to verify/update.
@@ -75,9 +75,9 @@ function useInsertElement() {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
-            videoEl.play();
+            videoEl.play().catch(() => {});
           }
-        }, 0);
+        });
       }
       focusCanvas();
       return element;
@@ -94,9 +94,9 @@ function useInsertElement() {
  * @param {number} props.width The element's width.
  * @param {number} props.height The element's height.
  * @param {?Object} props.mask The element's mask.
- * @return {!Object} The new element.
+ * @return {!Object} The element properties.
  */
-function createElementForCanvas(
+function getElementProperties(
   type,
   {
     resource,
@@ -109,7 +109,6 @@ function createElementForCanvas(
     scale = 100,
     focalX = 50,
     focalY = 50,
-    isFill = false,
     ...rest
   }
 ) {
@@ -119,7 +118,7 @@ function createElementForCanvas(
     updateForResizeEvent,
   } = getDefinitionForType(type);
 
-  const attrs = { ...defaultAttributes, ...rest };
+  const attrs = { type, ...defaultAttributes, ...rest };
 
   // Width and height defaults. Width takes precedence.
   const ratio =
@@ -132,7 +131,7 @@ function createElementForCanvas(
       width = height * ratio;
     } else if (resource) {
       // Resource is available: take resource's width with DPR, but limit
-      // to fit on the page.
+      // to fit on the page (80% max).
       width = Math.min(resource.width * DEFAULT_DPR, PAGE_WIDTH * 0.8);
     } else {
       // Default to half of page.
@@ -173,7 +172,7 @@ function createElementForCanvas(
   x = dataPixels(Math.min(x, PAGE_WIDTH - width));
   y = dataPixels(Math.min(y, PAGE_HEIGHT - height));
 
-  const element = createNewElement(type, {
+  return {
     ...attrs,
     ...(Boolean(resource) && {
       resource: {
@@ -191,15 +190,21 @@ function createElementForCanvas(
     scale,
     focalX,
     focalY,
-    isFill,
     ...(isMaskable
       ? {
           mask: mask || DEFAULT_MASK,
         }
       : {}),
-  });
+  };
+}
 
-  return element;
+/**
+ * @param {string} type Element type.
+ * @param {!Object} props The element's properties.
+ * @return {!Object} The new element.
+ */
+function createElementForCanvas(type, props) {
+  return createNewElement(type, getElementProperties(type, props));
 }
 
 /**
@@ -211,4 +216,4 @@ function isNum(value) {
 }
 
 export default useInsertElement;
-export { createElementForCanvas };
+export { getElementProperties };

@@ -17,35 +17,215 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import { Numeric } from '../';
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
+import { renderWithTheme } from '../../../testUtils';
 
 describe('Form/Numeric', () => {
+  const arrowUp = (node) =>
+    fireEvent.keyDown(node, { key: 'ArrowUp', which: 38 });
+  const altArrowUp = (node) =>
+    fireEvent.keyDown(node, { key: 'ArrowUp', which: 38, altKey: true });
+  const arrowDown = (node) =>
+    fireEvent.keyDown(node, { key: 'ArrowDown', which: 40 });
+  const altArrowDown = (node) =>
+    fireEvent.keyDown(node, { key: 'ArrowDown', which: 40, altKey: true });
+
   it('should render <Numeric /> form', () => {
     const onChangeMock = jest.fn();
     const onBlurMock = jest.fn();
 
-    const { getByTestId } = arrange(
+    const { getByRole } = renderWithTheme(
       <Numeric
         value={0}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        data-testid="numeric"
+        aria-label="Numeric"
       />
     );
 
-    const input = getByTestId('numeric');
+    const input = getByRole('textbox', { name: 'Numeric' });
 
     expect(input).toBeDefined();
+  });
+
+  it('should increment int on key up', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={0}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    arrowUp(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(1);
+  });
+
+  it('should increment non-float on alt + key up', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={0}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    altArrowUp(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(1);
+  });
+
+  it('should increment to full int on alt + key up', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={0.9}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    altArrowUp(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(1);
+  });
+
+  it('should increment float point on alt + key up', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={0}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    altArrowUp(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(0.1);
+  });
+
+  it('should increment long float point on alt + key up', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={0.38934985}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    altArrowUp(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(0.48934985);
+  });
+
+  it('should decrement int on key down', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={2}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    arrowDown(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(1);
+  });
+
+  it('should decrement non-float on alt + key down', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={2}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    altArrowDown(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(1);
+  });
+
+  it('should decrement float point on alt + key down', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={2}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    altArrowDown(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(1.9);
+  });
+
+  it('should decrement long float point on alt + key down', () => {
+    const onChangeMock = jest.fn();
+    const onBlurMock = jest.fn();
+
+    const { getByRole } = renderWithTheme(
+      <Numeric
+        value={2.34598345}
+        onChange={onChangeMock}
+        onBlur={onBlurMock}
+        float={true}
+        aria-label="Numeric"
+      />
+    );
+
+    const input = getByRole('textbox', { name: 'Numeric' });
+    altArrowDown(input);
+
+    expect(onChangeMock).toHaveBeenCalledWith(2.24598345);
   });
 });

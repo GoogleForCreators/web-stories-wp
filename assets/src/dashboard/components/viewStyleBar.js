@@ -29,20 +29,21 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 
-import { ReactComponent as GridSVG } from '../icons/grid.svg';
-import { ReactComponent as ListSVG } from '../icons/list.svg';
-import { VIEW_STYLE, VIEW_STYLE_ICON_METRICS } from '../constants';
+import { Grid as GridSVG, List as ListSVG } from '../icons';
+import { ICON_METRICS, VIEW_STYLE, VIEW_STYLE_LABELS } from '../constants';
+import Tooltip from './tooltip';
 
 const Container = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
 `;
 
 const ToggleButton = styled.button`
   border: none;
-  padding: 15px;
+  padding: 0;
   background: transparent;
+  cursor: pointer;
 
   &:hover svg {
     color: ${({ theme }) => theme.colors.gray700};
@@ -52,48 +53,40 @@ const ToggleButton = styled.button`
   }
 `;
 
-const ListIcon = styled(ListSVG).attrs(VIEW_STYLE_ICON_METRICS)`
+const ListIcon = styled(ListSVG).attrs(ICON_METRICS.VIEW_STYLE)`
   color: ${({ theme }) => theme.colors.gray500};
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `;
 
-const GridIcon = styled(GridSVG).attrs(VIEW_STYLE_ICON_METRICS)`
+const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
   color: ${({ theme }) => theme.colors.gray500};
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `;
 
-const Label = styled.span`
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  color: ${({ theme }) => theme.colors.gray500};
-`;
-
-export default function ViewStyleBar({ onPress, label, layoutStyle }) {
+export default function ViewStyleBar({ onPress, layoutStyle }) {
   return (
     <Container>
-      <ToggleButton
-        aria-label={__(
-          'Toggle between showing stories as a grid or list.',
-          'web-stories'
-        )}
-        onClick={onPress}
-      >
-        {layoutStyle === VIEW_STYLE.GRID && <ListIcon />}
-        {layoutStyle === VIEW_STYLE.LIST && <GridIcon />}
-      </ToggleButton>
-      <Label>{label}</Label>
+      <Tooltip content={VIEW_STYLE_LABELS[layoutStyle]} position="right">
+        <ToggleButton
+          aria-label={__(
+            'Toggle between showing stories as a grid or list.',
+            'web-stories'
+          )}
+          onClick={onPress}
+        >
+          {layoutStyle === VIEW_STYLE.GRID && <ListIcon />}
+          {layoutStyle === VIEW_STYLE.LIST && <GridIcon />}
+        </ToggleButton>
+      </Tooltip>
     </Container>
   );
 }
 
 ViewStyleBar.propTypes = {
   onPress: PropTypes.func,
-  label: PropTypes.string.isRequired,
   layoutStyle: PropTypes.oneOf([VIEW_STYLE.GRID, VIEW_STYLE.LIST]).isRequired,
 };

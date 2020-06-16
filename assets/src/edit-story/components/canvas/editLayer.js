@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -31,27 +31,22 @@ import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
 import { Layer, PageArea, Z_INDEX } from './layout';
 import useCanvas from './useCanvas';
+import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`
   background-color: ${({ grayout, theme }) =>
     grayout ? theme.colors.grayout : 'transparent'};
 `;
 
-const EditPageArea = withOverlay(styled(PageArea).attrs({
-  className: 'container',
-})`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`);
+const EditPageArea = withOverlay(PageArea);
 
-function EditLayer({}) {
-  const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement: editingElementId },
-  } = useCanvas();
+function EditLayer() {
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+  const { editingElementId } = useCanvas((state) => ({
+    editingElementId: state.state.editingElement,
+  }));
 
   const editingElement =
     editingElementId &&
@@ -70,25 +65,35 @@ function EditLayerForElement({ element }) {
   const pageAreaRef = useRef(null);
   const { editModeGrayout } = getDefinitionForType(element.type);
 
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
+
+  const focusCanvas = useFocusCanvas();
+
   useKeyDownEffect(ref, { key: 'esc', editable: true }, () => clearEditing(), [
     clearEditing,
   ]);
 
+  // Unmount effect to restore focus, but do not force it, in case the
+  // design panel is active.
+  useEffect(() => {
+    return () => focusCanvas(/* force */ false);
+  }, [focusCanvas]);
+
   return (
     <LayerWithGrayout
       ref={ref}
+      data-testid="editLayer"
       grayout={editModeGrayout}
       zIndex={Z_INDEX.EDIT}
-      onClick={(evt) => {
+      onPointerDown={(evt) => {
         if (evt.target === ref.current || evt.target === pageAreaRef.current) {
           clearEditing();
         }
       }}
     >
-      <EditPageArea ref={pageAreaRef}>
+      <EditPageArea ref={pageAreaRef} showOverflow={editModeGrayout}>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>
@@ -99,4 +104,4 @@ EditLayerForElement.propTypes = {
   element: StoryPropTypes.element.isRequired,
 };
 
-export default EditLayer;
+export default memo(EditLayer);

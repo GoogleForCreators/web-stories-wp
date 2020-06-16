@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Button from '../';
+import Button, { PaginationButton } from '../';
 import { BUTTON_TYPES } from '../../../constants';
 
 export default {
@@ -32,23 +32,32 @@ export default {
   component: Button,
 };
 
+const ButtonContainer = styled.div`
+  width: 60vw;
+`;
+
 export const _default = () => {
   return (
-    <Button
-      isDisabled={boolean('isDisabled')}
-      onClick={action('clicked')}
-      type={select(
-        'type',
-        {
-          cta: BUTTON_TYPES.CTA,
-          primary: BUTTON_TYPES.PRIMARY,
-          secondary: BUTTON_TYPES.SECONDARY,
-        },
-        BUTTON_TYPES.PRIMARY
-      )}
-    >
-      {text('children', 'Default Button Demo')}
-    </Button>
+    <ButtonContainer>
+      <Button
+        isLink={boolean('isLink')}
+        href={text('href', '')}
+        isDisabled={boolean('isDisabled')}
+        onClick={action('clicked')}
+        type={select(
+          'type',
+          {
+            cta: BUTTON_TYPES.CTA,
+            primary: BUTTON_TYPES.PRIMARY,
+            secondary: BUTTON_TYPES.SECONDARY,
+            default: BUTTON_TYPES.DEFAULT,
+          },
+          BUTTON_TYPES.PRIMARY
+        )}
+      >
+        {text('children', 'Default Button Demo')}
+      </Button>
+    </ButtonContainer>
   );
 };
 
@@ -62,6 +71,8 @@ export const _LongButton = () => {
   return (
     <LongContainer>
       <LongButton
+        isLink={boolean('isLink')}
+        href={text('href', '')}
         isDisabled={boolean('isDisabled')}
         onClick={action('clicked')}
         type={select(
@@ -97,6 +108,8 @@ export const SecondaryButton = () => {
   return (
     <SecondaryButtonContainer>
       <Button
+        isLink={boolean('isLink')}
+        href={text('href', '')}
         isDisabled={boolean('isDisabled')}
         onClick={action('clicked')}
         type={select(
@@ -114,3 +127,7 @@ export const SecondaryButton = () => {
     </SecondaryButtonContainer>
   );
 };
+
+export const _PaginationButton = () => (
+  <PaginationButton rotateRight={boolean('rotateRight')} />
+);

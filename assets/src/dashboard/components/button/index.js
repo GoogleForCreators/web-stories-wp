@@ -17,34 +17,36 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types'; // import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
+import { TypographyPresets } from '../typography';
 
 const StyledButton = styled.button`
-  font-family: ${({ theme }) => theme.fonts.button.family};
-  font-size: ${({ theme }) => theme.fonts.button.size};
-  font-weight: ${({ theme }) => theme.fonts.button.weight};
-  line-height: ${({ theme }) => theme.fonts.button.lineHeight};
+  ${TypographyPresets.Small};
+
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   align-items: center;
+  justify-content: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.border.buttonRadius};
+  border: ${({ theme }) => theme.borders.transparent};
+  border-radius: ${({ theme }) => theme.button.borderRadius}px;
   display: flex;
-  height: 40px;
   min-width: 100px;
   opacity: 0.75;
-  padding: 0 10px;
+  padding: 4px 12px;
   text-decoration: none;
+  text-align: center;
 
   &:focus,
   &:active,
   &:hover {
+    box-shadow: none;
     opacity: 1;
     outline: none;
     color: ${({ theme }) => theme.colors.white};
@@ -64,6 +66,20 @@ const PrimaryButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
 `;
 
+const DefaultButton = styled(StyledButton)(
+  ({ theme }) => `
+    background-color: ${theme.colors.white};
+    color: ${theme.colors.gray800};
+    border: ${theme.borders.gray800};
+    &:focus,
+    &:active,
+    &:hover {
+      color: ${theme.colors.gray900};
+      border-color: ${theme.colors.gray900};
+    }
+  `
+);
+
 // TODO: address CTA active styling
 const CtaButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
@@ -71,6 +87,7 @@ const CtaButton = styled(StyledButton)`
 `;
 
 const SecondaryButton = styled(StyledButton)`
+  border-radius: 0px;
   background-color: transparent;
   text-shadow: ${({ theme }) => theme.text.shadow};
 
@@ -80,18 +97,26 @@ const SecondaryButton = styled(StyledButton)`
     text-shadow: ${({ theme }) => theme.text.shadow};
   }
 `;
+
 const StyledChildren = styled.span`
   margin: 0 auto;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border-bottom: ${({ isSecondary }) =>
+    isSecondary ? '0.1em solid currentColor' : 'none'};
 `;
+
+StyledChildren.propTypes = {
+  isSecondary: PropTypes.bool,
+};
 
 const Button = ({
   children,
   isDisabled,
-  onClick,
+  isLink,
   type = BUTTON_TYPES.PRIMARY,
   ...rest
 }) => {
@@ -99,23 +124,31 @@ const Button = ({
     [BUTTON_TYPES.PRIMARY]: PrimaryButton,
     [BUTTON_TYPES.SECONDARY]: SecondaryButton,
     [BUTTON_TYPES.CTA]: CtaButton,
+    [BUTTON_TYPES.DEFAULT]: DefaultButton,
   };
 
   const StyledButtonByType = ButtonOptions[type];
 
   return (
-    <StyledButtonByType disabled={isDisabled} onClick={onClick} {...rest}>
-      <StyledChildren>{children}</StyledChildren>
+    <StyledButtonByType
+      as={isLink ? 'a' : 'button'}
+      disabled={isDisabled}
+      {...rest}
+    >
+      <StyledChildren isSecondary={type === BUTTON_TYPES.SECONDARY}>
+        {children}
+      </StyledChildren>
     </StyledButtonByType>
   );
 };
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
   isCta: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isLink: PropTypes.bool,
   type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
 };
 
 export default Button;
+export { default as PaginationButton } from './paginationButton';

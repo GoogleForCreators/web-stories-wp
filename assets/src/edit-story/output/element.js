@@ -26,7 +26,6 @@ import WithLink from '../components/link/output';
 function OutputElement({ element }) {
   const { id, opacity, type } = element;
 
-  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -47,6 +46,7 @@ function OutputElement({ element }) {
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
         opacity: opacity ? opacity / 100 : null,
       }}
+      skipDefaultMask
     >
       <WithLink
         element={element}

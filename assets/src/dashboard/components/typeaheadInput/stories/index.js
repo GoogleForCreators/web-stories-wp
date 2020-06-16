@@ -20,6 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, number, text } from '@storybook/addon-knobs';
 import { useState } from 'react';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -40,46 +41,32 @@ const items = [
   { label: 'Basil', value: 'basil' },
   { label: 'water', value: 'agua' },
 ];
+
+const Container = styled.div`
+  width: 400px;
+  margin: 50px 100px;
+  padding: 40px;
+  background-color: white;
+`;
 export const _default = () => {
   const [value, setValue] = useState('');
   return (
-    <TypeaheadInput
-      inputId={'demo-search-component'}
-      items={items}
-      onChange={(inputValue) => {
-        if (!inputValue) {
-          setValue('');
-        }
-        action(`input changed ${inputValue}`)(inputValue);
-      }}
-      maxItemsVisible={number('maxItemsVisible', 7)}
-      value={value}
-      placeholder={text('placeholder', 'Search Stories')}
-      ariaLabel={text('ariaLabel', 'my search for seasonings')}
-      disabled={boolean('disabled')}
-    />
-  );
-};
-
-export const _filterLoadedSearchItems = () => {
-  const [value, setValue] = useState('Sports');
-  return (
-    <TypeaheadInput
-      inputId={'demo-search-component'}
-      items={items}
-      isFiltering={true}
-      onChange={(inputValue) => {
-        if (!inputValue) {
-          setValue('');
-        }
-        action(`input changed ${inputValue}`)(inputValue);
-        setValue(inputValue);
-      }}
-      value={value}
-      maxItemsVisible={number('maxItemsVisible')}
-      placeholder={text('placeholder', 'Search Stories')}
-      ariaLabel={text('ariaLabel', 'my search for seasonings')}
-      disabled={boolean('disabled')}
-    />
+    <Container>
+      <TypeaheadInput
+        inputId={'demo-search-component'}
+        items={items}
+        onChange={(inputValue) => {
+          if (!inputValue) {
+            setValue('');
+          }
+          action(`input changed ${inputValue}`)(inputValue);
+        }}
+        maxItemsVisible={number('maxItemsVisible', 7)}
+        value={value}
+        placeholder={text('placeholder', 'Search Stories')}
+        ariaLabel={text('ariaLabel', 'my search for seasonings')}
+        disabled={boolean('disabled')}
+      />
+    </Container>
   );
 };

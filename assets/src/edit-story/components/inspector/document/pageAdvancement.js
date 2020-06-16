@@ -50,15 +50,17 @@ const MIN_PAGE_DURATION = 1;
 const MAX_PAGE_DURATION = 20;
 
 function PageAdvancementPanel() {
-  const {
-    state: {
-      story: {
-        autoAdvance = DEFAULT_AUTO_ADVANCE,
-        defaultPageDuration = DEFAULT_PAGE_DURATION,
+  const { autoAdvance, defaultPageDuration, updateStory } = useStory(
+    ({
+      state: {
+        story: {
+          autoAdvance = DEFAULT_AUTO_ADVANCE,
+          defaultPageDuration = DEFAULT_PAGE_DURATION,
+        },
       },
-    },
-    actions: { updateStory },
-  } = useStory();
+      actions: { updateStory },
+    }) => ({ autoAdvance, defaultPageDuration, updateStory })
+  );
 
   const [duration, setDuration] = useState(defaultPageDuration);
 
@@ -97,7 +99,7 @@ function PageAdvancementPanel() {
       </Row>
       <SwitchRow>
         <Switch
-          label={__('Page Advancement')}
+          label={__('Page Advancement', 'web-stories')}
           value={autoAdvance}
           onLabel={__('Auto', 'web-stories')}
           offLabel={__('Manual', 'web-stories')}

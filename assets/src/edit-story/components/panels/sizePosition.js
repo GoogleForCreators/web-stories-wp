@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,11 +29,17 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Button, Row, Numeric, Toggle, usePresubmitHandler } from '../form';
+import {
+  Button,
+  Row,
+  Numeric,
+  Toggle,
+  usePresubmitHandler,
+  MULTIPLE_VALUE,
+} from '../form';
 import { dataPixels } from '../../units';
-import { ReactComponent as Locked } from '../../icons/lock.svg';
-import { ReactComponent as Unlocked } from '../../icons/unlock.svg';
-import { ReactComponent as Fullbleed } from '../../icons/fullbleed.svg';
+import { Lock as Locked, Unlock as Unlocked } from '../../icons';
+
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
@@ -70,7 +76,6 @@ function SizePositionPanel({
 }) {
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
-  const isFill = getCommonValue(selectedElements, 'isFill', false);
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
   const flip = useCommonObjectValue(selectedElements, 'flip', DEFAULT_FLIP);
 
@@ -79,18 +84,39 @@ function SizePositionPanel({
     const origHeight = getCommonValue(submittedSelectedElements, 'height');
     return origWidth / origHeight;
   }, [submittedSelectedElements]);
-  const [lockRatio, setLockRatio] = useState(true);
+  const rawLockAspectRatio = getCommonValue(
+    selectedElements,
+    'lockAspectRatio'
+  );
 
-  const {
-    actions: { setBackgroundElement },
-  } = useStory();
+  // When multiple element selected with aspect lock ratio value combined, it treated as true, reversed behavior with padding lock ratio.
+  const lockAspectRatio =
+    rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
+
+  const { currentPage, combineElements } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+    combineElements: state.actions.combineElements,
+  }));
+  const currentBackgroundId = currentPage?.elements[0].id;
 
   const isSingleElement = selectedElements.length === 1;
-  const { isMedia, canFill } = getDefinitionForType(selectedElements[0].type);
+  const { isMedia } = getDefinitionForType(selectedElements[0].type);
 
   const canFlip = selectedElements.every(
     ({ type }) => getDefinitionForType(type).canFlip
   );
+
+  const getUpdateObject = (nWidth, nHeight) =>
+    rawLockAspectRatio === MULTIPLE_VALUE
+      ? {
+          lockAspectRatio,
+          height: nHeight,
+          width: nWidth,
+        }
+      : {
+          height: nHeight,
+          width: nWidth,
+        };
 
   // Recalculate width/height if ratio locked.
   usePresubmitHandler(
@@ -115,7 +141,7 @@ function SizePositionPanel({
       }
 
       // Fallback to ratio.
-      if (lockRatio) {
+      if (lockAspectRatio) {
         const ratio = oldWidth / oldHeight;
         if (!isResizeWidth) {
           return { width: dataPixels(newHeight * ratio) };
@@ -127,7 +153,7 @@ function SizePositionPanel({
 
       return null;
     },
-    [lockRatio]
+    [lockAspectRatio]
   );
 
   usePresubmitHandler(
@@ -138,16 +164,11 @@ function SizePositionPanel({
   );
 
   const handleSetBackground = useCallback(() => {
-    pushUpdate(
-      {
-        isBackground: true,
-        opacity: 100,
-        overlay: null,
-      },
-      true
-    );
-    setBackgroundElement({ elementId: selectedElements[0].id });
-  }, [selectedElements, pushUpdate, setBackgroundElement]);
+    combineElements({
+      firstId: selectedElements[0].id,
+      secondId: currentBackgroundId,
+    });
+  }, [selectedElements, combineElements, currentBackgroundId]);
 
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
@@ -161,54 +182,46 @@ function SizePositionPanel({
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
-          data-testid="width"
           suffix={_x('W', 'The Width dimension', 'web-stories')}
           value={width}
           onChange={(value) => {
             const newWidth = value;
             let newHeight = height;
-            if (lockRatio) {
+            if (lockAspectRatio) {
               if (newWidth === '') {
                 newHeight = '';
               } else if (isNum(newWidth / origRatio)) {
                 newHeight = dataPixels(newWidth / origRatio);
               }
             }
-            pushUpdate({
-              width: newWidth,
-              height: newHeight,
-            });
+            pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
-          disabled={isFill}
+          aria-label={__('Width', 'web-stories')}
         />
         <Toggle
-          data-testid="lockRatio"
+          aria-label={__('Aspect ratio lock', 'web-stories')}
+          title={__('Constrain proportions', 'web-stories')}
           icon={<StyledLocked />}
           uncheckedIcon={<StyledUnlocked />}
-          value={lockRatio}
-          onChange={setLockRatio}
-          disabled={isFill}
+          value={lockAspectRatio}
+          onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
         />
         <BoxedNumeric
-          data-testid="height"
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={height}
           onChange={(value) => {
             const newHeight = value;
             let newWidth = width;
-            if (lockRatio) {
+            if (lockAspectRatio) {
               if (newHeight === '') {
                 newWidth = '';
               } else if (isNum(newHeight * origRatio)) {
                 newWidth = dataPixels(newHeight * origRatio);
               }
             }
-            pushUpdate({
-              height: newHeight,
-              width: newWidth,
-            });
+            pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
-          disabled={isFill}
+          aria-label={__('Height', 'web-stories')}
         />
       </Row>
       {/** Rotation and Flipping */}
@@ -218,7 +231,7 @@ function SizePositionPanel({
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
-          disabled={isFill}
+          aria-label={__('Rotation', 'web-stories')}
         />
         {canFlip && (
           <FlipControls
@@ -226,13 +239,6 @@ function SizePositionPanel({
               pushUpdateForObject('flip', value, DEFAULT_FLIP, true)
             }
             value={flip}
-          />
-        )}
-        {canFill && isSingleElement && (
-          <Toggle
-            icon={<Fullbleed />}
-            value={isFill}
-            onChange={(value) => pushUpdate({ isFill: value }, true)}
           />
         )}
       </Row>

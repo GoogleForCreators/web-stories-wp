@@ -17,25 +17,21 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
-import { useMedia } from '../media';
+import createError from '../../utils/createError';
 
-function useUploader(refreshLibrary = true) {
-  const {
-    actions: { resetWithFetch },
-  } = useMedia();
+function useUploader() {
   const {
     actions: { uploadMedia },
   } = useAPI();
@@ -46,8 +42,13 @@ function useUploader(refreshLibrary = true) {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
+    allowedFileTypes,
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  const allowedMimeTypes = useMemo(
+    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
+    [allowedImageMimeTypes, allowedVideoMimeTypes]
+  );
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
@@ -65,55 +66,74 @@ function useUploader(refreshLibrary = true) {
     [maxUpload]
   );
 
-  const uploadFile = (file) => {
-    // TODO Add permission check here, see Gutenberg's userCan function.
-    if (!fileSizeCheck(file)) {
-      const sizeError = new Error();
-      sizeError.name = 'SizeError';
-      sizeError.file = file.name;
-      sizeError.isUserError = true;
-
-      /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
-      sizeError.message = sprintf(
-        __(
-          'Your file is %sMB and the upload limit is %sMB. Please resize and try again!',
+  /**
+   * Uploads a file.
+   *
+   * @param {Object} file File object.
+   */
+  const uploadFile = useCallback(
+    (file) => {
+      if (!hasUploadMediaAction) {
+        const message = __(
+          'Sorry, you are unable to upload files.',
           'web-stories'
-        ),
-        bytesToMB(file.size),
-        bytesToMB(maxUpload)
-      );
-      throw sizeError;
-    }
+        );
+        const permissionError = createError(
+          'PermissionError',
+          file.name,
+          message
+        );
 
-    if (!isValidType(file)) {
-      const validError = new Error();
-      validError.isUserError = true;
-      validError.name = 'ValidError';
-      validError.file = file.name;
+        throw permissionError;
+      }
+      if (!fileSizeCheck(file)) {
+        const message = sprintf(
+          /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
+          __(
+            'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
+            'web-stories'
+          ),
+          bytesToMB(file.size),
+          bytesToMB(maxUpload)
+        );
+        const sizeError = createError('SizeError', file.name, message);
 
-      /* translators: %s is a list of allowed file extensions. */
-      validError.message = createInterpolateElement(
-        sprintf(
-          __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-          allowedMimeTypes.join(', ')
-        ),
-        {
-          b: <b />,
-        }
-      );
-      throw validError;
-    }
+        throw sizeError;
+      }
 
-    const additionalData = {
-      post: storyId,
-    };
+      if (!isValidType(file)) {
+        /* translators: %s is a list of allowed file extensions. */
+        const message = sprintf(
+          /* translators: %s: list of allowed file types. */
+          __('Please choose only %s to upload.', 'web-stories'),
+          allowedFileTypes.join(
+            /* translators: delimiter used in a list */
+            __(', ', 'web-stories')
+          )
+        );
 
-    const promise = uploadMedia(file, additionalData);
-    if (refreshLibrary) {
-      promise.finally(resetWithFetch);
-    }
-    return promise;
-  };
+        const validError = createError('ValidError', file.name, message);
+
+        throw validError;
+      }
+
+      const additionalData = {
+        post: storyId,
+        media_source: 'editor',
+      };
+
+      return uploadMedia(file, additionalData);
+    },
+    [
+      allowedFileTypes,
+      fileSizeCheck,
+      hasUploadMediaAction,
+      isValidType,
+      maxUpload,
+      uploadMedia,
+      storyId,
+    ]
+  );
 
   return {
     uploadFile,

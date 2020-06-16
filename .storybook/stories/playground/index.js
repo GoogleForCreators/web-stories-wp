@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { FlagsProvider } from 'flagged';
+
+/**
  * Internal dependencies
  */
 import App from '../../../assets/src/edit-story/app';
@@ -30,6 +35,7 @@ const config = {
     audio: [],
     video: ['video/mp4'],
   },
+  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
   storyId: 1234,
   api: {
     stories: '',
@@ -43,8 +49,15 @@ const config = {
     },
     poster: '',
   },
+  capabilities: {
+    hasUploadMediaAction: false,
+    hasAssignAuthorAction: false,
+    hasPublishAction: false,
+  },
 };
 
-export const _default = () => {
-  return <App config={config} />;
-};
+export const _default = () => (
+  <FlagsProvider features={{}}>
+    <App config={config} />
+  </FlagsProvider>
+);

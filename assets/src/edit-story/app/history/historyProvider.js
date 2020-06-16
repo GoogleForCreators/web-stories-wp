@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -30,8 +30,8 @@ import Context from './context';
 
 function HistoryProvider({ children, size }) {
   const {
-    replayState,
-    appendToHistory,
+    requestedState,
+    stateToHistory,
     clearHistory,
     offset,
     historyLength,
@@ -40,39 +40,50 @@ function HistoryProvider({ children, size }) {
     versionNumber,
   } = useHistoryReducer(size);
 
+  const [hasNewChanges, setHasNewChanges] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
+  // The version number for the initially loaded (saved) state is 1.
+  const savedVersionNumber = useRef(1);
 
   useEffect(() => {
-    setPreventUnload('history', versionNumber - 1 > 0);
-
+    setPreventUnload('history', hasNewChanges);
     return () => setPreventUnload('history', false);
-  }, [setPreventUnload, versionNumber]);
+  }, [setPreventUnload, hasNewChanges]);
+
+  useEffect(() => {
+    setHasNewChanges(versionNumber !== savedVersionNumber.current);
+  }, [versionNumber]);
+
+  const resetNewChanges = useCallback(() => {
+    // When new changes are saved, let's track which version was saved.
+    savedVersionNumber.current = versionNumber;
+    setHasNewChanges(false);
+  }, [versionNumber]);
 
   const state = {
     state: {
-      replayState,
+      hasNewChanges,
+      requestedState,
       canUndo: offset < historyLength - 1,
       canRedo: offset > 0,
     },
     actions: {
-      appendToHistory,
+      stateToHistory,
       clearHistory,
+      resetNewChanges,
       undo,
       redo,
     },
   };
 
-  useGlobalKeyDownEffect('undo', () => undo(), [undo]);
-  useGlobalKeyDownEffect('redo', () => redo(), [redo]);
+  useGlobalKeyDownEffect({ key: 'undo', dialog: true }, () => undo(), [undo]);
+  useGlobalKeyDownEffect({ key: 'redo', dialog: true }, () => redo(), [redo]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 HistoryProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   size: PropTypes.number,
 };
 

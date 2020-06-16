@@ -38,14 +38,6 @@ describe('TextOutput', () => {
     const element = {
       id: '123',
       content: 'Content',
-      color: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-          a: 0.5,
-        },
-      },
       backgroundColor: {
         color: {
           r: 255,
@@ -54,10 +46,11 @@ describe('TextOutput', () => {
           a: 0.3,
         },
       },
+      font: {
+        family: 'Roboto',
+      },
       fontSize: 16,
-      letterSpacing: 1.3,
       textAlign: 'left',
-      textDecoration: 'none',
       type: 'text',
       x: 10,
       y: 10,
@@ -84,50 +77,31 @@ describe('TextOutput', () => {
       whiteSpace: 'pre-wrap',
       padding: '0% 0%',
       margin: '0px',
-      color: 'rgba(255, 255, 255, 0.5)',
       backgroundColor: 'rgba(255, 0, 0, 0.3)',
-      fontSize: '0.242424em',
-      letterSpacing: '1.3em',
+      fontSize: '0.258900em',
       textAlign: 'left',
-      textDecoration: 'none',
     });
   });
 
-  it('should apply <strong> tags if bold', () => {
+  it('should convert padding to percent of width', () => {
     const element = {
       id: '123',
       content: 'Content',
-      color: {
-        color: {
-          r: 255,
-          g: 255,
-          b: 255,
-          a: 0.5,
-        },
-      },
-      backgroundColor: {
-        color: {
-          r: 255,
-          g: 0,
-          b: 0,
-          a: 0.3,
-        },
+      font: {
+        family: 'Roboto',
       },
       fontSize: 16,
-      letterSpacing: 1.3,
       textAlign: 'left',
-      textDecoration: 'none',
       type: 'text',
       x: 10,
       y: 10,
       width: 50,
-      height: 50,
+      height: 100,
       rotationAngle: 0,
       padding: {
-        vertical: 0,
-        horizontal: 0,
+        vertical: 10,
+        horizontal: 10,
       },
-      bold: true,
     };
 
     const output = renderViaString(
@@ -136,7 +110,12 @@ describe('TextOutput', () => {
         box={{ width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 }}
       />
     );
-    expect(output.innerHTML).toBe('<strong>Content</strong>');
+    expect(output.tagName).toBe('P');
+    expect(output.innerHTML).toBe('Content');
+    expect(output.className).toBe('fill');
+    expect(output.style).toMatchObject({
+      padding: '20% 20%',
+    });
   });
 
   it('should wrap font-family into quotes', () => {
@@ -148,14 +127,15 @@ describe('TextOutput', () => {
       y: 10,
       width: 50,
       height: 50,
-      fontFamily: 'Baloo Bhaina 2',
+      font: {
+        family: 'Baloo Bhaina 2',
+      },
+      fontSize: 16,
       rotationAngle: 0,
       padding: {
         vertical: 0,
         horizontal: 0,
       },
-      fontSize: 16,
-      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
     };
 
     const output = renderViaString(
@@ -176,15 +156,16 @@ describe('TextOutput', () => {
       y: 10,
       width: 50,
       height: 50,
-      fontFamily: 'Baloo Bhaina 2',
-      fontFallback: ['Roboto', 'cursive'],
+      font: {
+        family: 'Baloo Bhaina 2',
+        fallbacks: ['Roboto', 'cursive'],
+      },
+      fontSize: 16,
       rotationAngle: 0,
       padding: {
         vertical: 0,
         horizontal: 0,
       },
-      fontSize: 16,
-      color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
     };
 
     const output = renderViaString(
@@ -196,26 +177,31 @@ describe('TextOutput', () => {
     expect(output.style.fontFamily).toBe('"Baloo Bhaina 2","Roboto",cursive');
   });
 
-  it('should produce valid AMP output', async () => {
-    const props = {
-      element: {
-        type: 'text',
-        id: '123',
-        x: 50,
-        y: 100,
-        height: 1920,
-        width: 1080,
-        rotationAngle: 0,
-        content: 'Hello World',
-        color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
-        padding: {
-          horizontal: 0,
-          vertical: 0,
+  describe('AMP validation', () => {
+    it('should produce valid AMP output', async () => {
+      const props = {
+        element: {
+          type: 'text',
+          id: '123',
+          x: 50,
+          y: 100,
+          height: 1920,
+          width: 1080,
+          rotationAngle: 0,
+          content: 'Hello World',
+          color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          padding: {
+            horizontal: 0,
+            vertical: 0,
+          },
+          font: {
+            family: 'Roboto',
+          },
         },
-      },
-      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
-    };
+        box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+      };
 
-    await expect(<TextOutput {...props} />).toBeValidAMPStoryElement();
+      await expect(<TextOutput {...props} />).toBeValidAMPStoryElement();
+    });
   });
 });

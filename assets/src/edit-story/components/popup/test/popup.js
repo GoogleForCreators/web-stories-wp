@@ -15,20 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-
-/**
  * Internal dependencies
  */
 import Popup from '../index';
-import theme from '../../../theme';
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
+import { renderWithTheme } from '../../../testUtils';
 
 describe('Popup', () => {
   it('should render popup', () => {
@@ -36,7 +26,7 @@ describe('Popup', () => {
       current: document.createElement('div'),
     };
     document.body.append(anchor.current);
-    const { getByText } = arrange(
+    const { getByText } = renderWithTheme(
       <Popup anchor={anchor} isOpen={true}>
         {'Hello World!'}
       </Popup>
@@ -44,15 +34,18 @@ describe('Popup', () => {
 
     const popup = getByText('Hello World!');
     expect(popup).toBeDefined();
-    expect(popup).toHaveAttribute('width', '270');
   });
+
+  // TODO(wassgha): Tests for different placements
+
+  // TODO(wassgha): Test for default placement
 
   it('should not render popup when isOpen set to false', () => {
     const anchor = {
       current: document.createElement('div'),
     };
     document.body.append(anchor.current);
-    const { queryByText } = arrange(
+    const { queryByText } = renderWithTheme(
       <Popup anchor={anchor} isOpen={false}>
         {'Hello World!'}
       </Popup>

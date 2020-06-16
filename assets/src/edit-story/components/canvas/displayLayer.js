@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { memo } from 'react';
 
 /**
  * Internal dependencies
@@ -27,47 +27,46 @@ import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 
-const DisplayPageArea = styled(PageArea).attrs({
-  className: 'container',
-  overflowAllowed: false,
-})`
-  background-color: white;
-  background-image: linear-gradient(45deg, #999999 25%, transparent 25%),
-    linear-gradient(-45deg, #999999 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #999999 75%),
-    linear-gradient(-45deg, transparent 75%, #999999 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-`;
-
 function DisplayLayer() {
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
   const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement },
-    actions: { setPageContainer },
-  } = useCanvas();
+    editingElement,
+    setPageContainer,
+    setFullbleedContainer,
+  } = useCanvas(
+    ({
+      state: { editingElement },
+      actions: { setPageContainer, setFullbleedContainer },
+    }) => ({ editingElement, setPageContainer, setFullbleedContainer })
+  );
 
   return (
     <Layer pointerEvents="none">
-      <DisplayPageArea ref={setPageContainer}>
-        {currentPage &&
-          currentPage.elements.map(({ id, ...rest }) => {
-            if (editingElement === id) {
-              return null;
-            }
-            return (
-              <DisplayElement
-                key={id}
-                element={{ id, ...rest }}
-                page={currentPage}
-              />
-            );
-          })}
-      </DisplayPageArea>
+      <PageArea
+        ref={setPageContainer}
+        fullbleedRef={setFullbleedContainer}
+        background={currentPage?.backgroundColor}
+        showDangerZone={true}
+      >
+        {currentPage
+          ? currentPage.elements.map(({ id, ...rest }) => {
+              if (editingElement === id) {
+                return null;
+              }
+              return (
+                <DisplayElement
+                  key={id}
+                  element={{ id, ...rest }}
+                  page={currentPage}
+                />
+              );
+            })
+          : null}
+      </PageArea>
     </Layer>
   );
 }
 
-export default DisplayLayer;
+export default memo(DisplayLayer);

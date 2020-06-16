@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
+import { rgba } from 'polished';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -35,7 +36,6 @@ import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
 import { MainButton, SearchInput } from '../../common';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
-import { DEFAULT_DPR, PAGE_WIDTH } from '../../../../constants';
 import {
   getTypeFromMime,
   getResourceFromMediaPicker,
@@ -49,7 +49,8 @@ const Container = styled.div`
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
   overflow: auto;
-  padding: 1em 1.5em 0 1.5em;
+  padding: 0 1.5em 0 1.5em;
+  margin-top: 1em;
 `;
 
 const Column = styled.div`
@@ -104,28 +105,65 @@ const Inner = styled.div`
     / 1fr;
 `;
 
+const Loading = styled.div`
+  grid-column: 1 / span 2;
+  margin-bottom: 16px;
+  text-align: center;
+  padding: 8px 80px;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
+  border-radius: 100px;
+  margin-top: auto;
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-weight: 500;
+`;
+
 const FILTERS = [
   { filter: '', name: __('All', 'web-stories') },
   { filter: 'image', name: __('Images', 'web-stories') },
   { filter: 'video', name: __('Video', 'web-stories') },
 ];
 
-// By default, the element should be 50% of the page.
-const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
 const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
   const {
-    state: {
-      hasMore,
-      media,
-      isMediaLoading,
-      isMediaLoaded,
-      mediaType,
-      searchTerm,
-    },
-    actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
-  } = useMedia();
+    hasMore,
+    media,
+    isMediaLoading,
+    isMediaLoaded,
+    mediaType,
+    searchTerm,
+    setNextPage,
+    resetWithFetch,
+    setMediaType,
+    setSearchTerm,
+  } = useMedia(
+    ({
+      state: {
+        hasMore,
+        media,
+        isMediaLoading,
+        isMediaLoaded,
+        mediaType,
+        searchTerm,
+      },
+      actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
+    }) => {
+      return {
+        hasMore,
+        media,
+        isMediaLoading,
+        isMediaLoaded,
+        mediaType,
+        searchTerm,
+        setNextPage,
+        resetWithFetch,
+        setMediaType,
+        setSearchTerm,
+      };
+    }
+  );
 
   const {
     allowedMimeTypes: {
@@ -134,9 +172,9 @@ function MediaPane(props) {
     },
   } = useConfig();
 
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
 
   const onClose = resetWithFetch;
 
@@ -158,16 +196,16 @@ function MediaPane(props) {
   /**
    * Handle search term changes.
    *
-   * @param {Object} evt Doc Event
+   * @param {string} value the new search term.
    */
-  const onSearch = (evt) => {
-    setSearchTerm({ searchTerm: evt.target.value });
+  const onSearch = (value) => {
+    setSearchTerm({ searchTerm: value });
   };
 
   /**
    * Filter REST API calls and re-request API.
    *
-   * @param {string} filter Value that is passed to rest api to filter.
+   * @param {string} value that is passed to rest api to filter.
    */
   const onFilter = useCallback(
     (filter) => () => {
@@ -182,10 +220,10 @@ function MediaPane(props) {
    * @param {Object} resource Resource object
    * @return {null|*} Return onInsert or null.
    */
-  const insertMediaElement = (resource) => {
-    const width = Math.min(resource.width * DEFAULT_DPR, DEFAULT_ELEMENT_WIDTH);
-    return insertElement(resource.type, { resource, width });
-  };
+  const insertMediaElement = useCallback(
+    (resource) => insertElement(resource.type, { resource }),
+    [insertElement]
+  );
 
   /**
    * Check if number is odd or even.
@@ -216,23 +254,55 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  const refContainer = useRef();
-  const refContainerFooter = useRef();
+  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
 
+  // State and callback ref necessary to recalculate the padding of the list
+  //  given the scrollbar width.
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  let container = null;
+  const refContainer = (element) => {
+    if (!element) {
+      return;
+    }
+    container = element;
+    setScrollbarWidth(element.offsetWidth - element.clientWidth);
+  };
+
+  // Recalculates padding of Media Pane so it stays centered.
+  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
+  // prop is not yet ready).
+  useLayoutEffect(() => {
+    if (!scrollbarWidth) {
+      return;
+    }
+    const currentPaddingLeft = parseFloat(
+      window.getComputedStyle(container, null).getPropertyValue('padding-left')
+    );
+    container.style['padding-right'] =
+      currentPaddingLeft - scrollbarWidth + 'px';
+  }, [scrollbarWidth, container]);
+
+  const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: refContainer,
+      root: { current: container },
       rootMargin: '0px 0px 300px 0px',
     },
     (entry) => {
-      if (!isMediaLoaded || isMediaLoading) return;
-      if (!hasMore) return;
-      if (!entry.isIntersecting) return;
+      if (!isMediaLoaded || isMediaLoading) {
+        return;
+      }
+      if (!hasMore) {
+        return;
+      }
+      if (!entry.isIntersecting) {
+        return;
+      }
 
       setNextPage();
     },
-    [hasMore, isMediaLoading, isMediaLoaded]
+    [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
   return (
@@ -290,7 +360,11 @@ function MediaPane(props) {
                   />
                 ))}
             </Column>
-            {hasMore && <div ref={refContainerFooter}>{'Loading...'}</div>}
+            {hasMore && (
+              <Loading ref={refContainerFooter}>
+                {__('Loading…', 'web-stories')}
+              </Loading>
+            )}
           </Container>
         )}
       </Inner>

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import { rgba } from 'polished';
 
 /**
@@ -31,16 +31,15 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
-import { LinkGuidelines } from '../link';
-import { Layer, PageArea } from './layout';
+import PageMenu from './pagemenu';
+import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
-    className: 'container',
-    pointerEvents: 'initial',
+    showOverflow: true,
   })``
 );
 
@@ -67,9 +66,9 @@ const Hint = styled.div`
 `;
 
 function FramesLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
@@ -81,19 +80,16 @@ function FramesLayer() {
   return (
     <Layer
       ref={ref}
+      data-testid="FramesLayer"
       pointerEvents="none"
       // Use `-1` to ensure that there's a default target to focus if
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
     >
-      <FramesPageArea>
-        {currentPage &&
-          currentPage.elements.map(({ id, ...rest }) => {
-            return <FrameElement key={id} element={{ id, ...rest }} />;
-          })}
-        <Selection />
-        {Boolean(draggingResource) &&
+      <FramesPageArea
+        overlay={
+          Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&
           Object.keys(dropTargets).length > 0 && (
             <FrameSidebar>
@@ -101,11 +97,26 @@ function FramesLayer() {
                 {__('Drop targets are outlined in blue.', 'web-stories')}
               </Hint>
             </FrameSidebar>
-          )}
-        <LinkGuidelines />
+          )
+        }
+        fullbleed={<Selection />}
+      >
+        {currentPage &&
+          currentPage.elements.map(({ id, ...rest }) => {
+            return <FrameElement key={id} element={{ id, ...rest }} />;
+          })}
       </FramesPageArea>
+      <MenuArea
+        pointerEvents="initial"
+        // Make its own stacking context.
+        zIndex={1}
+        // Cancel lasso.
+        onMouseDown={(evt) => evt.stopPropagation()}
+      >
+        <PageMenu />
+      </MenuArea>
     </Layer>
   );
 }
 
-export default FramesLayer;
+export default memo(FramesLayer);

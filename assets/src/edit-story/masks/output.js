@@ -17,7 +17,7 @@
 // Important! This file cannot use `styled-components` or any stateful/context
 // React features to stay compatible with the "output" templates.
 
-/* eslint no-restricted-imports: ["error", { "paths": ["styled-components", "@wordpress/element"] }] */
+/* eslint no-restricted-imports: ["error", { "paths": ["styled-components"] }] */
 
 /**
  * External dependencies
@@ -29,7 +29,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getElementMask } from '.';
+import { getElementMask, DEFAULT_MASK } from '.';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -45,6 +45,7 @@ export default function WithMask({
   style,
   children,
   box,
+  skipDefaultMask,
   ...rest
 }) {
   const mask = getElementMask(element);
@@ -57,7 +58,11 @@ export default function WithMask({
       : transformFlip;
   }
 
-  if (!mask?.type || isBackground) {
+  if (
+    !mask?.type ||
+    (skipDefaultMask && mask.type === DEFAULT_MASK.type) ||
+    isBackground
+  ) {
     return (
       <div
         style={{
@@ -107,6 +112,11 @@ WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
   fill: PropTypes.bool,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
   box: StoryPropTypes.box.isRequired,
+  skipDefaultMask: PropTypes.bool,
+};
+
+WithMask.defaultProps = {
+  skipDefaultMask: false,
 };

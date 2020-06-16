@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -31,48 +30,56 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row } from '../../form';
-import {
-  createLink,
-  inferLinkType,
-  getLinkFromElement,
-  LinkType,
-} from '../../link';
+import { Media, Row, Button } from '../../form';
+import { createLink, getLinkFromElement } from '../../link';
 import { useAPI } from '../../../app/api';
 import { useSnackbar } from '../../../app/snackbar';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
-import Dialog from '../../dialog';
-import theme from '../../../theme';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
-import { Plain } from '../../button';
 import { useCanvas } from '../../canvas';
-import LinkInfoDialog from './dialogContent';
+import { Close } from '../../../icons';
 
-const BrandIconText = styled.span`
+const IconText = styled.span`
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+`;
+
+const IconInfo = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-left: 12px;
 `;
 
+const IconRemoveButton = styled(Button)`
+  margin-top: 6px;
+  justify-content: flex-start;
+  align-self: flex-start;
+  padding: 4px 6px;
+`;
+
+const CloseIcon = styled(Close)`
+  margin-right: 4px;
+`;
+
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const selectedElement = selectedElements[0];
-  const { isFill } = selectedElement;
-  const inferredLinkType = useMemo(() => inferLinkType(selectedElement), [
-    selectedElement,
-  ]);
   const defaultLink = useMemo(
-    () => createLink({ url: null, icon: null, desc: null }),
+    () => createLink({ url: '', icon: null, desc: null }),
     []
   );
   const link = useMemo(
     () => getLinkFromElement(selectedElement) || defaultLink,
     [selectedElement, defaultLink]
   );
-  const canLink = selectedElements.length === 1 && !isFill;
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
 
@@ -126,21 +133,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       }
       return pushUpdateForObject(
         'link',
-        {
-          ...properties,
-          type: inferredLinkType,
-        },
+        properties.url !== ''
+          ? {
+              ...properties,
+            }
+          : null,
         defaultLink,
         submit
       );
     },
-    [
-      clearEditing,
-      pushUpdateForObject,
-      inferredLinkType,
-      defaultLink,
-      populateMetadata,
-    ]
+    [clearEditing, pushUpdateForObject, defaultLink, populateMetadata]
   );
 
   const handleChangeIcon = useCallback(
@@ -150,40 +152,37 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
-  // Informational dialog
-  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
-  const openDialog = useCallback(() => setInfoDialogOpen(true), []);
-  const closeDialog = useCallback(() => setInfoDialogOpen(false), []);
-
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
-        <Note onClick={() => openDialog()}>
-          {__('Type an address to apply a 1 or 2-tap link', 'web-stories')}
-        </Note>
+        <Note>{__('Type an address to apply a link', 'web-stories')}</Note>
       </Row>
 
       <Row>
         <ExpandedTextInput
           placeholder={__('Web address', 'web-stories')}
-          disabled={!canLink}
-          onChange={(value) => handleChange({ url: value })}
+          onChange={(value) =>
+            handleChange({ url: value }, !value /* submit */)
+          }
           value={link.url || ''}
           clear
+          aria-label={__('Edit: Element link', 'web-stories')}
         />
       </Row>
 
-      {Boolean(link.url) && link.type === LinkType.TWO_TAP && (
+      {Boolean(link.url) && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
-            disabled={!canLink}
-            onChange={(value) => handleChange({ desc: value })}
+            onChange={(value) =>
+              handleChange({ desc: value }, !value /* submit */)
+            }
             value={link.desc || ''}
+            aria-label={__('Edit: Link description', 'web-stories')}
           />
         </Row>
       )}
-      {Boolean(link.url) && link.type === LinkType.TWO_TAP && (
+      {Boolean(link.url) && (
         <Row spaceBetween={false}>
           <Media
             value={link.icon || ''}
@@ -191,32 +190,23 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             title={__('Select as link icon', 'web-stories')}
             buttonInsertText={__('Select as link icon', 'web-stories')}
             type={'image'}
-            size={60}
+            size={64}
             loading={fetchingMetadata}
             circle
           />
-          <BrandIconText>
-            {__('Optional brand icon', 'web-stories')}
-          </BrandIconText>
+          <IconInfo>
+            <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
+            {link.icon && (
+              <IconRemoveButton
+                onClick={() => handleChange({ icon: null }, true /* submit */)}
+              >
+                <CloseIcon width={14} height={14} />
+                {__('Remove', 'web-stories')}
+              </IconRemoveButton>
+            )}
+          </IconInfo>
         </Row>
       )}
-      <Dialog
-        open={infoDialogOpen}
-        onClose={closeDialog}
-        title={__('How to apply a link', 'web-stories')}
-        actions={
-          <Plain onClick={() => closeDialog()}>
-            {__('Ok, got it', 'web-stories')}
-          </Plain>
-        }
-        style={{
-          overlay: {
-            background: rgba(theme.colors.bg.v11, 0.6),
-          },
-        }}
-      >
-        <LinkInfoDialog />
-      </Dialog>
     </SimplePanel>
   );
 }

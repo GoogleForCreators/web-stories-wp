@@ -37,11 +37,11 @@ function updatePage({ elements, backgroundColor, ...rest }) {
 function updateElement(props) {
   const newProps = { ...props };
 
-  if (props.hasOwnProperty('color')) {
+  if (Object.prototype.hasOwnProperty.call(props, 'color')) {
     newProps.color = parse(newProps.color);
   }
 
-  if (props.hasOwnProperty('backgroundColor')) {
+  if (Object.prototype.hasOwnProperty.call(props, 'backgroundColor')) {
     newProps.backgroundColor = parse(newProps.backgroundColor);
   }
 

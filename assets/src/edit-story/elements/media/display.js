@@ -66,7 +66,7 @@ function MediaDisplay({
 MediaDisplay.propTypes = {
   element: StoryPropTypes.elements.media,
   mediaRef: PropTypes.object,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default MediaDisplay;

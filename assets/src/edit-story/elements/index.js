@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import createSolid from '../utils/createSolid';
 import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
@@ -34,7 +35,10 @@ import * as videoElement from './video';
 
 export const createNewElement = (type, attributes = {}) => {
   const element = elementTypes.find((el) => el.type === type);
-  const defaultAttributes = element ? element.defaultAttributes : {};
+  if (!element) {
+    throw new Error(`Unknown element type: ${type}`);
+  }
+  const { defaultAttributes } = element;
   return {
     ...defaultAttributes,
     ...attributes,
@@ -43,28 +47,43 @@ export const createNewElement = (type, attributes = {}) => {
   };
 };
 
-export const createPage = (attributes = {}) => {
-  const { elements, backgroundElementId } = attributes;
-  // Enforce having background element for each Page.
-  if (!backgroundElementId) {
+export const createPage = (pageProps = null) => {
+  const backgroundElementProps = {
     // The values of x, y, width, height are irrelevant here, however, need to be set.
-    const props = {
-      x: 1,
-      y: 1,
-      width: 1,
-      height: 1,
-      mask: {
-        type: 'rectangle',
-      },
-      isBackground: true,
-    };
-    const backgroundElement = createNewElement('shape', props);
-    attributes.elements = elements
-      ? [backgroundElement, ...elements]
-      : [backgroundElement];
-    attributes.backgroundElementId = backgroundElement.id;
-  }
-  return createNewElement('page', attributes);
+    x: 1,
+    y: 1,
+    width: 1,
+    height: 1,
+    mask: {
+      type: 'rectangle',
+    },
+    isBackground: true,
+    isDefaultBackground: true,
+  };
+  const backgroundElement = createNewElement('shape', backgroundElementProps);
+
+  const newAttributes = {
+    elements: [backgroundElement],
+    backgroundColor: createSolid(255, 255, 255),
+    ...pageProps,
+  };
+
+  return createNewElement('page', newAttributes);
+};
+
+export const duplicatePage = (oldPage) => {
+  const { elements: oldElements, ...rest } = oldPage;
+
+  // Ensure all existing elements get new ids
+  const elements = oldElements.map(({ type, ...attrs }) =>
+    createNewElement(type, attrs)
+  );
+  const newAttributes = {
+    elements,
+    ...rest,
+  };
+
+  return createNewElement('page', newAttributes);
 };
 
 export const elementTypes = [

@@ -30,17 +30,40 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
-import DraggablePage from '../draggablePage';
 import RangeInput from '../../rangeInput';
-import { ReactComponent as RectangleIcon } from '../../../icons/rectangle.svg';
+import { Rectangle as RectangleIcon } from '../../../icons';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
-import { THUMB_FRAME_HEIGHT, THUMB_FRAME_WIDTH } from '../pagepreview';
+import PagePreview, {
+  THUMB_FRAME_HEIGHT,
+  THUMB_FRAME_WIDTH,
+} from '../pagepreview';
+import {
+  Reorderable,
+  ReorderableSeparator,
+  ReorderableItem,
+} from '../../reorderable';
 
 const PREVIEW_WIDTH = 90;
 const PREVIEW_HEIGHT = (PREVIEW_WIDTH * PAGE_HEIGHT) / PAGE_WIDTH;
 const GRID_GAP = 20;
 
-const Wrapper = styled.div`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const Wrapper = styled(Reorderable)`
+  position: relative;
+  overflow-y: auto;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Grid = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: ${({ scale }) =>
@@ -51,6 +74,7 @@ const Wrapper = styled.div`
   justify-content: center;
   justify-items: center;
   align-items: center;
+  flex-grow: 1;
 `;
 
 const RangeInputWrapper = styled.div`
@@ -59,6 +83,7 @@ const RangeInputWrapper = styled.div`
   align-items: center;
   max-width: 430px;
   margin: 0 auto 75px auto;
+  width: 100%;
 `;
 
 const FlexGrowRangeInput = styled(RangeInput)`
@@ -96,6 +121,35 @@ const Rectangle = styled.button`
 
 const Space = styled.div`
   flex: 0 0 20px;
+`;
+
+const PageSeparator = styled(ReorderableSeparator)`
+  position: absolute;
+  bottom: 0;
+  left: ${({ width }) => width / 2}px;
+  width: ${({ width, margin }) => width + margin}px;
+  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  display: flex;
+  justify-content: center;
+
+  ${({ before, width, margin }) =>
+    before &&
+    `
+      left: -${(width + 2 * margin) / 2}px;
+    `}
+`;
+
+const Line = styled.div`
+  background: ${({ theme }) => theme.colors.action};
+  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  width: 4px;
+  margin: 0px;
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: relative;
 `;
 
 function ThumbnailSizeControl({ value, onChange }) {
@@ -160,38 +214,91 @@ ThumbnailSizeControl.propTypes = {
 
 function GridView() {
   const {
-    state: { pages, currentPageIndex },
-  } = useStory();
+    pages,
+    currentPageIndex,
+    setCurrentPage,
+    arrangePage,
+  } = useStory(
+    ({
+      state: { pages, currentPageIndex },
+      actions: { setCurrentPage, arrangePage },
+    }) => ({ pages, currentPageIndex, setCurrentPage, arrangePage })
+  );
   const [zoomLevel, setZoomLevel] = useState(2);
 
-  return (
-    <>
-      <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
-      <Wrapper scale={zoomLevel}>
-        {pages.map((page, index) => {
-          const isCurrentPage = index === currentPageIndex;
+  const width = zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH;
+  const height = zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT;
 
-          return (
-            <DraggablePage
-              key={index}
-              ariaLabel={
-                isCurrentPage
-                  ? sprintf(
-                      __('Page %s (current page)', 'web-stories'),
-                      index + 1
-                    )
-                  : sprintf(__('Page %s', 'web-stories'), index + 1)
-              }
-              isActive={isCurrentPage}
-              pageIndex={index}
-              width={zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH}
-              height={zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT}
-              dragIndicatorOffset={GRID_GAP / 2}
-            />
-          );
-        })}
+  const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
+
+  return (
+    <Container>
+      <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
+      <Wrapper
+        aria-label={__('Pages List', 'web-stories')}
+        onPositionChange={(oldPos, newPos) => {
+          const pageId = pages[oldPos].id;
+          arrangePage({ pageId, position: newPos });
+          setCurrentPage({ pageId });
+        }}
+        mode={'grid'}
+        getItemSize={() => height}
+      >
+        <Grid scale={zoomLevel}>
+          {pages.map((page, index) => {
+            const isCurrentPage = index === currentPageIndex;
+            const isInteractive = pages.length > 1;
+
+            return (
+              <ItemContainer key={`page-${index}`}>
+                <PageSeparator
+                  position={index}
+                  width={width}
+                  height={height}
+                  margin={GRID_GAP}
+                  before
+                >
+                  <Line height={height} />
+                </PageSeparator>
+                <ReorderableItem position={index}>
+                  <PagePreview
+                    key={index}
+                    aria-label={
+                      isCurrentPage
+                        ? sprintf(
+                            /* translators: %s: page number. */
+                            __('Page %s (current page)', 'web-stories'),
+                            index + 1
+                          )
+                        : sprintf(
+                            /* translators: %s: page number. */
+                            __('Page %s', 'web-stories'),
+                            index + 1
+                          )
+                    }
+                    isActive={isCurrentPage && isInteractive}
+                    index={index}
+                    width={width}
+                    height={height}
+                    dragIndicatorOffset={GRID_GAP / 2}
+                    onClick={handleClickPage(page)}
+                    isInteractive={isInteractive}
+                  />
+                </ReorderableItem>
+                <PageSeparator
+                  position={index + 1}
+                  width={width}
+                  height={height}
+                  margin={GRID_GAP}
+                >
+                  <Line height={height} />
+                </PageSeparator>
+              </ItemContainer>
+            );
+          })}
+        </Grid>
       </Wrapper>
-    </>
+    </Container>
   );
 }
 

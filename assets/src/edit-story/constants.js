@@ -28,10 +28,16 @@ export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_WIDTH = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_WIDTH;
 
-export const PAGE_WIDTH = 440;
-export const PAGE_HEIGHT = 660;
-export const DEFAULT_EDITOR_PAGE_WIDTH = PAGE_WIDTH;
-export const DEFAULT_EDITOR_PAGE_HEIGHT = PAGE_HEIGHT;
+export const PAGE_RATIO = 2 / 3;
+export const PAGE_WIDTH = 412;
+export const PAGE_HEIGHT = 618;
+
+export const ALLOWED_EDITOR_PAGE_WIDTHS = [412, 268, 223];
+
+export const FULLBLEED_RATIO = 9 / 16;
+
+export const COLOR_PRESETS_PER_ROW = 6;
+export const STYLE_PRESETS_PER_ROW = 3;
 
 // Default device pixel ratio.
 export const DEFAULT_DPR = 0.5;
@@ -43,9 +49,11 @@ export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
 export const MIN_FONT_SIZE = 30;
 export const MAX_FONT_SIZE = 200;
 
-// See constraints at
-// https://amp.dev/documentation/components/amp-story-cta-layer/#constraints
-export const CTA_ZONE_PERCENT = 0.2; /** Bottom 20% */
+export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
+};
 
 export const LAYER_DIRECTIONS = {
   FRONT: 'FRONT',

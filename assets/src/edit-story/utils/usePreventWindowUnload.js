@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, createContext, useContext } from 'react';
+import { useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { createContext, useContext } from './context';
 
 const PreventUnloadContext = createContext({ listeners: new Map() });
 
@@ -50,8 +55,8 @@ function usePreventWindowUnload() {
     },
     [context]
   );
-
   return setPreventUnload;
 }
 
-export default usePreventWindowUnload;
+const shouldDisablePrevent = process.env.DISABLE_PREVENT === 'true';
+export default shouldDisablePrevent ? () => () => {} : usePreventWindowUnload;

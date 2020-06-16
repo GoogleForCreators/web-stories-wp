@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 
-const rgb = ({ r, g, b }) => {
+const rgb = ({ r = 0, g = 0, b = 0 } = {}) => {
   return `rgb(${r},${g},${b})`;
 };
 

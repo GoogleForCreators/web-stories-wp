@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import createResource from './createResource';
+import getResourceSize from './getResourceSize';
 
 /**
  * Generates a resource object from a WordPress attachment.
@@ -28,6 +29,7 @@ import createResource from './createResource';
 function getResourceFromAttachment(attachment) {
   const {
     id,
+    date,
     guid: { rendered: src },
     media_details: {
       width,
@@ -40,14 +42,25 @@ function getResourceFromAttachment(attachment) {
     description: { raw: description },
     mime_type: mimeType,
     featured_media: posterId,
-    featured_media_src: poster,
+    featured_media_src: {
+      src: poster,
+      width: posterWidth,
+      height: posterHeight,
+      generated: posterGenerated,
+    },
     alt_text: alt,
   } = attachment;
   return createResource({
     mimeType,
+    creationDate: date,
     src,
-    width,
-    height,
+    ...getResourceSize(
+      width,
+      height,
+      posterGenerated,
+      posterWidth,
+      posterHeight
+    ),
     poster,
     posterId,
     id,

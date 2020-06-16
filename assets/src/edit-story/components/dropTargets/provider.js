@@ -18,17 +18,22 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useTransform } from '../transform';
 import { useStory } from '../../app';
+import { useTransform } from '../transform';
+import { getElementProperties } from '../canvas/useInsertElement';
+import { getDefinitionForType } from '../../elements';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
 const DROP_TARGET_ALLOWED_TYPES = ['image', 'video', 'shape'];
+
+const isDropSource = (type) => DROP_SOURCE_ALLOWED_TYPES.includes(type);
+const isDropTarget = (type) => DROP_TARGET_ALLOWED_TYPES.includes(type);
 
 function DropTargetsProvider({ children }) {
   const [draggingResource, setDraggingResource] = useState(null);
@@ -37,10 +42,14 @@ function DropTargetsProvider({ children }) {
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    actions: { deleteElementById, updateElementById },
-    state: { currentPage },
-  } = useStory();
+  const { currentPage, combineElements } = useStory(
+    ({ state: { currentPage }, actions: { combineElements } }) => ({
+      currentPage,
+      combineElements,
+    })
+  );
+
+  const elements = currentPage?.elements || [];
 
   const getDropTargetFromCursor = useCallback(
     (x, y, ignoreId = null) => {
@@ -69,19 +78,6 @@ function DropTargetsProvider({ children }) {
     });
   }, []);
 
-  const isDropSource = (type) => {
-    return DROP_SOURCE_ALLOWED_TYPES.includes(type);
-  };
-
-  const isDropTarget = (type) => {
-    return DROP_TARGET_ALLOWED_TYPES.includes(type);
-  };
-
-  const activeDropTarget = useMemo(
-    () => currentPage?.elements.find((el) => el.id === activeDropTargetId),
-    [activeDropTargetId, currentPage]
-  );
-
   /**
    * Dragging elements
    */
@@ -91,11 +87,27 @@ function DropTargetsProvider({ children }) {
         return;
       }
 
+      const newElement = getElementProperties(resource.type, {
+        resource,
+      });
+
+      const existingElement = elements.find(({ id }) => id === selfId);
+
+      // Get these attributes from the existing element (if exists and is non-null)
+      // or get defaults from a new element of the same type
+      const scale = existingElement?.scale ?? newElement.scale;
+      const focalX = existingElement?.focalX ?? newElement.focalX;
+      const focalY = existingElement?.focalY ?? newElement.focalY;
+      const flip = existingElement?.flip ?? newElement.flip;
+
       const dropTargetId = getDropTargetFromCursor(x, y, selfId);
 
       if (dropTargetId && dropTargetId !== activeDropTargetId) {
         pushTransform(dropTargetId, {
-          dropTargets: { active: true, replacement: resource },
+          dropTargets: {
+            active: true,
+            replacement: { resource, scale, focalX, focalY, flip },
+          },
         });
         if (selfId) {
           pushTransform(selfId, {
@@ -110,7 +122,7 @@ function DropTargetsProvider({ children }) {
         }
       }
       setActiveDropTargetId(dropTargetId);
-      (currentPage?.elements || [])
+      elements
         .filter(({ id }) => id !== dropTargetId)
         .forEach((el) =>
           pushTransform(el.id, {
@@ -118,7 +130,7 @@ function DropTargetsProvider({ children }) {
           })
         );
     },
-    [activeDropTargetId, currentPage, getDropTargetFromCursor, pushTransform]
+    [activeDropTargetId, elements, getDropTargetFromCursor, pushTransform]
   );
 
   /**
@@ -131,36 +143,31 @@ function DropTargetsProvider({ children }) {
       }
 
       if (!activeDropTargetId || activeDropTargetId === selfId) {
+        Object.keys(dropTargets)
+          .filter((id) => id !== selfId)
+          .map((id) => pushTransform(id, null));
         return;
       }
 
-      const {
-        scale = 100,
-        focalX = 50,
-        focalY = 50,
-        isFill = false,
-      } = activeDropTarget;
+      const combineArgs = {
+        secondId: activeDropTargetId,
+      };
 
-      updateElementById({
-        elementId: activeDropTargetId,
-        properties: {
+      if (selfId) {
+        combineArgs.firstId = selfId;
+      } else {
+        // Create properties as you'd create them for a new element to be added
+        // Then merge these into the existing element using the same logic as
+        // for merging existing elements.
+        combineArgs.firstElement = getElementProperties(resource.type, {
           resource,
-          type: resource.type,
-          scale,
-          focalX,
-          focalY,
-          isFill,
-        },
-      });
+        });
+      }
+      combineElements(combineArgs);
 
       // Reset styles on visisble elements
-      (currentPage?.elements || [])
-        .filter(
-          ({ id }) =>
-            !(id in Object.keys(dropTargets)) &&
-            id !== selfId &&
-            id !== activeDropTargetId
-        )
+      elements
+        .filter(({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId)
         .forEach((el) => {
           pushTransform(el.id, {
             dropTargets: {
@@ -170,20 +177,14 @@ function DropTargetsProvider({ children }) {
           });
         });
 
-      if (selfId) {
-        deleteElementById({ elementId: selfId });
-      }
       setActiveDropTargetId(null);
+
+      const { onDropHandler } = getDefinitionForType(resource.type);
+      if (onDropHandler) {
+        onDropHandler(activeDropTargetId);
+      }
     },
-    [
-      activeDropTarget,
-      activeDropTargetId,
-      currentPage,
-      dropTargets,
-      deleteElementById,
-      pushTransform,
-      updateElementById,
-    ]
+    [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
 
   const state = {
@@ -207,10 +208,7 @@ function DropTargetsProvider({ children }) {
 }
 
 DropTargetsProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default DropTargetsProvider;

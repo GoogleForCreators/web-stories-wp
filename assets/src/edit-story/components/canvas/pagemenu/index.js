@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -29,15 +30,18 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useStory, useHistory, useConfig } from '../../../app';
-import { createPage } from '../../../elements';
-import { ReactComponent as Delete } from '../../../icons/delete_icon.svg';
-import { ReactComponent as Duplicate } from '../../../icons/duplicate_icon.svg';
-import { ReactComponent as LeftArrow } from '../../../icons/undo_icon.svg';
-import { ReactComponent as RightArrow } from '../../../icons/redo_icon.svg';
-import { ReactComponent as Add } from '../../../icons/add_page.svg';
-import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
-import { ReactComponent as Text } from '../../../icons/text_helper.svg';
+import { createPage, duplicatePage } from '../../../elements';
+import {
+  Delete,
+  Duplicate,
+  UndoAlt as LeftArrow,
+  RedoAlt as RightArrow,
+  AddPage,
+  LayoutHelper,
+  Text,
+} from '../../../icons';
 import WithTooltip from '../../tooltip';
+import useCanvas from '../useCanvas';
 
 const HEIGHT = 28;
 
@@ -110,10 +114,28 @@ function PageMenu() {
     actions: { undo, redo },
   } = useHistory();
   const {
-    state: { currentPageNumber, currentPage },
-    actions: { deleteCurrentPage, addPage },
-  } = useStory();
+    currentPageNumber,
+    currentPage,
+    deleteCurrentPage,
+    addPage,
+  } = useStory(
+    ({
+      state: { currentPageNumber, currentPage },
+      actions: { deleteCurrentPage, addPage },
+    }) => {
+      return {
+        currentPageNumber,
+        currentPage,
+        deleteCurrentPage,
+        addPage,
+      };
+    }
+  );
+  const { pageSize } = useCanvas((state) => ({
+    pageSize: state.state.pageSize,
+  }));
   const { isRTL } = useConfig();
+  const { showTextMagicAndHelperMode } = useFeatures();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -124,7 +146,7 @@ function PageMenu() {
   ]);
 
   const handleDuplicatePage = useCallback(
-    () => addPage({ page: createPage(currentPage) }),
+    () => addPage({ page: duplicatePage(currentPage) }),
     [addPage, currentPage]
   );
 
@@ -140,15 +162,19 @@ function PageMenu() {
     <Wrapper>
       <Box>
         <Options>
-          <PageCount>
-            {sprintf(
-              /* translators: %s: Page number. */
-              __('Page %s', 'web-stories'),
-              currentPageNumber
-            )}
-          </PageCount>
-          <Space />
-          <WithTooltip title={__('Delete page', 'web-stories')} shortcut="del">
+          {pageSize.width > 280 && (
+            <>
+              <PageCount>
+                {sprintf(
+                  /* translators: %s: Page number. */
+                  __('Page %s', 'web-stories'),
+                  currentPageNumber
+                )}
+              </PageCount>
+              <Space />
+            </>
+          )}
+          <WithTooltip title={__('Delete page', 'web-stories')}>
             <Icon
               onClick={handleDeletePage}
               aria-label={__('Delete Page', 'web-stories')}
@@ -171,7 +197,7 @@ function PageMenu() {
               onClick={handleAddPage}
               aria-label={__('Add New Page', 'web-stories')}
             >
-              <Add />
+              <AddPage />
             </Icon>
           </WithTooltip>
           <Space />
@@ -197,15 +223,17 @@ function PageMenu() {
             </Icon>
           </WithTooltip>
         </Options>
-        <Options>
-          <Icon disabled>
-            <Layout />
-          </Icon>
-          <Space isDouble />
-          <Icon disabled>
-            <Text />
-          </Icon>
-        </Options>
+        {showTextMagicAndHelperMode && (
+          <Options>
+            <Icon disabled>
+              <LayoutHelper />
+            </Icon>
+            <Space isDouble />
+            <Icon disabled>
+              <Text />
+            </Icon>
+          </Options>
+        )}
       </Box>
     </Wrapper>
   );

@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -36,26 +35,48 @@ import {
   getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
+import createError from '../../../utils/createError';
 
-function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
-  const { uploadFile } = useUploader();
+function useUploadMedia({ media, setMedia }) {
+  const { uploadFile, isValidType } = useUploader();
   const { showSnackbar } = useSnackbar();
-  const {
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
-  } = useConfig();
-  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  const { allowedFileTypes } = useConfig();
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
 
+  const mediaRef = useRef();
+  mediaRef.current = media;
+
   const uploadMedia = useCallback(
     async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
+      // eslint-disable-next-line no-shadow
+      const media = mediaRef.current;
+
+      // If there are no files passed, don't try to upload.
+      if (!files || files.length === 0) {
+        return;
+      }
       let localFiles;
+      let updatedMedia;
       try {
         setIsUploading(true);
         setPreventUnload('upload', true);
+
+        files.reverse().map((file) => {
+          if (!isValidType(file)) {
+            /* translators: %s is a list of allowed file extensions. */
+            const message = sprintf(
+              /* translators: %s: list of allowed file types. */
+              __('Please choose only %s to upload.', 'web-stories'),
+              allowedFileTypes.join(
+                /* translators: delimiter used in a list */
+                __(', ', 'web-stories')
+              )
+            );
+
+            throw createError('ValidError', file.name, message);
+          }
+        });
 
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
@@ -63,6 +84,7 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
             file,
           }))
         );
+        localFiles = localFiles.filter((f) => f.localResource != null);
 
         if (onLocalFile) {
           localFiles = localFiles.map(({ localResource, file }) => {
@@ -72,49 +94,53 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
             return { localResource, file, element };
           });
         }
-        setMedia({
-          media: [
-            ...localFiles.map(({ localResource }) => localResource),
-            ...media,
-          ],
-        });
+        updatedMedia = [
+          ...localFiles.map(({ localResource }) => localResource),
+          ...media,
+        ];
+        setMedia({ media: updatedMedia });
       } catch (e) {
         setMedia({ media });
 
         setIsUploading(false);
         showSnackbar({
-          message: createInterpolateElement(
-            sprintf(
-              __('Please choose only <b>%s</b> to upload.', 'web-stories'),
-              allowedMimeTypes.join(', ')
-            ),
-            {
-              b: <b />,
-            }
-          ),
+          message: e.message,
         });
         return;
       }
 
       try {
-        const uploadingFiles = await Promise.all(
+        const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => ({
             ...localFile,
-            fileUploaded: await uploadFile(localFile.file),
+            fileUploaded: getResourceFromAttachment(
+              await uploadFile(localFile.file)
+            ),
           }))
         );
 
         setIsUploading(false);
 
         if (onUploadedFile) {
-          uploadingFiles.forEach(({ element, fileUploaded }) => {
+          uploadedFiles.forEach(({ element, fileUploaded }) => {
             onUploadedFile({
-              resource: getResourceFromAttachment(fileUploaded),
+              resource: fileUploaded,
               element,
             });
           });
         }
-        fetchMedia({ pagingNum, mediaType }, setMedia);
+
+        const uploadedFilesMap = new Map(
+          uploadedFiles.map(({ localResource, fileUploaded }) => [
+            localResource,
+            fileUploaded,
+          ])
+        );
+        setMedia({
+          media: updatedMedia.map((resource) => {
+            return uploadedFilesMap.get(resource) ?? resource;
+          }),
+        });
       } catch (e) {
         showSnackbar({
           message: e.message,
@@ -135,13 +161,10 @@ function useUploadMedia({ media, pagingNum, mediaType, fetchMedia, setMedia }) {
     },
     [
       setMedia,
-      media,
       showSnackbar,
-      allowedMimeTypes,
-      fetchMedia,
-      pagingNum,
-      mediaType,
+      allowedFileTypes,
       uploadFile,
+      isValidType,
       setPreventUnload,
     ]
   );

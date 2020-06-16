@@ -1,0 +1,158 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { Remove } from '../../../icons';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
+import { PanelContent } from '../panel';
+import { StylePresetPropType } from '../../../types';
+import WithTooltip from '../../tooltip';
+import PresetGroup from './presetGroup';
+import { presetHasOpacity } from './utils';
+
+const REMOVE_ICON_SIZE = 18;
+const PRESET_HEIGHT = 30;
+
+const presetCSS = css`
+  width: 100%;
+  height: 100%;
+  font-size: 13px;
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
+  border-width: 0;
+  svg {
+    width: ${REMOVE_ICON_SIZE}px;
+    height: ${REMOVE_ICON_SIZE}px;
+    position: absolute;
+    top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+    left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+  }
+`;
+
+const Transparent = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: conic-gradient(
+    #fff 0.25turn,
+    #d3d4d4 0turn 0.5turn,
+    #fff 0turn 0.75turn,
+    #d3d4d4 0turn 1turn
+  );
+  background-size: 50% 50%;
+`;
+
+const ColorWrapper = styled.div`
+  display: inline-block;
+  width: 30px;
+  height: ${PRESET_HEIGHT}px;
+  border: 1px solid ${({ theme }) => theme.colors.whiteout};
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
+`;
+
+const Color = styled.button.attrs({ type: 'button' })`
+  ${presetCSS}
+  ${({ color }) => generatePatternStyles(color)}
+`;
+
+function Presets({
+  stylePresets,
+  handleOnClick,
+  isEditMode,
+  isText,
+  isBackground,
+}) {
+  const { fillColors, textColors } = stylePresets;
+
+  const colorPresets = isText ? textColors : fillColors;
+  const hasPresets = colorPresets.length > 0;
+
+  const colorPresetRenderer = (color, i, activeIndex) => {
+    if (!color) {
+      return null;
+    }
+    const disabled = isBackground && !isEditMode && presetHasOpacity(color);
+    // @todo The correct text here should be: Page background colors can not have an opacity.
+    // However, due to bug with Tooltips/Popup, the text flows out of the screen.
+    const title = disabled
+      ? __('Opacity not allowed for Page', 'web-stories')
+      : null;
+    return (
+      <WithTooltip title={title}>
+        <ColorWrapper disabled={disabled}>
+          <Transparent />
+          <Color
+            tabIndex={activeIndex === i ? 0 : -1}
+            color={color}
+            onClick={() => handleOnClick(color)}
+            disabled={disabled}
+            aria-label={
+              isEditMode
+                ? __('Delete color preset', 'web-stories')
+                : __('Apply color preset', 'web-stories')
+            }
+          >
+            {isEditMode && <Remove />}
+          </Color>
+        </ColorWrapper>
+      </WithTooltip>
+    );
+  };
+
+  const colorLabel = isText
+    ? __('Text colors', 'web-stories')
+    : __('Colors', 'web-stories');
+  return (
+    <PanelContent isPrimary padding={hasPresets ? null : '0'}>
+      {hasPresets && (
+        <PresetGroup
+          label={colorLabel}
+          itemRenderer={colorPresetRenderer}
+          presets={colorPresets}
+          type={'color'}
+        />
+      )}
+    </PanelContent>
+  );
+}
+
+Presets.propTypes = {
+  stylePresets: StylePresetPropType.isRequired,
+  handleOnClick: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
+  isText: PropTypes.bool.isRequired,
+  isBackground: PropTypes.bool.isRequired,
+};
+
+export default Presets;

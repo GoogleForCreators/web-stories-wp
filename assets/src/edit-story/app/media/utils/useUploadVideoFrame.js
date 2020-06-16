@@ -25,17 +25,17 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
-import getFirstFrameOfVideo from './getFirstFrameOfVideo';
+import { preloadImage, getFirstFrameOfVideo } from './';
 
 function useUploadVideoFrame({ updateMediaElement }) {
   const {
     actions: { updateMedia },
   } = useAPI();
-  const { uploadFile } = useUploader(false);
+  const { uploadFile } = useUploader();
   const { storyId } = useConfig();
-  const {
-    actions: { updateElementsByResourceId },
-  } = useStory();
+  const { updateElementsByResourceId } = useStory((state) => ({
+    updateElementsByResourceId: state.actions.updateElementsByResourceId,
+  }));
   const setProperties = useCallback(
     (id, properties) => {
       updateElementsByResourceId({ id, properties });
@@ -46,7 +46,12 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const processData = async (id, src) => {
     try {
       const obj = await getFirstFrameOfVideo(src);
-      const { id: posterId, source_url: poster } = await uploadFile(obj);
+      const {
+        id: posterId,
+        source_url: poster,
+        media_details: { width: posterWidth, height: posterHeight },
+      } = await uploadFile(obj);
+      // Meta data cannot be sent as part of upload.
       await updateMedia(posterId, {
         meta: {
           web_stories_is_poster: true,
@@ -54,17 +59,39 @@ function useUploadVideoFrame({ updateMediaElement }) {
       });
       await updateMedia(id, {
         featured_media: posterId,
+        meta: {
+          web_stories_poster_id: posterId,
+        },
         post: storyId,
       });
+
+      // Preload the full image in the browser to stop jumping around.
+      await preloadImage(poster);
+
+      // Overwrite the original video dimensions. The poster reupload has more
+      // accurate dimensions of the video that includes orientation changes.
+      const newSize =
+        (posterWidth &&
+          posterHeight && {
+            width: posterWidth,
+            height: posterHeight,
+          }) ||
+        null;
       const newState = ({ resource }) => ({
         resource: {
           ...resource,
           posterId,
           poster,
+          ...newSize,
         },
       });
       setProperties(id, newState);
-      updateMediaElement({ id, posterId, poster });
+      updateMediaElement({
+        id,
+        posterId,
+        poster,
+        ...newSize,
+      });
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.
     }
@@ -75,7 +102,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
    *
    */
   const uploadVideoFrame = useCallback(processData, [
-    getFirstFrameOfVideo,
+    storyId,
+    updateMediaElement,
     uploadFile,
     updateMedia,
     setProperties,

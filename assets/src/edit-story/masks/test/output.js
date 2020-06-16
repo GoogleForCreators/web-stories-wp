@@ -125,12 +125,11 @@ describe('WithMask', () => {
     await expect(content).toContain(MaskTypes.HEART);
   });
 
-  // see https://github.com/google/web-stories-wp/issues/536
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should produce valid AMP output', async () => {
+  it('should add default mask', async () => {
     const props = {
       element: {
         id: '123',
+        isBackground: false,
         type: 'image',
         mimeType: 'image/png',
         scale: 1,
@@ -147,19 +146,94 @@ describe('WithMask', () => {
           height: 1920,
           width: 1080,
         },
-      },
-      mask: {
-        type: 'heart',
-        fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
-        style: {},
+        mask: {
+          type: MaskTypes.RECTANGLE,
+        },
       },
       box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
     };
 
-    await expect(
+    const content = renderToStaticMarkup(
       <WithMask {...props}>
-        <amp-img src="https://example.com/image.png" layout="fill" />
+        <p>{'Hello World'}</p>
       </WithMask>
-    ).toBeValidAMPStoryElement();
+    );
+
+    await expect(content).toContain(MaskTypes.RECTANGLE);
+  });
+
+  it('should ignore default mask when requested', async () => {
+    const props = {
+      element: {
+        id: '123',
+        isBackground: false,
+        type: 'image',
+        mimeType: 'image/png',
+        scale: 1,
+        origRatio: 9 / 16,
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          src: 'https://example.com/image.png',
+          height: 1920,
+          width: 1080,
+        },
+        mask: {
+          type: MaskTypes.RECTANGLE,
+        },
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
+
+    const content = renderToStaticMarkup(
+      <WithMask {...props} skipDefaultMask>
+        <p>{'Hello World'}</p>
+      </WithMask>
+    );
+
+    await expect(content).not.toContain(MaskTypes.RECTANGLE);
+  });
+
+  describe('AMP validation', () => {
+    it('should produce valid AMP output', async () => {
+      const props = {
+        element: {
+          id: '123',
+          type: 'image',
+          mimeType: 'image/png',
+          scale: 1,
+          origRatio: 9 / 16,
+          x: 50,
+          y: 100,
+          height: 1920,
+          width: 1080,
+          rotationAngle: 0,
+          resource: {
+            type: 'image',
+            mimeType: 'image/png',
+            src: 'https://example.com/image.png',
+            height: 1920,
+            width: 1080,
+          },
+          mask: {
+            type: 'heart',
+            fill: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+            style: {},
+          },
+        },
+        box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+      };
+
+      await expect(
+        <WithMask {...props}>
+          <amp-img src="https://example.com/image.png" layout="fill" />
+        </WithMask>
+      ).toBeValidAMPStoryElement();
+    });
   });
 });

@@ -47,7 +47,7 @@ const Container = styled.div`
   top: ${({ place }) => (place.indexOf('top') === 0 ? 0 : 'inherit')};
   bottom: ${({ place }) => (place.indexOf('bottom') === 0 ? 0 : 'inherit')};
   left: ${({ place }) => getLeft(place)};
-  z-index: 10000;
+  z-index: 2147483647;
 `;
 
 const ChildContainer = styled.div`
@@ -80,7 +80,7 @@ function SnackbarContainer({
   component: Component,
   notifications,
   onRemove,
-  place,
+  place = 'bottom-left',
 }) {
   const orderednotifications =
     place.indexOf('top') === 0 ? [...notifications].reverse() : notifications;

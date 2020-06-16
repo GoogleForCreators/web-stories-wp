@@ -26,21 +26,20 @@ import { useHistory } from '../../';
 
 function useHistoryReplay({ restore }) {
   const {
-    state: { replayState },
+    state: { requestedState },
   } = useHistory();
   useEffect(() => {
-    if (!replayState) {
+    if (!requestedState) {
       return;
     }
-    const { current, pages, selection, story, capabilities } = replayState;
+    const { current, pages, selection, story } = requestedState;
     restore({
       pages,
       current,
       story,
       selection,
-      capabilities,
     });
-  }, [restore, replayState]);
+  }, [restore, requestedState]);
 }
 
 export default useHistoryReplay;

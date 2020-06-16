@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { memo } from 'react';
 
 /**
  * WordPress dependencies
@@ -65,11 +66,8 @@ const Icon = styled(UploadIcon)`
 `;
 
 function UploadDropTargetMessage({ message, ...rest }) {
-  const { allowedMimeTypes = {} } = useConfig();
-  const allowedFileTypes = Object.keys(allowedMimeTypes).reduce(
-    (acc, cur) => [...acc, ...allowedMimeTypes[cur]],
-    []
-  );
+  const { allowedFileTypes } = useConfig();
+
   return (
     <Container {...rest}>
       <Box>
@@ -79,7 +77,10 @@ function UploadDropTargetMessage({ message, ...rest }) {
           {sprintf(
             /* translators: %s is a list of allowed file extensions. */
             __('You can upload %s.', 'web-stories'),
-            allowedFileTypes.join(', ')
+            allowedFileTypes.join(
+              /* translators: delimiter used in a list */
+              __(', ', 'web-stories')
+            )
           )}
         </Text>
       </Box>
@@ -91,4 +92,4 @@ UploadDropTargetMessage.propTypes = {
   message: PropTypes.string.isRequired,
 };
 
-export default UploadDropTargetMessage;
+export default memo(UploadDropTargetMessage);

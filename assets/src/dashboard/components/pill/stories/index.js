@@ -15,16 +15,24 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
+import { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Pill, FloatingTab } from '../';
+import { TEMPLATE_COLOR_ITEMS } from '../../../constants';
+import { PILL_LABEL_TYPES } from '../../../constants/components';
+import Pill from '../';
 
 export default {
   title: 'Dashboard/Components/Pill',
@@ -50,16 +58,44 @@ const TEMP_EDIT_PENCIL = (
 
 const categoryDemoData = [
   {
-    label: 'All categories',
+    label: __('All Categories', 'web-stories'),
     value: 'all',
+    icon: TEMP_EDIT_PENCIL,
+    selected: false,
+  },
+  {
+    label: __('Arts and Crafts', 'web-stories'),
+    value: 'arts_crafts',
+    icon: TEMP_EDIT_PENCIL,
+    selected: false,
+  },
+  {
+    label: __('Beauty', 'web-stories'),
+    value: 'beauty',
     icon: TEMP_EDIT_PENCIL,
     selected: true,
   },
-  { label: 'Arts and Crafts', value: 'arts_crafts', icon: TEMP_EDIT_PENCIL },
-  { label: 'Beauty', value: 'beauty', icon: TEMP_EDIT_PENCIL },
-  { label: 'Cooking', value: 'cooking', icon: TEMP_EDIT_PENCIL },
-  { label: 'Sports', value: 'sports', icon: TEMP_EDIT_PENCIL },
-  { label: 'News', value: 'news', icon: TEMP_EDIT_PENCIL },
+  {
+    label: __('Cooking', 'web-stories'),
+    value: 'cooking',
+    icon: TEMP_EDIT_PENCIL,
+    selected: false,
+  },
+  { label: __('News', 'web-stories'), value: 'news', icon: TEMP_EDIT_PENCIL },
+  {
+    label: __('Sports', 'web-stories'),
+    value: 'sports',
+    icon: TEMP_EDIT_PENCIL,
+    selected: false,
+  },
+  { label: __('News', 'web-stories'), value: 'news_2', icon: TEMP_EDIT_PENCIL },
+  {
+    label: __('UNCLICKABLE', 'web-stories'),
+    value: 'unclickable',
+    disabled: true,
+    icon: TEMP_EDIT_PENCIL,
+    selected: false,
+  },
 ];
 
 const DemoFieldSet = styled.fieldset`
@@ -77,62 +113,167 @@ const IconSpan = styled.span`
 `;
 
 export const _default = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
   return (
     <DemoFieldSet>
-      {categoryDemoData.map(({ icon, label, selected, value }, index) => {
-        return (
-          <Pill
-            key={value + index}
-            inputType="checkbox"
-            name="demo_checkbox"
-            onClick={action('on click selected')}
-            value={value}
-            isSelected={boolean(`isSelected: ${index}`, selected)}
-          >
-            <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
-          </Pill>
-        );
-      })}
+      {statefulDemoData.map(
+        ({ icon, label, selected, value, disabled }, index) => {
+          return (
+            <Pill
+              key={value + index}
+              inputType="checkbox"
+              name={value}
+              onClick={(e, selectedValue) => {
+                action('on click selected')(selectedValue);
+                updateDemoDataState(selectedValue);
+              }}
+              value={value}
+              isSelected={selected}
+              disabled={disabled}
+            >
+              <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
+            </Pill>
+          );
+        }
+      )}
     </DemoFieldSet>
   );
 };
 
 export const _floatingTabs = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
   return (
     <DemoFieldSet>
-      {categoryDemoData.map(({ icon, label, selected, value }, index) => {
-        return (
-          <FloatingTab
-            key={value + index}
-            inputType="checkbox"
-            name="demo_checkbox"
-            onClick={action('on click selected')}
-            value={value}
-            isSelected={boolean(`isSelected: ${index}`, selected)}
-          >
-            <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
-          </FloatingTab>
-        );
-      })}
+      {statefulDemoData.map(
+        ({ icon, label, selected, value, disabled }, index) => {
+          return (
+            <Pill
+              key={value + index}
+              inputType="checkbox"
+              labelType={PILL_LABEL_TYPES.FLOATING}
+              name={value}
+              onClick={(e, selectedValue) => {
+                action('on click selected')(selectedValue);
+                updateDemoDataState(selectedValue);
+              }}
+              value={value}
+              isSelected={selected}
+              disabled={disabled}
+            >
+              <IconSpan>{icon}</IconSpan> {text(`label: ${index}`, label)}
+            </Pill>
+          );
+        }
+      )}
     </DemoFieldSet>
   );
 };
 
 export const _radioGroup = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return { ...item, selected: false };
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
   return (
     <DemoFieldSet>
-      {categoryDemoData.map(({ label, selected, value }, index) => {
+      {statefulDemoData.map(
+        ({ disabled, label, selected = false, value }, index) => {
+          return (
+            <Pill
+              key={value + index}
+              inputType="radio"
+              name="demo_radio"
+              onClick={(e, selectedValue) => {
+                action('on click selected')(selectedValue);
+                updateDemoDataState(selectedValue);
+              }}
+              value={value}
+              isSelected={selected}
+              disabled={disabled}
+            >
+              {text(`label: ${index}`, label)}
+            </Pill>
+          );
+        }
+      )}
+    </DemoFieldSet>
+  );
+};
+
+export const _colorSwatches = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(
+    TEMPLATE_COLOR_ITEMS
+  );
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
+  return (
+    <DemoFieldSet>
+      {statefulDemoData.map(({ label, hex, value, selected }, index) => {
         return (
           <Pill
+            ariaLabel={label}
             key={value + index}
-            inputType="radio"
-            name="demo_radio"
-            onClick={action('on click selected')}
+            inputType="checkbox"
+            labelType={PILL_LABEL_TYPES.SWATCH}
+            hex={hex}
+            name={value}
+            onClick={(_, selectedValue) => {
+              action('on click selected')(selectedValue);
+              updateDemoDataState(selectedValue);
+            }}
             value={value}
-            isSelected={boolean(`isSelected: ${index}`, selected)}
-          >
-            {text(`label: ${index}`, label)}
-          </Pill>
+            isSelected={selected}
+            disabled={boolean('disabled')}
+          />
         );
       })}
     </DemoFieldSet>

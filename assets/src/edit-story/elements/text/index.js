@@ -17,9 +17,11 @@
 /**
  * Internal dependencies
  */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import createSolid from '../../utils/createSolid';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -32,20 +34,15 @@ export { default as updateForResizeEvent } from './updateForResizeEvent';
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-  bold: false,
-  fontFamily: 'Roboto',
-  fontFallback: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-  fontWeight: 400,
+  font: TEXT_ELEMENT_DEFAULT_FONT,
   fontSize: 36,
-  fontStyle: 'normal',
-  color: '#000000',
-  letterSpacing: 0,
+  backgroundColor: createSolid(196, 196, 196),
   lineHeight: 1.3,
   textAlign: 'initial',
-  textDecoration: 'none',
   padding: {
     vertical: 0,
     horizontal: 0,
+    locked: true,
   },
 };
 
@@ -61,6 +58,8 @@ export const resizeRules = {
   vertical: false,
   horizontal: true,
   diagonal: true,
+  minWidth: 20,
+  minHeight: 0, // Enforced by min font size
 };
 
 export const panels = [

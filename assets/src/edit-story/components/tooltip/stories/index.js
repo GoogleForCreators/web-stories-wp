@@ -26,15 +26,18 @@ import styled from 'styled-components';
 import WithTooltip from '../';
 
 const Container = styled.div`
-  margin: 60px 120px;
+  display: flex;
+  margin: 64px;
 `;
 
 const Content = styled.div`
-  width: 100px;
-  padding: 12px;
+  width: 240px;
+  height: 120px;
   background: #333;
   color: white;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default {
@@ -49,10 +52,18 @@ export const _default = () => {
   const placement = select(
     'Placement',
     {
+      TopStart: 'top-start',
       Top: 'top',
+      TopEnd: 'top-end',
+      BottomStart: 'bottom-start',
       Bottom: 'bottom',
+      BottomEnd: 'bottom-end',
+      RightStart: 'right-start',
       Right: 'right',
+      RightEnd: 'right-end',
+      LeftStart: 'left-start',
       Left: 'left',
+      LeftEnd: 'left-end',
     },
     'top'
   );

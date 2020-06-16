@@ -1,3 +1,4 @@
+.test_artifacts
 .travis_deploy_key
 .idea/
 .vscode/
@@ -6,6 +7,8 @@ node_modules
 /vendor
 /assets/css
 /assets/js
+/assets/testjs
 /build
 /bin/local-env/data
+phpcs.xml
 phpunit.xml

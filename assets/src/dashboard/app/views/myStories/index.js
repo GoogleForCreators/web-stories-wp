@@ -15,179 +15,105 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf, _n } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-import styled from 'styled-components';
-import { useCallback, useContext, useEffect, useState, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
-import { FloatingTab, ListBar } from '../../../components';
+import { ScrollToTop, Layout } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
+import { useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
-import { UnitsProvider } from '../../../../edit-story/units';
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import FontProvider from '../../font/fontProvider';
-import usePagePreviewSize from '../../../utils/usePagePreviewSize';
-import { ReactComponent as PlayArrowSvg } from '../../../icons/playArrow.svg';
-import {
-  BodyWrapper,
-  PageHeading,
-  NoResults,
-  StoryGridView,
-  ListBarContainer,
-} from '../shared';
-
-const FilterContainer = styled.div`
-  padding: 0 20px 20px 0;
-  margin: ${({ theme }) => `0 ${theme.pageGutter.desktop}px`};
-  border-bottom: ${({ theme: t }) => t.subNavigationBar.border};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    margin: ${({ theme }) => `0 ${theme.pageGutter.min}px`};
-  }
-
-  @media ${({ theme }) => theme.breakpoint.min} {
-    & > label {
-      border-radius: 0;
-      box-shadow: none;
-      padding: 0 10px 0 0;
-    }
-  }
-`;
-
-const DefaultBodyText = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-weight: ${({ theme }) => theme.fonts.body1.weight};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  color: ${({ theme }) => theme.colors.gray200};
-  margin: 40px 20px;
-`;
-
-const PlayArrowIcon = styled(PlayArrowSvg).attrs({ width: 11, height: 14 })`
-  margin-right: 9px;
-`;
+import { useConfig } from '../../config';
+import Content from './content';
+import Header from './header';
 
 function MyStories() {
-  const [status, setStatus] = useState(STORY_STATUSES[0].value);
-  const [typeaheadValue, setTypeaheadValue] = useState('');
-  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
-  const { pageSize } = usePagePreviewSize();
   const {
-    actions: { fetchStories },
-    state: { stories },
+    actions: {
+      storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
+      templateApi: { createTemplateFromStory },
+    },
+    state: {
+      stories: {
+        allPagesFetched,
+        isLoading,
+        stories,
+        storiesOrderById,
+        totalPages,
+        totalStoriesByStatus,
+      },
+      users,
+    },
   } = useContext(ApiContext);
 
+  const { filter, page, search, sort, view } = useStoryView({
+    filters: STORY_STATUSES,
+    totalPages,
+  });
+
+  const { wpListURL } = useConfig();
+
   useEffect(() => {
-    fetchStories({ status });
-  }, [fetchStories, status]);
-
-  const filteredStories = useMemo(() => {
-    return stories.filter((story) => {
-      const lowerTypeaheadValue = typeaheadValue.toLowerCase();
-
-      return story.title.toLowerCase().includes(lowerTypeaheadValue);
+    fetchStories({
+      page: page.value,
+      searchTerm: search.keyword,
+      sortDirection: view.style === VIEW_STYLE.LIST && sort.direction,
+      sortOption: sort.value,
+      status: filter.value,
     });
-  }, [stories, typeaheadValue]);
-
-  const handleViewStyleBarButtonSelected = useCallback(() => {
-    if (viewStyle === VIEW_STYLE.LIST) {
-      setViewStyle(VIEW_STYLE.GRID);
-    } else {
-      setViewStyle(VIEW_STYLE.LIST);
-    }
-  }, [viewStyle]);
-
-  const filteredStoriesCount = filteredStories.length;
-
-  const listBarLabel = sprintf(
-    /* translators: %s: number of stories */
-    _n(
-      '%s total story',
-      '%s total stories',
-      filteredStoriesCount,
-      'web-stories'
-    ),
-    filteredStoriesCount
-  );
-
-  const BodyContent = useMemo(() => {
-    if (filteredStoriesCount > 0) {
-      return (
-        <BodyWrapper>
-          <ListBarContainer>
-            <ListBar
-              label={listBarLabel}
-              layoutStyle={viewStyle}
-              onPress={handleViewStyleBarButtonSelected}
-            />
-          </ListBarContainer>
-          <StoryGridView
-            filteredStories={filteredStories}
-            centerActionLabel={
-              <>
-                <PlayArrowIcon />
-                {__('Preview', 'web-stories')}
-              </>
-            }
-            bottomActionLabel={__('Open in editor', 'web-stories')}
-          />
-        </BodyWrapper>
-      );
-    } else if (typeaheadValue.length > 0) {
-      return <NoResults typeaheadValue={typeaheadValue} />;
-    }
-
-    return (
-      <DefaultBodyText>
-        {__('Create a story to get started!', 'web-stories')}
-      </DefaultBodyText>
-    );
   }, [
-    filteredStories,
-    filteredStoriesCount,
-    handleViewStyleBarButtonSelected,
-    listBarLabel,
-    typeaheadValue,
-    viewStyle,
+    fetchStories,
+    filter.value,
+    page.value,
+    search.keyword,
+    sort.direction,
+    sort.value,
+    view.style,
   ]);
 
+  const orderedStories = useMemo(() => {
+    return storiesOrderById.map((storyId) => {
+      return stories[storyId];
+    });
+  }, [stories, storiesOrderById]);
+
   return (
-    <FontProvider>
-      <TransformProvider>
-        <UnitsProvider pageSize={pageSize}>
-          <PageHeading
-            defaultTitle={__('My Stories', 'web-stories')}
-            searchPlaceholder={__('Search Stories', 'web-stories')}
-            filteredStories={filteredStories}
-            handleTypeaheadChange={setTypeaheadValue}
-            typeaheadValue={typeaheadValue}
-          />
-          <FilterContainer>
-            {STORY_STATUSES.map((storyStatus) => (
-              <FloatingTab
-                key={storyStatus.value}
-                onClick={(_, value) => setStatus(value)}
-                name="all-stories"
-                value={storyStatus.value}
-                isSelected={status === storyStatus.value}
-              >
-                {storyStatus.label}
-              </FloatingTab>
-            ))}
-          </FilterContainer>
-          {BodyContent}
-        </UnitsProvider>
-      </TransformProvider>
-    </FontProvider>
+    <Layout.Provider>
+      <Header
+        filter={filter}
+        search={search}
+        sort={sort}
+        stories={orderedStories}
+        totalStoriesByStatus={totalStoriesByStatus}
+        view={view}
+        wpListURL={wpListURL}
+      />
+
+      <Content
+        allPagesFetched={allPagesFetched}
+        filter={filter}
+        isLoading={isLoading}
+        page={page}
+        search={search}
+        sort={sort}
+        stories={orderedStories}
+        storyActions={{
+          createTemplateFromStory,
+          duplicateStory,
+          trashStory,
+          updateStory,
+        }}
+        users={users}
+        view={view}
+      />
+
+      <Layout.Fixed>
+        <ScrollToTop />
+      </Layout.Fixed>
+    </Layout.Provider>
   );
 }
 

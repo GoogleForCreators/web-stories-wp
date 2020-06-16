@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -30,19 +29,13 @@ import InspectorContent from './inspectorContent';
 
 const Layout = styled.div`
   height: 100%;
-  display: grid;
-  grid:
-    'tabs   ' 40px
-    'inspector' 1fr
-    / 1fr;
+  display: flex;
+  flex-direction: column;
 `;
 
-const TabsArea = styled.div`
-  grid-area: tabs;
-`;
+const TabsArea = styled.div``;
 
 const InspectorBackground = styled.div`
-  grid-area: inspector;
   background-color: ${({ theme }) => theme.colors.bg.v4};
   height: 100%;
   padding: 0;
@@ -51,13 +44,13 @@ const InspectorBackground = styled.div`
 `;
 
 function InspectorLayout() {
-  const ref = useRef(null);
   const {
     actions: { setInspectorContentNode },
+    refs: { inspector },
   } = useInspector();
-  useEscapeToBlurEffect(ref);
+  useEscapeToBlurEffect(inspector);
   return (
-    <Layout ref={ref}>
+    <Layout ref={inspector}>
       <TabsArea>
         <InspectorTabs />
       </TabsArea>

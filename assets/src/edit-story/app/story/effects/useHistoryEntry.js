@@ -25,9 +25,9 @@ import { useEffect, useRef } from 'react';
 import { useHistory } from '../../';
 
 // Record any change to core variables in history (history will know if it's a replay)
-function useHistoryEntry({ story, current, pages, selection, capabilities }) {
+function useHistoryEntry({ story, current, pages, selection }) {
   const {
-    actions: { appendToHistory },
+    actions: { stateToHistory },
   } = useHistory();
 
   const currentPageIndexRef = useRef();
@@ -38,14 +38,13 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
   }, [current, selection]);
 
   useEffect(() => {
-    appendToHistory({
+    stateToHistory({
       story,
       current: currentPageIndexRef.current,
       selection: selectedElementIdsRef.current,
       pages,
-      capabilities,
     });
-  }, [capabilities, story, pages, appendToHistory]);
+  }, [story, pages, stateToHistory]);
 }
 
 export default useHistoryEntry;

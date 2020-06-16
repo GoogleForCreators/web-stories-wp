@@ -86,6 +86,12 @@ const updateSelectedElements = (dispatch) => ({ properties }) =>
     payload: { elementIds: null, properties },
   });
 
+const combineElements = (dispatch) => ({ firstId, firstElement, secondId }) =>
+  dispatch({
+    type: types.COMBINE_ELEMENTS,
+    payload: { firstId, firstElement, secondId },
+  });
+
 const setBackgroundElement = (dispatch) => ({ elementId }) =>
   dispatch({ type: types.SET_BACKGROUND_ELEMENT, payload: { elementId } });
 
@@ -140,6 +146,7 @@ export const exposedActions = {
   updateElementsByResourceId,
   updateElementById,
   updateSelectedElements,
+  combineElements,
   setBackgroundElement,
   clearBackgroundElement,
   arrangeElement,
@@ -153,16 +160,10 @@ export const exposedActions = {
 };
 
 // Internal actions
-const restore = (dispatch) => ({
-  pages,
-  selection,
-  current,
-  story,
-  capabilities,
-}) =>
+const restore = (dispatch) => ({ pages, selection, current, story }) =>
   dispatch({
     type: types.RESTORE,
-    payload: { pages, selection, current, story, capabilities },
+    payload: { pages, selection, current, story },
   });
 
 export const internalActions = {

@@ -17,9 +17,21 @@
 /**
  * Internal dependencies
  */
-import { createNewElement, createPage } from '../';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import { createNewElement, createPage, duplicatePage } from '../';
+
 describe('Element', () => {
   describe('createNewElement', () => {
+    it('should create an element with just default attributes', () => {
+      const imageElement = createNewElement('image');
+      expect(imageElement).toStrictEqual(
+        expect.objectContaining({
+          opacity: 100, // a default shared attribute
+          scale: 100, // a default media attribute
+        })
+      );
+    });
+
     it('should create an element with correct attributes', () => {
       const atts = {
         x: 10,
@@ -30,20 +42,69 @@ describe('Element', () => {
       const textElement = createNewElement('text', atts);
       expect(textElement.rotationAngle).toStrictEqual(0);
       expect(textElement.width).toStrictEqual(100);
-      expect(textElement.fontFallback).toStrictEqual([
-        'Helvetica Neue',
-        'Helvetica',
-        'sans-serif',
-      ]);
+      expect(textElement.font).toMatchObject(TEXT_ELEMENT_DEFAULT_FONT);
+    });
+
+    it('should throw if trying to create unknown element type', () => {
+      const unknownElementCreator = () => createNewElement('puppy');
+      expect(unknownElementCreator).toThrow(/unknown element type: puppy/i);
     });
   });
 
   describe('createPage', () => {
     it('should create a Page element with default background element', () => {
       const page = createPage();
-      expect(page.backgroundElementId).toBeDefined();
-      expect(page.elements).toHaveLength(1);
-      expect(page.elements[0].id).toStrictEqual(page.backgroundElementId);
+      expect(page.elements).toStrictEqual([
+        expect.objectContaining({
+          isBackground: true,
+          isDefaultBackground: true,
+        }),
+      ]);
+    });
+  });
+
+  describe('duplicatePage', () => {
+    it('should generate new ids (including bg)', () => {
+      const oldElements = [
+        { id: 'abc001', isBackground: true, x: 10, y: 20, type: 'shape' },
+        { id: 'abc002', x: 110, y: 120, type: 'text' },
+        { id: 'abc003', x: 210, y: 220, type: 'image' },
+      ];
+      const oldPage = {
+        id: 'abc000',
+        type: 'page',
+        elements: oldElements,
+        otherProperty: '45',
+      };
+      const newPage = duplicatePage(oldPage);
+
+      // Expect same structure but new id's!
+      expect(newPage).toStrictEqual({
+        id: expect.not.stringMatching(oldPage.id),
+        type: 'page',
+        otherProperty: '45',
+        elements: [
+          expect.objectContaining({
+            id: expect.not.stringMatching(oldElements[0].id),
+            isBackground: true,
+            x: 10,
+            y: 20,
+            type: 'shape',
+          }),
+          expect.objectContaining({
+            id: expect.not.stringMatching(oldElements[1].id),
+            x: 110,
+            y: 120,
+            type: 'text',
+          }),
+          expect.objectContaining({
+            id: expect.not.stringMatching(oldElements[2].id),
+            x: 210,
+            y: 220,
+            type: 'image',
+          }),
+        ],
+      });
     });
   });
 });

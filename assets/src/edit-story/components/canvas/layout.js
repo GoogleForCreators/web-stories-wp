@@ -18,18 +18,22 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { forwardRef, createRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import {
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
+  FULLBLEED_RATIO,
+  PAGE_RATIO,
+  ALLOWED_EDITOR_PAGE_WIDTHS,
   HEADER_HEIGHT,
   PAGE_NAV_WIDTH,
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import useResizeEffect from '../../utils/useResizeEffect';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import useCanvas from './useCanvas';
 
 /**
@@ -51,29 +55,12 @@ export const COMPACT_THUMB_WIDTH = 72;
 export const COMPACT_THUMB_HEIGHT = 8;
 
 const MAX_CAROUSEL_THUMB_HEIGHT = 128;
-// @todo: UX needed for min thumb size
-export const MIN_CAROUSEL_THUMB_HEIGHT = MAX_CAROUSEL_THUMB_HEIGHT / 3;
-
-// Below this available height switch to Compact mode.
-export const COMPACT_CAROUSEL_BREAKPOINT =
-  MIN_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
+export const MIN_CAROUSEL_THUMB_HEIGHT = 52;
 
 const MIN_CAROUSEL_HEIGHT =
   COMPACT_CAROUSEL_VERTICAL_PADDING * 2 + COMPACT_THUMB_HEIGHT;
 const MAX_CAROUSEL_HEIGHT =
   MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
-
-const LARGE_EDITOR_PAGE_SIZE = [
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
-];
-const MEDIUM_EDITOR_PAGE_SIZE = [280, 420];
-const SMALL_EDITOR_PAGE_SIZE = [240, 360];
-const ALLOWED_PAGE_SIZES = [
-  LARGE_EDITOR_PAGE_SIZE,
-  MEDIUM_EDITOR_PAGE_SIZE,
-  SMALL_EDITOR_PAGE_SIZE,
-];
 
 // @todo: the menu height is not responsive
 const Layer = styled.div`
@@ -91,14 +78,18 @@ const Layer = styled.div`
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(16px, 1fr)
-    '.         prev      page      next      .       ' var(--page-height-px)
+    '.         prev      page      next      .       ' var(
+      --fullbleed-height-px
+    )
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
     'carousel  carousel  carousel  carousel  carousel' minmax(
       ${MIN_CAROUSEL_HEIGHT}px,
       ${MAX_CAROUSEL_HEIGHT}px
     )
-    / 1fr ${PAGE_NAV_WIDTH}px var(--page-width-px) ${PAGE_NAV_WIDTH}px 1fr;
+    / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
+    ${PAGE_NAV_WIDTH}px 1fr;
+  height: 100%;
 `;
 
 const Area = styled.div`
@@ -110,11 +101,61 @@ const Area = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  ${({ zIndex }) => (zIndex !== undefined ? `z-index: ${zIndex}` : null)};
 `;
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageArea = styled(Area).attrs({ area: 'page', overflowAllowed: true })``;
+const PageAreaFullbleedContainer = styled(Area).attrs({
+  area: 'page',
+  overflowAllowed: true,
+})`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+// Overflow is not hidden for media edit layer.
+const PageAreaWithOverflow = styled.div`
+  ${({ background }) => generatePatternStyles(background)}
+  overflow: ${({ showOverflow }) => (showOverflow ? 'initial' : 'hidden')};
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PageAreaSafeZone = styled.div`
+  width: 100%;
+  height: var(--page-height-px);
+  overflow: visible;
+  position: relative;
+  margin: auto 0;
+`;
+
+const PageAreaDangerZone = styled.div`
+  pointer-events: none;
+  position: absolute;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 10px,
+    black 10px 20px
+  );
+  opacity: 0.05;
+  width: 100%;
+  height: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
+  z-index: 1;
+`;
+
+const PageAreaDangerZoneTop = styled(PageAreaDangerZone)`
+  top: 0;
+`;
+
+const PageAreaDangerZoneBottom = styled(PageAreaDangerZone)`
+  bottom: 0;
+`;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
 
@@ -139,9 +180,9 @@ const CarouselArea = styled(Area).attrs({
  * @param {!{current: ?Element}} containerRef
  */
 function useLayoutParams(containerRef) {
-  const {
-    actions: { setPageSize },
-  } = useCanvas();
+  const { setPageSize } = useCanvas((state) => ({
+    setPageSize: state.actions.setPageSize,
+  }));
 
   useResizeEffect(containerRef, ({ width, height }) => {
     // See Layer's `grid` CSS above. Per the layout, the maximum available
@@ -150,28 +191,69 @@ function useLayoutParams(containerRef) {
     const maxHeight =
       height - HEADER_HEIGHT - MENU_HEIGHT - MIN_CAROUSEL_HEIGHT;
 
-    // Find the first size that fits within the [maxWidth, maxHeight].
-    let bestSize = ALLOWED_PAGE_SIZES[ALLOWED_PAGE_SIZES.length - 1];
-    for (let i = 0; i < ALLOWED_PAGE_SIZES.length; i++) {
-      const size = ALLOWED_PAGE_SIZES[i];
-      if (size[0] <= maxWidth && size[1] <= maxHeight) {
-        bestSize = size;
-        break;
-      }
-    }
-    setPageSize({ width: bestSize[0], height: bestSize[1] });
+    let bestSize =
+      ALLOWED_EDITOR_PAGE_WIDTHS.find(
+        (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
+      ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
+    setPageSize({ width: bestSize, height: bestSize / PAGE_RATIO });
   });
 }
 
 function useLayoutParamsCssVars() {
-  const {
-    state: { pageSize },
-  } = useCanvas();
+  const { pageSize } = useCanvas((state) => ({
+    pageSize: state.state.pageSize,
+  }));
   return {
     '--page-width-px': `${pageSize.width}px`,
     '--page-height-px': `${pageSize.height}px`,
+    '--fullbleed-width-px': `${pageSize.width}px`,
+    '--fullbleed-height-px': `${pageSize.width / FULLBLEED_RATIO}px`,
   };
 }
+
+const PageArea = forwardRef(
+  (
+    {
+      children,
+      showDangerZone,
+      showOverflow = false,
+      fullbleedRef = createRef(),
+      overlay = [],
+      fullbleed = [],
+      background,
+    },
+    ref
+  ) => {
+    return (
+      <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
+        <PageAreaWithOverflow
+          showOverflow={showOverflow}
+          background={background}
+        >
+          <PageAreaSafeZone ref={ref} data-testid="safezone">
+            {children}
+          </PageAreaSafeZone>
+          {showDangerZone && (
+            <>
+              <PageAreaDangerZoneTop />
+              <PageAreaDangerZoneBottom />
+            </>
+          )}
+          {fullbleed}
+        </PageAreaWithOverflow>
+        {overlay}
+      </PageAreaFullbleedContainer>
+    );
+  }
+);
+
+PageArea.propTypes = {
+  children: PropTypes.node,
+  overlay: PropTypes.node,
+  fullbleed: PropTypes.node,
+  showDangerZone: PropTypes.bool,
+  showOverflow: PropTypes.bool,
+};
 
 export {
   Layer,

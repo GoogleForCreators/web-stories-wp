@@ -56,7 +56,7 @@ function setSelectedElements(state, { elementIds }) {
 
   // If it's a multi-selection, filter out the background element
   const currentPage = state.pages.find(({ id }) => id === state.current);
-  const isNotBackgroundElement = (id) => currentPage.backgroundElementId !== id;
+  const isNotBackgroundElement = (id) => currentPage.elements[0].id !== id;
   const newSelection =
     uniqueElementIds.length > 1
       ? uniqueElementIds.filter(isNotBackgroundElement)

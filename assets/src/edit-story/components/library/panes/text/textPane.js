@@ -23,91 +23,41 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, BACKGROUND_TEXT_MODE } from '../../../../constants';
-import createSolid from '../../../../utils/createSolid';
-import { dataFontEm } from '../../../../units';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
-
-// By default, the element should be 50% of the page.
-const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
-
-const PRESETS = [
-  {
-    id: 'heading',
-    title: __('Heading', 'web-stories'),
-    content: __('Heading', 'web-stories'),
-    fontSize: dataFontEm(2),
-    fontWeight: 700,
-    fontFamily: 'Open Sans',
-  },
-  {
-    id: 'subheading',
-    title: __('Subheading', 'web-stories'),
-    content: __('Subheading', 'web-stories'),
-    fontSize: dataFontEm(1.5),
-    fontWeight: 600,
-    fontFamily: 'Open Sans',
-  },
-  {
-    id: 'body-text',
-    title: __('Body text', 'web-stories'),
-    content: __(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      'web-stories'
-    ),
-    fontSize: dataFontEm(1.1),
-    fontWeight: 400,
-    fontFamily: 'Roboto',
-  },
-];
-
-function getPresetById(id) {
-  for (let i = 0; i < PRESETS.length; i++) {
-    if (PRESETS[i].id === id) {
-      return PRESETS[i];
-    }
-  }
-  return null;
-}
+import { PRESETS, DEFAULT_PRESET } from './textPresets';
 
 const SectionContent = styled.p``;
 
 function TextPane(props) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
+  const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
+
   return (
     <Pane id={paneId} {...props}>
-      <SearchInput
-        value={''}
-        placeholder={__('Search', 'web-stories')}
-        onChange={() => {}}
-        disabled
-      />
+      {showTextAndShapesSearchInput && (
+        <SearchInput
+          value={''}
+          placeholder={__('Search', 'web-stories')}
+          onChange={() => {}}
+          disabled
+        />
+      )}
 
       <Section
         title={__('Presets', 'web-stories')}
         titleTools={
-          <MainButton
-            onClick={() =>
-              insertElement('text', {
-                ...getPresetById('subheading'),
-                content: __('Fill in some text', 'web-stories'),
-                color: createSolid(0, 0, 0),
-                backgroundColor: createSolid(196, 196, 196),
-                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-                width: DEFAULT_ELEMENT_WIDTH,
-              })
-            }
-          >
+          <MainButton onClick={() => insertElement('text', DEFAULT_PRESET)}>
             {__('Add new text', 'web-stories')}
           </MainButton>
         }
@@ -116,21 +66,15 @@ function TextPane(props) {
           <FontPreview
             key={`preset-${preset.id}`}
             {...preset}
-            onClick={() =>
-              insertElement('text', {
-                ...preset,
-                color: createSolid(0, 0, 0),
-                backgroundColor: createSolid(196, 196, 196),
-                backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-                width: DEFAULT_ELEMENT_WIDTH,
-              })
-            }
+            onClick={() => insertElement('text', preset)}
           />
         ))}
       </Section>
-      <Section title={__('Text Sets', 'web-stories')}>
-        <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
-      </Section>
+      {showTextSets && (
+        <Section title={__('Text Sets', 'web-stories')}>
+          <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
+        </Section>
+      )}
     </Pane>
   );
 }

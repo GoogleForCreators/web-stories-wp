@@ -18,8 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { forwardRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
+import { forwardRef } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useContext } from '../../utils/context';
 
 /**
  * Internal dependencies

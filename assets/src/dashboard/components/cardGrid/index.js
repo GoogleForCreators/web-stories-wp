@@ -23,29 +23,48 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import usePagePreviewSize from '../../utils/usePagePreviewSize';
+import { PageSizePropType } from '../../types';
 
-const DashboardGrid = styled.div`
+const DashboardGrid = styled.div(
+  ({ columnHeight, columnWidth, theme }) => `
   display: grid;
   width: 100%;
-  align-content: space-between;
-  grid-column-gap: 10px;
-  grid-template-columns: ${({ columnWidth }) =>
-    `repeat(auto-fill, minmax(${columnWidth}px, 1fr))`};
+  grid-column-gap: ${theme.grid.columnGap.desktop}px;
+  grid-row-gap: 20px;
+  grid-template-columns:
+    repeat(auto-fill, ${columnWidth}px);
+  grid-template-rows: minmax(${columnHeight}px, auto);
 
-  @media ${({ theme }) => theme.breakpoint.min} {
-    grid-template-columns: repeat(2, 1fr);
+  ${theme.breakpoint.tablet} {
+    grid-column-gap: ${theme.grid.columnGap.tablet}px;
   }
-`;
+  ${theme.breakpoint.largeDisplayPhone} {
+    grid-column-gap: ${theme.grid.columnGap.largeDisplayPhone}px;
+  }
+  ${theme.breakpoint.smallDisplayPhone} {
+    grid-column-gap: ${theme.grid.columnGap.smallDisplayPhone}px;
+  }
+  ${theme.breakpoint.min} {
+    grid-column-gap: ${theme.grid.columnGap.min}px;
+  }
+`
+);
+DashboardGrid.propTypes = {
+  columnHeight: PropTypes.number.isRequired,
+  columnWidth: PropTypes.number.isRequired,
+};
 
-const CardGrid = ({ children }) => {
-  const { pageSize } = usePagePreviewSize();
-
-  return <DashboardGrid columnWidth={pageSize.width}>{children}</DashboardGrid>;
+const CardGrid = ({ children, pageSize }) => {
+  return (
+    <DashboardGrid columnWidth={pageSize.width} columnHeight={pageSize.height}>
+      {children}
+    </DashboardGrid>
+  );
 };
 
 CardGrid.propTypes = {
   children: PropTypes.node.isRequired,
+  pageSize: PageSizePropType.isRequired,
 };
 
 export default CardGrid;

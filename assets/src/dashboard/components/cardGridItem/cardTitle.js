@@ -17,58 +17,122 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
+import { STORY_STATUS } from '../../constants';
+import { getFormattedDisplayDate } from '../../utils/';
+import { DashboardStatusesPropType } from '../../types';
+import { Paragraph2 } from '../typography';
+import InlineInputForm from '../inlineInputForm';
+import { Link } from '../link';
 
 const StyledCardTitle = styled.div`
-  font-family: ${({ theme }) => theme.fonts.storyGridItem.family};
-  font-size: ${({ theme }) => theme.fonts.storyGridItem.size};
-  font-weight: ${({ theme }) => theme.fonts.storyGridItem.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.storyGridItem.letterSpacing};
-  line-height: ${({ theme }) => theme.fonts.storyGridItem.lineHeight};
   padding-top: 12px;
-  max-width: 80%;
-  height: ${CARD_TITLE_AREA_HEIGHT}px;
+  display: inline-block;
+  overflow: hidden;
 `;
 
-const StyledTitle = styled.p`
+const TitleStoryLink = styled(Link)`
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 2px;
   color: ${({ theme }) => theme.colors.gray900};
-  margin: 0;
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-const StyledDate = styled.p`
+const TitleBodyText = styled(Paragraph2)`
   margin: 0;
   color: ${({ theme }) => theme.colors.gray500};
-  font-family: ${({ theme }) => theme.fonts.storyGridItemSub.weight};
-  font-family: ${({ theme }) => theme.fonts.storyGridItemSub.family};
+  font-weight: ${({ theme }) => theme.typography.weight.light};
 `;
 
-// TODO this needs date handling
-// TODO modify to handle other types of card titles - not just own stories
-const CardTitle = ({ title, modifiedDate }) => (
-  <StyledCardTitle>
-    <StyledTitle>{title}</StyledTitle>
-    <StyledDate>{`
-      ${__('Modified', 'web-stories')} ${modifiedDate} `}</StyledDate>
-  </StyledCardTitle>
-);
+const DateHelperText = styled.span`
+  text-transform: uppercase;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.gray900};
+  &:after {
+    content: '-';
+    color: ${({ theme }) => theme.colors.gray500};
+    font-weight: 400;
+    padding: 0 0.25em;
+  }
+`;
+
+const CardTitle = ({
+  id,
+  secondaryTitle,
+  title,
+  titleLink,
+  status,
+  displayDate,
+  editMode,
+  onEditComplete,
+  onEditCancel,
+}) => {
+  const displayDateText = useMemo(() => {
+    if (!displayDate) {
+      return null;
+    }
+    return status === STORY_STATUS.PUBLISHED
+      ? sprintf(
+          /* translators: %s: last modified date */
+          __('Published %s', 'web-stories'),
+          getFormattedDisplayDate(displayDate)
+        )
+      : sprintf(
+          /* translators: %s: last modified date */
+          __('Modified %s', 'web-stories'),
+          getFormattedDisplayDate(displayDate)
+        );
+  }, [status, displayDate]);
+
+  return (
+    <StyledCardTitle>
+      {editMode ? (
+        <InlineInputForm
+          onEditComplete={onEditComplete}
+          onEditCancel={onEditCancel}
+          value={title}
+          id={id}
+          label={__('Rename story', 'web-stories')}
+        />
+      ) : (
+        <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
+      )}
+      <TitleBodyText>
+        {status === STORY_STATUS.DRAFT && (
+          <DateHelperText>{__('draft', 'web-stories')}</DateHelperText>
+        )}
+        {displayDateText}
+      </TitleBodyText>
+      {secondaryTitle && <TitleBodyText>{secondaryTitle}</TitleBodyText>}
+    </StyledCardTitle>
+  );
+};
 
 CardTitle.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string.isRequired,
-  modifiedDate: PropTypes.string.isRequired,
+  titleLink: PropTypes.string,
+  secondaryTitle: PropTypes.string,
+  status: DashboardStatusesPropType,
+  editMode: PropTypes.bool,
+  displayDate: PropTypes.object,
+  onEditComplete: PropTypes.func,
+  onEditCancel: PropTypes.func,
 };
 
 export default CardTitle;

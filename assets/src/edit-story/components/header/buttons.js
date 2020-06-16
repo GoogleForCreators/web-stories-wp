@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,10 +29,14 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory, useMedia } from '../../app';
+import { useStory, useMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
+import escapeHTML from '../../utils/escapeHTML';
+import PreviewErrorDialog from './previewErrorDialog';
+
+const PREVIEW_TARGET = 'story-preview';
 
 const ButtonList = styled.nav`
   display: flex;
@@ -50,38 +54,124 @@ const Space = styled.div`
 `;
 
 function PreviewButton() {
-  const {
-    state: {
-      meta: { isSaving },
-      story: { link },
-    },
-  } = useStory();
+  const { isSaving, link, status, autoSave, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+        story: { link, status },
+      },
+      actions: { autoSave, saveStory },
+    }) => ({ isSaving, link, status, autoSave, saveStory })
+  );
+  const { previewLink: autoSaveLink } = useConfig();
+
+  const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
+    null
+  );
+  const isDraft = 'draft' === status;
 
   /**
    * Open a preview of the story in current window.
    */
-  const openPreviewLink = () => {
-    const previewLink = addQueryArgs(link, { preview: 'true' });
-    window.open(previewLink, 'story-preview');
-  };
+  const openPreviewLink = useCallback(() => {
+    // Display the actual link in case of a draft.
+    const previewLink = isDraft
+      ? addQueryArgs(link, { preview: 'true' })
+      : autoSaveLink;
+
+    // Start a about:blank popup with waiting message until we complete
+    // the saving operation. That way we will not bust the popup timeout.
+    let popup;
+    try {
+      popup = window.open('about:blank', PREVIEW_TARGET);
+      if (popup) {
+        popup.document.write('<!DOCTYPE html><html><head>');
+        popup.document.write('<title>');
+        popup.document.write(
+          escapeHTML(__('Generating the preview…', 'web-stories'))
+        );
+        popup.document.write('</title>');
+        popup.document.write('</head><body>');
+        // Output "waiting" message.
+        popup.document.write(
+          escapeHTML(__('Please wait. Generating the preview…', 'web-stories'))
+        );
+        // Force redirect to the preview URL after 5 seconds. The saving tab
+        // might get frozen by the browser.
+        popup.document.write(
+          `<script>
+            setTimeout(function() {
+              location.replace(${JSON.stringify(previewLink)});
+            }, 5000);
+          </script>`
+        );
+      }
+    } catch (e) {
+      // Ignore errors. Anything can happen with a popup. The errors
+      // will be resolved after the story is saved.
+    }
+
+    // Save story directly if draft, otherwise, use auto-save.
+    const updateFunc = isDraft ? saveStory : autoSave;
+    updateFunc()
+      .then((update) => {
+        if (popup && !popup.closed) {
+          if (popup.location.href) {
+            // Auto-save sends an updated preview link, use that instead if available.
+            const updatedPreviewLink = update?.preview_link ?? previewLink;
+            popup.location.replace(updatedPreviewLink);
+          }
+        }
+      })
+      .catch(() => {
+        setPreviewLinkToOpenViaDialog(previewLink);
+      });
+  }, [autoSave, autoSaveLink, isDraft, link, saveStory]);
+
+  const openPreviewLinkSync = useCallback(
+    (evt) => {
+      setPreviewLinkToOpenViaDialog(null);
+      // Ensure that this method is as safe as possible and pass the random
+      // target in case the normal target is not openable.
+      window.open(previewLinkToOpenViaDialog, PREVIEW_TARGET + Math.random());
+      evt.preventDefault();
+    },
+    [previewLinkToOpenViaDialog]
+  );
+
+  const onDialogClose = useCallback(
+    () => setPreviewLinkToOpenViaDialog(null),
+    []
+  );
+
   return (
-    <Outline onClick={openPreviewLink} isDisabled={isSaving}>
-      {__('Preview', 'web-stories')}
-    </Outline>
+    <>
+      <Outline onClick={openPreviewLink} isDisabled={isSaving}>
+        {__('Preview', 'web-stories')}
+      </Outline>
+      <PreviewErrorDialog
+        open={Boolean(previewLinkToOpenViaDialog)}
+        onClose={onDialogClose}
+        onRetry={openPreviewLinkSync}
+      />
+    </>
   );
 }
 
 function Publish() {
-  const {
-    state: {
-      meta: { isSaving },
-      story: { date, storyId },
-    },
-    actions: { saveStory },
-  } = useStory();
-  const {
-    state: { isUploading },
-  } = useMedia();
+  const { isSaving, date, storyId, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+        story: { date, storyId },
+      },
+      actions: { saveStory },
+    }) => ({ isSaving, date, storyId, saveStory })
+  );
+  const { isUploading } = useMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
+  const { capabilities } = useConfig();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
   const hasFutureDate = Date.now() < Date.parse(date);
@@ -94,23 +184,29 @@ function Publish() {
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
+
   return (
-    <Primary onClick={handlePublish} isDisabled={isSaving || isUploading}>
+    <Primary
+      onClick={handlePublish}
+      isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
+    >
       {text}
     </Primary>
   );
 }
 
 function SwitchToDraft() {
-  const {
-    state: {
-      meta: { isSaving },
-    },
-    actions: { saveStory },
-  } = useStory();
-  const {
-    state: { isUploading },
-  } = useMedia();
+  const { isSaving, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+      },
+      actions: { saveStory },
+    }) => ({ isSaving, saveStory })
+  );
+  const { isUploading } = useMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
 
   const handleUnPublish = useCallback(() => saveStory({ status: 'draft' }), [
     saveStory,
@@ -124,16 +220,21 @@ function SwitchToDraft() {
 }
 
 function Update() {
+  const { isSaving, status, saveStory } = useStory(
+    ({
+      state: {
+        meta: { isSaving },
+        story: { status },
+      },
+      actions: { saveStory },
+    }) => ({ isSaving, status, saveStory })
+  );
+  const { isUploading } = useMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
   const {
-    state: {
-      meta: { isSaving },
-      story: { status },
-    },
-    actions: { saveStory },
-  } = useStory();
-  const {
-    state: { isUploading },
-  } = useMedia();
+    state: { hasNewChanges },
+  } = useHistory();
 
   let text;
   switch (status) {
@@ -149,7 +250,7 @@ function Update() {
       return (
         <Outline
           onClick={() => saveStory({ status: 'draft' })}
-          isDisabled={isSaving || isUploading}
+          isDisabled={isSaving || isUploading || !hasNewChanges}
         >
           {text}
         </Outline>
@@ -157,18 +258,16 @@ function Update() {
   }
 
   return (
-    <Primary onClick={saveStory} isDisabled={isSaving || isUploading}>
+    <Primary onClick={() => saveStory()} isDisabled={isSaving || isUploading}>
       {text}
     </Primary>
   );
 }
 
 function Loading() {
-  const {
-    state: {
-      meta: { isSaving },
-    },
-  } = useStory();
+  const { isSaving } = useStory((state) => ({
+    isSaving: state.state.meta.isSaving,
+  }));
   return (
     <>
       {isSaving && <CircularProgress size={30} />}
@@ -178,11 +277,9 @@ function Loading() {
 }
 
 function Buttons() {
-  const {
-    state: {
-      story: { status },
-    },
-  } = useStory();
+  const { status } = useStory((state) => ({
+    status: state.state.story.status,
+  }));
   const isDraft = 'draft' === status;
   return (
     <ButtonList>

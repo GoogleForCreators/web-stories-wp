@@ -41,7 +41,9 @@ function updateElementsByResourceId(
   state,
   { id, properties: propertiesOrUpdater }
 ) {
-  if (id === null) return state;
+  if (id === null) {
+    return state;
+  }
   const updatedPages = state.pages.map((page, pageIndex) => {
     const updatedElements = page.elements.map((element) => {
       if (element.resource?.id === id) {

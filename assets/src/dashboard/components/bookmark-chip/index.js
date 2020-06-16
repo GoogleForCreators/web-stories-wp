@@ -23,24 +23,22 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-
 import { KEYBOARD_USER_SELECTOR, CHIP_TYPES } from '../../constants';
-import { ReactComponent as BookmarkFill } from '../../icons/bookmark-fill.svg';
-import { ReactComponent as BookmarkOutline } from '../../icons/bookmark-outline.svg';
+import { BookmarkFill, BookmarkOutline } from '../../icons';
 
 const chipSize = {
   [CHIP_TYPES.STANDARD]: {
-    container: '40px',
+    container: '28px',
     icon: {
-      height: '18px',
-      width: '14px',
+      height: '16px',
+      width: '12px',
     },
   },
   [CHIP_TYPES.SMALL]: {
-    container: '32px',
+    container: '20px',
     icon: {
-      height: '14px',
-      width: '10px',
+      height: '12px',
+      width: '8px',
     },
   },
 };
@@ -48,12 +46,13 @@ const chipSize = {
 const ChipContainer = styled.button`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.white};
-  border: 1px solid none;
-  border-radius: ${({ theme }) => theme.border.buttonRadius};
+  border: ${({ theme }) => theme.borders.transparent};
+  border-radius: ${({ theme }) => theme.button.borderRadius}px;
   box-shadow: ${({ theme }) => theme.chip.shadow};
   color: ${({ theme }) => theme.colors.gray500};
   cursor: pointer;
   display: flex;
+  padding: 5px;
   height: ${({ chipType }) => chipSize[chipType].container};
   width: ${({ chipType }) => chipSize[chipType].container};
 

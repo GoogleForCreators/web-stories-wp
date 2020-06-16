@@ -79,7 +79,7 @@ const TempPointer = styled(Pointer).attrs(({ x }) => ({
   pointer-events: none;
 `;
 
-function GradientPicker({
+function GradientLine({
   stops,
   currentStopIndex,
 
@@ -120,7 +120,7 @@ function GradientPicker({
         <TempPointer
           aria-label={sprintf(
             /* translators: %d: stop percentage */
-            __('Temporary gradient stop at %d%%', 'web-stories'),
+            __('Temporary gradient stop at %1$d%%', 'web-stories'),
             Math.round(
               (100 * (tempPointerPosition - LINE_WIDTH / 2)) / LINE_LENGTH
             )
@@ -132,7 +132,7 @@ function GradientPicker({
   );
 }
 
-GradientPicker.propTypes = {
+GradientLine.propTypes = {
   stops: PropTypes.arrayOf(ColorStopPropType),
   currentStopIndex: PropTypes.number.isRequired,
 
@@ -142,4 +142,4 @@ GradientPicker.propTypes = {
   onMove: PropTypes.func.isRequired,
 };
 
-export default GradientPicker;
+export default GradientLine;

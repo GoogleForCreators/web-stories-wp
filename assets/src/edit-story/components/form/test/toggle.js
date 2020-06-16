@@ -17,45 +17,40 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
+import { renderWithTheme } from '../../../testUtils';
 import { Toggle } from '../';
-
-function arrange(children = null) {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-}
 
 describe('Form/Toggle', () => {
   it('should render <Toggle /> form', () => {
     const onChangeMock = jest.fn();
 
-    const { getByTestId } = arrange(
-      <Toggle value={0} onChange={onChangeMock} data-testid="toggle" />
+    const { getByRole } = renderWithTheme(
+      <Toggle value={0} onChange={onChangeMock} aria-label="Toggle" />
     );
 
-    const input = getByTestId('toggle');
+    const toggle = getByRole('checkbox', { name: 'Toggle' });
 
-    expect(input).toBeDefined();
+    expect(toggle).toBeDefined();
   });
 
   it('should simulate a change on <Toggle />', () => {
     const onChangeMock = jest.fn();
 
-    const { getByTestId } = arrange(
+    const { getByRole } = renderWithTheme(
       <Toggle
         value={1}
         checked={false}
         onChange={onChangeMock}
-        data-testid="toggle"
+        aria-label="Toggle"
       />
     );
 
-    const toggle = getByTestId('toggle');
+    const toggle = getByRole('checkbox', { name: 'Toggle' });
 
     expect(toggle.checked).toStrictEqual(false);
 

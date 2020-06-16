@@ -83,6 +83,13 @@ container chmod 767 \
 	/var/www/html/wp-content/uploads \
 	/var/www/html/wp-content/upgrade
 
+# Let's make sure we have some images in the media library to work with.
+echo -e $(status_message "Import default set of media assets...")
+# TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
+wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg
+wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg
+wp media import /var/www/html/wp-content/e2e-assets/example-3.png
+
 CURRENT_WP_VERSION=$(wp core version | tr -d '\r')
 echo -e $(status_message "Current WordPress version: $CURRENT_WP_VERSION...")
 
@@ -102,11 +109,6 @@ if [ "$CURRENT_URL" != "http://localhost:$HOST_PORT" ]; then
 	wp option update siteurl "http://localhost:$HOST_PORT" --quiet
 fi
 
-# Install a dummy favicon to avoid 404 errors.
-echo -e $(status_message "Installing a dummy favicon...")
-container touch /var/www/html/favicon.ico
-container chmod 767 /var/www/html/favicon.ico
-
 # Activate Web Stories plugin.
 echo -e $(status_message "Activating Web Stories plugin...")
 wp plugin activate web-stories --quiet
@@ -114,6 +116,9 @@ wp plugin activate web-stories --quiet
 # Install & activate testing plugins.
 echo -e $(status_message "Installing and activating RTL Tester plugin...")
 wp plugin install rtl-tester --activate --force --quiet
+
+echo -e $(status_message "Installing Gutenberg plugin...")
+wp plugin install gutenberg --force --quiet
 
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")

@@ -64,11 +64,11 @@ function ColorInput({
 }
 
 ColorInput.propTypes = {
-  value: PatternPropType,
+  value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
   colorPickerActions: PropTypes.func,
 };
 
@@ -77,7 +77,6 @@ ColorInput.defaultProps = {
   hasGradient: false,
   hasOpacity: true,
   opacity: null,
-  label: null,
 };
 
 export default ColorInput;

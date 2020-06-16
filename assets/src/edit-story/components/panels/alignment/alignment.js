@@ -33,18 +33,20 @@ import { __ } from '@wordpress/i18n';
 import WithTooltip from '../../tooltip';
 import { useConfig } from '../../../app';
 import { useKeyDownEffect } from '../../keyboard';
-import { ReactComponent as AlignBottom } from '../../../icons/align_bottom.svg';
-import { ReactComponent as AlignTop } from '../../../icons/align_top.svg';
-import { ReactComponent as AlignCenter } from '../../../icons/align_center.svg';
-import { ReactComponent as AlignMiddle } from '../../../icons/align_middle.svg';
-import { ReactComponent as AlignLeft } from '../../../icons/align_left.svg';
-import { ReactComponent as AlignRight } from '../../../icons/align_right.svg';
-import { ReactComponent as HorizontalDistribute } from '../../../icons/horizontal_distribute.svg';
-import { ReactComponent as VerticalDistribute } from '../../../icons/vertical_distribute.svg';
-import getCommonValue from '../utils/getCommonValue';
+import {
+  AlignBottom,
+  AlignTop,
+  AlignMiddle,
+  AlignLeft,
+  AlignRight,
+  AlignCenter,
+  DistributeHorizontal,
+  DistributeVertical,
+} from '../../../icons';
 import getBoundRect, {
   calcRotatedObjectPositionAndSize,
 } from '../utils/getBoundRect';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
 import useAlignment from './useAlignment';
 
 const ElementRow = styled.div`
@@ -54,6 +56,8 @@ const ElementRow = styled.div`
   align-items: center;
   padding: 10px 20px;
   border-top: 1px solid ${({ theme }) => theme.colors.bg.v9};
+  overflow: auto;
+  overflow: overlay;
 `;
 
 const IconButton = styled.button`
@@ -102,10 +106,20 @@ const alignmentButtonIds = [
   'alignBottom',
 ];
 
+const PAGE_RECT = {
+  startX: 0,
+  startY: 0,
+  endX: PAGE_WIDTH,
+  endY: PAGE_HEIGHT,
+  width: PAGE_WIDTH,
+  height: PAGE_HEIGHT,
+};
+
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const { isRTL } = useConfig();
-  const boundRect = getBoundRect(selectedElements);
-  const isFill = getCommonValue(selectedElements, 'isFill');
+  // Set boundRect with pageSize when there is only element selected
+  const boundRect =
+    selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
 
   const updatedSelectedElementsWithFrame = useMemo(
     () =>
@@ -156,8 +170,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     [updatedSelectedElementsWithFrame, setUpdatedSelectedElementsWithFrame]
   );
 
-  const isAlignEnabled = !isFill && selectedElements.length > 1;
-  const isDistributionEnabled = !isFill && selectedElements.length > 2;
+  const isDistributionEnabled = selectedElements.length > 2;
 
   const ref = useRef();
   const [currentButton, setCurrentButton] = useState(null);
@@ -177,30 +190,31 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     [currentButton, setCurrentButton]
   );
 
-  const backwardDirection = isRTL ? 1 : -1;
-  const forwardDirection = isRTL ? -1 : 1;
-
-  useKeyDownEffect(ref, 'left', handleNavigation(backwardDirection), [
+  useKeyDownEffect(ref, 'left', () => handleNavigation(isRTL ? 1 : -1), [
     handleNavigation,
+    isRTL,
   ]);
-  useKeyDownEffect(ref, 'right', handleNavigation(forwardDirection), [
+  useKeyDownEffect(ref, 'right', () => handleNavigation(isRTL ? -11 : 1), [
     handleNavigation,
+    isRTL,
   ]);
 
   useKeyDownEffect(
     ref,
     { key: 'mod+{', shift: true },
     () => handleAlign('left'),
-    []
+    [handleAlign]
   );
 
-  useKeyDownEffect(ref, { key: 'mod+h', shift: true }, handleAlignCenter, []);
+  useKeyDownEffect(ref, { key: 'mod+h', shift: true }, handleAlignCenter, [
+    handleAlignCenter,
+  ]);
 
   useKeyDownEffect(
     ref,
     { key: 'mod+}', shift: true },
     () => handleAlign('right'),
-    []
+    [handleAlign]
   );
 
   return (
@@ -213,7 +227,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
           id={alignmentButtonIds[0]}
           onFocus={() => setCurrentButton(alignmentButtonIds[0])}
         >
-          <HorizontalDistribute />
+          <DistributeHorizontal />
         </IconButton>
       </WithTooltip>
       <WithTooltip title={__('Distribute vertically', 'web-stories')}>
@@ -224,13 +238,12 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
           id={alignmentButtonIds[1]}
           onFocus={() => setCurrentButton(alignmentButtonIds[1])}
         >
-          <VerticalDistribute />
+          <DistributeVertical />
         </IconButton>
       </WithTooltip>
       <SeparateBorder />
       <WithTooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
         <IconButton
-          disabled={!isAlignEnabled}
           onClick={() => handleAlign('left', boundRect, pushUpdate)}
           aria-label={__('Justify Left', 'web-stories')}
           id={alignmentButtonIds[2]}
@@ -241,7 +254,6 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
         <IconButton
-          disabled={!isAlignEnabled}
           onClick={() => handleAlignCenter(boundRect, pushUpdate)}
           aria-label={__('Justify Center', 'web-stories')}
           id={alignmentButtonIds[3]}
@@ -252,7 +264,6 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
         <IconButton
-          disabled={!isAlignEnabled}
           onClick={() => handleAlign('right', boundRect, pushUpdate)}
           aria-label={__('Justify Right', 'web-stories')}
           id={alignmentButtonIds[4]}
@@ -263,7 +274,6 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align top', 'web-stories')}>
         <IconButton
-          disabled={!isAlignEnabled}
           onClick={() => handleAlign('top', boundRect, pushUpdate)}
           aria-label={__('Justify Top', 'web-stories')}
           id={alignmentButtonIds[5]}
@@ -274,7 +284,6 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align vertical center', 'web-stories')}>
         <IconButton
-          disabled={!isAlignEnabled}
           onClick={() => handleAlignMiddle(boundRect, pushUpdate)}
           aria-label={__('Justify Middle', 'web-stories')}
           id={alignmentButtonIds[6]}
@@ -285,7 +294,6 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       </WithTooltip>
       <WithTooltip title={__('Align bottom', 'web-stories')}>
         <IconButton
-          disabled={!isAlignEnabled}
           onClick={() => handleAlign('bottom', boundRect, pushUpdate)}
           aria-label={__('Justify Bottom', 'web-stories')}
           id={alignmentButtonIds[7]}

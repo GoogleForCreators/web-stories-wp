@@ -36,14 +36,17 @@ function LayerPanel() {
   return (
     <Panel
       name="layers"
-      initialHeight={numLayersVisible * LAYER_HEIGHT}
+      initialHeight={Math.min(
+        numLayersVisible * LAYER_HEIGHT,
+        window.innerHeight / 3
+      )}
       resizeable
     >
       <PanelTitle isSecondary isResizable>
         {__('Layers', 'web-stories')}
       </PanelTitle>
 
-      <PanelContent isSecondary isScrollable padding={'0'}>
+      <PanelContent isSecondary padding={'0'}>
         <LayerList layers={layers} />
       </PanelContent>
     </Panel>

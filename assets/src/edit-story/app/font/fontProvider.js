@@ -15,23 +15,25 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import { useCallback, useState } from 'react';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import { useCallback, useState, useRef } from 'react';
+
+/**
  * Internal dependencies
  */
+import loadStylesheet from '../../utils/loadStylesheet';
 import Context from './context';
-
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
+
+const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
@@ -51,14 +53,7 @@ function FontProvider({ children }) {
 
   const getFontByName = useCallback(
     (name) => {
-      return getFontBy('name', name);
-    },
-    [getFontBy]
-  );
-
-  const getFontBySlug = useCallback(
-    (slug) => {
-      return getFontBy('slug', slug);
+      return getFontBy('family', name);
     },
     [getFontBy]
   );
@@ -105,6 +100,27 @@ function FontProvider({ children }) {
     [getFontByName]
   );
 
+  const menuFonts = useRef([]);
+  const ensureMenuFontsLoaded = useCallback((menuFontsRequested) => {
+    const newMenuFonts = menuFontsRequested.filter(
+      (fontName) => !menuFonts.current.includes(fontName)
+    );
+    if (!newMenuFonts?.length) {
+      return;
+    }
+    menuFonts.current = menuFonts.current.concat(newMenuFonts);
+
+    // Create new <link> in head with ref to new font families
+    const families = encodeURIComponent(newMenuFonts.join('|'));
+    const url = `${GOOGLE_MENU_FONT_URL}?family=${families}&subset=menu&display=swap`;
+    loadStylesheet(url).catch(() => {
+      // If they failed to load, remove from array again!
+      menuFonts.current = menuFonts.current.filter(
+        (font) => !newMenuFonts.includes(font)
+      );
+    });
+  }, []);
+
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
 
   const state = {
@@ -113,10 +129,10 @@ function FontProvider({ children }) {
     },
     actions: {
       getFontByName,
-      getFontBySlug,
       maybeEnqueueFontStyle,
       getFontWeight,
       getFontFallback,
+      ensureMenuFontsLoaded,
     },
   };
 
@@ -124,10 +140,7 @@ function FontProvider({ children }) {
 }
 
 FontProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default FontProvider;

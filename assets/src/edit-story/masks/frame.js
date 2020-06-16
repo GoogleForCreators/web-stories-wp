@@ -124,7 +124,7 @@ function WithDropTarget({ element, children, hover }) {
 
 WithDropTarget.propTypes = {
   element: StoryPropTypes.element,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
   hover: PropTypes.bool,
 };
 
@@ -198,5 +198,5 @@ WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
   fill: PropTypes.bool,
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };

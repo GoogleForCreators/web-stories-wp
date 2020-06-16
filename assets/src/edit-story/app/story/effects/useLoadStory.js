@@ -26,18 +26,6 @@ import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
 import { migrate } from '../../../migration';
 
-/**
- * Get the permission by checking for fields in the REST API.
- *
- * @param {Object} post Current post object.
- * @param {Object} post._links Embed links
- * @param {string} field Requested field.
- * @return {boolean} If user has capability, defaults to false.
- */
-const getPerm = (post, field) => {
-  return Boolean(post?._links?.[field]);
-};
-
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore }) {
   const {
@@ -55,7 +43,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           status,
           author,
           slug,
-          date,
+          date_gmt,
           modified,
           excerpt: { raw: excerpt },
           link,
@@ -67,6 +55,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           style_presets: stylePresets,
           password,
         } = post;
+        const date = `${date_gmt}Z`;
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
@@ -97,6 +86,8 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
         if (!stylePresets.textColors) {
           stylePresets.textColors = [];
         }
+        // @todo Add this back once UX ready post-beta, currently always empty.
+        stylePresets.textStyles = [];
 
         // Set story-global variables.
         const story = {
@@ -119,17 +110,12 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           defaultPageDuration: storyData?.defaultPageDuration,
         };
 
-        const hasPublishAction = getPerm(post, 'wp:action-publish');
-        const hasAssignAuthorAction = getPerm(post, 'wp:action-assign-author');
-
-        const capabilities = { hasPublishAction, hasAssignAuthorAction };
         // TODO read current page and selection from deeplink?
         restore({
           pages,
           story,
           selection: [],
           current: null, // will be set to first page by `restore`
-          capabilities,
         });
       });
     }

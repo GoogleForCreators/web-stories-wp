@@ -17,10 +17,53 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/backgroundOverlay';
 import { setupReducer } from './_utils';
 
 describe('setBackgroundElement', () => {
+  it('should set the given background opacity to 100', () => {
+    const { restore, setBackgroundElement } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '000', isBackground: true },
+            { id: '123', opacity: 20 },
+          ],
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    const result = setBackgroundElement({ elementId: '123' });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '123', isBackground: true, opacity: 100 },
+    ]);
+  });
+  it('should not set opacity for new backgroud elements if none was present', () => {
+    const { restore, setBackgroundElement } = setupReducer();
+
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [{ id: '000', isBackground: true }, { id: '123' }],
+        },
+      ],
+      current: '111',
+      selection: [],
+    });
+
+    const result = setBackgroundElement({ elementId: '123' });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '123', isBackground: true },
+    ]);
+  });
+
   it('should set the given background element and move it back', () => {
     const { restore, setBackgroundElement } = setupReducer();
 
@@ -29,9 +72,11 @@ describe('setBackgroundElement', () => {
       pages: [
         {
           id: '111',
-          elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
-          backgroundElementId: null,
-          backgroundOverlay: OverlayType.NONE,
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
         },
       ],
       current: '111',
@@ -41,16 +86,10 @@ describe('setBackgroundElement', () => {
     // 456 is to be bg - move it back and set it as background
     const result = setBackgroundElement({ elementId: '456' });
 
-    expect(result.pages[0]).toStrictEqual({
-      id: '111',
-      backgroundElementId: '456',
-      backgroundOverlay: OverlayType.NONE,
-      elements: [
-        { id: '456', isBackground: true },
-        { id: '123' },
-        { id: '789' },
-      ],
-    });
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '456', isBackground: true },
+      { id: '789' },
+    ]);
   });
 
   it('should remove the new background element from selection if there is more than it there', () => {
@@ -61,9 +100,11 @@ describe('setBackgroundElement', () => {
       pages: [
         {
           id: '111',
-          elements: [{ id: '123' }, { id: '456' }, { id: '789' }],
-          backgroundElementId: null,
-          backgroundOverlay: OverlayType.NONE,
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
         },
       ],
       current: '111',
@@ -85,12 +126,10 @@ describe('setBackgroundElement', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true },
+            { id: '123', isBackground: true, opacity: 100 },
             { id: '456' },
             { id: '789' },
           ],
-          backgroundElementId: '123',
-          backgroundOverlay: OverlayType.NONE,
         },
       ],
       current: '111',
@@ -112,12 +151,10 @@ describe('setBackgroundElement', () => {
         {
           id: '111',
           elements: [
-            { id: '123', isBackground: true },
+            { id: '123', isBackground: true, opacity: 100 },
             { id: '456' },
             { id: '789' },
           ],
-          backgroundElementId: '123',
-          backgroundOverlay: OverlayType.NONE,
         },
       ],
       current: '111',
@@ -130,70 +167,94 @@ describe('setBackgroundElement', () => {
     expect(result).toStrictEqual(initialState);
   });
 
-  describe('when there is another background element', () => {
-    it('should delete existing background element completely', () => {
-      const { restore, setBackgroundElement } = setupReducer();
+  it('should save default background element for later', () => {
+    const { restore, setBackgroundElement } = setupReducer();
 
-      // Set an initial state with a current page and no selection.
-      restore({
-        pages: [
-          {
-            id: '111',
-            elements: [
-              { id: '123', isBackground: true },
-              { id: '456' },
-              { id: '789' },
-            ],
-            backgroundElementId: '123',
-            backgroundOverlay: OverlayType.NONE,
-          },
-        ],
-        current: '111',
-        selection: [],
-      });
-
-      // 789 becomes background, 123 is deleted
-      const result = setBackgroundElement({ elementId: '789' });
-
-      expect(result.pages[0]).toStrictEqual({
-        id: '111',
-        backgroundElementId: '789',
-        backgroundOverlay: OverlayType.NONE,
-        elements: [{ id: '789', isBackground: true }, { id: '456' }],
-      });
+    // Set an initial state with a current page and no selection.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true, isDefaultBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: [],
     });
 
-    it('should also delete existing background element from selection', () => {
-      const { restore, setBackgroundElement } = setupReducer();
+    // 789 becomes background, 123 is deleted
+    const result = setBackgroundElement({ elementId: '789' });
 
-      // Set an initial state with a current page and background element selected.
-      restore({
-        pages: [
-          {
-            id: '111',
-            elements: [
-              { id: '123', isBackground: true },
-              { id: '456' },
-              { id: '789' },
-            ],
-            backgroundElementId: '123',
-            backgroundOverlay: OverlayType.NONE,
-          },
-        ],
-        current: '111',
-        selection: ['123'],
-      });
-
-      // 789 becomes background, 123 is deleted (also from selection)
-      const result = setBackgroundElement({ elementId: '789' });
-
-      expect(result.pages[0]).toStrictEqual({
-        id: '111',
-        backgroundElementId: '789',
-        backgroundOverlay: OverlayType.NONE,
+    expect(result.pages[0]).toStrictEqual(
+      expect.objectContaining({
+        defaultBackgroundElement: {
+          id: '123',
+          isBackground: true,
+          isDefaultBackground: true,
+        },
         elements: [{ id: '789', isBackground: true }, { id: '456' }],
-      });
-      expect(result.selection).toStrictEqual([]);
+      })
+    );
+  });
+
+  it('should delete existing background element if not default', () => {
+    const { restore, setBackgroundElement } = setupReducer();
+
+    // Set an initial state with a current page and no selection.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: [],
     });
+
+    // 789 becomes background, 123 is deleted
+    const result = setBackgroundElement({ elementId: '789' });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '789', isBackground: true },
+      { id: '456' },
+    ]);
+  });
+
+  it('should also delete non-default background element from selection', () => {
+    const { restore, setBackgroundElement } = setupReducer();
+
+    // Set an initial state with a current page and background element selected.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: '123', isBackground: true },
+            { id: '456' },
+            { id: '789' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['123'],
+    });
+
+    // 789 becomes background, 123 is deleted (also from selection)
+    const result = setBackgroundElement({ elementId: '789' });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      { id: '789', isBackground: true },
+      { id: '456' },
+    ]);
+    expect(result.selection).toStrictEqual([]);
   });
 });

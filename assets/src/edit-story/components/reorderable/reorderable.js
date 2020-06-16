@@ -19,73 +19,77 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { forwardRef, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import Context from './context';
+import useReordering from './useReordering';
 import ReorderableScroller from './reorderableScroller';
 import useScroll from './useScroll';
-import useReordering from './useReordering';
 
 const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
   display: flex;
 `;
 
-function Reorderable({
-  children,
-  onPositionChange = () => {},
-  getItemSize = () => 10,
-  ...props
-}) {
-  const {
-    isReordering,
-    currentSeparator,
-    setCurrentSeparator,
-    setIsReordering,
-    handleStartReordering,
-  } = useReordering(onPositionChange, children.length);
-
-  const {
-    setScrollTarget,
-    startScroll,
-    canScrollUp,
-    canScrollDown,
-  } = useScroll(isReordering);
-
-  const state = {
-    state: {
+const Reorderable = forwardRef(
+  (
+    {
+      children,
+      onPositionChange = () => {},
+      getItemSize = () => 10,
+      mode = 'horizontal',
+      ...props
+    },
+    forwardedRef
+  ) => {
+    const ref = useRef(null);
+    const containerRef = forwardedRef || ref;
+    const {
       isReordering,
       currentSeparator,
-      canScrollUp,
-      canScrollDown,
-    },
-    actions: {
       setCurrentSeparator,
-      setIsReordering,
       handleStartReordering,
-      startScroll,
-    },
-  };
+    } = useReordering(onPositionChange, children.length);
 
-  return (
-    <Context.Provider value={state}>
-      <ReorderableContainer ref={setScrollTarget} {...props}>
-        <ReorderableScroller direction={-1} size={getItemSize()} />
+    const { startScroll, canScrollEnd, canScrollStart } = useScroll(
+      mode,
+      isReordering,
+      containerRef,
+      getItemSize()
+    );
 
-        {children}
+    const state = {
+      state: {
+        isReordering,
+        currentSeparator,
+        containerRef,
+        mode,
+        canScrollEnd,
+        canScrollStart,
+      },
+      actions: {
+        setCurrentSeparator,
+        handleStartReordering,
+        startScroll,
+      },
+    };
 
-        <ReorderableScroller direction={1} size={getItemSize()} />
-      </ReorderableContainer>
-    </Context.Provider>
-  );
-}
+    return (
+      <Context.Provider value={state}>
+        <ReorderableContainer ref={containerRef} {...props}>
+          <ReorderableScroller direction={-1} size={getItemSize()} />
+          {children}
+          <ReorderableScroller direction={1} size={getItemSize()} />
+        </ReorderableContainer>
+      </Context.Provider>
+    );
+  }
+);
 
 Reorderable.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   onPositionChange: PropTypes.func.isRequired,
   getItemSize: PropTypes.func.isRequired,
 };

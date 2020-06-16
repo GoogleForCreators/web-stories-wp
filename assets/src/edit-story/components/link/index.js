@@ -14,36 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { PAGE_HEIGHT, CTA_ZONE_PERCENT } from '../../constants';
-
-export { default as LinkGuidelines } from './guidelines';
-
-export const LinkType = {
-  ONE_TAP: 1,
-  TWO_TAP: 2,
-};
-
 export function getLinkFromElement(element) {
   return element.link || null;
 }
 
-export function inferLinkType(selectedElement) {
-  const { y } = selectedElement;
-  return y >= PAGE_HEIGHT * (1 - CTA_ZONE_PERCENT)
-    ? LinkType.ONE_TAP
-    : LinkType.TWO_TAP;
-}
-
-export function createLink({
-  url = '',
-  type = LinkType.TWO_TAP,
-  ...rest
-} = {}) {
+export function createLink({ url = '', ...rest } = {}) {
   return {
-    type,
     url,
     ...rest,
   };

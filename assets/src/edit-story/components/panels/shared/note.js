@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Info } from '../../../icons/info.svg';
+import { Info } from '../../../icons';
 
 const NoteContainer = styled.span`
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
@@ -54,10 +54,7 @@ const Note = ({ onClick, children }) => {
 };
 
 Note.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   onClick: PropTypes.func,
 };
 

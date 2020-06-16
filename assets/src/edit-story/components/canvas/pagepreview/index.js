@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 /**
  * Internal dependencies
@@ -28,16 +29,17 @@ import useStory from '../../../app/story/useStory';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
 
-const THUMB_INDICATOR_HEIGHT = 6;
-const THUMB_INDICATOR_GAP = 4;
+export const THUMB_INDICATOR_HEIGHT = 6;
+export const THUMB_INDICATOR_GAP = 4;
 
 export const THUMB_FRAME_HEIGHT = THUMB_INDICATOR_HEIGHT + THUMB_INDICATOR_GAP;
 export const THUMB_FRAME_WIDTH = 0;
 
 const Page = styled.button`
   display: block;
-  cursor: pointer;
+  cursor: ${({ isInteractive }) => (isInteractive ? 'pointer' : 'default')};
   padding: ${THUMB_INDICATOR_GAP}px 0 0 0;
   border: 0;
   border-top: ${THUMB_INDICATOR_HEIGHT}px solid
@@ -49,8 +51,9 @@ const Page = styled.button`
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
   outline: 0;
-  ${({ isActive, theme }) =>
+  ${({ isActive, isInteractive, theme }) =>
     !isActive &&
+    isInteractive &&
     css`
       &:hover,
       &:focus {
@@ -65,27 +68,23 @@ const PreviewWrapper = styled.div`
   position: relative;
   overflow: hidden;
   background-color: white;
-  background-image: linear-gradient(45deg, #999999 25%, transparent 25%),
-    linear-gradient(-45deg, #999999 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #999999 75%),
-    linear-gradient(-45deg, transparent 75%, #999999 75%);
-  background-size: 8px 8px;
-  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  ${({ background }) => generatePatternStyles(background)}
 `;
 
-function PagePreview({ index, forwardedRef, ...props }) {
-  const {
-    state: { pages },
-  } = useStory();
+function PagePreview({ index, ...props }) {
+  const { pages } = useStory((state) => ({
+    pages: state.state.pages,
+  }));
   const page = pages[index];
+  const { backgroundColor } = page;
   const { width: thumbWidth, height: thumbHeight } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;
   const height = thumbHeight - THUMB_FRAME_HEIGHT;
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page {...props} ref={forwardedRef}>
-          <PreviewWrapper>
+        <Page {...props}>
+          <PreviewWrapper background={backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
                 key={id}
@@ -103,9 +102,13 @@ function PagePreview({ index, forwardedRef, ...props }) {
 
 PagePreview.propTypes = {
   index: PropTypes.number.isRequired,
-  forwardedRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  isInteractive: PropTypes.bool,
+};
+
+PagePreview.defaultProps = {
+  isInteractive: true,
 };
 
 export default PagePreview;

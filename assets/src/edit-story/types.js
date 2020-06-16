@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  */
 import { OverlayType } from './utils/backgroundOverlay';
 import { BACKGROUND_TEXT_MODE } from './constants';
+import MULTIPLE_VALUE from './components/form/multipleValue';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -37,7 +38,7 @@ export const ColorStopPropType = PropTypes.shape({
 });
 
 export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'radial', 'conic']),
+  type: PropTypes.oneOf(['solid', 'linear', 'radial']),
   color: HexPropType,
   stops: PropTypes.arrayOf(ColorStopPropType),
   rotation: PropTypes.number,
@@ -50,6 +51,12 @@ export const PatternPropType = PropTypes.shape({
     w: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
   }),
+});
+
+export const StylePresetPropType = PropTypes.shape({
+  fillColors: PropTypes.array,
+  textColors: PropTypes.array,
+  textStyles: PropTypes.array,
 });
 
 const StoryPropTypes = {};
@@ -74,7 +81,6 @@ StoryPropTypes.mask = PropTypes.shape({
 });
 
 StoryPropTypes.link = PropTypes.shape({
-  type: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
   desc: PropTypes.string,
   icon: PropTypes.string,
@@ -93,21 +99,15 @@ StoryPropTypes.box = PropTypes.exact({
   rotationAngle: PropTypes.number.isRequired,
 });
 
-StoryPropTypes.children = PropTypes.oneOfType([
-  PropTypes.arrayOf(PropTypes.node),
-  PropTypes.node,
-]);
-
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
-  backgroundElementId: PropTypes.string,
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
@@ -118,7 +118,7 @@ StoryPropTypes.imageResource = PropTypes.shape({
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
@@ -153,10 +153,10 @@ const StoryElementPropTypes = {
   height: PropTypes.number.isRequired,
   flip: StoryPropTypes.flip,
   rotationAngle: PropTypes.number.isRequired,
-  isFill: PropTypes.bool,
   mask: StoryPropTypes.mask,
   link: StoryPropTypes.link,
   opacity: PropTypes.number,
+  lockAspectRatio: PropTypes.bool,
 };
 
 const StoryMediaPropTypes = {
@@ -190,25 +190,41 @@ StoryPropTypes.elements.media = PropTypes.oneOfType([
   StoryPropTypes.elements.video,
 ]);
 
+export const FontPropType = PropTypes.shape({
+  family: PropTypes.string,
+  service: PropTypes.string,
+  weights: PropTypes.arrayOf(PropTypes.number),
+  styles: PropTypes.arrayOf(PropTypes.string),
+  // There's no built-in prop type validation for tuples.
+  variants: PropTypes.arrayOf(PropTypes.array),
+  fallbacks: PropTypes.array,
+});
+
+export const PaddingPropType = PropTypes.shape({
+  horizontal: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([MULTIPLE_VALUE]),
+  ]),
+  vertical: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([MULTIPLE_VALUE]),
+  ]),
+  locked: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.oneOf([MULTIPLE_VALUE]),
+  ]),
+});
+
 StoryPropTypes.elements.text = PropTypes.shape({
   ...StoryElementPropTypes,
   content: PropTypes.string,
-  color: PatternPropType.isRequired,
   backgroundTextMode: PropTypes.oneOf(Object.values(BACKGROUND_TEXT_MODE)),
   backgroundColor: PatternPropType,
-  fontFamily: PropTypes.string,
-  fontFallback: PropTypes.array,
+  font: FontPropType.isRequired,
   fontSize: PropTypes.number,
-  fontWeight: PropTypes.number,
-  fontStyle: PropTypes.string,
-  letterSpacing: PropTypes.number,
   lineHeight: PropTypes.number,
-  padding: PropTypes.shape({
-    horizontal: PropTypes.number,
-    vertical: PropTypes.number,
-  }),
+  padding: PaddingPropType,
   textAlign: PropTypes.string,
-  textDecoration: PropTypes.string,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({
@@ -224,6 +240,13 @@ StoryPropTypes.elements.background = PropTypes.shape({
 export default StoryPropTypes;
 
 /**
+ * Page object.
+ *
+ * @typedef {Page} Page
+ * @property {Array} elements Array of all elements.
+ */
+
+/**
  * Story object.
  *
  * @typedef {Story} Story
@@ -231,7 +254,7 @@ export default StoryPropTypes;
  * @property {number} storyId Story post id.
  * @property {string} title Story title.
  * @property {string} status Post status, draft or published.
- * @property {Array}  pages Array of all pages.
+ * @property {Array<Page>} pages Array of all pages.
  * @property {number} author User ID of story author.
  * @property {string} slug The slug of the story.
  * @property {string} date The publish date of the story.

@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
 import { useDropTargets } from '../dropTargets';
 import { useUnits } from '../../units';
 import { isDragType } from '../../utils/dragEvent';
@@ -37,15 +37,16 @@ const Container = styled.div`
 
 function CanvasElementDropzone({ children }) {
   const insertElement = useInsertElement();
-  const {
-    state: { activeDropTargetId },
-  } = useDropTargets();
-  const {
-    state: { pageContainer },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY },
-  } = useUnits();
+  const { activeDropTargetId } = useDropTargets((state) => ({
+    activeDropTargetId: state.state.activeDropTargetId,
+  }));
+  const { pageContainer } = useCanvas((state) => ({
+    pageContainer: state.state.pageContainer,
+  }));
+  const { editorToDataX, editorToDataY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+  }));
 
   const onDropHandler = useCallback(
     (e) => {
@@ -70,7 +71,7 @@ function CanvasElementDropzone({ children }) {
     },
     [
       activeDropTargetId,
-      pageContainer,
+      pageContainer?.getBoundingClientRect,
       insertElement,
       editorToDataX,
       editorToDataY,
@@ -95,7 +96,7 @@ function CanvasElementDropzone({ children }) {
 }
 
 CanvasElementDropzone.propTypes = {
-  children: StoryPropTypes.children.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default CanvasElementDropzone;

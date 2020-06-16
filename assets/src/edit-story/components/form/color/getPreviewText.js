@@ -36,12 +36,10 @@ function getPreviewText(pattern) {
   switch (pattern.type) {
     case 'radial':
       return __('Radial', 'web-stories');
-    case 'conic':
-      return __('Conic', 'web-stories');
     case 'linear':
       return __('Linear', 'web-stories');
     case 'solid':
-    default:
+    default: {
       const {
         color: { r, g, b, a },
       } = pattern;
@@ -49,6 +47,7 @@ function getPreviewText(pattern) {
         return null;
       }
       return printRGB(r, g, b);
+    }
   }
 }
 

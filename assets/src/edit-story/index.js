@@ -19,6 +19,7 @@
  */
 import Modal from 'react-modal';
 import { render } from 'react-dom';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -31,19 +32,24 @@ import './style.css'; // This way the general editor styles are loaded before al
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
+ * @param {Object} flags    The flags for the application.
  */
-const initialize = (id, config) => {
+const initialize = (id, config, flags) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
   Modal.setAppElement(appElement);
-
-  render(<App config={config} />, appElement);
+  render(
+    <FlagsProvider features={flags}>
+      <App config={config} />
+    </FlagsProvider>,
+    appElement
+  );
 };
 
 const initializeWithConfig = () => {
-  const { id, config } = window.webStoriesEditorSettings;
-  initialize(id, config);
+  const { id, config, flags } = window.webStoriesEditorSettings;
+  initialize(id, config, flags);
 };
 
 if ('loading' === document.readyState) {

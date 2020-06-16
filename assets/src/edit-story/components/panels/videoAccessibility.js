@@ -41,9 +41,10 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     'resource',
     DEFAULT_RESOURCE
   );
-  const poster = getCommonValue(selectedElements, 'poster') || resource.poster;
-  const title = getCommonValue(selectedElements, 'title') || resource.title;
-  const alt = getCommonValue(selectedElements, 'alt') || resource.alt;
+
+  const poster = getCommonValue(selectedElements, 'poster', resource.poster);
+  const title = getCommonValue(selectedElements, 'title', resource.title);
+  const alt = getCommonValue(selectedElements, 'alt', resource.alt);
 
   const handleChangePoster = useCallback(
     (image) => {
@@ -69,22 +70,25 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           type={'image'}
+          ariaLabel={__('Edit: Video poster', 'web-stories')}
         />
       </Row>
       <Row>
         <ExpandedTextInput
           placeholder={__('Title', 'web-stories')}
           value={title || ''}
-          onChange={(value) => pushUpdate({ title: value })}
+          onChange={(value) => pushUpdate({ title: value || null })}
           clear
+          aria-label={__('Edit: Video title', 'web-stories')}
         />
       </Row>
       <Row>
         <ExpandedTextInput
           placeholder={__('Assistive text', 'web-stories')}
           value={alt || ''}
-          onChange={(value) => pushUpdate({ alt: value })}
+          onChange={(value) => pushUpdate({ alt: value || null })}
           clear
+          aria-label={__('Edit: Assistive text', 'web-stories')}
         />
       </Row>
       <Row>

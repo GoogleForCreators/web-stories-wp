@@ -18,19 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import {
-  DEFAULT_EDITOR_PAGE_WIDTH,
-  DEFAULT_EDITOR_PAGE_HEIGHT,
-} from '../../constants';
+import { PAGE_WIDTH, PAGE_RATIO } from '../../constants';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
-import useCanvasSelectionCopyPaste from './useCanvasSelectionCopyPaste';
+import useCanvasCopyPaste from './useCanvasCopyPaste';
 import Context from './context';
 
 function CanvasProvider({ children }) {
@@ -38,10 +35,11 @@ function CanvasProvider({ children }) {
   const lastSelectedElementId = useRef(null);
 
   const [pageSize, setPageSize] = useState({
-    width: DEFAULT_EDITOR_PAGE_WIDTH,
-    height: DEFAULT_EDITOR_PAGE_HEIGHT,
+    width: PAGE_WIDTH,
+    height: PAGE_WIDTH / PAGE_RATIO,
   });
   const [pageContainer, setPageContainer] = useState(null);
+  const [fullbleedContainer, setFullbleedContainer] = useState(null);
 
   const {
     nodesById,
@@ -50,13 +48,28 @@ function CanvasProvider({ children }) {
     setEditingElementWithState,
     setEditingElementWithoutState,
     clearEditing,
+    getNodeForElement,
     setNodeForElement,
   } = useEditingElement();
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { toggleElementInSelection, setSelectedElementsById },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    toggleElementInSelection,
+    setSelectedElementsById,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementIds },
+      actions: { toggleElementInSelection, setSelectedElementsById },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        toggleElementInSelection,
+        setSelectedElementsById,
+      };
+    }
+  );
 
   const handleSelectElement = useCallback(
     (elId, evt) => {
@@ -76,8 +89,8 @@ function CanvasProvider({ children }) {
       } else {
         setSelectedElementsById({ elementIds: [elId] });
       }
-      evt.currentTarget.focus();
-      if (currentPage?.backgroundElementId !== elId) {
+      evt.currentTarget.focus({ preventScroll: true });
+      if (currentPage?.elements[0].id !== elId) {
         evt.stopPropagation();
       }
 
@@ -96,7 +109,7 @@ function CanvasProvider({ children }) {
     },
     [
       editingElement,
-      currentPage,
+      currentPage?.elements,
       clearEditing,
       toggleElementInSelection,
       setSelectedElementsById,
@@ -106,6 +119,7 @@ function CanvasProvider({ children }) {
   const selectIntersection = useCallback(
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const newSelectedElementIds = currentPage.elements
+        .filter(({ isBackground }) => !isBackground)
         .filter(({ x, y, width, height }) => {
           return (
             x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
@@ -134,30 +148,53 @@ function CanvasProvider({ children }) {
     }
   }, [editingElement, selectedElementIds, clearEditing]);
 
-  useCanvasSelectionCopyPaste(pageContainer);
+  useCanvasCopyPaste();
 
-  const state = {
-    state: {
+  const state = useMemo(
+    () => ({
+      state: {
+        pageContainer,
+        fullbleedContainer,
+        nodesById,
+        editingElement,
+        editingElementState,
+        isEditing: Boolean(editingElement),
+        lastSelectionEvent,
+        pageSize,
+      },
+      actions: {
+        setPageContainer,
+        setFullbleedContainer,
+        getNodeForElement,
+        setNodeForElement,
+        setEditingElement: setEditingElementWithoutState,
+        setEditingElementWithState,
+        clearEditing,
+        handleSelectElement,
+        selectIntersection,
+        setPageSize,
+      },
+    }),
+    [
       pageContainer,
+      fullbleedContainer,
       nodesById,
       editingElement,
       editingElementState,
-      isEditing: Boolean(editingElement),
       lastSelectionEvent,
       pageSize,
-    },
-    actions: {
       setPageContainer,
+      setFullbleedContainer,
+      getNodeForElement,
       setNodeForElement,
-      setEditingElement: setEditingElementWithoutState,
+      setEditingElementWithoutState,
       setEditingElementWithState,
       clearEditing,
       handleSelectElement,
       selectIntersection,
       setPageSize,
-    },
-  };
-
+    ]
+  );
   return (
     <Context.Provider value={state}>
       <UnitsProvider pageSize={pageSize}>{children}</UnitsProvider>
@@ -166,10 +203,7 @@ function CanvasProvider({ children }) {
 }
 
 CanvasProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default CanvasProvider;

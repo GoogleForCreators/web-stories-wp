@@ -14,24 +14,38 @@
  * limitations under the License.
  */
 
-module.exports = {
-  ...require('@wordpress/scripts/config/jest-e2e.config'),
+/**
+ * Environment variables
+ */
+const {
+  WP_USERNAME = 'admin',
+  WP_PASSWORD = 'password',
+  WP_BASE_URL = 'http://localhost:8899',
+} = process.env;
+
+// Explicitly set these environment variables if not already there.
+process.env.WP_USERNAME = WP_USERNAME;
+process.env.WP_PASSWORD = WP_PASSWORD;
+process.env.WP_BASE_URL = WP_BASE_URL;
+
+export default {
+  preset: 'jest-puppeteer',
   transform: {
-    '^.+\\.[jt]sx?$':
-      '<rootDir>/../../node_modules/@wordpress/scripts/config/babel-transform',
+    '^.+\\.[jt]sx?$': 'babel-jest',
   },
+  testMatch: ['**/specs/**/*.[jt]s', '**/?(*.)spec.[jt]s'],
+  testPathIgnorePatterns: [
+    '<rootDir>/.git',
+    '<rootDir>/node_modules',
+    '<rootDir>/build',
+    '<rootDir>/tests/e2e/specs/edit-story',
+  ],
   transformIgnorePatterns: ['node_modules'],
   setupFilesAfterEnv: [
     '<rootDir>/config/bootstrap.js',
     '@wordpress/jest-puppeteer-axe',
     '@wordpress/jest-console',
     'expect-puppeteer',
-  ],
-  testPathIgnorePatterns: [
-    '<rootDir>/.git',
-    '<rootDir>/node_modules',
-    '<rootDir>/build',
-    '<rootDir>/tests/e2e/specs/edit-story',
   ],
   reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };

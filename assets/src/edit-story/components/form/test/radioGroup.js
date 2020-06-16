@@ -17,10 +17,8 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { ThemeProvider } from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -30,16 +28,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import theme from '../../../theme';
 import RadioGroup from '../radioGroup';
-
-function ThemeProviderWrapper({ children }) {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
-}
-
-ThemeProviderWrapper.propTypes = {
-  children: PropTypes.any.isRequired,
-};
+import { renderWithTheme } from '../../../testUtils';
 
 describe('RadioGroup', () => {
   const options = [
@@ -56,38 +46,32 @@ describe('RadioGroup', () => {
   ];
 
   it('should render with correct options', () => {
-    const { getByText, getByLabelText } = render(
+    const { getByRole } = renderWithTheme(
       <RadioGroup
         onChange={() => null}
         options={options}
         value={options[0].value}
-      />,
-      {
-        wrapper: ThemeProviderWrapper,
-      }
+      />
     );
 
-    const optionA = getByText('Option A');
-    const optionB = getByText('Option B');
+    const optionA = getByRole('radio', { name: 'Option A' });
+    const optionB = getByRole('radio', { name: 'Option B' });
 
     expect(optionA).toBeInTheDocument();
-    expect(getByLabelText(/Option A/i)).toBeChecked();
+    expect(optionA).toBeChecked();
     expect(optionB).toBeInTheDocument();
   });
 
   it('should change the value when clicking', () => {
     const onChange = jest.fn();
-    const { getByLabelText } = render(
+    const { getByRole } = renderWithTheme(
       <RadioGroup
         onChange={onChange}
         options={options}
         value={options[0].value}
-      />,
-      {
-        wrapper: ThemeProviderWrapper,
-      }
+      />
     );
-    const optionB = getByLabelText(/Option B/i);
+    const optionB = getByRole('radio', { name: 'Option B' });
     fireEvent.click(optionB);
     expect(onChange).toHaveBeenCalledTimes(1);
 

@@ -29,16 +29,16 @@ import useLoadStory from './effects/useLoadStory';
 import useSaveStory from './actions/useSaveStory';
 import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
-import usePageBackgrounds from './effects/usePageBackgrounds';
 import useStoryReducer from './useStoryReducer';
-import useDeleteStory from './actions/useDeleteStory';
+import useAutoSave from './actions/useAutoSave';
 
 function StoryProvider({ storyId, children }) {
   const {
-    state: { pages, current, selection, story, capabilities },
+    state: reducerState,
     api,
     internal: { restore },
   } = useStoryReducer();
+  const { pages, current, selection, story, capabilities } = reducerState;
 
   // Generate current page info.
   const {
@@ -91,13 +91,6 @@ function StoryProvider({ storyId, children }) {
   useHistoryEntry({ pages, current, selection, story, capabilities });
   useHistoryReplay({ restore });
 
-  // Ensure all pages have a background element at all times
-  usePageBackgrounds({
-    currentPage,
-    setBackgroundElement: api.setBackgroundElement,
-    addElement: api.addElement,
-  });
-
   // This action allows the user to save the story
   // (and it will have side-effects because saving can update url and status,
   //  thus the need for `updateStory`)
@@ -108,7 +101,12 @@ function StoryProvider({ storyId, children }) {
     story,
     updateStory,
   });
-  const { deleteStory } = useDeleteStory({ storyId });
+
+  const { autoSave, isAutoSaving } = useAutoSave({
+    storyId,
+    pages,
+    story,
+  });
 
   const state = {
     state: {
@@ -123,24 +121,22 @@ function StoryProvider({ storyId, children }) {
       story,
       capabilities,
       meta: {
-        isSaving,
+        isSaving: isSaving || isAutoSaving,
       },
     },
     actions: {
       ...api,
+      autoSave,
       saveStory,
-      deleteStory,
     },
+    internal: { reducerState, restore },
   };
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 StoryProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   storyId: PropTypes.number,
 };
 

@@ -30,7 +30,9 @@ import useLoadFontFiles from '../../../edit-story/app/font/actions/useLoadFontFi
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
   const {
-    actions: { getAllFonts },
+    actions: {
+      fontApi: { getAllFonts },
+    },
   } = useContext(ApiContext);
 
   const getFontBy = useCallback(
@@ -46,13 +48,21 @@ function FontProvider({ children }) {
 
   const getFontByName = useCallback(
     (name) => {
-      return getFontBy('name', name);
+      return getFontBy('family', name);
     },
     [getFontBy]
   );
 
   useEffect(() => {
-    getAllFonts().then(setFonts);
+    let mounted = true;
+    getAllFonts().then((newFonts) => {
+      if (mounted) {
+        setFonts(newFonts);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
   }, [getAllFonts]);
 
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
@@ -70,10 +80,7 @@ function FontProvider({ children }) {
 }
 
 FontProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
 };
 
 export default FontProvider;

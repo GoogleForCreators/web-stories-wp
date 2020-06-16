@@ -23,14 +23,31 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import useFocusCanvas from '../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
   const { id: elementId } = layer;
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { setSelectedElementsById, toggleElementInSelection },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    setSelectedElementsById,
+    toggleElementInSelection,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementIds },
+      actions: { setSelectedElementsById, toggleElementInSelection },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        setSelectedElementsById,
+        toggleElementInSelection,
+      };
+    }
+  );
+
+  const focusCanvas = useFocusCanvas();
 
   const isSelected = selectedElementIds.includes(elementId);
   const pageElementIds = currentPage.elements.map(({ id }) => id);
@@ -62,6 +79,9 @@ function useLayerSelection(layer) {
         // No special key pressed - just selected this layer and nothing else.
         setSelectedElementsById({ elementIds: [elementId] });
       }
+
+      // In any case, revert focus to selected element(s)
+      focusCanvas();
     },
     [
       pageElementIds,
@@ -69,6 +89,7 @@ function useLayerSelection(layer) {
       setSelectedElementsById,
       toggleElementInSelection,
       elementId,
+      focusCanvas,
     ]
   );
 

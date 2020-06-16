@@ -19,8 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
 import { rgba } from 'polished';
+
+/**
+ * Internal dependencies
+ */
+import { useContext } from '../../../../utils/context';
 
 /**
  * Internal dependencies
@@ -58,10 +62,7 @@ function Content({ children, ...rest }) {
 }
 
 Content.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node,
   isPrimary: PropTypes.bool,
 };
 

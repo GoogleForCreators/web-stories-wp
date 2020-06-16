@@ -18,45 +18,43 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
+import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
+import createSolid from '../../utils/createSolid';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import {
-  draftMarkupToContent,
-  generateParagraphTextStyle,
-  getHighlightLineheight,
-} from './util';
+import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.
  */
 export function TextOutputWithUnits({
-  element: {
-    bold,
-    content,
-    color,
-    backgroundColor,
-    backgroundTextMode,
-    padding,
-    ...rest
-  },
+  element: { content, backgroundColor, backgroundTextMode, padding, ...rest },
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY,
+  dataToPaddingX,
+  dataToPaddingY,
   className,
 }) {
   if (!dataToFontSizeY) {
     dataToFontSizeY = dataToStyleY;
   }
-  const { width } = rest;
+  if (!dataToPaddingX) {
+    dataToPaddingX = dataToStyleX;
+  }
+  if (!dataToPaddingY) {
+    dataToPaddingY = dataToStyleY;
+  }
   const paddingStyles = {
-    vertical: `${(padding.vertical / width) * 100}%`,
-    horizontal: `${(padding.horizontal / width) * 100}%`,
+    vertical: dataToPaddingY(padding.vertical),
+    horizontal: dataToPaddingX(padding.horizontal),
   };
 
   const bgColor =
@@ -71,8 +69,8 @@ export function TextOutputWithUnits({
       dataToStyleY,
       dataToFontSizeY
     ),
-    ...generatePatternStyles(color, 'color'),
     ...bgColor,
+    color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
 
@@ -131,6 +129,13 @@ export function TextOutputWithUnits({
     background: 'none',
   };
 
+  // Setting the text color of the entire block to black essentially removes all inline
+  // color styling allowing us to apply transparent to all of them.
+  const contentWithoutColor = useMemo(
+    () => getHTMLFormatters().setColor(content, createSolid(0, 0, 0)),
+    [content]
+  );
+
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <>
@@ -139,7 +144,7 @@ export function TextOutputWithUnits({
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: contentWithoutColor,
               }}
             />
           </span>
@@ -149,7 +154,7 @@ export function TextOutputWithUnits({
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
-                __html: draftMarkupToContent(content, bold),
+                __html: content,
               }}
             />
           </span>
@@ -162,7 +167,7 @@ export function TextOutputWithUnits({
     <p
       className={className}
       style={fillStyle}
-      dangerouslySetInnerHTML={{ __html: draftMarkupToContent(content, bold) }}
+      dangerouslySetInnerHTML={{ __html: content }}
     />
   );
 }
@@ -172,6 +177,8 @@ TextOutputWithUnits.propTypes = {
   dataToStyleX: PropTypes.func.isRequired,
   dataToStyleY: PropTypes.func.isRequired,
   dataToFontSizeY: PropTypes.func,
+  dataToPaddingX: PropTypes.func,
+  dataToPaddingY: PropTypes.func,
   className: PropTypes.string,
 };
 
@@ -179,6 +186,7 @@ TextOutputWithUnits.propTypes = {
  * Returns AMP HTML for saving into post content for displaying in the FE.
  */
 function TextOutput({ element }) {
+  const { width } = element;
   return (
     <TextOutputWithUnits
       element={element}
@@ -186,6 +194,10 @@ function TextOutput({ element }) {
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
       dataToFontSizeY={(y) => `${(dataToEditorY(y, 100) / 10).toFixed(6)}em`}
+      // Both vertical and horizontal paddings are calculated in % relative to
+      // the box's width per CSS rules.
+      dataToPaddingX={(x) => `${(x / width) * 100}%`}
+      dataToPaddingY={(y) => `${(y / width) * 100}%`}
     />
   );
 }

@@ -15,21 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import theme from '../../../theme';
-
+import { renderWithTheme } from '../../../testUtils/';
 import Dropdown from '../';
-
-const wrapper = (children) => {
-  return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
-};
 
 describe('Dropdown', () => {
   const demoItems = [
@@ -40,8 +29,8 @@ describe('Dropdown', () => {
   ];
   const onClickMock = jest.fn();
 
-  it('should render a <Dropdown /> by default', () => {
-    const { getByRole } = wrapper(
+  it('should render a <Dropdown /> button by default', () => {
+    const wrapper = renderWithTheme(
       <Dropdown
         placeholder="placeholder text"
         ariaLabel="my dropdown test"
@@ -52,11 +41,10 @@ describe('Dropdown', () => {
       />
     );
 
-    const DropdownButton = getByRole('button');
-    const DropdownPopoverMenu = getByRole('list');
-
+    const DropdownButton = wrapper.getByRole('button');
+    const PopoverMenu = wrapper.getByTestId('popover-menu');
+    const DropdownMenu = window.getComputedStyle(PopoverMenu).display;
     expect(DropdownButton).toBeDefined();
-
-    expect(DropdownPopoverMenu).toBeDefined();
+    expect(DropdownMenu).toBe('none');
   });
 });

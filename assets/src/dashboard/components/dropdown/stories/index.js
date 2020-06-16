@@ -15,9 +15,14 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
@@ -26,16 +31,17 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Dropdown from '../';
-import { DROPDOWN_TYPES } from '../../../constants';
+import { DROPDOWN_TYPES, TEMPLATE_COLOR_ITEMS } from '../../../constants';
 
 const demoItems = [
-  { value: '1', label: 'one' },
-  { value: 'foo', label: 'two' },
-  { value: 'bar', label: 'three' },
+  { value: '1', label: __('one', 'web-stories') },
+  { value: 'foo', label: __('two', 'web-stories') },
+  { value: 'bar', label: __('three', 'web-stories') },
 ];
 
 const DropdownWrapper = styled.div`
   width: 200px;
+  margin: 20px 50px;
 `;
 
 const FillerContainer = styled.div`
@@ -71,21 +77,53 @@ export const _default = () => {
   );
 };
 
-export const _transparent = () => {
-  const [value, setValue] = useState();
+const categoryDemoData = [
+  {
+    label: <span>{__('All Categories', 'web-stories')}</span>,
+    value: 'all',
+    selected: true,
+  },
+  { label: __('Arts and Crafts', 'web-stories'), value: 'arts_crafts' },
+  { label: __('Beauty', 'web-stories'), value: 'beauty' },
+  { label: __('Cooking', 'web-stories'), value: 'cooking' },
+  { label: __('News', 'web-stories'), value: 'news' },
+  { label: __('Sports', 'web-stories'), value: 'sports' },
+  { label: __('News', 'web-stories'), value: 'news_2' },
+  {
+    label: __('UNCLICKABLE', 'web-stories'),
+    value: 'unclickable',
+    disabled: true,
+  },
+];
+
+export const _panel = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(categoryDemoData);
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
 
   return (
     <DropdownWrapper>
       <Dropdown
-        ariaLabel={text('ariaLabel', 'my dropdown description')}
-        items={demoItems}
+        ariaLabel={text('ariaLabel', 'my semantic label')}
         disabled={boolean('disabled')}
-        value={value}
-        type={DROPDOWN_TYPES.TRANSPARENT_MENU}
-        placeholder={text('placeholder', 'Select Value')}
-        onChange={(item) => {
-          action(`clicked on dropdown item ${item.value}`)(item);
-          setValue(item.value);
+        type={DROPDOWN_TYPES.PANEL}
+        placeholder={text('placeholder', 'My dropdown for categories')}
+        items={statefulDemoData}
+        onChange={(selectedValue) => {
+          action(`clicked on dropdown item ${selectedValue}`)(selectedValue);
+          updateDemoDataState(selectedValue);
         }}
       />
       <FillerContainer />
@@ -93,24 +131,38 @@ export const _transparent = () => {
   );
 };
 
-export const _panel = () => {
+export const _colorPanel = () => {
+  const [statefulDemoData, setStatefulDemoData] = useState(
+    TEMPLATE_COLOR_ITEMS
+  );
+
+  const updateDemoDataState = useCallback(
+    (dataToUpdate) => {
+      const newDemoData = statefulDemoData.map((item) => {
+        if (item.value === dataToUpdate) {
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      });
+
+      setStatefulDemoData(newDemoData);
+    },
+    [statefulDemoData]
+  );
+
   return (
     <DropdownWrapper>
       <Dropdown
-        ariaLabel={text('ariaLabel', 'my dropdown description')}
+        ariaLabel={text('ariaLabel', 'choose colors to filter on')}
         disabled={boolean('disabled')}
-        type={DROPDOWN_TYPES.PANEL}
-        placeholder={text('placeholder', 'Select Value')}
-      >
-        {({ closeMenu }) => (
-          <div>
-            <button onClick={closeMenu}>
-              {text('closeButtonLabel', 'Close')}
-            </button>
-            <h1>{text('panelTitle', 'Panel Content')}</h1>
-          </div>
-        )}
-      </Dropdown>
+        type={DROPDOWN_TYPES.COLOR_PANEL}
+        placeholder={text('placeholder', 'My dropdown for colors')}
+        items={statefulDemoData}
+        onChange={(selectedValue) => {
+          action(`clicked on dropdown item ${selectedValue}`)(selectedValue);
+          updateDemoDataState(selectedValue);
+        }}
+      />
       <FillerContainer />
     </DropdownWrapper>
   );

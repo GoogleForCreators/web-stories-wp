@@ -28,10 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, TextInput, HelperText, Button, RadioGroup } from '../../form';
+import { Row, TextInput, HelperText, RadioGroup } from '../../form';
 import { useStory } from '../../../app/story';
 import useInspector from '../useInspector';
 import { SimplePanel } from '../../panels/panel';
+import { useConfig } from '../../../app/config';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -44,20 +45,21 @@ const BoxedTextInput = styled(TextInput)`
 
 function StatusPanel() {
   const {
-    actions: { loadStatuses, loadUsers },
-    state: { statuses },
+    actions: { loadUsers },
   } = useInspector();
 
-  const {
-    state: {
-      story: { status, password },
-      capabilities,
-    },
-    actions: { updateStory, deleteStory },
-  } = useStory();
+  const { status, password, updateStory } = useStory(
+    ({
+      state: {
+        story: { status, password },
+      },
+      actions: { updateStory },
+    }) => ({ status, password, updateStory })
+  );
+
+  const { capabilities } = useConfig();
 
   useEffect(() => {
-    loadStatuses();
     loadUsers();
   });
 
@@ -67,17 +69,20 @@ function StatusPanel() {
       name: __('Draft', 'web-stories'),
       helper: __('Visible to just me', 'web-stories'),
     },
-    {
+  ];
+
+  if (capabilities?.hasPublishAction) {
+    visibilityOptions.push({
       value: 'publish',
       name: __('Public', 'web-stories'),
       helper: __('Visible to everyone', 'web-stories'),
-    },
-    {
+    });
+    visibilityOptions.push({
       value: 'private',
       name: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
-    },
-  ];
+    });
+  }
 
   const passwordProtected = 'protected';
   // @todo Add this back once we have FE implementation, too.
@@ -121,14 +126,6 @@ function StatusPanel() {
     [password, status, updateStory]
   );
 
-  const handleRemoveStory = useCallback(
-    (evt) => {
-      deleteStory();
-      evt.preventDefault();
-    },
-    [deleteStory]
-  );
-
   const getStatusValue = (value) => {
     // Always display protected visibility, independent of the status.
     if (password && password.length) {
@@ -143,35 +140,30 @@ function StatusPanel() {
 
   return (
     <SimplePanel name="status" title={__('Status & Visibility', 'web-stories')}>
-      {capabilities && capabilities.hasPublishAction && statuses && (
-        <>
-          <Row>
-            <RadioGroup
-              options={visibilityOptions}
-              onChange={handleChangeVisibility}
-              value={getStatusValue(status)}
-            />
-          </Row>
-          {passwordProtected === status && (
-            <>
-              <Row>
-                <BoxedTextInput
-                  label={__('Password', 'web-stories')}
-                  value={password}
-                  onChange={handleChangePassword}
-                  placeholder={__('Enter a password', 'web-stories')}
-                />
-              </Row>
-              <HelperText isWarning={password && password.length > 20}>
-                {__('Must not exceed 20 characters', 'web-stories')}
-              </HelperText>
-            </>
-          )}
-        </>
-      )}
-      <Button onClick={handleRemoveStory} fullWidth>
-        {__('Move to trash', 'web-stories')}
-      </Button>
+      <>
+        <Row>
+          <RadioGroup
+            options={visibilityOptions}
+            onChange={handleChangeVisibility}
+            value={getStatusValue(status)}
+          />
+        </Row>
+        {passwordProtected === status && (
+          <>
+            <Row>
+              <BoxedTextInput
+                label={__('Password', 'web-stories')}
+                value={password}
+                onChange={handleChangePassword}
+                placeholder={__('Enter a password', 'web-stories')}
+              />
+            </Row>
+            <HelperText isWarning={password && password.length > 20}>
+              {__('Must not exceed 20 characters', 'web-stories')}
+            </HelperText>
+          </>
+        )}
+      </>
     </SimplePanel>
   );
 }

@@ -27,7 +27,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Locked } from '../../../icons/lock.svg';
+import { Lock as Locked } from '../../../icons';
 
 /**
  * Internal dependencies
@@ -100,15 +100,18 @@ const BackgroundDescription = styled.div`
 
 const LayerContentContainer = styled.div`
   margin-right: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
-  const {
-    state: { currentPage },
-  } = useStory();
-  const isBackground = currentPage.backgroundElementId === layer.id;
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+  const isBackground = currentPage.elements[0].id === layer.id;
   const showPreview = !isBackground || layer.type !== 'shape';
 
   return (

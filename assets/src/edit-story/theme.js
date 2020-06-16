@@ -18,7 +18,13 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import { useContext } from 'react';
+import { rgba } from 'polished';
+
+/**
+ * Internal dependencies
+ */
+import { SCROLLBAR_WIDTH } from './constants';
+import { identity, useContextSelector } from './utils/context';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -31,10 +37,47 @@ export const GlobalStyle = createGlobalStyle`
   ul#adminmenu a.wp-has-current-submenu::after {
     border-right-color: ${({ theme }) => theme.colors.bg.v4};
   }
+
+  /**
+   * Override the shell (WP) the default styling used for stories content.
+   */
+  .web-stories-content b, .web-stories-content strong {
+    font-weight: bold;
+  }
+
+  /*
+   * Custom dark scrollbars for Chromium & Firefox.
+   * Scoped to <Editor> to make sure we don't mess with WP dialogs
+   * like the Backbone Media Gallery dialog.
+   */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+    ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  }
+
+  *::-webkit-scrollbar {
+    width: ${SCROLLBAR_WIDTH}px;
+    height: ${SCROLLBAR_WIDTH}px;
+    position:fixed;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+    border-radius: 6px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.bg.v10};
+    width: 3px;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
 `;
 
-export function useTheme() {
-  return useContext(ThemeContext);
+export function useTheme(selector) {
+  return useContextSelector(ThemeContext, selector ?? identity);
 }
 
 const theme = {
@@ -53,6 +96,7 @@ const theme = {
       v10: '#44485B',
       v11: '#08223A',
       v12: '#F2F2F2',
+      v13: '#FFFFFF',
     },
     mg: {
       v1: '#616877',
@@ -69,6 +113,7 @@ const theme = {
       v7: '#1A73E8',
       v8: '#E6E6E6',
     },
+    hover: '#4285F4',
     action: '#47A0F4',
     danger: '#FF0000',
     warning: '#EA4335',
@@ -90,6 +135,12 @@ const theme = {
     },
   },
   fonts: {
+    title: {
+      family: 'Roboto',
+      size: '18px',
+      lineHeight: '24px',
+      weight: 'bold',
+    },
     body1: {
       family: 'Roboto',
       size: '16px',
@@ -114,11 +165,29 @@ const theme = {
       lineHeight: '18px',
       weight: '400',
     },
+    input: {
+      family: 'Roboto',
+      size: '15px',
+      lineHeight: '18px',
+      weight: '400',
+    },
     duration: {
       family: 'Roboto',
       size: '12px',
       lineHeight: '1',
       weight: '500',
+    },
+    description: {
+      family: 'Roboto',
+      weight: 'normal',
+      size: '13px',
+      lineHeight: '16px',
+    },
+    date: {
+      family: 'Roboto',
+      weight: 'normal',
+      size: '13px',
+      lineHeight: '24px',
     },
   },
 };

@@ -30,11 +30,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
+import { Dropdown as DropdownIcon } from '../../../icons';
 import Popup from '../../popup';
 import DropDownList from './list';
-
-const DEFAULT_WIDTH = 240;
 
 const DropDownContainer = styled.div`
   display: flex;
@@ -86,9 +84,9 @@ function DropDown({
   value,
   onChange,
   disabled,
-  ariaLabel,
   lightMode = false,
   placeholder,
+  ...rest
 }) {
   const selectRef = useRef();
 
@@ -135,19 +133,25 @@ function DropDown({
         ref={selectRef}
         aria-disabled={disabled}
         lightMode={lightMode}
+        {...rest}
       >
         <DropDownTitle>
           {(activeItem && activeItem.name) || placeholder}
         </DropDownTitle>
-        <DropDownIcon />
+        <DropdownIcon />
       </DropDownSelect>
-      <Popup anchor={selectRef} isOpen={isOpen} width={DEFAULT_WIDTH}>
+      <Popup
+        anchor={selectRef}
+        isOpen={isOpen}
+        placement={'bottom-end'}
+        fillWidth={true}
+      >
         <DropDownList
           handleCurrentValue={handleCurrentValue}
           value={activeItem && activeItem.value}
-          ariaLabel={ariaLabel}
           options={options}
           toggleOptions={toggleOptions}
+          {...rest}
         />
       </Popup>
     </DropDownContainer>
@@ -159,14 +163,13 @@ DropDown.propTypes = {
   options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  ariaLabel: PropTypes.string,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
+  labelledBy: PropTypes.string,
 };
 
 DropDown.defaultProps = {
   disabled: false,
-  ariaLabel: __('DropDown', 'web-stories'),
   value: '',
   onChange: () => {},
   options: [],

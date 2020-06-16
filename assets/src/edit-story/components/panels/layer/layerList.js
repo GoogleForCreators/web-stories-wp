@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Fragment } from 'react';
+import { Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -30,14 +30,17 @@ import {
   ReorderableItem,
 } from '../../reorderable';
 import { useStory } from '../../../app';
+import useFocusCanvas from '../../canvas/useFocusCanvas';
 import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
 
 const LayerList = styled(Reorderable).attrs({ 'aria-orientation': 'vertical' })`
   flex-direction: column;
   width: 100%;
+  height: 100%;
   align-items: stretch;
   user-select: ${({ hasUserSelect }) => (hasUserSelect ? 'none' : 'initial')};
+  overflow-y: scroll;
 `;
 
 const LayerSeparator = styled(ReorderableSeparator)`
@@ -47,11 +50,21 @@ const LayerSeparator = styled(ReorderableSeparator)`
 `;
 
 function LayerPanel({ layers }) {
-  const {
-    actions: { arrangeElement, setSelectedElementsById },
-  } = useStory();
+  const { arrangeElement, setSelectedElementsById } = useStory((state) => ({
+    arrangeElement: state.actions.arrangeElement,
+    setSelectedElementsById: state.actions.setSelectedElementsById,
+  }));
 
   const numLayers = layers && layers.length;
+
+  const focusCanvas = useFocusCanvas();
+  const handleStartReordering = useCallback(
+    (id) => () => {
+      setSelectedElementsById({ elementIds: [id] });
+      focusCanvas();
+    },
+    [setSelectedElementsById, focusCanvas]
+  );
 
   if (!numLayers) {
     return null;
@@ -65,6 +78,7 @@ function LayerPanel({ layers }) {
           position: newPos,
         })
       }
+      mode={'vertical'}
       getItemSize={() => LAYER_HEIGHT}
     >
       {layers.map((layer) => (
@@ -72,9 +86,7 @@ function LayerPanel({ layers }) {
           <LayerSeparator position={layer.position + 1} />
           <ReorderableItem
             position={layer.position}
-            onStartReordering={() =>
-              setSelectedElementsById({ elementIds: [layer.id] })
-            }
+            onStartReordering={handleStartReordering(layer.id)}
             disabled={layer.type === 'background'}
           >
             <Layer layer={layer} />

@@ -27,6 +27,7 @@ export const UPDATE_ELEMENTS = 'UPDATE_ELEMENTS';
 export const UPDATE_ELEMENTS_BY_RESOURCE_ID = 'UPDATE_ELEMENTS_BY_RESOURCE_ID';
 export const SET_BACKGROUND_ELEMENT = 'SET_BACKGROUND_ELEMENT';
 export const ARRANGE_ELEMENT = 'ARRANGE_ELEMENT';
+export const COMBINE_ELEMENTS = 'COMBINE_ELEMENTS';
 
 // Manipulate current page.
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
@@ -44,9 +45,9 @@ export const UPDATE_STORY = 'UPDATE_STORY';
 export const RESTORE = 'RESTORE';
 
 // Reserved property names for pages and elements.
-export const PAGE_RESERVED_PROPERTIES = [
+export const PAGE_RESERVED_PROPERTIES = ['id', 'elements'];
+export const ELEMENT_RESERVED_PROPERTIES = [
   'id',
-  'elements',
-  'backgroundElementId',
+  'isBackground',
+  'isDefaultBackground',
 ];
-export const ELEMENT_RESERVED_PROPERTIES = ['id'];

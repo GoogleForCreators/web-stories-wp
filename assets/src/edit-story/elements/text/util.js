@@ -15,12 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { RichUtils, SelectionState } from 'draft-js';
-import { filterEditorState } from 'draftjs-filters';
-
-/**
  * @param {Object} element Text element properties.
  * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
  * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
@@ -34,106 +28,21 @@ export function generateParagraphTextStyle(
   dataToStyleY,
   dataToFontSizeY = dataToStyleY
 ) {
-  const {
-    fontFamily,
-    fontFallback,
-    fontSize,
-    fontStyle,
-    fontWeight,
-    lineHeight,
-    letterSpacing,
-    padding,
-    textAlign,
-    textDecoration,
-  } = element;
+  const { font, fontSize, lineHeight, padding, textAlign } = element;
   return {
     whiteSpace: 'pre-wrap',
     margin: 0,
-    fontFamily: generateFontFamily(fontFamily, fontFallback),
+    fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
-    fontStyle,
-    fontWeight,
     lineHeight,
-    letterSpacing: `${typeof letterSpacing === 'number' ? letterSpacing : 0}em`,
     textAlign,
-    textDecoration,
     padding: `${dataToStyleY(padding?.vertical || 0)}px ${dataToStyleX(
       padding?.horizontal || 0
     )}px`,
   };
 }
 
-export function getSelectionForAll(content) {
-  const firstBlock = content.getFirstBlock();
-  const lastBlock = content.getLastBlock();
-  return new SelectionState({
-    anchorKey: firstBlock.getKey(),
-    anchorOffset: 0,
-    focusKey: lastBlock.getKey(),
-    focusOffset: lastBlock.getLength(),
-  });
-}
-
-export function getSelectionForOffset(content, offset) {
-  const blocks = content.getBlocksAsArray();
-  let countdown = offset;
-  for (let i = 0; i < blocks.length && countdown >= 0; i++) {
-    const block = blocks[i];
-    const length = block.getLength();
-    if (countdown <= length) {
-      const selection = new SelectionState({
-        anchorKey: block.getKey(),
-        anchorOffset: countdown,
-      });
-      return selection;
-    }
-    // +1 char for the delimiter.
-    countdown -= length + 1;
-  }
-  return null;
-}
-
-export function getFilteredState(editorState, oldEditorState) {
-  const shouldFilterPaste =
-    oldEditorState.getCurrentContent() !== editorState.getCurrentContent() &&
-    editorState.getLastChangeType() === 'insert-fragment';
-
-  if (!shouldFilterPaste) {
-    return editorState;
-  }
-
-  return filterEditorState(
-    {
-      blocks: [],
-      styles: ['BOLD', 'ITALIC', 'UNDERLINE'],
-      entities: [],
-      maxNesting: 1,
-      whitespacedCharacters: [],
-    },
-    editorState
-  );
-}
-
-const ALLOWED_KEY_COMMANDS = ['bold', 'italic', 'underline'];
-export const getHandleKeyCommand = (setEditorState) => (
-  command,
-  currentEditorState
-) => {
-  if (!ALLOWED_KEY_COMMANDS.includes(command)) {
-    return 'not-handled';
-  }
-  const newEditorState = RichUtils.handleKeyCommand(
-    currentEditorState,
-    command
-  );
-  if (newEditorState) {
-    setEditorState(newEditorState);
-    return 'handled';
-  }
-  return 'not-handled';
-};
-
-export const generateFontFamily = (fontFamily, fontFallback) => {
+export const generateFontFamily = ({ family, fallbacks }) => {
   const genericFamilyKeywords = [
     'cursive',
     'fantasy',
@@ -142,24 +51,16 @@ export const generateFontFamily = (fontFamily, fontFallback) => {
     'sans-serif',
   ];
   // Wrap into " since some fonts won't work without it.
-  let fontFamilyDisplay = fontFamily ? `"${fontFamily}"` : null;
-  if (fontFallback && fontFallback.length) {
-    fontFamilyDisplay += fontFamily ? `,` : ``;
-    fontFamilyDisplay += fontFallback
+  let fontFamilyDisplay = family ? `"${family}"` : null;
+  if (fallbacks && fallbacks.length) {
+    fontFamilyDisplay += family ? `,` : ``;
+    fontFamilyDisplay += fallbacks
       .map((fallback) =>
         genericFamilyKeywords.includes(fallback) ? fallback : `"${fallback}"`
       )
       .join(`,`);
   }
   return fontFamilyDisplay;
-};
-
-export const draftMarkupToContent = (content, bold) => {
-  // @todo This logic is temporary and will change with selecting part + marking bold/italic/underline.
-  if (bold) {
-    return `<strong>${content}</strong>`;
-  }
-  return content;
 };
 
 export const getHighlightLineheight = function (

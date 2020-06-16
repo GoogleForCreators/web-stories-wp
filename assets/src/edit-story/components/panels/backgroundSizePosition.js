@@ -38,9 +38,9 @@ function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
   // Background can only have one selected element.
   const flip = selectedElements[0]?.flip || DEFAULT_FLIP;
 
-  const {
-    actions: { setBackgroundElement },
-  } = useStory();
+  const { setBackgroundElement } = useStory((state) => ({
+    setBackgroundElement: state.actions.setBackgroundElement,
+  }));
 
   const removeAsBackground = useCallback(() => {
     pushUpdate(
@@ -68,6 +68,7 @@ function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
         <FlipControls
           onChange={(value) => pushUpdate({ flip: value }, true)}
           value={flip}
+          elementSpacing={36}
         />
       </Row>
     </SimplePanel>

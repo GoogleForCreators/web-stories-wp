@@ -16,46 +16,103 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
+
 /**
  * Internal dependencies
  */
 import theme from '../theme';
-import { PAGE_RATIO } from '../constants';
+import { DASHBOARD_LEFT_NAV_WIDTH, PAGE_RATIO, WPBODY_ID } from '../constants';
+import { useResizeEffect } from './';
 
-export default function usePagePreviewSize() {
-  const [pageSize, setPageSize] = useState({
-    width: 100,
-    height: PAGE_RATIO * 100,
-  });
-  const handleWindowResize = useCallback(() => {
-    const { innerWidth } = window;
-    let itemWidth = 0;
+const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
+  (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
+);
+const getCurrentBp = (availableContainerSpace) =>
+  descendingBreakpointKeys.reduce((current, bp) => {
+    return availableContainerSpace <= theme.breakpoint.raw[bp] ? bp : current;
+  }, descendingBreakpointKeys[0]);
 
-    if (innerWidth <= theme.breakpoint.raw.min) {
-      itemWidth = theme.previewWidth.min;
-    } else if (innerWidth <= theme.breakpoint.raw.smallDisplayPhone) {
-      itemWidth = theme.previewWidth.smallDisplayPhone;
-    } else if (innerWidth <= theme.breakpoint.raw.largeDisplayPhone) {
-      itemWidth = theme.previewWidth.largeDisplayPhone;
-    } else if (innerWidth <= theme.breakpoint.raw.tablet) {
-      itemWidth = theme.previewWidth.tablet;
-    } else {
-      itemWidth = theme.previewWidth.desktop;
-    }
-    setPageSize({
-      width: itemWidth,
-      height: itemWidth * PAGE_RATIO,
-    });
-  }, []);
+// To determine the size of a story page we take the default page size according to breakpoint
+// and then find the remaining width in the given space that the dashboard is showing stories in
+// if the container isn't important to size then respectSetWidth catches it (thumbnails or isn't a grid)
+// otherwise, we're taking the available space we have and finding out how many items in the default size we can fit in a row
+// then we calculate the grid column gutter and the page gutter
+// subtract those values from the availableContainer space to get remaining space
+// divide the remaining space by the itemsInRow
+// attach that extra space to the width
+// get height by dividing new with by PAGE_RATIO
+const sizeFromWidth = (
+  width,
+  { bp, respectSetWidth, availableContainerSpace }
+) => {
+  if (respectSetWidth) {
+    return { width, height: width / PAGE_RATIO };
+  }
+
+  if (bp === 'desktop') {
+    availableContainerSpace -= DASHBOARD_LEFT_NAV_WIDTH;
+  }
+
+  const itemsInRow = Math.floor(availableContainerSpace / width);
+  const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
+  const pageGutter = theme.standardViewContentGutter[bp] * 2;
+  const takenSpace = width * itemsInRow + columnGapWidth + pageGutter;
+  const remainingSpace = availableContainerSpace - takenSpace;
+  const addToWidthValue = remainingSpace / itemsInRow;
+
+  const trueWidth = width + addToWidthValue;
+  return {
+    width: trueWidth,
+    height: trueWidth / PAGE_RATIO,
+  };
+};
+
+export default function usePagePreviewSize(options = {}) {
+  const { thumbnailMode = false, isGrid } = options;
+  // When the dashboard is pulled out of wordpress this id will need to be updated.
+  // For now, we need to grab wordpress instead because of how the app's rendered
+  const dashboardContainerRef = useRef(document.getElementById(WPBODY_ID));
+  // BP is contingent on the actual window size
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [bp, setBp] = useState(getCurrentBp(viewportWidth));
+
+  const [availableContainerSpace, setAvailableContainerSpace] = useState(
+    dashboardContainerRef.current?.offsetWidth || window.innerWidth
+  );
+
+  const [debounceSetViewportWidth] = useDebouncedCallback((width) => {
+    setViewportWidth(width);
+  }, 500);
 
   useEffect(() => {
-    window.addEventListener('resize', handleWindowResize);
-    handleWindowResize();
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, [handleWindowResize]);
+    setBp(getCurrentBp(viewportWidth));
+  }, [viewportWidth]);
 
-  return { pageSize };
+  useResizeEffect(
+    dashboardContainerRef,
+    ({ width }) => {
+      setAvailableContainerSpace(width);
+
+      if (window.innerWidth !== viewportWidth) {
+        debounceSetViewportWidth(window.innerWidth);
+      }
+    },
+    [setAvailableContainerSpace, viewportWidth, debounceSetViewportWidth]
+  );
+
+  return useMemo(
+    () => ({
+      pageSize: sizeFromWidth(
+        theme.previewWidth[thumbnailMode ? 'thumbnail' : bp],
+        {
+          respectSetWidth: !isGrid || thumbnailMode,
+          availableContainerSpace,
+          bp,
+        }
+      ),
+    }),
+    [bp, isGrid, thumbnailMode, availableContainerSpace]
+  );
 }

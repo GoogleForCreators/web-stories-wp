@@ -26,21 +26,18 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Discovery;
 use Google\Web_Stories\Story_Post_Type;
-use stdClass;
+use WP_Query;
 use WP_Error;
 use WP_Post;
-use WP_REST_Posts_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 
 /**
- * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
- *
- * Class Stories_Controller
+ * Stories_Controller class.
  */
-class Stories_Controller extends WP_REST_Posts_Controller {
-
+class Stories_Controller extends Stories_Base_Controller {
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
 	/**
@@ -49,38 +46,10 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	const EMPTY_STYLE_PRESETS = [
 		'fillColors' => [],
 		'textColors' => [],
-		'styles'     => [],
+		'textStyles' => [],
 	];
 
 	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
-	/**
-	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 *
-	 * @return stdClass|WP_Error Post object or WP_Error.
-	 */
-	protected function prepare_item_for_database( $request ) {
-		$prepared_story = parent::prepare_item_for_database( $request );
-
-		if ( is_wp_error( $prepared_story ) ) {
-			return $prepared_story;
-		}
-		// Ensure that content and story_data are updated together.
-		if (
-			( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
-			( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
-		) {
-			return new WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
-		}
-
-		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
-		if ( isset( $request['story_data'] ) ) {
-			$prepared_story->post_content_filtered = wp_json_encode( $request['story_data'] );
-		}
-
-		return $prepared_story;
-	}
 
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
@@ -94,20 +63,9 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
-		$schema   = $this->get_item_schema();
-
-		if ( in_array( 'story_data', $fields, true ) ) {
-			$post_story_data    = json_decode( $post->post_content_filtered, true );
-			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
-		}
-
-		if ( in_array( 'featured_media_url', $fields, true ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, 'medium' );
-			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
-		}
 
 		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
-			$data['publisher_logo_url'] = Story_Post_Type::get_publisher_logo();
+			$data['publisher_logo_url'] = Discovery::get_publisher_logo();
 		}
 
 		if ( in_array( 'style_presets', $fields, true ) ) {
@@ -166,7 +124,7 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
-	 * Retrieves the attachment's schema, conforming to JSON Schema.
+	 * Retrieves the story's schema, conforming to JSON Schema.
 	 *
 	 * @return array Item schema as an array.
 	 */
@@ -174,22 +132,8 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
+
 		$schema = parent::get_item_schema();
-
-		$schema['properties']['story_data'] = [
-			'description' => __( 'Story data stored as a JSON object. Stored in post_content_filtered field.', 'web-stories' ),
-			'context'     => [ 'edit' ],
-			'default'     => [],
-		];
-
-		$schema['properties']['featured_media_url'] = [
-			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
-			'type'        => 'string',
-			'format'      => 'uri',
-			'context'     => [ 'view', 'edit', 'embed' ],
-			'readonly'    => true,
-			'default'     => '',
-		];
 
 		$schema['properties']['publisher_logo_url'] = [
 			'description' => __( 'Publisher logo URL.', 'web-stories' ),
@@ -205,9 +149,182 @@ class Stories_Controller extends WP_REST_Posts_Controller {
 			'context'     => [ 'view', 'edit' ],
 		];
 
+		$schema['properties']['status']['enum'][] = 'auto-draft';
+
 		$this->schema = $schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
 	}
 
+	/**
+	 * Filters the orderby query to filter first all the current user's posts and then the rest.
+	 *
+	 * @param string    $orderby Original orderby clause.
+	 * @param \WP_Query $query WP_Query object.
+	 * @return string Orderby clause.
+	 */
+	public function filter_posts_orderby( $orderby, $query ) {
+		global $wpdb;
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
+			return $orderby;
+		}
+		if ( 'story_author' !== $query->get( 'orderby' ) ) {
+			return $orderby;
+		}
+
+		$current_user = get_current_user_id();
+		if ( ! $current_user ) {
+			return $orderby;
+		}
+		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_author DESC, wp_posts.post_modified DESC', $current_user );
+	}
+
+	/**
+	 * Retrieves a collection of web stories.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function get_items( $request ) {
+		add_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10, 2 );
+		$response = parent::get_items( $request );
+		remove_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10 );
+
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		if ( 'edit' !== $request['context'] ) {
+			return $response;
+		}
+
+		// Retrieve the list of registered collection query parameters.
+		$registered = $this->get_collection_params();
+		$args       = [];
+
+		/*
+		 * This array defines mappings between public API query parameters whose
+		 * values are accepted as-passed, and their internal WP_Query parameter
+		 * name equivalents (some are the same). Only values which are also
+		 * present in $registered will be set.
+		 */
+		$parameter_mappings = [
+			'author'         => 'author__in',
+			'author_exclude' => 'author__not_in',
+			'exclude'        => 'post__not_in',
+			'include'        => 'post__in',
+			'menu_order'     => 'menu_order',
+			'offset'         => 'offset',
+			'order'          => 'order',
+			'orderby'        => 'orderby',
+			'page'           => 'paged',
+			'parent'         => 'post_parent__in',
+			'parent_exclude' => 'post_parent__not_in',
+			'search'         => 's',
+			'slug'           => 'post_name__in',
+			'status'         => 'post_status',
+		];
+
+		/*
+		 * For each known parameter which is both registered and present in the request,
+		 * set the parameter's value on the query $args.
+		 */
+		foreach ( $parameter_mappings as $api_param => $wp_param ) {
+			if ( isset( $registered[ $api_param ], $request[ $api_param ] ) ) {
+				$args[ $wp_param ] = $request[ $api_param ];
+			}
+		}
+
+		// Check for & assign any parameters which require special handling or setting.
+		$args['date_query'] = [];
+
+		// Set before into date query. Date query must be specified as an array of an array.
+		if ( isset( $registered['before'], $request['before'] ) ) {
+			$args['date_query'][0]['before'] = $request['before'];
+		}
+
+		// Set after into date query. Date query must be specified as an array of an array.
+		if ( isset( $registered['after'], $request['after'] ) ) {
+			$args['date_query'][0]['after'] = $request['after'];
+		}
+
+		// Ensure our per_page parameter overrides any provided posts_per_page filter.
+		if ( isset( $registered['per_page'] ) ) {
+			$args['posts_per_page'] = $request['per_page'];
+		}
+
+		// Force the post_type argument, since it's not a user input variable.
+		$args['post_type'] = $this->post_type;
+
+		/**
+		 * Filters the query arguments for a request.
+		 *
+		 * Enables adding extra arguments or setting defaults for a post collection request.
+		 *
+		 * @link https://developer.wordpress.org/reference/classes/wp_query/
+		 *
+		 * @param array           $args    Key value array of query var to query value.
+		 * @param WP_REST_Request $request The request used.
+		 */
+		$args       = apply_filters( "rest_{$this->post_type}_query", $args, $request );
+		$query_args = $this->prepare_items_query( $args, $request );
+
+		$taxonomies = wp_list_filter( get_object_taxonomies( $this->post_type, 'objects' ), [ 'show_in_rest' => true ] );
+
+		if ( ! empty( $request['tax_relation'] ) ) {
+			$query_args['tax_query'] = [ 'relation' => $request['tax_relation'] ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+		}
+
+		foreach ( $taxonomies as $taxonomy ) {
+			$base        = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
+			$tax_exclude = $base . '_exclude';
+
+			if ( ! empty( $request[ $base ] ) ) {
+				$query_args['tax_query'][] = [
+					'taxonomy'         => $taxonomy->name,
+					'field'            => 'term_id',
+					'terms'            => $request[ $base ],
+					'include_children' => false,
+				];
+			}
+
+			if ( ! empty( $request[ $tax_exclude ] ) ) {
+				$query_args['tax_query'][] = [
+					'taxonomy'         => $taxonomy->name,
+					'field'            => 'term_id',
+					'terms'            => $request[ $tax_exclude ],
+					'include_children' => false,
+					'operator'         => 'NOT IN',
+				];
+			}
+		}
+
+		// Add counts for other statuses.
+		$statuses = [
+			'all'     => [ 'publish', 'draft' ],
+			'publish' => 'publish',
+			'draft'   => 'draft',
+		];
+
+		$statuses_count = [];
+
+		// Strip down query for speed.
+		$query_args['fields']                 = 'ids';
+		$query_args['posts_per_page']         = 1;
+		$query_args['update_post_meta_cache'] = false;
+		$query_args['update_post_term_cache'] = false;
+
+		foreach ( $statuses as $key => $status ) {
+			$posts_query               = new WP_Query();
+			$query_args['post_status'] = $status;
+			$posts_query->query( $query_args );
+			$statuses_count[ $key ] = absint( $posts_query->found_posts );
+		}
+		// Encode the array as headers do not support passing an array.
+		$encoded_statuses = wp_json_encode( $statuses_count );
+		if ( $encoded_statuses ) {
+			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
+		}
+		return $response;
+	}
 }

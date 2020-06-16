@@ -17,7 +17,15 @@
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_HEIGHT, DEFAULT_EM } from '../constants';
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  FULLBLEED_RATIO,
+  DEFAULT_EM,
+} from '../constants';
+
+const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
+const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.
@@ -101,7 +109,7 @@ export function editorToDataY(y, pageHeight) {
  * Converts the element's position, width, and rotation) to the "box" in the
  * "editor" coordinate space.
  *
- * @param {{x:number, y:number, width:number, height:number, rotationAngle:number, isFill:boolean}} element The
+ * @param {{x:number, y:number, width:number, height:number, rotationAngle:number}} element The
  * element's position, width, and rotation. See `StoryPropTypes.element`.
  * @param {number} pageWidth The basis value for the page's width in the "editor" space.
  * @param {number} pageHeight The basis value for the page's height in the "editor" space.
@@ -109,16 +117,15 @@ export function editorToDataY(y, pageHeight) {
  * "box" in the editor space.
  */
 export function getBox(
-  { x, y, width, height, rotationAngle, isFill, isBackground },
+  { x, y, width, height, rotationAngle, isBackground },
   pageWidth,
   pageHeight
 ) {
-  const displayFull = isFill || isBackground;
   return {
-    x: dataToEditorX(displayFull ? 0 : x, pageWidth),
-    y: dataToEditorY(displayFull ? 0 : y, pageHeight),
-    width: dataToEditorX(displayFull ? PAGE_WIDTH : width, pageWidth),
-    height: dataToEditorY(displayFull ? PAGE_HEIGHT : height, pageHeight),
-    rotationAngle: displayFull ? 0 : rotationAngle,
+    x: dataToEditorX(isBackground ? 0 : x, pageWidth),
+    y: dataToEditorY(isBackground ? -DANGER_ZONE_HEIGHT : y, pageHeight),
+    width: dataToEditorX(isBackground ? PAGE_WIDTH : width, pageWidth),
+    height: dataToEditorY(isBackground ? FULLBLEED_HEIGHT : height, pageHeight),
+    rotationAngle: isBackground ? 0 : rotationAngle,
   };
 }

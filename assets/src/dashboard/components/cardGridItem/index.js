@@ -18,40 +18,34 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { CARD_TITLE_AREA_HEIGHT } from '../../constants';
-import usePagePreviewSize from '../../utils/usePagePreviewSize';
-import { MoreVerticalButton } from './cardItemMenu';
+import { MoreVerticalButton } from '../storyMenu';
 import { ActionLabel } from './types';
 
-const StyledCard = styled.div`
-  margin: auto 0;
-  height: ${({ cardSize }) => `${cardSize.height + CARD_TITLE_AREA_HEIGHT}px`};
-  width: ${({ cardSize }) => `${cardSize.width}px`};
+const CardGridItem = styled.div`
+  margin: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
 
-  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
+  ${MoreVerticalButton} {
+    margin: 12px 0;
+  }
+
+  &:hover
+    ${MoreVerticalButton},
+    &:active
+    ${MoreVerticalButton},
+    &:focus-within
+    ${MoreVerticalButton} {
     opacity: 1;
   }
 `;
-
-const CardGridItem = ({ children }) => {
-  const { pageSize } = usePagePreviewSize();
-
-  return <StyledCard cardSize={pageSize}>{children}</StyledCard>;
-};
-
-CardGridItem.propTypes = {
-  children: PropTypes.node,
-};
 
 export default CardGridItem;
 export { default as CardPreviewContainer } from './cardPreview';
 export { ActionLabel };
 export { default as CardTitle } from './cardTitle';
-export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';

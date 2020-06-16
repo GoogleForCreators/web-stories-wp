@@ -17,18 +17,13 @@
 /**
  * External dependencies
  */
-import { makeSingleQuery, queryAllByAttribute } from '@testing-library/react';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
  */
 import useLiveRegion from '../useLiveRegion';
-
-const queryById = makeSingleQuery(
-  (container, id) => queryAllByAttribute('id', container, id),
-  (c, id) => `Found multiple elements with the ID: ${id}`
-);
+import { queryById } from '../../testUtils';
 
 describe('useLiveRegion', () => {
   it('should add message to live region', () => {
@@ -36,7 +31,9 @@ describe('useLiveRegion', () => {
 
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
-    ).toBeEmpty();
+    ).toHaveTextContent('');
+    // .toBeEmpty() cannot be used, because of
+    // https://github.com/testing-library/jest-dom/issues/216
 
     act(() => {
       result.current('Hello World');
@@ -58,7 +55,9 @@ describe('useLiveRegion', () => {
         document.documentElement,
         'web-stories-aria-live-region-assertive'
       )
-    ).toBeEmpty();
+    ).toHaveTextContent('');
+    // .toBeEmpty() cannot be used, because of
+    // https://github.com/testing-library/jest-dom/issues/216
 
     act(() => result.current('Hello World'));
 
@@ -78,7 +77,9 @@ describe('useLiveRegion', () => {
 
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
-    ).toBeEmpty();
+    ).toHaveTextContent('');
+    // .toBeEmpty() cannot be used, because of
+    // https://github.com/testing-library/jest-dom/issues/216
 
     unmount();
 
@@ -92,7 +93,9 @@ describe('useLiveRegion', () => {
 
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
-    ).toBeEmpty();
+    ).toHaveTextContent('');
+    // .toBeEmpty() cannot be used, because of
+    // https://github.com/testing-library/jest-dom/issues/216
 
     act(() => {
       result.current('Foo');
@@ -105,5 +108,18 @@ describe('useLiveRegion', () => {
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
     ).toHaveTextContent('Bar');
+  });
+
+  it('should not add multiple containers', () => {
+    renderHook(() => {
+      useLiveRegion();
+      useLiveRegion();
+    });
+
+    expect(
+      queryById(document.documentElement, 'web-stories-aria-live-region-polite')
+    ).toHaveTextContent('');
+    // .toBeEmpty() cannot be used, because of
+    // https://github.com/testing-library/jest-dom/issues/216
   });
 });

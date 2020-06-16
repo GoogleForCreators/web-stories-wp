@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -27,12 +30,17 @@ import {
   CardGrid,
   CardGridItem,
   CardTitle,
-  CardItemMenu,
   CardPreviewContainer,
   ActionLabel,
-  PreviewPage,
+  StoryMenu,
 } from '../../../components';
-import { StoriesPropType } from '../../../types';
+import {
+  StoriesPropType,
+  StoryMenuPropType,
+  UsersPropType,
+  PageSizePropType,
+  RenameStoryPropType,
+} from '../../../types';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -41,57 +49,97 @@ export const DetailRow = styled.div`
 `;
 
 const StoryGrid = styled(CardGrid)`
-  width: ${({ theme }) => `calc(100% - ${theme.pageGutter.desktop}px)`};
+  width: ${({ theme }) =>
+    `calc(100% - ${theme.standardViewContentGutter.desktop}px)`};
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) => `calc(100% - ${theme.pageGutter.min}px)`};
+    width: ${({ theme }) =>
+      `calc(100% - ${theme.standardViewContentGutter.min}px)`};
   }
 `;
 
 const StoryGridView = ({
-  filteredStories,
-  centerActionLabel,
+  stories,
+  users,
+  centerActionLabelByStatus,
   bottomActionLabel,
+  isSavedTemplate,
+  pageSize,
+  storyMenu,
+  renameStory,
 }) => {
-  const [contextMenuId, setContextMenuId] = useState(-1);
   return (
-    <StoryGrid>
-      {filteredStories.map((story) => (
-        <CardGridItem key={story.id}>
-          <CardPreviewContainer
-            centerAction={{
-              targetAction: story.centerTargetAction,
-              label: centerActionLabel,
-            }}
-            bottomAction={{
-              targetAction: story.bottomTargetAction,
-              label: bottomActionLabel,
-            }}
+    <StoryGrid pageSize={pageSize}>
+      {stories.map((story) => {
+        const titleRenameProps = renameStory
+          ? {
+              editMode: renameStory?.id === story?.id,
+              onEditComplete: (newTitle) =>
+                renameStory?.handleOnRenameStory(story, newTitle),
+              onEditCancel: renameStory?.handleCancelRename,
+            }
+          : {};
+
+        return (
+          <CardGridItem
+            key={story.id}
+            data-testid={`story-grid-item-${story.id}`}
           >
-            <PreviewPage page={story.pages[0]} />
-          </CardPreviewContainer>
-          <DetailRow>
-            <CardTitle
-              title={story.title}
-              modifiedDate={story.modified.startOf('day').fromNow()}
-            />
-            <CardItemMenu
-              onMoreButtonSelected={setContextMenuId}
-              contextMenuId={contextMenuId}
-              onMenuItemSelected={() => setContextMenuId(-1)}
+            <CardPreviewContainer
+              pageSize={pageSize}
               story={story}
+              centerAction={{
+                targetAction: story.centerTargetAction,
+                label: centerActionLabelByStatus[story.status],
+              }}
+              bottomAction={{
+                targetAction: story.bottomTargetAction,
+                label: bottomActionLabel,
+              }}
             />
-          </DetailRow>
-        </CardGridItem>
-      ))}
+            <DetailRow>
+              <CardTitle
+                title={story.title}
+                titleLink={story.editStoryLink}
+                status={story?.status}
+                id={story.id}
+                secondaryTitle={
+                  isSavedTemplate
+                    ? __('Google', 'web-stories')
+                    : users[story.author]?.name
+                }
+                displayDate={story?.modified}
+                {...titleRenameProps}
+              />
+
+              <StoryMenu
+                onMoreButtonSelected={storyMenu.handleMenuToggle}
+                contextMenuId={storyMenu.contextMenuId}
+                onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                story={story}
+                menuItems={storyMenu.menuItems}
+              />
+            </DetailRow>
+          </CardGridItem>
+        );
+      })}
     </StoryGrid>
   );
 };
 
 StoryGridView.propTypes = {
-  filteredStories: StoriesPropType,
-  centerActionLabel: ActionLabel,
+  isTemplate: PropTypes.bool,
+  isSavedTemplate: PropTypes.bool,
+  stories: StoriesPropType,
+  users: UsersPropType,
+  centerActionLabelByStatus: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.bool,
+  ]),
   bottomActionLabel: ActionLabel,
+  pageSize: PageSizePropType.isRequired,
+  storyMenu: StoryMenuPropType,
+  renameStory: RenameStoryPropType,
 };
 
 export default StoryGridView;

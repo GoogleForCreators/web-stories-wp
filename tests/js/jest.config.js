@@ -14,15 +14,22 @@
  * limitations under the License.
  */
 
-module.exports = {
+/**
+ * External dependencies
+ */
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export default {
   rootDir: '../../',
-  ...require('@wordpress/scripts/config/jest-unit.config'),
   transform: {
-    '^.+\\.[jt]sx?$':
-      '<rootDir>/node_modules/@wordpress/scripts/config/babel-transform',
+    '^.+\\.[jt]sx?$': 'babel-jest',
   },
   moduleNameMapper: {
-    '\\.svg': '<rootDir>/__mocks__/svgrMock.js',
+    '\\.svg': join(__dirname, '/svgrMock.js'),
+    '\\.css': join(__dirname, '/styleMock.js'),
   },
   setupFiles: [
     '<rootDir>/tests/js/setup-globals',
@@ -40,14 +47,22 @@ module.exports = {
     '<rootDir>/.git',
     '<rootDir>/node_modules',
     '<rootDir>/build',
+    'testUtils',
     '_utils',
   ],
-  coveragePathIgnorePatterns: ['/node_modules/', '<rootDir>/build/'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/node_modules',
+    '<rootDir>/build',
+    'testUtils',
+    '_utils',
+    'types.js',
+  ],
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',
   collectCoverageFrom: [
-    '<rootDir>/assets/src/edit-story/**/*.js',
-    '<rootDir>/assets/src/dashboard/**/*.js',
+    '<rootDir>/assets/src/**/*.js',
+    '<rootDir>/bin/**/*.js',
+    '!**/karma/**',
     '!**/test/**',
     '!**/stories/**',
   ],

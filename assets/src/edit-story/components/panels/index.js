@@ -23,11 +23,11 @@ import BackgroundOverlayPanel from './backgroundOverlay';
 import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
+import PageStylePanel from './pageStyle';
 import ShapeStylePanel from './shapeStyle';
 import SizePositionPanel from './sizePosition';
 import TextStylePanel from './textStyle';
 import VideoAccessibilityPanel from './videoAccessibility';
-import BackgroundDisplayPanel from './backgroundDisplay';
 import NoSelectionPanel from './noSelection';
 import ElementAlignmentPanel from './alignment';
 import VideoOptionsPanel from './videoOptions';
@@ -35,16 +35,16 @@ import StylePresetPanel from './stylePreset';
 export { default as LayerPanel } from './layer';
 
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
-const BACKGROUND_DISPLAY = 'backgroundDisplay';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
 const STYLE_PRESETS = 'stylePresets';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
-const TEXT = 'text';
+const PAGE_STYLE = 'pageStyle';
 const SIZE_POSITION = 'sizePosition';
-const TEXT_STYLE = 'textStyle';
 const SHAPE_STYLE = 'shapeStyle';
+const TEXT = 'text';
+const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
@@ -53,8 +53,8 @@ const NO_SELECTION = 'noselection';
 export const PanelTypes = {
   STYLE_PRESETS, // Display presets as the first panel for elements.
   ELEMENT_ALIGNMENT,
+  PAGE_STYLE,
   BACKGROUND_SIZE_POSITION,
-  BACKGROUND_DISPLAY,
   BACKGROUND_OVERLAY,
   SIZE_POSITION,
   SHAPE_STYLE,
@@ -82,20 +82,17 @@ export function getPanels(elements) {
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [
-      { type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel },
-      { type: BACKGROUND_DISPLAY, Panel: BackgroundDisplayPanel },
-    ];
-    // If the selected element's type is video / image , display accessibility panel, too.
-    if ('shape' === elements[0].type) {
-      panels.unshift({ type: SHAPE_STYLE, Panel: ShapeStylePanel });
-    } else {
-      panels.unshift({
+    const panels = [{ type: PAGE_STYLE, Panel: PageStylePanel }];
+
+    if (!elements[0].isDefaultBackground) {
+      panels.push({
         type: BACKGROUND_SIZE_POSITION,
         Panel: BackgroundSizePositionPanel,
       });
+      panels.push({ type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel });
     }
 
+    // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
       panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
       panels.push({
@@ -128,9 +125,6 @@ export function getPanels(elements) {
           return { type, Panel: StylePresetPanel };
         case LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
-        case BACKGROUND_DISPLAY:
-          // Only display when isBackground.
-          return null;
         case BACKGROUND_OVERLAY:
           // Only display when isBackground.
           return null;

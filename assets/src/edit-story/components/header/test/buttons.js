@@ -17,52 +17,69 @@
 /**
  * External dependencies
  */
-import { fireEvent, render, getByRole } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../app/story/context';
+import ConfigContext from '../../../app/config/context';
 import Buttons from '../buttons';
-import theme from '../../../theme';
+import { renderWithTheme } from '../../../testUtils';
 
 function setupButtons(extraStoryProps, extraMetaProps) {
   const saveStory = jest.fn();
+  const autoSave = jest.fn();
 
   const storyContextValue = {
     state: {
       meta: { isSaving: false, ...extraMetaProps },
       story: { status: 'draft', storyId: 123, date: null, ...extraStoryProps },
     },
-    actions: { saveStory },
+    actions: { saveStory, autoSave },
   };
-  const { getByText, container } = render(
-    <ThemeProvider theme={theme}>
+  const configValue = {
+    previewLink:
+      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+    capabilities: {
+      hasPublishAction: true,
+    },
+  };
+  const { getByRole } = renderWithTheme(
+    <ConfigContext.Provider value={configValue}>
       <StoryContext.Provider value={storyContextValue}>
         <Buttons />
       </StoryContext.Provider>
-    </ThemeProvider>
+    </ConfigContext.Provider>
   );
   return {
-    container,
-    getByText,
+    getByRole,
+    autoSave,
     saveStory,
   };
 }
 
 describe('buttons', () => {
   const FUTURE_DATE = '9999-01-01T20:20:20';
+  const PREVIEW_POPUP = {
+    document: {
+      write: jest.fn(),
+    },
+    location: {
+      href: 'about:blank',
+      replace: jest.fn(),
+    },
+  };
 
   it('should display Publish button when in draft mode', () => {
-    const { getByText } = setupButtons();
-    const publishButton = getByText('Publish');
+    const { getByRole } = setupButtons();
+    const publishButton = getByRole('button', { name: 'Publish' });
     expect(publishButton).toBeDefined();
   });
 
   it('should update window location when publishing', () => {
-    const { getByText, saveStory } = setupButtons();
-    const publishButton = getByText('Publish');
+    const { getByRole, saveStory } = setupButtons();
+    const publishButton = getByRole('button', { name: 'Publish' });
 
     fireEvent.click(publishButton);
     expect(saveStory).toHaveBeenCalledTimes(1);
@@ -70,8 +87,8 @@ describe('buttons', () => {
   });
 
   it('should display Switch to draft button when published', () => {
-    const { getByText, saveStory } = setupButtons({ status: 'publish' });
-    const draftButton = getByText('Switch to Draft');
+    const { getByRole, saveStory } = setupButtons({ status: 'publish' });
+    const draftButton = getByRole('button', { name: 'Switch to Draft' });
 
     expect(draftButton).toBeDefined();
     fireEvent.click(draftButton);
@@ -79,11 +96,11 @@ describe('buttons', () => {
   });
 
   it('should display Schedule button when future date is set', () => {
-    const { getByText, saveStory } = setupButtons({
+    const { getByRole, saveStory } = setupButtons({
       status: 'draft',
       date: FUTURE_DATE,
     });
-    const scheduleButton = getByText('Schedule');
+    const scheduleButton = getByRole('button', { name: 'Schedule' });
 
     expect(scheduleButton).toBeDefined();
     fireEvent.click(scheduleButton);
@@ -91,25 +108,36 @@ describe('buttons', () => {
   });
 
   it('should display Schedule button with future status', () => {
-    const { getByText } = setupButtons({
+    const { getByRole } = setupButtons({
       status: 'future',
       date: FUTURE_DATE,
     });
-    const scheduleButton = getByText('Schedule');
+    const scheduleButton = getByRole('button', { name: 'Schedule' });
 
     expect(scheduleButton).toBeDefined();
   });
 
   it('should display loading indicator while the story is updating', () => {
-    const { container } = setupButtons({}, { isSaving: true });
-    expect(getByRole(container, 'progressbar')).toBeInTheDocument();
+    const { getByRole } = setupButtons({}, { isSaving: true });
+    expect(getByRole('progressbar')).toBeInTheDocument();
   });
 
-  it('should open preview when clicking on Preview', () => {
-    const { getByText } = setupButtons({ link: 'https://example.com' });
-    const previewButton = getByText('Preview');
+  it('should open draft preview when clicking on Preview via about:blank', () => {
+    const { getByRole, saveStory } = setupButtons({
+      link: 'https://example.com',
+    });
+    const previewButton = getByRole('button', { name: 'Preview' });
 
     expect(previewButton).toBeDefined();
+
+    saveStory.mockImplementation(() => ({
+      then(callback) {
+        callback();
+        return {
+          catch: () => {},
+        };
+      },
+    }));
 
     const mockedOpen = jest.fn();
     const originalWindow = { ...window };
@@ -119,11 +147,51 @@ describe('buttons', () => {
       open: mockedOpen,
     }));
 
+    const popup = PREVIEW_POPUP;
+    mockedOpen.mockImplementation(() => popup);
+
     fireEvent.click(previewButton);
 
-    expect(mockedOpen).toHaveBeenCalledWith(
-      'https://example.com/?preview=true',
-      'story-preview'
+    expect(saveStory).toHaveBeenCalledWith();
+    expect(mockedOpen).toHaveBeenCalledWith('about:blank', 'story-preview');
+    expect(popup.location.replace).toHaveBeenCalledWith(
+      'https://example.com/?preview=true'
+    );
+
+    windowSpy.mockRestore();
+  });
+
+  it('should open preview for a published story when clicking on Preview via about:blank', () => {
+    const { getByRole, autoSave } = setupButtons({
+      link: 'https://example.com',
+      status: 'publish',
+    });
+    const previewButton = getByRole('button', { name: 'Preview' });
+    autoSave.mockImplementation(() => ({
+      then(callback) {
+        callback();
+        return {
+          catch: () => {},
+        };
+      },
+    }));
+
+    const mockedOpen = jest.fn();
+    const originalWindow = { ...window };
+    const windowSpy = jest.spyOn(global, 'window', 'get');
+    windowSpy.mockImplementation(() => ({
+      ...originalWindow,
+      open: mockedOpen,
+    }));
+
+    const popup = PREVIEW_POPUP;
+    mockedOpen.mockImplementation(() => popup);
+
+    fireEvent.click(previewButton);
+
+    expect(autoSave).toHaveBeenCalledWith();
+    expect(popup.location.replace).toHaveBeenCalledWith(
+      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true'
     );
 
     windowSpy.mockRestore();

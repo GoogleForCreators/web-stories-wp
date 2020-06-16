@@ -17,16 +17,99 @@
 /**
  * Internal dependencies
  */
+import isPatternEqual from '../../../utils/isPatternEqual';
+import convertToCSS from '../../../utils/convertToCSS';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
+import { generateFontFamily } from '../../../elements/text/util';
+import { BACKGROUND_TEXT_MODE } from '../../../constants';
+import { MULTIPLE_VALUE } from '../../form';
+import { getHTMLInfo } from '../../richText/htmlManipulation';
 
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = isText
     ? stylePresets.textColors
     : stylePresets.fillColors;
   const patternType = isText ? 'color' : 'background';
-  const toAdd = generatePatternStyles(color, patternType);
-  return colorsToMatch.find((value) => {
-    const existing = generatePatternStyles(value, patternType);
-    return Object.keys(toAdd).every((key) => existing[key] === toAdd[key]);
-  });
+  return colorsToMatch.find((value) =>
+    isPatternEqual(value, color, patternType)
+  );
+}
+
+export function findMatchingStylePreset(preset, stylePresets) {
+  const stylesToMatch = stylePresets.textStyles;
+  const toAdd = convertToCSS(generatePresetStyle(preset));
+  return stylesToMatch.find(
+    (value) => toAdd === convertToCSS(generatePresetStyle(value))
+  );
+}
+
+export function generatePresetStyle(preset, prepareForCSS) {
+  const { color, backgroundColor, font, backgroundTextMode } = preset;
+  let style = {
+    fontFamily: generateFontFamily(font),
+    ...generatePatternStyles(color, 'color'),
+  };
+
+  // If it's highlight mode then the highlight is displayed on the text wrapper instead.
+  if (!prepareForCSS || backgroundTextMode !== BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    style = {
+      ...style,
+      ...generatePatternStyles(backgroundColor, 'background'),
+    };
+  }
+  return style;
+}
+
+export function getTextPresets(elements, stylePresets) {
+  // @todo Fix: Currently when two selected elements have the same attributes, two presets are added.
+  return {
+    textColors: elements
+      .map(({ content }) => getHTMLInfo(content).color)
+      .filter((color) => color !== MULTIPLE_VALUE)
+      .filter(
+        (color) => color && !findMatchingColor(color, stylePresets, true)
+      ),
+    textStyles: [],
+  };
+}
+
+export function getShapePresets(elements, stylePresets) {
+  // Shapes only support fillColors currently.
+  return {
+    fillColors: elements
+      .map(({ backgroundColor }) => {
+        return backgroundColor ? backgroundColor : null;
+      })
+      .filter(
+        (color) => color && !findMatchingColor(color, stylePresets, false)
+      ),
+  };
+}
+
+export function getPagePreset(page, stylePresets) {
+  // Page only supports fillColors.
+  return {
+    fillColors: [page.backgroundColor].filter(
+      (color) => color && !findMatchingColor(color, stylePresets, false)
+    ),
+  };
+}
+
+function colorHasTransparency(color) {
+  return color.a && color.a < 1;
+}
+
+export function presetHasOpacity(preset) {
+  const { color, stops } = preset;
+  if (color) {
+    return Boolean(colorHasTransparency(color));
+  }
+  let opacityFound = false;
+  for (const colorStop of stops) {
+    if (colorHasTransparency(colorStop.color)) {
+      opacityFound = true;
+      break;
+    }
+  }
+  return opacityFound;
 }
