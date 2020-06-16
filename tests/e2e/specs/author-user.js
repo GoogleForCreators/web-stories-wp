@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { percySnapshot } from '@percy/puppeteer';
+
+/**
  * WordPress dependencies
  */
 import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
@@ -47,7 +52,11 @@ describe('Author User', () => {
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
+
     await expect(previewPage).toMatch('Fill in some text');
+
+    await percySnapshot(previewPage, this.test.fullTitle());
+
     await editorPage.bringToFront();
     await previewPage.close();
   });
@@ -71,7 +80,11 @@ describe('Author User', () => {
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
+
     await expect(previewPage).toMatch('Fill in some text');
+
+    await percySnapshot(previewPage, this.test.fullTitle());
+
     await editorPage.bringToFront();
     await previewPage.close();
   });
@@ -95,7 +108,11 @@ describe('Author User', () => {
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
+
     await expect(previewPage).toMatch('Fill in some text');
+
+    await percySnapshot(previewPage, this.test.fullTitle());
+
     await editorPage.bringToFront();
     await previewPage.close();
   });

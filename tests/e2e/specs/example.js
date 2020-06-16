@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { percySnapshot } from '@percy/puppeteer';
+
+/**
  * Internal dependencies
  */
 import { createNewStory } from '../utils';
@@ -24,5 +29,7 @@ describe('Example Spec', () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+    await percySnapshot(page, this.test.fullTitle());
   });
 });
