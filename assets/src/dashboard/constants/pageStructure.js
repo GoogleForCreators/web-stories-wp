@@ -17,9 +17,10 @@
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../edit-story/constants';
+import { FULLBLEED_RATIO } from '../../edit-story/constants';
+
 export const WPBODY_ID = 'wpbody';
-export const PAGE_RATIO = PAGE_WIDTH / PAGE_HEIGHT;
+export const PAGE_RATIO = FULLBLEED_RATIO;
 
 export const DASHBOARD_LEFT_NAV_WIDTH = 190;
 export const DASHBOARD_TOP_MARGIN = 45;
