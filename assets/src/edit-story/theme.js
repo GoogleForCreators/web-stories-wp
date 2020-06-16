@@ -183,6 +183,12 @@ const theme = {
       size: '13px',
       lineHeight: '16px',
     },
+    date: {
+      family: 'Roboto',
+      weight: 'normal',
+      size: '13px',
+      lineHeight: '24px',
+    },
   },
 };
 
