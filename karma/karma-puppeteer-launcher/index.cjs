@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-const fs = require('fs').promises;
+/**
+ * External dependencies
+ */
 const path = require('path');
+const fs = require('fs').promises;
 const puppeteer = require('puppeteer');
+
+/**
+ * Internal dependencies
+ */
 const MouseWithDnd = require('./mouseWithDnd.cjs');
 
 function puppeteerBrowser(baseBrowserDecorator, config) {
