@@ -52,7 +52,7 @@ export const _default = () => {
       }}
       isTemplate={boolean('isTemplate')}
       isSavedTemplate={boolean('isSavedTemplate')}
-      pageSize={{ width: 210, height: 316 }}
+      pageSize={{ width: 212, height: 377.9, fullBleedHeight: 58.94 }}
     />
   );
 };

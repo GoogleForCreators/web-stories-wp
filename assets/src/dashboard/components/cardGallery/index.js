@@ -22,7 +22,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
  * Internal dependencies
  */
 import { UnitsProvider } from '../../../edit-story/units';
-import { PAGE_RATIO, STORY_PAGE_STATE } from '../../constants';
+import {
+  PAGE_RATIO,
+  STORY_PAGE_STATE,
+  TWO_THIRDS_RATIO,
+} from '../../constants';
 import { StoryPropType } from '../../types';
 import PreviewPage from '../previewPage';
 import {
@@ -59,10 +63,14 @@ function CardGallery({ story }) {
       activeCardSize: {
         width: activeCardWidth,
         height: activeCardWidth / PAGE_RATIO,
+        fullBleedHeight:
+          activeCardWidth / PAGE_RATIO - activeCardWidth / TWO_THIRDS_RATIO,
       },
       miniCardSize: {
         width: miniCardWidth,
         height: miniCardWidth / PAGE_RATIO,
+        fullBleedHeight:
+          miniCardWidth / PAGE_RATIO - miniCardWidth / TWO_THIRDS_RATIO,
       },
       miniWrapperSize: {
         width: miniCardWidth + CARD_WRAPPER_BUFFER,
@@ -118,7 +126,7 @@ function CardGallery({ story }) {
                 onClick={() => handleMiniCardClick(index)}
               >
                 <MiniCard {...metrics.miniCardSize}>
-                  <PreviewPage page={page} />
+                  <PreviewPage page={page} pageSize={metrics.miniCardSize} />
                 </MiniCard>
               </MiniCardWrapper>
             ))}
@@ -130,6 +138,7 @@ function CardGallery({ story }) {
           <ActiveCard {...metrics.activeCardSize}>
             <PreviewPage
               page={pages[activePageIndex]}
+              pageSize={metrics.activeCardSize}
               animationState={STORY_PAGE_STATE.PLAYING}
             />
           </ActiveCard>

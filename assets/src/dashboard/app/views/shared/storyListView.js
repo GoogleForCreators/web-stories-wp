@@ -34,6 +34,7 @@ import {
   UsersPropType,
   RenameStoryPropType,
   StoryMenuPropType,
+  PageSizePropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -135,6 +136,7 @@ const toggleSortLookup = {
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
+  pageSize,
   renameStory,
   sortDirection,
   stories,
@@ -233,7 +235,7 @@ export default function StoryListView({
               <TablePreviewCell>
                 <PreviewContainer>
                   <PreviewErrorBoundary>
-                    <PreviewPage page={story.pages[0]} />
+                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
                   </PreviewErrorBoundary>
                 </PreviewContainer>
               </TablePreviewCell>
@@ -284,6 +286,7 @@ export default function StoryListView({
 StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
+  pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,
   sortDirection: PropTypes.string.isRequired,
   storyMenu: StoryMenuPropType.isRequired,

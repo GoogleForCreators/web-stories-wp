@@ -23,9 +23,22 @@ import { useDebouncedCallback } from 'use-debounce';
  * Internal dependencies
  */
 import theme from '../theme';
-import { DASHBOARD_LEFT_NAV_WIDTH, PAGE_RATIO, WPBODY_ID } from '../constants';
+import {
+  DASHBOARD_LEFT_NAV_WIDTH,
+  PAGE_RATIO,
+  WPBODY_ID,
+  TWO_THIRDS_RATIO,
+} from '../constants';
 import { useResizeEffect } from './';
 
+const getHeightOptions = (width) => {
+  const fullBleedHeight = width / PAGE_RATIO;
+  const twoThirdsRatio = width / TWO_THIRDS_RATIO;
+
+  const dangerZoneHeight = fullBleedHeight - twoThirdsRatio;
+
+  return { fullBleedHeight, dangerZoneHeight };
+};
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
@@ -48,7 +61,8 @@ const sizeFromWidth = (
   { bp, respectSetWidth, availableContainerSpace }
 ) => {
   if (respectSetWidth) {
-    return { width, height: width / PAGE_RATIO };
+    const { fullBleedHeight, dangerZoneHeight } = getHeightOptions(width);
+    return { width, height: fullBleedHeight, dangerZoneHeight };
   }
 
   if (bp === 'desktop') {
@@ -63,9 +77,11 @@ const sizeFromWidth = (
   const addToWidthValue = remainingSpace / itemsInRow;
 
   const trueWidth = width + addToWidthValue;
+  const { fullBleedHeight, dangerZoneHeight } = getHeightOptions(trueWidth);
   return {
     width: trueWidth,
-    height: trueWidth / PAGE_RATIO,
+    height: fullBleedHeight,
+    dangerZoneHeight,
   };
 };
 

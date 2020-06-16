@@ -35,7 +35,7 @@ export const _default = () => {
   return (
     <TemplateGridView
       templates={formattedTemplatesArray}
-      pageSize={{ width: 210, height: 316 }}
+      pageSize={{ width: 212, height: 377.9, fullBleedHeight: 58.94 }}
       templateActions={{
         createStoryFromTemplate: action('create story from template clicked'),
       }}

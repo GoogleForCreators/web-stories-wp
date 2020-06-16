@@ -62,7 +62,7 @@ const search = {
 const view = {
   style: VIEW_STYLE.GRID,
   toggleStyle: action('toggle view style'),
-  pageSize: { width: 210, height: 316 },
+  pageSize: { width: 212, height: 377.9, fullBleedHeight: 58.94 },
 };
 const page = {
   value: 1,

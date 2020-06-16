@@ -25,19 +25,36 @@ import styled from 'styled-components';
  */
 import DisplayElement from '../../edit-story/components/canvas/displayElement';
 import StoryPropTypes from '../../edit-story/types';
-import { STORY_PAGE_STATE } from '../constants';
 import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
+import { STORY_PAGE_STATE } from '../constants';
+import { PageSizePropType } from '../types';
 import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 
 const PreviewWrapper = styled.div`
-  height: 100%;
+  overflow: initial;
   position: relative;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
   background-color: white;
   ${({ background }) => generatePatternStyles(background)};
 `;
 
-function PreviewPageController({ page, animationState, subscribeGlobalTime }) {
+const PageContainerSafeZone = styled.div`
+  width: 100%;
+  height: ${({ pageSize }) =>
+    `${pageSize.height - pageSize.dangerZoneHeight}px`};
+  overflow: visible;
+  position: absolute;
+  margin: 0;
+  top: ${({ pageSize }) => `${pageSize.dangerZoneHeight / 2}px`};
+`;
+
+function PreviewPageController({
+  page,
+  animationState,
+  subscribeGlobalTime,
+  pageSize,
+}) {
   const {
     actions: { WAAPIAnimationMethods },
   } = useStoryAnimationContext();
@@ -68,21 +85,24 @@ function PreviewPageController({ page, animationState, subscribeGlobalTime }) {
 
   return (
     <PreviewWrapper background={page.backgroundColor}>
-      {page.elements.map(({ id, ...rest }) => (
-        <DisplayElement
-          previewMode
-          key={id}
-          page={page}
-          element={{ id, ...rest }}
-          isAnimatable
-        />
-      ))}
+      <PageContainerSafeZone pageSize={pageSize}>
+        {page.elements.map(({ id, ...rest }) => (
+          <DisplayElement
+            previewMode
+            key={id}
+            page={page}
+            element={{ id, ...rest }}
+            isAnimatable
+          />
+        ))}
+      </PageContainerSafeZone>
     </PreviewWrapper>
   );
 }
 
 function PreviewPage({
   page,
+  pageSize,
   animationState = STORY_PAGE_STATE.RESET,
   onAnimationComplete,
   subscribeGlobalTime,
@@ -94,6 +114,7 @@ function PreviewPage({
     >
       <PreviewPageController
         page={page}
+        pageSize={pageSize}
         animationState={animationState}
         onAnimationComplete={onAnimationComplete}
         subscribeGlobalTime={subscribeGlobalTime}
@@ -104,6 +125,7 @@ function PreviewPage({
 
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
+  pageSize: PageSizePropType.isRequired,
   animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
   onAnimationComplete: PropTypes.func,
   subscribeGlobalTime: PropTypes.func,
@@ -111,6 +133,7 @@ PreviewPage.propTypes = {
 
 PreviewPageController.propTypes = {
   page: StoryPropTypes.page.isRequired,
+  pageSize: PageSizePropType.isRequired,
   animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
   subscribeGlobalTime: PropTypes.func,
 };

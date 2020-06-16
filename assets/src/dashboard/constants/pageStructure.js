@@ -21,6 +21,7 @@ import { FULLBLEED_RATIO } from '../../edit-story/constants';
 
 export const WPBODY_ID = 'wpbody';
 export const PAGE_RATIO = FULLBLEED_RATIO;
+export const TWO_THIRDS_RATIO = 2 / 3;
 
 export const DASHBOARD_LEFT_NAV_WIDTH = 190;
 export const DASHBOARD_TOP_MARGIN = 45;
