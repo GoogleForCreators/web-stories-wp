@@ -90,7 +90,9 @@ describe('stylePresets/Presets', () => {
     expect(queryByLabelText('Styles')).toBeDefined();
   });
 
-  it('should display correct text inside a style preset', () => {
+  // Disable reason: functionality removed from beta.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should display correct text inside a style preset', () => {
     const textContent = 'Hello, Preset';
     const { getByText } = setupPresets({
       textContent,
@@ -103,7 +105,9 @@ describe('stylePresets/Presets', () => {
     expect(getByText(textContent)).toBeDefined();
   });
 
-  it('should display highlight wrapper in a style preset', () => {
+  // Disable reason: functionality removed from beta.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should display highlight wrapper in a style preset', () => {
     const textContent = 'Hello, Preset';
     const { getByText } = setupPresets({
       textContent,

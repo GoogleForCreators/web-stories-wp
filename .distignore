@@ -44,7 +44,9 @@ package.json
 package-lock.json
 percy.config.yml
 phpcs.xml
+phpcs.xml.dist
 phpstan.neon.dist
+phpunit.xml
 phpunit.xml.dist
 README.md
 webpack.config.cjs

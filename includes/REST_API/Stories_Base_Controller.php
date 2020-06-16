@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\KSES;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -106,16 +107,38 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
-		/**
-		 * Filters the post data for a response.
-		 *
-		 * The dynamic portion of the hook name, `$this->post_type`, refers to the post type slug.
-		 *
-		 * @param WP_REST_Response $response The response object.
-		 * @param WP_Post $post Post object.
-		 * @param WP_REST_Request $request Request object.
-		 */
+		/* This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
+	}
+
+	/**
+	 * Creates a single post.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function create_item( $request ) {
+		$kses = new KSES();
+		$kses->init();
+		$response = parent::create_item( $request );
+		$kses->remove_filters();
+		return $response;
+	}
+
+	/**
+	 * Updates a single post.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function update_item( $request ) {
+		$kses = new KSES();
+		$kses->init();
+		$response = parent::update_item( $request );
+		$kses->remove_filters();
+		return $response;
 	}
 
 	/**
