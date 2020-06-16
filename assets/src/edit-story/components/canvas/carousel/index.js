@@ -36,7 +36,7 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
-  SafeMode,
+  SafeZone,
   Plain,
 } from '../../button';
 import {
@@ -121,7 +121,7 @@ const buttonDimensions = { width: '24', height: '24' };
 
 const StyledGridViewButton = styled(GridViewButton).attrs(buttonDimensions)``;
 
-const SafeModeButton = styled(SafeMode).attrs(buttonDimensions)`
+const SafeZoneButton = styled(SafeZone).attrs(buttonDimensions)`
   ${({ active }) =>
     active &&
     css`
@@ -459,7 +459,7 @@ function Carousel() {
                 />
               </OverflowButtons>
             )}
-            <SafeModeButton
+            <SafeZoneButton
               active={showSafeZone}
               onClick={() => setShowSafeZone((current) => !current)}
               aria-label={
