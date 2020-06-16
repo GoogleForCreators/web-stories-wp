@@ -137,16 +137,7 @@ const PageAreaSafeZone = styled.div`
   ${({ showSafeZone }) =>
     showSafeZone &&
     css`
-      &::before {
-        content: '';
-        width: 20px;
-        height: var(--page-height-px);
-        position: absolute;
-        border-top: 1px solid rgba(255, 255, 255, 0.4);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-        left: -20px;
-      }
-
+      &::before,
       &::after {
         content: '';
         width: 20px;
@@ -154,6 +145,11 @@ const PageAreaSafeZone = styled.div`
         position: absolute;
         border-top: 1px solid rgba(255, 255, 255, 0.4);
         border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      }
+      &::before {
+        left: -20px;
+      }
+      &::after {
         right: -20px;
       }
     `}
