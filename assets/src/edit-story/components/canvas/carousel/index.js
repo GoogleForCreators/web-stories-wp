@@ -215,7 +215,7 @@ function calculatePageThumbSize(carouselSize) {
   return [pageWidth + THUMB_FRAME_WIDTH, pageHeight + THUMB_FRAME_HEIGHT];
 }
 
-function useCanvasSelector({
+function safeZoneSelector({
   state: { showSafeZone },
   actions: { setShowSafeZone },
 }) {
@@ -235,7 +235,7 @@ function Carousel() {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
   const { isRTL } = useConfig();
-  const { showSafeZone, setShowSafeZone } = useCanvas(useCanvasSelector);
+  const { showSafeZone, setShowSafeZone } = useCanvas(safeZoneSelector);
   const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
