@@ -40,26 +40,9 @@ class Updater {
 	 * @return void
 	 */
 	public function init() {
-		add_filter(
-			'plugins_api',
-			function( $value, $action, $args ) {
-				return $this->plugin_info( $value, $action, $args );
-			},
-			10,
-			3
-		);
-		add_filter(
-			'pre_set_site_transient_update_plugins',
-			function( $value ) {
-				return $this->updater_data( $value );
-			}
-		);
-		add_action(
-			'load-update-core.php',
-			function() {
-				$this->clear_plugin_data();
-			}
-		);
+		add_filter( 'plugins_api', [ $this, 'plugin_info' ], 10, 3 );
+		add_filter( 'pre_set_site_transient_update_plugins', [ $this, 'updater_data' ] );
+		add_action( 'load-update-core.php', [ $this, 'clear_plugin_data' ] );
 		add_action(
 			'upgrader_process_complete',
 			function( $upgrader, $options ) {
