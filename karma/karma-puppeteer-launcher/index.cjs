@@ -273,6 +273,9 @@ async function extractSnapshot(frame, testName, snapshotName) {
           width: 100vw;
           height: 100vh;
         }
+        .i__karma__snapshot__hide {
+          display: none !important;
+        }
       </style>
       ${localizeUrls(head)}
     </head>
