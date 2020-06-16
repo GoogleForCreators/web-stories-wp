@@ -105,7 +105,7 @@ class Dashboard {
 		 *
 		 * @param string[] $preload_paths Array of paths to preload.
 		 */
-		$preload_paths = apply_filters( 'stories_dashboard_preload_paths', $preload_paths );
+		$preload_paths = apply_filters( 'web_stories_dashboard_preload_paths', $preload_paths );
 
 		$preload_data = array_reduce(
 			$preload_paths,

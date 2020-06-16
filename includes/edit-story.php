@@ -47,7 +47,7 @@ $preload_paths = [
  * @param string[] $preload_paths Array of paths to preload.
  * @param WP_Post  $post          Post being edited.
  */
-$preload_paths = apply_filters( 'stories_editor_preload_paths', $preload_paths, $post );
+$preload_paths = apply_filters( 'web_stories_editor_preload_paths', $preload_paths, $post );
 
 /*
  * Ensure the global $post remains the same after API data is preloaded.
