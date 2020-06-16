@@ -245,6 +245,7 @@ async function exposeClipboard(page) {
   // native clipboard. OTOH, there's something good in not running tests on
   // a real clipboard. E.g. a test cannot accidentally copy/print a secret
   // value.
+  // See the https://crbug.com/931839 for "text/html" support.
   let clipboardData;
 
   // @todo: Implement `cut` and `set()`.
