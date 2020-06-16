@@ -233,7 +233,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   );
 
   return (
-    <PickerContainer ref={ref}>
+    <PickerContainer role="dialog" ref={ref}>
       <SearchInput
         ref={inputRef}
         aria-expanded={Boolean(matchingFonts.length)}
