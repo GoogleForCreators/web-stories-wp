@@ -198,7 +198,7 @@ class Dashboard {
 					'newStoryURL'  => $new_story_url,
 					'editStoryURL' => $edit_story_url,
 					'wpListURL'    => $classic_wp_list_url,
-					'assetsURL'    => WEBSTORIES_ASSETS_URL,
+					'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 					'version'      => WEBSTORIES_VERSION,
 					'api'          => [
 						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
