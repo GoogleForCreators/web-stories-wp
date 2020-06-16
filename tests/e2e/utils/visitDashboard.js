@@ -23,7 +23,10 @@ import { visitAdminPage } from '@wordpress/e2e-test-utils';
  * Creates a new story.
  */
 async function visitDashboard() {
-  await visitAdminPage('edit.php', 'post_type=web-story&page=stories-dashboard');
+  await visitAdminPage(
+    'edit.php',
+    'post_type=web-story&page=stories-dashboard'
+  );
 }
 
 export default visitDashboard;
