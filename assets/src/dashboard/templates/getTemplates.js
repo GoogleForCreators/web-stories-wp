@@ -43,7 +43,7 @@ export function loadTemplate(title, data, imageBaseUrl) {
           elem.resource.sizes = [];
         }
         if (elem.resource && elem.resource.src) {
-          elem.resource.src = `${imageBaseUrl}/images/templates/${title}/${getImageFile(
+          elem.resource.src = `${imageBaseUrl}images/templates/${title}/${getImageFile(
             elem.resource.src
           )}`;
         }
