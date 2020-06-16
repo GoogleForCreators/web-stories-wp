@@ -50,7 +50,7 @@ const Alert = ({ message, severity, handleDismissClick }) => {
 
 Alert.propTypes = {
   message: PropTypes.string.isRequired,
-  severity: PropTypes.oneOf(['error', 'warning', 'info']),
+  severity: PropTypes.oneOf(['error', 'warning', 'info', 'success']),
   handleDismissClick: PropTypes.func,
 };
 

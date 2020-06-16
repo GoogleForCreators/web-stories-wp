@@ -16,34 +16,58 @@
 /**
  * External dependencies
  */
-import { createContext, useMemo, useCallback, useState } from 'react';
+import {
+  createContext,
+  useMemo,
+  useCallback,
+  useState,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 
 export const AlertContext = createContext(null);
 
 const Provider = ({ children }) => {
-  const [activeAlerts, setActiveAlerts] = useState([]);
+  const [activeAlerts, setActiveAlerts] = useState([
+    { message: 'alert 1', severity: 'error' },
+    { message: 'alert 2', severity: 'warning' },
+  ]);
+  const [inactiveAlerts, setInactiveAlerts] = useState([]);
+
+  const allAlerts = useMemo(() => {
+    console.log('setting all alerts ', activeAlerts, inactiveAlerts);
+    return [...new Set([...activeAlerts, ...inactiveAlerts])];
+    debugger;
+  }, [activeAlerts, inactiveAlerts]);
 
   const removeAlert = useCallback(
     (index) => {
       const alertsCopy = JSON.parse(JSON.stringify(activeAlerts));
-      alertsCopy.splice(index, 1);
+      const newInactiveAlert = alertsCopy.splice(index, 1);
+      console.log('new inactive alert: ', newInactiveAlert);
+      console.log('new list of active alerts ', alertsCopy);
       setActiveAlerts(alertsCopy);
+      setInactiveAlerts([...new Set([...inactiveAlerts, ...newInactiveAlert])]);
+      // const alertToHide = activeAlerts[index];
+      // console.log(alertToHide);
+      // alertToHide.isActive = false;
+      // const newAlertsSet = [...new Set([...activeAlerts, alertToHide])];
+      // setActiveAlerts(newAlertsSet);
     },
-    [activeAlerts]
+    [activeAlerts, inactiveAlerts]
   );
 
   const addAlert = useCallback(
     ({ message, severity }) => {
-      const newAlert = activeAlerts.reduce((_, activeAlert) => {
-        return activeAlert?.message !== message;
+      const newAlert = allAlerts.reduce((_, alert) => {
+        return alert?.message !== message;
       }, []);
-
+      console.log('add this alert? ', newAlert);
       if (newAlert) {
         setActiveAlerts([...activeAlerts, { message, severity }]);
       }
     },
-    [activeAlerts]
+    [allAlerts, activeAlerts]
   );
 
   const value = useMemo(
