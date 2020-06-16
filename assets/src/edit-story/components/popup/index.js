@@ -100,6 +100,7 @@ function Popup({
   anchor,
   dock,
   children,
+  renderContents,
   placement = 'bottom',
   spacing,
   isOpen,
@@ -154,8 +155,8 @@ function Popup({
           fillHeight={fillHeight}
           placement={placement}
         >
-          {typeof children === 'function'
-            ? children({ propagateDimensionChange: positionPopup })
+          {renderContents
+            ? renderContents({ propagateDimensionChange: positionPopup })
             : children}
         </Container>,
         document.body
