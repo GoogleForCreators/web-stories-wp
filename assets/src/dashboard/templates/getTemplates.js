@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { migrate } from '../../edit-story/migration/migrate';
+import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
 import beauty from './raw/beauty.json';
 import cooking from './raw/cooking.json';
 import diy from './raw/diy.json';
@@ -29,7 +29,7 @@ import wellbeing from './raw/wellbeing.json';
 
 export function getImageFile(url) {
   const file = (url || '').split('/').slice(-1).join('');
-  /** removes `-x` in some_file-x.jpg */
+  /* removes `-x` in some_file-x.jpg */
   return file.replace(/-\d+(?=.\w{3,4}$)/g, '');
 }
 
@@ -52,7 +52,10 @@ export function loadTemplate(title, data, imageBaseUrl) {
     })),
   };
 
-  const migratedTemplate = migrate(template, template.version);
+  const migratedTemplate = {
+    ...migrate(template, template.version),
+    version: DATA_VERSION,
+  };
 
   return migratedTemplate;
 }
