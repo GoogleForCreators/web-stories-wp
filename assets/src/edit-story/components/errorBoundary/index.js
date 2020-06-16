@@ -24,7 +24,6 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import ErrorActions from './errorActions';
-import DummyElement from './dummyElement';
 
 class ErrorBoundary extends Component {
   static propTypes = {
@@ -66,8 +65,7 @@ class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
-      const { element } = this.props;
-      return element ? <DummyElement element={element} /> : <ErrorActions />;
+      return <ErrorActions />;
     }
     return this.props.children;
   }

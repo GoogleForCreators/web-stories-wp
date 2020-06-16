@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 function ErrorActions() {
   const reload = () => {
     window.location.reload(true);
@@ -22,10 +27,14 @@ function ErrorActions() {
   return (
     <div>
       <h3 className="loading-message" style={{ padding: 40 }}>
-        Editor has crashed.
+        {__('Editor has crashed.', 'web-stories')}
         <br />
-        Try <button onClick={reload}>reload</button> if that doesn't help, wait
-        for a fix.
+        {__(
+          "Try to reload if that doesn't help, wait for a fix.",
+          'web-stories'
+        )}
+        <br />
+        <button onClick={reload}>{__('Reload', 'web-stories')}</button>
       </h3>
     </div>
   );

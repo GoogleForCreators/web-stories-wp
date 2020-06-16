@@ -29,7 +29,6 @@ import useStory from '../../../app/story/useStory';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
-import ErrorBoundary from '../../errorBoundary';
 
 export const THUMB_INDICATOR_HEIGHT = 6;
 export const THUMB_INDICATOR_GAP = 4;
@@ -90,13 +89,12 @@ function PagePreview({ index, ...props }) {
         <Page {...props}>
           <PreviewWrapper className="web-stories-content">
             {page.elements.map(({ id, ...rest }) => (
-              <ErrorBoundary key={id} element={{ id, ...rest }}>
-                <DisplayElement
-                  previewMode={true}
-                  element={{ id, ...rest }}
-                  page={page}
-                />
-              </ErrorBoundary>
+              <DisplayElement
+                key={id}
+                previewMode={true}
+                element={{ id, ...rest }}
+                page={page}
+              />
             ))}
           </PreviewWrapper>
         </Page>

@@ -98,10 +98,6 @@ function TextDisplay({
   element: { id, content, backgroundColor, backgroundTextMode, ...rest },
   box: { width },
 }) {
-  // TODO: Remove. Just to cause an error.
-  const foo = {};
-  foo.bar();
-
   const ref = useRef(null);
 
   const {

@@ -23,10 +23,6 @@ import StatusPanel from './status';
 import PageAdvancement from './pageAdvancement';
 
 function DocumentInspector() {
-  // TODO: Remove. Just to cause an error.
-  // This will trigger error boundry in Document inspector
-  const foo = {};
-  foo.bar();
   return (
     <>
       <StatusPanel />

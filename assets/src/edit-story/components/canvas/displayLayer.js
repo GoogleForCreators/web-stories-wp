@@ -24,7 +24,6 @@ import { memo } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import ErrorBoundary from '../../components/errorBoundary';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
@@ -64,12 +63,11 @@ function DisplayLayer() {
                 return null;
               }
               return (
-                <ErrorBoundary key={id} element={{ id, ...rest }}>
-                  <DisplayElement
-                    element={{ id, ...rest }}
-                    page={currentPage}
-                  />
-                </ErrorBoundary>
+                <DisplayElement
+                  key={id}
+                  element={{ id, ...rest }}
+                  page={currentPage}
+                />
               );
             })
           : null}
