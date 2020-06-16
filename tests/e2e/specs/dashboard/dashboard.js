@@ -28,7 +28,7 @@ describe('Stories Dashboard', () => {
   it('should be able to open the dashboard', async () => {
     await visitDashboard();
 
-    await expect(page).toMatcch('My stories');
+    await expect(page).toMatch('My Stories');
 
     await percySnapshot(page, 'E2E: Stories Dashboard');
   });
