@@ -31,7 +31,9 @@
   width: inherit;
   height: inherit;
 }
-
+.wp-block-web-stories-embed.aligncenter .components-resizable-box__container {
+  margin: auto;
+}
 /* Embed Preview Component */
 
 .web-stories-embed-preview {

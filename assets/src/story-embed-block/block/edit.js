@@ -66,8 +66,8 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   }, [outerURL]);
 
   useEffect(() => {
-    if (ref.current && global.ampStoryPlayer) {
-      const player = new global.ampStoryPlayer(global, ref.current);
+    if (ref.current && global.AmpStoryPlayer) {
+      const player = new global.AmpStoryPlayer(global, ref.current);
       player.load();
     }
   }, [showLoadingIndicator, showPlaceholder]);

@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: ['chrome', 'firefox']
+        # TODO: add back Firefox once support is more mature.
+        browser: ['chrome']
 
     steps:
       - name: Checkout

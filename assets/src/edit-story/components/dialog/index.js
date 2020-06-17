@@ -44,7 +44,7 @@ const DialogBox = styled.div`
   background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-const DialogTitle = styled.div`
+const DialogTitle = styled.h1`
   flex: 0 0 auto;
   margin: 0;
   padding: 24px;
