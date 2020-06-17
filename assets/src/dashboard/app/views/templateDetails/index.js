@@ -257,7 +257,12 @@ function TemplateDetails() {
                     <SubHeading>
                       {__('Related Templates', 'web-stories')}
                     </SubHeading>
-                    <UnitsProvider pageSize={pageSize}>
+                    <UnitsProvider
+                      pageSize={{
+                        width: pageSize.width,
+                        height: pageSize.height,
+                      }}
+                    >
                       <TemplateGridView
                         templates={relatedTemplates}
                         pageSize={pageSize}

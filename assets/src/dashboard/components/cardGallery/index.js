@@ -111,7 +111,12 @@ function CardGallery({ story }) {
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
       {metrics.miniCardSize && (
-        <UnitsProvider pageSize={metrics.miniCardSize}>
+        <UnitsProvider
+          pageSize={{
+            width: metrics.miniCardSize.width,
+            height: metrics.miniCardSize.height,
+          }}
+        >
           <MiniCardsContainer
             rowHeight={metrics.miniWrapperSize.height}
             gap={metrics.gap}
@@ -132,7 +137,12 @@ function CardGallery({ story }) {
         </UnitsProvider>
       )}
       {metrics.activeCardSize && pages[activePageIndex] && (
-        <UnitsProvider pageSize={metrics.activeCardSize}>
+        <UnitsProvider
+          pageSize={{
+            width: metrics.activeCardSize.width,
+            height: metrics.activeCardSize.height,
+          }}
+        >
           <ActiveCard {...metrics.activeCardSize}>
             <PreviewPage
               page={pages[activePageIndex]}

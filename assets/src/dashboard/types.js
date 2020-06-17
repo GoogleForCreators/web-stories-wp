@@ -93,7 +93,7 @@ export const TotalStoriesByStatusPropType = PropTypes.shape({
 export const PageSizePropType = PropTypes.shape({
   width: PropTypes.number,
   height: PropTypes.number,
-  dangerZoneHeight: PropTypes.number,
+  containerHeight: PropTypes.number,
 });
 
 export const StoryMenuPropType = PropTypes.shape({
