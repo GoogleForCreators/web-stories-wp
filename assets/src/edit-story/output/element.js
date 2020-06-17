@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import StoryAnimation from '../../dashboard/components/storyAnimation';
 import StoryPropTypes from '../types';
 import WithMask from '../masks/output';
 import { getDefinitionForType } from '../elements';
@@ -25,7 +26,6 @@ import WithLink from '../components/link/output';
 
 function OutputElement({ element }) {
   const { id, opacity, type } = element;
-
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -33,12 +33,10 @@ function OutputElement({ element }) {
   const { x, y, width, height, rotationAngle } = box;
 
   return (
-    <WithMask
-      element={element}
-      box={box}
-      id={'el-' + id}
-      className="wrapper"
+    <div
       style={{
+        position: 'absolute',
+        pointerEvents: 'none',
         left: `${x}%`,
         top: `${y}%`,
         width: `${width}%`,
@@ -46,22 +44,40 @@ function OutputElement({ element }) {
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
         opacity: opacity ? opacity / 100 : null,
       }}
-      skipDefaultMask
     >
-      <WithLink
-        element={element}
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'block',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-        }}
-      >
-        <Output element={element} box={box} />
-      </WithLink>
-    </WithMask>
+      <StoryAnimation.AMPWrapper target={id}>
+        <WithMask
+          className="mask"
+          element={element}
+          box={box}
+          id={'el-' + id}
+          style={{
+            pointerEvents: 'initial',
+            width: '100%',
+            height: '100%',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+          skipDefaultMask
+        >
+          <WithLink
+            element={element}
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+            }}
+          >
+            <Output element={element} box={box} />
+          </WithLink>
+        </WithMask>
+      </StoryAnimation.AMPWrapper>
+    </div>
   );
 }
 

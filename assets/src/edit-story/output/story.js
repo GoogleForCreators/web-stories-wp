@@ -36,6 +36,7 @@ function OutputStory({
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const fontDeclarations = getFontDeclarations(pages);
+
   return (
     <html amp="" lang="en">
       <head>
