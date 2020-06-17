@@ -49,6 +49,7 @@ import FlipControls from './shared/flipControls';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 const MIN_MAX = {
+  // TODO: with %360 logic this is not used, but can be utilized via keyboard arrows
   ROTATION: {
     MIN: 0,
     MAX: 359,
@@ -182,7 +183,7 @@ function SizePositionPanel({
 
   usePresubmitHandler(({ rotationAngle: newRotationAngle }) => {
     return {
-      rotationAngle: setMinMax(newRotationAngle, MIN_MAX.ROTATION),
+      rotationAngle: newRotationAngle % 360,
     };
   }, []);
 
