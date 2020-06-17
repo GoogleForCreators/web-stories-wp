@@ -459,58 +459,7 @@
       ],
       "type": "page",
       "id": "d47afc22-71b7-4303-9917-96f9a31ad38a",
-      "backgroundOverlay": "none",
-      "animations": [
-        {
-          "id": "d5e53845-e936-49a7-972f-7dcbac6a29df",
-          "type": "blinkOn",
-          "duration": 1250,
-          "delay": 0,
-          "direction": "normal",
-          "easing": "",
-          "fill": "forwards",
-          "iterations": "",
-          "blinkCount": 5,
-          "targets": [
-            "a0f67513-d98a-43f4-bb0b-ad3383051452",
-            "04ec92dc-313f-428d-87d0-00bd975290b5",
-            "59955c3a-57a0-4c4a-857d-bd6234e1382c"
-          ]
-        },
-        {
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 0.75,
-          "id": "3744e9b9-38f8-4767-a9c7-3ac3965273d7",
-          "duration": 8000,
-          "delay": 500,
-          "direction": "normal",
-          "easing": "",
-          "fill": "forwards",
-          "iterations": "infinity",
-          "targets": [
-            "59955c3a-57a0-4c4a-857d-bd6234e1382c",
-            "4e256c35-5e30-45f5-9095-d8ce0a230b21",
-            "7dd406da-ea86-4b60-be48-aeb22c4451a2"
-          ]
-        },
-        {
-          "type": "move",
-          "offsetX": -50,
-          "offsetY": 400,
-          "id": "b2f9d575-a255-4a7c-b0dc-20cd1bee4afb",
-          "duration": 1000,
-          "delay": 250,
-          "direction": "normal",
-          "easing": "",
-          "fill": "forwards",
-          "iterations": 4,
-          "targets": [
-            "a0f67513-d98a-43f4-bb0b-ad3383051452",
-            "b8f9eb9a-5007-4642-aca3-750cdb7c7463"
-          ]
-        }
-      ]
+      "backgroundOverlay": "none"
     },
     {
       "elements": [
@@ -769,28 +718,7 @@
       ],
       "backgroundOverlay": "none",
       "type": "page",
-      "id": "6a6ddf2d-7f98-405a-8c95-76b0440f9b30",
-      "animations": [
-        {
-          "id": "b4c367e1-2990-46ae-a593-ab60db38a18f",
-          "type": "flip",
-          "duration": 2000,
-          "delay": 0,
-          "targets": [
-            "00210dfd-2813-4a6c-9182-df2071c28e1f"
-          ]
-        },
-        {
-          "id": "adda68ca-ad52-42df-9f2a-6489b7ccb3c0",
-          "type": "bounce",
-          "duration": 1000,
-          "delay": 500,
-          "targets": [
-            "8e053a88-17a5-4162-8ae0-214e5a84e33c",
-            "9b8df2db-2f35-4aa6-a48c-f7bc71afc6de"
-          ]
-        }
-      ]
+      "id": "6a6ddf2d-7f98-405a-8c95-76b0440f9b30"
     },
     {
       "elements": [
