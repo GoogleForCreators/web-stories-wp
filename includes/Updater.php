@@ -170,7 +170,7 @@ class Updater {
 	 * Callback for when updates are finished.
 	 *
 	 * @param \WP_Upgrader $upgrader Upgrader instance.
-	 * @param array $options Upgrader event data.
+	 * @param array        $options  Upgrader event data.
 	 */
 	public function upgrader_process_complete( $upgrader, $options ) {
 		if (
