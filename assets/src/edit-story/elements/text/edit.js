@@ -50,6 +50,8 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
 // on the content and properties.
+// Background color is used to make the edited element more prominent and
+// easier to see.
 const Wrapper = styled.div`
   ${elementFillContent}
 
@@ -64,6 +66,8 @@ const Wrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
     pointer-events: none;
   }
+  background-color: ${({ theme, displayWhiteout }) =>
+    displayWhiteout ? theme.colors.whiteout : 'transparent'};
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -230,7 +234,12 @@ function TextEdit({
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   return (
-    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
+    <Wrapper
+      ref={wrapperRef}
+      onClick={onClick}
+      data-testid="textEditor"
+      displayWhiteout={backgroundTextMode !== BACKGROUND_TEXT_MODE.FILL}
+    >
       <TextBox ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}
