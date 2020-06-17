@@ -123,8 +123,11 @@ class Updater {
 		if ( ! empty( $data['banners_rtl'] ) ) {
 			$new_data['banners_rtl'] = $data['banners_rtl'];
 		}
+
+		$is_plugin_outdated = version_compare( WEBSTORIES_VERSION, $data['version'], '<' );
+
 		// Return data if Web Stories plugin is not up to date.
-		if ( version_compare( WEBSTORIES_VERSION, $data['version'], '<' ) ) {
+		if ( $is_plugin_outdated && is_wp_version_compatible( $data['requires'] ) && is_php_version_compatible( $data['requires_php'] ) ) {
 			$value->response[ plugin_basename( WEBSTORIES_PLUGIN_FILE ) ] = (object) $new_data;
 		} else {
 			$value->no_update[ plugin_basename( WEBSTORIES_PLUGIN_FILE ) ] = (object) $new_data;
