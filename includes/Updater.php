@@ -171,6 +171,7 @@ class Updater {
 	 *
 	 * @param \WP_Upgrader $upgrader Upgrader instance.
 	 * @param array        $options  Upgrader event data.
+	 * @return void
 	 */
 	public function upgrader_process_complete( $upgrader, $options ) {
 		if (
