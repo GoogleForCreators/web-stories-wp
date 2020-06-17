@@ -43,22 +43,7 @@ class Updater {
 		add_filter( 'plugins_api', [ $this, 'plugin_info' ], 10, 3 );
 		add_filter( 'pre_set_site_transient_update_plugins', [ $this, 'updater_data' ] );
 		add_action( 'load-update-core.php', [ $this, 'clear_plugin_data' ] );
-		add_action(
-			'upgrader_process_complete',
-			function( $upgrader, $options ) {
-				if (
-					'update' !== $options['action'] ||
-					'plugin' !== $options['type'] ||
-					! isset( $options['plugins'] ) ||
-					! in_array( plugin_basename( WEBSTORIES_PLUGIN_FILE ), $options['plugins'], true )
-				) {
-					return;
-				}
-				$this->clear_plugin_data();
-			},
-			10,
-			2
-		);
+		add_action( 'upgrader_process_complete', [ $this, 'upgrader_process_complete' ], 10, 2 );
 	}
 
 	/**
@@ -69,7 +54,7 @@ class Updater {
 	 * @param mixed              $args   Plugin API arguments.
 	 * @return false|object|array Updated $value, or passed-through $value on failure.
 	 */
-	private function plugin_info( $value, $action, $args ) {
+	public function plugin_info( $value, $action, $args ) {
 		list( $plugin_slug ) = explode( '/', plugin_basename( WEBSTORIES_PLUGIN_FILE ) );
 		if ( 'plugin_information' !== $action || $plugin_slug !== $args->slug ) {
 			return $value;
@@ -101,13 +86,14 @@ class Updater {
 		}
 		return (object) $new_data;
 	}
+
 	/**
 	 * Retrieves plugin update data from custom API endpoint.
 	 *
 	 * @param mixed $value Update check object.
 	 * @return object Modified update check object.
 	 */
-	private function updater_data( $value ) {
+	public function updater_data( $value ) {
 		// Stop here if the current user does not have sufficient capabilities.
 		if ( ! current_user_can( 'update_plugins' ) ) {
 			return $value;
@@ -145,6 +131,7 @@ class Updater {
 		}
 		return $value;
 	}
+
 	/**
 	 * Gets plugin data from the API.
 	 *
@@ -172,7 +159,25 @@ class Updater {
 	 *
 	 * @return void
 	 */
-	private function clear_plugin_data() {
+	public function clear_plugin_data() {
 		delete_site_transient( 'web_stories_updater' );
+	}
+
+	/**
+	 * Callback for when updates are finished.
+	 *
+	 * @param \WP_Upgrader $upgrader Upgrader instance.
+	 * @param array $options Upgrader event data.
+	 */
+	public function upgrader_process_complete( $upgrader, $options ) {
+		if (
+			'update' !== $options['action'] ||
+			'plugin' !== $options['type'] ||
+			! isset( $options['plugins'] ) ||
+			! in_array( plugin_basename( WEBSTORIES_PLUGIN_FILE ), $options['plugins'], true )
+		) {
+			return;
+		}
+		$this->clear_plugin_data();
 	}
 }
