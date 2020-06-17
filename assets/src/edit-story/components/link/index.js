@@ -14,13 +14,26 @@
  * limitations under the License.
  */
 
-export function getLinkFromElement(element) {
-  return element.link || null;
-}
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
 
-export function createLink({ url = '', ...rest } = {}) {
-  return {
-    url,
-    ...rest,
-  };
-}
+const Link = styled.a`
+  margin: 0;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.link};
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: currentColor;
+    box-shadow: none;
+    border-bottom: 1px solid currentColor;
+    outline: 0;
+  }
+`;
+
+export default Link;

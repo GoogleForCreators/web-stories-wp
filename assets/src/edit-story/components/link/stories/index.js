@@ -15,21 +15,15 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled, { css } from 'styled-components';
+import Link from '../';
 
-export default styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform-origin: 50% 50%;
+export default {
+  title: 'Stories Editor/Components/Link',
+  component: Link,
+};
 
-  ${({ overflowHidden }) =>
-    overflowHidden &&
-    css`
-      overflow: hidden;
-    `};
-`;
+export const _default = () => {
+  return <Link href="https://example.com/">{'This is a link'}</Link>;
+};

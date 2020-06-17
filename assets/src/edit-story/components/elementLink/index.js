@@ -14,22 +14,13 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled, { css } from 'styled-components';
+export function getLinkFromElement(element) {
+  return element.link || null;
+}
 
-export default styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform-origin: 50% 50%;
-
-  ${({ overflowHidden }) =>
-    overflowHidden &&
-    css`
-      overflow: hidden;
-    `};
-`;
+export function createLink({ url = '', ...rest } = {}) {
+  return {
+    url,
+    ...rest,
+  };
+}

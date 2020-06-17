@@ -27,7 +27,29 @@ import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { createNewStory, previewStory } from '../utils';
+import { createNewStory, previewStory } from '../../utils';
+
+async function insertStoryTitle(title) {
+  await expect(page).toMatchElement('input[placeholder="Add title"]');
+  await page.type('input[placeholder="Add title"]', title);
+}
+
+async function addTextElement() {
+  await expect(page).toClick('button[aria-label="Add new text element"]');
+  await expect(page).toMatchElement('[data-testid="textFrame"]', {
+    text: 'Fill in some text',
+  });
+}
+
+async function publishStory() {
+  await expect(page).toClick('button', { text: 'Publish' });
+  await expect(page).toMatch('Story published!');
+  await expect(page).toClick('button', { text: 'Dismiss' });
+  await expect(page).toMatchElement('button', {
+    text: 'Switch to Draft',
+  });
+  await expect(page).toClick('button', { text: 'Update' });
+}
 
 describe('Author User', () => {
   beforeAll(async () => {
@@ -41,19 +63,15 @@ describe('Author User', () => {
   it('should be able to directly preview a story without markup being stripped', async () => {
     await createNewStory();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await page.type(
-      'input[placeholder="Add title"]',
-      'Previewing without Publishing'
-    );
+    await insertStoryTitle('Previewing without Publishing');
 
-    await expect(page).toClick('button[aria-label="Add new text element"]');
-    await expect(page).toMatch('Fill in some text');
+    await addTextElement();
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
-
-    await expect(previewPage).toMatch('Fill in some text');
+    await expect(previewPage).toMatchElement('p', {
+      text: 'Fill in some text',
+    });
 
     await percySnapshot(
       previewPage,
@@ -64,27 +82,22 @@ describe('Author User', () => {
     await previewPage.close();
   });
 
-  it('should be able to publish a story without markup being stripped', async () => {
+  //eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should be able to publish a story without markup being stripped', async () => {
     await createNewStory();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await page.type(
-      'input[placeholder="Add title"]',
-      'Publishing and Previewing'
-    );
+    await insertStoryTitle('Publishing and Previewing');
 
-    // Make some changes before publishing the story.
-    await expect(page).toClick('button[aria-label="Add new text element"]');
-    await expect(page).toMatch('Fill in some text');
+    // Make some changes _before_ publishing the story.
+    await addTextElement();
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toMatchElement('button', { text: 'Update' });
+    await publishStory();
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
-
-    await expect(previewPage).toMatch('Fill in some text');
+    await expect(previewPage).toMatchElement('p', {
+      text: 'Fill in some text',
+    });
 
     await percySnapshot(previewPage, 'E2E: Author previewing after publishing');
 
@@ -92,27 +105,22 @@ describe('Author User', () => {
     await previewPage.close();
   });
 
-  it('should be able to publish and preview a story without markup being stripped', async () => {
+  //eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should be able to publish and preview a story without markup being stripped', async () => {
     await createNewStory();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await page.type(
-      'input[placeholder="Add title"]',
-      'Autosaving and Previewing'
-    );
+    await insertStoryTitle('Autosaving and Previewing');
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toMatchElement('button', { text: 'Update' });
+    await publishStory();
 
-    // Make some changes after publishing so previewing will cause an autosave.
-    await expect(page).toClick('button[aria-label="Add new text element"]');
-    await expect(page).toMatch('Fill in some text');
+    // Make some changes _after_ publishing so previewing will cause an autosave.
+    await addTextElement();
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
-
-    await expect(previewPage).toMatch('Fill in some text');
+    await expect(previewPage).toMatchElement('p', {
+      text: 'Fill in some text',
+    });
 
     await percySnapshot(previewPage, 'E2E: Autosaving and previewing');
 

@@ -17,19 +17,26 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import { action } from '@storybook/addon-actions';
+import { text } from '@storybook/addon-knobs';
 
-export default styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform-origin: 50% 50%;
+/**
+ * Internal dependencies
+ */
+import PostPublishDialog from '../postPublishDialog';
 
-  ${({ overflowHidden }) =>
-    overflowHidden &&
-    css`
-      overflow: hidden;
-    `};
-`;
+export default {
+  title: 'Stories Editor/Components/Dialog/Post-Publish',
+  component: PostPublishDialog,
+};
+
+export const _default = () => {
+  return (
+    <PostPublishDialog
+      open
+      onClose={action('closed')}
+      storyURL={text('Story URL', 'https://example.com')}
+      confirmURL={text('Confirm URL', 'https://example.com')}
+    />
+  );
+};
