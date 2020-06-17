@@ -17,20 +17,40 @@
 /**
  * Internal dependencies
  */
-import { AnimationTab, AnimationPane } from './animation';
-import { MediaTab, MediaPane } from './media';
-import { ShapesTab, ShapesPane } from './shapes';
-import { TextTab, TextPane } from './text';
+/**
+ * External dependencies
+ */
+import { TAB_IDS } from '../../../components/library/libraryProvider';
+import { AnimationPane, AnimationTab } from './animation';
+import { MediaPane, MediaTab } from './media';
+import { Media3pPane, Media3pTab } from './media/media3p';
+import { ShapesPane, ShapesTab } from './shapes';
+import { TextPane, TextTab } from './text';
+import { ElementsPane, ElementsTab } from './elements';
 import { Tabs } from './shared';
 
-function getPanes({ ANIMATION, MEDIA, SHAPES, TEXT }) {
-  // Order here is important, as it denotes the actual visual order of elements.
-  return [
-    { Tab: MediaTab, Pane: MediaPane, id: MEDIA },
-    { Tab: TextTab, Pane: TextPane, id: TEXT },
-    { Tab: ShapesTab, Pane: ShapesPane, id: SHAPES },
-    { Tab: AnimationTab, Pane: AnimationPane, id: ANIMATION },
-  ];
+/**
+ * Return the necessary information to render the tab and pane for a tab ID.
+ *
+ * @param {string} tabId The id of the tab.
+ */
+function getPane(tabId) {
+  switch (tabId) {
+    case TAB_IDS.MEDIA:
+      return { Tab: MediaTab, Pane: MediaPane, id: TAB_IDS.MEDIA };
+    case TAB_IDS.MEDIA3P:
+      return { Tab: Media3pTab, Pane: Media3pPane, id: TAB_IDS.MEDIA3P };
+    case TAB_IDS.TEXT:
+      return { Tab: TextTab, Pane: TextPane, id: TAB_IDS.TEXT };
+    case TAB_IDS.SHAPES:
+      return { Tab: ShapesTab, Pane: ShapesPane, id: TAB_IDS.SHAPES };
+    case TAB_IDS.ELEMENTS:
+      return { Tab: ElementsTab, Pane: ElementsPane, id: TAB_IDS.ELEMENTS };
+    case TAB_IDS.ANIMATION:
+      return { Tab: AnimationTab, Pane: AnimationPane, id: TAB_IDS.ANIMATION };
+    default:
+      throw new Error('Invalid tab id: ' + tabId);
+  }
 }
 
-export { Tabs, getPanes };
+export { Tabs, getPane };
