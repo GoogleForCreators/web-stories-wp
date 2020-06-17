@@ -66,8 +66,7 @@ const Wrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
     pointer-events: none;
   }
-  background-color: ${({ theme, displayWhiteout }) =>
-    displayWhiteout ? theme.colors.whiteout : 'transparent'};
+  background-color: ${({ theme }) => theme.colors.whiteout};
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -234,12 +233,7 @@ function TextEdit({
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   return (
-    <Wrapper
-      ref={wrapperRef}
-      onClick={onClick}
-      data-testid="textEditor"
-      displayWhiteout={backgroundTextMode !== BACKGROUND_TEXT_MODE.FILL}
-    >
+    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
       <TextBox ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}
