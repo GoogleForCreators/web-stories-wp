@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -96,6 +96,7 @@ function MediaEdit({ element, box }) {
   const [fullMedia, setFullMedia] = useState(null);
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
+  const editElementRef = useRef();
 
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
@@ -134,8 +135,35 @@ function MediaEdit({ element, box }) {
 
   const isImage = 'image' === type;
   const isVideo = 'video' === type;
+
+  const wheelHandler = useCallback(
+    (evt) => {
+      let newScale = scale || 100;
+      if (event.deltaY > 0) {
+        newScale += 10;
+      } else {
+        newScale -= 10;
+      }
+      setProperties({ scale: newScale });
+      evt.preventDefault();
+    },
+    [setProperties, scale]
+  );
+
+  useEffect(() => {
+    const editEl = editElementRef.current;
+    editEl.addEventListener('wheel', wheelHandler, {
+      passive: false,
+    });
+    return () => {
+      editEl.removeEventListener('wheel', wheelHandler, {
+        passive: false,
+      });
+    };
+  });
+
   return (
-    <Element>
+    <Element ref={editElementRef}>
       {isImage && <FadedImage {...fadedMediaProps} src={resource.src} />}
       {isVideo && (
         <FadedVideo {...fadedMediaProps}>
