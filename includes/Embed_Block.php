@@ -168,7 +168,8 @@ class Embed_Block {
 		$title        = (string) $attributes['title'];
 		$poster       = ! empty( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
 		$align        = sprintf( 'align%s', $attributes['align'] );
-		$player_style = sprintf( 'width: %dpx; height: %dpx', absint( $attributes['width'] ), absint( $attributes['height'] ) );
+		$margin       = ( 'center' === $attributes['align'] ) ? 'auto' : '0';
+		$player_style = sprintf( 'width: %dpx; height: %dpx; margin: %s', absint( $attributes['width'] ), absint( $attributes['height'] ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
 		wp_enqueue_style( 'amp-story-player' );

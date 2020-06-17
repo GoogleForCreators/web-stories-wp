@@ -68,7 +68,7 @@ function SimpleAnimation(
 
   WAAPIAnimation.propTypes = WAAPIAnimationProps;
 
-  const AMPTarget = function ({ children, style }) {
+  const AMPTarget = function ({ children, style = {} }) {
     const options = useClippingContainer
       ? {
           useClippingContainer: useClippingContainer,
@@ -91,11 +91,10 @@ function SimpleAnimation(
 
   AMPTarget.propTypes = AMPAnimationProps;
 
-  const AMPAnimation = function ({ prefixId }) {
+  const AMPAnimation = function () {
     return (
       <AnimationOutput
-        animation={`${prefixId}-${animationName}`}
-        config={{ selector: `#anim-${id}`, ...timings }}
+        config={{ selector: `#anim-${id}`, keyframes, ...timings }}
       />
     );
   };

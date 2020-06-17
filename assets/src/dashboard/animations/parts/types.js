@@ -13,10 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { ANIMATION_TYPES } from '../constants';
+import { GeneralAnimationPropTypes } from '../outputs/types';
 
 export const WAAPIAnimationProps = {
   children: PropTypes.node.isRequired,
@@ -24,7 +31,15 @@ export const WAAPIAnimationProps = {
 };
 
 export const AMPAnimationProps = {
+  className: PropTypes.string,
   children: PropTypes.node,
   style: PropTypes.object,
   prefixId: PropTypes.string,
+};
+
+export const AnimationProps = {
+  id: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(Object.values(ANIMATION_TYPES)),
+  targets: PropTypes.arrayOf(PropTypes.string),
+  ...GeneralAnimationPropTypes,
 };
