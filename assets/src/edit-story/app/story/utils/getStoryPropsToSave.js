@@ -35,7 +35,8 @@ function getStoryPropsToSave({ story, pages, metadata }) {
     'autoAdvance',
     'defaultPageDuration',
   ]);
-  const content = getStoryMarkup(story, pages, metadata);
+  const { flags } = window.webStoriesEditorSettings;
+  const content = getStoryMarkup(story, pages, metadata, flags);
   return {
     content,
     pages,

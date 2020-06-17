@@ -232,13 +232,19 @@ function StoryAnimTool() {
       },
     };
 
-    const storyMarkup = getStoryMarkup(story, activeStory.pages, {
-      fallbackPoster: '',
-      logoPlaceholder: '',
-      publisher: {
-        name: 'Demo',
+    const { flags } = window.webStoriesDashboardSettings;
+    const storyMarkup = getStoryMarkup(
+      story,
+      activeStory.pages,
+      {
+        fallbackPoster: '',
+        logoPlaceholder: '',
+        publisher: {
+          name: 'Demo',
+        },
       },
-    });
+      flags
+    );
 
     const popup = window.open('about:blank', '_blank');
 
