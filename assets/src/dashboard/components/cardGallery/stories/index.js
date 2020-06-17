@@ -18,6 +18,9 @@
  * Internal dependencies
  */
 import CardGallery from '../index';
+import formattedTemplatesArray from '../../../storybookUtils/formattedTemplatesArray';
+import FontProvider from '../../../app/font/fontProvider';
+import { TransformProvider } from '../../../../edit-story/components/transform';
 
 export default {
   title: 'Dashboard/Components/CardGallery',
@@ -25,25 +28,13 @@ export default {
 };
 
 export const _default = () => {
-  const cards = [
-    'red',
-    'orange',
-    'green',
-    'blue',
-    'purple',
-    'aqua',
-    'yellow',
-    'grey',
-  ].map((color) => (
-    <div
-      key={color}
-      style={{ backgroundColor: color, width: '100%', height: '100%' }}
-    />
-  ));
-
   return (
-    <div style={{ padding: '20px' }}>
-      <CardGallery>{cards}</CardGallery>
-    </div>
+    <FontProvider>
+      <TransformProvider>
+        <div style={{ padding: '20px' }}>
+          <CardGallery story={formattedTemplatesArray[0]} />
+        </div>
+      </TransformProvider>
+    </FontProvider>
   );
 };
