@@ -26,8 +26,8 @@ import theme from '../theme';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   FULLBLEED_RATIO,
+  PAGE_RATIO,
   WPBODY_ID,
-  TWO_THIRDS_RATIO,
 } from '../constants';
 import { useResizeEffect } from './';
 
@@ -47,7 +47,7 @@ import { useResizeEffect } from './';
  */
 export const getPagePreviewHeights = (width) => {
   const fullBleedHeight = width / FULLBLEED_RATIO;
-  const storyHeight = width / TWO_THIRDS_RATIO;
+  const storyHeight = width / PAGE_RATIO;
 
   return { fullBleedHeight, storyHeight };
 };

@@ -90,6 +90,7 @@ StoryPropTypes.link = PropTypes.shape({
 StoryPropTypes.size = PropTypes.exact({
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  containerHeight: PropTypes.number,
 });
 
 StoryPropTypes.box = PropTypes.exact({
