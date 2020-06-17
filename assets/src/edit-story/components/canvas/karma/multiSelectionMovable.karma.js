@@ -100,8 +100,8 @@ describe('Multi-selection Movable integration', () => {
       frame3 = getElementFrame(element3.id);
     });
 
-    it('should render initial content', () => {
-      fixture.snapshot();
+    it('should render initial content', async () => {
+      await fixture.snapshot();
     });
 
     async function getSelection() {

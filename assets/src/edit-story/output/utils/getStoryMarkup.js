@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from 'react-dom/server';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -33,7 +34,11 @@ import OutputStory from '../story';
  * @return {string} Story markup.
  */
 export default function getStoryMarkup(story, pages, metadata) {
+  const { flags } = window.webStoriesEditorSettings;
+
   return renderToStaticMarkup(
-    <OutputStory story={story} pages={pages} metadata={metadata} />
+    <FlagsProvider features={flags}>
+      <OutputStory story={story} pages={pages} metadata={metadata} />
+    </FlagsProvider>
   );
 }

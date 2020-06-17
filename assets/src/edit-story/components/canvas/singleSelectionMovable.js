@@ -191,15 +191,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     [setIsDragging, setDraggingResource, resetMoveable]
   );
 
-  const {
-    resizeRules = {},
-    updateForResizeEvent,
-    isMaskable,
-  } = getDefinitionForType(selectedElement.type);
+  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
+    selectedElement.type
+  );
 
   const canSnap =
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
-  const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
+  const hideHandles = isDragging || Boolean(draggingResource);
 
   // Removes element if it's outside of canvas.
   const handleElementOutOfCanvas = (target) => {
@@ -262,7 +260,11 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
-        if (deltaX !== 0 || deltaY !== 0) {
+        if (
+          deltaX !== 0 ||
+          deltaY !== 0 ||
+          isDropSource(selectedElement.type)
+        ) {
           const properties = {
             x: selectedElement.x + editorToDataX(deltaX),
             y: selectedElement.y + editorToDataY(deltaY),

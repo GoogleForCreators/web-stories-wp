@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -24,6 +25,8 @@ export default styled.div`
   right: 0;
   bottom: 0;
   left: 0;
+  transform-origin: 50% 50%;
+
   ${({ overflowHidden }) =>
     overflowHidden &&
     css`
