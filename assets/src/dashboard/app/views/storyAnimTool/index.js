@@ -35,9 +35,8 @@ import {
   STORY_STATUS,
   STORY_PAGE_STATE,
 } from '../../../constants';
-import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import { PreviewPage } from '../../../components';
-import { clamp } from '../../../utils';
+import { clamp, getPagePreviewHeights } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import UpdateTemplateForm from './updateTemplateForm';
@@ -282,6 +281,8 @@ function StoryAnimTool() {
     setActiveAnimation({});
   }, [activePageIndex]);
 
+  const { fullBleedHeight, storyHeight } = getPagePreviewHeights(STORY_WIDTH);
+
   const renderElementContent = useCallback((element) => {
     switch (element.type) {
       case 'image':
@@ -326,15 +327,20 @@ function StoryAnimTool() {
                   <UnitsProvider
                     pageSize={{
                       width: STORY_WIDTH,
-                      height: STORY_WIDTH / FULLBLEED_RATIO,
+                      height: storyHeight,
                     }}
                   >
                     <ActiveCard
                       width={STORY_WIDTH}
-                      height={STORY_WIDTH / FULLBLEED_RATIO}
+                      height={fullBleedHeight}
                       selectedElementIds={selectedElementIds}
                     >
                       <PreviewPage
+                        pageSize={{
+                          width: STORY_WIDTH,
+                          height: storyHeight,
+                          containerHeight: fullBleedHeight,
+                        }}
                         page={activeStory.pages[activePageIndex]}
                         animationState={pageAnimationState}
                         subscribeGlobalTime={globalTimeSubscription.subscribe}

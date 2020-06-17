@@ -42,8 +42,8 @@ import { useResizeEffect } from './';
  * It's maintaining a 2:3 aspect ratio.
  * When fullbleed is visible (as it is for our reqs) we use the 2:3 aspect ratio w/ overflow to allow the fullBleed height to be visible
  *
- * @param width
- * @return { fullBleedHeight: Number, storyHeight: Number}
+ * @param {number} width  width of page to base ratios on
+ * @return {Object}       heights to use in pagePreviews { fullBleedHeight: Number, storyHeight: Number}
  */
 export const getPagePreviewHeights = (width) => {
   const fullBleedHeight = width / FULLBLEED_RATIO;
@@ -68,7 +68,7 @@ const getCurrentBp = (availableContainerSpace) =>
 // subtract those values from the availableContainer space to get remaining space
 // divide the remaining space by the itemsInRow
 // attach that extra space to the width
-// get height by dividing new with by FULLBLEED_RATIO
+// get heights for page and container in getPagePreviewHeights
 const sizeFromWidth = (
   width,
   { bp, respectSetWidth, availableContainerSpace }

@@ -24,7 +24,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { UnitsProvider } from '../../../edit-story/units';
 import { STORY_PAGE_STATE } from '../../constants';
 import { StoryPropType } from '../../types';
-import { getPagePreviewHeights } from '../../utils/usePagePreviewSize';
+import { getPagePreviewHeights } from '../../utils';
 import PreviewPage from '../previewPage';
 import {
   ActiveCard,
