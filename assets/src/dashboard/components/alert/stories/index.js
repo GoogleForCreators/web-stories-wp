@@ -60,7 +60,7 @@ export const _default = () => {
   );
 };
 
-export const justAlert = () => {
+export const JustAlert = () => {
   return (
     <AlertContainer
       message={text('warningMessage', 'this is a warning')}

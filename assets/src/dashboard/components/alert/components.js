@@ -38,14 +38,15 @@ const slideIn = keyframes`
 	}
 `;
 
+const alertBackgrounds = {
+  [ALERT_SEVERITIES.ERROR]: 'danger',
+  [ALERT_SEVERITIES.WARNING]: 'warning',
+  [ALERT_SEVERITIES.INFO]: 'bluePrimary',
+  [ALERT_SEVERITIES.SUCCESS]: 'success',
+  [ALERT_SEVERITIES.DEFAULT]: 'bluePrimary',
+};
+
 const getColor = (severity = ALERT_SEVERITIES.DEFAULT) => {
-  const alertBackgrounds = {
-    [ALERT_SEVERITIES.ERROR]: 'danger',
-    [ALERT_SEVERITIES.WARNING]: 'warning',
-    [ALERT_SEVERITIES.INFO]: 'bluePrimary',
-    [ALERT_SEVERITIES.SUCCESS]: 'success',
-    [ALERT_SEVERITIES.DEFAULT]: 'bluePrimary',
-  };
   return alertBackgrounds[severity];
 };
 
