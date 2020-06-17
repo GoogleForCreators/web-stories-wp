@@ -421,6 +421,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-04
 				 */
 				'showTextAndShapesSearchInput' => false,
+				/**
+				 * Description: Flag for the 3P Media tab.
+				 * Author: @diegovar
+				 * Issue: #2508
+				 * Creation date: 2020-06-17
+				 */
+				'thirdPartyMediaTab'           => false,
 			],
 
 		];
