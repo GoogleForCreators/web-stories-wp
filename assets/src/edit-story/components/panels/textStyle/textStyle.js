@@ -46,7 +46,6 @@ import { getCommonValue } from '../utils';
 import { useFont } from '../../../app/font';
 import stripHTML from '../../../utils/stripHTML';
 import clamp from '../../../utils/clamp';
-import validateMinMax from '../../../utils/validateMinMax';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const MIN_MAX = {
