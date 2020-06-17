@@ -73,7 +73,9 @@ describe('Author User', () => {
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
     await expect(page).toClick('button', { text: 'Dismiss' });
-    await expect(page).toMatchElement('button', { text: 'Update' });
+    await expect(page).toMatchElement('button', {
+      text: 'Switch to Draft',
+    });
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
@@ -92,7 +94,9 @@ describe('Author User', () => {
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
     await expect(page).toClick('button', { text: 'Dismiss' });
-    await expect(page).toMatchElement('button', { text: 'Update' });
+    await expect(page).toMatchElement('button', {
+      text: 'Switch to Draft',
+    });
 
     // Make some changes after publishing so previewing will cause an autosave.
     await addTextElement();
