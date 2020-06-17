@@ -36,6 +36,16 @@ async function addTextElement() {
   });
 }
 
+async function publishStory() {
+  await expect(page).toClick('button', { text: 'Publish' });
+  await expect(page).toMatch('Story published!');
+  await expect(page).toClick('button', { text: 'Dismiss' });
+  await expect(page).toMatchElement('button', {
+    text: 'Switch to Draft',
+  });
+  await expect(page).toClick('button', { text: 'Update' });
+}
+
 describe('Author User', () => {
   beforeAll(async () => {
     await loginUser('author', 'password');
@@ -48,7 +58,6 @@ describe('Author User', () => {
   it('should be able to directly preview a story without markup being stripped', async () => {
     await createNewStory();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
     await insertStoryTitle('Previewing without Publishing');
 
     await addTextElement();
@@ -67,15 +76,10 @@ describe('Author User', () => {
 
     await insertStoryTitle('Publishing and Previewing');
 
-    // Make some changes before publishing the story.
+    // Make some changes _before_ publishing the story.
     await addTextElement();
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toClick('button', { text: 'Dismiss' });
-    await expect(page).toMatchElement('button', {
-      text: 'Switch to Draft',
-    });
+    await publishStory();
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
@@ -91,14 +95,9 @@ describe('Author User', () => {
 
     await insertStoryTitle('Autosaving and Previewing');
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toClick('button', { text: 'Dismiss' });
-    await expect(page).toMatchElement('button', {
-      text: 'Switch to Draft',
-    });
+    await publishStory();
 
-    // Make some changes after publishing so previewing will cause an autosave.
+    // Make some changes _after_ publishing so previewing will cause an autosave.
     await addTextElement();
 
     const editorPage = page;
