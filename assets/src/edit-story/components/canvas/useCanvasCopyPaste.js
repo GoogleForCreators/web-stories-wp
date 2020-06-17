@@ -32,36 +32,21 @@ import {
 } from '../../utils/copyPaste';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import useInsertElement from './useInsertElement';
+import useAddNewElements from './useAddNewElements';
 import useUploadWithPreview from './useUploadWithPreview';
 
 function useCanvasGlobalKeys() {
-  const {
-    currentPage,
-    selectedElements,
-    addElements,
-    deleteSelectedElements,
-    updateCurrentPageProperties,
-    deleteElementById,
-    combineElements,
-  } = useStory(
+  const addNewElements = useAddNewElements();
+
+  const { currentPage, selectedElements, deleteSelectedElements } = useStory(
     ({
       state: { currentPage, selectedElements },
-      actions: {
-        addElements,
-        deleteSelectedElements,
-        updateCurrentPageProperties,
-        deleteElementById,
-        combineElements,
-      },
+      actions: { deleteSelectedElements },
     }) => {
       return {
         currentPage,
         selectedElements,
-        addElements,
         deleteSelectedElements,
-        updateCurrentPageProperties,
-        deleteElementById,
-        combineElements,
       };
     }
   );
@@ -90,54 +75,9 @@ function useCanvasGlobalKeys() {
   const elementPasteHandler = useBatchingCallback(
     (content) => {
       const elements = processPastedElements(content, currentPage);
-      if (elements.length === 0) {
-        return false;
-      }
-
-      // If a bg element is pasted, handle that first
-      const newBackgroundElement = elements.find(
-        ({ isBackground }) => isBackground
-      );
-      if (newBackgroundElement) {
-        const existingBgElement = currentPage.elements[0];
-        if (newBackgroundElement.isDefaultBackground) {
-          // The user has pasted a non-media background from another page:
-          // Delete existing background (if any) and then update page
-          // with this default element background color
-          if (!existingBgElement.isDefaultBackground) {
-            deleteElementById({ elementId: existingBgElement.id });
-          }
-          updateCurrentPageProperties({
-            properties: {
-              backgroundColor: newBackgroundElement.backgroundColor,
-            },
-          });
-        } else {
-          // The user has pasted a media background from another page:
-          // Merge this element into the existing background element on this page
-          combineElements({
-            firstElement: newBackgroundElement,
-            secondId: existingBgElement.id,
-          });
-        }
-      }
-
-      // Then add all regular elements if any exist
-      const nonBackgroundElements = elements.filter(
-        ({ isBackground }) => !isBackground
-      );
-      if (nonBackgroundElements.length) {
-        addElements({ elements: nonBackgroundElements });
-      }
-      return true;
+      return addNewElements(elements);
     },
-    [
-      addElements,
-      currentPage,
-      updateCurrentPageProperties,
-      combineElements,
-      deleteElementById,
-    ]
+    [addNewElements, currentPage]
   );
 
   const rawPasteHandler = useCallback(
