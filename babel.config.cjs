@@ -47,7 +47,7 @@ module.exports = function (api) {
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
       '@babel/plugin-transform-react-jsx',
-      'babel-plugin-styled-components',
+      'styled-components',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-proposal-private-methods', { loose: true }],
       'babel-plugin-inline-json-import',
@@ -56,6 +56,11 @@ module.exports = function (api) {
     env: {
       production: {
         plugins: ['transform-react-remove-prop-types'],
+      },
+      // TODO: Does this affect Jest?
+      // See https://jestjs.io/docs/uk/troubleshooting#coveragepathignorepatterns-seems-to-not-have-any-effect
+      test: {
+        plugins: ['istanbul'],
       },
     },
   };

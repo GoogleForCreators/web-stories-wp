@@ -303,7 +303,6 @@
         "karma.config.cjs",
         "webpack.*.cjs",
         ".storybook/*.cjs",
-        ".storybook/*.js",
         "tests/js/*.js",
         "tests/e2e/*.js",
         "tests/e2e/config/*.js"
