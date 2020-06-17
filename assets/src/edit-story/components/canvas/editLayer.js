@@ -41,12 +41,12 @@ const LayerWithGrayout = styled(Layer)`
 const EditPageArea = withOverlay(PageArea);
 
 function EditLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement: editingElementId },
-  } = useCanvas();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+  const { editingElementId } = useCanvas((state) => ({
+    editingElementId: state.state.editingElement,
+  }));
 
   const editingElement =
     editingElementId &&
@@ -65,9 +65,9 @@ function EditLayerForElement({ element }) {
   const pageAreaRef = useRef(null);
   const { editModeGrayout } = getDefinitionForType(element.type);
 
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const focusCanvas = useFocusCanvas();
 

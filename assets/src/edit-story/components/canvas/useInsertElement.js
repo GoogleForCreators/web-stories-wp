@@ -32,12 +32,12 @@ import useFocusCanvas from './useFocusCanvas';
 const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 function useInsertElement() {
-  const {
-    actions: { addElement },
-  } = useStory();
-  const {
-    actions: { uploadVideoPoster },
-  } = useMedia();
+  const { addElement } = useStory((state) => ({
+    addElement: state.actions.addElement,
+  }));
+  const { uploadVideoPoster } = useMedia((state) => ({
+    uploadVideoPoster: state.actions.uploadVideoPoster,
+  }));
 
   /**
    * @param {Object} resource The resource to verify/update.
@@ -75,9 +75,9 @@ function useInsertElement() {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
-            videoEl.play();
+            videoEl.play().catch(() => {});
           }
-        }, 0);
+        });
       }
       focusCanvas();
       return element;

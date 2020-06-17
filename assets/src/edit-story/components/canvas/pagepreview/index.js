@@ -72,9 +72,9 @@ const PreviewWrapper = styled.div`
 `;
 
 function PagePreview({ index, ...props }) {
-  const {
-    state: { pages },
-  } = useStory();
+  const { pages } = useStory((state) => ({
+    pages: state.state.pages,
+  }));
   const page = pages[index];
   const { backgroundColor } = page;
   const { width: thumbWidth, height: thumbHeight } = props;

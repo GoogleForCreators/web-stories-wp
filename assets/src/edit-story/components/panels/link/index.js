@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useDebouncedCallback } from 'use-debounce';
 import { Media, Row, Button } from '../../form';
-import { createLink, getLinkFromElement } from '../../link';
+import { createLink, getLinkFromElement } from '../../elementLink';
 import { useAPI } from '../../../app/api';
 import { useSnackbar } from '../../../app/snackbar';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
@@ -67,9 +67,9 @@ const CloseIcon = styled(Close)`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const selectedElement = selectedElements[0];
   const defaultLink = useMemo(

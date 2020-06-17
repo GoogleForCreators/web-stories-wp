@@ -85,7 +85,7 @@ class Story_Post_Type {
 				'labels'                => [
 					'name'                     => _x( 'Stories', 'post type general name', 'web-stories' ),
 					'singular_name'            => _x( 'Story', 'post type singular name', 'web-stories' ),
-					'add_new'                  => _x( 'New', 'story', 'web-stories' ),
+					'add_new'                  => _x( 'Add New', 'story', 'web-stories' ),
 					'add_new_item'             => __( 'Add New Story', 'web-stories' ),
 					'edit_item'                => __( 'Edit Story', 'web-stories' ),
 					'new_item'                 => __( 'New Story', 'web-stories' ),
@@ -366,20 +366,77 @@ class Story_Post_Type {
 			],
 			'flags'  => [
 				/**
+				 * Description: Enables user facing animations.
+				 * Author: @mariano-formidable
+				 * Issue: 1903
+				 * Creation date: 2020-06-08
+				 */
+				'enableAnimation'              => false,
+				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu' => false,
+				'mediaDropdownMenu'            => false,
 				/**
 				 * Description: Flag for new font picker with typeface previews in style panel.
 				 * Author: @carlos-kelly
 				 * Issue: #1300
 				 * Creation date: 2020-06-02
 				 */
-				'newFontPicker'     => false,
+				'newFontPicker'                => false,
+				/**
+				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
+				 * Author: @dmmulroy
+				 * Issue: #2094
+				 * Creation date: 2020-06-04
+				 */
+				'showKeyboardShortcutsButton'  => false,
+				/**
+				 * Description: Flag for hiding/enabling text sets.
+				 * Author: @dmmulroy
+				 * Issue: #2097
+				 * Creation date: 2020-06-04
+				 */
+				'showTextSets'                 => false,
+				/**
+				 * Description: Flag for hiding/enabling the pre publish tab.
+				 * Author: @dmmulroy
+				 * Issue: #2095
+				 * Creation date: 2020-06-04
+				 */
+				'showPrePublishTab'            => false,
+				/**
+				 * Description: Flag for displaying the animation tab/panel.
+				 * Author: @dmmulroy
+				 * Issue: #2092
+				 * Creation date: 2020-06-04
+				 */
+				'showAnimationTab'             => false,
+				/**
+				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
+				 * Author: @dmmulroy
+				 * Issue: #2044
+				 * Creation date: 2020-06-04
+				 */
+				'showTextMagicAndHelperMode'   => false,
+				/**
+				 * Description: Flag for hiding/enabling the search input on the text and shapes panes.
+				 * Author: @dmmulroy
+				 * Issue: #2098
+				 * Creation date: 2020-06-04
+				 */
+				'showTextAndShapesSearchInput' => false,
+				/**
+				 * Description: Flag for the 3P Media tab.
+				 * Author: @diegovar
+				 * Issue: #2508
+				 * Creation date: 2020-06-17
+				 */
+				'media3pTab'                   => false,
 			],
+
 		];
 
 		return $settings;

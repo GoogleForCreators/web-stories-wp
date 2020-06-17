@@ -31,7 +31,8 @@ function CustomStyles() {
                 overflow: visible;
               }
 
-              .page-fullbleed-area {
+              .page-fullbleed-area,
+              .page-background-overlay-area {
                 position: absolute;
                 overflow: hidden;
                 width: 100%;
@@ -52,7 +53,7 @@ function CustomStyles() {
                 margin: auto 0;
               }
 
-              .wrapper {
+              .mask {
                 position: absolute;
                 overflow: hidden;
               }

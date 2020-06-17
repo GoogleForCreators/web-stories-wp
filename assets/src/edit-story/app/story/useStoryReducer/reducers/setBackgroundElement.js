@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../utils/backgroundOverlay';
+import objectWithout from '../../../../utils/objectWithout';
 import { moveArrayElement } from './utils';
 
 /**
@@ -55,20 +55,16 @@ function setBackgroundElement(state, { elementId }) {
 
     const defaultBackgroundElement = page.defaultBackgroundElement;
 
-    // Unset isBackground for the element, too.
+    // Unset isBackground and backgroundOverlay for the element, too.
     const elementsWithoutBackground = page.elements.map((element) => {
       if (element.isBackground) {
-        return {
-          ...element,
-          isBackground: false,
-        };
+        return objectWithout(element, ['backgroundOverlay', 'isBackground']);
       }
       return element;
     });
     newPage = {
       ...page,
       elements: [defaultBackgroundElement, ...elementsWithoutBackground],
-      backgroundOverlay: OverlayType.NONE,
     };
   } else {
     // Does the element even exist or is it already background
@@ -124,7 +120,6 @@ function setBackgroundElement(state, { elementId }) {
     newPage = {
       ...page,
       defaultBackgroundElement,
-      backgroundOverlay: OverlayType.NONE,
       elements: newElements,
     };
   }

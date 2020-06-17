@@ -97,11 +97,13 @@ module.exports = function (config) {
         slowMo: config.slowMo || 0,
         devtools: config.devtools || false,
         snapshots: config.snapshots || false,
-        // @todo: consider testing on a couple of canonical viewport sizes.
-        // Per Figma, the canonical sizes are:
-        // Desktop: 1920:1080
-        // iPad: 1024:680
-        defaultViewport: null,
+        defaultViewport: getViewport(config.viewport),
+      },
+    },
+
+    client: {
+      jasmine: {
+        timeoutInterval: 10000,
       },
     },
 
@@ -117,3 +119,31 @@ module.exports = function (config) {
     failOnEmptyTestSuite: false,
   });
 };
+
+/**
+ * Returns a viewport object for  a given flag.
+ *
+ * The following viewports are supported:
+ * - default: no special viewport is used.
+ * - 1600:1000: empirical laptop size. Also used for screenshots.
+ *
+ * A custom W:H viewport is intentionally not supported to reduce number of
+ * test variations.
+ *
+ * Todo: Support the viewport sizes from Figma:
+ * - 1920:1080: the canonical desktop size.
+ * - 1024:680: the canonical iPad size.
+ *
+ * @param {string} flag Viewport flag.
+ * @return {{width: number, height: number}|null} Viewport.
+ */
+function getViewport(flag) {
+  if (!flag) {
+    // @todo: switch to 1600:1000 default once Percy is fully launched.
+    return null;
+  }
+  if (flag === '1600:1000') {
+    return { width: 1600, height: 1000 };
+  }
+  throw new Error(`Unsupported viewport: "${flag}"`);
+}

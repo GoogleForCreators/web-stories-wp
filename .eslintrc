@@ -249,17 +249,23 @@
       "files": [
         "**/karma/**/*.js"
       ],
+      "extends": [
+        "plugin:jasmine/recommended"
+      ],
       "plugins": [
         "jsx-a11y",
         "header",
-        "testing-library"
+        "testing-library",
+        "jasmine"
       ],
       "env": {
         "jasmine": true
       },
       "rules": {
         "testing-library/no-debug": "error",
-        "testing-library/no-dom-import": "error"
+        "testing-library/no-dom-import": "error",
+        "jasmine/new-line-before-expect": "off",
+        "jasmine/no-disabled-tests": "error"
       },
       "globals": {
         "karmaPuppeteer": "readonly",

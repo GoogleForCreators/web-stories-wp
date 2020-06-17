@@ -28,14 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import Link from '../../link';
 import { Row, TextInput, HelperText } from '../../form';
 import { useStory } from '../../../app/story';
 import { SimplePanel } from '../../panels/panel';
 import cleanForSlug from '../../../utils/cleanForSlug';
-
-const Permalink = styled.a`
-  color: ${({ theme }) => theme.colors.link};
-`;
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -47,12 +44,14 @@ const BoxedTextInput = styled(TextInput)`
 `;
 
 function SlugPanel() {
-  const {
-    state: {
-      story: { slug, link, permalinkConfig },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { slug, link, permalinkConfig, updateStory } = useStory(
+    ({
+      state: {
+        story: { slug, link, permalinkConfig },
+      },
+      actions: { updateStory },
+    }) => ({ slug, link, permalinkConfig, updateStory })
+  );
   const handleChangeValue = useCallback(
     (value) => {
       updateStory({
@@ -78,9 +77,9 @@ function SlugPanel() {
         />
       </Row>
       <HelperText>
-        <Permalink rel="noopener noreferrer" target="_blank" href={link}>
+        <Link rel="noopener noreferrer" target="_blank" href={link}>
           {displayLink}
-        </Permalink>
+        </Link>
       </HelperText>
     </SimplePanel>
   );

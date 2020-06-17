@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import videoIdToId from '../v0013_videoIdToId';
+import blobsToSingleBlob from '../v0024_blobsToSingleBlob';
 
 describe('blobsToSingleBlob', () => {
   it('should migrate elements with old blobs to a single blob type', () => {
     expect(
-      videoIdToId({
+      blobsToSingleBlob({
         _test: 'story',
         pages: [
           {

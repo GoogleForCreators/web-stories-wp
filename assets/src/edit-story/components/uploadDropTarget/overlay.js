@@ -37,7 +37,9 @@ const Overlay = styled.div`
 `;
 
 function UploadDropTargetOverlayWithRef(props, ref) {
-  const { isDragging } = useUploadDropTarget();
+  const { isDragging } = useUploadDropTarget((state) => ({
+    isDragging: state.isDragging,
+  }));
   if (!isDragging) {
     return null;
   }
