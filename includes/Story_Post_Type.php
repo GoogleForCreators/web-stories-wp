@@ -427,7 +427,7 @@ class Story_Post_Type {
 				 * Issue: #2508
 				 * Creation date: 2020-06-17
 				 */
-				'thirdPartyMediaTab'           => false,
+				'media3pTab'                   => false,
 			],
 
 		];
