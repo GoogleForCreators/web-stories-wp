@@ -22,7 +22,7 @@ import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { createNewStory, previewStory } from '../utils';
+import { createNewStory, previewStory } from '../../utils';
 
 async function insertStoryTitle(title) {
   await expect(page).toMatchElement('input[placeholder="Add title"]');
