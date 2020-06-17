@@ -52,7 +52,7 @@ const StorybookGridItem = (
         targetAction: '',
         label: 'Preview',
       }}
-      pageSize={{ width: 212, height: 377.9, fullBleedHeight: 58.94 }}
+      pageSize={{ width: 212, height: 377.9, dangerZoneHeight: 58.94 }}
     >
       <Card>{text('Sample Story Content', 'Sample Story')}</Card>
     </CardPreviewContainer>
@@ -71,7 +71,7 @@ const itemArray = new Array(12).fill(StorybookGridItem);
 
 export const _default = () => {
   return (
-    <CardGrid pageSize={{ width: 212, height: 377.9, fullBleedHeight: 58.94 }}>
+    <CardGrid pageSize={{ width: 212, height: 377.9, dangerZoneHeight: 58.94 }}>
       {itemArray.map((gridItem, index) => (
         <div key={index}>{gridItem}</div>
       ))}

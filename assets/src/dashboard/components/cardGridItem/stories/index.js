@@ -47,7 +47,7 @@ const Card = styled.div`
 
 export const _default = () => {
   return (
-    <CardGrid pageSize={{ width: 212, height: 377.9, fullBleedHeight: 58.94 }}>
+    <CardGrid pageSize={{ width: 212, height: 377.9, dangerZoneHeight: 58.94 }}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -58,7 +58,7 @@ export const _default = () => {
             targetAction: '',
             label: 'Preview',
           }}
-          pageSize={{ width: 212, height: 377.9, fullBleedHeight: 58.94 }}
+          pageSize={{ width: 212, height: 377.9, dangerZoneHeight: 58.94 }}
           story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
@@ -78,7 +78,7 @@ export const _default = () => {
 
 export const _publishedStory = () => {
   return (
-    <CardGrid pageSize={{ width: 212, height: 377.9, fullBleedHeight: 58.94 }}>
+    <CardGrid pageSize={{ width: 212, height: 377.9, dangerZoneHeight: 58.94 }}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -89,7 +89,7 @@ export const _publishedStory = () => {
             targetAction: '',
             label: 'Preview',
           }}
-          pageSize={{ width: 212, height: 377.9, fullBleedHeight: 58.94 }}
+          pageSize={{ width: 212, height: 377.9, dangerZoneHeight: 58.94 }}
           story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>

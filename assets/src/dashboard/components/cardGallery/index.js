@@ -22,12 +22,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
  * Internal dependencies
  */
 import { UnitsProvider } from '../../../edit-story/units';
-import {
-  PAGE_RATIO,
-  STORY_PAGE_STATE,
-  TWO_THIRDS_RATIO,
-} from '../../constants';
+import { STORY_PAGE_STATE } from '../../constants';
 import { StoryPropType } from '../../types';
+import { getHeightOptions } from '../../utils/usePagePreviewSize';
 import PreviewPage from '../previewPage';
 import {
   ActiveCard,
@@ -59,27 +56,29 @@ function CardGallery({ story }) {
     }
     const activeCardWidth = ACTIVE_CARD_WIDTH * dimensionMultiplier;
     const miniCardWidth = MINI_CARD_WIDTH * dimensionMultiplier;
+    const activeHeightOptions = getHeightOptions(activeCardWidth);
+    const miniCardHeightOptions = getHeightOptions(miniCardWidth);
     return {
       activeCardSize: {
         width: activeCardWidth,
-        height: activeCardWidth / PAGE_RATIO,
-        fullBleedHeight:
-          activeCardWidth / PAGE_RATIO - activeCardWidth / TWO_THIRDS_RATIO,
+        height: activeHeightOptions.fullBleedHeight,
+        dangerZoneHeight: activeHeightOptions.dangerZoneHeight,
       },
       miniCardSize: {
         width: miniCardWidth,
-        height: miniCardWidth / PAGE_RATIO,
-        fullBleedHeight:
-          miniCardWidth / PAGE_RATIO - miniCardWidth / TWO_THIRDS_RATIO,
+        height: miniCardHeightOptions.fullBleedHeight,
+        dangerZoneHeight: miniCardHeightOptions.dangerZoneHeight,
       },
       miniWrapperSize: {
         width: miniCardWidth + CARD_WRAPPER_BUFFER,
-        height: miniCardWidth / PAGE_RATIO + CARD_WRAPPER_BUFFER,
+        height:
+          miniCardHeightOptions.fullBleedHeight +
+          miniCardHeightOptions.dangerZoneHeight +
+          CARD_WRAPPER_BUFFER,
       },
       gap: CARD_GAP * dimensionMultiplier,
     };
   }, [dimensionMultiplier]);
-
   const handleMiniCardClick = useCallback((index) => {
     setActivePageIndex(index);
   }, []);

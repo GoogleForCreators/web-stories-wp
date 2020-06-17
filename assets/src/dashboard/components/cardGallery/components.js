@@ -50,10 +50,10 @@ export const MiniCardWrapper = styled.div`
 `;
 
 export const MiniCard = styled.div(
-  ({ width, height, theme }) => `
+  ({ width, height, dangerZoneHeight, theme }) => `
     position: relative;
     width: ${width}px;
-    height: ${height}px;
+    height: ${height + dangerZoneHeight}px;
     overflow: hidden;
     cursor: pointer;
     border: ${theme.storyPreview.border};
@@ -61,10 +61,10 @@ export const MiniCard = styled.div(
 );
 
 export const ActiveCard = styled.div(
-  ({ height, width, theme }) => `
+  ({ height, width, dangerZoneHeight, theme }) => `
     position: relative;
     width: ${width}px;
-    height: ${height}px;
+    height: ${height + dangerZoneHeight}px;
     overflow: hidden;
     border: ${theme.storyPreview.border};
     box-shadow: ${theme.storyPreview.shadow};

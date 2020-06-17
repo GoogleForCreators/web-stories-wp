@@ -31,7 +31,7 @@ import {
 } from '../constants';
 import { useResizeEffect } from './';
 
-const getHeightOptions = (width) => {
+export const getHeightOptions = (width) => {
   const fullBleedHeight = width / PAGE_RATIO;
   const twoThirdsRatio = width / TWO_THIRDS_RATIO;
 
