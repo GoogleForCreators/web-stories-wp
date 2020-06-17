@@ -16,9 +16,7 @@
 /**
  * Internal dependencies
  */
-import Provider from './provider';
 import Container from './container';
 import { Wrapper } from './components';
-import useAlertContext from './useAlertContext';
 
-export const Alert = { Provider, Container, useAlertContext, Wrapper };
+export const Alert = { Container, Wrapper };

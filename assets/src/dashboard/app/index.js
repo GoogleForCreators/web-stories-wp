@@ -27,7 +27,6 @@ import PropTypes from 'prop-types';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-import { Alert } from '../components/alert';
 import { APP_ROUTES, NESTED_APP_ROUTES } from '../constants';
 
 import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
@@ -40,7 +39,6 @@ import {
   ExploreTemplatesView,
   SavedTemplatesView,
   StoryAnimTool,
-  ErrorQueue,
 } from './views';
 
 const AppContent = () => {
@@ -84,10 +82,6 @@ const AppContent = () => {
           component={<StoryAnimTool />}
         />
       </PageContent>
-
-      <Alert.Provider>
-        <ErrorQueue />
-      </Alert.Provider>
     </AppFrame>
   );
 };
