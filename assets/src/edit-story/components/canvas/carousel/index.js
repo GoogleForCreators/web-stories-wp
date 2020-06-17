@@ -122,10 +122,10 @@ const buttonDimensions = { width: '24', height: '24' };
 const StyledGridViewButton = styled(GridViewButton).attrs(buttonDimensions)``;
 
 const SafeZoneButton = styled(SafeZone).attrs(buttonDimensions)`
-  ${({ active }) =>
+  ${({ active, theme }) =>
     active &&
     css`
-      background: rgba(255, 255, 255, 0.1);
+      background: ${rgba(theme.colors.bg.v13, 0.1)};
     `}
   margin-bottom: 12px;
 `;
