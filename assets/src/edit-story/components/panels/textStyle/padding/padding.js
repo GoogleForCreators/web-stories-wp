@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import setMinMax from '../../../../utils/setMinMax';
+import clamp from '../../../../utils/clamp';
 import { Label, Row, MULTIPLE_VALUE, usePresubmitHandler } from '../../../form';
 import { useCommonObjectValue } from '../../utils';
 import LockedPaddingControls from './locked';
@@ -69,8 +69,8 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
     ({ padding: { horizontal, vertical, ...rest } }) => ({
       padding: {
         ...rest,
-        horizontal: setMinMax(horizontal, MIN_MAX.HORIZONTAL_PADDING),
-        vertical: setMinMax(vertical, MIN_MAX.VERTICAL_PADDING),
+        horizontal: clamp(horizontal, MIN_MAX.HORIZONTAL_PADDING),
+        vertical: clamp(vertical, MIN_MAX.VERTICAL_PADDING),
       },
     }),
     []

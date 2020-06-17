@@ -45,7 +45,7 @@ import {
 import { getCommonValue } from '../utils';
 import { useFont } from '../../../app/font';
 import stripHTML from '../../../utils/stripHTML';
-import setMinMax from '../../../utils/setMinMax';
+import clamp from '../../../utils/clamp';
 import validateMinMax from '../../../utils/validateMinMax';
 import useRichTextFormatting from './useRichTextFormatting';
 
@@ -99,7 +99,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
   const setLetterSpacingMinMax = useCallback(
     (value) => {
       if (!validateMinMax(value, MIN_MAX.LETTER_SPACING)) {
-        return handleSetLetterSpacing(setMinMax(value, MIN_MAX.LETTER_SPACING));
+        return handleSetLetterSpacing(clamp(value, MIN_MAX.LETTER_SPACING));
       }
 
       return handleSetLetterSpacing(value);
@@ -109,9 +109,10 @@ function StylePanel({ selectedElements, pushUpdate }) {
 
   usePresubmitHandler(({ lineHeight: newLineHeight }) => {
     return {
-      lineHeight: setMinMax(newLineHeight, MIN_MAX.LINE_HEIGHT),
+      lineHeight: clamp(newLineHeight, MIN_MAX.LINE_HEIGHT),
     };
   }, []);
+  console.log({lineHeight})
 
   return (
     <>

@@ -29,7 +29,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import setMinMax from '../../../utils/setMinMax';
+import clamp from '../../../utils/clamp';
 import { useStory } from '../../../app/story';
 import { Switch, Numeric, Row, Label } from '../../form';
 import RangeInput from '../../rangeInput';
@@ -75,7 +75,7 @@ function PageAdvancementPanel() {
   );
 
   const [updateDefaultPageDuration] = useDebouncedCallback((value) => {
-    const newValue = setMinMax(value, MIN_MAX.PAGE_DURATION);
+    const newValue = clamp(value, MIN_MAX.PAGE_DURATION);
     if (value !== newValue) {
       setDuration(newValue);
     }

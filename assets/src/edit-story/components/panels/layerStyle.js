@@ -28,7 +28,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import setMinMax from '../../utils/setMinMax';
+import clamp from '../../utils/clamp';
 import { Row, Numeric, usePresubmitHandler } from '../form';
 import { SimplePanel } from './panel';
 import { getCommonValue } from './utils';
@@ -58,7 +58,7 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
         ? MIN_MAX.OPACITY.MAX
         : newOpacity;
     return {
-      opacity: setMinMax(value, MIN_MAX.OPACITY),
+      opacity: clamp(value, MIN_MAX.OPACITY),
     };
   }, []);
 

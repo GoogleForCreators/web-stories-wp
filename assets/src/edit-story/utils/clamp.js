@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const setMinMax = (value, { MIN, MAX }) => Math.min(Math.max(value, MIN), MAX);
 
-export default setMinMax;
+const clamp = (value, { MIN, MAX }) => Math.min(Math.max(value, MIN), MAX);
+
+export default clamp;

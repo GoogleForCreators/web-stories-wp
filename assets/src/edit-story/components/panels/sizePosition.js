@@ -42,7 +42,7 @@ import { Lock as Locked, Unlock as Unlocked } from '../../icons';
 
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
-import setMinMax from '../../utils/setMinMax';
+import clamp from '../../utils/clamp';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 import FlipControls from './shared/flipControls';
@@ -156,8 +156,8 @@ function SizePositionPanel({
         return updateForResizeEvent(
           newElement,
           direction,
-          setMinMax(newWidth, MIN_MAX.WIDTH),
-          setMinMax(newHeight, MIN_MAX.HEIGHT)
+          clamp(newWidth, MIN_MAX.WIDTH),
+          clamp(newHeight, MIN_MAX.HEIGHT)
         );
       }
 
@@ -166,12 +166,12 @@ function SizePositionPanel({
         const ratio = oldWidth / oldHeight;
         if (!isResizeWidth) {
           return {
-            width: setMinMax(dataPixels(newHeight * ratio), MIN_MAX.WIDTH),
+            width: clamp(dataPixels(newHeight * ratio), MIN_MAX.WIDTH),
           };
         }
         if (!isResizeHeight) {
           return {
-            height: setMinMax(dataPixels(newWidth / ratio), MIN_MAX.HEIGHT),
+            height: clamp(dataPixels(newWidth / ratio), MIN_MAX.HEIGHT),
           };
         }
       }
@@ -190,10 +190,10 @@ function SizePositionPanel({
   const setDimensionMinMax = useCallback(
     (value, ratio, minmax) => {
       if (lockAspectRatio && value >= minmax.MAX) {
-        return setMinMax(minmax.MAX * ratio, minmax);
+        return clamp(minmax.MAX * ratio, minmax);
       }
 
-      return setMinMax(value, minmax);
+      return clamp(value, minmax);
     },
     [lockAspectRatio]
   );

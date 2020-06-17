@@ -36,7 +36,7 @@ import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
-import setMinMax from '../../../utils/setMinMax';
+import clamp from '../../../utils/clamp';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 
@@ -138,7 +138,7 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   usePresubmitHandler(
     ({ fontSize: newFontSize }) => ({
-      fontSize: setMinMax(newFontSize, MIN_MAX.FONT_SIZE),
+      fontSize: clamp(newFontSize, MIN_MAX.FONT_SIZE),
     }),
     []
   );
