@@ -53,7 +53,8 @@ const Name = styled.span`
   line-height: 24px;
 `;
 
-const Radio = styled.input`
+// Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
+const Radio = styled.input.attrs({ className: 'mousetrap' })`
   opacity: 0;
   position: absolute;
   :focus + ${Label} {
