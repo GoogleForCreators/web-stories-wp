@@ -35,8 +35,7 @@ describe('Background Copy Paste integration', () => {
     fixture.restore();
   });
 
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  fit('should correctly copy pattern background to page with pattern background', async () => {
+  it('should correctly copy pattern background to page with pattern background', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -62,12 +61,7 @@ describe('Background Copy Paste integration', () => {
     await clickBackgroundElement();
     await fixture.events.clipboard.copy();
     await gotoPage(2);
-
-    await karmaPause();
-
     await fixture.events.clipboard.paste();
-
-    await karmaPause();
 
     // Assert - validate that page 2 now has the correct background color and only 1 element
     await gotoPage(2);
@@ -76,12 +70,9 @@ describe('Background Copy Paste integration', () => {
       'rgb(255, 0, 0)'
     );
     expect(await getNumElements()).toBe(1);
-
-    await karmaPause();
   });
 
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy pattern background to page with image', async () => {
+  it('should correctly copy pattern background to page with image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -121,8 +112,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy image to page without image', async () => {
+  it('should correctly copy image to page without image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -167,8 +157,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getCanvasBackgroundElement()).toBeEmpty();
   });
 
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy image to page with existing image', async () => {
+  it('should correctly copy image to page with existing image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -187,17 +176,14 @@ describe('Background Copy Paste integration', () => {
     );
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'linear-gradient'
+      'linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%)'
     );
     expect(await getNumElements()).toBe(1);
     await gotoPage(2);
-    expect(await getCanvasBackgroundImage()).toHaveProperty(
-      'src',
-      /saturn.jpg/
-    );
+    expect(await getCanvasBackgroundImage()).toHaveProperty('src', /saturn/);
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'radial-gradient'
+      'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.6) 100%)'
     );
     expect(await getNumElements()).toBe(1);
 
@@ -216,7 +202,7 @@ describe('Background Copy Paste integration', () => {
     );
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'linear-gradient'
+      'linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%)'
     );
     expect(await getNumElements()).toBe(1);
 
@@ -255,9 +241,12 @@ describe('Background Copy Paste integration', () => {
     // Then type hex combo
     await fixture.events.keyboard.type(hex);
   }
-  async function setOverlay(overlayName) {
-    const overlayButton = getButtonByAriaLabel(overlayName);
-    await fixture.events.click(overlayButton);
+  function setOverlay(overlayName) {
+    const overlayCheckbox = getInputByAriaLabel(
+      new RegExp(`set overlay: ${overlayName}`, 'i')
+    );
+    const overlayLabel = overlayCheckbox.parentNode;
+    overlayLabel.click();
   }
   async function addBackgroundImage(imageAlt) {
     // Click img in library to add it to page
@@ -279,12 +268,14 @@ describe('Background Copy Paste integration', () => {
   async function getCanvasBackgroundElement() {
     const wrapper = await getCanvasBackgroundElementWrapper();
     // TODO fix this selector
-    return wrapper.querySelector(`[class^="display__Element-"]`);
+    return wrapper.querySelector('[class^="display__Element-"]');
   }
   async function getCanvasBackgroundOverlay() {
     const wrapper = await getCanvasBackgroundElementWrapper();
     // TODO fix this selector
-    return wrapper.querySelector(`[class^="display__Element-"]`);
+    return wrapper.querySelector(
+      '[class^="displayElement__BackgroundOverlay-"]'
+    );
   }
   async function getCanvasBackgroundImage() {
     const wrapper = await getCanvasBackgroundElementWrapper();
@@ -335,7 +326,7 @@ describe('Background Copy Paste integration', () => {
 
   function getMediaElement(imageAlt) {
     return getElementByQueryAndMatcher(
-      '[data-testid=mediaElement]',
+      '[data-testid="mediaElement"] img',
       getByAttribute('alt', imageAlt)
     );
   }
@@ -375,7 +366,7 @@ describe('Background Copy Paste integration', () => {
 
   function getPageArea() {
     return fixture.querySelector(
-      `[data-testid="fullbleed"] [class^="layout__PageAreaWithOverflow"]`
+      '[data-testid="fullbleed"] [class^="layout__PageAreaWithOverflow"]'
     );
   }
 });
@@ -408,7 +399,10 @@ const customMatchers = {
   toHaveProperty: (util, customEqualityTesters) => ({
     compare: function (element, property, expected) {
       const actual = element?.[property] ?? '';
-      const pass = util.equals(actual, expected, customEqualityTesters);
+      const pass =
+        typeof expected === 'string'
+          ? util.equals(actual, expected, customEqualityTesters)
+          : expected.test(actual);
       return {
         pass,
         message: pass
@@ -420,5 +414,5 @@ const customMatchers = {
 };
 
 function getComputedStyle(element) {
-  return window.getComputedStyle(element);
+  return element ? window.getComputedStyle(element) : {};
 }
