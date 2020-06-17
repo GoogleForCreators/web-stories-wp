@@ -22,7 +22,11 @@ import styled, { keyframes } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { KEYBOARD_USER_SELECTOR, Z_INDEX } from '../../constants';
+import {
+  ALERT_SEVERITIES,
+  KEYBOARD_USER_SELECTOR,
+  Z_INDEX,
+} from '../../constants';
 import { TypographyPresets } from '../typography';
 
 const slideIn = keyframes`
@@ -34,13 +38,13 @@ const slideIn = keyframes`
 	}
 `;
 
-const getColor = (severity = 'default') => {
+const getColor = (severity = ALERT_SEVERITIES.DEFAULT) => {
   const alertBackgrounds = {
-    error: 'danger',
-    warning: 'warning',
-    info: 'bluePrimary',
-    success: 'success',
-    default: 'bluePrimary',
+    [ALERT_SEVERITIES.ERROR]: 'danger',
+    [ALERT_SEVERITIES.WARNING]: 'warning',
+    [ALERT_SEVERITIES.INFO]: 'bluePrimary',
+    [ALERT_SEVERITIES.SUCCESS]: 'success',
+    [ALERT_SEVERITIES.DEFAULT]: 'bluePrimary',
   };
   return alertBackgrounds[severity];
 };
@@ -62,6 +66,7 @@ export const AlertContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 10px 20px;
+  margin-top: 20px;
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme, severity }) =>
     theme.colors[getColor(severity)]};

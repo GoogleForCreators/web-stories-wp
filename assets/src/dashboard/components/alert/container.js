@@ -28,6 +28,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Close } from '../../icons';
+import { AlertSeveritiesPropType } from '../../types';
 import { AlertContainer, AlertText, DismissButton } from './components';
 
 const Alert = ({ message, severity, handleDismissClick }) => {
@@ -50,7 +51,7 @@ const Alert = ({ message, severity, handleDismissClick }) => {
 
 Alert.propTypes = {
   message: PropTypes.string.isRequired,
-  severity: PropTypes.oneOf(['error', 'warning', 'info', 'success']),
+  severity: AlertSeveritiesPropType,
   handleDismissClick: PropTypes.func,
 };
 

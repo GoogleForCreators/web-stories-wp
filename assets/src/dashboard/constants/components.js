@@ -46,3 +46,11 @@ export const KEYS = {
   UP: 'ArrowUp',
   DOWN: 'ArrowDown',
 };
+
+export const ALERT_SEVERITIES = {
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+  SUCCESS: 'success',
+  DEFAULT: 'default',
+};
