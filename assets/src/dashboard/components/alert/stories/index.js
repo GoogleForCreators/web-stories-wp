@@ -59,3 +59,12 @@ export const _default = () => {
     </Wrapper>
   );
 };
+
+export const justAlert = () => {
+  return (
+    <AlertContainer
+      message={text('warningMessage', 'this is a warning')}
+      severity={ALERT_SEVERITIES.WARNING}
+    />
+  );
+};
