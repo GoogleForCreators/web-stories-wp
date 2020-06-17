@@ -30,23 +30,33 @@ import { STORY_PAGE_STATE } from '../constants';
 import { PageSizePropType } from '../types';
 import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 
-const PreviewWrapper = styled.div`
-  overflow: initial;
-  position: relative;
+/**
+ * A quick note about how height works with the 9:16 aspect ratio (FULLBLEED_RATIO)
+ * The unitProvider that sizes page previews still needs the 2:3 ratio,
+ * this is passed in here as pageSize.height. It is the true height of the story
+ * That said, we also need a height for the 9:16 that acts as the container for the story
+ * to allow for fullBleed overflow.
+ * So, you'll notice that containerHeight is getting used to wrap the PreviewSafeZone height
+ * to make sure that the overflow has the proper size.
+ * Reference edit-story/components/canvas/layout for more details
+ */
+const FullBleedPreviewWrapper = styled.div`
+  height: ${({ pageSize }) => `${pageSize.containerHeight}px`};
   width: 100%;
-  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
   background-color: white;
   ${({ background }) => generatePatternStyles(background)};
 `;
 
-const PageContainerSafeZone = styled.div`
+const PreviewSafeZone = styled.div`
   width: 100%;
-  height: ${({ pageSize }) =>
-    `${pageSize.height - pageSize.dangerZoneHeight}px`};
+  height: ${({ pageSize }) => `${pageSize.height}px`};
   overflow: visible;
   position: absolute;
   margin: 0;
-  top: ${({ pageSize }) => `${pageSize.dangerZoneHeight / 2}px`};
 `;
 
 function PreviewPageController({
@@ -84,8 +94,11 @@ function PreviewPageController({
   useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
 
   return (
-    <PreviewWrapper background={page.backgroundColor}>
-      <PageContainerSafeZone pageSize={pageSize}>
+    <FullBleedPreviewWrapper
+      pageSize={pageSize}
+      background={page.backgroundColor}
+    >
+      <PreviewSafeZone pageSize={pageSize}>
         {page.elements.map(({ id, ...rest }) => (
           <DisplayElement
             previewMode
@@ -95,8 +108,8 @@ function PreviewPageController({
             isAnimatable
           />
         ))}
-      </PageContainerSafeZone>
-    </PreviewWrapper>
+      </PreviewSafeZone>
+    </FullBleedPreviewWrapper>
   );
 }
 

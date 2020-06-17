@@ -61,7 +61,7 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
-import { PAGE_RATIO } from '../../../constants/pageStructure';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
@@ -79,7 +79,7 @@ const PreviewContainer = styled.div`
   position: relative;
   overflow: hidden;
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail / PAGE_RATIO}px;
+  height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   border: ${({ theme }) => theme.storyPreview.border};

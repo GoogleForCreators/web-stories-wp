@@ -25,20 +25,33 @@ import { useDebouncedCallback } from 'use-debounce';
 import theme from '../theme';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
-  PAGE_RATIO,
+  FULLBLEED_RATIO,
   WPBODY_ID,
   TWO_THIRDS_RATIO,
 } from '../constants';
 import { useResizeEffect } from './';
 
-export const getHeightOptions = (width) => {
-  const fullBleedHeight = width / PAGE_RATIO;
-  const twoThirdsRatio = width / TWO_THIRDS_RATIO;
+/**
+ * Here we need to calculate two heights for every pagePreview in use.
+ * 1. The height that is 9:16 aspect ratio, this is the default FULLBLEED_RATIO
+ * This height is used anywhere we need the height of the container holding a pagePreview.
+ * It is the true boundary for overflow.
+ * It is the 'fullBleedHeight'
+ * 2. The height for the actual story, used in our shared components with edit-story
+ * This means things like the unitsProvider and displayElements that we import to the Dashboard from the editor
+ * It's maintaining a 2:3 aspect ratio.
+ * When fullbleed is visible (as it is for our reqs) we use the 2:3 aspect ratio w/ overflow to allow the fullBleed height to be visible
+ *
+ * @param width
+ * @return { fullBleedHeight: Number, storyHeight: Number}
+ */
+export const getPagePreviewHeights = (width) => {
+  const fullBleedHeight = width / FULLBLEED_RATIO;
+  const storyHeight = width / TWO_THIRDS_RATIO;
 
-  const dangerZoneHeight = fullBleedHeight - twoThirdsRatio;
-
-  return { fullBleedHeight, dangerZoneHeight };
+  return { fullBleedHeight, storyHeight };
 };
+
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
 );
@@ -55,14 +68,14 @@ const getCurrentBp = (availableContainerSpace) =>
 // subtract those values from the availableContainer space to get remaining space
 // divide the remaining space by the itemsInRow
 // attach that extra space to the width
-// get height by dividing new with by PAGE_RATIO
+// get height by dividing new with by FULLBLEED_RATIO
 const sizeFromWidth = (
   width,
   { bp, respectSetWidth, availableContainerSpace }
 ) => {
   if (respectSetWidth) {
-    const { fullBleedHeight, dangerZoneHeight } = getHeightOptions(width);
-    return { width, height: fullBleedHeight, dangerZoneHeight };
+    const { fullBleedHeight, storyHeight } = getPagePreviewHeights(width);
+    return { width, height: storyHeight, containerHeight: fullBleedHeight };
   }
 
   if (bp === 'desktop') {
@@ -77,11 +90,12 @@ const sizeFromWidth = (
   const addToWidthValue = remainingSpace / itemsInRow;
 
   const trueWidth = width + addToWidthValue;
-  const { fullBleedHeight, dangerZoneHeight } = getHeightOptions(trueWidth);
+  const { fullBleedHeight, storyHeight } = getPagePreviewHeights(trueWidth);
+
   return {
     width: trueWidth,
-    height: fullBleedHeight,
-    dangerZoneHeight,
+    height: storyHeight,
+    containerHeight: fullBleedHeight,
   };
 };
 

@@ -24,7 +24,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { UnitsProvider } from '../../../edit-story/units';
 import { STORY_PAGE_STATE } from '../../constants';
 import { StoryPropType } from '../../types';
-import { getHeightOptions } from '../../utils/usePagePreviewSize';
+import { getPagePreviewHeights } from '../../utils/usePagePreviewSize';
 import PreviewPage from '../previewPage';
 import {
   ActiveCard,
@@ -56,29 +56,28 @@ function CardGallery({ story }) {
     }
     const activeCardWidth = ACTIVE_CARD_WIDTH * dimensionMultiplier;
     const miniCardWidth = MINI_CARD_WIDTH * dimensionMultiplier;
-    const activeHeightOptions = getHeightOptions(activeCardWidth);
-    const miniCardHeightOptions = getHeightOptions(miniCardWidth);
+    const activeHeightOptions = getPagePreviewHeights(activeCardWidth);
+    const miniCardHeightOptions = getPagePreviewHeights(miniCardWidth);
+
     return {
       activeCardSize: {
         width: activeCardWidth,
-        height: activeHeightOptions.fullBleedHeight,
-        dangerZoneHeight: activeHeightOptions.dangerZoneHeight,
+        height: activeHeightOptions.storyHeight,
+        containerHeight: activeHeightOptions.fullBleedHeight,
       },
       miniCardSize: {
         width: miniCardWidth,
-        height: miniCardHeightOptions.fullBleedHeight,
-        dangerZoneHeight: miniCardHeightOptions.dangerZoneHeight,
+        height: miniCardHeightOptions.storyHeight,
+        containerHeight: miniCardHeightOptions.fullBleedHeight,
       },
       miniWrapperSize: {
         width: miniCardWidth + CARD_WRAPPER_BUFFER,
-        height:
-          miniCardHeightOptions.fullBleedHeight +
-          miniCardHeightOptions.dangerZoneHeight +
-          CARD_WRAPPER_BUFFER,
+        height: miniCardHeightOptions.fullBleedHeight + CARD_WRAPPER_BUFFER,
       },
       gap: CARD_GAP * dimensionMultiplier,
     };
   }, [dimensionMultiplier]);
+
   const handleMiniCardClick = useCallback((index) => {
     setActivePageIndex(index);
   }, []);

@@ -35,7 +35,7 @@ import {
   STORY_STATUS,
   STORY_PAGE_STATE,
 } from '../../../constants';
-import { PAGE_RATIO } from '../../../constants/pageStructure';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import { PreviewPage } from '../../../components';
 import { clamp } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
@@ -326,12 +326,12 @@ function StoryAnimTool() {
                   <UnitsProvider
                     pageSize={{
                       width: STORY_WIDTH,
-                      height: STORY_WIDTH / PAGE_RATIO,
+                      height: STORY_WIDTH / FULLBLEED_RATIO,
                     }}
                   >
                     <ActiveCard
                       width={STORY_WIDTH}
-                      height={STORY_WIDTH / PAGE_RATIO}
+                      height={STORY_WIDTH / FULLBLEED_RATIO}
                       selectedElementIds={selectedElementIds}
                     >
                       <PreviewPage
