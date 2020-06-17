@@ -86,7 +86,6 @@ function FramesLayer() {
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
-      role="region"
       aria-label={__('Frames', 'web-stories')}
     >
       <FramesPageArea

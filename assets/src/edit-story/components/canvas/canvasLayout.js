@@ -37,7 +37,9 @@ import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 
-const Background = styled.div`
+const Background = styled.section.attrs({
+  'aria-label': __('Canvas', 'web-stories'),
+})`
   background-color: ${({ theme }) => theme.colors.bg.v1};
   width: 100%;
   height: 100%;
@@ -52,12 +54,7 @@ function CanvasLayout() {
   const layoutParamsCss = useLayoutParamsCssVars();
 
   return (
-    <Background
-      ref={backgroundRef}
-      style={layoutParamsCss}
-      role="region"
-      aria-label={__('Canvas', 'web-stories')}
-    >
+    <Background ref={backgroundRef} style={layoutParamsCss}>
       <CanvasUploadDropTarget>
         <CanvasElementDropzone>
           <SelectionCanvas>
