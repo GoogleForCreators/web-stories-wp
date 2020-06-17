@@ -97,13 +97,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
   const setLetterSpacingMinMax = useCallback(
-    (value) => {
-      if (!validateMinMax(value, MIN_MAX.LETTER_SPACING)) {
-        return handleSetLetterSpacing(clamp(value, MIN_MAX.LETTER_SPACING));
-      }
-
-      return handleSetLetterSpacing(value);
-    },
+    (value) => handleSetLetterSpacing(clamp(value, MIN_MAX.LETTER_SPACING)),
     [handleSetLetterSpacing]
   );
 
@@ -112,7 +106,6 @@ function StylePanel({ selectedElements, pushUpdate }) {
       lineHeight: clamp(newLineHeight, MIN_MAX.LINE_HEIGHT),
     };
   }, []);
-  console.log({lineHeight})
 
   return (
     <>
