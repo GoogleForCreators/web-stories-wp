@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
-export { default as createNewStory } from './createNewStory';
-export { default as previewStory } from './previewStory';
-export { default as addRequestInterception } from './addRequestInterception';
+export function getLinkFromElement(element) {
+  return element.link || null;
+}
+
+export function createLink({ url = '', ...rest } = {}) {
+  return {
+    url,
+    ...rest,
+  };
+}

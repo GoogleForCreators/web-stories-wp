@@ -14,6 +14,29 @@
  * limitations under the License.
  */
 
-export { default as createNewStory } from './createNewStory';
-export { default as previewStory } from './previewStory';
-export { default as addRequestInterception } from './addRequestInterception';
+/**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+import { text } from '@storybook/addon-knobs';
+
+/**
+ * Internal dependencies
+ */
+import PostPublishDialog from '../postPublishDialog';
+
+export default {
+  title: 'Stories Editor/Components/Dialog/Post-Publish',
+  component: PostPublishDialog,
+};
+
+export const _default = () => {
+  return (
+    <PostPublishDialog
+      open
+      onClose={action('closed')}
+      storyURL={text('Story URL', 'https://example.com')}
+      confirmURL={text('Confirm URL', 'https://example.com')}
+    />
+  );
+};
