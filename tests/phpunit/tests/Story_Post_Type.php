@@ -53,14 +53,14 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_get_editor_settings_admin() {
 		wp_set_current_user( self::$admin_id );
 		$post_type = new \Google\Web_Stories\Story_Post_Type();
-		$results   = $post_type::get_editor_settings();
+		$results   = $post_type->get_editor_settings();
 		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
 	public function test_get_editor_settings_sub() {
 		wp_set_current_user( self::$subscriber_id );
 		$post_type = new \Google\Web_Stories\Story_Post_Type();
-		$results   = $post_type::get_editor_settings();
+		$results   = $post_type->get_editor_settings();
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
@@ -72,8 +72,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 			],
 		];
 
-		$post_type       = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-		$filtered_params = \Google\Web_Stories\Story_Post_Type::filter_rest_collection_params( $query_params, $post_type );
+		$post_type        = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$filtered_params  = $post_type_object->filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals(
 			$filtered_params,
 			[
@@ -95,7 +96,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$post_type       = new \stdClass();
 		$post_type->name = 'post';
-		$filtered_params = \Google\Web_Stories\Story_Post_Type::filter_rest_collection_params( $query_params, $post_type );
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$filtered_params = $post_type_object->filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals( $filtered_params, $query_params );
 	}
 }

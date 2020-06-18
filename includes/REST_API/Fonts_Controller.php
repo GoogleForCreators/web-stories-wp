@@ -79,7 +79,8 @@ class Fonts_Controller extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		$fonts       = Fonts::get_fonts();
+		$font        = new Fonts();
+		$fonts       = $font->get_fonts();
 		$total_fonts = count( $fonts );
 		$page        = $request['page'];
 		$per_page    = $request['per_page'];
