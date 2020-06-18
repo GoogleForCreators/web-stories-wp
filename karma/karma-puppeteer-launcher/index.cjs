@@ -274,14 +274,14 @@ async function exposeClipboard(page) {
       // @todo: do `document.execCommand('copy')` inside an input or
       // a contenteditable.
       const target = document.activeElement;
-      const clipboardContent = new DataTransfer();
+      const data = new DataTransfer();
       const event = new ClipboardEvent('copy', {
         bubbles: true,
         cancelable: true,
-        clipboardContent,
+        clipboardData: data,
       });
       target.dispatchEvent(event);
-      return clipboardContent;
+      return data;
     });
   });
 
@@ -290,17 +290,16 @@ async function exposeClipboard(page) {
     if (!clipboardData) {
       throw new Error('clipboard is empty');
     }
-    await frame.evaluate((clipboardContent) => {
+    await frame.evaluate((data) => {
       // @todo: do `document.execCommand('paste')` inside an input or
       // a contenteditable.
       const target = document.activeElement;
       const event = new ClipboardEvent('paste', {
         bubbles: true,
         cancelable: true,
-        clipboardContent,
+        clipboardData: data,
       });
       target.dispatchEvent(event);
-      return clipboardContent;
     }, clipboardData);
   });
 }
