@@ -211,6 +211,8 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
       try {
         const { createdBy, pages, version } = template;
+        const { flags } = window.webStoriesDashboardSettings;
+
         const storyPropsToSave = await getStoryPropsToSave({
           story: {
             status: 'auto-draft',
@@ -221,6 +223,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
               name: createdBy,
             },
           },
+          flags,
         });
         const response = await dataAdapter.post(storyApi, {
           data: {
