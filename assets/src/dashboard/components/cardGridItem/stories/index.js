@@ -19,18 +19,19 @@
  */
 import styled from 'styled-components';
 import moment from 'moment';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { text } from '@storybook/addon-knobs';
+import { STORY_STATUS } from '../../../constants';
+import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
 import {
   CardGrid,
   CardGridItem,
   CardPreviewContainer,
   CardTitle,
 } from '../../';
-import { STORY_STATUS } from '../../../constants';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
@@ -47,7 +48,7 @@ const Card = styled.div`
 
 export const _default = () => {
   return (
-    <CardGrid pageSize={{ width: 212, height: 318, containerHeight: 376.89 }}>
+    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -58,7 +59,7 @@ export const _default = () => {
             targetAction: '',
             label: 'Preview',
           }}
-          pageSize={{ width: 212, height: 318, containerHeight: 376.89 }}
+          pageSize={STORYBOOK_PAGE_SIZE}
           story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
@@ -78,7 +79,7 @@ export const _default = () => {
 
 export const _publishedStory = () => {
   return (
-    <CardGrid pageSize={{ width: 212, height: 318, containerHeight: 376.89 }}>
+    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -89,7 +90,7 @@ export const _publishedStory = () => {
             targetAction: '',
             label: 'Preview',
           }}
-          pageSize={{ width: 212, height: 318, containerHeight: 376.89 }}
+          pageSize={STORYBOOK_PAGE_SIZE}
           story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>

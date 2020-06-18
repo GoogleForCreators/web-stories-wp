@@ -32,8 +32,11 @@ import {
   VIEW_STYLE,
   STORY_STATUS,
 } from '../../../../../constants';
-import formattedStoriesArray from '../../../../../storybookUtils/formattedStoriesArray';
-import formattedUsersObject from '../../../../../storybookUtils/formattedUsersObject';
+import {
+  formattedStoriesArray,
+  formattedUsersObject,
+  STORYBOOK_PAGE_SIZE,
+} from '../../../../../storybookUtils';
 import Content from '../';
 import { usePagePreviewSize } from '../../../../../utils';
 import StoriesView from '../storiesView';
@@ -62,7 +65,7 @@ const search = {
 const view = {
   style: VIEW_STYLE.GRID,
   toggleStyle: action('toggle view style'),
-  pageSize: { width: 212, height: 318, containerHeight: 376.89 },
+  pageSize: STORYBOOK_PAGE_SIZE,
 };
 const page = {
   value: 1,

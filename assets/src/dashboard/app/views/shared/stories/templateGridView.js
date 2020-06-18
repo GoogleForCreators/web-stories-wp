@@ -23,8 +23,11 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 
-import formattedTemplatesArray from '../../../../storybookUtils/formattedTemplatesArray';
 import TemplateGridView from '../templateGridView';
+import {
+  STORYBOOK_PAGE_SIZE,
+  formattedTemplatesArray,
+} from '../../../../storybookUtils';
 
 export default {
   title: 'Dashboard/Views/Shared/TemplateGridView',
@@ -35,7 +38,7 @@ export const _default = () => {
   return (
     <TemplateGridView
       templates={formattedTemplatesArray}
-      pageSize={{ width: 212, height: 318, containerHeight: 376.89 }}
+      pageSize={STORYBOOK_PAGE_SIZE}
       templateActions={{
         createStoryFromTemplate: action('create story from template clicked'),
       }}
