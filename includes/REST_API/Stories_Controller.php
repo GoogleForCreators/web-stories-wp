@@ -65,7 +65,8 @@ class Stories_Controller extends Stories_Base_Controller {
 		$data     = $response->get_data();
 
 		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
-			$data['publisher_logo_url'] = Discovery::get_publisher_logo();
+			$discovery = new Discovery();
+			$data['publisher_logo_url'] = $discovery->get_publisher_logo();
 		}
 
 		if ( in_array( 'style_presets', $fields, true ) ) {

@@ -78,7 +78,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public static function init() {
+	public function init() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -133,19 +133,20 @@ class Story_Post_Type {
 			]
 		);
 
-		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
-		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
-		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
-		add_filter( 'use_block_editor_for_post_type', [ __CLASS__, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
-		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
+		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
+
+		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
-		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
+		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
 
-		add_filter( 'amp_skip_post', [ __CLASS__, 'skip_amp' ], PHP_INT_MAX, 2 );
+		add_filter( 'amp_skip_post', [ $this, 'skip_amp' ], PHP_INT_MAX, 2 );
 
-		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 	}
 
 	/**
@@ -244,7 +245,7 @@ class Story_Post_Type {
 	 * @param string $post_type         The post type being checked.
 	 * @return bool Whether to use the block editor.
 	 */
-	public static function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
 		if ( self::POST_TYPE_SLUG === $post_type ) {
 			return false;
 		}
@@ -359,14 +360,17 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
+		$discovery = new Discovery();
+		$media = new Media();
+
 		$settings = [
 			'id'     => 'edit-story',
 			'config' => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'timeFormat'       => get_option( 'time_format' ),
-				'allowedMimeTypes' => Media::get_allowed_mime_types(),
-				'allowedFileTypes' => Media::get_allowed_file_types(),
+				'allowedMimeTypes' => $media->get_allowed_mime_types(),
+				'allowedFileTypes' => $media->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
@@ -384,7 +388,7 @@ class Story_Post_Type {
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => Discovery::get_publisher_data(),
+					'publisher'       => $discovery->get_publisher_data(),
 					'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
