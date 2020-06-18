@@ -299,7 +299,7 @@ class Media {
 	 * @param mixed    $value Value to update.
 	 * @param \WP_Post $object Object to update on.
 	 *
-	 * @return true|WP_Error
+	 * @return true|\WP_Error
 	 */
 	public static function update_callback_media_source( $value, $object ) {
 		$check = wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
