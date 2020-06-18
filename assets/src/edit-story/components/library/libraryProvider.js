@@ -50,7 +50,7 @@ function LibraryProvider({ children }) {
     TAB_IDS.SHAPES,
     TAB_IDS.ELEMENTS,
     showAnimationTab ? TAB_IDS.ANIMATION : null,
-  ].filter((t) => t != null);
+  ].filter(Boolean);
 
   const state = useMemo(
     () => ({
