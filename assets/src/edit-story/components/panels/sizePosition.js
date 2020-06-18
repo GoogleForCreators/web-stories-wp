@@ -249,6 +249,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('W', 'The Width dimension', 'web-stories')}
           value={width}
+          min={MIN_MAX.WIDTH.MIN}
+          max={MIN_MAX.WIDTH.MAX}
           onChange={(value) => {
             const newWidth = value;
             let newHeight = height;
@@ -276,6 +278,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={height}
+          min={MIN_MAX.HEIGHT.MIN}
+          max={MIN_MAX.HEIGHT.MAX}
           onChange={(value) => {
             const newHeight = value;
             let newWidth = width;
@@ -299,6 +303,8 @@ function SizePositionPanel({
           suffix={__('Rotate', 'web-stories')}
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
+          min={MIN_MAX.ROTATION.MIN}
+          max={MIN_MAX.ROTATION.MAX}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
           aria-label={__('Rotation', 'web-stories')}
           canBeNegative
