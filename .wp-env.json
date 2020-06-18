@@ -1,0 +1,13 @@
+{
+  "port": 8898,
+  "testsPort": 8899,
+  "plugins": [
+    "https://downloads.wordpress.org/plugin/rtl-tester.zip",
+    "https://downloads.wordpress.org/plugin/gutenberg.zip"
+  ],
+  "mappings": {
+    "wp-content/plugins/web-stories": ".",
+    "wp-content/plugins/web-stories-test-plugins": "./tests/e2e/plugins",
+    "wp-content/e2e-assets": "./__static__"
+  }
+}

@@ -83,7 +83,9 @@ jobs:
           DISABLE_PREVENT: true
 
       - name: Start Docker environment
-        run: npm run env:start
+        run: |
+          npm run wp-env start
+          npm run wp-env run cli wp plugin activate web-stories
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
@@ -93,7 +95,7 @@ jobs:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Stop Docker environment
-        run: npm run env:stop
+        run: npm run wp-env stop
         if: always()
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true

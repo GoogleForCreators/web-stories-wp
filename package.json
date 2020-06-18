@@ -90,6 +90,7 @@
     "@wordpress/babel-plugin-import-jsx-pragma": "^2.6.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^2.7.0",
     "@wordpress/e2e-test-utils": "^4.9.0",
+    "@wordpress/env": "^1.5.0",
     "@wordpress/eslint-plugin": "^6.0.0",
     "@wordpress/jest-console": "^3.6.0",
     "@wordpress/jest-puppeteer-axe": "^1.8.0",
@@ -182,8 +183,8 @@
     "lint:js": "eslint --ext .js,.cjs,.md .",
     "lint:js:fix": "npm run lint:js -- --fix",
     "lint:js:report": "eslint --ext .js,.cjs,.md --output-file build/lint-js-report.json --format json .",
-    "lint:php": "vendor/bin/phpcs",
-    "lint:php:fix": "vendor/bin/phpcbf",
+    "lint:php": "npm run wp-env run composer run-script lint",
+    "lint:php:fix": "npm run wp-env run composer run-script format",
     "lint:md": "markdownlint .",
     "postinstall": "npx patch-package",
     "storybook": "start-storybook --quiet",
@@ -196,8 +197,8 @@
     "test:js:watch": "npm run test:js -- --watch",
     "test:karma": "NODE_OPTIONS=\"--max-old-space-size=4096\" karma start karma.config.cjs --single-run",
     "test:karma:watch": "NODE_OPTIONS=\"--max-old-space-size=4096\" karma start karma.config.cjs",
-    "test:php": "vendor/bin/phpunit",
-    "test:php:help": "npm run test:php -- --help",
+    "test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/web-stories/phpunit.xml.dist'",
+    "test:php:help": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/web-stories/phpunit.xml.dist --help'",
     "test:e2e": "JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs jest --runInBand --config=tests/e2e/jest.config.js",
     "test:e2e:help": "npm run test:e2e -- --help",
     "test:e2e:watch": "npm run test:e2e -- --watch",
@@ -212,7 +213,8 @@
     "workflow:copy-template-assets": "cp -R assets/images/templates build/storybook/plugin-assets/images/templates",
     "workflow:version": "./bin/commander.js version",
     "workflow:build-plugin": "./bin/commander.js build-plugin",
-    "workflow:fonts": "./bin/commander.js build-fonts"
+    "workflow:fonts": "./bin/commander.js build-fonts",
+    "wp-env": "wp-env"
   },
   "husky": {
     "hooks": {

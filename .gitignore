@@ -3,6 +3,7 @@
 .idea/
 .vscode/
 .DS_Store
+.wp-env.override.json
 node_modules
 /vendor
 /assets/css

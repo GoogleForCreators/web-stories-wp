@@ -14,10 +14,10 @@
     "automattic/vipwpcs": "dev-develop",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.6",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
-    "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "wp-coding-standards/wpcs": "^2.2"
+    "wp-coding-standards/wpcs": "^2.2",
+    "wp-phpunit/wp-phpunit": "^5.4"
   },
   "config": {
     "platform": {
@@ -35,5 +35,10 @@
       "Google\\Web_Stories\\Tests\\": "tests/phpunit/tests"
     }
   },
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "phpstan": "phpstan",
+    "format": "phpcbf",
+    "lint": "phpcs"
+  }
 }

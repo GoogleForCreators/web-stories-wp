@@ -34,6 +34,8 @@ tests
 .travis.yml
 .travis_deploy_key
 .travis_deploy_key.enc
+.wp-env.json
+.wp-env.override.json
 babel.config.cjs
 codecov.yml
 composer.json

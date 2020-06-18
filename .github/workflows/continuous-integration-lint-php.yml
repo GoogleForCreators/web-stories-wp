@@ -40,8 +40,13 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-suggest --no-progress --no-interaction
 
+      - name: Start Docker environment
+        run: npm run wp-env start
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: true
+
       - name: Detect coding standard violations (PHPCS)
-        run: vendor/bin/phpcs -q --report=checkstyle --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 | cs2pr --graceful-warnings
+        run: npm run lint:php -- -- -q --report=checkstyle --runtime-set="ignore_errors_on_exit 1" --runtime-set="ignore_warnings_on_exit 1" | cs2pr --graceful-warnings
 
       - name: Normalize composer.json
         # composer-normalize requires PHP 7.1+. Ignore version conflicts.
@@ -53,5 +58,5 @@ jobs:
         # phpstan requires PHP 7.1+. Ignore version conflicts.
         run: |
           composer require --no-interaction --dev szepeviktor/phpstan-wordpress --ignore-platform-reqs
-          vendor/bin/phpstan analyse --memory-limit=256M --error-format=checkstyle | cs2pr
+          npm run wp-env run composer run-script phpstan analyse -- --memory-limit=256M --error-format=checkstyle | cs2pr
         if: always()

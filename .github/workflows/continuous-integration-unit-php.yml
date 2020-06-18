@@ -11,16 +11,6 @@ jobs:
   unit-php:
     name: PHP ${{ matrix.php }}
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mariadb:latest
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_ROOT_PASSWORD:
-          MYSQL_DATABASE: wordpress_test
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
@@ -43,15 +33,6 @@ jobs:
           coverage: xdebug
           tools: composer, cs2pr
 
-      - name: Shutdown default MySQL service
-        run: sudo service mysql stop
-
-      - name: Verify MariaDB connection
-        run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"${{ job.services.mysql.ports[3306] }}" --silent; do
-            sleep 1
-          done
-
       - name: Get Composer cache directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
@@ -68,8 +49,10 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-suggest --no-progress --no-interaction
 
-      - name: Set up tests
-        run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
+      - name: Start Docker environment
+        run: npm run wp-env start
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Run tests
         run: npm run test:php
