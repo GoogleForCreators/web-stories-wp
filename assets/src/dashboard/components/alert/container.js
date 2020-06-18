@@ -36,7 +36,7 @@ const Alert = ({ message, severity, handleDismissClick }) => {
     <AlertContainer
       severity={severity}
       role="alert"
-      aria-label={__('alert notification', 'web-stories')}
+      aria-label={__('Alert Notification', 'web-stories')}
     >
       <AlertText>{message}</AlertText>
       <DismissButton
