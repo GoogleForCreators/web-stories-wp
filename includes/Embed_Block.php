@@ -50,8 +50,7 @@ class Embed_Block {
 	 * @return void
 	 */
 	public function init() {
-		// TOOD: Replace with https://cdn.ampproject.org/amp-story-player-v0.js once this updated version of the script is on prod.
-		wp_register_script( 'amp-story-player', 'https://stamp-animation.web.app/dist/amp-story-player.js', [], 'v0', false );
+		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
 		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::SCRIPT_HANDLE . '.asset.php';
@@ -88,7 +87,8 @@ class Embed_Block {
 						'type' => 'url',
 					],
 					'title'  => [
-						'type' => 'string',
+						'type'    => 'string',
+						'default' => __( 'Web Story', 'web-stories' ),
 					],
 					'poster' => [
 						'type' => 'string',
@@ -144,33 +144,37 @@ class Embed_Block {
 	 *
 	 * @return string Rendered block type output.
 	 */
-	public function render_block( array $attributes, $content ) {
-		// The only 2 mandatory attributes.
-		if ( empty( $attributes['url'] ) || empty( $attributes['title'] ) ) {
+	public function render_block( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+		// The only mandatory attribute.
+		if ( empty( $attributes['url'] ) ) {
 			return '';
 		}
 
-		if ( is_feed() ) {
-			return $this->render_block_feed( $attributes, $content );
+		if ( empty( $attributes['title'] ) ) {
+			$attributes['title'] = __( 'Web Story', 'web-stories' );
 		}
 
-		return $this->render_block_html( $attributes, $content );
+		if ( is_feed() ) {
+			return $this->render_block_feed( $attributes );
+		}
+
+		return $this->render_block_html( $attributes );
 	}
 
 	/**
 	 * Renders the block type output in default context.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $attributes Block attributes.
 	 *
 	 * @return string Rendered block type output.
 	 */
-	protected function render_block_html( array $attributes, $content ) {
+	protected function render_block_html( array $attributes ) {
 		$url          = (string) $attributes['url'];
 		$title        = (string) $attributes['title'];
 		$poster       = ! empty( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
 		$align        = sprintf( 'align%s', $attributes['align'] );
-		$player_style = sprintf( 'width: %dpx; height: %dpx', absint( $attributes['width'] ), absint( $attributes['height'] ) );
+		$margin       = ( 'center' === $attributes['align'] ) ? 'auto' : '0';
+		$player_style = sprintf( 'width: %dpx; height: %dpx; margin: %s', absint( $attributes['width'] ), absint( $attributes['height'] ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
 		wp_enqueue_style( 'amp-story-player' );
@@ -198,12 +202,11 @@ class Embed_Block {
 	/**
 	 * Renders the block type output in an RSS feed context.
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array $attributes Block attributes.
 	 *
 	 * @return string Rendered block type output.
 	 */
-	protected function render_block_feed( array $attributes, $content ) {
+	protected function render_block_feed( array $attributes ) {
 		$url   = (string) $attributes['url'];
 		$title = (string) $attributes['title'];
 

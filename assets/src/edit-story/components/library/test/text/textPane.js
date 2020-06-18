@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { act, fireEvent } from '@testing-library/react';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -34,11 +35,13 @@ import useLibrary from '../../useLibrary';
 describe('TextPane', () => {
   const insertElement = jest.fn();
   beforeAll(() => {
-    useLibrary.mockImplementation(() => ({
-      actions: {
-        insertElement: insertElement,
-      },
-    }));
+    useLibrary.mockImplementation((selector) =>
+      selector({
+        actions: {
+          insertElement: insertElement,
+        },
+      })
+    );
   });
 
   it('should insert text with default text style on pressing quick action', async () => {
@@ -49,17 +52,24 @@ describe('TextPane', () => {
       },
     };
     await act(async () => {
-      const { getByText } = renderWithTheme(
-        <APIContext.Provider value={apiContextValue}>
-          <FontProvider apiContextValue>
-            <TextPane />
-          </FontProvider>
-        </APIContext.Provider>
+      const { getByRole } = renderWithTheme(
+        <FlagsProvider
+          features={{
+            showTextSets: false,
+            showTextAndShapesSearchInput: false,
+          }}
+        >
+          <APIContext.Provider value={apiContextValue}>
+            <FontProvider apiContextValue>
+              <TextPane isActive={true} />
+            </FontProvider>
+          </APIContext.Provider>
+        </FlagsProvider>
       );
 
       await getAllFontsPromise;
 
-      fireEvent.click(getByText('Add new text'));
+      fireEvent.click(getByRole('button', { name: 'Add new text' }));
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);

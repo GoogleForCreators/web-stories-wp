@@ -31,6 +31,7 @@ const StyledButton = styled.button`
 
   font-weight: ${({ theme }) => theme.typography.weight.bold};
   align-items: center;
+  justify-content: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   border: ${({ theme }) => theme.borders.transparent};
@@ -40,10 +41,12 @@ const StyledButton = styled.button`
   opacity: 0.75;
   padding: 4px 12px;
   text-decoration: none;
+  text-align: center;
 
   &:focus,
   &:active,
   &:hover {
+    box-shadow: none;
     opacity: 1;
     outline: none;
     color: ${({ theme }) => theme.colors.white};
@@ -62,6 +65,20 @@ const StyledButton = styled.button`
 const PrimaryButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
 `;
+
+const DefaultButton = styled(StyledButton)(
+  ({ theme }) => `
+    background-color: ${theme.colors.white};
+    color: ${theme.colors.gray800};
+    border: ${theme.borders.gray800};
+    &:focus,
+    &:active,
+    &:hover {
+      color: ${theme.colors.gray900};
+      border-color: ${theme.colors.gray900};
+    }
+  `
+);
 
 // TODO: address CTA active styling
 const CtaButton = styled(StyledButton)`
@@ -107,6 +124,7 @@ const Button = ({
     [BUTTON_TYPES.PRIMARY]: PrimaryButton,
     [BUTTON_TYPES.SECONDARY]: SecondaryButton,
     [BUTTON_TYPES.CTA]: CtaButton,
+    [BUTTON_TYPES.DEFAULT]: DefaultButton,
   };
 
   const StyledButtonByType = ButtonOptions[type];

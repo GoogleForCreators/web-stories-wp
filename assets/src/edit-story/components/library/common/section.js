@@ -26,6 +26,10 @@ const Container = styled.div`
   margin-top: 28px;
   margin-bottom: 28px;
   border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
+
+  &:first-child {
+    margin-top: 0px;
+  }
 `;
 
 const TitleAndTools = styled.div`

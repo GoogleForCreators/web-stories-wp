@@ -17,27 +17,20 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import {
-  useRef,
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-  Children,
-} from 'react';
-
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../../constants/pageStructure';
 import { UnitsProvider } from '../../../edit-story/units';
+import { PAGE_RATIO, STORY_PAGE_STATE } from '../../constants';
+import { StoryPropType } from '../../types';
+import PreviewPage from '../previewPage';
 import {
   ActiveCard,
   GalleryContainer,
+  MiniCard,
   MiniCardsContainer,
   MiniCardWrapper,
-  MiniCard,
 } from './components';
 
 const MAX_WIDTH = 680;
@@ -46,22 +39,15 @@ const MINI_CARD_WIDTH = 75;
 const CARD_GAP = 15;
 const CARD_WRAPPER_BUFFER = 12;
 
-function CardGallery({ children }) {
+function CardGallery({ story }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
-  const [cards, setCards] = useState([]);
+  const [activePageIndex, setActivePageIndex] = useState(0);
+  const [pages, setPages] = useState([]);
   const containerRef = useRef();
 
   useEffect(() => {
-    const count = Children.count(children);
-    if (count > 1) {
-      setCards(children);
-    } else if (count === 1) {
-      setCards([children]);
-    } else if (count === 0) {
-      setCards([]);
-    }
-  }, [children]);
+    setPages(story.pages || []);
+  }, [story]);
 
   const metrics = useMemo(() => {
     if (!dimensionMultiplier) {
@@ -87,7 +73,7 @@ function CardGallery({ children }) {
   }, [dimensionMultiplier]);
 
   const handleMiniCardClick = useCallback((index) => {
-    setActiveCardIndex(index);
+    setActivePageIndex(index);
   }, []);
 
   const updateContainerSize = useCallback(() => {
@@ -113,8 +99,8 @@ function CardGallery({ children }) {
   }, [updateContainerSize]);
 
   useEffect(() => {
-    setActiveCardIndex(0);
-  }, [children]);
+    setActivePageIndex(0);
+  }, [story]);
 
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
@@ -124,23 +110,28 @@ function CardGallery({ children }) {
             rowHeight={metrics.miniWrapperSize.height}
             gap={metrics.gap}
           >
-            {cards.map((card, index) => (
+            {pages.map((page, index) => (
               <MiniCardWrapper
                 key={index}
-                isSelected={index === activeCardIndex}
+                isSelected={index === activePageIndex}
                 {...metrics.miniWrapperSize}
                 onClick={() => handleMiniCardClick(index)}
               >
-                <MiniCard {...metrics.miniCardSize}>{card}</MiniCard>
+                <MiniCard {...metrics.miniCardSize}>
+                  <PreviewPage page={page} />
+                </MiniCard>
               </MiniCardWrapper>
             ))}
           </MiniCardsContainer>
         </UnitsProvider>
       )}
-      {metrics.activeCardSize && cards[activeCardIndex] && (
+      {metrics.activeCardSize && pages[activePageIndex] && (
         <UnitsProvider pageSize={metrics.activeCardSize}>
           <ActiveCard {...metrics.activeCardSize}>
-            {cards[activeCardIndex]}
+            <PreviewPage
+              page={pages[activePageIndex]}
+              animationState={STORY_PAGE_STATE.PLAYING}
+            />
           </ActiveCard>
         </UnitsProvider>
       )}
@@ -149,7 +140,7 @@ function CardGallery({ children }) {
 }
 
 CardGallery.propTypes = {
-  children: PropTypes.node.isRequired,
+  story: StoryPropType.isRequired,
 };
 
 export default CardGallery;

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { rgba } from 'polished';
-import { useCallback, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -43,13 +43,16 @@ import {
 import paneId from './paneId';
 import MediaElement from './mediaElement';
 
+export const ROOT_MARGIN = 300;
+
 const Container = styled.div`
   grid-area: infinitescroll;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
   overflow: auto;
-  padding: 1em 1.5em 0 1.5em;
+  padding: 0 1.5em 0 1.5em;
+  margin-top: 1em;
 `;
 
 const Column = styled.div`
@@ -127,16 +130,42 @@ const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
   const {
-    state: {
-      hasMore,
-      media,
-      isMediaLoading,
-      isMediaLoaded,
-      mediaType,
-      searchTerm,
-    },
-    actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
-  } = useMedia();
+    hasMore,
+    media,
+    isMediaLoading,
+    isMediaLoaded,
+    mediaType,
+    searchTerm,
+    setNextPage,
+    resetWithFetch,
+    setMediaType,
+    setSearchTerm,
+  } = useMedia(
+    ({
+      state: {
+        hasMore,
+        media,
+        isMediaLoading,
+        isMediaLoaded,
+        mediaType,
+        searchTerm,
+      },
+      actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
+    }) => {
+      return {
+        hasMore,
+        media,
+        isMediaLoading,
+        isMediaLoaded,
+        mediaType,
+        searchTerm,
+        setNextPage,
+        resetWithFetch,
+        setMediaType,
+        setSearchTerm,
+      };
+    }
+  );
 
   const {
     allowedMimeTypes: {
@@ -145,9 +174,9 @@ function MediaPane(props) {
     },
   } = useConfig();
 
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
 
   const onClose = resetWithFetch;
 
@@ -169,16 +198,16 @@ function MediaPane(props) {
   /**
    * Handle search term changes.
    *
-   * @param {Object} evt Doc Event
+   * @param {string} value the new search term.
    */
-  const onSearch = (evt) => {
-    setSearchTerm({ searchTerm: evt.target.value });
+  const onSearch = (value) => {
+    setSearchTerm({ searchTerm: value });
   };
 
   /**
    * Filter REST API calls and re-request API.
    *
-   * @param {string} filter Value that is passed to rest api to filter.
+   * @param {string} value that is passed to rest api to filter.
    */
   const onFilter = useCallback(
     (filter) => () => {
@@ -227,14 +256,45 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  const refContainer = useRef();
-  const refContainerFooter = useRef();
+  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
 
+  // State and callback ref necessary to recalculate the padding of the list
+  //  given the scrollbar width.
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+  const refContainer = useRef();
+  const refCallbackContainer = (element) => {
+    refContainer.current = element;
+    if (!element) {
+      return;
+    }
+    setScrollbarWidth(element.offsetWidth - element.clientWidth);
+  };
+
+  // Recalculates padding of Media Pane so it stays centered.
+  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
+  // prop is not yet ready).
+  useLayoutEffect(() => {
+    if (!scrollbarWidth) {
+      return;
+    }
+    const currentPaddingLeft = parseFloat(
+      window
+        .getComputedStyle(refContainer.current, null)
+        .getPropertyValue('padding-left')
+    );
+    refContainer.current.style['padding-right'] =
+      currentPaddingLeft - scrollbarWidth + 'px';
+  }, [scrollbarWidth, refContainer]);
+
+  const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
     {
       root: refContainer,
-      rootMargin: '0px 0px 300px 0px',
+      // This rootMargin is added so that we load an extra page when the
+      // "loading" footer is "close" to the bottom of the container, even if
+      // it's not yet visible.
+      rootMargin: `0px 0px ${ROOT_MARGIN}px 0px`,
     },
     (entry) => {
       if (!isMediaLoaded || isMediaLoading) {
@@ -282,7 +342,7 @@ function MediaPane(props) {
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
-          <Container ref={refContainer}>
+          <Container data-testid="mediaLibrary" ref={refCallbackContainer}>
             <Column>
               {resources
                 .filter((_, index) => isEven(index))

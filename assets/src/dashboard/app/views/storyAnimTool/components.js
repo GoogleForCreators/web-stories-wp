@@ -40,13 +40,15 @@ export const ActiveCard = styled.div(
     height: ${height}px;
     overflow: hidden;
 
-    ${Object.values(selectedElementIds).map(
-      (elementId) => `
-        [data-element-id='${elementId}'] {
-          border: 2px solid ${theme.colors.bluePrimary};
-        }
-      `
-    )}
+    ${Object.values(selectedElementIds)
+      .map(
+        (elementId) => `
+          [data-element-id='${elementId}'] {
+            border: 2px solid ${theme.colors.bluePrimary};
+          }
+        `
+      )
+      .join(' ')}
   `
 );
 

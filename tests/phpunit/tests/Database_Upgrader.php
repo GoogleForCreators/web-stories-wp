@@ -22,14 +22,25 @@ use Google\Web_Stories\REST_API\Stories_Controller;
 class Database_Upgrader extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
-		$option_name = \Google\Web_Stories\Database_Upgrader::OPTION;
-		delete_option( $option_name );
+		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );
+		delete_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
 	}
 
-	public function test_init() {
+	public function test_init_sets_missing_options() {
 		$object = new \Google\Web_Stories\Database_Upgrader();
 		$object->init();
 		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
+		$this->assertSame( '0.0.0', get_option( $object::PREVIOUS_OPTION ) );
+	}
+
+	public function test_init_does_not_override_previous_version_if_there_was_no_update() {
+		add_option( \Google\Web_Stories\Database_Upgrader::OPTION, WEBSTORIES_DB_VERSION );
+		add_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.2.3' );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$object->init();
+		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
+		$this->assertSame( '1.2.3', get_option( $object::PREVIOUS_OPTION ) );
 	}
 
 	public function test_v_2_remove_conic_style_presets() {
@@ -97,6 +108,58 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			[
 				[
 					'color' => [],
+				],
+			]
+		);
+
+		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
+	}
+
+	public function test_remove_broken_text_styles() {
+		$presets = [
+			'textStyles' => [
+				[
+					'color' => [
+						'r' => 255,
+						'g' => 255,
+						'b' => 255,
+					],
+					'font'  => [],
+				],
+				[
+					'color' => [
+						'type'  => 'solid',
+						'color' => [
+							'r' => 255,
+							'g' => 255,
+							'b' => 255,
+						],
+					],
+					'font'  => [],
+				],
+			],
+			'textColors' => [],
+			'fillColors' => [],
+		];
+		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$object->init();
+
+		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$this->assertSame(
+			$style_presets['textStyles'],
+			[
+				[
+					'color' => [
+						'type'  => 'solid',
+						'color' => [
+							'r' => 255,
+							'g' => 255,
+							'b' => 255,
+						],
+					],
+					'font'  => [],
 				],
 			]
 		);

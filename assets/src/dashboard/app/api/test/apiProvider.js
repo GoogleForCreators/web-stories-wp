@@ -90,6 +90,7 @@ describe('ApiProvider', () => {
       '123': {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
+        editStoryLink: 'editStory&post=123',
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
         created: moment('1970-01-01T00:00:00.000Z'),
@@ -160,6 +161,7 @@ describe('ApiProvider', () => {
       '123': {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
+        editStoryLink: 'editStory&post=123',
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
         created: moment('1970-01-01T00:00:00.000Z'),
@@ -243,6 +245,7 @@ describe('ApiProvider', () => {
       '123': {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
+        editStoryLink: 'editStory&post=123',
         id: 123,
         modified: moment('1970-01-01T00:00:00.000Z'),
         created: moment('1970-01-01T00:00:00.000Z'),
@@ -278,6 +281,7 @@ describe('ApiProvider', () => {
       '456': {
         bottomTargetAction: 'editStory&post=456',
         centerTargetAction: '',
+        editStoryLink: 'editStory&post=456',
         id: 456,
         modified: moment('1970-01-01T00:00:00.000Z'),
         created: moment('1970-01-01T00:00:00.000Z'),

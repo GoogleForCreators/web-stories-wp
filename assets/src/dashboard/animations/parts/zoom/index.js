@@ -40,7 +40,7 @@ export function AnimationZoom({ zoomFrom = 0, zoomTo = 1, ...args }) {
     animationName,
     keyframes,
     timings,
-    true
+    false
   );
 
   return {

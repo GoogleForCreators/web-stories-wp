@@ -24,9 +24,14 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
 import MULTIPLE_VALUE from './multipleValue';
 
-const CheckBoxInput = styled.input.attrs({ type: 'checkbox' })`
+// Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
+const CheckBoxInput = styled.input.attrs({
+  type: 'checkbox',
+  className: 'mousetrap',
+})`
   position: absolute;
   opacity: 0;
   height: 0;
@@ -77,6 +82,10 @@ const ContainerLabel = styled.label`
 		pointer-events: none;
 		opacity: .2;
 	`}
+
+  ${KEYBOARD_USER_SELECTOR} &:focus-within {
+    outline: 1px solid ${({ theme }) => theme.colors.whiteout};
+  }
 
   svg {
     color: ${({ theme }) => theme.colors.mg.v2};

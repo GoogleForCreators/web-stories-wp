@@ -18,6 +18,7 @@
  */
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -25,41 +26,66 @@ import PropTypes from 'prop-types';
 import DisplayElement from '../../edit-story/components/canvas/displayElement';
 import StoryPropTypes from '../../edit-story/types';
 import { STORY_PAGE_STATE } from '../constants';
+import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
 import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 
-function PreviewPageController({ page, animationState }) {
+const PreviewWrapper = styled.div`
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  ${({ background }) => generatePatternStyles(background)};
+`;
+
+function PreviewPageController({ page, animationState, subscribeGlobalTime }) {
   const {
     actions: { WAAPIAnimationMethods },
   } = useStoryAnimationContext();
 
   useEffect(() => {
-    if (STORY_PAGE_STATE.ANIMATE === animationState) {
-      WAAPIAnimationMethods.play();
+    switch (animationState) {
+      case STORY_PAGE_STATE.PLAYING:
+        WAAPIAnimationMethods.play();
+        return () => {};
+      case STORY_PAGE_STATE.RESET:
+        WAAPIAnimationMethods.reset();
+        return () => {};
+      case STORY_PAGE_STATE.SCRUBBING:
+        WAAPIAnimationMethods.pause();
+        return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
+      case STORY_PAGE_STATE.PAUSED:
+        WAAPIAnimationMethods.pause();
+        return () => {};
+      default:
+        return () => {};
     }
-    if (STORY_PAGE_STATE.IDLE === animationState) {
-      WAAPIAnimationMethods.reset();
-    }
-  }, [animationState, WAAPIAnimationMethods]);
+  }, [animationState, WAAPIAnimationMethods, subscribeGlobalTime]);
 
   /**
    * Reset everything on unmount;
    */
   useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
 
-  return page.elements.map(({ id, ...rest }) => (
-    <DisplayElement
-      key={id}
-      page={page}
-      element={{ id, ...rest }}
-      isAnimatable
-    />
-  ));
+  return (
+    <PreviewWrapper background={page.backgroundColor}>
+      {page.elements.map(({ id, ...rest }) => (
+        <DisplayElement
+          previewMode
+          key={id}
+          page={page}
+          element={{ id, ...rest }}
+          isAnimatable
+        />
+      ))}
+    </PreviewWrapper>
+  );
 }
 
 function PreviewPage({
   page,
-  animationState = STORY_PAGE_STATE.IDLE,
+  animationState = STORY_PAGE_STATE.RESET,
   onAnimationComplete,
+  subscribeGlobalTime,
 }) {
   return (
     <StoryAnimation.Provider
@@ -70,6 +96,7 @@ function PreviewPage({
         page={page}
         animationState={animationState}
         onAnimationComplete={onAnimationComplete}
+        subscribeGlobalTime={subscribeGlobalTime}
       />
     </StoryAnimation.Provider>
   );
@@ -79,6 +106,13 @@ PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
   onAnimationComplete: PropTypes.func,
+  subscribeGlobalTime: PropTypes.func,
+};
+
+PreviewPageController.propTypes = {
+  page: StoryPropTypes.page.isRequired,
+  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
+  subscribeGlobalTime: PropTypes.func,
 };
 
 export default PreviewPage;

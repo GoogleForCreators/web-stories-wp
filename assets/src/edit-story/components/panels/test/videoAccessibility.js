@@ -38,18 +38,18 @@ describe('Panels/VideoAccessibility', () => {
   }
 
   it('should render <VideoAccessibility /> panel', () => {
-    const { getByLabelText } = renderVideoAccessibility([
+    const { getByRole } = renderVideoAccessibility([
       { resource: { posterId: 0, poster: '' } },
     ]);
-    const element = getByLabelText('Select as video poster');
+    const element = getByRole('button', { name: 'Edit: Video poster' });
     expect(element).toBeDefined();
   });
 
   it('should simulate a click on <VideoAccessibility />', () => {
-    const { getByLabelText, pushUpdate } = renderVideoAccessibility([
+    const { getByRole, pushUpdate } = renderVideoAccessibility([
       { resource: { posterId: 0, poster: '' } },
     ]);
-    const element = getByLabelText('Select as video poster');
+    const element = getByRole('button', { name: 'Edit: Video poster' });
     fireEvent.click(element);
     expect(pushUpdate).toHaveBeenCalledTimes(1);
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);

@@ -74,7 +74,6 @@ function Numeric({
   value,
   float,
   flexBasis,
-  ariaLabel,
   disabled,
   ...rest
 }) {
@@ -120,7 +119,9 @@ function Numeric({
     >
       {label}
       {prefix}
+      {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
+        type="text"
         ref={ref}
         placeholder={placeholder}
         prefix={prefix}
@@ -131,7 +132,6 @@ function Numeric({
             ? ''
             : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
         }
-        aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
         onChange={(evt) => {
@@ -178,7 +178,6 @@ Numeric.propTypes = {
   symbol: PropTypes.string,
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
-  ariaLabel: PropTypes.string,
   float: PropTypes.bool,
 };
 
@@ -189,7 +188,6 @@ Numeric.defaultProps = {
   flexBasis: 110,
   textCenter: false,
   float: false,
-  ariaLabel: __('Standard input', 'web-stories'),
 };
 
 export default Numeric;

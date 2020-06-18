@@ -38,6 +38,8 @@ export const StoryPropType = PropTypes.shape({
   modified: PropTypes.object,
 });
 
+export const TemplatePropType = StoryPropType;
+
 export const TagPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
@@ -61,6 +63,7 @@ export const UserPropType = PropTypes.shape({
 });
 
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
 export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
 export const CategoriesPropType = PropTypes.objectOf(CategoryPropType)
   .isRequired;
@@ -73,6 +76,10 @@ export const StoryActionsPropType = PropTypes.shape({
   updateStory: PropTypes.func,
 });
 
+export const TemplateActionsPropType = PropTypes.shape({
+  createStoryFromTemplate: PropTypes.func,
+});
+
 export const TotalStoriesByStatusPropType = PropTypes.shape({
   all: PropTypes.number,
   draft: PropTypes.number,
@@ -82,4 +89,22 @@ export const TotalStoriesByStatusPropType = PropTypes.shape({
 export const PageSizePropType = PropTypes.shape({
   width: PropTypes.number,
   height: PropTypes.number,
+});
+
+export const StoryMenuPropType = PropTypes.shape({
+  handleMenuToggle: PropTypes.func.isRequired,
+  contextMenuId: PropTypes.number.isRequired,
+  handleMenuItemSelected: PropTypes.func.isRequired,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.oneOfType[(PropTypes.string, PropTypes.bool)],
+    })
+  ),
+});
+
+export const RenameStoryPropType = PropTypes.shape({
+  handleOnRenameStory: PropTypes.func,
+  id: PropTypes.number,
+  handleCancelRename: PropTypes.func,
 });

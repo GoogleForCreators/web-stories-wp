@@ -20,12 +20,16 @@
 import { FIELD_TYPES } from '../../constants';
 
 export default {
+  overflowHidden: {
+    type: FIELD_TYPES.CHECKBOX,
+    defaultValue: false,
+  },
   offsetX: {
-    type: FIELD_TYPES.FLOAT,
+    type: FIELD_TYPES.TEXT,
     defaultValue: 0,
   },
   offsetY: {
-    type: FIELD_TYPES.FLOAT,
+    type: FIELD_TYPES.TEXT,
     defaultValue: 0,
   },
 };

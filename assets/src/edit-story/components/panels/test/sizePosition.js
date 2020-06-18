@@ -42,7 +42,6 @@ describe('Panels/SizePosition', () => {
       isBackground: false,
       width: 100,
       height: 80,
-      isFill: false,
       rotationAngle: 0,
       lockAspectRatio: true,
     };
@@ -51,7 +50,6 @@ describe('Panels/SizePosition', () => {
       isBackground: false,
       width: 100,
       height: 80,
-      isFill: false,
       rotationAngle: 0,
       lockAspectRatio: false,
     };
@@ -67,7 +65,6 @@ describe('Panels/SizePosition', () => {
       return {
         isMedia: 'image' === type,
         canFlip: 'image' === type,
-        canFill: true,
       };
     });
   });
@@ -77,14 +74,14 @@ describe('Panels/SizePosition', () => {
   }
 
   it('should render <SizePosition /> panel', () => {
-    const { getByText } = renderSizePosition([defaultElement]);
-    const element = getByText('Size & position');
+    const { getByRole } = renderSizePosition([defaultElement]);
+    const element = getByRole('button', { name: 'Size & position' });
     expect(element).toBeDefined();
   });
 
   it('should render Background button for Image', () => {
-    const { getByText } = renderSizePosition([defaultImage]);
-    const element = getByText('Set as background');
+    const { getByRole } = renderSizePosition([defaultImage]);
+    const element = getByRole('button', { name: 'Set as background' });
     expect(element).toBeDefined();
   });
 
@@ -98,31 +95,31 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should render default flip controls', () => {
-      const { getByTitle } = renderSizePosition([defaultImage]);
-      const horiz = getByTitle('Flip horizontally');
-      const vert = getByTitle('Flip vertically');
+      const { getByRole } = renderSizePosition([defaultImage]);
+      const horiz = getByRole('checkbox', { name: 'Flip horizontally' });
+      const vert = getByRole('checkbox', { name: 'Flip vertically' });
       expect(horiz).not.toBeChecked();
       expect(vert).not.toBeChecked();
     });
 
     it('should render specified flip controls', () => {
-      const { getByTitle } = renderSizePosition([
+      const { getByRole } = renderSizePosition([
         {
           ...defaultImage,
           flip: { horizontal: true, vertical: true },
         },
       ]);
-      const horiz = getByTitle('Flip horizontally');
-      const vert = getByTitle('Flip vertically');
+      const horiz = getByRole('checkbox', { name: 'Flip horizontally' });
+      const vert = getByRole('checkbox', { name: 'Flip vertically' });
       expect(horiz).toBeChecked();
       expect(vert).toBeChecked();
     });
 
     it('should update flip horizontal controls', () => {
-      const { getByTitle, pushUpdateForObject } = renderSizePosition([
+      const { getByRole, pushUpdateForObject } = renderSizePosition([
         defaultImage,
       ]);
-      const horiz = getByTitle('Flip horizontally');
+      const horiz = getByRole('checkbox', { name: 'Flip horizontally' });
       fireEvent.click(horiz);
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'flip',
@@ -133,10 +130,10 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update flip vertical controls', () => {
-      const { getByTitle, pushUpdateForObject } = renderSizePosition([
+      const { getByRole, pushUpdateForObject } = renderSizePosition([
         defaultImage,
       ]);
-      const vert = getByTitle('Flip vertically');
+      const vert = getByRole('checkbox', { name: 'Flip vertically' });
       fireEvent.click(vert);
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'flip',
@@ -146,15 +143,9 @@ describe('Panels/SizePosition', () => {
       );
     });
 
-    it('should update fill', () => {
-      const { getByTitle, pushUpdate } = renderSizePosition([defaultImage]);
-      fireEvent.click(getByTitle('Fill'));
-      expect(pushUpdate).toHaveBeenCalledWith({ isFill: true }, true);
-    });
-
     it('should update width with lock ratio', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-      const input = getByTestId('width');
+      const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
+      const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
@@ -163,8 +154,8 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update height with lock ratio', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-      const input = getByTestId('height');
+      const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
+      const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
       expect(pushUpdate).toHaveBeenCalledWith({
         height: 160,
@@ -173,69 +164,73 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update width without lock ratio', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([
+      const { getByRole, pushUpdate } = renderSizePosition([
         unlockAspectRatioElement,
       ]);
 
-      const input = getByTestId('width');
+      const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
       expect(pushUpdate).toHaveBeenCalledWith({ width: 150, height: 80 });
     });
 
     it('should update height without lock ratio', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([
+      const { getByRole, pushUpdate } = renderSizePosition([
         unlockAspectRatioElement,
       ]);
 
-      const input = getByTestId('height');
+      const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
       expect(pushUpdate).toHaveBeenCalledWith({ height: 160, width: 100 });
     });
 
     it('should update width with lock ratio and empty value', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
-      const input = getByTestId('width');
+      const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
+      const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ width: '', height: '' });
     });
 
     it('should update height with lock ratio and empty value', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([defaultImage]);
+      const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
 
-      const input = getByTestId('height');
+      const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: '' });
     });
 
     it('should update width without lock ratio and empty value', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([
+      const { getByRole, pushUpdate } = renderSizePosition([
         unlockAspectRatioElement,
       ]);
-      const input = getByTestId('width');
+      const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ width: '', height: 80 });
     });
 
     it('should update height without lock ratio and empty value', () => {
-      const { getByTestId, pushUpdate } = renderSizePosition([
+      const { getByRole, pushUpdate } = renderSizePosition([
         unlockAspectRatioElement,
       ]);
-      const input = getByTestId('height');
+      const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: 100 });
     });
 
     it('should update lock ratio to false for element', () => {
-      const { getByLabelText, pushUpdate } = renderSizePosition([defaultImage]);
-      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
+      fireEvent.click(
+        getByRole('checkbox', { name: aspectRatioLockButtonLabel })
+      );
       expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
     });
 
     it('should update lock ratio to true for unlock aspect ratio element', () => {
-      const { getByLabelText, pushUpdate } = renderSizePosition([
+      const { getByRole, pushUpdate } = renderSizePosition([
         unlockAspectRatioElement,
       ]);
-      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      fireEvent.click(
+        getByRole('checkbox', { name: aspectRatioLockButtonLabel })
+      );
       expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: true });
     });
   });
@@ -264,7 +259,7 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update flip controls', () => {
-      const { getByTitle, pushUpdateForObject } = renderSizePosition([
+      const { getByRole, pushUpdateForObject } = renderSizePosition([
         {
           ...image,
           flip: { horizontal: true, vertical: false },
@@ -274,7 +269,7 @@ describe('Panels/SizePosition', () => {
           flip: { horizontal: false, vertical: true },
         },
       ]);
-      const horiz = getByTitle('Flip horizontally');
+      const horiz = getByRole('checkbox', { name: 'Flip horizontally' });
       fireEvent.click(horiz);
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'flip',
@@ -285,11 +280,11 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update width with lock ratio and same size', () => {
-      const { getByTestId, pushUpdate, submit } = renderSizePosition([
+      const { getByRole, pushUpdate, submit } = renderSizePosition([
         image,
         imageWithSameSize,
       ]);
-      const input = getByTestId('width');
+      const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
@@ -310,11 +305,11 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update width with lock ratio and different size', () => {
-      const { getByTestId, pushUpdate, submit } = renderSizePosition([
+      const { getByRole, pushUpdate, submit } = renderSizePosition([
         image,
         imageWithDifferentSize,
       ]);
-      const input = getByTestId('width');
+      const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
@@ -335,11 +330,11 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should update height with lock ratio and different size', () => {
-      const { getByTestId, pushUpdate, submit } = renderSizePosition([
+      const { getByRole, pushUpdate, submit } = renderSizePosition([
         image,
         imageWithDifferentSize,
       ]);
-      const input = getByTestId('height');
+      const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
       expect(pushUpdate).toHaveBeenCalledWith({
         height: 160,
@@ -360,29 +355,35 @@ describe('Panels/SizePosition', () => {
     });
 
     it('should disable aspect ratio lock if all elements had lock enabled', () => {
-      const { getByLabelText, pushUpdate } = renderSizePosition([
+      const { getByRole, pushUpdate } = renderSizePosition([
         image,
         imageWithSameSize,
       ]);
-      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      fireEvent.click(
+        getByRole('checkbox', { name: aspectRatioLockButtonLabel })
+      );
       expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
     });
 
     it('should disable aspect ratio lock if elements had different settings for aspect ratio lock', () => {
-      const { getByLabelText, pushUpdate } = renderSizePosition([
+      const { getByRole, pushUpdate } = renderSizePosition([
         unlockImage,
         imageWithSameSize,
       ]);
-      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      fireEvent.click(
+        getByRole('checkbox', { name: aspectRatioLockButtonLabel })
+      );
       expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: false });
     });
 
     it('should enable aspect ratio lock only if all elements had lock disabled', () => {
-      const { getByLabelText, pushUpdate } = renderSizePosition([
+      const { getByRole, pushUpdate } = renderSizePosition([
         unlockImageWithSameSize,
         unlockImage,
       ]);
-      fireEvent.click(getByLabelText(aspectRatioLockButtonLabel));
+      fireEvent.click(
+        getByRole('checkbox', { name: aspectRatioLockButtonLabel })
+      );
       expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: true });
     });
   });

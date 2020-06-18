@@ -38,6 +38,7 @@ describe('reshapeTemplateObject', () => {
     ],
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     pages: [{ id: 0, elements: [] }],
+    version: 17,
   };
 
   it('should reshape object to match snapshot', () => {

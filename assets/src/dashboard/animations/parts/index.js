@@ -13,10 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES } from '../constants';
+import { ANIMATION_TYPES, BEZIER } from '../constants';
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
 import { AnimationFade } from './fade';
@@ -35,13 +41,21 @@ import moveProps from './move/animationProps';
 import spinProps from './spin/animationProps';
 import zoomProps from './zoom/animationProps';
 
+function EmptyAMPTarget({ children, ...rest }) {
+  return <div {...rest}>{children}</div>;
+}
+
+EmptyAMPTarget.propTypes = {
+  children: PropTypes.node,
+};
+
 export function throughput() {
   return {
     id: -1,
     generatedKeyframes: {},
     WAAPIAnimation: ({ children }) => children,
-    AMPTarget: ({ children }) => children,
-    AMPAnimation: () => {},
+    AMPTarget: EmptyAMPTarget,
+    AMPAnimation: () => null,
   };
 }
 
@@ -57,6 +71,9 @@ export function AnimationPart(type, args) {
       [ANIMATION_TYPES.SPIN]: AnimationSpin,
       [ANIMATION_TYPES.ZOOM]: AnimationZoom,
     }[type] || throughput;
+
+  args.easing = args.easing || BEZIER[args.easingPreset];
+  args.easingPreset = undefined;
 
   return generator(args);
 }

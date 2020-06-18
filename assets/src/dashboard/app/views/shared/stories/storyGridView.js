@@ -24,13 +24,16 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 
-import StoryGridView from '../storyGridView';
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
-import { STORY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import {
+  STORY_ITEM_CENTER_ACTION_LABELS,
+  STORY_CONTEXT_MENU_ITEMS,
+} from '../../../../constants';
+import StoryGridView from '../storyGridView';
 
 export default {
-  title: 'Dashboard/Components/StoryGridView',
+  title: 'Dashboard/Views/Shared/StoryGridView',
   component: StoryGridView,
 };
 
@@ -41,10 +44,12 @@ export const _default = () => {
       users={formattedUsersObject}
       centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
       bottomActionLabel={text('bottomActionLabel', 'MY CTA')}
-      createTemplateFromStory={boolean('createTemplateFromStory')}
-      updateStory={action('updateStory button clicked')}
-      trashStory={action('trashStory button clicked')}
-      duplicateStory={action('duplicateStory button clicked')}
+      storyMenu={{
+        handleMenuToggle: action('handleMenuToggle'),
+        contextMenuId: -1,
+        menuItems: STORY_CONTEXT_MENU_ITEMS,
+        handleMenuItemSelected: action('handleMenuItemSelected'),
+      }}
       isTemplate={boolean('isTemplate')}
       isSavedTemplate={boolean('isSavedTemplate')}
       pageSize={{ width: 210, height: 316 }}

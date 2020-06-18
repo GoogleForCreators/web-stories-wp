@@ -50,6 +50,7 @@ export const _default = () => {
             cta: BUTTON_TYPES.CTA,
             primary: BUTTON_TYPES.PRIMARY,
             secondary: BUTTON_TYPES.SECONDARY,
+            default: BUTTON_TYPES.DEFAULT,
           },
           BUTTON_TYPES.PRIMARY
         )}

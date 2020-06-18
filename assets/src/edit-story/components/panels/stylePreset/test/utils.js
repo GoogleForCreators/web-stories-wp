@@ -22,6 +22,7 @@ import {
   findMatchingStylePreset,
   getShapePresets,
   getTextPresets,
+  presetHasOpacity,
 } from '../utils';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import objectWithout from '../../../../utils/objectWithout';
@@ -180,8 +181,8 @@ describe('Panels/StylePreset/utils', () => {
       fillColors: [],
     };
     const expected = {
-      textColors: [TEST_COLOR],
-      textStyles: [stylePreset],
+      textColors: [TEST_COLOR, TEST_COLOR_2],
+      textStyles: [],
     };
     const presets = getTextPresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
@@ -210,7 +211,9 @@ describe('Panels/StylePreset/utils', () => {
     expect(presets).toStrictEqual(expected);
   });
 
-  it('should use black color when adding text style preset for multi-color text fields', () => {
+  // Disable reason: feature temporarily removed from beta.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should use black color when adding text style preset for multi-color text fields', () => {
     const stylePreset = {
       ...STYLE_PRESET,
       font: {
@@ -273,8 +276,8 @@ describe('Panels/StylePreset/utils', () => {
       },
     ];
     const stylePresets = {
-      textStyles: [stylePreset],
-      textColors: [TEST_COLOR],
+      textStyles: [],
+      textColors: [TEST_COLOR, TEST_COLOR_2],
       fillColors: [],
     };
     const expected = {
@@ -306,5 +309,30 @@ describe('Panels/StylePreset/utils', () => {
     };
     const presets = getShapePresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
+  });
+
+  it('should detect opacity in preset correctly', () => {
+    expect(presetHasOpacity(TEST_COLOR)).toBeFalse();
+    const preset1 = {
+      color: {
+        r: 1,
+        g: 1,
+        b: 1,
+        a: 0.5,
+      },
+    };
+    expect(presetHasOpacity(preset1)).toBeTrue();
+
+    const preset2 = {
+      type: 'linear',
+      stops: [TEST_COLOR, preset1],
+    };
+    expect(presetHasOpacity(preset2)).toBeTrue();
+
+    const preset3 = {
+      type: 'linear',
+      stops: [TEST_COLOR, TEST_COLOR_2],
+    };
+    expect(presetHasOpacity(preset3)).toBeFalse();
   });
 });

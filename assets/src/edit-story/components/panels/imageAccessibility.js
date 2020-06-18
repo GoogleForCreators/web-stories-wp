@@ -53,6 +53,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
+          aria-label={__('Edit: Assistive text', 'web-stories')}
         />
       </Row>
       <Row>

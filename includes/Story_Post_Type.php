@@ -72,7 +72,7 @@ class Story_Post_Type {
 	const PUBLISHER_LOGO_PLACEHOLDER = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
 
 	/**
-	 * Registers the post type to store URLs with validation errors.
+	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
 	 *
@@ -85,7 +85,7 @@ class Story_Post_Type {
 				'labels'                => [
 					'name'                     => _x( 'Stories', 'post type general name', 'web-stories' ),
 					'singular_name'            => _x( 'Story', 'post type singular name', 'web-stories' ),
-					'add_new'                  => _x( 'New', 'story', 'web-stories' ),
+					'add_new'                  => _x( 'Add New', 'story', 'web-stories' ),
 					'add_new_item'             => __( 'Add New Story', 'web-stories' ),
 					'edit_item'                => __( 'Edit Story', 'web-stories' ),
 					'new_item'                 => __( 'New Story', 'web-stories' ),
@@ -121,7 +121,6 @@ class Story_Post_Type {
 					'editor',
 					'excerpt',
 					'thumbnail', // Used for poster images.
-					'web-stories',
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
 				],
 				'rewrite'               => [
@@ -137,39 +136,12 @@ class Story_Post_Type {
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
 		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
-		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
-		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', [ __CLASS__, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
-
-		add_action(
-			'web_stories_story_head',
-			static function () {
-				// Theme support for title-tag is implied for stories. See _wp_render_title_tag().
-				echo '<title>' . esc_html( wp_get_document_title() ) . '</title>' . "\n";
-			},
-			1
-		);
-
-		add_action( 'web_stories_story_head', [ __CLASS__, 'print_schemaorg_metadata' ] );
-
-		// @todo Check if there's something to skip in the new version.
-		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
-		add_action( 'web_stories_story_head', 'wp_resource_hints', 2 );
-		add_action( 'web_stories_story_head', 'feed_links', 2 );
-		add_action( 'web_stories_story_head', 'feed_links_extra', 3 );
-		add_action( 'web_stories_story_head', 'rsd_link' );
-		add_action( 'web_stories_story_head', 'wlwmanifest_link' );
-		add_action( 'web_stories_story_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
-		add_action( 'web_stories_story_head', 'noindex', 1 );
-		add_action( 'web_stories_story_head', 'wp_generator' );
-		add_action( 'web_stories_story_head', 'rel_canonical' );
-		add_action( 'web_stories_story_head', 'wp_shortlink_wp_head', 10, 0 );
-		add_action( 'web_stories_story_head', 'wp_site_icon', 99 );
-		add_action( 'web_stories_story_head', 'wp_oembed_add_discovery_links' );
 
 		// @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
 		add_filter(
@@ -254,6 +226,24 @@ class Story_Post_Type {
 		}
 
 		return $replace;
+	}
+
+	/**
+	 * Filters whether post type supports the block editor.
+	 *
+	 * Disables the block editor and associated logic (like enqueueing assets)
+	 * for the story post type.
+	 *
+	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string $post_type         The post type being checked.
+	 * @return bool Whether to use the block editor.
+	 */
+	public static function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+		if ( self::POST_TYPE_SLUG === $post_type ) {
+			return false;
+		}
+
+		return $use_block_editor;
 	}
 
 	/**
@@ -369,8 +359,8 @@ class Story_Post_Type {
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'timeFormat'       => get_option( 'time_format' ),
-				'allowedMimeTypes' => self::get_allowed_mime_types(),
-				'allowedFileTypes' => self::get_allowed_file_types(),
+				'allowedMimeTypes' => Media::get_allowed_mime_types(),
+				'allowedFileTypes' => Media::get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
@@ -388,250 +378,87 @@ class Story_Post_Type {
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => self::get_publisher_data(),
+					'publisher'       => Discovery::get_publisher_data(),
 					'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
 			'flags'  => [
 				/**
+				 * Description: Enables user facing animations.
+				 * Author: @mariano-formidable
+				 * Issue: 1903
+				 * Creation date: 2020-06-08
+				 */
+				'enableAnimation'              => false,
+				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu' => false,
+				'mediaDropdownMenu'            => false,
+				/**
+				 * Description: Flag for new font picker with typeface previews in style panel.
+				 * Author: @carlos-kelly
+				 * Issue: #1300
+				 * Creation date: 2020-06-02
+				 */
+				'newFontPicker'                => false,
+				/**
+				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
+				 * Author: @dmmulroy
+				 * Issue: #2094
+				 * Creation date: 2020-06-04
+				 */
+				'showKeyboardShortcutsButton'  => false,
+				/**
+				 * Description: Flag for hiding/enabling text sets.
+				 * Author: @dmmulroy
+				 * Issue: #2097
+				 * Creation date: 2020-06-04
+				 */
+				'showTextSets'                 => false,
+				/**
+				 * Description: Flag for hiding/enabling the pre publish tab.
+				 * Author: @dmmulroy
+				 * Issue: #2095
+				 * Creation date: 2020-06-04
+				 */
+				'showPrePublishTab'            => false,
+				/**
+				 * Description: Flag for displaying the animation tab/panel.
+				 * Author: @dmmulroy
+				 * Issue: #2092
+				 * Creation date: 2020-06-04
+				 */
+				'showAnimationTab'             => false,
+				/**
+				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
+				 * Author: @dmmulroy
+				 * Issue: #2044
+				 * Creation date: 2020-06-04
+				 */
+				'showTextMagicAndHelperMode'   => false,
+				/**
+				 * Description: Flag for hiding/enabling the search input on the text and shapes panes.
+				 * Author: @dmmulroy
+				 * Issue: #2098
+				 * Creation date: 2020-06-04
+				 */
+				'showTextAndShapesSearchInput' => false,
+				/**
+				 * Description: Flag for the 3P Media tab.
+				 * Author: @diegovar
+				 * Issue: #2508
+				 * Creation date: 2020-06-17
+				 */
+				'media3pTab'                   => false,
 			],
+
 		];
 
 		return $settings;
-	}
-
-	/**
-	 * Returns a list of allowed file types.
-	 *
-	 * @return array List of allowed file types.
-	 */
-	protected static function get_allowed_file_types() {
-		$allowed_mime_types = self::get_allowed_mime_types();
-		$mime_types         = [];
-
-		foreach ( $allowed_mime_types as $type => $mimes ) {
-			// Otherwise this throws a warning on PHP < 7.3.
-			if ( ! empty( $mimes ) ) {
-				array_push( $mime_types, ...$mimes );
-			}
-		}
-
-		$allowed_file_types = [];
-		$all_mime_types     = wp_get_mime_types();
-
-		foreach ( $all_mime_types as $ext => $mime ) {
-			if ( in_array( $mime, $mime_types, true ) ) {
-				array_push( $allowed_file_types, ...explode( '|', $ext ) );
-			}
-		}
-		sort( $allowed_file_types );
-
-		return $allowed_file_types;
-	}
-
-	/**
-	 * Returns a list of allowed mime types per media type (image, audio, video).
-	 *
-	 * @return array List of allowed mime types.
-	 */
-	protected static function get_allowed_mime_types() {
-		$default_allowed_mime_types = [
-			'image' => [
-				'image/png',
-				'image/jpeg',
-				'image/jpg',
-				'image/gif',
-			],
-			'audio' => [], // todo: support audio uploads.
-			'video' => [
-				'video/mp4',
-				'video/webm',
-			],
-		];
-
-		/**
-		 * Filter list of allowed mime types.
-		 *
-		 * This can be used to add additionally supported formats, for example by plugins
-		 * that do video transcoding.
-		 *
-		 * @since 1.3
-		 *
-		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
-		 */
-		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
-
-		foreach ( array_keys( $default_allowed_mime_types ) as $media_type ) {
-			if ( ! is_array( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
-				$allowed_mime_types[ $media_type ] = $default_allowed_mime_types[ $media_type ];
-			}
-
-			// Only add currently supported mime types.
-			$allowed_mime_types[ $media_type ] = array_values( array_intersect( $allowed_mime_types[ $media_type ], wp_get_mime_types() ) );
-		}
-
-		return $allowed_mime_types;
-	}
-
-	/**
-	 * Filter the list of admin classes.
-	 *
-	 * @param string $class Current classes.
-	 *
-	 * @return string $class List of Classes.
-	 */
-	public static function admin_body_class( $class ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return $class;
-		}
-
-		if ( self::POST_TYPE_SLUG !== $screen->post_type ) {
-			return $class;
-		}
-
-		$class .= ' edit-story';
-
-		// Overrides regular WordPress behavior by collapsing the admin menu by default.
-		if ( false === strpos( $class, 'folded' ) ) {
-			$class .= ' folded';
-		}
-
-		return $class;
-	}
-
-	/**
-	 * Filter the allowed tags for KSES to allow for amp-story children.
-	 *
-	 * @param array|string $allowed_tags Allowed tags.
-	 *
-	 * @return array|string Allowed tags.
-	 */
-	public static function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! is_array( $allowed_tags ) ) {
-			return $allowed_tags;
-		}
-
-		$story_components = [
-			'amp-story'                 => [
-				'background-audio'     => true,
-				'live-story'           => true,
-				'live-story-disabled'  => true,
-				'poster-landscape-src' => true,
-				'poster-portrait-src'  => true,
-				'poster-square-src'    => true,
-				'publisher'            => true,
-				'publisher-logo-src'   => true,
-				'standalone'           => true,
-				'supports-landscape'   => true,
-				'title'                => true,
-			],
-			'amp-story-page'            => [
-				'auto-advance-after' => true,
-				'background-audio'   => true,
-				'id'                 => true,
-			],
-			'amp-story-page-attachment' => [
-				'theme' => true,
-			],
-			'amp-story-grid-layer'      => [
-				'position' => true,
-				'template' => true,
-			],
-			'amp-story-cta-layer'       => [],
-			'amp-img'                   => [
-				'alt'                       => true,
-				'attribution'               => true,
-				'data-amp-bind-alt'         => true,
-				'data-amp-bind-attribution' => true,
-				'data-amp-bind-src'         => true,
-				'data-amp-bind-srcset'      => true,
-				'lightbox'                  => true,
-				'lightbox-thumbnail-id'     => true,
-				'media'                     => true,
-				'noloading'                 => true,
-				'object-fit'                => true,
-				'object-position'           => true,
-				'placeholder'               => true,
-				'src'                       => true,
-				'srcset'                    => true,
-			],
-			'amp-video'                 => [
-				'album'                      => true,
-				'alt'                        => true,
-				'artist'                     => true,
-				'artwork'                    => true,
-				'attribution'                => true,
-				'autoplay'                   => true,
-				'controls'                   => true,
-				'controlslist'               => true,
-				'crossorigin'                => true,
-				'data-amp-bind-album'        => true,
-				'data-amp-bind-alt'          => true,
-				'data-amp-bind-artist'       => true,
-				'data-amp-bind-artwork'      => true,
-				'data-amp-bind-attribution'  => true,
-				'data-amp-bind-controls'     => true,
-				'data-amp-bind-controlslist' => true,
-				'data-amp-bind-loop'         => true,
-				'data-amp-bind-poster'       => true,
-				'data-amp-bind-preload'      => true,
-				'data-amp-bind-src'          => true,
-				'data-amp-bind-title'        => true,
-				'disableremoteplayback'      => true,
-				'dock'                       => true,
-				'lightbox'                   => true,
-				'lightbox-thumbnail-id'      => true,
-				'loop'                       => true,
-				'media'                      => true,
-				'muted'                      => true,
-				'noaudio'                    => true,
-				'noloading'                  => true,
-				'object-fit'                 => true,
-				'object-position'            => true,
-				'placeholder'                => true,
-				'poster'                     => true,
-				'preload'                    => true,
-				'rotate-to-fullscreen'       => true,
-				'src'                        => true,
-			],
-			'img'                       => [
-				'alt'           => true,
-				'attribution'   => true,
-				'border'        => true,
-				'decoding'      => true,
-				'height'        => true,
-				'importance'    => true,
-				'intrinsicsize' => true,
-				'ismap'         => true,
-				'loading'       => true,
-				'longdesc'      => true,
-				'sizes'         => true,
-				'src'           => true,
-				'srcset'        => true,
-				'srcwidth'      => true,
-			],
-		];
-
-		$allowed_tags = array_merge( $allowed_tags, $story_components );
-
-		foreach ( $allowed_tags as &$allowed_tag ) {
-			$allowed_tag['animate-in']          = true;
-			$allowed_tag['animate-in-duration'] = true;
-			$allowed_tag['animate-in-delay']    = true;
-			$allowed_tag['animate-in-after']    = true;
-			$allowed_tag['layout']              = true;
-		}
-
-		return $allowed_tags;
 	}
 
 	/**
@@ -647,180 +474,5 @@ class Story_Post_Type {
 		}
 
 		return $template;
-	}
-
-	/**
-	 * Gets a valid publisher logo URL. Loops through sizes and looks for a square image.
-	 *
-	 * @param integer $image_id Attachment ID.
-	 *
-	 * @return string|false Either the URL or false if error.
-	 */
-	private static function get_valid_publisher_image( $image_id ) {
-		$logo_image_url = false;
-
-		// Get metadata for finding a square image.
-		$metadata = wp_get_attachment_metadata( $image_id );
-		if ( empty( $metadata ) ) {
-			return $logo_image_url;
-		}
-		// First lets check if the image is square by default.
-		$fullsize_img = wp_get_attachment_image_src( $image_id, 'full', false );
-		if ( $metadata['width'] === $metadata['height'] && is_array( $fullsize_img ) ) {
-			return array_shift( $fullsize_img );
-		}
-
-		if ( empty( $metadata['sizes'] ) ) {
-			return $logo_image_url;
-		}
-
-		// Loop through other size to find a square image.
-		foreach ( $metadata['sizes'] as $size ) {
-			if ( $size['width'] === $size['height'] && $size['width'] >= 96 ) {
-				$logo_img = wp_get_attachment_image_src( $image_id, [ $size['width'], $size['height'] ], false );
-				if ( is_array( $logo_img ) ) {
-					return array_shift( $logo_img );
-				}
-			}
-		}
-
-		// If a square image was not found, return the full size nevertheless,
-		// the editor should take care of warning about incorrect size.
-		return is_array( $fullsize_img ) ? array_shift( $fullsize_img ) : false;
-	}
-
-	/**
-	 * Get the publisher logo.
-	 *
-	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
-	 * @link https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines
-	 *
-	 * @return string Publisher logo image URL. WordPress logo if no site icon or custom logo defined, and no logo provided via 'amp_site_icon_url' filter.
-	 */
-	public static function get_publisher_logo() {
-		$logo_image_url = null;
-
-		$publisher_logo_settings = get_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [] );
-		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
-		if ( $has_publisher_logo ) {
-			$publisher_logo_id = absint( $publisher_logo_settings['active'] );
-			$logo_image_url    = self::get_valid_publisher_image( $publisher_logo_id );
-		}
-
-		// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
-		// Currently, it's marked as required but that's not actually enforced.
-
-		// Finding fallback image.
-		$custom_logo_id = get_theme_mod( 'custom_logo' );
-		if ( empty( $logo_image_url ) && has_custom_logo() && $custom_logo_id ) {
-			$logo_image_url = self::get_valid_publisher_image( $custom_logo_id );
-		}
-
-		// Try Site Icon, though it is not ideal for non-Story because it should be square.
-		$site_icon_id = get_option( 'site_icon' );
-		if ( empty( $logo_image_url ) && $site_icon_id ) {
-			$logo_image_url = self::get_valid_publisher_image( $site_icon_id );
-		}
-
-		// Fallback to serving the WordPress logo.
-		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
-		}
-
-		/**
-		 * Filters the publisher's logo.
-		 *
-		 * This should point to a square image.
-		 *
-		 * @param string $logo_image_url URL to the publisher's logo.
-		 */
-		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
-	}
-
-	/**
-	 * Returns the publisher data.
-	 *
-	 * @return array Publisher name and logo.
-	 */
-	private static function get_publisher_data() {
-		$publisher      = get_bloginfo( 'name' );
-		$publisher_logo = self::get_publisher_logo();
-
-		return [
-			'name' => $publisher,
-			'logo' => $publisher_logo,
-		];
-	}
-
-	/**
-	 * Prints the schema.org metadata on the single story template.
-	 *
-	 * @return void
-	 */
-	public static function print_schemaorg_metadata() {
-		$metadata = self::get_schemaorg_metadata();
-
-		?>
-		<script type="application/ld+json"><?php echo wp_json_encode( $metadata, JSON_UNESCAPED_UNICODE ); ?></script>
-		<?php
-	}
-
-	/**
-	 * Get schema.org metadata for the current query.
-	 *
-	 * @return array $metadata All schema.org metadata for the post.
-	 */
-	public static function get_schemaorg_metadata() {
-		$publisher = self::get_publisher_data();
-
-		$metadata = [
-			'@context'  => 'http://schema.org',
-			'publisher' => [
-				'@type' => 'Organization',
-				'name'  => $publisher['name'],
-				'logo'  => $publisher['logo'],
-			],
-		];
-
-		/**
-		 * We're expecting a post object.
-		 *
-		 * @var WP_Post $post
-		 */
-		$post = get_queried_object();
-
-		if ( $post instanceof WP_Post ) {
-			$metadata = array_merge(
-				$metadata,
-				[
-					'@type'            => 'BlogPosting',
-					'mainEntityOfPage' => get_permalink(),
-					'headline'         => get_the_title(),
-					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
-					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
-				]
-			);
-
-			$post_author = get_userdata( (int) $post->post_author );
-
-			if ( $post_author ) {
-				$metadata['author'] = [
-					'@type' => 'Person',
-					'name'  => html_entity_decode( $post_author->display_name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
-				];
-			}
-
-			if ( has_post_thumbnail( $post->ID ) ) {
-				$metadata['image'] = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post->ID ), 'full' );
-			}
-		}
-
-		/**
-		 * Filters the schema.org metadata for a given story.
-		 *
-		 * @param array $metadata The structured data.
-		 * @param WP_Post $post The current post object.
-		 */
-		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
 	}
 }

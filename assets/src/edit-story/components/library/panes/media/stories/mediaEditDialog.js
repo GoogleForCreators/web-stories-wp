@@ -30,7 +30,7 @@ import SnackbarContext from '../../../../../app/snackbar/context';
 import testImage from './test-image.jpg';
 
 export default {
-  title: 'Stories Editor/Components/Media Edit Dialog',
+  title: 'Stories Editor/Components/Dialog/Edit Media',
   component: MediaEditDialog,
 };
 
@@ -48,6 +48,7 @@ export const _default = () => {
     type: 'image',
     mimeType: 'image/png',
     title: 'My Image :)',
+    creationDate: Date.now(),
     src: testImage,
     width: 910,
     height: 675,

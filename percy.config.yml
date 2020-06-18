@@ -1,4 +1,4 @@
 version: 1
 snapshot:
-  widths: [1024, 1920]
-  min-height: 768
+  widths: [1600]
+  min-height: 1000

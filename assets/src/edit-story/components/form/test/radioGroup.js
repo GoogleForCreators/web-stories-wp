@@ -46,7 +46,7 @@ describe('RadioGroup', () => {
   ];
 
   it('should render with correct options', () => {
-    const { getByText, getByLabelText } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <RadioGroup
         onChange={() => null}
         options={options}
@@ -54,24 +54,24 @@ describe('RadioGroup', () => {
       />
     );
 
-    const optionA = getByText('Option A');
-    const optionB = getByText('Option B');
+    const optionA = getByRole('radio', { name: 'Option A' });
+    const optionB = getByRole('radio', { name: 'Option B' });
 
     expect(optionA).toBeInTheDocument();
-    expect(getByLabelText(/Option A/i)).toBeChecked();
+    expect(optionA).toBeChecked();
     expect(optionB).toBeInTheDocument();
   });
 
   it('should change the value when clicking', () => {
     const onChange = jest.fn();
-    const { getByLabelText } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <RadioGroup
         onChange={onChange}
         options={options}
         value={options[0].value}
       />
     );
-    const optionB = getByLabelText(/Option B/i);
+    const optionB = getByRole('radio', { name: 'Option B' });
     fireEvent.click(optionB);
     expect(onChange).toHaveBeenCalledTimes(1);
 

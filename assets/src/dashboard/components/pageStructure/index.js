@@ -24,7 +24,8 @@ import { __ } from '@wordpress/i18n';
  */
 
 import styled from 'styled-components';
-import { useCallback, useRef, useLayoutEffect } from 'react';
+import { useCallback, useRef, useLayoutEffect, useMemo } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -102,6 +103,7 @@ export function LeftRail() {
   const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
+  const enableInProgressViews = useFeature('enableInProgressViews');
 
   const {
     state: { sideBarVisible },
@@ -120,6 +122,20 @@ export function LeftRail() {
     },
     [toggleSideBar, leftRailRef, upperContentRef]
   );
+
+  const enabledPaths = useMemo(() => {
+    if (enableInProgressViews) {
+      return primaryPaths;
+    }
+    return primaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews]);
+
+  const enabledSecondaryPaths = useMemo(() => {
+    if (enableInProgressViews) {
+      return secondaryPaths;
+    }
+    return secondaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews]);
 
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
@@ -157,7 +173,7 @@ export function LeftRail() {
         </Content>
         <Content>
           <NavList>
-            {primaryPaths.map((path) => (
+            {enabledPaths.map((path) => (
               <NavListItem key={path.value}>
                 <NavLink
                   active={path.value === state.currentPath}
@@ -172,7 +188,7 @@ export function LeftRail() {
         <Rule />
         <Content>
           <NavList>
-            {secondaryPaths.map((path) => (
+            {enabledSecondaryPaths.map((path) => (
               <NavListItem key={path.value}>
                 <NavLink
                   active={path.value === state.currentPath}

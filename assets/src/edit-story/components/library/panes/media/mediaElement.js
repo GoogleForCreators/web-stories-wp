@@ -28,7 +28,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
-import { ReactComponent as Play } from '../../../../icons/play.svg';
+import { Play } from '../../../../icons';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from './dropDownMenu';
 
@@ -199,7 +199,7 @@ const MediaElement = ({
           setShowVideoDetail(false);
           if (mediaElement.current) {
             // Pointer still in the media element, continue the video.
-            mediaElement.current.play();
+            mediaElement.current.play().catch(() => {});
           }
         } else {
           setShowVideoDetail(true);
@@ -260,7 +260,11 @@ const MediaElement = ({
 
   const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <Container onPointerEnter={onPointerEnter} onPointerLeave={onPointerLeave}>
+    <Container
+      data-testid="mediaElement"
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+    >
       <Video
         key={src}
         ref={mediaElement}
@@ -268,6 +272,7 @@ const MediaElement = ({
         width={width}
         height={height}
         preload="none"
+        aria-label={alt}
         muted
         onClick={onClick}
         {...dropTargetsBindings}

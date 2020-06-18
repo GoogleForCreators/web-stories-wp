@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useFeatures } from 'flagged';
 import { MASKS } from '../../../../masks';
 import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
@@ -41,17 +42,19 @@ const SectionContent = styled.div`
 `;
 
 function ShapesPane(props) {
+  const { showTextAndShapesSearchInput } = useFeatures();
   return (
     <Pane id={paneId} {...props}>
-      <SearchInput
-        value={''}
-        placeholder={__('Search', 'web-stories')}
-        onChange={() => {}}
-        disabled
-      />
+      {showTextAndShapesSearchInput && (
+        <SearchInput
+          value={''}
+          placeholder={__('Search', 'web-stories')}
+          onChange={() => {}}
+          disabled
+        />
+      )}
       <Section title={__('Basic shapes', 'web-stories')}>
         <SectionContent>
-          {/** Basic masks */}
           {MASKS.map((mask) => (
             <ShapePreview mask={mask} key={mask.type} />
           ))}

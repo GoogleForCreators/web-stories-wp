@@ -29,8 +29,7 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Toggle } from '../../../form';
-import { ReactComponent as Locked } from '../../../../icons/lock.svg';
-import { ReactComponent as Unlocked } from '../../../../icons/unlock.svg';
+import { Lock as Locked, Unlock as Unlocked } from '../../../../icons';
 import { PaddingPropType } from '../../../../types';
 import { BoxedNumeric, Space } from './common';
 
@@ -42,7 +41,6 @@ function LockedPaddingControls({ padding, handleChange }) {
   return (
     <>
       <FlexedBoxedNumeric
-        data-testid="padding.multiple"
         suffix={_x(
           `H\u00A0&\u00A0V`,
           'The Horizontal & Vertical padding',
@@ -55,14 +53,15 @@ function LockedPaddingControls({ padding, handleChange }) {
             vertical: value,
           })
         }
+        aria-label={__('Edit: Horizontal & Vertical padding', 'web-stories')}
       />
       <Space />
       <Toggle
-        aria-label={__('Padding ratio lock', 'web-stories')}
         icon={<Locked />}
         uncheckedIcon={<Unlocked />}
         value={true}
         onChange={() => handleChange({ locked: false })}
+        aria-label={__('Toggle padding ratio lock', 'web-stories')}
       />
     </>
   );

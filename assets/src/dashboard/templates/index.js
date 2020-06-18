@@ -17,25 +17,13 @@
 /**
  * Internal dependencies
  */
-import getBeautyStoryData from './data/beauty';
-import getCookingStoryData from './data/cooking';
-import getDIYStoryData from './data/diy';
-import getEntertainmentStoryData from './data/entertainment';
-import getFashionStoryData from './data/fashion';
-import getFitnessStoryData from './data/fitness';
-import getTravelStoryData from './data/travel';
-import getWellbeingStoryData from './data/wellbeing';
+import { memoize } from '../utils';
+import getTemplates from './getTemplates';
 
-export default function (config) {
-  const { assetsURL } = config;
-  const beautyStoryData = getBeautyStoryData(assetsURL);
-  const cookingStoryData = getCookingStoryData(assetsURL);
-  const diyStoryData = getDIYStoryData(assetsURL);
-  const entertainmentData = getEntertainmentStoryData(assetsURL);
-  const fashionStoryData = getFashionStoryData(assetsURL);
-  const fitnessStoryData = getFitnessStoryData(assetsURL);
-  const travelStoryData = getTravelStoryData(assetsURL);
-  const wellbeingStoryData = getWellbeingStoryData(assetsURL);
+const memoizedGetTemplates = memoize(getTemplates);
+
+export default function ({ assetsURL }) {
+  const templates = memoizedGetTemplates(assetsURL);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',
@@ -57,7 +45,8 @@ export default function (config) {
       ],
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-      pages: beautyStoryData.pages,
+      pages: templates.beauty.pages,
+      version: templates.beauty.version,
     },
     {
       id: 2,
@@ -73,7 +62,8 @@ export default function (config) {
       ],
       description:
         'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
-      pages: cookingStoryData.pages,
+      pages: templates.cooking.pages,
+      version: templates.cooking.version,
     },
     {
       id: 3,
@@ -90,7 +80,8 @@ export default function (config) {
       ],
       description:
         'Mauris placerat velit ut nunc ornare porta. Integer auctor hendrerit aliquam. Proin egestas nisi et nisl commodo.',
-      pages: diyStoryData.pages,
+      pages: templates.diy.pages,
+      version: templates.diy.version,
     },
     {
       id: 4,
@@ -105,7 +96,8 @@ export default function (config) {
       ],
       description:
         'Nam a tellus tortor. Aenean non mi porta quam feugiat vehicula in a lectus. Suspendisse eget justo ac quam.',
-      pages: entertainmentData.pages,
+      pages: templates.entertainment.pages,
+      version: templates.entertainment.version,
     },
     {
       id: 5,
@@ -121,7 +113,8 @@ export default function (config) {
       ],
       description:
         'Duis auctor libero vel dui tincidunt, at mattis nisi placerat. Nam id lacinia lectus.',
-      pages: fashionStoryData.pages,
+      pages: templates.fashion.pages,
+      version: templates.fashion.version,
     },
     {
       id: 6,
@@ -135,7 +128,8 @@ export default function (config) {
       ],
       description:
         'Quisque dignissim urna id lectus ultricies blandit. Cras laoreet pharetra lectus. Nunc mollis suscipit feugiat.',
-      pages: fitnessStoryData.pages,
+      pages: templates.fitness.pages,
+      version: templates.fitness.version,
     },
     {
       id: 7,
@@ -150,7 +144,8 @@ export default function (config) {
       ],
       description:
         'Vestibulum lobortis quis nunc eget pulvinar. Duis auctor eros quis dignissim iaculis.',
-      pages: travelStoryData.pages,
+      pages: templates.travel.pages,
+      version: templates.travel.version,
     },
     {
       id: 8,
@@ -167,7 +162,8 @@ export default function (config) {
       ],
       description:
         'In lorem est, aliquam tempus justo nec, tincidunt aliquet diam. Fusce ut nisl ex. Nam mollis dolor non arcu.',
-      pages: wellbeingStoryData.pages,
+      pages: templates.wellbeing.pages,
+      version: templates.wellbeing.version,
     },
   ];
 }

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { memo } from 'react';
 
 /**
@@ -28,34 +27,28 @@ import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 
-const DisplayPageArea = styled(PageArea).attrs({
-  className: 'container web-stories-content',
-  overflowAllowed: false,
-  showDangerZone: true,
-})`
-  background-color: white;
-  background-image: linear-gradient(45deg, #999999 25%, transparent 25%),
-    linear-gradient(-45deg, #999999 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #999999 75%),
-    linear-gradient(-45deg, transparent 75%, #999999 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-`;
-
 function DisplayLayer() {
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
   const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement },
-    actions: { setPageContainer, setFullbleedContainer },
-  } = useCanvas();
+    editingElement,
+    setPageContainer,
+    setFullbleedContainer,
+  } = useCanvas(
+    ({
+      state: { editingElement },
+      actions: { setPageContainer, setFullbleedContainer },
+    }) => ({ editingElement, setPageContainer, setFullbleedContainer })
+  );
 
   return (
-    <Layer pointerEvents="none">
-      <DisplayPageArea
+    <Layer data-testid="DisplayLayer" pointerEvents="none">
+      <PageArea
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
+        background={currentPage?.backgroundColor}
+        showDangerZone={true}
       >
         {currentPage
           ? currentPage.elements.map(({ id, ...rest }) => {
@@ -71,7 +64,7 @@ function DisplayLayer() {
               );
             })
           : null}
-      </DisplayPageArea>
+      </PageArea>
     </Layer>
   );
 }

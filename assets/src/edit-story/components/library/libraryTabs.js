@@ -25,20 +25,20 @@ import { useMemo, useRef, useCallback } from 'react';
 import { useConfig } from '../../app';
 import { useKeyDownEffect } from '../keyboard';
 import useLibrary from './useLibrary';
-import { Tabs, getPanes } from './panes';
+import { Tabs, getPane } from './panes';
 import { getTabId } from './panes/shared';
 
 function LibraryTabs() {
-  const {
-    state: { tab },
-    actions: { setTab },
-    data: { tabs },
-  } = useLibrary();
+  const { tab, setTab, tabs } = useLibrary((state) => ({
+    tab: state.state.tab,
+    setTab: state.actions.setTab,
+    tabs: state.data.tabs,
+  }));
   const { isRTL } = useConfig();
-  const panes = useMemo(() => getPanes(tabs), [tabs]);
+  const panes = useMemo(() => tabs.map((t) => getPane(t)), [tabs]);
   const ref = useRef();
   const handleNavigation = useCallback(
-    (direction) => () => {
+    (direction) => {
       const currentIndex = panes.findIndex(({ id }) => id === tab);
       const nextPane = panes[currentIndex + direction];
       if (!nextPane) {
@@ -60,6 +60,8 @@ function LibraryTabs() {
     handleNavigation,
     isRTL,
   ]);
+  // Empty up/down handlers for consistency with left/right.
+  useKeyDownEffect(ref, ['up', 'down'], () => {}, []);
 
   return (
     <Tabs ref={ref}>

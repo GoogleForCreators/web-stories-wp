@@ -46,9 +46,9 @@ const Path = styled.path`
 `;
 
 function ShapePreview({ mask }) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
 
   // Creating a ref to the Path so that it can be used as a drag icon.
   // This avoids the drag image that follows the cursor from being the whole

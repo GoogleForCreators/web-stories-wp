@@ -22,18 +22,30 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+jest.mock('../../previewPage');
+import PreviewPage from '../../previewPage';
 import { renderWithTheme } from '../../../testUtils/';
 import CardGallery from '../';
 
+const createMockTemplate = (pages) => ({
+  id: 1,
+  title: 'some-template',
+  pages,
+});
+
 describe('CardGallery', () => {
+  PreviewPage.mockImplementation(({ page }) => <div data-testid={page.name} />);
+
   it('should render CardGallery', () => {
+    const template = createMockTemplate([
+      { id: 'id-1', name: 'test-child' },
+      { id: 'id-2', name: 'test-child' },
+      { id: 'id-3', name: 'test-child' },
+      { id: 'id-4', name: 'test-child' },
+    ]);
+
     const { getAllByTestId } = renderWithTheme(
-      <CardGallery>
-        <div data-testid={'test-child'}>{'Item 1'}</div>
-        <div data-testid={'test-child'}>{'Item 2'}</div>
-        <div data-testid={'test-child'}>{'Item 3'}</div>
-        <div data-testid={'test-child'}>{'Item 4'}</div>
-      </CardGallery>
+      <CardGallery story={template} />
     );
 
     // totalCards = childrenCount + activeCardCount (there is only 1 active card at a time)
@@ -42,13 +54,15 @@ describe('CardGallery', () => {
   });
 
   it('should set first child as active child', () => {
+    const template = createMockTemplate([
+      { id: 'id-1', name: 'active-child' },
+      { id: 'id-2', name: 'non-active-child' },
+      { id: 'id-3', name: 'non-active-child' },
+      { id: 'id-4', name: 'non-active-child' },
+    ]);
+
     const { getAllByTestId } = renderWithTheme(
-      <CardGallery>
-        <div data-testid={'active-child'}>{'Item 1'}</div>
-        <div>{'Item 2'}</div>
-        <div>{'Item 3'}</div>
-        <div>{'Item 4'}</div>
-      </CardGallery>
+      <CardGallery story={template} />
     );
 
     // The active child should always appear twice
@@ -56,13 +70,15 @@ describe('CardGallery', () => {
   });
 
   it('should change active child to the child that is clicked on', () => {
+    const template = createMockTemplate([
+      { id: 'id-1', name: 'other-child' },
+      { id: 'id-2', name: 'other-child' },
+      { id: 'id-3', name: 'test-child' },
+      { id: 'id-4', name: 'other-child' },
+    ]);
+
     const { getAllByTestId } = renderWithTheme(
-      <CardGallery>
-        <div>{'Item 1'}</div>
-        <div>{'Item 2'}</div>
-        <div data-testid={'test-child'}>{'Item 3'}</div>
-        <div>{'Item 4'}</div>
-      </CardGallery>
+      <CardGallery story={template} />
     );
 
     // When the child is not active, it should only appear once

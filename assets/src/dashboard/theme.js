@@ -75,6 +75,7 @@ const colors = {
 const borders = {
   gray50: `1px solid ${colors.gray50}`,
   gray100: `1px solid ${colors.gray100}`,
+  gray800: `1px solid ${colors.gray800}`,
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
   action: `1px solid ${colors.action}`,
