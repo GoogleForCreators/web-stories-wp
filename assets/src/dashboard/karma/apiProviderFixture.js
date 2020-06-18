@@ -28,10 +28,51 @@ import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../storybookUtils/formattedUsersObject';
 import formattedTemplatesArray from '../storybookUtils/formattedTemplatesArray';
 
+/* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
   const [stories] = useState(formattedStoriesArray);
   const [templates] = useState(formattedTemplatesArray);
   const [users] = useState(formattedUsersObject);
+
+  const storyApi = useMemo(
+    () => ({
+      duplicateStory: jasmine.createSpy('duplicateStory'),
+      fetchStories: jasmine.createSpy('fetchStories'),
+      createStoryFromTemplate: jasmine.createSpy('createStoryFromTemplate'),
+      trashStory: jasmine.createSpy('trashStory'),
+      updateStory: jasmine.createSpy('updateStory'),
+    }),
+    []
+  );
+
+  const templateApi = useMemo(
+    () => ({
+      bookmarkTemplateById: jasmine.createSpy('bookmarkTemplateById'),
+      createTemplateFromStory: jasmine.createSpy('createTemplateFromStory'),
+      fetchBookmarkedTemplates: jasmine.createSpy('fetchBookmarkedTemplates'),
+      fetchExternalTemplates: jasmine.createSpy('fetchExternalTemplates'),
+      fetchExternalTemplateById: jasmine.createSpy('fetchExternalTemplateById'),
+      fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
+      fetchMyTemplateById: jasmine.createSpy('fetchMyTemplateById'),
+      fetchRelatedTemplates: jasmine.createSpy('fetchRelatedTemplates'),
+      fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
+    }),
+    []
+  );
+
+  const usersApi = useMemo(
+    () => ({
+      fetchUsers: jasmine.createSpy('fetchUsers'),
+    }),
+    []
+  );
+
+  const fontApi = useMemo(
+    () => ({
+      getAllFonts: jasmine.createSpy('getAllFonts'),
+    }),
+    []
+  );
 
   const value = useMemo(
     () => ({
@@ -40,13 +81,19 @@ export default function ApiProviderFixture({ children }) {
         templates,
         users,
       },
-      actions: {},
+      actions: {
+        storyApi,
+        templateApi,
+        fontApi,
+        usersApi,
+      },
     }),
-    [stories, templates, users]
+    [stories, templates, users, usersApi, storyApi, templateApi, fontApi]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 }
+/* eslint-enable jasmine/no-unsafe-spy */
 
 ApiProviderFixture.propTypes = {
   children: PropTypes.node,
