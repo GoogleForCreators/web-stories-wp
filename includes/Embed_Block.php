@@ -112,7 +112,7 @@ class Embed_Block {
 			]
 		);
 
-		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 	}
 
 	/**
@@ -122,7 +122,7 @@ class Embed_Block {
 	 *
 	 * @return array|string Allowed tags.
 	 */
-	public static function filter_kses_allowed_html( $allowed_tags ) {
+	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! is_array( $allowed_tags ) ) {
 			return $allowed_tags;
 		}

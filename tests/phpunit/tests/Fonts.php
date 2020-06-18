@@ -18,8 +18,19 @@
 namespace Google\Web_Stories\Tests;
 
 class Fonts extends \WP_UnitTestCase {
+
+	/**
+	 * Setup.
+	 *
+	 * @inheritdoc
+	 */
+	public function setUp() {
+		parent::setUp();
+		$this->fonts = new \Google\Web_Stories\Fonts();
+	}
+
 	public function test_get_fonts() {
-		$fonts = \Google\Web_Stories\Fonts::get_fonts();
+		$fonts = $this->fonts->get_fonts();
 		$this->assertInternalType( 'array', $fonts );
 
 		$arial_font = current(
@@ -74,7 +85,7 @@ class Fonts extends \WP_UnitTestCase {
 			$this->markTestSkipped( 'List of Google Fonts is missing' );
 		}
 
-		$fonts = \Google\Web_Stories\Fonts::get_google_fonts( $fonts_file );
+		$fonts = $this->fonts->get_google_fonts( $fonts_file );
 		$this->assertInternalType( 'array', $fonts );
 
 		$roboto_font = current(

@@ -120,7 +120,9 @@ class Story_Renderer {
 	 * @return string Filtered markup.
 	 */
 	protected function add_publisher_logo( $content ) {
-		$publisher_logo = Discovery::get_publisher_logo();
+		$discovery = new Discovery();
+		$publisher_logo = $discovery->get_publisher_logo();
+
 		return str_replace( Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER, $publisher_logo, $content );
 	}
 
@@ -132,7 +134,8 @@ class Story_Renderer {
 	 * @return string Filtered content.
 	 */
 	protected function add_poster_images( $content ) {
-		$poster_images = Media::get_story_meta_images( $this->post );
+		$media = new Media();
+		$poster_images = $media->get_story_meta_images( $this->post );
 
 		unset( $poster_images['poster-portrait'] ); // Already exists.
 
