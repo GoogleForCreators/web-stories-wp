@@ -273,7 +273,7 @@ class Discovery {
 		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
 		if ( $has_publisher_logo ) {
 			$publisher_logo_id = absint( $publisher_logo_settings['active'] );
-			$logo_image_url    = $this->get_valid_publisher_image()( $publisher_logo_id );
+			$logo_image_url    = $this->get_valid_publisher_image( $publisher_logo_id );
 		}
 
 		// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
@@ -282,13 +282,13 @@ class Discovery {
 		// Finding fallback image.
 		$custom_logo_id = get_theme_mod( 'custom_logo' );
 		if ( empty( $logo_image_url ) && has_custom_logo() && $custom_logo_id ) {
-			$logo_image_url = $this->get_valid_publisher_image()( $custom_logo_id );
+			$logo_image_url = $this->get_valid_publisher_image( $custom_logo_id );
 		}
 
 		// Try Site Icon, though it is not ideal for non-Story because it should be square.
 		$site_icon_id = get_option( 'site_icon' );
 		if ( empty( $logo_image_url ) && $site_icon_id ) {
-			$logo_image_url = $this->get_valid_publisher_image()( $site_icon_id );
+			$logo_image_url = $this->get_valid_publisher_image( $site_icon_id );
 		}
 
 		// Fallback to serving the WordPress logo.
