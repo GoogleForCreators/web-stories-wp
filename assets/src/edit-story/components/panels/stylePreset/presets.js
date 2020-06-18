@@ -34,7 +34,7 @@ import { PanelContent } from '../panel';
 import { StylePresetPropType } from '../../../types';
 import WithTooltip from '../../tooltip';
 import PresetGroup from './presetGroup';
-import { presetHasOpacity } from './utils';
+import { presetHasOpacity, presetHasGradient } from './utils';
 
 const REMOVE_ICON_SIZE = 18;
 const PRESET_HEIGHT = 30;
@@ -86,7 +86,13 @@ const Color = styled.button.attrs({ type: 'button' })`
   ${({ color }) => generatePatternStyles(color)}
 `;
 
-function Presets({ stylePresets, handleOnClick, isEditMode, isBackground }) {
+function Presets({
+  stylePresets,
+  handleOnClick,
+  isEditMode,
+  isText,
+  isBackground,
+}) {
   const { colors } = stylePresets;
 
   const hasPresets = colors.length > 0;
@@ -95,14 +101,20 @@ function Presets({ stylePresets, handleOnClick, isEditMode, isBackground }) {
     if (!color) {
       return null;
     }
-    const disabled = isBackground && !isEditMode && presetHasOpacity(color);
-    // @todo The correct text here should be: Page background colors can not have an opacity.
-    // However, due to bug with Tooltips/Popup, the text flows out of the screen.
-    const title = disabled
-      ? __('Opacity not allowed for Page', 'web-stories')
-      : null;
+    const disabled =
+      !isEditMode &&
+      ((isBackground && presetHasOpacity(color)) ||
+        (isText && presetHasGradient(color)));
+    let tooltip = null;
+    if (disabled) {
+      // @todo The correct text here should be: Page background colors can not have an opacity.
+      // However, due to bug with Tooltips/Popup, the text flows out of the screen.
+      tooltip = isBackground
+        ? __('Opacity not allowed for Page', 'web-stories')
+        : __('Gradient not allowed for Text', 'web-stories');
+    }
     return (
-      <WithTooltip title={title}>
+      <WithTooltip title={tooltip}>
         <ColorWrapper disabled={disabled}>
           <Transparent />
           <Color
@@ -142,6 +154,7 @@ Presets.propTypes = {
   stylePresets: StylePresetPropType.isRequired,
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
+  isText: PropTypes.bool.isRequired,
   isBackground: PropTypes.bool.isRequired,
 };
 

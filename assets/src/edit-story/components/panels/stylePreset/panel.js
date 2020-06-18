@@ -229,6 +229,7 @@ function StylePresetPanel() {
         stylePresets={stylePresets}
         handleOnClick={handlePresetClick}
         isBackground={isBackground}
+        isText={isText}
       />
       <Resize />
     </Panel>

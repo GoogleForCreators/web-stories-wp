@@ -26,9 +26,7 @@ import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
 
 export function findMatchingColor(color, stylePresets, isText) {
-  const colorsToMatch = isText
-    ? stylePresets.textColors
-    : stylePresets.fillColors;
+  const colorsToMatch = stylePresets.colors;
   const patternType = isText ? 'color' : 'background';
   return colorsToMatch.find((value) =>
     isPatternEqual(value, color, patternType)
@@ -111,4 +109,8 @@ export function presetHasOpacity(preset) {
     }
   }
   return opacityFound;
+}
+
+export function presetHasGradient({ type }) {
+  return Boolean(type && 'solid' !== type);
 }
