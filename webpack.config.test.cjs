@@ -53,7 +53,7 @@ function getConfig(group, { coverage = false } = {}) {
     config.module.rules.push({
       enforce: 'post',
       test: /\.js$/,
-      exclude: [/karma/, /\.karma\.js$/, /\.test\.js$/, /node_modules/],
+      exclude: [/\/karma\//, /\.karma\.js$/, /\.test\.js$/, /node_modules/],
       use: '@jsdevtools/coverage-istanbul-loader',
     });
   }
