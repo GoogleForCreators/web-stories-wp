@@ -23,7 +23,7 @@ import styled, { keyframes } from 'styled-components';
  * Internal dependencies
  */
 import {
-  ALERT_SEVERITIES,
+  ALERT_SEVERITY,
   KEYBOARD_USER_SELECTOR,
   Z_INDEX,
 } from '../../constants';
@@ -38,16 +38,23 @@ const slideIn = keyframes`
 	}
 `;
 
-const alertBackgrounds = {
-  [ALERT_SEVERITIES.ERROR]: 'danger',
-  [ALERT_SEVERITIES.WARNING]: 'warning',
-  [ALERT_SEVERITIES.INFO]: 'bluePrimary',
-  [ALERT_SEVERITIES.SUCCESS]: 'success',
-  [ALERT_SEVERITIES.DEFAULT]: 'bluePrimary',
-};
+const getColor = (severity) => {
+  switch (severity) {
+    case ALERT_SEVERITY.ERROR:
+      return 'danger';
 
-const getColor = (severity = ALERT_SEVERITIES.DEFAULT) => {
-  return alertBackgrounds[severity];
+    case ALERT_SEVERITY.WARNING:
+      return 'warning';
+
+    case ALERT_SEVERITY.INFO:
+      return 'bluePrimary';
+
+    case ALERT_SEVERITY.SUCCESS:
+      return 'success';
+
+    default:
+      return 'bluePrimary';
+  }
 };
 
 export const Wrapper = styled.div`
@@ -58,7 +65,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   max-width: 300px;
-  min-width: 40vw;
+  width: 40vw;
 `;
 
 export const AlertContainer = styled.div`
@@ -73,13 +80,12 @@ export const AlertContainer = styled.div`
     theme.colors[getColor(severity)]};
   border-radius: 5px;
   z-index: ${Z_INDEX.ALERT};
-  animation: 0.5s ${slideIn} ease-in;
+  animation: 0.5s ${slideIn} ease-out;
 `;
 
 export const AlertText = styled.p`
   ${TypographyPresets.Medium};
   width: calc(100% - 25px);
-  display: inline;
 `;
 
 export const DismissButton = styled.button`

@@ -47,7 +47,7 @@ export const KEYS = {
   DOWN: 'ArrowDown',
 };
 
-export const ALERT_SEVERITIES = {
+export const ALERT_SEVERITY = {
   ERROR: 'error',
   WARNING: 'warning',
   INFO: 'info',

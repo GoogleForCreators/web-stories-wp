@@ -24,7 +24,7 @@ import { text } from '@storybook/addon-knobs';
  */
 import { Wrapper } from '../components';
 import AlertContainer from '../container';
-import { ALERT_SEVERITIES } from '../../../constants';
+import { ALERT_SEVERITY } from '../../../constants';
 
 export default {
   title: 'Dashboard/Components/Alert',
@@ -36,19 +36,19 @@ export const _default = () => {
     <Wrapper>
       <AlertContainer
         message={text('errorMessage', 'this is an error')}
-        severity={ALERT_SEVERITIES.ERROR}
+        severity={ALERT_SEVERITY.ERROR}
       />
       <AlertContainer
         message={text('warningMessage', 'this is a warning')}
-        severity={ALERT_SEVERITIES.WARNING}
+        severity={ALERT_SEVERITY.WARNING}
       />
       <AlertContainer
         message={text('infoMessage', 'this is informational')}
-        severity={ALERT_SEVERITIES.INFO}
+        severity={ALERT_SEVERITY.INFO}
       />
       <AlertContainer
         message={text('successMessage', 'this is successful')}
-        severity={ALERT_SEVERITIES.SUCCESS}
+        severity={ALERT_SEVERITY.SUCCESS}
       />
       <AlertContainer
         message={text(
@@ -64,7 +64,7 @@ export const JustAlert = () => {
   return (
     <AlertContainer
       message={text('warningMessage', 'this is a warning')}
-      severity={ALERT_SEVERITIES.WARNING}
+      severity={ALERT_SEVERITY.WARNING}
     />
   );
 };

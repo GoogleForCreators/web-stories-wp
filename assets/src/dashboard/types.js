@@ -26,7 +26,7 @@ import StoryPropTypes from '../edit-story/types';
 import {
   STORY_STATUS,
   TEMPLATES_GALLERY_STATUS,
-  ALERT_SEVERITIES,
+  ALERT_SEVERITY,
 } from './constants';
 
 export const DashboardStatusesPropType = PropTypes.oneOf([
@@ -114,5 +114,5 @@ export const RenameStoryPropType = PropTypes.shape({
 });
 
 export const AlertSeveritiesPropType = PropTypes.oneOf(
-  Object.values(ALERT_SEVERITIES)
+  Object.values(ALERT_SEVERITY)
 );

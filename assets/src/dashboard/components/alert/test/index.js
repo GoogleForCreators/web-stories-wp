@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { ALERT_SEVERITIES } from '../../../constants';
+import { ALERT_SEVERITY } from '../../../constants';
 import { renderWithTheme } from '../../../testUtils/';
 import { Wrapper } from '../components';
 import AlertContainer from '../container';
@@ -33,7 +33,7 @@ describe('Alert', () => {
       <Wrapper>
         <AlertContainer
           message={'this is an error'}
-          severity={ALERT_SEVERITIES.ERROR}
+          severity={ALERT_SEVERITY.ERROR}
         />
       </Wrapper>
     );
@@ -49,7 +49,7 @@ describe('Alert', () => {
       <Wrapper>
         <AlertContainer
           message={'this is an error'}
-          severity={ALERT_SEVERITIES.ERROR}
+          severity={ALERT_SEVERITY.ERROR}
           handleDismissClick={mockDismissClick}
         />
       </Wrapper>
