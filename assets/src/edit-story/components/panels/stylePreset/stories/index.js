@@ -25,7 +25,6 @@ import styled from 'styled-components';
  */
 import Presets from '../presets';
 import createSolid from '../../../../utils/createSolid';
-import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 
 export default {
   title: 'Stories Editor/Components/Style Presets',
@@ -52,35 +51,6 @@ export const _default = () => {
       createSolid(0, 255, 255, 1),
       createSolid(0, 0, 0, 0.7),
       createSolid(0, 0, 255, 0.7),
-    ],
-    textStyles: [
-      {
-        color: createSolid(0, 0, 0, 1),
-        backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
-        backgroundColor: createSolid(255, 0, 255, 0.5),
-        font: {},
-      },
-      {
-        color: createSolid(255, 255, 0, 0.9),
-        backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
-        backgroundColor: createSolid(0, 0, 0, 1),
-        font: {
-          family: 'Princess Sofia',
-          fallbacks: ['cursive'],
-        },
-      },
-      {
-        color: createSolid(255, 255, 255, 0.9),
-        backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
-        backgroundColor: createSolid(0, 0, 0, 1),
-        font: {},
-      },
-      {
-        color: createSolid(0, 0, 0, 1),
-        backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
-        backgroundColor: createSolid(255, 255, 255, 0.8),
-        font: {},
-      },
     ],
   });
 

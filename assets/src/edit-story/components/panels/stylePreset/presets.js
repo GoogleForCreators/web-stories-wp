@@ -135,12 +135,10 @@ function Presets({
     );
   };
 
-  const colorLabel = __('Colors', 'web-stories');
   return (
     <PanelContent isPrimary padding={hasPresets ? null : '0'}>
       {hasPresets && (
         <PresetGroup
-          label={colorLabel}
           itemRenderer={colorPresetRenderer}
           presets={colors}
           type={'color'}

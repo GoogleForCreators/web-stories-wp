@@ -70,21 +70,6 @@ describe('stylePresets/Presets', () => {
     backgroundColor: TEST_COLOR,
     font: TEXT_ELEMENT_DEFAULT_FONT,
   };
-  it('should not display labels when no presets exist', () => {
-    const { queryByLabelText } = setupPresets();
-    expect(queryByLabelText('Colors')).toBeNull();
-    expect(queryByLabelText('Text Colors')).toBeNull();
-    expect(queryByLabelText('Styles')).toBeNull();
-  });
-
-  it('should display labels if presets exist', () => {
-    const { queryByLabelText } = setupPresets({
-      stylePresets: {
-        colors: [TEST_COLOR],
-      },
-    });
-    expect(queryByLabelText('Colors')).toBeDefined();
-  });
 
   // Disable reason: functionality removed from beta.
   // eslint-disable-next-line jest/no-disabled-tests

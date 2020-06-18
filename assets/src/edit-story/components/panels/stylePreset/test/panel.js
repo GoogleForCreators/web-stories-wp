@@ -306,29 +306,6 @@ describe('Panels/StylePreset', () => {
   });
 
   describe('Panels/StylePreset/Colors', () => {
-    it('should display correct label for Colors', () => {
-      const extraStylePresets = {
-        colors: [TEST_COLOR],
-      };
-      const extraStateProps = {
-        selectedElements: [
-          {
-            id: '1',
-            type: 'shape',
-          },
-        ],
-      };
-      const { getByText, queryByText } = setupPanel(
-        extraStylePresets,
-        extraStateProps
-      );
-      const groupLabel = getByText('Colors');
-      expect(groupLabel).toBeDefined();
-
-      const textColorGroupLabel = queryByText('Text colors');
-      expect(textColorGroupLabel).toBeNull();
-    });
-
     it('should allow deleting the relevant color preset', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR, TEST_COLOR_2],

@@ -178,8 +178,7 @@ function StylePresetPanel() {
     ]
   );
 
-  const colorPresets = colors;
-  const hasPresets = colorPresets.length > 0;
+  const hasPresets = colors.length > 0;
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
@@ -201,14 +200,11 @@ function StylePresetPanel() {
     }
   };
 
-  const rowHeight = 40;
+  const rowHeight = 35;
 
-  // Assume at least 2 rows if there's at least 1 preset:
-  // One for presets, one for the label.
+  // Assume at least 2 lines if there are presets to leave some room.
   const colorRows =
-    colorPresets.length > 0
-      ? Math.max(2, colorPresets.length / COLOR_PRESETS_PER_ROW)
-      : 0;
+    colors.length > 0 ? Math.max(2, colors.length / COLOR_PRESETS_PER_ROW) : 0;
   const initialHeight = colorRows * rowHeight;
 
   return (
