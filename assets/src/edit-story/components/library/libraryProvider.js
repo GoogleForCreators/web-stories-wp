@@ -43,14 +43,18 @@ function LibraryProvider({ children }) {
   const { showAnimationTab, media3pTab } = useFeatures();
 
   // Order here is important, as it denotes the actual visual order of elements.
-  const tabs = [
-    TAB_IDS.MEDIA,
-    media3pTab ? TAB_IDS.MEDIA3P : null,
-    TAB_IDS.TEXT,
-    TAB_IDS.SHAPES,
-    TAB_IDS.ELEMENTS,
-    showAnimationTab ? TAB_IDS.ANIMATION : null,
-  ].filter(Boolean);
+  const tabs = useMemo(
+    () =>
+      [
+        TAB_IDS.MEDIA,
+        media3pTab ? TAB_IDS.MEDIA3P : null,
+        TAB_IDS.TEXT,
+        TAB_IDS.SHAPES,
+        TAB_IDS.ELEMENTS,
+        showAnimationTab ? TAB_IDS.ANIMATION : null,
+      ].filter(Boolean),
+    [media3pTab, showAnimationTab]
+  );
 
   const state = useMemo(
     () => ({

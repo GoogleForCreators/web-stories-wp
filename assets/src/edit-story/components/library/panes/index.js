@@ -29,28 +29,32 @@ import { TextPane, TextTab } from './text';
 import { ElementsPane, ElementsTab } from './elements';
 import { Tabs } from './shared';
 
+const tabs = {
+  [TAB_IDS.MEDIA]: { Tab: MediaTab, Pane: MediaPane, id: TAB_IDS.MEDIA },
+  [TAB_IDS.MEDIA3P]: {
+    Tab: Media3pTab,
+    Pane: Media3pPane,
+    id: TAB_IDS.MEDIA3P,
+  },
+  [TAB_IDS.TEXT]: { Tab: TextTab, Pane: TextPane, id: TAB_IDS.TEXT },
+  [TAB_IDS.SHAPES]: { Tab: ShapesTab, Pane: ShapesPane, id: TAB_IDS.SHAPES },
+  [TAB_IDS.ELEMENTS]: {
+    Tab: ElementsTab,
+    Pane: ElementsPane,
+    id: TAB_IDS.ELEMENTS,
+  },
+  [TAB_IDS.ANIMATION]: {
+    Tab: AnimationTab,
+    Pane: AnimationPane,
+    id: TAB_IDS.ANIMATION,
+  },
+};
+
 /**
  * Return the necessary information to render the tab and pane for a tab ID.
  *
  * @param {string} tabId The id of the tab.
  */
-function getPane(tabId) {
-  switch (tabId) {
-    case TAB_IDS.MEDIA:
-      return { Tab: MediaTab, Pane: MediaPane, id: TAB_IDS.MEDIA };
-    case TAB_IDS.MEDIA3P:
-      return { Tab: Media3pTab, Pane: Media3pPane, id: TAB_IDS.MEDIA3P };
-    case TAB_IDS.TEXT:
-      return { Tab: TextTab, Pane: TextPane, id: TAB_IDS.TEXT };
-    case TAB_IDS.SHAPES:
-      return { Tab: ShapesTab, Pane: ShapesPane, id: TAB_IDS.SHAPES };
-    case TAB_IDS.ELEMENTS:
-      return { Tab: ElementsTab, Pane: ElementsPane, id: TAB_IDS.ELEMENTS };
-    case TAB_IDS.ANIMATION:
-      return { Tab: AnimationTab, Pane: AnimationPane, id: TAB_IDS.ANIMATION };
-    default:
-      throw new Error('Invalid tab id: ' + tabId);
-  }
-}
+const getPane = (tabId) => tabs[tabId];
 
 export { Tabs, getPane };
