@@ -33,7 +33,9 @@ jest.mock('../../mediaPicker', () => ({
 }));
 
 describe('Panels/VideoAccessibility', () => {
-  const defaultElement = { resource: { posterId: 0, poster: '', alt: '' } };
+  const defaultElement = {
+    resource: { posterId: 0, title: '', poster: '', alt: '' },
+  };
   function renderVideoAccessibility(...args) {
     return renderPanel(VideoAccessibility, ...args);
   }
@@ -54,7 +56,7 @@ describe('Panels/VideoAccessibility', () => {
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
   });
 
-  it('should set max to opacity value on change to max', () => {
+  it('should trim "alt" to maximum allowed length if exceeding', () => {
     const { getByPlaceholderText, submit } = renderVideoAccessibility([
       defaultElement,
     ]);
@@ -68,6 +70,23 @@ describe('Panels/VideoAccessibility', () => {
     });
     expect(submits[defaultElement.id].resource.alt).toHaveLength(
       MIN_MAX.ALT_TEXT.MAX
+    );
+  });
+
+  it('should trim "title" to maximum allowed length if exceeding', () => {
+    const { getByPlaceholderText, submit } = renderVideoAccessibility([
+      defaultElement,
+    ]);
+    const input = getByPlaceholderText('Title');
+
+    const bigText = ''.padStart(MIN_MAX.TITLE.MAX + 10, '1');
+
+    fireEvent.change(input, { target: { value: bigText } });
+    const submits = submit({
+      resource: { posterId: 0, poster: '', title: bigText },
+    });
+    expect(submits[defaultElement.id].resource.title).toHaveLength(
+      MIN_MAX.TITLE.MAX
     );
   });
 });

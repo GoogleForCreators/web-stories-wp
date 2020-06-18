@@ -183,37 +183,19 @@ describe('Panels/SizePosition', () => {
       expect(pushUpdate).toHaveBeenCalledWith({ height: 160, width: 100 });
     });
 
-    it('should update width with lock ratio and empty value', () => {
+    it('should not update width if empty value', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ width: '', height: '' });
+      expect(pushUpdate).not.toHaveBeenCalled();
     });
 
-    it('should update height with lock ratio and empty value', () => {
+    it('should not update height if empty value', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
 
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: '' });
-    });
-
-    it('should update width without lock ratio and empty value', () => {
-      const { getByRole, pushUpdate } = renderSizePosition([
-        unlockAspectRatioElement,
-      ]);
-      const input = getByRole('textbox', { name: 'Width' });
-      fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ width: '', height: 80 });
-    });
-
-    it('should update height without lock ratio and empty value', () => {
-      const { getByRole, pushUpdate } = renderSizePosition([
-        unlockAspectRatioElement,
-      ]);
-      const input = getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: 100 });
+      expect(pushUpdate).not.toHaveBeenCalled();
     });
 
     it('should update lock ratio to false for element', () => {

@@ -78,6 +78,7 @@ function Numeric({
   min,
   max,
   canBeNegative,
+  canBeEmpty,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
@@ -148,10 +149,17 @@ function Numeric({
         {...rest}
         onChange={(evt) => {
           const newValue = evt.target.value;
-          const isEmpty = newValue === '';
-          const isMinus = newValue === '-';
-          if (isEmpty || (isMinus && canBeNegative)) {
-            // Allow input to be empty and allow a single "-" if negative values are allowed
+          if (newValue === '') {
+            // Allow input to be empty
+            if (canBeEmpty) {
+              // Send empty up-stream
+              onChange('', evt);
+            } else {
+              // Just update empty value internally but keep old value upstream
+              setInputValue('');
+            }
+          } else if (newValue === '-' && canBeNegative) {
+            // Allow a single "-" if negative values are allowed
             setInputValue(newValue);
           } else {
             setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
@@ -198,7 +206,8 @@ Numeric.propTypes = {
   float: PropTypes.bool,
   min: PropTypes.number,
   max: PropTypes.number,
-  canBeNegative: PropTypes.boolean,
+  canBeNegative: PropTypes.bool,
+  canBeEmpty: PropTypes.bool,
 };
 
 Numeric.defaultProps = {
@@ -209,6 +218,7 @@ Numeric.defaultProps = {
   textCenter: false,
   float: false,
   canBeNegative: false,
+  canBeEmpty: false,
 };
 
 export default Numeric;

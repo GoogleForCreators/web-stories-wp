@@ -38,6 +38,9 @@ export const MIN_MAX = {
   ALT_TEXT: {
     MAX: 1000,
   },
+  TITLE: {
+    MAX: 1000,
+  },
 };
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
@@ -67,7 +70,8 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     ({ resource: newResource }) => ({
       resource: {
         ...newResource,
-        alt: newResource.alt.slice(0, MIN_MAX.ALT_TEXT.MAX),
+        title: newResource.title?.slice(0, MIN_MAX.TITLE.MAX),
+        alt: newResource.alt?.slice(0, MIN_MAX.ALT_TEXT.MAX),
       },
     }),
     []
@@ -95,6 +99,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           onChange={(value) => pushUpdate({ title: value || null })}
           clear
           aria-label={__('Edit: Video title', 'web-stories')}
+          maxLength={MIN_MAX.TITLE.MAX}
         />
       </Row>
       <Row>
