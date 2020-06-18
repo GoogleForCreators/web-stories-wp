@@ -17,20 +17,44 @@
 /**
  * Internal dependencies
  */
-import { AnimationTab, AnimationPane } from './animation';
-import { MediaTab, MediaPane } from './media';
-import { ShapesTab, ShapesPane } from './shapes';
-import { TextTab, TextPane } from './text';
+/**
+ * External dependencies
+ */
+import { TAB_IDS } from '../../../components/library/libraryProvider';
+import { AnimationPane, AnimationTab } from './animation';
+import { MediaPane, MediaTab } from './media';
+import { Media3pPane, Media3pTab } from './media/media3p';
+import { ShapesPane, ShapesTab } from './shapes';
+import { TextPane, TextTab } from './text';
+import { ElementsPane, ElementsTab } from './elements';
 import { Tabs } from './shared';
 
-function getPanes({ ANIMATION, MEDIA, SHAPES, TEXT }) {
-  // Order here is important, as it denotes the actual visual order of elements.
-  return [
-    { Tab: MediaTab, Pane: MediaPane, id: MEDIA },
-    { Tab: TextTab, Pane: TextPane, id: TEXT },
-    { Tab: ShapesTab, Pane: ShapesPane, id: SHAPES },
-    { Tab: AnimationTab, Pane: AnimationPane, id: ANIMATION },
-  ];
-}
+const tabs = {
+  [TAB_IDS.MEDIA]: { Tab: MediaTab, Pane: MediaPane, id: TAB_IDS.MEDIA },
+  [TAB_IDS.MEDIA3P]: {
+    Tab: Media3pTab,
+    Pane: Media3pPane,
+    id: TAB_IDS.MEDIA3P,
+  },
+  [TAB_IDS.TEXT]: { Tab: TextTab, Pane: TextPane, id: TAB_IDS.TEXT },
+  [TAB_IDS.SHAPES]: { Tab: ShapesTab, Pane: ShapesPane, id: TAB_IDS.SHAPES },
+  [TAB_IDS.ELEMENTS]: {
+    Tab: ElementsTab,
+    Pane: ElementsPane,
+    id: TAB_IDS.ELEMENTS,
+  },
+  [TAB_IDS.ANIMATION]: {
+    Tab: AnimationTab,
+    Pane: AnimationPane,
+    id: TAB_IDS.ANIMATION,
+  },
+};
 
-export { Tabs, getPanes };
+/**
+ * Return the necessary information to render the tab and pane for a tab ID.
+ *
+ * @param {string} tabId The id of the tab.
+ */
+const getPane = (tabId) => tabs[tabId];
+
+export { Tabs, getPane };

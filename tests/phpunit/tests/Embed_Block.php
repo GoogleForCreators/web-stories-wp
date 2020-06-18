@@ -87,7 +87,7 @@ class Embed_Block extends \WP_UnitTestCase {
 			''
 		);
 
-		$this->assertEmpty( $actual );
+		$this->assertContains( __( 'Web Story', 'web-stories' ), $actual );
 	}
 
 	public function test_render_block_feed_no_poster() {

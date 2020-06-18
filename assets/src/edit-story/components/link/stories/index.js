@@ -17,12 +17,13 @@
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../utils';
+import Link from '../';
 
-describe('Example Spec', () => {
-  it('should be able to create a blank story', async () => {
-    await createNewStory();
+export default {
+  title: 'Stories Editor/Components/Link',
+  component: Link,
+};
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-  });
-});
+export const _default = () => {
+  return <Link href="https://example.com/">{'This is a link'}</Link>;
+};

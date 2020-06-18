@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useMemo, useRef, useCallback } from 'react';
-import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -26,7 +25,7 @@ import { useFeatures } from 'flagged';
 import { useConfig } from '../../app';
 import { useKeyDownEffect } from '../keyboard';
 import useLibrary from './useLibrary';
-import { Tabs, getPanes } from './panes';
+import { Tabs, getPane } from './panes';
 import { getTabId } from './panes/shared';
 
 function LibraryTabs() {
@@ -36,14 +35,7 @@ function LibraryTabs() {
     tabs: state.data.tabs,
   }));
   const { isRTL } = useConfig();
-  const { showAnimationTab } = useFeatures();
-  const panes = useMemo(
-    () =>
-      showAnimationTab
-        ? getPanes(tabs)
-        : getPanes(tabs).filter(({ id }) => id !== tabs.ANIMATION),
-    [tabs, showAnimationTab]
-  );
+  const panes = useMemo(() => tabs.map((t) => getPane(t)), [tabs]);
   const ref = useRef();
   const handleNavigation = useCallback(
     (direction) => {
