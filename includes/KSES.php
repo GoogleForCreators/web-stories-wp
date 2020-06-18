@@ -540,11 +540,20 @@ class KSES {
 	public function filter_content_save_pre_before_kses( $post_content ) {
 		return (string) preg_replace_callback(
 			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
-			static function ( $matches ) {
-				return $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'];
-			},
+			[ $this, 'filter_content_save_pre_before_kses_matches' ],
 			$post_content
 		);
+	}
+
+	/**
+	 * Callback for preg replace.
+	 *
+	 * @param array $matches Array of matches.
+	 *
+	 * @return string
+	 */
+	public function filter_content_save_pre_before_kses_matches( $matches ) {
+		return $matches['before'] . sprintf( ' data-temp-style="%s" ', $matches['styles'] ) . $matches['after'];
 	}
 
 	/**
@@ -556,11 +565,20 @@ class KSES {
 	public function filter_content_save_pre_after_kses( $post_content ) {
 		return (string) preg_replace_callback(
 			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
-			function ( $matches ) {
-				$styles = str_replace( '&quot;', '\"', $matches['styles'] );
-				return sprintf( ' style="%s"', esc_attr( $this->safecss_filter_attr( wp_kses_stripslashes( $styles ) ) ) );
-			},
+			[ $this, 'filter_content_save_pre_after_kses_matches' ],
 			$post_content
 		);
+	}
+
+	/**
+	 * Callback for preg replace.
+	 *
+	 * @param array $matches Array of matches.
+	 *
+	 * @return string
+	 */
+	public function filter_content_save_pre_after_kses_matches( $matches ) {
+		$styles = str_replace( '&quot;', '\"', $matches['styles'] );
+		return sprintf( ' style="%s"', esc_attr( $this->safecss_filter_attr( wp_kses_stripslashes( $styles ) ) ) );
 	}
 }
