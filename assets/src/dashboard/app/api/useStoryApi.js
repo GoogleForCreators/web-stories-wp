@@ -25,6 +25,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useCallback, useMemo, useReducer } from 'react';
 import moment from 'moment';
 import queryString from 'query-string';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -85,6 +86,7 @@ export function reshapeStoryObject(editStoryURL) {
 
 const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
+  const flags = useFeatures();
 
   const fetchStories = useCallback(
     async ({
@@ -221,6 +223,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
               name: createdBy,
             },
           },
+          flags,
         });
         const response = await dataAdapter.post(storyApi, {
           data: {
@@ -253,7 +256,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         });
       }
     },
-    [dataAdapter, editStoryURL, storyApi]
+    [dataAdapter, editStoryURL, storyApi, flags]
   );
 
   const duplicateStory = useCallback(
