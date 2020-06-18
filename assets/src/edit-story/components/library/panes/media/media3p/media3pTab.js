@@ -15,18 +15,23 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
-import { getPane } from './panes';
+import { Tab } from '../../shared';
+import { Media } from '../../../../../icons';
+import paneId from './paneId';
 
-function LibraryPanes() {
-  const { tab, tabs } = useLibrary((state) => ({
-    tab: state.state.tab,
-    tabs: state.data.tabs,
-  }));
-  const panes = tabs.map(getPane);
-  return panes.map(({ id, Pane }) => <Pane key={id} isActive={id === tab} />);
+function Media3pTab(props) {
+  return (
+    <Tab aria-controls={paneId} {...props}>
+      <Media aria-label={__('Third Party Media library', 'web-stories')} />
+    </Tab>
+  );
 }
 
-export default LibraryPanes;
+export default Media3pTab;

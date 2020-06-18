@@ -17,16 +17,6 @@
 /**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
-import { getPane } from './panes';
+import { getPaneId } from '../../shared';
 
-function LibraryPanes() {
-  const { tab, tabs } = useLibrary((state) => ({
-    tab: state.state.tab,
-    tabs: state.data.tabs,
-  }));
-  const panes = tabs.map(getPane);
-  return panes.map(({ id, Pane }) => <Pane key={id} isActive={id === tab} />);
-}
-
-export default LibraryPanes;
+export default getPaneId('media3p');
