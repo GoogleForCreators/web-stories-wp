@@ -38,7 +38,7 @@ import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
-import validateMinMax from '../../../utils/validateMinMax';
+import inRange from '../../../utils/inRange';
 import { useCanvas } from '../../canvas';
 import { Close } from '../../../icons';
 
@@ -161,7 +161,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   );
 
   const hasSomeLinkContent =
-    Boolean(link.url) && validateMinMax(link.url.length, MIN_MAX.URL);
+    Boolean(link.url) && inRange(link.url.length, MIN_MAX.URL);
 
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>

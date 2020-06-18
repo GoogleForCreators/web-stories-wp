@@ -13,6 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const validateMinMax = (value, { MIN, MAX }) => value >= MIN && value <= MAX;
+const inRange = (value, { MIN, MAX }) => value >= MIN && value <= MAX;
 
-export default validateMinMax;
+export default inRange;

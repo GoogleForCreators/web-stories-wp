@@ -33,7 +33,7 @@ import { Row, TextInput, HelperText } from '../../form';
 import { useStory } from '../../../app/story';
 import { SimplePanel } from '../../panels/panel';
 import cleanForSlug from '../../../utils/cleanForSlug';
-import validateMinMax from '../../../utils/validateMinMax';
+import inRange from '../../../utils/inRange';
 
 export const MIN_MAX = {
   PERMALINK: {
@@ -72,7 +72,7 @@ function SlugPanel() {
   );
 
   const displayLink =
-    slug && permalinkConfig && validateMinMax(slug.length, MIN_MAX.PERMALINK)
+    slug && permalinkConfig && inRange(slug.length, MIN_MAX.PERMALINK)
       ? permalinkConfig.prefix + slug + permalinkConfig.suffix
       : link;
 
