@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { EditorState } from 'draft-js';
 
 /**
@@ -70,6 +70,7 @@ function RichTextProvider({ children }) {
       if (selection) {
         state = EditorState.forceSelection(state, selection);
       }
+      lastKnownStyle.current = state.getCurrentInlineStyle();
       setEditorState(state);
     },
     [editingElementState, setEditorState]
@@ -80,9 +81,20 @@ function RichTextProvider({ children }) {
   // This filters out illegal content (see `getFilteredState`)
   // on paste and updates state accordingly.
   // Furthermore it also sets initial selection if relevant.
+  const lastKnownStyle = useRef(null);
   const updateEditorState = useCallback(
     (newEditorState) => {
-      const filteredState = getFilteredState(newEditorState, editorState);
+      let filteredState = getFilteredState(newEditorState, editorState);
+      const isEmpty = filteredState.getCurrentContent().getPlainText('') === '';
+      if (isEmpty) {
+        // Copy last known current style as inline style
+        filteredState = EditorState.setInlineStyleOverride(
+          filteredState,
+          lastKnownStyle.current
+        );
+      } else {
+        lastKnownStyle.current = filteredState.getCurrentInlineStyle();
+      }
       setEditorState(filteredState);
     },
     [editorState, setEditorState]
