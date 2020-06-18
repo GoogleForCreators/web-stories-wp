@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import Big from 'big.js';
 /**
  * WordPress dependencies
@@ -77,12 +77,16 @@ function Numeric({
   disabled,
   min,
   max,
+  canBeNegative,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [dot, setDot] = useState(false);
+  const [inputValue, setInputValue] = useState(value);
   const ref = useRef();
+
+  useEffect(() => setInputValue(value), [value]);
 
   const handleUpDown = useCallback(
     ({ key, altKey }) => {
@@ -138,14 +142,17 @@ function Numeric({
         value={
           isMultiple
             ? ''
-            : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
+            : `${inputValue}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
         }
         disabled={disabled}
         {...rest}
         onChange={(evt) => {
           const newValue = evt.target.value;
-          if (newValue === '') {
-            onChange('', evt);
+          const isEmpty = newValue === '';
+          const isMinus = newValue === '-';
+          if (isEmpty || (isMinus && canBeNegative)) {
+            // Allow input to be empty and allow a single "-" if negative values are allowed
+            setInputValue(newValue);
           } else {
             setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
             const valueAsNumber = float
@@ -162,6 +169,8 @@ function Numeric({
               new window.Event('submit', { cancelable: true })
             );
           }
+          // Always update to latest value from upstream
+          setInputValue(value);
           if (onBlur) {
             onBlur();
           }
@@ -189,6 +198,7 @@ Numeric.propTypes = {
   float: PropTypes.bool,
   min: PropTypes.number,
   max: PropTypes.number,
+  canBeNegative: PropTypes.boolean,
 };
 
 Numeric.defaultProps = {
@@ -198,6 +208,7 @@ Numeric.defaultProps = {
   flexBasis: 110,
   textCenter: false,
   float: false,
+  canBeNegative: false,
 };
 
 export default Numeric;

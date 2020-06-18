@@ -54,7 +54,7 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
 
   usePresubmitHandler(({ opacity: newOpacity }, { opacity: oldOpacity }) => {
     const value =
-      typeof opacity === 'undefined' || typeof oldOpacity === 'undefined'
+      typeof newOpacity === 'undefined' || typeof oldOpacity === 'undefined'
         ? MIN_MAX.OPACITY.MAX
         : newOpacity;
     return {
