@@ -296,7 +296,7 @@ class Media {
 	/**
 	 * Update rest field callback.
 	 *
-	 * @param mixed   $value Value to update.
+	 * @param mixed    $value Value to update.
 	 * @param \WP_Post $object Object to update on.
 	 *
 	 * @return true|WP_Error
