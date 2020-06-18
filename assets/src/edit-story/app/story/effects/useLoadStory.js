@@ -84,7 +84,6 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           stylePresets.colors = [];
         }
         // @todo Add this back once UX ready post-beta, currently always empty.
-        stylePresets.textColors = [];
         stylePresets.textStyles = [];
 
         // Set story-global variables.

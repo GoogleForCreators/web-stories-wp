@@ -306,17 +306,6 @@ describe('Panels/StylePreset', () => {
   });
 
   describe('Panels/StylePreset/Colors', () => {
-    // Disable reason: not implemented for beta.
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should display correct label for Text colors', () => {
-      const extraStylePresets = {
-        textColors: [TEST_COLOR],
-      };
-      const { getByText } = setupPanel(extraStylePresets);
-      const groupLabel = getByText('Text colors');
-      expect(groupLabel).toBeDefined();
-    });
-
     it('should display correct label for Colors', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR],

@@ -33,7 +33,6 @@ function setupPresets(props = {}) {
     textContent = '',
   } = props;
   const presets = {
-    textColors: [],
     colors: [],
     textStyles: [],
     ...stylePresets,
@@ -95,7 +94,6 @@ describe('stylePresets/Presets', () => {
       textContent,
       stylePresets: {
         textStyles: [STYLE_PRESET],
-        textColors: [],
         fillColors: [],
       },
     });
@@ -115,7 +113,6 @@ describe('stylePresets/Presets', () => {
             backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
           },
         ],
-        textColors: [],
         fillColors: [],
       },
     });

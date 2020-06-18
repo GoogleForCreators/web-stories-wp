@@ -45,7 +45,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 */
 	const EMPTY_STYLE_PRESETS = [
 		'colors'     => [],
-		'textColors' => [],
 		'textStyles' => [],
 	];
 

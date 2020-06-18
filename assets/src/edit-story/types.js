@@ -56,7 +56,6 @@ export const PatternPropType = PropTypes.shape({
 
 export const StylePresetPropType = PropTypes.shape({
   colors: PropTypes.array,
-  textColors: PropTypes.array,
   textStyles: PropTypes.array,
 });
 

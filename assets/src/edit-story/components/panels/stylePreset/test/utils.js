@@ -177,7 +177,6 @@ describe('Panels/StylePreset/utils', () => {
     ];
     const stylePresets = {
       textStyles: [],
-      textColors: [],
       colors: [],
     };
     const expected = {
@@ -199,7 +198,6 @@ describe('Panels/StylePreset/utils', () => {
     ];
     const stylePresets = {
       textStyles: [],
-      textColors: [],
       colors: [],
     };
     const expected = {
@@ -230,11 +228,9 @@ describe('Panels/StylePreset/utils', () => {
     ];
     const stylePresets = {
       textStyles: [],
-      textColors: [],
       fillColors: [],
     };
     const expected = {
-      textColors: [],
       textStyles: [
         {
           ...stylePreset,
@@ -296,7 +292,6 @@ describe('Panels/StylePreset/utils', () => {
     ];
     const stylePresets = {
       textStyles: [],
-      textColors: [],
       colors: [],
     };
     const expected = {
