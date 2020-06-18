@@ -26,7 +26,9 @@ import { act, render, screen } from '@testing-library/react';
  */
 import FixtureEvents from '../../edit-story/karma/fixture/events';
 import App from '../app';
+import ApiProvider from '../app/api/apiProvider';
 import ComponentStub from './componentStub';
+import ApiProviderFixture from './apiProviderFixture';
 
 export class Fixture {
   constructor() {
@@ -56,6 +58,8 @@ export class Fixture {
       }
       return createElement(type, props, ...children);
     });
+
+    this.stubComponent(ApiProvider).callFake(ApiProviderFixture);
   }
 
   get container() {
