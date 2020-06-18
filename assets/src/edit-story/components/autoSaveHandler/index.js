@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig, useHistory, useStory } from '../../app';
+import { useConfig, useHistory, useMedia, useStory } from '../../app';
 
 function AutoSaveHandler() {
   const { autoSaveInterval } = useConfig();
@@ -40,22 +40,24 @@ function AutoSaveHandler() {
       saveStory,
     })
   );
+  const { isUploading } = useMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
 
   const isDraft = 'draft' === status;
 
   useEffect(() => {
     // @todo The isDraft check is temporary to ensure only draft gets auto-saved,
     // until the logic for other statuses has been decided.
-    if (!isDraft || !hasNewChanges || !autoSaveInterval) {
+    if (!isDraft || !hasNewChanges || !autoSaveInterval || isUploading) {
       return undefined;
     }
     let timeout = setTimeout(() => {
       saveStory();
-      timeout = null;
     }, autoSaveInterval * 1000);
 
     return () => {
-      timeout && clearTimeout(timeout);
+      clearTimeout(timeout);
     };
   }, [autoSaveInterval, isDraft, saveStory, status, hasNewChanges]);
 
