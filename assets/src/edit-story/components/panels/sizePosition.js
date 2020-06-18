@@ -264,8 +264,6 @@ function SizePositionPanel({
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
           aria-label={__('Width', 'web-stories')}
-          min={MIN_MAX.WIDTH.MIN}
-          max={MIN_MAX.WIDTH.MAX}
         />
         <Toggle
           aria-label={__('Aspect ratio lock', 'web-stories')}
@@ -293,8 +291,6 @@ function SizePositionPanel({
             pushUpdate(getUpdateObject(newWidth, newHeight));
           }}
           aria-label={__('Height', 'web-stories')}
-          min={MIN_MAX.HEIGHT.MIN}
-          max={MIN_MAX.HEIGHT.MAX}
         />
       </Row>
       {/** Rotation and Flipping */}
@@ -308,8 +304,6 @@ function SizePositionPanel({
           onChange={(value) => pushUpdate({ rotationAngle: value })}
           aria-label={__('Rotation', 'web-stories')}
           canBeNegative
-          min={MIN_MAX.ROTATION.MIN}
-          max={MIN_MAX.ROTATION.MAX}
         />
         {canFlip && (
           <FlipControls
