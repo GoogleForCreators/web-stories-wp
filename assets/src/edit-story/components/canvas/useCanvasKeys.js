@@ -27,7 +27,7 @@ import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
-import useAddNewElements from './useAddNewElements';
+import useAddPastedElements from './useAddPastedElements';
 import useCanvas from './useCanvas';
 
 const MOVE_COARSE_STEP = 10;
@@ -36,7 +36,7 @@ const MOVE_COARSE_STEP = 10;
  * @param {{current: Node}} ref
  */
 function useCanvasKeys(ref) {
-  const addNewElements = useAddNewElements();
+  const addPastedElements = useAddPastedElements();
 
   const {
     selectedElementIds,
@@ -163,8 +163,8 @@ function useCanvasKeys(ref) {
           ...rest,
         };
       });
-    addNewElements(clonedElements);
-  }, [addNewElements, selectedElements]);
+    addPastedElements(clonedElements);
+  }, [addPastedElements, selectedElements]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 }

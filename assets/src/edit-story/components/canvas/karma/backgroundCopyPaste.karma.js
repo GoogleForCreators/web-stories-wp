@@ -406,8 +406,8 @@ const customMatchers = {
       return {
         pass,
         message: pass
-          ? `Expected element to not have src "${expected}"`
-          : `Expected element to have src "${expected}" but found "${actual}"`,
+          ? `Expected element to not have ${property} = "${expected}"`
+          : `Expected element to have ${property} = "${expected}" but found "${actual}"`,
       };
     },
   }),

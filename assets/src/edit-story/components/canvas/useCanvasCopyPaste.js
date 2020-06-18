@@ -32,11 +32,11 @@ import {
 } from '../../utils/copyPaste';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import useInsertElement from './useInsertElement';
-import useAddNewElements from './useAddNewElements';
+import useAddPastedElements from './useAddPastedElements';
 import useUploadWithPreview from './useUploadWithPreview';
 
 function useCanvasGlobalKeys() {
-  const addNewElements = useAddNewElements();
+  const addPastedElements = useAddPastedElements();
 
   const { currentPage, selectedElements, deleteSelectedElements } = useStory(
     ({
@@ -75,9 +75,9 @@ function useCanvasGlobalKeys() {
   const elementPasteHandler = useBatchingCallback(
     (content) => {
       const elements = processPastedElements(content, currentPage);
-      return addNewElements(elements);
+      return addPastedElements(elements);
     },
-    [addNewElements, currentPage]
+    [addPastedElements, currentPage]
   );
 
   const rawPasteHandler = useCallback(

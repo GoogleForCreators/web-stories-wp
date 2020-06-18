@@ -76,8 +76,6 @@ describe('Clone element integration', () => {
     // Clear selection by pressing above background element
     await clickAboveElement(bg.id);
 
-    //await karmaPause();
-
     // Press clone shortcut
     await fixture.events.keyboard.shortcut('mod+d');
 

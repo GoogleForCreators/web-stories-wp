@@ -20,7 +20,7 @@
 import { useStory } from '../../app';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 
-function useAddNewElements() {
+function useAddPastedElements() {
   const {
     currentPage,
     addElements,
@@ -50,7 +50,7 @@ function useAddNewElements() {
     }
   );
 
-  const addNewElements = useBatchingCallback(
+  const addPastedElements = useBatchingCallback(
     (elements) => {
       if (elements.length === 0) {
         return false;
@@ -102,7 +102,7 @@ function useAddNewElements() {
     ]
   );
 
-  return addNewElements;
+  return addPastedElements;
 }
 
-export default useAddNewElements;
+export default useAddPastedElements;
