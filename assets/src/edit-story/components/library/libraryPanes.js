@@ -25,7 +25,7 @@ function LibraryPanes() {
     tab: state.state.tab,
     tabs: state.data.tabs,
   }));
-  const panes = tabs.map((t) => getPane(t));
+  const panes = tabs.map(getPane);
   return panes.map(({ id, Pane }) => <Pane key={id} isActive={id === tab} />);
 }
 
