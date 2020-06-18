@@ -26,14 +26,14 @@ import queryString from 'query-string';
  *
  * @param response The response from the initial wpFetch call
  * @param dataAdapter The WP Data Adapter that will make the additional page fetch requests
- * @param wpApi The base url for the fetch calls
+ * @param apiString The base url for the fetch calls
  * @return Promise<any[]> A flattened array with all the entities
  */
 
 export default async function fetchAllFromTotalPages(
   response,
   dataAdapter,
-  wpApi
+  apiString
 ) {
   const totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
   const additionalRequests = [];
@@ -43,7 +43,7 @@ export default async function fetchAllFromTotalPages(
       additionalRequests.push(
         dataAdapter.get(
           queryString.stringifyUrl({
-            url: wpApi,
+            url: apiString,
             query: { page: i },
           })
         )

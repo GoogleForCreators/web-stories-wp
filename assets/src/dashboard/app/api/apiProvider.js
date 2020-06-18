@@ -36,19 +36,20 @@ export default function ApiProvider({ children }) {
   const { api, editStoryURL, assetsURL } = useConfig();
 
   const { users, api: usersApi } = useUsersApi(dataAdapter, {
-    wpApi: api.users,
+    userApi: api.users,
   });
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
     assetsURL,
+    templateApi: api.templates,
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
     editStoryURL,
-    wpApi: api.stories,
+    storyApi: api.stories,
   });
 
-  const { api: fontApi } = useFontApi(dataAdapter, { wpApi: api.fonts });
+  const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
 
   const value = useMemo(
     () => ({
