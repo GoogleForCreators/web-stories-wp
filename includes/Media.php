@@ -297,7 +297,7 @@ class Media {
 	 * Update rest field callback.
 	 *
 	 * @param mixed   $value Value to update.
-	 * @param WP_Post $object Object to update on.
+	 * @param \WP_Post $object Object to update on.
 	 */
 	public static function update_callback_media_source( $value, $object ) {
 		wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
