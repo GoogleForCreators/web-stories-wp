@@ -41,7 +41,7 @@ const Alert = ({ message, severity, handleDismissClick }) => {
       <AlertText>{message}</AlertText>
       <DismissButton
         onClick={handleDismissClick}
-        ariaLabel={__('dismiss alert', 'web-stories')}
+        ariaLabel={__('Dismiss Alert', 'web-stories')}
       >
         <Close />
       </DismissButton>
