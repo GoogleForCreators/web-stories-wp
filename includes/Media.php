@@ -30,12 +30,13 @@ namespace Google\Web_Stories;
  * Class Media
  */
 class Media {
+
 	/**
 	 * The image size for the poster-portrait-src.
 	 *
 	 * @var string
 	 */
-	const STORY_POSTER_IMAGE_SIZE = 'web-stories-poster-portrait';
+	protected $story_poster_image_size = 'web-stories-poster-portrait';
 
 	/**
 	 * The image size for the poster-landscape-src.
@@ -91,17 +92,17 @@ class Media {
 	 *
 	 * @var string
 	 */
-	const STORY_MEDIA_TAXONOMY = 'web_story_media_source';
+	protected $story_media_taxonomy = 'web_story_media_source';
 
 	/**
 	 * Init.
 	 *
 	 * @return void
 	 */
-	public static function init() {
+	public function init() {
 
 		register_taxonomy(
-			self::STORY_MEDIA_TAXONOMY,
+			$this->get_story_media_taxonomy(),
 			'attachment',
 			[
 				'label'        => __( 'Source', 'web-stories' ),
@@ -139,7 +140,7 @@ class Media {
 		);
 
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
-		add_image_size( self::STORY_POSTER_IMAGE_SIZE, self::STORY_SMALL_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
+		add_image_size( $this->get_story_poster_image_size(), self::STORY_SMALL_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
 
 		// Used for amp-story[poster-square-src]: The story poster in square format (1x1 aspect ratio).
 		add_image_size( self::STORY_SQUARE_IMAGE_SIZE, self::STORY_LARGE_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
@@ -168,7 +169,7 @@ class Media {
 	 * @param int|\WP_Post|null $post Post.
 	 * @return string[] Images.
 	 */
-	public static function get_story_meta_images( $post = null ) {
+	public function get_story_meta_images( $post = null ) {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 === $thumbnail_id ) {
@@ -176,7 +177,7 @@ class Media {
 		}
 
 		$images = [
-			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, self::STORY_POSTER_IMAGE_SIZE ),
+			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, $this->get_story_poster_image_size() ),
 			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, self::STORY_SQUARE_IMAGE_SIZE ),
 			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, self::STORY_LANDSCAPE_IMAGE_SIZE ),
 		];
@@ -192,7 +193,7 @@ class Media {
 	 * @param \WP_Query $query WP_Query instance, passed by reference.
 	 * @return void
 	 */
-	public static function filter_poster_attachments( &$query ) {
+	public function filter_poster_attachments( &$query ) {
 		$post_type = (array) $query->get( 'post_type' );
 
 		if ( ! in_array( 'any', $post_type, true ) && ! in_array( 'attachment', $post_type, true ) ) {
@@ -210,11 +211,25 @@ class Media {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function get_story_poster_image_size() {
+		return $this->story_poster_image_size;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_story_media_taxonomy() {
+		return $this->story_media_taxonomy;
+	}
+
+	/**
 	 * Registers additional REST API fields upon API initialization.
 	 *
 	 * @return void
 	 */
-	public static function rest_api_init() {
+	public function rest_api_init() {
 		register_rest_field(
 			'attachment',
 			'featured_media',
@@ -238,21 +253,8 @@ class Media {
 					'enum'        => [ 'editor' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'get_callback'    => static function ( $prepared ) {
-					$id = $prepared['id'];
-
-					$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
-					if ( is_array( $terms ) && $terms ) {
-						$term = array_shift( $terms );
-
-						return $term->slug;
-					}
-
-					return '';
-				},
-				'update_callback' => static function ( $value, $object ) {
-					wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
-				},
+				'get_callback'    => [$this, 'media_source_get_callback'],
+				'update_callback' => [$this, 'media_source_update_callback']
 			]
 		);
 
@@ -260,16 +262,7 @@ class Media {
 			'attachment',
 			'featured_media_src',
 			[
-				'get_callback' => static function ( $prepared ) {
-
-					$id    = $prepared['featured_media'];
-					$image = [];
-					if ( $id ) {
-						$image = self::get_thumbnail_data( $id );
-					}
-
-					return $image;
-				},
+				'get_callback' => [$this, 'featured_media_src_get_callback'],
 				'schema'       => [
 					'description' => __( 'URL, width and height.', 'web-stories' ),
 					'type'        => 'object',
@@ -294,6 +287,33 @@ class Media {
 		);
 	}
 
+	public function media_source_get_callback( $prepared ) {
+		$id = $prepared['id'];
+
+		$terms = wp_get_object_terms( $id, $this->get_story_media_taxonomy() );
+		if ( is_array( $terms ) && $terms ) {
+			$term = array_shift( $terms );
+
+			return $term->slug;
+		}
+
+		return '';
+	}
+
+	public function media_source_update_callback( $value, $object ) {
+		wp_set_object_terms( $object->ID, $value, $this->get_story_media_taxonomy() );
+	}
+
+	public function featured_media_src_get_callback( $prepared ) {
+		$id    = $prepared['featured_media'];
+		$image = [];
+		if ( $id ) {
+			$image = $this->get_thumbnail_data( $id );
+		}
+
+		return $image;
+	}
+
 	/**
 	 * Filters the attachment data prepared for JavaScript.
 	 *
@@ -302,12 +322,12 @@ class Media {
 	 *
 	 * @return array $response;
 	 */
-	public static function wp_prepare_attachment_for_js( $response, $attachment ) {
+	public function wp_prepare_attachment_for_js( $response, $attachment ) {
 		if ( 'video' === $response['type'] ) {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
 			if ( 0 !== $thumbnail_id ) {
-				$image = self::get_thumbnail_data( $thumbnail_id );
+				$image = $this->get_thumbnail_data( $thumbnail_id );
 			}
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
@@ -323,7 +343,7 @@ class Media {
 	 *
 	 * @return array
 	 */
-	public static function get_thumbnail_data( $thumbnail_id ) {
+	public function get_thumbnail_data( $thumbnail_id ) {
 		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
 		list ( $src, $width, $height ) = $img_src;
 		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
@@ -337,7 +357,7 @@ class Media {
 	 *
 	 * @return string[]
 	 */
-	public static function upload_mimes( array $mime_types ) {
+	public function upload_mimes( array $mime_types ) {
 		$mime_types['svg'] = 'image/svg+xml';
 		return $mime_types;
 	}
@@ -352,7 +372,7 @@ class Media {
 	 *
 	 * @return void
 	 */
-	public static function delete_video_poster( $attachment_id ) {
+	public function delete_video_poster( $attachment_id ) {
 		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
 
 		if ( empty( $post_id ) ) {
@@ -372,8 +392,8 @@ class Media {
 	 *
 	 * @return array List of allowed file types.
 	 */
-	public static function get_allowed_file_types() {
-		$allowed_mime_types = self::get_allowed_mime_types();
+	public function get_allowed_file_types() {
+		$allowed_mime_types = $this->get_allowed_mime_types();
 		$mime_types         = [];
 
 		foreach ( $allowed_mime_types as $mimes ) {
@@ -401,7 +421,7 @@ class Media {
 	 *
 	 * @return array List of allowed mime types.
 	 */
-	public static function get_allowed_mime_types() {
+	public function get_allowed_mime_types() {
 		$default_allowed_mime_types = [
 			'image' => [
 				'image/png',

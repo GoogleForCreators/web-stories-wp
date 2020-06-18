@@ -38,13 +38,22 @@ use WP_Post;
  * Plugin class.
  */
 class Plugin {
+
+	/**
+	 * @var Media
+	 */
+	public $media;
+
 	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
 	 */
 	public function register() {
-		add_action( 'init', [ Media::class, 'init' ], 9 );
+		$this->media = new Media;
+		add_action( 'init', [ $this->media, 'init' ], 9 );
+
+
 		add_action( 'init', [ Story_Post_Type::class, 'init' ] );
 		add_action( 'init', [ Template_Post_Type::class, 'init' ] );
 
@@ -61,7 +70,7 @@ class Plugin {
 		add_action( 'init', [ $dashboard, 'init' ] );
 
 		// Admin-related functionality.
-		$admin = new Admin();
+		$admin = new Admin( $this );
 		add_action( 'admin_init', [ $admin, 'init' ] );
 
 		// Gutenberg Blocks.
@@ -69,7 +78,7 @@ class Plugin {
 		add_action( 'init', [ $embed_block, 'init' ] );
 
 		// Frontend.
-		$discovery = new Discovery();
+		$discovery = new Discovery( $this );
 		add_action( 'init', [ $discovery, 'init' ] );
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );

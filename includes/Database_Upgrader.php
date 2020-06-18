@@ -50,6 +50,15 @@ class Database_Upgrader {
 	const PREVIOUS_OPTION = 'web_stories_previous_db_version';
 
 	/**
+	 * @var Plugin
+	 */
+	public $plugin;
+
+	public function __construct( $plugin ) {
+		$this->plugin = $plugin;
+	}
+
+	/**
 	 * Hooked into admin_init and walks through an array of upgrade methods.
 	 *
 	 * @return void
@@ -153,7 +162,7 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function v_2_add_term() {
-		wp_insert_term( 'editor', Media::STORY_MEDIA_TAXONOMY );
+		wp_insert_term( 'editor', $this->plugin->media->get_story_media_taxonomy() );
 	}
 
 	/**

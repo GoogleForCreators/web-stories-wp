@@ -35,6 +35,13 @@ use WP_Post;
  * Discovery class.
  */
 class Discovery {
+
+	public $plugin;
+
+	public function __construct( $plugin ) {
+		$this->plugin = $plugin;
+	}
+
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -208,7 +215,7 @@ class Discovery {
 			return;
 		}
 
-		$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id(), Media::STORY_POSTER_IMAGE_SIZE );
+		$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id(), $this->plugin->media->get_story_poster_image_size() );
 
 		if ( ! $poster ) {
 			return;

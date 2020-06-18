@@ -35,6 +35,16 @@ use WP_Screen;
  * Admin class.
  */
 class Admin {
+
+	/**
+	 * @var Plugin
+	 */
+	public $plugin;
+
+	public function __construct( $plugin ) {
+		$this->plugin = $plugin;
+	}
+
 	/**
 	 * Initialize admin-related functionality.
 	 *
@@ -42,12 +52,12 @@ class Admin {
 	 */
 	public function init() {
 		// Migrations.
-		$database_upgrader = new Database_Upgrader();
+		$database_upgrader = new Database_Upgrader( $this->plugin );
 		$database_upgrader->init();
 
-		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
-		add_filter( 'default_content', [ __CLASS__, 'prefill_post_content' ] );
-		add_filter( 'default_title', [ __CLASS__, 'prefill_post_title' ] );
+		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
+		add_filter( 'default_content', [ $this, 'prefill_post_content' ] );
+		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
 	}
 
 	/**
@@ -60,7 +70,7 @@ class Admin {
 	 *
 	 * @return string $class List of Classes.
 	 */
-	public static function admin_body_class( $class ) {
+	public function admin_body_class( $class ) {
 		$screen = get_current_screen();
 
 		if ( ! $screen instanceof WP_Screen ) {
@@ -93,7 +103,7 @@ class Admin {
 	 *
 	 * @return string Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public static function prefill_post_content( $content ) {
+	public function prefill_post_content( $content ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
@@ -137,7 +147,7 @@ BLOCK;
 		ob_start();
 
 		if ( $has_poster ) {
-			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
+			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), $this->plugin->media->get_story_poster_image_size() );
 
 			return sprintf(
 				$block_markup_with_poster,
@@ -163,7 +173,7 @@ BLOCK;
 	 *
 	 * @return string Pre-filled post title if applicable, or the default title otherwise.
 	 */
-	public static function prefill_post_title( $title ) {
+	public function prefill_post_title( $title ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $title;
 		}
