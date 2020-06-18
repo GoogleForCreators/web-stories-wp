@@ -50,6 +50,7 @@ script:
 before_deploy:
   - npm run storybook:build
   - npm run workflow:copy-template-assets
+  - npm run workflow:copy-cdn-files
 
 deploy:
   - provider: pages

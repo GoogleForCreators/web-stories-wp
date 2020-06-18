@@ -36,6 +36,7 @@ import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/compon
 import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
 } from '../assets/src/dashboard/theme';
+import { GlobalStyle as DashboardModalGlobalStyle } from '../assets/src/dashboard/components/modal';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
 import { ConfigProvider } from '../assets/src/dashboard/app/config';
 import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
@@ -87,6 +88,7 @@ addDecorator((story, { id }) => {
           >
             <ApiProvider>
               <DashboardGlobalStyle />
+              <DashboardModalGlobalStyle />
               <DashboardKeyboardOnlyOutline />
               {story()}
             </ApiProvider>

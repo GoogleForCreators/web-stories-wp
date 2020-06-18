@@ -17,21 +17,27 @@
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../../utils';
+import { renderWithTheme } from '../../../testUtils/';
+import Modal from '../';
 
-describe('Inserting Media from Media Library', () => {
-  // Uses the existence of the element's frame element as an indicator for successful insertion.
-  it('should insert an image by clicking on it', async () => {
-    await createNewStory();
-
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
-    // Clicking will only act on the first element.
-    await expect(page).toClick('[data-testid="mediaElement"]');
-
-    // First match is for the background element, second for the image.
-    await expect(page).toMatchElement(
-      '[data-testid="frameElement"]:nth-of-type(2)'
+describe('Modal', () => {
+  it('should not render a modal by default', () => {
+    const { queryAllByRole } = renderWithTheme(
+      <Modal onClose={jest.fn}>
+        <p>{'modal child'}</p>
+      </Modal>
     );
+
+    expect(queryAllByRole('dialog', { hidden: true })).toHaveLength(0);
+  });
+
+  it('should render a modal when isOpen is true', () => {
+    const { getByRole } = renderWithTheme(
+      <Modal onClose={jest.fn} isOpen={true}>
+        <p>{'modal child'}</p>
+      </Modal>
+    );
+
+    expect(getByRole('dialog')).toBeInTheDocument();
   });
 });

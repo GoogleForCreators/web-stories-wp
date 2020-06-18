@@ -35,6 +35,7 @@ export const GeneralAnimationPropTypes = {
   ]),
   duration: PropTypes.number,
   easing: PropTypes.string,
+  easingPreset: PropTypes.string,
   endDelay: PropTypes.number,
   fill: PropTypes.oneOf(['backwards', 'forwards', 'both', 'none']),
   iterationStart: PropTypes.number,

@@ -382,7 +382,7 @@
           "isFill": false,
           "type": "text",
           "id": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
-          "content": "<span style=\"letter-spacing: -0.0003em\"><span style=\"color: rgba(255, 255, 255, 1)\">“DON’T BE AFRAID TO GIVE UP THE GOOD\n TO GO FOR THE GREAT.”</span></span>"
+          "content": "<span style=\"letter-spacing: -0.0003em\"><span style=\"color: rgba(255, 255, 255, 1)\">“DON’T BE AFRAID TO GIVE UP THE GOOD\nTO GO FOR THE GREAT.”</span></span>"
         },
         {
           "opacity": 100,
@@ -727,7 +727,7 @@
           "isFill": false,
           "type": "text",
           "id": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
-          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips on how to best start running</span>"
+          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips onhow to best start running</span>"
         },
         {
           "opacity": 100,
@@ -1231,7 +1231,7 @@
           "id": "9832faa6-2c7e-43eb-b75a-b68051da626a",
           "x": 20,
           "y": 544,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Hit the trails with the latest and greatest lightweight mid-distance shoes for the season.</span>"
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Hit the trails with the latest and greatestlightweight mid-distance shoes for the season.</span>"
         }
       ],
       "backgroundOverlay": "none",
@@ -3107,7 +3107,7 @@
           "id": "96fea994-b71e-442f-b611-16d73f520016",
           "x": 257,
           "y": 168,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">SWEAT RESISTENT\n EARBUDS</span></span>"
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">SWEAT RESISTENT\nEARBUDS</span></span>"
         },
         {
           "opacity": 100,
@@ -3158,7 +3158,7 @@
           "id": "9b117b87-0269-4c4b-9e0d-8cdbcb0df89a",
           "x": 34,
           "y": 339,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORE TRAINING EXERCISES</span></span>"
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORETRAINING EXERCISES</span></span>"
         },
         {
           "opacity": 100,
@@ -3209,7 +3209,7 @@
           "id": "03c44ea1-7ec8-4bdf-8e49-bb43ba83b2f3",
           "x": 256,
           "y": 463,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">TRIATHLON TRAINING IN THE SUMMER</span></span>"
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">TRIATHLON TRAININGIN THE SUMMER</span></span>"
         },
         {
           "opacity": 100,

@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 const path = require('path');
 
 function createPattern(pattern) {

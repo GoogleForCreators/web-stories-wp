@@ -22,3 +22,27 @@ export const PILL_INPUT_TYPES = {
   CHECKBOX: 'checkbox',
   RADIO: 'radio',
 };
+
+export const BUTTON_TYPES = {
+  CTA: 'cta',
+  DEFAULT: 'default',
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+};
+
+export const CHIP_TYPES = {
+  STANDARD: 'standard',
+  SMALL: 'small',
+};
+
+export const DROPDOWN_TYPES = {
+  MENU: 'menu',
+  PANEL: 'panel',
+  COLOR_PANEL: 'color_panel',
+};
+
+export const KEYS = {
+  ENTER: 'Enter',
+  UP: 'ArrowUp',
+  DOWN: 'ArrowDown',
+};

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -26,6 +26,7 @@ import { useState, useCallback } from 'react';
 import { useStory } from '../../app';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
+import { getDefinitionForType } from '../../elements';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
@@ -49,17 +50,25 @@ function DropTargetsProvider({ children }) {
   );
 
   const elements = currentPage?.elements || [];
+  const sortedDropTargetIds = useMemo(
+    () =>
+      elements
+        .filter(({ id }) => id in dropTargets)
+        .map(({ id }) => id)
+        .reverse(), // Sort by z-index
+    [dropTargets, elements]
+  );
 
   const getDropTargetFromCursor = useCallback(
     (x, y, ignoreId = null) => {
       const underCursor = document.elementsFromPoint(x, y);
       return (
-        Object.keys(dropTargets).find(
+        sortedDropTargetIds.find(
           (id) => underCursor.includes(dropTargets[id]) && id !== ignoreId
         ) || null
       );
     },
-    [dropTargets]
+    [sortedDropTargetIds, dropTargets]
   );
 
   /**
@@ -177,6 +186,11 @@ function DropTargetsProvider({ children }) {
         });
 
       setActiveDropTargetId(null);
+
+      const { onDropHandler } = getDefinitionForType(resource.type);
+      if (onDropHandler) {
+        onDropHandler(activeDropTargetId);
+      }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );

@@ -29,9 +29,12 @@ import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import Layout from '../../app/layout';
+import { DATA_VERSION } from '../../migration';
+import { createPage } from '../../elements';
 import FixtureEvents from './events';
 import getMediaResponse from './db/getMediaResponse';
 
+export const MEDIA_PER_PAGE = 20;
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
@@ -162,6 +165,13 @@ export class Fixture {
    */
   setFlags(flags) {
     this._flags = { ...flags };
+  }
+
+  /**
+   * @param {Array<Object>} pages
+   */
+  setPages(pages) {
+    this.apiProviderFixture_.setPages(pages);
   }
 
   /**
@@ -386,6 +396,8 @@ function HookExecutor({ hooks }) {
 /* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
   constructor() {
+    this._pages = [];
+
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
       const getStoryById = useCallback(
@@ -400,7 +412,10 @@ class APIProviderFixture {
             modified: '2020-05-06T22:32:37',
             excerpt: { raw: '' },
             link: 'http://stories.local/?post_type=web-story&p=1',
-            story_data: [],
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
             featured_media: 0,
             featured_media_url: '',
             publisher_logo_url:
@@ -441,12 +456,17 @@ class APIProviderFixture {
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
           : () => true;
+        // Generate 7*6=42 items, 3 pages
+        const clonedMedia = Array(6)
+          .fill(getMediaResponse)
+          .flat()
+          .map((media, i) => ({ ...media, id: i + 1 }));
         return asyncResponse({
-          data: getMediaResponse
-            .slice((pagingNum - 1) * 20, 20)
+          data: clonedMedia
+            .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { get: () => 1 },
+          headers: { get: () => 3 },
         });
       }, []);
       const uploadMedia = useCallback(
@@ -492,6 +512,20 @@ class APIProviderFixture {
     };
     Comp.displayName = 'Fixture(APIProvider)';
     this._comp = Comp;
+  }
+
+  /**
+   * @param {Array<Object>} pages
+   */
+  setPages(pages) {
+    this._pages = pages.map((page) => {
+      const result = createPage(page);
+      // Overwrite ID used in testing.
+      if (page.id !== undefined) {
+        result.id = page.id;
+      }
+      return result;
+    });
   }
 
   get Component() {

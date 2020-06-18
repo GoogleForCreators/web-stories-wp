@@ -199,10 +199,7 @@ const MediaElement = ({
           setShowVideoDetail(false);
           if (mediaElement.current) {
             // Pointer still in the media element, continue the video.
-            const playPromise = mediaElement.current.play();
-            if (playPromise) {
-              playPromise.catch(() => {});
-            }
+            mediaElement.current.play().catch(() => {});
           }
         } else {
           setShowVideoDetail(true);
@@ -263,7 +260,11 @@ const MediaElement = ({
 
   const { lengthFormatted, poster, mimeType } = resource;
   return (
-    <Container onPointerEnter={onPointerEnter} onPointerLeave={onPointerLeave}>
+    <Container
+      data-testid="mediaElement"
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+    >
       <Video
         key={src}
         ref={mediaElement}
@@ -271,6 +272,7 @@ const MediaElement = ({
         width={width}
         height={height}
         preload="none"
+        aria-label={alt}
         muted
         onClick={onClick}
         {...dropTargetsBindings}

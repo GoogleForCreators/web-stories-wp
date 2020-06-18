@@ -17,6 +17,8 @@
 /**
  * External dependencies
  */
+jest.mock('flagged');
+import { useFeature } from 'flagged';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
@@ -25,6 +27,14 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import StoryOutput from '../story';
 
 describe('Story output', () => {
+  useFeature.mockImplementation((feature) => {
+    const config = {
+      enableAnimation: true,
+    };
+
+    return config[feature];
+  });
+
   it('should include Google Fonts stylesheet', () => {
     const props = {
       id: '123',
@@ -46,6 +56,10 @@ describe('Story output', () => {
       pages: [
         {
           id: '123',
+          animations: [
+            { targets: ['123'], type: 'bounce', duration: 1000 },
+            { targets: ['124'], type: 'spin', duration: 500 },
+          ],
           backgroundColor: {
             type: 'solid',
             color: { r: 255, g: 255, b: 255 },
@@ -62,7 +76,7 @@ describe('Story output', () => {
               height: 1920,
               width: 1080,
               rotationAngle: 0,
-              content: 'Hello World',
+              content: '<span style="font-style: italic">Hello World</span>',
               color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
               padding: {
                 horizontal: 0,
@@ -76,17 +90,16 @@ describe('Story output', () => {
                   [1, 400],
                 ],
               },
-              fontStyle: 'italic',
             },
             {
               type: 'text',
-              id: '123',
+              id: '124',
               x: 50,
               y: 100,
               height: 1920,
               width: 1080,
               rotationAngle: 0,
-              content: 'Hello World',
+              content: '<span style="font-weight: 400">Hello World</span>',
               color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
               padding: {
                 horizontal: 0,
@@ -100,7 +113,6 @@ describe('Story output', () => {
                   [1, 400],
                 ],
               },
-              fontWeight: 400,
             },
           ],
         },
@@ -220,6 +232,71 @@ describe('Story output', () => {
         pages: [
           {
             id: '123',
+            backgroundColor: {
+              type: 'solid',
+              color: { r: 255, g: 255, b: 255 },
+            },
+            page: {
+              id: '123',
+            },
+            elements: [
+              {
+                type: 'text',
+                id: '123',
+                x: 50,
+                y: 100,
+                height: 1920,
+                width: 1080,
+                rotationAngle: 0,
+                content: 'Hello World',
+                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                padding: {
+                  horizontal: 0,
+                  vertical: 0,
+                },
+                font: {
+                  family: 'Roboto',
+                  service: 'fonts.google.com',
+                },
+              },
+            ],
+          },
+        ],
+        metadata: {
+          publisher: {
+            name: 'Publisher Name',
+            logo: 'https://example.com/logo.png',
+          },
+          fallbackPoster: 'https://example.com/logo.png',
+          logoPlaceholder: 'https://example.com/logo.png',
+        },
+      };
+
+      await expect(<StoryOutput {...props} />).toBeValidAMP();
+    });
+
+    it('should produce valid AMP output when using animations', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        story: {
+          title: 'Example',
+          slug: 'example',
+          status: 'publish',
+          author: 123,
+          date: '123',
+          modified: '123',
+          excerpt: '123',
+          featuredMedia: 123,
+          publisherLogoUrl: 'https://example.com/logo.png',
+          password: '123',
+          link: 'https://example.com/story',
+          autoAdvance: false,
+        },
+        pages: [
+          {
+            id: '123',
+            animations: [{ targets: ['123'], type: 'bounce', duration: 1000 }],
             backgroundColor: {
               type: 'solid',
               color: { r: 255, g: 255, b: 255 },

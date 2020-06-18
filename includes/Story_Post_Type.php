@@ -366,6 +366,13 @@ class Story_Post_Type {
 			],
 			'flags'  => [
 				/**
+				 * Description: Enables user facing animations.
+				 * Author: @mariano-formidable
+				 * Issue: 1903
+				 * Creation date: 2020-06-08
+				 */
+				'enableAnimation'              => false,
+				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
 				 * Issue: #1319 and #354
@@ -421,6 +428,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-04
 				 */
 				'showTextAndShapesSearchInput' => false,
+				/**
+				 * Description: Flag for the 3P Media tab.
+				 * Author: @diegovar
+				 * Issue: #2508
+				 * Creation date: 2020-06-17
+				 */
+				'media3pTab'                   => false,
 			],
 
 		];
