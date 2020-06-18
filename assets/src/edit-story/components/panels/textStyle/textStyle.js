@@ -113,6 +113,8 @@ function StylePanel({ selectedElements, pushUpdate }) {
           aria-label={__('Line-height', 'web-stories')}
           float={true}
           value={lineHeight || 0}
+          min={MIN_MAX.LINE_HEIGHT.MIN}
+          max={MIN_MAX.LINE_HEIGHT.MAX}
           suffix={<OffsetVertical />}
           onChange={(value) => pushUpdate({ lineHeight: value })}
         />
@@ -120,6 +122,8 @@ function StylePanel({ selectedElements, pushUpdate }) {
         <ExpandedNumeric
           aria-label={__('Letter-spacing', 'web-stories')}
           value={letterSpacing}
+          min={MIN_MAX.LETTER_SPACING.MIN}
+          max={MIN_MAX.LETTER_SPACING.MAX}
           suffix={<OffsetHorizontal />}
           symbol="%"
           onChange={setLetterSpacingMinMax}
