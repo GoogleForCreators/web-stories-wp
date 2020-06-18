@@ -122,6 +122,7 @@ describe('Panels/TextStyle', () => {
       id: '1',
       textAlign: 'normal',
       fontSize: 30,
+      lineHeight: 1,
       font: {
         family: 'ABeeZee',
       },
@@ -172,7 +173,7 @@ describe('Panels/TextStyle', () => {
     expect(submits[textElement.id]).toStrictEqual({
       fontSize: 70,
       height: 171,
-      lineHeight: NaN,
+      lineHeight: 1,
       padding: {
         horizontal: 0,
         locked: true,
