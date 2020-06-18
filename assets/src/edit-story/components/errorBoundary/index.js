@@ -39,26 +39,6 @@ class ErrorBoundary extends Component {
   }
 
   // eslint-disable-next-line no-unused-vars
-  onError(evt) {
-    // In the future we will take some action here
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  onUnhandledRejection(evt) {
-    // In the future we might take some action here
-  }
-
-  componentDidMount() {
-    window.addEventListener('error', this.onError);
-    window.addEventListener('unhandledrejection', this.onUnhandledRejection);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('error', this.onError);
-    window.removeEventListener('unhandledrejection', this.onError);
-  }
-
-  // eslint-disable-next-line no-unused-vars
   componentDidCatch(error, errorInfo) {
     // In the future we will take some action here
   }
