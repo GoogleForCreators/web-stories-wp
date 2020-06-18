@@ -361,7 +361,7 @@ class Story_Post_Type {
 		];
 
 		$discovery = new Discovery();
-		$media = new Media();
+		$media     = new Media();
 
 		$settings = [
 			'id'     => 'edit-story',
