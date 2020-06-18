@@ -247,10 +247,12 @@ async function exposeMouseFunctions(page) {
 }
 
 async function exposeClipboard(page) {
-  await page.browserContext().overridePermissions(
-    'http://localhost:9876',
-    ['clipboard-read', 'clipboard-write']
-  );
+  await page
+    .browserContext()
+    .overridePermissions('http://localhost:9876', [
+      'clipboard-read',
+      'clipboard-write',
+    ]);
 
   function exposeClipboardFunction(name, func) {
     return exposeFunction(page, `clipboard_${name}`, func);
@@ -272,14 +274,14 @@ async function exposeClipboard(page) {
       // @todo: do `document.execCommand('copy')` inside an input or
       // a contenteditable.
       const target = document.activeElement;
-      const clipboardData = new DataTransfer();
+      const clipboardContent = new DataTransfer();
       const event = new ClipboardEvent('copy', {
         bubbles: true,
         cancelable: true,
-        clipboardData,
+        clipboardContent,
       });
       target.dispatchEvent(event);
-      return clipboardData;
+      return clipboardContent;
     });
   });
 
@@ -288,17 +290,17 @@ async function exposeClipboard(page) {
     if (!clipboardData) {
       throw new Error('clipboard is empty');
     }
-    await frame.evaluate((clipboardData) => {
+    await frame.evaluate((clipboardContent) => {
       // @todo: do `document.execCommand('paste')` inside an input or
       // a contenteditable.
       const target = document.activeElement;
       const event = new ClipboardEvent('paste', {
         bubbles: true,
         cancelable: true,
-        clipboardData,
+        clipboardContent,
       });
       target.dispatchEvent(event);
-      return clipboardData;
+      return clipboardContent;
     }, clipboardData);
   });
 }
