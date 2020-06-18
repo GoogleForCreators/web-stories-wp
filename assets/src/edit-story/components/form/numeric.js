@@ -75,6 +75,8 @@ function Numeric({
   float,
   flexBasis,
   disabled,
+  min,
+  max,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
@@ -92,10 +94,16 @@ function Numeric({
       const diff = Big(float && altKey ? 0.1 : 1);
       if (key === 'ArrowUp') {
         // Increment value
-        newValue = Big(value).plus(diff);
+        newValue =
+          typeof max !== 'undefined'
+            ? Math.min(max, Big(value).plus(diff))
+            : Big(value).plus(diff);
       } else if (key === 'ArrowDown') {
         // Decrement value
-        newValue = Big(value).minus(diff);
+        newValue =
+          typeof min !== 'undefined'
+            ? Math.max(min, Big(value).minus(diff))
+            : Big(value).minus(diff);
       }
       onChange(parseFloat(newValue.toString()));
     },
@@ -179,6 +187,8 @@ Numeric.propTypes = {
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
   float: PropTypes.bool,
+  min: PropTypes.number,
+  max: PropTypes.number,
 };
 
 Numeric.defaultProps = {
