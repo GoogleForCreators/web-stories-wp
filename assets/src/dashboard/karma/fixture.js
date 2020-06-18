@@ -30,10 +30,25 @@ import ApiProvider from '../app/api/apiProvider';
 import ComponentStub from './componentStub';
 import ApiProviderFixture from './apiProviderFixture';
 
-export class Fixture {
-  constructor() {
-    this._config = {};
-    this._flags = {};
+const defaultConfig = {
+  isRTL: false,
+  newStoryURL:
+    'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
+  editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
+  wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
+  assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories//assets',
+  version: '1.0.0-alpha.9',
+  api: {
+    stories: '/wp/v2/web-story',
+    users: '/wp/v2/users',
+    fonts: '/web-stories/v1/fonts',
+  },
+};
+
+export default class Fixture {
+  constructor({ config = {}, flags = {} } = {}) {
+    this._config = { ...defaultConfig, ...config };
+    this._flags = flags;
     this._container = null;
     this._screen = null;
     this._componentStubs = new Map();
@@ -130,10 +145,6 @@ export class Fixture {
    * @return {Promise} Yields when the editor rendering is complete.
    */
   render() {
-    if (!this._apiProviderFixture) {
-      throw new Error('ApiProviderFixture not provided');
-    }
-
     const root = document.querySelector('test-root');
     const { container } = render(
       <FlagsProvider features={this._flags}>

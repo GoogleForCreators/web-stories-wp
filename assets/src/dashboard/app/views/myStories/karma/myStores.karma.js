@@ -15,39 +15,18 @@
  */
 
 /**
- * External dependencies
- */
-import { render } from '@testing-library/react';
-import { FlagsProvider } from 'flagged';
-
-/**
  * Internal dependencies
  */
-import App from '../../../../app';
-
-const config = {
-  isRTL: false,
-  newStoryURL:
-    'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
-  editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
-  wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
-  assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories//assets',
-  version: '1.0.0-alpha.9',
-  api: {
-    stories: '/wp/v2/web-story',
-    users: '/wp/v2/users',
-    fonts: '/web-stories/v1/fonts',
-  },
-};
+import Fixture from '../../../../karma/fixture';
 
 describe('My Stories View', () => {
+  let fixture;
+  beforeEach(async () => {
+    fixture = new Fixture();
+    await fixture.render();
+  });
+
   it('should render', () => {
-    const root = document.querySelector('test-root');
-    render(
-      <FlagsProvider features={{}}>
-        <App key={Math.random()} config={config} />
-      </FlagsProvider>,
-      { container: root }
-    );
+    fixture.screen.debug();
   });
 });
