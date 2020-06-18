@@ -14,6 +14,40 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { useMemo, useState } from 'react';
+import { ApiContext } from '../app/api/apiProvider';
+import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
+import formattedUsersObject from '../storybookUtils/formattedUsersObject';
+import formattedTemplatesArray from '../storybookUtils/formattedTemplatesArray';
+
 export default function ApiProviderFixture({ children }) {
-  return children;
+  const [stories] = useState(formattedStoriesArray);
+  const [templates] = useState(formattedTemplatesArray);
+  const [users] = useState(formattedUsersObject);
+
+  const value = useMemo(
+    () => ({
+      state: {
+        stories,
+        templates,
+        users,
+      },
+      actions: {},
+    }),
+    [stories, templates, users]
+  );
+
+  return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 }
+
+ApiProviderFixture.propTypes = {
+  children: PropTypes.node,
+};
