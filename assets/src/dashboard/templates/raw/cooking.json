@@ -250,7 +250,7 @@
           "isFill": false,
           "type": "text",
           "id": "be108bc9-3a51-48c4-b495-24be6163e44c",
-          "content": "<span style=\"font-weight: 700; color: #fff\">Food &amp;  Stuff</span>"
+          "content": "<span style=\"font-weight: 700; color: #fff\">Food &amp; Stuff</span>"
         },
         {
           "opacity": 100,
@@ -5894,7 +5894,7 @@
           "id": "f4b2e739-5428-4639-8b71-b25630dac775",
           "x": 41,
           "y": 438,
-          "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">Squash Soup&nbsp;\n with Persimmon</span></span>"
+          "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">Squash Soup&nbsp;\nwith Persimmon</span></span>"
         },
         {
           "opacity": 100,
@@ -8973,7 +8973,7 @@
           "id": "21aed5d1-b061-4a20-87e8-3e9c9b804d41",
           "x": 143,
           "y": 437,
-          "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Easy brunch recipes that  will impress your guests</span>"
+          "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Easy brunch recipes that will impress your guests</span>"
         },
         {
           "opacity": 100,

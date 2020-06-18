@@ -88,7 +88,6 @@ export const AMPStory = () => {
       {[1, 2].map((pageId) => (
         <amp-story-page key={pageId} id={`page-${pageId}`}>
           <StoryAnimation.Provider animations={animations}>
-            <StoryAnimation.AMPKeyframes />
             <StoryAnimation.AMPAnimations />
             {elements.map(({ id, color, ...styles }) => (
               <StoryAnimation.AMPWrapper

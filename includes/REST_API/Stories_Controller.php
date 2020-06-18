@@ -157,26 +157,30 @@ class Stories_Controller extends Stories_Base_Controller {
 	}
 
 	/**
-	 * Filters the orderby query to filter first all the current user's posts and then the rest.
+	 * Filters query clauses to sort posts by the author's display name.
 	 *
-	 * @param string    $orderby Original orderby clause.
-	 * @param \WP_Query $query WP_Query object.
-	 * @return string Orderby clause.
+	 * @param string[] $clauses Associative array of the clauses for the query.
+	 * @param WP_Query $query   The WP_Query instance.
+	 *
+	 * @return array Filtered query clauses.
 	 */
-	public function filter_posts_orderby( $orderby, $query ) {
+	public function filter_posts_clauses( $clauses, $query ) {
 		global $wpdb;
+
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
-			return $orderby;
+			return $clauses;
 		}
 		if ( 'story_author' !== $query->get( 'orderby' ) ) {
-			return $orderby;
+			return $clauses;
 		}
 
-		$current_user = get_current_user_id();
-		if ( ! $current_user ) {
-			return $orderby;
-		}
-		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_author DESC, wp_posts.post_modified DESC', $current_user );
+		// phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
+		$order              = $query->get( 'order' );
+		$clauses['join']   .= " LEFT JOIN {$wpdb->users} ON {$wpdb->posts}.post_author={$wpdb->users}.ID";
+		$clauses['orderby'] = "{$wpdb->users}.display_name $order, " . $clauses['orderby'];
+		// phpcs:enable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
+
+		return $clauses;
 	}
 
 	/**
@@ -186,9 +190,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		add_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10, 2 );
+		add_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10, 2 );
 		$response = parent::get_items( $request );
-		remove_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10 );
+		remove_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10 );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;

@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import Link from '../../link';
 import { Row, TextInput, HelperText } from '../../form';
 import { useStory } from '../../../app/story';
 import { SimplePanel } from '../../panels/panel';
@@ -40,10 +41,6 @@ export const MIN_MAX = {
     MAX: 200,
   },
 };
-
-const Permalink = styled.a`
-  color: ${({ theme }) => theme.colors.link};
-`;
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -93,9 +90,9 @@ function SlugPanel() {
         />
       </Row>
       <HelperText>
-        <Permalink rel="noopener noreferrer" target="_blank" href={link}>
+        <Link rel="noopener noreferrer" target="_blank" href={link}>
           {displayLink}
-        </Permalink>
+        </Link>
       </HelperText>
     </SimplePanel>
   );

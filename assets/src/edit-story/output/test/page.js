@@ -22,12 +22,21 @@ import { render } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+jest.mock('flagged');
+import { useFeature } from 'flagged';
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
-import { OverlayType } from '../../utils/backgroundOverlay';
 
 describe('Page output', () => {
+  useFeature.mockImplementation((feature) => {
+    const config = {
+      enableAnimation: true,
+    };
+
+    return config[feature];
+  });
+
   describe('aspect-ratio markup', () => {
     let backgroundElement;
 
@@ -60,7 +69,7 @@ describe('Page output', () => {
     it('should render a single layer with no background', () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -85,10 +94,10 @@ describe('Page output', () => {
       );
     });
 
-    it('should render the layer for background with overlay', () => {
+    it('should render the layer for background', () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [backgroundElement],
@@ -114,34 +123,105 @@ describe('Page output', () => {
       );
     });
 
-    it('should render the layer for background', () => {
+    it('should render the layer for background with overlay', () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
-          elements: [backgroundElement],
-          backgroundOverlay: OverlayType.LINEAR,
+          elements: [
+            {
+              ...backgroundElement,
+              backgroundOverlay: { color: { r: 0, g: 255, b: 0, a: 0.4 } },
+            },
+          ],
         },
         autoAdvance: false,
         defaultPageDuration: 7,
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const layers = container.querySelectorAll('amp-story-grid-layer');
-      expect(layers).toHaveLength(2);
-      const bgLayer = layers[0];
-      expect(bgLayer).toHaveAttribute(
-        'aspect-ratio',
-        `${PAGE_WIDTH}:${PAGE_HEIGHT}`
+      const overlayLayer = container.querySelector(
+        '.page-background-overlay-area'
       );
-      expect(bgLayer.children).toHaveLength(2);
-      expect(bgLayer.children[0].className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(bgLayer.children[1].className).toStrictEqual(
-        'page-fullbleed-area'
-      );
+      expect(overlayLayer).toBeInTheDocument();
+    });
+  });
+
+  describe('animation markup', () => {
+    it('should render animation tags for animations', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          animations: [
+            { targets: ['123', '124'], type: 'bounce', duration: 1000 },
+            { targets: ['123'], type: 'spin', duration: 1000 },
+          ],
+          elements: [
+            {
+              id: '123',
+              type: 'video',
+              mimeType: 'video/mp4',
+              scale: 1,
+              origRatio: 9 / 16,
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              loop: true,
+              resource: {
+                type: 'video',
+                mimeType: 'video/mp4',
+                id: 123,
+                src: 'https://example.com/image.png',
+                poster: 'https://example.com/poster.png',
+                height: 1920,
+                width: 1080,
+                length: 99,
+              },
+            },
+            {
+              id: '124',
+              type: 'shape',
+              opacity: 100,
+              flip: {
+                vertical: false,
+                horizontal: false,
+              },
+              rotationAngle: 0,
+              lockAspectRatio: true,
+              backgroundColor: {
+                color: {
+                  r: 51,
+                  g: 51,
+                  b: 51,
+                },
+              },
+              x: 249,
+              y: 67,
+              width: 147,
+              height: 147,
+              scale: 100,
+              focalX: 50,
+              focalY: 50,
+              mask: {
+                type: 'circle',
+              },
+            },
+          ],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 11,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+
+      const storyAnimations = container.querySelectorAll('amp-story-animation');
+      expect(storyAnimations).toHaveLength(3);
+      expect(storyAnimations[0]).toHaveAttribute('trigger', `visibility`);
     });
   });
 
@@ -149,7 +229,7 @@ describe('Page output', () => {
     it('should use default value for auto-advance-after', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -167,7 +247,7 @@ describe('Page output', () => {
     it('should use default duration for auto-advance-after', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -185,7 +265,7 @@ describe('Page output', () => {
     it('should use default duration for images', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [
@@ -226,7 +306,7 @@ describe('Page output', () => {
     it('should use video element ID for auto-advance-after', async () => {
       const props = {
         id: 'foo',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
           elements: [
@@ -284,7 +364,7 @@ describe('Page output', () => {
     it('should ignore looping video for auto-advance-after and set default instead', async () => {
       const props = {
         id: 'foo',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: 'bar',
           elements: [
@@ -328,7 +408,7 @@ describe('Page output', () => {
     it('should produce valid AMP output', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -343,7 +423,7 @@ describe('Page output', () => {
     it('should produce valid AMP output with manual page advancement', async () => {
       const props = {
         id: '123',
-        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
         page: {
           id: '123',
           elements: [],
@@ -358,7 +438,7 @@ describe('Page output', () => {
       it('should produce valid output with media elements', async () => {
         const props = {
           id: '123',
-          backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
           page: {
             id: '123',
             elements: [
@@ -383,6 +463,42 @@ describe('Page output', () => {
                   height: 1920,
                   width: 1080,
                   length: 99,
+                },
+              },
+            ],
+          },
+          autoAdvance: true,
+          defaultPageDuration: 11,
+        };
+
+        await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      });
+
+      it('should produce valid output with animations', async () => {
+        const props = {
+          id: '123',
+          backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            animations: [{ targets: ['123'], type: 'bounce', duration: 1000 }],
+            elements: [
+              {
+                type: 'text',
+                id: '123',
+                x: 50,
+                y: 100,
+                height: 1920,
+                width: 1080,
+                rotationAngle: 0,
+                content: 'Hello World',
+                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                padding: {
+                  horizontal: 0,
+                  vertical: 0,
+                },
+                font: {
+                  family: 'Roboto',
+                  service: 'fonts.google.com',
                 },
               },
             ],

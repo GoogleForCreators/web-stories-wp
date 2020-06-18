@@ -31,6 +31,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Fonts_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
+use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
 use WP_Post;
 
 /**
@@ -47,16 +48,13 @@ class Plugin {
 		add_action( 'init', [ Story_Post_Type::class, 'init' ] );
 		add_action( 'init', [ Template_Post_Type::class, 'init' ] );
 
+		// Beta version updater.
+		$updater = new Updater();
+		add_action( 'init', [ $updater, 'init' ], 9 );
+
 		// REST API endpoints.
-
-		$fonts_controller = new Fonts_Controller();
-		add_action( 'rest_api_init', [ $fonts_controller, 'register_routes' ] );
-
-		$link_controller = new Link_Controller();
-		add_action( 'rest_api_init', [ $link_controller, 'register_routes' ] );
-
-		$embed_controller = new Embed_Controller();
-		add_action( 'rest_api_init', [ $embed_controller, 'register_routes' ] );
+		// High priority so it runs after create_initial_rest_routes().
+		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
 		// Dashboard.
 		$dashboard = new Dashboard();
@@ -75,135 +73,28 @@ class Plugin {
 		add_action( 'init', [ $discovery, 'init' ] );
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
-
-		// Everything else.
-		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
 	}
 
 	/**
-	 * Filter the allowed tags for KSES to allow for amp-story children.
+	 * Registers REST API routes.
 	 *
-	 * @param array|string $allowed_tags Allowed tags.
-	 *
-	 * @return array|string Allowed tags.
+	 * @return void
 	 */
-	public static function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! is_array( $allowed_tags ) ) {
-			return $allowed_tags;
-		}
+	public function register_rest_routes() {
+		$fonts_controller = new Fonts_Controller();
+		$fonts_controller->register_routes();
 
-		$story_components = [
-			'amp-story'                 => [
-				'background-audio'     => true,
-				'live-story'           => true,
-				'live-story-disabled'  => true,
-				'poster-landscape-src' => true,
-				'poster-portrait-src'  => true,
-				'poster-square-src'    => true,
-				'publisher'            => true,
-				'publisher-logo-src'   => true,
-				'standalone'           => true,
-				'supports-landscape'   => true,
-				'title'                => true,
-			],
-			'amp-story-page'            => [
-				'auto-advance-after' => true,
-				'background-audio'   => true,
-				'id'                 => true,
-			],
-			'amp-story-page-attachment' => [
-				'theme' => true,
-			],
-			'amp-story-grid-layer'      => [
-				'position' => true,
-				'template' => true,
-			],
-			'amp-story-cta-layer'       => [],
-			'amp-img'                   => [
-				'alt'                       => true,
-				'attribution'               => true,
-				'data-amp-bind-alt'         => true,
-				'data-amp-bind-attribution' => true,
-				'data-amp-bind-src'         => true,
-				'data-amp-bind-srcset'      => true,
-				'lightbox'                  => true,
-				'lightbox-thumbnail-id'     => true,
-				'media'                     => true,
-				'noloading'                 => true,
-				'object-fit'                => true,
-				'object-position'           => true,
-				'placeholder'               => true,
-				'src'                       => true,
-				'srcset'                    => true,
-			],
-			'amp-video'                 => [
-				'album'                      => true,
-				'alt'                        => true,
-				'artist'                     => true,
-				'artwork'                    => true,
-				'attribution'                => true,
-				'autoplay'                   => true,
-				'controls'                   => true,
-				'controlslist'               => true,
-				'crossorigin'                => true,
-				'data-amp-bind-album'        => true,
-				'data-amp-bind-alt'          => true,
-				'data-amp-bind-artist'       => true,
-				'data-amp-bind-artwork'      => true,
-				'data-amp-bind-attribution'  => true,
-				'data-amp-bind-controls'     => true,
-				'data-amp-bind-controlslist' => true,
-				'data-amp-bind-loop'         => true,
-				'data-amp-bind-poster'       => true,
-				'data-amp-bind-preload'      => true,
-				'data-amp-bind-src'          => true,
-				'data-amp-bind-title'        => true,
-				'disableremoteplayback'      => true,
-				'dock'                       => true,
-				'lightbox'                   => true,
-				'lightbox-thumbnail-id'      => true,
-				'loop'                       => true,
-				'media'                      => true,
-				'muted'                      => true,
-				'noaudio'                    => true,
-				'noloading'                  => true,
-				'object-fit'                 => true,
-				'object-position'            => true,
-				'placeholder'                => true,
-				'poster'                     => true,
-				'preload'                    => true,
-				'rotate-to-fullscreen'       => true,
-				'src'                        => true,
-			],
-			'img'                       => [
-				'alt'           => true,
-				'attribution'   => true,
-				'border'        => true,
-				'decoding'      => true,
-				'height'        => true,
-				'importance'    => true,
-				'intrinsicsize' => true,
-				'ismap'         => true,
-				'loading'       => true,
-				'longdesc'      => true,
-				'sizes'         => true,
-				'src'           => true,
-				'srcset'        => true,
-				'srcwidth'      => true,
-			],
-		];
+		$link_controller = new Link_Controller();
+		$link_controller->register_routes();
 
-		$allowed_tags = array_merge( $allowed_tags, $story_components );
+		$embed_controller = new Embed_Controller();
+		$embed_controller->register_routes();
 
-		foreach ( $allowed_tags as &$allowed_tag ) {
-			$allowed_tag['animate-in']          = true;
-			$allowed_tag['animate-in-duration'] = true;
-			$allowed_tag['animate-in-delay']    = true;
-			$allowed_tag['animate-in-after']    = true;
-			$allowed_tag['layout']              = true;
-		}
+		$templates_autosaves = new Stories_Autosaves_Controller( Template_Post_Type::POST_TYPE_SLUG );
+		$templates_autosaves->register_routes();
 
-		return $allowed_tags;
+		$stories_autosaves = new Stories_Autosaves_Controller( Story_Post_Type::POST_TYPE_SLUG );
+		$stories_autosaves->register_routes();
 	}
 
 	/**

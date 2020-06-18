@@ -78,7 +78,7 @@ describe('TextOutput', () => {
       padding: '0% 0%',
       margin: '0px',
       backgroundColor: 'rgba(255, 0, 0, 0.3)',
-      fontSize: '0.242424em',
+      fontSize: '0.258900em',
       textAlign: 'left',
     });
   });
