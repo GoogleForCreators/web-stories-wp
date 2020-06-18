@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -65,6 +66,7 @@ function StoryAnimTool() {
   const [selectedElementIds, setSelectedElementIds] = useState({});
   const [isElementSelectable, setIsElementSelectable] = useState(false);
   const globalTimeSubscription = useMemo(() => emitter(), []);
+  const flags = useFeatures();
 
   const {
     actions: {
@@ -232,7 +234,6 @@ function StoryAnimTool() {
       },
     };
 
-    const { flags } = window.webStoriesDashboardSettings;
     const storyMarkup = getStoryMarkup(
       story,
       activeStory.pages,
@@ -262,7 +263,7 @@ function StoryAnimTool() {
     iframeDoc.open();
     iframeDoc.write(storyMarkup.toString());
     iframeDoc.close();
-  }, [activeStory]);
+  }, [activeStory, flags]);
 
   useEffect(() => {
     setSelectedElementIds(

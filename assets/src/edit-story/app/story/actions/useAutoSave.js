@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -41,7 +42,7 @@ function useAutoSave({ storyId, pages, story }) {
   } = useAPI();
   const { metadata } = useConfig();
   const [isAutoSaving, setIsAutoSaving] = useState(false);
-  const { flags } = window.webStoriesEditorSettings;
+  const flags = useFeatures();
 
   const autoSave = useCallback(
     (props) => {

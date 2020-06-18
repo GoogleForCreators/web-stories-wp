@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -51,7 +52,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { resetNewChanges },
   } = useHistory();
-  const { flags } = window.webStoriesEditorSettings;
+  const flags = useFeatures();
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
