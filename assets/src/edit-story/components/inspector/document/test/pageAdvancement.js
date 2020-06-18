@@ -38,14 +38,13 @@ function setupPanel(configs = {}) {
     },
     actions: { updateStory },
   };
-  const { getByRole, getByAriaLabel } = renderWithTheme(
+  const { getByRole } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <PageAdvancementPanel />
     </StoryContext.Provider>
   );
   return {
     getByRole,
-    getByAriaLabel,
     updateStory,
   };
 }

@@ -59,7 +59,9 @@ describe('Panels/VideoAccessibility', () => {
       defaultElement,
     ]);
     const input = getByPlaceholderText('Assistive text');
-    const bigText = [...Array(1001)].map(() => '1').join('');
+
+    const bigText = ''.padStart(MIN_MAX.ALT_TEXT.MAX + 10, '1');
+
     fireEvent.change(input, { target: { value: bigText } });
     const submits = submit({
       resource: { posterId: 0, poster: '', alt: bigText },

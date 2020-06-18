@@ -42,14 +42,13 @@ function setupPanel() {
     },
     actions: { updateStory },
   };
-  const { getByRole, getByAriaLabel } = renderWithTheme(
+  const { getByRole } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <SlugPanel />
     </StoryContext.Provider>
   );
   return {
     getByRole,
-    getByAriaLabel,
     updateStory,
   };
 }
@@ -72,7 +71,7 @@ describe('SlugPanel', () => {
     const input = getByRole('textbox', { name: 'Edit: URL slug' });
     expect(input).toBeDefined();
 
-    const bigSlug = [...Array(201)].map(() => '1').join('');
+    const bigSlug = ''.padStart(MIN_MAX.PERMALINK.MAX + 10, '1');
 
     fireEvent.change(input, {
       target: { value: bigSlug },
