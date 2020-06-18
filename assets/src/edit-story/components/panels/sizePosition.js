@@ -301,6 +301,7 @@ function SizePositionPanel({
           value={rotationAngle}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
           aria-label={__('Rotation', 'web-stories')}
+          canBeNegative
           min={MIN_MAX.ROTATION.MIN}
           max={MIN_MAX.ROTATION.MAX}
         />
