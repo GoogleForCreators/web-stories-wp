@@ -24,14 +24,17 @@ import PropTypes from 'prop-types';
  */
 import { useMemo, useState } from 'react';
 import { ApiContext } from '../app/api/apiProvider';
-import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
+import { defaultStoriesState } from '../app/reducer/stories';
+import { defaultTemplatesState } from '../app/reducer/templates';
+// import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../storybookUtils/formattedUsersObject';
-import formattedTemplatesArray from '../storybookUtils/formattedTemplatesArray';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
+// import formattedTemplatesArray from '../storybookUtils/formattedTemplatesArray';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
-  const [stories] = useState(formattedStoriesArray);
-  const [templates] = useState(formattedTemplatesArray);
+  const [stories] = useState(defaultStoriesState);
+  const [templates] = useState(defaultTemplatesState);
   const [users] = useState(formattedUsersObject);
 
   const storyApi = useMemo(
@@ -69,7 +72,15 @@ export default function ApiProviderFixture({ children }) {
 
   const fontApi = useMemo(
     () => ({
-      getAllFonts: jasmine.createSpy('getAllFonts'),
+      getAllFonts: () => {
+        return Promise.resolve(
+          [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
+            name: font.family,
+            value: font.family,
+            ...font,
+          }))
+        );
+      },
     }),
     []
   );
