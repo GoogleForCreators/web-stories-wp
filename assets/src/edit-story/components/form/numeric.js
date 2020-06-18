@@ -107,7 +107,7 @@ function Numeric({
       }
       onChange(parseFloat(newValue.toString()));
     },
-    [onChange, value, isMultiple, float]
+    [isMultiple, float, onChange, max, value, min]
   );
 
   useKeyDownEffect(
