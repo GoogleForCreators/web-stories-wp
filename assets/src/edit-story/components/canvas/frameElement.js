@@ -25,7 +25,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory } from '../../app';
+import { useStory, useTransform } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -66,6 +66,9 @@ function FrameElement({ element }) {
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
+  const {
+    state: { isAnythingTransforming },
+  } = useTransform();
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
@@ -101,12 +104,6 @@ function FrameElement({ element }) {
       target.style.opacity = transform.dropTargets.hover ? 0 : 1;
     }
     setIsTransforming(transform !== null);
-  });
-
-  const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
-
-  useTransformHandler('*', (transform) => {
-    setIsAnythingTransforming(transform !== null);
   });
 
   return (

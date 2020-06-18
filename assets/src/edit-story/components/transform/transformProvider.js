@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +27,8 @@ import Context from './context';
 
 function TransformProvider({ children }) {
   const transformHandlersRef = useRef({});
+  const lastTransformsRef = useRef({});
+  const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
   const registerTransformHandler = useCallback((id, handler) => {
     const handlerListMap = transformHandlersRef.current;
@@ -37,20 +39,39 @@ function TransformProvider({ children }) {
     };
   }, []);
 
-  const pushTransform = useCallback((id, transform) => {
-    const handlerListMap = transformHandlersRef.current;
-    const handlerList = handlerListMap[id];
-    if (handlerList) {
-      handlerList.forEach((handler) => handler(transform));
-    }
-    const globalHandlerList = handlerListMap['*'];
-    if (globalHandlerList) {
-      globalHandlerList.forEach((handler) => handler(transform));
-    }
-  }, []);
+  const pushTransform = useCallback(
+    (id, transform) => {
+      const handlerListMap = transformHandlersRef.current;
+      const lastTransforms = lastTransformsRef.current;
+      const handlerList = handlerListMap[id];
+
+      lastTransforms[id] = transform;
+
+      if (handlerList) {
+        handlerList.forEach((handler) => handler(transform));
+      }
+
+      if (!isAnythingTransforming && transform !== null) {
+        setIsAnythingTransforming(true);
+      }
+
+      if (isAnythingTransforming && transform === null) {
+        const allTransformsDone = Object.values(lastTransforms).every(
+          (v) => v === null
+        );
+        if (allTransformsDone) {
+          lastTransformsRef.current = {};
+          setIsAnythingTransforming(false);
+        }
+      }
+    },
+    [isAnythingTransforming]
+  );
 
   const state = {
-    state: {},
+    state: {
+      isAnythingTransforming,
+    },
     actions: {
       registerTransformHandler,
       pushTransform,
