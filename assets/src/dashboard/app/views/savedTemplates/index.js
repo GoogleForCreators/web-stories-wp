@@ -71,6 +71,7 @@ function Header({ filter, search, sort, stories, view }) {
         typeaheadValue={search.keyword}
       />
       <BodyViewOptions
+        showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
