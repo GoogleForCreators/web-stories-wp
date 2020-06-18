@@ -107,7 +107,6 @@ function StylePresetPanel() {
           ...getPagePreset(currentPage, stylePresets),
         };
       } else {
-        // Currently, shape only supports fillColors.
         addedPresets = {
           ...addedPresets,
           ...getShapePresets(selectedElements, stylePresets),

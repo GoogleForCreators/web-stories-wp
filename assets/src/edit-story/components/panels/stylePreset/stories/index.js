@@ -43,7 +43,7 @@ const Wrapper = styled.div`
 
 export const _default = () => {
   const stylePresets = object('Presets', {
-    textColors: [
+    colors: [
       createSolid(255, 255, 255, 0.5),
       createSolid(255, 0, 0, 0.9),
       createSolid(255, 255, 0, 0.8),
@@ -82,7 +82,6 @@ export const _default = () => {
         font: {},
       },
     ],
-    fillColors: [],
   });
 
   return (

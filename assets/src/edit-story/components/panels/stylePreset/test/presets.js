@@ -34,7 +34,7 @@ function setupPresets(props = {}) {
   } = props;
   const presets = {
     textColors: [],
-    fillColors: [],
+    colors: [],
     textStyles: [],
     ...stylePresets,
   };
@@ -81,13 +81,10 @@ describe('stylePresets/Presets', () => {
   it('should display labels if presets exist', () => {
     const { queryByLabelText } = setupPresets({
       stylePresets: {
-        textStyles: [STYLE_PRESET],
-        textColors: [TEST_COLOR],
-        fillColors: [],
+        colors: [TEST_COLOR],
       },
     });
-    expect(queryByLabelText('Text Colors')).toBeDefined();
-    expect(queryByLabelText('Styles')).toBeDefined();
+    expect(queryByLabelText('Colors')).toBeDefined();
   });
 
   // Disable reason: functionality removed from beta.

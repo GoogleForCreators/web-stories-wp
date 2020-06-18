@@ -71,7 +71,6 @@ export function getTextPresets(elements, stylePresets) {
 }
 
 export function getShapePresets(elements, stylePresets) {
-  // Shapes only support fillColors currently.
   return {
     colors: elements
       .map(({ backgroundColor }) => {
@@ -84,7 +83,6 @@ export function getShapePresets(elements, stylePresets) {
 }
 
 export function getPagePreset(page, stylePresets) {
-  // Page only supports fillColors.
   return {
     colors: [page.backgroundColor].filter(
       (color) => color && !findMatchingColor(color, stylePresets, false)

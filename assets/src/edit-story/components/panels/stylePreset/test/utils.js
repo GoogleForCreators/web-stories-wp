@@ -51,7 +51,7 @@ describe('Panels/StylePreset/utils', () => {
   };
   it('should return matching color object', () => {
     const stylePresets = {
-      textColors: [
+      colors: [
         TEST_COLOR,
         {
           color: {
@@ -74,7 +74,7 @@ describe('Panels/StylePreset/utils', () => {
 
   it('should return undefined when not finding matching color', () => {
     const stylePresets = {
-      textColors: [
+      colors: [
         {
           color: {
             r: 1,
@@ -178,11 +178,10 @@ describe('Panels/StylePreset/utils', () => {
     const stylePresets = {
       textStyles: [],
       textColors: [],
-      fillColors: [],
+      colors: [],
     };
     const expected = {
-      textColors: [TEST_COLOR, TEST_COLOR_2],
-      textStyles: [],
+      colors: [TEST_COLOR, TEST_COLOR_2],
     };
     const presets = getTextPresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
@@ -201,11 +200,10 @@ describe('Panels/StylePreset/utils', () => {
     const stylePresets = {
       textStyles: [],
       textColors: [],
-      fillColors: [],
+      colors: [],
     };
     const expected = {
-      textColors: [],
-      textStyles: [],
+      colors: [],
     };
     const presets = getTextPresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
@@ -276,13 +274,10 @@ describe('Panels/StylePreset/utils', () => {
       },
     ];
     const stylePresets = {
-      textStyles: [],
-      textColors: [TEST_COLOR, TEST_COLOR_2],
-      fillColors: [],
+      colors: [TEST_COLOR, TEST_COLOR_2],
     };
     const expected = {
-      textColors: [],
-      textStyles: [],
+      colors: [],
     };
     const presets = getTextPresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
@@ -302,10 +297,10 @@ describe('Panels/StylePreset/utils', () => {
     const stylePresets = {
       textStyles: [],
       textColors: [],
-      fillColors: [],
+      colors: [],
     };
     const expected = {
-      fillColors: [TEST_COLOR, TEST_COLOR_2],
+      colors: [TEST_COLOR, TEST_COLOR_2],
     };
     const presets = getShapePresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
