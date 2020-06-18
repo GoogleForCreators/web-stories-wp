@@ -2790,10 +2790,10 @@
           }
         },
         {
-          "x": 39,
-          "y": 485,
-          "width": 332,
-          "height": 74,
+          "x": 50,
+          "y": 493,
+          "width": 343,
+          "height": 84,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2913,8 +2913,8 @@
           "type": "text",
           "basedOn": "e23cd5e4-d0c9-436d-a1b1-b91dcf909373",
           "id": "fc016a73-3d6f-43a3-8542-6de6651a2829",
-          "content": "D7 first gained media attention in 2020 when a video of her singing \"Nowhere to Go\" was shared over a million times. Her deput album was well received.",
-          "fontSize": 13,
+          "content": "<span style=\"color: #fff\">D7 first gained media attention in 2020 when a video of her singing \"Nowhere to Go\" was shared over a million times. Her deput album was well received.</span>",
+          "fontSize": 15,
           "padding": {
             "horizontal": 0,
             "vertical": 0
@@ -3050,112 +3050,6 @@
             "horizontal": 0,
             "vertical": 0
           }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Roboto",
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                900
-              ]
-            ],
-            "fallbacks": [
-              "Helvetica Neue",
-              "Helvetica",
-              "sans-serif"
-            ],
-            "service": "fonts.google.com"
-          },
-          "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "type": "text",
-          "id": "24187a34-f4e7-4ace-b4f9-8729d94a26b5",
-          "content": "<span style=\"color: #fff\">D7 first gained media attention in 2020 when a video of her singing \"Nowhere to Go\" was shared over a million times. Her deput album was well received.</span>",
-          "x": 49,
-          "y": 494,
-          "width": 312,
-          "height": 76,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50
         }
       ],
       "backgroundOverlay": "none",
