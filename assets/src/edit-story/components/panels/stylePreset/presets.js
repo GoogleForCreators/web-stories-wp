@@ -86,17 +86,10 @@ const Color = styled.button.attrs({ type: 'button' })`
   ${({ color }) => generatePatternStyles(color)}
 `;
 
-function Presets({
-  stylePresets,
-  handleOnClick,
-  isEditMode,
-  isText,
-  isBackground,
-}) {
-  const { fillColors, textColors } = stylePresets;
+function Presets({ stylePresets, handleOnClick, isEditMode, isBackground }) {
+  const { colors } = stylePresets;
 
-  const colorPresets = isText ? textColors : fillColors;
-  const hasPresets = colorPresets.length > 0;
+  const hasPresets = colors.length > 0;
 
   const colorPresetRenderer = (color, i, activeIndex) => {
     if (!color) {
@@ -130,16 +123,14 @@ function Presets({
     );
   };
 
-  const colorLabel = isText
-    ? __('Text colors', 'web-stories')
-    : __('Colors', 'web-stories');
+  const colorLabel = __('Colors', 'web-stories');
   return (
     <PanelContent isPrimary padding={hasPresets ? null : '0'}>
       {hasPresets && (
         <PresetGroup
           label={colorLabel}
           itemRenderer={colorPresetRenderer}
-          presets={colorPresets}
+          presets={colors}
           type={'color'}
         />
       )}
@@ -151,7 +142,6 @@ Presets.propTypes = {
   stylePresets: StylePresetPropType.isRequired,
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  isText: PropTypes.bool.isRequired,
   isBackground: PropTypes.bool.isRequired,
 };
 

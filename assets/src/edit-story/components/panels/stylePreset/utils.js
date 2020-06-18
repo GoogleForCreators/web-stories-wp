@@ -63,20 +63,19 @@ export function generatePresetStyle(preset, prepareForCSS) {
 export function getTextPresets(elements, stylePresets) {
   // @todo Fix: Currently when two selected elements have the same attributes, two presets are added.
   return {
-    textColors: elements
+    colors: elements
       .map(({ content }) => getHTMLInfo(content).color)
       .filter((color) => color !== MULTIPLE_VALUE)
       .filter(
         (color) => color && !findMatchingColor(color, stylePresets, true)
       ),
-    textStyles: [],
   };
 }
 
 export function getShapePresets(elements, stylePresets) {
   // Shapes only support fillColors currently.
   return {
-    fillColors: elements
+    colors: elements
       .map(({ backgroundColor }) => {
         return backgroundColor ? backgroundColor : null;
       })
@@ -89,7 +88,7 @@ export function getShapePresets(elements, stylePresets) {
 export function getPagePreset(page, stylePresets) {
   // Page only supports fillColors.
   return {
-    fillColors: [page.backgroundColor].filter(
+    colors: [page.backgroundColor].filter(
       (color) => color && !findMatchingColor(color, stylePresets, false)
     ),
   };
