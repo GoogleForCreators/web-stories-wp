@@ -460,6 +460,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-17
 				 */
 				'media3pTab'                   => false,
+				/**
+				 * Description: Flag for displaying the elements tab/panel.
+				 * Author: @swissspidy
+				 * Issue: #2616
+				 * Creation date: 2020-06-19
+				 */
+				'showElementsTab'              => false,
 			],
 
 		];

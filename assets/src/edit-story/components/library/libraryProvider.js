@@ -40,7 +40,7 @@ function LibraryProvider({ children }) {
   const [tab, setTab] = useState(TAB_IDS.MEDIA);
   const insertElement = useInsertElement();
 
-  const { showAnimationTab, media3pTab } = useFeatures();
+  const { showAnimationTab, showElementsTab, media3pTab } = useFeatures();
 
   // Order here is important, as it denotes the actual visual order of elements.
   const tabs = useMemo(
@@ -50,10 +50,10 @@ function LibraryProvider({ children }) {
         media3pTab ? TAB_IDS.MEDIA3P : null,
         TAB_IDS.TEXT,
         TAB_IDS.SHAPES,
-        TAB_IDS.ELEMENTS,
+        showElementsTab ? TAB_IDS.ELEMENTS : null,
         showAnimationTab ? TAB_IDS.ANIMATION : null,
       ].filter(Boolean),
-    [media3pTab, showAnimationTab]
+    [media3pTab, showAnimationTab, showElementsTab]
   );
 
   const state = useMemo(
