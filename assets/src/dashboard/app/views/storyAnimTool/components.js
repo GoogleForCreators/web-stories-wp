@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../../../constants/pageStructure';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 
 export const STORY_WIDTH = 275;
 
@@ -63,7 +63,7 @@ export const Container = styled.div`
 
 export const ElementsContainer = styled.div`
   min-width: 300px;
-  height: ${STORY_WIDTH / PAGE_RATIO}px;
+  height: ${STORY_WIDTH / FULLBLEED_RATIO}px;
   overflow: scroll;
 `;
 
