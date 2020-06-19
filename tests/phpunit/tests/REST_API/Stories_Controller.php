@@ -25,13 +25,30 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	protected $server;
 
 	protected static $user_id;
+	protected static $user2_id;
+	protected static $user3_id;
 
 	protected static $author_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
 			[
-				'role' => 'administrator',
+				'role'         => 'administrator',
+				'display_name' => 'Andrea Adams',
+			]
+		);
+
+		self::$user2_id = $factory->user->create(
+			[
+				'role'         => 'administrator',
+				'display_name' => 'Jane Doe',
+			]
+		);
+
+		self::$user3_id = $factory->user->create(
+			[
+				'role'         => 'administrator',
+				'display_name' => 'Zane Doe',
 			]
 		);
 
@@ -44,10 +61,28 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
 
 		$factory->post->create_many(
-			7,
+			3,
 			[
 				'post_status' => 'publish',
 				'post_author' => self::$user_id,
+				'post_type'   => $post_type,
+			]
+		);
+
+		$factory->post->create_many(
+			2,
+			[
+				'post_status' => 'publish',
+				'post_author' => self::$user2_id,
+				'post_type'   => $post_type,
+			]
+		);
+
+		$factory->post->create_many(
+			2,
+			[
+				'post_status' => 'publish',
+				'post_author' => self::$user3_id,
 				'post_type'   => $post_type,
 			]
 		);
@@ -64,6 +99,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$user_id );
+		self::delete_user( self::$user2_id );
+		self::delete_user( self::$user3_id );
 		self::delete_user( self::$author_id );
 	}
 
@@ -94,7 +131,6 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	public function test_get_items() {
 		wp_set_current_user( self::$user_id );
 		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
-		$request->set_param( 'author', self::$user_id );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
 		$response       = rest_get_server()->dispatch( $request );
@@ -125,52 +161,71 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'featured_media_url', $properties );
 	}
 
-	public function test_filter_posts_orderby() {
-		wp_set_current_user( self::$user_id );
-		do_action( 'init' );
-		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+	public function test_filter_posts_by_author_display_names() {
+		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request->set_param( 'order', 'asc' );
+		$request->set_param( 'orderby', 'story_author' );
 
-		$initial_orderby = 'foo bar';
+		$response = rest_get_server()->dispatch( $request );
+		$results  = wp_list_pluck( $response->get_data(), 'author' );
 
-		$query = new \WP_Query();
-		$query->set( 'post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-		$query->set( 'orderby', 'story_author' );
+		$this->assertSame(
+			[
+				self::$user_id,
+				self::$user_id,
+				self::$user_id,
+				self::$user2_id,
+				self::$user2_id,
+				self::$user3_id,
+				self::$user3_id,
+			],
+			$results,
+			'Expected posts ordered by author display names'
+		);
 
-		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
+		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request->set_param( 'order', 'desc' );
+		$request->set_param( 'orderby', 'story_author' );
 
-		$this->assertEquals( $orderby, "wp_posts.post_author = '" . self::$user_id . "' DESC, wp_posts.post_author DESC, wp_posts.post_modified DESC" );
+		$response = rest_get_server()->dispatch( $request );
+		$results  = wp_list_pluck( $response->get_data(), 'author' );
 
-		// Registered during init.
-		unregister_block_type( 'web-stories/embed' );
+		$this->assertSame(
+			[
+				self::$user3_id,
+				self::$user3_id,
+				self::$user2_id,
+				self::$user2_id,
+				self::$user_id,
+				self::$user_id,
+				self::$user_id,
+			],
+			$results,
+			'Expected posts ordered by author display names'
+		);
 	}
 
-	public function test_filter_posts_orderby_irrelevant_query() {
-		do_action( 'init' );
+	public function test_filter_posts_clauses_irrelevant_query() {
 		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
-		$initial_orderby = 'foo bar';
+		$initial_clauses = [
+			'join'    => '',
+			'orderby' => '',
+		];
 
 		$query = new \WP_Query();
-		$query->set( 'post_type', 'foo' );
+		$query->set( 'post_type', 'post' );
 		$query->set( 'orderby', 'story_author' );
 
-		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
-		$this->assertEquals( $orderby, $initial_orderby );
+		$orderby = $controller->filter_posts_clauses( $initial_clauses, $query );
+		$this->assertEquals( $orderby, $initial_clauses );
 
+		$query = new \WP_Query();
 		$query->set( 'post_type', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$query->set( 'orderby', 'author' );
 
-		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
-		$this->assertEquals( $orderby, $initial_orderby );
-
-		$query->set( 'orderby', 'story_author' );
-		wp_set_current_user( 0 );
-
-		$orderby = $controller->filter_posts_orderby( $initial_orderby, $query );
-		$this->assertEquals( $orderby, $initial_orderby );
-
-		// Registered during init.
-		unregister_block_type( 'web-stories/embed' );
+		$orderby = $controller->filter_posts_clauses( $initial_clauses, $query );
+		$this->assertEquals( $orderby, $initial_clauses );
 	}
 
 	public function test_create_item_as_author_should_not_strip_markup() {

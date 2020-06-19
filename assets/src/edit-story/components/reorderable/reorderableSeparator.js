@@ -58,9 +58,6 @@ function ReorderableSeparator({ position, children = <Line />, ...props }) {
   }, [setCurrentSeparator, isReordering, position]);
 
   return (
-    // Disable reason: This one does not need keyboard interactivity
-    //  - there are better ways to reorder using keyboard.
-    // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
     <Wrapper
       onMouseOver={handlePointerEnter}
       ref={separatorRef}
