@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import Container from './container';
-import { Wrapper } from './components';
-
-export default { Container, Wrapper };
+export { default as useToastContext } from './useToastContext';
+export { default as ToastProvider } from './provider';
+export { default as Toaster } from './toaster';

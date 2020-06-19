@@ -15,9 +15,23 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useContext } from 'react';
+
+/**
  * Internal dependencies
  */
-import Container from './container';
-import { Wrapper } from './components';
+import { ToasterContext } from './provider';
 
-export default { Container, Wrapper };
+const useToasterContext = () => {
+  const context = useContext(ToasterContext);
+  if (!context) {
+    throw new Error(
+      'useToasterContext() must be used within a <Toast.Provider />'
+    );
+  }
+  return context;
+};
+
+export default useToasterContext;

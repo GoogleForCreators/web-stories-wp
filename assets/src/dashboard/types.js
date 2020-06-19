@@ -117,3 +117,11 @@ export const RenameStoryPropType = PropTypes.shape({
 export const AlertSeveritiesPropType = PropTypes.oneOf(
   Object.values(ALERT_SEVERITY)
 );
+
+export const ToastMessagePropType = PropTypes.shape({
+  message: PropTypes.string.isRequired,
+  severity: AlertSeveritiesPropType,
+  errorId: PropTypes.number.isRequired,
+});
+
+export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);
