@@ -190,6 +190,8 @@ class Database_Upgrader {
 	/**
 	 * Migration for version 2.0.3.
 	 * Color presets: Removes fillColor and textColor and unifies to one color.
+	 *
+	 * @return void
 	 */
 	protected function unify_color_presets() {
 		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
