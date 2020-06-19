@@ -20,20 +20,16 @@
 import { getPagePreviewHeights } from '../usePagePreviewSize';
 
 describe('getPagePreviewHeights', () => {
-  it('should return { fullBleedHeight: 359.1111111111111, storyHeight: 303 } when width is 202', () => {
+  it('should return { fullBleedHeight: 359.11, storyHeight: 303 } when width is 202', () => {
     const previewHeights = getPagePreviewHeights(202);
 
-    expect(previewHeights).toStrictEqual({
-      fullBleedHeight: 359.1111111111111,
-      storyHeight: 303,
-    });
+    expect(previewHeights.fullBleedHeight).toBeCloseTo(359.11);
+    expect(previewHeights.storyHeight).toBeCloseTo(303);
   });
-  it('should return { fullBleedHeight: 451.55555555555554, storyHeight: 381 } when width is 202', () => {
+  it('should return { fullBleedHeight: 451.55, storyHeight: 381 } when width is 202', () => {
     const previewHeights = getPagePreviewHeights(254);
 
-    expect(previewHeights).toStrictEqual({
-      fullBleedHeight: 451.55555555555554,
-      storyHeight: 381,
-    });
+    expect(previewHeights.fullBleedHeight).toBeCloseTo(451.56);
+    expect(previewHeights.storyHeight).toBeCloseTo(381);
   });
 });

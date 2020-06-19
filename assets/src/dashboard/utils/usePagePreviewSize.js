@@ -46,8 +46,8 @@ import { useResizeEffect } from './';
  * @return {Object}       heights to use in pagePreviews { fullBleedHeight: Number, storyHeight: Number}
  */
 export const getPagePreviewHeights = (width) => {
-  const fullBleedHeight = width / FULLBLEED_RATIO;
-  const storyHeight = width / PAGE_RATIO;
+  const fullBleedHeight = Math.round((width / FULLBLEED_RATIO) * 100) / 100;
+  const storyHeight = Math.round((width / PAGE_RATIO) * 100) / 100;
 
   return { fullBleedHeight, storyHeight };
 };

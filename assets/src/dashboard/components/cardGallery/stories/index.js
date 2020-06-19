@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import CardGallery from '../index';
@@ -27,13 +32,16 @@ export default {
   component: CardGallery,
 };
 
+const CardGalleryContainer = styled.div`
+  padding: 20px;
+`;
 export const _default = () => {
   return (
     <FontProvider>
       <TransformProvider>
-        <div style={{ padding: '20px' }}>
+        <CardGalleryContainer>
           <CardGallery story={formattedTemplatesArray[0]} />
-        </div>
+        </CardGalleryContainer>
       </TransformProvider>
     </FontProvider>
   );
