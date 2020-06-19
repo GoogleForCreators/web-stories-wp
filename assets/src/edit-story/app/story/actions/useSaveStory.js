@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -51,18 +52,25 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { resetNewChanges },
   } = useHistory();
+  const flags = useFeatures();
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
+  const [isFreshlyPublished, setIsFreshlyPublished] = useState(false);
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
 
   const saveStory = useCallback(
     (props) => {
       setIsSaving(true);
+
+      const isStoryAlreadyPublished = ['publish', 'future'].includes(
+        story.status
+      );
+
       return saveStoryById({
         storyId,
-        ...getStoryPropsToSave({ story, pages, metadata }),
+        ...getStoryPropsToSave({ story, pages, metadata, flags }),
         ...props,
       })
         .then((post) => {
@@ -73,6 +81,9 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           updateStory({ properties });
 
           refreshPostEditURL();
+
+          const isStoryPublished = ['publish', 'future'].includes(post.status);
+          setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
         .catch(() => {
           showSnackbar({
@@ -87,6 +98,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     [
       story,
       pages,
+      flags,
       metadata,
       saveStoryById,
       storyId,
@@ -97,7 +109,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     ]
   );
 
-  return { saveStory, isSaving };
+  return { saveStory, isSaving, isFreshlyPublished };
 }
 
 export default useSaveStory;

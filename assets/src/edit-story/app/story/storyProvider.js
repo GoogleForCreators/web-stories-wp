@@ -95,7 +95,7 @@ function StoryProvider({ storyId, children }) {
   // (and it will have side-effects because saving can update url and status,
   //  thus the need for `updateStory`)
   const { updateStory } = api;
-  const { saveStory, isSaving } = useSaveStory({
+  const { saveStory, isSaving, isFreshlyPublished } = useSaveStory({
     storyId,
     pages,
     story,
@@ -122,6 +122,7 @@ function StoryProvider({ storyId, children }) {
       capabilities,
       meta: {
         isSaving: isSaving || isAutoSaving,
+        isFreshlyPublished,
       },
     },
     actions: {

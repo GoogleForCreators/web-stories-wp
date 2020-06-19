@@ -107,6 +107,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}.wiki
+          ref: master
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download combined ZIP file
@@ -145,6 +146,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}.wiki
+          ref: master
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download full bundle
