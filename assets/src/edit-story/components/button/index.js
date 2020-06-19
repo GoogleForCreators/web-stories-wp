@@ -35,6 +35,7 @@ import {
   Close as CloseIcon,
   Eyedropper as EyedropperIcon,
   More as MoreIcon,
+  SafeZone as SafeZoneIcon,
 } from '../../icons';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
@@ -183,6 +184,12 @@ export const More = forwardRef((props, ref) => (
     <MoreIcon />
   </StyledButton>
 ));
+
+export const SafeZone = (props) => (
+  <StyledButton {...props}>
+    <SafeZoneIcon />
+  </StyledButton>
+);
 
 export const BUTTON_TYPES = {
   PRIMARY: 'primary',

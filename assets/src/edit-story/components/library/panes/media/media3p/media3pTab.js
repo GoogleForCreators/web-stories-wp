@@ -15,33 +15,23 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { __ } from '@wordpress/i18n';
 
-const useFontApi = (dataAdapter, { fontApi }) => {
-  const getAllFonts = useCallback(() => {
-    if (!fontApi) {
-      return Promise.resolve([]);
-    }
+/**
+ * Internal dependencies
+ */
+import { Tab } from '../../shared';
+import { Media } from '../../../../../icons';
+import paneId from './paneId';
 
-    return dataAdapter.get(fontApi).then((data) =>
-      data.map((font) => ({
-        value: font.family,
-        name: font.family,
-        ...font,
-      }))
-    );
-  }, [dataAdapter, fontApi]);
-
-  const api = useMemo(
-    () => ({
-      getAllFonts,
-    }),
-    [getAllFonts]
+function Media3pTab(props) {
+  return (
+    <Tab aria-controls={paneId} {...props}>
+      <Media aria-label={__('Third Party Media library', 'web-stories')} />
+    </Tab>
   );
+}
 
-  return { api };
-};
-
-export default useFontApi;
+export default Media3pTab;
