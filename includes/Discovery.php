@@ -306,6 +306,18 @@ class Discovery {
 		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
 	}
 
+
+	/**
+	 * Publisher logo placeholder for static content output which will be replaced server-side.
+	 *
+	 * Uses a fallback logo to always create valid AMP in FE.
+	 *
+	 * @return string
+	 */
+	public function get_publisher_logo_placeholder() {
+		return WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
+	}
+
 	/**
 	 * Returns the publisher data.
 	 *

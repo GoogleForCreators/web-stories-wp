@@ -121,9 +121,8 @@ class Story_Renderer {
 	 */
 	protected function add_publisher_logo( $content ) {
 		$discovery      = new Discovery();
-		$publisher_logo = $discovery->get_publisher_logo();
 
-		return str_replace( Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER, $publisher_logo, $content );
+		return str_replace( $discovery->get_publisher_logo_placeholder(), $discovery->get_publisher_logo(), $content );
 	}
 
 	/**

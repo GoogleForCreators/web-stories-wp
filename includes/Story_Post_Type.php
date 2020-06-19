@@ -62,14 +62,6 @@ class Story_Post_Type {
 	 */
 	const REWRITE_SLUG = 'stories';
 
-	/**
-	 * Publisher logo placeholder for static content output which will be replaced server-side.
-	 *
-	 * Uses a fallback logo to always create valid AMP in FE.
-	 *
-	 * @var string
-	 */
-	const PUBLISHER_LOGO_PLACEHOLDER = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
 
 	/**
 	 * Registers the post type for stories.
@@ -389,7 +381,7 @@ class Story_Post_Type {
 				],
 				'metadata'         => [
 					'publisher'       => $discovery->get_publisher_data(),
-					'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
+					'logoPlaceholder' => $discovery->get_publisher_logo_placeholder(),
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
