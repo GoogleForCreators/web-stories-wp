@@ -29,18 +29,21 @@ const TOAST_1 = {
   message: 'one',
   severity: ALERT_SEVERITY.ERROR,
   id: 1,
+  isActive: true,
 };
 
 const TOAST_2 = {
   message: 'two',
   id: 2,
   severity: ALERT_SEVERITY.ERROR,
+  isActive: true,
 };
 
 const TOAST_3 = {
   message: 'three',
   id: 3,
   severity: ALERT_SEVERITY.WARNING,
+  isActive: true,
 };
 
 describe('useToastContext', () => {
@@ -106,26 +109,22 @@ describe('useToastContext', () => {
       result.current.actions.addToast(TOAST_1);
     });
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
-    expect(result.current.state.allToasts).toStrictEqual([TOAST_1]);
 
     act(() => {
       result.current.actions.addToast(TOAST_2);
     });
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1, TOAST_2]);
-    expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_2]);
 
     act(() => {
-      result.current.actions.removeToast(1);
+      result.current.actions.removeToast(TOAST_2.id);
     });
 
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
-    expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_2]);
 
     act(() => {
-      result.current.actions.removeToast(0);
+      result.current.actions.removeToast(TOAST_1.id);
     });
     expect(result.current.state.activeToasts).toStrictEqual([]);
-    expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_2]);
   });
 
   it('should reset allToasts when resetToasts is called', () => {
@@ -135,75 +134,22 @@ describe('useToastContext', () => {
     act(() => {
       result.current.actions.addToast(TOAST_1);
     });
-    expect(result.current.state.allToasts).toStrictEqual([TOAST_1]);
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
 
     act(() => {
       result.current.actions.addToast(TOAST_3);
     });
-    expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_3]);
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1, TOAST_3]);
 
     act(() => {
-      result.current.actions.removeToast(1);
+      result.current.actions.removeToast(TOAST_3.id);
     });
-    expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_3]);
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
 
     act(() => {
       result.current.actions.resetToasts();
     });
 
-    expect(result.current.state.allToasts).toStrictEqual([]);
     expect(result.current.state.activeToasts).toStrictEqual([]);
   });
-
-  // eslint-disable-next-line jest/no-commented-out-tests
-  //   it(
-  //     'should automatically remove activeToasts at an increment of 10000ms',
-  //     async () => {
-  //       const { result, waitForNextUpdate } = renderHook(
-  //         () => useToastContext(),
-  //         {
-  //           wrapper: ToastProvider,
-  //         }
-  //       );
-
-  //       act(() => {
-  //         result.current.actions.addToast(TOAST_1);
-  //       });
-  //       act(() => {
-  //         result.current.actions.addToast(TOAST_2);
-  //       });
-  //       act(() => {
-  //         result.current.actions.addToast(TOAST_3);
-  //       });
-
-  //       expect(result.current.state.activeToasts).toStrictEqual([
-  //         TOAST_1,
-  //         TOAST_2,
-  //         TOAST_3,
-  //       ]);
-
-  //       await waitForNextUpdate(AUTO_REMOVE_TOAST_TIME_INTERVAL + 1, true);
-
-  //       expect(result.current.state.activeToasts).toStrictEqual([
-  //         TOAST_2,
-  //         TOAST_3,
-  //       ]);
-
-  //       await waitForNextUpdate(AUTO_REMOVE_TOAST_TIME_INTERVAL + 1, true);
-
-  //       expect(result.current.state.activeToasts).toStrictEqual([TOAST_3]);
-
-  //       await waitForNextUpdate(AUTO_REMOVE_TOAST_TIME_INTERVAL + 1, true);
-
-  //       expect(result.current.state.activeToasts).toStrictEqual([]);
-  //       expect(result.current.state.allToasts).toStrictEqual([
-  //         TOAST_1,
-  //         TOAST_2,
-  //         TOAST_3,
-  //       ]);
-  //     }
-  //   );
 });

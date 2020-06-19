@@ -25,76 +25,53 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * ToastProvider tracks messages to display based on id so that if the same message occurs in a different instance it will still display
- * When a toast is dismissed early or at interval it is removed from the activeToasts but stays part of allToasts
- * When useEffect clean up is called (view change) allToasts and activeToasts will reset
- */
-export const AUTO_REMOVE_TOAST_TIME_INTERVAL = 10000;
-
 export const ToasterContext = createContext(null);
 
 const ToastProvider = ({ children }) => {
-  const [activeToasts, setActiveToasts] = useState([]);
-  const [allToasts, setAllToasts] = useState([]);
+  const [toasts, setToasts] = useState({});
+
+  const activeToasts = useMemo(
+    () => Object.values(toasts).filter((toast) => toast.isActive),
+    [toasts]
+  );
 
   const resetToasts = useCallback(() => {
-    setAllToasts([]);
-    setActiveToasts([]);
-  }, [setAllToasts, setActiveToasts]);
+    setToasts({});
+  }, [setToasts]);
 
   const removeToast = useCallback(
-    (index = 0) => {
-      const activeToastsCopy = JSON.parse(JSON.stringify(activeToasts));
-      activeToastsCopy.splice(index, 1);
-      setActiveToasts(activeToastsCopy);
+    (id) => {
+      const toastIdToUpdate = id || activeToasts[0].id;
+      toastIdToUpdate &&
+        setToasts({
+          ...toasts,
+          [toastIdToUpdate]: { ...toasts[toastIdToUpdate], isActive: false },
+        });
     },
-    [activeToasts]
+    [activeToasts, toasts]
   );
 
   const addToast = useCallback(
     ({ message, severity, id }) => {
-      const newToast =
-        allToasts.length === 0
-          ? true
-          : allToasts.reduce((_, toast) => {
-              return toast?.id !== id;
-            }, []);
-
-      if (newToast) {
-        setActiveToasts([
-          ...new Set([...activeToasts, { message, severity, id }]),
-        ]);
-        setAllToasts([...new Set([...allToasts, { message, severity, id }])]);
+      const isNewToast = !toasts[id];
+      if (isNewToast) {
+        setToasts({
+          ...toasts,
+          [id]: { message, severity, id, isActive: true },
+        });
       }
     },
-    [allToasts, activeToasts]
+    [toasts]
   );
 
-  useEffect(() => {
-    let deleteToastInterval;
-    if (activeToasts.length > 0) {
-      deleteToastInterval = setInterval(
-        removeToast,
-        AUTO_REMOVE_TOAST_TIME_INTERVAL
-      );
-    }
-
-    return () => deleteToastInterval && clearInterval(deleteToastInterval);
-  }, [activeToasts.length, removeToast]);
-
-  useEffect(() => {
-    return () => {
-      resetToasts();
-    };
-  }, [resetToasts]);
+  useEffect(() => resetToasts, [resetToasts]);
 
   const value = useMemo(
     () => ({
-      state: { activeToasts, allToasts },
+      state: { activeToasts },
       actions: { addToast, removeToast, resetToasts },
     }),
-    [addToast, activeToasts, allToasts, removeToast, resetToasts]
+    [addToast, activeToasts, removeToast, resetToasts]
   );
 
   return (

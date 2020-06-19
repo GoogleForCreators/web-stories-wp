@@ -34,49 +34,59 @@ export default {
 
 export const _default = () => {
   const [toastIndexToAdd, setToastIndexToAdd] = useState(0);
-  const errors = [
-    { message: 'i am an error', severity: ALERT_SEVERITY.ERROR },
-    { message: 'i am a second error', severity: ALERT_SEVERITY.ERROR },
-    { message: 'i am just here for fun', severity: ALERT_SEVERITY.INFO },
+  const alerts = [
+    {
+      message: 'i am an error',
+      severity: ALERT_SEVERITY.ERROR,
+      id: Date.now(),
+    },
+    {
+      message: 'i am a second error',
+      severity: ALERT_SEVERITY.ERROR,
+      id: Date.now(),
+    },
+    {
+      message: 'i am just here for fun',
+      severity: ALERT_SEVERITY.INFO,
+      id: Date.now(),
+    },
     {
       message: 'seems like things are not bueno',
       severity: ALERT_SEVERITY.WARNING,
+      id: Date.now(),
     },
     {
       message: 'Everything is successful and peachy!',
       severity: ALERT_SEVERITY.SUCCESS,
+      id: Date.now(),
     },
   ];
-  const totalErrors = errors.length - 1;
-
+  const totalAlerts = alerts.length - 1;
   return (
     <ToastProvider>
       <ToasterContext.Consumer>
-        {({ state, actions }) => {
-          return (
-            <>
-              <Button
-                onClick={() => {
-                  setToastIndexToAdd(toastIndexToAdd + 1);
-                  actions.addToast({
-                    ...errors[toastIndexToAdd],
-                    id: toastIndexToAdd,
-                  });
-                }}
-                isDisabled={toastIndexToAdd > totalErrors}
-              >
-                {toastIndexToAdd > totalErrors
-                  ? 'No more practice alerts'
-                  : 'Add practice alert'}
-              </Button>
-              <Toaster
-                isAllowEarlyDismiss={boolean('isAllowEarlyDismiss')}
-                activeToasts={state.activeToasts}
-                onRemoveToastClick={actions.removeToast}
-              />
-            </>
-          );
-        }}
+        {({ state, actions }) => (
+          <>
+            <Button
+              onClick={() => {
+                actions.addToast({
+                  ...alerts[toastIndexToAdd],
+                });
+                setToastIndexToAdd(toastIndexToAdd + 1);
+              }}
+              isDisabled={toastIndexToAdd > totalAlerts}
+            >
+              {toastIndexToAdd > totalAlerts
+                ? 'No more practice alerts'
+                : 'Add practice alert'}
+            </Button>
+            <Toaster
+              isAllowEarlyDismiss={boolean('isAllowEarlyDismiss')}
+              activeToasts={state.activeToasts}
+              onRemoveToastClick={actions.removeToast}
+            />
+          </>
+        )}
       </ToasterContext.Consumer>
     </ToastProvider>
   );

@@ -39,13 +39,13 @@ const Wrapper = styled.div`
 function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
   return (
     <Wrapper>
-      {activeToasts.map((activeToast, index) => (
+      {activeToasts.map((toast) => (
         <Alert
           isAllowDismiss={isAllowEarlyDismiss}
-          key={`alert_${activeToast.id}`}
-          message={activeToast.message}
-          severity={activeToast.severity}
-          handleDismissClick={() => onRemoveToastClick(index)}
+          key={`alert_${toast.id}`}
+          message={toast.message}
+          severity={toast.severity}
+          handleDismissClick={() => onRemoveToastClick(toast.id)}
         />
       ))}
     </Wrapper>

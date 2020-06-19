@@ -23,15 +23,38 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { Close } from '../../icons';
 import { AlertSeveritiesPropType } from '../../types';
+import { AUTO_REMOVE_ALERT_TIME_INTERVAL } from '../../constants';
 import { AlertContainer, AlertText, DismissButton } from './components';
 
-const Alert = ({ isAllowDismiss, message, severity, handleDismissClick }) => {
+const Alert = ({
+  isPreventAutoDismiss,
+  isAllowDismiss,
+  message,
+  severity,
+  handleDismissClick,
+}) => {
+  const autoDismissRef = useRef();
+  autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismissClick;
+
+  useEffect(() => {
+    if (!autoDismissRef.current) {
+      return () => {};
+    }
+    const dismissTimeout = setTimeout(
+      () => autoDismissRef.current(),
+      AUTO_REMOVE_ALERT_TIME_INTERVAL
+    );
+
+    return () => clearTimeout(dismissTimeout);
+  }, []);
+
   return (
     <AlertContainer
       severity={severity}
@@ -55,6 +78,7 @@ Alert.propTypes = {
   isAllowDismiss: PropTypes.bool,
   message: PropTypes.string.isRequired,
   handleDismissClick: PropTypes.func,
+  isPreventAutoDismiss: PropTypes.bool,
   severity: AlertSeveritiesPropType,
 };
 

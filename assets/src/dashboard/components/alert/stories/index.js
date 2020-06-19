@@ -41,34 +41,43 @@ export const _default = () => {
     <Wrapper>
       <Alert
         isAllowDismiss={boolean('isAllowDismiss1')}
-        handleDismissClick={action('dismiss clicked')}
+        handleDismissClick={action('error message dismiss')}
         message={text('errorMessage', 'this is an error')}
         severity={ALERT_SEVERITY.ERROR}
       />
       <Alert
         isAllowDismiss={boolean('isAllowDismiss2')}
-        handleDismissClick={action('dismiss clicked')}
+        handleDismissClick={action('warning message dismiss')}
         message={text('warningMessage', 'this is a warning')}
         severity={ALERT_SEVERITY.WARNING}
       />
       <Alert
         isAllowDismiss={boolean('isAllowDismiss3')}
-        handleDismissClick={action('dismiss clicked')}
+        handleDismissClick={action('info message dismiss')}
         message={text('infoMessage', 'this is informational')}
         severity={ALERT_SEVERITY.INFO}
       />
       <Alert
         isAllowDismiss={boolean('isAllowDismiss4')}
-        handleDismissClick={action('dismiss clicked')}
+        handleDismissClick={action('success message dismiss')}
         message={text('successMessage', 'this is successful')}
         severity={ALERT_SEVERITY.SUCCESS}
       />
       <Alert
         isAllowDismiss={boolean('isAllowDismiss5')}
-        handleDismissClick={action('dismiss clicked')}
+        handleDismissClick={action('default message dismiss')}
         message={text(
           'defaultMessage',
           'this is an alert without a severity passed in'
+        )}
+      />
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss6')}
+        handleDismissClick={action('no auto dismiss dismiss clicked')}
+        isPreventAutoDismiss
+        message={text(
+          'preventAutoDismiss',
+          'this is an alert that will not dismiss automatically after 10 seconds'
         )}
       />
     </Wrapper>
