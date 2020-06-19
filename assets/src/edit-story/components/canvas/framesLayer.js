@@ -34,8 +34,8 @@ import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
-import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
+import Selection from './selection';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
@@ -99,7 +99,6 @@ function FramesLayer() {
             </FrameSidebar>
           )
         }
-        fullbleed={<Selection />}
       >
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
@@ -115,6 +114,7 @@ function FramesLayer() {
       >
         <PageMenu />
       </MenuArea>
+      <Selection />
     </Layer>
   );
 }

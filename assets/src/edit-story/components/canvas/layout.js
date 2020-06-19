@@ -42,8 +42,8 @@ import useCanvas from './useCanvas';
  */
 
 export const Z_INDEX = {
-  NAV: 1,
-  EDIT: 2,
+  NAV: 2,
+  EDIT: 3,
 };
 
 const MENU_HEIGHT = 48;
@@ -219,7 +219,6 @@ const PageArea = forwardRef(
       showOverflow = false,
       fullbleedRef = createRef(),
       overlay = [],
-      fullbleed = [],
       background,
     },
     ref
@@ -239,7 +238,6 @@ const PageArea = forwardRef(
               <PageAreaDangerZoneBottom />
             </>
           )}
-          {fullbleed}
         </PageAreaWithOverflow>
         {overlay}
       </PageAreaFullbleedContainer>
@@ -250,7 +248,6 @@ const PageArea = forwardRef(
 PageArea.propTypes = {
   children: PropTypes.node,
   overlay: PropTypes.node,
-  fullbleed: PropTypes.node,
   showDangerZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
 };
