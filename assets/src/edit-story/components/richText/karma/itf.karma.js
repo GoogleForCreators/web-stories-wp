@@ -46,9 +46,7 @@ describe('Background Overlay Panel', () => {
   });
 
   it('should have the correct initial text', async () => {
-    expect(await getTextContent()).toBe(
-      '<span style="font-weight: 400">Fill in some text</span>'
-    );
+    expect(await getTextContent()).toBe('Fill in some text');
   });
 
   it('should have new text when replacing it', async () => {
