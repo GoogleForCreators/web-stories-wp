@@ -37,7 +37,7 @@ describe('Toaster', () => {
     const { getByRole } = renderWithTheme(
       <Toaster
         activeToasts={[testAlert]}
-        allowEarlyDismiss={false}
+        isAllowEarlyDismiss={false}
         onRemoveToastClick={mockRemoveToastClick}
       />
     );
@@ -47,11 +47,11 @@ describe('Toaster', () => {
     expect(alert).toBeInTheDocument();
   });
 
-  it('should not load dismiss button when allowEarlyDismiss is false', () => {
+  it('should not load dismiss button when isAllowEarlyDismiss is false', () => {
     const { queryAllByRole } = renderWithTheme(
       <Toaster
         activeToasts={[testAlert]}
-        allowEarlyDismiss={false}
+        isAllowEarlyDismiss={false}
         onRemoveToastClick={mockRemoveToastClick}
       />
     );
@@ -61,11 +61,11 @@ describe('Toaster', () => {
     expect(button).toHaveLength(0);
   });
 
-  it('should load dismiss button when allowEarlyDismiss is true', () => {
+  it('should load dismiss button when isAllowEarlyDismiss is true', () => {
     const { getByRole } = renderWithTheme(
       <Toaster
         activeToasts={[testAlert]}
-        allowEarlyDismiss={true}
+        isAllowEarlyDismiss={true}
         onRemoveToastClick={mockRemoveToastClick}
       />
     );

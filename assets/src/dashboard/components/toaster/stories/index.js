@@ -69,7 +69,7 @@ export const _default = () => {
                   : 'Add practice alert'}
               </Button>
               <Toaster
-                allowEarlyDismiss={boolean('allowEarlyDismiss')}
+                isAllowEarlyDismiss={boolean('isAllowEarlyDismiss')}
                 activeToasts={state.activeToasts}
                 onRemoveToastClick={actions.removeToast}
               />

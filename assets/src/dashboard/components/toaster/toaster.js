@@ -17,6 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -24,25 +25,35 @@ import PropTypes from 'prop-types';
 import { ToastMessagesPropType } from '../../types';
 import { Alert } from '../';
 
-function Toaster({ allowEarlyDismiss, activeToasts, onRemoveToastClick }) {
+const Wrapper = styled.div`
+  position: fixed;
+  bottom: 40px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 300px;
+  width: 40vw;
+`;
+function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
   return (
-    <Alert.Wrapper>
+    <Wrapper>
       {activeToasts.map((activeToast, index) => (
-        <Alert.Container
-          allowDismiss={allowEarlyDismiss}
+        <Alert
+          isAllowDismiss={isAllowEarlyDismiss}
           key={`alert_${index}`}
           message={activeToast.message}
           severity={activeToast.severity}
           handleDismissClick={() => onRemoveToastClick(index)}
         />
       ))}
-    </Alert.Wrapper>
+    </Wrapper>
   );
 }
 
 Toaster.propTypes = {
   activeToasts: ToastMessagesPropType,
-  allowEarlyDismiss: PropTypes.bool,
+  isAllowEarlyDismiss: PropTypes.bool,
   onRemoveToastClick: PropTypes.func,
 };
 export default Toaster;

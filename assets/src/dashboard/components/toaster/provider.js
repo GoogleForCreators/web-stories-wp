@@ -25,15 +25,14 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 
-export const ToasterContext = createContext(null);
-
-export const AUTO_REMOVE_TOAST_TIME_INTERVAL = 10000;
-
 /**
  * ToastProvider tracks messages to display based on toastId so that if the same message occurs in a different instance it will still display
  * When a toast is dismissed early or at interval it is removed from the activeToasts but stays part of allToasts
  * When useEffect clean up is called (view change) allToasts and activeToasts will reset
  */
+export const AUTO_REMOVE_TOAST_TIME_INTERVAL = 10000;
+
+export const ToasterContext = createContext(null);
 
 const ToastProvider = ({ children }) => {
   const [activeToasts, setActiveToasts] = useState([]);

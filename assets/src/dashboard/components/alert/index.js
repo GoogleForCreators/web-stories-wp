@@ -15,9 +15,47 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-import Container from './container';
-import { Wrapper } from './components';
+import { Close } from '../../icons';
+import { AlertSeveritiesPropType } from '../../types';
+import { AlertContainer, AlertText, DismissButton } from './components';
 
-export default { Container, Wrapper };
+const Alert = ({ isAllowDismiss, message, severity, handleDismissClick }) => {
+  return (
+    <AlertContainer
+      severity={severity}
+      role="alert"
+      aria-label={__('Alert Notification', 'web-stories')}
+    >
+      <AlertText>{message}</AlertText>
+      {isAllowDismiss && (
+        <DismissButton
+          onClick={handleDismissClick}
+          ariaLabel={__('Dismiss Alert', 'web-stories')}
+        >
+          <Close />
+        </DismissButton>
+      )}
+    </AlertContainer>
+  );
+};
+
+Alert.propTypes = {
+  isAllowDismiss: PropTypes.bool,
+  message: PropTypes.string.isRequired,
+  handleDismissClick: PropTypes.func,
+  severity: AlertSeveritiesPropType,
+};
+
+export default Alert;
