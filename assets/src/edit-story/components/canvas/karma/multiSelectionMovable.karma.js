@@ -64,7 +64,7 @@ describe('Multi-selection Movable integration', () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
       element1 = await fixture.act(() =>
         insertElement('shape', {
-          backgroundColor: createSolidFromString('#ff00ff'),
+          backgroundColor: createSolidFromString('#000000'),
           mask: { type: 'rectangle' },
           x: 10,
           y: 10,
