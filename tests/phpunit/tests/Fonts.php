@@ -18,24 +18,14 @@
 namespace Google\Web_Stories\Tests;
 
 class Fonts extends \WP_UnitTestCase {
-
-	/**
-	 * Setup.
-	 *
-	 * @inheritdoc
-	 */
-	public function setUp() {
-		parent::setUp();
-		$this->fonts = new \Google\Web_Stories\Fonts();
-	}
-
 	public function test_get_fonts() {
-		$fonts = $this->fonts->get_fonts();
-		$this->assertInternalType( 'array', $fonts );
+		$fonts     = new \Google\Web_Stories\Fonts();
+		$font_list = $fonts->get_fonts();
+		$this->assertInternalType( 'array', $font_list );
 
 		$arial_font = current(
 			array_filter(
-				$fonts,
+				$font_list,
 				static function ( $font ) {
 					return 'Arial' === $font['family'];
 				}
@@ -44,7 +34,7 @@ class Fonts extends \WP_UnitTestCase {
 
 		$roboto_font = current(
 			array_filter(
-				$fonts,
+				$font_list,
 				static function ( $font ) {
 					return 'Roboto' === $font['family'];
 				}
@@ -84,13 +74,13 @@ class Fonts extends \WP_UnitTestCase {
 		if ( ! file_exists( $fonts_file ) ) {
 			$this->markTestSkipped( 'List of Google Fonts is missing' );
 		}
-
-		$fonts = $this->fonts->get_google_fonts( $fonts_file );
-		$this->assertInternalType( 'array', $fonts );
+		$fonts     = new \Google\Web_Stories\Fonts();
+		$font_list = $fonts->get_google_fonts( $fonts_file );
+		$this->assertInternalType( 'array', $font_list );
 
 		$roboto_font = current(
 			array_filter(
-				$fonts,
+				$font_list,
 				static function ( $font ) {
 					return 'Roboto' === $font['family'];
 				}
