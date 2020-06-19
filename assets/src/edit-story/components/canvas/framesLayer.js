@@ -109,7 +109,7 @@ function FramesLayer() {
       <MenuArea
         pointerEvents="initial"
         // Make its own stacking context.
-        zIndex={0}
+        zIndex={1}
         // Cancel lasso.
         onMouseDown={(evt) => evt.stopPropagation()}
       >
