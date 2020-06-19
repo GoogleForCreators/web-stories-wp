@@ -94,10 +94,10 @@ class Story_Post_Type extends \WP_UnitTestCase {
 			],
 		];
 
-		$post_type       = new \stdClass();
-		$post_type->name = 'post';
+		$post_type        = new \stdClass();
+		$post_type->name  = 'post';
 		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
-		$filtered_params = $post_type_object->filter_rest_collection_params( $query_params, $post_type );
+		$filtered_params  = $post_type_object->filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals( $filtered_params, $query_params );
 	}
 }
