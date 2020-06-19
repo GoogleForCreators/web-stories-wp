@@ -28,18 +28,18 @@ import { ALERT_SEVERITY } from '../../../constants';
 const TOAST_1 = {
   message: 'one',
   severity: ALERT_SEVERITY.ERROR,
-  errorId: 1,
+  id: 1,
 };
 
 const TOAST_2 = {
   message: 'two',
-  errorId: 2,
+  id: 2,
   severity: ALERT_SEVERITY.ERROR,
 };
 
 const TOAST_3 = {
   message: 'three',
-  errorId: 3,
+  id: 3,
   severity: ALERT_SEVERITY.WARNING,
 };
 

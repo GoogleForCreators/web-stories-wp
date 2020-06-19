@@ -29,6 +29,7 @@ import { ALERT_SEVERITY } from '../../../constants';
 const testAlert = {
   message: 'i am an error',
   severity: ALERT_SEVERITY.ERROR,
+  id: 1,
 };
 
 describe('Toaster', () => {

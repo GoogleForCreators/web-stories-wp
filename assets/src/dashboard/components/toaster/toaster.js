@@ -41,7 +41,7 @@ function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
       {activeToasts.map((activeToast, index) => (
         <Alert
           isAllowDismiss={isAllowEarlyDismiss}
-          key={`alert_${index}`}
+          key={`alert_${activeToast.id}`}
           message={activeToast.message}
           severity={activeToast.severity}
           handleDismissClick={() => onRemoveToastClick(index)}

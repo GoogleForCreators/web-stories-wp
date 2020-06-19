@@ -26,7 +26,7 @@ import {
 import PropTypes from 'prop-types';
 
 /**
- * ToastProvider tracks messages to display based on toastId so that if the same message occurs in a different instance it will still display
+ * ToastProvider tracks messages to display based on id so that if the same message occurs in a different instance it will still display
  * When a toast is dismissed early or at interval it is removed from the activeToasts but stays part of allToasts
  * When useEffect clean up is called (view change) allToasts and activeToasts will reset
  */
@@ -53,21 +53,19 @@ const ToastProvider = ({ children }) => {
   );
 
   const addToast = useCallback(
-    ({ message, severity, errorId }) => {
+    ({ message, severity, id }) => {
       const newToast =
         allToasts.length === 0
           ? true
           : allToasts.reduce((_, toast) => {
-              return toast?.errorId !== errorId;
+              return toast?.id !== id;
             }, []);
 
       if (newToast) {
         setActiveToasts([
-          ...new Set([...activeToasts, { message, severity, errorId }]),
+          ...new Set([...activeToasts, { message, severity, id }]),
         ]);
-        setAllToasts([
-          ...new Set([...allToasts, { message, severity, errorId }]),
-        ]);
+        setAllToasts([...new Set([...allToasts, { message, severity, id }])]);
       }
     },
     [allToasts, activeToasts]

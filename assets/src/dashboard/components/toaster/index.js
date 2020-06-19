@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
 export { default as useToastContext } from './useToastContext';
 export { default as ToastProvider } from './provider';
 export { default as Toaster } from './toaster';

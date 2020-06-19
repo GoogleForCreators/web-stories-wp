@@ -33,7 +33,7 @@ export default {
 };
 
 export const _default = () => {
-  const [errorIndexToAdd, setErrorIndexToAdd] = useState(0);
+  const [toastIndexToAdd, setToastIndexToAdd] = useState(0);
   const errors = [
     { message: 'i am an error', severity: ALERT_SEVERITY.ERROR },
     { message: 'i am a second error', severity: ALERT_SEVERITY.ERROR },
@@ -56,15 +56,15 @@ export const _default = () => {
             <>
               <Button
                 onClick={() => {
-                  setErrorIndexToAdd(errorIndexToAdd + 1);
+                  setToastIndexToAdd(toastIndexToAdd + 1);
                   actions.addToast({
-                    ...errors[errorIndexToAdd],
-                    errorId: errorIndexToAdd,
+                    ...errors[toastIndexToAdd],
+                    id: toastIndexToAdd,
                   });
                 }}
-                isDisabled={errorIndexToAdd > 4}
+                isDisabled={toastIndexToAdd > 4}
               >
-                {errorIndexToAdd > 4
+                {toastIndexToAdd > 4
                   ? 'No more practice alerts'
                   : 'Add practice alert'}
               </Button>
