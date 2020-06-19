@@ -107,7 +107,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [pushUpdateForObject, defaultLink]
   );
 
-  const [isInvalidUrl, setIsInvalidUrl] = useState(false);
+  const [isInvalidUrl, setIsInvalidUrl] = useState(
+    !isValidUrl(withProtocol(link.url || ''))
+  );
 
   const [populateMetadata] = useDebouncedCallback((url) => {
     setFetchingMetadata(true);
