@@ -159,7 +159,7 @@ class Story_Post_Type {
 	 *
 	 * @return bool
 	 */
-	public static function skip_amp( $skipped, $post ) {
+	public function skip_amp( $skipped, $post ) {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
 			$skipped = true;
 		}
@@ -173,7 +173,7 @@ class Story_Post_Type {
 	 * @param \WP_Post_Type $post_type Post type.
 	 * @return array Array of query params.
 	 */
-	public static function filter_rest_collection_params( $query_params, $post_type ) {
+	public function filter_rest_collection_params( $query_params, $post_type ) {
 		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
 			return $query_params;
 		}
@@ -192,7 +192,7 @@ class Story_Post_Type {
 	 * @param array $story Story post array.
 	 * @return array Array of allowed fields.
 	 */
-	public static function filter_revision_fields( $fields, $story ) {
+	public function filter_revision_fields( $fields, $story ) {
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
@@ -206,7 +206,7 @@ class Story_Post_Type {
 	 *
 	 * @return bool
 	 */
-	public static function show_admin_bar( $show ) {
+	public function show_admin_bar( $show ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) ) {
 			$show = false;
 		}
@@ -222,7 +222,7 @@ class Story_Post_Type {
 	 *
 	 * @return bool
 	 */
-	public static function replace_editor( $replace, $post ) {
+	public function replace_editor( $replace, $post ) {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
 			$replace = true;
 			// In lieu of an action being available to actually load the replacement editor, include it here
@@ -261,7 +261,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public static function admin_enqueue_scripts( $hook ) {
+	public function admin_enqueue_scripts( $hook ) {
 		$screen = get_current_screen();
 
 		if ( ! $screen instanceof WP_Screen ) {
@@ -329,7 +329,7 @@ class Story_Post_Type {
 	 *
 	 * @return array
 	 */
-	public static function get_editor_settings() {
+	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
 		$rest_base                = self::POST_TYPE_SLUG;
@@ -478,7 +478,7 @@ class Story_Post_Type {
 	 *
 	 * @return string Template.
 	 */
-	public static function filter_template_include( $template ) {
+	public function filter_template_include( $template ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) && ! is_embed() ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/single-web-story.php';
 		}
