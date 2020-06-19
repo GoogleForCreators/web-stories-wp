@@ -80,6 +80,7 @@ export default function BodyViewOptions({
   layoutStyle,
   pageSortOptions = [],
   showGridToggle,
+  showSortDropdown,
   sortDropdownAriaLabel,
   wpListURL,
 }) {
@@ -88,7 +89,7 @@ export default function BodyViewOptions({
       <DisplayFormatContainer>
         <Label>{resultsLabel}</Label>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && Boolean(handleSortChange) && (
+          {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
             <StorySortDropdownContainer>
               <SortDropdown
                 alignment="flex-end"
@@ -134,5 +135,6 @@ BodyViewOptions.propTypes = {
     })
   ),
   showGridToggle: PropTypes.bool,
+  showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
 };

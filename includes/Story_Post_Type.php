@@ -136,26 +136,33 @@ class Story_Post_Type {
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
 		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', [ __CLASS__, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
 
-		// @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
-		add_filter(
-			'amp_skip_post',
-			static function( $skipped, $post ) {
-				if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-					$skipped = true;
-				}
-				return $skipped;
-			},
-			PHP_INT_MAX,
-			2
-		);
+		add_filter( 'amp_skip_post', [ __CLASS__, 'skip_amp' ], PHP_INT_MAX, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * AMP plugin compatibility.
+	 *
+	 * @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
+	 *
+	 * @param bool    $skipped Should this post type be skipped.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return bool
+	 */
+	public static function skip_amp( $skipped, $post ) {
+		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
+			$skipped = true;
+		}
+		return $skipped;
 	}
 
 	/**
@@ -225,6 +232,24 @@ class Story_Post_Type {
 		}
 
 		return $replace;
+	}
+
+	/**
+	 * Filters whether post type supports the block editor.
+	 *
+	 * Disables the block editor and associated logic (like enqueueing assets)
+	 * for the story post type.
+	 *
+	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string $post_type         The post type being checked.
+	 * @return bool Whether to use the block editor.
+	 */
+	public static function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+		if ( self::POST_TYPE_SLUG === $post_type ) {
+			return false;
+		}
+
+		return $use_block_editor;
 	}
 
 	/**
