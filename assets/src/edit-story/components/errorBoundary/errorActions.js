@@ -23,29 +23,59 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import PropTypes from 'prop-types';
 
-const Message = styled.p`
+/**
+ * Internal dependencies
+ */
+import { Outline, Primary } from '../button';
+
+const Message = styled.div`
   color: #fff;
   font-size: 16px;
   font-weight: 300;
   line-height: 1.6;
   padding: 20px;
+  button {
+    margin-right: 6px;
+  }
 `;
 
-function ErrorActions() {
+const P = styled.p`
+  margin: 0 0 8px 0;
+`;
+
+function ErrorActions({ error, errorInfo }) {
+  const body = encodeURIComponent(`${error}${errorInfo.componentStack}`);
+  const reportUrl = `https://github.com/google/web-stories-wp/issues/new?labels=Type%3A+Bug&template=bug_report.md&title=${error}&body=${body}`;
+
   const reload = () => {
     window.location.reload(true);
   };
 
   return (
     <Message>
-      {__('Editor has crashed.', 'web-stories')}
-      <br />
-      {__("Try to reload if that doesn't help, wait for a fix.", 'web-stories')}
-      <br />
-      <button onClick={reload}>{__('Reload', 'web-stories')}</button>
+      <P>{__('Something went wrong!', 'web-stories')}</P>
+      <P>
+        {__(
+          'The editor has crashed. Please try reloading the page and report the error using the button below.',
+          'web-stories'
+        )}
+      </P>
+      <P>{__('Apologies for the inconvenience.', 'web-stories')}</P>
+      <div>
+        <Outline onClick={reload}>{__('Reload', 'web-stories')}</Outline>
+        <Primary as="a" href={reportUrl} target="_blank" rel="noreferrer">
+          {__('Report Error', 'web-stories')}
+        </Primary>
+      </div>
     </Message>
   );
 }
+
+ErrorActions.propTypes = {
+  error: PropTypes.instanceOf(Error),
+  errorInfo: PropTypes.object,
+};
 
 export default ErrorActions;

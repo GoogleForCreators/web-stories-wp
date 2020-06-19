@@ -31,21 +31,19 @@ class ErrorBoundary extends Component {
   };
 
   state = {
-    hasError: false,
+    error: null,
+    errorInfo: null,
   };
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  // eslint-disable-next-line no-unused-vars
   componentDidCatch(error, errorInfo) {
-    // In the future we will take some action here
+    this.setState({ error, errorInfo });
+    // In the future we might take some action here (report to 3P service with tree info)
   }
 
   render() {
-    if (this.state.hasError) {
-      return <ErrorActions />;
+    const { error, errorInfo } = this.state;
+    if (error) {
+      return <ErrorActions error={error} errorInfo={errorInfo} />;
     }
     return this.props.children;
   }

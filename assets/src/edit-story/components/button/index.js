@@ -41,13 +41,14 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   border-style: solid;
   border-radius: 2px;
   background: transparent;
-  display: block;
+  display: inline-block;
   min-width: ${({ isIcon }) => (isIcon ? 'initial' : '63px')};
   line-height: 28px;
-  height: 30px;
+  max-height: 30px;
   padding: 0 10px;
   cursor: pointer;
   font-size: 14px;
+  text-decoration: none;
 
   &:active {
     outline: none;
@@ -94,17 +95,32 @@ export const Primary = styled(Base)`
   border-color: ${({ theme }) => theme.colors.action};
   background-color: ${({ theme }) => theme.colors.action};
   color: ${({ theme }) => theme.colors.fg.v1};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v1};
+  }
 `;
 
 export const Secondary = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v1};
   background-color: ${({ theme }) => theme.colors.fg.v3};
   color: ${({ theme }) => theme.colors.bg.v5};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v5};
+  }
 `;
 
 export const Outline = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v4};
   color: ${({ theme }) => theme.colors.fg.v1};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v1};
+  }
 `;
 
 export const Plain = styled(Base)`
