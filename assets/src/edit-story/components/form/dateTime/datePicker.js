@@ -22,14 +22,12 @@ import 'react-calendar/dist/Calendar.css';
 import { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
-  border-top: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
 `;
 
-function DatePicker({ currentDate, onChange }) {
+function DatePicker({ currentDate, onChange, onViewChange }) {
   const nodeRef = useRef();
   const value = new Date(currentDate);
   const handleOnChange = useCallback(
@@ -43,13 +41,18 @@ function DatePicker({ currentDate, onChange }) {
 
   return (
     <CalendarWrapper ref={nodeRef}>
-      <Calendar value={value} onChange={handleOnChange} />
+      <Calendar
+        value={value}
+        onChange={handleOnChange}
+        onViewChange={onViewChange}
+      />
     </CalendarWrapper>
   );
 }
 
 DatePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
+  onViewChange: PropTypes.func,
   currentDate: PropTypes.string,
 };
 

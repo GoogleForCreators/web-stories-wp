@@ -27,7 +27,7 @@ import {
   VIEW_STYLE,
   TEMPLATES_GALLERY_SORT_OPTIONS,
 } from '../../../../../constants';
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 import Header from '../';
 
@@ -69,7 +69,7 @@ const fakeTemplates = [
 
 describe('Explore Templates <Header />', function () {
   it('should have results label that says "Viewing all templates" on initial page view', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -85,14 +85,15 @@ describe('Explore Templates <Header />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressTemplateActions: false }
     );
 
     expect(getByText('Viewing all templates')).toBeInTheDocument();
   });
 
   it('should render with the correct count label and search keyword.', function () {
-    const { getByPlaceholderText, getByText } = renderWithTheme(
+    const { getByPlaceholderText, getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -108,7 +109,8 @@ describe('Explore Templates <Header />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressTemplateActions: true }
     );
     expect(getByPlaceholderText('Search Templates').value).toBe('Harry Potter');
     expect(getByText('8 results')).toBeInTheDocument();
@@ -116,7 +118,7 @@ describe('Explore Templates <Header />', function () {
 
   it('should call the set keyword function when new text is searched', function () {
     const setKeywordFn = jest.fn();
-    const { getByPlaceholderText } = renderWithTheme(
+    const { getByPlaceholderText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -132,7 +134,8 @@ describe('Explore Templates <Header />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressTemplateActions: true }
     );
     fireEvent.change(getByPlaceholderText('Search Templates'), {
       target: { value: 'Hermione Granger' },
@@ -142,7 +145,7 @@ describe('Explore Templates <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithTheme(
+    const { getAllByText, getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -158,11 +161,35 @@ describe('Explore Templates <Header />', function () {
             pageSize: { width: 200, height: 300 },
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressTemplateActions: true }
     );
     fireEvent.click(getAllByText('Popular')[0].parentElement);
     fireEvent.click(getByText('Recent'));
 
     expect(setSortFn).toHaveBeenCalledWith('recent');
+  });
+
+  it('should not render with search when enableInProgressTemplateActions is false', function () {
+    const { queryAllByRole } = renderWithThemeAndFlagsProvider(
+      <LayoutProvider>
+        <Header
+          filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
+          totalTemplates={8}
+          search={{ keyword: '', setKeyword: jest.fn }}
+          templates={fakeTemplates}
+          sort={{
+            value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+            set: jest.fn,
+          }}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 200, height: 300 },
+          }}
+        />
+      </LayoutProvider>,
+      { enableInProgressTemplateActions: false }
+    );
+    expect(queryAllByRole('textbox')).toHaveLength(0);
   });
 });

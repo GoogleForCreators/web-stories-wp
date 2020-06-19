@@ -114,4 +114,56 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
 	}
+
+	public function test_remove_broken_text_styles() {
+		$presets = [
+			'textStyles' => [
+				[
+					'color' => [
+						'r' => 255,
+						'g' => 255,
+						'b' => 255,
+					],
+					'font'  => [],
+				],
+				[
+					'color' => [
+						'type'  => 'solid',
+						'color' => [
+							'r' => 255,
+							'g' => 255,
+							'b' => 255,
+						],
+					],
+					'font'  => [],
+				],
+			],
+			'textColors' => [],
+			'fillColors' => [],
+		];
+		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$object->init();
+
+		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$this->assertSame(
+			$style_presets['textStyles'],
+			[
+				[
+					'color' => [
+						'type'  => 'solid',
+						'color' => [
+							'r' => 255,
+							'g' => 255,
+							'b' => 255,
+						],
+					],
+					'font'  => [],
+				],
+			]
+		);
+
+		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
+	}
 }

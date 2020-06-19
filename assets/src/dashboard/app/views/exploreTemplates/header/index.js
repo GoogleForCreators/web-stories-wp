@@ -24,6 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -61,6 +62,10 @@ const HeadingDropdownsContainer = styled.div`
   }
 `;
 function Header({ filter, totalTemplates, search, templates, sort, view }) {
+  const enableInProgressTemplateActions = useFeature(
+    'enableInProgressTemplateActions'
+  );
+
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
     totalResults: totalTemplates,
@@ -77,6 +82,27 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
     clearAllColors,
   } = useTemplateFilters();
 
+  const TemplateFilters = enableInProgressTemplateActions ? (
+    <HeadingDropdownsContainer>
+      <Dropdown
+        ariaLabel={__('Category Dropdown', 'web-stories')}
+        type={DROPDOWN_TYPES.PANEL}
+        placeholder={__('Category', 'web-stories')}
+        items={selectedCategories}
+        onClear={clearAllCategories}
+        onChange={onNewCategorySelected}
+      />
+      <Dropdown
+        ariaLabel={__('Color Dropdown', 'web-stories')}
+        type={DROPDOWN_TYPES.COLOR_PANEL}
+        placeholder={__('Color', 'web-stories')}
+        items={selectedColors}
+        onClear={clearAllColors}
+        onChange={onNewColorSelected}
+      />
+    </HeadingDropdownsContainer>
+  ) : null;
+
   return (
     <Layout.Squishable>
       <PageHeading
@@ -84,27 +110,13 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
         defaultTitle={__('Templates', 'web-stories')}
         searchPlaceholder={__('Search Templates', 'web-stories')}
         stories={templates}
-        handleTypeaheadChange={search.setKeyword}
+        showTypeahead={enableInProgressTemplateActions}
+        handleTypeaheadChange={
+          enableInProgressTemplateActions ? search.setKeyword : () => {}
+        }
         typeaheadValue={search.keyword}
       >
-        <HeadingDropdownsContainer>
-          <Dropdown
-            ariaLabel={__('Category Dropdown', 'web-stories')}
-            type={DROPDOWN_TYPES.PANEL}
-            placeholder={__('Category', 'web-stories')}
-            items={selectedCategories}
-            onClear={clearAllCategories}
-            onChange={onNewCategorySelected}
-          />
-          <Dropdown
-            ariaLabel={__('Color Dropdown', 'web-stories')}
-            type={DROPDOWN_TYPES.COLOR_PANEL}
-            placeholder={__('Color', 'web-stories')}
-            items={selectedColors}
-            onClear={clearAllColors}
-            onChange={onNewColorSelected}
-          />
-        </HeadingDropdownsContainer>
+        {TemplateFilters}
       </PageHeading>
       <BodyViewOptions
         resultsLabel={resultsLabel}
@@ -112,7 +124,8 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={TEMPLATES_GALLERY_SORT_MENU_ITEMS}
-        handleSortChange={sort.set}
+        showSortDropdown={enableInProgressTemplateActions}
+        handleSortChange={enableInProgressTemplateActions ? sort.set : () => {}}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
           'web-stories'

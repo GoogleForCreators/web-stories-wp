@@ -108,6 +108,7 @@ function Header({
       </PageHeading>
       <BodyViewOptions
         showGridToggle
+        showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}

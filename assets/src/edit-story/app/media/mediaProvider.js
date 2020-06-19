@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -57,31 +57,39 @@ function MediaProvider({ children }) {
   const {
     actions: { getMedia },
   } = useAPI();
+
   const fetchMedia = useCallback(
-    ({ pagingNum: p = 1, mediaType: currentMediaType } = {}, callback) => {
+    (
+      {
+        searchTerm: currentSearchTerm = '',
+        pagingNum: p = 1,
+        mediaType: currentMediaType,
+      } = {},
+      callback
+    ) => {
       fetchMediaStart({ pagingNum: p });
-      getMedia({ mediaType: currentMediaType, searchTerm, pagingNum: p })
+      getMedia({
+        mediaType: currentMediaType,
+        searchTerm: currentSearchTerm,
+        pagingNum: p,
+      })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers.get('X-WP-TotalPages'));
           const mediaArray = data.map(getResourceFromAttachment);
           callback({
             media: mediaArray,
             mediaType: currentMediaType,
-            searchTerm,
+            searchTerm: currentSearchTerm,
             pagingNum: p,
             totalPages,
           });
         })
         .catch(fetchMediaError);
     },
-    [fetchMediaError, fetchMediaStart, getMedia, searchTerm]
+    [fetchMediaError, fetchMediaStart, getMedia]
   );
-  const { uploadMedia, isUploading } = useUploadMedia({
-    media,
-    pagingNum,
-    setMedia,
-    fetchMedia,
-  });
+
+  const { uploadMedia, isUploading } = useUploadMedia({ media, setMedia });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
     setProcessing,
@@ -89,30 +97,33 @@ function MediaProvider({ children }) {
     processing,
     processed,
   });
+
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
 
+  const stateRef = useRef();
+  stateRef.current = state;
+
   const resetWithFetch = useCallback(() => {
+    // eslint-disable-next-line no-shadow
+    const { mediaType, pagingNum, searchTerm } = stateRef.current;
+
     resetFilters();
     if (!mediaType && !searchTerm && pagingNum === 1) {
       fetchMedia({ mediaType }, fetchMediaSuccess);
     }
-  }, [
-    fetchMedia,
-    fetchMediaSuccess,
-    mediaType,
-    pagingNum,
-    resetFilters,
-    searchTerm,
-  ]);
+  }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 
   useEffect(() => {
-    fetchMedia({ pagingNum, mediaType }, fetchMediaSuccess);
+    fetchMedia({ searchTerm, pagingNum, mediaType }, fetchMediaSuccess);
   }, [fetchMedia, fetchMediaSuccess, mediaType, pagingNum, searchTerm]);
 
   const uploadVideoPoster = useCallback(
     (id, src) => {
+      // eslint-disable-next-line no-shadow
+      const { processed, processing } = stateRef.current;
+
       const process = async () => {
         if (processed.includes(id) || processing.includes(id)) {
           return;
@@ -123,7 +134,7 @@ function MediaProvider({ children }) {
       };
       process();
     },
-    [processed, processing, setProcessing, uploadVideoFrame, removeProcessing]
+    [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
   const processor = useCallback(
@@ -160,7 +171,6 @@ function MediaProvider({ children }) {
       setNextPage,
       setMediaType,
       setSearchTerm,
-      fetchMedia,
       resetFilters,
       uploadMedia,
       resetWithFetch,

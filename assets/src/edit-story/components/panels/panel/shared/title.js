@@ -36,7 +36,7 @@ import { __ } from '@wordpress/i18n';
  */
 import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
-import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
+import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../utils/context';
 import DragHandle from './handle';

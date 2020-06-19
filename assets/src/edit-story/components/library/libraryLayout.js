@@ -56,7 +56,7 @@ const LibraryBackground = styled.div`
 
 function LibraryLayout() {
   return (
-    <Layout>
+    <Layout data-testid="libraryLayout">
       <TabsArea>
         <LibraryTabs />
       </TabsArea>

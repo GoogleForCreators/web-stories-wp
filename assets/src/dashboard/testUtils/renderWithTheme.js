@@ -19,6 +19,7 @@
  */
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -34,3 +35,9 @@ const renderWithTheme = (ui, options) =>
   render(ui, { wrapper: WithThemeProvider, ...options });
 
 export default renderWithTheme;
+
+export const renderWithThemeAndFlagsProvider = (ui, featureFlags = {}) => {
+  return renderWithTheme(
+    <FlagsProvider features={featureFlags}>{ui}</FlagsProvider>
+  );
+};

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
 
 import {
   STORY_SORT_OPTIONS,
@@ -58,7 +58,7 @@ const fakeStories = [
 
 describe('My Stories <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
-    const { getAllByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithThemeAndFlagsProvider(
       <StoriesView
         filterValue="all"
         sort={{
@@ -77,9 +77,10 @@ describe('My Stories <StoriesView />', function () {
           style: VIEW_STYLE.GRID,
           pageSize: { width: 210, height: 316 },
         }}
-      />
+      />,
+      { enableInProgressStoryActions: false }
     );
 
-    expect(getAllByTestId('grid-item')).toHaveLength(fakeStories.length);
+    expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
   });
 });

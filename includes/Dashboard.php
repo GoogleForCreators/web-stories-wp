@@ -57,6 +57,7 @@ class Dashboard {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
+		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
 	}
 
 	/**
@@ -82,6 +83,40 @@ class Dashboard {
 			'stories-dashboard',
 			[ $this, 'render' ],
 			0
+		);
+	}
+
+	/**
+	 * Preload api requests in the dashboard.
+	 *
+	 * @return void
+	 */
+	public function load_stories_dashboard() {
+		// Preload common data.
+		// TODO Preload templates.
+		$preload_paths = [
+			'/web-stories/v1/fonts',
+		];
+
+		/**
+		 * Preload common data by specifying an array of REST API paths that will be preloaded.
+		 *
+		 * Filters the array of paths that will be preloaded.
+		 *
+		 * @param string[] $preload_paths Array of paths to preload.
+		 */
+		$preload_paths = apply_filters( 'web_stories_dashboard_preload_paths', $preload_paths );
+
+		$preload_data = array_reduce(
+			$preload_paths,
+			'rest_preload_api_request',
+			[]
+		);
+
+		wp_add_inline_script(
+			'wp-api-fetch',
+			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
+			'after'
 		);
 	}
 
@@ -163,12 +198,13 @@ class Dashboard {
 					'newStoryURL'  => $new_story_url,
 					'editStoryURL' => $edit_story_url,
 					'wpListURL'    => $classic_wp_list_url,
-					'assetsURL'    => WEBSTORIES_ASSETS_URL,
+					'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 					'version'      => WEBSTORIES_VERSION,
 					'api'          => [
-						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
-						'users'   => '/wp/v2/users',
-						'fonts'   => '/web-stories/v1/fonts',
+						'stories'   => sprintf( '/wp/v2/%s', $rest_base ),
+						'users'     => '/wp/v2/users',
+						'fonts'     => '/web-stories/v1/fonts',
+						'templates' => '/wp/v2/web-story-template',
 					],
 				],
 				'flags'  => [
@@ -178,14 +214,35 @@ class Dashboard {
 					 * Issue: 1897
 					 * Creation date: 2020-05-21
 					 */
-					'enableAnimation'       => false,
+					'enableAnimation'                 => false,
 					/**
 					 * Description: Enables in-progress views to be accessed.
 					 * Author: @carlos-kelly
 					 * Issue: 2081
 					 * Creation date: 2020-05-28
 					 */
-					'enableInProgressViews' => false,
+					'enableInProgressViews'           => false,
+					/**
+					 * Description: Enables in-progress story actions.
+					 * Author: @brittanyirl
+					 * Issue: 2344
+					 * Creation date: 2020-06-10
+					 */
+					'enableInProgressStoryActions'    => false,
+					/**
+					 * Description: Enables in-progress template actions.
+					 * Author: @brittanyirl
+					 * Issue: 2381
+					 * Creation date: 2020-06-11
+					 */
+					'enableInProgressTemplateActions' => false,
+					/**
+					 * Description: Enables bookmark actions.
+					 * Author: @brittanyirl
+					 * Issue: 2292
+					 * Creation date: 2020-06-11
+					 */
+					'enableBookmarkActions'           => false,
 				],
 			]
 		);

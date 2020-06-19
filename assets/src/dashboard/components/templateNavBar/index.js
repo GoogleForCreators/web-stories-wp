@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -74,19 +75,27 @@ const CloseLink = styled.a`
     color: ${theme.colors.gray700};
   `}
 `;
+const CapitalizedButton = styled(Button)`
+  text-transform: uppercase;
+`;
 
-export function TemplateNavBar() {
+export function TemplateNavBar({ handleCta, handleBookmarkClick }) {
   return (
     <Nav>
       <Container>
         <CloseLink href={parentRoute()}>{__('Close', 'web-stories')}</CloseLink>
       </Container>
       <Container>
-        <BookmarkToggle />
-        <Button type={BUTTON_TYPES.CTA} href={'#'} isLink={true}>
-          {__('USE TEMPLATE', 'web-stories')}
-        </Button>
+        {handleBookmarkClick && <BookmarkToggle />}
+        <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
+          {__('Use template', 'web-stories')}
+        </CapitalizedButton>
       </Container>
     </Nav>
   );
 }
+
+TemplateNavBar.propTypes = {
+  handleBookmarkClick: PropTypes.func,
+  handleCta: PropTypes.func.isRequired,
+};

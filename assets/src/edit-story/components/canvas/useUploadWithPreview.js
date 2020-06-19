@@ -25,13 +25,15 @@ import objectPick from '../../utils/objectPick';
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
-  const {
-    actions: { uploadMedia, uploadVideoPoster },
-  } = useMedia();
+  const { uploadMedia, uploadVideoPoster } = useMedia((state) => ({
+    uploadMedia: state.actions.uploadMedia,
+    uploadVideoPoster: state.actions.uploadVideoPoster,
+  }));
   const insertElement = useInsertElement();
-  const {
-    actions: { updateElementById, deleteElementById },
-  } = useStory();
+  const { updateElementById, deleteElementById } = useStory((state) => ({
+    updateElementById: state.actions.updateElementById,
+    deleteElementById: state.actions.deleteElementById,
+  }));
 
   const onLocalFile = useCallback(
     ({ resource }) => {

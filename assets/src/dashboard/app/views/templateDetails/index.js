@@ -22,6 +22,8 @@ import { sprintf, __ } from '@wordpress/i18n';
  * External dependencies
  */
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useFeature } from 'flagged';
+
 /**
  * Internal dependencies
  */
@@ -36,14 +38,13 @@ import {
   Pill,
   TemplateNavBar,
 } from '../../../components';
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
-import { StoryGridView } from '../shared';
+import { TemplateGridView } from '../shared';
 import {
   ByLine,
   Column,
@@ -64,6 +65,7 @@ function TemplateDetails() {
   const [orderedTemplates, setOrderedTemplates] = useState([]);
   const { pageSize } = usePagePreviewSize({ isGrid: true });
   const { isRTL } = useConfig();
+  const enableBookmarks = useFeature('enableBookmarkActions');
 
   const {
     state: {
@@ -77,6 +79,7 @@ function TemplateDetails() {
       templates: { templates, templatesOrderById },
     },
     actions: {
+      storyApi: { createStoryFromTemplate },
       templateApi: {
         fetchMyTemplateById,
         fetchExternalTemplateById,
@@ -190,6 +193,8 @@ function TemplateDetails() {
     switchToTemplateByOffset,
   ]);
 
+  const handleBookmarkClickSelected = useCallback(() => {}, []);
+
   if (!template) {
     return null;
   }
@@ -200,7 +205,12 @@ function TemplateDetails() {
         <TransformProvider>
           <Layout.Provider>
             <Layout.Fixed>
-              <TemplateNavBar />
+              <TemplateNavBar
+                handleCta={() => createStoryFromTemplate(template)}
+                handleBookmarkClick={
+                  enableBookmarks ? handleBookmarkClickSelected : undefined
+                }
+              />
             </Layout.Fixed>
             <Layout.Scrollable>
               <DetailViewContentGutter>
@@ -248,14 +258,10 @@ function TemplateDetails() {
                       {__('Related Templates', 'web-stories')}
                     </SubHeading>
                     <UnitsProvider pageSize={pageSize}>
-                      <StoryGridView
-                        stories={relatedTemplates}
-                        centerActionLabelByStatus={
-                          TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
-                        }
-                        bottomActionLabel={__('Use template', 'web-stories')}
-                        isTemplate
+                      <TemplateGridView
+                        templates={relatedTemplates}
                         pageSize={pageSize}
+                        templateActions={{ createStoryFromTemplate }}
                       />
                     </UnitsProvider>
                   </RowContainer>

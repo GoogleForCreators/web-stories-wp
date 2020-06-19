@@ -50,13 +50,15 @@ const AddColorPreset = styled.button`
 `;
 
 function ColorPresetActions({ color }) {
-  const {
-    state: {
-      selectedElements,
-      story: { stylePresets },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { selectedElements, stylePresets, updateStory } = useStory(
+    ({
+      state: {
+        selectedElements,
+        story: { stylePresets },
+      },
+      actions: { updateStory },
+    }) => ({ selectedElements, stylePresets, updateStory })
+  );
 
   const { fillColors, textColors } = stylePresets;
 

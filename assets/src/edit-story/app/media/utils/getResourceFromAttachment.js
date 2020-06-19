@@ -29,6 +29,7 @@ import getResourceSize from './getResourceSize';
 function getResourceFromAttachment(attachment) {
   const {
     id,
+    date,
     guid: { rendered: src },
     media_details: {
       width,
@@ -51,6 +52,7 @@ function getResourceFromAttachment(attachment) {
   } = attachment;
   return createResource({
     mimeType,
+    creationDate: date,
     src,
     ...getResourceSize(
       width,

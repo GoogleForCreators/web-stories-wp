@@ -1,3 +1,4 @@
+prerelease: true
 name-template: '$NEXT_PATCH_VERSION'
 tag-template: '$NEXT_PATCH_VERSION'
 categories:
@@ -12,6 +13,11 @@ categories:
       - 'Dependencies'
       - 'Type: Documentation'
       - 'Type: Infrastructure'
+exclude-labels:
+  - 'Type: Code Quality'
+  - 'Type: Task'
+  - 'Skip Changelog'
+  - 'Dependencies'
 change-template: '- $TITLE (#$NUMBER)'
 template: |
   [View changes since last release](https://github.com/google/web-stories-wp/compare/$PREVIOUS_TAG...HEAD).

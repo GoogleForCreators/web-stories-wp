@@ -87,11 +87,31 @@ class Media {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * Key for media post type.
+	 *
+	 * @var string
+	 */
+	const STORY_MEDIA_TAXONOMY = 'web_story_media_source';
+
+	/**
 	 * Init.
 	 *
 	 * @return void
 	 */
 	public static function init() {
+
+		register_taxonomy(
+			self::STORY_MEDIA_TAXONOMY,
+			'attachment',
+			[
+				'label'        => __( 'Source', 'web-stories' ),
+				'public'       => false,
+				'rewrite'      => false,
+				'hierarchical' => false,
+				'show_in_rest' => true,
+			]
+		);
+
 		register_meta(
 			'post',
 			self::POSTER_POST_META_KEY,
@@ -144,8 +164,6 @@ class Media {
 	 * Get story meta images.
 	 *
 	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
-	 *
-	 * @since 1.2.1
 	 *
 	 * @param int|\WP_Post|null $post Post.
 	 * @return string[] Images.
@@ -209,20 +227,28 @@ class Media {
 			]
 		);
 
+		// Custom field, as built in term update require term id and not slug.
+		register_rest_field(
+			'attachment',
+			'media_source',
+			[
+
+				'get_callback'    => [ __CLASS__, 'get_callback_media_source' ],
+				'schema'          => [
+					'description' => __( 'Media source. ', 'web-stories' ),
+					'type'        => 'string',
+					'enum'        => [ 'editor' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'update_callback' => [ __CLASS__, 'update_callback_media_source' ],
+			]
+		);
+
 		register_rest_field(
 			'attachment',
 			'featured_media_src',
 			[
-				'get_callback' => static function ( $prepared ) {
-
-					$id    = $prepared['featured_media'];
-					$image = [];
-					if ( $id ) {
-						$image = self::get_thumbnail_data( $id );
-					}
-
-					return $image;
-				},
+				'get_callback' => [ __CLASS__, 'get_callback_featured_media_src' ],
 				'schema'       => [
 					'description' => __( 'URL, width and height.', 'web-stories' ),
 					'type'        => 'object',
@@ -245,6 +271,60 @@ class Media {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Force media attachment as string instead of the default array.
+	 *
+	 * @param array $prepared Prepared data before response.
+	 *
+	 * @return string
+	 */
+	public static function get_callback_media_source( $prepared ) {
+		$id = $prepared['id'];
+
+		$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
+		if ( is_array( $terms ) && $terms ) {
+			$term = array_shift( $terms );
+
+			return $term->slug;
+		}
+
+		return '';
+	}
+
+	/**
+	 * Update rest field callback.
+	 *
+	 * @param mixed    $value Value to update.
+	 * @param \WP_Post $object Object to update on.
+	 *
+	 * @return true|\WP_Error
+	 */
+	public static function update_callback_media_source( $value, $object ) {
+		$check = wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get attachment source for featured media.
+	 *
+	 * @param array $prepared Prepared data before response.
+	 *
+	 * @return array
+	 */
+	public static function get_callback_featured_media_src( $prepared ) {
+		$id    = $prepared['featured_media'];
+		$image = [];
+		if ( $id ) {
+			$image = self::get_thumbnail_data( $id );
+		}
+
+		return $image;
 	}
 
 	/**
@@ -374,8 +454,6 @@ class Media {
 		 *
 		 * This can be used to add additionally supported formats, for example by plugins
 		 * that do video transcoding.
-		 *
-		 * @since 1.3
 		 *
 		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */

@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -37,17 +38,21 @@ import { PRESETS, DEFAULT_PRESET } from './textPresets';
 const SectionContent = styled.p``;
 
 function TextPane(props) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
+  const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
+
   return (
     <Pane id={paneId} {...props}>
-      <SearchInput
-        value={''}
-        placeholder={__('Search', 'web-stories')}
-        onChange={() => {}}
-        disabled
-      />
+      {showTextAndShapesSearchInput && (
+        <SearchInput
+          value={''}
+          placeholder={__('Search', 'web-stories')}
+          onChange={() => {}}
+          disabled
+        />
+      )}
 
       <Section
         title={__('Presets', 'web-stories')}
@@ -65,9 +70,11 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      <Section title={__('Text Sets', 'web-stories')}>
-        <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
-      </Section>
+      {showTextSets && (
+        <Section title={__('Text Sets', 'web-stories')}>
+          <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
+        </Section>
+      )}
     </Pane>
   );
 }

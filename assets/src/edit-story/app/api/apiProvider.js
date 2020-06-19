@@ -30,7 +30,7 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
-import { useConfig } from '../';
+import { useConfig } from '../config';
 import Context from './context';
 
 function APIProvider({ children }) {

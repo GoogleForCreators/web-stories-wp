@@ -31,7 +31,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { useStory } from '../../../app/story';
 import RangeInput from '../../rangeInput';
-import { ReactComponent as RectangleIcon } from '../../../icons/rectangle.svg';
+import { Rectangle as RectangleIcon } from '../../../icons';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
 import PagePreview, {
   THUMB_FRAME_HEIGHT,
@@ -214,9 +214,16 @@ ThumbnailSizeControl.propTypes = {
 
 function GridView() {
   const {
-    state: { pages, currentPageIndex },
-    actions: { setCurrentPage, arrangePage },
-  } = useStory();
+    pages,
+    currentPageIndex,
+    setCurrentPage,
+    arrangePage,
+  } = useStory(
+    ({
+      state: { pages, currentPageIndex },
+      actions: { setCurrentPage, arrangePage },
+    }) => ({ pages, currentPageIndex, setCurrentPage, arrangePage })
+  );
   const [zoomLevel, setZoomLevel] = useState(2);
 
   const width = zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH;

@@ -39,9 +39,9 @@ import customExport from './customExport';
 import useSelectionManipulation from './useSelectionManipulation';
 
 function RichTextProvider({ children }) {
-  const {
-    state: { editingElementState },
-  } = useCanvas();
+  const { editingElementState } = useCanvas((state) => ({
+    editingElementState: state.state.editingElementState,
+  }));
 
   const [editorState, setEditorState] = useState(null);
 

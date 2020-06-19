@@ -25,29 +25,6 @@ import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
 
-export const BUTTON_TYPES = {
-  CTA: 'cta',
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
-
-export const CHIP_TYPES = {
-  STANDARD: 'standard',
-  SMALL: 'small',
-};
-
-export const DROPDOWN_TYPES = {
-  MENU: 'menu',
-  PANEL: 'panel',
-  COLOR_PANEL: 'color_panel',
-};
-
-export const KEYS = {
-  ENTER: 'Enter',
-  UP: 'ArrowUp',
-  DOWN: 'ArrowDown',
-};
-
 export const KEYBOARD_USER_CLASS = `useskeyboard`;
 export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
@@ -57,6 +34,7 @@ export const Z_INDEX = {
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
+  ALERT: 15,
 };
 
 export const APP_ROUTES = {
@@ -130,6 +108,7 @@ export const RESULT_LABELS = {
 };
 
 export * from './animation';
+export * from './components';
 export * from './direction';
 export * from './pageStructure';
 export * from './savedTemplates';

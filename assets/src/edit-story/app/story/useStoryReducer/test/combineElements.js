@@ -101,10 +101,37 @@ describe('combineElements', () => {
         focalX: 20,
         focalY: 50,
         scale: 100,
+        flip: {},
         x: 20,
         y: 20,
         width: 20,
         height: 20,
+      },
+    ]);
+  });
+
+  it('should remove background overlay if present on second element', () => {
+    const { restore, combineElements } = setupReducer();
+
+    restore(getDefaultState3());
+
+    // Combine element 456 into 123
+    const result = combineElements({ firstId: '456', secondId: '123' });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '123',
+        resource: { type: 'image', src: '1' },
+        type: 'image',
+        focalX: 50,
+        focalY: 50,
+        scale: 100,
+        flip: {},
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
+        isBackground: true,
       },
     ]);
   });
@@ -125,6 +152,7 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
+        flip: {},
         x: 10,
         y: 10,
         width: 10,
@@ -160,6 +188,7 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
+        flip: {},
         x: 30,
         y: 30,
         width: 30,
@@ -253,6 +282,38 @@ function getDefaultState2() {
           {
             id: '123',
             type: 'shape',
+            isBackground: true,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+          },
+          {
+            id: '456',
+            type: 'image',
+            resource: { type: 'image', src: '1' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+          },
+        ],
+      },
+    ],
+    current: '111',
+  };
+}
+
+function getDefaultState3() {
+  return {
+    pages: [
+      {
+        id: '111',
+        elements: [
+          {
+            id: '123',
+            type: 'image',
+            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
             y: 1,

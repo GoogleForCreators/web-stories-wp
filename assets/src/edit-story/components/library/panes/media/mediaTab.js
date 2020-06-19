@@ -23,13 +23,13 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Tab } from '../shared';
-import { ReactComponent as MediaIcon } from '../../../../icons/media.svg';
+import { Media } from '../../../../icons';
 import paneId from './paneId';
 
 function MediaTab(props) {
   return (
     <Tab aria-controls={paneId} {...props}>
-      <MediaIcon aria-label={__('Media library', 'web-stories')} />
+      <Media aria-label={__('Media library', 'web-stories')} />
     </Tab>
   );
 }

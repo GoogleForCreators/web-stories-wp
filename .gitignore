@@ -10,4 +10,5 @@ node_modules
 /assets/testjs
 /build
 /bin/local-env/data
+phpcs.xml
 phpunit.xml

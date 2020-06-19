@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from 'react';
+import classnames from 'classnames';
 
 /**
  * Internal dependencies
@@ -31,6 +32,7 @@ import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
+import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -43,18 +45,49 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
+  const { updateSelectedElements, deleteSelectedElements } = useStory(
+    (state) => ({
+      updateSelectedElements: state.actions.updateSelectedElements,
+      deleteSelectedElements: state.actions.deleteSelectedElements,
+    })
+  );
   const {
-    actions: { updateSelectedElements },
-  } = useStory();
+    canvasWidth,
+    canvasHeight,
+    nodesById,
+    fullbleedContainer,
+  } = useCanvas(
+    ({
+      state: {
+        pageSize: { width: canvasWidth, height: canvasHeight },
+        nodesById,
+        fullbleedContainer,
+      },
+    }) => ({ canvasWidth, canvasHeight, nodesById, fullbleedContainer })
+  );
   const {
-    state: {
-      pageSize: { width: canvasWidth, height: canvasHeight },
-      nodesById,
-    },
-  } = useCanvas();
-  const {
-    actions: { getBox, editorToDataX, editorToDataY, dataToEditorY },
-  } = useUnits();
+    getBox,
+    editorToDataX,
+    editorToDataY,
+    dataToEditorY,
+    dataToEditorX,
+  } = useUnits(
+    ({
+      actions: {
+        getBox,
+        editorToDataX,
+        editorToDataY,
+        dataToEditorY,
+        dataToEditorX,
+      },
+    }) => ({
+      getBox,
+      editorToDataX,
+      editorToDataY,
+      dataToEditorY,
+      dataToEditorX,
+    })
+  );
   const {
     actions: { pushTransform },
   } = useTransform();
@@ -158,21 +191,42 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     [setIsDragging, setDraggingResource, resetMoveable]
   );
 
-  const {
-    resizeRules = {},
-    updateForResizeEvent,
-    isMaskable,
-  } = getDefinitionForType(selectedElement.type);
+  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
+    selectedElement.type
+  );
 
   const canSnap =
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
-  const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
+  const hideHandles = isDragging || Boolean(draggingResource);
+
+  // Removes element if it's outside of canvas.
+  const handleElementOutOfCanvas = (target) => {
+    if (isTargetOutOfContainer(target, fullbleedContainer)) {
+      setIsDragging(false);
+      setDraggingResource(null);
+      deleteSelectedElements();
+      return true;
+    }
+    return false;
+  };
+
+  const minWidth = dataToEditorX(resizeRules.minWidth);
+  const minHeight = dataToEditorY(resizeRules.minHeight);
+  const aspectRatio = selectedElement.width / selectedElement.height;
+
+  const visuallyHideHandles =
+    selectedElement.width <= resizeRules.minWidth ||
+    selectedElement.height <= resizeRules.minHeight;
+
+  const classNames = classnames('default-movable', {
+    'hide-handles': hideHandles,
+    'visually-hide-handles': visuallyHideHandles,
+    'type-text': selectedElement.type === 'text',
+  });
 
   return (
     <Movable
-      className={`default-movable ${hideHandles ? 'hide-handles' : ''} ${
-        selectedElement.type === 'text' ? 'type-text' : ''
-      }`}
+      className={classNames}
       zIndex={0}
       ref={moveable}
       target={targetEl}
@@ -201,9 +255,16 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         set(frame.translate);
       }}
       onDragEnd={({ target }) => {
+        if (handleElementOutOfCanvas(target)) {
+          return;
+        }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
-        if (deltaX !== 0 || deltaY !== 0) {
+        if (
+          deltaX !== 0 ||
+          deltaY !== 0 ||
+          isDropSource(selectedElement.type)
+        ) {
           const properties = {
             x: selectedElement.x + editorToDataX(deltaX),
             y: selectedElement.y + editorToDataY(deltaY),
@@ -229,9 +290,24 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
       }}
       onResize={({ target, direction, width, height, drag }) => {
-        const newWidth = width;
+        let newWidth = width;
         let newHeight = height;
         let updates = null;
+
+        if (isResizingFromCorner) {
+          if (newWidth < minWidth) {
+            newWidth = minWidth;
+            newHeight = newWidth / aspectRatio;
+          }
+          if (newHeight < minHeight) {
+            newHeight = minHeight;
+            newWidth = minHeight * aspectRatio;
+          }
+        } else {
+          newHeight = Math.max(newHeight, minHeight);
+          newWidth = Math.max(newWidth, minWidth);
+        }
+
         if (updateForResizeEvent) {
           updates = updateForResizeEvent(
             selectedElement,
@@ -243,6 +319,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         if (updates && updates.height) {
           newHeight = dataToEditorY(updates.height);
         }
+
         target.style.width = `${newWidth}px`;
         target.style.height = `${newHeight}px`;
         frame.direction = direction;
@@ -252,6 +329,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setTransformStyle(target);
       }}
       onResizeEnd={({ target }) => {
+        if (handleElementOutOfCanvas(target)) {
+          return;
+        }
         const [editorWidth, editorHeight] = frame.resize;
         if (editorWidth !== 0 && editorHeight !== 0) {
           const { direction } = frame;
@@ -287,6 +367,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         setTransformStyle(target);
       }}
       onRotateEnd={({ target }) => {
+        if (handleElementOutOfCanvas(target)) {
+          return;
+        }
         const properties = { rotationAngle: Math.round(frame.rotate) };
         updateSelectedElements({ properties });
         resetMoveable(target);

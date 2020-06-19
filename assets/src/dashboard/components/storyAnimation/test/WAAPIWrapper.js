@@ -25,7 +25,8 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import * as useStoryAnimationContext from '../useStoryAnimationContext';
-import StoryAnimation from '..';
+import Provider from '../provider';
+import WAAPIWrapper from '../WAAPIWrapper';
 
 describe('StoryAnimation.WAAPIWrapper', () => {
   useFeature.mockImplementation(() => true);
@@ -52,13 +53,13 @@ describe('StoryAnimation.WAAPIWrapper', () => {
     }));
 
     const { container } = render(
-      <StoryAnimation.Provider animations={[]}>
+      <Provider animations={[]}>
         <div data-testid="story-element-wrapper">
-          <StoryAnimation.WAAPIWrapper target="_">
+          <WAAPIWrapper target="_">
             <div data-testid="inner-content" />
-          </StoryAnimation.WAAPIWrapper>
+          </WAAPIWrapper>
         </div>
-      </StoryAnimation.Provider>
+      </Provider>
     );
 
     expect(container.firstChild).toMatchInlineSnapshot(`

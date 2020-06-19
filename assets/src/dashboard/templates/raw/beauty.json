@@ -1,0 +1,5302 @@
+{
+  "version": 19,
+  "pages": [
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "image",
+          "id": "9ecb248e-2adc-4834-a270-01325263a30e",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg.png",
+            "width": 220,
+            "height": 391,
+            "posterId": 0,
+            "id": 323,
+            "title": "beauty_page1_bg",
+            "alt": "beauty_page1_bg",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page1_bg-169x300.png",
+                "width": 169,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg-169x300.png"
+              },
+              "large": {
+                "file": "beauty_page1_bg-576x1024.png",
+                "width": 576,
+                "height": 1024,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg-576x1024.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page1_bg-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg-150x150.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "beauty_page1_bg-696x928.png",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg-696x928.png"
+              },
+              "web-stories-poster-square": {
+                "file": "beauty_page1_bg-750x928.png",
+                "width": 750,
+                "height": 928,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg-750x928.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "beauty_page1_bg-750x696.png",
+                "width": 750,
+                "height": 696,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg-750x696.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page1_bg-150x267.png",
+                "width": 150,
+                "height": 267,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg-150x267.png"
+              },
+              "full": {
+                "file": "beauty_page1_bg.png",
+                "width": 750,
+                "height": 1334,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_bg.png"
+              }
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_grid.png",
+            "width": 220,
+            "height": 163,
+            "posterId": 0,
+            "id": 325,
+            "title": "beauty_page1_grid",
+            "alt": "beauty_page1_grid",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page1_grid-300x222.png",
+                "width": 300,
+                "height": 222,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_grid-300x222.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page1_grid-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_grid-150x150.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page1_grid-150x111.png",
+                "width": 150,
+                "height": 111,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_grid-150x111.png"
+              },
+              "full": {
+                "file": "beauty_page1_grid.png",
+                "width": 533,
+                "height": 395,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_grid.png"
+              }
+            }
+          },
+          "x": 145,
+          "y": 516,
+          "width": 318,
+          "height": 234,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "9dab070f-7678-4570-8d6a-c52bf087860c"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_stroke.png",
+            "width": 220,
+            "height": 95,
+            "posterId": 0,
+            "id": 324,
+            "title": "beauty_page1_stroke",
+            "alt": "beauty_page1_stroke",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page1_stroke-300x130.png",
+                "width": 300,
+                "height": 130,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_stroke-300x130.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page1_stroke-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_stroke-150x150.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "beauty_page1_stroke-696x324.png",
+                "width": 696,
+                "height": 324,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_stroke-696x324.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page1_stroke-150x65.png",
+                "width": 150,
+                "height": 65,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_stroke-150x65.png"
+              },
+              "full": {
+                "file": "beauty_page1_stroke.png",
+                "width": 750,
+                "height": 324,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page1_stroke.png"
+              }
+            }
+          },
+          "x": -2,
+          "y": 550,
+          "width": 444,
+          "height": 189,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "1b2f0eda-08be-4852-b615-2fef9915210a"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 50,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 360,
+          "height": 150,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "d886c844-5b5c-4b27-a9c3-332df2aed3f3",
+          "id": "25b6f99b-3f69-4351-9e18-31b8ef1d1a61",
+          "x": 51,
+          "y": 488,
+          "content": "<span style=\"font-weight: 400; color: #fff; letter-spacing: 0.09em\">FRESH</span>\n<span style=\"font-weight: 400; color: #fff; letter-spacing: 0.09em\">&amp;&nbsp;</span>\n<span style=\"font-weight: 400; color: #fff; letter-spacing: 0.09em\">BRIGHT</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 50,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 46,
+          "y": 486,
+          "width": 360,
+          "height": 146,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "d886c844-5b5c-4b27-a9c3-332df2aed3f3",
+          "content": "<span style=\"color: #28292b\">FRESH</span>\n&amp;&nbsp;\nBRIGHT"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "type": "shape",
+          "x": 28,
+          "y": 28,
+          "width": 108,
+          "height": 18,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "172bb862-1b07-4a72-8a06-e39177eeb0a7"
+        }
+      ],
+      "type": "page",
+      "id": "17fa9c85-89c7-47d0-a7a8-29f6ef56e161",
+      "defaultBackgroundElement": {
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "rotationAngle": 0,
+        "mask": {
+          "type": "rectangle"
+        },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "eaf6765f-8506-48c9-a526-15917b431464"
+      }
+    },
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 233,
+              "g": 213,
+              "b": 197
+            }
+          },
+          "isFill": false,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "ef056bde-fdc3-4f71-809a-e69c62ae914d",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 84,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 330,
+          "height": 552,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "53004538-6bca-4ac6-810e-18bd81e84276",
+          "id": "51e3dfb3-fe95-4132-ade1-cd226982cf68",
+          "x": 65,
+          "y": 28,
+          "content": "<span style=\"color: #fff; letter-spacing: 0.09em\">I</span>\n<span style=\"color: #fff; letter-spacing: 0.09em\">WOKE</span>\n<span style=\"color: #fff; letter-spacing: 0.09em\">UP</span>\n<span style=\"color: #fff; letter-spacing: 0.09em\">LIKE</span>\n<span style=\"color: #fff; letter-spacing: 0.09em\">THIS</span>\n<span style=\"color: #fff; letter-spacing: 0.09em\">”</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 84,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 56,
+          "y": 28,
+          "width": 330,
+          "height": 552,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "53004538-6bca-4ac6-810e-18bd81e84276",
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\">I\nWOKE\nUP\nLIKE\nTHIS\n”</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 40,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 110,
+          "y": 580,
+          "width": 202,
+          "height": 52,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "96e93ceb-accb-4c38-b603-7d616174e5d3",
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Beyoncé</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page2_heart.png",
+            "width": 28,
+            "height": 24,
+            "posterId": 0,
+            "id": 332,
+            "title": "beauty_page2_heart",
+            "alt": "beauty_page2_heart",
+            "local": false,
+            "sizes": []
+          },
+          "x": 73,
+          "y": 22,
+          "width": 54,
+          "height": 48,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "4a7f0df3-e082-4660-b7bb-652538550e7e"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page2_heart.png",
+            "width": 28,
+            "height": 24,
+            "posterId": 0,
+            "id": 332,
+            "title": "beauty_page2_heart",
+            "alt": "beauty_page2_heart",
+            "local": false,
+            "sizes": []
+          },
+          "width": 54,
+          "height": 48,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "4a7f0df3-e082-4660-b7bb-652538550e7e",
+          "id": "4be5961a-aeaf-4e24-8ac8-e50313949351",
+          "x": 38,
+          "y": 579
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page2_heart.png",
+            "width": 28,
+            "height": 24,
+            "posterId": 0,
+            "id": 332,
+            "title": "beauty_page2_heart",
+            "alt": "beauty_page2_heart",
+            "local": false,
+            "sizes": []
+          },
+          "width": 54,
+          "height": 48,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "4a7f0df3-e082-4660-b7bb-652538550e7e",
+          "id": "ce94c9cd-7342-4bfd-b1e6-38a3884833e7",
+          "x": 331,
+          "y": 66
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page2_heart.png",
+            "width": 28,
+            "height": 24,
+            "posterId": 0,
+            "id": 332,
+            "title": "beauty_page2_heart",
+            "alt": "beauty_page2_heart",
+            "local": false,
+            "sizes": []
+          },
+          "width": 54,
+          "height": 48,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "4a7f0df3-e082-4660-b7bb-652538550e7e",
+          "id": "0953215a-65ac-40b3-82f8-fada83f3359d",
+          "x": 56,
+          "y": 250
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page2_heart.png",
+            "width": 28,
+            "height": 24,
+            "posterId": 0,
+            "id": 332,
+            "title": "beauty_page2_heart",
+            "alt": "beauty_page2_heart",
+            "local": false,
+            "sizes": []
+          },
+          "width": 54,
+          "height": 48,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "4a7f0df3-e082-4660-b7bb-652538550e7e",
+          "id": "09136066-166c-4c25-8f32-a7704c688da8",
+          "x": 358,
+          "y": 545
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "65359a38-f1fa-4048-9b99-9415147b74d3"
+    },
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "f20aa1b3-6e99-4b87-9088-8fafd8d1f2b0",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_brush-1.png",
+            "width": 220,
+            "height": 169,
+            "posterId": 0,
+            "id": 345,
+            "title": "beauty_page3_brush",
+            "alt": "beauty_page3_brush",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page3_brush-1-300x230.png",
+                "width": 300,
+                "height": 230,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_brush-1-300x230.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page3_brush-1-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_brush-1-150x150.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "beauty_page3_brush-1-696x576.png",
+                "width": 696,
+                "height": 576,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_brush-1-696x576.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page3_brush-1-150x115.png",
+                "width": 150,
+                "height": 115,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_brush-1-150x115.png"
+              },
+              "full": {
+                "file": "beauty_page3_brush-1.png",
+                "width": 750,
+                "height": 576,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_brush-1.png"
+              }
+            }
+          },
+          "x": -1,
+          "y": 354,
+          "width": 441,
+          "height": 303,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "a26522e4-9881-4026-9141-c4dc8492bd35"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 216,
+              "g": 221,
+              "b": 204
+            }
+          },
+          "isFill": false,
+          "x": 161,
+          "y": 12,
+          "width": 187,
+          "height": 291,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "9f1b4f10-f779-4a36-9833-baef0c4530a4"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 216,
+              "g": 221,
+              "b": 204
+            }
+          },
+          "isFill": false,
+          "width": 196,
+          "height": 295,
+          "scale": 120,
+          "focalX": 60.636029423263835,
+          "focalY": 58.06001706624724,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "basedOn": "9f1b4f10-f779-4a36-9833-baef0c4530a4",
+          "id": "254e9e10-3f62-4e5a-8184-35f7aa9f15b8",
+          "x": 125,
+          "y": 45,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure.jpg",
+            "width": 220,
+            "height": 258,
+            "posterId": 0,
+            "id": 346,
+            "title": "beauty_page3_figure",
+            "alt": "beauty_page3_figure",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page3_figure-256x300.jpg",
+                "width": 256,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-256x300.jpg"
+              },
+              "large": {
+                "file": "beauty_page3_figure-873x1024.jpg",
+                "width": 873,
+                "height": 1024,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-873x1024.jpg"
+              },
+              "thumbnail": {
+                "file": "beauty_page3_figure-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "beauty_page3_figure-768x901.jpg",
+                "width": 768,
+                "height": 901,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-768x901.jpg"
+              },
+              "1536x1536": {
+                "file": "beauty_page3_figure-1310x1536.jpg",
+                "width": 1310,
+                "height": 1536,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-1310x1536.jpg"
+              },
+              "2048x2048": {
+                "file": "beauty_page3_figure-1746x2048.jpg",
+                "width": 1746,
+                "height": 2048,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-1746x2048.jpg"
+              },
+              "post-thumbnail": {
+                "file": "beauty_page3_figure-1200x1407.jpg",
+                "width": 1200,
+                "height": 1407,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-1200x1407.jpg"
+              },
+              "twentytwenty-fullscreen": {
+                "file": "beauty_page3_figure-1980x2322.jpg",
+                "width": 1980,
+                "height": 2322,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-1980x2322.jpg"
+              },
+              "web-stories-poster-portrait": {
+                "file": "beauty_page3_figure-696x928.jpg",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-696x928.jpg"
+              },
+              "web-stories-poster-square": {
+                "file": "beauty_page3_figure-928x928.jpg",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-928x928.jpg"
+              },
+              "web-stories-poster-landscape": {
+                "file": "beauty_page3_figure-928x696.jpg",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-928x696.jpg"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page3_figure-150x176.jpg",
+                "width": 150,
+                "height": 176,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-150x176.jpg"
+              },
+              "full": {
+                "file": "beauty_page3_figure-scaled.jpg",
+                "width": 2183,
+                "height": 2560,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_figure-scaled.jpg"
+              }
+            }
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 40,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 60,
+          "y": 408,
+          "width": 320,
+          "height": 80,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "8922e664-91d5-422d-86a8-8dda035c39d8",
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Sun Protection\nDone Right</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 77,
+          "y": 495,
+          "width": 285,
+          "height": 72,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "b93fdb3d-22a9-4f54-bcdc-5c9c0aa7117c",
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\">We’ve done our research so you don’t have to. These sheer sun screens protect your skin from UVA and UVBs while also posing no harm to the environment.</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com"
+          },
+          "fontSize": 15,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 160,
+          "height": 19,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "12bef1fe-a18d-4b9f-aa0b-fd718228e0fd",
+          "id": "ce4c387a-a263-4664-a978-f465a5fe668f",
+          "x": 140,
+          "y": 621,
+          "content": "<span style=\"color: rgba(0, 0, 0, 1)\"><span style=\"font-weight: 700\">See Full Story</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "isFill": false,
+          "width": 29,
+          "height": 29,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "circle"
+          },
+          "type": "shape",
+          "basedOn": "b4e310b4-3fde-429f-83c6-1d1a9893d358",
+          "id": "a5de4655-0ada-4352-bf98-b3956190f48b",
+          "x": 205.5,
+          "y": 584
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page3_arrow.png",
+            "width": 7,
+            "height": 3,
+            "posterId": 0,
+            "id": 350,
+            "title": "beauty_page3_arrow",
+            "alt": "beauty_page3_arrow",
+            "local": false,
+            "sizes": []
+          },
+          "x": 213,
+          "y": 595.5,
+          "width": 14,
+          "height": 6,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "977b09fd-6017-472d-a911-eef3457da13a"
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "e71288c8-1c09-4abd-8e59-db479c97cef2"
+    },
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "image",
+          "id": "98d7eb94-0a2d-4dff-b1bc-83b1487d37ee",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg.png",
+            "width": 220,
+            "height": 391,
+            "posterId": 0,
+            "id": 356,
+            "title": "beauty_page4_bg",
+            "alt": "beauty_page4_bg",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page4_bg-169x300.png",
+                "width": 169,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg-169x300.png"
+              },
+              "large": {
+                "file": "beauty_page4_bg-576x1024.png",
+                "width": 576,
+                "height": 1024,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg-576x1024.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page4_bg-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg-150x150.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "beauty_page4_bg-696x928.png",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg-696x928.png"
+              },
+              "web-stories-poster-square": {
+                "file": "beauty_page4_bg-750x928.png",
+                "width": 750,
+                "height": 928,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg-750x928.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "beauty_page4_bg-750x696.png",
+                "width": 750,
+                "height": 696,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg-750x696.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page4_bg-150x267.png",
+                "width": 150,
+                "height": 267,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg-150x267.png"
+              },
+              "full": {
+                "file": "beauty_page4_bg.png",
+                "width": 750,
+                "height": 1334,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page4_bg.png"
+              }
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 0.5
+            }
+          },
+          "isFill": false,
+          "x": 156.5,
+          "y": 449,
+          "width": 37,
+          "height": 37,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "circle"
+          },
+          "type": "shape",
+          "id": "98791375-1a20-4b01-8e12-cb8c3f9932ba"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page_4_heart.png",
+            "width": 11,
+            "height": 10,
+            "posterId": 0,
+            "id": 357,
+            "title": "beauty_page_4_heart",
+            "alt": "beauty_page_4_heart",
+            "local": false,
+            "sizes": []
+          },
+          "x": 165,
+          "y": 458.5,
+          "width": 20,
+          "height": 18,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "23b05054-ad0e-45c8-a6e0-e676cc94c2db"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 0.5
+            }
+          },
+          "isFill": false,
+          "width": 37,
+          "height": 37,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "circle"
+          },
+          "type": "shape",
+          "basedOn": "98791375-1a20-4b01-8e12-cb8c3f9932ba",
+          "id": "4b924f3a-045c-4675-9b79-383ebdd1466a",
+          "x": 56.5,
+          "y": 354
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page_4_heart.png",
+            "width": 11,
+            "height": 10,
+            "posterId": 0,
+            "id": 357,
+            "title": "beauty_page_4_heart",
+            "alt": "beauty_page_4_heart",
+            "local": false,
+            "sizes": []
+          },
+          "width": 20,
+          "height": 18,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "23b05054-ad0e-45c8-a6e0-e676cc94c2db",
+          "id": "c63e3e3d-5c3e-4d83-b0aa-e68e88b6e8b7",
+          "x": 65,
+          "y": 363.5
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 0.5
+            }
+          },
+          "isFill": false,
+          "width": 37,
+          "height": 37,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "circle"
+          },
+          "type": "shape",
+          "basedOn": "98791375-1a20-4b01-8e12-cb8c3f9932ba",
+          "id": "c24c76b4-6670-4377-9c1e-b1d66455b1f4",
+          "x": 201.5,
+          "y": 147
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page_4_heart.png",
+            "width": 11,
+            "height": 10,
+            "posterId": 0,
+            "id": 357,
+            "title": "beauty_page_4_heart",
+            "alt": "beauty_page_4_heart",
+            "local": false,
+            "sizes": []
+          },
+          "width": 20,
+          "height": 18,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "23b05054-ad0e-45c8-a6e0-e676cc94c2db",
+          "id": "db9e3510-ab36-46e7-b699-e38621f492ff",
+          "x": 210,
+          "y": 156.5
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 57,
+          "y": 9,
+          "width": 211,
+          "height": 124,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "2e187dbb-7a55-4b5f-8a74-5ea2cc4574d7"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 45,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 214,
+          "y": 126,
+          "width": 12,
+          "height": 12,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "fe8eace8-a864-4de2-9260-839bdd178e65"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 76,
+          "y": 25,
+          "width": 202,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "74deb240-66ad-43e1-986d-7c9201800001",
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Exfoliating Cream</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 75,
+          "y": 49,
+          "width": 137,
+          "height": 36,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "81f142c3-607d-416a-9ef8-b8d90bd334dd",
+          "content": "<span style=\"color: rgba(0, 0, 0, 1)\">Gently remove dull\nskin naturally</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 202,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "74deb240-66ad-43e1-986d-7c9201800001",
+          "id": "fe8c57c9-63eb-4c41-8cde-2f3b4dbb364f",
+          "x": 76,
+          "y": 98,
+          "content": "<span style=\"color: rgba(0, 0, 0, 1)\"><span style=\"font-weight: 900\">$38</span></span>"
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "31982a98-dcce-44b0-8280-15614e2b67f2",
+      "defaultBackgroundElement": {
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "rotationAngle": 0,
+        "mask": {
+          "type": "rectangle"
+        },
+        "backgroundColor": {
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "b9d953bb-b69e-4d97-a5b8-61136fe83c0f"
+      }
+    },
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 217,
+              "b": 225
+            }
+          },
+          "isFill": false,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "73511558-2879-461f-a983-d872d0436048",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 50,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 360,
+          "height": 150,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "25b6f99b-3f69-4351-9e18-31b8ef1d1a61",
+          "id": "65b49662-1ad8-4478-8fe9-98a7b60b2ea4",
+          "x": 42,
+          "y": 18,
+          "content": "<span style=\"color: #fff; letter-spacing: 0.09em\">GIFTS</span>\n<span style=\"color: #fff; letter-spacing: 0.09em\">FOR</span>\n<span style=\"color: #fff; letter-spacing: 0.09em\">UNDER</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 50,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 360,
+          "height": 146,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "d886c844-5b5c-4b27-a9c3-332df2aed3f3",
+          "id": "20f12482-ebbd-469f-a4da-315da300cbc1",
+          "x": 36,
+          "y": 18,
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(40, 41, 43, 1)\">GIFTS\nFOR\nUNDER</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 84,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 203,
+          "height": 84,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "6ef90019-01ac-420c-851a-bd9486cd9092",
+          "id": "e4be23ed-5219-4df3-8cde-5a9a2e571f8f",
+          "x": 128,
+          "y": 180,
+          "content": "<span style=\"color: #fff; letter-spacing: 0.09em\">$20</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 84,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 203,
+          "height": 84,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "20f12482-ebbd-469f-a4da-315da300cbc1",
+          "id": "6ef90019-01ac-420c-851a-bd9486cd9092",
+          "x": 118,
+          "y": 180,
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(40, 41, 43, 1)\">$20</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 84,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 95,
+          "height": 84,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "6ef90019-01ac-420c-851a-bd9486cd9092",
+          "id": "4aa7d17d-97f9-4588-bc76-cadae99f64a0",
+          "x": 15,
+          "y": 51,
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(40, 41, 43, 1)\">*</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 84,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 95,
+          "height": 84,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "4aa7d17d-97f9-4588-bc76-cadae99f64a0",
+          "id": "0ed12d81-7462-4451-9d8b-95dbc0f4591e",
+          "x": 331,
+          "y": 51,
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(40, 41, 43, 1)\">*</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_grid.png",
+            "width": 188,
+            "height": 163,
+            "posterId": 0,
+            "id": 374,
+            "title": "beauty_page5_grid",
+            "alt": "beauty_page5_grid",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page5_grid-300x260.png",
+                "width": 300,
+                "height": 260,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_grid-300x260.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page5_grid-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_grid-150x150.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page5_grid-150x130.png",
+                "width": 150,
+                "height": 130,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_grid-150x130.png"
+              },
+              "full": {
+                "file": "beauty_page5_grid.png",
+                "width": 375,
+                "height": 325,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_grid.png"
+              }
+            }
+          },
+          "x": 2,
+          "y": 343,
+          "width": 439,
+          "height": 378,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "58d034a2-aa25-4299-a845-2f100a14c460"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "x": 72,
+          "y": 300,
+          "width": 296,
+          "height": 360,
+          "scale": 100,
+          "focalX": 50.09652605991262,
+          "focalY": 57.52895834886181,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "91a4a6fc-9c99-49dd-a70b-cd31d0f8ad11",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4.jpg",
+            "width": 220,
+            "height": 330,
+            "posterId": 0,
+            "id": 378,
+            "title": "beauty_page5_figure",
+            "alt": "beauty_page5_figure",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page5_figure-4-200x300.jpg",
+                "width": 200,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-200x300.jpg"
+              },
+              "large": {
+                "file": "beauty_page5_figure-4-684x1024.jpg",
+                "width": 684,
+                "height": 1024,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-684x1024.jpg"
+              },
+              "thumbnail": {
+                "file": "beauty_page5_figure-4-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "beauty_page5_figure-4-768x1151.jpg",
+                "width": 768,
+                "height": 1151,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-768x1151.jpg"
+              },
+              "1536x1536": {
+                "file": "beauty_page5_figure-4-1025x1536.jpg",
+                "width": 1025,
+                "height": 1536,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-1025x1536.jpg"
+              },
+              "post-thumbnail": {
+                "file": "beauty_page5_figure-4-1200x1798.jpg",
+                "width": 1200,
+                "height": 1798,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-1200x1798.jpg"
+              },
+              "web-stories-poster-portrait": {
+                "file": "beauty_page5_figure-4-696x928.jpg",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-696x928.jpg"
+              },
+              "web-stories-poster-square": {
+                "file": "beauty_page5_figure-4-928x928.jpg",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-928x928.jpg"
+              },
+              "web-stories-poster-landscape": {
+                "file": "beauty_page5_figure-4-928x696.jpg",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-928x696.jpg"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page5_figure-4-150x225.jpg",
+                "width": 150,
+                "height": 225,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4-150x225.jpg"
+              },
+              "full": {
+                "file": "beauty_page5_figure-4.jpg",
+                "width": 1335,
+                "height": 2000,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page5_figure-4.jpg"
+              }
+            }
+          }
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "a31f98d0-13a5-4904-860b-61a6ce35d36c"
+    },
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "fe20d9ff-158b-4948-adae-cba1d9a2b25b",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 114,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 140,
+          "height": 114,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "6ef90019-01ac-420c-851a-bd9486cd9092",
+          "id": "53c22575-7ab2-4c00-931d-b0a8b68b7464",
+          "x": 150,
+          "y": 24,
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(40, 41, 43, 1)\">1</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 40,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 329,
+          "height": 52,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "96e93ceb-accb-4c38-b603-7d616174e5d3",
+          "id": "6db599ec-da49-4694-ad37-9384644b0f8d",
+          "x": 56,
+          "y": 154,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Natural Beauty</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 255,
+          "height": 36,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "b93fdb3d-22a9-4f54-bcdc-5c9c0aa7117c",
+          "id": "c7cb3455-9a2e-4af4-8098-e5f04567b377",
+          "x": 92,
+          "y": 223,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\">For that friend who barely wears makeup but likes to add a little sparkle.</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_grid.png",
+            "width": 133,
+            "height": 210,
+            "posterId": 0,
+            "id": 383,
+            "title": "beauty_page6_grid",
+            "alt": "beauty_page6_grid",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page6_grid-190x300.png",
+                "width": 190,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_grid-190x300.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page6_grid-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_grid-150x150.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page6_grid-150x236.png",
+                "width": 150,
+                "height": 236,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_grid-150x236.png"
+              },
+              "full": {
+                "file": "beauty_page6_grid.png",
+                "width": 266,
+                "height": 419,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_grid.png"
+              }
+            }
+          },
+          "x": 150,
+          "y": 266,
+          "width": 290,
+          "height": 455,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "3d78ac27-2fab-4f05-93c0-420c619f1a58"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 217,
+              "b": 225
+            }
+          },
+          "isFill": false,
+          "x": 42,
+          "y": 386,
+          "width": 274,
+          "height": 255,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "2c9f4240-6d4e-4c26-a62b-bb628a0ae34e"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_figure.jpg",
+            "width": 220,
+            "height": 174,
+            "posterId": 0,
+            "id": 382,
+            "title": "beauty_page6_figure",
+            "alt": "beauty_page6_figure",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page6_figure-300x237.jpg",
+                "width": 300,
+                "height": 237,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_figure-300x237.jpg"
+              },
+              "large": {
+                "file": "beauty_page6_figure-1024x808.jpg",
+                "width": 1024,
+                "height": 808,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_figure-1024x808.jpg"
+              },
+              "thumbnail": {
+                "file": "beauty_page6_figure-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_figure-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "beauty_page6_figure-768x606.jpg",
+                "width": 768,
+                "height": 606,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_figure-768x606.jpg"
+              },
+              "1536x1536": {
+                "file": "beauty_page6_figure-1536x1211.jpg",
+                "width": 1536,
+                "height": 1211,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_figure-1536x1211.jpg"
+              },
+              "full": {
+                "file": "beauty_page6_figure-scaled.jpg",
+                "width": 2560,
+                "height": 2019,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page6_figure-scaled.jpg"
+              }
+            }
+          },
+          "x": 97,
+          "y": 307,
+          "width": 263,
+          "height": 208,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "9fe9caa0-d046-40d2-8e22-a8a88fbbdbfd"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "x": 276,
+          "y": 558,
+          "width": 124,
+          "height": 46,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "d9cf345f-dd84-49c9-b652-20e31cd6d03a"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 258,
+          "y": 569,
+          "width": 160,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "b21c003f-d5ad-4829-8ebd-4fe39746ec36",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Buy Now</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 202,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "74deb240-66ad-43e1-986d-7c9201800001",
+          "id": "ef299f55-6f0c-4a50-80e4-254eb5d0e633",
+          "x": 98,
+          "y": 558,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Lid Shimmer $12</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 255,
+          "height": 17,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "c7cb3455-9a2e-4af4-8098-e5f04567b377",
+          "id": "d30b7bc0-5ff5-4fd0-87f2-970911904782",
+          "x": 98,
+          "y": 579,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\">website.com</span>"
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "173b610b-392d-4bd1-a3c4-747c7535ba5c"
+    },
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "17f22a0e-aae4-4eff-9cee-5020ca545950",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_grid.png",
+            "width": 220,
+            "height": 249,
+            "posterId": 0,
+            "id": 394,
+            "title": "beauty_page7_grid",
+            "alt": "beauty_page7_grid",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page7_grid-266x300.png",
+                "width": 266,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_grid-266x300.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page7_grid-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_grid-150x150.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "beauty_page7_grid-687x696.png",
+                "width": 687,
+                "height": 696,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_grid-687x696.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page7_grid-150x169.png",
+                "width": 150,
+                "height": 169,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_grid-150x169.png"
+              },
+              "full": {
+                "file": "beauty_page7_grid.png",
+                "width": 687,
+                "height": 776,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_grid.png"
+              }
+            }
+          },
+          "x": 55,
+          "y": 120,
+          "width": 385,
+          "height": 437,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "73ba67e8-9d2b-4ca0-9790-1f1a55cd7e5f"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 194,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 171,
+          "height": 194,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "53c22575-7ab2-4c00-931d-b0a8b68b7464",
+          "id": "aff7e56b-0116-4ce5-9d7d-4a67d53a3084",
+          "x": -67,
+          "y": 0,
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(40, 41, 43, 1)\">*</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 216,
+              "g": 221,
+              "b": 204
+            }
+          },
+          "isFill": false,
+          "x": -1,
+          "y": 419,
+          "width": 316,
+          "height": 240,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "66c7e85f-72de-4dda-93cd-c3d114332275"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 216,
+              "g": 221,
+              "b": 204
+            }
+          },
+          "isFill": false,
+          "width": 296,
+          "height": 259,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "66c7e85f-72de-4dda-93cd-c3d114332275",
+          "id": "6b601d9d-0aa0-4c11-8077-19881fb1f744",
+          "x": 144,
+          "y": 79
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "x": 190,
+          "y": 0,
+          "width": 211,
+          "height": 229,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "ca75cd7a-c9d1-48ac-8d4a-1268023e88d3",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1.jpg",
+            "width": 220,
+            "height": 275,
+            "posterId": 0,
+            "id": 395,
+            "title": "beauty_page7_product1",
+            "alt": "beauty_page7_product1",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page7_product1-1-240x300.jpg",
+                "width": 240,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1-240x300.jpg"
+              },
+              "large": {
+                "file": "beauty_page7_product1-1-819x1024.jpg",
+                "width": 819,
+                "height": 1024,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1-819x1024.jpg"
+              },
+              "thumbnail": {
+                "file": "beauty_page7_product1-1-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "beauty_page7_product1-1-768x960.jpg",
+                "width": 768,
+                "height": 960,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1-768x960.jpg"
+              },
+              "1536x1536": {
+                "file": "beauty_page7_product1-1-1229x1536.jpg",
+                "width": 1229,
+                "height": 1536,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1-1229x1536.jpg"
+              },
+              "2048x2048": {
+                "file": "beauty_page7_product1-1-1638x2048.jpg",
+                "width": 1638,
+                "height": 2048,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1-1638x2048.jpg"
+              },
+              "post-thumbnail": {
+                "file": "beauty_page7_product1-1-1200x1500.jpg",
+                "width": 1200,
+                "height": 1500,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1-1200x1500.jpg"
+              },
+              "full": {
+                "file": "beauty_page7_product1-1-scaled.jpg",
+                "width": 2048,
+                "height": 2560,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product1-1-scaled.jpg"
+              }
+            }
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "x": 54,
+          "y": 382,
+          "width": 304,
+          "height": 191,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "8e829ac4-0b1a-42b5-b519-a7941b98b768",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2.jpg",
+            "width": 220,
+            "height": 184,
+            "posterId": 0,
+            "id": 393,
+            "title": "beauty_page7_product2",
+            "alt": "beauty_page7_product2",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page7_product2-300x251.jpg",
+                "width": 300,
+                "height": 251,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-300x251.jpg"
+              },
+              "large": {
+                "file": "beauty_page7_product2-1024x858.jpg",
+                "width": 1024,
+                "height": 858,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-1024x858.jpg"
+              },
+              "thumbnail": {
+                "file": "beauty_page7_product2-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "beauty_page7_product2-768x643.jpg",
+                "width": 768,
+                "height": 643,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-768x643.jpg"
+              },
+              "1536x1536": {
+                "file": "beauty_page7_product2-1536x1287.jpg",
+                "width": 1536,
+                "height": 1287,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-1536x1287.jpg"
+              },
+              "2048x2048": {
+                "file": "beauty_page7_product2-2048x1716.jpg",
+                "width": 2048,
+                "height": 1716,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-2048x1716.jpg"
+              },
+              "post-thumbnail": {
+                "file": "beauty_page7_product2-1200x1005.jpg",
+                "width": 1200,
+                "height": 1005,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-1200x1005.jpg"
+              },
+              "twentytwenty-fullscreen": {
+                "file": "beauty_page7_product2-1980x1659.jpg",
+                "width": 1980,
+                "height": 1659,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-1980x1659.jpg"
+              },
+              "web-stories-poster-portrait": {
+                "file": "beauty_page7_product2-696x928.jpg",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-696x928.jpg"
+              },
+              "web-stories-poster-square": {
+                "file": "beauty_page7_product2-928x928.jpg",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-928x928.jpg"
+              },
+              "web-stories-poster-landscape": {
+                "file": "beauty_page7_product2-928x696.jpg",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-928x696.jpg"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page7_product2-150x126.jpg",
+                "width": 150,
+                "height": 126,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-150x126.jpg"
+              },
+              "full": {
+                "file": "beauty_page7_product2-scaled.jpg",
+                "width": 2560,
+                "height": 2145,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page7_product2-scaled.jpg"
+              }
+            }
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "width": 133,
+          "height": 46,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "1e41bc02-224e-4168-875c-82b101b868b8",
+          "id": "e7d293d9-09be-439d-a665-09a7d5427ce0",
+          "x": 54.5,
+          "y": 249
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 160,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "82945f20-87ab-4b75-84d8-4f177b7a2250",
+          "id": "61b7afa6-8306-4656-b0f6-b47a43350b9a",
+          "x": 41,
+          "y": 260,
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Buy Now</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 202,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "ef299f55-6f0c-4a50-80e4-254eb5d0e633",
+          "id": "ac0add24-bf97-46a4-abe0-1241f0e91a20",
+          "x": 57,
+          "y": 593,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Lid Shimmer $12</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 255,
+          "height": 17,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "d30b7bc0-5ff5-4fd0-87f2-970911904782",
+          "id": "479bdbea-1369-40c8-bcb7-96d82fb8b36c",
+          "x": 57,
+          "y": 614,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\">website.com</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 202,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "ac0add24-bf97-46a4-abe0-1241f0e91a20",
+          "id": "d07cf4f9-46d9-420c-aa06-ad4e406b7a42",
+          "x": 220,
+          "y": 249,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Lip Tattoo $18</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 255,
+          "height": 17,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "479bdbea-1369-40c8-bcb7-96d82fb8b36c",
+          "id": "6017e32e-c0fb-4ea3-8876-aaaa1b2bbef5",
+          "x": 220,
+          "y": 270,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\">website.com</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "width": 133,
+          "height": 46,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "e7d293d9-09be-439d-a665-09a7d5427ce0",
+          "id": "0bc138cd-b9ba-469c-b43b-8610b9b70565",
+          "x": 267.5,
+          "y": 595
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 160,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "61b7afa6-8306-4656-b0f6-b47a43350b9a",
+          "id": "3a38df92-03f4-4576-8d59-928c9412c39e",
+          "x": 254,
+          "y": 606,
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Buy Now</span></span>"
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "9845d2e8-8afe-448b-b7c7-ed1b5e30ab69"
+    },
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 217,
+              "b": 225
+            }
+          },
+          "isFill": false,
+          "x": 5,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "bc3bdf9d-3f6d-428c-be02-82e004339ab4",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 40,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 329,
+          "height": 79,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "6db599ec-da49-4694-ad37-9384644b0f8d",
+          "id": "7ad20266-6a32-4038-8ed7-d84b8f697532",
+          "x": 55,
+          "y": 72,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">TV Inspired\nMake-up</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 255,
+          "height": 52,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "c7cb3455-9a2e-4af4-8098-e5f04567b377",
+          "id": "3eafb106-5681-4bba-9eef-b162d3364486",
+          "x": 92,
+          "y": 165,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\">Want to look like Hunter Schafer from “Euphoria”? We got’chyu, plus looks from the rest of the cast.</span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 118,
+          "y": 268,
+          "width": 188,
+          "height": 253,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "1fd9e47b-c054-4966-8b5e-8288726a1463"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "x": 137,
+          "y": 254,
+          "width": 185,
+          "height": 246,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "7d267050-70a4-4fdb-849e-f91092d8fda4",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page8_figure.png",
+            "width": 370,
+            "height": 492,
+            "id": 409,
+            "title": "beauty_page8_figure",
+            "alt": "beauty_page8_figure",
+            "local": true
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "width": 133,
+          "height": 46,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "0bc138cd-b9ba-469c-b43b-8610b9b70565",
+          "id": "c01e32d0-fecd-4462-b8a5-9284fea75f78",
+          "x": 153.5,
+          "y": 554
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 160,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "3a38df92-03f4-4576-8d59-928c9412c39e",
+          "id": "a2cd4b99-da90-49e7-8a8d-25c54400b4a1",
+          "x": 140,
+          "y": 566,
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Get The Look</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 21,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "x": 39,
+          "y": 0,
+          "width": 710,
+          "height": 27,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "id": "609386ee-5a0f-4a59-b389-b3c639aa9f31",
+          "content": "<span style=\"letter-spacing: 0.0001em\"><span style=\"color: rgba(255, 255, 255, 1)\">trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend ☻ trend ☻ trend ☻ trend ☻</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 180,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 21,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 710,
+          "height": 27,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "609386ee-5a0f-4a59-b389-b3c639aa9f31",
+          "id": "c21af0fb-6b27-49b1-8bc4-ce7731829e9c",
+          "x": -305,
+          "y": 633,
+          "content": "<span style=\"letter-spacing: 0.0001em\"><span style=\"color: rgba(255, 255, 255, 1)\">☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ </span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 270,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 21,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 710,
+          "height": 27,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "c21af0fb-6b27-49b1-8bc4-ce7731829e9c",
+          "id": "2eb4a001-9928-4906-9f42-ffd85eb76479",
+          "x": -340,
+          "y": 248,
+          "content": "<span style=\"letter-spacing: 0.0001em\"><span style=\"color: rgba(255, 255, 255, 1)\">☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;tren</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 450,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 21,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 710,
+          "height": 27,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "2eb4a001-9928-4906-9f42-ffd85eb76479",
+          "id": "6eec651a-1637-4e28-8932-d4cf52e41976",
+          "x": 71,
+          "y": 382,
+          "content": "<span style=\"color: #fff\">☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;trend &nbsp;☻ &nbsp;tren</span>"
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "d605aece-b940-4ae4-8917-562ffba57c53"
+    },
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "isFill": false,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "d07dfc60-f3b6-4295-b687-012dd2cfdf8c",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "x": 53,
+          "y": 607,
+          "width": 411,
+          "height": 57,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "732e04d4-bf24-418d-b691-dbc606d72010"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Bungee Shade",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
+          },
+          "fontSize": 50,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 360,
+          "height": 97,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "20f12482-ebbd-469f-a4da-315da300cbc1",
+          "id": "2d2d9987-93c3-4c06-83c4-8e59dff41e48",
+          "x": 40,
+          "y": 0,
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(40, 41, 43, 1)\">MORE\nSTORIES</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story2-bg.png",
+            "width": 176,
+            "height": 71,
+            "posterId": 0,
+            "id": 420,
+            "title": "beauty_page9_story2-bg",
+            "alt": "beauty_page9_story2-bg",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page9_story2-bg-300x121.png",
+                "width": 300,
+                "height": 121,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story2-bg-300x121.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page9_story2-bg-150x142.png",
+                "width": 150,
+                "height": 142,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story2-bg-150x142.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page9_story2-bg-150x61.png",
+                "width": 150,
+                "height": 61,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story2-bg-150x61.png"
+              },
+              "full": {
+                "file": "beauty_page9_story2-bg.png",
+                "width": 351,
+                "height": 142,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story2-bg.png"
+              }
+            }
+          },
+          "x": 0,
+          "y": 275,
+          "width": 381,
+          "height": 153,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "fd69e4bf-ef28-4fa6-839d-967a712ffc82"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-bg.png",
+            "width": 186,
+            "height": 76,
+            "posterId": 0,
+            "id": 423,
+            "title": "beauty_page9_story3-bg",
+            "alt": "beauty_page9_story3-bg",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page9_story3-bg-300x123.png",
+                "width": 300,
+                "height": 123,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-bg-300x123.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page9_story3-bg-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-bg-150x150.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page9_story3-bg-150x61.png",
+                "width": 150,
+                "height": 61,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-bg-150x61.png"
+              },
+              "full": {
+                "file": "beauty_page9_story3-bg.png",
+                "width": 371,
+                "height": 152,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-bg.png"
+              }
+            }
+          },
+          "x": 10,
+          "y": 416,
+          "width": 453,
+          "height": 186,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "311dd65b-815e-4888-abfd-775d7ad40e56"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-bg.png",
+            "width": 188,
+            "height": 69,
+            "posterId": 0,
+            "id": 418,
+            "title": "beauty_page9_story1-bg",
+            "alt": "beauty_page9_story1-bg",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page9_story1-bg-300x110.png",
+                "width": 300,
+                "height": 110,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-bg-300x110.png"
+              },
+              "thumbnail": {
+                "file": "beauty_page9_story1-bg-150x137.png",
+                "width": 150,
+                "height": 137,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-bg-150x137.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page9_story1-bg-150x55.png",
+                "width": 150,
+                "height": 55,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-bg-150x55.png"
+              },
+              "full": {
+                "file": "beauty_page9_story1-bg.png",
+                "width": 375,
+                "height": 137,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-bg.png"
+              }
+            }
+          },
+          "x": 25,
+          "y": 124,
+          "width": 415,
+          "height": 150,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "c40c9f11-6997-40fc-bf5c-ac924b8cac3f"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "x": 58,
+          "y": 128,
+          "width": 107,
+          "height": 107,
+          "scale": 220,
+          "focalX": 29.72407681721303,
+          "focalY": 49.98987897855799,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "7fc72830-25a5-47a0-8228-d1adee50581e",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1.jpg",
+            "width": 220,
+            "height": 124,
+            "posterId": 0,
+            "id": 419,
+            "title": "beauty_page9_story1",
+            "alt": "beauty_page9_story1",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page9_story1-300x169.jpg",
+                "width": 300,
+                "height": 169,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-300x169.jpg"
+              },
+              "large": {
+                "file": "beauty_page9_story1-1024x576.jpg",
+                "width": 1024,
+                "height": 576,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-1024x576.jpg"
+              },
+              "thumbnail": {
+                "file": "beauty_page9_story1-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "beauty_page9_story1-768x432.jpg",
+                "width": 768,
+                "height": 432,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-768x432.jpg"
+              },
+              "1536x1536": {
+                "file": "beauty_page9_story1-1536x864.jpg",
+                "width": 1536,
+                "height": 864,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-1536x864.jpg"
+              },
+              "2048x2048": {
+                "file": "beauty_page9_story1-2048x1152.jpg",
+                "width": 2048,
+                "height": 1152,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-2048x1152.jpg"
+              },
+              "post-thumbnail": {
+                "file": "beauty_page9_story1-1200x675.jpg",
+                "width": 1200,
+                "height": 675,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-1200x675.jpg"
+              },
+              "twentytwenty-fullscreen": {
+                "file": "beauty_page9_story1-1980x1114.jpg",
+                "width": 1980,
+                "height": 1114,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-1980x1114.jpg"
+              },
+              "web-stories-poster-portrait": {
+                "file": "beauty_page9_story1-696x928.jpg",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-696x928.jpg"
+              },
+              "web-stories-poster-square": {
+                "file": "beauty_page9_story1-928x928.jpg",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-928x928.jpg"
+              },
+              "web-stories-poster-landscape": {
+                "file": "beauty_page9_story1-928x696.jpg",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-928x696.jpg"
+              },
+              "web_stories_thumbnail": {
+                "file": "beauty_page9_story1-150x84.jpg",
+                "width": 150,
+                "height": 84,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-150x84.jpg"
+              },
+              "full": {
+                "file": "beauty_page9_story1-scaled.jpg",
+                "width": 2560,
+                "height": 1440,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story1-scaled.jpg"
+              }
+            }
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "width": 107,
+          "height": 107,
+          "scale": 100,
+          "focalX": 50.133512681795565,
+          "focalY": 55.87449925401202,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "basedOn": "7fc72830-25a5-47a0-8228-d1adee50581e",
+          "id": "eb703bda-f03c-44b1-8df7-a7970252e4ea",
+          "x": 223,
+          "y": 291,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/beauty_page9_story2-2.jpg",
+            "width": 352,
+            "height": 528,
+            "id": 515,
+            "title": "beauty_page9_story2",
+            "alt": "beauty_page9_story2",
+            "local": false,
+            "sizes": {
+              "thumbnail": {
+                "height": 150,
+                "width": 150,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/beauty_page9_story2-2-150x150.jpg",
+                "orientation": "landscape"
+              },
+              "medium": {
+                "height": 300,
+                "width": 200,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/beauty_page9_story2-2-200x300.jpg",
+                "orientation": "portrait"
+              },
+              "large": {
+                "height": 870,
+                "width": 580,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/beauty_page9_story2-2-683x1024.jpg",
+                "orientation": "portrait"
+              },
+              "full": {
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/beauty_page9_story2-2.jpg",
+                "height": 1500,
+                "width": 1000,
+                "orientation": "portrait"
+              }
+            }
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "isFill": false,
+          "width": 107,
+          "height": 107,
+          "scale": 100,
+          "focalX": 50.133512681795544,
+          "focalY": 41.18825111898196,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "basedOn": "7fc72830-25a5-47a0-8228-d1adee50581e",
+          "id": "f36a0781-1fa1-4cf5-9d88-c5a4140f9e77",
+          "x": 53,
+          "y": 437,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1.jpg",
+            "width": 220,
+            "height": 330,
+            "posterId": 0,
+            "id": 425,
+            "title": "beauty_page9_story3",
+            "alt": "beauty_page9_story3",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "beauty_page9_story3-1-200x300.jpg",
+                "width": 200,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1-200x300.jpg"
+              },
+              "large": {
+                "file": "beauty_page9_story3-1-683x1024.jpg",
+                "width": 683,
+                "height": 1024,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1-683x1024.jpg"
+              },
+              "thumbnail": {
+                "file": "beauty_page9_story3-1-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "beauty_page9_story3-1-768x1152.jpg",
+                "width": 768,
+                "height": 1152,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1-768x1152.jpg"
+              },
+              "1536x1536": {
+                "file": "beauty_page9_story3-1-1024x1536.jpg",
+                "width": 1024,
+                "height": 1536,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1-1024x1536.jpg"
+              },
+              "2048x2048": {
+                "file": "beauty_page9_story3-1-1365x2048.jpg",
+                "width": 1365,
+                "height": 2048,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1-1365x2048.jpg"
+              },
+              "post-thumbnail": {
+                "file": "beauty_page9_story3-1-1200x1800.jpg",
+                "width": 1200,
+                "height": 1800,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1-1200x1800.jpg"
+              },
+              "full": {
+                "file": "beauty_page9_story3-1-scaled.jpg",
+                "width": 1707,
+                "height": 2560,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_story3-1-scaled.jpg"
+              }
+            }
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 200,
+          "height": 35,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "7ad20266-6a32-4038-8ed7-d84b8f697532",
+          "id": "e5f86bbb-dd3e-431a-aae3-5a8e00cf6d0f",
+          "x": 185,
+          "y": 162,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Top 10 Bronzing\nKits for Summer</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 200,
+          "height": 35,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "e5f86bbb-dd3e-431a-aae3-5a8e00cf6d0f",
+          "id": "6405d5d0-89ec-4f1e-976e-48eed941608d",
+          "x": 180,
+          "y": 475,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">Use the Fenty\nShade Finder</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 200,
+          "height": 35,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "e5f86bbb-dd3e-431a-aae3-5a8e00cf6d0f",
+          "id": "41f71d08-27df-4137-94b7-eaf0aec0d16c",
+          "x": 58,
+          "y": 320,
+          "content": "<span style=\"color: rgba(40, 41, 43, 1)\"><span style=\"font-weight: 900\">This Year’s\nK-Beauty Trends</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
+          "width": 100,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "type": "text",
+          "basedOn": "3a38df92-03f4-4576-8d59-928c9412c39e",
+          "id": "96a002db-b6ee-49f2-b8d1-53b1f016b397",
+          "x": 87,
+          "y": 622,
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 500\">Follow Us</span></span>"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_Instagram.png",
+            "width": 11,
+            "height": 12,
+            "posterId": 0,
+            "id": 417,
+            "title": "beauty_page9_Instagram",
+            "alt": "beauty_page9_Instagram",
+            "local": false,
+            "sizes": []
+          },
+          "x": 236,
+          "y": 621,
+          "width": 22,
+          "height": 24,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "894b9f6f-107e-4afc-8ca6-e725dd64b177"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_Facebook.png",
+            "width": 6,
+            "height": 11,
+            "posterId": 0,
+            "id": 416,
+            "title": "beauty_page9_Facebook",
+            "alt": "beauty_page9_Facebook",
+            "local": false,
+            "sizes": []
+          },
+          "x": 202,
+          "y": 623,
+          "width": 11,
+          "height": 20,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "835b8ddf-5343-4f4b-ae34-22a9be561226"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_Youtube.png",
+            "width": 13,
+            "height": 9,
+            "posterId": 0,
+            "id": 427,
+            "title": "beauty_page9_Youtube",
+            "alt": "beauty_page9_Youtube",
+            "local": false,
+            "sizes": []
+          },
+          "x": 281,
+          "y": 624,
+          "width": 25,
+          "height": 18,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "be1b7d59-0d27-45a1-a895-0a986c9887fc"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "isFill": false,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/beauty_page9_Twitter.png",
+            "width": 12,
+            "height": 10,
+            "posterId": 0,
+            "id": 426,
+            "title": "beauty_page9_Twitter",
+            "alt": "beauty_page9_Twitter",
+            "local": false,
+            "sizes": []
+          },
+          "x": 329,
+          "y": 623,
+          "width": 24,
+          "height": 20,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "c05c1df5-86f8-4455-8ef1-c2556787d6b0"
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "edf299b1-e35a-4049-9e66-a08dcee8b936"
+    }
+  ],
+  "autoAdvance": true,
+  "defaultPageDuration": 7
+}

@@ -30,9 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
-import { ReactComponent as NoneIcon } from '../../../icons/fill_none_icon.svg';
-import { ReactComponent as FilledIcon } from '../../../icons/fill_filled_icon.svg';
-import { ReactComponent as HighlightedIcon } from '../../../icons/fill_highlighted_icon.svg';
+import { FillNone, FillFilled, FillHighlighted } from '../../../icons/';
 import { Color, Label, Row, ToggleButton } from '../../form';
 import { useKeyDownEffect } from '../../keyboard';
 import { useCommonColorValue, getCommonValue } from '../utils';
@@ -65,17 +63,17 @@ const BUTTONS = [
   {
     mode: BACKGROUND_TEXT_MODE.NONE,
     label: __('None', 'web-stories'),
-    Icon: NoneIcon,
+    Icon: FillNone,
   },
   {
     mode: BACKGROUND_TEXT_MODE.FILL,
     label: __('Fill', 'web-stories'),
-    Icon: FilledIcon,
+    Icon: FillFilled,
   },
   {
     mode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
     label: __('Highlight', 'web-stories'),
-    Icon: HighlightedIcon,
+    Icon: FillHighlighted,
   },
 ];
 

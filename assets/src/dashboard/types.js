@@ -23,7 +23,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../edit-story/types';
-import { STORY_STATUS, TEMPLATES_GALLERY_STATUS } from './constants';
+import {
+  STORY_STATUS,
+  TEMPLATES_GALLERY_STATUS,
+  ALERT_SEVERITY,
+} from './constants';
 
 export const DashboardStatusesPropType = PropTypes.oneOf([
   ...Object.values(STORY_STATUS),
@@ -76,6 +80,10 @@ export const StoryActionsPropType = PropTypes.shape({
   updateStory: PropTypes.func,
 });
 
+export const TemplateActionsPropType = PropTypes.shape({
+  createStoryFromTemplate: PropTypes.func,
+});
+
 export const TotalStoriesByStatusPropType = PropTypes.shape({
   all: PropTypes.number,
   draft: PropTypes.number,
@@ -91,6 +99,12 @@ export const StoryMenuPropType = PropTypes.shape({
   handleMenuToggle: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
   handleMenuItemSelected: PropTypes.func.isRequired,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.oneOfType[(PropTypes.string, PropTypes.bool)],
+    })
+  ),
 });
 
 export const RenameStoryPropType = PropTypes.shape({
@@ -98,3 +112,7 @@ export const RenameStoryPropType = PropTypes.shape({
   id: PropTypes.number,
   handleCancelRename: PropTypes.func,
 });
+
+export const AlertSeveritiesPropType = PropTypes.oneOf(
+  Object.values(ALERT_SEVERITY)
+);

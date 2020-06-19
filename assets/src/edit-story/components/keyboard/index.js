@@ -84,7 +84,7 @@ function useKeyEffectInternal(
       }
       const mousetrap = getOrCreateMousetrap(node);
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
-      const handler = createKeyHandler(keySpec, batchingCallback);
+      const handler = createKeyHandler(node, keySpec, batchingCallback);
       mousetrap.bind(keySpec.key, handler, type);
       return () => {
         mousetrap.unbind(keySpec.key);
@@ -247,13 +247,14 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     shift = false,
     repeat = true,
     editable = false,
+    dialog = false,
   } = keySpec;
   const mappedKeys = []
     .concat(keyOrArray)
     .map((key) => keyDict[key] || key)
     .flat();
   const allKeys = addMods(mappedKeys, shift);
-  return { key: allKeys, shift, repeat, editable };
+  return { key: allKeys, shift, repeat, editable, dialog };
 }
 
 function addMods(keys, shift) {
@@ -264,7 +265,8 @@ function addMods(keys, shift) {
 }
 
 function createKeyHandler(
-  { repeat: repeatAllowed, editable: editableAllowed },
+  keyTarget,
+  { repeat: repeatAllowed, editable: editableAllowed, dialog: dialogAllowed },
   callback
 ) {
   return (evt) => {
@@ -273,6 +275,9 @@ function createKeyHandler(
       return undefined;
     }
     if (!editableAllowed && isEditableTarget(target)) {
+      return undefined;
+    }
+    if (!dialogAllowed && crossesDialogBoundary(target, keyTarget)) {
       return undefined;
     }
     callback(evt);
@@ -293,6 +298,18 @@ function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
     return !NON_EDITABLE_INPUT_TYPES.includes(type);
   }
   return false;
+}
+
+function crossesDialogBoundary(target, keyTarget) {
+  if (target.nodeType !== 1) {
+    // Not an element. Most likely a document node. The dialog search
+    // does not apply.
+    return false;
+  }
+  // Check if somewhere between `keyTarget` and `target` there's a
+  // dialog boundary.
+  const dialog = target.closest('dialog,[role="dialog"]');
+  return dialog && keyTarget !== dialog && keyTarget.contains(dialog);
 }
 
 /**

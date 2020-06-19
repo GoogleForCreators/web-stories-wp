@@ -30,15 +30,17 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Numeric, Row, ToggleButton } from '../../form';
-import { ReactComponent as VerticalOffset } from '../../../icons/offset_vertical.svg';
-import { ReactComponent as HorizontalOffset } from '../../../icons/offset_horizontal.svg';
-import { ReactComponent as LeftAlign } from '../../../icons/left_align.svg';
-import { ReactComponent as CenterAlign } from '../../../icons/center_align.svg';
-import { ReactComponent as RightAlign } from '../../../icons/right_align.svg';
-import { ReactComponent as MiddleAlign } from '../../../icons/middle_align.svg';
-import { ReactComponent as BoldIcon } from '../../../icons/bold_icon.svg';
-import { ReactComponent as ItalicIcon } from '../../../icons/italic_icon.svg';
-import { ReactComponent as UnderlineIcon } from '../../../icons/underline_icon.svg';
+import {
+  OffsetVertical,
+  OffsetHorizontal,
+  AlignLeftAlt,
+  AlignCenterAlt,
+  AlignMiddleAlt,
+  AlignRightAlt,
+  Bold,
+  Italic,
+  Underline,
+} from '../../../icons';
 import { getCommonValue } from '../utils';
 import { useFont } from '../../../app/font';
 import stripHTML from '../../../utils/stripHTML';
@@ -87,21 +89,21 @@ function StylePanel({ selectedElements, pushUpdate }) {
           aria-label={__('Line-height', 'web-stories')}
           float={true}
           value={lineHeight || 0}
-          suffix={<VerticalOffset />}
+          suffix={<OffsetVertical />}
           onChange={(value) => pushUpdate({ lineHeight: value })}
         />
         <Space />
         <ExpandedNumeric
           aria-label={__('Letter-spacing', 'web-stories')}
           value={letterSpacing}
-          suffix={<HorizontalOffset />}
+          suffix={<OffsetHorizontal />}
           symbol="%"
           onChange={handleSetLetterSpacing}
         />
       </Row>
       <Row>
         <ToggleButton
-          icon={<LeftAlign />}
+          icon={<AlignLeftAlt />}
           value={textAlign === 'left'}
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'left' : '' }, true)
@@ -109,7 +111,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           aria-label={__('Align: left', 'web-stories')}
         />
         <ToggleButton
-          icon={<CenterAlign />}
+          icon={<AlignCenterAlt />}
           value={textAlign === 'center'}
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'center' : '' }, true)
@@ -117,7 +119,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           aria-label={__('Align: center', 'web-stories')}
         />
         <ToggleButton
-          icon={<RightAlign />}
+          icon={<AlignRightAlt />}
           value={textAlign === 'right'}
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'right' : '' }, true)
@@ -125,7 +127,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           aria-label={__('Align: right', 'web-stories')}
         />
         <ToggleButton
-          icon={<MiddleAlign />}
+          icon={<AlignMiddleAlt />}
           value={textAlign === 'justify'}
           onChange={(value) =>
             pushUpdate({ textAlign: value ? 'justify' : '' }, true)
@@ -134,7 +136,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
         />
         <ToggleButton
           data-testid="boldToggle"
-          icon={<BoldIcon />}
+          icon={<Bold />}
           value={isBold}
           iconWidth={9}
           iconHeight={10}
@@ -142,7 +144,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           aria-label={__('Toggle: bold', 'web-stories')}
         />
         <ToggleButton
-          icon={<ItalicIcon />}
+          icon={<Italic />}
           value={isItalic}
           iconWidth={10}
           iconHeight={10}
@@ -162,7 +164,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           aria-label={__('Toggle: italic', 'web-stories')}
         />
         <ToggleButton
-          icon={<UnderlineIcon />}
+          icon={<Underline />}
           value={isUnderline}
           iconWidth={8}
           iconHeight={21}

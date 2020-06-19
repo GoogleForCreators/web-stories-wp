@@ -35,9 +35,23 @@ import useUploadWithPreview from './useUploadWithPreview';
 
 function useCanvasGlobalKeys() {
   const {
-    state: { currentPage, selectedElements },
-    actions: { addElements, deleteSelectedElements },
-  } = useStory();
+    currentPage,
+    selectedElements,
+    addElements,
+    deleteSelectedElements,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElements },
+      actions: { addElements, deleteSelectedElements },
+    }) => {
+      return {
+        currentPage,
+        selectedElements,
+        addElements,
+        deleteSelectedElements,
+      };
+    }
+  );
 
   const uploadWithPreview = useUploadWithPreview();
 

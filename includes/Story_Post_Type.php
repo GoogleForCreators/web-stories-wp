@@ -72,7 +72,7 @@ class Story_Post_Type {
 	const PUBLISHER_LOGO_PLACEHOLDER = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
 
 	/**
-	 * Registers the post type to store URLs with validation errors.
+	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
 	 *
@@ -85,7 +85,7 @@ class Story_Post_Type {
 				'labels'                => [
 					'name'                     => _x( 'Stories', 'post type general name', 'web-stories' ),
 					'singular_name'            => _x( 'Story', 'post type singular name', 'web-stories' ),
-					'add_new'                  => _x( 'New', 'story', 'web-stories' ),
+					'add_new'                  => _x( 'Add New', 'story', 'web-stories' ),
 					'add_new_item'             => __( 'Add New Story', 'web-stories' ),
 					'edit_item'                => __( 'Edit Story', 'web-stories' ),
 					'new_item'                 => __( 'New Story', 'web-stories' ),
@@ -121,7 +121,6 @@ class Story_Post_Type {
 					'editor',
 					'excerpt',
 					'thumbnail', // Used for poster images.
-					'web-stories',
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
 				],
 				'rewrite'               => [
@@ -137,28 +136,33 @@ class Story_Post_Type {
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
 		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
-		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
-		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', [ __CLASS__, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
 
-		// @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
-		add_filter(
-			'amp_skip_post',
-			static function( $skipped, $post ) {
-				if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-					$skipped = true;
-				}
-				return $skipped;
-			},
-			PHP_INT_MAX,
-			2
-		);
+		add_filter( 'amp_skip_post', [ __CLASS__, 'skip_amp' ], PHP_INT_MAX, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * AMP plugin compatibility.
+	 *
+	 * @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
+	 *
+	 * @param bool    $skipped Should this post type be skipped.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return bool
+	 */
+	public static function skip_amp( $skipped, $post ) {
+		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
+			$skipped = true;
+		}
+		return $skipped;
 	}
 
 	/**
@@ -228,6 +232,24 @@ class Story_Post_Type {
 		}
 
 		return $replace;
+	}
+
+	/**
+	 * Filters whether post type supports the block editor.
+	 *
+	 * Disables the block editor and associated logic (like enqueueing assets)
+	 * for the story post type.
+	 *
+	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string $post_type         The post type being checked.
+	 * @return bool Whether to use the block editor.
+	 */
+	public static function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+		if ( self::POST_TYPE_SLUG === $post_type ) {
+			return false;
+		}
+
+		return $use_block_editor;
 	}
 
 	/**
@@ -369,177 +391,80 @@ class Story_Post_Type {
 			],
 			'flags'  => [
 				/**
+				 * Description: Enables user facing animations.
+				 * Author: @mariano-formidable
+				 * Issue: 1903
+				 * Creation date: 2020-06-08
+				 */
+				'enableAnimation'              => false,
+				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu' => false,
+				'mediaDropdownMenu'            => false,
 				/**
 				 * Description: Flag for new font picker with typeface previews in style panel.
 				 * Author: @carlos-kelly
 				 * Issue: #1300
 				 * Creation date: 2020-06-02
 				 */
-				'newFontPicker'     => false,
+				'newFontPicker'                => false,
+				/**
+				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
+				 * Author: @dmmulroy
+				 * Issue: #2094
+				 * Creation date: 2020-06-04
+				 */
+				'showKeyboardShortcutsButton'  => false,
+				/**
+				 * Description: Flag for hiding/enabling text sets.
+				 * Author: @dmmulroy
+				 * Issue: #2097
+				 * Creation date: 2020-06-04
+				 */
+				'showTextSets'                 => false,
+				/**
+				 * Description: Flag for hiding/enabling the pre publish tab.
+				 * Author: @dmmulroy
+				 * Issue: #2095
+				 * Creation date: 2020-06-04
+				 */
+				'showPrePublishTab'            => false,
+				/**
+				 * Description: Flag for displaying the animation tab/panel.
+				 * Author: @dmmulroy
+				 * Issue: #2092
+				 * Creation date: 2020-06-04
+				 */
+				'showAnimationTab'             => false,
+				/**
+				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
+				 * Author: @dmmulroy
+				 * Issue: #2044
+				 * Creation date: 2020-06-04
+				 */
+				'showTextMagicAndHelperMode'   => false,
+				/**
+				 * Description: Flag for hiding/enabling the search input on the text and shapes panes.
+				 * Author: @dmmulroy
+				 * Issue: #2098
+				 * Creation date: 2020-06-04
+				 */
+				'showTextAndShapesSearchInput' => false,
+				/**
+				 * Description: Flag for the 3P Media tab.
+				 * Author: @diegovar
+				 * Issue: #2508
+				 * Creation date: 2020-06-17
+				 */
+				'media3pTab'                   => false,
 			],
+
 		];
 
 		return $settings;
-	}
-
-	/**
-	 * Filter the list of admin classes.
-	 *
-	 * @param string $class Current classes.
-	 *
-	 * @return string $class List of Classes.
-	 */
-	public static function admin_body_class( $class ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return $class;
-		}
-
-		if ( self::POST_TYPE_SLUG !== $screen->post_type ) {
-			return $class;
-		}
-
-		$class .= ' edit-story';
-
-		// Overrides regular WordPress behavior by collapsing the admin menu by default.
-		if ( false === strpos( $class, 'folded' ) ) {
-			$class .= ' folded';
-		}
-
-		return $class;
-	}
-
-	/**
-	 * Filter the allowed tags for KSES to allow for amp-story children.
-	 *
-	 * @param array|string $allowed_tags Allowed tags.
-	 *
-	 * @return array|string Allowed tags.
-	 */
-	public static function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! is_array( $allowed_tags ) ) {
-			return $allowed_tags;
-		}
-
-		$story_components = [
-			'amp-story'                 => [
-				'background-audio'     => true,
-				'live-story'           => true,
-				'live-story-disabled'  => true,
-				'poster-landscape-src' => true,
-				'poster-portrait-src'  => true,
-				'poster-square-src'    => true,
-				'publisher'            => true,
-				'publisher-logo-src'   => true,
-				'standalone'           => true,
-				'supports-landscape'   => true,
-				'title'                => true,
-			],
-			'amp-story-page'            => [
-				'auto-advance-after' => true,
-				'background-audio'   => true,
-				'id'                 => true,
-			],
-			'amp-story-page-attachment' => [
-				'theme' => true,
-			],
-			'amp-story-grid-layer'      => [
-				'position' => true,
-				'template' => true,
-			],
-			'amp-story-cta-layer'       => [],
-			'amp-img'                   => [
-				'alt'                       => true,
-				'attribution'               => true,
-				'data-amp-bind-alt'         => true,
-				'data-amp-bind-attribution' => true,
-				'data-amp-bind-src'         => true,
-				'data-amp-bind-srcset'      => true,
-				'lightbox'                  => true,
-				'lightbox-thumbnail-id'     => true,
-				'media'                     => true,
-				'noloading'                 => true,
-				'object-fit'                => true,
-				'object-position'           => true,
-				'placeholder'               => true,
-				'src'                       => true,
-				'srcset'                    => true,
-			],
-			'amp-video'                 => [
-				'album'                      => true,
-				'alt'                        => true,
-				'artist'                     => true,
-				'artwork'                    => true,
-				'attribution'                => true,
-				'autoplay'                   => true,
-				'controls'                   => true,
-				'controlslist'               => true,
-				'crossorigin'                => true,
-				'data-amp-bind-album'        => true,
-				'data-amp-bind-alt'          => true,
-				'data-amp-bind-artist'       => true,
-				'data-amp-bind-artwork'      => true,
-				'data-amp-bind-attribution'  => true,
-				'data-amp-bind-controls'     => true,
-				'data-amp-bind-controlslist' => true,
-				'data-amp-bind-loop'         => true,
-				'data-amp-bind-poster'       => true,
-				'data-amp-bind-preload'      => true,
-				'data-amp-bind-src'          => true,
-				'data-amp-bind-title'        => true,
-				'disableremoteplayback'      => true,
-				'dock'                       => true,
-				'lightbox'                   => true,
-				'lightbox-thumbnail-id'      => true,
-				'loop'                       => true,
-				'media'                      => true,
-				'muted'                      => true,
-				'noaudio'                    => true,
-				'noloading'                  => true,
-				'object-fit'                 => true,
-				'object-position'            => true,
-				'placeholder'                => true,
-				'poster'                     => true,
-				'preload'                    => true,
-				'rotate-to-fullscreen'       => true,
-				'src'                        => true,
-			],
-			'img'                       => [
-				'alt'           => true,
-				'attribution'   => true,
-				'border'        => true,
-				'decoding'      => true,
-				'height'        => true,
-				'importance'    => true,
-				'intrinsicsize' => true,
-				'ismap'         => true,
-				'loading'       => true,
-				'longdesc'      => true,
-				'sizes'         => true,
-				'src'           => true,
-				'srcset'        => true,
-				'srcwidth'      => true,
-			],
-		];
-
-		$allowed_tags = array_merge( $allowed_tags, $story_components );
-
-		foreach ( $allowed_tags as &$allowed_tag ) {
-			$allowed_tag['animate-in']          = true;
-			$allowed_tag['animate-in-duration'] = true;
-			$allowed_tag['animate-in-delay']    = true;
-			$allowed_tag['animate-in-after']    = true;
-			$allowed_tag['layout']              = true;
-		}
-
-		return $allowed_tags;
 	}
 
 	/**

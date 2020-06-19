@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -45,7 +45,10 @@ function useUploader() {
     allowedFileTypes,
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  const allowedMimeTypes = useMemo(
+    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
+    [allowedImageMimeTypes, allowedVideoMimeTypes]
+  );
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
@@ -68,57 +71,69 @@ function useUploader() {
    *
    * @param {Object} file File object.
    */
-  const uploadFile = (file) => {
-    if (!hasUploadMediaAction) {
-      const message = __(
-        'Sorry, you are unable to upload files.',
-        'web-stories'
-      );
-      const permissionError = createError(
-        'PermissionError',
-        file.name,
-        message
-      );
-
-      throw permissionError;
-    }
-    if (!fileSizeCheck(file)) {
-      const message = sprintf(
-        /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
-        __(
-          'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
+  const uploadFile = useCallback(
+    (file) => {
+      if (!hasUploadMediaAction) {
+        const message = __(
+          'Sorry, you are unable to upload files.',
           'web-stories'
-        ),
-        bytesToMB(file.size),
-        bytesToMB(maxUpload)
-      );
-      const sizeError = createError('SizeError', file.name, message);
+        );
+        const permissionError = createError(
+          'PermissionError',
+          file.name,
+          message
+        );
 
-      throw sizeError;
-    }
+        throw permissionError;
+      }
+      if (!fileSizeCheck(file)) {
+        const message = sprintf(
+          /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
+          __(
+            'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
+            'web-stories'
+          ),
+          bytesToMB(file.size),
+          bytesToMB(maxUpload)
+        );
+        const sizeError = createError('SizeError', file.name, message);
 
-    if (!isValidType(file)) {
-      /* translators: %s is a list of allowed file extensions. */
-      const message = sprintf(
-        /* translators: %s: list of allowed file types. */
-        __('Please choose only %s to upload.', 'web-stories'),
-        allowedFileTypes.join(
-          /* translators: delimiter used in a list */
-          __(', ', 'web-stories')
-        )
-      );
+        throw sizeError;
+      }
 
-      const validError = createError('ValidError', file.name, message);
+      if (!isValidType(file)) {
+        /* translators: %s is a list of allowed file extensions. */
+        const message = sprintf(
+          /* translators: %s: list of allowed file types. */
+          __('Please choose only %s to upload.', 'web-stories'),
+          allowedFileTypes.join(
+            /* translators: delimiter used in a list */
+            __(', ', 'web-stories')
+          )
+        );
 
-      throw validError;
-    }
+        const validError = createError('ValidError', file.name, message);
 
-    const additionalData = {
-      post: storyId,
-    };
+        throw validError;
+      }
 
-    return uploadMedia(file, additionalData);
-  };
+      const additionalData = {
+        post: storyId,
+        media_source: 'editor',
+      };
+
+      return uploadMedia(file, additionalData);
+    },
+    [
+      allowedFileTypes,
+      fileSizeCheck,
+      hasUploadMediaAction,
+      isValidType,
+      maxUpload,
+      uploadMedia,
+      storyId,
+    ]
+  );
 
   return {
     uploadFile,

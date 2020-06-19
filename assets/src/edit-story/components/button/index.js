@@ -20,19 +20,22 @@
 import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as UndoIcon } from '../../icons/undo.svg';
-import { ReactComponent as RedoIcon } from '../../icons/redo.svg';
-import { ReactComponent as LeftArrowIcon } from '../../icons/arrow_left.svg';
-import { ReactComponent as RightArrowIcon } from '../../icons/arrow_right.svg';
-import { ReactComponent as GridViewIcon } from '../../icons/grid_view.svg';
-import { ReactComponent as KeyboardIcon } from '../../icons/keyboard.svg';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
-import { ReactComponent as EyedropperIcon } from '../../icons/eyedropper.svg';
-import { ReactComponent as MoreIcon } from '../../icons/more_horiz.svg';
+import {
+  Undo as UndoIcon,
+  Redo as RedoIcon,
+  ArrowLeft as ArrowLeftIcon,
+  ArrowRight as ArrowRightIcon,
+  GridView as GridViewIcon,
+  Keyboard as KeyboardIcon,
+  Close as CloseIcon,
+  Eyedropper as EyedropperIcon,
+  More as MoreIcon,
+} from '../../icons';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,
@@ -43,11 +46,13 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   background: transparent;
   display: inline-block;
   min-width: ${({ isIcon }) => (isIcon ? 'initial' : '63px')};
-  line-height: 28px;
   max-height: 30px;
   padding: 0 10px;
   cursor: pointer;
-  font-size: 14px;
+  text-decoration: none;
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: 28px;
   text-decoration: none;
 
   &:active {
@@ -91,7 +96,7 @@ const StyledButtonWithOpacity = styled(StyledButton)`
   }
 `;
 
-export const Primary = styled(Base)`
+const PrimaryButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.action};
   background-color: ${({ theme }) => theme.colors.action};
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -102,7 +107,7 @@ export const Primary = styled(Base)`
   }
 `;
 
-export const Secondary = styled(Base)`
+const SecondaryButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v1};
   background-color: ${({ theme }) => theme.colors.fg.v3};
   color: ${({ theme }) => theme.colors.bg.v5};
@@ -113,7 +118,7 @@ export const Secondary = styled(Base)`
   }
 `;
 
-export const Outline = styled(Base)`
+const OutlineButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v4};
   color: ${({ theme }) => theme.colors.fg.v1};
   &:focus,
@@ -123,7 +128,7 @@ export const Outline = styled(Base)`
   }
 `;
 
-export const Plain = styled(Base)`
+const PlainButton = styled(Base)`
   color: ${({ theme }) => theme.colors.action};
   border: none;
   transition: background-color 0.6s ease;
@@ -132,7 +137,9 @@ export const Plain = styled(Base)`
   padding: 4px 14px;
   height: auto;
   font-weight: 500;
-  font-size: 16px;
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 
   &:hover {
     background-color: ${({ theme }) => rgba(theme.colors.action, 0.15)};
@@ -141,13 +148,13 @@ export const Plain = styled(Base)`
 
 export const LeftArrow = (props) => (
   <StyledButtonWithOpacity {...props}>
-    <LeftArrowIcon />
+    <ArrowLeftIcon />
   </StyledButtonWithOpacity>
 );
 
 export const RightArrow = (props) => (
   <StyledButtonWithOpacity {...props}>
-    <RightArrowIcon />
+    <ArrowRightIcon />
   </StyledButtonWithOpacity>
 );
 
@@ -192,3 +199,82 @@ export const More = forwardRef((props, ref) => (
     <MoreIcon />
   </StyledButton>
 ));
+
+export const BUTTON_TYPES = {
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+  OUTLINE: 'outline',
+  PLAIN: 'plain',
+};
+
+export const Primary = ({ children, ...rest }) => {
+  return (
+    <Button type={BUTTON_TYPES.PRIMARY} {...rest}>
+      {children}
+    </Button>
+  );
+};
+
+Primary.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export const Secondary = ({ children, ...rest }) => {
+  return (
+    <Button type={BUTTON_TYPES.SECONDARY} {...rest}>
+      {children}
+    </Button>
+  );
+};
+
+Secondary.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export const Outline = ({ children, ...rest }) => {
+  return (
+    <Button type={BUTTON_TYPES.OUTLINE} {...rest}>
+      {children}
+    </Button>
+  );
+};
+
+Outline.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export const Plain = ({ children, ...rest }) => {
+  return (
+    <Button type={BUTTON_TYPES.PLAIN} {...rest}>
+      {children}
+    </Button>
+  );
+};
+
+Plain.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+const Button = ({ children, type = BUTTON_TYPES.PRIMARY, ...rest }) => {
+  const ButtonOptions = {
+    [BUTTON_TYPES.PRIMARY]: PrimaryButton,
+    [BUTTON_TYPES.SECONDARY]: SecondaryButton,
+    [BUTTON_TYPES.OUTLINE]: OutlineButton,
+    [BUTTON_TYPES.PLAIN]: PlainButton,
+  };
+
+  const isLink = rest.href !== undefined;
+
+  const StyledButtonByType = ButtonOptions[type];
+
+  return (
+    <StyledButtonByType as={isLink ? 'a' : 'button'} {...rest}>
+      {children}
+    </StyledButtonByType>
+  );
+};
+
+Button.propTypes = {
+  type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
+  children: PropTypes.node.isRequired,
+};

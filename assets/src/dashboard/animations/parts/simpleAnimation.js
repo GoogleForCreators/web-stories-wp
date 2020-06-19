@@ -29,6 +29,11 @@ import createKeyframeEffect from '../utils/createKeyframeEffect';
 import { WAAPIAnimationProps, AMPAnimationProps } from './types';
 import FullSizeAbsolute from './components/fullSizeAbsolute';
 
+const sanitizeTimings = (timings) => ({
+  ...timings,
+  easing: timings.easing || 'linear',
+});
+
 function SimpleAnimation(
   animationName,
   keyframes,
@@ -44,12 +49,16 @@ function SimpleAnimation(
       if (!target.current) {
         return () => {};
       }
-      const effect = createKeyframeEffect(target.current, keyframes, timings);
+      const effect = createKeyframeEffect(
+        target.current,
+        keyframes,
+        sanitizeTimings(timings)
+      );
       return hoistAnimation(new Animation(effect, document.timeline));
     }, [hoistAnimation]);
 
     return useClippingContainer ? (
-      <FullSizeAbsolute style={{ overflow: 'hidden' }}>
+      <FullSizeAbsolute overflowHidden={useClippingContainer}>
         <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
       </FullSizeAbsolute>
     ) : (
@@ -59,7 +68,7 @@ function SimpleAnimation(
 
   WAAPIAnimation.propTypes = WAAPIAnimationProps;
 
-  const AMPTarget = function ({ children, style }) {
+  const AMPTarget = function ({ children, style = {} }) {
     const options = useClippingContainer
       ? {
           useClippingContainer: useClippingContainer,
@@ -82,11 +91,10 @@ function SimpleAnimation(
 
   AMPTarget.propTypes = AMPAnimationProps;
 
-  const AMPAnimation = function ({ prefixId }) {
+  const AMPAnimation = function () {
     return (
       <AnimationOutput
-        animation={`${prefixId}-${animationName}`}
-        config={{ selector: `#anim-${id}`, ...timings }}
+        config={{ selector: `#anim-${id}`, keyframes, ...timings }}
       />
     );
   };

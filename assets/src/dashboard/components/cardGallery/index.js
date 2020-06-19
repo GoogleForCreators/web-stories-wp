@@ -130,7 +130,7 @@ function CardGallery({ story }) {
           <ActiveCard {...metrics.activeCardSize}>
             <PreviewPage
               page={pages[activePageIndex]}
-              animationState={STORY_PAGE_STATE.ANIMATE}
+              animationState={STORY_PAGE_STATE.PLAYING}
             />
           </ActiveCard>
         </UnitsProvider>

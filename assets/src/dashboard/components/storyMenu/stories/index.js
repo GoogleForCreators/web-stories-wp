@@ -24,6 +24,7 @@ import { actions } from '@storybook/addon-actions';
  */
 import { useState } from 'react';
 import StoryMenu, { MoreVerticalButton } from '..';
+import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
 
 const Container = styled.div`
   margin: 200px 0 0 50px;
@@ -54,6 +55,7 @@ export const _default = () => {
           actions('onClick ', item.label, story.id);
           setContextMenuId(-1);
         }}
+        menuItems={STORY_CONTEXT_MENU_ITEMS}
         story={{ id: 1, status: 'publish', title: 'Sample Story' }}
       />
     </Container>

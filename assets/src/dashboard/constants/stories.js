@@ -38,6 +38,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Preview', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.PREVIEW,
+    inProgress: true,
   },
   { label: null, value: false, separator: true },
   {
@@ -51,6 +52,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Create Template', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE,
+    inProgress: true,
   },
   { label: null, value: false, separator: true },
   {
@@ -133,6 +135,8 @@ export const STORY_VIEWING_LABELS = {
 };
 
 export const STORY_PAGE_STATE = {
-  IDLE: 'idle',
-  ANIMATE: 'animate',
+  RESET: 'reset',
+  PAUSED: 'paused',
+  SCRUBBING: 'scrubbing',
+  PLAYING: 'playing',
 };

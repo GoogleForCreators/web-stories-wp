@@ -130,6 +130,6 @@ describe('TextFrame: enter edit mode', () => {
 
     expect(
       editingElementContext.setEditingElementWithState
-    ).toHaveBeenCalledWith('1', { clearContent: true });
+    ).toHaveBeenCalledWith('1', { selectAll: true });
   });
 });
