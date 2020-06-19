@@ -292,7 +292,7 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
-		$settings = self::get_editor_settings();
+		$settings = $this->get_editor_settings();
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,

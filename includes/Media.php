@@ -321,7 +321,7 @@ class Media {
 		$id    = $prepared['featured_media'];
 		$image = [];
 		if ( $id ) {
-			$image = self::get_thumbnail_data( $id );
+			$image = $this->get_thumbnail_data( $id );
 		}
 
 		return $image;
@@ -340,7 +340,7 @@ class Media {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
 			if ( 0 !== $thumbnail_id ) {
-				$image = self::get_thumbnail_data( $thumbnail_id );
+				$image = $this->get_thumbnail_data( $thumbnail_id );
 			}
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
@@ -406,7 +406,7 @@ class Media {
 	 * @return array List of allowed file types.
 	 */
 	public function get_allowed_file_types() {
-		$allowed_mime_types = self::get_allowed_mime_types();
+		$allowed_mime_types = $this->get_allowed_mime_types();
 		$mime_types         = [];
 
 		foreach ( $allowed_mime_types as $mimes ) {
