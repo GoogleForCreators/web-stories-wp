@@ -43,12 +43,11 @@ jobs:
 
       - name: Add files for snapshotting
         run: cp -r __static__ .test_artifacts/karma_snapshots/
-      #
-      # Disable Percy until the license is fully set up.
-      # - name: Upload Percy snapshots
-      #   uses: percy/snapshot-action@v0.1.1
-      #   with:
-      #     build-directory: '.test_artifacts/karma_snapshots'
-      #     flags: '--config=percy.config.yml'
-      #   env:
-      #    PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
+      - name: Upload Percy snapshots
+        uses: percy/snapshot-action@v0.1.1
+        with:
+          build-directory: '.test_artifacts/karma_snapshots'
+          flags: '--config=percy.config.yml'
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
