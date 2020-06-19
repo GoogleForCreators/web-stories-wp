@@ -42,7 +42,7 @@ import useCanvas from './useCanvas';
  */
 
 export const Z_INDEX = {
-  NAV: 0,
+  NAV: 1,
   EDIT: 2,
 };
 
