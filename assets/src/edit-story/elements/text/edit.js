@@ -54,6 +54,7 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 // easier to see.
 const Wrapper = styled.div`
   ${elementFillContent}
+  background-color: ${({ theme }) => theme.colors.whiteout};
 
   &::after {
     content: '';
@@ -66,7 +67,6 @@ const Wrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.mg.v1}70;
     pointer-events: none;
   }
-  background-color: ${({ theme }) => theme.colors.whiteout};
 `;
 
 // TextBox defines all text display properties and is used for measuring
