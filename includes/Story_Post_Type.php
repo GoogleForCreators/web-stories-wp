@@ -62,7 +62,12 @@ class Story_Post_Type {
 	 */
 	const REWRITE_SLUG = 'stories';
 
-
+	/**
+	 * Style Present options name.
+	 *
+	 * @var string
+	 */
+	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 	/**
 	 * Registers the post type for stories.
 	 *

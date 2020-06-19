@@ -28,14 +28,17 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post;
 
 /**
  * Discovery class.
  */
 class Discovery {
-
+	/**
+	 * Name of publisher option.
+	 *
+	 * @var string
+	 */
 	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 	/**
 	 * Initialize discovery functionality.

@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
-
 /**
  * Class Database_Upgrader
  *
@@ -102,7 +100,7 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function v_2_replace_conic_style_presets() {
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! is_array( $style_presets ) ) {
 			return;
@@ -144,7 +142,7 @@ class Database_Upgrader {
 			'textColors' => $style_presets['textColors'],
 			'textStyles' => $text_styles,
 		];
-		update_option( Stories_Controller::STYLE_PRESETS_OPTION, $updated_style_presets );
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
 	}
 
 	/**
@@ -162,7 +160,7 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function remove_broken_text_styles() {
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! is_array( $style_presets ) ) {
 			return;
@@ -183,7 +181,7 @@ class Database_Upgrader {
 			'textColors' => $style_presets['textColors'],
 			'textStyles' => $text_styles,
 		];
-		update_option( Stories_Controller::STYLE_PRESETS_OPTION, $updated_style_presets );
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
 	}
 
 	/**
