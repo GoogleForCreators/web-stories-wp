@@ -74,6 +74,27 @@ describe('storyReducer', () => {
     });
   });
 
+  it(`should update error when ${ACTION_TYPES.TRASH_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.TRASH_STORY_FAILURE,
+        payload: {
+          message: 'my trash story failure message',
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: 'my trash story failure message',
+        code: 'my_error_code',
+      },
+    });
+  });
+
   it(`should update stories state when ${ACTION_TYPES.DUPLICATE_STORY} is called`, () => {
     const result = storyReducer(
       {
@@ -115,6 +136,27 @@ describe('storyReducer', () => {
         publish: 4,
       },
       totalPages: 4,
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.DUPLICATE_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.DUPLICATE_STORY_FAILURE,
+        payload: {
+          message: 'my duplicate story failure message',
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: 'my duplicate story failure message',
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -298,6 +340,27 @@ describe('storyReducer', () => {
         65: { id: 65, status: 'publish', title: 'new title for story' },
         78: { id: 78, status: 'draft', title: 'my test story 3' },
         12: { id: 12, status: 'draft', title: 'my test story 4' },
+      },
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.UPDATE_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.UPDATE_STORY_FAILURE,
+        payload: {
+          message: 'my update story failure message',
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: 'my update story failure message',
+        code: 'my_error_code',
       },
     });
   });

@@ -178,9 +178,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           type: STORY_ACTION_TYPES.UPDATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.UPDATE_STORY_FAILURE,
+          payload: { message: err.message, code: err.code },
+        });
       }
     },
     [storyApi, dataAdapter, editStoryURL]
@@ -196,9 +198,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.TRASH_STORY_FAILURE,
+          payload: { message: err.message, code: err.code },
+        });
       }
     },
     [storyApi, dataAdapter]
@@ -292,9 +296,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.DUPLICATE_STORY_FAILURE,
+          payload: { message: err.message, code: err.code },
+        });
       }
     },
     [storyApi, dataAdapter, editStoryURL]
