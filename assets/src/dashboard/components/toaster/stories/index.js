@@ -47,6 +47,7 @@ export const _default = () => {
       severity: ALERT_SEVERITY.SUCCESS,
     },
   ];
+  const totalErrors = errors.length - 1;
 
   return (
     <ToastProvider>
@@ -62,9 +63,9 @@ export const _default = () => {
                     id: toastIndexToAdd,
                   });
                 }}
-                isDisabled={toastIndexToAdd > 4}
+                isDisabled={toastIndexToAdd > totalErrors}
               >
-                {toastIndexToAdd > 4
+                {toastIndexToAdd > totalErrors
                   ? 'No more practice alerts'
                   : 'Add practice alert'}
               </Button>
