@@ -99,6 +99,14 @@ function observeConsoleLogging() {
 
     let text = message.text();
 
+    // As of WordPress 5.3.2 in Chrome 79, navigating to the block editor
+    // (Posts > Add New) will display a console warning about
+    // non - unique IDs.
+    // See: https://core.trac.wordpress.org/ticket/23165
+    if (text.includes('elements with non-unique id #_wpnonce')) {
+      return;
+    }
+
     // styled-components warns about dynamically created components.
     // @todo Fix issues.
     if (text.includes(' has been created dynamically.')) {
