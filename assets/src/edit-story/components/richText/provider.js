@@ -44,6 +44,7 @@ function RichTextProvider({ children }) {
   }));
 
   const [editorState, setEditorState] = useState(null);
+  const lastKnownStyle = useRef(null);
 
   const selectionInfo = useMemo(() => {
     if (editorState) {
@@ -81,7 +82,6 @@ function RichTextProvider({ children }) {
   // This filters out illegal content (see `getFilteredState`)
   // on paste and updates state accordingly.
   // Furthermore it also sets initial selection if relevant.
-  const lastKnownStyle = useRef(null);
   const updateEditorState = useCallback(
     (newEditorState) => {
       let filteredState = getFilteredState(newEditorState, editorState);
