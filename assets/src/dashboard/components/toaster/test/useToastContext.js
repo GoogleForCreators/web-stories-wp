@@ -122,7 +122,7 @@ describe('useToastContext', () => {
     expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_2]);
 
     act(() => {
-      result.current.actions.removeToast(1);
+      result.current.actions.removeToast(0);
     });
     expect(result.current.state.activeToasts).toStrictEqual([]);
     expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_2]);
