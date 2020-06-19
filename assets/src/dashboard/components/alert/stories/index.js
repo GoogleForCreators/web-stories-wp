@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -35,22 +36,32 @@ export const _default = () => {
   return (
     <Wrapper>
       <AlertContainer
+        allowDismiss={boolean('allowDismiss1')}
+        handleDismissClick={action('dismiss clicked')}
         message={text('errorMessage', 'this is an error')}
         severity={ALERT_SEVERITY.ERROR}
       />
       <AlertContainer
+        allowDismiss={boolean('allowDismiss2')}
+        handleDismissClick={action('dismiss clicked')}
         message={text('warningMessage', 'this is a warning')}
         severity={ALERT_SEVERITY.WARNING}
       />
       <AlertContainer
+        allowDismiss={boolean('allowDismiss3')}
+        handleDismissClick={action('dismiss clicked')}
         message={text('infoMessage', 'this is informational')}
         severity={ALERT_SEVERITY.INFO}
       />
       <AlertContainer
+        allowDismiss={boolean('allowDismiss4')}
+        handleDismissClick={action('dismiss clicked')}
         message={text('successMessage', 'this is successful')}
         severity={ALERT_SEVERITY.SUCCESS}
       />
       <AlertContainer
+        allowDismiss={boolean('allowDismiss5')}
+        handleDismissClick={action('dismiss clicked')}
         message={text(
           'defaultMessage',
           'this is an alert without a severity passed in'
@@ -65,6 +76,8 @@ export const JustAlert = () => {
     <AlertContainer
       message={text('warningMessage', 'this is a warning')}
       severity={ALERT_SEVERITY.WARNING}
+      allowDismiss={boolean('allowDismiss')}
+      handleDismissClick={action('dismiss clicked')}
     />
   );
 };

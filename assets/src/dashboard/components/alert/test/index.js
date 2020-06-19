@@ -48,6 +48,7 @@ describe('Alert', () => {
     const { getByRole } = renderWithTheme(
       <Wrapper>
         <AlertContainer
+          allowDismiss={true}
           message={'this is an error'}
           severity={ALERT_SEVERITY.ERROR}
           handleDismissClick={mockDismissClick}

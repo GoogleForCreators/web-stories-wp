@@ -31,7 +31,7 @@ import { Close } from '../../icons';
 import { AlertSeveritiesPropType } from '../../types';
 import { AlertContainer, AlertText, DismissButton } from './components';
 
-const Alert = ({ message, severity, handleDismissClick }) => {
+const Alert = ({ allowDismiss, message, severity, handleDismissClick }) => {
   return (
     <AlertContainer
       severity={severity}
@@ -39,20 +39,23 @@ const Alert = ({ message, severity, handleDismissClick }) => {
       aria-label={__('Alert Notification', 'web-stories')}
     >
       <AlertText>{message}</AlertText>
-      <DismissButton
-        onClick={handleDismissClick}
-        ariaLabel={__('Dismiss Alert', 'web-stories')}
-      >
-        <Close />
-      </DismissButton>
+      {allowDismiss && (
+        <DismissButton
+          onClick={handleDismissClick}
+          ariaLabel={__('Dismiss Alert', 'web-stories')}
+        >
+          <Close />
+        </DismissButton>
+      )}
     </AlertContainer>
   );
 };
 
 Alert.propTypes = {
+  allowDismiss: PropTypes.bool,
   message: PropTypes.string.isRequired,
-  severity: AlertSeveritiesPropType,
   handleDismissClick: PropTypes.func,
+  severity: AlertSeveritiesPropType,
 };
 
 export default Alert;
