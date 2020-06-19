@@ -166,4 +166,54 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
 	}
+
+	public function test_unify_color_presets() {
+		$presets = [
+			'textStyles' => [],
+			'textColors' => [
+				[
+					'color' => [
+						'r' => 255,
+						'g' => 255,
+						'b' => 255,
+					],
+				],
+			],
+			'fillColors' => [
+				[
+					'color' => [
+						'r' => 1,
+						'g' => 1,
+						'b' => 1,
+					],
+				],
+			],
+		];
+		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$object->init();
+
+		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$this->assertSame(
+			$style_presets['colors'],
+			[
+				[
+					'color' => [
+						'r' => 1,
+						'g' => 1,
+						'b' => 1,
+					],
+				],
+				[
+					'color' => [
+						'r' => 255,
+						'g' => 255,
+						'b' => 255,
+					],
+				],
+			]
+		);
+		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
+	}
 }
