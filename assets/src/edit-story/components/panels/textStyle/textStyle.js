@@ -118,7 +118,6 @@ function StylePanel({ selectedElements, pushUpdate }) {
           suffix={<OffsetVertical />}
           onChange={(value) => pushUpdate({ lineHeight: value })}
           canBeEmpty
-          canBeNegative
         />
         <Space />
         <ExpandedNumeric
@@ -130,7 +129,6 @@ function StylePanel({ selectedElements, pushUpdate }) {
           symbol="%"
           onChange={setLetterSpacingMinMax}
           canBeEmpty
-          canBeNegative
         />
       </Row>
       <Row>
