@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useContext } from 'react';
 
 /**
  * Internal dependencies
@@ -47,12 +47,10 @@ import useStoryView, {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../utils/useStoryView';
-import getAllTemplates from '../../../templates';
 import { StoriesPropType } from '../../../types';
-import { reshapeTemplateObject } from '../../api/useTemplateApi';
-import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { BodyViewOptions, PageHeading } from '../shared';
+import { ApiContext } from '../../api/apiProvider';
 import SavedTemplatesGridView from './savedTemplatesGridView';
 
 function Header({ filter, search, sort, stories, view }) {
@@ -73,6 +71,7 @@ function Header({ filter, search, sort, stories, view }) {
         typeaheadValue={search.keyword}
       />
       <BodyViewOptions
+        showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
@@ -110,18 +109,29 @@ function Content({ stories, view, page }) {
 }
 
 function SavedTemplates() {
-  const config = useConfig();
+  const {
+    actions: {
+      templateApi: { fetchMyTemplates },
+    },
+    state: {
+      templates: { savedTemplates, savedTemplatesOrderById },
+    },
+  } = useContext(ApiContext);
+
   const { filter, page, sort, search, view } = useStoryView({
     filters: SAVED_TEMPLATES_STATUSES,
     totalPages: 1,
   });
 
-  const [mockTemplates, setMockTemplates] = useState([]);
+  const orderedSavedTemplates = useMemo(() => {
+    return savedTemplatesOrderById.map((templateId) => {
+      return savedTemplates[templateId];
+    });
+  }, [savedTemplates, savedTemplatesOrderById]);
 
   useEffect(() => {
-    const templates = getAllTemplates(config).map(reshapeTemplateObject(false));
-    setMockTemplates(templates);
-  }, [config]);
+    fetchMyTemplates({ page: 1 });
+  }, [fetchMyTemplates]);
 
   return (
     <Layout.Provider>
@@ -129,10 +139,15 @@ function SavedTemplates() {
         filter={filter}
         view={view}
         search={search}
-        stories={mockTemplates}
+        stories={orderedSavedTemplates}
         sort={sort}
       />
-      <Content view={view} page={page} sort={sort} stories={mockTemplates} />
+      <Content
+        view={view}
+        page={page}
+        sort={sort}
+        stories={orderedSavedTemplates}
+      />
     </Layout.Provider>
   );
 }
