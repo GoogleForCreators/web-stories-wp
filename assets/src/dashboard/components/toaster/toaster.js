@@ -35,6 +35,7 @@ const Wrapper = styled.div`
   max-width: 300px;
   width: 40vw;
 `;
+
 function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
   return (
     <Wrapper>

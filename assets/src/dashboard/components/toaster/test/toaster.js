@@ -26,7 +26,7 @@ import { renderWithTheme } from '../../../testUtils/';
 import Toaster from '../toaster';
 import { ALERT_SEVERITY } from '../../../constants';
 
-const testAlert = {
+const testToast = {
   message: 'i am an error',
   severity: ALERT_SEVERITY.ERROR,
   id: 1,
@@ -34,10 +34,10 @@ const testAlert = {
 
 describe('Toaster', () => {
   const mockRemoveToastClick = jest.fn();
-  it('should have 1 active alert', () => {
+  it('should have 1 active toast', () => {
     const { getByRole } = renderWithTheme(
       <Toaster
-        activeToasts={[testAlert]}
+        activeToasts={[testToast]}
         isAllowEarlyDismiss={false}
         onRemoveToastClick={mockRemoveToastClick}
       />
@@ -51,7 +51,7 @@ describe('Toaster', () => {
   it('should not load dismiss button when isAllowEarlyDismiss is false', () => {
     const { queryAllByRole } = renderWithTheme(
       <Toaster
-        activeToasts={[testAlert]}
+        activeToasts={[testToast]}
         isAllowEarlyDismiss={false}
         onRemoveToastClick={mockRemoveToastClick}
       />
@@ -65,7 +65,7 @@ describe('Toaster', () => {
   it('should load dismiss button when isAllowEarlyDismiss is true', () => {
     const { getByRole } = renderWithTheme(
       <Toaster
-        activeToasts={[testAlert]}
+        activeToasts={[testToast]}
         isAllowEarlyDismiss={true}
         onRemoveToastClick={mockRemoveToastClick}
       />

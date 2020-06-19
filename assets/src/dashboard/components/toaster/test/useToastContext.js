@@ -75,7 +75,9 @@ describe('useToastContext', () => {
       wrapper: ToastProvider,
     });
 
-    result.current.actions.addToast(TOAST_1);
+    act(() => {
+      result.current.actions.addToast(TOAST_1);
+    });
 
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
   });
@@ -103,16 +105,26 @@ describe('useToastContext', () => {
     act(() => {
       result.current.actions.addToast(TOAST_1);
     });
+    expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
+    expect(result.current.state.allToasts).toStrictEqual([TOAST_1]);
 
     act(() => {
       result.current.actions.addToast(TOAST_2);
     });
+    expect(result.current.state.activeToasts).toStrictEqual([TOAST_1, TOAST_2]);
+    expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_2]);
 
     act(() => {
       result.current.actions.removeToast(1);
     });
 
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
+    expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_2]);
+
+    act(() => {
+      result.current.actions.removeToast(1);
+    });
+    expect(result.current.state.activeToasts).toStrictEqual([]);
     expect(result.current.state.allToasts).toStrictEqual([TOAST_1, TOAST_2]);
   });
 
