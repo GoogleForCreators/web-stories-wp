@@ -110,5 +110,5 @@ export function presetHasOpacity(preset) {
 }
 
 export function presetHasGradient({ type }) {
-  return Boolean(type && 'solid' !== type);
+  return Boolean(type) && 'solid' !== type;
 }
