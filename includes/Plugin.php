@@ -48,6 +48,10 @@ class Plugin {
 		add_action( 'init', [ Story_Post_Type::class, 'init' ] );
 		add_action( 'init', [ Template_Post_Type::class, 'init' ] );
 
+		// Beta version updater.
+		$updater = new Updater();
+		add_action( 'init', [ $updater, 'init' ], 9 );
+
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );

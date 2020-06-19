@@ -136,6 +136,7 @@ class Story_Post_Type {
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
 		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', [ __CLASS__, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
 
@@ -225,6 +226,24 @@ class Story_Post_Type {
 		}
 
 		return $replace;
+	}
+
+	/**
+	 * Filters whether post type supports the block editor.
+	 *
+	 * Disables the block editor and associated logic (like enqueueing assets)
+	 * for the story post type.
+	 *
+	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string $post_type         The post type being checked.
+	 * @return bool Whether to use the block editor.
+	 */
+	public static function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+		if ( self::POST_TYPE_SLUG === $post_type ) {
+			return false;
+		}
+
+		return $use_block_editor;
 	}
 
 	/**
@@ -366,6 +385,13 @@ class Story_Post_Type {
 			],
 			'flags'  => [
 				/**
+				 * Description: Enables user facing animations.
+				 * Author: @mariano-formidable
+				 * Issue: 1903
+				 * Creation date: 2020-06-08
+				 */
+				'enableAnimation'              => false,
+				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
 				 * Issue: #1319 and #354
@@ -421,6 +447,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-04
 				 */
 				'showTextAndShapesSearchInput' => false,
+				/**
+				 * Description: Flag for the 3P Media tab.
+				 * Author: @diegovar
+				 * Issue: #2508
+				 * Creation date: 2020-06-17
+				 */
+				'media3pTab'                   => false,
 			],
 
 		];

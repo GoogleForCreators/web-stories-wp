@@ -191,15 +191,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     [setIsDragging, setDraggingResource, resetMoveable]
   );
 
-  const {
-    resizeRules = {},
-    updateForResizeEvent,
-    isMaskable,
-  } = getDefinitionForType(selectedElement.type);
+  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
+    selectedElement.type
+  );
 
   const canSnap =
     !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
-  const hideHandles = (isDragging && isMaskable) || Boolean(draggingResource);
+  const hideHandles = isDragging || Boolean(draggingResource);
 
   // Removes element if it's outside of canvas.
   const handleElementOutOfCanvas = (target) => {

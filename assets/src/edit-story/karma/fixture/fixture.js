@@ -34,6 +34,7 @@ import { createPage } from '../../elements';
 import FixtureEvents from './events';
 import getMediaResponse from './db/getMediaResponse';
 
+export const MEDIA_PER_PAGE = 20;
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
@@ -455,12 +456,17 @@ class APIProviderFixture {
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
           : () => true;
+        // Generate 7*6=42 items, 3 pages
+        const clonedMedia = Array(6)
+          .fill(getMediaResponse)
+          .flat()
+          .map((media, i) => ({ ...media, id: i + 1 }));
         return asyncResponse({
-          data: getMediaResponse
-            .slice((pagingNum - 1) * 20, 20)
+          data: clonedMedia
+            .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { get: () => 1 },
+          headers: { get: () => 3 },
         });
       }, []);
       const uploadMedia = useCallback(

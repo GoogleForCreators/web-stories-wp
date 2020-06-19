@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useDebouncedCallback } from 'use-debounce';
 import { Media, Row, Button } from '../../form';
-import { createLink, getLinkFromElement } from '../../link';
+import { createLink, getLinkFromElement } from '../../elementLink';
 import { useAPI } from '../../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';

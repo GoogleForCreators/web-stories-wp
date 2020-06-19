@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -35,6 +35,7 @@ import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
 import escapeHTML from '../../utils/escapeHTML';
 import PreviewErrorDialog from './previewErrorDialog';
+import PostPublishDialog from './postPublishDialog';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -277,24 +278,52 @@ function Loading() {
 }
 
 function Buttons() {
-  const { status } = useStory((state) => ({
-    status: state.state.story.status,
-  }));
+  const { status, storyId, link, isFreshlyPublished } = useStory(
+    ({
+      state: {
+        story: { status, storyId, link },
+        meta: { isFreshlyPublished },
+      },
+    }) => ({
+      status,
+      storyId,
+      link,
+      isFreshlyPublished,
+    })
+  );
+  const [showDialog, setShowDialog] = useState(isFreshlyPublished);
+  useEffect(() => {
+    setShowDialog(isFreshlyPublished);
+  }, [isFreshlyPublished]);
+
   const isDraft = 'draft' === status;
+
+  const confirmURL = addQueryArgs('post-new.php', {
+    ['from-web-story']: storyId,
+  });
+
   return (
-    <ButtonList>
-      <List>
-        <Loading />
-        {isDraft && <Update />}
-        {!isDraft && <SwitchToDraft />}
-        <Space />
-        <PreviewButton />
-        <Space />
-        {isDraft && <Publish />}
-        {!isDraft && <Update />}
-        <Space />
-      </List>
-    </ButtonList>
+    <>
+      <ButtonList>
+        <List>
+          <Loading />
+          {isDraft && <Update />}
+          {!isDraft && <SwitchToDraft />}
+          <Space />
+          <PreviewButton />
+          <Space />
+          {isDraft && <Publish />}
+          {!isDraft && <Update />}
+          <Space />
+        </List>
+      </ButtonList>
+      <PostPublishDialog
+        open={showDialog}
+        onClose={() => setShowDialog(false)}
+        confirmURL={confirmURL}
+        storyURL={link}
+      />
+    </>
   );
 }
 export default Buttons;
