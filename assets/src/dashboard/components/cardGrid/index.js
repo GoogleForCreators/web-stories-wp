@@ -56,7 +56,10 @@ DashboardGrid.propTypes = {
 
 const CardGrid = ({ children, pageSize }) => {
   return (
-    <DashboardGrid columnWidth={pageSize.width} columnHeight={pageSize.height}>
+    <DashboardGrid
+      columnWidth={pageSize.width}
+      columnHeight={pageSize.containerHeight}
+    >
       {children}
     </DashboardGrid>
   );

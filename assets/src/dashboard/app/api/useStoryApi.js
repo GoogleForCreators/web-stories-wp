@@ -25,6 +25,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useCallback, useMemo, useReducer } from 'react';
 import moment from 'moment';
 import queryString from 'query-string';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -83,8 +84,9 @@ export function reshapeStoryObject(editStoryURL) {
   };
 }
 
-const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
+const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
+  const flags = useFeatures();
 
   const fetchStories = useCallback(
     async ({
@@ -100,7 +102,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         payload: true,
       });
 
-      if (!wpApi) {
+      if (!storyApi) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
           payload: true,
@@ -120,7 +122,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
 
       try {
         const path = queryString.stringifyUrl({
-          url: wpApi,
+          url: storyApi,
           query,
         });
 
@@ -163,13 +165,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         });
       }
     },
-    [wpApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL]
   );
 
   const updateStory = useCallback(
     async (story) => {
       try {
-        const response = await dataAdapter.post(`${wpApi}/${story.id}`, {
+        const response = await dataAdapter.post(`${storyApi}/${story.id}`, {
           data: story,
         });
         dispatch({
@@ -181,13 +183,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         console.error(e);
       }
     },
-    [wpApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL]
   );
 
   const trashStory = useCallback(
     async (story) => {
       try {
-        await dataAdapter.deleteRequest(`${wpApi}/${story.id}`, {
+        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`, {
           data: story,
         });
         dispatch({
@@ -199,7 +201,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         console.error(e);
       }
     },
-    [wpApi, dataAdapter]
+    [storyApi, dataAdapter]
   );
 
   const createStoryFromTemplate = useCallback(
@@ -221,8 +223,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
               name: createdBy,
             },
           },
+          flags,
         });
-        const response = await dataAdapter.post(wpApi, {
+        const response = await dataAdapter.post(storyApi, {
           data: {
             ...storyPropsToSave,
             story_data: {
@@ -253,7 +256,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         });
       }
     },
-    [dataAdapter, editStoryURL, wpApi]
+    [dataAdapter, editStoryURL, storyApi, flags]
   );
 
   const duplicateStory = useCallback(
@@ -268,7 +271,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           title,
         } = story.originalStoryData;
 
-        const response = await dataAdapter.post(wpApi, {
+        const response = await dataAdapter.post(storyApi, {
           data: {
             content,
             story_data,
@@ -294,7 +297,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         console.error(e);
       }
     },
-    [wpApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL]
   );
 
   const api = useMemo(

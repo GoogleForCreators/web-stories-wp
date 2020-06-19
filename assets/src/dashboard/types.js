@@ -23,7 +23,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../edit-story/types';
-import { STORY_STATUS, TEMPLATES_GALLERY_STATUS } from './constants';
+import {
+  STORY_STATUS,
+  TEMPLATES_GALLERY_STATUS,
+  ALERT_SEVERITY,
+} from './constants';
 
 export const DashboardStatusesPropType = PropTypes.oneOf([
   ...Object.values(STORY_STATUS),
@@ -89,6 +93,7 @@ export const TotalStoriesByStatusPropType = PropTypes.shape({
 export const PageSizePropType = PropTypes.shape({
   width: PropTypes.number,
   height: PropTypes.number,
+  containerHeight: PropTypes.number,
 });
 
 export const StoryMenuPropType = PropTypes.shape({
@@ -108,3 +113,7 @@ export const RenameStoryPropType = PropTypes.shape({
   id: PropTypes.number,
   handleCancelRename: PropTypes.func,
 });
+
+export const AlertSeveritiesPropType = PropTypes.oneOf(
+  Object.values(ALERT_SEVERITY)
+);

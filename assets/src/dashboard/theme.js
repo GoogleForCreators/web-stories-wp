@@ -68,6 +68,8 @@ const colors = {
   action: '#47A0F4',
   danger: '#FF0000',
   selection: '#44aaff',
+  warning: '#FF9800',
+  success: '#4CAF4F',
   // todo
   placeholder: '#d9dbdd',
 };

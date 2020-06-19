@@ -13,35 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
 /**
  * Internal dependencies
  */
+import Container from './container';
+import { Wrapper } from './components';
 
-import TemplateGridView from '../templateGridView';
-import {
-  STORYBOOK_PAGE_SIZE,
-  formattedTemplatesArray,
-} from '../../../../storybookUtils';
-
-export default {
-  title: 'Dashboard/Views/Shared/TemplateGridView',
-  component: TemplateGridView,
-};
-
-export const _default = () => {
-  return (
-    <TemplateGridView
-      templates={formattedTemplatesArray}
-      pageSize={STORYBOOK_PAGE_SIZE}
-      templateActions={{
-        createStoryFromTemplate: action('create story from template clicked'),
-      }}
-    />
-  );
-};
+export const Alert = { Container, Wrapper };
