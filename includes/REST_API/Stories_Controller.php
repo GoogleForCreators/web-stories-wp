@@ -49,8 +49,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		'textStyles' => [],
 	];
 
-	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
-
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
@@ -110,9 +108,9 @@ class Stories_Controller extends Stories_Base_Controller {
 			$publisher_logo_id = $request->get_param( 'publisher_logo' );
 			if ( $publisher_logo_id ) {
 				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
-				$publisher_logo_settings           = get_option( self::PUBLISHER_LOGOS_OPTION, [] );
+				$publisher_logo_settings           = get_option( Discovery::PUBLISHER_LOGOS_OPTION, [] );
 				$publisher_logo_settings['active'] = $publisher_logo_id;
-				update_option( self::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
+				update_option( Discovery::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
 			}
 
 			// If style presets are set.

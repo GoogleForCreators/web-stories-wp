@@ -35,6 +35,8 @@ use WP_Post;
  * Discovery class.
  */
 class Discovery {
+
+	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -269,7 +271,7 @@ class Discovery {
 	public function get_publisher_logo() {
 		$logo_image_url = null;
 
-		$publisher_logo_settings = get_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [] );
+		$publisher_logo_settings = get_option( self::PUBLISHER_LOGOS_OPTION, [] );
 		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
 		if ( $has_publisher_logo ) {
 			$publisher_logo_id = absint( $publisher_logo_settings['active'] );
