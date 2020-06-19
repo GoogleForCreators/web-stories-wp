@@ -48,7 +48,6 @@ function DisplayLayer() {
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
         background={currentPage?.backgroundColor}
-        showDangerZone={true}
       >
         {currentPage
           ? currentPage.elements.map(({ id, ...rest }) => {
