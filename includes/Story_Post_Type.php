@@ -27,6 +27,9 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\TRAITS\Assets;
+use Google\Web_Stories\TRAITS\Publisher;
+use Google\Web_Stories\TRAITS\Types;
 use WP_Post;
 use WP_Screen;
 
@@ -34,6 +37,9 @@ use WP_Screen;
  * Class Story_Post_Type.
  */
 class Story_Post_Type {
+	use Publisher;
+	use Types;
+	use Assets;
 	/**
 	 * The slug of the stories post type.
 	 *
@@ -277,20 +283,7 @@ class Story_Post_Type {
 		// Force media model to load.
 		wp_enqueue_media();
 
-		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.asset.php';
-		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
-		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
-		$version      = isset( $asset['version'] ) ? $asset['version'] : [];
-
-		wp_enqueue_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.js',
-			$dependencies,
-			$version,
-			false
-		);
-
-		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
+		$this->load_assert( self::WEB_STORIES_SCRIPT_HANDLE );
 
 		$settings = $this->get_editor_settings();
 
@@ -311,7 +304,7 @@ class Story_Post_Type {
 			self::WEB_STORIES_STYLE_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
 			[ 'roboto' ],
-			$version
+			WEBSTORIES_VERSION
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
@@ -357,8 +350,6 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
-		$discovery = new Discovery();
-		$media     = new Media();
 
 		$settings = [
 			'id'     => 'edit-story',
@@ -366,8 +357,8 @@ class Story_Post_Type {
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'timeFormat'       => get_option( 'time_format' ),
-				'allowedMimeTypes' => $media->get_allowed_mime_types(),
-				'allowedFileTypes' => $media->get_allowed_file_types(),
+				'allowedMimeTypes' => $this->get_allowed_mime_types(),
+				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
@@ -385,8 +376,8 @@ class Story_Post_Type {
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => $discovery->get_publisher_data(),
-					'logoPlaceholder' => $discovery->get_publisher_logo_placeholder(),
+					'publisher'       => $this->get_publisher_data(),
+					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],

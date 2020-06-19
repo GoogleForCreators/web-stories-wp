@@ -26,10 +26,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\TRAITS\Publisher;
+
 /**
  * Class Story_Renderer
  */
 class Story_Renderer {
+	use Publisher;
+
 	/*
 	 * Regular expressions to fetch the individual structural tags.
 	 * These patterns were optimized to avoid extreme backtracking on large documents.
@@ -120,9 +124,7 @@ class Story_Renderer {
 	 * @return string Filtered markup.
 	 */
 	protected function add_publisher_logo( $content ) {
-		$discovery = new Discovery();
-
-		return str_replace( $discovery->get_publisher_logo_placeholder(), $discovery->get_publisher_logo(), $content );
+		return str_replace( $this->get_publisher_logo_placeholder(), $this->get_publisher_logo(), $content );
 	}
 
 	/**
