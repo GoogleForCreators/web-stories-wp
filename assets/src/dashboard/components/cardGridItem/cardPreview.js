@@ -39,7 +39,7 @@ import { ActionLabel } from './types';
 const PreviewPane = styled.div`
   position: relative;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  height: ${({ cardSize }) => `${cardSize.height}px`};
+  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
   box-shadow: ${({ theme }) => theme.storyPreview.shadow};
   border: ${({ theme }) => theme.storyPreview.border};
   width: 100%;
@@ -51,7 +51,7 @@ PreviewPane.propTypes = {
 };
 
 const EditControls = styled.div`
-  height: ${({ cardSize }) => `${cardSize.height}px`};
+  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
   width: ${({ cardSize }) => `${cardSize.width}px`};
   position: absolute;
   display: flex;
@@ -159,6 +159,7 @@ const CardPreviewContainer = ({
       <PreviewPane cardSize={pageSize}>
         <PreviewErrorBoundary>
           <PreviewPage
+            pageSize={pageSize}
             page={storyPages[pageIndex]}
             animationState={
               CARD_STATE.ACTIVE === cardState
