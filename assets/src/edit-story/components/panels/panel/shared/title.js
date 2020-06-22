@@ -159,7 +159,6 @@ function Title({
           handleHeightChange={handleHeightChange}
           handleExpandToHeightChange={handleExpandToHeightChange}
           handleDoubleClick={resetHeight}
-          position="top"
         />
       )}
       <HeaderButton onClick={isCollapsed ? expand : collapse}>
