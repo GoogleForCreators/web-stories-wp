@@ -30,6 +30,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../tracking';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
@@ -151,6 +152,10 @@ export function LeftRail() {
     }
   }, [sideBarVisible]);
 
+  const onCreateNewStoryClick = useCallback(async () => {
+    await trackEvent('dashboard', 'create_new_story');
+  }, []);
+
   return (
     <LeftRailContainer
       onClickCapture={onContainerClickCapture}
@@ -167,7 +172,12 @@ export function LeftRail() {
           </WebStoriesHeading>
         </Content>
         <Content>
-          <NavButton type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
+          <NavButton
+            type={BUTTON_TYPES.CTA}
+            href={newStoryURL}
+            isLink
+            onClick={onCreateNewStoryClick}
+          >
             {__('Create New Story', 'web-stories')}
           </NavButton>
         </Content>

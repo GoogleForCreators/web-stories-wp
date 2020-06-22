@@ -93,6 +93,14 @@ class Plugin {
 	 * @var Discovery
 	 */
 	public $discovery;
+
+	/**
+	 * Tracking.
+	 *
+	 * @var Tracking
+	 */
+	public $tracking;
+
 	/**
 	 * Initialize plugin functionality.
 	 *
@@ -111,6 +119,9 @@ class Plugin {
 		// Beta version updater.
 		$this->updater = new Updater();
 		add_action( 'init', [ $this->updater, 'init' ], 9 );
+
+		$this->tracking = new Tracking();
+		add_action( 'init', [ $this->tracking, 'init' ] );
 
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().

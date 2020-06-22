@@ -15,13 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-/**
  * External dependencies
  */
 import styled from 'styled-components';
+import { useCallback } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -37,6 +39,7 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
+import { trackEvent } from '../../../../tracking';
 
 const GridContainer = styled(CardGrid)`
   width: ${({ theme }) =>
@@ -48,30 +51,42 @@ const GridContainer = styled(CardGrid)`
   }
 `;
 
-const TemplateGridView = ({ pageSize, templates, templateActions }) => (
-  <GridContainer pageSize={pageSize}>
-    {templates.map((template) => (
-      <CardGridItem
-        key={template.id}
-        data-testid={`template-grid-item-${template.id}`}
-      >
-        <CardPreviewContainer
-          pageSize={pageSize}
-          story={template}
-          centerAction={{
-            targetAction: template.centerTargetAction,
-            label: TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[template.status],
-          }}
-          bottomAction={{
-            targetAction: () =>
-              templateActions.createStoryFromTemplate(template),
-            label: __('Use template', 'web-stories'),
-          }}
-        />
-      </CardGridItem>
-    ))}
-  </GridContainer>
-);
+function TemplateGridView({ pageSize, templates, templateActions }) {
+  const targetAction = useCallback(
+    (template) => {
+      return () => {
+        trackEvent('dashboard', 'use_template', undefined, template.id);
+        templateActions.createStoryFromTemplate(template);
+      };
+    },
+    [templateActions]
+  );
+
+  return (
+    <GridContainer pageSize={pageSize}>
+      {templates.map((template) => (
+        <CardGridItem
+          key={template.id}
+          data-testid={`template-grid-item-${template.id}`}
+        >
+          <CardPreviewContainer
+            pageSize={pageSize}
+            story={template}
+            centerAction={{
+              targetAction: template.centerTargetAction,
+              label:
+                TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[template.status],
+            }}
+            bottomAction={{
+              targetAction: targetAction(template),
+              label: __('Use template', 'web-stories'),
+            }}
+          />
+        </CardGridItem>
+      ))}
+    </GridContainer>
+  );
+}
 
 TemplateGridView.propTypes = {
   pageSize: PageSizePropType,

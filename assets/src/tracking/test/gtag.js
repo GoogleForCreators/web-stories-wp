@@ -15,16 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
-
-/**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
+import { gtag } from '../shared';
+import { DATA_LAYER } from '../constants';
 
-registerBlockType(name, settings);
-
-initializeTracking('Embed Block');
+describe('gtag', () => {
+  it('should push data to the data layer', () => {
+    gtag('Foo', 'Bar');
+    gtag('Bar', 'Baz');
+    expect(global[DATA_LAYER]).toHaveLength(2);
+  });
+});

@@ -41,15 +41,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		);
 	}
 
-	public function setUp() {
-		parent::setUp();
-
-		do_action( 'init' );
-
-		// Registered during init.
-		unregister_block_type( 'web-stories/embed' );
-	}
-
 	public function test_get_editor_settings_admin() {
 		wp_set_current_user( self::$admin_id );
 		$post_type = new \Google\Web_Stories\Story_Post_Type();

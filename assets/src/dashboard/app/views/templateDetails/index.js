@@ -27,6 +27,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../../tracking';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
 import {
@@ -195,6 +196,11 @@ function TemplateDetails() {
 
   const handleBookmarkClickSelected = useCallback(() => {}, []);
 
+  const onHandleCta = useCallback(() => {
+    trackEvent('dashboard', 'use_template', undefined, template.id);
+    createStoryFromTemplate(template);
+  }, [createStoryFromTemplate, template]);
+
   if (!template) {
     return null;
   }
@@ -206,7 +212,7 @@ function TemplateDetails() {
           <Layout.Provider>
             <Layout.Fixed>
               <TemplateNavBar
-                handleCta={() => createStoryFromTemplate(template)}
+                handleCta={onHandleCta}
                 handleBookmarkClick={
                   enableBookmarks ? handleBookmarkClickSelected : undefined
                 }

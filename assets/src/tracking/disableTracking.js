@@ -15,16 +15,12 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
-
-/**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
+import { config } from './shared';
 
-registerBlockType(name, settings);
+function disableTracking() {
+  config.trackingEnabled = false;
+}
 
-initializeTracking('Embed Block');
+export default disableTracking;

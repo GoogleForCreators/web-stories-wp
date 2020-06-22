@@ -15,16 +15,19 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
-
-/**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
+import { gtag, config } from './shared';
+import enableTracking from './enableTracking';
 
-registerBlockType(name, settings);
+async function initializeTracking(appName) {
+  config.appName = appName;
+  gtag('config', config.trackingId, { app_name: appName });
 
-initializeTracking('Embed Block');
+  // eslint-disable-next-line no-console
+  console.log('Initialize Tracking');
+
+  await enableTracking();
+}
+
+export default initializeTracking;
