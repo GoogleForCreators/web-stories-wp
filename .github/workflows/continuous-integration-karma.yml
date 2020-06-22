@@ -38,8 +38,11 @@ jobs:
         env:
           CI: true
 
-      - name: Run integration tests
-        run: npm run test:karma -- --headless --snapshots --viewport=1600:1000
+      - name: Run edit-story integration tests
+        run: npm run test:karma:edit-story -- --headless --snapshots --viewport=1600:1000
+
+      - name: Run dashboard integration tests
+        run: npm run test:karma:dashboard -- --headless --snapshots --viewport=1600:1000
 
       - name: Add files for snapshotting
         run: cp -r __static__ .test_artifacts/karma_snapshots/
