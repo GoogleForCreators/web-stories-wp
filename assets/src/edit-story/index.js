@@ -26,7 +26,6 @@ import { FlagsProvider } from 'flagged';
  */
 import App from './app';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
-import ErrorBoundary from './components/errorBoundary';
 
 /**
  * Initializes the web stories editor.
