@@ -38,7 +38,6 @@ use WP_REST_Response;
  * Stories_Controller class.
  */
 class Stories_Controller extends Stories_Base_Controller {
-	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
 	/**
 	 * Default style presets to pass if not set.
@@ -48,8 +47,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		'textColors' => [],
 		'textStyles' => [],
 	];
-
-	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
@@ -65,11 +62,12 @@ class Stories_Controller extends Stories_Base_Controller {
 		$data     = $response->get_data();
 
 		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
-			$data['publisher_logo_url'] = Discovery::get_publisher_logo();
+			$discovery                  = new Discovery();
+			$data['publisher_logo_url'] = $discovery->get_publisher_logo();
 		}
 
 		if ( in_array( 'style_presets', $fields, true ) ) {
-			$style_presets         = get_option( self::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
+			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
@@ -109,15 +107,15 @@ class Stories_Controller extends Stories_Base_Controller {
 			$publisher_logo_id = $request->get_param( 'publisher_logo' );
 			if ( $publisher_logo_id ) {
 				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
-				$publisher_logo_settings           = get_option( self::PUBLISHER_LOGOS_OPTION, [] );
+				$publisher_logo_settings           = get_option( Discovery::PUBLISHER_LOGOS_OPTION, [] );
 				$publisher_logo_settings['active'] = $publisher_logo_id;
-				update_option( self::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
+				update_option( Discovery::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
 			}
 
 			// If style presets are set.
 			$style_presets = $request->get_param( 'style_presets' );
 			if ( is_array( $style_presets ) ) {
-				update_option( self::STYLE_PRESETS_OPTION, $style_presets );
+				update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $style_presets );
 			}
 		}
 		return rest_ensure_response( $response );
@@ -157,26 +155,30 @@ class Stories_Controller extends Stories_Base_Controller {
 	}
 
 	/**
-	 * Filters the orderby query to filter first all the current user's posts and then the rest.
+	 * Filters query clauses to sort posts by the author's display name.
 	 *
-	 * @param string    $orderby Original orderby clause.
-	 * @param \WP_Query $query WP_Query object.
-	 * @return string Orderby clause.
+	 * @param string[] $clauses Associative array of the clauses for the query.
+	 * @param WP_Query $query   The WP_Query instance.
+	 *
+	 * @return array Filtered query clauses.
 	 */
-	public function filter_posts_orderby( $orderby, $query ) {
+	public function filter_posts_clauses( $clauses, $query ) {
 		global $wpdb;
+
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
-			return $orderby;
+			return $clauses;
 		}
 		if ( 'story_author' !== $query->get( 'orderby' ) ) {
-			return $orderby;
+			return $clauses;
 		}
 
-		$current_user = get_current_user_id();
-		if ( ! $current_user ) {
-			return $orderby;
-		}
-		return $wpdb->prepare( 'wp_posts.post_author = %s DESC, wp_posts.post_author DESC, wp_posts.post_modified DESC', $current_user );
+		// phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
+		$order              = $query->get( 'order' );
+		$clauses['join']   .= " LEFT JOIN {$wpdb->users} ON {$wpdb->posts}.post_author={$wpdb->users}.ID";
+		$clauses['orderby'] = "{$wpdb->users}.display_name $order, " . $clauses['orderby'];
+		// phpcs:enable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
+
+		return $clauses;
 	}
 
 	/**
@@ -186,9 +188,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		add_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10, 2 );
+		add_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10, 2 );
 		$response = parent::get_items( $request );
-		remove_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10 );
+		remove_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10 );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;

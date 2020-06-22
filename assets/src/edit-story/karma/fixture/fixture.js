@@ -33,7 +33,9 @@ import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
 import FixtureEvents from './events';
 import getMediaResponse from './db/getMediaResponse';
+import { Editor as EditorContainer } from './containers';
 
+export const MEDIA_PER_PAGE = 20;
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
@@ -101,6 +103,8 @@ export class Fixture {
     this._events = new FixtureEvents(this.act.bind(this));
 
     this._container = null;
+
+    this._editor = null;
   }
 
   restore() {}
@@ -111,6 +115,10 @@ export class Fixture {
 
   get screen() {
     return this._screen;
+  }
+
+  get editor() {
+    return this._editor;
   }
 
   /**
@@ -181,7 +189,7 @@ export class Fixture {
    */
   render() {
     const root = document.querySelector('test-root');
-    const { container } = render(
+    const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />
       </FlagsProvider>,
@@ -195,6 +203,11 @@ export class Fixture {
     container.style.height = '100%';
     this._container = container;
     this._screen = screen;
+
+    this._editor = new EditorContainer(
+      getByRole('region', { name: 'Web Stories Editor' }),
+      'editor'
+    );
 
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
@@ -455,12 +468,17 @@ class APIProviderFixture {
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
           : () => true;
+        // Generate 7*6=42 items, 3 pages
+        const clonedMedia = Array(6)
+          .fill(getMediaResponse)
+          .flat()
+          .map((media, i) => ({ ...media, id: i + 1 }));
         return asyncResponse({
-          data: getMediaResponse
-            .slice((pagingNum - 1) * 20, 20)
+          data: clonedMedia
+            .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { get: () => 1 },
+          headers: { get: () => 3 },
         });
       }, []);
       const uploadMedia = useCallback(

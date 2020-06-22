@@ -63,14 +63,11 @@ class Story_Post_Type {
 	const REWRITE_SLUG = 'stories';
 
 	/**
-	 * Publisher logo placeholder for static content output which will be replaced server-side.
-	 *
-	 * Uses a fallback logo to always create valid AMP in FE.
+	 * Style Present options name.
 	 *
 	 * @var string
 	 */
-	const PUBLISHER_LOGO_PLACEHOLDER = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
-
+	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 	/**
 	 * Registers the post type for stories.
 	 *
@@ -78,7 +75,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public static function init() {
+	public function init() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -133,29 +130,37 @@ class Story_Post_Type {
 			]
 		);
 
-		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
-		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
-		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
+		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
-		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
+
+		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
-		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
+		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
 
-		// @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
-		add_filter(
-			'amp_skip_post',
-			static function( $skipped, $post ) {
-				if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-					$skipped = true;
-				}
-				return $skipped;
-			},
-			PHP_INT_MAX,
-			2
-		);
+		add_filter( 'amp_skip_post', [ $this, 'skip_amp' ], PHP_INT_MAX, 2 );
 
-		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * AMP plugin compatibility.
+	 *
+	 * @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
+	 *
+	 * @param bool    $skipped Should this post type be skipped.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return bool
+	 */
+	public function skip_amp( $skipped, $post ) {
+		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
+			$skipped = true;
+		}
+		return $skipped;
 	}
 
 	/**
@@ -165,7 +170,7 @@ class Story_Post_Type {
 	 * @param \WP_Post_Type $post_type Post type.
 	 * @return array Array of query params.
 	 */
-	public static function filter_rest_collection_params( $query_params, $post_type ) {
+	public function filter_rest_collection_params( $query_params, $post_type ) {
 		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
 			return $query_params;
 		}
@@ -184,7 +189,7 @@ class Story_Post_Type {
 	 * @param array $story Story post array.
 	 * @return array Array of allowed fields.
 	 */
-	public static function filter_revision_fields( $fields, $story ) {
+	public function filter_revision_fields( $fields, $story ) {
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
@@ -198,7 +203,7 @@ class Story_Post_Type {
 	 *
 	 * @return bool
 	 */
-	public static function show_admin_bar( $show ) {
+	public function show_admin_bar( $show ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) ) {
 			$show = false;
 		}
@@ -214,7 +219,7 @@ class Story_Post_Type {
 	 *
 	 * @return bool
 	 */
-	public static function replace_editor( $replace, $post ) {
+	public function replace_editor( $replace, $post ) {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
 			$replace = true;
 			// In lieu of an action being available to actually load the replacement editor, include it here
@@ -228,6 +233,24 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Filters whether post type supports the block editor.
+	 *
+	 * Disables the block editor and associated logic (like enqueueing assets)
+	 * for the story post type.
+	 *
+	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string $post_type         The post type being checked.
+	 * @return bool Whether to use the block editor.
+	 */
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+		if ( self::POST_TYPE_SLUG === $post_type ) {
+			return false;
+		}
+
+		return $use_block_editor;
+	}
+
+	/**
 	 *
 	 * Enqueue scripts for the element editor.
 	 *
@@ -235,7 +258,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public static function admin_enqueue_scripts( $hook ) {
+	public function admin_enqueue_scripts( $hook ) {
 		$screen = get_current_screen();
 
 		if ( ! $screen instanceof WP_Screen ) {
@@ -269,7 +292,7 @@ class Story_Post_Type {
 
 		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
 
-		$settings = self::get_editor_settings();
+		$settings = $this->get_editor_settings();
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
@@ -303,7 +326,7 @@ class Story_Post_Type {
 	 *
 	 * @return array
 	 */
-	public static function get_editor_settings() {
+	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
 		$rest_base                = self::POST_TYPE_SLUG;
@@ -334,14 +357,17 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
+		$discovery = new Discovery();
+		$media     = new Media();
+
 		$settings = [
 			'id'     => 'edit-story',
 			'config' => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'timeFormat'       => get_option( 'time_format' ),
-				'allowedMimeTypes' => Media::get_allowed_mime_types(),
-				'allowedFileTypes' => Media::get_allowed_file_types(),
+				'allowedMimeTypes' => $media->get_allowed_mime_types(),
+				'allowedFileTypes' => $media->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
@@ -359,12 +385,19 @@ class Story_Post_Type {
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => Discovery::get_publisher_data(),
-					'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
+					'publisher'       => $discovery->get_publisher_data(),
+					'logoPlaceholder' => $discovery->get_publisher_logo_placeholder(),
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
 			'flags'  => [
+				/**
+				 * Description: Enables user facing animations.
+				 * Author: @mariano-formidable
+				 * Issue: 1903
+				 * Creation date: 2020-06-08
+				 */
+				'enableAnimation'              => false,
 				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
@@ -421,6 +454,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-04
 				 */
 				'showTextAndShapesSearchInput' => false,
+				/**
+				 * Description: Flag for the 3P Media tab.
+				 * Author: @diegovar
+				 * Issue: #2508
+				 * Creation date: 2020-06-17
+				 */
+				'media3pTab'                   => false,
 			],
 
 		];
@@ -435,7 +475,7 @@ class Story_Post_Type {
 	 *
 	 * @return string Template.
 	 */
-	public static function filter_template_include( $template ) {
+	public function filter_template_include( $template ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) && ! is_embed() ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/single-web-story.php';
 		}

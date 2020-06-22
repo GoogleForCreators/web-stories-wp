@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { AnimationProps } from '../dashboard/animations/parts/types';
 import { OverlayType } from './utils/backgroundOverlay';
 import { BACKGROUND_TEXT_MODE } from './constants';
 import MULTIPLE_VALUE from './components/form/multipleValue';
@@ -101,6 +102,7 @@ StoryPropTypes.box = PropTypes.exact({
 
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
+  animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });

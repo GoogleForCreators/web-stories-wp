@@ -16,5 +16,12 @@
 
 export { default as AMPStoryWrapper } from './ampStoryWrapper';
 export { default as formattedStoriesArray } from './formattedStoriesArray';
+export { default as formattedTemplatesArray } from './formattedTemplatesArray';
 export { default as formattedUsersObject } from './formattedUsersObject';
 export { default as PlayButton } from './playButton';
+
+export const STORYBOOK_PAGE_SIZE = {
+  width: 212,
+  height: 318,
+  containerHeight: 376.89,
+};

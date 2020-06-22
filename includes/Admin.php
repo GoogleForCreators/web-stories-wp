@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use WP_Post;
 use WP_Screen;
 
 /**
@@ -44,7 +45,9 @@ class Admin {
 		$database_upgrader = new Database_Upgrader();
 		$database_upgrader->init();
 
-		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
+		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
+		add_filter( 'default_content', [ $this, 'prefill_post_content' ] );
+		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
 	}
 
 	/**
@@ -57,7 +60,7 @@ class Admin {
 	 *
 	 * @return string $class List of Classes.
 	 */
-	public static function admin_body_class( $class ) {
+	public function admin_body_class( $class ) {
 		$screen = get_current_screen();
 
 		if ( ! $screen instanceof WP_Screen ) {
@@ -81,5 +84,100 @@ class Admin {
 		}
 
 		return $class;
+	}
+
+	/**
+	 * Pre-fills post content with a web-story/embed block.
+	 *
+	 * @param string $content Default post content.
+	 *
+	 * @return string Pre-filled post content if applicable, or the default content otherwise.
+	 */
+	public function prefill_post_content( $content ) {
+		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return $content;
+		}
+
+		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
+			return $content;
+		}
+
+		if ( ! current_user_can( 'read_post', $post_id ) ) {
+			return $content;
+		}
+
+		$block_markup_with_poster = <<<BLOCK
+<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":"%3\$s"} -->
+<div class="wp-block-web-stories-embed alignnone">
+	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
+			href="%1\$s"
+			style="--story-player-poster:url('%3\$s')">%4\$s</a>
+	</amp-story-player>
+</div>
+<!-- /wp:web-stories/embed -->
+BLOCK;
+
+		$block_markup_without_poster = <<<BLOCK
+<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":""} -->
+<div class="wp-block-web-stories-embed alignnone">
+	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
+			href="%1\$s"
+			>%3\$s</a>
+	</amp-story-player>
+</div>
+<!-- /wp:web-stories/embed -->
+BLOCK;
+
+		$url        = (string) get_the_permalink( $post_id );
+		$title      = (string) get_the_title( $post_id );
+		$has_poster = has_post_thumbnail( $post_id );
+
+		ob_start();
+
+		if ( $has_poster ) {
+			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
+
+			return sprintf(
+				$block_markup_with_poster,
+				esc_url( $url ),
+				esc_js( $title ),
+				esc_url( $poster ),
+				esc_html( $title )
+			);
+		}
+
+		return sprintf(
+			$block_markup_without_poster,
+			esc_url( $url ),
+			esc_js( $title ),
+			esc_html( $title )
+		);
+	}
+
+	/**
+	 * Pre-fills post title with the story title.
+	 *
+	 * @param string $title Default post title.
+	 *
+	 * @return string Pre-filled post title if applicable, or the default title otherwise.
+	 */
+	public function prefill_post_title( $title ) {
+		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return $title;
+		}
+
+		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
+			return $title;
+		}
+
+		if ( ! current_user_can( 'read_post', $post_id ) ) {
+			return $title;
+		}
+
+		return (string) get_the_title( $post_id );
 	}
 }

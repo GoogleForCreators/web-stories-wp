@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
+const MAX_WAIT_THRESHOLD = 5000;
+
 async function previewStory(editorPage) {
   let openTabs = await browser.pages();
   const expectedTabsCount = openTabs.length + 1;
-  await expect(editorPage).toClick('button', { text: 'Preview' });
+  await expect(editorPage).toClick('button:not([disabled])', {
+    text: 'Preview',
+  });
+  await expect(editorPage).not.toMatch('The preview window failed to open.');
+
+  let waits = 0;
 
   // Wait for the new tab to open.
   while (openTabs.length < expectedTabsCount) {
+    waits++;
+
+    if (waits >= MAX_WAIT_THRESHOLD) {
+      throw new Error('There was an error previewing the story');
+    }
     /* eslint-disable no-await-in-loop */
     await editorPage.waitFor(1);
     openTabs = await browser.pages();

@@ -50,8 +50,7 @@ class Embed_Block {
 	 * @return void
 	 */
 	public function init() {
-		// TOOD: Replace with https://cdn.ampproject.org/amp-story-player-v0.js once this updated version of the script is on prod.
-		wp_register_script( 'amp-story-player', 'https://stamp-animation.web.app/dist/amp-story-player.js', [], 'v0', false );
+		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
 		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::SCRIPT_HANDLE . '.asset.php';
@@ -88,7 +87,8 @@ class Embed_Block {
 						'type' => 'url',
 					],
 					'title'  => [
-						'type' => 'string',
+						'type'    => 'string',
+						'default' => __( 'Web Story', 'web-stories' ),
 					],
 					'poster' => [
 						'type' => 'string',
@@ -112,7 +112,7 @@ class Embed_Block {
 			]
 		);
 
-		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 	}
 
 	/**
@@ -122,7 +122,7 @@ class Embed_Block {
 	 *
 	 * @return array|string Allowed tags.
 	 */
-	public static function filter_kses_allowed_html( $allowed_tags ) {
+	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! is_array( $allowed_tags ) ) {
 			return $allowed_tags;
 		}
@@ -145,9 +145,13 @@ class Embed_Block {
 	 * @return string Rendered block type output.
 	 */
 	public function render_block( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		// The only 2 mandatory attributes.
-		if ( empty( $attributes['url'] ) || empty( $attributes['title'] ) ) {
+		// The only mandatory attribute.
+		if ( empty( $attributes['url'] ) ) {
 			return '';
+		}
+
+		if ( empty( $attributes['title'] ) ) {
+			$attributes['title'] = __( 'Web Story', 'web-stories' );
 		}
 
 		if ( is_feed() ) {
@@ -169,7 +173,8 @@ class Embed_Block {
 		$title        = (string) $attributes['title'];
 		$poster       = ! empty( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
 		$align        = sprintf( 'align%s', $attributes['align'] );
-		$player_style = sprintf( 'width: %dpx; height: %dpx', absint( $attributes['width'] ), absint( $attributes['height'] ) );
+		$margin       = ( 'center' === $attributes['align'] ) ? 'auto' : '0';
+		$player_style = sprintf( 'width: %dpx; height: %dpx; margin: %s', absint( $attributes['width'] ), absint( $attributes['height'] ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
 		wp_enqueue_style( 'amp-story-player' );

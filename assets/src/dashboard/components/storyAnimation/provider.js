@@ -34,6 +34,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { AnimationPart, throughput } from '../../animations/parts';
+import { AnimationProps } from '../../animations/parts/types';
 import { clamp } from '../../utils';
 
 const Context = createContext(null);
@@ -196,7 +197,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
 }
 
 Provider.propTypes = {
-  animations: PropTypes.arrayOf(PropTypes.object),
+  animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
 };
