@@ -87,7 +87,8 @@ class Embed_Block {
 						'type' => 'url',
 					],
 					'title'  => [
-						'type' => 'string',
+						'type'    => 'string',
+						'default' => __( 'Web Story', 'web-stories' ),
 					],
 					'poster' => [
 						'type' => 'string',
@@ -144,9 +145,13 @@ class Embed_Block {
 	 * @return string Rendered block type output.
 	 */
 	public function render_block( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		// The only 2 mandatory attributes.
-		if ( empty( $attributes['url'] ) || empty( $attributes['title'] ) ) {
+		// The only mandatory attribute.
+		if ( empty( $attributes['url'] ) ) {
 			return '';
+		}
+
+		if ( empty( $attributes['title'] ) ) {
+			$attributes['title'] = __( 'Web Story', 'web-stories' );
 		}
 
 		if ( is_feed() ) {

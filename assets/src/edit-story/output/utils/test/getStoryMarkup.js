@@ -92,7 +92,7 @@ describe('getStoryMarkup', () => {
         ],
       },
     ];
-    const markup = getStoryMarkup(story, pages, meta);
+    const markup = getStoryMarkup(story, pages, meta, {});
     expect(markup).toContain('Hello World');
     expect(markup).toContain('transform:rotate(1deg)');
     expect(markup).toContain(

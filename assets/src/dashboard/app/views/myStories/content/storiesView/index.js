@@ -147,6 +147,7 @@ function StoriesView({
       <StoryListView
         handleSortChange={sort.set}
         handleSortDirectionChange={sort.setDirection}
+        pageSize={view.pageSize}
         renameStory={renameStory}
         sortDirection={sort.direction}
         stories={stories}

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -51,6 +52,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { resetNewChanges },
   } = useHistory();
+  const flags = useFeatures();
   const { metadata } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
@@ -68,7 +70,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
       return saveStoryById({
         storyId,
-        ...getStoryPropsToSave({ story, pages, metadata }),
+        ...getStoryPropsToSave({ story, pages, metadata, flags }),
         ...props,
       })
         .then((post) => {
@@ -96,6 +98,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
     [
       story,
       pages,
+      flags,
       metadata,
       saveStoryById,
       storyId,
