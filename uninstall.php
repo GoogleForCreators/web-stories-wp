@@ -50,10 +50,8 @@ $prefix = 'web_stories\_%';
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 $options = $wpdb->get_results(
 	$wpdb->prepare(
-		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s",
-		$prefix,
-		'_transient_' . $prefix,
-		'_transient_timeout_' . $prefix
+		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
+		$prefix
 	),
 	ARRAY_N
 );
@@ -62,21 +60,47 @@ if ( ! empty( $options ) ) {
 	array_map( 'delete_option', (array) $options );
 }
 
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+$transients = $wpdb->get_results(
+	$wpdb->prepare(
+		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE",
+		'_transient_' . $prefix,
+		'_transient_timeout_' . $prefix
+	),
+	ARRAY_N
+);
+
+if ( ! empty( $transients ) ) {
+	array_map( 'delete_transient', (array) $transients );
+}
+
 // Clear network data if multisite.
 if ( is_multisite() ) {
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	$options = $wpdb->get_results(
 		$wpdb->prepare(
-			"SELECT option_name FROM $wpdb->sitemeta WHERE meta_key LIKE %s OR meta_key LIKE %s OR meta_key LIKE %s",
-			$prefix,
-			'_site_transient_' . $prefix,
-			'_site_transient_timeout_' . $prefix
+			"SELECT option_name FROM $wpdb->sitemeta WHERE meta_key LIKE %s",
+			$prefix
 		),
 		ARRAY_N
 	);
 
 	if ( ! empty( $options ) ) {
 		array_map( 'delete_option', (array) $options );
+	}
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$transients = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT option_name FROM $wpdb->sitemeta WHERE meta_key LIKE %s OR meta_key LIKE %s",
+			'_site_transient_' . $prefix,
+			'_site_transient_timeout_' . $prefix
+		),
+		ARRAY_N
+	);
+
+	if ( ! empty( $transients ) ) {
+		array_map( 'delete_transient', (array) $transients );
 	}
 }
 
