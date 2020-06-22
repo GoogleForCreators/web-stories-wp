@@ -192,7 +192,7 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function unify_color_presets() {
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! is_array( $style_presets ) ) {
 			return;
@@ -209,7 +209,7 @@ class Database_Upgrader {
 		$updated_style_presets = [
 			'colors' => $colors,
 		];
-		update_option( Stories_Controller::STYLE_PRESETS_OPTION, $updated_style_presets );
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
 	}
 
 	/**

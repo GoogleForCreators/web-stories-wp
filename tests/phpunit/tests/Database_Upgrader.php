@@ -190,12 +190,12 @@ class Database_Upgrader extends \WP_UnitTestCase {
 				],
 			],
 		];
-		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
 		$this->call_private_method( $object, 'unify_color_presets' );
 
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 		$this->assertSame(
 			$style_presets['colors'],
 			[
@@ -215,6 +215,6 @@ class Database_Upgrader extends \WP_UnitTestCase {
 				],
 			]
 		);
-		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 }
