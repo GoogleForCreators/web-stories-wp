@@ -42,9 +42,7 @@ const initialize = (id, config, flags) => {
   Modal.setAppElement(appElement);
   render(
     <FlagsProvider features={flags}>
-      <ErrorBoundary>
-        <App config={config} />
-      </ErrorBoundary>
+      <App config={config} />
     </FlagsProvider>,
     appElement
   );

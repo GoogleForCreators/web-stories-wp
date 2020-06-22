@@ -51,12 +51,12 @@ function App({ config }) {
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={theme}>
-        <ConfigProvider config={config}>
-          <APIProvider>
-            <HistoryProvider size={50}>
-              <SnackbarProvider>
-                <StoryProvider storyId={storyId}>
-                  <ErrorBoundary>
+        <ErrorBoundary>
+          <ConfigProvider config={config}>
+            <APIProvider>
+              <HistoryProvider size={50}>
+                <SnackbarProvider>
+                  <StoryProvider storyId={storyId}>
                     <AutoSaveHandler />
                     <FontProvider>
                       <MediaProvider>
@@ -73,12 +73,12 @@ function App({ config }) {
                         </TransformProvider>
                       </MediaProvider>
                     </FontProvider>
-                  </ErrorBoundary>
-                </StoryProvider>
-              </SnackbarProvider>
-            </HistoryProvider>
-          </APIProvider>
-        </ConfigProvider>
+                  </StoryProvider>
+                </SnackbarProvider>
+              </HistoryProvider>
+            </APIProvider>
+          </ConfigProvider>
+        </ErrorBoundary>
       </ThemeProvider>
     </StyleSheetManager>
   );
