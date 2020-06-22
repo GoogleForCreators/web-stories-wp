@@ -71,6 +71,7 @@ export { ReactComponent as Rectangle } from './rectangle.svg';
 export { ReactComponent as Redo } from './redo.svg';
 export { ReactComponent as RedoAlt } from './redo_icon.svg';
 export { ReactComponent as Remove } from './remove.svg';
+export { ReactComponent as SafeZone } from './safe_zone.svg';
 export { ReactComponent as Shapes } from './shapes.svg';
 export { ReactComponent as Text } from './text.svg';
 export { ReactComponent as TextHelper } from './text_helper.svg'; // todo: remove?
