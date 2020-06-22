@@ -38,7 +38,6 @@ use WP_REST_Response;
  * Stories_Controller class.
  */
 class Stories_Controller extends Stories_Base_Controller {
-	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
 	/**
 	 * Default style presets to pass if not set.
@@ -48,8 +47,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		'textColors' => [],
 		'textStyles' => [],
 	];
-
-	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
@@ -65,11 +62,12 @@ class Stories_Controller extends Stories_Base_Controller {
 		$data     = $response->get_data();
 
 		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
-			$data['publisher_logo_url'] = Discovery::get_publisher_logo();
+			$discovery                  = new Discovery();
+			$data['publisher_logo_url'] = $discovery->get_publisher_logo();
 		}
 
 		if ( in_array( 'style_presets', $fields, true ) ) {
-			$style_presets         = get_option( self::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
+			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
@@ -109,15 +107,15 @@ class Stories_Controller extends Stories_Base_Controller {
 			$publisher_logo_id = $request->get_param( 'publisher_logo' );
 			if ( $publisher_logo_id ) {
 				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
-				$publisher_logo_settings           = get_option( self::PUBLISHER_LOGOS_OPTION, [] );
+				$publisher_logo_settings           = get_option( Discovery::PUBLISHER_LOGOS_OPTION, [] );
 				$publisher_logo_settings['active'] = $publisher_logo_id;
-				update_option( self::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
+				update_option( Discovery::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
 			}
 
 			// If style presets are set.
 			$style_presets = $request->get_param( 'style_presets' );
 			if ( is_array( $style_presets ) ) {
-				update_option( self::STYLE_PRESETS_OPTION, $style_presets );
+				update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $style_presets );
 			}
 		}
 		return rest_ensure_response( $response );
