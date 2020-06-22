@@ -48,52 +48,54 @@ $prefix = 'web_stories\_%';
 
 // Delete options and transients.
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-$wpdb->query(
+$options = $wpdb->get_results(
 	$wpdb->prepare(
-		"DELETE FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s",
+		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s OR option_name LIKE %s",
 		$prefix,
 		'_transient_' . $prefix,
 		'_transient_timeout_' . $prefix
-	)
+	),
+	ARRAY_N
 );
+
+if ( ! empty( $options ) ) {
+	array_map( 'delete_option', (array) $options );
+}
 
 // Clear network data if multisite.
 if ( is_multisite() ) {
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-	$wpdb->query(
+	$options = $wpdb->get_results(
 		$wpdb->prepare(
-			"DELETE FROM $wpdb->sitemeta WHERE meta_key LIKE %s OR meta_key LIKE %s OR meta_key LIKE %s",
+			"SELECT option_name FROM $wpdb->sitemeta WHERE meta_key LIKE %s OR meta_key LIKE %s OR meta_key LIKE %s",
 			$prefix,
 			'_site_transient_' . $prefix,
 			'_site_transient_timeout_' . $prefix
-		)
+		),
+		ARRAY_N
 	);
+
+	if ( ! empty( $options ) ) {
+		array_map( 'delete_option', (array) $options );
+	}
 }
 
 // Delete post meta.
 delete_post_meta_by_key( 'web_stories_is_poster' );
 delete_post_meta_by_key( 'web_stories_poster_id' );
 
-// Delete all stories.
-$stories = get_posts(
+// Delete all stories & templates.
+$posts = get_posts(
 	[
-		'post_type'      => Story_Post_Type::POST_TYPE_SLUG,
-		'posts_per_page' => - 1,
+		'fields'           => 'ids',
+		'suppress_filters' => false,
+		'post_type'        => [ Story_Post_Type::POST_TYPE_SLUG, Template_Post_Type::POST_TYPE_SLUG ],
+		'posts_per_page'   => - 1,
 	]
 );
-foreach ( $stories as $story_post ) {
-	wp_delete_post( $story_post->ID, true );
-}
 
-// Delete all template.
-$templates = get_posts(
-	[
-		'post_type'      => Template_Post_Type::POST_TYPE_SLUG,
-		'posts_per_page' => - 1,
-	]
-);
-foreach ( $templates as $template_post ) {
-	wp_delete_post( $template_post->ID, true );
+foreach ( $posts as $custom_post ) {
+	wp_delete_post( $custom_post->ID, true );
 }
 
 // Clear options cache.
