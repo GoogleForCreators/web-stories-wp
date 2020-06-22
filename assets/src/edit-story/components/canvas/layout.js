@@ -63,7 +63,7 @@ const MAX_CAROUSEL_HEIGHT =
   MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
 
 // @todo: the menu height is not responsive
-const Layer = styled.div`
+const Layer = styled.section`
   ${pointerEventsCss}
 
   position: absolute;
