@@ -1,10 +1,4 @@
 <?php
-/**
- * Trait PrivateAccess.
- *
- * @package AmpProject\AmpWP
- */
-
 namespace Google\Web_Stories\Tests;
 
 use ReflectionClass;
@@ -16,7 +10,6 @@ use ReflectionException;
  * Allows accessing private methods and properties for testing.
  *
  * @internal
- * @since 1.5.0
  */
 trait Private_Access {
 
