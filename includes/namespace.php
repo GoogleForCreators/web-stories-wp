@@ -80,5 +80,17 @@ function deactivate( $network_wide ) {
 register_activation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\deactivate' );
 
+global $web_stories;
+
 $web_stories = new Plugin();
 $web_stories->register();
+
+/**
+ * Web stories Plugin Instance
+ *
+ * @return Plugin
+ */
+function get_plugin_instance() {
+	global $web_stories;
+	return $web_stories;
+}

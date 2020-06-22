@@ -39,43 +39,98 @@ use WP_Post;
  */
 class Plugin {
 	/**
+	 * Media object.
+	 *
+	 * @var Media
+	 */
+	public $media;
+
+	/**
+	 * Story Post Type object.
+	 *
+	 * @var  Story_Post_Type
+	 */
+	public $story;
+
+	/**
+	 * Template object.
+	 *
+	 * @var Template_Post_Type
+	 */
+	public $template;
+
+	/**
+	 * Beta version updater.
+	 *
+	 * @var Updater
+	 */
+	public $updater;
+
+	/**
+	 * Dashboard.
+	 *
+	 * @var Dashboard
+	 */
+	public $dashboard;
+
+	/**
+	 * Admin-related functionality.
+	 *
+	 * @var Admin
+	 */
+	public $admin;
+
+	/**
+	 * Gutenberg Blocks.
+	 *
+	 * @var Embed_Block
+	 */
+	public $embed_block;
+
+	/**
+	 * Frontend.
+	 *
+	 * @var Discovery
+	 */
+	public $discovery;
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
 	 */
 	public function register() {
-		$media = new Media();
-		add_action( 'init', [ $media, 'init' ], 9 );
+		$this->media = new Media();
+		add_action( 'init', [ $this->media, 'init' ], 9 );
 
-		$story = new Story_Post_Type();
-		add_action( 'init', [ $story, 'init' ] );
+		$this->story = new Story_Post_Type();
+		add_action( 'init', [ $this->story, 'init' ] );
 
-		$template = new Template_Post_Type();
-		add_action( 'init', [ $template, 'init' ] );
+		$this->template = new Template_Post_Type();
+		add_action( 'init', [ $this->template, 'init' ] );
 
 		// Beta version updater.
-		$updater = new Updater();
-		add_action( 'init', [ $updater, 'init' ], 9 );
+		$this->updater = new Updater();
+		add_action( 'init', [ $this->updater, 'init' ], 9 );
 
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
 		// Dashboard.
-		$dashboard = new Dashboard();
-		add_action( 'init', [ $dashboard, 'init' ] );
+		$this->dashboard = new Dashboard();
+		add_action( 'init', [ $this->dashboard, 'init' ] );
 
 		// Admin-related functionality.
-		$admin = new Admin();
-		add_action( 'admin_init', [ $admin, 'init' ] );
+		$this->admin = new Admin();
+		add_action( 'admin_init', [ $this->admin, 'init' ] );
 
 		// Gutenberg Blocks.
-		$embed_block = new Embed_Block();
-		add_action( 'init', [ $embed_block, 'init' ] );
+		$this->embed_block = new Embed_Block();
+		add_action( 'init', [ $this->embed_block, 'init' ] );
 
 		// Frontend.
-		$discovery = new Discovery();
-		add_action( 'init', [ $discovery, 'init' ] );
+		$this->discovery = new Discovery();
+		add_action( 'init', [ $this->discovery, 'init' ] );
 	}
 
 	/**
