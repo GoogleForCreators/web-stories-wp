@@ -135,8 +135,7 @@ class Story_Renderer {
 	 * @return string Filtered content.
 	 */
 	protected function add_poster_images( $content ) {
-		$poster_images = $this->get_story_meta_images( $this->post );
-		unset( $poster_images['poster-portrait'] ); // Already exists.
+		$poster_images = $this->get_story_meta_images();
 
 		foreach ( $poster_images as $attr => $url ) {
 			$attr_markup = sprintf( '%1$s-src="%2$s"', $attr, $url );
@@ -240,18 +239,16 @@ class Story_Renderer {
 	 *
 	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
 	 *
-	 * @param int|\WP_Post|null $post Post.
 	 * @return string[] Images.
 	 */
-	public function get_story_meta_images( $post = null ) {
-		$thumbnail_id = (int) get_post_thumbnail_id( $post );
+	protected function get_story_meta_images() {
+		$thumbnail_id = (int) get_post_thumbnail_id( $this->post );
 
 		if ( 0 === $thumbnail_id ) {
 			return [];
 		}
 
 		$images = [
-			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_POSTER_IMAGE_SIZE ),
 			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_SQUARE_IMAGE_SIZE ),
 			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_LANDSCAPE_IMAGE_SIZE ),
 		];
