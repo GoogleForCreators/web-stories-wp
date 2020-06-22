@@ -58,9 +58,8 @@ trait Assets {
 	 */
 	public function register_script( $script_handle, array $script_dependencies = [] ) {
 		$asset        = $this->get_asset_metadata( $script_handle );
-		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
-		$version      = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
-		$dependencies = array_merge( $dependencies, $script_dependencies );
+		$dependencies = array_merge( $asset['dependencies'], $script_dependencies );
+		$version      = $asset['version'];
 
 		wp_register_script(
 			$script_handle,
@@ -96,7 +95,7 @@ trait Assets {
 	 */
 	public function register_style( $style_handle, array $style_dependencies = [] ) {
 		$asset   = $this->get_asset_metadata( $style_handle );
-		$version = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
+		$version = $asset['version'];
 		wp_register_style(
 			$style_handle,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . $style_handle . '.css',
