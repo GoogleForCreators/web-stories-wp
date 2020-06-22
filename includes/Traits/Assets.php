@@ -39,6 +39,8 @@ trait Assets {
 	 * @param array        $script_dependencies Array of extra dependencies.
 	 * @param string|false $style_handle Handle of style.
 	 * @param array        $style_dependencies Array of extra dependencies.
+	 *
+	 * @return void
 	 */
 	public function load_asset( $script_handle, array $script_dependencies = [], $style_handle = false, array $style_dependencies = [] ) {
 		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . $script_handle . '.asset.php';
