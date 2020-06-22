@@ -58,11 +58,11 @@ function setupButtons(
 
   const { getByRole } = renderWithTheme(
     <ConfigContext.Provider value={configValue}>
-      <MediaContext.Provider value={mediaContextValue}>
-        <StoryContext.Provider value={storyContextValue}>
+      <StoryContext.Provider value={storyContextValue}>
+        <MediaContext.Provider value={mediaContextValue}>
           <Buttons />
-        </StoryContext.Provider>
-      </MediaContext.Provider>
+        </MediaContext.Provider>
+      </StoryContext.Provider>
     </ConfigContext.Provider>
   );
   return {
