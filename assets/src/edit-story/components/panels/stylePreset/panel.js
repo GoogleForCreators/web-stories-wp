@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -223,11 +223,14 @@ function StylePresetPanel() {
       : 0;
   const initialHeight = colorRows * rowHeight;
 
+  const resizeable = hasPresets;
+
   return (
     <Panel
       name="stylepreset"
       initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
-      resizeable
+      resizeable={resizeable}
+      collapsible={hasPresets}
     >
       <PresetsHeader
         handleAddColorPreset={handleAddColorPreset}
@@ -242,7 +245,7 @@ function StylePresetPanel() {
         isText={isText}
         isBackground={isBackground}
       />
-      <Resize />
+      {resizeable && <Resize />}
     </Panel>
   );
 }
