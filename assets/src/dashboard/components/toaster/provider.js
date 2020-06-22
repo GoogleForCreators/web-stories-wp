@@ -42,24 +42,20 @@ const ToastProvider = ({ children }) => {
   const removeToast = useCallback(
     (id) =>
       id &&
-      setToasts({
-        ...toasts,
-        [id]: { ...toasts[id], isActive: false },
-      }),
-    [toasts]
+      setToasts((existingToasts) => ({
+        ...existingToasts,
+        [id]: { ...existingToasts[id], isActive: false },
+      })),
+    []
   );
 
   const addToast = useCallback(
-    ({ message, severity, id }) => {
-      const isNewToast = !toasts[id];
-      if (isNewToast) {
-        setToasts({
-          ...toasts,
-          [id]: { message, severity, id, isActive: true },
-        });
-      }
-    },
-    [toasts]
+    ({ message, severity, id }) =>
+      setToasts((existingToasts) => ({
+        ...existingToasts,
+        [id]: { message, severity, id, isActive: true },
+      })),
+    []
   );
 
   useEffect(() => resetToasts, [resetToasts]);
