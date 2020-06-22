@@ -43,7 +43,6 @@ function TextPane(props) {
   }));
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
 
-  // Todo: Rename label to 'Presets' post-beta.
   return (
     <Pane id={paneId} {...props}>
       {showTextAndShapesSearchInput && (
@@ -56,7 +55,7 @@ function TextPane(props) {
       )}
 
       <Section
-        title={__('Saved Colors', 'web-stories')}
+        title={__('Presets', 'web-stories')}
         titleTools={
           <MainButton onClick={() => insertElement('text', DEFAULT_PRESET)}>
             {__('Add new text', 'web-stories')}
