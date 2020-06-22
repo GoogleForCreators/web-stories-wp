@@ -45,7 +45,7 @@ import { Close } from '../../../icons';
 const MIN_MAX = {
   URL: {
     MIN: 2,
-    MAX: 2048, // Based on IE url limits and sitemaps
+    MAX: 2048, // Based on sitemaps url limits (safe side)
   },
 };
 
