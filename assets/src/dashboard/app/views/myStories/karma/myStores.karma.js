@@ -17,16 +17,36 @@
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
 import Fixture from '../../../../karma/fixture';
 
-describe('My Stories View', () => {
+describe('My Stories View integration', () => {
   let fixture;
+
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
   });
 
   it('should render', () => {
-    fixture.screen.debug();
+    const screen = fixture.screen;
+
+    const exploreTemplatesMenuItem = screen.queryByText('Explore Templates');
+
+    expect(exploreTemplatesMenuItem).toBeTruthy();
+  });
+
+  it('should navigate to Explore Templates', async () => {
+    const screen = fixture.screen;
+
+    const exploreTemplatesMenuItem = screen.queryByText('Explore Templates');
+
+    await fixture.events.click(exploreTemplatesMenuItem);
+
+    const viewTemplates = screen.queryByText('Viewing all templates');
+
+    expect(viewTemplates).toBeTruthy();
   });
 });

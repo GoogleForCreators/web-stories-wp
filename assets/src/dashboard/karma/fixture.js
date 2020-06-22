@@ -52,7 +52,7 @@ export default class Fixture {
     this._container = null;
     this._screen = null;
     this._componentStubs = new Map();
-    this._events = new FixtureEvents();
+    this._events = new FixtureEvents(act);
 
     const createElement = React.createElement;
     //eslint-disable-next-line jasmine/no-unsafe-spy
