@@ -44,10 +44,10 @@ const Alert = ({
   message,
   severity,
   title,
-  handleDismissClick,
+  handleDismiss,
 }) => {
   const autoDismissRef = useRef();
-  autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismissClick;
+  autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismiss;
 
   useEffect(() => {
     if (!autoDismissRef.current) {
@@ -73,7 +73,7 @@ const Alert = ({
       </AlertText>
       {isAllowDismiss && (
         <DismissButton
-          onClick={handleDismissClick}
+          onClick={handleDismiss}
           ariaLabel={__('Dismiss Alert', 'web-stories')}
         >
           <Close />
@@ -86,7 +86,7 @@ const Alert = ({
 Alert.propTypes = {
   isAllowDismiss: PropTypes.bool,
   message: PropTypes.string.isRequired,
-  handleDismissClick: PropTypes.func,
+  handleDismiss: PropTypes.func,
   isPreventAutoDismiss: PropTypes.bool,
   severity: AlertSeveritiesPropType,
   title: PropTypes.string,

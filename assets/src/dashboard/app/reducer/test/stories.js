@@ -100,6 +100,7 @@ describe('storyReducer', () => {
           body: 'my trash story failure message',
           title: 'Unable to Delete Story',
         },
+        id: Date.now(),
         code: 'my_error_code',
       },
     });

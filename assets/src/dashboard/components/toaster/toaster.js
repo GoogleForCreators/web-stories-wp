@@ -38,7 +38,7 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.TOASTER};
 `;
 
-function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
+function Toaster({ isAllowEarlyDismiss, activeToasts, handleRemoveToast }) {
   return (
     <Wrapper>
       {activeToasts.map((toast) => (
@@ -48,7 +48,7 @@ function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
           message={toast.message.body}
           title={toast.message.title}
           severity={toast.severity}
-          handleDismissClick={() => onRemoveToastClick(toast.id)}
+          handleDismiss={() => handleRemoveToast(toast.id)}
         />
       ))}
     </Wrapper>
@@ -58,6 +58,6 @@ function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
 Toaster.propTypes = {
   activeToasts: ToastMessagesPropType,
   isAllowEarlyDismiss: PropTypes.bool,
-  onRemoveToastClick: PropTypes.func,
+  handleRemoveToast: PropTypes.func,
 };
 export default Toaster;

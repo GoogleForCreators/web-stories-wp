@@ -98,7 +98,7 @@ export const _default = () => {
             <Toaster
               isAllowEarlyDismiss={boolean('isAllowEarlyDismiss')}
               activeToasts={state.activeToasts}
-              onRemoveToastClick={actions.removeToast}
+              handleRemoveToast={actions.removeToast}
             />
           </>
         )}

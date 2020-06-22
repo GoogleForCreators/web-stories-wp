@@ -57,7 +57,7 @@ describe('Alert', () => {
         isAllowDismiss={true}
         message={'this is an error'}
         severity={ALERT_SEVERITY.ERROR}
-        handleDismissClick={mockDismissClick}
+        handleDismiss={mockDismissClick}
       />
     );
 

@@ -62,7 +62,7 @@ function ToasterView() {
   return (
     <Toaster
       activeToasts={activeToasts}
-      onRemoveToastClick={removeToast}
+      handleRemoveToast={removeToast}
       isAllowEarlyDismiss
     />
   );
