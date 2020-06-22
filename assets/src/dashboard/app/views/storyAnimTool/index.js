@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -34,9 +35,8 @@ import {
   STORY_STATUS,
   STORY_PAGE_STATE,
 } from '../../../constants';
-import { PAGE_RATIO } from '../../../constants/pageStructure';
 import { PreviewPage } from '../../../components';
-import { clamp } from '../../../utils';
+import { clamp, getPagePreviewHeights } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import UpdateTemplateForm from './updateTemplateForm';
@@ -65,6 +65,7 @@ function StoryAnimTool() {
   const [selectedElementIds, setSelectedElementIds] = useState({});
   const [isElementSelectable, setIsElementSelectable] = useState(false);
   const globalTimeSubscription = useMemo(() => emitter(), []);
+  const flags = useFeatures();
 
   const {
     actions: {
@@ -232,13 +233,18 @@ function StoryAnimTool() {
       },
     };
 
-    const storyMarkup = getStoryMarkup(story, activeStory.pages, {
-      fallbackPoster: '',
-      logoPlaceholder: '',
-      publisher: {
-        name: 'Demo',
+    const storyMarkup = getStoryMarkup(
+      story,
+      activeStory.pages,
+      {
+        fallbackPoster: '',
+        logoPlaceholder: '',
+        publisher: {
+          name: 'Demo',
+        },
       },
-    });
+      flags
+    );
 
     const popup = window.open('about:blank', '_blank');
 
@@ -256,7 +262,7 @@ function StoryAnimTool() {
     iframeDoc.open();
     iframeDoc.write(storyMarkup.toString());
     iframeDoc.close();
-  }, [activeStory]);
+  }, [activeStory, flags]);
 
   useEffect(() => {
     setSelectedElementIds(
@@ -274,6 +280,8 @@ function StoryAnimTool() {
     // Deselect animation
     setActiveAnimation({});
   }, [activePageIndex]);
+
+  const { fullBleedHeight, storyHeight } = getPagePreviewHeights(STORY_WIDTH);
 
   const renderElementContent = useCallback((element) => {
     switch (element.type) {
@@ -319,15 +327,20 @@ function StoryAnimTool() {
                   <UnitsProvider
                     pageSize={{
                       width: STORY_WIDTH,
-                      height: STORY_WIDTH / PAGE_RATIO,
+                      height: storyHeight,
                     }}
                   >
                     <ActiveCard
                       width={STORY_WIDTH}
-                      height={STORY_WIDTH / PAGE_RATIO}
+                      height={fullBleedHeight}
                       selectedElementIds={selectedElementIds}
                     >
                       <PreviewPage
+                        pageSize={{
+                          width: STORY_WIDTH,
+                          height: storyHeight,
+                          containerHeight: fullBleedHeight,
+                        }}
                         page={activeStory.pages[activePageIndex]}
                         animationState={pageAnimationState}
                         subscribeGlobalTime={globalTimeSubscription.subscribe}

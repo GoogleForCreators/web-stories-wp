@@ -32,10 +32,7 @@ const DEFAULT_LEFT_MARGIN = 40;
 
 const DEFAULT_PRESET = {
   id: 'default-text',
-  content: `<span style="font-weight: 400">${__(
-    'Fill in some text',
-    'web-stories'
-  )}</span>`,
+  content: __('Fill in some text', 'web-stories'),
   fontSize: dataFontEm(1),
   font: TEXT_ELEMENT_DEFAULT_FONT,
   width: 160,

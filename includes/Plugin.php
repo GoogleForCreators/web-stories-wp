@@ -44,9 +44,18 @@ class Plugin {
 	 * @return void
 	 */
 	public function register() {
-		add_action( 'init', [ Media::class, 'init' ], 9 );
-		add_action( 'init', [ Story_Post_Type::class, 'init' ] );
-		add_action( 'init', [ Template_Post_Type::class, 'init' ] );
+		$media = new Media();
+		add_action( 'init', [ $media, 'init' ], 9 );
+
+		$story = new Story_Post_Type();
+		add_action( 'init', [ $story, 'init' ] );
+
+		$template = new Template_Post_Type();
+		add_action( 'init', [ $template, 'init' ] );
+
+		// Beta version updater.
+		$updater = new Updater();
+		add_action( 'init', [ $updater, 'init' ], 9 );
 
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().

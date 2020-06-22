@@ -45,9 +45,9 @@ class Admin {
 		$database_upgrader = new Database_Upgrader();
 		$database_upgrader->init();
 
-		add_filter( 'admin_body_class', [ __CLASS__, 'admin_body_class' ], 99 );
-		add_filter( 'default_content', [ __CLASS__, 'prefill_post_content' ] );
-		add_filter( 'default_title', [ __CLASS__, 'prefill_post_title' ] );
+		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
+		add_filter( 'default_content', [ $this, 'prefill_post_content' ] );
+		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Admin {
 	 *
 	 * @return string $class List of Classes.
 	 */
-	public static function admin_body_class( $class ) {
+	public function admin_body_class( $class ) {
 		$screen = get_current_screen();
 
 		if ( ! $screen instanceof WP_Screen ) {
@@ -93,7 +93,7 @@ class Admin {
 	 *
 	 * @return string Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public static function prefill_post_content( $content ) {
+	public function prefill_post_content( $content ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
@@ -163,7 +163,7 @@ BLOCK;
 	 *
 	 * @return string Pre-filled post title if applicable, or the default title otherwise.
 	 */
-	public static function prefill_post_title( $title ) {
+	public function prefill_post_title( $title ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $title;
 		}
