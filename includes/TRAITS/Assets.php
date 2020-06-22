@@ -35,25 +35,36 @@ trait Assets {
 	/**
 	 * Helper method to load assets based on a handle.
 	 *
-	 * @param string $handle Handle of script.
-	 * @param array  $extra_dependencies Array of extra dependencies.
+	 * @param string       $script_handle Handle of script.
+	 * @param array        $script_dependencies Array of extra dependencies.
+	 * @param string|false $style_handle Handle of style.
+	 * @param array        $style_dependencies Array of extra dependencies.
 	 */
-	public function load_assert( $handle, array $extra_dependencies = [] ) {
-		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . $handle . '.asset.php';
+	public function load_asset( $script_handle, array $script_dependencies = [], $style_handle = false, array $style_dependencies = [] ) {
+		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . $script_handle . '.asset.php';
 		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
 		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
 		$version      = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
 
-		$dependencies = array_merge( $dependencies, $extra_dependencies );
+		$dependencies = array_merge( $dependencies, $script_dependencies );
 
 		wp_enqueue_script(
-			$handle,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . $handle . '.js',
+			$script_handle,
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . $script_handle . '.js',
 			$dependencies,
 			$version,
 			false
 		);
 
-		wp_set_script_translations( $handle, 'web-stories' );
+		wp_set_script_translations( $script_handle, 'web-stories' );
+
+		if ( $style_handle ) {
+			wp_enqueue_style(
+				$style_handle,
+				WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . $style_handle . '.css',
+				$style_dependencies,
+				$version
+			);
+		}
 	}
 }

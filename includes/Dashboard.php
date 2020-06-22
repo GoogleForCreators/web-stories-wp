@@ -148,7 +148,14 @@ class Dashboard {
 			return;
 		}
 
-		$this->load_assert( self::SCRIPT_HANDLE );
+		wp_register_style(
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500|Roboto:400',
+			[],
+			WEBSTORIES_VERSION
+		);
+
+		$this->load_asset( self::SCRIPT_HANDLE, [], self::SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		$rest_base     = Story_Post_Type::POST_TYPE_SLUG;
 		$new_story_url = admin_url(
@@ -235,20 +242,6 @@ class Dashboard {
 					'enableBookmarkActions'           => false,
 				],
 			]
-		);
-
-		wp_register_style(
-			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500|Roboto:400',
-			[],
-			WEBSTORIES_VERSION
-		);
-
-		wp_enqueue_style(
-			self::SCRIPT_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
-			[ 'google-fonts' ],
-			WEBSTORIES_VERSION
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .

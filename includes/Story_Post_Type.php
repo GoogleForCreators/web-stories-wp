@@ -283,16 +283,6 @@ class Story_Post_Type {
 		// Force media model to load.
 		wp_enqueue_media();
 
-		$this->load_assert( self::WEB_STORIES_SCRIPT_HANDLE );
-
-		$settings = $this->get_editor_settings();
-
-		wp_localize_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			'webStoriesEditorSettings',
-			$settings
-		);
-
 		wp_register_style(
 			'roboto',
 			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
@@ -300,11 +290,14 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		wp_enqueue_style(
-			self::WEB_STORIES_STYLE_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[ 'roboto' ],
-			WEBSTORIES_VERSION
+		$this->load_asset( self::WEB_STORIES_SCRIPT_HANDLE, [], self::WEB_STORIES_STYLE_HANDLE, [ 'roboto' ] );
+
+		$settings = $this->get_editor_settings();
+
+		wp_localize_script(
+			self::WEB_STORIES_SCRIPT_HANDLE,
+			'webStoriesEditorSettings',
+			$settings
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .

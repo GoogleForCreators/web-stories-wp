@@ -57,14 +57,7 @@ class Embed_Block {
 		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
-		$this->load_assert( self::SCRIPT_HANDLE, [ 'amp-story-player' ] );
-
-		wp_register_style(
-			self::STYLE_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::STYLE_HANDLE . '.css',
-			[ 'amp-story-player' ],
-			WEBSTORIES_VERSION
-		);
+		$this->load_asset( self::SCRIPT_HANDLE, [ 'amp-story-player' ], self::STYLE_HANDLE, [ 'amp-story-player' ] );
 
 		// todo: use register_block_type_from_metadata() once generally available.
 
