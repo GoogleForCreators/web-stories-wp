@@ -66,7 +66,7 @@ describe('SlugPanel', () => {
     expect(url).toBeDefined();
   });
 
-  it('should not display permalink', async () => {
+  it('should respect the link limit', async () => {
     const { getByRole, updateStory } = setupPanel();
     const input = getByRole('textbox', { name: 'Edit: URL slug' });
     expect(input).toBeDefined();
