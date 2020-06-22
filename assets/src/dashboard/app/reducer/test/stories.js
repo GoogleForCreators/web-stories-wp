@@ -29,6 +29,10 @@ describe('storyReducer', () => {
     totalPages: null,
   };
 
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => 1592844570916);
+  });
+
   it(`should update stories state when ${ACTION_TYPES.TRASH_STORY} is called`, () => {
     const result = storyReducer(
       {
@@ -80,7 +84,10 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.TRASH_STORY_FAILURE,
         payload: {
-          message: 'my trash story failure message',
+          message: {
+            body: 'my trash story failure message',
+            title: 'Unable to Delete Story',
+          },
           code: 'my_error_code',
         },
       }
@@ -89,7 +96,10 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: 'my trash story failure message',
+        message: {
+          body: 'my trash story failure message',
+          title: 'Unable to Delete Story',
+        },
         code: 'my_error_code',
       },
     });
@@ -145,7 +155,10 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.DUPLICATE_STORY_FAILURE,
         payload: {
-          message: 'my duplicate story failure message',
+          message: {
+            title: 'Unable to Duplciate Story',
+            body: 'my duplicate story failure message',
+          },
           code: 'my_error_code',
         },
       }
@@ -154,7 +167,11 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: 'my duplicate story failure message',
+        message: {
+          title: 'Unable to Duplciate Story',
+          body: 'my duplicate story failure message',
+        },
+        id: Date.now(),
         code: 'my_error_code',
       },
     });
@@ -291,13 +308,26 @@ describe('storyReducer', () => {
       { ...initialState },
       {
         type: ACTION_TYPES.FETCH_STORIES_FAILURE,
-        payload: { message: 'my error message', code: 'my_error_code' },
+        payload: {
+          message: {
+            title: 'Unable to Load Stories',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      error: { message: 'my error message', code: 'my_error_code' },
+      error: {
+        message: {
+          title: 'Unable to Load Stories',
+          body: 'my error message',
+        },
+        id: Date.now(),
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -306,13 +336,26 @@ describe('storyReducer', () => {
       { ...initialState },
       {
         type: ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
-        payload: { message: 'my error message', code: 'my_error_code' },
+        payload: {
+          message: {
+            title: 'Unable to Create Story From Template',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      error: { message: 'my error message', code: 'my_error_code' },
+      error: {
+        message: {
+          title: 'Unable to Create Story From Template',
+          body: 'my error message',
+        },
+        id: Date.now(),
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -350,7 +393,10 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.UPDATE_STORY_FAILURE,
         payload: {
-          message: 'my update story failure message',
+          message: {
+            title: 'Unable to Update Story',
+            body: 'my error message',
+          },
           code: 'my_error_code',
         },
       }
@@ -359,7 +405,11 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: 'my update story failure message',
+        message: {
+          title: 'Unable to Update Story',
+          body: 'my error message',
+        },
+        id: Date.now(),
         code: 'my_error_code',
       },
     });
