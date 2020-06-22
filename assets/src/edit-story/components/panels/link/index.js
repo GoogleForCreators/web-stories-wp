@@ -200,13 +200,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             <Media
               value={link.icon || ''}
               onChange={handleChangeIcon}
-              title={__('Select as link icon', 'web-stories')}
-              buttonInsertText={__('Select as link icon', 'web-stories')}
+              title={__('Select link icon', 'web-stories')}
+              buttonInsertText={__('Select link icon', 'web-stories')}
               type={'image'}
               size={64}
               loading={fetchingMetadata}
               circle
-              ariaLabel={link.desc}
+              ariaLabel={__('Select link icon', 'web-stories')}
             />
             <IconInfo>
               <IconText>{__('Optional brand icon', 'web-stories')}</IconText>

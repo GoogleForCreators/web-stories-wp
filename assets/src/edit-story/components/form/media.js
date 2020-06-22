@@ -181,7 +181,7 @@ MediaInput.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.number,
   circle: PropTypes.bool,
-  ariaLabel: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
@@ -199,6 +199,7 @@ MediaInput.defaultProps = {
   type: 'image',
   buttonInsertText: __('Choose an image', 'web-stories'),
   title: __('Choose an image', 'web-stories'),
+  ariaLabel: __('Choose an image', 'web-stories'),
 };
 
 export default MediaInput;
