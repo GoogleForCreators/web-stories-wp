@@ -1,6 +1,6 @@
 <?php
 /**
- * Trait Url_Parser
+ * Trait Document_Parser
  *
  * @package   Google\Web_Stories\Traits
  * @copyright 2020 Google LLC
