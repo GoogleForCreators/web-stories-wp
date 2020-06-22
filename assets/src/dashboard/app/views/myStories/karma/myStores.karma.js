@@ -30,23 +30,25 @@ describe('My Stories View integration', () => {
     await fixture.render();
   });
 
-  it('should render', () => {
-    const screen = fixture.screen;
+  describe('when the page intially loads', () => {
+    it('should render', () => {
+      const screen = fixture.screen;
 
-    const exploreTemplatesMenuItem = screen.queryByText('Explore Templates');
+      const exploreTemplatesMenuItem = screen.queryByText('Explore Templates');
 
-    expect(exploreTemplatesMenuItem).toBeTruthy();
-  });
+      expect(exploreTemplatesMenuItem).toBeTruthy();
+    });
 
-  it('should navigate to Explore Templates', async () => {
-    const screen = fixture.screen;
+    it('should navigate to Explore Templates', async () => {
+      const screen = fixture.screen;
 
-    const exploreTemplatesMenuItem = screen.queryByText('Explore Templates');
+      const exploreTemplatesMenuItem = screen.queryByText('Explore Templates');
 
-    await fixture.events.click(exploreTemplatesMenuItem);
+      await fixture.events.click(exploreTemplatesMenuItem);
 
-    const viewTemplates = screen.queryByText('Viewing all templates');
+      const viewTemplates = screen.queryByText('Viewing all templates');
 
-    expect(viewTemplates).toBeTruthy();
+      expect(viewTemplates).toBeTruthy();
+    });
   });
 });
