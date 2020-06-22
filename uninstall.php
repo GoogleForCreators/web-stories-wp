@@ -85,7 +85,7 @@ delete_post_meta_by_key( 'web_stories_is_poster' );
 delete_post_meta_by_key( 'web_stories_poster_id' );
 
 // Delete all stories & templates.
-$posts = get_posts(
+$cpt_posts = get_posts(
 	[
 		'fields'           => 'ids',
 		'suppress_filters' => false,
@@ -94,7 +94,7 @@ $posts = get_posts(
 	]
 );
 
-foreach ( $posts as $custom_post ) {
+foreach ( $cpt_posts as $custom_post ) {
 	wp_delete_post( $custom_post->ID, true );
 }
 
