@@ -116,4 +116,13 @@ trait Assets {
 		$this->register_style( $style_handle, $style_dependencies );
 		wp_enqueue_style( $style_handle );
 	}
+
+	/**
+	 * Remove admin styles.
+	 *
+	 * @param array $styles Array to style to be removed.
+	 */
+	public function remove_admin_style( array $styles ) {
+		wp_styles()->registered['wp-admin']->deps = array_diff( wp_styles()->registered['wp-admin']->deps, $styles );
+	}
 }

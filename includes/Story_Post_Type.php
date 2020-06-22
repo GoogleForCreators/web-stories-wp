@@ -293,10 +293,7 @@ class Story_Post_Type {
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		wp_styles()->registered['wp-admin']->deps = array_diff(
-			wp_styles()->registered['wp-admin']->deps,
-			[ 'forms' ]
-		);
+		$this->remove_admin_style( [ 'forms' ] );
 	}
 
 	/**
