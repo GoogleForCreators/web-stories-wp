@@ -63,7 +63,7 @@ if ( ! empty( $options ) ) {
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 $transients = $wpdb->get_results(
 	$wpdb->prepare(
-		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE",
+		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s",
 		'_transient_' . $prefix,
 		'_transient_timeout_' . $prefix
 	),
