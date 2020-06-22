@@ -201,6 +201,7 @@
     "test:php:help": "npm run test:php -- --help",
     "test:e2e": "JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs jest --runInBand --config=tests/e2e/jest.config.js",
     "test:e2e:help": "npm run test:e2e -- --help",
+    "test:e2e:percy": "percy exec -- npm run test:e2e",
     "test:e2e:watch": "npm run test:e2e -- --watch",
     "test:e2e:interactive": "PUPPETEER_HEADLESS=false PUPPETEER_SLOWMO=80 npm run test:e2e",
     "test:e2e:debug": "PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs node --inspect-brk node_modules/.bin/jest --runInBand --config=tests/e2e/jest.config.js",

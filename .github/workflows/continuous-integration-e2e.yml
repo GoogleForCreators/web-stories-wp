@@ -93,7 +93,7 @@ jobs:
           command: "npm run test:e2e"
           flags: '--config=percy.config.yml'
         env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Stop Docker environment
