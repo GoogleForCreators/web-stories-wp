@@ -91,7 +91,12 @@ function Content({ stories, view, page }) {
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>
+          <UnitsProvider
+            pageSize={{
+              width: view.pageSize.width,
+              height: view.pageSize.height,
+            }}
+          >
             <StandardViewContentGutter>
               <SavedTemplatesGridView view={view} stories={stories} />
               <InfiniteScroller

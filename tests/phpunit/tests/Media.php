@@ -79,7 +79,8 @@ class Media extends \WP_UnitTestCase {
 		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
 		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
-		\Google\Web_Stories\Media::delete_video_poster( $video_attachment_id );
+		$media = new \Google\Web_Stories\Media();
+		$media->delete_video_poster( $video_attachment_id );
 		$this->assertNull( get_post( $poster_attachment_id ) );
 	}
 
@@ -103,7 +104,8 @@ class Media extends \WP_UnitTestCase {
 		);
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		\Google\Web_Stories\Media::delete_video_poster( $video_attachment_id );
+		$media = new \Google\Web_Stories\Media();
+		$media->delete_video_poster( $video_attachment_id );
 		$this->assertNotNull( get_post( $poster_attachment_id ) );
 	}
 

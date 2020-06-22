@@ -25,7 +25,7 @@ import { FlagsProvider } from 'flagged';
 import App from '../../../assets/src/edit-story/app';
 
 export default {
-  title: 'Playground|Stories Editor',
+  title: 'Playground/Stories Editor',
 };
 
 // @todo: Find better way to mock these.
