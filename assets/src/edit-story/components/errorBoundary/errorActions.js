@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -30,46 +30,72 @@ import PropTypes from 'prop-types';
  */
 import { Outline, Primary } from '../button';
 
-const Message = styled.div`
-  color: #fff;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.6;
+const ErrorContainer = styled.div`
   padding: 20px;
-  button {
-    margin-right: 6px;
-  }
 `;
 
-const P = styled.p`
-  margin: 0 0 8px 0;
+const Paragraph = styled.p`
+  margin: 0 0 10px 0;
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  color: ${({ theme }) => theme.colors.fg.v1};
+`;
+
+const LargeButtonStyles = css`
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+`;
+
+const InlineOutline = styled(Outline)`
+  ${LargeButtonStyles}
+  margin-right: 10px;
+`;
+
+const InlinePrimary = styled(Primary)`
+  ${LargeButtonStyles}
+`;
+
+const Actions = styled.div`
+  display: flex;
+  margin-top: 20px;
 `;
 
 function ErrorActions({ error, errorInfo }) {
-  const body = encodeURIComponent(`${error}${errorInfo.componentStack}`);
-  const reportUrl = `https://github.com/google/web-stories-wp/issues/new?labels=Type%3A+Bug&template=bug_report.md&title=${error}&body=${body}`;
+  const body = encodeURIComponent(`${error}\n\n${errorInfo.componentStack}`);
+  const reportUrl = `https://docs.google.com/forms/d/e/1FAIpQLSfRK9gFWMavvGbEWPFUFz8PDgrDE6XdVuh3B9e1Fu549V8BxQ/viewform?entry.1908864204=Report+an+issue&entry.770137249=${body}`;
 
   const reload = () => {
     window.location.reload(true);
   };
 
   return (
-    <Message>
-      <P>{__('Something went wrong!', 'web-stories')}</P>
-      <P>
+    <ErrorContainer>
+      <Paragraph>{__('Something went wrong!', 'web-stories')}</Paragraph>
+      <Paragraph>
         {__(
           'The editor has crashed. Please try reloading the page and report the error using the button below.',
           'web-stories'
         )}
-      </P>
-      <P>{__('Apologies for the inconvenience.', 'web-stories')}</P>
-      <div>
-        <Outline onClick={reload}>{__('Reload', 'web-stories')}</Outline>
-        <Primary as="a" href={reportUrl} target="_blank" rel="noreferrer">
+      </Paragraph>
+      <Paragraph>
+        {__('Apologies for the inconvenience.', 'web-stories')}
+      </Paragraph>
+      <Actions>
+        <InlineOutline onClick={reload}>
+          {__('Reload', 'web-stories')}
+        </InlineOutline>
+        <InlinePrimary
+          forwardedAs="a"
+          href={reportUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
           {__('Report Error', 'web-stories')}
-        </Primary>
-      </div>
-    </Message>
+        </InlinePrimary>
+      </Actions>
+    </ErrorContainer>
   );
 }
 

@@ -45,12 +45,11 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   border-style: solid;
   border-radius: 2px;
   background: transparent;
-  display: inline-block;
+  display: block;
   min-width: ${({ isIcon }) => (isIcon ? 'initial' : '63px')};
   max-height: 30px;
   padding: 0 10px;
   cursor: pointer;
-  text-decoration: none;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: 28px;
