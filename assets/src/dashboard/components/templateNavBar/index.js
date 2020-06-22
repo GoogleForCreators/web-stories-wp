@@ -88,7 +88,7 @@ export function TemplateNavBar({ handleCta, handleBookmarkClick }) {
       <Container>
         {handleBookmarkClick && <BookmarkToggle />}
         <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
-          {__('use template', 'web-stories')}
+          {__('Use template', 'web-stories')}
         </CapitalizedButton>
       </Container>
     </Nav>

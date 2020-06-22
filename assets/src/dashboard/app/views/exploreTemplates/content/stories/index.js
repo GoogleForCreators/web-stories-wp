@@ -25,9 +25,12 @@ import styled from 'styled-components';
  */
 import { Layout } from '../../../../../components';
 import { VIEW_STYLE } from '../../../../../constants';
+import {
+  STORYBOOK_PAGE_SIZE,
+  formattedTemplatesArray,
+} from '../../../../../storybookUtils';
 import { usePagePreviewSize } from '../../../../../utils';
 import Content from '../index';
-import formattedTemplatesArray from '../../../../../storybookUtils/formattedTemplatesArray';
 
 const search = {
   keyword: '',
@@ -35,7 +38,7 @@ const search = {
 };
 const view = {
   style: VIEW_STYLE.GRID,
-  pageSize: { width: 210, height: 316 },
+  pageSize: STORYBOOK_PAGE_SIZE,
 };
 const page = {
   value: 1,

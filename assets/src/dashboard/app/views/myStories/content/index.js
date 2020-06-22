@@ -65,7 +65,12 @@ function Content({
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>
+          <UnitsProvider
+            pageSize={{
+              width: view.pageSize.width,
+              height: view.pageSize.height,
+            }}
+          >
             {stories.length > 0 ? (
               <StandardViewContentGutter>
                 <StoriesView
