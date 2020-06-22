@@ -112,7 +112,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
         <ExpandedNumeric
           aria-label={__('Line-height', 'web-stories')}
           float={true}
-          value={lineHeight || 0}
+          value={lineHeight}
           min={MIN_MAX.LINE_HEIGHT.MIN}
           max={MIN_MAX.LINE_HEIGHT.MAX}
           suffix={<OffsetVertical />}
