@@ -20,6 +20,9 @@ namespace Google\Web_Stories\Tests;
 use Google\Web_Stories\REST_API\Stories_Controller;
 
 class Database_Upgrader extends \WP_UnitTestCase {
+
+	use Private_Access;
+
 	public function setUp() {
 		parent::setUp();
 		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );
@@ -43,7 +46,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		$this->assertSame( '1.2.3', get_option( $object::PREVIOUS_OPTION ) );
 	}
 
-	public function test_v_2_remove_conic_style_presets() {
+	public function test_v_2_replace_conic_style_presets() {
 		$radial_preset = [
 			[
 				'color'              => [],
@@ -97,7 +100,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
-		$object->init();
+		$this->call_private_method( $object, 'v_2_replace_conic_style_presets' );
 
 		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
 		$this->assertSame( $style_presets['textStyles'][1], $radial_preset );
@@ -144,7 +147,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
-		$object->init();
+		$this->call_private_method( $object, 'remove_broken_text_styles' );
 
 		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
 		$this->assertSame(
@@ -192,7 +195,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
-		$object->init();
+		$this->call_private_method( $object, 'unify_color_presets' );
 
 		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
 		$this->assertSame(
