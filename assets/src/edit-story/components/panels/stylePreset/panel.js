@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -30,6 +31,19 @@ import { getPagePreset, getShapePresets, getTextPresets } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
+
+const StyledPanel = styled(Panel)`
+  position: relative;
+`;
+
+// Prevents gap at the bottom between handle and color swatches.
+const StyledResize = styled(Resize)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+`;
 
 function StylePresetPanel() {
   const {
@@ -226,7 +240,7 @@ function StylePresetPanel() {
   const resizeable = hasPresets;
 
   return (
-    <Panel
+    <StyledPanel
       name="stylepreset"
       initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
       resizeable={resizeable}
@@ -245,8 +259,8 @@ function StylePresetPanel() {
         isText={isText}
         isBackground={isBackground}
       />
-      {resizeable && <Resize />}
-    </Panel>
+      {resizeable && <StyledResize />}
+    </StyledPanel>
   );
 }
 
