@@ -466,6 +466,7 @@ function Carousel() {
                   ? __('Disable Safe Zone', 'web-stories')
                   : __('Enable Safe Zone', 'web-stories')
               }
+              placement="left"
             >
               <SafeZoneButton
                 active={showSafeZone}
@@ -479,8 +480,7 @@ function Carousel() {
             </WithTooltip>
             <WithTooltip
               title={__('Grid View', 'web-stories')}
-              // onPointerLeave={() => console.log('leave')}
-              // onPointerEnter={() => console.log('enter')}
+              placement="left"
             >
               <StyledGridViewButton
                 onClick={openModal}
