@@ -88,10 +88,7 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Run E2E tests
-        uses: percy/exec-action@v0.3.0
-        with:
-          command: "npm run test:e2e"
-          flags: '--config=percy.config.yml'
+        run: npm run test:e2e:percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
