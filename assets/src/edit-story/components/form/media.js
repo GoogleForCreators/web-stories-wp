@@ -181,7 +181,7 @@ MediaInput.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.number,
   circle: PropTypes.bool,
-  ariaLabel: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string,
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
