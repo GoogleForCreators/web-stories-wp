@@ -61,6 +61,7 @@ describe('stylePresets/PresetGroup', () => {
     expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([0, 0, 0]);
 
     const firstButton = getAllByRole('button')[0];
+    // @todo Use label here once it gets added back with finalized UX.
     const group = firstButton.parentNode;
     expect(group).toBeDefined();
 
