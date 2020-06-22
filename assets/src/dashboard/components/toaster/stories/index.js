@@ -37,7 +37,7 @@ export const _default = () => {
   const alerts = [
     {
       message: {
-        body: 'i am an error reason',
+        body: 'I am an error reason.',
         title: 'Error Saving Story',
       },
       severity: ALERT_SEVERITY.ERROR,
@@ -45,7 +45,7 @@ export const _default = () => {
     },
     {
       message: {
-        body: 'i am a second error',
+        body: 'I am a second error.',
         title: 'Unable to Save Story',
       },
       severity: ALERT_SEVERITY.ERROR,
@@ -53,7 +53,7 @@ export const _default = () => {
     },
     {
       message: {
-        body: 'i am just here for fun',
+        body: 'I am just here for fun.',
         title: 'Just Dropping By',
       },
       severity: ALERT_SEVERITY.INFO,
@@ -61,7 +61,7 @@ export const _default = () => {
     },
     {
       message: {
-        body: 'seems like things are not bueno',
+        body: 'Seems like things are not bueno.',
         title: 'Connection Unstable',
       },
       severity: ALERT_SEVERITY.WARNING,

@@ -40,7 +40,7 @@ function ToasterView() {
   } = useToastContext();
 
   useEffect(() => {
-    if (storyError?.message) {
+    if (storyError?.id) {
       addToast({
         message: storyError.message,
         severity: ALERT_SEVERITY.ERROR,
@@ -50,7 +50,7 @@ function ToasterView() {
   }, [storyError, addToast]);
 
   useEffect(() => {
-    if (templateError?.message) {
+    if (templateError?.id) {
       addToast({
         message: templateError.message,
         severity: ALERT_SEVERITY.ERROR,

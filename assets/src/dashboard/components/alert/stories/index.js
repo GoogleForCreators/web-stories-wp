@@ -42,28 +42,28 @@ export const _default = () => {
       <Alert
         isAllowDismiss={boolean('isAllowDismiss1')}
         handleDismissClick={action('error message dismiss')}
-        message={text('errorMessage', 'this is an error')}
+        message={text('errorMessage', 'This is an error.')}
         title={text('errorTitle', 'Error Title')}
         severity={ALERT_SEVERITY.ERROR}
       />
       <Alert
         isAllowDismiss={boolean('isAllowDismiss2')}
         handleDismissClick={action('warning message dismiss')}
-        message={text('warningMessage', 'this is a warning')}
+        message={text('warningMessage', 'This is a warning.')}
         title={text('warningTitle', 'Warning Title')}
         severity={ALERT_SEVERITY.WARNING}
       />
       <Alert
         isAllowDismiss={boolean('isAllowDismiss3')}
         handleDismissClick={action('info message dismiss')}
-        message={text('infoMessage', 'this is informational')}
+        message={text('infoMessage', 'This is informational.')}
         title={text('infoTitle', 'Info Title')}
         severity={ALERT_SEVERITY.INFO}
       />
       <Alert
         isAllowDismiss={boolean('isAllowDismiss4')}
         handleDismissClick={action('success message dismiss')}
-        message={text('successMessage', 'this is successful')}
+        message={text('successMessage', 'This is successful.')}
         title={text('successTitle', 'Success Title')}
         severity={ALERT_SEVERITY.SUCCESS}
       />
@@ -72,7 +72,7 @@ export const _default = () => {
         handleDismissClick={action('default message dismiss')}
         message={text(
           'defaultMessage',
-          'this is an alert without a severity passed in'
+          'This is an alert without a severity passed in.'
         )}
         title={text('defaultTitle', 'Default Title')}
       />
@@ -82,7 +82,7 @@ export const _default = () => {
         isPreventAutoDismiss
         message={text(
           'preventAutoDismiss',
-          'this is an alert that will not dismiss automatically after 10 seconds'
+          'This is an alert that will not dismiss automatically after 10 seconds.'
         )}
         title={text('noAutoDismissTitle', 'No Auto Dismiss Alert')}
       />

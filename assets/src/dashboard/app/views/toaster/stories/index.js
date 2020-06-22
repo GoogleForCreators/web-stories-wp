@@ -31,29 +31,115 @@ export default {
   component: ToasterView,
 };
 
+const storyErrors = [
+  {
+    message: {
+      body: 'I am an error.',
+      title: 'Unable to Load Stories',
+    },
+  },
+  {
+    message: {
+      body: 'I am another error.',
+      title: 'Unable to Load Stories',
+    },
+  },
+  {
+    message: {
+      body: 'I am the third error.',
+      title: 'Unable to Update Story',
+    },
+  },
+  {
+    message: {
+      body: 'Something is really not working!',
+      title: 'Oh No!',
+    },
+  },
+  {
+    message: {
+      body: 'I am the last preloaded error for stories in this storybook.',
+      title: 'Unable to Load Stories',
+    },
+  },
+];
+
+const templateErrors = [
+  {
+    message: {
+      body: 'I am an error.',
+      title: 'Unable to Load Templates',
+    },
+  },
+  {
+    message: {
+      body: 'I am another error.',
+      title: 'Unable to Load Templates',
+    },
+  },
+  {
+    message: {
+      body: 'I am the third error.',
+      title: 'Unable to Create Story From Template',
+    },
+  },
+  {
+    message: {
+      body: 'Something is really not working!',
+      title: 'Oh No!',
+    },
+  },
+  {
+    message: {
+      body: 'I am the last preloaded error for templates in this storybook.',
+      title: 'Unable to Load Templates',
+    },
+  },
+];
+
 export const _default = () => {
-  const [error, setError] = useState();
-  const [errorIndexToAdd, setErrorIndexToAdd] = useState(0);
-  const errors = [
-    { message: 'i am an error' },
-    { message: 'i am a second error' },
-    { message: 'i am third' },
-    { message: 'something is really not working!' },
-    { message: 'oh no!' },
-  ];
+  const [storyError, setStoryError] = useState();
+  const [storyErrorIndexToAdd, setStoryErrorIndexToAdd] = useState(0);
+  const [templateError, setTemplateError] = useState();
+  const [templateErrorIndexToAdd, setTemplateErrorIndexToAdd] = useState(0);
 
   return (
-    <ApiContext.Provider value={{ state: { stories: { error } } }}>
+    <ApiContext.Provider
+      value={{
+        state: {
+          stories: { error: storyError },
+          templates: { error: templateError },
+        },
+      }}
+    >
       <Button
         onClick={() => {
-          setErrorIndexToAdd(errorIndexToAdd + 1);
-          setError({ ...errors[errorIndexToAdd], id: Date.now() });
+          setStoryErrorIndexToAdd(storyErrorIndexToAdd + 1);
+          setStoryError({
+            ...storyErrors[storyErrorIndexToAdd],
+            id: Date.now(),
+          });
         }}
-        isDisabled={errorIndexToAdd > errors.length - 1}
+        isDisabled={storyErrorIndexToAdd > storyErrors.length - 1}
       >
-        {errorIndexToAdd > errors.length - 1
-          ? 'No more practice alerts'
-          : 'Add practice alert'}
+        {storyErrorIndexToAdd > storyErrors.length - 1
+          ? 'No more practice story alerts'
+          : 'Add practice story alert'}
+      </Button>
+      <br />
+      <Button
+        onClick={() => {
+          setTemplateErrorIndexToAdd(templateErrorIndexToAdd + 1);
+          setTemplateError({
+            ...templateErrors[templateErrorIndexToAdd],
+            id: Date.now(),
+          });
+        }}
+        isDisabled={templateErrorIndexToAdd > templateErrors.length - 1}
+      >
+        {templateErrorIndexToAdd > templateErrors.length - 1
+          ? 'No more practice template alerts'
+          : 'Add practice template alert'}
       </Button>
       <ToastProvider>
         <ToasterView />
