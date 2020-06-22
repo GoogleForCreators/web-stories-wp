@@ -42,85 +42,14 @@ if ( false === $erase ) {
 	return;
 }
 
-global $wpdb;
+require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 
-$prefix = 'web_stories\_%';
+\Google\Web_Stories\delete_options();
 
-// Delete options and transients.
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-$options = $wpdb->get_results(
-	$wpdb->prepare(
-		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
-		$prefix
-	),
-	ARRAY_N
-);
-
-if ( ! empty( $options ) ) {
-	array_map( 'delete_option', (array) $options );
-}
-
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-$transients = $wpdb->get_results(
-	$wpdb->prepare(
-		"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s",
-		'_transient_' . $prefix,
-		'_transient_timeout_' . $prefix
-	),
-	ARRAY_N
-);
-
-if ( ! empty( $transients ) ) {
-	array_map( 'delete_transient', (array) $transients );
-}
-
-// Clear network data if multisite.
 if ( is_multisite() ) {
-	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-	$options = $wpdb->get_results(
-		$wpdb->prepare(
-			"SELECT option_name FROM $wpdb->sitemeta WHERE meta_key LIKE %s",
-			$prefix
-		),
-		ARRAY_N
-	);
-
-	if ( ! empty( $options ) ) {
-		array_map( 'delete_option', (array) $options );
-	}
-
-	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-	$transients = $wpdb->get_results(
-		$wpdb->prepare(
-			"SELECT option_name FROM $wpdb->sitemeta WHERE meta_key LIKE %s OR meta_key LIKE %s",
-			'_site_transient_' . $prefix,
-			'_site_transient_timeout_' . $prefix
-		),
-		ARRAY_N
-	);
-
-	if ( ! empty( $transients ) ) {
-		array_map( 'delete_transient', (array) $transients );
-	}
+	\Google\Web_Stories\delete_site_options();
 }
 
-// Delete post meta.
-delete_post_meta_by_key( 'web_stories_is_poster' );
-delete_post_meta_by_key( 'web_stories_poster_id' );
+\Google\Web_Stories\delete_post_meta();
 
-// Delete all stories & templates.
-$cpt_posts = get_posts(
-	[
-		'fields'           => 'ids',
-		'suppress_filters' => false,
-		'post_type'        => [ Story_Post_Type::POST_TYPE_SLUG, Template_Post_Type::POST_TYPE_SLUG ],
-		'posts_per_page'   => - 1,
-	]
-);
-
-foreach ( $cpt_posts as $custom_post ) {
-	wp_delete_post( $custom_post->ID, true );
-}
-
-// Clear options cache.
-wp_cache_flush();
+\Google\Web_Stories\delete_posts();
