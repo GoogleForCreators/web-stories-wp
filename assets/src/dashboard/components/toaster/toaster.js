@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import { ToastMessagesPropType } from '../../types';
 import { Alert } from '../';
+import { Z_INDEX } from '../../constants';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -34,6 +35,7 @@ const Wrapper = styled.div`
   align-items: flex-start;
   max-width: 300px;
   width: 40vw;
+  z-index: ${Z_INDEX.TOASTER};
 `;
 
 function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
@@ -43,7 +45,8 @@ function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
         <Alert
           isAllowDismiss={isAllowEarlyDismiss}
           key={`alert_${toast.id}`}
-          message={toast.message}
+          message={toast.message.body}
+          title={toast.message.title}
           severity={toast.severity}
           handleDismissClick={() => onRemoveToastClick(toast.id)}
         />

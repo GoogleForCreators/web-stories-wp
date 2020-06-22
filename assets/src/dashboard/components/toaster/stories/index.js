@@ -36,27 +36,42 @@ export const _default = () => {
   const [toastIndexToAdd, setToastIndexToAdd] = useState(0);
   const alerts = [
     {
-      message: 'i am an error',
+      message: {
+        body: 'i am an error reason',
+        title: 'Error Saving Story',
+      },
       severity: ALERT_SEVERITY.ERROR,
       id: Date.now(),
     },
     {
-      message: 'i am a second error',
+      message: {
+        body: 'i am a second error',
+        title: 'Unable to Save Story',
+      },
       severity: ALERT_SEVERITY.ERROR,
       id: Date.now(),
     },
     {
-      message: 'i am just here for fun',
+      message: {
+        body: 'i am just here for fun',
+        title: 'Just Dropping By',
+      },
       severity: ALERT_SEVERITY.INFO,
       id: Date.now(),
     },
     {
-      message: 'seems like things are not bueno',
+      message: {
+        body: 'seems like things are not bueno',
+        title: 'Connection Unstable',
+      },
       severity: ALERT_SEVERITY.WARNING,
       id: Date.now(),
     },
     {
-      message: 'Everything is successful and peachy!',
+      message: {
+        body: 'Everything is successful and peachy!',
+        title: 'Story Title Updated',
+      },
       severity: ALERT_SEVERITY.SUCCESS,
       id: Date.now(),
     },

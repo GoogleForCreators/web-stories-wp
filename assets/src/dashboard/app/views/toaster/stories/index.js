@@ -47,7 +47,7 @@ export const _default = () => {
       <Button
         onClick={() => {
           setErrorIndexToAdd(errorIndexToAdd + 1);
-          setError({ ...errors[errorIndexToAdd], id: errorIndexToAdd });
+          setError({ ...errors[errorIndexToAdd], id: Date.now() });
         }}
         isDisabled={errorIndexToAdd > errors.length - 1}
       >
