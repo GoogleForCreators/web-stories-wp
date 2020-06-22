@@ -161,30 +161,6 @@ class Media {
 	}
 
 	/**
-	 * Get story meta images.
-	 *
-	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
-	 *
-	 * @param int|\WP_Post|null $post Post.
-	 * @return string[] Images.
-	 */
-	public function get_story_meta_images( $post = null ) {
-		$thumbnail_id = (int) get_post_thumbnail_id( $post );
-
-		if ( 0 === $thumbnail_id ) {
-			return [];
-		}
-
-		$images = [
-			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, self::STORY_POSTER_IMAGE_SIZE ),
-			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, self::STORY_SQUARE_IMAGE_SIZE ),
-			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, self::STORY_LANDSCAPE_IMAGE_SIZE ),
-		];
-
-		return array_filter( $images );
-	}
-
-	/**
 	 * Filters the current query to hide all automatically extracted poster image attachments.
 	 *
 	 * Reduces unnecessary noise in the media library.
