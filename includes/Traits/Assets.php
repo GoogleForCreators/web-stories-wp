@@ -2,7 +2,7 @@
 /**
  * Trait Assets
  *
- * @package   Google\Web_Stories\TRAITS
+ * @package   Google\Web_Stories\Traits
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
@@ -24,12 +24,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\TRAITS;
+namespace Google\Web_Stories\Traits;
 
 /**
  * Trait Assets
  *
- * @package Google\Web_Stories\TRAITS
+ * @package Google\Web_Stories\Traits
  */
 trait Assets {
 	/**

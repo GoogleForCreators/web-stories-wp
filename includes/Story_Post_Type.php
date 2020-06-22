@@ -27,9 +27,9 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
-use Google\Web_Stories\TRAITS\Assets;
-use Google\Web_Stories\TRAITS\Publisher;
-use Google\Web_Stories\TRAITS\Types;
+use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Screen;
 

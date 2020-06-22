@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\TRAITS\Publisher;
+use Google\Web_Stories\Traits\Publisher;
 
 /**
  * Class Story_Renderer

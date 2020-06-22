@@ -28,7 +28,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\TRAITS\Assets;
+use Google\Web_Stories\Traits\Assets;
 use WP_Screen;
 
 /**

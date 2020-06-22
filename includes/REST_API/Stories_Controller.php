@@ -27,7 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\TRAITS\Publisher;
+use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
 use WP_Error;
 use WP_Post;
