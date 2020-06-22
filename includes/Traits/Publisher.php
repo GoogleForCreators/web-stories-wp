@@ -142,7 +142,7 @@ trait Publisher {
 
 		// Fallback to serving the WordPress logo.
 		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
+			$logo_image_url = $this->get_publisher_logo_placeholder();
 		}
 
 		/**
