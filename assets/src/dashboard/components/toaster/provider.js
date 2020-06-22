@@ -40,15 +40,13 @@ const ToastProvider = ({ children }) => {
   }, [setToasts]);
 
   const removeToast = useCallback(
-    (id) => {
-      const toastIdToUpdate = id || activeToasts[0].id;
-      toastIdToUpdate &&
-        setToasts({
-          ...toasts,
-          [toastIdToUpdate]: { ...toasts[toastIdToUpdate], isActive: false },
-        });
-    },
-    [activeToasts, toasts]
+    (id) =>
+      id &&
+      setToasts({
+        ...toasts,
+        [id]: { ...toasts[id], isActive: false },
+      }),
+    [toasts]
   );
 
   const addToast = useCallback(
