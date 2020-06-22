@@ -39,34 +39,33 @@ function TransformProvider({ children }) {
     };
   }, []);
 
-  const pushTransform = useCallback(
-    (id, transform) => {
-      const handlerListMap = transformHandlersRef.current;
-      const lastTransforms = lastTransformsRef.current;
-      const handlerList = handlerListMap[id];
+  const pushTransform = useCallback((id, transform) => {
+    const handlerListMap = transformHandlersRef.current;
+    const lastTransforms = lastTransformsRef.current;
+    const handlerList = handlerListMap[id];
 
-      lastTransforms[id] = transform;
+    if (handlerList) {
+      handlerList.forEach((handler) => handler(transform));
+    }
 
-      if (handlerList) {
-        handlerList.forEach((handler) => handler(transform));
+    if (transform === null) {
+      lastTransforms[id] = null;
+    } else {
+      lastTransforms[id] = { ...lastTransforms[id], ...transform };
+    }
+
+    if (isDoneTransform(lastTransforms[id])) {
+      const allTransformsDone = Object.values(lastTransforms).every(
+        isDoneTransform
+      );
+      if (allTransformsDone) {
+        lastTransformsRef.current = {};
+        setIsAnythingTransforming(false);
       }
-
-      if (!isAnythingTransforming && transform !== null) {
-        setIsAnythingTransforming(true);
-      }
-
-      if (isAnythingTransforming && transform === null) {
-        const allTransformsDone = Object.values(lastTransforms).every(
-          (v) => v === null
-        );
-        if (allTransformsDone) {
-          lastTransformsRef.current = {};
-          setIsAnythingTransforming(false);
-        }
-      }
-    },
-    [isAnythingTransforming]
-  );
+    } else {
+      setIsAnythingTransforming(true);
+    }
+  }, []);
 
   const state = {
     state: {
@@ -83,6 +82,14 @@ function TransformProvider({ children }) {
 
 TransformProvider.propTypes = {
   children: PropTypes.node,
+};
+
+const isDoneTransform = (transform) => {
+  if (transform === null) {
+    return true;
+  }
+  const transformKeys = Object.keys(transform);
+  return transformKeys.length === 1 && 'dropTargets' in transform;
 };
 
 export default TransformProvider;
