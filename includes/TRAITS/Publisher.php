@@ -103,7 +103,7 @@ trait Publisher {
 	 *
 	 * @return string
 	 */
-	public function get_publisher_logo_option() {
+	public function get_publisher_logo_option_name() {
 		return 'web_stories_publisher_logos';
 	}
 
@@ -118,7 +118,7 @@ trait Publisher {
 	public function get_publisher_logo() {
 		$logo_image_url = null;
 
-		$publisher_logo_settings = get_option( $this->get_publisher_logo_option(), [] );
+		$publisher_logo_settings = get_option( $this->get_publisher_logo_option_name(), [] );
 		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
 		if ( $has_publisher_logo ) {
 			$publisher_logo_id = absint( $publisher_logo_settings['active'] );

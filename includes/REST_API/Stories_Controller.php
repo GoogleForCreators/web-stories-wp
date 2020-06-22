@@ -106,9 +106,9 @@ class Stories_Controller extends Stories_Base_Controller {
 			$publisher_logo_id = $request->get_param( 'publisher_logo' );
 			if ( $publisher_logo_id ) {
 				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
-				$publisher_logo_settings           = get_option( $this->get_publisher_logo_option(), [] );
+				$publisher_logo_settings           = get_option( $this->get_publisher_logo_option_name(), [] );
 				$publisher_logo_settings['active'] = $publisher_logo_id;
-				update_option( $this->get_publisher_logo_option(), $publisher_logo_settings, false );
+				update_option( $this->get_publisher_logo_option_name(), $publisher_logo_settings, false );
 			}
 
 			// If style presets are set.
