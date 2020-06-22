@@ -2229,10 +2229,10 @@
           "id": "4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2"
         },
         {
-          "x": 45,
-          "y": 12,
+          "x": 44,
+          "y": 6,
           "width": 258,
-          "height": 132,
+          "height": 129,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -2264,7 +2264,7 @@
           "focalY": 50,
           "basedOn": "2a83d681-85df-4b20-88e4-cc67d02817d4",
           "id": "5fe94c96-3a59-4b24-bb76-1a2a24795c23",
-          "content": "<span style=\"color: #ff7324\">THE BEST TOOLS</span>\n<span style=\"color: #353332\">FOR YOUR DIY</span>\nPROJECT.",
+          "content": "<span style=\"color: #ff7324\">THE BEST TOOLS</span>\n<span style=\"color: #353332\">FOR YOUR DIY</span>\n<span style=\"color: #353332\">PROJECT.</span>",
           "fontSize": 44,
           "padding": {
             "horizontal": 0,
