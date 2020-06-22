@@ -34,18 +34,21 @@ const Wrapper = styled.section`
   flex-direction: column;
 `;
 
-function Panel({ resizeable, initialHeight, name, children }) {
+function Panel({ resizeable, collapsible, initialHeight, name, children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
   const [manuallyChanged, setManuallyChanged] = useState(false);
 
   const collapse = useCallback(() => {
+    if (!collapsible) {
+      return;
+    }
     setIsCollapsed(true);
     if (resizeable) {
       setHeight(0);
     }
-  }, [resizeable]);
+  }, [resizeable, collapsible]);
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
@@ -127,10 +130,13 @@ Panel.propTypes = {
   name: PropTypes.string.isRequired,
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
+  collapsible: PropTypes.bool,
 };
 
 Panel.defaultProps = {
   initialHeight: null,
+  resizeable: false,
+  collapsible: true,
 };
 
 export default Panel;
