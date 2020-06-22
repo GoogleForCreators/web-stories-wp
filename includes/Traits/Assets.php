@@ -40,17 +40,10 @@ trait Assets {
 	 * @return array
 	 */
 	protected function get_asset_metadata( $handle ) {
-		$asset_file = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . $handle . '.asset.php';
-		$asset      = is_readable( $asset_file ) ? require $asset_file : [];
-		if ( ! is_array( $asset ) ) {
-			$asset = [];
-		}
-		if ( ! $asset['dependencies'] ) {
-			$asset['dependencies'] = [];
-		}
-		if ( ! $asset['version'] ) {
-			$asset['version'] = WEBSTORIES_VERSION;
-		}
+		$asset_file            = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . $handle . '.asset.php';
+		$asset                 = is_readable( $asset_file ) ? require $asset_file : [];
+		$asset['dependencies'] = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
+		$asset['version']      = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
 
 		return $asset;
 	}
