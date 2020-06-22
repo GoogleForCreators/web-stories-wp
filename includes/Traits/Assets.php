@@ -121,6 +121,7 @@ trait Assets {
 	 * Remove admin styles.
 	 *
 	 * @param array $styles Array to style to be removed.
+	 * @return void
 	 */
 	public function remove_admin_style( array $styles ) {
 		wp_styles()->registered['wp-admin']->deps = array_diff( wp_styles()->registered['wp-admin']->deps, $styles );

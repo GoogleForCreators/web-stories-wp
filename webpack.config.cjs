@@ -98,7 +98,10 @@ const sharedConfig = {
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
-    new webpack.EnvironmentPlugin({ DISABLE_PREVENT: false }),
+    new webpack.EnvironmentPlugin({
+      DISABLE_PREVENT: false,
+      DISABLE_ERROR_BOUNDARIES: false,
+    }),
   ].filter(Boolean),
   optimization: {
     minimizer: [
