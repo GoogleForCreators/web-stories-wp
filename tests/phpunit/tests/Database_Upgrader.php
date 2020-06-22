@@ -17,8 +17,6 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
-
 class Database_Upgrader extends \WP_UnitTestCase {
 
 	use Private_Access;
@@ -97,12 +95,12 @@ class Database_Upgrader extends \WP_UnitTestCase {
 				$radial_preset,
 			],
 		];
-		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
 		$this->call_private_method( $object, 'v_2_replace_conic_style_presets' );
 
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 		$this->assertSame( $style_presets['textStyles'][1], $radial_preset );
 		$this->assertSame( $style_presets['textStyles'][0]['backgroundColor']['type'], 'linear' );
 		$this->assertSame( $style_presets['fillColors'][0]['type'], 'linear' );
@@ -115,7 +113,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			]
 		);
 
-		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 
 	public function test_remove_broken_text_styles() {
@@ -144,12 +142,12 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			'textColors' => [],
 			'fillColors' => [],
 		];
-		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
 		$this->call_private_method( $object, 'remove_broken_text_styles' );
 
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 		$this->assertSame(
 			$style_presets['textStyles'],
 			[
@@ -167,7 +165,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			]
 		);
 
-		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 
 	public function test_unify_color_presets() {

@@ -28,13 +28,18 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post;
 
 /**
  * Discovery class.
  */
 class Discovery {
+	/**
+	 * Name of publisher option.
+	 *
+	 * @var string
+	 */
+	const PUBLISHER_LOGOS_OPTION = 'web_stories_publisher_logos';
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -99,7 +104,7 @@ class Discovery {
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	protected function get_schemaorg_metadata() {
-		$publisher = self::get_publisher_data();
+		$publisher = $this->get_publisher_data();
 
 		$metadata = [
 			'@context'  => 'http://schema.org',
@@ -225,7 +230,7 @@ class Discovery {
 	 *
 	 * @return string|false Either the URL or false if error.
 	 */
-	private static function get_valid_publisher_image( $image_id ) {
+	private function get_valid_publisher_image( $image_id ) {
 		$logo_image_url = false;
 
 		// Get metadata for finding a square image.
@@ -266,14 +271,14 @@ class Discovery {
 	 *
 	 * @return string Publisher logo image URL. WordPress logo if no site icon or custom logo defined, and no logo provided via 'amp_site_icon_url' filter.
 	 */
-	public static function get_publisher_logo() {
+	public function get_publisher_logo() {
 		$logo_image_url = null;
 
-		$publisher_logo_settings = get_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [] );
+		$publisher_logo_settings = get_option( self::PUBLISHER_LOGOS_OPTION, [] );
 		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
 		if ( $has_publisher_logo ) {
 			$publisher_logo_id = absint( $publisher_logo_settings['active'] );
-			$logo_image_url    = self::get_valid_publisher_image( $publisher_logo_id );
+			$logo_image_url    = $this->get_valid_publisher_image( $publisher_logo_id );
 		}
 
 		// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
@@ -282,13 +287,13 @@ class Discovery {
 		// Finding fallback image.
 		$custom_logo_id = get_theme_mod( 'custom_logo' );
 		if ( empty( $logo_image_url ) && has_custom_logo() && $custom_logo_id ) {
-			$logo_image_url = self::get_valid_publisher_image( $custom_logo_id );
+			$logo_image_url = $this->get_valid_publisher_image( $custom_logo_id );
 		}
 
 		// Try Site Icon, though it is not ideal for non-Story because it should be square.
 		$site_icon_id = get_option( 'site_icon' );
 		if ( empty( $logo_image_url ) && $site_icon_id ) {
-			$logo_image_url = self::get_valid_publisher_image( $site_icon_id );
+			$logo_image_url = $this->get_valid_publisher_image( $site_icon_id );
 		}
 
 		// Fallback to serving the WordPress logo.
@@ -306,14 +311,26 @@ class Discovery {
 		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
 	}
 
+
+	/**
+	 * Publisher logo placeholder for static content output which will be replaced server-side.
+	 *
+	 * Uses a fallback logo to always create valid AMP in FE.
+	 *
+	 * @return string
+	 */
+	public function get_publisher_logo_placeholder() {
+		return WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
+	}
+
 	/**
 	 * Returns the publisher data.
 	 *
 	 * @return array Publisher name and logo.
 	 */
-	public static function get_publisher_data() {
+	public function get_publisher_data() {
 		$publisher      = get_bloginfo( 'name' );
-		$publisher_logo = self::get_publisher_logo();
+		$publisher_logo = $this->get_publisher_logo();
 
 		return [
 			'name' => $publisher,

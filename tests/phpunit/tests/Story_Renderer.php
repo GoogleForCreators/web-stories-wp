@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Discovery;
 
 class Story_Renderer extends \WP_UnitTestCase {
 	protected static $user;
@@ -116,7 +116,9 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$placeholder              = \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER;
+		$discovery                = new Discovery();
+		$placeholder              = $discovery->get_publisher_logo_placeholder();
+		$option_name              = Discovery::PUBLISHER_LOGOS_OPTION;
 		$post_with_publisher_logo = self::factory()->post->create_and_get(
 			[
 				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . $placeholder . '"></amp-story></body></html>',
@@ -124,11 +126,11 @@ class Story_Renderer extends \WP_UnitTestCase {
 		);
 
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
-		add_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [ 'active' => $attachment_id ] );
+		add_option( $option_name, [ 'active' => $attachment_id ] );
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
 		$rendered = $renderer->render();
 
-		delete_option( Stories_Controller::PUBLISHER_LOGOS_OPTION );
+		delete_option( $option_name );
 
 		$this->assertContains( 'attachment', $rendered );
 		$this->assertNotContains( $placeholder, $rendered );
