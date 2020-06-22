@@ -28,6 +28,8 @@ namespace Google\Web_Stories;
 
 /**
  * Deletes options and transients.
+ *
+ * @return void
  */
 function delete_options() {
 	global $wpdb;
@@ -65,6 +67,8 @@ function delete_options() {
 
 /**
  * Deletes options and transients on multisite.
+ *
+ * @return void
  */
 function delete_site_options() {
 	global $wpdb;
@@ -101,6 +105,8 @@ function delete_site_options() {
 
 /**
  * Deletes all associated post meta data.
+ *
+ * @return void
  */
 function delete_post_meta() {
 	delete_post_meta_by_key( 'web_stories_is_poster' );
@@ -109,6 +115,8 @@ function delete_post_meta() {
 
 /**
  * Deletes all stories & templates.
+ *
+ * @return void
  */
 function delete_posts() {
 	$cpt_posts = get_posts(
@@ -120,7 +128,7 @@ function delete_posts() {
 		]
 	);
 
-	foreach ( $cpt_posts as $custom_post ) {
-		wp_delete_post( $custom_post->ID, true );
+	foreach ( $cpt_posts as $post_id ) {
+		wp_delete_post( (int) $post_id, true );
 	}
 }
