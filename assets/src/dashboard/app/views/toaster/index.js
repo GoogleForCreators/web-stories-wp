@@ -29,7 +29,8 @@ import { ALERT_SEVERITY } from '../../../constants';
 function ToasterView() {
   const {
     state: {
-      stories: { error },
+      stories: { error: storyError },
+      templates: { error: templateError },
     },
   } = useContext(ApiContext);
 
@@ -39,14 +40,24 @@ function ToasterView() {
   } = useToastContext();
 
   useEffect(() => {
-    if (error?.message) {
+    if (storyError?.message) {
       addToast({
-        message: error.message,
+        message: storyError.message,
         severity: ALERT_SEVERITY.ERROR,
-        id: error.id,
+        id: storyError.id,
       });
     }
-  }, [error, addToast]);
+  }, [storyError, addToast]);
+
+  useEffect(() => {
+    if (templateError?.message) {
+      addToast({
+        message: templateError.message,
+        severity: ALERT_SEVERITY.ERROR,
+        id: templateError.id,
+      });
+    }
+  }, [templateError, addToast]);
 
   return (
     <Toaster
