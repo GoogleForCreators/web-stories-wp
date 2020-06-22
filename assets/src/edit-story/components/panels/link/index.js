@@ -182,7 +182,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         </Row>
       )}
 
-      {Boolean(link.url) && (
+      {Boolean(link.url) && !isInvalidUrl && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
@@ -194,7 +194,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           />
         </Row>
       )}
-      {Boolean(link.url) && (
+      {Boolean(link.url) && !isInvalidUrl && (
         <Row spaceBetween={false}>
           <Media
             value={link.icon || ''}

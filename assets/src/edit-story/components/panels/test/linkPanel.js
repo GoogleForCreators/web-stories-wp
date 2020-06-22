@@ -45,6 +45,38 @@ function renderLinkPanel(selectedElements) {
 }
 
 describe('Panels/Link', () => {
+  it('should not display metadata fields if URL is missing', () => {
+    const defaultElement = {
+      id: '1',
+      isBackground: false,
+      x: 10,
+      y: 10,
+      width: 100,
+      height: 80,
+      rotationAngle: 0,
+      link: {
+        url: '',
+      },
+    };
+
+    renderLinkPanel([defaultElement]);
+    expect(
+      screen.getByRole('textbox', {
+        name: 'Edit: Element link',
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('textbox', {
+        name: 'Edit: Link description',
+      })
+    ).toBeNull();
+    expect(
+      screen.queryByRole('button', {
+        name: 'Edit link icon',
+      })
+    ).toBeNull();
+  });
+
   it('should display an error message for invalid URLs', () => {
     const defaultElement = {
       id: '1',
@@ -61,5 +93,32 @@ describe('Panels/Link', () => {
 
     renderLinkPanel([defaultElement]);
     expect(screen.getByText('Invalid web address.')).toBeInTheDocument();
+  });
+
+  it('should not display metadata fields if URL is invalid', () => {
+    const defaultElement = {
+      id: '1',
+      isBackground: false,
+      x: 10,
+      y: 10,
+      width: 100,
+      height: 80,
+      rotationAngle: 0,
+      link: {
+        url: 'http://',
+      },
+    };
+
+    renderLinkPanel([defaultElement]);
+    expect(
+      screen.queryByRole('textbox', {
+        name: 'Edit: Link description',
+      })
+    ).toBeNull();
+    expect(
+      screen.queryByRole('button', {
+        name: 'Edit link icon',
+      })
+    ).toBeNull();
   });
 });
