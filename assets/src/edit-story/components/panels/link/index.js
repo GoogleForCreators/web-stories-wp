@@ -206,6 +206,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               size={64}
               loading={fetchingMetadata}
               circle
+              ariaLabel={link.desc}
             />
             <IconInfo>
               <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
