@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Discovery;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
 use WP_Error;
 use WP_Post;
@@ -38,7 +38,7 @@ use WP_REST_Response;
  * Stories_Controller class.
  */
 class Stories_Controller extends Stories_Base_Controller {
-
+	use Publisher;
 	/**
 	 * Default style presets to pass if not set.
 	 */
@@ -62,8 +62,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$data     = $response->get_data();
 
 		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
-			$discovery                  = new Discovery();
-			$data['publisher_logo_url'] = $discovery->get_publisher_logo();
+			$data['publisher_logo_url'] = $this->get_publisher_logo();
 		}
 
 		if ( in_array( 'style_presets', $fields, true ) ) {
@@ -107,9 +106,9 @@ class Stories_Controller extends Stories_Base_Controller {
 			$publisher_logo_id = $request->get_param( 'publisher_logo' );
 			if ( $publisher_logo_id ) {
 				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
-				$publisher_logo_settings           = get_option( Discovery::PUBLISHER_LOGOS_OPTION, [] );
+				$publisher_logo_settings           = get_option( $this->get_publisher_logo_option_name(), [] );
 				$publisher_logo_settings['active'] = $publisher_logo_id;
-				update_option( Discovery::PUBLISHER_LOGOS_OPTION, $publisher_logo_settings, false );
+				update_option( $this->get_publisher_logo_option_name(), $publisher_logo_settings, false );
 			}
 
 			// If style presets are set.
