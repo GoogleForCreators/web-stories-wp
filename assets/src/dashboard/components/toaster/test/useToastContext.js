@@ -85,22 +85,7 @@ describe('useToastContext', () => {
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
   });
 
-  it('should not add a duplicate activeToast when addToast is called with existing toast id', () => {
-    const { result } = renderHook(() => useToastContext(), {
-      wrapper: ToastProvider,
-    });
-    act(() => {
-      result.current.actions.addToast(TOAST_1);
-    });
-
-    act(() => {
-      result.current.actions.addToast(TOAST_1);
-    });
-
-    expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
-  });
-
-  it('should remove an activeToast but maintain allToasts when removeToast is called', () => {
+  it('should remove an activeToast when removeToast is called', () => {
     const { result } = renderHook(() => useToastContext(), {
       wrapper: ToastProvider,
     });
@@ -127,7 +112,7 @@ describe('useToastContext', () => {
     expect(result.current.state.activeToasts).toStrictEqual([]);
   });
 
-  it('should reset allToasts when resetToasts is called', () => {
+  it('should clear activeToasts when resetToasts is called', () => {
     const { result } = renderHook(() => useToastContext(), {
       wrapper: ToastProvider,
     });
