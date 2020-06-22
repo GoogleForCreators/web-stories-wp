@@ -143,20 +143,26 @@ class Story_Post_Type {
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
 
-		// @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
-		add_filter(
-			'amp_skip_post',
-			static function( $skipped, $post ) {
-				if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-					$skipped = true;
-				}
-				return $skipped;
-			},
-			PHP_INT_MAX,
-			2
-		);
+		add_filter( 'amp_skip_post', [ __CLASS__, 'skip_amp' ], PHP_INT_MAX, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+	}
+
+	/**
+	 * AMP plugin compatibility.
+	 *
+	 * @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
+	 *
+	 * @param bool    $skipped Should this post type be skipped.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return bool
+	 */
+	public static function skip_amp( $skipped, $post ) {
+		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
+			$skipped = true;
+		}
+		return $skipped;
 	}
 
 	/**

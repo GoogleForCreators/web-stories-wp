@@ -232,27 +232,15 @@ class Media {
 			'attachment',
 			'media_source',
 			[
+
+				'get_callback'    => [ __CLASS__, 'get_callback_media_source' ],
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
 					'enum'        => [ 'editor' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'get_callback'    => static function ( $prepared ) {
-					$id = $prepared['id'];
-
-					$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
-					if ( is_array( $terms ) && $terms ) {
-						$term = array_shift( $terms );
-
-						return $term->slug;
-					}
-
-					return '';
-				},
-				'update_callback' => static function ( $value, $object ) {
-					wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
-				},
+				'update_callback' => [ __CLASS__, 'update_callback_media_source' ],
 			]
 		);
 
@@ -260,16 +248,7 @@ class Media {
 			'attachment',
 			'featured_media_src',
 			[
-				'get_callback' => static function ( $prepared ) {
-
-					$id    = $prepared['featured_media'];
-					$image = [];
-					if ( $id ) {
-						$image = self::get_thumbnail_data( $id );
-					}
-
-					return $image;
-				},
+				'get_callback' => [ __CLASS__, 'get_callback_featured_media_src' ],
 				'schema'       => [
 					'description' => __( 'URL, width and height.', 'web-stories' ),
 					'type'        => 'object',
@@ -292,6 +271,60 @@ class Media {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Force media attachment as string instead of the default array.
+	 *
+	 * @param array $prepared Prepared data before response.
+	 *
+	 * @return string
+	 */
+	public static function get_callback_media_source( $prepared ) {
+		$id = $prepared['id'];
+
+		$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
+		if ( is_array( $terms ) && $terms ) {
+			$term = array_shift( $terms );
+
+			return $term->slug;
+		}
+
+		return '';
+	}
+
+	/**
+	 * Update rest field callback.
+	 *
+	 * @param mixed    $value Value to update.
+	 * @param \WP_Post $object Object to update on.
+	 *
+	 * @return true|\WP_Error
+	 */
+	public static function update_callback_media_source( $value, $object ) {
+		$check = wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get attachment source for featured media.
+	 *
+	 * @param array $prepared Prepared data before response.
+	 *
+	 * @return array
+	 */
+	public static function get_callback_featured_media_src( $prepared ) {
+		$id    = $prepared['featured_media'];
+		$image = [];
+		if ( $id ) {
+			$image = self::get_thumbnail_data( $id );
+		}
+
+		return $image;
 	}
 
 	/**
