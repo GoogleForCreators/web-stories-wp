@@ -24,10 +24,16 @@ import { fireEvent } from '@testing-library/react';
  */
 import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
+import MediaContext from '../../../app/media/context';
 import Buttons from '../buttons';
 import { renderWithTheme } from '../../../testUtils';
 
-function setupButtons(extraStoryProps, extraMetaProps) {
+function setupButtons(
+  extraStoryProps,
+  extraMetaProps,
+  extraMediaProps,
+  extraConfigProps
+) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
 
@@ -44,12 +50,19 @@ function setupButtons(extraStoryProps, extraMetaProps) {
     capabilities: {
       hasPublishAction: true,
     },
+    ...extraConfigProps,
   };
+  const mediaContextValue = {
+    state: { ...extraMediaProps },
+  };
+
   const { getByRole } = renderWithTheme(
     <ConfigContext.Provider value={configValue}>
-      <StoryContext.Provider value={storyContextValue}>
-        <Buttons />
-      </StoryContext.Provider>
+      <MediaContext.Provider value={mediaContextValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          <Buttons />
+        </StoryContext.Provider>
+      </MediaContext.Provider>
     </ConfigContext.Provider>
   );
   return {
@@ -120,6 +133,26 @@ describe('buttons', () => {
   it('should display loading indicator while the story is updating', () => {
     const { getByRole } = setupButtons({}, { isSaving: true });
     expect(getByRole('progressbar')).toBeInTheDocument();
+    expect(getByRole('button', { name: 'Save draft' })).toBeDisabled();
+    expect(getByRole('button', { name: 'Preview' })).toBeDisabled();
+    expect(getByRole('button', { name: 'Publish' })).toBeDisabled();
+  });
+
+  it('should disable buttons while upload is in progress', () => {
+    const { getByRole } = setupButtons({}, {}, { isUploading: true });
+    expect(getByRole('button', { name: 'Save draft' })).toBeDisabled();
+    expect(getByRole('button', { name: 'Preview' })).toBeDisabled();
+    expect(getByRole('button', { name: 'Publish' })).toBeDisabled();
+  });
+
+  it('should disable publish button when user lacks permission', () => {
+    const { getByRole } = setupButtons(
+      {},
+      {},
+      {},
+      { capabilities: { hasPublishAction: false } }
+    );
+    expect(getByRole('button', { name: 'Publish' })).toBeDisabled();
   });
 
   it('should open draft preview when clicking on Preview via about:blank', () => {
