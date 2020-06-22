@@ -36,7 +36,7 @@ use DOMElement;
  *
  * @package Google\Web_Stories\Traits
  */
-trait Url_Parser {
+trait Document_Parser {
 	/**
 	 * Retrieve content of a given DOM node attribute.
 	 *

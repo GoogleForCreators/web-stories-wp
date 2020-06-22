@@ -28,7 +28,7 @@ namespace Google\Web_Stories\REST_API;
 
 use DOMNodeList;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Url_Parser;
+use Google\Web_Stories\Traits\Document_Parser;
 use WP_Error;
 use WP_Http;
 use WP_Post;
@@ -43,7 +43,7 @@ use WP_REST_Server;
  * Class Embed_Controller
  */
 class Embed_Controller extends WP_REST_Controller {
-	use Url_Parser;
+	use Document_Parser;
 	/**
 	 * Constructor.
 	 */

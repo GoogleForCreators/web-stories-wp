@@ -28,7 +28,7 @@ namespace Google\Web_Stories\REST_API;
 
 use DOMElement;
 use DOMNodeList;
-use Google\Web_Stories\Traits\Url_Parser;
+use Google\Web_Stories\Traits\Document_Parser;
 use WP_Error;
 use WP_Http;
 use WP_REST_Controller;
@@ -42,7 +42,7 @@ use WP_REST_Server;
  * Class Link_Controller
  */
 class Link_Controller extends WP_REST_Controller {
-	use Url_Parser;
+	use Document_Parser;
 	/**
 	 * Constructor.
 	 */
