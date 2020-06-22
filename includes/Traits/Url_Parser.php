@@ -28,6 +28,8 @@ namespace Google\Web_Stories\Traits;
 
 use DOMDocument;
 use DOMXpath;
+use DOMNodeList;
+use DOMElement;
 
 /**
  * Trait Url_Parser
@@ -69,7 +71,7 @@ trait Url_Parser {
 	 *
 	 * @return DOMXpath
 	 */
-	protected function set_html_document( $html ) {
+	protected function html_to_xpath( $html ) {
 		$doc                      = new DOMDocument();
 		$doc->strictErrorChecking = false; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 

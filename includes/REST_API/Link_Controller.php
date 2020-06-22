@@ -153,7 +153,7 @@ class Link_Controller extends WP_REST_Controller {
 			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
 		}
 
-		$xpath = $this->set_html_document( $html );
+		$xpath = $this->html_to_xpath( $html );
 
 		if ( libxml_get_last_error() ) {
 			libxml_clear_errors();

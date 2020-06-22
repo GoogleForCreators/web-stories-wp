@@ -245,7 +245,7 @@ class Embed_Controller extends WP_REST_Controller {
 	 * @return array|false Response data or false if document is not a story.
 	 */
 	private function get_data_from_document( $html ) {
-		$xpath = $this->set_html_document( $html );
+		$xpath = $this->html_to_xpath( $html );
 
 		$amp_story = $xpath->query( '//amp-story' );
 
