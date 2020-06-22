@@ -24,7 +24,7 @@ import { act, render, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import FixtureEvents from '../../edit-story/karma/fixture/events';
+import FixtureEvents from '../../../../karma/events';
 import App from '../app';
 import ApiProvider from '../app/api/apiProvider';
 import ComponentStub from './componentStub';
