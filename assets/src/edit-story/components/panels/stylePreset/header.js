@@ -112,12 +112,13 @@ function PresetsHeader({
     );
   };
 
+  // Todo: Rename label to 'Presets' post-beta.
   return (
     <PanelTitle
       secondaryAction={getActions()}
       canCollapse={!isEditMode && hasPresets}
     >
-      {__('Presets', 'web-stories')}
+      {__('Saved Colors', 'web-stories')}
     </PanelTitle>
   );
 }
