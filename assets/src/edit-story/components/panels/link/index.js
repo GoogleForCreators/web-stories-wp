@@ -200,6 +200,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             value={link.icon || ''}
             onChange={handleChangeIcon}
             title={__('Select as link icon', 'web-stories')}
+            ariaLabel={__('Edit link icon', 'web-stories')}
             buttonInsertText={__('Select as link icon', 'web-stories')}
             type={'image'}
             size={64}
