@@ -55,13 +55,6 @@ class Story_Post_Type {
 	const WEB_STORIES_SCRIPT_HANDLE = 'edit-story';
 
 	/**
-	 * Web Stories editor style handle.
-	 *
-	 * @var string
-	 */
-	const WEB_STORIES_STYLE_HANDLE = 'edit-story';
-
-	/**
 	 * The rewrite slug for this post type.
 	 *
 	 * @var string
@@ -290,14 +283,13 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		$this->load_asset( self::WEB_STORIES_SCRIPT_HANDLE, [], self::WEB_STORIES_STYLE_HANDLE, [ 'roboto' ] );
-
-		$settings = $this->get_editor_settings();
+		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE );
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
 			'webStoriesEditorSettings',
-			$settings
+			$this->get_editor_settings()
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .

@@ -155,8 +155,28 @@ class Dashboard {
 			WEBSTORIES_VERSION
 		);
 
-		$this->load_asset( self::SCRIPT_HANDLE, [], self::SCRIPT_HANDLE, [ 'google-fonts' ] );
+		$this->enqueue_script( self::SCRIPT_HANDLE );
+		$this->enqueue_style( self::SCRIPT_HANDLE, [ 'google-fonts' ] );
 
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesDashboardSettings',
+			$this->get_dashboard_settings()
+		);
+
+		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
+		wp_styles()->registered['wp-admin']->deps = array_diff(
+			wp_styles()->registered['wp-admin']->deps,
+			[ 'forms' ]
+		);
+	}
+
+	/**
+	 * Get dashboard settings as an array.
+	 *
+	 * @return array
+	 */
+	public function get_dashboard_settings() {
 		$rest_base     = Story_Post_Type::POST_TYPE_SLUG;
 		$new_story_url = admin_url(
 			add_query_arg(
@@ -185,70 +205,62 @@ class Dashboard {
 			)
 		);
 
-		wp_localize_script(
-			self::SCRIPT_HANDLE,
-			'webStoriesDashboardSettings',
-			[
-				'id'     => 'web-stories-dashboard',
-				'config' => [
-					'isRTL'        => is_rtl(),
-					'newStoryURL'  => $new_story_url,
-					'editStoryURL' => $edit_story_url,
-					'wpListURL'    => $classic_wp_list_url,
-					'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
-					'version'      => WEBSTORIES_VERSION,
-					'api'          => [
-						'stories'   => sprintf( '/wp/v2/%s', $rest_base ),
-						'users'     => '/wp/v2/users',
-						'fonts'     => '/web-stories/v1/fonts',
-						'templates' => '/wp/v2/web-story-template',
-					],
+		$settings = [
+			'id'     => 'web-stories-dashboard',
+			'config' => [
+				'isRTL'        => is_rtl(),
+				'newStoryURL'  => $new_story_url,
+				'editStoryURL' => $edit_story_url,
+				'wpListURL'    => $classic_wp_list_url,
+				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'version'      => WEBSTORIES_VERSION,
+				'api'          => [
+					'stories'   => sprintf( '/wp/v2/%s', $rest_base ),
+					'users'     => '/wp/v2/users',
+					'fonts'     => '/web-stories/v1/fonts',
+					'templates' => '/wp/v2/web-story-template',
 				],
-				'flags'  => [
-					/**
-					 * Description: Enables user facing animations.
-					 * Author: @littlemilkstudio
-					 * Issue: 1897
-					 * Creation date: 2020-05-21
-					 */
-					'enableAnimation'                 => false,
-					/**
-					 * Description: Enables in-progress views to be accessed.
-					 * Author: @carlos-kelly
-					 * Issue: 2081
-					 * Creation date: 2020-05-28
-					 */
-					'enableInProgressViews'           => false,
-					/**
-					 * Description: Enables in-progress story actions.
-					 * Author: @brittanyirl
-					 * Issue: 2344
-					 * Creation date: 2020-06-10
-					 */
-					'enableInProgressStoryActions'    => false,
-					/**
-					 * Description: Enables in-progress template actions.
-					 * Author: @brittanyirl
-					 * Issue: 2381
-					 * Creation date: 2020-06-11
-					 */
-					'enableInProgressTemplateActions' => false,
-					/**
-					 * Description: Enables bookmark actions.
-					 * Author: @brittanyirl
-					 * Issue: 2292
-					 * Creation date: 2020-06-11
-					 */
-					'enableBookmarkActions'           => false,
-				],
-			]
-		);
+			],
+			'flags'  => [
+				/**
+				 * Description: Enables user facing animations.
+				 * Author: @littlemilkstudio
+				 * Issue: 1897
+				 * Creation date: 2020-05-21
+				 */
+				'enableAnimation'                 => false,
+				/**
+				 * Description: Enables in-progress views to be accessed.
+				 * Author: @carlos-kelly
+				 * Issue: 2081
+				 * Creation date: 2020-05-28
+				 */
+				'enableInProgressViews'           => false,
+				/**
+				 * Description: Enables in-progress story actions.
+				 * Author: @brittanyirl
+				 * Issue: 2344
+				 * Creation date: 2020-06-10
+				 */
+				'enableInProgressStoryActions'    => false,
+				/**
+				 * Description: Enables in-progress template actions.
+				 * Author: @brittanyirl
+				 * Issue: 2381
+				 * Creation date: 2020-06-11
+				 */
+				'enableInProgressTemplateActions' => false,
+				/**
+				 * Description: Enables bookmark actions.
+				 * Author: @brittanyirl
+				 * Issue: 2292
+				 * Creation date: 2020-06-11
+				 */
+				'enableBookmarkActions'           => false,
+			],
+		];
 
-		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		wp_styles()->registered['wp-admin']->deps = array_diff(
-			wp_styles()->registered['wp-admin']->deps,
-			[ 'forms' ]
-		);
+		return $settings;
 	}
 
 	/**
