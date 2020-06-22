@@ -60,6 +60,7 @@ import {
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 
 import useCanvas from '../useCanvas';
+import WithTooltip from '../../tooltip';
 import CompactIndicator from './compactIndicator';
 import useCarouselKeys from './useCarouselKeys';
 
@@ -459,19 +460,33 @@ function Carousel() {
                 />
               </OverflowButtons>
             )}
-            <SafeZoneButton
-              active={showSafeZone}
-              onClick={() => setShowSafeZone((current) => !current)}
-              aria-label={
+            <WithTooltip
+              title={
                 showSafeZone
                   ? __('Disable Safe Zone', 'web-stories')
                   : __('Enable Safe Zone', 'web-stories')
               }
-            />
-            <StyledGridViewButton
-              onClick={openModal}
-              aria-label={__('Grid View', 'web-stories')}
-            />
+            >
+              <SafeZoneButton
+                active={showSafeZone}
+                onClick={() => setShowSafeZone((current) => !current)}
+                aria-label={
+                  showSafeZone
+                    ? __('Disable Safe Zone', 'web-stories')
+                    : __('Enable Safe Zone', 'web-stories')
+                }
+              />
+            </WithTooltip>
+            <WithTooltip
+              title={__('Grid View', 'web-stories')}
+              // onPointerLeave={() => console.log('leave')}
+              // onPointerEnter={() => console.log('enter')}
+            >
+              <StyledGridViewButton
+                onClick={openModal}
+                aria-label={__('Grid View', 'web-stories')}
+              />
+            </WithTooltip>
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
