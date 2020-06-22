@@ -32,6 +32,7 @@ export const PANEL_COLLAPSED_THRESHOLD = 10;
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 function Panel({ resizeable, collapsible, initialHeight, name, children }) {
