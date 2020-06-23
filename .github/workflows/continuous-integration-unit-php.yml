@@ -9,7 +9,7 @@ on:
 
 jobs:
   unit-php:
-    name: 'PHP ${{ matrix.php }} - WP {{ matrix.wp }} (Multisite: ${{ matrix.multisite }})'
+    name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }} (MS: ${{ matrix.multisite }})'
     runs-on: ubuntu-latest
     services:
       mysql:
