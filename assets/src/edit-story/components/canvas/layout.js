@@ -140,17 +140,17 @@ const PageAreaSafeZone = styled.div`
       &::before,
       &::after {
         content: '';
-        width: 20px;
+        width: 12px;
         height: var(--page-height-px);
         position: absolute;
         border-top: 1px solid rgba(255, 255, 255, 0.4);
         border-bottom: 1px solid rgba(255, 255, 255, 0.4);
       }
       &::before {
-        left: -20px;
+        left: -12px;
       }
       &::after {
-        right: -20px;
+        right: -12px;
       }
     `}
 `;
