@@ -34,8 +34,9 @@ import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
-import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
+import Selection from './selection';
+import useCanvas from './useCanvas';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
@@ -65,10 +66,15 @@ const Hint = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v1};
 `;
 
+function safeZoneSelector({ state: { showSafeZone } }) {
+  return { showSafeZone };
+}
+
 function FramesLayer() {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
+  const { showSafeZone } = useCanvas(safeZoneSelector);
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
@@ -86,8 +92,10 @@ function FramesLayer() {
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
+      aria-label={__('Frames', 'web-stories')}
     >
       <FramesPageArea
+        showSafeZone={showSafeZone}
         overlay={
           Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&
@@ -99,7 +107,6 @@ function FramesLayer() {
             </FrameSidebar>
           )
         }
-        fullbleed={<Selection />}
       >
         {currentPage &&
           currentPage.elements.map(({ id, ...rest }) => {
@@ -115,6 +122,7 @@ function FramesLayer() {
       >
         <PageMenu />
       </MenuArea>
+      <Selection />
     </Layer>
   );
 }

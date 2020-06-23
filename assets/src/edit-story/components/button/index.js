@@ -35,6 +35,7 @@ import {
   Close as CloseIcon,
   Eyedropper as EyedropperIcon,
   More as MoreIcon,
+  SafeZone as SafeZoneIcon,
 } from '../../icons';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
@@ -44,15 +45,16 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   border-style: solid;
   border-radius: 2px;
   background: transparent;
-  display: block;
+  display: inline-block;
   min-width: ${({ isIcon }) => (isIcon ? 'initial' : '63px')};
-  height: 30px;
+  max-height: 30px;
   padding: 0 10px;
   cursor: pointer;
   text-decoration: none;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: 28px;
+  text-decoration: none;
 
   &:active {
     outline: none;
@@ -99,17 +101,32 @@ const PrimaryButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.action};
   background-color: ${({ theme }) => theme.colors.action};
   color: ${({ theme }) => theme.colors.fg.v1};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v1};
+  }
 `;
 
 const SecondaryButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v1};
   background-color: ${({ theme }) => theme.colors.fg.v3};
   color: ${({ theme }) => theme.colors.bg.v5};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v5};
+  }
 `;
 
 const OutlineButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v4};
   color: ${({ theme }) => theme.colors.fg.v1};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v1};
+  }
 `;
 
 const PlainButton = styled(Base)`
@@ -183,6 +200,12 @@ export const More = forwardRef((props, ref) => (
     <MoreIcon />
   </StyledButton>
 ));
+
+export const SafeZone = (props) => (
+  <StyledButton {...props}>
+    <SafeZoneIcon />
+  </StyledButton>
+);
 
 export const BUTTON_TYPES = {
   PRIMARY: 'primary',
