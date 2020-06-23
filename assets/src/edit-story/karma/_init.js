@@ -194,7 +194,7 @@ beforeEach(async () => {
   document.body.appendChild(rootEl);
 
   // Each test should start with the pointer in the same location ([-1,-1]) to
-  // avoid flakes pointerover/mouseover/hover flakes.
+  // avoid pointerover/mouseover/hover flakes.
   await karmaPuppeteer.mouse.seq([{ type: 'move', x: -1, y: -1 }]);
 });
 
