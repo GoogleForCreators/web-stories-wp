@@ -35,6 +35,7 @@ class Uninstall extends \WP_UnitTestCase {
 		update_option( \Google\Web_Stories\Database_Upgrader::OPTION, '2.0.0' );
 		update_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.0.0' );
 		set_transient( 'web_stories_link_data_fdsf', 'hello' );
+		set_site_transient( 'web_stories_updater', 'hello' );
 	}
 
 	public function test_delete_options() {
@@ -70,4 +71,14 @@ class Uninstall extends \WP_UnitTestCase {
 			$this->assertSame( '', get_post_meta( $attachment_id, 'web_stories_poster_id', true ) );
 		}
 	}
+
+	public function test_delete_site_options() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'Test only runs on Multisite' );
+		}
+		\Google\Web_Stories\delete_site_options();
+		$this->assertFalse( get_site_transient( 'web_stories_updater' ) );
+	}
+
 }
+
