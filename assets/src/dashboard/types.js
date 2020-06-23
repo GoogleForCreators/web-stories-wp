@@ -119,7 +119,10 @@ export const AlertSeveritiesPropType = PropTypes.oneOf(
 );
 
 export const ToastMessagePropType = PropTypes.shape({
-  message: PropTypes.string.isRequired,
+  message: PropTypes.shape({
+    title: PropTypes.string,
+    body: PropTypes.string.isRequired,
+  }),
   severity: AlertSeveritiesPropType,
   id: PropTypes.number.isRequired,
 });
