@@ -79,15 +79,15 @@ jobs:
 
       - name: Run tests
         run: npm run test:php
-        if: ${{ matrix.wp != 'latest' || matrix.php != 7.4 && matrix.multisite == false }}
+        if: ${{ matrix.wp != 'latest' || matrix.php != 7.4 || matrix.multisite != true }}
 
       - name: Run tests ( multisite )
         run: npm run test:php -- --verbose -c phpunit-multisite.xml.dist
-        if: ${{ matrix.wp != 'latest' || matrix.php != 7.4 && matrix.multisite == true }}
+        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 && matrix.multisite == true }}
 
       - name: Run tests with coverage
         run: npm run test:php -- --coverage-clover build/logs/clover.xml
-        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 }}
+        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 && matrix.multisite == false }}
 
       - name: Uplaod code coverage report
         uses: codecov/codecov-action@v1
