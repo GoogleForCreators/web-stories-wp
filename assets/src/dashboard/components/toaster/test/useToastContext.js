@@ -112,7 +112,7 @@ describe('useToastContext', () => {
     expect(result.current.state.activeToasts).toStrictEqual([]);
   });
 
-  it('should clear activeToasts when resetToasts is called', () => {
+  it('should update toasts based on id to isActive: false when removeToasts is called', () => {
     const { result } = renderHook(() => useToastContext(), {
       wrapper: ToastProvider,
     });
@@ -130,11 +130,5 @@ describe('useToastContext', () => {
       result.current.actions.removeToast(TOAST_3.id);
     });
     expect(result.current.state.activeToasts).toStrictEqual([TOAST_1]);
-
-    act(() => {
-      result.current.actions.resetToasts();
-    });
-
-    expect(result.current.state.activeToasts).toStrictEqual([]);
   });
 });

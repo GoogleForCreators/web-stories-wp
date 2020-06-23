@@ -16,28 +16,17 @@
 /**
  * External dependencies
  */
-import {
-  createContext,
-  useMemo,
-  useCallback,
-  useState,
-  useEffect,
-} from 'react';
+import { createContext, useMemo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export const ToasterContext = createContext(null);
 
 const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState({});
-
   const activeToasts = useMemo(
     () => Object.values(toasts).filter((toast) => toast.isActive),
     [toasts]
   );
-
-  const resetToasts = useCallback(() => {
-    setToasts({});
-  }, [setToasts]);
 
   const removeToast = useCallback(
     (id) =>
@@ -58,14 +47,12 @@ const ToastProvider = ({ children }) => {
     []
   );
 
-  useEffect(() => resetToasts, [resetToasts]);
-
   const value = useMemo(
     () => ({
       state: { activeToasts },
-      actions: { addToast, removeToast, resetToasts },
+      actions: { addToast, removeToast },
     }),
-    [addToast, activeToasts, removeToast, resetToasts]
+    [addToast, activeToasts, removeToast]
   );
 
   return (
