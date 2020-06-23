@@ -61,11 +61,14 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   );
 
   useEffect(() => {
-    if (
-      resizeable &&
-      height <= PANEL_COLLAPSED_THRESHOLD &&
-      isCollapsed === false
-    ) {
+    if (!canCollapse) {
+      setIsCollapsed(false);
+      expand(true);
+    }
+  }, [canCollapse, expand]);
+
+  useEffect(() => {
+    if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
       collapse();
     }
   }, [collapse, height, resizeable, isCollapsed]);
