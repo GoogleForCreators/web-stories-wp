@@ -27,7 +27,7 @@ import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
 import getFontDeclarations from './utils/getFontDeclarations';
-import { OutputPage } from './';
+import OutputPage from './page';
 
 function OutputStory({
   story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },

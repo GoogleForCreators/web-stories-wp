@@ -37,7 +37,7 @@ function setupPresetGroup() {
     return <button tabIndex={index === i ? 0 : -1} />;
   });
 
-  const { container, getByText } = renderWithTheme(
+  const { container, getAllByRole } = renderWithTheme(
     <PresetGroup
       presets={presets}
       itemRenderer={itemRenderer}
@@ -46,7 +46,7 @@ function setupPresetGroup() {
     />
   );
   return {
-    getByText,
+    getAllByRole,
     itemRenderer,
     container,
   };
@@ -57,11 +57,12 @@ const getThirdArguments = (calls) => {
 
 describe('stylePresets/PresetGroup', () => {
   it('should modify active index correctly with arrow keys', () => {
-    const { itemRenderer, getByText } = setupPresetGroup();
+    const { itemRenderer, getAllByRole } = setupPresetGroup();
     expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([0, 0, 0]);
 
-    const label = getByText('Colors');
-    const group = label.nextSibling;
+    const firstButton = getAllByRole('button')[0];
+    // @todo Use label here once it gets added back with finalized UX.
+    const group = firstButton.parentNode;
     expect(group).toBeDefined();
 
     itemRenderer.mockReset();
