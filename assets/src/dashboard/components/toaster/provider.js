@@ -23,26 +23,36 @@ export const ToasterContext = createContext(null);
 
 const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState({});
+
   const activeToasts = useMemo(
-    () => Object.values(toasts).filter((toast) => toast.isActive),
+    () => Object.values(toasts).map((toast) => toast),
     [toasts]
   );
 
-  const removeToast = useCallback(
-    (id) =>
-      id &&
-      setToasts((existingToasts) => ({
-        ...existingToasts,
-        [id]: { ...existingToasts[id], isActive: false },
-      })),
-    []
-  );
+  const removeToast = useCallback((id) => {
+    if (id) {
+      setToasts((existingToasts) => {
+        const updatedToasts = Object.keys(existingToasts).reduce(
+          (memoizedToasts, existingToastId) => {
+            if (parseInt(existingToastId) !== parseInt(id)) {
+              memoizedToasts[existingToastId] = {
+                ...existingToasts[existingToastId],
+              };
+            }
+            return memoizedToasts;
+          },
+          {}
+        );
+        return updatedToasts;
+      });
+    }
+  }, []);
 
   const addToast = useCallback(
     ({ message, severity, id }) =>
       setToasts((existingToasts) => ({
         ...existingToasts,
-        [id]: { message, severity, id, isActive: true },
+        [id]: { message, severity, id },
       })),
     []
   );
