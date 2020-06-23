@@ -63,7 +63,9 @@ function EditLayer() {
 function EditLayerForElement({ element }) {
   const ref = useRef(null);
   const pageAreaRef = useRef(null);
-  const { editModeGrayout } = getDefinitionForType(element.type);
+  const { editModeGrayout, hasEditModeMovable } = getDefinitionForType(
+    element.type
+  );
 
   const { clearEditing } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
@@ -81,6 +83,9 @@ function EditLayerForElement({ element }) {
     return () => focusCanvas(/* force */ false);
   }, [focusCanvas]);
 
+  // Display the overflow in case the element supports grayout or movable:
+  // Both need overflow to work as expected.
+  const showOverFlow = editModeGrayout || hasEditModeMovable;
   return (
     <LayerWithGrayout
       ref={ref}
@@ -93,7 +98,7 @@ function EditLayerForElement({ element }) {
         }
       }}
     >
-      <EditPageArea ref={pageAreaRef} showOverflow={editModeGrayout}>
+      <EditPageArea ref={pageAreaRef} showOverflow={showOverFlow}>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>

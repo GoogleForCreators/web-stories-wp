@@ -40,7 +40,12 @@ const VERTICAL_HANDLES = ['n', 's'];
 const HORIZONTAL_HANDLES = ['e', 'w'];
 const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
+function SingleSelectionMovable({
+  selectedElement,
+  targetEl,
+  pushEvent,
+  isEditMode,
+}) {
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
@@ -196,7 +201,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   );
 
   const canSnap =
-    !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
+    !snapDisabled &&
+    !isEditMode &&
+    (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = isDragging || Boolean(draggingResource);
 
   // Removes element if it's outside of canvas.
@@ -231,7 +238,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       ref={moveable}
       target={targetEl}
       edge={true}
-      draggable={actionsEnabled}
+      draggable={actionsEnabled && !isEditMode}
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
@@ -406,6 +413,7 @@ SingleSelectionMovable.propTypes = {
   selectedElement: PropTypes.object.isRequired,
   targetEl: PropTypes.object.isRequired,
   pushEvent: PropTypes.object,
+  isEditMode: PropTypes.bool,
 };
 
 export default SingleSelectionMovable;
