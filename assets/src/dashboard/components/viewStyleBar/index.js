@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -29,9 +24,9 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 
-import { Grid as GridSVG, List as ListSVG } from '../icons';
-import { ICON_METRICS, VIEW_STYLE, VIEW_STYLE_LABELS } from '../constants';
-import Tooltip from './tooltip';
+import { Grid as GridSVG, List as ListSVG } from '../../icons';
+import { ICON_METRICS, VIEW_STYLE, VIEW_STYLE_LABELS } from '../../constants';
+import Tooltip from '../tooltip';
 
 const Container = styled.div`
   display: flex;
@@ -67,19 +62,17 @@ const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
   align-items: center;
 `;
 
-export default function ViewStyleBar({ onPress, layoutStyle }) {
+export default function ViewStyleBar({ onPress, layoutStyle, ariaLabel }) {
   return (
     <Container>
       <Tooltip content={VIEW_STYLE_LABELS[layoutStyle]} position="right">
-        <ToggleButton
-          aria-label={__(
-            'Toggle between showing stories as a grid or list.',
-            'web-stories'
+        <ToggleButton aria-label={ariaLabel} onClick={onPress}>
+          {layoutStyle === VIEW_STYLE.GRID && (
+            <ListIcon data-testid="list-icon" />
           )}
-          onClick={onPress}
-        >
-          {layoutStyle === VIEW_STYLE.GRID && <ListIcon />}
-          {layoutStyle === VIEW_STYLE.LIST && <GridIcon />}
+          {layoutStyle === VIEW_STYLE.LIST && (
+            <GridIcon data-testid="grid-icon" />
+          )}
         </ToggleButton>
       </Tooltip>
     </Container>
@@ -87,6 +80,7 @@ export default function ViewStyleBar({ onPress, layoutStyle }) {
 }
 
 ViewStyleBar.propTypes = {
+  ariaLabel: PropTypes.string,
   onPress: PropTypes.func,
   layoutStyle: PropTypes.oneOf([VIEW_STYLE.GRID, VIEW_STYLE.LIST]).isRequired,
 };
