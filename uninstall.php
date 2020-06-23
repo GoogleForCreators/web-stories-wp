@@ -41,7 +41,6 @@ if ( false === $erase ) {
 
 require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 
-
 if ( is_multisite() ) {
 	\Google\Web_Stories\delete_site_options();
 	$site_ids = get_sites(
@@ -60,5 +59,3 @@ if ( is_multisite() ) {
 } else {
 	\Google\Web_Stories\delete_site();
 }
-
-
