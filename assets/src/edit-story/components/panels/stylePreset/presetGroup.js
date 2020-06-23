@@ -87,10 +87,6 @@ function PresetGroup({ presets, itemRenderer, type }) {
     [activeIndex, presets.length, type]
   );
 
-  const buttonWidth =
-    'color' === type
-      ? 100 / COLOR_PRESETS_PER_ROW
-      : 100 / STYLE_PRESETS_PER_ROW;
   return (
     <Group ref={groupRef}>
       {presets.map((preset, i) => (
