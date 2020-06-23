@@ -64,6 +64,9 @@ function PreviewButton() {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, link, status, autoSave, saveStory })
   );
+  const { isUploading } = useMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
   const { previewLink: autoSaveLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
@@ -147,7 +150,7 @@ function PreviewButton() {
 
   return (
     <>
-      <Outline onClick={openPreviewLink} isDisabled={isSaving}>
+      <Outline onClick={openPreviewLink} isDisabled={isSaving || isUploading}>
         {__('Preview', 'web-stories')}
       </Outline>
       <PreviewErrorDialog
@@ -318,7 +321,7 @@ function Buttons() {
         </List>
       </ButtonList>
       <PostPublishDialog
-        open={showDialog}
+        open={Boolean(showDialog)}
         onClose={() => setShowDialog(false)}
         confirmURL={confirmURL}
         storyURL={link}

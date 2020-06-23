@@ -116,9 +116,9 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$discovery                = new Discovery();
-		$placeholder              = $discovery->get_publisher_logo_placeholder();
-		$option_name              = Discovery::PUBLISHER_LOGOS_OPTION;
+		$renderer                 = new \Google\Web_Stories\Story_Renderer( null );
+		$placeholder              = $renderer->get_publisher_logo_placeholder();
+		$option_name              = $renderer->get_publisher_logo_option_name();
 		$post_with_publisher_logo = self::factory()->post->create_and_get(
 			[
 				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . $placeholder . '"></amp-story></body></html>',

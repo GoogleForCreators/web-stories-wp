@@ -33,8 +33,7 @@ function setupPresets(props = {}) {
     textContent = '',
   } = props;
   const presets = {
-    textColors: [],
-    fillColors: [],
+    colors: [],
     textStyles: [],
     ...stylePresets,
   };
@@ -71,24 +70,6 @@ describe('stylePresets/Presets', () => {
     backgroundColor: TEST_COLOR,
     font: TEXT_ELEMENT_DEFAULT_FONT,
   };
-  it('should not display labels when no presets exist', () => {
-    const { queryByLabelText } = setupPresets();
-    expect(queryByLabelText('Colors')).toBeNull();
-    expect(queryByLabelText('Text Colors')).toBeNull();
-    expect(queryByLabelText('Styles')).toBeNull();
-  });
-
-  it('should display labels if presets exist', () => {
-    const { queryByLabelText } = setupPresets({
-      stylePresets: {
-        textStyles: [STYLE_PRESET],
-        textColors: [TEST_COLOR],
-        fillColors: [],
-      },
-    });
-    expect(queryByLabelText('Text Colors')).toBeDefined();
-    expect(queryByLabelText('Styles')).toBeDefined();
-  });
 
   // Disable reason: functionality removed from beta.
   // eslint-disable-next-line jest/no-disabled-tests
@@ -98,7 +79,6 @@ describe('stylePresets/Presets', () => {
       textContent,
       stylePresets: {
         textStyles: [STYLE_PRESET],
-        textColors: [],
         fillColors: [],
       },
     });
@@ -118,7 +98,6 @@ describe('stylePresets/Presets', () => {
             backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
           },
         ],
-        textColors: [],
         fillColors: [],
       },
     });

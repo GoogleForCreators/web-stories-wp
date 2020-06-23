@@ -38,6 +38,10 @@ if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 
+// Manually require Private_Access trait
+// @todo Check why isn't auto-loading working.
+require_once dirname( dirname( __DIR__ ) ) . '/tests/phpunit/includes/Private_Access.php';
+
 /**
  * Manually load the plugin being tested.
  */

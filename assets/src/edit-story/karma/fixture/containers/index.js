@@ -14,16 +14,4 @@
  * limitations under the License.
  */
 
-const TEST_COLOR = {
-  color: { r: 1, g: 1, b: 1 },
-};
-
-export function createStory(properties = {}) {
-  return {
-    title: { raw: 'title' },
-    excerpt: { raw: 'excerpt' },
-    permalink_template: 'http://localhost:8899/stories/%pagename%',
-    style_presets: { colors: [TEST_COLOR] },
-    ...properties,
-  };
-}
+export { Editor } from './editor';

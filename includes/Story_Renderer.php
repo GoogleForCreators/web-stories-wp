@@ -26,10 +26,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Publisher;
+
 /**
  * Class Story_Renderer
  */
 class Story_Renderer {
+	use Publisher;
+
 	/*
 	 * Regular expressions to fetch the individual structural tags.
 	 * These patterns were optimized to avoid extreme backtracking on large documents.
@@ -120,9 +124,7 @@ class Story_Renderer {
 	 * @return string Filtered markup.
 	 */
 	protected function add_publisher_logo( $content ) {
-		$discovery = new Discovery();
-
-		return str_replace( $discovery->get_publisher_logo_placeholder(), $discovery->get_publisher_logo(), $content );
+		return str_replace( $this->get_publisher_logo_placeholder(), $this->get_publisher_logo(), $content );
 	}
 
 	/**
@@ -133,10 +135,7 @@ class Story_Renderer {
 	 * @return string Filtered content.
 	 */
 	protected function add_poster_images( $content ) {
-		$media         = new Media();
-		$poster_images = $media->get_story_meta_images( $this->post );
-
-		unset( $poster_images['poster-portrait'] ); // Already exists.
+		$poster_images = $this->get_story_meta_images();
 
 		foreach ( $poster_images as $attr => $url ) {
 			$attr_markup = sprintf( '%1$s-src="%2$s"', $attr, $url );
@@ -233,5 +232,27 @@ class Story_Renderer {
 		$markup = $this->replace_body_start_tag( $markup );
 		$markup = $this->replace_body_end_tag( $markup );
 		return $markup;
+	}
+
+	/**
+	 * Get story meta images.
+	 *
+	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
+	 *
+	 * @return string[] Images.
+	 */
+	protected function get_story_meta_images() {
+		$thumbnail_id = (int) get_post_thumbnail_id( $this->post );
+
+		if ( 0 === $thumbnail_id ) {
+			return [];
+		}
+
+		$images = [
+			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_SQUARE_IMAGE_SIZE ),
+			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_LANDSCAPE_IMAGE_SIZE ),
+		];
+
+		return array_filter( $images );
 	}
 }
