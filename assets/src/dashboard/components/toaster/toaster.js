@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
@@ -23,43 +22,39 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../../elements';
-import {
-  elementWithPosition,
-  elementWithSize,
-  elementWithRotation,
-} from '../../elements/shared';
-import { useUnits } from '../../units';
+import { ToastMessagesPropType } from '../../types';
+import { Alert } from '../';
 
 const Wrapper = styled.div`
-	${elementWithPosition}
-	${elementWithSize}
-	${elementWithRotation}
-	pointer-events: initial;
+  position: fixed;
+  bottom: 40px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 300px;
+  width: 40vw;
 `;
 
-function EditElement({ element }) {
-  const { id, type } = element;
-  const { getBox } = useUnits((state) => ({
-    getBox: state.actions.getBox,
-  }));
-
-  const { Edit } = getDefinitionForType(type);
-  const box = getBox(element);
-
+function Toaster({ isAllowEarlyDismiss, activeToasts, onRemoveToastClick }) {
   return (
-    <Wrapper
-      aria-labelledby={`layer-${id}`}
-      {...box}
-      onMouseDown={(evt) => evt.stopPropagation()}
-    >
-      <Edit element={element} box={box} />
+    <Wrapper>
+      {activeToasts.map((toast) => (
+        <Alert
+          isAllowDismiss={isAllowEarlyDismiss}
+          key={`alert_${toast.id}`}
+          message={toast.message}
+          severity={toast.severity}
+          handleDismissClick={() => onRemoveToastClick(toast.id)}
+        />
+      ))}
     </Wrapper>
   );
 }
 
-EditElement.propTypes = {
-  element: PropTypes.object.isRequired,
+Toaster.propTypes = {
+  activeToasts: ToastMessagesPropType,
+  isAllowEarlyDismiss: PropTypes.bool,
+  onRemoveToastClick: PropTypes.func,
 };
-
-export default EditElement;
+export default Toaster;

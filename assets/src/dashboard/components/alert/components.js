@@ -57,17 +57,6 @@ const getColor = (severity) => {
   }
 };
 
-export const Wrapper = styled.div`
-  position: fixed;
-  bottom: 40px;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 300px;
-  width: 40vw;
-`;
-
 export const AlertContainer = styled.div`
   display: flex;
   align-items: center;

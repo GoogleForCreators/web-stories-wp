@@ -17,54 +17,69 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Wrapper } from '../components';
-import AlertContainer from '../container';
 import { ALERT_SEVERITY } from '../../../constants';
+import Alert from '../';
 
 export default {
   title: 'Dashboard/Components/Alert',
-  component: AlertContainer,
+  component: Alert,
 };
+
+const Wrapper = styled.div`
+  width: 400px;
+`;
 
 export const _default = () => {
   return (
     <Wrapper>
-      <AlertContainer
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss1')}
+        handleDismissClick={action('error message dismiss')}
         message={text('errorMessage', 'this is an error')}
         severity={ALERT_SEVERITY.ERROR}
       />
-      <AlertContainer
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss2')}
+        handleDismissClick={action('warning message dismiss')}
         message={text('warningMessage', 'this is a warning')}
         severity={ALERT_SEVERITY.WARNING}
       />
-      <AlertContainer
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss3')}
+        handleDismissClick={action('info message dismiss')}
         message={text('infoMessage', 'this is informational')}
         severity={ALERT_SEVERITY.INFO}
       />
-      <AlertContainer
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss4')}
+        handleDismissClick={action('success message dismiss')}
         message={text('successMessage', 'this is successful')}
         severity={ALERT_SEVERITY.SUCCESS}
       />
-      <AlertContainer
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss5')}
+        handleDismissClick={action('default message dismiss')}
         message={text(
           'defaultMessage',
           'this is an alert without a severity passed in'
         )}
       />
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss6')}
+        handleDismissClick={action('no auto dismiss dismiss clicked')}
+        isPreventAutoDismiss
+        message={text(
+          'preventAutoDismiss',
+          'this is an alert that will not dismiss automatically after 10 seconds'
+        )}
+      />
     </Wrapper>
-  );
-};
-
-export const JustAlert = () => {
-  return (
-    <AlertContainer
-      message={text('warningMessage', 'this is a warning')}
-      severity={ALERT_SEVERITY.WARNING}
-    />
   );
 };
