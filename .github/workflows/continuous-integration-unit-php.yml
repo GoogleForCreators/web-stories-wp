@@ -33,7 +33,6 @@ jobs:
             wp: 'latest'
             multisite: true
             coverage: true
-            experimental: true
           - php: '7.4'
             wp: 'latest'
             multisite: false
