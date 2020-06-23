@@ -18,7 +18,7 @@
 
 namespace Google\Web_Stories\Tests;
 
-require_once '../../../includes/uninstall.php';
+require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 
 class Uninstall extends \WP_UnitTestCase {
 	protected static $attachment_ids;
