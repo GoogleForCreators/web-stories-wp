@@ -30,17 +30,19 @@ import {
   STYLE_PRESETS_PER_ROW,
 } from '../../../constants';
 
-const PRESET_HEIGHT = 35;
+const PRESET_SIZE = 30;
 
 const Group = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
 `;
 
 const ButtonWrapper = styled.div`
-  flex-basis: ${({ width }) => width}%;
-  height: ${PRESET_HEIGHT}px;
+  height: ${PRESET_SIZE}px;
+  width: ${PRESET_SIZE}px;
+  margin: auto;
 `;
 
 function PresetGroup({ presets, itemRenderer, type }) {
@@ -92,7 +94,7 @@ function PresetGroup({ presets, itemRenderer, type }) {
   return (
     <Group ref={groupRef}>
       {presets.map((preset, i) => (
-        <ButtonWrapper key={i} width={buttonWidth}>
+        <ButtonWrapper key={i}>
           {itemRenderer(preset, i, activeIndex)}
         </ButtonWrapper>
       ))}
