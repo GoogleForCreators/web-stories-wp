@@ -27,19 +27,12 @@ describe('Multi-selection Movable integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-
     await fixture.render();
   });
 
   afterEach(() => {
     fixture.restore();
   });
-
-  function getElementFrame(id) {
-    return fixture.querySelector(
-      `[data-testid="frameElement"][data-element-id="${id}"]`
-    );
-  }
 
   async function clickOnTarget(target, key = false) {
     const { x, y, width, height } = target.getBoundingClientRect();
@@ -95,9 +88,9 @@ describe('Multi-selection Movable integration', () => {
         })
       );
 
-      frame1 = getElementFrame(element1.id);
-      frame2 = getElementFrame(element2.id);
-      frame3 = getElementFrame(element3.id);
+      frame1 = fixture.editor.canvas.framesLayer.frame(element1.id);
+      frame2 = fixture.editor.canvas.framesLayer.frame(element2.id);
+      frame3 = fixture.editor.canvas.framesLayer.frame(element3.id);
     });
 
     it('should render initial content', async () => {

@@ -33,18 +33,6 @@ describe('Drop-Target order', () => {
     fixture.restore();
   });
 
-  function getFrame(elementId) {
-    return fixture.querySelector(
-      `[data-testid="FramesLayer"] [data-element-id="${elementId}"]`
-    );
-  }
-
-  function getDisplay(elementId) {
-    return fixture.querySelector(
-      `[data-testid="DisplayLayer"] [data-element-id="${elementId}"]`
-    );
-  }
-
   it('should replace top image when bg image is set and another one is on top', async () => {
     const insertElement = await fixture.renderHook(() => useInsertElement());
 
@@ -63,7 +51,9 @@ describe('Drop-Target order', () => {
     const replacementImage = await fixture.act(() =>
       insertElement('image', curiosityImageProps)
     );
-    const replacementImageFrame = getFrame(replacementImage.id);
+    const replacementImageFrame = fixture.editor.canvas.framesLayer.frame(
+      replacementImage.id
+    ).node;
 
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(replacementImageFrame, 10, 10),
@@ -74,8 +64,12 @@ describe('Drop-Target order', () => {
 
     const backgroundId = await getBackgroundElementId(fixture);
     // TODO: refactor after #2386?
-    const topImageImg = getDisplay(topImage.id).querySelector('img');
-    const backgroundImg = getDisplay(backgroundId).querySelector('img');
+    const topImageImg = fixture.editor.canvas.displayLayer
+      .display(topImage.id)
+      .node.querySelector('img');
+    const backgroundImg = fixture.editor.canvas.displayLayer
+      .display(backgroundId)
+      .node.querySelector('img');
     // TODO: improve with custom matchers
     expect(topImageImg.src).toBe(replacementImage.resource.src);
     expect(backgroundImg.src).toBe(bgImage.resource.src);
@@ -95,7 +89,9 @@ describe('Drop-Target order', () => {
     const replacementImage = await fixture.act(() =>
       insertElement('image', { ...curiosityImageProps, x: 100, y: 100 })
     );
-    const replacementImageFrame = getFrame(replacementImage.id);
+    const replacementImageFrame = fixture.editor.canvas.framesLayer.frame(
+      replacementImage.id
+    ).node;
 
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(replacementImageFrame, 10, 10),
@@ -104,8 +100,12 @@ describe('Drop-Target order', () => {
       up(),
     ]);
 
-    const topImageImg = getDisplay(topImage.id).querySelector('img');
-    const bottomImageImg = getDisplay(bottomImage.id).querySelector('img');
+    const topImageImg = fixture.editor.canvas.displayLayer
+      .display(topImage.id)
+      .node.querySelector('img');
+    const bottomImageImg = fixture.editor.canvas.displayLayer
+      .display(bottomImage.id)
+      .node.querySelector('img');
     expect(topImageImg.src).toBe(replacementImage.resource.src);
     expect(bottomImageImg.src).toBe(bottomImage.resource.src);
   });
