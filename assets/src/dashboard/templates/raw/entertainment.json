@@ -5512,7 +5512,7 @@
           "x": 36,
           "y": 509,
           "width": 340,
-          "height": 96,
+          "height": 92,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5632,7 +5632,7 @@
           "type": "text",
           "basedOn": "ff9a77cf-c942-4a04-84ea-d7134d97f360",
           "id": "b0d4ee54-76eb-4050-821d-5d11181b6a2c",
-          "content": "<span style=\"color: #fff\">It’s one thing to listen to music; it’s another to learn how it’s made! We’ll take your through the production process of one of our favorite song.</span>",
+          "content": "<span style=\"color: #fff\">It’s one thing to listen to music; it’s another to learn how it’s made! We’ll take your through the production process of one of our favorite songs.</span>",
           "fontSize": 16,
           "padding": {
             "horizontal": 0,
@@ -6997,7 +6997,7 @@
           "type": "text",
           "basedOn": "97bead85-66e2-4ea0-af98-8b1305d41884",
           "id": "c6c185a6-32d1-42ed-b376-5733abe06f55",
-          "content": "<span style=\"font-weight: 700; color: #fff\">OUR TOP PICKS&nbsp;FOR THE GRAMMY’S</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">OUR TOP PICKS&nbsp;FOR THE GRAMMYS</span>",
           "fontSize": 16,
           "padding": {
             "horizontal": 0,
