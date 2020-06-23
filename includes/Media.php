@@ -155,8 +155,6 @@ class Media {
 
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
-		add_filter( 'upload_mimes', [ $this, 'upload_mimes' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
-
 		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
 	}
 
@@ -338,19 +336,7 @@ class Media {
 		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}
-	/**
-	 * Filters the list of mime types and file extensions.
-	 *
-	 * @param string[] $mime_types Mime types keyed by the file extension regex
-	 *                             corresponding to those types.
-	 *
-	 * @return string[]
-	 */
-	public function upload_mimes( array $mime_types ) {
-		$mime_types['svg'] = 'image/svg+xml';
-		return $mime_types;
-	}
-
+	
 	/**
 	 * Deletes associated poster image when a video is deleted.
 	 *
