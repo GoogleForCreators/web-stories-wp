@@ -88,9 +88,9 @@ describe('Multi-selection Movable integration', () => {
         })
       );
 
-      frame1 = fixture.editor.canvas.framesLayer.frame(element1.id);
-      frame2 = fixture.editor.canvas.framesLayer.frame(element2.id);
-      frame3 = fixture.editor.canvas.framesLayer.frame(element3.id);
+      frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+      frame2 = fixture.editor.canvas.framesLayer.frame(element2.id).node;
+      frame3 = fixture.editor.canvas.framesLayer.frame(element3.id).node;
     });
 
     it('should render initial content', async () => {
