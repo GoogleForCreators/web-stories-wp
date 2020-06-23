@@ -27,6 +27,9 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Screen;
 
@@ -34,6 +37,9 @@ use WP_Screen;
  * Class Story_Post_Type.
  */
 class Story_Post_Type {
+	use Publisher;
+	use Types;
+	use Assets;
 	/**
 	 * The slug of the stories post type.
 	 *
@@ -47,13 +53,6 @@ class Story_Post_Type {
 	 * @var string
 	 */
 	const WEB_STORIES_SCRIPT_HANDLE = 'edit-story';
-
-	/**
-	 * Web Stories editor style handle.
-	 *
-	 * @var string
-	 */
-	const WEB_STORIES_STYLE_HANDLE = 'edit-story';
 
 	/**
 	 * The rewrite slug for this post type.
@@ -144,6 +143,8 @@ class Story_Post_Type {
 		add_filter( 'amp_skip_post', [ $this, 'skip_amp' ], PHP_INT_MAX, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
+
+		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
 	}
 
 	/**
@@ -277,29 +278,6 @@ class Story_Post_Type {
 		// Force media model to load.
 		wp_enqueue_media();
 
-		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.asset.php';
-		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
-		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
-		$version      = isset( $asset['version'] ) ? $asset['version'] : [];
-
-		wp_enqueue_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.js',
-			$dependencies,
-			$version,
-			false
-		);
-
-		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
-
-		$settings = $this->get_editor_settings();
-
-		wp_localize_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			'webStoriesEditorSettings',
-			$settings
-		);
-
 		wp_register_style(
 			'roboto',
 			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
@@ -307,18 +285,17 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		wp_enqueue_style(
-			self::WEB_STORIES_STYLE_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[ 'roboto' ],
-			$version
+		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE );
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
+
+		wp_localize_script(
+			self::WEB_STORIES_SCRIPT_HANDLE,
+			'webStoriesEditorSettings',
+			$this->get_editor_settings()
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		wp_styles()->registered['wp-admin']->deps = array_diff(
-			wp_styles()->registered['wp-admin']->deps,
-			[ 'forms' ]
-		);
+		$this->remove_admin_style( [ 'forms' ] );
 	}
 
 	/**
@@ -357,8 +334,6 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
-		$discovery = new Discovery();
-		$media     = new Media();
 
 		$settings = [
 			'id'     => 'edit-story',
@@ -366,8 +341,8 @@ class Story_Post_Type {
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'timeFormat'       => get_option( 'time_format' ),
-				'allowedMimeTypes' => $media->get_allowed_mime_types(),
-				'allowedFileTypes' => $media->get_allowed_file_types(),
+				'allowedMimeTypes' => $this->get_allowed_mime_types(),
+				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
@@ -385,8 +360,8 @@ class Story_Post_Type {
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => $discovery->get_publisher_data(),
-					'logoPlaceholder' => $discovery->get_publisher_logo_placeholder(),
+					'publisher'       => $this->get_publisher_data(),
+					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
@@ -461,6 +436,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-17
 				 */
 				'media3pTab'                   => false,
+				/**
+				 * Description: Flag to show or hide the elements tab.
+				 * Author: @diegovar
+				 * Issue: #2616
+				 * Creation date: 2020-06-23
+				 */
+				'showElementsTab'              => false,
 			],
 
 		];
@@ -481,5 +463,63 @@ class Story_Post_Type {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Filters the gtag configuration options for the amp-analytics tag.
+	 *
+	 * @see https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/
+	 * @see https://github.com/ampproject/amphtml/blob/master/extensions/amp-story/amp-story-analytics.md
+	 *
+	 * @param array $gtag_opt Array of gtag configuration options.
+	 * @return array Modified configuration options.
+	 */
+	public function filter_site_kit_gtag_opt( $gtag_opt ) {
+		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
+			return $gtag_opt;
+		}
+
+		$post = get_post();
+
+		if ( ! $post instanceof WP_Post ) {
+			return $gtag_opt;
+		}
+
+		$title       = get_the_title( $post );
+		$story_id    = $post->ID;
+		$tracking_id = $gtag_opt['vars']['gtag_id'];
+
+		$gtag_opt['triggers'] = $gtag_opt['triggers'] ?: [];
+
+		if ( ! isset( $gtag_opt['triggers']['storyProgress'] ) ) {
+			$gtag_opt['triggers']['storyProgress'] = [
+				'on'   => 'story-page-visible',
+				'vars' => [
+					'event_name'     => 'custom',
+					'event_action'   => 'story_progress',
+					'event_category' => $title,
+					'event_label'    => $story_id,
+					'send_to'        => [
+						$tracking_id,
+					],
+				],
+			];
+		}
+
+		if ( ! isset( $gtag_opt['triggers']['storyEnd'] ) ) {
+			$gtag_opt['triggers']['storyEnd'] = [
+				'on'   => 'story-last-page-visible',
+				'vars' => [
+					'event_name'     => 'custom',
+					'event_action'   => 'story_complete',
+					'event_category' => $title,
+					'send_to'        => [
+						$tracking_id,
+					],
+				],
+			];
+		}
+
+		return $gtag_opt;
 	}
 }
