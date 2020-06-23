@@ -26,6 +26,7 @@ jobs:
       matrix:
         php: ['7.4', '7.0', '5.6']
         wp: ['latest']
+        multisite: ['true', 'false']
         include:
           - php: '8.0'
             wp: 'trunk'
@@ -74,6 +75,10 @@ jobs:
       - name: Run tests
         run: npm run test:php
         if: ${{ matrix.wp != 'latest' || matrix.php != 7.4 }}
+
+      - name: Run tests ( multisite )
+        run: npm run test:php -- --verbose -c tests/phpunit/multisite.xml
+        if: ${{ matrix.wp != 'latest' || matrix.php != 7.4 || matrix.multisite != 'false' }}
 
       - name: Run tests with coverage
         run: npm run test:php -- --coverage-clover build/logs/clover.xml
