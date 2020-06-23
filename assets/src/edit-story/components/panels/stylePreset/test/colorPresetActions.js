@@ -36,7 +36,7 @@ function setupActions() {
   const storyContextValue = {
     state: {
       selectedElements: [textElement],
-      story: { stylePresets: { fillColors: [], textColors: [] } },
+      story: { stylePresets: { colors: [] } },
     },
     actions: { updateStory },
   };
@@ -67,8 +67,7 @@ describe('Panels/StylePreset/ColorPresetActions', () => {
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
         stylePresets: {
-          fillColors: [],
-          textColors: [{ color: { b: 1, g: 1, r: 1 } }],
+          colors: [{ color: { b: 1, g: 1, r: 1 } }],
         },
       },
     });

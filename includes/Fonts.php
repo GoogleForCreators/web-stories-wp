@@ -35,7 +35,7 @@ class Fonts {
 	 *
 	 * @return array Fonts.
 	 */
-	public static function get_fonts() {
+	public function get_fonts() {
 		static $fonts = null;
 
 		if ( isset( $fonts ) ) {
@@ -43,7 +43,7 @@ class Fonts {
 		}
 
 		$file  = __DIR__ . '/data/fonts.json';
-		$fonts = self::get_google_fonts( $file );
+		$fonts = $this->get_google_fonts( $file );
 
 		return $fonts;
 	}
@@ -55,7 +55,7 @@ class Fonts {
 	 *
 	 * @return array $fonts Fonts list.
 	 */
-	public static function get_google_fonts( $file ) {
+	public function get_google_fonts( $file ) {
 		if ( ! is_readable( $file ) ) {
 			return [];
 		}
