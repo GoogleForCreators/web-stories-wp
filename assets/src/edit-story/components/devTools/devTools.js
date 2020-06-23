@@ -100,9 +100,12 @@ function DevTools() {
   const [isDummyResources, setIsDummyResources] = useState(false);
   const { showSnackbar } = useSnackbar();
   const textareaRef = useRef();
-  const {
-    internal: { reducerState, restore },
-  } = useStory();
+  const { reducerState, restore } = useStory(
+    ({ internal: { reducerState, restore } }) => ({
+      reducerState,
+      restore,
+    })
+  );
 
   const {
     pages,

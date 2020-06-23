@@ -25,7 +25,7 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import useStory from '../../../app/story/useStory';
+import { useStory } from '../../../app';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';

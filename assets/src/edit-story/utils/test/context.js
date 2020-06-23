@@ -24,7 +24,11 @@ import { render, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useContextSelector } from '../context';
+import {
+  createContext,
+  useContextSelector,
+  convertFieldStringOrArrayToSelector,
+} from '../context';
 
 describe('useContextSelector', () => {
   let context;
@@ -85,5 +89,17 @@ describe('useContextSelector', () => {
 
     fireEvent.click(getByTestId('count++'));
     expect(renderCount).toBe(2);
+  });
+
+  it('convertFieldStringOrArrayToSelector with string field name', () => {
+    const selector = convertFieldStringOrArrayToSelector('field');
+    expect(selector({ field: 'value' })).toStrictEqual('value');
+  });
+
+  it('convertFieldStringOrArrayToSelector with field name array', () => {
+    const selector = convertFieldStringOrArrayToSelector(['field1']);
+    expect(selector({ field1: 'value1', field2: 'value2' })).toStrictEqual({
+      field1: 'value1',
+    });
   });
 });

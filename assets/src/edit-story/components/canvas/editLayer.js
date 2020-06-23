@@ -30,7 +30,7 @@ import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
 import { Layer, PageArea, Z_INDEX } from './layout';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`

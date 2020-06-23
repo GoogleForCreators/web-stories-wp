@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useMedia from '../../app/media/useMedia';
+import { useMedia } from '../../app/media/useMedia';
 import { useConfig } from '../../app/config';
 import { useSnackbar } from '../../app/snackbar';
 import { useAPI } from '../../app/api';

@@ -22,30 +22,20 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useStoryState, useStoryAction } from '../../../app';
 import useFocusCanvas from '../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
   const { id: elementId } = layer;
 
-  const {
-    currentPage,
-    selectedElementIds,
-    setSelectedElementsById,
-    toggleElementInSelection,
-  } = useStory(
-    ({
-      state: { currentPage, selectedElementIds },
-      actions: { setSelectedElementsById, toggleElementInSelection },
-    }) => {
-      return {
-        currentPage,
-        selectedElementIds,
-        setSelectedElementsById,
-        toggleElementInSelection,
-      };
-    }
-  );
+  const { currentPage, selectedElementIds } = useStoryState([
+    'currentPage',
+    'selectedElementIds',
+  ]);
+  const { setSelectedElementsById, toggleElementInSelection } = useStoryAction([
+    'setSelectedElementsById',
+    'toggleElementInSelection',
+  ]);
 
   const focusCanvas = useFocusCanvas();
 

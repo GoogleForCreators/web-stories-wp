@@ -40,7 +40,7 @@ import {
 import { dataPixels } from '../../units';
 import { Lock as Locked, Unlock as Unlocked } from '../../icons';
 
-import useStory from '../../app/story/useStory';
+import { useStory } from '../../app';
 import { getDefinitionForType } from '../../elements';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';

@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Button, Row } from '../form';
-import useStory from '../../app/story/useStory';
+import { useStory } from '../../app';
 import { SimplePanel } from './panel';
 import FlipControls from './shared/flipControls';
 

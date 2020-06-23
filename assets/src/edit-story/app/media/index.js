@@ -15,4 +15,4 @@
  */
 
 export { default as MediaProvider } from './mediaProvider';
-export { default as useMedia } from './useMedia';
+export { useMedia, useMediaState, useMediaAction } from './useMedia';

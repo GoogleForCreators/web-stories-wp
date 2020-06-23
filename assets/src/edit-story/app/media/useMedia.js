@@ -17,11 +17,25 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils/context';
+import {
+  identity,
+  useContextSelector,
+  convertFieldStringOrArrayToSelector,
+} from '../../utils/context';
 import Context from './context';
 
 function useMedia(selector) {
   return useContextSelector(Context, selector ?? identity);
 }
 
-export default useMedia;
+function useMediaState(selector) {
+  selector = convertFieldStringOrArrayToSelector(selector ?? identity);
+  return useMedia((state) => selector(state.state));
+}
+
+function useMediaAction(selector) {
+  selector = convertFieldStringOrArrayToSelector(selector ?? identity);
+  return useMedia((state) => selector(state.actions));
+}
+
+export { useMedia, useMediaState, useMediaAction };

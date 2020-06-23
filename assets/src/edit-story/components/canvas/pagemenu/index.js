@@ -41,7 +41,7 @@ import {
   Text,
 } from '../../../icons';
 import WithTooltip from '../../tooltip';
-import useCanvas from '../useCanvas';
+import { useCanvas } from '../useCanvas';
 
 const HEIGHT = 28;
 

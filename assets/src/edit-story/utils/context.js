@@ -20,6 +20,10 @@
 import { shallowEqual } from 'react-pure-render';
 import { useRef } from 'react';
 import { useContextSelector as useContextSelectorOrig } from 'use-context-selector';
+/**
+ * Internal dependencies
+ */
+import objectPick from './objectPick';
 
 export { createContext, useContext } from 'use-context-selector';
 
@@ -57,6 +61,23 @@ export const useContextSelector = (
   // Update the selector fn to memoize the selected value by [equalityFn].
   const patchedSelector = equalityFn ? equalityFnCallback : selector;
   return useContextSelectorOrig(context, patchedSelector);
+};
+
+/**
+ * Convert a selector expressed as a field string or array of fields to
+ * a selector function, or return the selector as is.
+ *
+ * @param selector
+ */
+export const convertFieldStringOrArrayToSelector = (selector) => {
+  var newSelector = selector;
+  if (typeof selector == 'string') {
+    newSelector = (state) => state[selector];
+  }
+  if (selector instanceof Array) {
+    newSelector = (state) => objectPick(state, selector);
+  }
+  return newSelector;
 };
 
 export const identity = (state) => state;

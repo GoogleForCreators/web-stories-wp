@@ -23,7 +23,7 @@ import { memo } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 

@@ -34,7 +34,7 @@ import {
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import useResizeEffect from '../../utils/useResizeEffect';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png

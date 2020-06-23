@@ -28,17 +28,18 @@ import APIContext from '../../../../app/api/context';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import { renderWithTheme } from '../../../../testUtils/index';
 
-jest.mock('../../useLibrary');
-import useLibrary from '../../useLibrary';
+const mockInsertElement = jest.fn();
+jest.mock('../../useLibrary', () => ({
+  useLibrary: () => ({
+    actions: {
+      insertElement: mockInsertElement,
+    },
+  }),
+}));
 
 describe('TextTab', () => {
-  const insertElement = jest.fn();
-  beforeAll(() => {
-    useLibrary.mockImplementation(() => ({
-      actions: {
-        insertElement: insertElement,
-      },
-    }));
+  beforeEach(() => {
+    mockInsertElement.mockReset();
   });
 
   it('should insert text with default text style on shortcut click', async () => {
@@ -62,7 +63,7 @@ describe('TextTab', () => {
       fireEvent.click(getByLabelText('Add new text element'));
     });
 
-    expect(insertElement).toHaveBeenCalledTimes(1);
-    expect(insertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
+    expect(mockInsertElement).toHaveBeenCalledTimes(1);
+    expect(mockInsertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
   });
 });

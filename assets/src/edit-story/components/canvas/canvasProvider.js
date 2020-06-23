@@ -23,7 +23,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStoryState, useStoryAction } from '../../app';
 import { PAGE_WIDTH, PAGE_RATIO } from '../../constants';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
@@ -52,24 +52,14 @@ function CanvasProvider({ children }) {
     setNodeForElement,
   } = useEditingElement();
 
-  const {
-    currentPage,
-    selectedElementIds,
-    toggleElementInSelection,
-    setSelectedElementsById,
-  } = useStory(
-    ({
-      state: { currentPage, selectedElementIds },
-      actions: { toggleElementInSelection, setSelectedElementsById },
-    }) => {
-      return {
-        currentPage,
-        selectedElementIds,
-        toggleElementInSelection,
-        setSelectedElementsById,
-      };
-    }
-  );
+  const { currentPage, selectedElementIds } = useStoryState([
+    'currentPage',
+    'selectedElementIds',
+  ]);
+  const { toggleElementInSelection, setSelectedElementsById } = useStoryAction([
+    'toggleElementInSelection',
+    'setSelectedElementsById',
+  ]);
 
   const handleSelectElement = useCallback(
     (elId, evt) => {

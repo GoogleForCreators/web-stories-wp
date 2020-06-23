@@ -30,7 +30,7 @@ import { useFeatures } from 'flagged';
  */
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
-import useLibrary from '../../useLibrary';
+import { useLibrary } from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';

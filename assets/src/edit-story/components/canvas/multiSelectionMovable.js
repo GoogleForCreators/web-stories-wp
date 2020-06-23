@@ -32,7 +32,7 @@ import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 

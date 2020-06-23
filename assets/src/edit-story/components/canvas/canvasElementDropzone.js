@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import { useDropTargets } from '../dropTargets';
 import { useUnits } from '../../units';
 import { isDragType } from '../../utils/dragEvent';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 import useInsertElement from './useInsertElement';
 
 const Container = styled.div`

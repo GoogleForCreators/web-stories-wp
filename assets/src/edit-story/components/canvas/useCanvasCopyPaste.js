@@ -23,7 +23,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStoryState, useStoryAction } from '../../app';
 import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import {
   addElementsToClipboard,
@@ -34,24 +34,14 @@ import useInsertElement from './useInsertElement';
 import useUploadWithPreview from './useUploadWithPreview';
 
 function useCanvasGlobalKeys() {
-  const {
-    currentPage,
-    selectedElements,
-    addElements,
-    deleteSelectedElements,
-  } = useStory(
-    ({
-      state: { currentPage, selectedElements },
-      actions: { addElements, deleteSelectedElements },
-    }) => {
-      return {
-        currentPage,
-        selectedElements,
-        addElements,
-        deleteSelectedElements,
-      };
-    }
-  );
+  const { currentPage, selectedElements } = useStoryState([
+    'currentPage',
+    'selectedElements',
+  ]);
+  const { addElements, deleteSelectedElements } = useStoryAction([
+    'addElements',
+    'deleteSelectedElements',
+  ]);
 
   const uploadWithPreview = useUploadWithPreview();
 

@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useLibrary from '../../useLibrary';
+import { useLibrary } from '../../useLibrary';
 import { Tab } from '../shared';
 import paneId from './paneId';
 import { ReactComponent as TextIcon } from './text.svg';

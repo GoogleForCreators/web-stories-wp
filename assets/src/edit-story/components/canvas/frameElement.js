@@ -35,7 +35,7 @@ import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 
 // @todo: should the frame borders follow clip lines?
 

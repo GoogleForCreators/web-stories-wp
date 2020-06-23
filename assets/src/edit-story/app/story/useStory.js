@@ -17,11 +17,25 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils/context';
+import {
+  identity,
+  useContextSelector,
+  convertFieldStringOrArrayToSelector,
+} from '../../utils/context';
 import Context from './context';
 
 function useStory(selector) {
   return useContextSelector(Context, selector ?? identity);
 }
 
-export default useStory;
+function useStoryState(selector) {
+  const newSelector = convertFieldStringOrArrayToSelector(selector ?? identity);
+  return useStory((state) => newSelector(state.state));
+}
+
+function useStoryAction(selector) {
+  const newSelector = convertFieldStringOrArrayToSelector(selector ?? identity);
+  return useStory((state) => newSelector(state.actions));
+}
+
+export { useStory, useStoryState, useStoryAction };

@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useFeatures } from 'flagged';
 import { MASKS } from '../../../../masks';
-import useLibrary from '../../useLibrary';
+import { useLibrary } from '../../useLibrary';
 import createSolid from '../../../../utils/createSolid';
 import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';

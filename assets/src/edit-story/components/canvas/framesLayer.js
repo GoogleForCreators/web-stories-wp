@@ -29,14 +29,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useStory, useDropTargets } from '../../app';
+import { useStoryState, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import useCanvasKeys from './useCanvasKeys';
 import Selection from './selection';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
@@ -71,9 +71,7 @@ function safeZoneSelector({ state: { showSafeZone } }) {
 }
 
 function FramesLayer() {
-  const { currentPage } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-  }));
+  const currentPage = useStoryState('currentPage');
   const { showSafeZone } = useCanvas(safeZoneSelector);
   const {
     state: { draggingResource, dropTargets },

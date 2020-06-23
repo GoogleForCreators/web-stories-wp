@@ -17,11 +17,25 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils/context';
+import {
+  identity,
+  useContextSelector,
+  convertFieldStringOrArrayToSelector,
+} from '../../utils/context';
 import Context from './context';
 
 function useCanvas(selector) {
   return useContextSelector(Context, selector ?? identity);
 }
 
-export default useCanvas;
+function useCanvasState(selector) {
+  selector = convertFieldStringOrArrayToSelector(selector ?? identity);
+  return useCanvas((state) => selector(state.state));
+}
+
+function useCanvasAction(selector) {
+  selector = convertFieldStringOrArrayToSelector(selector ?? identity);
+  return useCanvas((state) => selector(state.actions));
+}
+
+export { useCanvas, useCanvasState, useCanvasAction };

@@ -33,7 +33,7 @@ import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];

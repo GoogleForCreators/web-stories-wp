@@ -29,19 +29,16 @@ import APIContext from '../../../../app/api/context';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import { renderWithTheme } from '../../../../testUtils/index';
 
-jest.mock('../../useLibrary');
-import useLibrary from '../../useLibrary';
+const mockInsertElement = jest.fn();
+jest.mock('../../useLibrary', () => ({
+  useLibrary: () => ({
+    insertElement: mockInsertElement,
+  }),
+}));
 
 describe('TextPane', () => {
-  const insertElement = jest.fn();
-  beforeAll(() => {
-    useLibrary.mockImplementation((selector) =>
-      selector({
-        actions: {
-          insertElement: insertElement,
-        },
-      })
-    );
+  beforeEach(() => {
+    mockInsertElement.mockReset();
   });
 
   it('should insert text with default text style on pressing quick action', async () => {
@@ -72,7 +69,7 @@ describe('TextPane', () => {
       fireEvent.click(getByRole('button', { name: 'Add new text' }));
     });
 
-    expect(insertElement).toHaveBeenCalledTimes(1);
-    expect(insertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
+    expect(mockInsertElement).toHaveBeenCalledTimes(1);
+    expect(mockInsertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
   });
 });

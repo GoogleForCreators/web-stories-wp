@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import useCanvas from '../canvas/useCanvas';
+import { useCanvas } from '../canvas/useCanvas';
 import SingleSelectionMovable from './singleSelectionMovable';
 import MultiSelectionMovable from './multiSelectionMovable';
 

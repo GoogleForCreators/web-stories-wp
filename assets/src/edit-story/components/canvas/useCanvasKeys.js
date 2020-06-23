@@ -27,7 +27,7 @@ import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
-import useCanvas from './useCanvas';
+import { useCanvas } from './useCanvas';
 
 const MOVE_COARSE_STEP = 10;
 

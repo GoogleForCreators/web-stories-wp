@@ -34,7 +34,7 @@ import { useMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
 import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
 import { MainButton, SearchInput } from '../../common';
-import useLibrary from '../../useLibrary';
+import { useLibrary } from '../../useLibrary';
 import { Pane } from '../shared';
 import {
   getTypeFromMime,

@@ -15,5 +15,5 @@
  */
 
 export { default } from './canvas';
-export { default as useCanvas } from './useCanvas';
+export { useCanvas, useCanvasState, useCanvasAction } from './useCanvas';
 export { default as useInsertElement } from './useInsertElement';

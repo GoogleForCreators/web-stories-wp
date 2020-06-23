@@ -42,7 +42,12 @@ import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
 import { useMedia, MediaProvider } from './media';
-import { useStory, StoryProvider } from './story';
+import {
+  useStory,
+  useStoryState,
+  useStoryAction,
+  StoryProvider,
+} from './story';
 import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
 
@@ -96,6 +101,8 @@ export {
   useDropTargets,
   useTransform,
   useStory,
+  useStoryState,
+  useStoryAction,
   useConfig,
   useFont,
   useMedia,
