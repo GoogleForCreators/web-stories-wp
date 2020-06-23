@@ -40,7 +40,15 @@ trait Publisher {
 	 * @return string
 	 */
 	public function get_publisher_logo_placeholder() {
-		return WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
+		$placeholder_logo_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
+		/**
+		 * Filters the publisher's logo placeholder.
+		 *
+		 * This should point to a square image.
+		 *
+		 * @param string $placeholder_logo_url URL to the publisher's logo placeholder.
+		 */
+		return apply_filters( 'publisher_logo_placeholder', $placeholder_logo_url );
 	}
 
 	/**
