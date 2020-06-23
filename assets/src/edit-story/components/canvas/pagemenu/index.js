@@ -52,7 +52,7 @@ const Wrapper = styled.div`
 `;
 
 const Box = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: transparent;
   display: flex;
   flex-direction: row;
   align-items: center;

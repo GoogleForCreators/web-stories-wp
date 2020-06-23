@@ -24,18 +24,12 @@ import { fireEvent } from '@testing-library/react';
  */
 import { ALERT_SEVERITY } from '../../../constants';
 import { renderWithTheme } from '../../../testUtils/';
-import { Wrapper } from '../components';
-import AlertContainer from '../container';
+import Alert from '../';
 
 describe('Alert', () => {
   it('should render 1 alert', () => {
     const wrapper = renderWithTheme(
-      <Wrapper>
-        <AlertContainer
-          message={'this is an error'}
-          severity={ALERT_SEVERITY.ERROR}
-        />
-      </Wrapper>
+      <Alert message={'this is an error'} severity={ALERT_SEVERITY.ERROR} />
     );
 
     const alert = wrapper.getByRole('alert');
@@ -46,13 +40,12 @@ describe('Alert', () => {
   it('should recognize click on DismissButton', () => {
     const mockDismissClick = jest.fn();
     const { getByRole } = renderWithTheme(
-      <Wrapper>
-        <AlertContainer
-          message={'this is an error'}
-          severity={ALERT_SEVERITY.ERROR}
-          handleDismissClick={mockDismissClick}
-        />
-      </Wrapper>
+      <Alert
+        isAllowDismiss={true}
+        message={'this is an error'}
+        severity={ALERT_SEVERITY.ERROR}
+        handleDismissClick={mockDismissClick}
+      />
     );
 
     const button = getByRole('button');

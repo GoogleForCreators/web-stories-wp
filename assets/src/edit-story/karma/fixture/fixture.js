@@ -433,7 +433,7 @@ class APIProviderFixture {
             publisher_logo_url:
               'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
             permalink_template: 'http://stories3.local/stories/%pagename%/',
-            style_presets: { textStyles: [], fillColors: [], textColors: [] },
+            style_presets: { textStyles: [], colors: [] },
             password: '',
           }),
         []

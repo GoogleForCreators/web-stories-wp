@@ -13,10 +13,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import { useRef, useEffect } from 'react';
+
 /**
  * Internal dependencies
  */
-import Container from './container';
-import { Wrapper } from './components';
+import { Close } from '../../icons';
+import { AlertSeveritiesPropType } from '../../types';
+import { AUTO_REMOVE_ALERT_TIME_INTERVAL } from '../../constants';
+import { AlertContainer, AlertText, DismissButton } from './components';
 
-export const Alert = { Container, Wrapper };
+const Alert = ({
+  isPreventAutoDismiss,
+  isAllowDismiss,
+  message,
+  severity,
+  handleDismissClick,
+}) => {
+  const autoDismissRef = useRef();
+  autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismissClick;
+
+  useEffect(() => {
+    if (!autoDismissRef.current) {
+      return () => {};
+    }
+    const dismissTimeout = setTimeout(
+      () => autoDismissRef.current(),
+      AUTO_REMOVE_ALERT_TIME_INTERVAL
+    );
+
+    return () => clearTimeout(dismissTimeout);
+  }, []);
+
+  return (
+    <AlertContainer
+      severity={severity}
+      role="alert"
+      aria-label={__('Alert Notification', 'web-stories')}
+    >
+      <AlertText>{message}</AlertText>
+      {isAllowDismiss && (
+        <DismissButton
+          onClick={handleDismissClick}
+          ariaLabel={__('Dismiss Alert', 'web-stories')}
+        >
+          <Close />
+        </DismissButton>
+      )}
+    </AlertContainer>
+  );
+};
+
+Alert.propTypes = {
+  isAllowDismiss: PropTypes.bool,
+  message: PropTypes.string.isRequired,
+  handleDismissClick: PropTypes.func,
+  isPreventAutoDismiss: PropTypes.bool,
+  severity: AlertSeveritiesPropType,
+};
+
+export default Alert;
