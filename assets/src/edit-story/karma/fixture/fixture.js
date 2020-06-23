@@ -187,11 +187,7 @@ export class Fixture {
    *
    * @return {Promise} Yields when the editor rendering is complete.
    */
-  async render() {
-    // Each test should start with the pointer in the same location ([0,0]) to
-    // avoid flakes pointerover/mouseover/hover flakes.
-    await this._events.mouse.move(0, 0);
-
+  render() {
     const root = document.querySelector('test-root');
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
