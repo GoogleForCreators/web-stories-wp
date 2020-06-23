@@ -9,7 +9,7 @@ on:
 
 jobs:
   unit-php:
-    name: PHP ${{ matrix.php }} - Multisite ${{ matrix.multisite }} - Coverage ${{ matrix.coverage }}
+    name: 'PHP ${{ matrix.php }} - WP {{ matrix.wp }} (Multisite: ${{ matrix.multisite }})'
     runs-on: ubuntu-latest
     services:
       mysql:
