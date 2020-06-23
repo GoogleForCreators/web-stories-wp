@@ -24,7 +24,7 @@ import { useMemo, useRef, useCallback } from 'react';
  */
 import { useConfig } from '../../app';
 import { useKeyDownEffect } from '../keyboard';
-import useLibrary from './useLibrary';
+import { useLibrary } from './useLibrary';
 import { Tabs, getPane } from './panes';
 import { getTabId } from './panes/shared';
 

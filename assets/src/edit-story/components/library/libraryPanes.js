@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
+import { useLibrary } from './useLibrary';
 import { getPane } from './panes';
 
 function LibraryPanes() {
