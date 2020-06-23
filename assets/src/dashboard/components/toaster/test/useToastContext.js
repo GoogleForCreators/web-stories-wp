@@ -29,21 +29,18 @@ const TOAST_1 = {
   message: 'one',
   severity: ALERT_SEVERITY.ERROR,
   id: 1,
-  isActive: true,
 };
 
 const TOAST_2 = {
   message: 'two',
   id: 2,
   severity: ALERT_SEVERITY.ERROR,
-  isActive: true,
 };
 
 const TOAST_3 = {
   message: 'three',
   id: 3,
   severity: ALERT_SEVERITY.WARNING,
-  isActive: true,
 };
 
 describe('useToastContext', () => {
