@@ -29,20 +29,26 @@ jobs:
         multisite: [false]
         coverage: [false]
         include:
-          - php: '8.0'
-            wp: 'trunk'
-            multisite: false
-            coverage: false
-            experimental: true
           - php: '7.4'
             wp: 'latest'
             multisite: true
-            coverage: false
+            coverage: true
             experimental: true
           - php: '7.4'
             wp: 'latest'
             multisite: false
             coverage: true
+          - php: '7.4'
+            wp: 'trunk'
+            multisite: false
+            coverage: false
+            experimental: true
+          - php: '8.0'
+            wp: 'trunk'
+            multisite: false
+            coverage: false
+            experimental: true
+
 
     steps:
       - name: Checkout
@@ -86,15 +92,15 @@ jobs:
 
       - name: Run tests
         run: npm run test:php
-        if: ${{ matrix.coverage == false }}
+        if: ${{ matrix.coverage == false && matrix.multisite == false }}
 
-      - name: Run tests ( multisite )
-        run: npm run test:php -- --verbose -c phpunit-multisite.xml.dist
-        if: ${{ matrix.multisite == true }}
+      - name: Run tests in multisite with coverage
+        run: npm run test:php -- --coverage-clover build/logs/clover.xml -c phpunit-multisite.xml.dist
+        if: ${{ matrix.coverage == true && matrix.multisite == true }}
 
       - name: Run tests with coverage
         run: npm run test:php -- --coverage-clover build/logs/clover.xml
-        if: ${{ matrix.coverage == true }}
+        if: ${{ matrix.coverage == true && matrix.multisite == false }}
 
       - name: Uplaod code coverage report
         uses: codecov/codecov-action@v1
