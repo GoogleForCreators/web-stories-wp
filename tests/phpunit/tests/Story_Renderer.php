@@ -24,6 +24,9 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user = $factory->user->create( [ 'role' => 'administrator' ] );
+		if ( is_multisite() ) {
+			grant_super_admin( self::$user );
+		}
 	}
 
 	public function setUp() {
