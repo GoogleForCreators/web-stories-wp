@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -46,14 +41,7 @@ describe('Canvas keys integration', () => {
       })
     );
 
-    // @todo: The focusing is currently done via timeout. Find a way to
-    // make this nicer.
-    const framesLayer = fixture.querySelector('[data-testid="FramesLayer"]');
-    await waitFor(() => {
-      if (!framesLayer.contains(document.activeElement)) {
-        throw new Error('Focus is not set on the canvas yet');
-      }
-    });
+    await fixture.editor.canvas.framesLayer.waitFocusedWithin();
   });
 
   afterEach(() => {
