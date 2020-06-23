@@ -59,7 +59,7 @@ import {
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 
-import useCanvas from '../useCanvas';
+import { useCanvas } from '../useCanvas';
 import CompactIndicator from './compactIndicator';
 import useCarouselKeys from './useCarouselKeys';
 
