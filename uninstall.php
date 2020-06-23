@@ -8,7 +8,6 @@
  * @link      https://github.com/google/web-stories-wp
  */
 
-
 /**
  * Copyright 2020 Google LLC
  *
@@ -45,12 +44,14 @@ require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 
 if ( is_multisite() ) {
 	\Google\Web_Stories\delete_site_options();
-	$site_ids = get_sites( [
-		'fields'                 => 'ids',
-		'number'                 => '',
-		'update_site_cache'      => false,
-		'update_site_meta_cache' => false,
-	] );
+	$site_ids = get_sites(
+		[
+			'fields'                 => 'ids',
+			'number'                 => '',
+			'update_site_cache'      => false,
+			'update_site_meta_cache' => false,
+		]
+	);
 	foreach ( $site_ids as $site_id ) {
 		switch_to_blog( $site_id );
 		\Google\Web_Stories\delete_site();

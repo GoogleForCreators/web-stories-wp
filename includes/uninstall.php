@@ -41,7 +41,7 @@ function delete_options() {
 		$wpdb->prepare(
 			"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
 			$prefix
-		),
+		)
 	);
 
 	if ( ! empty( $options ) ) {
@@ -106,7 +106,7 @@ function delete_site_options() {
  *
  * @return void
  */
-function delete_post_meta() {
+function delete_stories_post_meta() {
 	delete_post_meta_by_key( 'web_stories_is_poster' );
 	delete_post_meta_by_key( 'web_stories_poster_id' );
 }
@@ -136,8 +136,8 @@ function delete_posts() {
  *
  * @return void
  */
-function delete_site(){
+function delete_site() {
 	delete_options();
 	delete_posts();
-	delete_post_meta();
+	delete_stories_post_meta();
 }
