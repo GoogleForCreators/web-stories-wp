@@ -208,19 +208,21 @@ function StylePresetPanel() {
   const initialHeight = colorRows * rowHeight;
 
   const resizeable = hasPresets;
+  const canCollapse = !isEditMode && hasPresets;
 
   return (
     <Panel
       name="stylepreset"
       initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
       resizeable={resizeable}
-      collapsible={hasPresets}
+      canCollapse={canCollapse}
     >
       <PresetsHeader
         handleAddColorPreset={handleAddColorPreset}
         stylePresets={stylePresets}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
+        canCollapse={canCollapse}
       />
       <Presets
         isEditMode={isEditMode}

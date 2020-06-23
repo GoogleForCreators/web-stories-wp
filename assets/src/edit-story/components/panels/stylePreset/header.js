@@ -74,6 +74,7 @@ function PresetsHeader({
   isEditMode,
   setIsEditMode,
   stylePresets,
+  canCollapse,
 }) {
   const { colors } = stylePresets;
   const hasPresets = colors.length > 0;
@@ -114,10 +115,7 @@ function PresetsHeader({
 
   // Todo: Rename label to 'Presets' post-beta.
   return (
-    <PanelTitle
-      secondaryAction={getActions()}
-      canCollapse={!isEditMode && hasPresets}
-    >
+    <PanelTitle secondaryAction={getActions()} canCollapse={canCollapse}>
       {__('Saved Colors', 'web-stories')}
     </PanelTitle>
   );
@@ -128,6 +126,7 @@ PresetsHeader.propTypes = {
   isEditMode: PropTypes.bool.isRequired,
   handleAddColorPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,
+  canCollapse: PropTypes.bool.isRequired,
 };
 
 export default PresetsHeader;

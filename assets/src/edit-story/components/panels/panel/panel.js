@@ -35,21 +35,21 @@ const Wrapper = styled.section`
   position: relative;
 `;
 
-function Panel({ resizeable, collapsible, initialHeight, name, children }) {
+function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
   const [manuallyChanged, setManuallyChanged] = useState(false);
 
   const collapse = useCallback(() => {
-    if (!collapsible) {
+    if (!canCollapse) {
       return;
     }
     setIsCollapsed(true);
     if (resizeable) {
       setHeight(0);
     }
-  }, [resizeable, collapsible]);
+  }, [resizeable, canCollapse]);
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
@@ -131,13 +131,13 @@ Panel.propTypes = {
   name: PropTypes.string.isRequired,
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
-  collapsible: PropTypes.bool,
+  canCollapse: PropTypes.bool,
 };
 
 Panel.defaultProps = {
   initialHeight: null,
   resizeable: false,
-  collapsible: true,
+  canCollapse: true,
 };
 
 export default Panel;
