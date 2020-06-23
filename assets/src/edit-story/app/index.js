@@ -57,9 +57,9 @@ function App({ config }) {
               <HistoryProvider size={50}>
                 <SnackbarProvider>
                   <StoryProvider storyId={storyId}>
-                    <AutoSaveHandler />
                     <FontProvider>
                       <MediaProvider>
+                        <AutoSaveHandler />
                         <TransformProvider>
                           <DropTargetsProvider>
                             <GlobalStyle />

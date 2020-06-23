@@ -33,7 +33,6 @@ import { useDebouncedCallback } from 'use-debounce';
 import { Media, Row, Button } from '../../form';
 import { createLink, getLinkFromElement } from '../../elementLink';
 import { useAPI } from '../../../app/api';
-import { useSnackbar } from '../../../app/snackbar';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
@@ -66,6 +65,12 @@ const CloseIcon = styled(Close)`
   margin-right: 4px;
 `;
 
+const Error = styled.span`
+  font-size: 12px;
+  line-height: 16px;
+  color: ${({ theme }) => theme.colors.warning};
+`;
+
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const { clearEditing } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
@@ -86,7 +91,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
-  const { showSnackbar } = useSnackbar();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
@@ -103,21 +107,18 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [pushUpdateForObject, defaultLink]
   );
 
-  const [populateMetadata] = useDebouncedCallback((url) => {
-    const urlWithProtocol = withProtocol(url);
-    if (!isValidUrl(urlWithProtocol)) {
-      return;
-    }
+  const [isInvalidUrl, setIsInvalidUrl] = useState(
+    !isValidUrl(withProtocol(link.url || ''))
+  );
 
+  const [populateMetadata] = useDebouncedCallback((url) => {
     setFetchingMetadata(true);
-    getLinkMetadata(urlWithProtocol)
+    getLinkMetadata(url)
       .then(({ title, image }) => {
-        updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
+        updateLinkFromMetadataApi({ url, title, icon: image });
       })
       .catch(() => {
-        showSnackbar({
-          message: __('This is an invalid link.', 'web-stories'),
-        });
+        setIsInvalidUrl(true);
       })
       .finally(() => {
         setFetchingMetadata(false);
@@ -129,7 +130,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       clearEditing();
 
       if (properties.url) {
-        populateMetadata(properties.url);
+        const urlWithProtocol = withProtocol(properties.url);
+        const valid = isValidUrl(urlWithProtocol);
+        setIsInvalidUrl(!valid);
+
+        if (valid) {
+          populateMetadata(urlWithProtocol);
+        }
       }
       return pushUpdateForObject(
         'link',
@@ -169,8 +176,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           aria-label={__('Edit: Element link', 'web-stories')}
         />
       </Row>
+      {Boolean(link.url) && isInvalidUrl && (
+        <Row>
+          <Error>{__('Invalid web address.', 'web-stories')}</Error>
+        </Row>
+      )}
 
-      {Boolean(link.url) && (
+      {Boolean(link.url) && !isInvalidUrl && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
@@ -182,12 +194,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           />
         </Row>
       )}
-      {Boolean(link.url) && (
+      {Boolean(link.url) && !isInvalidUrl && (
         <Row spaceBetween={false}>
           <Media
             value={link.icon || ''}
             onChange={handleChangeIcon}
             title={__('Select as link icon', 'web-stories')}
+            ariaLabel={__('Edit link icon', 'web-stories')}
             buttonInsertText={__('Select as link icon', 'web-stories')}
             type={'image'}
             size={64}

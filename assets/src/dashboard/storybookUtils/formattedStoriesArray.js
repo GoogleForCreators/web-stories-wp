@@ -208,8 +208,7 @@ const formattedStoriesArray = [
       publisher_logo_url:
         'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
-        fillColors: [],
-        textColors: [],
+        colors: [],
         textStyles: [],
       },
       _links: {
@@ -497,8 +496,7 @@ const formattedStoriesArray = [
       publisher_logo_url:
         'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
-        fillColors: [],
-        textColors: [],
+        colors: [],
         textStyles: [],
       },
       _links: {
@@ -1078,8 +1076,7 @@ const formattedStoriesArray = [
       publisher_logo_url:
         'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
-        fillColors: [],
-        textColors: [],
+        colors: [],
         textStyles: [],
       },
       _links: {
@@ -1481,8 +1478,7 @@ const formattedStoriesArray = [
       publisher_logo_url:
         'http://localhost:8899/wp-content/plugins/web-stories/assets/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
-        fillColors: [],
-        textColors: [],
+        colors: [],
         textStyles: [],
       },
       _links: {

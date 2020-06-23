@@ -108,14 +108,10 @@ class Link_Controller extends WP_REST_Controller {
 			return rest_ensure_response( json_decode( $data, true ) );
 		}
 
-		$title       = '';
-		$image       = '';
-		$description = '';
-
 		$data = [
-			'title'       => $title,
-			'image'       => $image,
-			'description' => $description,
+			'title'       => '',
+			'image'       => '',
+			'description' => '',
 		];
 
 		$args = [
@@ -136,8 +132,8 @@ class Link_Controller extends WP_REST_Controller {
 		$response = wp_safe_remote_get( $url, $args );
 
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
-			// Not saving the error response to cache since the error might be temporary.
-			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			// Not saving to cache since the error might be temporary.
+			return rest_ensure_response( $data );
 		}
 
 		$html = wp_remote_retrieve_body( $response );
@@ -150,7 +146,7 @@ class Link_Controller extends WP_REST_Controller {
 
 		if ( ! $html ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			return rest_ensure_response( $data );
 		}
 
 		$xpath = $this->html_to_xpath( $html );
@@ -159,11 +155,12 @@ class Link_Controller extends WP_REST_Controller {
 			libxml_clear_errors();
 
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-			return new WP_Error( 'rest_invalid_url', get_status_header_desc( 404 ), [ 'status' => 404 ] );
+			return rest_ensure_response( $data );
 		}
 
 		// Link title.
 
+		$title       = '';
 		$title_query = $xpath->query( '//title' );
 
 		if ( $title_query instanceof DOMNodeList && $title_query->length > 0 ) {

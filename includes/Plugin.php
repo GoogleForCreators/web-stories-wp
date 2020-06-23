@@ -131,6 +131,7 @@ class Plugin {
 		// Frontend.
 		$this->discovery = new Discovery();
 		add_action( 'init', [ $this->discovery, 'init' ] );
+
 	}
 
 	/**

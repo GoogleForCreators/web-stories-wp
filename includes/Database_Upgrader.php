@@ -58,6 +58,7 @@ class Database_Upgrader {
 			'2.0.0' => 'v_2_replace_conic_style_presets',
 			'2.0.1' => 'v_2_add_term',
 			'2.0.2' => 'remove_broken_text_styles',
+			'2.0.3' => 'unify_color_presets',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -180,6 +181,33 @@ class Database_Upgrader {
 			'fillColors' => $style_presets['fillColors'],
 			'textColors' => $style_presets['textColors'],
 			'textStyles' => $text_styles,
+		];
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Migration for version 2.0.3.
+	 * Color presets: Removes fillColor and textColor and unifies to one color.
+	 *
+	 * @return void
+	 */
+	protected function unify_color_presets() {
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
+		// Nothing to do if style presets don't exist.
+		if ( ! $style_presets || ! is_array( $style_presets ) ) {
+			return;
+		}
+
+		// If either of these is not an array, something is incorrect.
+		if ( ! is_array( $style_presets['fillColors'] ) || ! is_array( $style_presets['textColors'] ) ) {
+			return;
+		}
+
+		$colors = array_merge( $style_presets['fillColors'], $style_presets['textColors'] );
+
+		// Use only one array of colors for now.
+		$updated_style_presets = [
+			'colors' => $colors,
 		];
 		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
 	}

@@ -43,8 +43,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * Default style presets to pass if not set.
 	 */
 	const EMPTY_STYLE_PRESETS = [
-		'fillColors' => [],
-		'textColors' => [],
+		'colors'     => [],
 		'textStyles' => [],
 	];
 
