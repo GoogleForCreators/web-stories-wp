@@ -66,8 +66,8 @@ class Uninstall extends \WP_UnitTestCase {
 		\Google\Web_Stories\delete_stories_post_meta();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
 		foreach ( self::$attachment_ids as $attachment_id ) {
-			$this->assertFalse( get_post_meta( $attachment_id, 'web_stories_is_poster', true ) );
-			$this->assertFalse( get_post_meta( $attachment_id, 'web_stories_poster_id', true ) );
+			$this->assertSame( '', get_post_meta( $attachment_id, 'web_stories_is_poster', true ) );
+			$this->assertSame( '', get_post_meta( $attachment_id, 'web_stories_poster_id', true ) );
 		}
 	}
 }
