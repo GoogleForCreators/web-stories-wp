@@ -68,7 +68,7 @@ function EditElement({ element }) {
       >
         <Edit element={element} box={box} />
       </Wrapper>
-      {hasEditModeMovable && (
+      {hasEditModeMovable && editWrapper && (
         <SingleSelectionMovable
           selectedElement={element}
           targetEl={editWrapper}
