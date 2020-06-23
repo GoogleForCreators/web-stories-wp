@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
@@ -98,7 +103,7 @@ const useTemplateApi = (dataAdapter, config) => {
     // Saved Templates = Bookmarked Templates + My Templates
     dispatch({
       type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
-      paylod: {
+      payload: {
         templates: [],
         totalPages: 0,
         totalTemplates: 0,
@@ -111,7 +116,7 @@ const useTemplateApi = (dataAdapter, config) => {
   const fetchBookmarkedTemplates = useCallback((filters) => {
     dispatch({
       type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
-      paylod: {
+      payload: {
         templates: [],
         totalPages: 0,
         totalTemplates: 0,
@@ -130,7 +135,12 @@ const useTemplateApi = (dataAdapter, config) => {
       if (!templateApi) {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
-          payload: { message: 'unable to connect to data', code: '' },
+          payload: {
+            message: {
+              body: __('Cannot connect to data source', 'web-stories'),
+              title: __('Unable to Load Templates', 'web-stories'),
+            },
+          },
         });
       }
 
@@ -174,7 +184,13 @@ const useTemplateApi = (dataAdapter, config) => {
       } catch (err) {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
-          payload: { message: err.message, code: err.code },
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Load Templates', 'web-stories'),
+            },
+            code: err.code,
+          },
         });
       } finally {
         dispatch({
@@ -274,7 +290,13 @@ const useTemplateApi = (dataAdapter, config) => {
       } catch (err) {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
-          payload: { message: err.message, code: err.code },
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Create Template from Story', 'web-stories'),
+            },
+            code: err.code,
+          },
         });
       } finally {
         dispatch({

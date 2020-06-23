@@ -17,54 +17,75 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Wrapper } from '../components';
-import AlertContainer from '../container';
 import { ALERT_SEVERITY } from '../../../constants';
+import Alert from '../';
 
 export default {
   title: 'Dashboard/Components/Alert',
-  component: AlertContainer,
+  component: Alert,
 };
+
+const Wrapper = styled.div`
+  width: 400px;
+`;
 
 export const _default = () => {
   return (
     <Wrapper>
-      <AlertContainer
-        message={text('errorMessage', 'this is an error')}
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss1')}
+        handleDismiss={action('error message dismiss')}
+        message={text('errorMessage', 'This is an error.')}
+        title={text('errorTitle', 'Error Title')}
         severity={ALERT_SEVERITY.ERROR}
       />
-      <AlertContainer
-        message={text('warningMessage', 'this is a warning')}
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss2')}
+        handleDismiss={action('warning message dismiss')}
+        message={text('warningMessage', 'This is a warning.')}
+        title={text('warningTitle', 'Warning Title')}
         severity={ALERT_SEVERITY.WARNING}
       />
-      <AlertContainer
-        message={text('infoMessage', 'this is informational')}
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss3')}
+        handleDismiss={action('info message dismiss')}
+        message={text('infoMessage', 'This is informational.')}
+        title={text('infoTitle', 'Info Title')}
         severity={ALERT_SEVERITY.INFO}
       />
-      <AlertContainer
-        message={text('successMessage', 'this is successful')}
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss4')}
+        handleDismiss={action('success message dismiss')}
+        message={text('successMessage', 'This is successful.')}
+        title={text('successTitle', 'Success Title')}
         severity={ALERT_SEVERITY.SUCCESS}
       />
-      <AlertContainer
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss5')}
+        handleDismiss={action('default message dismiss')}
         message={text(
           'defaultMessage',
-          'this is an alert without a severity passed in'
+          'This is an alert without a severity passed in.'
         )}
+        title={text('defaultTitle', 'Default Title')}
+      />
+      <Alert
+        isAllowDismiss={boolean('isAllowDismiss6')}
+        handleDismiss={action('no auto dismiss dismiss clicked')}
+        isPreventAutoDismiss
+        message={text(
+          'preventAutoDismiss',
+          'This is an alert that will not dismiss automatically after 10 seconds.'
+        )}
+        title={text('noAutoDismissTitle', 'No Auto Dismiss Alert')}
       />
     </Wrapper>
-  );
-};
-
-export const JustAlert = () => {
-  return (
-    <AlertContainer
-      message={text('warningMessage', 'this is a warning')}
-      severity={ALERT_SEVERITY.WARNING}
-    />
   );
 };

@@ -13,9 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as MyStoriesView } from './myStories';
-export { default as ExploreTemplatesView } from './exploreTemplates';
-export { default as TemplateDetailsView } from './templateDetails';
-export { default as SavedTemplatesView } from './savedTemplates';
-export { default as StoryAnimTool } from './storyAnimTool';
-export { default as ToasterView } from './toaster';
+
+/**
+ * External dependencies
+ */
+import { useContext } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { ToasterContext } from './provider';
+
+const useToasterContext = () => {
+  const context = useContext(ToasterContext);
+  if (!context) {
+    throw new Error(
+      'useToasterContext() must be used within a <Toast.Provider />'
+    );
+  }
+  return context;
+};
+
+export default useToasterContext;
