@@ -17,14 +17,13 @@
 /**
  * External dependencies
  */
-const path = require('path');
-const fs = require('fs').promises;
 const puppeteer = require('puppeteer');
 
 /**
  * Internal dependencies
  */
 const MouseWithDnd = require('./mouseWithDnd.cjs');
+const extractAndSaveSnapshot = require('./snapshot.cjs');
 
 function puppeteerBrowser(baseBrowserDecorator, config) {
   baseBrowserDecorator(this);
@@ -102,46 +101,7 @@ async function exposeFunctions(page, config) {
         // Do nothing unless snapshots are enabled.
         return;
       }
-
-      if (!testName) {
-        testName = '_';
-      }
-      testName = testName.trim();
-      if (!snapshotName) {
-        snapshotName = 'default';
-      }
-      snapshotName = snapshotName.trim();
-
-      const snapshot = await extractSnapshot(frame, testName, snapshotName);
-
-      const dir = path.resolve(
-        process.cwd(),
-        '.test_artifacts',
-        'karma_snapshots'
-      );
-      try {
-        await fs.mkdir(dir, { recursive: true });
-      } catch (e) {
-        // Ignore. Let the file write fail instead.
-      }
-
-      // TODO: make "safe file name" rules better.
-      const maxFileName = 240;
-      let fileName = `${
-        testName.length + snapshotName.length < maxFileName
-          ? testName
-          : testName.substring(
-              0,
-              Math.max(maxFileName - snapshotName.length, 0)
-            )
-      }__${
-        snapshotName.length < maxFileName
-          ? snapshotName
-          : snapshotName.substring(0, maxFileName)
-      }`;
-      fileName = fileName.replace(/[^a-z0-9]/gi, '_');
-      const filePath = path.resolve(dir, fileName + '.html');
-      await fs.writeFile(filePath, snapshot);
+      await extractAndSaveSnapshot(frame, testName, snapshotName);
     }
   );
 
@@ -248,39 +208,6 @@ function getContextFrame(page) {
     page.frames().find((frame) => frame.name() === 'context') ||
     page.mainFrame()
   );
-}
-
-async function extractSnapshot(frame, testName, snapshotName) {
-  const { head, body } = await frame.evaluate(() => {
-    // TODO: more careful head selection.
-    return {
-      head: document.head.innerHTML,
-      body: document.body.innerHTML,
-    };
-  });
-
-  const localizeUrls = (s) => s.replace(/http:\/\/localhost:9876\//gi, '/');
-
-  return `<!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-      <title>${testName}: ${snapshotName}</title>
-      <style>
-        body {
-          margin: 0;
-          width: 100vw;
-          height: 100vh;
-        }
-      </style>
-      ${localizeUrls(head)}
-    </head>
-    <body>
-      ${localizeUrls(body)}
-    </body>
-    </html>
-  `;
 }
 
 puppeteerBrowser.$inject = ['baseBrowserDecorator', 'config.puppeteerLauncher'];
