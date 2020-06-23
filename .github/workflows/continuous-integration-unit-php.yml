@@ -30,6 +30,7 @@ jobs:
         include:
           - php: '8.0'
             wp: 'trunk'
+            multisite: 'false'
             experimental: true
 
     steps:
