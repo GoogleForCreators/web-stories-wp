@@ -37,12 +37,11 @@ function delete_options() {
 	$prefix = 'web_stories\_%';
 
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-	$options = $wpdb->get_results(
+	$options = $wpdb->get_col(
 		$wpdb->prepare(
 			"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
 			$prefix
 		),
-		ARRAY_N
 	);
 
 	if ( ! empty( $options ) ) {
@@ -51,17 +50,16 @@ function delete_options() {
 
 
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-	$transients = $wpdb->get_results(
+	$transients = $wpdb->get_col(
 		$wpdb->prepare(
 			"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s",
 			'_transient_' . $prefix,
 			'_transient_timeout_' . $prefix
-		),
-		ARRAY_N
+		)
 	);
 
 	if ( ! empty( $transients ) ) {
-		array_map( 'delete_transient', (array) $transients );
+		array_map( 'delete_option', (array) $transients );
 	}
 }
 
@@ -78,28 +76,28 @@ function delete_site_options() {
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	$options = $wpdb->get_results(
 		$wpdb->prepare(
-			"SELECT option_name FROM $wpdb->sitemeta WHERE meta_key LIKE %s",
+			"SELECT * FROM $wpdb->sitemeta WHERE meta_key LIKE %s",
 			$prefix
-		),
-		ARRAY_N
+		)
 	);
 
 	if ( ! empty( $options ) ) {
-		array_map( 'delete_option', (array) $options );
+		foreach ( (array) $options as $option ) {
+			delete_network_option( $option->site_id, $option->meta_key );
+		}
 	}
 
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-	$transients = $wpdb->get_results(
+	$transients = $wpdb->get_col(
 		$wpdb->prepare(
-			"SELECT option_name FROM $wpdb->sitemeta WHERE meta_key LIKE %s OR meta_key LIKE %s",
+			"SELECT meta_key FROM $wpdb->sitemeta WHERE meta_key LIKE %s OR meta_key LIKE %s",
 			'_site_transient_' . $prefix,
 			'_site_transient_timeout_' . $prefix
-		),
-		ARRAY_N
+		)
 	);
 
 	if ( ! empty( $transients ) ) {
-		array_map( 'delete_transient', (array) $transients );
+		array_map( 'delete_site_option', (array) $transients );
 	}
 }
 
@@ -131,4 +129,15 @@ function delete_posts() {
 	foreach ( $cpt_posts as $post_id ) {
 		wp_delete_post( (int) $post_id, true );
 	}
+}
+
+/**
+ * Delete all data on a site.
+ *
+ * @return void
+ */
+function delete_site(){
+	delete_options();
+	delete_posts();
+	delete_post_meta();
 }

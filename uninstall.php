@@ -8,8 +8,6 @@
  * @link      https://github.com/google/web-stories-wp
  */
 
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Template_Post_Type;
 
 /**
  * Copyright 2020 Google LLC
@@ -44,12 +42,22 @@ if ( false === $erase ) {
 
 require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 
-\Google\Web_Stories\delete_options();
 
 if ( is_multisite() ) {
 	\Google\Web_Stories\delete_site_options();
+	$site_ids = get_sites( [
+		'fields'                 => 'ids',
+		'number'                 => '',
+		'update_site_cache'      => false,
+		'update_site_meta_cache' => false,
+	] );
+	foreach ( $site_ids as $site_id ) {
+		switch_to_blog( $site_id );
+		\Google\Web_Stories\delete_site();
+	}
+	restore_current_blog();
+} else {
+	\Google\Web_Stories\delete_site();
 }
 
-\Google\Web_Stories\delete_post_meta();
 
-\Google\Web_Stories\delete_posts();
