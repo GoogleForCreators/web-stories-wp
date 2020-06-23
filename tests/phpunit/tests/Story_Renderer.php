@@ -24,7 +24,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function tearDown(  ) {
+	public function tearDown() {
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
