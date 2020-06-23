@@ -259,7 +259,7 @@
           },
           "type": "shape",
           "x": 164.5,
-          "y": 32,
+          "y": 24,
           "width": 83,
           "height": 37,
           "scale": 100,
@@ -284,34 +284,34 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_logo.png",
-            "width": 32,
-            "height": 10,
-            "id": 1591,
-            "title": "wellbeing_logo",
-            "alt": "wellbeing_logo",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_icon_logo.png",
+            "width": 38,
+            "height": 12,
+            "id": 1693,
+            "title": "wellbeing_icon_logo",
+            "alt": "wellbeing_icon_logo",
             "local": false,
             "sizes": {
               "full": {
-                "url": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_logo.png",
-                "height": 19,
-                "width": 63,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_icon_logo.png",
+                "height": 23,
+                "width": 75,
                 "orientation": "landscape"
               }
             }
           },
           "type": "image",
-          "x": 176,
-          "y": 41,
-          "width": 60,
-          "height": 19,
+          "x": 170.5,
+          "y": 30.5,
+          "width": 75,
+          "height": 24,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "1ea4c69d-0b36-43c8-804d-b481d3d02a94"
+          "id": "8b9f4705-fd93-41ad-bb6e-a47cfee940c4"
         }
       ],
       "type": "page",
@@ -3941,7 +3941,7 @@
           "type": "text",
           "basedOn": "456cb303-7b53-4844-8ecf-7a07e8c267b9",
           "id": "e34fa932-2407-4d18-8586-e08e1f0d360f",
-          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">Top 5\nwellness retreats\nin the world</span>",
+          "content": "<span style=\"color: #1f2a2e\">Top 4</span>\nwellness retreats\nin the world",
           "fontSize": 42,
           "padding": {
             "horizontal": 0,
@@ -3951,7 +3951,7 @@
         {
           "x": 44,
           "y": 352,
-          "width": 54,
+          "width": 66,
           "height": 132,
           "opacity": 100,
           "flip": {
@@ -4015,7 +4015,7 @@
         {
           "x": 46,
           "y": 158,
-          "width": 54,
+          "width": 66,
           "height": 132,
           "opacity": 100,
           "flip": {
@@ -4079,7 +4079,7 @@
         {
           "x": 314,
           "y": 255,
-          "width": 54,
+          "width": 63,
           "height": 132,
           "opacity": 100,
           "flip": {
@@ -4143,7 +4143,7 @@
         {
           "x": 315,
           "y": 449,
-          "width": 54,
+          "width": 65,
           "height": 132,
           "opacity": 100,
           "flip": {
