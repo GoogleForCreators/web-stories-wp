@@ -9,7 +9,7 @@ on:
 
 jobs:
   unit-php:
-    name: PHP ${{ matrix.php }} - Multisite ${{ matrix.multisite }}
+    name: PHP ${{ matrix.php }} - Multisite ${{ matrix.multisite }} - Coverage ${{ matrix.coverage }}
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -27,15 +27,22 @@ jobs:
         php: ['7.4', '7.0', '5.6']
         wp: ['latest']
         multisite: [false]
+        coverage: [false]
         include:
           - php: '8.0'
             wp: 'trunk'
             multisite: false
+            coverage: false
             experimental: true
           - php: '7.4'
             wp: 'latest'
             multisite: true
+            coverage: false
             experimental: true
+          - php: '7.4'
+            wp: 'latest'
+            multisite: false
+            coverage: true
 
     steps:
       - name: Checkout
@@ -79,15 +86,15 @@ jobs:
 
       - name: Run tests
         run: npm run test:php
-        if: ${{ matrix.wp != 'latest' || matrix.php != 7.4 || matrix.multisite != true }}
+        if: ${{ matrix.coverage == false }}
 
       - name: Run tests ( multisite )
         run: npm run test:php -- --verbose -c phpunit-multisite.xml.dist
-        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 && matrix.multisite == true }}
+        if: ${{ matrix.multisite == true }}
 
       - name: Run tests with coverage
         run: npm run test:php -- --coverage-clover build/logs/clover.xml
-        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 && matrix.multisite == false }}
+        if: ${{ matrix.coverage == true }}
 
       - name: Uplaod code coverage report
         uses: codecov/codecov-action@v1
