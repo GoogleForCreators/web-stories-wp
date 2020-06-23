@@ -30,8 +30,8 @@ class Uninstall extends \WP_UnitTestCase {
 			add_post_meta( $attachment_id, 'web_stories_is_poster', '1' );
 			add_post_meta( $attachment_id, 'web_stories_poster_id', '999' );
 		}
-		self::factory()->post->create_many( 5, array( 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
-		self::factory()->post->create_many( 5, array( 'post_type' => \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ) );
+		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
+		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ] );
 		update_option( \Google\Web_Stories\Database_Upgrader::OPTION, '2.0.0' );
 		update_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.0.0' );
 		set_transient( 'web_stories_link_data_fdsf', 'hello' );
@@ -54,7 +54,7 @@ class Uninstall extends \WP_UnitTestCase {
 				'suppress_filters' => false,
 				'post_type'        => [
 					\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-					\Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG
+					\Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG,
 				],
 				'posts_per_page'   => - 1,
 			]
