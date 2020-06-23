@@ -34,14 +34,11 @@ import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 import SingleSelectionMovable from './singleSelectionMovable';
 
-// Background color is used to make the edited element more prominent and
-// easier to see.
 const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
 	${elementWithRotation}
 	pointer-events: initial;
-	background-color: ${({ theme }) => theme.colors.whiteout};
 `;
 
 function EditElement({ element }) {

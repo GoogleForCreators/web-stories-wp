@@ -14,16 +14,35 @@
  * limitations under the License.
  */
 
-const TEST_COLOR = {
-  color: { r: 1, g: 1, b: 1 },
-};
+/**
+ * Internal dependencies
+ */
+import { Container } from './container';
+import { Canvas } from './canvas';
 
-export function createStory(properties = {}) {
-  return {
-    title: { raw: 'title' },
-    excerpt: { raw: 'excerpt' },
-    permalink_template: 'http://localhost:8899/stories/%pagename%',
-    style_presets: { colors: [TEST_COLOR] },
-    ...properties,
-  };
+/**
+ * The complete editor container, including library, canvas, inspector, etc.
+ */
+export class Editor extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get canvas() {
+    return this._get(
+      this.getByRole('region', { name: 'Canvas' }),
+      'canvas',
+      Canvas
+    );
+  }
+
+  get titleBar() {
+    // @todo: title bar container.
+    return null;
+  }
+
+  get library() {
+    // @todo: library container.
+    return null;
+  }
 }
