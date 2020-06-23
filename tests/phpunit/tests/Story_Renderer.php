@@ -17,21 +17,16 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\Discovery;
-
 class Story_Renderer extends \WP_UnitTestCase {
-	protected static $user;
-
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$user = $factory->user->create( [ 'role' => 'administrator' ] );
-		if ( is_multisite() ) {
-			grant_super_admin( self::$user );
-		}
-	}
-
 	public function setUp() {
 		// Avoids HTML in post_content being stripped because of lacking capabilities.
-		wp_set_current_user( self::$user );
+		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+	}
+
+	public function tearDown(  ) {
+		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
 	public function test_replace_html_start_tag() {
