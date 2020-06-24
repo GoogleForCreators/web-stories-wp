@@ -19,7 +19,8 @@ namespace Google\Web_Stories\Tests;
 
 class Story_Renderer extends \WP_UnitTestCase {
 	public function setUp() {
-		// Avoids HTML in post_content being stripped because of lacking capabilities.
+		// When running the tests, we don't have unfiltered_html capabilities.
+		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
 		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
