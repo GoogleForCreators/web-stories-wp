@@ -20,11 +20,6 @@
 import styled from 'styled-components';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { useEscapeToBlurEffect } from '../keyboard';
@@ -32,9 +27,7 @@ import useInspector from './useInspector';
 import InspectorTabs from './inspectorTabs';
 import InspectorContent from './inspectorContent';
 
-const Layout = styled.section.attrs({
-  'aria-label': __('Inspector', 'web-stories'),
-})`
+const Layout = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
