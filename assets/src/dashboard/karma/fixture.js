@@ -24,10 +24,11 @@ import { act, render, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import FixtureEvents from '../../../../karma/events';
 import App from '../app';
 import ApiProvider from '../app/api/apiProvider';
-import ComponentStub from './componentStub';
+import FixtureEvents from '../../../../karma/events';
+import ComponentStub from '../../../../karma/componentStub';
+import actPromise from '../../../../karma/actPromise';
 import ApiProviderFixture from './apiProviderFixture';
 
 const defaultConfig = {
@@ -231,29 +232,4 @@ export default class Fixture {
   snapshot(name) {
     return karmaSnapshot(name);
   }
-}
-
-/**
- * For integration fixture tests we want `act()` to be always async, otherwise
- * a tester would never know what to expect: switching from sync to async
- * is often an implementation detail.
- *
- * See https://github.com/facebook/react/blob/master/packages/react-dom/src/test-utils/ReactTestUtilsAct.js.
- *
- * @param {function():(!Promise|undefined)} callback The body of the `act()`.
- * @return {!Promise} The `act()` promise.
- */
-function actPromise(callback) {
-  return new Promise((resolve) => {
-    let callbackResult;
-    const actResult = act(() => {
-      callbackResult = callback();
-      return Promise.resolve(callbackResult);
-    });
-    resolve(
-      new Promise((aResolve, aReject) => {
-        actResult.then(aResolve, aReject);
-      }).then(() => callbackResult)
-    );
-  });
 }
