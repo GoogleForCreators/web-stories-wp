@@ -13,33 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import https from 'https';
+import { select } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 /**
- * Simple utility function to make GET requests.
- *
- * @param {string} url URL to request.
- * @return {Promise<string>} Result.
+ * Internal dependencies
  */
-function fetch(url) {
-  return new Promise((resolve, reject) => {
-    const data = [];
+import { VIEW_STYLE } from '../../../constants';
+import ViewStyleBar from '..';
 
-    https
-      .get(url, (res) => {
-        if (res.statusCode < 200 || res.statusCode > 299) {
-          reject(new Error('Error: ' + res.statusCode));
-        }
+export default {
+  title: 'Dashboard/Components/ViewStyleBar',
+  component: ViewStyleBar,
+};
 
-        res.on('data', (chunk) => data.push(chunk));
-        res.on('end', () => resolve(data.join('')));
-      })
-      .on('error', reject);
-  });
-}
-
-export default fetch;
+export const _default = () => {
+  return (
+    <ViewStyleBar
+      layoutStyle={select('layoutStyle', VIEW_STYLE, VIEW_STYLE.LIST)}
+      onPress={action('on press clicked')}
+    />
+  );
+};

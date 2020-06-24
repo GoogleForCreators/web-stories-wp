@@ -95,7 +95,7 @@
     "@wordpress/jest-puppeteer-axe": "^1.8.0",
     "amphtml-validator": "^1.0.31",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.0.1",
+    "babel-jest": "^26.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-styled-components": "^1.10.7",

@@ -29,8 +29,11 @@ export class Canvas extends Container {
   }
 
   get displayLayer() {
-    // @todo: display layer.
-    return null;
+    return this._get(
+      this.getByRole('region', { name: 'Display' }),
+      'displayLayer',
+      DisplayLayer
+    );
   }
 
   get framesLayer() {
@@ -43,6 +46,42 @@ export class Canvas extends Container {
 
   get editLayer() {
     return null;
+  }
+}
+
+/**
+ * Contains element displays.
+ */
+class DisplayLayer extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get displays() {
+    return this._getAll(
+      // @todo: improve query.
+      this.node.querySelectorAll('[data-element-id]'),
+      (node) => `displays[${node.getAttribute('data-element-id')}]`,
+      Frame
+    );
+  }
+
+  display(elementId) {
+    return this._get(
+      // @todo: improve query.
+      this.node.querySelector(`[data-element-id="${elementId}"]`),
+      `displays[${elementId}]`,
+      Display
+    );
+  }
+}
+
+/**
+ * An element's display.
+ */
+class Display extends Container {
+  constructor(node, path) {
+    super(node, path);
   }
 }
 
@@ -61,7 +100,7 @@ class FramesLayer extends Container {
   get frames() {
     return this._getAll(
       // @todo: improve query.
-      this.node.querySelectorAll('[data-testid="frameElement"]'),
+      this.node.querySelectorAll('[data-element-id]'),
       (node) => `frames[${node.getAttribute('data-element-id')}]`,
       Frame
     );
