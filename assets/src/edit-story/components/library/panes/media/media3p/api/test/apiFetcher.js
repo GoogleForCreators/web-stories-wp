@@ -38,12 +38,11 @@ const VALID_LIST_PHOTOS_RESPONSE = JSON.stringify({
 });
 
 describe('ApiFetcher', () => {
-  const setup = function () {
+  beforeEach(() => {
     fetch.mockReset();
-  };
+  });
 
   it('listMedia should perform a GET request', async () => {
-    setup();
     fetch.mockImplementationOnce(() =>
       Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
     );
@@ -53,7 +52,6 @@ describe('ApiFetcher', () => {
   });
 
   it('listMedia should format request params correctly', async () => {
-    setup();
     fetch.mockImplementationOnce(() =>
       Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
     );
@@ -87,14 +85,18 @@ describe('ApiFetcher', () => {
     expect(queryParams).toHaveLength(6); // Also includes the key
   });
 
-  it('listMedia should throw an error for an invalid pageSize', async () => {
-    expect.assertions(2);
+  it('listMedia should throw an error for an invalid pageSize type', async () => {
+    expect.assertions(1);
 
     await expect(
       listMedia({
         pageSize: 'big',
       })
     ).rejects.toThrow(/Invalid page_size/);
+  });
+
+  it('listMedia should throw an error for an invalid pageSize number', async () => {
+    expect.assertions(1);
 
     await expect(
       listMedia({
@@ -103,19 +105,55 @@ describe('ApiFetcher', () => {
     ).rejects.toThrow(/Invalid page_size/);
   });
 
-  it('listMedia should throw an error for an invalid orderBy', async () => {
-    expect.assertions(2);
+  it('listMedia should throw an error for an invalid orderBy value', async () => {
+    expect.assertions(1);
 
     await expect(
       listMedia({
         orderBy: 'oldest',
       })
     ).rejects.toThrow(/Invalid order_by/);
+  });
+
+  it('listMedia should throw an error for an empty string orderBy', async () => {
+    expect.assertions(1);
 
     await expect(
       listMedia({
         orderBy: '',
       })
     ).rejects.toThrow(/Invalid order_by/);
+  });
+
+  it('listMedia should correctly escape a filter with spaces', async () => {
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
+    );
+    const filter = 'cat and  many dogs';
+    const escapedFilter = 'cat+and++many+dogs';
+
+    await listMedia({ filter });
+    const fetchArg = fetch.mock.calls[0][0];
+    const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
+    const queryParams = queryString.split('&');
+    expect(queryParams).toStrictEqual(
+      expect.arrayContaining(['filter=' + escapedFilter])
+    );
+  });
+
+  it('listMedia should correctly escape a filter with &', async () => {
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
+    );
+    const filter = 'Tom & Jerry';
+    const escapedFilter = 'Tom+%26+Jerry';
+
+    await listMedia({ filter });
+    const fetchArg = fetch.mock.calls[0][0];
+    const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
+    const queryParams = queryString.split('&');
+    expect(queryParams).toStrictEqual(
+      expect.arrayContaining(['filter=' + escapedFilter])
+    );
   });
 });

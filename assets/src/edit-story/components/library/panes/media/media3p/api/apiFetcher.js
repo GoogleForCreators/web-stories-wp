@@ -76,7 +76,6 @@ export async function listMedia({
   pageSize = null,
   pageToken = null,
 } = {}) {
-  validateFilter(filter);
   validateOrderBy(orderBy);
   validatePageSize(pageSize);
 
@@ -89,10 +88,8 @@ export async function listMedia({
     ['key', API_KEY],
   ].filter((entry) => Boolean(entry[1]));
   // Querystring always has at least the api key
-  const queryString = params
-    .map((entry) => entry[0] + '=' + entry[1])
-    .join('&');
-  const url = API_DOMAIN + Paths.LIST_MEDIA + '?' + queryString;
+  const queryString = new URLSearchParams(Object.fromEntries(new Map(params)));
+  const url = API_DOMAIN + Paths.LIST_MEDIA + '?' + queryString.toString();
 
   const data = await fetch(url);
 
@@ -101,11 +98,6 @@ export async function listMedia({
   }
 
   return JSON.parse(data);
-}
-
-function validateFilter(filter) {
-  // TODO: implement.
-  return filter == null || filter === '';
 }
 
 function validateOrderBy(orderBy) {
