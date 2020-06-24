@@ -57,8 +57,16 @@ function useIsUsingKeyboard(acceptedKeys = DEFAULT_ACCEPTED_KEYS) {
       true /** useCapture */
     );
     return function cleanup() {
-      document.removeEventListener('keydown', handleKeydown);
-      document.removeEventListener('mousedown', handleMousedown);
+      document.removeEventListener(
+        'keydown',
+        handleKeydown,
+        true /** useCapture */
+      );
+      document.removeEventListener(
+        'mousedown',
+        handleMousedown,
+        true /** useCapture */
+      );
     };
   });
 
