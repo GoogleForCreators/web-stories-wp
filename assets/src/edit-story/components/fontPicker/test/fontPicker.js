@@ -26,10 +26,9 @@ import FontPicker from '../';
 import { FontProvider } from '../../../app/font';
 import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
-import StoryContext from '../../../app/story/context';
 import fontsListResponse from './fontsResponse';
 
-async function getFontPicker(extraStoryOptions = null) {
+async function getFontPicker() {
   const getAllFontsPromise = Promise.resolve(fontsListResponse);
   const apiContextValue = {
     actions: {
@@ -41,24 +40,11 @@ async function getFontPicker(extraStoryOptions = null) {
     value: 'Roboto',
   };
 
-  const storyContextValue = {
-    state: {
-      pages: [
-        {
-          elements: [],
-        },
-      ],
-      ...extraStoryOptions,
-    },
-  };
-
   const accessors = renderWithTheme(
     <APIContext.Provider value={apiContextValue}>
-      <StoryContext.Provider value={storyContextValue}>
-        <FontProvider>
-          <FontPicker {...props} />
-        </FontProvider>
-      </StoryContext.Provider>
+      <FontProvider>
+        <FontPicker {...props} />
+      </FontProvider>
     </APIContext.Provider>
   );
 
@@ -115,44 +101,5 @@ describe('Font Picker', () => {
     // We can't really validate this number anyway in JSDom (no actual
     // layout is happening), so just expect it to be called
     expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
-  });
-
-  it('should display used font as the first options', async () => {
-    const extraStoryOptions = {
-      pages: [
-        {
-          elements: [
-            {
-              type: 'text',
-              font: {
-                family: 'Space Mono',
-                service: 'fonts.google.com',
-                fallbacks: ['monospace'],
-                weights: [400, 700],
-                styles: ['regular', 'italic'],
-                variants: [
-                  [0, 400],
-                  [0, 700],
-                  [1, 400],
-                  [1, 700],
-                ],
-              },
-            },
-          ],
-        },
-      ],
-    };
-    const { getByRole, getAllByRole } = await getFontPicker(extraStoryOptions);
-
-    // Fire a click event.
-    const selectButton = getByRole('button');
-    fireEvent.click(selectButton);
-
-    // Listbox should be showing after click
-    const fontsList = getByRole('listbox');
-    expect(fontsList).toBeInTheDocument();
-
-    const firstOptionItem = getAllByRole('option')[0];
-    expect(firstOptionItem).toHaveTextContent('Space Mono');
   });
 });
