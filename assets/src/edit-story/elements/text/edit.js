@@ -39,6 +39,7 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
+  elementWithRotation,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -65,6 +66,7 @@ const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
   ${elementWithBackgroundColor}
+  ${elementWithRotation}
 
   opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
   position: absolute;
@@ -120,6 +122,7 @@ function TextEdit({ element, box: { x, y, height, rotationAngle } }) {
     font,
     backgroundColor,
     opacity,
+    rotationAngle,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
       lineHeight: getHighlightLineheight(
         rest.lineHeight,

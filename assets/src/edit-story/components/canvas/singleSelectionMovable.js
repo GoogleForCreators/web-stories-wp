@@ -158,15 +158,7 @@ function SingleSelectionMovable({
   };
 
   const setTransformStyle = (target) => {
-    if (isEditMode) {
-      // Since moveable is manipulating the edit textbox but the original rotation
-      // is assigned to wrapper, we only need to assign the difference here.
-      target.style.transform = `translate(${frame.translate[0]}px, ${
-        frame.translate[1]
-      }px) rotate(${frame.rotate - box.rotationAngle}deg)`;
-    } else {
-      target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
-    }
+    target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     if (frame.resize[0]) {
       target.style.width = `${frame.resize[0]}px`;
     }

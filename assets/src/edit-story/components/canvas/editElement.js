@@ -34,7 +34,7 @@ import { useUnits } from '../../units';
 const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
-	${elementWithRotation}
+	${({ hasEditModeMovable }) => !hasEditModeMovable && elementWithRotation}$
 	pointer-events: initial;
 `;
 
@@ -44,13 +44,14 @@ function EditElement({ element }) {
     getBox: state.actions.getBox,
   }));
 
-  const { Edit } = getDefinitionForType(type);
+  const { Edit, hasEditModeMovable } = getDefinitionForType(type);
   const box = getBox(element);
 
   return (
     <Wrapper
       aria-labelledby={`layer-${id}`}
       {...box}
+      hasEditModeMovable={hasEditModeMovable}
       onMouseDown={(evt) => evt.stopPropagation()}
     >
       <Edit element={element} box={box} />
