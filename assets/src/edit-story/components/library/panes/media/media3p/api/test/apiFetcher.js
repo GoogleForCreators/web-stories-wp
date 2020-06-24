@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import fetch from '../fetch';
-import { listPhotos } from '../apiFetcher';
+import { listMedia } from '../apiFetcher';
 
 jest.mock('../fetch');
 
@@ -42,17 +42,17 @@ describe('ApiFetcher', () => {
     fetch.mockReset();
   };
 
-  it('listPhotos should perform a GET request', async () => {
+  it('listMedia should perform a GET request', async () => {
     setup();
     fetch.mockImplementationOnce(() =>
       Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
     );
 
-    const result = await listPhotos();
+    const result = await listMedia();
     expect(result.media[0].name).toBe('photo 29044');
   });
 
-  it('listPhotos should format request params correctly', async () => {
+  it('listMedia should format request params correctly', async () => {
     setup();
     fetch.mockImplementationOnce(() =>
       Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
@@ -63,7 +63,7 @@ describe('ApiFetcher', () => {
     const pageToken = '1234';
     const filter = 'cat';
 
-    const result = await listPhotos({
+    const result = await listMedia({
       languageCode,
       pageSize,
       orderBy,
@@ -87,33 +87,33 @@ describe('ApiFetcher', () => {
     expect(queryParams).toHaveLength(6); // Also includes the key
   });
 
-  it('listPhotos should throw an error for an invalid pageSize', async () => {
+  it('listMedia should throw an error for an invalid pageSize', async () => {
     expect.assertions(2);
 
     await expect(
-      listPhotos({
+      listMedia({
         pageSize: 'big',
       })
     ).rejects.toThrow(/Invalid page_size/);
 
     await expect(
-      listPhotos({
+      listMedia({
         pageSize: -30,
       })
     ).rejects.toThrow(/Invalid page_size/);
   });
 
-  it('listPhotos should throw an error for an invalid orderBy', async () => {
+  it('listMedia should throw an error for an invalid orderBy', async () => {
     expect.assertions(2);
 
     await expect(
-      listPhotos({
+      listMedia({
         orderBy: 'oldest',
       })
     ).rejects.toThrow(/Invalid order_by/);
 
     await expect(
-      listPhotos({
+      listMedia({
         orderBy: '',
       })
     ).rejects.toThrow(/Invalid order_by/);

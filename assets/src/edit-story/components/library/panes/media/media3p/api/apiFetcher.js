@@ -42,7 +42,7 @@ const OrderBy = {
 };
 
 /**
- * Perform a GET request to the Media3P API to list photos.
+ * Perform a GET request to the Media3P API to list media.
  * If the parameters are invalid or the server does not return a 200 response,
  * an error is thrown.
  *
@@ -69,7 +69,7 @@ const OrderBy = {
  * the call that provided the page token.
  * @return {Promise<Object>} The response from the API.
  */
-export async function listPhotos({
+export async function listMedia({
   languageCode = null,
   filter = null,
   orderBy = null,
@@ -97,7 +97,7 @@ export async function listPhotos({
   const data = await fetch(url);
 
   if (!data.length) {
-    throw new Error('Obtained an empty response from listPhotos call.');
+    throw new Error('Obtained an empty response from listMedia call.');
   }
 
   return JSON.parse(data);
