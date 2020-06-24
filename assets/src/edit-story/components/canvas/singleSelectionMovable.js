@@ -27,7 +27,7 @@ import classnames from 'classnames';
 import { useStory, useDropTargets } from '../../app';
 import Movable from '../movable';
 import objectWithout from '../../utils/objectWithout';
-import {useTransform, useTransformHandler} from '../transform';
+import { useTransform } from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
@@ -45,11 +45,12 @@ function SingleSelectionMovable({
   targetEl,
   pushEvent,
   isEditMode,
-  moveableRef,
+  editMoveableRef,
+  setActionHappening,
 }) {
   let moveable = useRef(null);
   if (isEditMode) {
-    moveable = moveableRef;
+    moveable = editMoveableRef;
   }
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
@@ -165,14 +166,6 @@ function SingleSelectionMovable({
     }
     pushTransform(selectedElement.id, frame);
   };
-
-  useTransformHandler(selectedElement.id, (transform) => {
-    if (isEditMode && transform?.updates?.height) {
-      if (moveable.current) {
-        moveable.current.updateRect();
-      }
-    }
-  });
 
   /**
    * Resets Movable once the action is done, sets the initial values.
@@ -307,6 +300,9 @@ function SingleSelectionMovable({
         if (isResizingFromCorner !== newResizingMode) {
           setIsResizingFromCorner(newResizingMode);
         }
+        if (isEditMode) {
+          setActionHappening(true);
+        }
       }}
       onResize={({ target, direction, width, height, drag }) => {
         let newWidth = width;
@@ -348,6 +344,9 @@ function SingleSelectionMovable({
         setTransformStyle(target);
       }}
       onResizeEnd={({ target }) => {
+        if (isEditMode) {
+          setActionHappening(false);
+        }
         if (handleElementOutOfCanvas(target)) {
           return;
         }
@@ -379,6 +378,9 @@ function SingleSelectionMovable({
         resetMoveable(target);
       }}
       onRotateStart={({ set }) => {
+        if (isEditMode) {
+          setActionHappening(true);
+        }
         set(frame.rotate);
       }}
       onRotate={({ target, beforeRotate }) => {
@@ -386,6 +388,9 @@ function SingleSelectionMovable({
         setTransformStyle(target);
       }}
       onRotateEnd={({ target }) => {
+        if (isEditMode) {
+          setActionHappening(false);
+        }
         if (handleElementOutOfCanvas(target)) {
           return;
         }

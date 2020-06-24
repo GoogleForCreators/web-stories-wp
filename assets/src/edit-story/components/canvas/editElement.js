@@ -33,7 +33,6 @@ import {
 import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 import SingleSelectionMovable from './singleSelectionMovable';
-import {useTransform, useTransformHandler} from "../transform";
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -49,6 +48,7 @@ function EditElement({ element }) {
   }));
 
   const [editWrapper, setEditWrapper] = useState(null);
+  const [actionHappening, setActionHappening] = useState(false);
 
   const { lastSelectionEvent } = useCanvas(
     ({ state: { lastSelectionEvent } }) => ({
@@ -59,23 +59,7 @@ function EditElement({ element }) {
   const { Edit, hasEditModeMovable } = getDefinitionForType(type);
   const box = getBox(element);
 
-  const {
-    actions: { pushTransform },
-  } = useTransform();
-
   const moveable = useRef(null);
-
-  useTransformHandler(id, (transform) => {
-    if (editWrapper && moveable.current && transform?.updates?.height) {
-      const target = editWrapper;
-      console.log(transform);
-      const updatedHeight = transform.updates.height;
-      // @todo This should actually calculate the top/left as well ofc.
-      target.style.height = `${updatedHeight}px`;
-      moveable.current.updateRect();
-      pushTransform(id, null);
-    }
-  });
 
   return (
     <>
@@ -89,6 +73,8 @@ function EditElement({ element }) {
           element={element}
           box={box}
           editWrapper={hasEditModeMovable && editWrapper}
+          moveable={moveable}
+          actionHappening={actionHappening}
         />
       </Wrapper>
       {hasEditModeMovable && editWrapper && (
@@ -97,7 +83,8 @@ function EditElement({ element }) {
           targetEl={editWrapper}
           pushEvent={lastSelectionEvent}
           isEditMode={true}
-          moveableRef={moveable}
+          editMoveableRef={moveable}
+          setActionHappening={setActionHappening}
         />
       )}
     </>

@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import {useStory, useFont, useTransform} from '../../app';
+import { useStory, useFont } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
 import { useUnits } from '../../units';
@@ -47,10 +47,6 @@ import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { useTransformHandler } from '../../components/transform';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
-import SingleSelectionMovable from "../../components/canvas/singleSelectionMovable";
-import useCanvas from "../../components/canvas/useCanvas";
-import PropTypes from "prop-types";
-import {getBox} from "../../units/dimensions";
 
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
@@ -78,6 +74,8 @@ function TextEdit({
   element,
   box: { x, y, height, rotationAngle },
   editWrapper,
+  moveable,
+  actionHappening,
 }) {
   const {
     id,
@@ -113,10 +111,6 @@ function TextEdit({
       editorToDataY,
     })
   );
-
-  const {
-    actions: { pushTransform },
-  } = useTransform();
 
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
@@ -202,29 +196,29 @@ function TextEdit({
   // Update content for element on unmount.
   useUnmount(updateContent);
 
+  useEffect(() => {
+    // If there are any moveable actions happening, let's update the content
+    // Otherwise the font size and measures will not be correct.
+    if (actionHappening) {
+      updateContent();
+    }
+  }, [actionHappening, updateContent]);
+
   // A function to remeasure height
   const handleResize = useCallback(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-    pushTransform(id, { updates: { height: editorHeightRef.current } });
-    // We need to update Moveable as well.
     if (editWrapper) {
-      //editWrapper.style.height = `${editorHeightRef.current}px`;
-      /*const { x: bX, y: bY, height: bH, width } = getBox({
-        ...element,
-        height: editorHeightRef.current,
-      });
-      console.log(getBox({
-        ...element,
-        height: editorHeightRef.current,
-      }));
-      editWrapper.style.left = bX + 'px';
-      editWrapper.style.top = bY + 'px';
-      editWrapper.style.height = bH + 'px';*/
+      // @todo Get the correct top and left from getBox, just height for testing currently!
+      editWrapper.style.height = `${editorHeightRef.current}px`;
+      // We need to update Moveable as well.
+      if (moveable.current) {
+        moveable.current.updateRect();
+      }
     }
-  }, [editWrapper, element]);
+  }, [editWrapper, moveable]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
