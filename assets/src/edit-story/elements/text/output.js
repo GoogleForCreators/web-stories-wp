@@ -173,7 +173,7 @@ export function TextOutputWithUnits({
 }
 
 TextOutputWithUnits.propTypes = {
-  element: StoryPropTypes.elements.text.isRequired,
+  element: StoryPropTypes.textContent.isRequired,
   dataToStyleX: PropTypes.func.isRequired,
   dataToStyleY: PropTypes.func.isRequired,
   dataToFontSizeY: PropTypes.func,
