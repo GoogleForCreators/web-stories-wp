@@ -18,6 +18,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { format } from '@wordpress/date';
 
 /**
  * External dependencies
@@ -34,12 +35,15 @@ export function isYesterday(displayDate) {
   return displayDate.isSame(yesterday, 'd');
 }
 
-export default function getFormattedDisplayDate(date) {
+export default function getFormattedDisplayDate(date, dateFormat = 'Y-m-d') {
+  if (!date) {
+    return '';
+  }
   const displayDate = moment.isMoment(date) ? date : moment(date);
   if (isToday(displayDate)) {
     return displayDate.fromNow();
   } else if (isYesterday(displayDate)) {
     return __('yesterday', 'web-stories');
   }
-  return displayDate.format('M/D/YYYY');
+  return format(dateFormat, displayDate);
 }

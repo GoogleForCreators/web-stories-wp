@@ -206,6 +206,7 @@ class Dashboard {
 			'id'     => 'web-stories-dashboard',
 			'config' => [
 				'isRTL'        => is_rtl(),
+				'dateFormat'   => get_option( 'date_format' ),
 				'newStoryURL'  => $new_story_url,
 				'editStoryURL' => $edit_story_url,
 				'wpListURL'    => $classic_wp_list_url,
