@@ -25,6 +25,11 @@ import { format } from '@wordpress/date';
  */
 import moment from 'moment';
 
+/**
+ * Internal dependencies
+ */
+import { DEFAULT_DATE_FORMAT } from '../constants';
+
 export function isToday(displayDate) {
   const today = moment().startOf('day');
   return displayDate.isSame(today, 'd');
@@ -35,7 +40,10 @@ export function isYesterday(displayDate) {
   return displayDate.isSame(yesterday, 'd');
 }
 
-export default function getFormattedDisplayDate(date, dateFormat = 'Y-m-d') {
+export default function getFormattedDisplayDate(
+  date,
+  dateFormat = DEFAULT_DATE_FORMAT
+) {
   if (!date) {
     return '';
   }
