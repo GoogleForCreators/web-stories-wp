@@ -96,7 +96,6 @@ function Panel({ resizeable, initialHeight, name, children }) {
   }, [expand, isCollapsed]);
 
   const panelContentId = `panel-${name}-${uuidv4()}`;
-  const panelTitleId = `panel-${name}-${uuidv4()}`;
 
   const contextValue = {
     state: {
@@ -104,7 +103,6 @@ function Panel({ resizeable, initialHeight, name, children }) {
       resizeable,
       isCollapsed,
       panelContentId,
-      panelTitleId,
     },
     actions: {
       setHeight: manuallySetHeight,
@@ -118,7 +116,7 @@ function Panel({ resizeable, initialHeight, name, children }) {
   const ContextProvider = panelContext.Provider;
 
   return (
-    <Wrapper aria-labelledby={panelTitleId}>
+    <Wrapper>
       <ContextProvider value={contextValue}>{children}</ContextProvider>
     </Wrapper>
   );
