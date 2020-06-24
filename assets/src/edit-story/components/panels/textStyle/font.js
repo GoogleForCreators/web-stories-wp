@@ -98,7 +98,6 @@ function FontControls({ selectedElements, pushUpdate }) {
           'variants',
         ]),
       };
-      addRecentFont(newFont);
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {
@@ -110,6 +109,7 @@ function FontControls({ selectedElements, pushUpdate }) {
         })
       );
 
+      addRecentFont(fontObj);
       pushUpdate({ font: newFont }, true);
     },
     [

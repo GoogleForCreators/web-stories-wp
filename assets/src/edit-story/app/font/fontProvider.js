@@ -110,7 +110,7 @@ function FontProvider({ children }) {
         }
         newRecentFonts.push(font);
       });
-      setRecentFonts(newRecentFonts.slice(0, 4));
+      setRecentFonts(newRecentFonts.slice(0, 5));
     },
     [recentFonts]
   );
