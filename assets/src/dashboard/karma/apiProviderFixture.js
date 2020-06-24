@@ -26,10 +26,8 @@ import { useMemo, useState } from 'react';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import { defaultTemplatesState } from '../app/reducer/templates';
-// import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../storybookUtils/formattedUsersObject';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
-// import formattedTemplatesArray from '../storybookUtils/formattedTemplatesArray';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
