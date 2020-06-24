@@ -159,10 +159,11 @@ function SingleSelectionMovable({
 
   const setTransformStyle = (target) => {
     if (isEditMode) {
-      // No dragging in edit mode.
       // Since moveable is manipulating the edit textbox but the original rotation
       // is assigned to wrapper, we only need to assign the difference here.
-      target.style.transform = `rotate(${frame.rotate - box.rotationAngle}deg)`;
+      target.style.transform = `translate(${frame.translate[0]}px, ${
+        frame.translate[1]
+      }px) rotate(${frame.rotate - box.rotationAngle}deg)`;
     } else {
       target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     }
@@ -427,7 +428,7 @@ SingleSelectionMovable.propTypes = {
   targetEl: PropTypes.object.isRequired,
   pushEvent: PropTypes.object,
   isEditMode: PropTypes.bool,
-  editMoveableRef: PropTypes.node,
+  editMoveableRef: PropTypes.object,
 };
 
 export default SingleSelectionMovable;
