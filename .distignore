@@ -40,8 +40,8 @@ composer.json
 composer.lock
 CONTRIBUTING.md
 jest-puppeteer.config.cjs
-karma.edit-story-config.cjs
-karma.dashboard-config.cjs
+karma-edit-story.config.cjs
+karma-dashboard.config.cjs
 package.json
 package-lock.json
 percy.config.yml
