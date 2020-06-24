@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef } from 'react';
 
@@ -42,8 +42,8 @@ import useCanvas from './useCanvas';
  */
 
 export const Z_INDEX = {
-  NAV: 1,
-  EDIT: 2,
+  NAV: 2,
+  EDIT: 3,
 };
 
 const MENU_HEIGHT = 48;
@@ -63,7 +63,7 @@ const MAX_CAROUSEL_HEIGHT =
   MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
 
 // @todo: the menu height is not responsive
-const Layer = styled.div`
+const Layer = styled.section`
   ${pointerEventsCss}
 
   position: absolute;
@@ -133,28 +133,26 @@ const PageAreaSafeZone = styled.div`
   overflow: visible;
   position: relative;
   margin: auto 0;
-`;
 
-const PageAreaDangerZone = styled.div`
-  pointer-events: none;
-  position: absolute;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent 0 10px,
-    black 10px 20px
-  );
-  opacity: 0.05;
-  width: 100%;
-  height: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
-  z-index: 1;
-`;
-
-const PageAreaDangerZoneTop = styled(PageAreaDangerZone)`
-  top: 0;
-`;
-
-const PageAreaDangerZoneBottom = styled(PageAreaDangerZone)`
-  bottom: 0;
+  ${({ showSafeZone }) =>
+    showSafeZone &&
+    css`
+      &::before,
+      &::after {
+        content: '';
+        width: 20px;
+        height: var(--page-height-px);
+        position: absolute;
+        border-top: 1px solid rgba(255, 255, 255, 0.4);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      }
+      &::before {
+        left: -20px;
+      }
+      &::after {
+        right: -20px;
+      }
+    `}
 `;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
@@ -215,11 +213,10 @@ const PageArea = forwardRef(
   (
     {
       children,
-      showDangerZone,
+      showSafeZone = false,
       showOverflow = false,
       fullbleedRef = createRef(),
       overlay = [],
-      fullbleed = [],
       background,
     },
     ref
@@ -230,16 +227,13 @@ const PageArea = forwardRef(
           showOverflow={showOverflow}
           background={background}
         >
-          <PageAreaSafeZone ref={ref} data-testid="safezone">
+          <PageAreaSafeZone
+            ref={ref}
+            data-testid="safezone"
+            showSafeZone={showSafeZone}
+          >
             {children}
           </PageAreaSafeZone>
-          {showDangerZone && (
-            <>
-              <PageAreaDangerZoneTop />
-              <PageAreaDangerZoneBottom />
-            </>
-          )}
-          {fullbleed}
         </PageAreaWithOverflow>
         {overlay}
       </PageAreaFullbleedContainer>
@@ -250,8 +244,7 @@ const PageArea = forwardRef(
 PageArea.propTypes = {
   children: PropTypes.node,
   overlay: PropTypes.node,
-  fullbleed: PropTypes.node,
-  showDangerZone: PropTypes.bool,
+  showSafeZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
 };
 

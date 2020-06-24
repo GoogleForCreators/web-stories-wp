@@ -34,6 +34,7 @@ export const Z_INDEX = {
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
+  TOASTER: 15,
 };
 
 export const APP_ROUTES = {

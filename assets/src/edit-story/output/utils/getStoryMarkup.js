@@ -31,13 +31,12 @@ import OutputStory from '../story';
  * @param {import('../../../types').Story} story Story object.
  * @param {Array<Object>} pages List of pages.
  * @param {Object} metadata Metadata.
+ * @param {Object} featureFlags Boolean flags to enable/disable features
  * @return {string} Story markup.
  */
-export default function getStoryMarkup(story, pages, metadata) {
-  const { flags } = window.webStoriesEditorSettings;
-
+export default function getStoryMarkup(story, pages, metadata, featureFlags) {
   return renderToStaticMarkup(
-    <FlagsProvider features={flags}>
+    <FlagsProvider features={featureFlags}>
       <OutputStory story={story} pages={pages} metadata={metadata} />
     </FlagsProvider>
   );

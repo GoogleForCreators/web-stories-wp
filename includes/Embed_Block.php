@@ -26,23 +26,20 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Assets;
+
 /**
  * Embed block class.
  */
 class Embed_Block {
+
+	use Assets;
 	/**
 	 * Script handle.
 	 *
 	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'web-stories-embed-block';
-
-	/**
-	 * Style handle.
-	 *
-	 * @var string
-	 */
-	const STYLE_HANDLE = 'web-stories-embed-block';
 
 	/**
 	 * Initializes the Web Stories embed block.
@@ -53,27 +50,8 @@ class Embed_Block {
 		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
-		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::SCRIPT_HANDLE . '.asset.php';
-		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
-		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
-		$version      = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
-
-		$dependencies[] = 'amp-story-player';
-
-		wp_register_script(
-			self::SCRIPT_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::SCRIPT_HANDLE . '.js',
-			$dependencies,
-			$version,
-			false
-		);
-
-		wp_register_style(
-			self::STYLE_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::STYLE_HANDLE . '.css',
-			[ 'amp-story-player' ],
-			$version
-		);
+		$this->register_script( self::SCRIPT_HANDLE, [ 'amp-story-player' ] );
+		$this->register_style( self::SCRIPT_HANDLE, [ 'amp-story-player' ] );
 
 		// todo: use register_block_type_from_metadata() once generally available.
 
@@ -108,11 +86,11 @@ class Embed_Block {
 				],
 				'render_callback' => [ $this, 'render_block' ],
 				'editor_script'   => self::SCRIPT_HANDLE,
-				'editor_style'    => self::STYLE_HANDLE,
+				'editor_style'    => self::SCRIPT_HANDLE,
 			]
 		);
 
-		add_filter( 'wp_kses_allowed_html', [ __CLASS__, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 	}
 
 	/**
@@ -122,7 +100,7 @@ class Embed_Block {
 	 *
 	 * @return array|string Allowed tags.
 	 */
-	public static function filter_kses_allowed_html( $allowed_tags ) {
+	public function filter_kses_allowed_html( $allowed_tags ) {
 		if ( ! is_array( $allowed_tags ) ) {
 			return $allowed_tags;
 		}
