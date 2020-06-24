@@ -111,10 +111,6 @@ export default function BodyViewOptions({
               <ViewStyleBar
                 layoutStyle={layoutStyle}
                 onPress={handleLayoutSelect}
-                ariaLabel={__(
-                  'Toggle between showing stories as a grid or list.',
-                  'web-stories'
-                )}
               />
             </ControlsContainer>
           )}

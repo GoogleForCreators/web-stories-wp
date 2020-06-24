@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { text, select } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -35,7 +35,6 @@ export const _default = () => {
     <ViewStyleBar
       layoutStyle={select('layoutStyle', VIEW_STYLE, VIEW_STYLE.LIST)}
       onPress={action('on press clicked')}
-      ariaLabel={text('ariaLabel', 'My helpful aria label')}
     />
   );
 };

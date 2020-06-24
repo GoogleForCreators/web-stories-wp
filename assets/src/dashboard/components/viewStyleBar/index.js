@@ -62,11 +62,14 @@ const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
   align-items: center;
 `;
 
-export default function ViewStyleBar({ onPress, layoutStyle, ariaLabel }) {
+export default function ViewStyleBar({ onPress, layoutStyle }) {
   return (
     <Container>
       <Tooltip content={VIEW_STYLE_LABELS[layoutStyle]} position="right">
-        <ToggleButton aria-label={ariaLabel} onClick={onPress}>
+        <ToggleButton
+          aria-label={VIEW_STYLE_LABELS[layoutStyle]}
+          onClick={onPress}
+        >
           {layoutStyle === VIEW_STYLE.GRID && (
             <ListIcon data-testid="list-icon" />
           )}
@@ -80,7 +83,6 @@ export default function ViewStyleBar({ onPress, layoutStyle, ariaLabel }) {
 }
 
 ViewStyleBar.propTypes = {
-  ariaLabel: PropTypes.string,
   onPress: PropTypes.func,
   layoutStyle: PropTypes.oneOf([VIEW_STYLE.GRID, VIEW_STYLE.LIST]).isRequired,
 };
