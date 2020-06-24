@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import PopoverMenu from '../';
+import PopoverMenu, { PopoverMenuCard } from '../';
 
 const demoItems = [
   { value: '1', label: 'one' },
@@ -46,6 +46,12 @@ const PopoverWrapper = styled.div`
   position: relative;
 `;
 
+const PopoverCardWrapper = styled.div`
+  width: 100px;
+  margin: 400px 0 0 200px;
+  position: relative;
+`;
+
 export const _default = () => (
   <PopoverWrapper>
     <PopoverMenu
@@ -57,4 +63,16 @@ export const _default = () => (
       }}
     />
   </PopoverWrapper>
+);
+
+export const _PopoverCard = () => (
+  <PopoverCardWrapper>
+    <PopoverMenuCard
+      items={demoItems}
+      isOpen={boolean('isOpen', true)}
+      onSelect={(item) => {
+        action(`clicked on dropdown item ${item.value}`)(item);
+      }}
+    />
+  </PopoverCardWrapper>
 );
