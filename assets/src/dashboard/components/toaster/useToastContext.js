@@ -15,21 +15,23 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useContext } from 'react';
+
+/**
  * Internal dependencies
  */
-import useLibrary from './useLibrary';
-import { getPane } from './panes';
-import { getTabId } from './panes/shared';
+import { ToasterContext } from './provider';
 
-function LibraryPanes() {
-  const { tab, tabs } = useLibrary((state) => ({
-    tab: state.state.tab,
-    tabs: state.data.tabs,
-  }));
-  const panes = tabs.map(getPane);
-  return panes.map(({ id, Pane }) => (
-    <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
-  ));
-}
+const useToasterContext = () => {
+  const context = useContext(ToasterContext);
+  if (!context) {
+    throw new Error(
+      'useToasterContext() must be used within a <Toast.Provider />'
+    );
+  }
+  return context;
+};
 
-export default LibraryPanes;
+export default useToasterContext;

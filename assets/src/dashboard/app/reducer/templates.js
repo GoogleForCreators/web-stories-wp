@@ -56,6 +56,7 @@ function templateReducer(state, action) {
     case ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_SUCCESS: {
       return {
         ...state,
+        error: {},
       };
     }
 
@@ -64,7 +65,7 @@ function templateReducer(state, action) {
     case ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE:
       return {
         ...state,
-        error: action.payload,
+        error: { ...action.payload, id: Date.now() },
       };
 
     case ACTION_TYPES.FETCH_MY_TEMPLATES_SUCCESS: {
@@ -88,6 +89,7 @@ function templateReducer(state, action) {
         savedTemplatesOrderById: uniqueTemplateIds,
         totalTemplates: action.payload.totalTemplates,
         totalPages: action.payload.totalPages,
+        error: {},
       };
     }
 
