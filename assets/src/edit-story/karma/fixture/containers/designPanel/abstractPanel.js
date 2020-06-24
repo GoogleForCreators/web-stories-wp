@@ -17,45 +17,29 @@
 /**
  * Internal dependencies
  */
-import { Container } from './container';
-import { Canvas } from './canvas';
-import { Library } from './library';
-import { Inspector } from './inspector';
+import { Container } from '../container';
 
 /**
- * The complete editor container, including library, canvas, inspector, etc.
+ * The editor's canvas. Includes: display, frames, editor layers, carousel,
+ * navigation buttons, page menu.
  */
-export class Editor extends Container {
+export class AbstractPanel extends Container {
   constructor(node, path) {
     super(node, path);
   }
 
-  get canvas() {
-    return this._get(
-      this.getByRole('region', { name: 'Canvas' }),
-      'canvas',
-      Canvas
-    );
-  }
-
-  get titleBar() {
-    // @todo: title bar container.
+  get title() {
+    // @todo: implement
     return null;
   }
 
-  get library() {
-    return this._get(
-      this.getByRole('region', { name: 'Library' }),
-      'library',
-      Library
-    );
+  get isCollapsed() {
+    // @todo: implement
+    return null;
   }
 
-  get inspector() {
-    return this._get(
-      this.getByRole('region', { name: 'Inspector' }),
-      'inspector',
-      Inspector
-    );
+  toggle() {
+    // @todo: implement
+    return null;
   }
 }

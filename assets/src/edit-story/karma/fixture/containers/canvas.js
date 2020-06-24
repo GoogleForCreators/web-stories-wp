@@ -86,4 +86,8 @@ class Frame extends Container {
   constructor(node, path) {
     super(node, path);
   }
+
+  get textContent() {
+    return this.node.querySelector('[data-testid="textFrame"]')?.innerHTML;
+  }
 }

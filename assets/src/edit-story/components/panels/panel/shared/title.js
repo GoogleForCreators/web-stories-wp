@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -115,12 +115,21 @@ function Title({
   canCollapse = true,
 }) {
   const {
-    state: { isCollapsed, height, resizeable, panelContentId },
-    actions: { collapse, expand, setHeight, setExpandToHeight, resetHeight },
+    state: { isCollapsed, height, resizeable, panelContentId, panelTitleId },
+    actions: {
+      collapse,
+      expand,
+      setHeight,
+      setExpandToHeight,
+      resetHeight,
+      confirmTitle,
+    },
   } = useContext(panelContext);
   const {
     state: { inspectorContentHeight },
   } = useInspector();
+
+  useEffect(confirmTitle, [confirmTitle]);
 
   // Max panel height is set to 70% of full available height.
   const maxHeight = Math.round(inspectorContentHeight * 0.7);
@@ -162,7 +171,7 @@ function Title({
         />
       )}
       <HeaderButton onClick={isCollapsed ? expand : collapse}>
-        <Heading>{children}</Heading>
+        <Heading id={panelTitleId}>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
           {canCollapse && (

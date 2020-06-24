@@ -18,44 +18,35 @@
  * Internal dependencies
  */
 import { Container } from './container';
-import { Canvas } from './canvas';
-import { Library } from './library';
-import { Inspector } from './inspector';
+import { DesignPanel } from './designPanel';
 
 /**
- * The complete editor container, including library, canvas, inspector, etc.
+ * The editor's canvas. Includes: display, frames, editor layers, carousel,
+ * navigation buttons, page menu.
  */
-export class Editor extends Container {
+export class Inspector extends Container {
   constructor(node, path) {
     super(node, path);
   }
 
-  get canvas() {
+  get designTab() {
+    return this.getByRole('tab', { name: /Design/ });
+  }
+
+  get designPanel() {
     return this._get(
-      this.getByRole('region', { name: 'Canvas' }),
-      'canvas',
-      Canvas
+      this.getByRole('tabpanel', { name: /Design/ }),
+      'designPanel',
+      DesignPanel
     );
   }
 
-  get titleBar() {
-    // @todo: title bar container.
+  get documentTab() {
+    return this.getByRole('tab', { name: /Document/ });
+  }
+
+  get documentPanel() {
+    // @todo: implement
     return null;
-  }
-
-  get library() {
-    return this._get(
-      this.getByRole('region', { name: 'Library' }),
-      'library',
-      Library
-    );
-  }
-
-  get inspector() {
-    return this._get(
-      this.getByRole('region', { name: 'Inspector' }),
-      'inspector',
-      Inspector
-    );
   }
 }
