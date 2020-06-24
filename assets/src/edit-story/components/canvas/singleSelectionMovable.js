@@ -243,10 +243,13 @@ function SingleSelectionMovable({
       ref={moveable}
       target={targetEl}
       edge={true}
-      draggable={actionsEnabled && !isEditMode}
+      draggable={actionsEnabled}
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
+        if (isEditMode) {
+          return false;
+        }
         setIsDragging(true);
         if (isDropSource(selectedElement.type)) {
           setDraggingResource(selectedElement.resource);
@@ -264,9 +267,15 @@ function SingleSelectionMovable({
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
+        if (isEditMode) {
+          return false;
+        }
         set(frame.translate);
       }}
       onDragEnd={({ target }) => {
+        if (isEditMode) {
+          return false;
+        }
         if (handleElementOutOfCanvas(target)) {
           return;
         }
