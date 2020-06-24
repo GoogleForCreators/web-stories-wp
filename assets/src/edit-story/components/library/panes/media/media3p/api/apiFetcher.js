@@ -20,7 +20,7 @@
 import fetch from './fetch';
 
 const API_DOMAIN = 'https://staging-media3p.sandbox.googleapis.com';
-const API_KEY = 'AIzaSyAgauA-izuTeGWFe9d9O0d0id-pV43Y4kE';
+const API_KEY = 'AIzaSyAgauA-izuTeGWFe9d9O0d0id-pV43Y4kE'; // dev key
 
 /**
  * The methods exposed by the api
