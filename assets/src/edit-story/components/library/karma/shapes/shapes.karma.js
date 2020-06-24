@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { act } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -28,7 +24,6 @@ describe('TextEdit integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-
     await fixture.render();
   });
 
@@ -36,73 +31,34 @@ describe('TextEdit integration', () => {
     fixture.restore();
   });
 
-  it('should render ok', () => {
-    expect(
-      fixture.container.querySelector('[data-testid="fullbleed"]')
-    ).toBeTruthy();
-  });
-
   it('add shape via clicking on shape preview', async () => {
-    let shapes = await fixture.container.querySelectorAll(
-      '[data-testid="safezone"] [d="M 0.5 0 L 1 1 L 0 1 Z"]'
-    );
-    expect(shapes.length).toBe(0);
+    // Only background initially
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
 
-    await act(async () => {
-      await fixture.events.click(
-        fixture.querySelector(`[id="library-tab-shapes"]`)
-      );
-      await fixture.events.click(
-        fixture.querySelector('[aria-label="Triangle"]')
-      );
+    // Switch to shapes tab and click the triangle
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
 
-      shapes = await fixture.container.querySelectorAll(
-        '[data-testid="safezone"] [d="M 0.5 0 L 1 1 L 0 1 Z"]'
-      );
-    });
-    expect(shapes.length).toBeGreaterThan(0);
+    // Now background + 1 extra element
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
   });
 
-  xit('add shape via dragging from shape preview', async () => {
-    // Skipping this test because drag and drop doesn't work properly in
-    // puppeteer for now.
-    let shapes = await fixture.container.querySelectorAll(
-      '[data-testid="safezone"] [d="M 0.5 0 L 1 1 L 0 1 Z"]'
-    );
-    expect(shapes.length).toBe(0);
+  it('add shape via dragging from shape preview', async () => {
+    // Only background initially
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
 
-    await act(async () => {
-      await fixture.events.click(
-        fixture.querySelector(`[id="library-tab-shapes"]`)
-      );
-      // Move the mouse to the middel of the shape preview and start mouse press
-      // down.
-      const shapePreview = await fixture.querySelector(
-        '[aria-label="Triangle"]'
-      );
-      const shapeBoundingBox = await shapePreview.getBoundingClientRect();
-      await fixture.events.mouse.move(
-        shapeBoundingBox.x + shapeBoundingBox.width / 2,
-        shapeBoundingBox.y + shapeBoundingBox.height / 2
-      );
-      await fixture.events.mouse.down();
+    // Switch to the shapes tab and drag the triangle to the canvas
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    const triangle = fixture.editor.library.shapes.shape('Triangle');
+    const canvas = fixture.editor.canvas.framesLayer.container;
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(triangle, 10, 10),
+      down(),
+      moveRel(canvas, 50, 50),
+      up(),
+    ]);
 
-      // Move the mouse to the middle of the safe area and then mouse press up.
-      const safezone = await fixture.querySelector('[data-testid="safezone"]');
-      const safezoneBox = await safezone.getBoundingClientRect();
-
-      await fixture.events.mouse.move(
-        safezoneBox.x + safezoneBox.width / 2,
-        safezoneBox.y + safezoneBox.height / 2,
-        { steps: 100 }
-      );
-
-      await fixture.events.mouse.up();
-    });
-
-    shapes = await fixture.container.querySelectorAll(
-      '[data-testid="safezone"] [d="M 0.5 0 L 1 1 L 0 1 Z"]'
-    );
-    expect(shapes.length).toBeGreaterThan(0);
+    // Now background + 1 extra element
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
   });
 });

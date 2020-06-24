@@ -54,6 +54,10 @@ class FramesLayer extends Container {
     super(node, path);
   }
 
+  get container() {
+    return this.node;
+  }
+
   get frames() {
     return this._getAll(
       // @todo: improve query.

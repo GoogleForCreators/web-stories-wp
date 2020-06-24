@@ -32,7 +32,9 @@ import { PAGE_WIDTH } from '../../../../constants';
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
-const ShapePreviewContainer = styled.div`
+const ShapePreviewContainer = styled.button`
+  background: transparent;
+  border: 0;
   position: relative;
   padding: 0.8em 0.5em;
   flex: 0 0 25%;

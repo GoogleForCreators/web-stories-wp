@@ -115,7 +115,7 @@ function Title({
   canCollapse = true,
 }) {
   const {
-    state: { isCollapsed, height, resizeable, panelContentId },
+    state: { isCollapsed, height, resizeable, panelContentId, panelTitleId },
     actions: { collapse, expand, setHeight, setExpandToHeight, resetHeight },
   } = useContext(panelContext);
   const {
@@ -147,6 +147,7 @@ function Title({
 
   return (
     <Header
+      id={panelTitleId}
       isPrimary={isPrimary}
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}

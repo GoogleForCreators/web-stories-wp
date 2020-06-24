@@ -19,6 +19,7 @@
  */
 import { Container } from './container';
 import { Canvas } from './canvas';
+import { Library } from './library';
 
 /**
  * The complete editor container, including library, canvas, inspector, etc.
@@ -42,7 +43,10 @@ export class Editor extends Container {
   }
 
   get library() {
-    // @todo: library container.
-    return null;
+    return this._get(
+      this.getByRole('region', { name: 'Library' }),
+      'library',
+      Library
+    );
   }
 }
