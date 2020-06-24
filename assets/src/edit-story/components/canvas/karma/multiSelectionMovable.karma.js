@@ -64,7 +64,7 @@ describe('Multi-selection Movable integration', () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
       element1 = await fixture.act(() =>
         insertElement('shape', {
-          backgroundColor: createSolidFromString('#ff0000'),
+          backgroundColor: createSolidFromString('#ff00ff'),
           mask: { type: 'rectangle' },
           x: 10,
           y: 10,
@@ -100,8 +100,8 @@ describe('Multi-selection Movable integration', () => {
       frame3 = getElementFrame(element3.id);
     });
 
-    it('should render initial content', () => {
-      fixture.snapshot();
+    it('should render initial content', async () => {
+      await fixture.snapshot();
     });
 
     async function getSelection() {

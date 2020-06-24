@@ -36,6 +36,7 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
+  SafeZone,
   Plain,
 } from '../../button';
 import {
@@ -57,6 +58,9 @@ import {
   COMPACT_THUMB_WIDTH,
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
+
+import useCanvas from '../useCanvas';
+import WithTooltip from '../../tooltip';
 import CompactIndicator from './compactIndicator';
 import useCarouselKeys from './useCarouselKeys';
 
@@ -112,6 +116,19 @@ const OverflowButtons = styled.div`
     position: absolute;
     bottom: 10px;
   }
+`;
+
+const buttonDimensions = { width: '24', height: '24' };
+
+const StyledGridViewButton = styled(GridViewButton).attrs(buttonDimensions)``;
+
+const SafeZoneButton = styled(SafeZone).attrs(buttonDimensions)`
+  ${({ active, theme }) =>
+    active &&
+    css`
+      background: ${rgba(theme.colors.bg.v13, 0.1)};
+    `}
+  margin-bottom: 12px;
 `;
 
 const PageList = styled(Reorderable).attrs({
@@ -203,6 +220,13 @@ function calculatePageThumbSize(carouselSize) {
   return [pageWidth + THUMB_FRAME_WIDTH, pageHeight + THUMB_FRAME_HEIGHT];
 }
 
+function safeZoneSelector({
+  state: { showSafeZone },
+  actions: { setShowSafeZone },
+}) {
+  return { showSafeZone, setShowSafeZone };
+}
+
 function Carousel() {
   const {
     pages,
@@ -216,6 +240,7 @@ function Carousel() {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
   const { isRTL } = useConfig();
+  const { showSafeZone, setShowSafeZone } = useCanvas(safeZoneSelector);
   const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
@@ -435,12 +460,33 @@ function Carousel() {
                 />
               </OverflowButtons>
             )}
-            <GridViewButton
-              width="24"
-              height="24"
-              onClick={openModal}
-              aria-label={__('Grid View', 'web-stories')}
-            />
+            <WithTooltip
+              title={
+                showSafeZone
+                  ? __('Disable Safe Zone', 'web-stories')
+                  : __('Enable Safe Zone', 'web-stories')
+              }
+              placement="left"
+            >
+              <SafeZoneButton
+                active={showSafeZone}
+                onClick={() => setShowSafeZone((current) => !current)}
+                aria-label={
+                  showSafeZone
+                    ? __('Disable Safe Zone', 'web-stories')
+                    : __('Enable Safe Zone', 'web-stories')
+                }
+              />
+            </WithTooltip>
+            <WithTooltip
+              title={__('Grid View', 'web-stories')}
+              placement="left"
+            >
+              <StyledGridViewButton
+                onClick={openModal}
+                aria-label={__('Grid View', 'web-stories')}
+              />
+            </WithTooltip>
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>

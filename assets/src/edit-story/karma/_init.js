@@ -104,6 +104,24 @@ beforeAll(() => {
     return karmaPuppeteer.saveSnapshot(currentSpec?.fullName, name);
   };
 
+  // Disable transitions. These add unnecessarily flakiness into integration
+  // tests and snashots/screenshots.
+  withCleanupAll(() => {
+    const testRootStyles = document.createElement('style');
+    testRootStyles.setAttribute('data-desc', 'Karma test-root styles');
+    testRootStyles.textContent = `
+      * {
+        transition-property: none !important;
+        transition-delay: 0s !important;
+        transition-duration: 0s !important;
+      }
+    `;
+    document.head.appendChild(testRootStyles);
+    return () => {
+      testRootStyles.remove();
+    };
+  });
+
   // By default Jasmine doesn't report unhandled promise rejections.
   // But with `act()` it's very easy to do. So this is patched for Jasmine
   // here until the relevant issues are addressed.
@@ -154,7 +172,7 @@ afterAll(() => {
   }
 });
 
-beforeEach(() => {
+beforeEach(async () => {
   // @todo: ideally we can find a way to use a new <body> for each test, but
   // there are too many browser APIs to patch to make it consistent.
 
@@ -174,6 +192,10 @@ beforeEach(() => {
     margin: 0;
   `;
   document.body.appendChild(rootEl);
+
+  // Each test should start with the pointer in the same location ([-1,-1]) to
+  // avoid pointerover/mouseover/hover flakes.
+  await karmaPuppeteer.mouse.seq([{ type: 'move', x: -1, y: -1 }]);
 });
 
 afterEach(() => {

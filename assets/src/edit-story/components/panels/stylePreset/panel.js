@@ -62,7 +62,7 @@ function StylePresetPanel() {
     }
   );
 
-  const { fillColors, textColors } = stylePresets;
+  const { colors } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
   const areAllType = (elType) => {
@@ -82,25 +82,19 @@ function StylePresetPanel() {
         properties: {
           stylePresets: {
             ...stylePresets,
-            fillColors: isText
-              ? fillColors
-              : fillColors.filter((color) => color !== toDelete),
-            textColors: !isText
-              ? textColors
-              : textColors.filter((color) => color !== toDelete),
+            colors: colors.filter((color) => color !== toDelete),
           },
         },
       });
     },
-    [fillColors, isText, stylePresets, textColors, updateStory]
+    [colors, stylePresets, updateStory]
   );
 
   const handleAddColorPreset = useCallback(
     (evt) => {
       evt.stopPropagation();
       let addedPresets = {
-        fillColors: [],
-        textColors: [],
+        colors: [],
       };
       if (isText) {
         addedPresets = {
@@ -113,22 +107,17 @@ function StylePresetPanel() {
           ...getPagePreset(currentPage, stylePresets),
         };
       } else {
-        // Currently, shape only supports fillColors.
         addedPresets = {
           ...addedPresets,
           ...getShapePresets(selectedElements, stylePresets),
         };
       }
-      if (
-        addedPresets.fillColors?.length > 0 ||
-        addedPresets.textColors?.length > 0
-      ) {
+      if (addedPresets.colors?.length > 0) {
         updateStory({
           properties: {
             stylePresets: {
               ...stylePresets,
-              fillColors: [...fillColors, ...addedPresets.fillColors],
-              textColors: [...textColors, ...addedPresets.textColors],
+              colors: [...colors, ...addedPresets.colors],
             },
           },
         });
@@ -137,8 +126,7 @@ function StylePresetPanel() {
     [
       currentPage,
       isBackground,
-      fillColors,
-      textColors,
+      colors,
       isText,
       selectedElements,
       updateStory,
@@ -190,8 +178,7 @@ function StylePresetPanel() {
     ]
   );
 
-  const colorPresets = isText ? textColors : fillColors;
-  const hasPresets = colorPresets.length > 0;
+  const hasPresets = colors.length > 0;
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
@@ -213,14 +200,11 @@ function StylePresetPanel() {
     }
   };
 
-  const rowHeight = 40;
+  const rowHeight = 35;
 
-  // Assume at least 2 rows if there's at least 1 preset:
-  // One for presets, one for the label.
+  // Assume at least 2 lines if there are presets to leave some room.
   const colorRows =
-    colorPresets.length > 0
-      ? Math.max(2, colorPresets.length / COLOR_PRESETS_PER_ROW)
-      : 0;
+    colors.length > 0 ? Math.max(2, colors.length / COLOR_PRESETS_PER_ROW) : 0;
   const initialHeight = colorRows * rowHeight;
 
   return (
@@ -239,8 +223,8 @@ function StylePresetPanel() {
         isEditMode={isEditMode}
         stylePresets={stylePresets}
         handleOnClick={handlePresetClick}
-        isText={isText}
         isBackground={isBackground}
+        isText={isText}
       />
       <Resize />
     </Panel>

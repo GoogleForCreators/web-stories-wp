@@ -22,19 +22,18 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { GeneralAnimationPropTypes } from './types';
+import { GeneralAnimationPropTypes, KeyframesPropTypes } from './types';
 
-function AnimationOutput({ animation, config }) {
+function AnimationOutput({ config }) {
   const configs = Array.isArray(config) ? config : [config];
 
   return (
-    <amp-story-animation layout="nodisplay">
+    <amp-story-animation layout="nodisplay" trigger="visibility">
       <script
         type="application/json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             configs.map((conf) => ({
-              animation,
               ...conf,
             }))
           ),
@@ -47,11 +46,11 @@ function AnimationOutput({ animation, config }) {
 const AnimationConfigPropTypes = PropTypes.shape({
   selector: PropTypes.string.isRequired,
   animation: PropTypes.string,
+  keyframes: KeyframesPropTypes,
   ...GeneralAnimationPropTypes,
 });
 
 AnimationOutput.propTypes = {
-  animation: PropTypes.string,
   config: PropTypes.oneOfType([
     AnimationConfigPropTypes,
     PropTypes.arrayOf(AnimationConfigPropTypes),

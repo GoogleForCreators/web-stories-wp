@@ -27,6 +27,9 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Screen;
 
@@ -34,6 +37,9 @@ use WP_Screen;
  * Class Story_Post_Type.
  */
 class Story_Post_Type {
+	use Publisher;
+	use Types;
+	use Assets;
 	/**
 	 * The slug of the stories post type.
 	 *
@@ -49,13 +55,6 @@ class Story_Post_Type {
 	const WEB_STORIES_SCRIPT_HANDLE = 'edit-story';
 
 	/**
-	 * Web Stories editor style handle.
-	 *
-	 * @var string
-	 */
-	const WEB_STORIES_STYLE_HANDLE = 'edit-story';
-
-	/**
 	 * The rewrite slug for this post type.
 	 *
 	 * @var string
@@ -63,14 +62,11 @@ class Story_Post_Type {
 	const REWRITE_SLUG = 'stories';
 
 	/**
-	 * Publisher logo placeholder for static content output which will be replaced server-side.
-	 *
-	 * Uses a fallback logo to always create valid AMP in FE.
+	 * Style Present options name.
 	 *
 	 * @var string
 	 */
-	const PUBLISHER_LOGO_PLACEHOLDER = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
-
+	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 	/**
 	 * Registers the post type for stories.
 	 *
@@ -78,7 +74,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public static function init() {
+	public function init() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -133,29 +129,39 @@ class Story_Post_Type {
 			]
 		);
 
-		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ] );
-		add_filter( 'show_admin_bar', [ __CLASS__, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
-		add_filter( 'replace_editor', [ __CLASS__, 'replace_editor' ], 10, 2 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
+		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
-		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ __CLASS__, 'filter_rest_collection_params' ], 10, 2 );
+
+		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
-		add_filter( 'template_include', [ __CLASS__, 'filter_template_include' ] );
+		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
 
-		// @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
-		add_filter(
-			'amp_skip_post',
-			static function( $skipped, $post ) {
-				if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-					$skipped = true;
-				}
-				return $skipped;
-			},
-			PHP_INT_MAX,
-			2
-		);
+		add_filter( 'amp_skip_post', [ $this, 'skip_amp' ], PHP_INT_MAX, 2 );
 
-		add_filter( '_wp_post_revision_fields', [ __CLASS__, 'filter_revision_fields' ], 10, 2 );
+		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
+
+		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+	}
+
+	/**
+	 * AMP plugin compatibility.
+	 *
+	 * @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
+	 *
+	 * @param bool    $skipped Should this post type be skipped.
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return bool
+	 */
+	public function skip_amp( $skipped, $post ) {
+		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
+			$skipped = true;
+		}
+		return $skipped;
 	}
 
 	/**
@@ -165,7 +171,7 @@ class Story_Post_Type {
 	 * @param \WP_Post_Type $post_type Post type.
 	 * @return array Array of query params.
 	 */
-	public static function filter_rest_collection_params( $query_params, $post_type ) {
+	public function filter_rest_collection_params( $query_params, $post_type ) {
 		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
 			return $query_params;
 		}
@@ -184,7 +190,7 @@ class Story_Post_Type {
 	 * @param array $story Story post array.
 	 * @return array Array of allowed fields.
 	 */
-	public static function filter_revision_fields( $fields, $story ) {
+	public function filter_revision_fields( $fields, $story ) {
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
@@ -198,7 +204,7 @@ class Story_Post_Type {
 	 *
 	 * @return bool
 	 */
-	public static function show_admin_bar( $show ) {
+	public function show_admin_bar( $show ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) ) {
 			$show = false;
 		}
@@ -214,7 +220,7 @@ class Story_Post_Type {
 	 *
 	 * @return bool
 	 */
-	public static function replace_editor( $replace, $post ) {
+	public function replace_editor( $replace, $post ) {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
 			$replace = true;
 			// In lieu of an action being available to actually load the replacement editor, include it here
@@ -228,6 +234,24 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Filters whether post type supports the block editor.
+	 *
+	 * Disables the block editor and associated logic (like enqueueing assets)
+	 * for the story post type.
+	 *
+	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string $post_type         The post type being checked.
+	 * @return bool Whether to use the block editor.
+	 */
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+		if ( self::POST_TYPE_SLUG === $post_type ) {
+			return false;
+		}
+
+		return $use_block_editor;
+	}
+
+	/**
 	 *
 	 * Enqueue scripts for the element editor.
 	 *
@@ -235,7 +259,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public static function admin_enqueue_scripts( $hook ) {
+	public function admin_enqueue_scripts( $hook ) {
 		$screen = get_current_screen();
 
 		if ( ! $screen instanceof WP_Screen ) {
@@ -254,29 +278,6 @@ class Story_Post_Type {
 		// Force media model to load.
 		wp_enqueue_media();
 
-		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.asset.php';
-		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
-		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
-		$version      = isset( $asset['version'] ) ? $asset['version'] : [];
-
-		wp_enqueue_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::WEB_STORIES_SCRIPT_HANDLE . '.js',
-			$dependencies,
-			$version,
-			false
-		);
-
-		wp_set_script_translations( self::WEB_STORIES_SCRIPT_HANDLE, 'web-stories' );
-
-		$settings = self::get_editor_settings();
-
-		wp_localize_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			'webStoriesEditorSettings',
-			$settings
-		);
-
 		wp_register_style(
 			'roboto',
 			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
@@ -284,18 +285,17 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		wp_enqueue_style(
-			self::WEB_STORIES_STYLE_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::WEB_STORIES_STYLE_HANDLE . '.css',
-			[ 'roboto' ],
-			$version
+		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE );
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
+
+		wp_localize_script(
+			self::WEB_STORIES_SCRIPT_HANDLE,
+			'webStoriesEditorSettings',
+			$this->get_editor_settings()
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		wp_styles()->registered['wp-admin']->deps = array_diff(
-			wp_styles()->registered['wp-admin']->deps,
-			[ 'forms' ]
-		);
+		$this->remove_admin_style( [ 'forms' ] );
 	}
 
 	/**
@@ -303,7 +303,7 @@ class Story_Post_Type {
 	 *
 	 * @return array
 	 */
-	public static function get_editor_settings() {
+	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
 		$rest_base                = self::POST_TYPE_SLUG;
@@ -334,14 +334,15 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
+
 		$settings = [
 			'id'     => 'edit-story',
 			'config' => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'timeFormat'       => get_option( 'time_format' ),
-				'allowedMimeTypes' => Media::get_allowed_mime_types(),
-				'allowedFileTypes' => Media::get_allowed_file_types(),
+				'allowedMimeTypes' => $this->get_allowed_mime_types(),
+				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
@@ -359,19 +360,26 @@ class Story_Post_Type {
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => Discovery::get_publisher_data(),
-					'logoPlaceholder' => self::PUBLISHER_LOGO_PLACEHOLDER,
+					'publisher'       => $this->get_publisher_data(),
+					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
 			'flags'  => [
+				/**
+				 * Description: Enables user facing animations.
+				 * Author: @mariano-formidable
+				 * Issue: 1903
+				 * Creation date: 2020-06-08
+				 */
+				'enableAnimation'              => false,
 				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu'            => false,
+				'mediaDropdownMenu'            => true,
 				/**
 				 * Description: Flag for new font picker with typeface previews in style panel.
 				 * Author: @carlos-kelly
@@ -421,6 +429,20 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-04
 				 */
 				'showTextAndShapesSearchInput' => false,
+				/**
+				 * Description: Flag for the 3P Media tab.
+				 * Author: @diegovar
+				 * Issue: #2508
+				 * Creation date: 2020-06-17
+				 */
+				'media3pTab'                   => false,
+				/**
+				 * Description: Flag to show or hide the elements tab.
+				 * Author: @diegovar
+				 * Issue: #2616
+				 * Creation date: 2020-06-23
+				 */
+				'showElementsTab'              => false,
 			],
 
 		];
@@ -435,11 +457,69 @@ class Story_Post_Type {
 	 *
 	 * @return string Template.
 	 */
-	public static function filter_template_include( $template ) {
+	public function filter_template_include( $template ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) && ! is_embed() ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/single-web-story.php';
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Filters the gtag configuration options for the amp-analytics tag.
+	 *
+	 * @see https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/
+	 * @see https://github.com/ampproject/amphtml/blob/master/extensions/amp-story/amp-story-analytics.md
+	 *
+	 * @param array $gtag_opt Array of gtag configuration options.
+	 * @return array Modified configuration options.
+	 */
+	public function filter_site_kit_gtag_opt( $gtag_opt ) {
+		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
+			return $gtag_opt;
+		}
+
+		$post = get_post();
+
+		if ( ! $post instanceof WP_Post ) {
+			return $gtag_opt;
+		}
+
+		$title       = get_the_title( $post );
+		$story_id    = $post->ID;
+		$tracking_id = $gtag_opt['vars']['gtag_id'];
+
+		$gtag_opt['triggers'] = $gtag_opt['triggers'] ?: [];
+
+		if ( ! isset( $gtag_opt['triggers']['storyProgress'] ) ) {
+			$gtag_opt['triggers']['storyProgress'] = [
+				'on'   => 'story-page-visible',
+				'vars' => [
+					'event_name'     => 'custom',
+					'event_action'   => 'story_progress',
+					'event_category' => $title,
+					'event_label'    => $story_id,
+					'send_to'        => [
+						$tracking_id,
+					],
+				],
+			];
+		}
+
+		if ( ! isset( $gtag_opt['triggers']['storyEnd'] ) ) {
+			$gtag_opt['triggers']['storyEnd'] = [
+				'on'   => 'story-last-page-visible',
+				'vars' => [
+					'event_name'     => 'custom',
+					'event_action'   => 'story_complete',
+					'event_category' => $title,
+					'send_to'        => [
+						$tracking_id,
+					],
+				],
+			];
+		}
+
+		return $gtag_opt;
 	}
 }

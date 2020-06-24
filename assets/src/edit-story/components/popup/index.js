@@ -65,10 +65,6 @@ const Container = styled.div.attrs(
     },
   })
 )`
-  max-height: ${({ maxHeight }) =>
-    maxHeight > 0 ? maxHeight + 'px' : 'initial'};
-  ${({ showOverflow }) =>
-    showOverflow ? 'overflow: visible;' : 'overflow-y: auto;'}
   position: fixed;
   z-index: 2;
   ${({ placement }) => getTransforms(placement)}
@@ -104,13 +100,12 @@ function Popup({
   anchor,
   dock,
   children,
+  renderContents,
   placement = 'bottom',
   spacing,
   isOpen,
-  showOverflow,
   fillWidth = false,
   fillHeight = false,
-  maxHeight = 0,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -159,10 +154,10 @@ function Popup({
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
-          maxHeight={maxHeight}
-          showOverflow={showOverflow}
         >
-          {children}
+          {renderContents
+            ? renderContents({ propagateDimensionChange: positionPopup })
+            : children}
         </Container>,
         document.body
       )

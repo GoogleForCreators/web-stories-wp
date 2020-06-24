@@ -26,8 +26,8 @@ const DndMode = {
  */
 class MouseWithDnd {
   /**
-   * @param {Page} page
-   * @param {Frame} frame
+   * @param {Object} page
+   * @param {Object} frame
    */
   constructor(page, frame) {
     this._page = page;
@@ -101,7 +101,7 @@ class MouseWithDnd {
  */
 class DndClientBinding {
   /**
-   * @param {Frame} context
+   * @param {Object} context
    */
   constructor(context) {
     this._context = context;
