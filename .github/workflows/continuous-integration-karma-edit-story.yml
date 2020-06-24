@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Edit Story Integration Tests
 
 on:
   push:
