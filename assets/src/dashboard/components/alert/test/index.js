@@ -36,6 +36,19 @@ describe('Alert', () => {
 
     expect(alert).toBeInTheDocument();
   });
+  it('should render 1 alert with a title', () => {
+    const wrapper = renderWithTheme(
+      <Alert
+        message={'this is an error'}
+        title={'this is an alert title'}
+        severity={ALERT_SEVERITY.ERROR}
+      />
+    );
+
+    const alert = wrapper.getByText('this is an alert title');
+
+    expect(alert).toBeInTheDocument();
+  });
 
   it('should recognize click on DismissButton', () => {
     const mockDismissClick = jest.fn();
@@ -44,7 +57,7 @@ describe('Alert', () => {
         isAllowDismiss={true}
         message={'this is an error'}
         severity={ALERT_SEVERITY.ERROR}
-        handleDismissClick={mockDismissClick}
+        handleDismiss={mockDismissClick}
       />
     );
 

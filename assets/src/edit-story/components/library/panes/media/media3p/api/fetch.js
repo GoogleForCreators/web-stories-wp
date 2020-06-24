@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
@@ -21,6 +20,8 @@ import https from 'https';
 
 /**
  * Simple utility function to make GET requests.
+ *
+ * Used to fetch data from the Google Fonts API.
  *
  * @param {string} url URL to request.
  * @return {Promise<string>} Result.
@@ -32,7 +33,7 @@ function fetch(url) {
     https
       .get(url, (res) => {
         if (res.statusCode < 200 || res.statusCode > 299) {
-          reject(new Error('Error: ' + res.statusCode));
+          reject(new Error('Error fetching ' + url + ': ' + res.statusCode));
         }
 
         res.on('data', (chunk) => data.push(chunk));

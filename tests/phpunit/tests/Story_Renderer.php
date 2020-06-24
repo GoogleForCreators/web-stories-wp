@@ -17,18 +17,17 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\Discovery;
-
 class Story_Renderer extends \WP_UnitTestCase {
-	protected static $user;
-
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$user = $factory->user->create( [ 'role' => 'administrator' ] );
+	public function setUp() {
+		// When running the tests, we don't have unfiltered_html capabilities.
+		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
+		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function setUp() {
-		// Avoids HTML in post_content being stripped because of lacking capabilities.
-		wp_set_current_user( self::$user );
+	public function tearDown() {
+		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
 	public function test_replace_html_start_tag() {

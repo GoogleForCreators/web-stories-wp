@@ -22,11 +22,7 @@ import styled, { keyframes } from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-  ALERT_SEVERITY,
-  KEYBOARD_USER_SELECTOR,
-  Z_INDEX,
-} from '../../constants';
+import { ALERT_SEVERITY, KEYBOARD_USER_SELECTOR } from '../../constants';
 import { TypographyPresets } from '../typography';
 
 const slideIn = keyframes`
@@ -68,13 +64,17 @@ export const AlertContainer = styled.div`
   background-color: ${({ theme, severity }) =>
     theme.colors[getColor(severity)]};
   border-radius: 5px;
-  z-index: ${Z_INDEX.ALERT};
   animation: 0.5s ${slideIn} ease-out;
 `;
 
 export const AlertText = styled.p`
   ${TypographyPresets.Medium};
   width: calc(100% - 25px);
+`;
+
+export const AlertTitle = styled.span`
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  display: block;
 `;
 
 export const DismissButton = styled.button`

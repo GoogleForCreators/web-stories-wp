@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import useLibrary from './useLibrary';
-import { getPane } from './panes';
-import { getTabId } from './panes/shared';
-
-function LibraryPanes() {
-  const { tab, tabs } = useLibrary((state) => ({
-    tab: state.state.tab,
-    tabs: state.data.tabs,
-  }));
-  const panes = tabs.map(getPane);
-  return panes.map(({ id, Pane }) => (
-    <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
-  ));
+function blobsToSingleBlob({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
 }
 
-export default LibraryPanes;
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (element?.mask?.type && element?.mask?.type.startsWith('blob-')) {
+    element.mask.type = 'blob';
+  }
+  return element;
+}
+
+export default blobsToSingleBlob;
