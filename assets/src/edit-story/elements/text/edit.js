@@ -24,6 +24,7 @@ import {
   useRef,
   useCallback,
   useMemo,
+  useState,
 } from 'react';
 
 /**
@@ -46,6 +47,8 @@ import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { useTransformHandler } from '../../components/transform';
+import SingleSelectionMovable from '../../components/canvas/singleSelectionMovable';
+import useCanvas from '../../components/canvas/useCanvas';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
@@ -70,8 +73,8 @@ const TextBox = styled.div`
   right: 0;
 `;
 
-function TextEdit({
-  element: {
+function TextEdit({ element, box: { x, y, height, rotationAngle } }) {
+  const {
     id,
     content,
     backgroundColor,
@@ -79,9 +82,7 @@ function TextEdit({
     opacity,
     height: elementHeight,
     ...rest
-  },
-  box: { x, y, height, rotationAngle },
-}) {
+  } = element;
   const { font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
@@ -107,6 +108,13 @@ function TextEdit({
       editorToDataY,
     })
   );
+
+  const { lastSelectionEvent } = useCanvas(
+    ({ state: { lastSelectionEvent } }) => ({
+      lastSelectionEvent,
+    })
+  );
+
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     font,
@@ -135,9 +143,10 @@ function TextEdit({
     [id, updateElementById]
   );
 
+  const [textBox, setTextBox] = useState(null);
   const wrapperRef = useRef(null);
-  const textBoxRef = useRef(null);
   const editorRef = useRef(null);
+  const moveableRef = useRef(null);
   const boxRef = useRef();
   const contentRef = useRef();
   const editorHeightRef = useRef(0);
@@ -193,11 +202,16 @@ function TextEdit({
 
   // A function to remeasure height
   const handleResize = useCallback(() => {
-    const wrapper = wrapperRef.current;
-    const textBox = textBoxRef.current;
-    editorHeightRef.current = textBox.offsetHeight;
-    wrapper.style.height = `${editorHeightRef.current}px`;
-  }, []);
+    if (textBox) {
+      const wrapper = wrapperRef.current;
+      editorHeightRef.current = textBox.offsetHeight;
+      wrapper.style.height = `${editorHeightRef.current}px`;
+      // Also update moveable.
+      if (moveableRef.current) {
+        moveableRef.current.updateRect();
+      }
+    }
+  }, [textBox]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
@@ -219,7 +233,7 @@ function TextEdit({
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   useTransformHandler(id, (transform) => {
-    const target = textBoxRef.current;
+    const target = textBox;
     const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
@@ -227,15 +241,26 @@ function TextEdit({
   });
 
   return (
-    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
-      <TextBox ref={textBoxRef} {...textProps}>
-        <RichTextEditor
-          ref={editorRef}
-          content={content}
-          onChange={handleUpdate}
+    <>
+      <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
+        <TextBox ref={setTextBox} {...textProps}>
+          <RichTextEditor
+            ref={editorRef}
+            content={content}
+            onChange={handleUpdate}
+          />
+        </TextBox>
+      </Wrapper>
+      {textBox && (
+        <SingleSelectionMovable
+          selectedElement={element}
+          targetEl={textBox}
+          pushEvent={lastSelectionEvent}
+          isEditMode={true}
+          editMoveableRef={moveableRef}
         />
-      </TextBox>
-    </Wrapper>
+      )}
+    </>
   );
 }
 

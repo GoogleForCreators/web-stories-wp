@@ -45,8 +45,14 @@ function SingleSelectionMovable({
   targetEl,
   pushEvent,
   isEditMode,
+  editMoveableRef,
 }) {
-  const moveable = useRef(null);
+  let moveable = useRef(null);
+  // In edit mode we need to track the ref from upper level
+  // Since the edit mode might also need updating Moveable rect.
+  if (isEditMode) {
+    moveable = editMoveableRef;
+  }
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
@@ -152,7 +158,11 @@ function SingleSelectionMovable({
   };
 
   const setTransformStyle = (target) => {
-    target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
+    if (isEditMode) {
+      target.style.transform = `rotate(${frame.rotate - box.rotationAngle}deg)`;
+    } else {
+      target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
+    }
     if (frame.resize[0]) {
       target.style.width = `${frame.resize[0]}px`;
     }
@@ -414,6 +424,7 @@ SingleSelectionMovable.propTypes = {
   targetEl: PropTypes.object.isRequired,
   pushEvent: PropTypes.object,
   isEditMode: PropTypes.bool,
+  editMoveableRef: PropTypes.node,
 };
 
 export default SingleSelectionMovable;

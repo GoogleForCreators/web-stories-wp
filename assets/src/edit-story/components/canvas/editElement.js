@@ -23,7 +23,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
@@ -31,8 +30,6 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
-import useCanvas from './useCanvas';
-import SingleSelectionMovable from './singleSelectionMovable';
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -47,36 +44,17 @@ function EditElement({ element }) {
     getBox: state.actions.getBox,
   }));
 
-  const [editWrapper, setEditWrapper] = useState(null);
-
-  const { lastSelectionEvent } = useCanvas(
-    ({ state: { lastSelectionEvent } }) => ({
-      lastSelectionEvent,
-    })
-  );
-
-  const { Edit, hasEditModeMovable } = getDefinitionForType(type);
+  const { Edit } = getDefinitionForType(type);
   const box = getBox(element);
 
   return (
-    <>
-      <Wrapper
-        aria-labelledby={`layer-${id}`}
-        {...box}
-        onMouseDown={(evt) => evt.stopPropagation()}
-        ref={setEditWrapper}
-      >
-        <Edit element={element} box={box} />
-      </Wrapper>
-      {hasEditModeMovable && editWrapper && (
-        <SingleSelectionMovable
-          selectedElement={element}
-          targetEl={editWrapper}
-          pushEvent={lastSelectionEvent}
-          isEditMode={true}
-        />
-      )}
-    </>
+    <Wrapper
+      aria-labelledby={`layer-${id}`}
+      {...box}
+      onMouseDown={(evt) => evt.stopPropagation()}
+    >
+      <Edit element={element} box={box} />
+    </Wrapper>
   );
 }
 
