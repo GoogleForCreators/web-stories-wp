@@ -27,7 +27,7 @@ import classnames from 'classnames';
 import { useStory, useDropTargets } from '../../app';
 import Movable from '../movable';
 import objectWithout from '../../utils/objectWithout';
-import { useTransform } from '../transform';
+import {useTransform, useTransformHandler} from '../transform';
 import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
@@ -45,8 +45,12 @@ function SingleSelectionMovable({
   targetEl,
   pushEvent,
   isEditMode,
+  moveableRef,
 }) {
-  const moveable = useRef(null);
+  let moveable = useRef(null);
+  if (isEditMode) {
+    moveable = moveableRef;
+  }
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
@@ -161,6 +165,14 @@ function SingleSelectionMovable({
     }
     pushTransform(selectedElement.id, frame);
   };
+
+  useTransformHandler(selectedElement.id, (transform) => {
+    if (isEditMode && transform?.updates?.height) {
+      if (moveable.current) {
+        moveable.current.updateRect();
+      }
+    }
+  });
 
   /**
    * Resets Movable once the action is done, sets the initial values.

@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
@@ -33,6 +33,7 @@ import {
 import { useUnits } from '../../units';
 import useCanvas from './useCanvas';
 import SingleSelectionMovable from './singleSelectionMovable';
+import {useTransform, useTransformHandler} from "../transform";
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -58,6 +59,24 @@ function EditElement({ element }) {
   const { Edit, hasEditModeMovable } = getDefinitionForType(type);
   const box = getBox(element);
 
+  const {
+    actions: { pushTransform },
+  } = useTransform();
+
+  const moveable = useRef(null);
+
+  useTransformHandler(id, (transform) => {
+    if (editWrapper && moveable.current && transform?.updates?.height) {
+      const target = editWrapper;
+      console.log(transform);
+      const updatedHeight = transform.updates.height;
+      // @todo This should actually calculate the top/left as well ofc.
+      target.style.height = `${updatedHeight}px`;
+      moveable.current.updateRect();
+      pushTransform(id, null);
+    }
+  });
+
   return (
     <>
       <Wrapper
@@ -66,7 +85,11 @@ function EditElement({ element }) {
         onMouseDown={(evt) => evt.stopPropagation()}
         ref={setEditWrapper}
       >
-        <Edit element={element} box={box} />
+        <Edit
+          element={element}
+          box={box}
+          editWrapper={hasEditModeMovable && editWrapper}
+        />
       </Wrapper>
       {hasEditModeMovable && editWrapper && (
         <SingleSelectionMovable
@@ -74,6 +97,7 @@ function EditElement({ element }) {
           targetEl={editWrapper}
           pushEvent={lastSelectionEvent}
           isEditMode={true}
+          moveableRef={moveable}
         />
       )}
     </>
