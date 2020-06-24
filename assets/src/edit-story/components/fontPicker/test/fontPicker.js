@@ -28,12 +28,13 @@ import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
-async function getFontPicker() {
+async function getFontPicker(extraFontOptions) {
   const getAllFontsPromise = Promise.resolve(fontsListResponse);
   const apiContextValue = {
     actions: {
       getAllFonts: () => getAllFontsPromise,
     },
+    ...extraFontOptions,
   };
   const props = {
     onChange: jest.fn(),
@@ -101,5 +102,28 @@ describe('Font Picker', () => {
     // We can't really validate this number anyway in JSDom (no actual
     // layout is happening), so just expect it to be called
     expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
+  });
+
+  it('should display used font as the first options', async () => {
+    const extraFontOptions = {
+      state: {
+        recentFonts: {
+          family: 'Space Mono',
+          name: 'Space Mono',
+        },
+      },
+    };
+    const { getByRole, getAllByRole } = await getFontPicker(extraFontOptions);
+
+    // Fire a click event.
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    // Listbox should be showing after click
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    const firstOptionItem = getAllByRole('option')[0];
+    expect(firstOptionItem).toHaveTextContent('Space Mono');
   });
 });
