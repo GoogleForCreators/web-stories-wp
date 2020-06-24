@@ -9,7 +9,7 @@ on:
 
 jobs:
   unit-php:
-    name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }} (MS: ${{ matrix.multisite }})'
+    name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }}'
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -25,26 +25,18 @@ jobs:
     strategy:
       matrix:
         php: ['7.0', '5.6']
-        wp: ['latest']
-        multisite: [false]
+        wp: ['5.3', 'latest']
         coverage: [false]
         include:
           - php: '7.4'
             wp: 'latest'
-            multisite: true
-            coverage: true
-          - php: '7.4'
-            wp: 'latest'
-            multisite: false
             coverage: true
           - php: '7.4'
             wp: 'trunk'
-            multisite: false
             coverage: false
             experimental: true
           - php: '8.0'
             wp: 'trunk'
-            multisite: false
             coverage: false
             experimental: true
 
@@ -89,19 +81,19 @@ jobs:
         run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
 
       - name: Run tests
-        run: npm run test:php
-        if: ${{ matrix.coverage == false && matrix.multisite == false }}
-
-      - name: Run tests in multisite with coverage
-        run: npm run test:php -- --coverage-clover build/logs/clover.xml -c phpunit-multisite.xml.dist
-        if: ${{ matrix.coverage == true && matrix.multisite == true }}
+        run: |
+          npm run test:php
+          npm run test:php -- -c phpunit-multisite.xml.dist
+        if: ${{ ! matrix.coverage }}
 
       - name: Run tests with coverage
-        run: npm run test:php -- --coverage-clover build/logs/clover.xml
-        if: ${{ matrix.coverage == true && matrix.multisite == false }}
+        run: |
+          npm run test:php -- --coverage-clover build/logs/php-coverage.xml
+          npm run test:php -- --coverage-clover build/logs/php-coverage-multisite.xml -c phpunit-multisite.xml.dist
+        if: ${{ matrix.coverage }}
 
       - name: Uplaod code coverage report
         uses: codecov/codecov-action@v1
         with:
-          file: build/logs/clover.xml
-        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 }}
+          file: build/logs/*.xml
+        if: ${{ matrix.coverage }}
