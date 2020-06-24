@@ -264,6 +264,7 @@ function SingleSelectionMovable({
             selectedElement.id
           );
         }
+        return undefined;
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
@@ -271,13 +272,14 @@ function SingleSelectionMovable({
           return false;
         }
         set(frame.translate);
+        return undefined;
       }}
       onDragEnd={({ target }) => {
         if (isEditMode) {
           return false;
         }
         if (handleElementOutOfCanvas(target)) {
-          return;
+          return undefined;
         }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
@@ -296,6 +298,7 @@ function SingleSelectionMovable({
           }
         }
         resetDragging(target);
+        return undefined;
       }}
       onResizeStart={({ setOrigin, dragStart, direction }) => {
         setOrigin(['%', '%']);
