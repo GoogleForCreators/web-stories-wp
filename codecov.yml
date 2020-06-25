@@ -29,6 +29,10 @@ coverage:
         paths:
           - assets/src/edit-story
 
+      editor.karma:
+        flags:
+          - editor.karma
+
     # Patch-level coverage (how well is the PR tested)
     patch:
       default:
@@ -49,3 +53,8 @@ comment:
   require_changes: true
   branches:
     - 'master'
+
+flags:
+  editor.karma:
+    paths:
+      - assets/src/edit-story

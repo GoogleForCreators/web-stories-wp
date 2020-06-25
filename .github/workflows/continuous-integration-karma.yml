@@ -48,7 +48,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           file: build/logs/karma-coverage/lcov.info
-          flags: karma
+          flags: editor.karma
 
       - name: Upload Percy snapshots
         uses: percy/snapshot-action@v0.1.1
