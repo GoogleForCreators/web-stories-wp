@@ -27,7 +27,6 @@ import metadata from './block.json';
 import edit from './edit';
 import save from './save';
 
-
 const { name, category, attributes } = metadata;
 
 const settings = {
