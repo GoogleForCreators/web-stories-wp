@@ -200,30 +200,24 @@ function SizePositionPanel({
 
   usePresubmitHandler(
     ({ height: newHeight }, { width: oldWidth, height: oldHeight }) => {
-      const ratio = oldHeight / oldWidth;
-      if (isNum(ratio)) {
-        return {
-          height: setDimensionMinMax(
-            dataPixels(newHeight),
-            ratio,
-            MIN_MAX.HEIGHT
-          ),
-        };
-      }
-      return null;
+      const ratio = isNum(oldWidth / oldHeight) ? oldWidth / oldHeight : 1;
+      return {
+        height: setDimensionMinMax(
+          dataPixels(newHeight),
+          ratio,
+          MIN_MAX.HEIGHT
+        ),
+      };
     },
     [height, lockAspectRatio]
   );
 
   usePresubmitHandler(
     ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
-      const ratio = oldWidth / oldHeight;
-      if (isNum(ratio)) {
-        return {
-          width: setDimensionMinMax(dataPixels(newWidth), ratio, MIN_MAX.WIDTH),
-        };
-      }
-      return null;
+      const ratio = isNum(oldWidth / oldHeight) ? oldWidth / oldHeight : 1;
+      return {
+        width: setDimensionMinMax(dataPixels(newWidth), ratio, MIN_MAX.WIDTH),
+      };
     },
     [width, lockAspectRatio]
   );
