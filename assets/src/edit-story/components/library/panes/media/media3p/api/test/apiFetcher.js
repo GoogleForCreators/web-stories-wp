@@ -49,7 +49,6 @@ const ERROR_RESPONSE = {
 function mockFetch(response) {
   jest
     .spyOn(global, 'fetch')
-    .mockImplementation()
     .mockImplementation(() => Promise.resolve(response));
 }
 
