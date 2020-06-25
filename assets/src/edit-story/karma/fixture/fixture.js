@@ -31,7 +31,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import Layout from '../../app/layout';
 import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
-import FixtureEvents from '../../../../../karma/events';
+import FixtureEvents from '../../../../../karma/fixture/events';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 
