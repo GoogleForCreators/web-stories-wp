@@ -59,4 +59,5 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           file: build/logs/lcov.info
-          flags: unittests,editor.unit,dashboard.unit
+          flags: unittests
+          #,editor.unit,dashboard.unit

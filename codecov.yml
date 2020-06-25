@@ -53,7 +53,7 @@ coverage:
         paths:
           - assets/src/edit-story
         flags:
-          - karma
+          - karmatests
 
     # Patch-level coverage (how well is the PR tested)
     patch:
