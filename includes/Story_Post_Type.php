@@ -160,8 +160,12 @@ class Story_Post_Type {
 		if ( ! is_readable( $path ) ) {
 			return false;
 		}
+		$icon_contents = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+		if ( ! $icon_contents ) {
+			return false;
+		}
 
-		return 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( $path ) ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+		return 'data:image/svg+xml;base64,' . base64_encode( $icon_contents );
 	}
 
 	/**
