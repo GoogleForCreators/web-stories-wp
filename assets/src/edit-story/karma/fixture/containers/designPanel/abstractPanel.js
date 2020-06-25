@@ -20,8 +20,8 @@
 import { Container } from '../container';
 
 /**
- * The editor's canvas. Includes: display, frames, editor layers, carousel,
- * navigation buttons, page menu.
+ * An abstract panel supporting properties that all panels have -
+ * such as title and collapsed status.
  */
 export class AbstractPanel extends Container {
   constructor(node, path) {
@@ -34,11 +34,6 @@ export class AbstractPanel extends Container {
   }
 
   get isCollapsed() {
-    // @todo: implement
-    return null;
-  }
-
-  toggle() {
     // @todo: implement
     return null;
   }

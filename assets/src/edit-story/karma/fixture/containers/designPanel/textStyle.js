@@ -21,8 +21,8 @@ import { Toggle, Select } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
- * The editor's canvas. Includes: display, frames, editor layers, carousel,
- * navigation buttons, page menu.
+ * The text style panel containing inputs, toggles, dropdowns and other form elements
+ * to view and manipulate the style of one or more currently selected text elements.
  */
 export class TextStyle extends AbstractPanel {
   constructor(node, path) {

@@ -127,6 +127,6 @@ class Frame extends Container {
   }
 
   get textContent() {
-    return this.node.querySelector('[data-testid="textFrame"]')?.innerHTML;
+    return this.node.querySelector('p')?.innerHTML;
   }
 }

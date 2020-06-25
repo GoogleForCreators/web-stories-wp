@@ -21,8 +21,8 @@ import { Container } from './container';
 import { DesignPanel } from './designPanel';
 
 /**
- * The editor's canvas. Includes: display, frames, editor layers, carousel,
- * navigation buttons, page menu.
+ * The right-hand side inspector containing tabs and panes for design panel
+ * and document panel.
  */
 export class Inspector extends Container {
   constructor(node, path) {

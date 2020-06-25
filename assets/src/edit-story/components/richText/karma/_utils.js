@@ -50,7 +50,7 @@ export function initHelpers(data) {
     let remaining = count;
     const press = () => {
       if (remaining === 0) {
-        return true;
+        return Promise.resolve(true);
       }
       remaining--;
       return data.fixture.events.keyboard.press(key).then(press);

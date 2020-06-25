@@ -20,8 +20,10 @@
 import { Container } from '../container';
 
 /**
- * The editor's canvas. Includes: display, frames, editor layers, carousel,
- * navigation buttons, page menu.
+ * An icon-based toggle, that is either on or off and is surrounded by a label
+ * acting as the button to trigger it. The actual toggle element (the
+ * `<input type="checkbox" />`) is visually hidden so any mouse-user would
+ * click the surrounding label rather than the input.
  */
 export class Toggle extends Container {
   constructor(node, path) {

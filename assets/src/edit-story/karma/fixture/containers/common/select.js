@@ -20,8 +20,8 @@
 import { Container } from '../container';
 
 /**
- * The editor's canvas. Includes: display, frames, editor layers, carousel,
- * navigation buttons, page menu.
+ * The select dropdown, which is actually just a button that open a popup
+ * containing the actual dropdown options.
  */
 export class Select extends Container {
   constructor(node, path) {
