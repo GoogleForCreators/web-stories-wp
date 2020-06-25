@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import fetch from './fetch';
-
 const API_DOMAIN = 'https://staging-media3p.sandbox.googleapis.com';
 const API_KEY = 'AIzaSyAgauA-izuTeGWFe9d9O0d0id-pV43Y4kE'; // dev key
 
@@ -91,13 +86,16 @@ export async function listMedia({
   const queryString = new URLSearchParams(Object.fromEntries(new Map(params)));
   const url = API_DOMAIN + Paths.LIST_MEDIA + '?' + queryString.toString();
 
-  const data = await fetch(url);
+  const response = await window.fetch(url);
 
-  if (!data.length) {
-    throw new Error('Obtained an empty response from listMedia call.');
+  if (!response.ok) {
+    throw new Error(
+      'Obtained an error from the listMedia call, statusCode: ' +
+        response.status
+    );
   }
 
-  return JSON.parse(data);
+  return response.json();
 }
 
 function validateOrderBy(orderBy) {
