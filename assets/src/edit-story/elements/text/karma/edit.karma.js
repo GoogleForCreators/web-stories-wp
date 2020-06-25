@@ -57,9 +57,7 @@ describe('TextEdit integration', () => {
         })
       );
 
-      frame = fixture.querySelector(
-        `[data-element-id="${element.id}"] [data-testid="textFrame"]`
-      );
+      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
     });
 
     it('should render initial content', () => {
@@ -116,7 +114,8 @@ describe('TextEdit integration', () => {
         );
 
         // The content is updated in the frame.
-        expect(frame.innerHTML).toEqual(
+        // @todo: What to do with `<p>` and containers?
+        expect(frame.querySelector('p').innerHTML).toEqual(
           '<span style="font-weight: 700">hello world!</span>'
         );
       });

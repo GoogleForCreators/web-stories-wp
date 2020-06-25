@@ -47,7 +47,7 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   background: transparent;
   display: block;
   min-width: ${({ isIcon }) => (isIcon ? 'initial' : '63px')};
-  height: 30px;
+  max-height: 30px;
   padding: 0 10px;
   cursor: pointer;
   text-decoration: none;
@@ -100,17 +100,32 @@ const PrimaryButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.action};
   background-color: ${({ theme }) => theme.colors.action};
   color: ${({ theme }) => theme.colors.fg.v1};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v1};
+  }
 `;
 
 const SecondaryButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v1};
   background-color: ${({ theme }) => theme.colors.fg.v3};
   color: ${({ theme }) => theme.colors.bg.v5};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v5};
+  }
 `;
 
 const OutlineButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v4};
   color: ${({ theme }) => theme.colors.fg.v1};
+  &:focus,
+  &:active,
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.v1};
+  }
 `;
 
 const PlainButton = styled(Base)`
