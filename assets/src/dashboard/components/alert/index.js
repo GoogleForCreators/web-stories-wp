@@ -31,17 +31,23 @@ import { useRef, useEffect } from 'react';
 import { Close } from '../../icons';
 import { AlertSeveritiesPropType } from '../../types';
 import { AUTO_REMOVE_ALERT_TIME_INTERVAL } from '../../constants';
-import { AlertContainer, AlertText, DismissButton } from './components';
+import {
+  AlertContainer,
+  AlertText,
+  AlertTitle,
+  DismissButton,
+} from './components';
 
 const Alert = ({
   isPreventAutoDismiss,
   isAllowDismiss,
   message,
   severity,
-  handleDismissClick,
+  title,
+  handleDismiss,
 }) => {
   const autoDismissRef = useRef();
-  autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismissClick;
+  autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismiss;
 
   useEffect(() => {
     if (!autoDismissRef.current) {
@@ -61,10 +67,13 @@ const Alert = ({
       role="alert"
       aria-label={__('Alert Notification', 'web-stories')}
     >
-      <AlertText>{message}</AlertText>
+      <AlertText>
+        {title && <AlertTitle>{title}</AlertTitle>}
+        {message}
+      </AlertText>
       {isAllowDismiss && (
         <DismissButton
-          onClick={handleDismissClick}
+          onClick={handleDismiss}
           ariaLabel={__('Dismiss Alert', 'web-stories')}
         >
           <Close />
@@ -77,9 +86,10 @@ const Alert = ({
 Alert.propTypes = {
   isAllowDismiss: PropTypes.bool,
   message: PropTypes.string.isRequired,
-  handleDismissClick: PropTypes.func,
+  handleDismiss: PropTypes.func,
   isPreventAutoDismiss: PropTypes.bool,
   severity: AlertSeveritiesPropType,
+  title: PropTypes.string,
 };
 
 export default Alert;

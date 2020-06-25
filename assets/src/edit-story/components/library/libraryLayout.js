@@ -31,7 +31,10 @@ import { HEADER_HEIGHT } from '../../constants';
 import LibraryPanes from './libraryPanes';
 import LibraryTabs from './libraryTabs';
 
-const Layout = styled.div`
+const Layout = styled.section.attrs({
+  'aria-label': __('Library', 'web-stories'),
+  'data-testid': 'libraryLayout',
+})`
   height: 100%;
   display: grid;
   grid:
@@ -56,7 +59,7 @@ const LibraryBackground = styled.div`
 
 function LibraryLayout() {
   return (
-    <Layout data-testid="libraryLayout">
+    <Layout>
       <TabsArea>
         <LibraryTabs />
       </TabsArea>

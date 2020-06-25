@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +27,8 @@ import Context from './context';
 
 function TransformProvider({ children }) {
   const transformHandlersRef = useRef({});
+  const lastTransformsRef = useRef({});
+  const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
   const registerTransformHandler = useCallback((id, handler) => {
     const handlerListMap = transformHandlersRef.current;
@@ -39,14 +41,36 @@ function TransformProvider({ children }) {
 
   const pushTransform = useCallback((id, transform) => {
     const handlerListMap = transformHandlersRef.current;
+    const lastTransforms = lastTransformsRef.current;
     const handlerList = handlerListMap[id];
+
     if (handlerList) {
       handlerList.forEach((handler) => handler(transform));
+    }
+
+    if (transform === null) {
+      lastTransforms[id] = null;
+    } else {
+      lastTransforms[id] = { ...lastTransforms[id], ...transform };
+    }
+
+    if (isDoneTransform(lastTransforms[id])) {
+      const allTransformsDone = Object.values(lastTransforms).every(
+        isDoneTransform
+      );
+      if (allTransformsDone) {
+        lastTransformsRef.current = {};
+        setIsAnythingTransforming(false);
+      }
+    } else {
+      setIsAnythingTransforming(true);
     }
   }, []);
 
   const state = {
-    state: {},
+    state: {
+      isAnythingTransforming,
+    },
     actions: {
       registerTransformHandler,
       pushTransform,
@@ -58,6 +82,14 @@ function TransformProvider({ children }) {
 
 TransformProvider.propTypes = {
   children: PropTypes.node,
+};
+
+const isDoneTransform = (transform) => {
+  if (transform === null) {
+    return true;
+  }
+  const transformKeys = Object.keys(transform);
+  return transformKeys.length === 1 && 'dropTargets' in transform;
 };
 
 export default TransformProvider;

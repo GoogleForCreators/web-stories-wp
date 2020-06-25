@@ -27,8 +27,11 @@ export const ACTION_TYPES = {
   FETCH_STORIES_SUCCESS: 'fetch_stories_success',
   FETCH_STORIES_FAILURE: 'fetch_stories_failure',
   UPDATE_STORY: 'update_story',
+  UPDATE_STORY_FAILURE: 'update_story_failure',
   TRASH_STORY: 'trash_story',
+  TRASH_STORY_FAILURE: 'trash_story_failure',
   DUPLICATE_STORY: 'duplicate_story',
+  DUPLICATE_STORY_FAILURE: 'duplicate_story_failure',
 };
 
 export const defaultStoriesState = {
@@ -51,10 +54,13 @@ function storyReducer(state, action) {
     }
 
     case ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE:
-    case ACTION_TYPES.FETCH_STORIES_FAILURE: {
+    case ACTION_TYPES.FETCH_STORIES_FAILURE:
+    case ACTION_TYPES.UPDATE_STORY_FAILURE:
+    case ACTION_TYPES.TRASH_STORY_FAILURE:
+    case ACTION_TYPES.DUPLICATE_STORY_FAILURE: {
       return {
         ...state,
-        error: action.payload,
+        error: { ...action.payload, id: Date.now() },
       };
     }
 
@@ -68,6 +74,7 @@ function storyReducer(state, action) {
     case ACTION_TYPES.UPDATE_STORY:
       return {
         ...state,
+        error: {},
         stories: {
           ...state.stories,
           [action.payload.id]: action.payload,
@@ -77,6 +84,7 @@ function storyReducer(state, action) {
     case ACTION_TYPES.TRASH_STORY:
       return {
         ...state,
+        error: {},
         storiesOrderById: state.storiesOrderById.filter(
           (id) => id !== action.payload.id
         ),
@@ -97,6 +105,7 @@ function storyReducer(state, action) {
     case ACTION_TYPES.DUPLICATE_STORY:
       return {
         ...state,
+        error: {},
         storiesOrderById: [action.payload.id, ...state.storiesOrderById],
         totalStoriesByStatus: {
           ...state.totalStoriesByStatus,

@@ -39,7 +39,7 @@ describe('Toaster', () => {
       <Toaster
         activeToasts={[testToast]}
         isAllowEarlyDismiss={false}
-        onRemoveToastClick={mockRemoveToastClick}
+        handleRemoveToast={mockRemoveToastClick}
       />
     );
 
@@ -53,7 +53,7 @@ describe('Toaster', () => {
       <Toaster
         activeToasts={[testToast]}
         isAllowEarlyDismiss={false}
-        onRemoveToastClick={mockRemoveToastClick}
+        handleRemoveToast={mockRemoveToastClick}
       />
     );
 
@@ -67,7 +67,7 @@ describe('Toaster', () => {
       <Toaster
         activeToasts={[testToast]}
         isAllowEarlyDismiss={true}
-        onRemoveToastClick={mockRemoveToastClick}
+        handleRemoveToast={mockRemoveToastClick}
       />
     );
 
