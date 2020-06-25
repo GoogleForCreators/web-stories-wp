@@ -16,8 +16,10 @@
 /**
  * External dependencies
  */
+import { useEffect, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
@@ -42,6 +44,7 @@ const ScrollContent = styled.div`
 const Inner = styled.div`
   position: relative;
   padding-top: ${(props) => props.paddingTop || 0}px;
+  width: ${({ scrollbarWidth }) => `calc(100% + ${scrollbarWidth}px)`};
 `;
 
 Inner.propTypes = {
@@ -52,10 +55,28 @@ const Scrollable = ({ children }) => {
   const {
     state: { scrollFrameRef, squishContentHeight },
   } = useLayoutContext();
+  const [scrollbarWidth, setScrollbarWidth] = useState(0);
+
+  const getScrollbarWidth = useCallback(() => {
+    const { current } = scrollFrameRef;
+
+    setScrollbarWidth(current.offsetWidth - current.clientWidth);
+  }, [scrollFrameRef]);
+
+  useEffect(() => {
+    if (!scrollFrameRef.current) {
+      return () => {};
+    }
+    getScrollbarWidth();
+
+    return () => {};
+  }, [getScrollbarWidth, scrollFrameRef]);
 
   return (
     <ScrollContent ref={scrollFrameRef}>
-      <Inner paddingTop={squishContentHeight}>{children}</Inner>
+      <Inner scrollbarWidth={scrollbarWidth} paddingTop={squishContentHeight}>
+        {children}
+      </Inner>
     </ScrollContent>
   );
 };
