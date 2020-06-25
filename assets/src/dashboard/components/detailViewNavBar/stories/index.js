@@ -17,21 +17,24 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
+import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { TemplateNavBar } from '../';
+import { DetailViewNavBar } from '../';
 
 export default {
-  title: 'Dashboard/Components/TemplateNavBar',
+  title: 'Dashboard/Components/DetailViewNavBar',
 };
 
 export const _default = () => {
   return (
-    <TemplateNavBar
+    <DetailViewNavBar
       handleCta={action('handle cta clicked')}
       handleBookmarkClick={action('handle bookmark clicked')}
+      isBookmarkingEnabled={boolean('isBookmarkingEnabled')}
+      ctaText={text('ctaText', 'Use template')}
     />
   );
 };

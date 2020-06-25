@@ -79,23 +79,32 @@ const CapitalizedButton = styled(Button)`
   text-transform: uppercase;
 `;
 
-export function TemplateNavBar({ handleCta, handleBookmarkClick }) {
+export function DetailViewNavBar({
+  handleCta,
+  handleBookmarkClick,
+  isBookmarkingEnabled,
+  ctaText,
+}) {
   return (
     <Nav>
       <Container>
         <CloseLink href={parentRoute()}>{__('Close', 'web-stories')}</CloseLink>
       </Container>
       <Container>
-        {handleBookmarkClick && <BookmarkToggle />}
+        {isBookmarkingEnabled && (
+          <BookmarkToggle onClick={handleBookmarkClick} />
+        )}
         <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
-          {__('Use template', 'web-stories')}
+          {ctaText}
         </CapitalizedButton>
       </Container>
     </Nav>
   );
 }
 
-TemplateNavBar.propTypes = {
+DetailViewNavBar.propTypes = {
+  ctaText: PropTypes.string.isRequired,
   handleBookmarkClick: PropTypes.func,
   handleCta: PropTypes.func.isRequired,
+  isBookmarkingEnabled: PropTypes.bool,
 };

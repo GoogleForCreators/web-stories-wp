@@ -33,10 +33,10 @@ import {
   CardGallery,
   ColorList,
   DetailViewContentGutter,
+  DetailViewNavBar,
   Layout,
   PaginationButton,
   Pill,
-  TemplateNavBar,
 } from '../../../components';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { ApiContext } from '../../api/apiProvider';
@@ -193,8 +193,6 @@ function TemplateDetails() {
     switchToTemplateByOffset,
   ]);
 
-  const handleBookmarkClickSelected = useCallback(() => {}, []);
-
   if (!template) {
     return null;
   }
@@ -205,11 +203,10 @@ function TemplateDetails() {
         <TransformProvider>
           <Layout.Provider>
             <Layout.Fixed>
-              <TemplateNavBar
+              <DetailViewNavBar
+                ctaText={__('Use template', 'web-stories')}
                 handleCta={() => createStoryFromTemplate(template)}
-                handleBookmarkClick={
-                  enableBookmarks ? handleBookmarkClickSelected : undefined
-                }
+                isBookmarkingEnabled={enableBookmarks}
               />
             </Layout.Fixed>
             <Layout.Scrollable>
