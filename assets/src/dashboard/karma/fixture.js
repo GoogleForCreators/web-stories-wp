@@ -26,9 +26,9 @@ import { act, render, screen } from '@testing-library/react';
  */
 import App from '../app';
 import ApiProvider from '../app/api/apiProvider';
-import FixtureEvents from '../../../../karma/events';
-import ComponentStub from '../../../../karma/componentStub';
-import actPromise from '../../../../karma/actPromise';
+import FixtureEvents from '../../../../karma/fixture/events';
+import ComponentStub from '../../../../karma/fixture/componentStub';
+import actPromise from '../../../../karma/fixture/actPromise';
 import ApiProviderFixture from './apiProviderFixture';
 
 const defaultConfig = {

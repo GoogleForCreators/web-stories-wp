@@ -39,7 +39,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
-      { pattern: 'karma/init.js', watched: false },
+      { pattern: 'karma/fixture/init.js', watched: false },
       {
         pattern: '__static__/**/*',
         watched: false,
