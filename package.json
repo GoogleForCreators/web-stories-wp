@@ -52,6 +52,7 @@
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
     "react-moveable": "^0.20.10",
+    "react-photo-gallery": "^8.0.0",
     "react-pure-render": "^1.0.2",
     "react-transition-group": "^4.4.1",
     "resize-observer-polyfill": "^1.5.1",
