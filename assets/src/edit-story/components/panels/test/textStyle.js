@@ -90,6 +90,7 @@ function Wrapper({ children }) {
               ],
               fallbacks: ['fallback1'],
             }),
+            addRecentFont: jest.fn(),
           },
         }}
       >
