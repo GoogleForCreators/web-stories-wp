@@ -79,19 +79,14 @@ const CapitalizedButton = styled(Button)`
   text-transform: uppercase;
 `;
 
-export function DetailViewNavBar({
-  handleCta,
-  handleBookmarkClick,
-  isBookmarkingEnabled,
-  ctaText,
-}) {
+export function DetailViewNavBar({ handleCta, handleBookmarkClick, ctaText }) {
   return (
     <Nav>
       <Container>
         <CloseLink href={parentRoute()}>{__('Close', 'web-stories')}</CloseLink>
       </Container>
       <Container>
-        {isBookmarkingEnabled && (
+        {handleBookmarkClick && (
           <BookmarkToggle onClick={handleBookmarkClick} />
         )}
         <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
@@ -106,5 +101,4 @@ DetailViewNavBar.propTypes = {
   ctaText: PropTypes.string.isRequired,
   handleBookmarkClick: PropTypes.func,
   handleCta: PropTypes.func.isRequired,
-  isBookmarkingEnabled: PropTypes.bool,
 };

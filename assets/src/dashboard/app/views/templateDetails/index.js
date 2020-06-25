@@ -22,7 +22,6 @@ import { sprintf, __ } from '@wordpress/i18n';
  * External dependencies
  */
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -65,7 +64,6 @@ function TemplateDetails() {
   const [orderedTemplates, setOrderedTemplates] = useState([]);
   const { pageSize } = usePagePreviewSize({ isGrid: true });
   const { isRTL } = useConfig();
-  const enableBookmarks = useFeature('enableBookmarkActions');
 
   const {
     state: {
@@ -206,7 +204,6 @@ function TemplateDetails() {
               <DetailViewNavBar
                 ctaText={__('Use template', 'web-stories')}
                 handleCta={() => createStoryFromTemplate(template)}
-                isBookmarkingEnabled={enableBookmarks}
               />
             </Layout.Fixed>
             <Layout.Scrollable>
