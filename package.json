@@ -76,7 +76,7 @@
     "@storybook/addon-actions": "^6.0.0-beta.36",
     "@storybook/addon-backgrounds": "^6.0.0-beta.36",
     "@storybook/addon-docs": "^6.0.0-beta.34",
-    "@storybook/addon-knobs": "^6.0.0-beta.31",
+    "@storybook/addon-knobs": "^6.0.0-beta.36",
     "@storybook/addon-storysource": "^6.0.0-beta.33",
     "@storybook/addon-viewport": "^6.0.0-beta.36",
     "@storybook/client-api": "^6.0.0-beta.33",
