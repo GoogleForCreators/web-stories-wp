@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -55,22 +54,10 @@ const Scrollable = ({ children }) => {
   const {
     state: { scrollFrameRef, squishContentHeight },
   } = useLayoutContext();
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
 
-  const getScrollbarWidth = useCallback(() => {
-    const { current } = scrollFrameRef;
-
-    setScrollbarWidth(current.offsetWidth - current.clientWidth);
-  }, [scrollFrameRef]);
-
-  useEffect(() => {
-    if (!scrollFrameRef.current) {
-      return () => {};
-    }
-    getScrollbarWidth();
-
-    return () => {};
-  }, [getScrollbarWidth, scrollFrameRef]);
+  const scrollbarWidth = scrollFrameRef?.current
+    ? scrollFrameRef.current.offsetWidth - scrollFrameRef.current.clientWidth
+    : 0;
 
   return (
     <ScrollContent ref={scrollFrameRef}>
