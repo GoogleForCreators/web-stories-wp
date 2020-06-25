@@ -33,13 +33,17 @@ export function initHelpers(data) {
     data.textId = textId;
 
     await data.fixture.editor.canvas.framesLayer
-      .frame(textId)
+      .frame(data.textId)
       .waitFocusedWithin();
   }
 
   function getTextContent() {
     return data.fixture.editor.canvas.framesLayer.frame(data.textId)
       .textContent;
+  }
+
+  async function richTextHasFocus() {
+    await data.fixture.editor.canvas.waitFocusedWithin();
   }
 
   function repeatPress(key, count) {
@@ -68,5 +72,6 @@ export function initHelpers(data) {
     addInitialText,
     getTextContent,
     setSelection,
+    richTextHasFocus,
   };
 }
