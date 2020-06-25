@@ -37,6 +37,24 @@ coverage:
         flags:
           - editor.karma
 
+      xdashboard:
+        paths:
+          - assets/src/dashboard
+        flags:
+          - unittests
+
+      editor.xunit:
+        paths:
+          - assets/src/edit-story
+        flags:
+          - unittests
+
+      editor.xkarma:
+        paths:
+          - assets/src/edit-story
+        flags:
+          - karma
+
     # Patch-level coverage (how well is the PR tested)
     patch:
       default:
