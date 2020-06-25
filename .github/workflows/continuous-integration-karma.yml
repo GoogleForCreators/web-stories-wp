@@ -49,7 +49,6 @@ jobs:
         with:
           file: build/logs/karma-coverage/lcov.info
           flags: karmatests
-          #,editor.karma
 
       - name: Upload Percy snapshots
         uses: percy/snapshot-action@v0.1.1

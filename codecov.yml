@@ -30,26 +30,12 @@ coverage:
           - assets/src/edit-story
 
       editor.unit:
-        flags:
-          - editor.unit
-
-      editor.karma:
-        flags:
-          - editor.karma
-
-      xdashboard:
-        paths:
-          - assets/src/dashboard
-        flags:
-          - unittests
-
-      editor.xunit:
         paths:
           - assets/src/edit-story
         flags:
           - unittests
 
-      editor.xkarma:
+      editor.karma:
         paths:
           - assets/src/edit-story
         flags:
@@ -75,11 +61,3 @@ comment:
   require_changes: true
   branches:
     - 'master'
-
-flags:
-  editor.unit:
-    paths:
-      - assets/src/edit-story
-  editor.karma:
-    paths:
-      - assets/src/edit-story
