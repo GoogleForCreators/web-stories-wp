@@ -1,5 +1,5 @@
 {
-  "version": 23,
+  "version": 24,
   "pages": [
     {
       "elements": [
@@ -721,7 +721,7 @@
           "type": "move",
           "overflowHidden": false,
           "offsetX": 0,
-          "offsetY": "-100%",
+          "offsetY": "-225%",
           "id": "47b3834a-d155-4d65-b3b8-a05277dec29d",
           "duration": 500,
           "delay": 500,
@@ -751,7 +751,7 @@
           "type": "move",
           "overflowHidden": false,
           "offsetX": 0,
-          "offsetY": "-100%",
+          "offsetY": "-225%",
           "id": "2dc97458-b6a0-4395-8b0f-fdeaac734690",
           "duration": 500,
           "delay": 700,
@@ -1008,7 +1008,7 @@
           "type": "text",
           "basedOn": "5bfb51c9-3d47-4a78-be2c-776db5143bc9",
           "id": "26df8c19-b913-441a-bff1-bf1b677cb159",
-          "content": "<span style=\"color: rgba(141, 141, 141, 1)\"><span style=\"font-weight: 700\">THE TOP 10</span></span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">THE TOP 10</span>",
           "fontSize": 81,
           "padding": {
             "horizontal": 0,
@@ -1139,7 +1139,7 @@
           "type": "text",
           "basedOn": "5efefa69-c1d0-4331-905b-3936d866f0eb",
           "id": "5bfb51c9-3d47-4a78-be2c-776db5143bc9",
-          "content": "<span style=\"color: rgba(199, 196, 196, 1)\"><span style=\"font-weight: 700\">THE TOP 10</span></span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">THE TOP 10</span>",
           "fontSize": 81,
           "padding": {
             "horizontal": 0,
@@ -1423,7 +1423,7 @@
           "type": "move",
           "overflowHidden": false,
           "offsetX": "-16%",
-          "offsetY": "-15%",
+          "offsetY": "-22%",
           "id": "b5d957fc-93a0-4d0f-91ca-3cff48303c3e",
           "duration": 800,
           "delay": 0,
@@ -1920,9 +1920,9 @@
         },
         {
           "x": 45,
-          "y": 212,
+          "y": 160,
           "width": 324,
-          "height": 265,
+          "height": 366,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2042,138 +2042,7 @@
           "type": "text",
           "basedOn": "a8a8df4d-5750-4508-9698-69226f88a94f",
           "id": "37fa4bdd-2898-4b95-bf2a-ae0d4e474f47",
-          "content": "<span style=\"font-weight: 700; color: #fff\">IS NOT</span>\n<span style=\"font-weight: 700; color: #fff\">JUST A</span>\n<span style=\"font-weight: 700; color: #fff\">COLOR,</span>\n<span style=\"font-weight: 700; color: #fff\">IT'S AN</span>\n<span style=\"font-weight: 700; color: #fff\">ATTITUDE!</span>",
-          "fontSize": 64,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 44,
-          "y": 160,
-          "width": 163,
-          "height": 53,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Poppins",
-            "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              100,
-              200,
-              300,
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                0,
-                200
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                1,
-                200
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.83,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "37fa4bdd-2898-4b95-bf2a-ae0d4e474f47",
-          "id": "9de815af-b64d-4fda-966c-78f938df0f83",
-          "content": "<span style=\"color: rgba(255, 0, 214, 1)\"><span style=\"font-weight: 700\">PINK</span></span>",
+          "content": "<span style=\"font-weight: 700; color: #ff00d6\">PINK</span>\n<span style=\"font-weight: 700; color: #fff\">IS NOT</span>\n<span style=\"font-weight: 700; color: #fff\">JUST A</span>\n<span style=\"font-weight: 700; color: #fff\">COLOR,</span>\n<span style=\"font-weight: 700; color: #fff\">IT'S AN</span>\n<span style=\"font-weight: 700; color: #fff\">ATTITUDE!</span>",
           "fontSize": 64,
           "padding": {
             "horizontal": 0,
@@ -2380,24 +2249,9 @@
           "overflowHidden": true,
           "offsetX": "-100%",
           "offsetY": 0,
-          "id": "681bc897-d3fa-4ae3-961e-58e2e1b2b5e1",
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both",
-          "targets": [
-            "9de815af-b64d-4fda-966c-78f938df0f83"
-          ]
-        },
-        {
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "-100%",
-          "offsetY": 0,
           "id": "24bc05c8-36eb-4226-b2cd-e5ef53aebb3d",
           "duration": 1000,
-          "delay": 100,
+          "delay": 0,
           "direction": "normal",
           "easingPreset": "inOutSine",
           "fill": "both",
@@ -4919,7 +4773,7 @@
           "type": "text",
           "basedOn": "26df8c19-b913-441a-bff1-bf1b677cb159",
           "id": "99964f56-048a-4e9c-bc0c-79ff8f9e32d5",
-          "content": "<span style=\"color: rgba(141, 141, 141, 1)\"><span style=\"font-weight: 700\">OUT NOW</span></span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">OUT NOW</span>",
           "fontSize": 79,
           "padding": {
             "horizontal": 0,
@@ -5050,7 +4904,7 @@
           "type": "text",
           "basedOn": "5bfb51c9-3d47-4a78-be2c-776db5143bc9",
           "id": "7134bc0d-5c49-40fb-ac4a-dac7dc45dccf",
-          "content": "<span style=\"color: rgba(199, 196, 196, 1)\"><span style=\"font-weight: 700\">OUT NOW</span></span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">OUT NOW</span>",
           "fontSize": 79,
           "padding": {
             "horizontal": 0,
@@ -5203,8 +5057,8 @@
         {
           "type": "move",
           "overflowHidden": false,
-          "offsetX": "-10%",
-          "offsetY": "-38%",
+          "offsetX": "-11%",
+          "offsetY": "-56%",
           "id": "d048cc30-676e-46f9-8197-3e47d0cece37",
           "duration": 600,
           "delay": 0,
@@ -5649,7 +5503,111 @@
           "g": 0,
           "b": 0
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "f113927a-62e3-4da8-914d-938bcccb219b",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": [
+            "6314a691-d449-4d99-9f12-64a9c7e5b477"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "348eca7a-6524-4859-97fb-dda42b376b74",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": [
+            "6314a691-d449-4d99-9f12-64a9c7e5b477"
+          ]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1.1,
+          "id": "1f619c53-d711-43a6-9e22-ad9cec019753",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both",
+          "targets": [
+            "6314a691-d449-4d99-9f12-64a9c7e5b477"
+          ]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1.1,
+          "zoomTo": 1,
+          "id": "f2972fa0-abb5-4af0-a729-7d429383d739",
+          "duration": 3000,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": [
+            "6314a691-d449-4d99-9f12-64a9c7e5b477"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "ffea8686-6086-4f7f-9f8f-08d62637383f",
+          "duration": 600,
+          "delay": 350,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both",
+          "targets": [
+            "0fdf2c26-3138-41cf-ae7c-e508635ae6fe"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "20%",
+          "id": "7cb4c116-47ca-4dd6-a722-e0c628e557ee",
+          "duration": 600,
+          "delay": 450,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both",
+          "targets": [
+            "b0d4ee54-76eb-4050-821d-5d11181b6a2c"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "8ed6330e-dada-4c89-9fa2-34444ab0c4f5",
+          "duration": 600,
+          "delay": 450,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "b0d4ee54-76eb-4050-821d-5d11181b6a2c"
+          ]
+        }
+      ]
     },
     {
       "elements": [
