@@ -49,3 +49,8 @@ comment:
   require_changes: true
   branches:
     - 'master'
+
+flags:
+  unittests:
+    paths:
+      - assets/src
