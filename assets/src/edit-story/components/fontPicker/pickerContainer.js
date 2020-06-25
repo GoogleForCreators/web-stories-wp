@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useDebouncedCallback } from 'use-debounce/lib';
 import useFocusOut from '../../utils/useFocusOut';
 import { ReactComponent as Checkmark } from '../../icons/checkmark.svg';
 import { useFont } from '../../app/font';
@@ -68,6 +69,28 @@ const Divider = styled.hr`
   border-width: 1px 0 0;
 `;
 
+const SearchInput = styled.input.attrs({
+  type: 'search',
+  role: 'combobox',
+  ['aria-autocomplete']: 'list',
+  ['aria-owns']: 'editor-font-picker-list',
+})`
+  margin: 8px;
+  padding: 4px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.colors.bg.v5};
+  font-size: ${({ theme }) => theme.fonts.input.size};
+  line-height: ${({ theme }) => theme.fonts.input.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.input.weight};
+  font-family: ${({ theme }) => theme.fonts.input.family};
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.selection};
+  }
+`;
+
 const Item = styled.div.attrs(({ fontFamily }) => ({
   style: {
     fontFamily,
@@ -82,6 +105,7 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
   position: relative;
+  cursor: pointer;
 
   &:hover,
   &:focus {
@@ -108,35 +132,96 @@ const NoResult = styled.span`
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 `;
 
-function FontPickerContainer({ value, onSelect, onClose }) {
+function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const {
     state: { fonts, recentFonts },
     actions: { ensureMenuFontsLoaded },
   } = useFont();
 
   const ref = useRef();
+  const inputRef = useRef();
+  const dividerIndexTracker = useRef(recentFonts.length - 1);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [matchingFonts, setMatchingFonts] = useState([
+    ...recentFonts,
+    ...fonts,
+  ]);
+
+  useEffect(() => {
+    if (isOpen) {
+      inputRef?.current?.focus();
+    }
+  }, [isOpen]);
 
   const handleScroll = useCallback(
     (startIndex, endIndex) => {
       const startFrom = Math.max(0, startIndex - 2);
-      const endAt = Math.min(fonts.length - 1, endIndex + 2);
-      const visibleFontNames = fonts
+      const endAt = Math.min(matchingFonts.length - 1, endIndex + 2);
+      const visibleFontNames = matchingFonts
         .slice(startFrom, endAt)
         .filter(({ service }) => service === 'fonts.google.com')
         .map(({ name }) => name);
       ensureMenuFontsLoaded(visibleFontNames);
     },
-    [ensureMenuFontsLoaded, fonts]
+    [ensureMenuFontsLoaded, matchingFonts]
   );
 
   useFocusOut(ref, onClose, [onClose]);
 
-  // Add divider to the last item of the recent fonts.
-  const dividerIndex = recentFonts.length - 1;
-  const matchingFonts = [...recentFonts, ...fonts];
-
   // Scroll to offset for current value
-  const currentOffset = matchingFonts.findIndex(({ name }) => name === value);
+  const [currentOffset, setCurrentOffset] = useState(
+    fonts.findIndex(({ name }) => name === value)
+  );
+
+  const [updateMatchingFonts] = useDebouncedCallback(
+    () => {
+      if (searchKeyword.trim() === '') {
+        dividerIndexTracker.current = recentFonts.length - 1;
+        setMatchingFonts([...recentFonts, ...fonts]);
+        return;
+      }
+      const _fonts = fonts.filter(({ name }) =>
+        name.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+      const _recentFonts = recentFonts.filter(({ name }) =>
+        name.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+      dividerIndexTracker.current = _recentFonts.length - 1;
+      setMatchingFonts([..._recentFonts, ..._fonts]);
+    },
+    250,
+    {},
+    [searchKeyword, fonts]
+  );
+
+  const handleSearchInputChanged = useCallback(
+    ({ target }) => {
+      setSearchKeyword(target.value);
+      updateMatchingFonts();
+    },
+    [updateMatchingFonts]
+  );
+
+  useEffect(() => {
+    if (searchKeyword.trim().length > 0) {
+      setCurrentOffset(-1);
+    }
+  }, [searchKeyword]);
+
+  const handleKeyPress = useCallback(
+    ({ key }) => {
+      if (key === 'Escape') {
+        onClose();
+      } else if (key === 'Enter') {
+        onSelect(matchingFonts[currentOffset].name);
+      } else if (key === 'ArrowUp') {
+        setCurrentOffset(Math.max(0, currentOffset - 1));
+      } else if (key === 'ArrowDown') {
+        setCurrentOffset(Math.min(matchingFonts.length - 1, currentOffset + 1));
+      }
+    },
+    [currentOffset, matchingFonts, onClose, onSelect]
+  );
 
   const itemRenderer = useCallback(
     ({ service, name }, index) => (
@@ -150,16 +235,26 @@ function FontPickerContainer({ value, onSelect, onClose }) {
           )}
           {name}
         </Item>
-        {index === dividerIndex && <Divider />}
+        {index === dividerIndexTracker.current && <Divider />}
       </>
     ),
-    [dividerIndex, onSelect, value]
+    [onSelect, value]
   );
 
   return (
-    <PickerContainer ref={ref}>
+    <PickerContainer role="dialog" ref={ref}>
+      <SearchInput
+        ref={inputRef}
+        aria-expanded={Boolean(matchingFonts.length)}
+        value={searchKeyword}
+        onKeyDown={handleKeyPress}
+        placeholder={__('Search', 'web-stories')}
+        onChange={handleSearchInputChanged}
+      />
       {matchingFonts.length ? (
         <List
+          id="editor-font-picker-list"
+          onKeyDown={handleKeyPress}
           items={matchingFonts}
           onScroll={handleScroll}
           itemRenderer={itemRenderer}
@@ -173,6 +268,7 @@ function FontPickerContainer({ value, onSelect, onClose }) {
 }
 
 FontPickerContainer.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,

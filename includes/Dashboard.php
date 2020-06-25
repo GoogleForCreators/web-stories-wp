@@ -257,7 +257,12 @@ class Dashboard {
 			],
 		];
 
-		return $settings;
+		/**
+		 * Filters settings passed to the web stories dashboard.
+		 *
+		 * @param array $settings Array of settings passed to web stories dashboard.
+		 */
+		return apply_filters( 'web_stories_dashboard_settings', $settings );
 	}
 
 	/**

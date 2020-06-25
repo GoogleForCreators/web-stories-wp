@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getByRole, queryByRole } from '@testing-library/react';
+import { getByRole, queryByRole, waitFor } from '@testing-library/react';
 
 export class Container {
   /**
@@ -35,6 +35,18 @@ export class Container {
 
   get path() {
     return this._path;
+  }
+
+  /**
+   * @return {!Promise} Resolve when the element or one of its children becomes
+   * focused.
+   */
+  waitFocusedWithin() {
+    return waitFor(() => {
+      if (!this._node.contains(document.activeElement)) {
+        throw new Error(`Focus is not set within the <${this._path}> yet`);
+      }
+    });
   }
 
   /**

@@ -23,12 +23,11 @@
  * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
-  element,
+  { font, fontSize, lineHeight, padding, textAlign },
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY = dataToStyleY
 ) {
-  const { font, fontSize, lineHeight, padding, textAlign } = element;
   return {
     whiteSpace: 'pre-wrap',
     margin: 0,
