@@ -19,9 +19,7 @@
 /**
  * Internal dependencies
  */
-const {
-  storiesDashboard: webpackConfig,
-} = require('./webpack.config.test.cjs');
+const getWebpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -64,7 +62,7 @@ module.exports = function (config) {
       '/__static__/': '/base/__static__/',
     },
 
-    webpack: webpackConfig,
+    webpack: getWebpackConfig('stories-dashboard', config),
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration

@@ -19,7 +19,7 @@
 /**
  * Internal dependencies
  */
-const { editStory: webpackConfig } = require('./webpack.config.test.cjs');
+const getWebpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -62,7 +62,7 @@ module.exports = function (config) {
       '/__static__/': '/base/__static__/',
     },
 
-    webpack: webpackConfig,
+    webpack: getWebpackConfig('edit-story', config),
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
