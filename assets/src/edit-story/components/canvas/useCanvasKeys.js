@@ -27,6 +27,7 @@ import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
+import { getDefinitionForType } from '../../elements';
 import useCanvas from './useCanvas';
 
 const MOVE_COARSE_STEP = 10;
@@ -66,8 +67,11 @@ function useCanvasKeys(ref) {
     }
   );
 
-  const getNodeForElement = useCanvas(
-    ({ actions: { getNodeForElement } }) => getNodeForElement
+  const { getNodeForElement, setEditingElement } = useCanvas(
+    ({ actions: { getNodeForElement, setEditingElement } }) => ({
+      getNodeForElement,
+      setEditingElement,
+    })
   );
   const selectedElementIdsRef = useRef(null);
   selectedElementIdsRef.current = selectedElementIds;
@@ -146,6 +150,26 @@ function useCanvasKeys(ref) {
       }
     },
     [arrangeSelection]
+  );
+
+  // Edit mode
+  useGlobalKeyDownEffect(
+    'enter',
+    () => {
+      if (selectedElements.length === 0) {
+        return;
+      }
+
+      const { type, id } = selectedElements[0];
+      const { hasEditMode } = getDefinitionForType(type);
+      // Only handle Enter key for editable elements
+      if (!hasEditMode) {
+        return;
+      }
+
+      setEditingElement(id);
+    },
+    [selectedElements, setEditingElement]
   );
 
   const cloneHandler = useCallback(() => {
