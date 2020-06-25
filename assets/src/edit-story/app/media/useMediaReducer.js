@@ -22,8 +22,27 @@ import { useReducer, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import reducer, { INITIAL_STATE } from './local/reducer';
+import localReducer, {
+  INITIAL_STATE as LOCAL_INITIAL_STATE,
+} from './local/reducer';
+import media3pReducer, {
+  INITIAL_STATE as MEDIA3P_INITIAL_STATE,
+} from './media3p/reducer';
 import * as actionsToWrap from './actions';
+
+// TODO: Move initial values to the default state of each reducer function, eg:
+// 'reducer(state = INITIAL_STATE, ...)'.
+const INITIAL_STATE = {
+  local: LOCAL_INITIAL_STATE,
+  media3p: MEDIA3P_INITIAL_STATE,
+};
+
+function reducer(state, { type, payload }) {
+  return {
+    local: localReducer(state.local, { type, payload }),
+    media3p: media3pReducer(state.media3p, { type, payload }),
+  };
+}
 
 const wrapWithDispatch = (actions, dispatch) =>
   Object.keys(actions).reduce(
@@ -40,7 +59,8 @@ function useMediaReducer() {
   const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), []);
 
   return {
-    state,
+    // TODO: Consume 'local' and 'media3p' state separately from MediaProvider.
+    state: state.local,
     actions,
   };
 }
