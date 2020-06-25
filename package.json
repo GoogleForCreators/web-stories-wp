@@ -72,7 +72,7 @@
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.0",
     "@prettier/plugin-xml": "^0.7.2",
-    "@storybook/addon-a11y": "^6.0.0-beta.34",
+    "@storybook/addon-a11y": "^6.0.0-beta.36",
     "@storybook/addon-actions": "^6.0.0-beta.36",
     "@storybook/addon-backgrounds": "^6.0.0-beta.36",
     "@storybook/addon-docs": "^6.0.0-beta.34",
