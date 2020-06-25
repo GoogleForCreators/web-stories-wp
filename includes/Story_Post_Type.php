@@ -75,6 +75,7 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	public function init() {
+
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -110,7 +111,7 @@ class Story_Post_Type {
 					'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
 				],
-				'menu_icon'             => 'dashicons-book',
+				'menu_icon'             => $this->get_post_type_icon( 'stories.svg' ),
 				'supports'              => [
 					'title', // Used for amp-story[title].
 					'author',
@@ -145,6 +146,22 @@ class Story_Post_Type {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+	}
+
+	/**
+	 * Base64 encode the svg file for post tpye icon.
+	 *
+	 * @param string $icon Name of icon file.
+	 *
+	 * @return bool|string Returns false is the file doesn't exist.
+	 */
+	public function get_post_type_icon( $icon ) {
+		$path = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/images/' . $icon;
+		if ( ! is_readable( $path ) ) {
+			return false;
+		}
+
+		return 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( $path ) ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
 	}
 
 	/**

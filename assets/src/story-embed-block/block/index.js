@@ -18,9 +18,10 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-// TODO: Replace with web stories icon.
-import { page as icon } from '@wordpress/icons';
-
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as icon } from '../../../images/stories.svg';
 /**
  * Internal dependencies
  */
