@@ -85,8 +85,8 @@ export const VIEW_STYLE = {
 };
 
 export const VIEW_STYLE_LABELS = {
-  [VIEW_STYLE.GRID]: __('Grid View', 'web-stories'),
-  [VIEW_STYLE.LIST]: __('List View', 'web-stories'),
+  [VIEW_STYLE.GRID]: __('Switch to List View', 'web-stories'),
+  [VIEW_STYLE.LIST]: __('Switch to Grid View', 'web-stories'),
 };
 
 export const ICON_METRICS = {

@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 `;
 
 export const _default = () => {
-  const stylePresets = object('Presets', {
+  const stylePresets = object('Saved Colors', {
     colors: [
       createSolid(255, 255, 255, 0.5),
       createSolid(255, 0, 0, 0.9),

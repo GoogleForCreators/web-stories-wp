@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
-async function getFontPicker() {
+async function getFontPicker(options) {
   const getAllFontsPromise = Promise.resolve(fontsListResponse);
   const apiContextValue = {
     actions: {
@@ -38,6 +38,7 @@ async function getFontPicker() {
   const props = {
     onChange: jest.fn(),
     value: 'Roboto',
+    ...options,
   };
 
   const accessors = renderWithTheme(
@@ -101,5 +102,108 @@ describe('Font Picker', () => {
     // We can't really validate this number anyway in JSDom (no actual
     // layout is happening), so just expect it to be called
     expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
+  });
+
+  it('should select the next font in the list when using the down arrow plus enter key', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, { key: 'Enter' });
+    });
+
+    expect(onChangeFn).toHaveBeenCalledWith('Roboto Condensed');
+  });
+
+  it('should close the menu when the Esc key is pressed.', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'Escape',
+      });
+    });
+
+    await waitFor(() => expect(fontsList).not.toBeInTheDocument());
+  });
+
+  it('should select the previous font in the list when using the up arrow plus enter key', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowUp',
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, { key: 'Enter' });
+    });
+
+    expect(onChangeFn).toHaveBeenCalledWith('Handlee');
+  });
+
+  it('should search and filter the list to match the results.', async () => {
+    const { getByRole, queryAllByRole } = await getFontPicker();
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    expect(queryAllByRole('option')).toHaveLength(fontsListResponse.length);
+
+    act(() => {
+      fireEvent.change(getByRole('combobox'), {
+        target: { value: 'Yrsa' },
+      });
+    });
+
+    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(1), {
+      timeout: 500,
+    });
+  });
+
+  it('should show an empty list when the search keyword has no results.', async () => {
+    const { getByRole, queryAllByRole } = await getFontPicker();
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    expect(queryAllByRole('option')).toHaveLength(fontsListResponse.length);
+
+    act(() => {
+      fireEvent.change(getByRole('combobox'), {
+        target: { value: 'Not a font!' },
+      });
+    });
+
+    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(0), {
+      timeout: 500,
+    });
   });
 });

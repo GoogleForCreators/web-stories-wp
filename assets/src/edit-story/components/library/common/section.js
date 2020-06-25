@@ -19,13 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 const Container = styled.div`
   position: relative;
   margin-top: 28px;
   margin-bottom: 28px;
-  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
 
   &:first-child {
     margin-top: 0px;
