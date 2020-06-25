@@ -80,6 +80,13 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
+      {Boolean(page.pageAttachment?.url) && (
+        <amp-story-page-attachment
+          layout="nodisplay"
+          href={page.pageAttachment.url}
+          data-cta-text={page.pageAttachment.ctaText}
+        />
+      )}
     </amp-story-page>
   );
 }

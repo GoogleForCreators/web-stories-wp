@@ -23,6 +23,7 @@ import BackgroundOverlayPanel from './backgroundOverlay';
 import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
+import PageAttachmentPanel from './pageAttachment';
 import PageStylePanel from './pageStyle';
 import ShapeStylePanel from './shapeStyle';
 import SizePositionPanel from './sizePosition';
@@ -40,6 +41,7 @@ const STYLE_PRESETS = 'stylePresets';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
+const PAGE_ATTACHMENT = 'pageAttachment';
 const PAGE_STYLE = 'pageStyle';
 const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
@@ -54,6 +56,7 @@ export const PanelTypes = {
   STYLE_PRESETS, // Display presets as the first panel for elements.
   ELEMENT_ALIGNMENT,
   PAGE_STYLE,
+  PAGE_ATTACHMENT,
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_OVERLAY,
   SIZE_POSITION,
@@ -82,7 +85,10 @@ export function getPanels(elements) {
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [{ type: PAGE_STYLE, Panel: PageStylePanel }];
+    const panels = [
+      { type: PAGE_STYLE, Panel: PageStylePanel },
+      { type: PAGE_ATTACHMENT, Panel: PageAttachmentPanel },
+    ];
 
     if (!elements[0].isDefaultBackground) {
       panels.push({
