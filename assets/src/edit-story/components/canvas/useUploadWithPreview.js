@@ -91,7 +91,7 @@ function useUploadWithPreview() {
     ({ element }) => {
       deleteElementById({ elementId: element.id });
       showSnackbar({
-        message: __('Upload failed, preview was removed', 'web-stories'),
+        message: __('Upload failed, the element was removed', 'web-stories'),
       });
     },
     [deleteElementById, showSnackbar]
