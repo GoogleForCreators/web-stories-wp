@@ -17,47 +17,33 @@
 /**
  * Internal dependencies
  */
-import { Toggle, Select } from '../common';
-import { AbstractPanel } from './abstractPanel';
+import { Container } from '../container';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
  */
-export class TextStyle extends AbstractPanel {
+export class Select extends Container {
   constructor(node, path) {
     super(node, path);
+    this.name = this.node.getAttribute('aria-label');
   }
 
-  get bold() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Toggle: bold/ }),
-      'bold',
-      Toggle
-    );
+  get select() {
+    return this.node;
   }
 
-  get italic() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Toggle: italic/ }),
-      'italic',
-      Toggle
-    );
+  get value() {
+    return this.node.innerText;
   }
 
-  get underline() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Toggle: underline/ }),
-      'underline',
-      Toggle
-    );
+  get optionList() {
+    return this.getByRoleIn(this.node.ownerDocument, 'listbox', {
+      name: this.name,
+    });
   }
 
-  get fontWeight() {
-    return this._get(
-      this.getByRole('button', { name: /Font weight/ }),
-      'fontWeight',
-      Select
-    );
+  option(name) {
+    return this.getByRoleIn(this.optionList, 'option', { name });
   }
 }

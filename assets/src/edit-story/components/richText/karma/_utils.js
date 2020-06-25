@@ -15,30 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
 
 export function initHelpers(data) {
-  async function enterEditMode() {
-    await data.fixture.events.click(
-      data.fixture.editor.canvas.framesLayer.frame(data.bgId)
-    );
-    await data.fixture.events.click(
-      data.fixture.editor.canvas.framesLayer.frame(data.textId)
-    );
-    await data.fixture.events.keyboard.shortcut('Enter');
-  }
-
-  async function exitEditMode() {
-    await data.fixture.events.keyboard.shortcut('Escape');
-  }
-
   async function getElements() {
     const storyContext = await data.fixture.renderHook(() => useStory());
     return storyContext.state.currentPage.elements;
@@ -51,9 +32,9 @@ export function initHelpers(data) {
     data.bgId = bgId;
     data.textId = textId;
 
-    await waitFor(() =>
-      expect(data.fixture.editor.canvas.framesLayer.frame(textId)).toBeTruthy()
-    );
+    await data.fixture.editor.canvas.framesLayer
+      .frame(textId)
+      .waitFocusedWithin();
   }
 
   function getTextContent() {
@@ -61,11 +42,31 @@ export function initHelpers(data) {
       .textContent;
   }
 
+  function repeatPress(key, count) {
+    let remaining = count;
+    const press = () => {
+      if (remaining === 0) {
+        return true;
+      }
+      remaining--;
+      return data.fixture.events.keyboard.press(key).then(press);
+    };
+    return press();
+  }
+
+  async function setSelection(startOffset, endOffset) {
+    await data.fixture.events.keyboard.shortcut('mod+a');
+    await data.fixture.events.keyboard.press('ArrowLeft');
+    await repeatPress('ArrowRight', startOffset);
+    await data.fixture.events.keyboard.down('shift');
+    await repeatPress('ArrowRight', endOffset - startOffset);
+    await data.fixture.events.keyboard.up('shift');
+  }
+
   return {
-    enterEditMode,
-    exitEditMode,
     getElements,
     addInitialText,
     getTextContent,
+    setSelection,
   };
 }

@@ -62,6 +62,17 @@ export class Container {
   /**
    * See https://testing-library.com/docs/dom-testing-library/api-queries#byrole
    *
+   * @param {Element} root
+   * @param {string} role
+   * @param {Object} options
+   */
+  getByRoleIn(root, role, options) {
+    return getByRole(root, role, options);
+  }
+
+  /**
+   * See https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+   *
    * @param {string} role
    * @param {Object} options
    */

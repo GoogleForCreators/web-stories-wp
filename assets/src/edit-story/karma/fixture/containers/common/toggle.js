@@ -17,47 +17,22 @@
 /**
  * Internal dependencies
  */
-import { Toggle, Select } from '../common';
-import { AbstractPanel } from './abstractPanel';
+import { Container } from '../container';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
  */
-export class TextStyle extends AbstractPanel {
+export class Toggle extends Container {
   constructor(node, path) {
     super(node, path);
   }
 
-  get bold() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Toggle: bold/ }),
-      'bold',
-      Toggle
-    );
+  get checked() {
+    return this.node.checked;
   }
 
-  get italic() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Toggle: italic/ }),
-      'italic',
-      Toggle
-    );
-  }
-
-  get underline() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Toggle: underline/ }),
-      'underline',
-      Toggle
-    );
-  }
-
-  get fontWeight() {
-    return this._get(
-      this.getByRole('button', { name: /Font weight/ }),
-      'fontWeight',
-      Select
-    );
+  get button() {
+    return this.node.closest('label');
   }
 }
