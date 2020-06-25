@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -28,6 +28,7 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
+import useCanvas from '../../components/canvas/useCanvas';
 import EditCropMovable from './editCropMovable';
 import { mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -44,7 +45,6 @@ const fadedMediaCSS = css`
   position: absolute;
   opacity: ${({ opacity }) =>
     opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
-  pointer-events: none;
   ${mediaWithScale}
   ${elementWithFlip}
 `;
@@ -97,6 +97,11 @@ function MediaEdit({ element, box }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const editElementRef = useRef();
+  const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => {
+    return {
+      clearEditing,
+    };
+  });
 
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
@@ -121,6 +126,7 @@ function MediaEdit({ element, box }) {
     ref: setFullMedia,
     draggable: false,
     opacity: opacity / 100,
+    onClick: clearEditing,
     ...mediaProps,
   };
 
@@ -139,7 +145,7 @@ function MediaEdit({ element, box }) {
   const wheelHandler = useCallback(
     (evt) => {
       let newScale = scale || 100;
-      if (event.deltaY > 0) {
+      if (evt.deltaY > 0) {
         newScale += 10;
       } else {
         newScale -= 10;
@@ -160,7 +166,7 @@ function MediaEdit({ element, box }) {
         passive: false,
       });
     };
-  });
+  }, [editElementRef, wheelHandler]);
 
   return (
     <Element ref={editElementRef}>
