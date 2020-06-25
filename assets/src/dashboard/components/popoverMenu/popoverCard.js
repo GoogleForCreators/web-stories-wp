@@ -242,12 +242,11 @@ function PopoverCard({ children, isOpen }) {
    * Seems funky, but we need 1 full render where the proper
    * alignment is set before we animate in. This prevents react
    * from batching those renders and animating from wrong alignemnt.
-   *
-   * Other options include scheduling with something like rAF
-   * if we think it's a more robust solution.
    */
   useEffect(() => {
-    setIsReady(Boolean(align));
+    const frameId = requestAnimationFrame(() => setIsReady(Boolean(align)));
+
+    return () => cancelAnimationFrame(frameId);
   }, [align]);
 
   return (
