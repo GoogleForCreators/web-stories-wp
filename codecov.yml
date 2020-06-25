@@ -29,6 +29,10 @@ coverage:
         paths:
           - assets/src/edit-story
 
+      editor.unit:
+        flags:
+          - editor.unit
+
       editor.karma:
         flags:
           - editor.karma
@@ -55,6 +59,9 @@ comment:
     - 'master'
 
 flags:
+  editor.unit:
+    paths:
+      - assets/src/edit-story
   editor.karma:
     paths:
       - assets/src/edit-story
