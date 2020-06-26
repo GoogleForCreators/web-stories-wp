@@ -59,8 +59,12 @@ export function initHelpers(data) {
   }
 
   async function setSelection(startOffset, endOffset) {
-    await data.fixture.events.keyboard.shortcut('mod+a');
-    await data.fixture.events.keyboard.press('ArrowLeft');
+    // Assume text is in edit-mode - click inside editable text field
+    // and then press "up" a number of times to ensure cursor is at start
+    const textEditor = data.fixture.editor.canvas.editLayer.text;
+    await data.fixture.events.click(textEditor);
+    await repeatPress('ArrowUp', 10);
+    // Move to start of selection and hold shift while selecting
     await repeatPress('ArrowRight', startOffset);
     await data.fixture.events.keyboard.down('shift');
     await repeatPress('ArrowRight', endOffset - startOffset);

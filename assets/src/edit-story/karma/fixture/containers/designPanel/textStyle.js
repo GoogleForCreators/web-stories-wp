@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Toggle, Select } from '../common';
+import { Toggle, Select, Color } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -57,6 +57,30 @@ export class TextStyle extends AbstractPanel {
     return this._get(
       this.getByRole('button', { name: /Font weight/ }),
       'fontWeight',
+      Select
+    );
+  }
+
+  get letterSpacing() {
+    return this.getByRole('textbox', { name: /Letter-spacing/ });
+  }
+
+  get lineHeight() {
+    return this.getByRole('textbox', { name: /Line-height/ });
+  }
+
+  get fontColor() {
+    return this._get(
+      this.getByRole('region', { name: /Color input: Text/ }),
+      'fontColor',
+      Color
+    );
+  }
+
+  get fontFamily() {
+    return this._get(
+      this.getByRole('button', { name: /Font family/ }),
+      'fontFamily',
       Select
     );
   }

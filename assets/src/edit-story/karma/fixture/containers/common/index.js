@@ -19,3 +19,4 @@
  */
 export { Toggle } from './toggle';
 export { Select } from './select';
+export { Color } from './color';

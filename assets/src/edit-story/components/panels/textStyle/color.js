@@ -112,13 +112,14 @@ function ColorControls({ selectedElements, pushUpdate }) {
   return (
     <>
       <Row>
-        <Label>{__('Text', 'web-stories')}</Label>
+        <Label id="text-color-label">{__('Text', 'web-stories')}</Label>
         <Color
           data-testid="text.color"
           value={color}
           onChange={handleSetColor}
           colorPickerActions={getColorPickerActions}
           label={__('Text color', 'web-stories')}
+          labelId="text-color-label"
         />
       </Row>
       <FillRow ref={fillRow}>
@@ -149,7 +150,9 @@ function ColorControls({ selectedElements, pushUpdate }) {
       </FillRow>
       {backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE && (
         <Row>
-          <Label>{__('Textbox', 'web-stories')}</Label>
+          <Label id="background-color-label">
+            {__('Textbox', 'web-stories')}
+          </Label>
           <Color
             data-testid="text.backgroundColor"
             hasGradient
@@ -163,6 +166,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
               )
             }
             label={__('Background color', 'web-stories')}
+            labelId="background-color-label"
           />
         </Row>
       )}

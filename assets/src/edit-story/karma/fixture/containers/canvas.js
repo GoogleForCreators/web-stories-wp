@@ -45,7 +45,11 @@ export class Canvas extends Container {
   }
 
   get editLayer() {
-    return null;
+    return this._get(
+      this.getByRole('region', { name: 'Edit layer' }),
+      'editLayer',
+      EditLayer
+    );
   }
 }
 
@@ -115,6 +119,19 @@ class FramesLayer extends Container {
       `frames[${elementId}]`,
       Frame
     );
+  }
+}
+
+/**
+ * Contains elements in edit-mode.
+ */
+class EditLayer extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get text() {
+    return this.node.querySelector('[data-testid="textEditor"]');
   }
 }
 

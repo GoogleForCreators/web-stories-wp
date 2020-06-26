@@ -22,6 +22,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
@@ -29,7 +34,7 @@ import applyOpacityChange from './applyOpacityChange';
 import ColorPreview from './colorPreview';
 import OpacityPreview from './opacityPreview';
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   align-items: center;
 `;
@@ -46,8 +51,12 @@ function ColorInput({
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
     [value, onChange]
   );
+
+  // translators: The thing that can be colored
+  const containerLabel = sprintf(__('Color input: %s', 'web-stories'), label);
+
   return (
-    <Container>
+    <Container aria-label={containerLabel}>
       <ColorPreview
         onChange={onChange}
         hasGradient={hasGradient}
