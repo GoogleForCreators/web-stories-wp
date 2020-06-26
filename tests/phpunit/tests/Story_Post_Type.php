@@ -18,6 +18,9 @@
 namespace Google\Web_Stories\Tests;
 
 class Story_Post_Type extends \WP_UnitTestCase {
+
+	use Private_Access;
+
 	/**
 	 * Admin user for test.
 	 *
@@ -103,13 +106,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 	public function test_get_post_type_icon() {
 		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
-		$valid            = $post_type_object->get_post_type_icon( 'stories.svg' );
+		$valid            = $this->call_private_method( $post_type_object, 'get_post_type_icon' );
 		$this->assertContains( 'data:image/svg+xml;base64', $valid );
-	}
-
-	public function test_get_post_type_icon_invalid() {
-		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
-		$invalid          = $post_type_object->get_post_type_icon( 'invalid.svg' );
-		$this->assertFalse( $invalid );
 	}
 }

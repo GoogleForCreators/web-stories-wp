@@ -111,7 +111,7 @@ class Story_Post_Type {
 					'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
 				],
-				'menu_icon'             => $this->get_post_type_icon( 'stories.svg' ),
+				'menu_icon'             => $this->get_post_type_icon(),
 				'supports'              => [
 					'title', // Used for amp-story[title].
 					'author',
@@ -149,23 +149,12 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Base64 encode the svg file for post tpye icon.
-	 *
-	 * @param string $icon Name of icon file.
+	 * Base64 encoded svg icon.
 	 *
 	 * @return bool|string Returns false is the file doesn't exist.
 	 */
-	public function get_post_type_icon( $icon ) {
-		$path = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/images/' . $icon;
-		if ( ! is_readable( $path ) ) {
-			return false;
-		}
-		$icon_contents = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-		if ( ! $icon_contents ) {
-			return false;
-		}
-
-		return 'data:image/svg+xml;base64,' . base64_encode( $icon_contents );
+	protected function get_post_type_icon() {
+		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjMiIGhlaWdodD0iNTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOGg0djM5SDBWOHpNNTkgOGg0djM5aC00Vjh6TTUwIDBIMTN2NTVoMzdWMHoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvc3ZnPg==';
 	}
 
 	/**
