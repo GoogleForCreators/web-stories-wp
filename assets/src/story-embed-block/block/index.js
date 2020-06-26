@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import icon from './icon';
+import { ReactComponent as icon } from './icon.svg';
 import metadata from './block.json';
 import edit from './edit';
 import save from './save';
