@@ -30,12 +30,11 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
-  ITEMS_PER_PAGE,
+  STORIES_PER_REQUEST,
 } from '../../constants';
 import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
 import storyReducer, {
@@ -95,7 +94,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       sortDirection,
       searchTerm,
       page = 1,
-      perPage = ITEMS_PER_PAGE,
+      perPage = STORIES_PER_REQUEST,
     }) => {
       dispatch({
         type: STORY_ACTION_TYPES.LOADING_STORIES,
