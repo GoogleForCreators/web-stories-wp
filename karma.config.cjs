@@ -19,7 +19,7 @@
 /**
  * Internal dependencies
  */
-const webpackConfig = require('./webpack.config.test.cjs');
+const getWebpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -28,6 +28,7 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-sourcemap-loader',
       'karma-webpack',
+      'karma-coverage-istanbul-reporter',
       require('./karma/karma-puppeteer-launcher/index.cjs'),
       require('./karma/karma-puppeteer-client/index.cjs'),
     ],
@@ -49,7 +50,7 @@ module.exports = function (config) {
     ],
 
     // list of files / patterns to exclude
-    exclude: ['**/test/**/*.js'],
+    exclude: ['**/test/**/*.js', '**/*.test.js'],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -61,7 +62,7 @@ module.exports = function (config) {
       '/__static__/': '/base/__static__/',
     },
 
-    webpack: webpackConfig,
+    webpack: getWebpackConfig('edit-story', config),
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
@@ -69,10 +70,16 @@ module.exports = function (config) {
       stats: 'errors-only',
     },
 
+    webpackServer: {
+      noInfo: true,
+    },
+
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: config.coverage
+      ? ['progress', 'coverage-istanbul']
+      : ['progress'],
 
     // web server port
     port: 9876,
@@ -105,6 +112,11 @@ module.exports = function (config) {
       jasmine: {
         timeoutInterval: 10000,
       },
+    },
+
+    coverageIstanbulReporter: {
+      dir: 'build/logs/karma-coverage',
+      reports: ['text-summary', 'lcovonly'],
     },
 
     // Continuous Integration mode

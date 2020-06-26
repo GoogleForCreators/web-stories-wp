@@ -29,6 +29,18 @@ coverage:
         paths:
           - assets/src/edit-story
 
+      editor.unit:
+        paths:
+          - assets/src/edit-story
+        flags:
+          - unittests
+
+      editor.karma:
+        paths:
+          - assets/src/edit-story
+        flags:
+          - karmatests
+
     # Patch-level coverage (how well is the PR tested)
     patch:
       default:
