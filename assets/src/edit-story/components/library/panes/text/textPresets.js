@@ -31,55 +31,57 @@ const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
 const DEFAULT_LEFT_MARGIN = 40;
 
 const DEFAULT_PRESET = {
-  id: 'default-text',
   content: __('Fill in some text', 'web-stories'),
   fontSize: dataFontEm(1),
-  font: TEXT_ELEMENT_DEFAULT_FONT,
-  width: 160,
   x: DEFAULT_LEFT_MARGIN,
   y: (PAGE_HEIGHT - dataFontEm(1)) / 2,
+  font: TEXT_ELEMENT_DEFAULT_FONT,
+  width: 160,
   textAlign: 'center',
 };
 
 const PRESETS = [
   {
-    id: 'heading',
     title: __('Heading', 'web-stories'),
-    content: `<span style="font-weight: 700">${__(
-      'Heading',
-      'web-stories'
-    )}</span>`,
-    fontSize: dataFontEm(2),
-    x: DEFAULT_LEFT_MARGIN,
-    y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
-    font: TEXT_ELEMENT_DEFAULT_FONT,
-    width: DEFAULT_ELEMENT_WIDTH,
+    element: {
+      content: `<span style="font-weight: 700">${__(
+        'Heading',
+        'web-stories'
+      )}</span>`,
+      fontSize: dataFontEm(2),
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
   },
   {
-    id: 'subheading',
     title: __('Subheading', 'web-stories'),
-    content: `<span style="font-weight: 600">${__(
-      'Subheading',
-      'web-stories'
-    )}</span>`,
-    fontSize: dataFontEm(1.5),
-    x: DEFAULT_LEFT_MARGIN,
-    y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
-    font: TEXT_ELEMENT_DEFAULT_FONT,
-    width: DEFAULT_ELEMENT_WIDTH,
+    element: {
+      content: `<span style="font-weight: 600">${__(
+        'Subheading',
+        'web-stories'
+      )}</span>`,
+      fontSize: dataFontEm(1.5),
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
   },
   {
-    id: 'body-text',
     title: __('Body text', 'web-stories'),
-    content: __(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      'web-stories'
-    ),
-    fontSize: dataFontEm(1.1),
-    x: DEFAULT_LEFT_MARGIN,
-    y: (PAGE_HEIGHT - dataFontEm(1.1)) / 2,
-    font: TEXT_ELEMENT_DEFAULT_FONT,
-    width: DEFAULT_ELEMENT_WIDTH,
+    element: {
+      content: __(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'web-stories'
+      ),
+      fontSize: dataFontEm(1.1),
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(1.1)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
   },
 ];
 
