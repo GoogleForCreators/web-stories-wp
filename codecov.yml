@@ -25,6 +25,18 @@ coverage:
         paths:
           - assets/src/dashboard
 
+      dashboard.unit:
+        paths:
+          - assets/src/dashboard
+        flags:
+          - unittests
+
+      dashboard.karma:
+        paths:
+          - assets/src/dashboard
+        flags:
+          - karmatests
+
       editor:
         paths:
           - assets/src/edit-story
