@@ -73,10 +73,7 @@ describe('Author User', () => {
       text: 'Fill in some text',
     });
 
-    await percySnapshot(
-      previewPage,
-      'E2E: Author previewing without publishing'
-    );
+    await percySnapshot(previewPage, 'Author previewing without publishing');
 
     await editorPage.bringToFront();
     await previewPage.close();
@@ -99,7 +96,7 @@ describe('Author User', () => {
       text: 'Fill in some text',
     });
 
-    await percySnapshot(previewPage, 'E2E: Author previewing after publishing');
+    await percySnapshot(previewPage, 'Author previewing after publishing');
 
     await editorPage.bringToFront();
     await previewPage.close();
@@ -122,7 +119,7 @@ describe('Author User', () => {
       text: 'Fill in some text',
     });
 
-    await percySnapshot(previewPage, 'E2E: Autosaving and previewing');
+    await percySnapshot(previewPage, 'Autosaving and previewing');
 
     await editorPage.bringToFront();
     await previewPage.close();

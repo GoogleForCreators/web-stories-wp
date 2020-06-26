@@ -39,6 +39,6 @@ describe('Inserting Media from Media Library', () => {
       '[data-testid="frameElement"]:nth-of-type(2)'
     );
 
-    await percySnapshot(page, 'E2E: Inserting Media from Media Library');
+    await percySnapshot(page, 'Inserting Media from Media Library');
   });
 });

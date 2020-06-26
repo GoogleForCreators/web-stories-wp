@@ -30,6 +30,6 @@ describe('Story Editor', () => {
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    await percySnapshot(page, 'E2E: Empty Editor');
+    await percySnapshot(page, 'Empty Editor');
   });
 });

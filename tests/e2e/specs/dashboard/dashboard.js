@@ -30,6 +30,6 @@ describe('Stories Dashboard', () => {
 
     await expect(page).toMatch('My Stories');
 
-    await percySnapshot(page, 'E2E: Stories Dashboard');
+    await percySnapshot(page, 'Stories Dashboard');
   });
 });
