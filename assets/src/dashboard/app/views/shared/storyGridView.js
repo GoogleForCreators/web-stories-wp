@@ -41,6 +41,7 @@ import {
   PageSizePropType,
   RenameStoryPropType,
 } from '../../../types';
+import { getFormattedDisplayDate } from '../../../utils';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -67,6 +68,7 @@ const StoryGridView = ({
   pageSize,
   storyMenu,
   renameStory,
+  dateFormat,
 }) => {
   return (
     <StoryGrid pageSize={pageSize}>
@@ -108,7 +110,10 @@ const StoryGridView = ({
                     ? __('Google', 'web-stories')
                     : users[story.author]?.name
                 }
-                displayDate={story?.modified}
+                displayDate={getFormattedDisplayDate(
+                  story?.modified,
+                  dateFormat
+                )}
                 {...titleRenameProps}
               />
 
@@ -140,6 +145,7 @@ StoryGridView.propTypes = {
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
+  dateFormat: PropTypes.string,
 };
 
 export default StoryGridView;
