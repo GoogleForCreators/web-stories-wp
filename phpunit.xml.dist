@@ -30,6 +30,7 @@
 				<directory suffix=".php">tests</directory>
 				<directory suffix=".php">vendor</directory>
 				<file>web-stories.php</file>
+				<file>uninstall.php</file>
 			</exclude>
 		</whitelist>
 	</filter>
