@@ -81,7 +81,7 @@
     "@storybook/addon-viewport": "^6.0.0-beta.36",
     "@storybook/client-api": "^6.0.0-beta.36",
     "@storybook/client-logger": "^6.0.0-beta.37",
-    "@storybook/react": "^6.0.0-beta.36",
+    "@storybook/react": "^6.0.0-beta.37",
     "@svgr/webpack": "^5.4.0",
     "@testing-library/dom": "^7.18.1",
     "@testing-library/jest-dom": "^5.11.0",
