@@ -113,7 +113,7 @@ const UploadingIndicator = styled.div`
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
- * @param {boolean} param.isMedia3p If the element is from a 3P integration.
+ * @param {boolean} param.isMedia3p If the element is from a 3P Media provider.
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
@@ -246,7 +246,7 @@ const MediaElement = ({
             <UploadingIndicator />
           </CSSTransition>
         )}
-        {hasDropdownMenu && isMedia3p && (
+        {hasDropdownMenu && !isMedia3p && (
           <DropDownMenu
             resource={resource}
             pointerEntered={pointerEntered}
@@ -293,7 +293,7 @@ const MediaElement = ({
           <UploadingIndicator />
         </CSSTransition>
       )}
-      {hasDropdownMenu && isMedia3p && (
+      {hasDropdownMenu && !isMedia3p && (
         <DropDownMenu
           resource={resource}
           pointerEntered={pointerEntered}
