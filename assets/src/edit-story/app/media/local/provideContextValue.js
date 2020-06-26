@@ -17,21 +17,18 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { useEffect, useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useAPI, useConfig } from '../';
-import useUploadVideoFrame from './utils/useUploadVideoFrame';
-import useMediaReducer from './useMediaReducer';
-import useUploadMedia from './useUploadMedia';
-import Context from './context';
-import { getResourceFromAttachment } from './utils';
+import { useAPI, useConfig } from '../..';
+import useUploadVideoFrame from '../utils/useUploadVideoFrame';
+import useUploadMedia from '../useUploadMedia';
+import { getResourceFromAttachment } from '../utils';
 
-function MediaProvider({ children }) {
-  const { state, actions } = useMediaReducer();
+/* eslint-disable react-hooks/rules-of-hooks */
+export default function provideContextValue(reducerState, reducerActions) {
   const {
     processing,
     processed,
@@ -39,7 +36,7 @@ function MediaProvider({ children }) {
     pagingNum,
     mediaType,
     searchTerm,
-  } = state;
+  } = reducerState;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -53,7 +50,7 @@ function MediaProvider({ children }) {
     removeProcessing,
     updateMediaElement,
     deleteMediaElement,
-  } = actions;
+  } = reducerActions;
   const {
     actions: { getMedia },
   } = useAPI();
@@ -103,7 +100,7 @@ function MediaProvider({ children }) {
   } = useConfig();
 
   const stateRef = useRef();
-  stateRef.current = state;
+  stateRef.current = reducerState;
 
   const resetWithFetch = useCallback(() => {
     // eslint-disable-next-line no-shadow
@@ -165,8 +162,8 @@ function MediaProvider({ children }) {
     }
   }, [media, mediaType, searchTerm, processor]);
 
-  const context = {
-    state: { ...state, isUploading },
+  return {
+    state: { ...reducerState, isUploading },
     actions: {
       setNextPage,
       setMediaType,
@@ -179,12 +176,5 @@ function MediaProvider({ children }) {
       updateMediaElement,
     },
   };
-
-  return <Context.Provider value={context}>{children}</Context.Provider>;
 }
-
-MediaProvider.propTypes = {
-  children: PropTypes.node,
-};
-
-export default MediaProvider;
+/* eslint-enable react-hooks/rules-of-hooks */
