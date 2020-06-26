@@ -6,7 +6,12 @@
   "author": "Google",
   "license": "Apache-2.0",
   "type": "module",
-  "keywords": ["amp", "stories", "storytelling", "wordpress"],
+  "keywords": [
+    "amp",
+    "stories",
+    "storytelling",
+    "wordpress"
+  ],
   "homepage": "https://github.com/google/web-stories-wp",
   "repository": {
     "type": "git",
@@ -22,6 +27,7 @@
     "@wordpress/components": "^9.9.0",
     "@wordpress/compose": "^3.17.0",
     "@wordpress/data": "^4.20.0",
+    "@wordpress/date": "^3.9.0",
     "@wordpress/element": "^2.15.0",
     "@wordpress/i18n": "^3.13.0",
     "@wordpress/icons": "^2.3.0",
@@ -66,6 +72,7 @@
     "@babel/plugin-proposal-private-methods": "^7.8.3",
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.0",
+    "@jsdevtools/coverage-istanbul-loader": "^3.0.3",
     "@prettier/plugin-xml": "^0.7.2",
     "@storybook/addon-a11y": "^6.0.0-beta.36",
     "@storybook/addon-actions": "^6.0.0-beta.37",
@@ -127,6 +134,7 @@
     "jsdom-screenshot": "^3.2.0",
     "karma": "^5.1.0",
     "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^3.3.1",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^4.0.2",
@@ -223,7 +231,10 @@
       "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
     ],
     "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
-    "*.md": ["eslint --fix", "markdownlint -f"],
+    "*.md": [
+      "eslint --fix",
+      "markdownlint -f"
+    ],
     "*.php": "npm run lint:php:fix",
     "*.(xml|xml.dist)": "prettier --write",
     "*.yml": "prettier --write"
