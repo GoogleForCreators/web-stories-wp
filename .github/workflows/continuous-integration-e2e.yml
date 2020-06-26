@@ -69,11 +69,6 @@ jobs:
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      - name: Install Puppeteer with correct browser
-        run: npm install puppeteer
-        env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Build plugin
