@@ -39,7 +39,8 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
+      { pattern: 'assets/src/dashboard/**/karma/**/*.js', watched: false },
+      { pattern: 'karma/fixture/init.js', watched: false },
       {
         pattern: '__static__/**/*',
         watched: false,
@@ -55,14 +56,14 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'assets/src/edit-story/**/karma/**/*.js': ['webpack', 'sourcemap'],
+      'assets/src/dashboard/**/karma/**/*.js': ['webpack', 'sourcemap'],
     },
 
     proxies: {
       '/__static__/': '/base/__static__/',
     },
 
-    webpack: getWebpackConfig('edit-story', config),
+    webpack: getWebpackConfig('stories-dashboard', config),
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
@@ -115,7 +116,7 @@ module.exports = function (config) {
     },
 
     coverageIstanbulReporter: {
-      dir: 'build/logs/karma-coverage',
+      dir: 'build/logs/karma-coverage/dashboard',
       reports: ['text-summary', 'lcovonly'],
     },
 
@@ -129,6 +130,9 @@ module.exports = function (config) {
 
     // Allow not having any tests
     failOnEmptyTestSuite: false,
+
+    // Bump browserNoActivityTimeout to 60s to prevent github actions timeout
+    browserNoActivityTimeout: 60000,
   });
 };
 

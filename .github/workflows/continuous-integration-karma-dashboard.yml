@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Dashboard Integration Tests
 
 on:
   push:
@@ -38,22 +38,11 @@ jobs:
         env:
           CI: true
 
-      - name: Run integration tests
-        run: npm run test:karma -- --headless --snapshots --viewport=1600:1000 --coverage
+      - name: Run dashboard integration tests
+        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage
 
-      - name: Add files for snapshotting
-        run: cp -r __static__ .test_artifacts/karma_snapshots/
-
-      - name: Uplaod code coverage report
+      - name: Upload code coverage report
         uses: codecov/codecov-action@v1
         with:
-          file: build/logs/karma-coverage/lcov.info
+          file: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests
-
-      - name: Upload Percy snapshots
-        uses: percy/snapshot-action@v0.1.1
-        with:
-          build-directory: '.test_artifacts/karma_snapshots'
-          flags: '--config=percy.config.yml'
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
