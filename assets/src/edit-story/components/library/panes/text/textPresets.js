@@ -32,7 +32,8 @@ const DEFAULT_LEFT_MARGIN = 40;
 
 const DEFAULT_PRESET = {
   content: __('Fill in some text', 'web-stories'),
-  fontSize: dataFontEm(1),
+  fontSize: dataFontEm(1.2),
+  lineHeight: 1.5,
   x: DEFAULT_LEFT_MARGIN,
   y: (PAGE_HEIGHT - dataFontEm(1)) / 2,
   font: TEXT_ELEMENT_DEFAULT_FONT,
@@ -76,7 +77,8 @@ const PRESETS = [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'web-stories'
       ),
-      fontSize: dataFontEm(1.1),
+      fontSize: dataFontEm(1.2),
+      lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(1.1)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
