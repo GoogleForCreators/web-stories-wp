@@ -59,7 +59,7 @@ const PRESETS = [
   {
     title: __('Subheading', 'web-stories'),
     element: {
-      content: `<span style="font-weight: 600">${__(
+      content: `<span style="font-weight: 500">${__(
         'Subheading',
         'web-stories'
       )}</span>`,
