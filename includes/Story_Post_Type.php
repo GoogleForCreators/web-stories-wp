@@ -340,6 +340,7 @@ class Story_Post_Type {
 			'config' => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
+				'dateFormat'       => get_option( 'date_format' ),
 				'timeFormat'       => get_option( 'time_format' ),
 				'allowedMimeTypes' => $this->get_allowed_mime_types(),
 				'allowedFileTypes' => $this->get_allowed_file_types(),

@@ -94,7 +94,7 @@ export const ICON_METRICS = {
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
-export const ITEMS_PER_PAGE = 20;
+export const ITEMS_PER_PAGE = 100; // default max per request
 
 export const DASHBOARD_VIEWS = {
   MY_STORIES: 'MY_STORIES',
@@ -106,6 +106,8 @@ export const RESULT_LABELS = {
   [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
+
+export const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
 export * from './animation';
 export * from './components';
