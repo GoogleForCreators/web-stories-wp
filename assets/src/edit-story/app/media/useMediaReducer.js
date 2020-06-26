@@ -22,7 +22,7 @@ import { useReducer, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import reducer, { INITIAL_STATE } from './reducer';
+import reducer, { INITIAL_STATE } from './local/reducer';
 import * as actionsToWrap from './actions';
 
 const wrapWithDispatch = (actions, dispatch) =>
