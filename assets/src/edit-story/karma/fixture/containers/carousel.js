@@ -30,7 +30,7 @@ export class Carousel extends Container {
   get pages() {
     const pageList = this.getByRole('listbox', { name: 'Pages List' });
     if (!pageList) {
-      return null;
+      return [];
     }
     return this._getAll(
       // @todo: improve query.
@@ -41,15 +41,8 @@ export class Carousel extends Container {
   }
 
   page(pageId) {
-    const pageList = this.getByRole('listbox', { name: 'Pages List' });
-    if (!pageList) {
-      return null;
-    }
-    return this._get(
-      // @todo: improve query.
-      pageList.querySelector(`button[data-page-id="${pageId}"]`),
-      `pages[${pageId}]`,
-      PageThumb
+    return this.pages.find(
+      (page) => page.node.getAttribute('data-page-id') === pageId
     );
   }
 }
