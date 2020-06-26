@@ -50,6 +50,7 @@ const PRESETS = [
         'web-stories'
       )}</span>`,
       fontSize: dataFontEm(2),
+      lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
@@ -64,6 +65,7 @@ const PRESETS = [
         'web-stories'
       )}</span>`,
       fontSize: dataFontEm(1.5),
+      lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
