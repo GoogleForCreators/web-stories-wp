@@ -71,6 +71,7 @@ describe('My Stories <StoriesView />', function () {
           trashStory: jest.fn,
           updateStory: jest.fn,
         }}
+        dateFormat="F j, Y"
         stories={fakeStories}
         users={{}}
         view={{

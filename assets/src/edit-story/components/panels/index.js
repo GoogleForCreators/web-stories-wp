@@ -53,8 +53,8 @@ const ELEMENT_ALIGNMENT = 'elementAlignment';
 const NO_SELECTION = 'noselection';
 
 export const PanelTypes = {
-  STYLE_PRESETS, // Display presets as the first panel for elements.
   ELEMENT_ALIGNMENT,
+  STYLE_PRESETS,
   PAGE_STYLE,
   PAGE_ATTACHMENT,
   BACKGROUND_SIZE_POSITION,
