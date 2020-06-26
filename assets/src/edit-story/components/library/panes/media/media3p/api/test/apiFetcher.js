@@ -17,12 +17,9 @@
 /**
  * Internal dependencies
  */
-import fetch from '../fetch';
 import { listMedia } from '../apiFetcher';
 
-jest.mock('../fetch');
-
-const VALID_LIST_PHOTOS_RESPONSE = JSON.stringify({
+const PHOTOS_BODY_JSON = {
   media: [
     {
       name: 'photo 29044',
@@ -35,26 +32,51 @@ const VALID_LIST_PHOTOS_RESPONSE = JSON.stringify({
       ],
     },
   ],
-});
+};
+
+const VALID_RESPONSE = {
+  ok: true,
+  status: 200,
+  json: () => PHOTOS_BODY_JSON,
+};
+
+const ERROR_RESPONSE = {
+  ok: false,
+  status: 400,
+  statusText: 'Error',
+};
+
+function mockFetch(response) {
+  jest
+    .spyOn(global, 'fetch')
+    .mockImplementation(() => Promise.resolve(response));
+}
 
 describe('ApiFetcher', () => {
-  beforeEach(() => {
-    fetch.mockReset();
+  afterEach(() => {
+    if (global.fetch['mockClear']) {
+      global.fetch.mockClear();
+    }
   });
 
   it('listMedia should perform a GET request', async () => {
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
-    );
+    mockFetch(VALID_RESPONSE);
 
     const result = await listMedia();
     expect(result.media[0].name).toBe('photo 29044');
   });
 
+  it('listMedia should throw when the API returns an error', async () => {
+    mockFetch(ERROR_RESPONSE);
+
+    expect.assertions(1);
+
+    await expect(listMedia()).rejects.toThrow(/Obtained an error/);
+  });
+
   it('listMedia should format request params correctly', async () => {
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
-    );
+    mockFetch(VALID_RESPONSE);
+
     const languageCode = 'es';
     const pageSize = 15;
     const orderBy = 'latest';
@@ -69,7 +91,7 @@ describe('ApiFetcher', () => {
       filter,
     });
     expect(result.media[0].name).toBe('photo 29044');
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenCalledTimes(1);
     const fetchArg = fetch.mock.calls[0][0];
     const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
     const queryParams = queryString.split('&');
@@ -126,14 +148,13 @@ describe('ApiFetcher', () => {
   });
 
   it('listMedia should correctly escape a filter with spaces', async () => {
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
-    );
+    mockFetch(VALID_RESPONSE);
+
     const filter = 'cat and  many dogs';
     const escapedFilter = 'cat+and++many+dogs';
 
     await listMedia({ filter });
-    const fetchArg = fetch.mock.calls[0][0];
+    const fetchArg = global.fetch.mock.calls[0][0];
     const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
     const queryParams = queryString.split('&');
     expect(queryParams).toStrictEqual(
@@ -142,14 +163,13 @@ describe('ApiFetcher', () => {
   });
 
   it('listMedia should correctly escape a filter with &', async () => {
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve(VALID_LIST_PHOTOS_RESPONSE)
-    );
+    mockFetch(VALID_RESPONSE);
+
     const filter = 'Tom & Jerry';
     const escapedFilter = 'Tom+%26+Jerry';
 
     await listMedia({ filter });
-    const fetchArg = fetch.mock.calls[0][0];
+    const fetchArg = global.fetch.mock.calls[0][0];
     const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
     const queryParams = queryString.split('&');
     expect(queryParams).toStrictEqual(
