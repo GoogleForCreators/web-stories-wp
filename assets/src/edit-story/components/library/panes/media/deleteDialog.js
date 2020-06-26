@@ -89,7 +89,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
           <Plain onClick={onDelete}>{__('Delete', 'web-stories')}</Plain>
         </>
       }
-      maxWidth={'512px'}
+      maxWidth={512}
     >
       {type === 'image' ? imageDialogDescription : videoDialogDescription}
       <strong>{__('This action can not be undone.', 'web-stories')}</strong>

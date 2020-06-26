@@ -29,7 +29,7 @@ import Modal from '../modal';
 // Shadow styles ported from @material-ui/Dialog
 const DialogBox = styled.div`
   border-radius: 4px;
-  max-width: ${({ maxWidth }) => maxWidth};
+  max-width: ${({ maxWidth }) => maxWidth}px;
   margin: 32px;
   position: relative;
   overflow-y: auto;
@@ -107,11 +107,11 @@ Dialog.propTypes = {
     PropTypes.node,
   ]),
   children: PropTypes.node,
-  maxWidth: PropTypes.string,
+  maxWidth: PropTypes.number,
 };
 
 Dialog.defaultProps = {
-  maxWidth: '920px',
+  maxWidth: 920,
 };
 
 export default Dialog;

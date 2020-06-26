@@ -180,7 +180,7 @@ function MediaEditDialog({ resource, onClose }) {
           <Plain onClick={updateMediaItem}>{__('Save', 'web-stories')}</Plain>
         </>
       }
-      maxWidth={'530px'}
+      maxWidth={530}
     >
       <DialogBody>
         {type === 'image' ? (
