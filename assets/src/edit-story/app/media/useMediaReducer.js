@@ -54,7 +54,7 @@ function useMediaReducer() {
 
   return {
     // TODO: Consume 'local' and 'media3p' state separately from MediaProvider.
-    state: state.local,
+    state,
     actions,
   };
 }
