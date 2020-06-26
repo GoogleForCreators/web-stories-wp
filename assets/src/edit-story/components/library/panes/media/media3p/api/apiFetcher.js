@@ -91,7 +91,9 @@ export async function listMedia({
   if (!response.ok) {
     throw new Error(
       'Obtained an error from the listMedia call, statusCode: ' +
-        response.status
+        response.status +
+        ', statusText: ' +
+        response.statusText
     );
   }
 
