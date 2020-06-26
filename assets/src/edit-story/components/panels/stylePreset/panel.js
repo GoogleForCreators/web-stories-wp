@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -207,17 +207,22 @@ function StylePresetPanel() {
     colors.length > 0 ? Math.max(2, colors.length / COLOR_PRESETS_PER_ROW) : 0;
   const initialHeight = colorRows * rowHeight;
 
+  const resizeable = hasPresets;
+  const canCollapse = !isEditMode && hasPresets;
+
   return (
     <Panel
       name="stylepreset"
       initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
-      resizeable
+      resizeable={resizeable}
+      canCollapse={canCollapse}
     >
       <PresetsHeader
         handleAddColorPreset={handleAddColorPreset}
         stylePresets={stylePresets}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
+        canCollapse={canCollapse}
       />
       <Presets
         isEditMode={isEditMode}
@@ -226,7 +231,7 @@ function StylePresetPanel() {
         isBackground={isBackground}
         isText={isText}
       />
-      <Resize />
+      {resizeable && <Resize position="bottom" />}
     </Panel>
   );
 }
