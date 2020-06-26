@@ -116,7 +116,7 @@ module.exports = function (config) {
     },
 
     coverageIstanbulReporter: {
-      dir: 'build/logs/karma-coverage',
+      dir: 'build/logs/karma-coverage/dashboard',
       reports: ['text-summary', 'lcovonly'],
     },
 
