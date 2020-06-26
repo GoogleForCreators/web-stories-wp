@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-function reducer(state) {
+function providerReducer(state) {
   return state;
 }
 
-export default reducer;
+export default providerReducer;
