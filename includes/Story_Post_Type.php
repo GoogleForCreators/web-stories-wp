@@ -75,7 +75,6 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	public function init() {
-
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -151,7 +150,7 @@ class Story_Post_Type {
 	/**
 	 * Base64 encoded svg icon.
 	 *
-	 * @return bool|string Returns false is the file doesn't exist.
+	 * @return string Base64-encoded SVG icon.
 	 */
 	protected function get_post_type_icon() {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjMiIGhlaWdodD0iNTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOGg0djM5SDBWOHpNNTkgOGg0djM5aC00Vjh6TTUwIDBIMTN2NTVoMzdWMHoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvc3ZnPg==';
