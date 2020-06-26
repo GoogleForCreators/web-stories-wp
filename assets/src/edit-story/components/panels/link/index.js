@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useRef } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -72,6 +72,8 @@ const Error = styled.span`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
+  const linkRef = useRef(null);
+
   const { clearEditing } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
   }));
@@ -160,13 +162,21 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   );
 
   return (
-    <SimplePanel name="link" title={__('Link', 'web-stories')}>
+    <SimplePanel
+      name="link"
+      title={__('Link', 'web-stories')}
+      shortcut="mod+k"
+      onExpand={() => {
+        linkRef.current?.focus();
+      }}
+    >
       <Row>
         <Note>{__('Type an address to apply a link', 'web-stories')}</Note>
       </Row>
 
       <Row>
         <ExpandedTextInput
+          ref={linkRef}
           placeholder={__('Web address', 'web-stories')}
           onChange={(value) =>
             handleChange({ url: value }, !value /* submit */)

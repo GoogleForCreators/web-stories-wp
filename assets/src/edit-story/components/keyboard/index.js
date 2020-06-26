@@ -73,7 +73,7 @@ function useKeyEffectInternal(
         typeof refOrNode.current !== 'undefined'
           ? refOrNode.current
           : refOrNode;
-      if (!node) {
+      if (!node || !keyNameOrSpec) {
         return undefined;
       }
       if (

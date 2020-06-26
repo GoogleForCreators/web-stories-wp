@@ -20,11 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useGlobalKeyDownEffect } from '../../keyboard';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
@@ -35,11 +36,20 @@ const Wrapper = styled.section`
   position: relative;
 `;
 
-function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
+function Panel({
+  resizeable,
+  canCollapse,
+  initialHeight,
+  name,
+  shortcut,
+  onExpand,
+  children,
+}) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
   const [manuallyChanged, setManuallyChanged] = useState(false);
+  const wrapperRef = useRef(null);
 
   const collapse = useCallback(() => {
     if (!canCollapse) {
@@ -56,8 +66,11 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
       if (restoreHeight && resizeable) {
         setHeight(expandToHeight);
       }
+      if (onExpand) {
+        onExpand();
+      }
     },
-    [resizeable, expandToHeight]
+    [resizeable, expandToHeight, onExpand]
   );
 
   useEffect(() => {
@@ -80,6 +93,22 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
     setHeight(initialHeight);
     setExpandToHeight(initialHeight);
   }, [manuallyChanged, initialHeight, resizeable]);
+
+  // Set a keyboard shortcut that opens this panel
+  useGlobalKeyDownEffect(
+    shortcut ? { key: [shortcut] } : null,
+    (evt) => {
+      // Cancel the default behavior of the event if any
+      evt.preventDefault();
+
+      expand();
+      wrapperRef.current.scrollIntoView({
+        inline: 'center',
+        behavior: 'smooth',
+      });
+    },
+    [shortcut, wrapperRef, expand]
+  );
 
   const manuallySetHeight = useCallback(
     (h) => {
@@ -123,7 +152,7 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   const ContextProvider = panelContext.Provider;
 
   return (
-    <Wrapper>
+    <Wrapper ref={wrapperRef}>
       <ContextProvider value={contextValue}>{children}</ContextProvider>
     </Wrapper>
   );
@@ -135,6 +164,8 @@ Panel.propTypes = {
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
+  shortcut: PropTypes.string,
+  onExpand: PropTypes.func,
 };
 
 Panel.defaultProps = {

@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { forwardRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -79,20 +80,23 @@ const CloseIcon = styled(Close)`
   height: 12px;
 `;
 
-function TextInput({
-  className,
-  onBlur,
-  onChange,
-  label,
-  value,
-  flexBasis,
-  disabled,
-  clear,
-  clearIcon,
-  showClearIconBackground,
-  placeholder,
-  ...rest
-}) {
+function TextInput(
+  {
+    className,
+    onBlur,
+    onChange,
+    label,
+    value,
+    flexBasis,
+    disabled,
+    clear,
+    clearIcon,
+    showClearIconBackground,
+    placeholder,
+    ...rest
+  },
+  ref
+) {
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
   placeholder = isMultiple ? __('multiple', 'web-stories') : placeholder;
@@ -117,6 +121,7 @@ function TextInput({
     >
       {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
+        ref={ref}
         type="text"
         placeholder={placeholder}
         label={label}
@@ -169,4 +174,4 @@ TextInput.defaultProps = {
   placeholder: null,
 };
 
-export default TextInput;
+export default forwardRef(TextInput);
