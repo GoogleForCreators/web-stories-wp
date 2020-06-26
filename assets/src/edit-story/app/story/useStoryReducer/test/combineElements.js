@@ -218,7 +218,7 @@ describe('combineElements', () => {
     expect(result.pages[0].defaultBackgroundElement).toStrictEqual({
       // Note that id is regenerated. It doesn't matter what it is, just
       // has to be unique and different from current
-      id: expect.not.stringMatching('123'),
+      id: expect.not.stringMatching('/^123$/'),
       type: 'shape',
       isBackground: true,
       isDefaultBackground: true,
