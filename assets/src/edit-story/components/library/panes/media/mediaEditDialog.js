@@ -26,6 +26,7 @@ import moment from 'moment';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
+import { format } from '@wordpress/date';
 
 /**
  * Internal dependencies
@@ -36,6 +37,7 @@ import { Plain, Primary } from '../../../../components/button';
 import { useMedia } from '../../../../app/media';
 import { useSnackbar } from '../../../../app/snackbar';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
+import { useConfig } from '../../../../app';
 
 const styledMediaThumbnail = css`
   display: flex;
@@ -144,6 +146,7 @@ function MediaEditDialog({ resource, onClose }) {
     poster,
     mimeType,
   } = resource;
+  const { dateFormat = 'Y-m-d' } = useConfig();
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -201,7 +204,7 @@ function MediaEditDialog({ resource, onClose }) {
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
-                parsedDate.format('MMMM DD, YYYY')
+                format(dateFormat, parsedDate)
               )}
             </MediaDateText>
           )}
