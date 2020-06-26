@@ -60,6 +60,7 @@ function Content({
   storyActions,
   users,
   view,
+  dateFormat,
 }) {
   return (
     <Layout.Scrollable>
@@ -80,6 +81,7 @@ function Content({
                   stories={stories}
                   users={users}
                   view={view}
+                  dateFormat={dateFormat}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -108,6 +110,7 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
+  dateFormat: PropTypes.string,
 };
 
 export default Content;
