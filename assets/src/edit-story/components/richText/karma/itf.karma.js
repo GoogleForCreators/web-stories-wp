@@ -108,16 +108,9 @@ describe('Background Overlay Panel', () => {
     await fixture.events.keyboard.shortcut('Escape');
   }
 
-  function getCanvasElementWrapperById(id) {
-    return fixture.querySelector(
-      `[data-testid="safezone"] [data-element-id="${id}"]`
-    );
-  }
-
   async function clickElement(elementId) {
-    const wrapper = await getCanvasElementWrapperById(elementId);
-    const rect = wrapper.getBoundingClientRect();
-    await fixture.events.mouse.click(rect.left + 1, rect.top + 1);
+    const frame = fixture.editor.canvas.framesLayer.frame(elementId).node;
+    await fixture.events.mouse.clickOn(frame, 1, 1);
   }
 
   async function getTextContent() {

@@ -141,8 +141,9 @@ trait Publisher {
 		}
 
 		// Fallback to serving the WordPress logo.
+		$placeholder = $this->get_publisher_logo_placeholder();
 		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = $this->get_publisher_logo_placeholder();
+			$logo_image_url = $placeholder;
 		}
 
 		/**
@@ -151,7 +152,8 @@ trait Publisher {
 		 * This should point to a square image.
 		 *
 		 * @param string $logo_image_url URL to the publisher's logo.
+		 * @param string $placeholder    URL to the placeholder logo.
 		 */
-		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
+		return apply_filters( 'web_stories_publisher_logo', $logo_image_url, $placeholder );
 	}
 }

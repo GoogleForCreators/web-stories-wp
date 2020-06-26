@@ -108,12 +108,7 @@ xdescribe('Carousel integration', () => {
 
     // Exit.
     await fixture.events.keyboard.press('Esc');
-    const framesLayer = fixture.querySelector('[data-testid="FramesLayer"]');
-    await waitFor(() => {
-      if (!framesLayer.contains(document.activeElement)) {
-        throw new Error('Focus is not set on the canvas yet');
-      }
-    });
+    await fixture.editor.canvas.framesLayer.waitFocusedWithin();
   });
 
   it('should click into carousel on the second page', async () => {

@@ -447,7 +447,12 @@ class Story_Post_Type {
 
 		];
 
-		return $settings;
+		/**
+		 * Filters settings passed to the web stories editor.
+		 *
+		 * @param array $settings Array of settings passed to web stories editor.
+		 */
+		return apply_filters( 'web_stories_editor_settings', $settings );
 	}
 
 	/**

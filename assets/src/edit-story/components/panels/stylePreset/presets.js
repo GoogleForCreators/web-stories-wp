@@ -37,7 +37,7 @@ import PresetGroup from './presetGroup';
 import { presetHasOpacity, presetHasGradient } from './utils';
 
 const REMOVE_ICON_SIZE = 18;
-const PRESET_HEIGHT = 30;
+const PRESET_SIZE = 30;
 
 const presetCSS = css`
   width: 100%;
@@ -71,11 +71,11 @@ const Transparent = styled.div`
 `;
 
 const ColorWrapper = styled.div`
-  display: inline-block;
-  width: 30px;
-  height: ${PRESET_HEIGHT}px;
+  display: block;
+  width: ${PRESET_SIZE}px;
+  height: ${PRESET_SIZE}px;
   border: 1px solid ${({ theme }) => theme.colors.whiteout};
-  border-radius: 15px;
+  border-radius: 100%;
   overflow: hidden;
   position: relative;
   ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}

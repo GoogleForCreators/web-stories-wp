@@ -13,36 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { useReducer, useMemo } from 'react';
+import { select } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
  */
-import reducer, { INITIAL_STATE } from './reducer';
-import * as actionsToWrap from './actions';
+import { VIEW_STYLE } from '../../../constants';
+import ViewStyleBar from '..';
 
-const wrapWithDispatch = (actions, dispatch) =>
-  Object.keys(actions).reduce(
-    (collection, action) => ({
-      ...collection,
-      [action]: actions[action](dispatch),
-    }),
-    {}
+export default {
+  title: 'Dashboard/Components/ViewStyleBar',
+  component: ViewStyleBar,
+};
+
+export const _default = () => {
+  return (
+    <ViewStyleBar
+      layoutStyle={select('layoutStyle', VIEW_STYLE, VIEW_STYLE.LIST)}
+      onPress={action('on press clicked')}
+    />
   );
-
-function useMediaReducer() {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-
-  const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), []);
-
-  return {
-    state,
-    actions,
-  };
-}
-
-export default useMediaReducer;
+};
