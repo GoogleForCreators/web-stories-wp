@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function providerReducer(state) {
+function providerReducer(state = {}) {
   return state;
 }
 

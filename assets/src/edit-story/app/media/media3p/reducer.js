@@ -29,12 +29,7 @@ import providerReducer from './providerReducer.js';
 
 const providers = ['unsplash'];
 
-export const INITIAL_STATE = providers.reduce(
-  (state, provider) => Object.assign(state, { [provider]: {} }),
-  {}
-);
-
-function reducer(state, { type, payload }) {
+function reducer(state = {}, { type, payload }) {
   const result = {};
   for (const provider of providers) {
     result[provider] = providerReducer(state[provider], { type, payload });

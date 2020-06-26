@@ -17,23 +17,34 @@
 /**
  * Internal dependencies
  */
-import reducer, { INITIAL_STATE } from '../reducer';
+import reducer from '../reducer';
 import providerReducer from '../providerReducer';
+import * as types from '../../types';
 
 jest.mock('../providerReducer');
 
 describe('reducer', () => {
+  let initialValue;
+
+  beforeEach(() => {
+    providerReducer.mockReturnValueOnce({});
+    initialValue = reducer(undefined, { type: types.INITIAL_STATE });
+  });
+
   it('should provide initial state for each provider', () => {
-    expect(INITIAL_STATE).toStrictEqual(
+    expect(initialValue).toStrictEqual(
       expect.objectContaining({ unsplash: {} })
     );
   });
 
   it('should reduce each provider state', () => {
     providerReducer.mockReturnValueOnce({ key: 'value' });
-    const newState = reducer(INITIAL_STATE, { type: 'action' });
+    const newState = reducer(initialValue, { type: 'action' });
 
-    expect(providerReducer).toHaveBeenCalledWith({}, { type: 'action' });
+    expect(providerReducer).toHaveBeenCalledWith(
+      {},
+      { type: 'action', payload: undefined }
+    );
     expect(newState).toStrictEqual(
       expect.objectContaining({ unsplash: { key: 'value' } })
     );
