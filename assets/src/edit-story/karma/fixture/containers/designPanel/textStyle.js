@@ -84,4 +84,11 @@ export class TextStyle extends AbstractPanel {
       Select
     );
   }
+
+  // @todo: add remaining input options:
+  // * font size
+  // * justify toggles
+  // * fill style
+  // * background color
+  // * padding (lock ratio, combined padding and individual paddings)
 }
