@@ -143,7 +143,7 @@ class Frame extends Container {
     super(node, path);
   }
 
-  get textContent() {
+  get textContentHTML() {
     return this.node.querySelector('p')?.innerHTML;
   }
 }

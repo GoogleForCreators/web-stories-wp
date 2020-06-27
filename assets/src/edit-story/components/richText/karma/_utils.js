@@ -68,7 +68,7 @@ export function initHelpers(data) {
   function getTextContent(index = 0) {
     return data.fixture.editor.canvas.framesLayer.frame(
       index === 0 ? data.textId : data.extraId
-    ).textContent;
+    ).textContentHTML;
   }
 
   async function richTextHasFocus() {
