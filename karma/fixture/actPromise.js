@@ -16,22 +16,19 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
+import { act } from '@testing-library/react';
 
-/**
- * Internal dependencies
- */
-import { TemplateNavBar } from '../';
-
-export default {
-  title: 'Dashboard/Components/TemplateNavBar',
-};
-
-export const _default = () => {
-  return (
-    <TemplateNavBar
-      handleCta={action('handle cta clicked')}
-      handleBookmarkClick={action('handle bookmark clicked')}
-    />
-  );
-};
+export default function actPromise(callback) {
+  return new Promise((resolve) => {
+    let callbackResult;
+    const actResult = act(() => {
+      callbackResult = callback();
+      return Promise.resolve(callbackResult);
+    });
+    resolve(
+      new Promise((aResolve, aReject) => {
+        actResult.then(aResolve, aReject);
+      }).then(() => callbackResult)
+    );
+  });
+}

@@ -13,36 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { useReducer, useMemo } from 'react';
+import { action } from '@storybook/addon-actions';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import reducer, { INITIAL_STATE } from './reducer';
-import * as actionsToWrap from './actions';
+import { DetailViewNavBar } from '../';
 
-const wrapWithDispatch = (actions, dispatch) =>
-  Object.keys(actions).reduce(
-    (collection, action) => ({
-      ...collection,
-      [action]: actions[action](dispatch),
-    }),
-    {}
+export default {
+  title: 'Dashboard/Components/DetailViewNavBar',
+};
+
+export const _default = () => {
+  return (
+    <DetailViewNavBar
+      handleCta={action('handle cta clicked')}
+      handleBookmarkClick={action('handle bookmark clicked')}
+      ctaText={text('ctaText', 'Use template')}
+    />
   );
+};
 
-function useMediaReducer() {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-
-  const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), []);
-
-  return {
-    state,
-    actions,
-  };
-}
-
-export default useMediaReducer;
+export const NoBookmarking = () => {
+  return (
+    <DetailViewNavBar
+      handleCta={action('handle cta clicked')}
+      ctaText={text('ctaText', 'Use template')}
+    />
+  );
+};

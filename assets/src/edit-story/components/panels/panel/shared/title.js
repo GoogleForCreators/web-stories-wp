@@ -112,7 +112,7 @@ function Title({
   isSecondary,
   secondaryAction,
   isResizable,
-  canCollapse = true,
+  canCollapse,
 }) {
   const {
     state: { isCollapsed, height, resizeable, panelContentId, panelTitleId },
@@ -210,6 +210,7 @@ Title.defaultProps = {
   isPrimary: false,
   isSecondary: false,
   isResizable: false,
+  canCollapse: true,
 };
 
 export default Title;
