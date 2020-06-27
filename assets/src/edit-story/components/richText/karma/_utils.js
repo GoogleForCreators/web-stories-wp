@@ -25,21 +25,50 @@ export function initHelpers(data) {
     return storyContext.state.currentPage.elements;
   }
 
-  async function addInitialText() {
+  async function addInitialText(addExtra = false) {
     await data.fixture.events.click(data.fixture.editor.library.textAdd);
 
-    const [{ id: bgId }, { id: textId }] = await getElements();
-    data.bgId = bgId;
-    data.textId = textId;
+    if (addExtra) {
+      await data.fixture.events.click(data.fixture.editor.library.textAdd);
+    }
 
-    await data.fixture.editor.canvas.framesLayer
-      .frame(data.textId)
-      .waitFocusedWithin();
+    await data.fixture.editor.canvas.framesLayer.waitFocusedWithin();
+
+    const elements = await getElements();
+    data.bgId = elements[0].id;
+    data.textId = elements[1].id;
+
+    if (addExtra) {
+      data.extraId = elements[2].id;
+
+      // Change value of second text field and exit edit mode
+      await data.fixture.events.keyboard.press('Enter');
+      await data.fixture.events.keyboard.type('Number #2');
+      await data.fixture.events.keyboard.press('Escape');
+
+      // Move second text field 10 steps down
+      await repeatPress('ArrowDown', 10);
+    }
   }
 
-  function getTextContent() {
-    return data.fixture.editor.canvas.framesLayer.frame(data.textId)
-      .textContent;
+  async function selectTextField(index = 0) {
+    const node = data.fixture.editor.canvas.framesLayer.frame(
+      index === 0 ? data.textId : data.extraId
+    ).node;
+    await data.fixture.events.click(node);
+  }
+
+  async function selectBothTextFields() {
+    await selectTextField(0);
+    await data.fixture.events.keyboard.down('shift');
+    await selectTextField(1);
+    await data.fixture.events.keyboard.up('shift');
+  }
+
+  function getTextContent(index = 0) {
+    return data.fixture.editor.canvas.framesLayer.frame(
+      index === 0 ? data.textId : data.extraId
+    ).textContent;
   }
 
   async function richTextHasFocus() {
@@ -77,5 +106,7 @@ export function initHelpers(data) {
     getTextContent,
     setSelection,
     richTextHasFocus,
+    selectTextField,
+    selectBothTextFields,
   };
 }
