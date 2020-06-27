@@ -18,11 +18,11 @@
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../testUtils/';
-import { TemplateNavBar } from '../';
+import { DetailViewNavBar } from '../';
 
-describe('TemplateNavBar', () => {
+describe('DetailViewNavBar', () => {
   it('should render nav bar for detail template view', () => {
-    const { getByRole } = renderWithTheme(<TemplateNavBar />);
+    const { getByRole } = renderWithTheme(<DetailViewNavBar />);
     const nav = getByRole('navigation');
 
     expect(nav).toBeDefined();
