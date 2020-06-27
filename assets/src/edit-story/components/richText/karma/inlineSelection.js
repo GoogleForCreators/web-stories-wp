@@ -345,7 +345,7 @@ describe('CUJ: Editor Can Style Text', () => {
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
 
-      // Select character 5 and 6 (the word "in" in "Fill in some text")
+      // Select something
       await setSelection(5, 7);
 
       // Change line height to 5
