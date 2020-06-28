@@ -85,7 +85,7 @@
     "@storybook/client-logger": "^6.0.0-beta.37",
     "@storybook/react": "^6.0.0-beta.37",
     "@svgr/webpack": "^5.4.0",
-    "@testing-library/dom": "^7.18.1",
+    "@testing-library/dom": "^7.18.2",
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
     "@testing-library/react-hooks": "^3.3.0",
