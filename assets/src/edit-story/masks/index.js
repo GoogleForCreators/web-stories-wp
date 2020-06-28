@@ -110,7 +110,11 @@ export const DEFAULT_MASK = MASKS.find(
 
 export function getElementMask({ type, mask }) {
   if (mask?.type) {
-    return MASKS.find((m) => m.type === mask.type);
+    const maskDef = MASKS.find((m) => m.type === mask.type);
+    if (mask?.path) {
+      maskDef.path = mask?.path;
+    }
+    return maskDef;
   }
   return getDefaultElementMask(type);
 }

@@ -78,6 +78,7 @@ StoryPropTypes.story = PropTypes.shape({
 
 StoryPropTypes.mask = PropTypes.shape({
   type: PropTypes.string.isRequired,
+  path: PropTypes.string,
 });
 
 StoryPropTypes.link = PropTypes.shape({
