@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
-export default function provideContextValue() {
+// TODO(https://github.com/google/web-stories-wp/issues/2426):
+// Delegate work to new 'useProviderContextValueProvider' hook, and from there
+// re-use logic from media/common/useContextValueProvider.js.
+export default function useContextValueProvider() {
   return {};
 }

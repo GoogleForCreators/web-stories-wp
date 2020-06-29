@@ -22,16 +22,16 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import provideLocalContextValue from './local/provideContextValue';
-import provideMedia3pContextValue from './media3p/provideContextValue';
+import useLocalContextValueProvider from './local/useContextValueProvider';
+import useMedia3pContextValueProvider from './media3p/useContextValueProvider';
 import useMediaReducer from './useMediaReducer';
 import Context from './context';
 
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
 
-  const local = provideLocalContextValue(state.local, actions);
-  const media3p = provideMedia3pContextValue(state.media3p, actions);
+  const local = useLocalContextValueProvider(state.local, actions);
+  const media3p = useMedia3pContextValueProvider(state.media3p, actions);
 
   const context = { local, media3p };
   return <Context.Provider value={context}>{children}</Context.Provider>;
