@@ -47,7 +47,6 @@ function EditElement({ element }) {
   }));
 
   const [editWrapper, setEditWrapper] = useState(null);
-  const [actionHappening, setActionHappening] = useState(false);
 
   const { Edit, hasEditModeMovable } = getDefinitionForType(type);
   const box = getBox(element);
@@ -67,7 +66,6 @@ function EditElement({ element }) {
           box={box}
           editWrapper={hasEditModeMovable && editWrapper}
           moveable={moveable}
-          actionHappening={actionHappening}
         />
       </Wrapper>
       {hasEditModeMovable && editWrapper && (
@@ -76,7 +74,6 @@ function EditElement({ element }) {
           targetEl={editWrapper}
           isEditMode={true}
           editMoveableRef={moveable}
-          setActionHappening={setActionHappening}
         />
       )}
     </>

@@ -46,7 +46,6 @@ function SingleSelectionMovable({
   pushEvent,
   isEditMode,
   editMoveableRef,
-  setActionHappening,
 }) {
   let moveable = useRef(null);
   if (isEditMode) {
@@ -313,7 +312,8 @@ function SingleSelectionMovable({
           setIsResizingFromCorner(newResizingMode);
         }
         if (isEditMode) {
-          setActionHappening(true);
+          // In edit mode, we need to signal right away that the action started.
+          pushTransform(selectedElement.id, frame);
         }
       }}
       onResize={({ target, direction, width, height, drag }) => {
@@ -356,9 +356,6 @@ function SingleSelectionMovable({
         setTransformStyle(target);
       }}
       onResizeEnd={({ target }) => {
-        if (isEditMode) {
-          setActionHappening(false);
-        }
         if (handleElementOutOfCanvas(target)) {
           return;
         }
@@ -391,7 +388,8 @@ function SingleSelectionMovable({
       }}
       onRotateStart={({ set }) => {
         if (isEditMode) {
-          setActionHappening(true);
+          // In edit mode, we need to signal right away that the action started.
+          pushTransform(selectedElement.id, frame);
         }
         set(frame.rotate);
       }}
@@ -400,9 +398,6 @@ function SingleSelectionMovable({
         setTransformStyle(target);
       }}
       onRotateEnd={({ target }) => {
-        if (isEditMode) {
-          setActionHappening(false);
-        }
         if (handleElementOutOfCanvas(target)) {
           return;
         }
@@ -443,6 +438,7 @@ SingleSelectionMovable.propTypes = {
   targetEl: PropTypes.object.isRequired,
   pushEvent: PropTypes.object,
   isEditMode: PropTypes.bool,
+  editMoveableRef: PropTypes.object,
 };
 
 export default SingleSelectionMovable;

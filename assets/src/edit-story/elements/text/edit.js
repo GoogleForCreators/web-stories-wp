@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useStory, useFont } from '../../app';
+import { useStory, useFont, useTransform } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
 import { useUnits } from '../../units';
@@ -76,7 +76,6 @@ function TextEdit({
   box: { x, y, height, rotationAngle },
   editWrapper,
   moveable,
-  actionHappening,
 }) {
   const {
     id,
@@ -134,6 +133,10 @@ function TextEdit({
   } = useFont();
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
+  }));
+
+  const { isAnythingTransforming } = useTransform((state) => ({
+    isAnythingTransforming: state.state.isAnythingTransforming,
   }));
 
   const setProperties = useCallback(
@@ -200,10 +203,10 @@ function TextEdit({
   useEffect(() => {
     // If there are any moveable actions happening, let's update the content
     // Otherwise the font size and measures will not be correct.
-    if (actionHappening) {
+    if (isAnythingTransforming) {
       updateContent();
     }
-  }, [actionHappening, updateContent]);
+  }, [isAnythingTransforming, updateContent]);
 
   // A function to remeasure height
   const handleResize = useCallback(() => {
@@ -282,8 +285,7 @@ TextEdit.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   box: StoryPropTypes.box.isRequired,
   moveable: PropTypes.object,
-  editWrapper: PropTypes.node,
-  actionHappening: PropTypes.bool, // @todo Replace to use transform.
+  editWrapper: PropTypes.object,
 };
 
 export default TextEdit;
