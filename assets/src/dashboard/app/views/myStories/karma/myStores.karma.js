@@ -15,12 +15,18 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
+import { waitFor } from '@testing-library/react';
+/**
+ * Internal dependencies
+ */
 import Fixture from '../../../../karma/fixture';
+
+/**
+ * Internal dependencies
+ */
+import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
 
 describe('My Stories View integration', () => {
   let fixture;
@@ -32,11 +38,16 @@ describe('My Stories View integration', () => {
 
   describe('when the page intially loads', () => {
     it('should render', () => {
-      const screen = fixture.screen;
-
-      const exploreTemplatesMenuItem = screen.queryByText('Explore Templates');
+      const exploreTemplatesMenuItem = fixture.screen.queryByText(
+        'Explore Templates'
+      );
 
       expect(exploreTemplatesMenuItem).toBeTruthy();
+
+      waitFor(() => {
+        const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+        expect(stories.length).toEqual(formattedStoriesArray.length);
+      });
     });
 
     it('should navigate to Explore Templates', async () => {
