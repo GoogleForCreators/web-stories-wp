@@ -34,10 +34,10 @@ import {
   CardGallery,
   ColorList,
   DetailViewContentGutter,
+  DetailViewNavBar,
   Layout,
   PaginationButton,
   Pill,
-  TemplateNavBar,
 } from '../../../components';
 import { clamp, usePagePreviewSize } from '../../../utils/';
 import { ApiContext } from '../../api/apiProvider';
@@ -211,11 +211,12 @@ function TemplateDetails() {
         <TransformProvider>
           <Layout.Provider>
             <Layout.Fixed>
-              <TemplateNavBar
-                handleCta={onHandleCta}
+              <DetailViewNavBar
+                ctaText={__('Use template', 'web-stories')}
                 handleBookmarkClick={
-                  enableBookmarks ? handleBookmarkClickSelected : undefined
+                  enableBookmarks && handleBookmarkClickSelected
                 }
+                handleCta={onHandleCta}
               />
             </Layout.Fixed>
             <Layout.Scrollable>

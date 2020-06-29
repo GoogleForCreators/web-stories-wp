@@ -110,7 +110,7 @@ class Story_Post_Type {
 					'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
 				],
-				'menu_icon'             => 'dashicons-book',
+				'menu_icon'             => $this->get_post_type_icon(),
 				'supports'              => [
 					'title', // Used for amp-story[title].
 					'author',
@@ -145,6 +145,15 @@ class Story_Post_Type {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+	}
+
+	/**
+	 * Base64 encoded svg icon.
+	 *
+	 * @return string Base64-encoded SVG icon.
+	 */
+	protected function get_post_type_icon() {
+		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjMiIGhlaWdodD0iNTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOGg0djM5SDBWOHpNNTkgOGg0djM5aC00Vjh6TTUwIDBIMTN2NTVoMzdWMHoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvc3ZnPg==';
 	}
 
 	/**
@@ -340,6 +349,7 @@ class Story_Post_Type {
 			'config' => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
+				'dateFormat'       => get_option( 'date_format' ),
 				'timeFormat'       => get_option( 'time_format' ),
 				'allowedMimeTypes' => $this->get_allowed_mime_types(),
 				'allowedFileTypes' => $this->get_allowed_file_types(),
@@ -379,7 +389,7 @@ class Story_Post_Type {
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu'            => false,
+				'mediaDropdownMenu'            => true,
 				/**
 				 * Description: Flag for new font picker with typeface previews in style panel.
 				 * Author: @carlos-kelly
@@ -447,7 +457,12 @@ class Story_Post_Type {
 
 		];
 
-		return $settings;
+		/**
+		 * Filters settings passed to the web stories editor.
+		 *
+		 * @param array $settings Array of settings passed to web stories editor.
+		 */
+		return apply_filters( 'web_stories_editor_settings', $settings );
 	}
 
 	/**

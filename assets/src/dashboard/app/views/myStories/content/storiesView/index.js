@@ -56,6 +56,7 @@ function StoriesView({
   stories,
   users,
   view,
+  dateFormat,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -155,6 +156,7 @@ function StoriesView({
         storySort={sort.value}
         storyStatus={filterValue}
         users={users}
+        dateFormat={dateFormat}
       />
     ) : (
       <StoryGridView
@@ -167,6 +169,7 @@ function StoriesView({
         storyMenu={storyMenu}
         stories={stories}
         users={users}
+        dateFormat={dateFormat}
       />
     );
 
@@ -217,5 +220,6 @@ StoriesView.propTypes = {
   stories: StoriesPropType,
   users: UsersPropType,
   view: ViewPropTypes,
+  dateFormat: PropTypes.string,
 };
 export default StoriesView;

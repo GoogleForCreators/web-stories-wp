@@ -34,7 +34,7 @@ export const Z_INDEX = {
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
-  ALERT: 15,
+  TOASTER: 15,
 };
 
 export const APP_ROUTES = {
@@ -85,8 +85,8 @@ export const VIEW_STYLE = {
 };
 
 export const VIEW_STYLE_LABELS = {
-  [VIEW_STYLE.GRID]: __('Grid View', 'web-stories'),
-  [VIEW_STYLE.LIST]: __('List View', 'web-stories'),
+  [VIEW_STYLE.GRID]: __('Switch to List View', 'web-stories'),
+  [VIEW_STYLE.LIST]: __('Switch to Grid View', 'web-stories'),
 };
 
 export const ICON_METRICS = {
@@ -94,7 +94,7 @@ export const ICON_METRICS = {
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
-export const ITEMS_PER_PAGE = 20;
+export const ITEMS_PER_PAGE = 100; // default max per request
 
 export const DASHBOARD_VIEWS = {
   MY_STORIES: 'MY_STORIES',
@@ -106,6 +106,8 @@ export const RESULT_LABELS = {
   [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
+
+export const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
 export * from './animation';
 export * from './components';

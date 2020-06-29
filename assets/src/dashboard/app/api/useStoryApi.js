@@ -105,7 +105,12 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       if (!storyApi) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
-          payload: true,
+          payload: {
+            message: {
+              body: __('Cannot connect to data source', 'web-stories'),
+              title: __('Unable to Load Stories', 'web-stories'),
+            },
+          },
         });
         return;
       }
@@ -156,7 +161,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
-          payload: { message: err.message, code: err.code },
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Load Stories', 'web-stories'),
+            },
+            code: err.code,
+          },
         });
       } finally {
         dispatch({
@@ -178,9 +189,17 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           type: STORY_ACTION_TYPES.UPDATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.UPDATE_STORY_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Update Story', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
       }
     },
     [storyApi, dataAdapter, editStoryURL]
@@ -196,9 +215,17 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.TRASH_STORY_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Delete Story', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
       }
     },
     [storyApi, dataAdapter]
@@ -247,7 +274,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
-          payload: { message: err.message, code: err.code },
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Create Story From Template', 'web-stories'),
+            },
+            code: err.code,
+          },
         });
       } finally {
         dispatch({
@@ -292,9 +325,17 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.DUPLICATE_STORY_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Duplicate Story', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
       }
     },
     [storyApi, dataAdapter, editStoryURL]

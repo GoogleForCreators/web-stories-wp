@@ -109,7 +109,6 @@ export default function BodyViewOptions({
                 </ExternalLink>
               )}
               <ViewStyleBar
-                label={resultsLabel}
                 layoutStyle={layoutStyle}
                 onPress={handleLayoutSelect}
               />

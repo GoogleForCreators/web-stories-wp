@@ -181,7 +181,7 @@ const theme = {
       family: 'Roboto',
       weight: 'normal',
       size: '13px',
-      lineHeight: '16px',
+      lineHeight: '18px',
     },
     date: {
       family: 'Roboto',

@@ -54,3 +54,5 @@ export const ALERT_SEVERITY = {
   SUCCESS: 'success',
   DEFAULT: 'default',
 };
+
+export const AUTO_REMOVE_ALERT_TIME_INTERVAL = 10000;

@@ -66,7 +66,7 @@ import useCarouselKeys from './useCarouselKeys';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid: 'space prev-navigation carousel next-navigation menu' auto / 53px 53px 1fr 53px 53px;
@@ -220,13 +220,6 @@ function calculatePageThumbSize(carouselSize) {
   return [pageWidth + THUMB_FRAME_WIDTH, pageHeight + THUMB_FRAME_HEIGHT];
 }
 
-function safeZoneSelector({
-  state: { showSafeZone },
-  actions: { setShowSafeZone },
-}) {
-  return { showSafeZone, setShowSafeZone };
-}
-
 function Carousel() {
   const {
     pages,
@@ -240,7 +233,12 @@ function Carousel() {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
   const { isRTL } = useConfig();
-  const { showSafeZone, setShowSafeZone } = useCanvas(safeZoneSelector);
+  const { showSafeZone, setShowSafeZone } = useCanvas(
+    ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
+      showSafeZone,
+      setShowSafeZone,
+    })
+  );
   const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
@@ -253,6 +251,7 @@ function Carousel() {
     width: COMPACT_THUMB_WIDTH,
     height: COMPACT_THUMB_HEIGHT,
   });
+  const [resizedForPages, setResizedForPages] = useState(0);
 
   const isCompact =
     calculateThumbnailHeight(carouselSize) < MIN_CAROUSEL_THUMB_HEIGHT;
@@ -268,6 +267,7 @@ function Carousel() {
       setHasHorizontalOverflow(Math.ceil(scrollWidth) > Math.ceil(offsetWidth));
       setScrollPercentage(scrollLeft / max);
       setCarouselSize(currentCarouselSize);
+      setResizedForPages(pages.length);
     },
     [pages.length]
   );
@@ -363,7 +363,12 @@ function Carousel() {
 
   return (
     <>
-      <Wrapper ref={wrapperRef} data-testid="PageCarousel">
+      <Wrapper
+        ref={wrapperRef}
+        data-testid="PageCarousel"
+        aria-label={__('Page Carousel', 'web-stories')}
+        data-ready={resizedForPages === pages.length}
+      >
         <NavArea area="space" />
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
@@ -407,6 +412,7 @@ function Carousel() {
                   <Page
                     onClick={handleClickPage(page)}
                     role="option"
+                    data-page-id={page.id}
                     ariaLabel={
                       isCurrentPage
                         ? sprintf(

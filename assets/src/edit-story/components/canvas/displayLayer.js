@@ -20,6 +20,11 @@
 import { memo } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useStory } from '../../app';
@@ -43,7 +48,11 @@ function DisplayLayer() {
   );
 
   return (
-    <Layer data-testid="DisplayLayer" pointerEvents="none">
+    <Layer
+      data-testid="DisplayLayer"
+      pointerEvents="none"
+      aria-label={__('Display', 'web-stories')}
+    >
       <PageArea
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
