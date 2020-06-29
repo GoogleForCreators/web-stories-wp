@@ -14,9 +14,26 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2426):
-// Delegate work to new 'useProviderContextValueProvider' hook, and from there
-// re-use logic from media/common/useContextValueProvider.js.
-export default function useContextValueProvider() {
-  return {};
+/**
+ * Internal dependencies
+ */
+import useProviderContextValueProvider from './useProviderContextValueProvider';
+
+// TODO(https://github.com/google/web-stories-wp/issues/2804):
+// Use provider configuration json fragment.
+const providers = ['unsplash'];
+
+export default function useContextValueProvider(reducerState, reducerActions) {
+  const result = {};
+
+  // The 'providers' list is a constant, and so hooks are still called in the
+  // same order during a re-render as per rules-of-hooks.
+  for (const provider of providers) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    result[provider] = useProviderContextValueProvider(
+      reducerState,
+      reducerActions
+    );
+  }
+  return result;
 }
