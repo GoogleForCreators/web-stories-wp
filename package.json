@@ -30,7 +30,6 @@
     "@wordpress/date": "^3.9.0",
     "@wordpress/element": "^2.15.0",
     "@wordpress/i18n": "^3.13.0",
-    "@wordpress/icons": "^2.3.0",
     "big.js": "^5.2.2",
     "classnames": "^2.2.6",
     "colorthief": "^2.3.0",
