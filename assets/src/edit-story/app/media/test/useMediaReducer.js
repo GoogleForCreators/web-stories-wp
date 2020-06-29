@@ -14,10 +14,21 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Re-use logic from media/common/reducer.js.
-function providerReducer(state = {}) {
-  return state;
-}
+/**
+ * External dependencies
+ */
+import { renderHook } from '@testing-library/react-hooks';
 
-export default providerReducer;
+/**
+ * Internal dependencies
+ */
+import useMediaReducer from '../useMediaReducer';
+
+describe('useMediaReducer', () => {
+  it('should return the initial value for state', () => {
+    const { result } = renderHook(() => useMediaReducer());
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({ media: [], hasMore: true })
+    );
+  });
+});
