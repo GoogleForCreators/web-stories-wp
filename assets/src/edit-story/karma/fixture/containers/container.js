@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getByRole, queryByRole } from '@testing-library/react';
+import { getByRole, queryByRole, waitFor } from '@testing-library/react';
 
 export class Container {
   /**
@@ -35,6 +35,33 @@ export class Container {
 
   get path() {
     return this._path;
+  }
+
+  /**
+   * The container can indicate that it's not ready by setting the
+   * `data-ready="false"` attribute.
+   *
+   * @return {!Promise} Resolve when the container is ready.
+   */
+  waitReady() {
+    // @todo: consider joining on the parent waitReady as well.
+    return waitFor(() => {
+      if (this._node.getAttribute('data-ready') === 'false') {
+        throw new Error(`Container <${this._path}>is not ready  yet`);
+      }
+    });
+  }
+
+  /**
+   * @return {!Promise} Resolve when the element or one of its children becomes
+   * focused.
+   */
+  waitFocusedWithin() {
+    return waitFor(() => {
+      if (!this._node.contains(document.activeElement)) {
+        throw new Error(`Focus is not set within the <${this._path}> yet`);
+      }
+    });
   }
 
   /**

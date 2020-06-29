@@ -116,7 +116,7 @@ describe('Panels/StylePreset', () => {
 
   it('should render <StylePresetPanel /> panel', () => {
     const { getByText } = setupPanel();
-    const element = getByText('Presets');
+    const element = getByText('Saved Colors');
     expect(element).toBeDefined();
   });
 
@@ -134,7 +134,7 @@ describe('Panels/StylePreset', () => {
       ],
     };
     const { queryByText } = setupPanel(null, extraStateProps);
-    expect(queryByText('Presets')).toBeNull();
+    expect(queryByText('Saved Colors')).toBeNull();
   });
 
   describe('Panels/StylePreset/Header', () => {

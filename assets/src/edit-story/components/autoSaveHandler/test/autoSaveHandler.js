@@ -47,7 +47,9 @@ function setup({
     actions: { saveStory },
   };
   const mediaContextValue = {
-    state: { isUploading },
+    local: {
+      state: { isUploading },
+    },
   };
   render(
     <ConfigContext.Provider value={configValue}>

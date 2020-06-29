@@ -340,6 +340,7 @@ class Story_Post_Type {
 			'config' => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
+				'dateFormat'       => get_option( 'date_format' ),
 				'timeFormat'       => get_option( 'time_format' ),
 				'allowedMimeTypes' => $this->get_allowed_mime_types(),
 				'allowedFileTypes' => $this->get_allowed_file_types(),
@@ -447,7 +448,12 @@ class Story_Post_Type {
 
 		];
 
-		return $settings;
+		/**
+		 * Filters settings passed to the web stories editor.
+		 *
+		 * @param array $settings Array of settings passed to web stories editor.
+		 */
+		return apply_filters( 'web_stories_editor_settings', $settings );
 	}
 
 	/**

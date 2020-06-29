@@ -24,4 +24,9 @@ function useMedia(selector) {
   return useContextSelector(Context, selector ?? identity);
 }
 
-export default useMedia;
+function useLocalMedia(selector) {
+  return useMedia(({ local }) => (selector ?? identity)(local));
+}
+
+// TODO: Update usages of `useMedia` to import and call `useLocalMedia`.
+export default useLocalMedia;

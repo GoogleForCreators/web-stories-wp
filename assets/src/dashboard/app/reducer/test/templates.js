@@ -23,6 +23,10 @@ import templateReducer, {
 } from '../templates';
 
 describe('templateReducer', () => {
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => 1592844570916);
+  });
+
   it(`should update templates state when ${ACTION_TYPES.FETCH_TEMPLATES_SUCCESS} is called`, () => {
     const result = templateReducer(initialState, {
       type: ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
@@ -188,13 +192,26 @@ describe('templateReducer', () => {
       { ...initialState },
       {
         type: ACTION_TYPES.FETCH_TEMPLATES_FAILURE,
-        payload: { message: 'test error message', code: 'test-error-code' },
+        payload: {
+          message: {
+            title: 'Unable to Load Templates',
+            body: 'test error message',
+          },
+          code: 'test-error-code',
+        },
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      error: { message: 'test error message', code: 'test-error-code' },
+      error: {
+        message: {
+          title: 'Unable to Load Templates',
+          body: 'test error message',
+        },
+        id: Date.now(),
+        code: 'test-error-code',
+      },
     });
   });
 
@@ -203,13 +220,26 @@ describe('templateReducer', () => {
       { ...initialState },
       {
         type: ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
-        payload: { message: 'test error message', code: 'test-error-code' },
+        payload: {
+          message: {
+            title: 'Unable to Create Template from Story',
+            body: 'test error message',
+          },
+          code: 'test-error-code',
+        },
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      error: { message: 'test error message', code: 'test-error-code' },
+      error: {
+        message: {
+          title: 'Unable to Create Template from Story',
+          body: 'test error message',
+        },
+        id: Date.now(),
+        code: 'test-error-code',
+      },
     });
   });
 

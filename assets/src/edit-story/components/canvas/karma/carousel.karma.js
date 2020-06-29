@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -28,12 +23,9 @@ import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import createSolid from '../../../utils/createSolid';
 
-// @todo: Figure out the flakiness source and enable.
-// eslint-disable-next-line jasmine/no-disabled-tests
-xdescribe('Carousel integration', () => {
+describe('Carousel integration', () => {
   let fixture;
   let element1;
-  let carousel;
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -55,8 +47,6 @@ xdescribe('Carousel integration', () => {
         width: 250,
       })
     );
-
-    carousel = fixture.container.querySelector('[data-testid="PageCarousel"]');
   });
 
   afterEach(() => {
@@ -80,11 +70,11 @@ xdescribe('Carousel integration', () => {
     return pages.map(({ id }) => id);
   }
 
-  function getThumbnail(index) {
-    const thumbnails = carousel.querySelectorAll(
-      '[role="listbox"] button[role="option"]'
-    );
-    return thumbnails[index];
+  async function clickOnThumbnail(index) {
+    await fixture.editor.carousel.waitReady();
+    const thumb = fixture.editor.carousel.pages[index];
+    thumb.node.scrollIntoView();
+    await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
 
   it('should select the current page', async () => {
@@ -93,37 +83,29 @@ xdescribe('Carousel integration', () => {
   });
 
   it('should click into carousel on the first page', async () => {
-    await fixture.events.mouse.clickOn(getThumbnail(0), 5, 5);
+    await clickOnThumbnail(0);
     expect(await getCurrentPageId()).toEqual('page1');
     expect(await getSelection()).toEqual([]);
   });
 
   it('should exit the carousel on Esc', async () => {
-    await fixture.events.mouse.clickOn(getThumbnail(0), 5, 5);
-    await waitFor(() => {
-      if (!carousel.contains(document.activeElement)) {
-        throw new Error('Focus is not set on the carousel yet');
-      }
-    });
+    // Enter.
+    await clickOnThumbnail(0);
+    await fixture.editor.carousel.waitFocusedWithin();
 
     // Exit.
     await fixture.events.keyboard.press('Esc');
-    const framesLayer = fixture.querySelector('[data-testid="FramesLayer"]');
-    await waitFor(() => {
-      if (!framesLayer.contains(document.activeElement)) {
-        throw new Error('Focus is not set on the canvas yet');
-      }
-    });
+    await fixture.editor.canvas.framesLayer.waitFocusedWithin();
   });
 
   it('should click into carousel on the second page', async () => {
-    await fixture.events.mouse.clickOn(getThumbnail(1), 5, 5);
+    await clickOnThumbnail(1);
     expect(await getCurrentPageId()).toEqual('page2');
     expect(await getSelection()).toEqual([]);
   });
 
   it('should navigate the page with keys', async () => {
-    await fixture.events.mouse.clickOn(getThumbnail(1), 5, 5);
+    await clickOnThumbnail(1);
     expect(await getCurrentPageId()).toEqual('page2');
 
     // Go left.
@@ -152,7 +134,7 @@ xdescribe('Carousel integration', () => {
   });
 
   it('should reorder the page with keys', async () => {
-    await fixture.events.mouse.clickOn(getThumbnail(1), 5, 5);
+    await clickOnThumbnail(1);
     expect(await getCurrentPageId()).toEqual('page2');
 
     // Order left.
@@ -197,7 +179,7 @@ xdescribe('Carousel integration', () => {
   });
 
   it('should delete the first page', async () => {
-    await fixture.events.mouse.clickOn(getThumbnail(0), 5, 5);
+    await clickOnThumbnail(0);
     await fixture.events.keyboard.down('del');
     await fixture.events.keyboard.up('del');
     expect(await getPageIds()).toEqual(['page2', 'page3', 'page4']);
@@ -205,7 +187,7 @@ xdescribe('Carousel integration', () => {
   });
 
   it('should delete the second page', async () => {
-    await fixture.events.mouse.clickOn(getThumbnail(1), 5, 5);
+    await clickOnThumbnail(1);
     await fixture.events.keyboard.down('del');
     await fixture.events.keyboard.up('del');
     expect(await getPageIds()).toEqual(['page1', 'page3', 'page4']);
@@ -213,7 +195,7 @@ xdescribe('Carousel integration', () => {
   });
 
   it('should duplicate the first page', async () => {
-    await fixture.events.mouse.clickOn(getThumbnail(0), 5, 5);
+    await clickOnThumbnail(0);
     await fixture.events.keyboard.shortcut('mod+D');
     const newPageId = await getCurrentPageId();
     expect(await getPageIds()).toEqual([

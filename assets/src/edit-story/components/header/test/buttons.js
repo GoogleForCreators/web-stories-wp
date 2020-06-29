@@ -53,7 +53,9 @@ function setupButtons(
     ...extraConfigProps,
   };
   const mediaContextValue = {
-    state: { ...extraMediaProps },
+    local: {
+      state: { ...extraMediaProps },
+    },
   };
 
   const { getByRole } = renderWithTheme(

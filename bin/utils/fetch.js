@@ -22,8 +22,6 @@ import https from 'https';
 /**
  * Simple utility function to make GET requests.
  *
- * Used to fetch data from the Google Fonts API.
- *
  * @param {string} url URL to request.
  * @return {Promise<string>} Result.
  */
