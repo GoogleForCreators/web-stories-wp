@@ -27,6 +27,19 @@ class Updater extends \WP_UnitTestCase {
 	 */
 	protected $request_count = 0;
 
+	/**
+	 * Admin user for test.
+	 *
+	 * @var int
+	 */
+	protected static $admin_id;
+
+	public static function wpSetUpBeforeClass( $factory ) {
+		self::$admin_id = $factory->user->create(
+			[ 'role' => 'administrator' ]
+		);
+	}
+
 	public function setUp() {
 		parent::setUp();
 
@@ -123,7 +136,9 @@ class Updater extends \WP_UnitTestCase {
 	}
 
 	public function test_updater_data() {
-		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
+		wp_set_current_user( self::$admin_id );
+		grant_super_admin( self::$admin_id );
+
 		$plugin              = plugin_basename( WEBSTORIES_PLUGIN_FILE );
 		list( $plugin_slug ) = explode( '/', $plugin );
 		$expected            = (object) [
@@ -150,6 +165,18 @@ class Updater extends \WP_UnitTestCase {
 	}
 
 	public function test_updater_data_missing_capabilities() {
+		$expected = (object) [ 'foo' => 'bar' ];
+		$actual   = ( new \Google\Web_Stories\Updater() )->updater_data( $expected );
+		$this->assertEquals( $expected, $actual );
+		$this->assertSame( 0, $this->request_count );
+	}
+
+	public function test_updater_data_missing_capabilities_multisite() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'Test only runs on Multisite' );
+		}
+
+		wp_set_current_user( self::$admin_id );
 		$expected = (object) [ 'foo' => 'bar' ];
 		$actual   = ( new \Google\Web_Stories\Updater() )->updater_data( $expected );
 		$this->assertEquals( $expected, $actual );
