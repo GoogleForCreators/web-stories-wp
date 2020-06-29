@@ -15,13 +15,18 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { shallowEqual } from 'react-pure-render';
+
+/**
+ * Internal dependencies
+ */
 import providerReducer from './providerReducer.js';
+
+/**
+ * External dependencies
+ */
 
 /**
  * External dependencies

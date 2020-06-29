@@ -61,11 +61,24 @@ describe('getFormattedDisplayDate', () => {
     expect(formattedDate).toBe('yesterday');
   });
 
-  it('should return 5/2/2020', () => {
+  it('should return 2020-05-02 with no formatting options', () => {
     const dateString = moment('05-02-2020', 'MM-DD-YYYY');
     const formattedDate = getFormattedDisplayDate(dateString);
 
-    expect(formattedDate).toBe('5/2/2020');
+    expect(formattedDate).toBe('2020-05-02');
+  });
+
+  it('should return May 2, 2020 with F j, Y formatting options', () => {
+    const dateString = moment('05-02-2020', 'MM-DD-YYYY');
+    const formattedDate = getFormattedDisplayDate(dateString, 'F j, Y');
+
+    expect(formattedDate).toBe('May 2, 2020');
+  });
+
+  it('should return an empty string with a null date', () => {
+    const formattedDate = getFormattedDisplayDate(null, 'F j, Y');
+
+    expect(formattedDate).toBe('');
   });
 });
 
