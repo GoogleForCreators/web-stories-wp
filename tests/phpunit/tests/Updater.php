@@ -57,17 +57,19 @@ class Updater extends \WP_UnitTestCase {
 				'response' => [
 					'code' => 200,
 				],
-				'body'     => wp_json_encode( [
-					'name'         => 'Web Stories',
-					'slug'         => 'web-stories',
-					'version'      => '99.99.999',
-					'last_updated' => '2020-01-01 00:00:00',
-					'url'          => 'https://example.com/web-stories',
-					'download_url' => 'https://example.com/web-stories.zip',
-					'tested'       => '9.9',
-					'requires'     => '5.3',
-					'requires_php' => '5.6',
-				] ),
+				'body'     => wp_json_encode(
+					[
+						'name'         => 'Web Stories',
+						'slug'         => 'web-stories',
+						'version'      => '99.99.999',
+						'last_updated' => '2020-01-01 00:00:00',
+						'url'          => 'https://example.com/web-stories',
+						'download_url' => 'https://example.com/web-stories.zip',
+						'tested'       => '9.9',
+						'requires'     => '5.3',
+						'requires_php' => '5.6',
+					] 
+				),
 			];
 		}
 
@@ -90,7 +92,7 @@ class Updater extends \WP_UnitTestCase {
 
 	public function test_plugin_info() {
 		list( $plugin_slug ) = explode( '/', plugin_basename( WEBSTORIES_PLUGIN_FILE ) );
-		$expected = (object) [
+		$expected            = (object) [
 			'slug'          => $plugin_slug,
 			'name'          => 'Web Stories',
 			'version'       => '99.99.999',
@@ -102,29 +104,29 @@ class Updater extends \WP_UnitTestCase {
 			'requires_php'  => '5.6',
 			'last_updated'  => '2020-01-01 00:00:00',
 		];
-		$actual = ( new \Google\Web_Stories\Updater() )->plugin_info( false, 'plugin_information', (object) [ 'slug' => $plugin_slug ]);
+		$actual              = ( new \Google\Web_Stories\Updater() )->plugin_info( false, 'plugin_information', (object) [ 'slug' => $plugin_slug ] );
 		$this->assertEquals( $expected, $actual );
 		$this->assertSame( 1, $this->request_count );
 	}
 
 	public function test_plugin_info_different_action() {
 		list( $plugin_slug ) = explode( '/', plugin_basename( WEBSTORIES_PLUGIN_FILE ) );
-		$actual = ( new \Google\Web_Stories\Updater() )->plugin_info( false, 'theme_information', (object) [ 'slug' => $plugin_slug ]);
+		$actual              = ( new \Google\Web_Stories\Updater() )->plugin_info( false, 'theme_information', (object) [ 'slug' => $plugin_slug ] );
 		$this->assertFalse( $actual );
 		$this->assertSame( 0, $this->request_count );
 	}
 
 	public function test_plugin_info_different_plugin_slug() {
-		$actual = ( new \Google\Web_Stories\Updater() )->plugin_info( false, 'plugin_information', (object) [ 'slug' => 'akismet' ]);
+		$actual = ( new \Google\Web_Stories\Updater() )->plugin_info( false, 'plugin_information', (object) [ 'slug' => 'akismet' ] );
 		$this->assertFalse( $actual );
 		$this->assertSame( 0, $this->request_count );
 	}
 
 	public function test_updater_data() {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
-		$plugin = plugin_basename( WEBSTORIES_PLUGIN_FILE );
+		$plugin              = plugin_basename( WEBSTORIES_PLUGIN_FILE );
 		list( $plugin_slug ) = explode( '/', $plugin );
-		$expected = (object) [
+		$expected            = (object) [
 			'id'           => 'https://github.com/google/web-stories-wp',
 			'plugin'       => plugin_basename( WEBSTORIES_PLUGIN_FILE ),
 			'slug'         => $plugin_slug,
@@ -135,7 +137,7 @@ class Updater extends \WP_UnitTestCase {
 			'requires'     => '5.3',
 			'requires_php' => '5.6',
 		];
-		$actual   = ( new \Google\Web_Stories\Updater() )->updater_data( (object) [ 'foo' => 'bar' ] );
+		$actual              = ( new \Google\Web_Stories\Updater() )->updater_data( (object) [ 'foo' => 'bar' ] );
 		$this->assertArrayHasKey( plugin_basename( WEBSTORIES_PLUGIN_FILE ), $actual->response );
 		$this->assertEquals(
 			$expected,
@@ -146,7 +148,7 @@ class Updater extends \WP_UnitTestCase {
 
 	public function test_updater_data_missing_capabilities() {
 		$expected = (object) [ 'foo' => 'bar' ];
-		$actual = ( new \Google\Web_Stories\Updater() )->updater_data( $expected );
+		$actual   = ( new \Google\Web_Stories\Updater() )->updater_data( $expected );
 		$this->assertEquals( $expected, $actual );
 		$this->assertSame( 0, $this->request_count );
 	}
@@ -155,14 +157,14 @@ class Updater extends \WP_UnitTestCase {
 		$updater = new \Google\Web_Stories\Updater();
 		set_site_transient( 'web_stories_updater', 'foo' );
 		$expected = 'foo';
-		$actual = $this->call_private_method( $updater, 'fetch_plugin_data' );
+		$actual   = $this->call_private_method( $updater, 'fetch_plugin_data' );
 		$this->assertSame( $expected, $actual );
 	}
 
 	public function test_clear_plugin_data() {
 		set_site_transient( 'web_stories_updater', 'foo' );
 		$before = get_site_transient( 'web_stories_updater' );
-		(new \Google\Web_Stories\Updater() )->clear_plugin_data();
+		( new \Google\Web_Stories\Updater() )->clear_plugin_data();
 		$after = get_site_transient( 'web_stories_updater' );
 		$this->assertSame( 'foo', $before );
 		$this->assertFalse( $after );
@@ -170,15 +172,15 @@ class Updater extends \WP_UnitTestCase {
 
 	public function test_upgrader_process_complete() {
 		set_site_transient( 'web_stories_updater', 'foo' );
-		$before = get_site_transient( 'web_stories_updater' );
+		$before  = get_site_transient( 'web_stories_updater' );
 		$options = [
-			'action' => 'update',
-			'type' => 'plugin',
+			'action'  => 'update',
+			'type'    => 'plugin',
 			'plugins' => [
-				plugin_basename( WEBSTORIES_PLUGIN_FILE )
-			]
+				plugin_basename( WEBSTORIES_PLUGIN_FILE ),
+			],
 		];
-		(new \Google\Web_Stories\Updater() )->upgrader_process_complete( null, $options );
+		( new \Google\Web_Stories\Updater() )->upgrader_process_complete( null, $options );
 		$after = get_site_transient( 'web_stories_updater' );
 		$this->assertSame( 'foo', $before );
 		$this->assertFalse( $after );
@@ -187,13 +189,13 @@ class Updater extends \WP_UnitTestCase {
 	public function test_upgrader_process_complete_install() {
 		set_site_transient( 'web_stories_updater', 'foo' );
 		$options = [
-			'action' => 'install',
-			'type' => 'plugin',
+			'action'  => 'install',
+			'type'    => 'plugin',
 			'plugins' => [
-				plugin_basename( WEBSTORIES_PLUGIN_FILE )
-			]
+				plugin_basename( WEBSTORIES_PLUGIN_FILE ),
+			],
 		];
-		(new \Google\Web_Stories\Updater() )->upgrader_process_complete( null, $options );
+		( new \Google\Web_Stories\Updater() )->upgrader_process_complete( null, $options );
 		$after = get_site_transient( 'web_stories_updater' );
 		$this->assertSame( 'foo', $after );
 	}
@@ -202,12 +204,12 @@ class Updater extends \WP_UnitTestCase {
 		set_site_transient( 'web_stories_updater', 'foo' );
 		$options = [
 			'action' => 'update',
-			'type' => 'theme',
+			'type'   => 'theme',
 			'themes' => [
-				'twentyseventeen'
-			]
+				'twentyseventeen',
+			],
 		];
-		(new \Google\Web_Stories\Updater() )->upgrader_process_complete( null, $options );
+		( new \Google\Web_Stories\Updater() )->upgrader_process_complete( null, $options );
 		$after = get_site_transient( 'web_stories_updater' );
 		$this->assertSame( 'foo', $after );
 	}
@@ -215,13 +217,13 @@ class Updater extends \WP_UnitTestCase {
 	public function test_upgrader_process_complete_different_plugin() {
 		set_site_transient( 'web_stories_updater', 'foo' );
 		$options = [
-			'action' => 'update',
-			'type' => 'plugin',
+			'action'  => 'update',
+			'type'    => 'plugin',
 			'plugins' => [
-				'akismet/akismetp.php'
-			]
+				'akismet/akismetp.php',
+			],
 		];
-		(new \Google\Web_Stories\Updater() )->upgrader_process_complete( null, $options );
+		( new \Google\Web_Stories\Updater() )->upgrader_process_complete( null, $options );
 		$after = get_site_transient( 'web_stories_updater' );
 		$this->assertSame( 'foo', $after );
 	}
