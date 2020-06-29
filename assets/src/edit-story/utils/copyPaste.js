@@ -84,7 +84,10 @@ export function processPastedNodeList(nodeList, content) {
 export function processPastedElements(content, currentPage) {
   let foundElements = [];
   for (let n = content.firstChild; n; n = n.nextSibling) {
-    if (n.nodeType !== /* COMMENT */ 8) {
+    if (
+      n.nodeType !== /* COMMENT */ 8 ||
+      n.nodeValue?.indexOf('Fragment') !== -1
+    ) {
       continue;
     }
     const payload = JSON.parse(

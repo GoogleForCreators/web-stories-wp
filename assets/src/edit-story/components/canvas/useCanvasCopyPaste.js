@@ -107,7 +107,10 @@ function useCanvasGlobalKeys() {
         if (content) {
           const template = document.createElement('template');
           // Remove meta tag.
-          template.innerHTML = content.replace(/<meta[^>]+>/g, '');
+          template.innerHTML = content
+            .replace(/<meta[^>]+>/g, '')
+            .replace(/<\/?html>/g, '')
+            .replace(/<\/?body>/g, '');
           let addedElements = elementPasteHandler(template.content);
           if (!addedElements) {
             addedElements = rawPasteHandler(template.content);
