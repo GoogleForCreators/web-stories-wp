@@ -27,7 +27,7 @@ import useMediaReducer from '../useMediaReducer';
 describe('useMediaReducer', () => {
   it('should return the initial value for state', () => {
     const { result } = renderHook(() => useMediaReducer());
-    expect(result.current.state).toStrictEqual(
+    expect(result.current.state.local).toStrictEqual(
       expect.objectContaining({ media: [], hasMore: true })
     );
   });
