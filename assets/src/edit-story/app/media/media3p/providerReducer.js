@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-export { default } from './useMediaReducer';
+// TODO(https://github.com/google/web-stories-wp/issues/2802):
+// Re-use logic from media/common/reducer.js.
+function providerReducer(state = {}) {
+  return state;
+}
+
+export default providerReducer;

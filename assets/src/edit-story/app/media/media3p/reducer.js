@@ -17,32 +17,21 @@
 /**
  * External dependencies
  */
-import { useReducer, useMemo } from 'react';
+import { shallowEqual } from 'react-pure-render';
 
 /**
  * Internal dependencies
  */
-import reducer, { INITIAL_STATE } from './reducer';
-import * as actionsToWrap from './actions';
+import providerReducer from './providerReducer.js';
 
-const wrapWithDispatch = (actions, dispatch) =>
-  Object.keys(actions).reduce(
-    (collection, action) => ({
-      ...collection,
-      [action]: actions[action](dispatch),
-    }),
-    {}
-  );
+const providers = ['unsplash'];
 
-function useMediaReducer() {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-
-  const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), []);
-
-  return {
-    state,
-    actions,
-  };
+function reducer(state = {}, { type, payload }) {
+  const result = {};
+  for (const provider of providers) {
+    result[provider] = providerReducer(state[provider], { type, payload });
+  }
+  return !shallowEqual(result, state) ? result : state;
 }
 
-export default useMediaReducer;
+export default reducer;

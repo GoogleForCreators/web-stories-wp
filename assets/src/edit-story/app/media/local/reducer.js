@@ -19,9 +19,9 @@
 /**
  * Internal dependencies
  */
-import * as types from './types';
+import * as types from '../types';
 
-export const INITIAL_STATE = {
+const INITIAL_STATE = {
   media: [],
   processing: [],
   processed: [],
@@ -34,8 +34,11 @@ export const INITIAL_STATE = {
   isMediaLoaded: false,
 };
 
-function reducer(state, { type, payload }) {
+function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
+    case types.INITIAL_STATE:
+      return state;
+
     case types.FETCH_MEDIA_START: {
       return {
         ...state,

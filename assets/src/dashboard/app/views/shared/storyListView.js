@@ -144,6 +144,7 @@ export default function StoryListView({
   storySort,
   storyStatus,
   users,
+  dateFormat,
 }) {
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
@@ -267,8 +268,12 @@ export default function StoryListView({
                 </TitleTableCellContainer>
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
-              <TableCell>{getFormattedDisplayDate(story.modified)}</TableCell>
+              <TableCell>
+                {getFormattedDisplayDate(story.created, dateFormat)}
+              </TableCell>
+              <TableCell>
+                {getFormattedDisplayDate(story.modified, dateFormat)}
+              </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
                   {story.status === STORY_STATUS.PUBLISHED &&
@@ -294,4 +299,5 @@ StoryListView.propTypes = {
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
   users: UsersPropType.isRequired,
+  dateFormat: PropTypes.string,
 };
