@@ -27,11 +27,37 @@ import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import { defaultTemplatesState } from '../app/reducer/templates';
 import formattedUsersObject from '../storybookUtils/formattedUsersObject';
+import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
-  const [stories] = useState(defaultStoriesState);
+  const [stories] = useState({
+    ...defaultStoriesState,
+    stories: formattedStoriesArray.reduce((acc, curr) => {
+      acc[curr.id] = curr;
+
+      return acc;
+    }, {}),
+    storiesOrderById: formattedStoriesArray.map(({ id }) => id),
+    totalStoriesByStatus: formattedStoriesArray.reduce(
+      (acc, curr) => {
+        if (acc[curr.status] > 0) {
+          acc[curr.status] = acc[curr.status] + 1;
+        } else {
+          acc[curr.status] = 1;
+        }
+
+        return acc;
+      },
+      {
+        all: formattedStoriesArray.length,
+        draft: 0,
+        published: 0,
+      }
+    ),
+    totalPages: 1,
+  });
   const [templates] = useState(defaultTemplatesState);
   const [users] = useState(formattedUsersObject);
 
