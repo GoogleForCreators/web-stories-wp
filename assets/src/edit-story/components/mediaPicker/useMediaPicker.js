@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useMedia from '../../app/media/useMedia';
+import useLocalMedia from '../../app/media/local/useLocalMedia';
 import { useConfig } from '../../app/config';
 import { useSnackbar } from '../../app/snackbar';
 import { useAPI } from '../../app/api';
@@ -40,7 +40,7 @@ export default function useMediaPicker({
   type = '',
   multiple = false,
 }) {
-  const { uploadVideoPoster } = useMedia((state) => ({
+  const { uploadVideoPoster } = useLocalMedia((state) => ({
     uploadVideoPoster: state.actions.uploadVideoPoster,
   }));
   const {
