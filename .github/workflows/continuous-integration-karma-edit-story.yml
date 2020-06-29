@@ -1,4 +1,4 @@
-name: JavaScript Unit Tests
+name: Edit Story Integration Tests
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  unit-js:
+  karma:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,30 +33,27 @@ jobs:
             ${{ runner.os }}-npm-
             ${{ runner.os }}-
 
-      - name: Setup Jest cache
-        uses: actions/cache@v1
-        id: cache-jest-cache
-        with:
-          path: .jest-cache
-          key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
-
       - name: Install dependencies
         run: npm ci
         env:
           CI: true
 
-      - name: Run JavaScript unit tests
-        run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
+      - name: Run integration tests
+        run: npm run test:karma:edit-story -- --headless --snapshots --viewport=1600:1000 --coverage
 
-      - name: Upload mismatched image snapshots if found
-        uses: actions/upload-artifact@v2
-        with:
-          name: Image Snapshots Diff Output.zip
-          path: assets/src/**/__image_snapshots__/__diff_output__/*
-        if: failure()
+      - name: Add files for snapshotting
+        run: cp -r __static__ .test_artifacts/karma_snapshots/
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@v1
         with:
-          file: build/logs/lcov.info
-          flags: unittests
+          file: build/logs/karma-coverage/edit-story/lcov.info
+          flags: karmatests
+
+      - name: Upload Percy snapshots
+        uses: percy/snapshot-action@v0.1.1
+        with:
+          build-directory: '.test_artifacts/karma_snapshots'
+          flags: '--config=percy.config.yml'
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}

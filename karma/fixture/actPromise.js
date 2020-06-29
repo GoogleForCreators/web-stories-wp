@@ -13,18 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
-import { TemplateNavBar } from '../';
+import { act } from '@testing-library/react';
 
-describe('TemplateNavBar', () => {
-  it('should render nav bar for detail template view', () => {
-    const { getByRole } = renderWithTheme(<TemplateNavBar />);
-    const nav = getByRole('navigation');
-
-    expect(nav).toBeDefined();
+export default function actPromise(callback) {
+  return new Promise((resolve) => {
+    let callbackResult;
+    const actResult = act(() => {
+      callbackResult = callback();
+      return Promise.resolve(callbackResult);
+    });
+    resolve(
+      new Promise((aResolve, aReject) => {
+        actResult.then(aResolve, aReject);
+      }).then(() => callbackResult)
+    );
   });
-});
+}

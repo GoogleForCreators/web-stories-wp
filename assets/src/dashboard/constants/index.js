@@ -107,6 +107,8 @@ export const RESULT_LABELS = {
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
 
+export const DEFAULT_DATE_FORMAT = 'Y-m-d';
+
 export * from './animation';
 export * from './components';
 export * from './direction';

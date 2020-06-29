@@ -30,7 +30,6 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { STORY_STATUS } from '../../constants';
-import { getFormattedDisplayDate } from '../../utils/';
 import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
 import InlineInputForm from '../inlineInputForm';
@@ -90,12 +89,12 @@ const CardTitle = ({
       ? sprintf(
           /* translators: %s: last modified date */
           __('Published %s', 'web-stories'),
-          getFormattedDisplayDate(displayDate)
+          displayDate
         )
       : sprintf(
           /* translators: %s: last modified date */
           __('Modified %s', 'web-stories'),
-          getFormattedDisplayDate(displayDate)
+          displayDate
         );
   }, [status, displayDate]);
 
@@ -130,7 +129,7 @@ CardTitle.propTypes = {
   secondaryTitle: PropTypes.string,
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
-  displayDate: PropTypes.object,
+  displayDate: PropTypes.string,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
 };
