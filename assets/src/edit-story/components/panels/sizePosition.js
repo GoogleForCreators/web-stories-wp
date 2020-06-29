@@ -200,13 +200,19 @@ function SizePositionPanel({
 
   usePresubmitHandler(
     ({ height: newHeight }, { width: oldWidth, height: oldHeight }) => {
-      const ratio = isNum(oldWidth / oldHeight) ? oldWidth / oldHeight : 1;
+      const ratio = oldHeight / oldWidth;
+      newHeight = clamp(newHeight, MIN_MAX.HEIGHT);
+      if (isNum(ratio)) {
+        return {
+          height: setDimensionMinMax(
+            dataPixels(newHeight),
+            ratio,
+            MIN_MAX.HEIGHT
+          ),
+        };
+      }
       return {
-        height: setDimensionMinMax(
-          dataPixels(newHeight),
-          ratio,
-          MIN_MAX.HEIGHT
-        ),
+        height: clamp(newHeight, MIN_MAX.HEIGHT),
       };
     },
     [height, lockAspectRatio]
@@ -214,9 +220,15 @@ function SizePositionPanel({
 
   usePresubmitHandler(
     ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
-      const ratio = isNum(oldWidth / oldHeight) ? oldWidth / oldHeight : 1;
+      const ratio = oldWidth / oldHeight;
+      newWidth = clamp(newWidth, MIN_MAX.WIDTH);
+      if (isNum(ratio)) {
+        return {
+          width: setDimensionMinMax(dataPixels(newWidth), ratio, MIN_MAX.WIDTH),
+        };
+      }
       return {
-        width: setDimensionMinMax(dataPixels(newWidth), ratio, MIN_MAX.WIDTH),
+        width: clamp(newWidth, MIN_MAX.WIDTH),
       };
     },
     [width, lockAspectRatio]
