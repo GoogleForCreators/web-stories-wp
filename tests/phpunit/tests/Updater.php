@@ -68,7 +68,7 @@ class Updater extends \WP_UnitTestCase {
 						'tested'       => '9.9',
 						'requires'     => '5.3',
 						'requires_php' => '5.6',
-					] 
+					]
 				),
 			];
 		}
@@ -137,7 +137,10 @@ class Updater extends \WP_UnitTestCase {
 			'requires'     => '5.3',
 			'requires_php' => '5.6',
 		];
-		$actual              = ( new \Google\Web_Stories\Updater() )->updater_data( (object) [ 'foo' => 'bar' ] );
+
+		$actual = ( new \Google\Web_Stories\Updater() )->updater_data( (object) [ 'foo' => 'bar' ] );
+		$this->assertObjectNotHasAttribute( 'no_update', $actual );
+		$this->assertObjectHasAttribute( 'response', $actual );
 		$this->assertArrayHasKey( plugin_basename( WEBSTORIES_PLUGIN_FILE ), $actual->response );
 		$this->assertEquals(
 			$expected,
