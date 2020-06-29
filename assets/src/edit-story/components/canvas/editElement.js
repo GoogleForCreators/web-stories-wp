@@ -31,7 +31,6 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
-import useCanvas from './useCanvas';
 import SingleSelectionMovable from './singleSelectionMovable';
 
 const Wrapper = styled.div`
@@ -49,12 +48,6 @@ function EditElement({ element }) {
 
   const [editWrapper, setEditWrapper] = useState(null);
   const [actionHappening, setActionHappening] = useState(false);
-
-  const { lastSelectionEvent } = useCanvas(
-    ({ state: { lastSelectionEvent } }) => ({
-      lastSelectionEvent,
-    })
-  );
 
   const { Edit, hasEditModeMovable } = getDefinitionForType(type);
   const box = getBox(element);
@@ -81,7 +74,6 @@ function EditElement({ element }) {
         <SingleSelectionMovable
           selectedElement={element}
           targetEl={editWrapper}
-          pushEvent={lastSelectionEvent}
           isEditMode={true}
           editMoveableRef={moveable}
           setActionHappening={setActionHappening}
