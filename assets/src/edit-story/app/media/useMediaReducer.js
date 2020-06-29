@@ -53,7 +53,6 @@ function useMediaReducer() {
   const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), []);
 
   return {
-    // TODO: Consume 'local' and 'media3p' state separately from MediaProvider.
     state,
     actions,
   };
