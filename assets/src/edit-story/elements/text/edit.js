@@ -25,6 +25,7 @@ import {
   useCallback,
   useMemo,
 } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -53,6 +54,7 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 // on the content and properties.
 const Wrapper = styled.div`
   ${elementFillContent}
+  ${elementWithBackgroundColor}
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -61,7 +63,6 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
-  ${elementWithBackgroundColor}
 
   opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
   position: absolute;
@@ -241,14 +242,31 @@ function TextEdit({
 
   useTransformHandler(id, (transform) => {
     const target = textBoxRef.current;
+    const wrapper = wrapperRef.current;
     const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
+
+    if (transform === null) {
+      wrapper.style.width = '';
+      wrapper.style.height = '';
+    } else {
+      const { resize } = transform;
+      if (resize && resize[0] !== 0 && resize[1] !== 0) {
+        wrapper.style.width = `${resize[0]}px`;
+        wrapper.style.height = `${resize[1]}px`;
+      }
+    }
   });
 
   return (
-    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
+    <Wrapper
+      ref={wrapperRef}
+      onClick={onClick}
+      data-testid="textEditor"
+      {...textProps}
+    >
       <TextBox ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}
@@ -263,6 +281,9 @@ function TextEdit({
 TextEdit.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   box: StoryPropTypes.box.isRequired,
+  moveable: PropTypes.object,
+  editWrapper: PropTypes.node,
+  actionHappening: PropTypes.bool, // @todo Replace to use transform.
 };
 
 export default TextEdit;
