@@ -14,19 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { identity, useContextSelector } from '../../utils/context';
-import Context from './context';
-
-function useMedia(selector) {
-  return useContextSelector(Context, selector ?? identity);
+// TODO(https://github.com/google/web-stories-wp/issues/2802):
+// Implement, re-using logic from media/common/useContextValueProvider.js.
+export default function useProviderContextValueProvider() {
+  return {};
 }
-
-function useLocalMedia(selector) {
-  return useMedia(({ local }) => (selector ?? identity)(local));
-}
-
-// TODO: Update usages of `useMedia` to import and call `useLocalMedia`.
-export default useLocalMedia;
