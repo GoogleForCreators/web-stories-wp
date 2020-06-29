@@ -27,8 +27,7 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
 
-/* eslint-disable react-hooks/rules-of-hooks */
-export default function provideContextValue(reducerState, reducerActions) {
+export default function useContextValueProvider(reducerState, reducerActions) {
   const {
     processing,
     processed,
@@ -177,4 +176,3 @@ export default function provideContextValue(reducerState, reducerActions) {
     },
   };
 }
-/* eslint-enable react-hooks/rules-of-hooks */

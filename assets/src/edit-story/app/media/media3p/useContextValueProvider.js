@@ -14,26 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import useContextValueProvider from './local/useContextValueProvider';
-import useMediaReducer from './useMediaReducer';
-import Context from './context';
-
-function MediaProvider({ children }) {
-  const { state, actions } = useMediaReducer();
-  const context = useContextValueProvider(state, actions);
-  return <Context.Provider value={context}>{children}</Context.Provider>;
+export default function useContextValueProvider() {
+  return {};
 }
-
-MediaProvider.propTypes = {
-  children: PropTypes.node,
-};
-
-export default MediaProvider;
