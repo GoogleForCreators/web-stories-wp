@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Plain, Primary } from '../button';
+import { Plain } from '../button';
 import Dialog from '../dialog';
 
 function PreviewErrorDialog({ open, onClose, onRetry }) {
@@ -38,8 +38,8 @@ function PreviewErrorDialog({ open, onClose, onRetry }) {
       title={__('Open preview', 'web-stories')}
       actions={
         <>
-          <Primary onClick={onRetry}>{__('Try again', 'web-stories')}</Primary>
           <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
+          <Plain onClick={onRetry}>{__('Try again', 'web-stories')}</Plain>
         </>
       }
     >

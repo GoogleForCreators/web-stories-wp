@@ -18,44 +18,40 @@
  * Internal dependencies
  */
 import { Container } from './container';
-import { Canvas } from './canvas';
-import { Carousel } from './carousel';
-import { Library } from './library';
 
 /**
- * The complete editor container, including library, canvas, inspector, etc.
+ * The page carousel.
  */
-export class Editor extends Container {
+export class Carousel extends Container {
   constructor(node, path) {
     super(node, path);
   }
 
-  get canvas() {
-    return this._get(
-      this.getByRole('region', { name: 'Canvas' }),
-      'canvas',
-      Canvas
+  get pages() {
+    const pageList = this.getByRole('listbox', { name: 'Pages List' });
+    if (!pageList) {
+      return [];
+    }
+    return this._getAll(
+      // @todo: improve query.
+      pageList.querySelectorAll('button[role="option"]'),
+      (node) => `pages[${node.getAttribute('data-page-id')}]`,
+      PageThumb
     );
   }
 
-  get titleBar() {
-    // @todo: title bar container.
-    return null;
-  }
-
-  get library() {
-    return this._get(
-      this.getByRole('region', { name: 'Library' }),
-      'library',
-      Library
+  page(pageId) {
+    return this.pages.find(
+      (page) => page.node.getAttribute('data-page-id') === pageId
     );
   }
+}
 
-  get carousel() {
-    return this._get(
-      this.getByRole('region', { name: 'Page Carousel' }),
-      'carousel',
-      Carousel
-    );
+/**
+ * A page thumbnail.
+ */
+class PageThumb extends Container {
+  constructor(node, path) {
+    super(node, path);
   }
 }

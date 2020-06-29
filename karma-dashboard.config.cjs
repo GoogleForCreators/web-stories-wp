@@ -19,7 +19,7 @@
 /**
  * Internal dependencies
  */
-const webpackConfig = require('./webpack.config.test.cjs');
+const getWebpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   config.set({
@@ -28,6 +28,7 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-sourcemap-loader',
       'karma-webpack',
+      'karma-coverage-istanbul-reporter',
       require('./karma/karma-puppeteer-launcher/index.cjs'),
       require('./karma/karma-puppeteer-client/index.cjs'),
     ],
@@ -38,7 +39,8 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
+      { pattern: 'assets/src/dashboard/**/karma/**/*.js', watched: false },
+      { pattern: 'karma/fixture/init.js', watched: false },
       {
         pattern: '__static__/**/*',
         watched: false,
@@ -49,19 +51,19 @@ module.exports = function (config) {
     ],
 
     // list of files / patterns to exclude
-    exclude: ['**/test/**/*.js'],
+    exclude: ['**/test/**/*.js', '**/*.test.js'],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'assets/src/edit-story/**/karma/**/*.js': ['webpack', 'sourcemap'],
+      'assets/src/dashboard/**/karma/**/*.js': ['webpack', 'sourcemap'],
     },
 
     proxies: {
       '/__static__/': '/base/__static__/',
     },
 
-    webpack: webpackConfig,
+    webpack: getWebpackConfig('stories-dashboard', config),
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
@@ -69,10 +71,16 @@ module.exports = function (config) {
       stats: 'errors-only',
     },
 
+    webpackServer: {
+      noInfo: true,
+    },
+
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: config.coverage
+      ? ['progress', 'coverage-istanbul']
+      : ['progress'],
 
     // web server port
     port: 9876,
@@ -107,6 +115,11 @@ module.exports = function (config) {
       },
     },
 
+    coverageIstanbulReporter: {
+      dir: 'build/logs/karma-coverage/dashboard',
+      reports: ['text-summary', 'lcovonly'],
+    },
+
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
@@ -117,6 +130,9 @@ module.exports = function (config) {
 
     // Allow not having any tests
     failOnEmptyTestSuite: false,
+
+    // Bump browserNoActivityTimeout to 60s to prevent github actions timeout
+    browserNoActivityTimeout: 60000,
   });
 };
 

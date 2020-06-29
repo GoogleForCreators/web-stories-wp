@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Re-use logic from media/common/reducer.js.
-function providerReducer(state = {}) {
-  return state;
-}
+/**
+ * Internal dependencies
+ */
+import { renderWithTheme } from '../../../testUtils/';
+import { DetailViewNavBar } from '../';
 
-export default providerReducer;
+describe('DetailViewNavBar', () => {
+  it('should render nav bar for detail template view', () => {
+    const { getByRole } = renderWithTheme(<DetailViewNavBar />);
+    const nav = getByRole('navigation');
+
+    expect(nav).toBeDefined();
+  });
+});

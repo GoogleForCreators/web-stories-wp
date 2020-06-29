@@ -54,7 +54,7 @@ function MyStories() {
     totalPages,
   });
 
-  const { wpListURL } = useConfig();
+  const { wpListURL, dateFormat } = useConfig();
 
   useEffect(() => {
     fetchStories({
@@ -100,6 +100,7 @@ function MyStories() {
         search={search}
         sort={sort}
         stories={orderedStories}
+        dateFormat={dateFormat}
         storyActions={{
           createTemplateFromStory,
           duplicateStory,
