@@ -24,14 +24,6 @@ import { shallowEqual } from 'react-pure-render';
  */
 import providerReducer from './providerReducer.js';
 
-/**
- * External dependencies
- */
-
-/**
- * External dependencies
- */
-
 const providers = ['unsplash'];
 
 function reducer(state = {}, { type, payload }) {
