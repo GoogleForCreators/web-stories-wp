@@ -15,18 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import { renderHook } from '@testing-library/react-hooks';
+
+/**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils/context';
-import Context from './context';
+import useMediaReducer from '../useMediaReducer';
 
-function useMedia(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-function useLocalMedia(selector) {
-  return useMedia(({ local }) => (selector ?? identity)(local));
-}
-
-// TODO: Update usages of `useMedia` to import and call `useLocalMedia`.
-export default useLocalMedia;
+describe('useMediaReducer', () => {
+  it('should return the initial value for state', () => {
+    const { result } = renderHook(() => useMediaReducer());
+    expect(result.current.state.local).toStrictEqual(
+      expect.objectContaining({ media: [], hasMore: true })
+    );
+  });
+});

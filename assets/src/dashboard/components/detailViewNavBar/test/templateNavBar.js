@@ -17,16 +17,14 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils/context';
-import Context from './context';
+import { renderWithTheme } from '../../../testUtils/';
+import { DetailViewNavBar } from '../';
 
-function useMedia(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
+describe('DetailViewNavBar', () => {
+  it('should render nav bar for detail template view', () => {
+    const { getByRole } = renderWithTheme(<DetailViewNavBar />);
+    const nav = getByRole('navigation');
 
-function useLocalMedia(selector) {
-  return useMedia(({ local }) => (selector ?? identity)(local));
-}
-
-// TODO: Update usages of `useMedia` to import and call `useLocalMedia`.
-export default useLocalMedia;
+    expect(nav).toBeDefined();
+  });
+});

@@ -38,7 +38,9 @@ export const _default = () => {
     },
   };
   const mediaValue = {
-    actions: { deleteMediaElement: action('delete from state') },
+    local: {
+      actions: { deleteMediaElement: action('delete from state') },
+    },
   };
   const snackbarValue = { showSnackbar: action('show snackbar') };
 

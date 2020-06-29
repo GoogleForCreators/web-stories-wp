@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export const INITIAL_STATE = 'INITIAL_STATE';
 export const FETCH_MEDIA_START = 'FETCH_MEDIA_START';
 export const FETCH_MEDIA_SUCCESS = 'FETCH_MEDIA_SUCCESS';
 export const FETCH_MEDIA_ERROR = 'FETCH_MEDIA_ERROR';

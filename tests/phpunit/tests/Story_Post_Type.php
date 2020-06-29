@@ -18,6 +18,9 @@
 namespace Google\Web_Stories\Tests;
 
 class Story_Post_Type extends \WP_UnitTestCase {
+
+	use Private_Access;
+
 	/**
 	 * Admin user for test.
 	 *
@@ -99,5 +102,11 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
 		$filtered_params  = $post_type_object->filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals( $filtered_params, $query_params );
+	}
+
+	public function test_get_post_type_icon() {
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$valid            = $this->call_private_method( $post_type_object, 'get_post_type_icon' );
+		$this->assertContains( 'data:image/svg+xml;base64', $valid );
 	}
 }

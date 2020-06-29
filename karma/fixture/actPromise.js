@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { identity, useContextSelector } from '../../utils/context';
-import Context from './context';
+import { act } from '@testing-library/react';
 
-function useMedia(selector) {
-  return useContextSelector(Context, selector ?? identity);
+export default function actPromise(callback) {
+  return new Promise((resolve) => {
+    let callbackResult;
+    const actResult = act(() => {
+      callbackResult = callback();
+      return Promise.resolve(callbackResult);
+    });
+    resolve(
+      new Promise((aResolve, aReject) => {
+        actResult.then(aResolve, aReject);
+      }).then(() => callbackResult)
+    );
+  });
 }
-
-function useLocalMedia(selector) {
-  return useMedia(({ local }) => (selector ?? identity)(local));
-}
-
-// TODO: Update usages of `useMedia` to import and call `useLocalMedia`.
-export default useLocalMedia;
