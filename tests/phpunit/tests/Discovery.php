@@ -59,7 +59,7 @@ class Discovery extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 		global $wp_query, $post;
-		$post = get_post( self::$story_id );
+		$post                     = get_post( self::$story_id );
 		$wp_query->queried_object = $post;
 	}
 
@@ -70,6 +70,9 @@ class Discovery extends \WP_UnitTestCase {
 		parent::tearDown();
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\Discovery::init
+	 */
 	public function test_init() {
 		$object = new \Google\Web_Stories\Discovery();
 		$object->init();
@@ -80,6 +83,9 @@ class Discovery extends \WP_UnitTestCase {
 
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\Discovery::print_metadata
+	 */
 	public function test_print_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		ob_start();
@@ -88,6 +94,9 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( '<title>', $page );
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\Discovery::print_schemaorg_metadata
+	 */
 	public function test_print_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		ob_start();
@@ -96,6 +105,9 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( 'application/ld+json', $page );
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\Discovery::get_schemaorg_metadata
+	 */
 	public function test_get_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		$result = $this->call_private_method( $object, 'get_schemaorg_metadata' );
@@ -105,6 +117,9 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'dateModified', $result );
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\Discovery::print_open_graph_metadata
+	 */
 	public function test_print_open_graph_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		ob_start();
@@ -118,6 +133,9 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( 'og:image', $page );
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\Discovery::print_twitter_metadata
+	 */
 	public function test_print_twitter_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		ob_start();
@@ -127,6 +145,9 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( 'twtter:image', $page );
 	}
 
+	/**
+	 * @covers \Google\Web_Stories\Discovery::get_valid_publisher_image
+	 */
 	public function test_get_valid_publisher_image() {
 		$object = new \Google\Web_Stories\Discovery();
 		$result = $this->call_private_method( $object, 'get_valid_publisher_image', [ self::$poster_attachment_id ] );
