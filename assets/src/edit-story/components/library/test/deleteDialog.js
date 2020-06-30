@@ -44,8 +44,10 @@ function setup() {
   };
 
   const mediaValue = {
-    actions: {
-      deleteMediaElement,
+    local: {
+      actions: {
+        deleteMediaElement,
+      },
     },
   };
 

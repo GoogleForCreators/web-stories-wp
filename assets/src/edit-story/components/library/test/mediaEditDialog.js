@@ -56,8 +56,10 @@ function setup() {
   };
 
   const mediaValue = {
-    actions: {
-      updateMediaElement,
+    local: {
+      actions: {
+        updateMediaElement,
+      },
     },
   };
 

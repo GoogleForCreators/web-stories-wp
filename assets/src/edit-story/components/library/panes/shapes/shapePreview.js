@@ -47,7 +47,7 @@ const Path = styled.path`
   fill: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function ShapePreview({ mask }) {
+function ShapePreview({ mask, isPreview }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -70,12 +70,20 @@ function ShapePreview({ mask }) {
 
   const svg = (
     <svg
-      viewBox={`0 0 1 ${1 / mask.ratio}`}
-      width={PREVIEW_SIZE * mask.ratio}
+      viewBox={`0 0 1 ${
+        1 / (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
+      }`}
+      width={
+        PREVIEW_SIZE *
+        (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
+      }
       height={PREVIEW_SIZE}
     >
       <title>{mask.name}</title>
-      <Path d={mask.path} ref={pathRef} />
+      <Path
+        d={isPreview && mask.iconPath ? mask.iconPath : mask.path}
+        ref={pathRef}
+      />
     </svg>
   );
 
@@ -106,6 +114,7 @@ function ShapePreview({ mask }) {
 }
 ShapePreview.propTypes = {
   mask: PropTypes.object.isRequired,
+  isPreview: PropTypes.bool,
 };
 
 export default ShapePreview;
