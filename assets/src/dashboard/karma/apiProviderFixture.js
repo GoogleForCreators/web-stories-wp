@@ -160,6 +160,10 @@ function fetchStories({
           return a[sortOption].diff(b[sortOption]);
         case STORY_SORT_OPTIONS.NAME:
           return a[sortOption].localeCompare(b[sortOption]);
+        case STORY_SORT_OPTIONS.CREATED_BY:
+          return formattedUsersObject[a.author].name.localeCompare(
+            formattedUsersObject[b.author].name
+          );
         default:
           return 0;
       }

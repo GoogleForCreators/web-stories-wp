@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  */
 import Fixture from '../../../../karma/fixture';
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
+import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
 
 // Test coverage
 // 1. Navigate to Explore Templates - Done
@@ -41,6 +42,7 @@ import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesAr
 // 14. Rename Story
 // 15. Duplicate Story
 // 16. Delete Story
+// 17. Sort By Name - Done
 
 describe('My Stories View integration', () => {
   let fixture;
@@ -233,6 +235,38 @@ describe('My Stories View integration', () => {
 
     const storyIdsSortedByTitle = formattedStoriesArray
       .sort((a, b) => a.title.localeCompare(b.title))
+      .map(({ id }) => String(id));
+
+    expect(renderedStoriesById).toEqual(storyIdsSortedByTitle);
+  });
+
+  it('should sort by Created By', async () => {
+    const sortDropdown = fixture.screen.getByLabelText(
+      'Choose sort option for display'
+    );
+
+    expect(sortDropdown).toBeTruthy();
+
+    await fixture.events.click(sortDropdown);
+
+    const createdBy = fixture.screen.getByText(/Created by/);
+
+    expect(createdBy).toBeTruthy();
+
+    await fixture.events.click(createdBy);
+
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    const renderedStoriesById = stories.map(
+      ({ dataset }) => dataset['testid'].split('-').slice(-1)[0]
+    );
+
+    const storyIdsSortedByTitle = formattedStoriesArray
+      .sort((a, b) =>
+        formattedUsersObject[a.author].name.localeCompare(
+          formattedUsersObject[b.author].name
+        )
+      )
       .map(({ id }) => String(id));
 
     expect(renderedStoriesById).toEqual(storyIdsSortedByTitle);
