@@ -1,0 +1,536 @@
+<!doctype html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content="Web Stories for WordPress - Download the Beta">
+    <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
+    <link rel="preconnect dns-prefetch" href="https://fonts.gstatic.com/" crossorigin>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <!-- Import other AMP Extensions here -->
+    <script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
+    <script async custom-element="amp-animation" src="https://cdn.ampproject.org/v0/amp-animation-0.1.js"></script>
+    <script async custom-element="amp-position-observer" src="https://cdn.ampproject.org/v0/amp-position-observer-0.1.js"></script>
+    <style amp-custom>
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Roboto;
+        font-size: 16px;
+        background: #F8F8F8;
+        text-rendering: optimizeLegibility;
+    }
+
+    header,
+    footer,
+    section {
+        padding: 0 142px;
+    }
+
+    /*
+    * HEADER
+    */
+
+    header,
+    footer {
+        display: flex;
+        align-items: center;
+        line-height: 44px;
+        margin-top: 29px;
+        height: 44px;
+    }
+
+    header .google,
+    footer .google {
+        width: 55px;
+    }
+
+    header img,
+    footer img {
+        height: 22px;
+    }
+
+    header h1 {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 1rem;
+        line-height: 44px;
+        margin: 0;
+        margin-left: 24px;
+    }
+
+    header ul,
+    footer ul {
+        margin: 0;
+        padding: 0;
+        flex: 1 1 auto;
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        list-style: none;
+    }
+
+    header ul li,
+    footer ul li {
+        margin: 0;
+        padding: 0;
+    }
+
+    header ul li a,
+    footer ul li a {
+        color: #000;
+        text-decoration: none;
+        border-right: 1px solid #999;
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    header ul li:first-child a,
+    footer ul li:first-child a {
+        padding-left: 0;
+    }
+
+    header ul li:nth-child(3) a,
+    footer ul li:nth-child(4) a {
+        border: none;
+        padding-right: 0;
+    }
+
+    header a.download {
+        margin-left: 40px;
+        color: #1A73E8;
+        text-decoration: none;
+        border: none;
+    }
+
+    /*
+    * HEADER
+    */
+
+    section.teaser {
+        padding-top: 186px;
+        padding-bottom: 252px;
+        display: flex;
+        padding-right: 0;
+    }
+
+    section.teaser h2 {
+        font-style: normal;
+        font-weight: normal;
+        text-transform: uppercase;
+        font-size: 13px;
+        line-height: 20px;
+        color: #000000;
+        opacity: 0.54;
+        margin: 0;
+        margin-bottom: 33px;
+        margin-top: 50px;
+    }
+
+    section.teaser h3 {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 100;
+        font-size: 78px;
+        line-height: 84px;
+        margin: 0;
+    }
+
+    section.teaser p {
+        font-size: 23px;
+        line-height: 44px;
+        opacity: 0.64;
+    }
+
+    section.teaser .left {
+        flex: 1 1 33.3%;
+        margin-right: 133px;
+        min-width: 480px;
+        padding-bottom: 58px;
+    }
+
+    section.teaser .right {
+        flex: 1 1 66.6%;
+        background: #333;
+        text-align: center;
+        color: #fff;
+        box-shadow: 0px 0px 40px #00000047;
+    }
+
+    section.teaser a.download {
+        background: #3474E0;
+        color:#fff;
+        font-weight: 500;
+        font-size: 23px;
+        line-height: 29px;
+        text-align: center;
+        text-decoration: none;
+        padding: 8px 18px;
+        transition: 0.1s ease-out;
+        display: inline-block;
+        margin-top: 20px;
+        box-shadow: 0px 0px 40px #00000047;
+    }
+
+    section.teaser a.download:hover {
+        background: #000;
+        color: #fff;
+    }
+
+    /*
+    * ABOUT
+    */
+
+    section.about {
+        background: #fff;
+        padding-top: 156px;
+    }
+
+    section.about h2 {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    section.about h2 a {
+        border-bottom: 4px solid;
+    }
+
+    section.about p {
+        font-weight: 500;
+        font-size: 58px;
+        line-height: 76px;
+        text-align: center;
+        opacity: 0.84;
+        margin-top: 156px;
+        margin-bottom: 0;
+        padding: 0 11vw;
+        padding-bottom: 152px;
+    }
+
+    /*
+    * ABOUT VIDEO
+    */
+
+    section.about-video {
+        background: linear-gradient(63.89deg, #010218 2.16%, #1B0418 102.6%);
+        color: #fff;
+        text-align: center;
+        padding-bottom: 112px;
+        position: relative;
+    }
+
+    section.about-video::before {
+        display: block;
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: 353px;
+        z-index: 1;
+        background: linear-gradient(0deg, #020219 37.25%, rgba(28, 6, 25, 0) 100%);
+    }
+
+    section.about-video p {
+        font-weight: 500;
+        font-size: 26px;
+        line-height: 52px;
+        opacity: 0.84;
+        margin: 0;
+        padding-top: 104px;
+        padding-bottom: 17px;
+    }
+
+    section.about-video amp-video {
+        opacity: 0;
+        will-change: transform;
+    }
+
+    /*
+    * TEMPLATES
+    */
+    section.templates {
+        background: #fff;
+        padding-top: 149px;
+        padding-bottom: 120px;
+    }
+
+    section.templates p {
+        font-weight: 500;
+        font-size: 26px;
+        line-height: 52px;
+        opacity: 0.84;
+        text-align: center;
+        margin: 0;
+    }
+
+    section.templates ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+    }
+
+    section.templates ul li {
+        margin: 0;
+        padding: 0;
+        flex: 1 1 auto;
+    }
+
+    section.templates ul amp-img {
+        will-change: transform;
+        transition: 0.2s ease-out;
+        opacity: 0;
+    }
+
+    section.templates ul amp-img:hover {
+        transform: scale(1.1);
+    }
+
+    /*
+    * FAQ
+    */
+
+    section.faq {
+        padding-top: 158px;
+        padding-bottom: 142px;
+    }
+
+    section.faq h2 {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    section.faq h2 a {
+        border-bottom: 4px solid;
+    }
+
+    section.faq dl {
+        padding: 0 11vw;
+        padding-top: 158px;
+    }
+
+    section.faq dt {
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 44px;
+    }
+
+    section.faq dd {
+        font-size: 18px;
+        line-height: 28px;
+        color: rgba(0,0,0,0.84);
+        margin: 0;
+        padding-top: 10px;
+        padding-bottom: 50px;
+        max-width: 850px;
+    }
+
+    /*
+    * Footer
+    */
+
+    footer {
+        border-top: 1px solid transparent;
+        width: 545px;
+        margin: 0 auto;
+        margin-bottom: 106px;
+        position: relative;
+        padding-top: 83px;
+    }
+
+    footer::before {
+        content: "";
+        display: block;
+        height: 1px;
+        background: linear-gradient(0.11deg, #010218 2.16%, #1B0418 102.6%);
+        opacity: 0.3;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+    </style>
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+
+    <link rel="canonical" href=".">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <title>Web Stories for WordPress - Download the Beta</title>
+</head>
+<body>
+    
+    <header>
+        <div class="google"><amp-img width="120" height="48" layout="responsive" src="./assets/google.svg" alt="Google"></div>
+        <h1>Web Stories for WordPress</h1>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://github.com/google/web-stories-wp">GitHub</a></li>
+            <li><a href="#" class="download">Download Beta</a></li>
+        </ul>
+    </header>
+
+    <section class="teaser">
+        <div class="left">
+            <h2>Stories Editor</h2>
+            <h3>Get Ready to Tell Stories on WordPress</h3>
+            <p>We're not quite ready for prime time yet, but if you like to live dangerously, we invite you to try our first public beta.</p>
+            <a href="#" class="download">Download the Beta</a>            
+        </div>
+        <div class="right">PLACEHOLDER</div>
+    </section>
+
+    <section class="about">
+        <h2><a id="about">About</a></h2>
+        <p>With Stories for WordPress, we're bringing first-class Web Stories support to WordPress.</p>
+    </section>
+
+    <amp-animation id="videoAnim" layout="nodisplay">
+        <script type="application/json">
+          {
+            "selector": "amp-video",
+            "duration": "2s",
+            "delay": "0",
+            "easing": "cubic-bezier(0.075, 0.820, 0.165, 1.000)",
+            "iterations": "1",
+            "fill": "both",
+            "keyframes": [
+                {"transform": "translate(0px, 100px)", "opacity": 0 },
+                {"transform": "translate(0px, 0px)", "opacity": 1 }
+            ]
+          }
+        </script>
+    </amp-animation>    
+    <section class="about-video">
+        <amp-position-observer
+            intersection-ratios="0.4"
+            on="enter:videoAnim.start"
+            layout="nodisplay"
+            once=""
+        >
+        </amp-position-observer>
+        <p>WYSIWYG all the way</p>
+        <amp-video width="3686" height="2304" layout="responsive" title="Stories for WordPress in action" src="./assets/wysiwyg.mp4" loop muted autoplay></video>
+    </section>
+
+    <amp-animation id="templateAnim" layout="nodisplay">
+    <script type="application/json">
+      {
+        "selector": ".template",
+        "--duration": "2.4s",
+        "duration": "var(--duration)",
+        "--delay": "0.1s",
+        "delay": "calc(var(--delay) * (length() - index() - 1) * var(--easeOutCircFactor))",
+        "easing": "cubic-bezier(0.075, 0.820, 0.165, 1.000)",
+        "iterations": "1",
+        "fill": "both",
+        "keyframes": [
+            {"transform": "translate(0px, 300px)", "opacity": 0 },
+            {"transform": "translate(0px, 0px)", "opacity": 1 }
+        ],
+        "subtargets": [
+            {
+                "index": 7,
+                "--easeOutCircFactor": 0.4841229182759271
+            },
+            {
+                "index": 6,
+                "delay": "calc(var(--delay) * (length() - index() - 1) * 0.6614378277661477)"
+            },
+            {
+                "index": 5,
+                "delay": "calc(var(--delay) * (length() - index() - 1) * 0.7806247497997998)"
+            },
+            {
+                "index": 4,
+                "delay": "calc(var(--delay) * (length() - index() - 1) * 0.8660254037844386)"
+            },
+            {
+                "index": 3,
+                "delay": "calc(var(--delay) * (length() - index() - 1) * 0.9270248108869579)"
+            },
+            {
+                "index": 2,
+                "delay": "calc(var(--delay) * (length() - index() - 1) * 0.9682458365518543)"
+            },
+            {
+                "index": 1,
+                "delay": "calc(var(--delay) * (length() - index() - 1) * 0.9921567416492215)"
+            },
+            {
+                "index": 0,
+                "delay": "calc(var(--delay) * (length() - index() - 1) * 1)"
+            } 
+        ]
+      }
+    </script>
+    </amp-animation>
+    <section class="templates">
+        <amp-position-observer
+            intersection-ratios="0.5"
+            on="enter:templateAnim.start"
+            layout="nodisplay"
+            once=""
+        >
+        </amp-position-observer>
+        <p>Expressive Templates</p>
+        <ul>
+            <li><amp-img class="template" layout="responsive" width="542" height="840" src="./assets/templates/1.png"></amp-img></li>
+            <li><amp-img class="template" layout="responsive" width="542" height="840" src="./assets/templates/2.png"></amp-img></li>
+            <li><amp-img class="template" layout="responsive" width="542" height="840" src="./assets/templates/3.png"></amp-img></li>
+            <li><amp-img class="template" layout="responsive" width="542" height="840" src="./assets/templates/4.png"></amp-img></li>
+            <li><amp-img class="template" layout="responsive" width="542" height="840" src="./assets/templates/5.png"></amp-img></li>
+            <li><amp-img class="template" layout="responsive" width="542" height="840" src="./assets/templates/6.png"></amp-img></li>
+            <li><amp-img class="template" layout="responsive" width="542" height="840" src="./assets/templates/7.png"></amp-img></li>
+            <li><amp-img class="template" layout="responsive" width="542" height="840" src="./assets/templates/8.png"></amp-img></li>
+        </ul>
+    </section>
+
+     <section class="media-gallery">
+     </section>
+
+     <section class="faq">
+        <h2><a id="faq">FAQ</a></h2>
+        <dl>
+            <dt>Where can I learn more about Web Stories?</dt>
+            <dd><a href="https://amp.dev/about/stories/">Web Stories</a> are tappable, engaging visual stories brought to the web. They’re powered by AMP technology, so learn more about them on <a href="https://amp.dev/about/stories/">amp.dev</a>.</dd>
+        
+            <dt>How do I install the Stories for WordPress plugin?</dt>
+            <dd>
+                As soon as we’re graduating from beta, the plugin will be available on WordPress.org. While we’re in beta, the plugin has to be downloaded as zip. After that:
+
+                <ol>
+                    <li>Navigate to Plugins &gt; Add New.</li>
+                    <li>Click the Upload Plugin button at the top of the screen.</li>
+                    <li>Select the zip file from your local filesystem.</li>
+                    <li>Click the Install Now button.</li>
+                    <li>When installation is complete, you’ll see “Plugin installed successfully.” Click the Activate Plugin button at the bottom of the page.</li>
+                </ol>
+            </dd>
+        
+            <dt>I found a bug or missing feature! How do I report it?</dt>
+            <dd>Awesome! That’s exactly what the beta is for. Please submit feedback via <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRK9gFWMavvGbEWPFUFz8PDgrDE6XdVuh3B9e1Fu549V8BxQ/viewform">this feedback form</a> or <a href="https://github.com/google/web-stories-wp/issues">file a bug or feature request on Github</a>. Your help is greatly appreciated.</dd>
+
+            <dt>When is the final version shipping, and what will be included?</dt>
+            <dd>Later this summer. In addition to stabilization, performance fixes and bug fixes, the final version will also include animation and page attachment support.</dd>
+        </dl>
+     </section>
+
+     <footer>
+        <div class="google"><amp-img width="120" height="48" layout="responsive" src="./assets/google.svg" alt="Google"></div>
+         <ul>
+             <li><a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a></li>
+             <li><a href="https://www.google.com/intl/en/policies/terms/">Terms</a></li>
+             <li><a href="https://www.google.com/intl/en/about/">About Google</a></li>
+             <li><a href="https://www.google.com/intl/en/about/products/">Google Products</a></li>
+         </ul>
+     </footer>
+
+</body>
+</html>
