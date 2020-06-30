@@ -38,6 +38,7 @@ class Discovery extends \WP_UnitTestCase {
 				'post_title'   => 'Example title',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
+				'post_author'  => self::$user_id,
 			]
 		);
 		self::$poster_attachment_id = $factory->attachment->create_object(
@@ -115,6 +116,8 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'headline', $result );
 		$this->assertArrayHasKey( 'datePublished', $result );
 		$this->assertArrayHasKey( 'dateModified', $result );
+		$this->assertArrayHasKey( 'author', $result );
+		$this->assertArrayHasKey( 'image', $result );
 	}
 
 	/**
