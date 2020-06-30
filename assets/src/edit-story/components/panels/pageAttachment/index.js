@@ -71,6 +71,7 @@ function PageAttachmentPanel() {
     !isValidUrl(withProtocol(url || ''))
   );
 
+  const isDefault = ctaText === defaultCTA;
   return (
     <SimplePanel
       name="pageAttachment"
@@ -105,7 +106,9 @@ function PageAttachmentPanel() {
             }
             value={ctaText || defaultCTA}
             aria-label={__('Edit: Page Attachment CTA text', 'web-stories')}
-            clear={Boolean(ctaText) && ctaText !== defaultCTA}
+            clear={Boolean(ctaText) && !isDefault}
+            suffix={isDefault ? __('default', 'web-stories') : null}
+            width={isDefault ? 85 : null}
           />
         </Row>
       )}
