@@ -39,9 +39,8 @@ const Wrapper = styled.div`
   z-index: 3;
 `;
 
-// The CSS here is mostly based on how it's displayed in the front-end, including
-// static font size independent of the viewport size.
-// @todo Confirm if that's OK or if we should adjust the sizes for the editor.
+// The CSS here is based on how it's displayed in the front-end, including static
+// font-size, line-height, etc. independent of the viewport size -- it's not responsive.
 const Icon = styled.div`
   position: relative;
   display: block;
