@@ -149,10 +149,10 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$wp_query->queried_object = get_post( self::$story_id );
 		$post_type_object         = new \Google\Web_Stories\Story_Post_Type();
 		$gtag                     = [
-			'vars' => [
+			'vars'     => [
 				'gtag_id' => 'hello',
 			],
-			'triggers' => []
+			'triggers' => [],
 		];
 		$result                   = $post_type_object->filter_site_kit_gtag_opt( $gtag );
 
@@ -162,5 +162,23 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 'Example title', $result['triggers']['storyEnd']['vars']['event_category'] );
 
 		unset( $wp_query->queried_object );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\Story_Post_Type::filter_use_block_editor_for_post_type
+	 */
+	public function test_filter_use_block_editor_for_post_type() {
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$use_block_editor = $post_type_object->filter_use_block_editor_for_post_type( true, $post_type_object::POST_TYPE_SLUG );
+		$this->assertFalse( $use_block_editor );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\Story_Post_Type::skip_amp
+	 */
+	public function test_skip_amp() {
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$skip_amp         = $post_type_object->skip_amp( true, get_post( self::$story_id ) );
+		$this->assertTrue( $skip_amp );
 	}
 }
