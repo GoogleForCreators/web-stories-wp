@@ -48,6 +48,7 @@ class Discovery extends \WP_UnitTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+		wp_maybe_generate_attachment_metadata( get_post( self::$poster_attachment_id ) );
 		set_post_thumbnail( self::$story_id, self::$poster_attachment_id );
 	}
 
