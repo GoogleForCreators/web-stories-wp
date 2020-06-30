@@ -32,7 +32,7 @@ import { useAPI } from '../../../../app/api';
 import { Plain } from '../../../../components/button';
 import Dialog from '../../../../components/dialog';
 import { useSnackbar } from '../../../../app/snackbar';
-import { useMedia } from '../../../../app/media';
+import { useLocalMedia } from '../../../../app/media';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
@@ -48,7 +48,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
     actions: { deleteMedia },
   } = useAPI();
   const { showSnackbar } = useSnackbar();
-  const { deleteMediaElement } = useMedia((state) => ({
+  const { deleteMediaElement } = useLocalMedia((state) => ({
     deleteMediaElement: state.actions.deleteMediaElement,
   }));
 
