@@ -132,7 +132,7 @@
         font-style: normal;
         font-weight: 100;
         font-size: 78px;
-        line-height: 84px;
+        line-height: 1.08;
         margin: 0;
     }
 
@@ -201,7 +201,7 @@
     section.about p {
         font-weight: 500;
         font-size: 58px;
-        line-height: 76px;
+        line-height: 1.32;
         text-align: center;
         opacity: 0.84;
         margin-top: 156px;
@@ -356,6 +356,63 @@
         left: 0;
         right: 0;
     }
+
+    /*
+    * Reponsiveness (TODO: check with Sam)
+    */
+    header, footer, section {
+        padding: 0 7.4vw;
+    }
+
+    section.teaser {
+        padding-bottom: 13.13vw;
+        padding-top: 9.69vw;
+    }
+
+    section.teaser h3 {
+        font-size: calc(32px + 2.4vw);
+    }
+
+    section.about {
+        padding-top: 8.13vw;
+    }
+
+    section.about p {
+        margin-top: 8.13vw;
+        padding-bottom: 7.92vw;
+        font-size: calc(20px + 1.98vw);
+    }
+
+    section.about-video p {
+        padding-top: 5.42vw;
+    }
+
+    section.templates {
+        padding-top: 7.76vw;
+        padding-bottom: 6.25vw;
+    }
+
+    section.faq {
+        padding-top: 8.13vw;
+        padding-bottom: 7.4vw;
+    }
+
+    section.faq dl {
+        padding-top: 8.13vw;
+    }
+
+    @media (max-width: 1000px) {
+        section.templates ul {
+            flex-wrap: wrap;
+        }
+        section.templates p {
+            padding-bottom: 30px;
+        }
+        section.templates ul li {
+            flex: 1 1 25%;
+        }
+    }
+
     </style>
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
