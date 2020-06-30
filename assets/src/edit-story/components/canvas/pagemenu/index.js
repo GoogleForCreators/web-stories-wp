@@ -186,7 +186,7 @@ function PageMenu() {
           <WithTooltip title={__('Duplicate page', 'web-stories')}>
             <Icon
               onClick={handleDuplicatePage}
-              aria-label={__('Dupliccate Page', 'web-stories')}
+              aria-label={__('Duplicate Page', 'web-stories')}
             >
               <Duplicate />
             </Icon>

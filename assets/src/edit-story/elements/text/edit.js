@@ -215,8 +215,16 @@ function TextEdit({
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
     if (editWrapper) {
-      // @todo Get the correct top and left from getBox, just height for testing currently!
+      const [dx, dy] = calcRotatedResizeOffset(
+        boxRef.current.rotationAngle,
+        0,
+        0,
+        0,
+        editorHeightRef.current - boxRef.current.height
+      );
       editWrapper.style.height = `${editorHeightRef.current}px`;
+      editWrapper.style.left = `${boxRef.current.x + dx}px`;
+      editWrapper.style.top = `${boxRef.current.y + dy}px`;
       // We need to update Moveable as well.
       if (moveable.current) {
         moveable.current.updateRect();
