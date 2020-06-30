@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useMemo, memo } from 'react';
+import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -125,7 +125,13 @@ function Header({
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
-        handleSortChange={sort.set}
+        handleSortChange={useCallback(
+          (newSort) => {
+            sort.set(newSort);
+            scrollToTop();
+          },
+          [scrollToTop, sort]
+        )}
         wpListURL={wpListURL}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
