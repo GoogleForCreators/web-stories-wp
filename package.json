@@ -6,7 +6,12 @@
   "author": "Google",
   "license": "Apache-2.0",
   "type": "module",
-  "keywords": ["amp", "stories", "storytelling", "wordpress"],
+  "keywords": [
+    "amp",
+    "stories",
+    "storytelling",
+    "wordpress"
+  ],
   "homepage": "https://github.com/google/web-stories-wp",
   "repository": {
     "type": "git",
@@ -224,7 +229,10 @@
       "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
     ],
     "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
-    "*.md": ["eslint --fix", "markdownlint -f"],
+    "*.md": [
+      "eslint --fix",
+      "markdownlint -f"
+    ],
     "*.php": "npm run lint:php:fix",
     "*.(xml|xml.dist)": "prettier --write",
     "*.yml": "prettier --write"

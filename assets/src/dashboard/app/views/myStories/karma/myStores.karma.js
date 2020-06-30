@@ -28,7 +28,7 @@ import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesAr
 // 1. Navigate to Explore Templates - Done
 // 2. Switch to Drafts - Done
 // 3. Switch to Published - Done
-// 4. Search Stories Text Box
+// 4. Search Stories Text Box - Done
 // 5. Sort By Date
 // 6. Sort By Last Modified
 // 7. Sort By Created By
@@ -125,5 +125,26 @@ describe('My Stories View integration', () => {
 
     const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
     expect(stories.length).toEqual(numPublished);
+  });
+
+  it('should should search/filter using the Search Stories search input', async () => {
+    const firstStoryTitle = formattedStoriesArray[0].title;
+
+    const searchInput = fixture.screen.getByPlaceholderText('Search Stories');
+
+    expect(searchInput).toBeTruthy();
+
+    await fixture.events.focus(searchInput);
+
+    await fixture.events.keyboard.type(firstStoryTitle);
+
+    await waitFor(() => {
+      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      expect(stories.length).toEqual(
+        formattedStoriesArray.filter(({ title }) =>
+          title.includes(firstStoryTitle)
+        ).length
+      );
+    });
   });
 });

@@ -139,12 +139,15 @@ function getStoriesState() {
   };
 }
 
-function fetchStories({ status = STORY_STATUSES[0].value }) {
-  const statuses = status.split(',');
+function fetchStories({ status = STORY_STATUSES[0].value, searchTerm = '' }) {
   const storiesState = getStoriesState();
+  const statuses = status.split(',');
 
   storiesState.storiesOrderById = formattedStoriesArray
-    .filter(({ status: storyStatus }) => statuses.includes(storyStatus))
+    .filter(
+      ({ status: storyStatus, title }) =>
+        statuses.includes(storyStatus) && title.includes(searchTerm)
+    )
     .map(({ id }) => id);
   return storiesState;
 }
