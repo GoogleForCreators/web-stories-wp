@@ -181,4 +181,13 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$skip_amp         = $post_type_object->skip_amp( true, get_post( self::$story_id ) );
 		$this->assertTrue( $skip_amp );
 	}
+
+	/**
+	 * @covers \Google\Web_Stories\Story_Post_Type::replace_editor
+	 */
+	public function test_replace_editor() {
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$replace_editor   = $post_type_object->replace_editor( false, get_post( self::$story_id ) );
+		$this->assertTrue( $replace_editor );
+	}
 }
