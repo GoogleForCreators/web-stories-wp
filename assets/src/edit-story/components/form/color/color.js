@@ -52,7 +52,7 @@ function ColorInput({
     [value, onChange]
   );
 
-  // translators: The thing that can be colored
+  // translators: %s: color input label name.
   const containerLabel = sprintf(__('Color input: %s', 'web-stories'), label);
 
   return (
