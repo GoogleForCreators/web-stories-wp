@@ -453,6 +453,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-23
 				 */
 				'showElementsTab'              => false,
+				/**
+				 * Description: Flag for using a row-based media gallery (vs column based) in the Uploads tab.
+				 * Author: @joannalee
+				 * Issue: #2820
+				 * Creation date: 2020-06-30
+				 */
+				'rowBasedGallery'              => false,
 			],
 
 		];
