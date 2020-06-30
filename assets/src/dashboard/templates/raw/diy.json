@@ -1,9 +1,13 @@
 {
-  "version": 19,
+  "version": 24,
   "pages": [
     {
       "elements": [
         {
+          "x": 90,
+          "y": 79,
+          "width": 128,
+          "height": 128,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -19,11 +23,6 @@
               "b": 30
             }
           },
-          "isFill": false,
-          "x": 102.41179302547151,
-          "y": 89.27481626110612,
-          "width": 146.66666666666666,
-          "height": 146.66666666666666,
           "mask": {
             "type": "rectangle"
           },
@@ -32,6 +31,10 @@
           "isDefaultBackground": true
         },
         {
+          "x": 0,
+          "y": -57,
+          "width": 412,
+          "height": 732,
           "type": "image",
           "opacity": 40,
           "flip": {
@@ -47,12 +50,7 @@
               "b": 51
             }
           },
-          "isFill": false,
-          "x": 0,
-          "y": 0,
-          "width": 441,
-          "height": 659,
-          "scale": 120,
+          "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
@@ -166,6 +164,10 @@
           }
         },
         {
+          "x": 41,
+          "y": 232,
+          "width": 330,
+          "height": 267,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -182,7 +184,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 82,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -192,69 +193,23 @@
           },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "id": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
           "title": "Subheading",
-          "x": -2,
-          "y": 273,
-          "width": 444,
-          "height": 82,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
-          "content": "<span style=\"color: #faf4ea\">DOERS</span>"
+          "content": "<span style=\"color: #faf4ea\">DOERS&nbsp;</span>\n<span style=\"color: #faf4ea\">GET </span><span style=\"color: #ff7324\">MORE DONE</span>",
+          "fontSize": 90,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 82,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
+          "x": 144.5,
+          "y": 87,
           "width": 123,
-          "height": 82,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
-          "id": "59955c3a-57a0-4c4a-857d-bd6234e1382c",
-          "x": 44,
-          "y": 359,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">GET</span>"
-        },
-        {
+          "height": 14,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -271,7 +226,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 82,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -281,116 +235,20 @@
           },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 189,
-          "height": 82,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
-          "basedOn": "59955c3a-57a0-4c4a-857d-bd6234e1382c",
-          "id": "04ec92dc-313f-428d-87d0-00bd975290b5",
-          "x": 177,
-          "y": 359,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">MORE</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 82,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 438,
-          "height": 82,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "04ec92dc-313f-428d-87d0-00bd975290b5",
-          "id": "7dd406da-ea86-4b60-be48-aeb22c4451a2",
-          "x": 0,
-          "y": 445,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">DONE</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 13,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 140,
-          "height": 13,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
           "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
           "id": "b8f9eb9a-5007-4642-aca3-750cdb7c7463",
-          "x": 150,
-          "y": 88,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">ISSUE NO. 2</span>"
+          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">ISSUE NO. 2</span>",
+          "fontSize": 14,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
-          "type": "image",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -398,123 +256,46 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 115,
+              "b": 36
+            }
+          },
+          "type": "shape",
+          "x": 197.5,
+          "y": 119,
+          "width": 17,
+          "height": 17,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_org_cross.png",
-            "width": 150,
-            "height": 150,
-            "posterId": 0,
-            "id": 397,
-            "title": "diy_icon_org_cross",
-            "alt": "diy_icon_org_cross",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "diy_icon_org_cross-300x300.png",
-                "width": 300,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_org_cross-300x300.png"
-              },
-              "thumbnail": {
-                "file": "diy_icon_org_cross-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_org_cross-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_icon_org_cross-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_org_cross-150x150.png"
-              },
-              "full": {
-                "file": "diy_icon_org_cross.png",
-                "width": 300,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_org_cross.png"
-              }
-            }
-          },
-          "x": 210,
-          "y": 116,
-          "width": 20,
-          "height": 20,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "cross"
           },
-          "id": "a0f67513-d98a-43f4-bb0b-ad3383051452"
+          "id": "b2adc0ce-a539-4d54-b7a3-1c04fdc6f863"
         }
       ],
       "type": "page",
       "id": "d47afc22-71b7-4303-9917-96f9a31ad38a",
       "backgroundOverlay": "none",
-      "animations": [
-        {
-          "id": "d5e53845-e936-49a7-972f-7dcbac6a29df",
-          "type": "blinkOn",
-          "duration": 1250,
-          "delay": 0,
-          "direction": "normal",
-          "easing": "",
-          "fill": "forwards",
-          "iterations": "",
-          "blinkCount": 5,
-          "targets": [
-            "a0f67513-d98a-43f4-bb0b-ad3383051452",
-            "04ec92dc-313f-428d-87d0-00bd975290b5",
-            "59955c3a-57a0-4c4a-857d-bd6234e1382c"
-          ]
-        },
-        {
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 0.75,
-          "id": "3744e9b9-38f8-4767-a9c7-3ac3965273d7",
-          "duration": 8000,
-          "delay": 500,
-          "direction": "normal",
-          "easing": "",
-          "fill": "forwards",
-          "iterations": "infinity",
-          "targets": [
-            "59955c3a-57a0-4c4a-857d-bd6234e1382c",
-            "4e256c35-5e30-45f5-9095-d8ce0a230b21",
-            "7dd406da-ea86-4b60-be48-aeb22c4451a2"
-          ]
-        },
-        {
-          "type": "move",
-          "offsetX": -50,
-          "offsetY": 400,
-          "id": "b2f9d575-a255-4a7c-b0dc-20cd1bee4afb",
-          "duration": 1000,
-          "delay": 250,
-          "direction": "normal",
-          "easing": "",
-          "fill": "forwards",
-          "iterations": 4,
-          "targets": [
-            "a0f67513-d98a-43f4-bb0b-ad3383051452",
-            "b8f9eb9a-5007-4642-aca3-750cdb7c7463"
-          ]
+      "animations": [],
+      "backgroundColor": {
+        "color": {
+          "r": 33,
+          "g": 31,
+          "b": 30
         }
-      ]
+      }
     },
     {
       "elements": [
         {
+          "x": 81,
+          "y": 44,
+          "width": 128,
+          "height": 128,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -530,11 +311,6 @@
               "b": 30
             }
           },
-          "isFill": false,
-          "x": 93.43841039554628,
-          "y": 49.69353239960639,
-          "width": 146.66666666666666,
-          "height": 146.66666666666666,
           "mask": {
             "type": "rectangle"
           },
@@ -543,6 +319,10 @@
           "isDefaultBackground": true
         },
         {
+          "x": 0,
+          "y": -56,
+          "width": 412,
+          "height": 730,
           "type": "image",
           "opacity": 40,
           "flip": {
@@ -558,14 +338,9 @@
               "b": 51
             }
           },
-          "isFill": false,
-          "x": 0,
-          "y": -1,
-          "width": 440,
-          "height": 661,
-          "scale": 120,
+          "scale": 100,
           "focalX": 50,
-          "focalY": 50,
+          "focalY": 41.681999964185515,
           "mask": {
             "type": "rectangle"
           },
@@ -677,6 +452,10 @@
           }
         },
         {
+          "x": -70,
+          "y": 284,
+          "width": 476,
+          "height": 154,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -693,7 +472,6 @@
           "rotationAngle": -90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 70,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -703,25 +481,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 444,
-          "height": 138,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
           "id": "8e053a88-17a5-4162-8ae0-214e5a84e33c",
-          "x": -38,
-          "y": 301,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">EXPAND YOUR\nLIVING SPACE TO</span>"
+          "content": "<span style=\"color: #fafae4\">EXPAND YOUR</span>\n<span style=\"color: #fafae4\">LIVING SPACE TO</span>",
+          "fontSize": 77,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 72,
+          "y": 185,
+          "width": 422,
+          "height": 77,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -738,7 +515,6 @@
           "rotationAngle": -90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 70,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -748,53 +524,38 @@
           },
           "lineHeight": 1,
           "textAlign": "right",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 444,
-          "height": 70,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "8e053a88-17a5-4162-8ae0-214e5a84e33c",
           "id": "9b8df2db-2f35-4aa6-a48c-f7bc71afc6de",
-          "x": 66,
-          "y": 263,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">THE OUTDOORS</span>"
+          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">THE OUTDOORS</span>",
+          "fontSize": 77,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
       "id": "6a6ddf2d-7f98-405a-8c95-76b0440f9b30",
-      "animations": [
-        {
-          "id": "b4c367e1-2990-46ae-a593-ab60db38a18f",
-          "type": "flip",
-          "duration": 2000,
-          "delay": 0,
-          "targets": [
-            "00210dfd-2813-4a6c-9182-df2071c28e1f"
-          ]
-        },
-        {
-          "id": "adda68ca-ad52-42df-9f2a-6489b7ccb3c0",
-          "type": "bounce",
-          "duration": 1000,
-          "delay": 500,
-          "targets": [
-            "8e053a88-17a5-4162-8ae0-214e5a84e33c",
-            "9b8df2db-2f35-4aa6-a48c-f7bc71afc6de"
-          ]
+      "animations": [],
+      "backgroundColor": {
+        "color": {
+          "r": 33,
+          "g": 31,
+          "b": 30
         }
-      ]
+      }
     },
     {
       "elements": [
         {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -810,11 +571,6 @@
               "b": 30
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -823,6 +579,10 @@
           "isDefaultBackground": true
         },
         {
+          "x": 167.5,
+          "y": 445,
+          "width": 77,
+          "height": 77,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -838,11 +598,6 @@
               "b": 51
             }
           },
-          "isFill": false,
-          "x": 185,
-          "y": 471,
-          "width": 70,
-          "height": 70,
           "scale": 140,
           "focalX": 50,
           "focalY": 50,
@@ -957,6 +712,10 @@
           }
         },
         {
+          "x": 144.5,
+          "y": 547,
+          "width": 123,
+          "height": 14,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -973,7 +732,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 13,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -983,25 +741,24 @@
           },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 140,
-          "height": 13,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "b8f9eb9a-5007-4642-aca3-750cdb7c7463",
           "id": "b767306b-6b92-4b2a-935d-00954a502681",
-          "x": 150,
-          "y": 566,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">DAVID J. MARKS</span>"
+          "content": "<span style=\"color: #faf4ea\">ANONYMOUS</span>",
+          "fontSize": 14,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 164,
+          "y": 38,
+          "width": 84,
+          "height": 65,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -1018,7 +775,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 60,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1028,25 +784,24 @@
           },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 96,
-          "height": 60,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "b767306b-6b92-4b2a-935d-00954a502681",
           "id": "ec867712-86cf-4681-a2f9-48fe633cfb4c",
-          "x": 172,
-          "y": 76,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">\"\"</span>"
+          "content": "<span style=\"color: #faf4ea\">“”</span>",
+          "fontSize": 66,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 164,
+          "y": 231,
+          "width": 170,
+          "height": 13,
           "type": "shape",
           "opacity": 50,
           "flip": {
@@ -1062,11 +817,6 @@
               "b": 128
             }
           },
-          "isFill": false,
-          "x": 178,
-          "y": 246,
-          "width": 163,
-          "height": 15,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1076,6 +826,10 @@
           "id": "7d8bae39-0d48-4424-b7ac-f95231a7c688"
         },
         {
+          "x": 108,
+          "y": 266,
+          "width": 188,
+          "height": 13,
           "type": "shape",
           "opacity": 50,
           "flip": {
@@ -1091,9 +845,6 @@
               "b": 128
             }
           },
-          "isFill": false,
-          "width": 180,
-          "height": 15,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1101,11 +852,13 @@
             "type": "rectangle"
           },
           "basedOn": "7d8bae39-0d48-4424-b7ac-f95231a7c688",
-          "id": "a9bf183b-8951-4fdc-8bfd-fa6a71736a28",
-          "x": 126,
-          "y": 281
+          "id": "a9bf183b-8951-4fdc-8bfd-fa6a71736a28"
         },
         {
+          "x": 68.5,
+          "y": 139,
+          "width": 275,
+          "height": 212,
           "font": {
             "service": "fonts.google.com",
             "family": "Open Sans",
@@ -1122,7 +875,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 29,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1132,62 +884,38 @@
           },
           "lineHeight": 1.2,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 274,
-          "height": 204,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "b767306b-6b92-4b2a-935d-00954a502681",
           "id": "1788ced3-50fc-495e-9944-9f7a205b3107",
-          "x": 83,
-          "y": 158,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">Always pay particular attention to the terrain, soil and weather influences of your landscape.</span>"
+          "content": "<span style=\"color: #faf4ea\">Always pay particular attention to the </span><span style=\"color: #faf4ea\">terrain, soil and weather</span><span style=\"color: #faf4ea\"> influences of your landscape.</span>",
+          "fontSize": 30,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
       "id": "6a5fbd97-2e43-4f7a-a672-6b1b90f8a625",
-      "animations": [
-        {
-          "id": "39976323-30ea-4429-bd60-ca6111d40d5d",
-          "type": "blinkOn",
-          "duration": 1000,
-          "delay": 0,
-          "targets": [
-            "7a20f7e7-fe90-46b3-9382-7204473f2724"
-          ]
-        },
-        {
-          "id": "9fc51a1b-c3ed-4905-ac92-d6e4ec3eb3ee",
-          "type": "bounce",
-          "duration": 1200,
-          "delay": 0,
-          "targets": [
-            "ec867712-86cf-4681-a2f9-48fe633cfb4c"
-          ]
-        },
-        {
-          "id": "55144037-e3c5-428f-b72a-236b13ebf203",
-          "type": "floatOn",
-          "duration": 200,
-          "delay": 0,
-          "targets": [
-            "7d8bae39-0d48-4424-b7ac-f95231a7c688",
-            "a9bf183b-8951-4fdc-8bfd-fa6a71736a28"
-          ]
+      "animations": [],
+      "backgroundColor": {
+        "color": {
+          "r": 33,
+          "g": 31,
+          "b": 30
         }
-      ]
+      }
     },
     {
       "elements": [
         {
+          "x": 21,
+          "y": 64,
+          "width": 128,
+          "height": 128,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -1203,11 +931,6 @@
               "b": 30
             }
           },
-          "isFill": false,
-          "x": 23.75158094816712,
-          "y": 72.77529289097599,
-          "width": 146.66666666666666,
-          "height": 146.66666666666666,
           "mask": {
             "type": "rectangle"
           },
@@ -1216,6 +939,10 @@
           "isDefaultBackground": true
         },
         {
+          "x": -1,
+          "y": -57,
+          "width": 413,
+          "height": 732,
           "type": "image",
           "opacity": 40,
           "flip": {
@@ -1231,14 +958,9 @@
               "b": 51
             }
           },
-          "isFill": false,
-          "x": -1,
-          "y": 1,
-          "width": 441,
-          "height": 660,
-          "scale": 150,
-          "focalX": 27.77777777777778,
-          "focalY": 53.01587301587302,
+          "scale": 140,
+          "focalX": 30.027943808528523,
+          "focalY": 55.266039046623774,
           "mask": {
             "type": "rectangle"
           },
@@ -1350,6 +1072,10 @@
           }
         },
         {
+          "x": 44,
+          "y": 37,
+          "width": 246,
+          "height": 220,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -1366,7 +1092,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 100,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1376,25 +1101,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 307,
-          "height": 200,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
           "id": "457c0ed6-69da-43c4-ac59-1d1359d980b9",
-          "x": 71,
-          "y": 82,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">START\nWITH</span>"
+          "content": "<span style=\"color: #faf4ea\">START</span>\n<span style=\"color: #faf4ea\">WITH</span>",
+          "fontSize": 110,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 54,
+          "y": 257,
+          "width": 324,
+          "height": 330,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -1411,7 +1135,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 100,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1421,32 +1144,37 @@
           },
           "lineHeight": 1,
           "textAlign": "right",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 307,
-          "height": 300,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "457c0ed6-69da-43c4-ac59-1d1359d980b9",
           "id": "b0b134b8-2aae-4da8-83be-a0f5a811f082",
-          "x": 71,
-          "y": 282,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">THE\nFOUNDA\nTION</span>"
+          "content": "<span style=\"color: #ff7324\">THE</span>\n<span style=\"color: #ff7324\">FOUNDA</span>\n<span style=\"color: #ff7324\">TION</span>",
+          "fontSize": 110,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
-      "id": "3164a2b3-10c7-42b8-bcea-38292c8427f5"
+      "id": "3164a2b3-10c7-42b8-bcea-38292c8427f5",
+      "backgroundColor": {
+        "color": {
+          "r": 33,
+          "g": 31,
+          "b": 30
+        }
+      }
     },
     {
       "elements": [
         {
+          "x": 36,
+          "y": 41,
+          "width": 193,
+          "height": 242,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -1456,9 +1184,8 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 140,
-          "focalX": 34.65136054421769,
-          "focalY": 55.95238095238096,
-          "isFill": false,
+          "focalX": 33.152160103793385,
+          "focalY": 53.103900115574774,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
@@ -1564,10 +1291,6 @@
               }
             }
           },
-          "x": 41,
-          "y": 47,
-          "width": 220,
-          "height": 275,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -1578,6 +1301,10 @@
           "isBackground": true
         },
         {
+          "x": -1,
+          "y": 511,
+          "width": 412,
+          "height": 164,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -1585,7 +1312,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
               "r": 250,
@@ -1593,9 +1320,6 @@
               "b": 234
             }
           },
-          "isFill": false,
-          "width": 441,
-          "height": 169,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1603,11 +1327,13 @@
             "type": "rectangle"
           },
           "basedOn": "4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2",
-          "id": "969611ae-3a4b-45b5-b075-38ffb5abdce1",
-          "x": -1,
-          "y": 491
+          "id": "969611ae-3a4b-45b5-b075-38ffb5abdce1"
         },
         {
+          "x": 0,
+          "y": 342,
+          "width": 386,
+          "height": 216,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -1615,7 +1341,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
               "r": 255,
@@ -1623,9 +1349,6 @@
               "b": 255
             }
           },
-          "isFill": false,
-          "width": 386,
-          "height": 225,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1633,11 +1356,13 @@
             "type": "rectangle"
           },
           "basedOn": "4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2",
-          "id": "4496cff1-60d7-4f33-9231-9fb423308319",
-          "x": 0,
-          "y": 358
+          "id": "4496cff1-60d7-4f33-9231-9fb423308319"
         },
         {
+          "x": 37,
+          "y": 384,
+          "width": 223,
+          "height": 22,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -1654,7 +1379,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 22,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1664,25 +1388,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 254,
-          "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "7b86d9a0-7674-4172-8abb-ddd27f241376",
           "id": "67f45a53-bf09-4235-95f0-680ad1bc9e66",
-          "x": 31,
-          "y": 390,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">GETTING STARTED</span>"
+          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">GETTING STARTED</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 37,
+          "y": 419,
+          "width": 310,
+          "height": 120,
           "font": {
             "service": "fonts.google.com",
             "family": "Noto Sans",
@@ -1699,7 +1422,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 15,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1707,25 +1429,24 @@
               "b": 196
             }
           },
-          "lineHeight": 1.4,
+          "lineHeight": 1.5,
           "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "x": 31,
-          "y": 429,
-          "width": 285,
-          "height": 105,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "id": "566dcf70-af92-4ee1-8a03-e07dab4556b8",
-          "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Every deck starts with a solid foundation. There are a few ways that a foundation system for a deck can be constructed and we’ll highlight three of them: footing, pier, and pier/footing.</span>"
+          "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Every deck starts with a solid foundation. There are a few ways that a foundation system for a deck can be constructed and we’ll highlight three of them: footing, pier, and pier/footing.</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 37,
+          "y": 573.5,
+          "width": 70,
+          "height": 14,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -1742,7 +1463,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
-          "fontSize": 12,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1752,26 +1472,20 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 80,
-          "height": 11,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "67f45a53-bf09-4235-95f0-680ad1bc9e66",
           "id": "88038fd9-5e4e-41f2-a831-a79e990695ce",
-          "x": 30,
-          "y": 616.5,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">GETTING STARTED</span>"
+          "content": "<span style=\"color: #353332\">LEARN MORE</span>",
+          "fontSize": 14,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
-          "type": "image",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1779,59 +1493,27 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 133,
+              "g": 130,
+              "b": 128
+            }
+          },
+          "type": "shape",
+          "x": 109,
+          "y": 572.5,
+          "width": 16,
+          "height": 16,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_arrow.png",
-            "width": 128,
-            "height": 128,
-            "posterId": 0,
-            "id": 395,
-            "title": "diy_icon_arrow",
-            "alt": "diy_icon_arrow",
-            "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "diy_icon_arrow-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_arrow-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_icon_arrow-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_arrow-150x150.png"
-              },
-              "full": {
-                "file": "diy_icon_arrow.png",
-                "width": 256,
-                "height": 256,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_arrow.png"
-              }
-            }
-          },
-          "x": 119,
-          "y": 612,
-          "width": 20,
-          "height": 20,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "arrow"
           },
-          "id": "e3adc9ce-fa17-45b6-a26b-6ec2fd532d3d"
+          "id": "96b893ad-20ea-4446-ae2c-5cd50213986b"
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
       "id": "cb4d4a6b-5b3c-4513-8732-96e6e86751b2",
       "defaultBackgroundElement": {
@@ -1855,11 +1537,23 @@
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "0f06a768-d7d7-48c3-94fd-0d200978ef7c"
+      },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        }
       }
     },
     {
       "elements": [
         {
+          "x": 81,
+          "y": 117,
+          "width": 193,
+          "height": 129,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -1871,7 +1565,6 @@
           "scale": 100,
           "focalX": 33.29545454545455,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
@@ -1977,10 +1670,6 @@
               }
             }
           },
-          "x": 93,
-          "y": 133,
-          "width": 220,
-          "height": 147,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -1991,6 +1680,10 @@
           "isBackground": true
         },
         {
+          "x": 0,
+          "y": -57,
+          "width": 66,
+          "height": 732,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -2006,11 +1699,6 @@
               "b": 30
             }
           },
-          "isFill": false,
-          "x": 0,
-          "y": 0,
-          "width": 75,
-          "height": 661,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2020,6 +1708,139 @@
           "id": "fba88016-92e6-4f7b-9f52-08c870f9ce0a"
         },
         {
+          "x": 81,
+          "y": 41,
+          "width": 281,
+          "height": 440,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Anton",
+            "fallbacks": [
+              "sans-serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "right",
+          "title": "Subheading",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
+          "id": "2af301c7-7cdf-4afc-bd9c-86309ec7cc80",
+          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">HEM-FIR\nBROWN\nSTAIN\nGROUND\nCONTACT\nPRESSURE-T\nREATED\nLUMBER</span>",
+          "fontSize": 55,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 18,
+          "y": 540,
+          "width": 35,
+          "height": 13,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Anton",
+            "fallbacks": [
+              "sans-serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": -90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "title": "Subheading",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "b767306b-6b92-4b2a-935d-00954a502681",
+          "id": "e754bfb7-0132-4515-80c2-5c20b2b1475b",
+          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">NATURAL</span>",
+          "fontSize": 13,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": -60,
+          "y": 356,
+          "width": 191,
+          "height": 13,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Anton",
+            "fallbacks": [
+              "sans-serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": -90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "title": "Subheading",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "e754bfb7-0132-4515-80c2-5c20b2b1475b",
+          "id": "e3de1f4e-c47e-439b-97cd-50c779650b6d",
+          "content": "<span style=\"letter-spacing: 0.001em\"><span style=\"color: rgba(250, 244, 234, 1)\">1.5 in. x 5.5 in. x 96 in</span></span>",
+          "fontSize": 13,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 307.5,
+          "y": 510,
+          "width": 55,
+          "height": 55,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -2035,11 +1856,6 @@
               "b": 36
             }
           },
-          "isFill": false,
-          "x": 345,
-          "y": 573,
-          "width": 50,
-          "height": 50,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2049,209 +1865,34 @@
           "id": "e7d91e07-214b-4718-9b8a-32f13e0e0d01"
         },
         {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 0,
+          "rotationAngle": 45,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 50,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 255,
+              "g": 255,
+              "b": 255
             }
           },
-          "lineHeight": 1,
-          "textAlign": "right",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 320,
-          "height": 390,
+          "type": "shape",
+          "x": 327,
+          "y": 529.5,
+          "width": 16,
+          "height": 16,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
-          "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
-          "id": "2af301c7-7cdf-4afc-bd9c-86309ec7cc80",
-          "x": 75,
-          "y": 68,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">HEM-FIR\nBROWN\nSTAIN\nGROUND\nCONTACT\nPRESSURE-T\nREATED\nLUMBER</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": -90,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 13,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 40,
-          "height": 13,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "b767306b-6b92-4b2a-935d-00954a502681",
-          "id": "e754bfb7-0132-4515-80c2-5c20b2b1475b",
-          "x": 16,
-          "y": 597,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">NATURAL</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": -90,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 13,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 218,
-          "height": 13,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "e754bfb7-0132-4515-80c2-5c20b2b1475b",
-          "id": "e3de1f4e-c47e-439b-97cd-50c779650b6d",
-          "x": -73,
-          "y": 413,
-          "content": "<span style=\"letter-spacing: 0.001em\"><span style=\"color: rgba(250, 244, 234, 1)\">1.5 in. x 5.5 in. x 96 in</span></span>"
-        },
-        {
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_wh_cross.png",
-            "width": 150,
-            "height": 158,
-            "posterId": 0,
-            "id": 401,
-            "title": "diy_icon_wh_cross",
-            "alt": "diy_icon_wh_cross",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "diy_icon_wh_cross-286x300.png",
-                "width": 286,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_wh_cross-286x300.png"
-              },
-              "thumbnail": {
-                "file": "diy_icon_wh_cross-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_wh_cross-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_icon_wh_cross-150x158.png",
-                "width": 150,
-                "height": 158,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_wh_cross-150x158.png"
-              },
-              "full": {
-                "file": "diy_icon_wh_cross.png",
-                "width": 300,
-                "height": 315,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_wh_cross.png"
-              }
-            }
-          },
-          "x": 360,
-          "y": 587,
-          "width": 20,
-          "height": 22,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "cross"
           },
-          "id": "a125ec6e-4254-4130-916d-e86d6d71aabb"
+          "id": "327d50e0-4586-435f-ba20-5fae451c8d9a"
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
       "id": "8f462228-45f9-459c-a091-da058c60bd62",
       "defaultBackgroundElement": {
@@ -2275,11 +1916,23 @@
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "f903e641-0485-4da0-be58-66e0cc614467"
+      },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        }
       }
     },
     {
       "elements": [
         {
+          "x": 12,
+          "y": 20,
+          "width": 128,
+          "height": 128,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -2295,19 +1948,18 @@
               "b": 30
             }
           },
-          "isFill": false,
-          "x": 14.288557141847704,
-          "y": 22.369037827370068,
-          "width": 146.66666666666666,
-          "height": 146.66666666666666,
           "mask": {
             "type": "rectangle"
           },
           "isBackground": true,
-          "id": "6f62cb45-cbe8-484a-9f9b-0204fd653ded",
+          "id": "d4d8e43d-57ff-401c-b525-fabfebb77af4",
           "isDefaultBackground": true
         },
         {
+          "x": -1,
+          "y": -58,
+          "width": 413,
+          "height": 554,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -2323,14 +1975,9 @@
               "b": 51
             }
           },
-          "isFill": false,
-          "x": -1,
-          "y": 0,
-          "width": 441,
-          "height": 505,
-          "scale": 120,
-          "focalX": 46.53606793169938,
-          "focalY": 58.404054878973454,
+          "scale": 100,
+          "focalX": 58.97434159500363,
+          "focalY": 48.75313812608893,
           "mask": {
             "type": "rectangle"
           },
@@ -2338,110 +1985,46 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg",
-            "width": 220,
-            "height": 124,
-            "posterId": 0,
-            "id": 334,
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg.jpg",
+            "width": 330,
+            "height": 442,
+            "id": 1563,
             "title": "diy_page7_bg",
             "alt": "diy_page7_bg",
             "local": false,
             "sizes": {
+              "thumbnail": {
+                "height": 150,
+                "width": 150,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-150x150.jpg",
+                "orientation": "landscape"
+              },
               "medium": {
-                "file": "diy_page7_bg-300x169.jpg",
-                "width": 300,
-                "height": 169,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-300x169.jpg"
+                "height": 300,
+                "width": 224,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-224x300.jpg",
+                "orientation": "portrait"
               },
               "large": {
-                "file": "diy_page7_bg-1024x576.jpg",
-                "width": 1024,
-                "height": 576,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1024x576.jpg"
-              },
-              "thumbnail": {
-                "file": "diy_page7_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "diy_page7_bg-768x432.jpg",
-                "width": 768,
-                "height": 432,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-768x432.jpg"
-              },
-              "1536x1536": {
-                "file": "diy_page7_bg-1536x863.jpg",
-                "width": 1536,
-                "height": 863,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1536x863.jpg"
-              },
-              "2048x2048": {
-                "file": "diy_page7_bg-2048x1151.jpg",
-                "width": 2048,
-                "height": 1151,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-2048x1151.jpg"
-              },
-              "post-thumbnail": {
-                "file": "diy_page7_bg-1200x675.jpg",
-                "width": 1200,
-                "height": 675,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1200x675.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "diy_page7_bg-1980x1113.jpg",
-                "width": 1980,
-                "height": 1113,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1980x1113.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "diy_page7_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "diy_page7_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "diy_page7_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_page7_bg-150x84.jpg",
-                "width": 150,
-                "height": 84,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x84.jpg"
+                "height": 777,
+                "width": 580,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-764x1024.jpg",
+                "orientation": "portrait"
               },
               "full": {
-                "file": "diy_page7_bg.jpg",
-                "width": 2400,
-                "height": 1349,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg"
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg.jpg",
+                "height": 1104,
+                "width": 824,
+                "orientation": "portrait"
               }
             }
           }
         },
         {
+          "x": -1,
+          "y": 344,
+          "width": 386,
+          "height": 274,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -2457,11 +2040,6 @@
               "b": 50
             }
           },
-          "isFill": false,
-          "x": 0,
-          "y": 356,
-          "width": 386,
-          "height": 228,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2471,35 +2049,10 @@
           "id": "92f6281c-d00a-4207-a95c-9a6bd40da7d9"
         },
         {
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "isFill": false,
-          "x": 205,
-          "y": 573,
-          "width": 29,
-          "height": 29,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "id": "226987ec-9aea-4342-a276-a1fbcf089a87"
-        },
-        {
+          "x": 37,
+          "y": 399,
+          "width": 223,
+          "height": 22,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -2516,7 +2069,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 22,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -2526,25 +2078,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 254,
-          "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "67f45a53-bf09-4235-95f0-680ad1bc9e66",
           "id": "9c0db82d-9759-4a90-8c97-3d1eb8f370e3",
-          "x": 42,
-          "y": 399,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">DC390B 18V Circular Saw</span>"
+          "content": "<span style=\"color: #fff\">TD-1M Circular Saw</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 37,
+          "y": 433,
+          "width": 271,
+          "height": 144,
           "font": {
             "service": "fonts.google.com",
             "family": "Noto Sans",
@@ -2561,7 +2112,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 15,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -2569,139 +2119,66 @@
               "b": 196
             }
           },
-          "lineHeight": 1.4,
+          "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 289,
-          "height": 105,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "9c0db82d-9759-4a90-8c97-3d1eb8f370e3",
           "id": "112e77ab-1cec-4679-b501-b9085d5f5d79",
-          "x": 42,
-          "y": 432,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip blade to maintain sharpness, and high strength shoe and upper guard for increased durability.</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Roboto",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
+          "content": "<span style=\"color: #f9f3e9\">The TD-1M Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip blade to maintain sharpness, and high strength shoe and upper guard for increased durability.</span>",
+          "fontSize": 16,
           "padding": {
-            "vertical": 0,
             "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 190,
-          "height": 15,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "9c0db82d-9759-4a90-8c97-3d1eb8f370e3",
-          "id": "2ee5ed18-dc65-454e-8b69-a76fc5f06a38",
-          "x": 125,
-          "y": 616,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">See Full Story</span>"
-        },
-        {
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_up_arrow.png",
-            "width": 150,
-            "height": 69,
-            "posterId": 0,
-            "id": 404,
-            "title": "diy_icon_up_arrow",
-            "alt": "diy_icon_up_arrow",
-            "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "diy_icon_up_arrow-150x138.png",
-                "width": 150,
-                "height": 138,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_up_arrow-150x138.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_icon_up_arrow-150x69.png",
-                "width": 150,
-                "height": 69,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_up_arrow-150x69.png"
-              },
-              "full": {
-                "file": "diy_icon_up_arrow.png",
-                "width": 299,
-                "height": 138,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_up_arrow.png"
-              }
-            }
-          },
-          "x": 213.5,
-          "y": 585,
-          "width": 12,
-          "height": 5,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "21029d0a-58a3-4719-a1f9-4d8f47b9da16"
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
-      "id": "eb4fdaf0-52c9-46bb-acb7-91408e671880"
+      "id": "eb4fdaf0-52c9-46bb-acb7-91408e671880",
+      "backgroundColor": {
+        "color": {
+          "r": 33,
+          "g": 31,
+          "b": 30
+        }
+      },
+      "defaultBackgroundElement": {
+        "x": 12,
+        "y": 20,
+        "width": 128,
+        "height": 128,
+        "type": "shape",
+        "opacity": 100,
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": {
+          "color": {
+            "r": 33,
+            "g": 31,
+            "b": 30
+          }
+        },
+        "mask": {
+          "type": "rectangle"
+        },
+        "isBackground": true,
+        "id": "d4d8e43d-57ff-401c-b525-fabfebb77af4",
+        "isDefaultBackground": true
+      }
     },
     {
       "elements": [
         {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -2717,11 +2194,6 @@
               "b": 30
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -2730,6 +2202,10 @@
           "isDefaultBackground": true
         },
         {
+          "x": 0,
+          "y": -57,
+          "width": 372,
+          "height": 612,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -2737,7 +2213,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
               "r": 250,
@@ -2745,11 +2221,6 @@
               "b": 234
             }
           },
-          "isFill": false,
-          "x": 0,
-          "y": -1,
-          "width": 386,
-          "height": 584,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2759,6 +2230,10 @@
           "id": "4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2"
         },
         {
+          "x": 44,
+          "y": 6,
+          "width": 258,
+          "height": 129,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -2775,7 +2250,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 40,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -2785,70 +2259,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 254,
-          "height": 40,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
-          "basedOn": "457c0ed6-69da-43c4-ac59-1d1359d980b9",
-          "id": "2a83d681-85df-4b20-88e4-cc67d02817d4",
-          "x": 52,
-          "y": 31,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">THE BEST TOOLS</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 40,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 254,
-          "height": 79,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
           "basedOn": "2a83d681-85df-4b20-88e4-cc67d02817d4",
           "id": "5fe94c96-3a59-4b24-bb76-1a2a24795c23",
-          "x": 52,
-          "y": 71,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">FOR YOUR DIY\nPROJECT.</span>"
+          "content": "<span style=\"color: #ff7324\">THE BEST TOOLS</span>\n<span style=\"color: #353332\">FOR YOUR DIY</span>\n<span style=\"color: #353332\">PROJECT.</span>",
+          "fontSize": 44,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 45,
+          "y": 164,
+          "width": 99,
+          "height": 99,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -2864,11 +2292,6 @@
               "b": 51
             }
           },
-          "isFill": false,
-          "x": 52,
-          "y": 186,
-          "width": 90,
-          "height": 90,
           "scale": 120,
           "focalX": 56.06481452601413,
           "focalY": 57.85714248299318,
@@ -2983,6 +2406,10 @@
           }
         },
         {
+          "x": 45,
+          "y": 299,
+          "width": 99,
+          "height": 99,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -2998,9 +2425,6 @@
               "b": 51
             }
           },
-          "isFill": false,
-          "width": 90,
-          "height": 90,
           "scale": 140,
           "focalX": 35.38461608058604,
           "focalY": 57.751613096774726,
@@ -3113,11 +2537,13 @@
             }
           },
           "basedOn": "ae3014b3-9828-4285-991d-4b0aa1fc83a6",
-          "id": "ad72e216-61e5-474b-b187-9f06a613a4d5",
-          "x": 51,
-          "y": 319
+          "id": "ad72e216-61e5-474b-b187-9f06a613a4d5"
         },
         {
+          "x": 45,
+          "y": 434,
+          "width": 99,
+          "height": 99,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -3133,11 +2559,6 @@
               "b": 51
             }
           },
-          "isFill": false,
-          "x": 51,
-          "y": 451,
-          "width": 90,
-          "height": 90,
           "scale": 100,
           "focalX": 39.50000049999998,
           "focalY": 50.15873173847311,
@@ -3252,6 +2673,10 @@
           }
         },
         {
+          "x": 192,
+          "y": 193,
+          "width": 110,
+          "height": 44,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -3268,7 +2693,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3278,25 +2702,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 112,
-          "height": 40,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "5fe94c96-3a59-4b24-bb76-1a2a24795c23",
           "id": "ac28f1fa-0509-49e2-82d2-4607c9e2cc23",
-          "x": 189,
-          "y": 210,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">CORDLESS\nPOWER DRILL</span>"
+          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">CORDLESS\nPOWER DRILL</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 192,
+          "y": 337,
+          "width": 112,
+          "height": 22,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -3313,7 +2736,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3323,25 +2745,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 112,
-          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "ac28f1fa-0509-49e2-82d2-4607c9e2cc23",
           "id": "bc9330a4-a5c1-4711-842c-9f6c2a577bd0",
-          "x": 188,
-          "y": 354,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">JET SCREWS</span>"
+          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">JET SCREWS</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 192,
+          "y": 472.5,
+          "width": 120,
+          "height": 22,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -3358,7 +2779,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3368,25 +2788,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 137,
-          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "bc9330a4-a5c1-4711-842c-9f6c2a577bd0",
           "id": "b29b6af7-1fd0-4f84-a9c5-8e33c4623865",
-          "x": 189,
-          "y": 486,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">CLAMP METER</span>"
+          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">CLAMP METER</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 168,
+          "y": 472.5,
+          "width": 26,
+          "height": 22,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -3403,7 +2822,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3413,25 +2831,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 30,
-          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "bc9330a4-a5c1-4711-842c-9f6c2a577bd0",
           "id": "7b1484d1-e0d5-4d8c-8c03-d28ecf193b4f",
-          "x": 169,
-          "y": 487,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">3.</span>"
+          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">3.</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 168,
+          "y": 337,
+          "width": 26,
+          "height": 22,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -3448,7 +2865,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3458,25 +2874,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 30,
-          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "7b1484d1-e0d5-4d8c-8c03-d28ecf193b4f",
           "id": "db606b2b-1199-4a93-885e-8e1be559c256",
-          "x": 169,
-          "y": 354,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">2.</span>"
+          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">2.</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 168,
+          "y": 193,
+          "width": 26,
+          "height": 22,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -3493,7 +2908,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3503,25 +2917,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 30,
-          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "db606b2b-1199-4a93-885e-8e1be559c256",
           "id": "9b59aecd-69c2-45c3-8f8e-b12aa586e99b",
-          "x": 168,
-          "y": 221,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">1.</span>"
+          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">1.</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 45,
+          "y": 578.5,
+          "width": 148,
+          "height": 14,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -3538,7 +2951,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 13,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3548,26 +2960,20 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 140,
-          "height": 13,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "b767306b-6b92-4b2a-935d-00954a502681",
           "id": "1f552208-c803-40aa-8eaf-8c7356196a87",
-          "x": 53,
-          "y": 616.5,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">VIEW ALL PRODUCTS</span>"
+          "content": "<span style=\"color: #faf4ea; letter-spacing: 0.15em\">VIEW ALL PRODUCTS</span>",
+          "fontSize": 14,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
-          "type": "image",
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3575,65 +2981,44 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 133,
+              "g": 130,
+              "b": 128
+            }
+          },
+          "type": "shape",
+          "x": 188,
+          "y": 577.5,
+          "width": 16,
+          "height": 16,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_arrow.png",
-            "width": 128,
-            "height": 128,
-            "posterId": 0,
-            "id": 395,
-            "title": "diy_icon_arrow",
-            "alt": "diy_icon_arrow",
-            "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "diy_icon_arrow-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_arrow-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_icon_arrow-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_arrow-150x150.png"
-              },
-              "full": {
-                "file": "diy_icon_arrow.png",
-                "width": 256,
-                "height": 256,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_icon_arrow.png"
-              }
-            }
-          },
-          "x": 162,
-          "y": 613,
-          "width": 20,
-          "height": 20,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "arrow"
           },
-          "id": "60f07480-c8af-42f9-953a-98569b97ffe7"
+          "id": "35b90dbc-5e5e-48ec-875b-198c711d810e"
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
-      "id": "7dc22ed5-579e-4988-9f9c-97b2cd2ff068"
+      "id": "7dc22ed5-579e-4988-9f9c-97b2cd2ff068",
+      "backgroundColor": {
+        "color": {
+          "r": 33,
+          "g": 31,
+          "b": 30
+        }
+      }
     },
     {
       "elements": [
         {
+          "x": 81,
+          "y": 187,
+          "width": 330,
+          "height": 442,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -3643,118 +3028,86 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
-          "focalX": 56.46595828414011,
-          "focalY": 50,
-          "isFill": false,
+          "focalX": 47.18877202262253,
+          "focalY": 49.953358674938045,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg",
-            "width": 220,
-            "height": 124,
+            "creationDate": "2020-06-22T16:42:02",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg.jpg",
+            "width": 330,
+            "height": 442,
             "posterId": 0,
-            "id": 334,
+            "id": 1563,
             "title": "diy_page7_bg",
             "alt": "diy_page7_bg",
             "local": false,
             "sizes": {
               "medium": {
-                "file": "diy_page7_bg-300x169.jpg",
-                "width": 300,
-                "height": 169,
+                "file": "diy_page7_bg-224x300.jpg",
+                "width": 224,
+                "height": 300,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-300x169.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-224x300.jpg"
               },
               "large": {
-                "file": "diy_page7_bg-1024x576.jpg",
-                "width": 1024,
-                "height": 576,
+                "file": "diy_page7_bg-764x1024.jpg",
+                "width": 764,
+                "height": 1024,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1024x576.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-764x1024.jpg"
               },
               "thumbnail": {
                 "file": "diy_page7_bg-150x150.jpg",
                 "width": 150,
                 "height": 150,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x150.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-150x150.jpg"
               },
               "medium_large": {
-                "file": "diy_page7_bg-768x432.jpg",
+                "file": "diy_page7_bg-768x1029.jpg",
                 "width": 768,
-                "height": 432,
+                "height": 1029,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-768x432.jpg"
-              },
-              "1536x1536": {
-                "file": "diy_page7_bg-1536x863.jpg",
-                "width": 1536,
-                "height": 863,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1536x863.jpg"
-              },
-              "2048x2048": {
-                "file": "diy_page7_bg-2048x1151.jpg",
-                "width": 2048,
-                "height": 1151,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-2048x1151.jpg"
-              },
-              "post-thumbnail": {
-                "file": "diy_page7_bg-1200x675.jpg",
-                "width": 1200,
-                "height": 675,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1200x675.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "diy_page7_bg-1980x1113.jpg",
-                "width": 1980,
-                "height": 1113,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1980x1113.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-768x1029.jpg"
               },
               "web-stories-poster-portrait": {
                 "file": "diy_page7_bg-696x928.jpg",
                 "width": 696,
                 "height": 928,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-696x928.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-696x928.jpg"
               },
               "web-stories-poster-square": {
-                "file": "diy_page7_bg-928x928.jpg",
-                "width": 928,
+                "file": "diy_page7_bg-824x928.jpg",
+                "width": 824,
                 "height": 928,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x928.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-824x928.jpg"
               },
               "web-stories-poster-landscape": {
-                "file": "diy_page7_bg-928x696.jpg",
-                "width": 928,
+                "file": "diy_page7_bg-824x696.jpg",
+                "width": 824,
                 "height": 696,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x696.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-824x696.jpg"
               },
               "web_stories_thumbnail": {
-                "file": "diy_page7_bg-150x84.jpg",
+                "file": "diy_page7_bg-150x201.jpg",
                 "width": 150,
-                "height": 84,
+                "height": 201,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x84.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg-150x201.jpg"
               },
               "full": {
                 "file": "diy_page7_bg.jpg",
-                "width": 2400,
-                "height": 1349,
+                "width": 824,
+                "height": 1104,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page7_bg.jpg"
               }
             }
           },
-          "x": 0,
-          "y": 120,
-          "width": 220,
-          "height": 124,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -3765,6 +3118,10 @@
           "isBackground": true
         },
         {
+          "x": 0,
+          "y": -57,
+          "width": 372,
+          "height": 181,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -3772,7 +3129,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
               "r": 250,
@@ -3780,9 +3137,6 @@
               "b": 234
             }
           },
-          "isFill": false,
-          "width": 386,
-          "height": 144,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3790,11 +3144,13 @@
             "type": "rectangle"
           },
           "basedOn": "4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2",
-          "id": "d38b12e9-ba7a-4a62-9e65-b03305beae30",
-          "x": 0,
-          "y": -1
+          "id": "d38b12e9-ba7a-4a62-9e65-b03305beae30"
         },
         {
+          "x": 60,
+          "y": 21,
+          "width": 277,
+          "height": 86,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -3811,7 +3167,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 40,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3821,133 +3176,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 254,
-          "height": 40,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "2a83d681-85df-4b20-88e4-cc67d02817d4",
           "id": "7b86d9a0-7674-4172-8abb-ddd27f241376",
-          "x": 59,
-          "y": 34,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">THE RIGHT TOOLS</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 40,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
+          "content": "<span style=\"color: #353332\">THE RIGHT TOOLS </span><span style=\"color: #ff7324\">FOR THE JOB.</span>",
+          "fontSize": 44,
           "padding": {
-            "vertical": 0,
             "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 254,
-          "height": 39,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "2a83d681-85df-4b20-88e4-cc67d02817d4",
-          "id": "55d03a3d-486e-446e-9e02-92a6af422cfb",
-          "x": 59,
-          "y": 74,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">FOR THE JOB.</span>"
-        },
-        {
-          "type": "shape",
-          "opacity": 20,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 249,
-              "g": 99,
-              "b": 2
-            }
-          },
-          "isFill": false,
-          "x": 349,
-          "y": 252,
-          "width": 50,
-          "height": 50,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "id": "41a2b205-4d95-4aa2-98ac-556605cb93f6"
-        },
-        {
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 115,
-              "b": 36
-            }
-          },
-          "isFill": false,
-          "x": 364,
-          "y": 267,
-          "width": 20,
-          "height": 20,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "id": "957322bc-5f94-4cf4-9163-6816b86d8e43",
-          "link": {
-            "url": "http://google.com",
-            "icon": null,
-            "desc": "DC390B 18V Circular Saw"
+            "vertical": 0
           }
         },
         {
+          "x": 81,
+          "y": 240,
+          "width": 56,
+          "height": 56,
           "type": "shape",
           "opacity": 20,
           "flip": {
@@ -3963,9 +3209,6 @@
               "b": 2
             }
           },
-          "isFill": false,
-          "width": 50,
-          "height": 50,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3973,11 +3216,13 @@
             "type": "circle"
           },
           "basedOn": "41a2b205-4d95-4aa2-98ac-556605cb93f6",
-          "id": "91a09dbb-ca6e-42bb-9829-4ac4fc6140d4",
-          "x": 127,
-          "y": 315
+          "id": "91a09dbb-ca6e-42bb-9829-4ac4fc6140d4"
         },
         {
+          "x": 97,
+          "y": 256,
+          "width": 24,
+          "height": 24,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -3993,9 +3238,6 @@
               "b": 36
             }
           },
-          "isFill": false,
-          "width": 20,
-          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4004,15 +3246,13 @@
           },
           "basedOn": "957322bc-5f94-4cf4-9163-6816b86d8e43",
           "id": "6c3bb33f-1d89-4624-96bb-b543e6336251",
-          "x": 142,
-          "y": 330,
-          "link": {
-            "url": "http://google.com",
-            "icon": null,
-            "desc": "The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip..."
-          }
+          "link": null
         },
         {
+          "x": 93,
+          "y": 429,
+          "width": 56,
+          "height": 56,
           "type": "shape",
           "opacity": 20,
           "flip": {
@@ -4028,9 +3268,6 @@
               "b": 2
             }
           },
-          "isFill": false,
-          "width": 50,
-          "height": 50,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4038,11 +3275,13 @@
             "type": "circle"
           },
           "basedOn": "91a09dbb-ca6e-42bb-9829-4ac4fc6140d4",
-          "id": "fab864c5-fe89-4082-bfc6-81fcb90fbdc0",
-          "x": 9,
-          "y": 430
+          "id": "fab864c5-fe89-4082-bfc6-81fcb90fbdc0"
         },
         {
+          "x": 109,
+          "y": 445,
+          "width": 24,
+          "height": 24,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -4058,9 +3297,6 @@
               "b": 36
             }
           },
-          "isFill": false,
-          "width": 20,
-          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4069,16 +3305,9 @@
           },
           "basedOn": "6c3bb33f-1d89-4624-96bb-b543e6336251",
           "id": "a0c96775-0f7f-48b3-9820-c19f6b6cc01f",
-          "x": 24,
-          "y": 445,
-          "link": {
-            "url": "http://google.com",
-            "icon": null,
-            "desc": "The DC390B 18V Cordless Circular Saw features 3,700 rpm for fast rip and cross cuts, carbide tip..."
-          }
+          "link": null
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
       "id": "d25a2dd8-b784-4818-81d3-cc70a6aad6ab",
       "defaultBackgroundElement": {
@@ -4102,11 +3331,23 @@
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "e982349a-5439-458d-937e-5a72701cfbad"
+      },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        }
       }
     },
     {
       "elements": [
         {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -4122,11 +3363,6 @@
               "b": 30
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -4135,6 +3371,10 @@
           "isDefaultBackground": true
         },
         {
+          "x": 0,
+          "y": -62,
+          "width": 372,
+          "height": 612,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -4142,7 +3382,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
               "r": 250,
@@ -4150,9 +3390,6 @@
               "b": 234
             }
           },
-          "isFill": false,
-          "width": 386,
-          "height": 661,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4160,40 +3397,13 @@
             "type": "rectangle"
           },
           "basedOn": "4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2",
-          "id": "f92aa000-0cfa-40ea-a9dd-dfee946477ab",
-          "x": 0,
-          "y": -1
+          "id": "f92aa000-0cfa-40ea-a9dd-dfee946477ab"
         },
         {
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 115,
-              "b": 36
-            }
-          },
-          "isFill": false,
-          "x": 359,
-          "y": 380,
-          "width": 82,
-          "height": 281,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "94619a1f-53a1-4c37-8481-7c7483565f6d"
-        },
-        {
+          "x": 52,
+          "y": 19,
+          "width": 142,
+          "height": 86,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -4210,7 +3420,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 40,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -4220,609 +3429,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 111,
-          "height": 40,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "7b86d9a0-7674-4172-8abb-ddd27f241376",
           "id": "3d4ecfbb-db87-4575-95f3-ad04b65645c9",
-          "x": 59,
-          "y": 34,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">MORE</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 40,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
+          "content": "<span style=\"color: #353332\">MORE</span>\n<span style=\"color: #ff7224\">STORIES.</span>",
+          "fontSize": 44,
           "padding": {
-            "vertical": 0,
             "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 161,
-          "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "55d03a3d-486e-446e-9e02-92a6af422cfb",
-          "id": "4e3adf8b-0488-45ba-8e8c-ced5b3a9d1b2",
-          "x": 59,
-          "y": 74,
-          "content": "<span style=\"color: rgba(255, 115, 36, 1)\">STORIES.</span>"
-        },
-        {
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "isFill": false,
-          "x": 59,
-          "y": 156,
-          "width": 90,
-          "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "83166f7e-86d0-4b9f-9ff3-961284d470da",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg",
-            "width": 220,
-            "height": 124,
-            "posterId": 0,
-            "id": 334,
-            "title": "diy_page7_bg",
-            "alt": "diy_page7_bg",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "diy_page7_bg-300x169.jpg",
-                "width": 300,
-                "height": 169,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-300x169.jpg"
-              },
-              "large": {
-                "file": "diy_page7_bg-1024x576.jpg",
-                "width": 1024,
-                "height": 576,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1024x576.jpg"
-              },
-              "thumbnail": {
-                "file": "diy_page7_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "diy_page7_bg-768x432.jpg",
-                "width": 768,
-                "height": 432,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-768x432.jpg"
-              },
-              "1536x1536": {
-                "file": "diy_page7_bg-1536x863.jpg",
-                "width": 1536,
-                "height": 863,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1536x863.jpg"
-              },
-              "2048x2048": {
-                "file": "diy_page7_bg-2048x1151.jpg",
-                "width": 2048,
-                "height": 1151,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-2048x1151.jpg"
-              },
-              "post-thumbnail": {
-                "file": "diy_page7_bg-1200x675.jpg",
-                "width": 1200,
-                "height": 675,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1200x675.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "diy_page7_bg-1980x1113.jpg",
-                "width": 1980,
-                "height": 1113,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1980x1113.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "diy_page7_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "diy_page7_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "diy_page7_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_page7_bg-150x84.jpg",
-                "width": 150,
-                "height": 84,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x84.jpg"
-              },
-              "full": {
-                "file": "diy_page7_bg.jpg",
-                "width": 2400,
-                "height": 1349,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg"
-              }
-            }
+            "vertical": 0
           }
         },
         {
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "isFill": false,
-          "width": 90,
-          "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg",
-            "width": 220,
-            "height": 124,
-            "posterId": 0,
-            "id": 334,
-            "title": "diy_page7_bg",
-            "alt": "diy_page7_bg",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "diy_page7_bg-300x169.jpg",
-                "width": 300,
-                "height": 169,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-300x169.jpg"
-              },
-              "large": {
-                "file": "diy_page7_bg-1024x576.jpg",
-                "width": 1024,
-                "height": 576,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1024x576.jpg"
-              },
-              "thumbnail": {
-                "file": "diy_page7_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "diy_page7_bg-768x432.jpg",
-                "width": 768,
-                "height": 432,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-768x432.jpg"
-              },
-              "1536x1536": {
-                "file": "diy_page7_bg-1536x863.jpg",
-                "width": 1536,
-                "height": 863,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1536x863.jpg"
-              },
-              "2048x2048": {
-                "file": "diy_page7_bg-2048x1151.jpg",
-                "width": 2048,
-                "height": 1151,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-2048x1151.jpg"
-              },
-              "post-thumbnail": {
-                "file": "diy_page7_bg-1200x675.jpg",
-                "width": 1200,
-                "height": 675,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1200x675.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "diy_page7_bg-1980x1113.jpg",
-                "width": 1980,
-                "height": 1113,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1980x1113.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "diy_page7_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "diy_page7_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "diy_page7_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_page7_bg-150x84.jpg",
-                "width": 150,
-                "height": 84,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x84.jpg"
-              },
-              "full": {
-                "file": "diy_page7_bg.jpg",
-                "width": 2400,
-                "height": 1349,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg"
-              }
-            }
-          },
-          "basedOn": "83166f7e-86d0-4b9f-9ff3-961284d470da",
-          "id": "b6d1ee6d-583a-4553-ac70-be1b3af4f943",
-          "x": 59,
-          "y": 277
-        },
-        {
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "isFill": false,
-          "width": 90,
-          "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg",
-            "width": 220,
-            "height": 124,
-            "posterId": 0,
-            "id": 334,
-            "title": "diy_page7_bg",
-            "alt": "diy_page7_bg",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "diy_page7_bg-300x169.jpg",
-                "width": 300,
-                "height": 169,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-300x169.jpg"
-              },
-              "large": {
-                "file": "diy_page7_bg-1024x576.jpg",
-                "width": 1024,
-                "height": 576,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1024x576.jpg"
-              },
-              "thumbnail": {
-                "file": "diy_page7_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "diy_page7_bg-768x432.jpg",
-                "width": 768,
-                "height": 432,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-768x432.jpg"
-              },
-              "1536x1536": {
-                "file": "diy_page7_bg-1536x863.jpg",
-                "width": 1536,
-                "height": 863,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1536x863.jpg"
-              },
-              "2048x2048": {
-                "file": "diy_page7_bg-2048x1151.jpg",
-                "width": 2048,
-                "height": 1151,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-2048x1151.jpg"
-              },
-              "post-thumbnail": {
-                "file": "diy_page7_bg-1200x675.jpg",
-                "width": 1200,
-                "height": 675,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1200x675.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "diy_page7_bg-1980x1113.jpg",
-                "width": 1980,
-                "height": 1113,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1980x1113.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "diy_page7_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "diy_page7_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "diy_page7_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_page7_bg-150x84.jpg",
-                "width": 150,
-                "height": 84,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x84.jpg"
-              },
-              "full": {
-                "file": "diy_page7_bg.jpg",
-                "width": 2400,
-                "height": 1349,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg"
-              }
-            }
-          },
-          "basedOn": "83166f7e-86d0-4b9f-9ff3-961284d470da",
-          "id": "8f6beafb-bc3b-472a-85f8-5de65ddc3778",
-          "x": 59,
-          "y": 398
-        },
-        {
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "isFill": false,
-          "width": 90,
-          "height": 90,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg",
-            "width": 220,
-            "height": 124,
-            "posterId": 0,
-            "id": 334,
-            "title": "diy_page7_bg",
-            "alt": "diy_page7_bg",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "diy_page7_bg-300x169.jpg",
-                "width": 300,
-                "height": 169,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-300x169.jpg"
-              },
-              "large": {
-                "file": "diy_page7_bg-1024x576.jpg",
-                "width": 1024,
-                "height": 576,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1024x576.jpg"
-              },
-              "thumbnail": {
-                "file": "diy_page7_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "diy_page7_bg-768x432.jpg",
-                "width": 768,
-                "height": 432,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-768x432.jpg"
-              },
-              "1536x1536": {
-                "file": "diy_page7_bg-1536x863.jpg",
-                "width": 1536,
-                "height": 863,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1536x863.jpg"
-              },
-              "2048x2048": {
-                "file": "diy_page7_bg-2048x1151.jpg",
-                "width": 2048,
-                "height": 1151,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-2048x1151.jpg"
-              },
-              "post-thumbnail": {
-                "file": "diy_page7_bg-1200x675.jpg",
-                "width": 1200,
-                "height": 675,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1200x675.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "diy_page7_bg-1980x1113.jpg",
-                "width": 1980,
-                "height": 1113,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-1980x1113.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "diy_page7_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "diy_page7_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "diy_page7_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "diy_page7_bg-150x84.jpg",
-                "width": 150,
-                "height": 84,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg-150x84.jpg"
-              },
-              "full": {
-                "file": "diy_page7_bg.jpg",
-                "width": 2400,
-                "height": 1349,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/diy_page7_bg.jpg"
-              }
-            }
-          },
-          "basedOn": "83166f7e-86d0-4b9f-9ff3-961284d470da",
-          "id": "12144c92-d1f1-462e-983c-20bc5e6ed940",
-          "x": 59,
-          "y": 519
-        },
-        {
+          "x": 174,
+          "y": 157,
+          "width": 186,
+          "height": 22,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -4839,7 +3463,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -4849,25 +3472,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 112,
-          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "bc9330a4-a5c1-4711-842c-9f6c2a577bd0",
           "id": "57cb521c-1572-490b-96aa-daa9ae4b45a9",
-          "x": 180,
-          "y": 178,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">STORY TITLE</span>"
+          "content": "<span style=\"color: #353332\">KITCHEN REMODELING</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 174,
+          "y": 183,
+          "width": 196,
+          "height": 46,
           "font": {
             "service": "fonts.google.com",
             "family": "Noto Sans",
@@ -4884,7 +3506,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "fontSize": 15,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -4892,342 +3513,26 @@
               "b": 196
             }
           },
-          "lineHeight": 1,
+          "lineHeight": 1.5,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
           "title": "Subheading",
-          "width": 150,
-          "height": 15,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "basedOn": "57cb521c-1572-490b-96aa-daa9ae4b45a9",
           "id": "e68025e7-bea3-47fc-ba92-466cdd5fbaf5",
-          "x": 179,
-          "y": 208,
-          "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Lorem ipsum dolor</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
+          "content": "<span style=\"color: #858280\">Learn how to remodel your kitchen in 10 steps</span>",
+          "fontSize": 16,
           "padding": {
-            "vertical": 0,
             "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 112,
-          "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "57cb521c-1572-490b-96aa-daa9ae4b45a9",
-          "id": "fb2ab27a-6f74-47b3-b913-395b53e79d62",
-          "x": 179,
-          "y": 295,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">STORY TITLE</span>"
+            "vertical": 0
+          }
         },
         {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Noto Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 150,
-          "height": 15,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "e68025e7-bea3-47fc-ba92-466cdd5fbaf5",
-          "id": "605b22dd-f600-46ae-a0ec-fab0adcb4c9d",
-          "x": 178,
-          "y": 322,
-          "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Lorem ipsum dolor</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 112,
-          "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "fb2ab27a-6f74-47b3-b913-395b53e79d62",
-          "id": "d133aa02-5c7a-4616-b192-cbc97dbbc1ef",
-          "x": 182,
-          "y": 421,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">STORY TITLE</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Noto Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 150,
-          "height": 14,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "605b22dd-f600-46ae-a0ec-fab0adcb4c9d",
-          "id": "c392e542-c5f6-41f0-9096-1215bdbff68c",
-          "x": 181,
-          "y": 448,
-          "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Lorem ipsum dolor</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 112,
-          "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "d133aa02-5c7a-4616-b192-cbc97dbbc1ef",
-          "id": "94e8ca84-5e11-42d7-bf00-64b4208cf7a2",
-          "x": 183,
-          "y": 544,
-          "content": "<span style=\"color: rgba(53, 51, 50, 1)\">STORY TITLE</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Noto Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 150,
-          "height": 14,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "c392e542-c5f6-41f0-9096-1215bdbff68c",
-          "id": "86085ea2-7b70-460f-9a2f-0972f378536d",
-          "x": 182,
-          "y": 571,
-          "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Lorem ipsum dolor</span>"
-        },
-        {
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": -90,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "fontSize": 13,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "title": "Subheading",
-          "width": 140,
-          "height": 13,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "basedOn": "1f552208-c803-40aa-8eaf-8c7356196a87",
-          "id": "5e25fd0f-8962-4c22-93fb-9eeb25ad4506",
-          "x": 343,
-          "y": 287,
-          "content": "<span style=\"color: rgba(250, 244, 234, 1)\">SOCIAL</span>"
-        },
-        {
+          "x": 323,
+          "y": 567,
+          "width": 13,
+          "height": 26,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -5239,7 +3544,6 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
@@ -5282,10 +3586,6 @@
               }
             }
           },
-          "x": 394.25,
-          "y": 408,
-          "width": 15,
-          "height": 30,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -5295,6 +3595,10 @@
           "id": "3684fec7-5606-4dbf-81e9-6c084dc1b1dd"
         },
         {
+          "x": 237,
+          "y": 569,
+          "width": 22,
+          "height": 22,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -5306,7 +3610,6 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
@@ -5349,10 +3652,6 @@
               }
             }
           },
-          "x": 388.75,
-          "y": 479,
-          "width": 26,
-          "height": 26,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -5362,6 +3661,10 @@
           "id": "3a6d6297-ea58-43c6-888b-4834f806c17d"
         },
         {
+          "x": 148,
+          "y": 571,
+          "width": 26,
+          "height": 18,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -5373,7 +3676,6 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
@@ -5409,10 +3711,6 @@
               }
             }
           },
-          "x": 386.75,
-          "y": 546,
-          "width": 30,
-          "height": 20,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -5422,6 +3720,10 @@
           "id": "a11f8eb5-8531-4f42-97b8-ada6050f4f59"
         },
         {
+          "x": 60,
+          "y": 569.5,
+          "width": 25,
+          "height": 21,
           "type": "image",
           "opacity": 100,
           "flip": {
@@ -5433,7 +3735,6 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
@@ -5469,10 +3770,6 @@
               }
             }
           },
-          "x": 387.25,
-          "y": 607,
-          "width": 29,
-          "height": 23,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -5480,11 +3777,558 @@
             "ratio": 1
           },
           "id": "563f7eeb-2251-4191-b3be-a269c0d42158"
+        },
+        {
+          "width": 186,
+          "height": 22,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Anton",
+            "fallbacks": [
+              "sans-serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "title": "Subheading",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "content": "<span style=\"color: #353332\">THE RIGHT TOOLS</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "basedOn": "57cb521c-1572-490b-96aa-daa9ae4b45a9",
+          "id": "bf4d94b8-f717-4ed1-a09d-f0d4cb4f7801",
+          "x": 173,
+          "y": 291
+        },
+        {
+          "width": 196,
+          "height": 46,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Noto Sans",
+            "fallbacks": [
+              "sans-serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "title": "Subheading",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "content": "<span style=\"color: #858280\">Finding the right tools for every home project</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "basedOn": "e68025e7-bea3-47fc-ba92-466cdd5fbaf5",
+          "id": "9a04e762-70f6-45bb-b265-a78a04253b5c",
+          "x": 173,
+          "y": 318
+        },
+        {
+          "width": 186,
+          "height": 22,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Anton",
+            "fallbacks": [
+              "sans-serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "title": "Subheading",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "content": "<span style=\"color: #353332\">CABINETRY</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "basedOn": "bf4d94b8-f717-4ed1-a09d-f0d4cb4f7801",
+          "id": "aa346ca1-cce7-4e30-b0e3-7f11462bf2e4",
+          "x": 172,
+          "y": 425
+        },
+        {
+          "width": 196,
+          "height": 46,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Noto Sans",
+            "fallbacks": [
+              "sans-serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "title": "Subheading",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "content": "<span style=\"color: #858280\">Learn the basics of cabinetry</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "basedOn": "9a04e762-70f6-45bb-b265-a78a04253b5c",
+          "id": "221fddb4-180f-4239-bb83-76d6e25bd38c",
+          "x": 172,
+          "y": 452
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "type": "image",
+          "x": 50,
+          "y": 139,
+          "width": 99,
+          "height": 99,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "261f4295-b4c7-40b3-8195-53181ea2380b",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2020-06-22T17:12:23",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1.jpg",
+            "width": 330,
+            "height": 235,
+            "posterId": 0,
+            "id": 1574,
+            "title": "diy_page10_image1",
+            "alt": "diy_page10_image1",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "diy_page10_image1-300x214.jpg",
+                "width": 300,
+                "height": 214,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-300x214.jpg"
+              },
+              "large": {
+                "file": "diy_page10_image1-1024x731.jpg",
+                "width": 1024,
+                "height": 731,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-1024x731.jpg"
+              },
+              "thumbnail": {
+                "file": "diy_page10_image1-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "diy_page10_image1-768x548.jpg",
+                "width": 768,
+                "height": 548,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-768x548.jpg"
+              },
+              "1536x1536": {
+                "file": "diy_page10_image1-1536x1097.jpg",
+                "width": 1536,
+                "height": 1097,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-1536x1097.jpg"
+              },
+              "post-thumbnail": {
+                "file": "diy_page10_image1-1200x857.jpg",
+                "width": 1200,
+                "height": 857,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-1200x857.jpg"
+              },
+              "web-stories-poster-portrait": {
+                "file": "diy_page10_image1-696x928.jpg",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-696x928.jpg"
+              },
+              "web-stories-poster-square": {
+                "file": "diy_page10_image1-928x928.jpg",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-928x928.jpg"
+              },
+              "web-stories-poster-landscape": {
+                "file": "diy_page10_image1-928x696.jpg",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-928x696.jpg"
+              },
+              "web_stories_thumbnail": {
+                "file": "diy_page10_image1-150x107.jpg",
+                "width": 150,
+                "height": 107,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1-150x107.jpg"
+              },
+              "full": {
+                "file": "diy_page10_image1.jpg",
+                "width": 1920,
+                "height": 1371,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image1.jpg"
+              }
+            }
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "type": "image",
+          "width": 99,
+          "height": 99,
+          "scale": 130,
+          "focalX": 61.70024257061352,
+          "focalY": 62.66451151162751,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "261f4295-b4c7-40b3-8195-53181ea2380b",
+          "id": "222b994c-3782-4970-8a0c-05bdc0c78cb8",
+          "x": 50,
+          "y": 276,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2020-06-22T17:12:21",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2.jpg",
+            "width": 330,
+            "height": 498,
+            "posterId": 0,
+            "id": 1573,
+            "title": "diy_page10_image2",
+            "alt": "diy_page10_image2",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "diy_page10_image2-199x300.jpg",
+                "width": 199,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-199x300.jpg"
+              },
+              "large": {
+                "file": "diy_page10_image2-678x1024.jpg",
+                "width": 678,
+                "height": 1024,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-678x1024.jpg"
+              },
+              "thumbnail": {
+                "file": "diy_page10_image2-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "diy_page10_image2-768x1160.jpg",
+                "width": 768,
+                "height": 1160,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-768x1160.jpg"
+              },
+              "1536x1536": {
+                "file": "diy_page10_image2-1017x1536.jpg",
+                "width": 1017,
+                "height": 1536,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-1017x1536.jpg"
+              },
+              "2048x2048": {
+                "file": "diy_page10_image2-1356x2048.jpg",
+                "width": 1356,
+                "height": 2048,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-1356x2048.jpg"
+              },
+              "post-thumbnail": {
+                "file": "diy_page10_image2-1200x1812.jpg",
+                "width": 1200,
+                "height": 1812,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-1200x1812.jpg"
+              },
+              "web-stories-poster-portrait": {
+                "file": "diy_page10_image2-696x928.jpg",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-696x928.jpg"
+              },
+              "web-stories-poster-square": {
+                "file": "diy_page10_image2-928x928.jpg",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-928x928.jpg"
+              },
+              "web-stories-poster-landscape": {
+                "file": "diy_page10_image2-928x696.jpg",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-928x696.jpg"
+              },
+              "web_stories_thumbnail": {
+                "file": "diy_page10_image2-150x226.jpg",
+                "width": 150,
+                "height": 226,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-150x226.jpg"
+              },
+              "full": {
+                "file": "diy_page10_image2-scaled.jpg",
+                "width": 1695,
+                "height": 2560,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image2-scaled.jpg"
+              }
+            }
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "type": "image",
+          "width": 99,
+          "height": 99,
+          "scale": 130,
+          "focalX": 50,
+          "focalY": 38.41341111589627,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "261f4295-b4c7-40b3-8195-53181ea2380b",
+          "id": "dfe5ba2a-fbb4-4739-b42c-b28b28fe3e44",
+          "x": 50,
+          "y": 413,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2020-06-22T17:12:19",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3.jpg",
+            "width": 330,
+            "height": 220,
+            "posterId": 0,
+            "id": 1572,
+            "title": "diy_page10_image3",
+            "alt": "diy_page10_image3",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "diy_page10_image3-300x200.jpg",
+                "width": 300,
+                "height": 200,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-300x200.jpg"
+              },
+              "large": {
+                "file": "diy_page10_image3-1024x683.jpg",
+                "width": 1024,
+                "height": 683,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-1024x683.jpg"
+              },
+              "thumbnail": {
+                "file": "diy_page10_image3-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "diy_page10_image3-768x512.jpg",
+                "width": 768,
+                "height": 512,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-768x512.jpg"
+              },
+              "1536x1536": {
+                "file": "diy_page10_image3-1536x1024.jpg",
+                "width": 1536,
+                "height": 1024,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-1536x1024.jpg"
+              },
+              "post-thumbnail": {
+                "file": "diy_page10_image3-1200x800.jpg",
+                "width": 1200,
+                "height": 800,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-1200x800.jpg"
+              },
+              "web-stories-poster-portrait": {
+                "file": "diy_page10_image3-696x928.jpg",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-696x928.jpg"
+              },
+              "web-stories-poster-square": {
+                "file": "diy_page10_image3-928x928.jpg",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-928x928.jpg"
+              },
+              "web-stories-poster-landscape": {
+                "file": "diy_page10_image3-928x696.jpg",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-928x696.jpg"
+              },
+              "web_stories_thumbnail": {
+                "file": "diy_page10_image3-150x100.jpg",
+                "width": 150,
+                "height": 100,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3-150x100.jpg"
+              },
+              "full": {
+                "file": "diy_page10_image3.jpg",
+                "width": 1920,
+                "height": 1280,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/diy_page10_image3.jpg"
+              }
+            }
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
-      "id": "5c295574-87a0-4ae7-b548-699e0bd47fdf"
+      "id": "5c295574-87a0-4ae7-b548-699e0bd47fdf",
+      "backgroundColor": {
+        "color": {
+          "r": 33,
+          "g": 31,
+          "b": 30
+        }
+      }
     }
   ],
   "autoAdvance": true,

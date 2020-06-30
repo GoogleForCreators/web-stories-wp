@@ -73,3 +73,10 @@ comment:
   require_changes: true
   branches:
     - 'master'
+
+# See https://docs.codecov.io/docs/ignoring-paths
+ignore:
+  - bin/commander.js
+  - web-stories.php
+  - uninstall.php
+  - includes/templates

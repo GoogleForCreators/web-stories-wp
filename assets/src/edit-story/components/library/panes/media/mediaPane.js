@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useConfig } from '../../../../app/config';
-import { useMedia } from '../../../../app/media';
+import { useLocalMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
 import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
 import { MainButton, SearchInput } from '../../common';
@@ -140,7 +140,7 @@ function MediaPane(props) {
     resetWithFetch,
     setMediaType,
     setSearchTerm,
-  } = useMedia(
+  } = useLocalMedia(
     ({
       state: {
         hasMore,

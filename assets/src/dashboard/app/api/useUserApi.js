@@ -18,11 +18,12 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import queryString from 'query-string';
 
 /**
  * Internal dependencies
  */
-import queryString from 'query-string';
+import { USERS_PER_REQUEST } from '../../constants';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
@@ -33,7 +34,7 @@ export default function useUserApi(dataAdapter, { userApi }) {
       const response = await dataAdapter.get(
         queryString.stringifyUrl({
           url: userApi,
-          query: { per_page: 100 },
+          query: { per_page: USERS_PER_REQUEST },
         }),
         {
           parse: false,
