@@ -39,7 +39,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
+      { pattern: 'assets/src/edit-story/karma-tests.cjs', watched: false },
       { pattern: 'karma/fixture/init.js', watched: false },
       {
         pattern: '__static__/**/*',
@@ -56,7 +56,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'assets/src/edit-story/**/karma/**/*.js': ['webpack', 'sourcemap'],
+      'assets/src/edit-story/karma-tests.cjs': ['webpack', 'sourcemap'],
     },
 
     proxies: {
@@ -112,6 +112,7 @@ module.exports = function (config) {
     client: {
       jasmine: {
         timeoutInterval: 10000,
+        random: false,
       },
     },
 
