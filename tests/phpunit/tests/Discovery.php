@@ -57,13 +57,15 @@ class Discovery extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		global $wp_query;
-		$wp_query->queried_object = get_post( self::$story_id );
+		global $wp_query, $post;
+		$post = get_post( self::$story_id );
+		$wp_query->queried_object = $post;
 	}
 
 	public function tearDown() {
-		global $wp_query;
+		global $wp_query, $post;
 		unset( $wp_query->queried_object );
+		unset( $post );
 		parent::tearDown();
 	}
 
