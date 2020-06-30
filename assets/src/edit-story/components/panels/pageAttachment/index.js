@@ -100,7 +100,9 @@ function PageAttachmentPanel() {
       {Boolean(url) && !isInvalidUrl && (
         <Row>
           <ExpandedTextInput
-            onChange={(value) => updatePageAttachment({ ctaText: value })}
+            onChange={(value) =>
+              updatePageAttachment({ ctaText: value ? value : defaultCTA })
+            }
             value={ctaText || defaultCTA}
             aria-label={__('Edit: Page Attachment CTA text', 'web-stories')}
             clear={Boolean(ctaText) && ctaText !== defaultCTA}
