@@ -235,7 +235,7 @@ class Story_Post_Type {
 			// In lieu of an action being available to actually load the replacement editor, include it here
 			// after the current_screen action has occurred because the replace_editor filter fires twice.
 			if ( did_action( 'current_screen' ) ) {
-				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/edit-story.php';
+				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
 			}
 		}
 
@@ -481,7 +481,7 @@ class Story_Post_Type {
 	 */
 	public function filter_template_include( $template ) {
 		if ( is_singular( self::POST_TYPE_SLUG ) && ! is_embed() ) {
-			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/single-web-story.php';
+			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
 		}
 
 		return $template;

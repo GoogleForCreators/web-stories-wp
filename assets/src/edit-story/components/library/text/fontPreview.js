@@ -27,7 +27,7 @@ import { useEffect } from 'react';
  */
 import { useFont } from '../../../app';
 import { ALLOWED_EDITOR_PAGE_WIDTHS, PAGE_WIDTH } from '../../../constants';
-import { FontPropType } from '../../../types';
+import StoryPropTypes from '../../../types';
 import stripHTML from '../../../utils/stripHTML';
 
 const PREVIEW_EM_SCALE = ALLOWED_EDITOR_PAGE_WIDTHS[0] / PAGE_WIDTH;
@@ -54,7 +54,8 @@ const Text = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function FontPreview({ title, font, fontSize, fontWeight, content, onClick }) {
+function FontPreview({ title, element, onClick }) {
+  const { font, fontSize, fontWeight, content } = element;
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -83,12 +84,9 @@ function FontPreview({ title, font, fontSize, fontWeight, content, onClick }) {
 }
 
 FontPreview.propTypes = {
-  title: PropTypes.string,
-  font: FontPropType,
-  fontSize: PropTypes.number,
-  fontWeight: PropTypes.number,
-  content: PropTypes.string,
-  onClick: PropTypes.func,
+  title: PropTypes.string.isRequired,
+  element: StoryPropTypes.elements.text.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default FontPreview;

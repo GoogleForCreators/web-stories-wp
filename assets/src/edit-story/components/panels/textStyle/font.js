@@ -30,15 +30,22 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Numeric, Row, DropDown } from '../../form';
+import { Numeric, Row, DropDown, usePresubmitHandler } from '../../form';
 import FontPicker from '../../fontPicker';
-import { PAGE_HEIGHT } from '../../../constants';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
+import clamp from '../../../utils/clamp';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
+
+const MIN_MAX = {
+  FONT_SIZE: {
+    MIN: 8,
+    MAX: 800,
+  },
+};
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -129,6 +136,13 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const FontPickerDropdown = hasNewFontPicker ? FontPicker : DropDown;
 
+  usePresubmitHandler(
+    ({ fontSize: newFontSize }) => ({
+      fontSize: clamp(newFontSize, MIN_MAX.FONT_SIZE),
+    }),
+    []
+  );
+
   return (
     <>
       {fonts && (
@@ -159,10 +173,11 @@ function FontControls({ selectedElements, pushUpdate }) {
         <BoxedNumeric
           aria-label={__('Font size', 'web-stories')}
           value={fontSize}
-          max={PAGE_HEIGHT}
           flexBasis={58}
           textCenter
           onChange={(value) => pushUpdate({ fontSize: value })}
+          min={MIN_MAX.FONT_SIZE.MIN}
+          max={MIN_MAX.FONT_SIZE.MAX}
         />
       </Row>
     </>

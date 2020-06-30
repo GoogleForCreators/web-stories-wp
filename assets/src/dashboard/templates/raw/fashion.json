@@ -1,5 +1,5 @@
 {
-  "version": 23,
+  "version": 24,
   "pages": [
     {
       "elements": [
@@ -31,9 +31,9 @@
           "isDefaultBackground": true
         },
         {
-          "x": 60,
-          "y": 58,
-          "width": 353,
+          "x": 65,
+          "y": 69,
+          "width": 347,
           "height": 456,
           "type": "image",
           "opacity": 100,
@@ -61,7 +61,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page1_hero.jpg",
             "width": 220,
             "height": 297,
             "posterId": 0,
@@ -69,75 +69,20 @@
             "title": "fashion_page1_hero",
             "alt": "fashion_page1_hero",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page1_hero-222x300.jpg",
-                "width": 222,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero-222x300.jpg"
-              },
-              "large": {
-                "file": "fashion_page1_hero-759x1024.jpg",
-                "width": 759,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero-759x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "fashion_page1_hero-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fashion_page1_hero-768x1036.jpg",
-                "width": 768,
-                "height": 1036,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero-768x1036.jpg"
-              },
-              "1536x1536": {
-                "file": "fashion_page1_hero-1138x1536.jpg",
-                "width": 1138,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero-1138x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "fashion_page1_hero-1518x2048.jpg",
-                "width": 1518,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero-1518x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "fashion_page1_hero-1200x1619.jpg",
-                "width": 1200,
-                "height": 1619,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero-1200x1619.jpg"
-              },
-              "full": {
-                "file": "fashion_page1_hero-scaled.jpg",
-                "width": 1897,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page1_hero-scaled.jpg"
-              }
-            }
+            "sizes": []
           }
         },
         {
-          "x": -145,
-          "y": 269,
-          "width": 501,
-          "height": 155,
+          "x": -180,
+          "y": 216,
+          "width": 580,
+          "height": 192,
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "type": "text",
           "opacity": 100,
@@ -155,24 +100,20 @@
               "b": 196
             }
           },
-          "lineHeight": 0.95,
+          "lineHeight": 0.96,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "id": "a32c17e0-a46b-4821-bbdb-8dc064ac097d",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">FASHION\nON THE GO</span></span>",
-          "fontSize": 81,
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">FASHION</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">ON THE GO</span>",
+          "fontSize": 100,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 27,
-          "y": 25,
-          "width": 83,
-          "height": 21,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -180,21 +121,33 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page1_logo-generic.png",
+            "width": 32,
+            "height": 10,
+            "id": 1145,
+            "title": "fashion_page1_logo-generic",
+            "alt": "fashion_page1_logo-generic",
+            "local": false,
+            "sizes": []
           },
-          "id": "6b7015cc-ffc3-4130-aadb-42cd6693e6cc"
+          "type": "image",
+          "x": 27,
+          "y": 30,
+          "width": 75,
+          "height": 22,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "f18e9cbe-088b-4366-99a7-3eec4b8d4c66"
         }
       ],
       "type": "page",
@@ -212,7 +165,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6978fba6-59ce-46bc-b862-92ce2b9795bb"]
+          "targets": [
+            "6978fba6-59ce-46bc-b862-92ce2b9795bb"
+          ]
         },
         {
           "type": "move",
@@ -226,7 +181,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6978fba6-59ce-46bc-b862-92ce2b9795bb"]
+          "targets": [
+            "6978fba6-59ce-46bc-b862-92ce2b9795bb"
+          ]
         },
         {
           "type": "zoom",
@@ -239,7 +196,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6978fba6-59ce-46bc-b862-92ce2b9795bb"]
+          "targets": [
+            "6978fba6-59ce-46bc-b862-92ce2b9795bb"
+          ]
         },
         {
           "type": "zoom",
@@ -252,7 +211,9 @@
           "easingPreset": "linear",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6978fba6-59ce-46bc-b862-92ce2b9795bb"]
+          "targets": [
+            "6978fba6-59ce-46bc-b862-92ce2b9795bb"
+          ]
         },
         {
           "type": "move",
@@ -266,7 +227,9 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": ["a32c17e0-a46b-4821-bbdb-8dc064ac097d"]
+          "targets": [
+            "a32c17e0-a46b-4821-bbdb-8dc064ac097d"
+          ]
         },
         {
           "type": "move",
@@ -279,7 +242,9 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "forwards",
-          "targets": ["a32c17e0-a46b-4821-bbdb-8dc064ac097d"]
+          "targets": [
+            "a32c17e0-a46b-4821-bbdb-8dc064ac097d"
+          ]
         },
         {
           "type": "move",
@@ -293,7 +258,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["a32c17e0-a46b-4821-bbdb-8dc064ac097d"]
+          "targets": [
+            "a32c17e0-a46b-4821-bbdb-8dc064ac097d"
+          ]
         },
         {
           "type": "move",
@@ -307,7 +274,9 @@
           "easingPreset": "linear",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6b7015cc-ffc3-4130-aadb-42cd6693e6cc"]
+          "targets": [
+            "6b7015cc-ffc3-4130-aadb-42cd6693e6cc"
+          ]
         },
         {
           "type": "move",
@@ -321,7 +290,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6b7015cc-ffc3-4130-aadb-42cd6693e6cc"]
+          "targets": [
+            "6b7015cc-ffc3-4130-aadb-42cd6693e6cc"
+          ]
         }
       ],
       "backgroundColor": {
@@ -363,13 +334,15 @@
         },
         {
           "x": 18,
-          "y": 21,
-          "width": 334,
-          "height": 267,
+          "y": 11,
+          "width": 356,
+          "height": 300,
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "type": "text",
           "opacity": 100,
@@ -393,8 +366,8 @@
           "focalX": 50,
           "focalY": 50,
           "id": "d773925c-2f95-44c0-9b0e-0743d45476f2",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(0, 0, 0, 1)\">“IF YOU CAN'T BE BETTER THAN YOUR COMPETITION, JUST DRESS BETTER”</span></span>",
-          "fontSize": 45,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">“IF YOU CAN'T BE BETTER THAN YOUR COMPETITION, JUST DRESS BETTER”</span>",
+          "fontSize": 50,
           "padding": {
             "horizontal": 0,
             "vertical": 0
@@ -402,13 +375,15 @@
         },
         {
           "x": 19,
-          "y": 503,
+          "y": 493,
           "width": 354,
-          "height": 90,
+          "height": 100,
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "type": "text",
           "opacity": 100,
@@ -433,18 +408,14 @@
           "focalY": 50,
           "basedOn": "d773925c-2f95-44c0-9b0e-0743d45476f2",
           "id": "61d23551-31e3-4aad-ac15-b8fc5e4be2ec",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(0, 0, 0, 1)\">— ANNA\nWINTOUR</span></span>",
-          "fontSize": 45,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">— ANNA</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">WINTOUR</span>",
+          "fontSize": 50,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 228,
-          "y": 298,
-          "width": 223,
-          "height": 223,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -452,65 +423,31 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page2_pinwheel_full.png",
-            "width": 220,
-            "height": 220,
-            "posterId": 0,
-            "id": 84,
-            "title": "fashion_page2_pinwheel_full",
-            "alt": "fashion_page2_pinwheel_full",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page2_pinwheel_full-300x300.png",
-                "width": 300,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page2_pinwheel_full-300x300.png"
-              },
-              "thumbnail": {
-                "file": "fashion_page2_pinwheel_full-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page2_pinwheel_full-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fashion_page2_pinwheel_full-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page2_pinwheel_full-150x150.png"
-              },
-              "full": {
-                "file": "fashion_page2_pinwheel_full.png",
-                "width": 508,
-                "height": 508,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page2_pinwheel_full.png"
-              }
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 108,
+              "b": 74
             }
           },
+          "type": "shape",
+          "x": 206,
+          "y": 278,
+          "width": 270,
+          "height": 270,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "burst"
           },
-          "type": "image",
-          "id": "d6798f2f-b78d-4a5a-9d83-13b84c950394"
+          "id": "a3d11546-e7a9-432f-8b88-be8c7ccdb721"
         },
         {
-          "x": 320,
-          "y": 396,
-          "width": 37,
-          "height": 29,
+          "x": 307,
+          "y": 385,
+          "width": 68,
+          "height": 53,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -524,7 +461,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page2_arrow.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page2_arrow.png",
             "width": 31,
             "height": 24,
             "posterId": 0,
@@ -560,7 +497,8 @@
           "iterations": 1,
           "targets": [
             "d6798f2f-b78d-4a5a-9d83-13b84c950394",
-            "99696270-286f-4c14-b062-aad2a021672a"
+            "99696270-286f-4c14-b062-aad2a021672a",
+            "a3d11546-e7a9-432f-8b88-be8c7ccdb721"
           ]
         },
         {
@@ -577,7 +515,8 @@
           "iterations": 1,
           "targets": [
             "d6798f2f-b78d-4a5a-9d83-13b84c950394",
-            "99696270-286f-4c14-b062-aad2a021672a"
+            "99696270-286f-4c14-b062-aad2a021672a",
+            "a3d11546-e7a9-432f-8b88-be8c7ccdb721"
           ]
         },
         {
@@ -592,7 +531,9 @@
           "easingPreset": "outQuint",
           "fill": "both",
           "iterations": 1,
-          "targets": ["d773925c-2f95-44c0-9b0e-0743d45476f2"]
+          "targets": [
+            "d773925c-2f95-44c0-9b0e-0743d45476f2"
+          ]
         },
         {
           "type": "move",
@@ -606,7 +547,9 @@
           "easingPreset": "outQuint",
           "fill": "both",
           "iterations": 1,
-          "targets": ["61d23551-31e3-4aad-ac15-b8fc5e4be2ec"]
+          "targets": [
+            "61d23551-31e3-4aad-ac15-b8fc5e4be2ec"
+          ]
         },
         {
           "type": "spin",
@@ -617,7 +560,10 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "forwards",
-          "targets": ["d6798f2f-b78d-4a5a-9d83-13b84c950394"]
+          "targets": [
+            "d6798f2f-b78d-4a5a-9d83-13b84c950394",
+            "a3d11546-e7a9-432f-8b88-be8c7ccdb721"
+          ]
         },
         {
           "type": "spin",
@@ -631,7 +577,8 @@
           "iterations": 1,
           "targets": [
             "99696270-286f-4c14-b062-aad2a021672a",
-            "d6798f2f-b78d-4a5a-9d83-13b84c950394"
+            "d6798f2f-b78d-4a5a-9d83-13b84c950394",
+            "a3d11546-e7a9-432f-8b88-be8c7ccdb721"
           ]
         },
         {
@@ -644,7 +591,10 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["d6798f2f-b78d-4a5a-9d83-13b84c950394"]
+          "targets": [
+            "d6798f2f-b78d-4a5a-9d83-13b84c950394",
+            "a3d11546-e7a9-432f-8b88-be8c7ccdb721"
+          ]
         },
         {
           "type": "fade",
@@ -657,7 +607,9 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": ["d773925c-2f95-44c0-9b0e-0743d45476f2"]
+          "targets": [
+            "d773925c-2f95-44c0-9b0e-0743d45476f2"
+          ]
         }
       ],
       "backgroundColor": {
@@ -698,10 +650,10 @@
           "isDefaultBackground": true
         },
         {
-          "x": 1,
-          "y": 1,
-          "width": 336,
-          "height": 486,
+          "x": -55,
+          "y": -60,
+          "width": 442,
+          "height": 678,
           "type": "image",
           "opacity": 95,
           "flip": {
@@ -727,7 +679,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page3_bg.jpg",
             "width": 220,
             "height": 261,
             "posterId": 0,
@@ -735,71 +687,14 @@
             "title": "fashion_page3_bg",
             "alt": "fashion_page3_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page3_bg-253x300.jpg",
-                "width": 253,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg-253x300.jpg"
-              },
-              "large": {
-                "file": "fashion_page3_bg-862x1024.jpg",
-                "width": 862,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg-862x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "fashion_page3_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fashion_page3_bg-768x912.jpg",
-                "width": 768,
-                "height": 912,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg-768x912.jpg"
-              },
-              "1536x1536": {
-                "file": "fashion_page3_bg-1293x1536.jpg",
-                "width": 1293,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg-1293x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "fashion_page3_bg-1725x2048.jpg",
-                "width": 1725,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg-1725x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "fashion_page3_bg-1200x1425.jpg",
-                "width": 1200,
-                "height": 1425,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg-1200x1425.jpg"
-              },
-              "full": {
-                "file": "fashion_page3_bg-scaled.jpg",
-                "width": 2156,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_bg-scaled.jpg"
-              }
-            }
+            "sizes": []
           }
         },
         {
-          "x": 2,
-          "y": 295,
-          "width": 335,
-          "height": 192,
+          "x": 0,
+          "y": 330,
+          "width": 412,
+          "height": 290,
           "type": "shape",
           "opacity": 100,
           "flip": {
@@ -841,14 +736,16 @@
           "id": "6fc327a4-8e5d-48e8-8285-899267ec1183"
         },
         {
-          "x": 43,
-          "y": 1,
+          "x": 8,
+          "y": -13,
           "width": 405,
-          "height": 393,
+          "height": 510,
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "type": "text",
           "opacity": 100,
@@ -866,28 +763,30 @@
               "b": 196
             }
           },
-          "lineHeight": 0.93,
+          "lineHeight": 0.96,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "id": "792955f1-699b-499a-bf65-d88b60d613af",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 236, 227, 1)\">S/S PREV\nIEW</span></span>",
-          "fontSize": 142,
+          "content": "<span style=\"color: #ffece3\">S/S PREV</span>\n<span style=\"color: #ffece3\">IEW</span>",
+          "fontSize": 178,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 50,
-          "y": 419,
-          "width": 198,
-          "height": 35,
+          "x": 16,
+          "y": 531,
+          "width": 239,
+          "height": 48,
           "font": {
             "service": "fonts.google.com",
             "family": "DM Sans",
-            "fallbacks": ["sans-serif"]
+            "fallbacks": [
+              "sans-serif"
+            ]
           },
           "type": "text",
           "opacity": 100,
@@ -912,131 +811,11 @@
           "focalY": 50,
           "id": "9bd1600f-5d9d-4beb-bdfb-817b118a8852",
           "content": "<span style=\"letter-spacing: 0.0002em\"><span style=\"color: rgba(255, 236, 227, 1)\">PREVIEW THE LATEST LOOKS OF THE SEASON</span></span>",
-          "fontSize": 15,
+          "fontSize": 20,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
-        },
-        {
-          "x": 115,
-          "y": 507,
-          "width": 131,
-          "height": 16,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Roboto",
-            "weights": [100, 300, 400, 500, 700, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 100],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 700],
-              [0, 900],
-              [1, 100],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 700],
-              [1, 900]
-            ],
-            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
-            "service": "fonts.google.com"
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "d27e267e-5ee5-4b60-8c79-a9e3afa92d52",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">See Full Story</span></span>",
-          "fontSize": 12,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 169,
-          "y": 476,
-          "width": 23,
-          "height": 23,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "id": "a2240997-ab2a-49ec-bafb-503d778122ca"
-        },
-        {
-          "x": 177,
-          "y": 486,
-          "width": 7,
-          "height": 4,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page3_arrow.png",
-            "width": 7,
-            "height": 3,
-            "posterId": 0,
-            "id": 64,
-            "title": "fashion_page3_arrow",
-            "alt": "fashion_page3_arrow",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "504deaac-9943-4878-984a-c22cc3efd7cd"
         }
       ],
       "type": "page",
@@ -1061,7 +840,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6cca5fcd-80d5-4181-b9e6-2979b80c2b99"]
+          "targets": [
+            "6cca5fcd-80d5-4181-b9e6-2979b80c2b99"
+          ]
         },
         {
           "type": "move",
@@ -1075,7 +856,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6cca5fcd-80d5-4181-b9e6-2979b80c2b99"]
+          "targets": [
+            "6cca5fcd-80d5-4181-b9e6-2979b80c2b99"
+          ]
         },
         {
           "type": "zoom",
@@ -1088,7 +871,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6cca5fcd-80d5-4181-b9e6-2979b80c2b99"]
+          "targets": [
+            "6cca5fcd-80d5-4181-b9e6-2979b80c2b99"
+          ]
         },
         {
           "type": "zoom",
@@ -1101,7 +886,9 @@
           "easingPreset": "linear",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["6cca5fcd-80d5-4181-b9e6-2979b80c2b99"]
+          "targets": [
+            "6cca5fcd-80d5-4181-b9e6-2979b80c2b99"
+          ]
         },
         {
           "type": "move",
@@ -1115,7 +902,9 @@
           "easingPreset": "outQuint",
           "fill": "both",
           "iterations": 1,
-          "targets": ["792955f1-699b-499a-bf65-d88b60d613af"]
+          "targets": [
+            "792955f1-699b-499a-bf65-d88b60d613af"
+          ]
         },
         {
           "type": "fade",
@@ -1128,7 +917,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["792955f1-699b-499a-bf65-d88b60d613af"]
+          "targets": [
+            "792955f1-699b-499a-bf65-d88b60d613af"
+          ]
         },
         {
           "type": "move",
@@ -1142,7 +933,9 @@
           "easingPreset": "outQuint",
           "fill": "both",
           "iterations": 1,
-          "targets": ["9bd1600f-5d9d-4beb-bdfb-817b118a8852"]
+          "targets": [
+            "9bd1600f-5d9d-4beb-bdfb-817b118a8852"
+          ]
         },
         {
           "type": "fade",
@@ -1155,7 +948,9 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": ["9bd1600f-5d9d-4beb-bdfb-817b118a8852"]
+          "targets": [
+            "9bd1600f-5d9d-4beb-bdfb-817b118a8852"
+          ]
         },
         {
           "type": "fade",
@@ -1206,10 +1001,10 @@
           "isDefaultBackground": true
         },
         {
-          "x": 20,
-          "y": 26,
-          "width": 174,
-          "height": 76,
+          "x": 17,
+          "y": 13,
+          "width": 143,
+          "height": 74,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1221,22 +1016,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -1253,7 +1096,7 @@
           "focalY": 50,
           "type": "text",
           "id": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">LOUIS\nVUITTON</span></span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">MJ</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">KEPLER</span>",
           "fontSize": 37,
           "padding": {
             "horizontal": 0,
@@ -1261,10 +1104,10 @@
           }
         },
         {
-          "x": 20,
-          "y": 110,
+          "x": 17,
+          "y": 97,
           "width": 143,
-          "height": 13,
+          "height": 18,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1276,16 +1119,43 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              400,
+              500,
+              700
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
+              [
+                0,
+                400
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                1,
+                700
+              ]
             ]
           },
           "backgroundColor": {
@@ -1302,18 +1172,18 @@
           "focalY": 50,
           "type": "text",
           "id": "a2a90d9e-2bce-44d3-95cd-77f33c55e144",
-          "content": "<span style=\"letter-spacing: 0.0002em\"><span style=\"color: rgba(33, 33, 33, 1)\">A RICH HISTORY</span></span>",
-          "fontSize": 13,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.02em\">A RICH HISTORY</span>",
+          "fontSize": 18,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 107,
-          "y": 199,
-          "width": 230,
-          "height": 25,
+          "x": 122,
+          "y": 225,
+          "width": 273,
+          "height": 33,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1325,22 +1195,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -1357,18 +1275,18 @@
           "focalY": 50,
           "type": "text",
           "id": "8c45242f-9941-4fdc-b5de-3339a36585bf",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">LV MONOGRAM CANVAS</span></span>",
-          "fontSize": 20,
+          "content": "<span style=\"color: #212121\">MONOGRAM CANVAS</span>",
+          "fontSize": 26,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 148,
-          "y": 92,
-          "width": 195,
-          "height": 128,
+          "x": 132,
+          "y": 66,
+          "width": 263,
+          "height": 171,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1380,7 +1298,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -1396,18 +1316,18 @@
           "focalY": 50,
           "type": "text",
           "id": "acb2ccae-1faf-4192-bf28-19614324ed25",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1896</span></span>",
-          "fontSize": 98,
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1896</span>",
+          "fontSize": 132,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 21,
-          "y": 213,
+          "x": 18,
+          "y": 251,
           "width": 131,
-          "height": 64,
+          "height": 85,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1419,7 +1339,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -1435,18 +1357,18 @@
           "focalY": 50,
           "type": "text",
           "id": "e6ee6ead-43e0-45a4-aeef-1bcb7c914fcd",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1901</span></span>",
-          "fontSize": 49,
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1901</span>",
+          "fontSize": 66,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 22,
-          "y": 269,
+          "x": 19,
+          "y": 329,
           "width": 195,
-          "height": 25,
+          "height": 33,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1458,22 +1380,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -1490,18 +1460,18 @@
           "focalY": 50,
           "type": "text",
           "id": "2c548d81-abe2-4f74-9292-9910382fb293",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">THE STEAMER BAG</span></span>",
-          "fontSize": 20,
+          "content": "<span style=\"color: #212121\">THE HOBO BAG</span>",
+          "fontSize": 26,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 206,
-          "y": 275,
+          "x": 264,
+          "y": 353,
           "width": 131,
-          "height": 63,
+          "height": 85,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1513,7 +1483,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -1530,18 +1502,18 @@
           "type": "text",
           "basedOn": "e6ee6ead-43e0-45a4-aeef-1bcb7c914fcd",
           "id": "9156bf8e-3cdd-41fb-99c2-f6206f95ec1b",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1930</span></span>",
-          "fontSize": 49,
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1930</span>",
+          "fontSize": 66,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 143,
-          "y": 330,
-          "width": 195,
-          "height": 24,
+          "x": 164,
+          "y": 432,
+          "width": 230,
+          "height": 32,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1553,22 +1525,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -1586,18 +1606,18 @@
           "type": "text",
           "basedOn": "2c548d81-abe2-4f74-9292-9910382fb293",
           "id": "78ef1efb-0ca7-4067-9a38-a646987fd096",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">THE KEEPALL BAG</span></span>",
-          "fontSize": 20,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE KEPLER BAG</span>",
+          "fontSize": 26,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 21,
-          "y": 440,
-          "width": 230,
-          "height": 24,
+          "x": 20,
+          "y": 571,
+          "width": 272,
+          "height": 32,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1609,22 +1629,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -1642,18 +1710,18 @@
           "type": "text",
           "basedOn": "8c45242f-9941-4fdc-b5de-3339a36585bf",
           "id": "f5593520-3bb3-49d6-bfbd-c9fe2af7ee51",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">THE PAPILLION BAG</span></span>",
-          "fontSize": 20,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE STARGAZE BAG</span>",
+          "fontSize": 26,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 21,
-          "y": 332,
+          "x": 18,
+          "y": 451,
           "width": 195,
-          "height": 128,
+          "height": 129,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1665,7 +1733,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -1682,104 +1752,8 @@
           "type": "text",
           "basedOn": "acb2ccae-1faf-4192-bf28-19614324ed25",
           "id": "a10cc4c5-ee6f-43dd-a391-ce72a14a43b7",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1966</span></span>",
-          "fontSize": 98,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 206,
-          "y": 438,
-          "width": 131,
-          "height": 63,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "right",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "9156bf8e-3cdd-41fb-99c2-f6206f95ec1b",
-          "id": "8c739a98-8a17-45f2-988a-935fc4e5ec33",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1985</span></span>",
-          "fontSize": 49,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 143,
-          "y": 493,
-          "width": 195,
-          "height": 24,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "right",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "78ef1efb-0ca7-4067-9a38-a646987fd096",
-          "id": "f17ac170-7428-4788-9f02-0a8704c1b8bf",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">EPI LEATHER</span></span>",
-          "fontSize": 20,
+          "content": "<span style=\"color: #ff6c4a\">1966</span>",
+          "fontSize": 100,
           "padding": {
             "horizontal": 0,
             "vertical": 0
@@ -2009,10 +1983,10 @@
           "isDefaultBackground": true
         },
         {
-          "x": -212,
-          "y": 262,
+          "x": -190,
+          "y": 396,
           "width": 512,
-          "height": 128,
+          "height": 171,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2024,7 +1998,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -2040,18 +2016,18 @@
           "focalY": 50,
           "type": "text",
           "id": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 236, 227, 1)\">CARDIN —</span></span>",
-          "fontSize": 98,
+          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em\">CARDIN&nbsp;</span>",
+          "fontSize": 132,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": -302,
-          "y": -309,
-          "width": 693,
-          "height": 128,
+          "x": -395,
+          "y": -425,
+          "width": 924,
+          "height": 171,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2063,7 +2039,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -2080,119 +2058,18 @@
           "type": "text",
           "basedOn": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
           "id": "875e2b60-1738-425a-8d7d-95f648bb3af6",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 236, 227, 0.35)\">THE HANDBAG</span></span>",
-          "fontSize": 98,
+          "content": "<span style=\"color: rgba(255,236,227,0.35); letter-spacing: -0.01em\">THE HANDBAG</span>",
+          "fontSize": 132,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 11,
-          "y": 94,
-          "width": 349,
-          "height": 308,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page5_handbag.png",
-            "width": 220,
-            "height": 194,
-            "posterId": 0,
-            "id": 131,
-            "title": "fashion_page5_handbag",
-            "alt": "fashion_page5_handbag",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page5_handbag-300x265.png",
-                "width": 300,
-                "height": 265,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page5_handbag-300x265.png"
-              },
-              "thumbnail": {
-                "file": "fashion_page5_handbag-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page5_handbag-150x150.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "fashion_page5_handbag-696x634.png",
-                "width": 696,
-                "height": 634,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page5_handbag-696x634.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fashion_page5_handbag-150x132.png",
-                "width": 150,
-                "height": 132,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page5_handbag-150x132.png"
-              },
-              "full": {
-                "file": "fashion_page5_handbag.png",
-                "width": 719,
-                "height": 634,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page5_handbag.png"
-              }
-            }
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"
-        },
-        {
-          "x": 132,
-          "y": 34,
-          "width": 24,
-          "height": 24,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 108,
-              "b": 74
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "id": "ba9ff730-74e6-478a-943e-8aa33851048d"
-        },
-        {
-          "x": 133,
-          "y": 415,
+          "x": 176,
+          "y": 464,
           "width": 131,
-          "height": 22,
+          "height": 26,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2204,7 +2081,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -2220,18 +2099,18 @@
           "focalY": 50,
           "type": "text",
           "id": "f19846b4-b351-4607-a8f9-c7e69ff7a6f3",
-          "content": "<span style=\"letter-spacing: 0.0002em\"><span style=\"color: rgba(255, 108, 74, 1)\">CARDIN</span></span>",
-          "fontSize": 19,
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: 0.02em\">MJ KEPLER</span>",
+          "fontSize": 21,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 133,
-          "y": 436,
-          "width": 131,
-          "height": 45,
+          "x": 176,
+          "y": 493,
+          "width": 216,
+          "height": 50,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2243,16 +2122,43 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              400,
+              500,
+              700
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
+              [
+                0,
+                400
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                1,
+                700
+              ]
             ]
           },
           "backgroundColor": {
@@ -2270,18 +2176,18 @@
           "type": "text",
           "basedOn": "f19846b4-b351-4607-a8f9-c7e69ff7a6f3",
           "id": "61b42950-25ca-46cf-83bf-1e04cdc0cd94",
-          "content": "<span style=\"letter-spacing: 0.0002em\"><span style=\"color: rgba(255, 236, 227, 1)\">THE HANDBAG\n$450</span></span>",
-          "fontSize": 19,
+          "content": "<span style=\"color: #ffece3; letter-spacing: 0.02em\">THE KEPLER HANDBAG $450</span>",
+          "fontSize": 20,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 133,
-          "y": 513,
+          "x": 177,
+          "y": 578,
           "width": 131,
-          "height": 14,
+          "height": 20,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2293,16 +2199,43 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              400,
+              500,
+              700
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
+              [
+                0,
+                400
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                1,
+                700
+              ]
             ]
           },
           "backgroundColor": {
@@ -2320,32 +2253,32 @@
           "type": "text",
           "basedOn": "61b42950-25ca-46cf-83bf-1e04cdc0cd94",
           "id": "67777589-1517-4a00-9e95-11e262bf02dd",
-          "content": "<span style=\"letter-spacing: 0.0008em\"><span style=\"color: rgba(255, 236, 227, 1)\">LEARN MORE</span></span>",
-          "fontSize": 11,
+          "content": "<span style=\"color: #ffece3; letter-spacing: 0.01em\">LEARN MORE</span>",
+          "fontSize": 16,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 224,
-          "y": 517,
-          "width": 11,
-          "height": 7,
+          "x": 288,
+          "y": 582,
+          "width": 25,
+          "height": 12,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page5_arrow.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page5_arrow.png",
             "width": 8,
             "height": 4,
             "posterId": 0,
@@ -2363,6 +2296,42 @@
           },
           "type": "image",
           "id": "87ae3605-e8e2-4d0f-8700-f84de19e4f01"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page5_handbag-alt.png",
+            "width": 272,
+            "height": 251,
+            "id": 1147,
+            "title": "fashion_page5_handbag-alt",
+            "alt": "fashion_page5_handbag-alt",
+            "local": false,
+            "sizes": []
+          },
+          "type": "image",
+          "x": 164,
+          "y": 15,
+          "width": 439,
+          "height": 405,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "f7d6b29f-d15e-4ac3-8372-bd389741dd92"
         }
       ],
       "type": "page",
@@ -2386,7 +2355,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"]
+          "targets": [
+            "b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"
+          ]
         },
         {
           "type": "move",
@@ -2400,7 +2371,9 @@
           "easingPreset": "inOutSine",
           "fill": "both",
           "iterations": 1,
-          "targets": ["b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"]
+          "targets": [
+            "b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"
+          ]
         },
         {
           "type": "fade",
@@ -2413,7 +2386,9 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": ["b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"]
+          "targets": [
+            "b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"
+          ]
         },
         {
           "type": "bounce",
@@ -2424,7 +2399,9 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": ["ba9ff730-74e6-478a-943e-8aa33851048d"]
+          "targets": [
+            "ba9ff730-74e6-478a-943e-8aa33851048d"
+          ]
         },
         {
           "type": "move",
@@ -2557,10 +2534,10 @@
           "isDefaultBackground": true
         },
         {
-          "x": 17,
-          "y": 7,
-          "width": 283,
-          "height": 113,
+          "x": 15,
+          "y": -1,
+          "width": 381,
+          "height": 153,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2572,7 +2549,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -2588,18 +2567,18 @@
           "focalY": 50,
           "type": "text",
           "id": "735394cc-0da6-479c-951d-14579f0766ef",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">TOP 5\nCOLLECTIONS\nTHIS SEASON</span></span>",
-          "fontSize": 37,
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">TOP 5</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">COLLECTIONS</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">THIS SEASON</span>",
+          "fontSize": 51,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 43,
-          "y": 193,
-          "width": 187,
-          "height": 37,
+          "x": 44,
+          "y": 204,
+          "width": 254,
+          "height": 48,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2611,22 +2590,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -2644,18 +2671,18 @@
           "type": "text",
           "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
           "id": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">RODARTE</span></span>",
-          "fontSize": 37,
+          "content": "<span style=\"color: #212121\">MJ KEPLER</span>",
+          "fontSize": 48,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 131,
-          "y": 258,
-          "width": 187,
-          "height": 37,
+          "x": 180,
+          "y": 294,
+          "width": 170,
+          "height": 48,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2667,22 +2694,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -2700,18 +2775,18 @@
           "type": "text",
           "basedOn": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
           "id": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">CHANEL</span></span>",
-          "fontSize": 37,
+          "content": "<span style=\"color: #212121\">JARDIN</span>",
+          "fontSize": 48,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 24,
-          "y": 327,
-          "width": 227,
-          "height": 37,
+          "x": 15,
+          "y": 382,
+          "width": 296,
+          "height": 48,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2723,22 +2798,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -2756,18 +2879,18 @@
           "type": "text",
           "basedOn": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
           "id": "dc565020-6358-44d9-9aac-a8eb90e76415",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">RICK OWENS</span></span>",
-          "fontSize": 37,
+          "content": "<span style=\"color: #212121\">RICK MARKS</span>",
+          "fontSize": 48,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 110,
-          "y": 395,
-          "width": 131,
-          "height": 37,
+          "x": 107,
+          "y": 464,
+          "width": 136,
+          "height": 48,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2779,22 +2902,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -2812,18 +2983,18 @@
           "type": "text",
           "basedOn": "dc565020-6358-44d9-9aac-a8eb90e76415",
           "id": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">PRADA</span></span>",
-          "fontSize": 37,
+          "content": "<span style=\"color: #212121\">PRAG</span>",
+          "fontSize": 48,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 72,
-          "y": 461,
-          "width": 246,
-          "height": 37,
+          "x": 70,
+          "y": 554,
+          "width": 251,
+          "height": 48,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2835,22 +3006,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -2868,18 +3087,18 @@
           "type": "text",
           "basedOn": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
           "id": "7726e175-d97f-42ed-bb2e-a581f4135332",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">BALENCIAGA</span></span>",
-          "fontSize": 37,
+          "content": "<span style=\"color: #212121\">RAG’N TAG</span>",
+          "fontSize": 48,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 196,
-          "y": 170,
-          "width": 46,
-          "height": 46,
+          "x": 242,
+          "y": 175,
+          "width": 60,
+          "height": 60,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2893,7 +3112,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page6_pinwheel-outline.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -2913,8 +3132,8 @@
           "id": "b9736281-90de-4a2e-b813-7faddcba9dd9"
         },
         {
-          "x": 200,
-          "y": 176,
+          "x": 254.5,
+          "y": 187,
           "width": 35,
           "height": 26,
           "opacity": 100,
@@ -2928,7 +3147,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -2946,17 +3167,17 @@
           "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
           "id": "3873fcaf-3c89-43dd-ba61-47bfed747b3e",
           "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1</span></span>",
-          "fontSize": 26,
+          "fontSize": 36,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 103,
-          "y": 239,
-          "width": 46,
-          "height": 46,
+          "x": 150,
+          "y": 263,
+          "width": 60,
+          "height": 60,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2970,7 +3191,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page6_pinwheel-outline.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -2991,10 +3212,10 @@
           "id": "9cc65a3f-90c8-4a6b-8994-2db0da03e2aa"
         },
         {
-          "x": 116,
-          "y": 244,
-          "width": 21,
-          "height": 26,
+          "x": 164,
+          "y": 271,
+          "width": 32,
+          "height": 38,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3006,7 +3227,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -3024,17 +3247,17 @@
           "basedOn": "3873fcaf-3c89-43dd-ba61-47bfed747b3e",
           "id": "e614554a-4201-4bdd-9ced-c5fe97c758c8",
           "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">2</span></span>",
-          "fontSize": 26,
+          "fontSize": 36,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 234,
-          "y": 304,
-          "width": 46,
-          "height": 46,
+          "x": 280,
+          "y": 353,
+          "width": 60,
+          "height": 60,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3048,7 +3271,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page6_pinwheel-outline.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -3069,10 +3292,10 @@
           "id": "1995d229-c3c4-4f57-8e19-dc65b333e87a"
         },
         {
-          "x": 239,
-          "y": 310,
-          "width": 34,
-          "height": 26,
+          "x": 288.5,
+          "y": 360,
+          "width": 43,
+          "height": 36,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3084,7 +3307,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -3102,17 +3327,17 @@
           "basedOn": "e614554a-4201-4bdd-9ced-c5fe97c758c8",
           "id": "53f8e685-93b5-4971-bb76-03d52602eb47",
           "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">3</span></span>",
-          "fontSize": 26,
+          "fontSize": 36,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 82,
-          "y": 375,
-          "width": 46,
-          "height": 46,
+          "x": 77,
+          "y": 434,
+          "width": 60,
+          "height": 60,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3126,7 +3351,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page6_pinwheel-outline.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -3147,10 +3372,10 @@
           "id": "8368daee-25c0-47fa-a3f8-f1d087aff0ea"
         },
         {
-          "x": 89,
-          "y": 381,
-          "width": 34,
-          "height": 26,
+          "x": 82,
+          "y": 440,
+          "width": 51,
+          "height": 36,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3162,7 +3387,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -3180,17 +3407,17 @@
           "basedOn": "53f8e685-93b5-4971-bb76-03d52602eb47",
           "id": "c8f479d6-429d-4ea4-93e8-ce8dfb37a5d5",
           "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">4</span></span>",
-          "fontSize": 26,
+          "fontSize": 36,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 276,
-          "y": 439,
-          "width": 46,
-          "height": 46,
+          "x": 302,
+          "y": 524,
+          "width": 60,
+          "height": 60,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3204,7 +3431,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page6_pinwheel-outline.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -3225,10 +3452,10 @@
           "id": "797bc565-14f8-4635-aef9-d3aaa1d4f61f"
         },
         {
-          "x": 282,
-          "y": 447,
-          "width": 34,
-          "height": 26,
+          "x": 311,
+          "y": 530,
+          "width": 42,
+          "height": 36,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3240,7 +3467,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -3258,7 +3487,7 @@
           "basedOn": "53f8e685-93b5-4971-bb76-03d52602eb47",
           "id": "175d2727-d683-4601-8405-f0a2ee56a654",
           "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">5</span></span>",
-          "fontSize": 26,
+          "fontSize": 36,
           "padding": {
             "horizontal": 0,
             "vertical": 0
@@ -3287,7 +3516,9 @@
           "easingPreset": "inOutCubic",
           "fill": "both",
           "iterations": 1,
-          "targets": ["735394cc-0da6-479c-951d-14579f0766ef"]
+          "targets": [
+            "735394cc-0da6-479c-951d-14579f0766ef"
+          ]
         },
         {
           "type": "move",
@@ -3474,7 +3705,9 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": ["b9736281-90de-4a2e-b813-7faddcba9dd9"]
+          "targets": [
+            "b9736281-90de-4a2e-b813-7faddcba9dd9"
+          ]
         },
         {
           "type": "spin",
@@ -3486,7 +3719,9 @@
           "easingPreset": "linear",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["797bc565-14f8-4635-aef9-d3aaa1d4f61f"]
+          "targets": [
+            "797bc565-14f8-4635-aef9-d3aaa1d4f61f"
+          ]
         },
         {
           "type": "spin",
@@ -3497,7 +3732,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["8368daee-25c0-47fa-a3f8-f1d087aff0ea"]
+          "targets": [
+            "8368daee-25c0-47fa-a3f8-f1d087aff0ea"
+          ]
         },
         {
           "type": "spin",
@@ -3508,7 +3745,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["1995d229-c3c4-4f57-8e19-dc65b333e87a"]
+          "targets": [
+            "1995d229-c3c4-4f57-8e19-dc65b333e87a"
+          ]
         },
         {
           "type": "spin",
@@ -3519,7 +3758,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["9cc65a3f-90c8-4a6b-8994-2db0da03e2aa"]
+          "targets": [
+            "9cc65a3f-90c8-4a6b-8994-2db0da03e2aa"
+          ]
         }
       ]
     },
@@ -3553,17 +3794,17 @@
           "isDefaultBackground": true
         },
         {
-          "x": 1,
-          "y": 0,
-          "width": 348,
-          "height": 318,
+          "x": -1,
+          "y": -57,
+          "width": 386,
+          "height": 426,
           "opacity": 90,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
               "r": 51,
@@ -3571,9 +3812,9 @@
               "b": 51
             }
           },
-          "scale": 230,
-          "focalX": 46.85572257958338,
-          "focalY": 44.20206702632711,
+          "scale": 250,
+          "focalX": 46.86957537007236,
+          "focalY": 44.74151693332471,
           "mask": {
             "type": "rectangle"
           },
@@ -3582,7 +3823,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page7_hero.jpg",
             "width": 220,
             "height": 274,
             "posterId": 0,
@@ -3590,71 +3831,14 @@
             "title": "fashion_page7_hero",
             "alt": "fashion_page7_hero",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page7_hero-241x300.jpg",
-                "width": 241,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero-241x300.jpg"
-              },
-              "large": {
-                "file": "fashion_page7_hero-823x1024.jpg",
-                "width": 823,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero-823x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "fashion_page7_hero-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fashion_page7_hero-768x955.jpg",
-                "width": 768,
-                "height": 955,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero-768x955.jpg"
-              },
-              "1536x1536": {
-                "file": "fashion_page7_hero-1235x1536.jpg",
-                "width": 1235,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero-1235x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "fashion_page7_hero-1647x2048.jpg",
-                "width": 1647,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero-1647x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "fashion_page7_hero-1200x1493.jpg",
-                "width": 1200,
-                "height": 1493,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero-1200x1493.jpg"
-              },
-              "full": {
-                "file": "fashion_page7_hero-scaled.jpg",
-                "width": 2058,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_hero-scaled.jpg"
-              }
-            }
+            "sizes": []
           }
         },
         {
           "x": 19,
-          "y": 342,
-          "width": 187,
-          "height": 37,
+          "y": 400,
+          "width": 135,
+          "height": 51,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3666,22 +3850,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -3699,18 +3931,18 @@
           "type": "text",
           "basedOn": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
           "id": "9ce78e9e-7568-45de-bef3-1f9438a11568",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">CARDIN</span></span>",
-          "fontSize": 37,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">PRAG</span>",
+          "fontSize": 51,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 23,
-          "y": 260,
-          "width": 101,
-          "height": 101,
+          "x": 9,
+          "y": 302,
+          "width": 134,
+          "height": 134,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3724,7 +3956,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_pinwheel.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page7_pinwheel.png",
             "width": 123,
             "height": 123,
             "posterId": 0,
@@ -3732,29 +3964,7 @@
             "title": "fashion_page7_pinwheel",
             "alt": "fashion_page7_pinwheel",
             "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "fashion_page7_pinwheel-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_pinwheel-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fashion_page7_pinwheel-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_pinwheel-150x150.png"
-              },
-              "full": {
-                "file": "fashion_page7_pinwheel.png",
-                "width": 246,
-                "height": 246,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_pinwheel.png"
-              }
-            }
+            "sizes": []
           },
           "mask": {
             "type": "rectangle",
@@ -3767,9 +3977,9 @@
         },
         {
           "x": 37,
-          "y": 274,
+          "y": 315,
           "width": 75,
-          "height": 59,
+          "height": 78,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3781,7 +3991,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -3799,7 +4011,7 @@
           "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
           "id": "8c86903b-0df0-4c1e-a75a-23f1e79522b3",
           "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1</span></span>",
-          "fontSize": 59,
+          "fontSize": 78,
           "padding": {
             "horizontal": 0,
             "vertical": 0
@@ -3807,9 +4019,9 @@
         },
         {
           "x": 22,
-          "y": 397,
-          "width": 328,
-          "height": 82,
+          "y": 468,
+          "width": 363,
+          "height": 132,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3821,16 +4033,43 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              400,
+              500,
+              700
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
+              [
+                0,
+                400
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                1,
+                700
+              ]
             ]
           },
           "backgroundColor": {
@@ -3840,7 +4079,7 @@
               "b": 196
             }
           },
-          "lineHeight": 1.25,
+          "lineHeight": 1.3,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
@@ -3848,17 +4087,17 @@
           "type": "text",
           "id": "43b205d1-376b-4eaf-b493-e55d70f8703e",
           "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus. Proin malesuada maximus felis, non lacinia est porttitor ante eget scelerisque.</span>",
-          "fontSize": 13,
+          "fontSize": 17,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 23,
-          "y": 510,
+          "x": 22,
+          "y": 637,
           "width": 131,
-          "height": 14,
+          "height": 20,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3870,16 +4109,43 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              400,
+              500,
+              700
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
+              [
+                0,
+                400
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                1,
+                700
+              ]
             ]
           },
           "backgroundColor": {
@@ -3897,32 +4163,32 @@
           "type": "text",
           "basedOn": "67777589-1517-4a00-9e95-11e262bf02dd",
           "id": "46ec18b4-8061-467f-88a0-fb2abd494061",
-          "content": "<span style=\"letter-spacing: 0.0008em\"><span style=\"color: rgba(33, 33, 33, 1)\">LEARN MORE</span></span>",
-          "fontSize": 11,
+          "content": "<span style=\"color: #212121; letter-spacing: 0.01em\">LEARN MORE</span>",
+          "fontSize": 16,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 112,
-          "y": 515,
-          "width": 11,
-          "height": 7,
+          "x": 137,
+          "y": 641,
+          "width": 25,
+          "height": 12,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page7_arrow.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page7_arrow.png",
             "width": 8,
             "height": 4,
             "posterId": 0,
@@ -3963,7 +4229,9 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": ["7ecf93c5-2286-495d-86e9-30cdf0bf32b3"]
+          "targets": [
+            "7ecf93c5-2286-495d-86e9-30cdf0bf32b3"
+          ]
         },
         {
           "type": "move",
@@ -3976,7 +4244,9 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "forwards",
-          "targets": ["7ecf93c5-2286-495d-86e9-30cdf0bf32b3"]
+          "targets": [
+            "7ecf93c5-2286-495d-86e9-30cdf0bf32b3"
+          ]
         },
         {
           "type": "zoom",
@@ -3988,7 +4258,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["7ecf93c5-2286-495d-86e9-30cdf0bf32b3"]
+          "targets": [
+            "7ecf93c5-2286-495d-86e9-30cdf0bf32b3"
+          ]
         },
         {
           "type": "zoom",
@@ -4000,7 +4272,9 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": ["7ecf93c5-2286-495d-86e9-30cdf0bf32b3"]
+          "targets": [
+            "7ecf93c5-2286-495d-86e9-30cdf0bf32b3"
+          ]
         },
         {
           "type": "move",
@@ -4013,7 +4287,9 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": ["8c86903b-0df0-4c1e-a75a-23f1e79522b3"]
+          "targets": [
+            "8c86903b-0df0-4c1e-a75a-23f1e79522b3"
+          ]
         },
         {
           "type": "zoom",
@@ -4025,7 +4301,9 @@
           "direction": "normal",
           "easingPreset": "outSine",
           "fill": "both",
-          "targets": ["e03c6326-6b3a-4a11-b7f1-80decd115e08"]
+          "targets": [
+            "e03c6326-6b3a-4a11-b7f1-80decd115e08"
+          ]
         },
         {
           "type": "move",
@@ -4056,7 +4334,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["e03c6326-6b3a-4a11-b7f1-80decd115e08"]
+          "targets": [
+            "e03c6326-6b3a-4a11-b7f1-80decd115e08"
+          ]
         },
         {
           "type": "fade",
@@ -4068,7 +4348,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["e03c6326-6b3a-4a11-b7f1-80decd115e08"]
+          "targets": [
+            "e03c6326-6b3a-4a11-b7f1-80decd115e08"
+          ]
         },
         {
           "type": "move",
@@ -4081,7 +4363,9 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": ["9ce78e9e-7568-45de-bef3-1f9438a11568"]
+          "targets": [
+            "9ce78e9e-7568-45de-bef3-1f9438a11568"
+          ]
         },
         {
           "type": "fade",
@@ -4093,7 +4377,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["43b205d1-376b-4eaf-b493-e55d70f8703e"]
+          "targets": [
+            "43b205d1-376b-4eaf-b493-e55d70f8703e"
+          ]
         },
         {
           "type": "move",
@@ -4106,7 +4392,9 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": ["43b205d1-376b-4eaf-b493-e55d70f8703e"]
+          "targets": [
+            "43b205d1-376b-4eaf-b493-e55d70f8703e"
+          ]
         },
         {
           "type": "move",
@@ -4171,7 +4459,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page8_bg.jpg",
             "width": 220,
             "height": 291,
             "posterId": 0,
@@ -4179,74 +4467,17 @@
             "title": "fashion_page8_bg",
             "alt": "fashion_page8_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page8_bg-227x300.jpg",
-                "width": 227,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg-227x300.jpg"
-              },
-              "large": {
-                "file": "fashion_page8_bg-774x1024.jpg",
-                "width": 774,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg-774x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "fashion_page8_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fashion_page8_bg-768x1016.jpg",
-                "width": 768,
-                "height": 1016,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg-768x1016.jpg"
-              },
-              "1536x1536": {
-                "file": "fashion_page8_bg-1161x1536.jpg",
-                "width": 1161,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg-1161x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "fashion_page8_bg-1547x2048.jpg",
-                "width": 1547,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg-1547x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "fashion_page8_bg-1200x1588.jpg",
-                "width": 1200,
-                "height": 1588,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg-1200x1588.jpg"
-              },
-              "full": {
-                "file": "fashion_page8_bg-scaled.jpg",
-                "width": 1934,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_bg-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "scale": 120,
           "focalX": 54.19913419913419,
           "focalY": 58.333333333333336
         },
         {
-          "x": -321,
-          "y": 144,
-          "width": 737,
-          "height": 128,
+          "x": -378,
+          "y": 191,
+          "width": 875,
+          "height": 143,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -4258,7 +4489,9 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "fallbacks": [
+              "serif"
+            ]
           },
           "backgroundColor": {
             "color": {
@@ -4276,17 +4509,13 @@
           "basedOn": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
           "id": "faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5",
           "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">GET THE LOOK</span></span>",
-          "fontSize": 98,
+          "fontSize": 110,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 142,
-          "y": 468,
-          "width": 19,
-          "height": 19,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -4301,21 +4530,20 @@
               "b": 227
             }
           },
+          "type": "shape",
+          "x": 131,
+          "y": 110,
+          "width": 32,
+          "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "circle"
+            "type": "burst"
           },
-          "type": "shape",
-          "basedOn": "06b9b1f3-3fdb-49b8-8efa-895081f2a0c6",
-          "id": "833449da-699c-4fac-aa52-cefc6c713423"
+          "id": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3"
         },
         {
-          "x": 144,
-          "y": 470,
-          "width": 15,
-          "height": 15,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -4330,136 +4558,21 @@
               "b": 74
             }
           },
+          "type": "shape",
+          "width": 24,
+          "height": 24,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "circle"
+            "type": "burst"
           },
-          "type": "shape",
-          "id": "06b9b1f3-3fdb-49b8-8efa-895081f2a0c6"
-        },
-        {
-          "x": 265,
-          "y": 297,
-          "width": 19,
-          "height": 19,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "833449da-699c-4fac-aa52-cefc6c713423",
-          "id": "5c3a77a7-f9c2-4bd5-bf8f-9d211c433af3"
-        },
-        {
-          "x": 267,
-          "y": 299,
-          "width": 15,
-          "height": 15,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 108,
-              "b": 74
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "06b9b1f3-3fdb-49b8-8efa-895081f2a0c6",
-          "id": "1273a089-3c1f-44e2-a992-ee1c74571ce0"
-        },
-        {
-          "x": 172,
-          "y": 229,
-          "width": 19,
-          "height": 19,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "5c3a77a7-f9c2-4bd5-bf8f-9d211c433af3",
-          "id": "67a25f3e-d47f-4b06-97e8-b315ef85e0e2"
-        },
-        {
-          "x": 173,
-          "y": 231,
-          "width": 15,
-          "height": 15,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 108,
-              "b": 74
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "1273a089-3c1f-44e2-a992-ee1c74571ce0",
-          "id": "0ece7509-bf1e-479d-a146-8be2be2f0cee"
-        },
-        {
+          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
+          "id": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
           "x": 135,
-          "y": 111,
-          "width": 19,
-          "height": 19,
+          "y": 114
+        },
+        {
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -4474,21 +4587,21 @@
               "b": 227
             }
           },
+          "type": "shape",
+          "width": 32,
+          "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "circle"
+            "type": "burst"
           },
-          "type": "shape",
-          "basedOn": "67a25f3e-d47f-4b06-97e8-b315ef85e0e2",
-          "id": "f6443849-a102-4899-9be1-ba2651204712"
+          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
+          "id": "8c069227-c1ab-41cf-96b2-7d2ab9e03ef5",
+          "x": 191,
+          "y": 249
         },
         {
-          "x": 136,
-          "y": 113,
-          "width": 15,
-          "height": 15,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -4503,28 +4616,28 @@
               "b": 74
             }
           },
+          "type": "shape",
+          "width": 24,
+          "height": 24,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "circle"
+            "type": "burst"
           },
-          "type": "shape",
-          "basedOn": "0ece7509-bf1e-479d-a146-8be2be2f0cee",
-          "id": "15da37bf-3d0f-42d6-bce1-c5cd63d92603"
+          "basedOn": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
+          "id": "508d68d8-d633-4bc5-9937-cce7bb74930e",
+          "x": 195,
+          "y": 253
         },
         {
-          "x": 77,
-          "y": 389,
-          "width": 147,
-          "height": 67,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
+          "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
               "r": 255,
@@ -4532,206 +4645,106 @@
               "b": 227
             }
           },
+          "type": "shape",
+          "width": 32,
+          "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "rectangle"
+            "type": "burst"
+          },
+          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
+          "id": "830924ad-11c5-47d8-962f-42db6c1ed5d3",
+          "x": 291,
+          "y": 381
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 108,
+              "b": 74
+            }
           },
           "type": "shape",
-          "id": "e3507933-d80f-4ed2-b52a-02dea8a0779d"
-        },
-        {
-          "x": 85,
-          "y": 394,
-          "width": 76,
-          "height": 16,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
+          "width": 24,
+          "height": 24,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "id": "b141ca71-b4f8-474c-93d0-b2a0b439c83e",
-          "content": "<span style=\"color: rgba(33, 33, 33, 1)\">CARDIN</span>",
-          "fontSize": 12,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 85,
-          "y": 411,
-          "width": 111,
-          "height": 14,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "DM Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "b141ca71-b4f8-474c-93d0-b2a0b439c83e",
-          "id": "4c1eea44-cac5-45ba-bdc2-c6959c9edd76",
-          "content": "<span style=\"color: rgba(33, 33, 33, 1)\">The Everyday Boots</span>",
-          "fontSize": 11,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 85,
-          "y": 435,
-          "width": 111,
-          "height": 14,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "DM Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "4c1eea44-cac5-45ba-bdc2-c6959c9edd76",
-          "id": "bed8c7dc-aa6d-4fb9-b87d-b7bcb5911f93",
-          "content": "<span style=\"color: rgba(33, 33, 33, 1)\">$575</span>",
-          "fontSize": 11,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 208,
-          "y": 441,
-          "width": 7,
-          "height": 7,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page8_arrow.png",
-            "width": 5,
-            "height": 5,
-            "posterId": 0,
-            "id": 219,
-            "title": "fashion_page8_arrow",
-            "alt": "fashion_page8_arrow",
-            "local": false,
-            "sizes": []
-          },
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "burst"
           },
-          "type": "image",
-          "id": "4446cc97-cd5a-45ea-8232-3a53e1df3d86"
+          "basedOn": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
+          "id": "8eb53cc7-ce88-4d10-be25-43a29e030ce4",
+          "x": 295,
+          "y": 385
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 236,
+              "b": 227
+            }
+          },
+          "type": "shape",
+          "width": 32,
+          "height": 32,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "burst"
+          },
+          "basedOn": "830924ad-11c5-47d8-962f-42db6c1ed5d3",
+          "id": "191717bc-a737-4bcc-b07b-8eb1d58d1379",
+          "x": 157,
+          "y": 542
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 108,
+              "b": 74
+            }
+          },
+          "type": "shape",
+          "width": 24,
+          "height": 24,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "burst"
+          },
+          "basedOn": "8eb53cc7-ce88-4d10-be25-43a29e030ce4",
+          "id": "11becc4b-a92d-41ee-a39f-4a034cea7813",
+          "x": 161,
+          "y": 546
         }
       ],
       "type": "page",
@@ -4777,7 +4790,9 @@
           "direction": "normal",
           "easingPreset": "inOutCubic",
           "fill": "both",
-          "targets": ["a879eb64-3b0f-49f7-93de-e63359e6fb1a"]
+          "targets": [
+            "a879eb64-3b0f-49f7-93de-e63359e6fb1a"
+          ]
         },
         {
           "type": "move",
@@ -4790,7 +4805,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"]
+          "targets": [
+            "faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"
+          ]
         },
         {
           "type": "move",
@@ -4803,7 +4820,9 @@
           "direction": "normal",
           "easingPreset": "inOutQuart",
           "fill": "both",
-          "targets": ["faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"]
+          "targets": [
+            "faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"
+          ]
         },
         {
           "type": "zoom",
@@ -4815,7 +4834,9 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": ["a879eb64-3b0f-49f7-93de-e63359e6fb1a"]
+          "targets": [
+            "a879eb64-3b0f-49f7-93de-e63359e6fb1a"
+          ]
         },
         {
           "type": "zoom",
@@ -4949,10 +4970,10 @@
           "isDefaultBackground": true
         },
         {
-          "x": 44,
-          "y": 15,
+          "x": 29,
+          "y": 5,
           "width": 213,
-          "height": 98,
+          "height": 129,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -4964,22 +4985,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -4989,7 +5058,7 @@
               "b": 196
             }
           },
-          "lineHeight": 0.98,
+          "lineHeight": 1.3,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
@@ -4997,18 +5066,18 @@
           "type": "text",
           "basedOn": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
           "id": "421f76ac-4c4d-4a44-ad77-622facf57db5",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">MORE\nSTORIES</span></span>",
-          "fontSize": 51,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">MORE</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">STORIES</span>",
+          "fontSize": 50,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 132,
-          "y": 169,
-          "width": 195,
-          "height": 32,
+          "x": 148,
+          "y": 188,
+          "width": 217,
+          "height": 44,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5020,22 +5089,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -5053,18 +5170,18 @@
           "type": "text",
           "basedOn": "2c548d81-abe2-4f74-9292-9910382fb293",
           "id": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">HOW TO PULL OFF THE\nALL DENIM LOOK</span></span>",
-          "fontSize": 15,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">HOW TO PULL OFF THE</span>\n<span style=\"letter-spacing: -0.01em\">ALL DENIM LOOK</span>",
+          "fontSize": 20,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 132,
-          "y": 256,
-          "width": 195,
-          "height": 32,
+          "x": 148,
+          "y": 299,
+          "width": 249,
+          "height": 43,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5076,22 +5193,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -5109,18 +5274,18 @@
           "type": "text",
           "basedOn": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
           "id": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">THE BEST STREET\nSTYLES FROM NYFW</span></span>",
-          "fontSize": 15,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE BEST STREET </span><span style=\"letter-spacing: -0.01em\">STYLES FROM NYFW</span>",
+          "fontSize": 20,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 131,
-          "y": 339,
-          "width": 195,
-          "height": 32,
+          "x": 148,
+          "y": 416,
+          "width": 227,
+          "height": 44,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5132,22 +5297,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -5165,46 +5378,18 @@
           "type": "text",
           "basedOn": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
           "id": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">THE LATEST TRENDS\nIN SNEAKER LAND</span></span>",
-          "fontSize": 15,
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE LATEST TRENDS </span><span style=\"letter-spacing: -0.01em\">IN SNEAKER LAND</span>",
+          "fontSize": 20,
           "padding": {
             "horizontal": 0,
             "vertical": 0
           }
         },
         {
-          "x": 46,
-          "y": 420,
-          "width": 271,
-          "height": 1,
-          "opacity": 10,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 33,
-              "g": 33,
-              "b": 33
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "id": "c330044d-44a1-4cee-91b3-51f2147914d7"
-        },
-        {
-          "x": 45,
-          "y": 150,
-          "width": 71,
-          "height": 71,
+          "x": 30,
+          "y": 163,
+          "width": 94,
+          "height": 94,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5230,7 +5415,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item1-cropped.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page9_item1-cropped.png",
             "width": 43,
             "height": 43,
             "posterId": 0,
@@ -5242,10 +5427,10 @@
           }
         },
         {
-          "x": 45,
-          "y": 237,
-          "width": 71,
-          "height": 71,
+          "x": 30,
+          "y": 274,
+          "width": 94,
+          "height": 94,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5272,7 +5457,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item2.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page9_item2.jpg",
             "width": 220,
             "height": 331,
             "posterId": 0,
@@ -5280,57 +5465,14 @@
             "title": "fashion_page9_item2",
             "alt": "fashion_page9_item2",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page9_item2-199x300.jpg",
-                "width": 199,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item2-199x300.jpg"
-              },
-              "large": {
-                "file": "fashion_page9_item2-681x1024.jpg",
-                "width": 681,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item2-681x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "fashion_page9_item2-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item2-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fashion_page9_item2-768x1155.jpg",
-                "width": 768,
-                "height": 1155,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item2-768x1155.jpg"
-              },
-              "1536x1536": {
-                "file": "fashion_page9_item2-1021x1536.jpg",
-                "width": 1021,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item2-1021x1536.jpg"
-              },
-              "full": {
-                "file": "fashion_page9_item2-scaled.jpg",
-                "width": 1702,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item2-scaled.jpg"
-              }
-            }
+            "sizes": []
           }
         },
         {
-          "x": 44,
-          "y": 323,
-          "width": 71,
-          "height": 71,
+          "x": 29,
+          "y": 385,
+          "width": 94,
+          "height": 94,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5357,7 +5499,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page9_item3.jpg",
             "width": 229,
             "height": 157,
             "posterId": 0,
@@ -5365,106 +5507,70 @@
             "title": "fashion_page9_item3",
             "alt": "fashion_page9_item3",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page9_item3-300x200.jpg",
-                "width": 300,
-                "height": 200,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-300x200.jpg"
-              },
-              "large": {
-                "file": "fashion_page9_item3-1024x683.jpg",
-                "width": 1024,
-                "height": 683,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-1024x683.jpg"
-              },
-              "thumbnail": {
-                "file": "fashion_page9_item3-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fashion_page9_item3-768x512.jpg",
-                "width": 768,
-                "height": 512,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-768x512.jpg"
-              },
-              "1536x1536": {
-                "file": "fashion_page9_item3-1536x1024.jpg",
-                "width": 1536,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-1536x1024.jpg"
-              },
-              "2048x2048": {
-                "file": "fashion_page9_item3-2048x1365.jpg",
-                "width": 2048,
-                "height": 1365,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-2048x1365.jpg"
-              },
-              "post-thumbnail": {
-                "file": "fashion_page9_item3-1200x800.jpg",
-                "width": 1200,
-                "height": 800,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-1200x800.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "fashion_page9_item3-1980x1320.jpg",
-                "width": 1980,
-                "height": 1320,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-1980x1320.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "fashion_page9_item3-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "fashion_page9_item3-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "fashion_page9_item3-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "fashion_page9_item3-150x100.jpg",
-                "width": 150,
-                "height": 100,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-150x100.jpg"
-              },
-              "full": {
-                "file": "fashion_page9_item3-scaled.jpg",
-                "width": 2560,
-                "height": 1707,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_item3-scaled.jpg"
-              }
-            }
+            "sizes": []
           }
         },
         {
-          "x": 84,
-          "y": 439,
+          "width": 94,
+          "height": 94,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 210,
+          "focalX": 50.23363426439001,
+          "focalY": 56.7630971270795,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2020-06-29T20:54:29",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fashion_page9_item4.jpg",
+            "width": 330,
+            "height": 494,
+            "posterId": 0,
+            "id": 1854,
+            "title": "fashion_page9_item4",
+            "alt": "fashion_page9_item4",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "fashion_page9_item4-200x300.jpg",
+                "width": 200,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fashion_page9_item4-200x300.jpg"
+              },
+              "full": {
+                "file": "fashion_page9_item4-scaled.jpg",
+                "width": 1707,
+                "height": 2560,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fashion_page9_item4-scaled.jpg"
+              }
+            }
+          },
+          "basedOn": "ba68ba92-edcd-4c5c-a4fe-5263fc994e2b",
+          "id": "40d8eaeb-1fad-4346-b56b-eef002fcb4db",
+          "x": 29,
+          "y": 496
+        },
+        {
           "width": 195,
-          "height": 21,
+          "height": 22,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -5476,22 +5582,70 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
+            "fallbacks": [
+              "serif"
+            ],
+            "weights": [
+              400,
+              500,
+              600,
+              700,
+              800,
+              900
+            ],
+            "styles": [
+              "regular",
+              "italic"
+            ],
             "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ],
+              [
+                0,
+                800
+              ],
+              [
+                0,
+                900
+              ],
+              [
+                1,
+                400
+              ],
+              [
+                1,
+                500
+              ],
+              [
+                1,
+                600
+              ],
+              [
+                1,
+                700
+              ],
+              [
+                1,
+                800
+              ],
+              [
+                1,
+                900
+              ]
             ]
           },
           "backgroundColor": {
@@ -5502,167 +5656,21 @@
             }
           },
           "lineHeight": 1.1,
-          "textAlign": "center",
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
-          "id": "40a6fb22-daa4-4d78-8cdc-5ce6547d1d64",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">FOLLOW US</span></span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE 90’S BACK!</span>",
           "fontSize": 20,
           "padding": {
             "horizontal": 0,
             "vertical": 0
-          }
-        },
-        {
-          "x": 79,
-          "y": 471,
-          "width": 39,
-          "height": 39,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
           },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_facebook.png",
-            "width": 24,
-            "height": 24,
-            "posterId": 0,
-            "id": 239,
-            "title": "fashion_page9_facebook",
-            "alt": "fashion_page9_facebook",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "38462ba6-4406-458f-8f0e-88fa6558e712"
-        },
-        {
-          "x": 133,
-          "y": 471,
-          "width": 39,
-          "height": 39,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_instagram.png",
-            "width": 24,
-            "height": 24,
-            "posterId": 0,
-            "id": 240,
-            "title": "fashion_page9_instagram",
-            "alt": "fashion_page9_instagram",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "d4c4986d-35cf-414c-8047-8697a4e03446"
-        },
-        {
-          "x": 187,
-          "y": 471,
-          "width": 39,
-          "height": 39,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_youtube.png",
-            "width": 24,
-            "height": 24,
-            "posterId": 0,
-            "id": 242,
-            "title": "fashion_page9_youtube",
-            "alt": "fashion_page9_youtube",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "e13df6ed-9e36-42f5-a614-54faaf827097"
-        },
-        {
-          "x": 243,
-          "y": 471,
-          "width": 39,
-          "height": 39,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fashion_page9_twitter.png",
-            "width": 24,
-            "height": 24,
-            "posterId": 0,
-            "id": 241,
-            "title": "fashion_page9_twitter",
-            "alt": "fashion_page9_twitter",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "372a14f4-bc2c-493c-92e7-f7aa5d470289"
+          "basedOn": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
+          "id": "0785511b-324d-4a52-90bc-1fa6d5a8a0e6",
+          "x": 148,
+          "y": 531
         }
       ],
       "type": "page",
@@ -5687,7 +5695,9 @@
           "easingPreset": "inOutQuart",
           "fill": "both",
           "iterations": 1,
-          "targets": ["421f76ac-4c4d-4a44-ad77-622facf57db5"]
+          "targets": [
+            "421f76ac-4c4d-4a44-ad77-622facf57db5"
+          ]
         },
         {
           "type": "move",
@@ -5701,7 +5711,9 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": ["421f76ac-4c4d-4a44-ad77-622facf57db5"]
+          "targets": [
+            "421f76ac-4c4d-4a44-ad77-622facf57db5"
+          ]
         },
         {
           "type": "move",
@@ -5806,7 +5818,7 @@
           "overflowHidden": false,
           "offsetX": 0,
           "offsetY": "80",
-          "id": "77af1bac-5959-4c12-93a1-f098110ff31f",
+          "id": "528b07aa-9639-4302-9104-ed7854e3a8ed",
           "duration": 800,
           "delay": 350,
           "direction": "normal",
@@ -5814,19 +5826,15 @@
           "fill": "both",
           "iterations": 1,
           "targets": [
-            "372a14f4-bc2c-493c-92e7-f7aa5d470289",
-            "e13df6ed-9e36-42f5-a614-54faaf827097",
-            "d4c4986d-35cf-414c-8047-8697a4e03446",
-            "38462ba6-4406-458f-8f0e-88fa6558e712",
-            "40a6fb22-daa4-4d78-8cdc-5ce6547d1d64",
-            "c330044d-44a1-4cee-91b3-51f2147914d7"
+            "40d8eaeb-1fad-4346-b56b-eef002fcb4db",
+            "0785511b-324d-4a52-90bc-1fa6d5a8a0e6"
           ]
         },
         {
           "type": "fade",
           "fadeFrom": 0,
           "fadeTo": 1,
-          "id": "7809d1fc-3a75-4e53-bfb8-8fe515f752c5",
+          "id": "956f62ab-2025-45ca-944b-40291fd9de9f",
           "duration": 500,
           "delay": 500,
           "direction": "normal",
@@ -5834,50 +5842,13 @@
           "fill": "both",
           "iterations": 1,
           "targets": [
-            "c330044d-44a1-4cee-91b3-51f2147914d7",
-            "40a6fb22-daa4-4d78-8cdc-5ce6547d1d64",
-            "38462ba6-4406-458f-8f0e-88fa6558e712",
-            "d4c4986d-35cf-414c-8047-8697a4e03446",
-            "e13df6ed-9e36-42f5-a614-54faaf827097",
-            "372a14f4-bc2c-493c-92e7-f7aa5d470289"
-          ]
-        },
-        {
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": 0,
-          "offsetY": "100%",
-          "id": "672c74fd-39c2-42ee-bfa6-f10faf29aca7",
-          "duration": 900,
-          "delay": 350,
-          "direction": "normal",
-          "easingPreset": "inOutQuart",
-          "fill": "both",
-          "iterations": 1,
-          "targets": ["40a6fb22-daa4-4d78-8cdc-5ce6547d1d64"]
-        },
-        {
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": 0,
-          "offsetY": "50",
-          "id": "163f0597-fa98-44f1-a300-373213722ef0",
-          "duration": 1000,
-          "delay": 350,
-          "direction": "normal",
-          "easingPreset": "inOutQuart",
-          "fill": "both",
-          "iterations": 1,
-          "targets": [
-            "372a14f4-bc2c-493c-92e7-f7aa5d470289",
-            "e13df6ed-9e36-42f5-a614-54faaf827097",
-            "d4c4986d-35cf-414c-8047-8697a4e03446",
-            "38462ba6-4406-458f-8f0e-88fa6558e712"
+            "40d8eaeb-1fad-4346-b56b-eef002fcb4db",
+            "0785511b-324d-4a52-90bc-1fa6d5a8a0e6"
           ]
         }
       ]
     }
   ],
   "autoAdvance": true,
-  "defaultPageDuration": 6
+  "defaultPageDuration": 7
 }
