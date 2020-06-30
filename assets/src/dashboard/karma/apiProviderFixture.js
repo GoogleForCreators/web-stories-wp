@@ -158,6 +158,8 @@ function fetchStories({
           return new Date(a.created).getTime() - new Date(b.created).getTime();
         case STORY_SORT_OPTIONS.LAST_MODIFIED:
           return a[sortOption].diff(b[sortOption]);
+        case STORY_SORT_OPTIONS.NAME:
+          return a[sortOption].localeCompare(b[sortOption]);
         default:
           return 0;
       }

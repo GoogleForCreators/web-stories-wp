@@ -209,4 +209,32 @@ describe('My Stories View integration', () => {
 
     expect(renderedStoriesById).toEqual(storyIdsSortedByLastModified);
   });
+
+  it('should sort by Name', async () => {
+    const sortDropdown = fixture.screen.getByLabelText(
+      'Choose sort option for display'
+    );
+
+    expect(sortDropdown).toBeTruthy();
+
+    await fixture.events.click(sortDropdown);
+
+    const name = fixture.screen.getByText(/Name/);
+
+    expect(name).toBeTruthy();
+
+    await fixture.events.click(name);
+
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    const renderedStoriesById = stories.map(
+      ({ dataset }) => dataset['testid'].split('-').slice(-1)[0]
+    );
+
+    const storyIdsSortedByTitle = formattedStoriesArray
+      .sort((a, b) => a.title.localeCompare(b.title))
+      .map(({ id }) => String(id));
+
+    expect(renderedStoriesById).toEqual(storyIdsSortedByTitle);
+  });
 });
