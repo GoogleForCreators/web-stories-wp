@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
@@ -30,23 +29,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { Primary, Plain } from '../../../../components/button';
+import { Plain } from '../../../../components/button';
 import Dialog from '../../../../components/dialog';
 import { useSnackbar } from '../../../../app/snackbar';
-import { useMedia } from '../../../../app/media';
-
-const DialogBody = styled.div`
-  width: 512px;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.body1.weight};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  color: ${({ theme }) => theme.colors.fg.v0};
-`;
-
-const Space = styled.div`
-  width: 8px;
-`;
+import { useLocalMedia } from '../../../../app/media';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
@@ -62,7 +48,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
     actions: { deleteMedia },
   } = useAPI();
   const { showSnackbar } = useSnackbar();
-  const { deleteMediaElement } = useMedia((state) => ({
+  const { deleteMediaElement } = useLocalMedia((state) => ({
     deleteMediaElement: state.actions.deleteMediaElement,
   }));
 
@@ -96,19 +82,17 @@ function DeleteDialog({ mediaId, type, onClose }) {
     <Dialog
       open={true}
       onClose={onClose}
-      title={type == 'image' ? imageDialogTitle : videoDialogTitle}
+      title={type === 'image' ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
           <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Space />
-          <Primary onClick={onDelete}>{__('Delete', 'web-stories')}</Primary>
+          <Plain onClick={onDelete}>{__('Delete', 'web-stories')}</Plain>
         </>
       }
+      maxWidth={512}
     >
-      <DialogBody>
-        {type == 'image' ? imageDialogDescription : videoDialogDescription}
-        <strong>{__('This action can not be undone.', 'web-stories')}</strong>
-      </DialogBody>
+      {type === 'image' ? imageDialogDescription : videoDialogDescription}
+      <strong>{__('This action can not be undone.', 'web-stories')}</strong>
     </Dialog>
   );
 }

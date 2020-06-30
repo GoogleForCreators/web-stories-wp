@@ -17,14 +17,24 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
-import { TemplateNavBar } from '../';
+import useContextValueProvider from '../useContextValueProvider';
+import useProviderContextValueProvider from '../useProviderContextValueProvider';
 
-describe('TemplateNavBar', () => {
-  it('should render nav bar for detail template view', () => {
-    const { getByRole } = renderWithTheme(<TemplateNavBar />);
-    const nav = getByRole('navigation');
+jest.mock('../useProviderContextValueProvider');
 
-    expect(nav).toBeDefined();
+describe('useContextValueProvider', () => {
+  it('should provide initial state for each provider', () => {
+    useProviderContextValueProvider.mockReturnValueOnce({
+      state: { media: [] },
+    });
+    const value = useContextValueProvider();
+
+    expect(value).toStrictEqual(
+      expect.objectContaining({
+        unsplash: {
+          state: { media: [] },
+        },
+      })
+    );
   });
 });

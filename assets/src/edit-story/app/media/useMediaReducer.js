@@ -22,8 +22,17 @@ import { useReducer, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import reducer, { INITIAL_STATE } from './local/reducer';
+import localReducer from './local/reducer';
+import media3pReducer from './media3p/reducer';
 import * as actionsToWrap from './actions';
+import * as types from './types';
+
+function reducer(state = {}, { type, payload }) {
+  return {
+    local: localReducer(state.local, { type, payload }),
+    media3p: media3pReducer(state.media3p, { type, payload }),
+  };
+}
 
 const wrapWithDispatch = (actions, dispatch) =>
   Object.keys(actions).reduce(
@@ -35,7 +44,11 @@ const wrapWithDispatch = (actions, dispatch) =>
   );
 
 function useMediaReducer() {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const initialValue = useMemo(
+    () => reducer(undefined, { type: types.INITIAL_STATE }),
+    []
+  );
+  const [state, dispatch] = useReducer(reducer, initialValue);
 
   const actions = useMemo(() => wrapWithDispatch(actionsToWrap, dispatch), []);
 

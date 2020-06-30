@@ -18,6 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
@@ -42,6 +43,7 @@ const ScrollContent = styled.div`
 const Inner = styled.div`
   position: relative;
   padding-top: ${(props) => props.paddingTop || 0}px;
+  width: ${({ scrollbarWidth }) => `calc(100% + ${scrollbarWidth}px)`};
 `;
 
 Inner.propTypes = {
@@ -53,9 +55,15 @@ const Scrollable = ({ children }) => {
     state: { scrollFrameRef, squishContentHeight },
   } = useLayoutContext();
 
+  const scrollbarWidth = scrollFrameRef?.current
+    ? scrollFrameRef.current.offsetWidth - scrollFrameRef.current.clientWidth
+    : 0;
+
   return (
     <ScrollContent ref={scrollFrameRef}>
-      <Inner paddingTop={squishContentHeight}>{children}</Inner>
+      <Inner scrollbarWidth={scrollbarWidth} paddingTop={squishContentHeight}>
+        {children}
+      </Inner>
     </ScrollContent>
   );
 };

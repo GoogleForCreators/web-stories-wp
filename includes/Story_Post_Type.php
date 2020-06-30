@@ -110,7 +110,7 @@ class Story_Post_Type {
 					'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
 				],
-				'menu_icon'             => 'dashicons-book',
+				'menu_icon'             => $this->get_post_type_icon(),
 				'supports'              => [
 					'title', // Used for amp-story[title].
 					'author',
@@ -145,6 +145,15 @@ class Story_Post_Type {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+	}
+
+	/**
+	 * Base64 encoded svg icon.
+	 *
+	 * @return string Base64-encoded SVG icon.
+	 */
+	protected function get_post_type_icon() {
+		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjMiIGhlaWdodD0iNTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOGg0djM5SDBWOHpNNTkgOGg0djM5aC00Vjh6TTUwIDBIMTN2NTVoMzdWMHoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvc3ZnPg==';
 	}
 
 	/**
@@ -444,6 +453,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-23
 				 */
 				'showElementsTab'              => false,
+				/**
+				 * Description: Flag for using a row-based media gallery (vs column based) in the Uploads tab.
+				 * Author: @joannalee
+				 * Issue: #2820
+				 * Creation date: 2020-06-30
+				 */
+				'rowBasedGallery'              => false,
 			],
 
 		];
