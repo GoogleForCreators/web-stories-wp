@@ -39,6 +39,9 @@ const MoreButton = styled(More)`
   position: absolute;
   top: 8px;
   right: 8px;
+  background: ${({ theme }) => theme.colors.bg.v4};
+  color: ${({ theme }) => theme.colors.fg.v1};
+  border-radius: 100%;
 `;
 
 const DropDownContainer = styled.div`

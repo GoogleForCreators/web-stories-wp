@@ -277,6 +277,7 @@ describe('StoryAnimation.Provider', () => {
         result.current.actions.WAAPIAnimationMethods.setCurrentTime(newTime)
       );
 
+      /* eslint-disable jest/no-conditional-expect */
       animations.map((animation, i) => {
         if (i === unhoistIndex) {
           expect(animation.play).toHaveBeenCalledTimes(0);
@@ -288,6 +289,7 @@ describe('StoryAnimation.Provider', () => {
           expect(animation.currentTime).toStrictEqual(newTime);
         }
       });
+      /* eslint-enable jest/no-conditional-expect */
     });
   });
 

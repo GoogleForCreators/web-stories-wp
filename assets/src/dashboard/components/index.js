@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+export { default as Alert } from './alert';
 export { default as BookmarkChip } from './bookmark-chip';
 export { default as Button, PaginationButton } from './button';
 export { default as CardGallery } from './cardGallery';
@@ -29,6 +29,7 @@ export {
   DetailViewContentGutter,
   StandardViewContentGutter,
 } from './contentGutter';
+export { DetailViewNavBar } from './detailViewNavBar';
 export { default as Dialog } from './dialog';
 export { default as Dropdown } from './dropdown';
 export { default as InfiniteScroller } from './infiniteScroller';
@@ -69,7 +70,7 @@ export {
   TableStatusHeaderCell,
   TableStatusCell,
 } from './table';
-export { TemplateNavBar } from './templateNavBar';
+export { Toaster, ToastProvider, useToastContext } from './toaster';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';
 export { default as TypeaheadInput } from './typeaheadInput';
 export { default as TypeaheadOptions } from './typeaheadOptions';

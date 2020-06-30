@@ -53,7 +53,6 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: 28px;
-  text-decoration: none;
 
   &:active {
     outline: none;

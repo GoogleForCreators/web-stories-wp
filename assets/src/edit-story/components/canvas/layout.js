@@ -42,8 +42,8 @@ import useCanvas from './useCanvas';
  */
 
 export const Z_INDEX = {
-  NAV: 1,
-  EDIT: 2,
+  NAV: 2,
+  EDIT: 3,
 };
 
 const MENU_HEIGHT = 48;
@@ -63,7 +63,7 @@ const MAX_CAROUSEL_HEIGHT =
   MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
 
 // @todo: the menu height is not responsive
-const Layer = styled.div`
+const Layer = styled.section`
   ${pointerEventsCss}
 
   position: absolute;
@@ -140,17 +140,17 @@ const PageAreaSafeZone = styled.div`
       &::before,
       &::after {
         content: '';
-        width: 20px;
+        width: 12px;
         height: var(--page-height-px);
         position: absolute;
         border-top: 1px solid rgba(255, 255, 255, 0.4);
         border-bottom: 1px solid rgba(255, 255, 255, 0.4);
       }
       &::before {
-        left: -20px;
+        left: -12px;
       }
       &::after {
-        right: -20px;
+        right: -12px;
       }
     `}
 `;
@@ -217,7 +217,6 @@ const PageArea = forwardRef(
       showOverflow = false,
       fullbleedRef = createRef(),
       overlay = [],
-      fullbleed = [],
       background,
     },
     ref
@@ -235,7 +234,6 @@ const PageArea = forwardRef(
           >
             {children}
           </PageAreaSafeZone>
-          {fullbleed}
         </PageAreaWithOverflow>
         {overlay}
       </PageAreaFullbleedContainer>
@@ -246,7 +244,6 @@ const PageArea = forwardRef(
 PageArea.propTypes = {
   children: PropTypes.node,
   overlay: PropTypes.node,
-  fullbleed: PropTypes.node,
   showSafeZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
 };

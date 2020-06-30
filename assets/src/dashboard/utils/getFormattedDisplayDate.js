@@ -18,11 +18,17 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { format } from '@wordpress/date';
 
 /**
  * External dependencies
  */
 import moment from 'moment';
+
+/**
+ * Internal dependencies
+ */
+import { DEFAULT_DATE_FORMAT } from '../constants';
 
 export function isToday(displayDate) {
   const today = moment().startOf('day');
@@ -34,12 +40,18 @@ export function isYesterday(displayDate) {
   return displayDate.isSame(yesterday, 'd');
 }
 
-export default function getFormattedDisplayDate(date) {
+export default function getFormattedDisplayDate(
+  date,
+  dateFormat = DEFAULT_DATE_FORMAT
+) {
+  if (!date) {
+    return '';
+  }
   const displayDate = moment.isMoment(date) ? date : moment(date);
   if (isToday(displayDate)) {
     return displayDate.fromNow();
   } else if (isYesterday(displayDate)) {
     return __('yesterday', 'web-stories');
   }
-  return displayDate.format('M/D/YYYY');
+  return format(dateFormat, displayDate);
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { isUri as isValidUrl } from 'valid-url';
+export { isWebUri as isValidUrl } from 'valid-url';
 
 /**
  * Prepends a protocol (default http) to a URL that

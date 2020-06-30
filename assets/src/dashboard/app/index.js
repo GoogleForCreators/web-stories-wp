@@ -29,11 +29,18 @@ import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { APP_ROUTES, NESTED_APP_ROUTES } from '../constants';
 
-import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
+import {
+  AppFrame,
+  LeftRail,
+  NavProvider,
+  PageContent,
+  ToastProvider,
+} from '../components';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider, RouterContext, matchPath } from './router';
 import { ConfigProvider } from './config';
 import {
+  ToasterView,
   MyStoriesView,
   TemplateDetailsView,
   ExploreTemplatesView,
@@ -82,6 +89,9 @@ const AppContent = () => {
           component={<StoryAnimTool />}
         />
       </PageContent>
+      <ToastProvider>
+        <ToasterView />
+      </ToastProvider>
     </AppFrame>
   );
 };
