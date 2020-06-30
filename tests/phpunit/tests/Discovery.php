@@ -86,7 +86,15 @@ class Discovery extends \WP_UnitTestCase {
 
 	public function test_print_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
-		$result = $object->print_schemaorg_metadata();
+		ob_start();
+		$object->print_schemaorg_metadata();
+		$page = ob_get_clean();
+		$this->assertContains( 'application/ld+json', $page );
+	}
+
+	public function test_get_schemaorg_metadata() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_schemaorg_metadata' );
 		$this->assertArrayHasKey( '@type', $result );
 		$this->assertArrayHasKey( 'mainEntityOfPage', $result );
 		$this->assertArrayHasKey( 'headline', $result );
