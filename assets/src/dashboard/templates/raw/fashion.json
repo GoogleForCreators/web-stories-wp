@@ -2016,7 +2016,7 @@
           "focalY": 50,
           "type": "text",
           "id": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
-          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em\">KEPLER&nbsp;</span>",
+          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em\">KEPLER</span>",
           "fontSize": 132,
           "padding": {
             "horizontal": 0,
