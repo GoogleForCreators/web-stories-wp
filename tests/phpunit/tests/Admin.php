@@ -35,11 +35,11 @@ class Admin extends \WP_UnitTestCase {
 	protected static $story_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {
-		self::$admin_id      = $factory->user->create(
+		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 
-		self::$story_id      = $factory->post->create(
+		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Example title',
@@ -62,10 +62,10 @@ class Admin extends \WP_UnitTestCase {
 	public function test_admin_body_class() {
 		$admin = new \Google\Web_Stories\Admin();
 		$admin->init();
-		$_GET['post']      = self::$story_id;
+		$GLOBALS['post']   = get_post( self::$story_id );
 		$_GET['post_type'] = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
 		wp_set_current_user( self::$admin_id );
-		set_current_screen();
+		set_current_screen( 'post.php' );
 		$result = $admin->admin_body_class( 'current' );
 		$this->assertContains( 'folded', $result );
 	}
