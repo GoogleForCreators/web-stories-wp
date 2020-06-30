@@ -1,3 +1,3 @@
 ---
-redirect_to: https://google.github.io/web-stories-wp/storybook/
+redirect_to: https://google.github.io/web-stories-wp/beta/
 ---
