@@ -22,7 +22,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-describe('Canvas keys integration', () => {
+describe('Link panel integration', () => {
   let fixture;
   let element1;
 
@@ -63,6 +63,15 @@ describe('Canvas keys integration', () => {
   }
 
   it('should open the link panel when cmd + k is clicked', async () => {
+    expect(await getNonBackgroundElementIds()).toEqual([element1.id]);
+    expect(await getSelection()).toEqual([element1.id]);
+    const linkInput = fixture.querySelector('[data-testid="link-input-field"]');
+    expect(linkInput.contains(document.activeElement)).toBeFalse();
+    await fixture.events.keyboard.shortcut('mod+k');
+    expect(linkInput.contains(document.activeElement)).toBeTrue();
+  });
+
+  it('should be able to add a link', async () => {
     expect(await getNonBackgroundElementIds()).toEqual([element1.id]);
     expect(await getSelection()).toEqual([element1.id]);
     const linkInput = fixture.querySelector('[data-testid="link-input-field"]');
