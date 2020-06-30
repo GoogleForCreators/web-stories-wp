@@ -29,42 +29,18 @@ import { defaultTemplatesState } from '../app/reducer/templates';
 import formattedUsersObject from '../storybookUtils/formattedUsersObject';
 import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
+import { STORY_STATUSES } from '../constants/stories';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
-  const [stories] = useState({
-    ...defaultStoriesState,
-    stories: formattedStoriesArray.reduce((acc, curr) => {
-      acc[curr.id] = curr;
-
-      return acc;
-    }, {}),
-    storiesOrderById: formattedStoriesArray.map(({ id }) => id),
-    totalStoriesByStatus: formattedStoriesArray.reduce(
-      (acc, curr) => {
-        if (acc[curr.status] > 0) {
-          acc[curr.status] = acc[curr.status] + 1;
-        } else {
-          acc[curr.status] = 1;
-        }
-
-        return acc;
-      },
-      {
-        all: formattedStoriesArray.length,
-        draft: 0,
-        published: 0,
-      }
-    ),
-    totalPages: 1,
-  });
+  const [stories, setStoriesState] = useState(getStoriesState());
   const [templates] = useState(defaultTemplatesState);
   const [users] = useState(formattedUsersObject);
 
   const storyApi = useMemo(
     () => ({
       duplicateStory: jasmine.createSpy('duplicateStory'),
-      fetchStories: jasmine.createSpy('fetchStories'),
+      fetchStories: (...args) => setStoriesState(fetchStories(...args)),
       createStoryFromTemplate: jasmine.createSpy('createStoryFromTemplate'),
       trashStory: jasmine.createSpy('trashStory'),
       updateStory: jasmine.createSpy('updateStory'),
@@ -133,3 +109,42 @@ export default function ApiProviderFixture({ children }) {
 ApiProviderFixture.propTypes = {
   children: PropTypes.node,
 };
+
+function getStoriesState() {
+  return {
+    ...defaultStoriesState,
+    stories: formattedStoriesArray.reduce((acc, curr) => {
+      acc[curr.id] = curr;
+
+      return acc;
+    }, {}),
+    storiesOrderById: formattedStoriesArray.map(({ id }) => id),
+    totalStoriesByStatus: formattedStoriesArray.reduce(
+      (acc, curr) => {
+        if (acc[curr.status] > 0) {
+          acc[curr.status] = acc[curr.status] + 1;
+        } else {
+          acc[curr.status] = 1;
+        }
+
+        return acc;
+      },
+      {
+        all: formattedStoriesArray.length,
+        draft: 0,
+        published: 0,
+      }
+    ),
+    totalPages: 1,
+  };
+}
+
+function fetchStories({ status = STORY_STATUSES[0].value }) {
+  const statuses = status.split(',');
+  const storiesState = getStoriesState();
+
+  storiesState.storiesOrderById = formattedStoriesArray
+    .filter(({ status: storyStatus }) => statuses.includes(storyStatus))
+    .map(({ id }) => id);
+  return storiesState;
+}

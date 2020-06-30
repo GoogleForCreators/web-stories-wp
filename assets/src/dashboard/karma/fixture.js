@@ -167,6 +167,10 @@ export default class Fixture {
     return Promise.resolve();
   }
 
+  restore() {
+    window.location.hash = '#';
+  }
+
   /**
    * Calls the specified callback and performs rendering actions on the
    * whole editor.

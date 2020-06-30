@@ -22,11 +22,25 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-
-/**
- * Internal dependencies
- */
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
+
+// Test coverage
+// 1. Navigate to Explore Templates - Done
+// 2. Switch to Drafts - Done
+// 3. Switch to Published - Done
+// 4. Search Stories Text Box
+// 5. Sort By Date
+// 6. Sort By Last Modified
+// 7. Sort By Created By
+// 8. Switch to List View
+// 9. Sort By Title in List View
+// 10. Sort By Author in List View
+// 11. Sort By Date Created in List View
+// 12. Sort By Last Modified In List View
+// 13. Switch to List view and back to Grid View
+// 14. Rename Story
+// 15. Duplicate Story
+// 16. Delete Story
 
 describe('My Stories View integration', () => {
   let fixture;
@@ -36,30 +50,80 @@ describe('My Stories View integration', () => {
     await fixture.render();
   });
 
-  describe('when the page intially loads', () => {
-    it('should render', () => {
-      const exploreTemplatesMenuItem = fixture.screen.queryByText(
-        'Explore Templates'
-      );
+  afterEach(() => {
+    fixture.restore();
+  });
 
-      expect(exploreTemplatesMenuItem).toBeTruthy();
+  it('should render', async () => {
+    await waitFor(() => {
+      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      expect(stories.length).toEqual(formattedStoriesArray.length);
+    });
+  });
 
-      waitFor(() => {
-        const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-        expect(stories.length).toEqual(formattedStoriesArray.length);
+  it('should navigate to Explore Templates', async () => {
+    const exploreTemplatesMenuItem = fixture.screen.queryByText(
+      'Explore Templates'
+    );
+
+    await fixture.events.click(exploreTemplatesMenuItem);
+
+    const viewTemplates = fixture.screen.queryByText('Viewing all templates');
+
+    expect(viewTemplates).toBeTruthy();
+  });
+
+  it('should switch to the Drafts Tab', async () => {
+    const numDrafts = formattedStoriesArray.filter(
+      ({ status }) => status === 'draft'
+    ).length;
+
+    expect(numDrafts).toBeGreaterThan(0);
+
+    let draftsTabButton;
+
+    await waitFor(() => {
+      draftsTabButton = fixture.screen.getByRole('button', { name: /^Drafts/ });
+
+      expect(draftsTabButton).toBeTruthy();
+    });
+
+    await fixture.events.click(draftsTabButton);
+
+    const viewDraftsText = fixture.screen.getByText(/Viewing drafts/);
+
+    expect(viewDraftsText).toBeTruthy();
+
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+    expect(stories.length).toEqual(numDrafts);
+  });
+
+  it('should switch to the Published Tab', async () => {
+    const numPublished = formattedStoriesArray.filter(
+      ({ status }) => status === 'publish'
+    ).length;
+
+    expect(numPublished).toBeGreaterThan(0);
+
+    let publishedTabButton;
+
+    await waitFor(() => {
+      publishedTabButton = fixture.screen.getByRole('button', {
+        name: /^Published/,
       });
+
+      expect(publishedTabButton).toBeTruthy();
     });
 
-    it('should navigate to Explore Templates', async () => {
-      const screen = fixture.screen;
+    await fixture.events.click(publishedTabButton);
 
-      const exploreTemplatesMenuItem = screen.queryByText('Explore Templates');
+    const viewPublishedText = fixture.screen.getByText(
+      /Viewing published stories/
+    );
 
-      await fixture.events.click(exploreTemplatesMenuItem);
+    expect(viewPublishedText).toBeTruthy();
 
-      const viewTemplates = screen.queryByText('Viewing all templates');
-
-      expect(viewTemplates).toBeTruthy();
-    });
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+    expect(stories.length).toEqual(numPublished);
   });
 });
