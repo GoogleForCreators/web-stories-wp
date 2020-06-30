@@ -29,7 +29,7 @@ import { defaultTemplatesState } from '../app/reducer/templates';
 import formattedUsersObject from '../storybookUtils/formattedUsersObject';
 import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
-import { STORY_STATUSES } from '../constants/stories';
+import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
@@ -139,7 +139,11 @@ function getStoriesState() {
   };
 }
 
-function fetchStories({ status = STORY_STATUSES[0].value, searchTerm = '' }) {
+function fetchStories({
+  status = STORY_STATUSES[0].value,
+  searchTerm = '',
+  sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
+}) {
   const storiesState = getStoriesState();
   const statuses = status.split(',');
 
@@ -148,6 +152,16 @@ function fetchStories({ status = STORY_STATUSES[0].value, searchTerm = '' }) {
       ({ status: storyStatus, title }) =>
         statuses.includes(storyStatus) && title.includes(searchTerm)
     )
+    .sort((a, b) => {
+      switch (sortOption) {
+        case STORY_SORT_OPTIONS.DATE_CREATED:
+          return new Date(a.created).getTime() - new Date(b.created).getTime();
+        case STORY_SORT_OPTIONS.LAST_MODIFIED:
+          return a[sortOption].diff(b[sortOption]);
+        default:
+          return 0;
+      }
+    })
     .map(({ id }) => id);
   return storiesState;
 }

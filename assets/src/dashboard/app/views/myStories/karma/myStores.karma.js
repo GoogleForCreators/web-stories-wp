@@ -29,8 +29,8 @@ import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesAr
 // 2. Switch to Drafts - Done
 // 3. Switch to Published - Done
 // 4. Search Stories Text Box - Done
-// 5. Sort By Date
-// 6. Sort By Last Modified
+// 5. Sort By Date - Done
+// 6. Sort By Last Modified - Done
 // 7. Sort By Created By
 // 8. Switch to List View
 // 9. Sort By Title in List View
@@ -146,5 +146,69 @@ describe('My Stories View integration', () => {
         ).length
       );
     });
+  });
+
+  it('should sort by Date Created', async () => {
+    window.shouldDebug = true;
+    const sortDropdown = fixture.screen.getByLabelText(
+      'Choose sort option for display'
+    );
+
+    expect(sortDropdown).toBeTruthy();
+
+    await fixture.events.click(sortDropdown);
+
+    const dateCreated = fixture.screen.getByText(/Date created/);
+
+    expect(dateCreated).toBeTruthy();
+
+    await fixture.events.click(dateCreated);
+
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    const renderedStoriesById = stories.map(
+      ({ dataset }) => dataset['testid'].split('-').slice(-1)[0]
+    );
+
+    const storyIdsSortedByCreated = formattedStoriesArray
+      .sort(
+        (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()
+      )
+      .map(({ id }) => String(id));
+
+    expect(renderedStoriesById).toEqual(storyIdsSortedByCreated);
+    delete window.shouldDebug;
+  });
+
+  it('should sort by Last Modified', async () => {
+    const sortDropdown = fixture.screen.getByLabelText(
+      'Choose sort option for display'
+    );
+
+    expect(sortDropdown).toBeTruthy();
+
+    await fixture.events.click(sortDropdown);
+
+    // last modified is the default sort and will be present in the dom twice
+    const lastModified = fixture.screen.getAllByText(/Last modified/);
+
+    expect(lastModified).toBeTruthy();
+
+    expect(lastModified.length).toEqual(2);
+
+    // Click the item in the dropdown
+    await fixture.events.click(lastModified[1]);
+
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    const renderedStoriesById = stories.map(
+      ({ dataset }) => dataset['testid'].split('-').slice(-1)[0]
+    );
+
+    const storyIdsSortedByLastModified = formattedStoriesArray
+      .sort((a, b) => a.modified.diff(b.modified))
+      .map(({ id }) => String(id));
+
+    expect(renderedStoriesById).toEqual(storyIdsSortedByLastModified);
   });
 });
