@@ -31,7 +31,7 @@ class Plugin extends \WP_UnitTestCase {
 		$this->assertSame( 9, has_action( 'init', [ $plugin->updater, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->dashboard, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'admin_init', [ $plugin->admin, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'admin_init', [ $this->database_upgrader, 'init' ] ) );
+		$this->assertSame( 10, has_action( 'admin_init', [ $plugin->database_upgrader, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->embed_block, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->discovery, 'init' ] ) );
 		$this->assertSame( 100, has_action( 'rest_api_init', [ $plugin, 'register_rest_routes' ] ) );
