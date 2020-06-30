@@ -27,7 +27,7 @@
     "@wordpress/components": "^9.9.0",
     "@wordpress/compose": "^3.18.0",
     "@wordpress/data": "^4.21.0",
-    "@wordpress/date": "^3.9.0",
+    "@wordpress/date": "^3.10.0",
     "@wordpress/element": "^2.15.0",
     "@wordpress/i18n": "^3.14.0",
     "big.js": "^5.2.2",
@@ -214,8 +214,6 @@
     "test:e2e:firefox:debug": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true node --inspect-brk node_modules/.bin/jest --runInBand --config=tests/e2e/jest.config.js",
     "percy": "percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots/",
     "preworkflow:copy-template-assets": "mkdir -p build/storybook/plugin-assets/images",
-    "workflow:copy-cdn-files": "cp -R __cdn__/* build/storybook/",
-    "workflow:copy-template-assets": "cp -R assets/images/templates build/storybook/plugin-assets/images/templates",
     "workflow:version": "./bin/commander.js version",
     "workflow:build-plugin": "./bin/commander.js build-plugin",
     "workflow:fonts": "./bin/commander.js build-fonts"

@@ -41,10 +41,6 @@ class Admin {
 	 * @return void
 	 */
 	public function init() {
-		// Migrations.
-		$database_upgrader = new Database_Upgrader();
-		$database_upgrader->init();
-
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ] );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
