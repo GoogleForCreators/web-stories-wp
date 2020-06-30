@@ -85,16 +85,14 @@ export const VIEW_STYLE = {
 };
 
 export const VIEW_STYLE_LABELS = {
-  [VIEW_STYLE.GRID]: __('Grid View', 'web-stories'),
-  [VIEW_STYLE.LIST]: __('List View', 'web-stories'),
+  [VIEW_STYLE.GRID]: __('Switch to List View', 'web-stories'),
+  [VIEW_STYLE.LIST]: __('Switch to Grid View', 'web-stories'),
 };
 
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
-
-export const ITEMS_PER_PAGE = 20;
 
 export const DASHBOARD_VIEWS = {
   MY_STORIES: 'MY_STORIES',
@@ -106,6 +104,13 @@ export const RESULT_LABELS = {
   [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
+
+// API Query Constants
+export const ITEMS_PER_PAGE = 24;
+export const USERS_PER_REQUEST = 100;
+export const STORIES_PER_REQUEST = 24;
+
+export const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
 export * from './animation';
 export * from './components';

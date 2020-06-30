@@ -12,3 +12,4 @@ node_modules
 /bin/local-env/data
 phpcs.xml
 phpunit.xml
+phpunit-multisite.xml

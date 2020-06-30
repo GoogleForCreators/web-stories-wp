@@ -19,4 +19,7 @@
  */
 import { createContext } from '../../utils/context';
 
-export default createContext({ state: {}, actions: {} });
+export default createContext({
+  local: { state: {}, actions: {} },
+  media3p: { state: {}, actions: {} },
+});
