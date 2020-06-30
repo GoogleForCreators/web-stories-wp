@@ -31,6 +31,7 @@ import { useStory } from '../../app';
 import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
+import PageAttachment from './pageAttachment';
 
 function DisplayLayer() {
   const { currentPage } = useStory((state) => ({
@@ -72,6 +73,9 @@ function DisplayLayer() {
               );
             })
           : null}
+        {currentPage?.pageAttachment?.url && (
+          <PageAttachment pageAttachment={currentPage.pageAttachment} />
+        )}
       </PageArea>
     </Layer>
   );
