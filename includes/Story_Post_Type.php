@@ -453,6 +453,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-23
 				 */
 				'showElementsTab'              => false,
+				/**
+				 * Description: Flag for row-based media gallery (vs column based).
+				 * Author: @joannalee
+				 * Issue: #
+				 * Creation date: 2020-06-30
+				 */
+				'rowBasedGallery'              => false,
 			],
 
 		];
