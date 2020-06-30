@@ -15,23 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { shallowEqual } from 'react-pure-render';
-
-/**
  * Internal dependencies
  */
-import providerReducer from './providerReducer.js';
+import { identity } from '../../../utils/context';
+import useMedia from '../useMedia';
 
-const providers = ['unsplash'];
-
-function reducer(state = {}, { type, payload }) {
-  const result = {};
-  for (const provider of providers) {
-    result[provider] = providerReducer(state[provider], { type, payload });
-  }
-  return !shallowEqual(result, state) ? result : state;
+function useLocalMedia(selector) {
+  return useMedia(({ local }) => (selector ?? identity)(local));
 }
 
-export default reducer;
+export default useLocalMedia;
