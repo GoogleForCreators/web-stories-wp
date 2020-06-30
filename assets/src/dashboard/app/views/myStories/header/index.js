@@ -22,12 +22,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Layout, ToggleButtonGroup } from '../../../../components';
+import {
+  Layout,
+  ToggleButtonGroup,
+  useLayoutContext,
+} from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
@@ -59,6 +63,10 @@ function Header({
   view,
   wpListURL,
 }) {
+  const {
+    actions: { scrollToTop },
+  } = useLayoutContext();
+
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
     isActiveSearch: Boolean(search.keyword),
@@ -79,7 +87,10 @@ function Header({
         <ToggleButtonGroup
           buttons={STORY_STATUSES.map((storyStatus) => {
             return {
-              handleClick: () => filter.set(storyStatus.value),
+              handleClick: () => {
+                filter.set(storyStatus.value);
+                scrollToTop();
+              },
               key: storyStatus.value,
               isActive: filter.value === storyStatus.value,
               disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
@@ -93,7 +104,7 @@ function Header({
         />
       </HeaderToggleButtonContainer>
     );
-  }, [filter, totalStoriesByStatus]);
+  }, [filter, scrollToTop, totalStoriesByStatus]);
 
   return (
     <Layout.Squishable>
@@ -135,4 +146,4 @@ Header.propTypes = {
   wpListURL: PropTypes.string,
 };
 
-export default Header;
+export default memo(Header);
