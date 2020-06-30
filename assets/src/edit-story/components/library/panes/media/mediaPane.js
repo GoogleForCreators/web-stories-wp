@@ -20,6 +20,7 @@
 import { rgba } from 'polished';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -42,15 +43,24 @@ import {
 } from '../../../../app/media/utils';
 import paneId from './paneId';
 import MediaElement from './mediaElement';
+import MediaGallery from './mediaGallery';
 
 export const ROOT_MARGIN = 300;
 
-const Container = styled.div`
+const ColumnContainer = styled.div`
   grid-area: infinitescroll;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
   overflow: auto;
+  padding: 0 1.5em 0 1.5em;
+  margin-top: 1em;
+`;
+
+const RowContainer = styled.div`
+  grid-area: infinitescroll;
+  overflow: scroll;
+  height: 100%;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
 `;
@@ -129,6 +139,7 @@ const FILTERS = [
 const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
+  const isRowBasedGallery = useFeature('rowBasedGallery');
   const {
     hasMore,
     media,
@@ -312,6 +323,53 @@ function MediaPane(props) {
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
+  const innerContainer = isRowBasedGallery ? (
+    <RowContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
+      <MediaGallery
+        resources={resources}
+        onInsert={insertMediaElement}
+        isMedia3p={false}
+      />
+      {hasMore && (
+        <Loading ref={refContainerFooter}>
+          {__('Loading…', 'web-stories')}
+        </Loading>
+      )}
+    </RowContainer>
+  ) : (
+    <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
+      <Column>
+        {resources
+          .filter((_, index) => isEven(index))
+          .map((resource, i) => (
+            <MediaElement
+              resource={resource}
+              key={i}
+              width={PREVIEW_SIZE}
+              onInsert={insertMediaElement}
+            />
+          ))}
+      </Column>
+      <Column>
+        {resources
+          .filter((_, index) => !isEven(index))
+          .map((resource, i) => (
+            <MediaElement
+              resource={resource}
+              key={i}
+              width={PREVIEW_SIZE}
+              onInsert={insertMediaElement}
+            />
+          ))}
+      </Column>
+      {hasMore && (
+        <Loading ref={refContainerFooter}>
+          {__('Loading…', 'web-stories')}
+        </Loading>
+      )}
+    </ColumnContainer>
+  );
+
   return (
     <StyledPane id={paneId} {...props}>
       <Inner>
@@ -342,37 +400,7 @@ function MediaPane(props) {
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
-          <Container data-testid="mediaLibrary" ref={refCallbackContainer}>
-            <Column>
-              {resources
-                .filter((_, index) => isEven(index))
-                .map((resource, i) => (
-                  <MediaElement
-                    resource={resource}
-                    key={i}
-                    width={PREVIEW_SIZE}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            <Column>
-              {resources
-                .filter((_, index) => !isEven(index))
-                .map((resource, i) => (
-                  <MediaElement
-                    resource={resource}
-                    key={i}
-                    width={PREVIEW_SIZE}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            {hasMore && (
-              <Loading ref={refContainerFooter}>
-                {__('Loading…', 'web-stories')}
-              </Loading>
-            )}
-          </Container>
+          innerContainer
         )}
       </Inner>
     </StyledPane>
