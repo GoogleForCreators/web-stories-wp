@@ -149,7 +149,6 @@ describe('My Stories View integration', () => {
   });
 
   it('should sort by Date Created', async () => {
-    window.shouldDebug = true;
     const sortDropdown = fixture.screen.getByLabelText(
       'Choose sort option for display'
     );
@@ -177,7 +176,6 @@ describe('My Stories View integration', () => {
       .map(({ id }) => String(id));
 
     expect(renderedStoriesById).toEqual(storyIdsSortedByCreated);
-    delete window.shouldDebug;
   });
 
   it('should sort by Last Modified', async () => {
