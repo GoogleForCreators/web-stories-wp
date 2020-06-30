@@ -1,5 +1,5 @@
 {
-  "version": 23,
+  "version": 24,
   "pages": [
     {
       "elements": [
@@ -31,16 +31,12 @@
           "isDefaultBackground": true
         },
         {
-          "x": -133,
-          "y": 337,
-          "width": 679,
-          "height": 745,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": -80,
+          "rotationAngle": 83,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
@@ -49,14 +45,18 @@
               "b": 84
             }
           },
+          "type": "shape",
+          "x": -131,
+          "y": 339,
+          "width": 540,
+          "height": 618,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-6"
+            "type": "blob-3"
           },
-          "type": "shape",
-          "id": "b7661996-d869-4afb-bdef-21b61d9a8729"
+          "id": "a413ec38-e047-4458-927f-14364d513d52"
         },
         {
           "x": 26,
@@ -87,7 +87,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page1_image1.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -95,85 +95,7 @@
             "title": "wellbeing_page1_image1",
             "alt": "wellbeing_page1_image1",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page1_image1-300x200.jpg",
-                "width": 300,
-                "height": 200,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-300x200.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page1_image1-1024x683.jpg",
-                "width": 1024,
-                "height": 683,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-1024x683.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page1_image1-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page1_image1-768x512.jpg",
-                "width": 768,
-                "height": 512,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-768x512.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page1_image1-1536x1025.jpg",
-                "width": 1536,
-                "height": 1025,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-1536x1025.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page1_image1-1200x801.jpg",
-                "width": 1200,
-                "height": 801,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-1200x801.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page1_image1-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page1_image1-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page1_image1-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page1_image1-150x100.jpg",
-                "width": 150,
-                "height": 100,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1-150x100.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page1_image1.jpg",
-                "width": 1920,
-                "height": 1281,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page1_image1.jpg"
-              }
-            }
+            "sizes": []
           },
           "basedOn": "41a5dd8e-e12b-46fb-aef1-63b71a2475bf",
           "id": "8dbfe563-a930-4de7-90d7-e9681be1e98e"
@@ -284,21 +206,14 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_icon_logo.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_icon_logo.png",
             "width": 38,
             "height": 12,
             "id": 1693,
             "title": "wellbeing_icon_logo",
             "alt": "wellbeing_icon_logo",
             "local": false,
-            "sizes": {
-              "full": {
-                "url": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_icon_logo.png",
-                "height": 23,
-                "width": 75,
-                "orientation": "landscape"
-              }
-            }
+            "sizes": []
           },
           "type": "image",
           "x": 170.5,
@@ -312,6 +227,34 @@
             "ratio": 1
           },
           "id": "8b9f4705-fd93-41ad-bb6e-a47cfee940c4"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "type": "shape",
+          "x": -156,
+          "y": -81,
+          "width": 641,
+          "height": 781,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "blob-6"
+          },
+          "id": "d1783451-12c7-4e47-99a7-baebb0a45541"
         }
       ],
       "type": "page",
@@ -395,10 +338,6 @@
           "isDefaultBackground": true
         },
         {
-          "x": -163,
-          "y": 491,
-          "width": 608,
-          "height": 475,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -413,42 +352,47 @@
               "b": 46
             }
           },
+          "type": "shape",
+          "x": -163,
+          "y": 485,
+          "width": 793,
+          "height": 713,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-6"
+            "type": "blob-3"
           },
-          "type": "shape",
-          "id": "28272c83-6d09-42da-abcb-bff4b3e91980"
+          "id": "8d31d477-7e91-4214-b263-c72d0a726be1"
         },
         {
-          "opacity": 50,
+          "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 345,
+          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
               "r": 251,
               "g": 235,
-              "b": 186
+              "b": 186,
+              "a": 0.5
             }
           },
           "type": "shape",
-          "x": -240,
-          "y": 53,
-          "width": 665,
-          "height": 665,
+          "x": -233,
+          "y": -57,
+          "width": 746,
+          "height": 870,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-2"
           },
-          "id": "24d2d267-4665-4fc1-8aa5-c3bfb8f528c9"
+          "id": "ec40785b-35e7-4572-8fd5-3bce5b898d50"
         },
         {
           "x": 71.5,
@@ -705,6 +649,34 @@
             "horizontal": 0,
             "vertical": 0
           }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 216,
+              "g": 216,
+              "b": 216
+            }
+          },
+          "type": "shape",
+          "x": -45,
+          "y": -82,
+          "width": 588,
+          "height": 732,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "blob-6"
+          },
+          "id": "741aeabf-40d3-4f1b-8ff0-0e9d72639718"
         }
       ],
       "type": "page",
@@ -776,7 +748,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page3_bg.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -784,85 +756,7 @@
             "title": "wellbeing_page3_bg",
             "alt": "wellbeing_page3_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page3_bg-300x200.jpg",
-                "width": 300,
-                "height": 200,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-300x200.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page3_bg-1024x684.jpg",
-                "width": 1024,
-                "height": 684,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-1024x684.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page3_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page3_bg-768x513.jpg",
-                "width": 768,
-                "height": 513,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-768x513.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page3_bg-1536x1026.jpg",
-                "width": 1536,
-                "height": 1026,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-1536x1026.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page3_bg-1200x801.jpg",
-                "width": 1200,
-                "height": 801,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-1200x801.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page3_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page3_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page3_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page3_bg-150x100.jpg",
-                "width": 150,
-                "height": 100,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg-150x100.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page3_bg.jpg",
-                "width": 1920,
-                "height": 1282,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page3_bg.jpg"
-              }
-            }
+            "sizes": []
           }
         },
         {
@@ -871,8 +765,8 @@
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 49,
-          "lockAspectRatio": false,
+          "rotationAngle": 69,
+          "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
               "r": 75,
@@ -881,17 +775,17 @@
             }
           },
           "type": "shape",
-          "x": -37,
-          "y": 223,
-          "width": 532,
-          "height": 546,
+          "x": -148,
+          "y": 265,
+          "width": 664,
+          "height": 664,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-3"
           },
-          "id": "668d924c-901e-492c-a800-1ff696e0d471"
+          "id": "768c1106-9dff-438d-ab20-7f1194e4d3e0"
         },
         {
           "x": 38,
@@ -1236,7 +1130,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
             "width": 150,
             "height": 257,
             "posterId": 0,
@@ -1244,36 +1138,7 @@
             "title": "wellbeing_icon_arrow_head_light",
             "alt": "wellbeing_icon_arrow_head_light",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_icon_arrow_head_light-175x300.png",
-                "width": 175,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light-175x300.png"
-              },
-              "thumbnail": {
-                "file": "wellbeing_icon_arrow_head_light-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_icon_arrow_head_light-150x257.png",
-                "width": 150,
-                "height": 257,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light-150x257.png"
-              },
-              "full": {
-                "file": "wellbeing_icon_arrow_head_light.png",
-                "width": 300,
-                "height": 514,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light.png"
-              }
-            }
+            "sizes": []
           },
           "mask": {
             "type": "rectangle",
@@ -1313,32 +1178,61 @@
           "id": "74d501d3-4f54-4348-b718-fef474c789f2"
         },
         {
-          "opacity": 50,
+          "opacity": 100,
           "flip": {
-            "vertical": false,
+            "vertical": true,
             "horizontal": false
           },
-          "rotationAngle": 241,
+          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
               "r": 251,
               "g": 235,
-              "b": 186
+              "b": 186,
+              "a": 0.5
             }
           },
           "type": "shape",
-          "x": 290,
-          "y": 280,
-          "width": 195,
-          "height": 195,
+          "x": 270,
+          "y": 224,
+          "width": 285,
+          "height": 283,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-2"
           },
-          "id": "975e9a9f-fb05-4856-865c-cb79dab2e707"
+          "id": "f48c6b69-fb61-4c9f-aee3-2155a28eda0b"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 287,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": -217,
+          "y": 178,
+          "width": 621,
+          "height": 723,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "blob-6"
+          },
+          "id": "1d881f00-3727-4531-ba0a-3d6d3459dc8e"
         }
       ],
       "type": "page",
@@ -1371,7 +1265,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page4_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
@@ -1379,92 +1273,7 @@
             "title": "wellbeing_page4_bg",
             "alt": "wellbeing_page4_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page4_bg-169x300.jpg",
-                "width": 169,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-169x300.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page4_bg-576x1024.jpg",
-                "width": 576,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-576x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page4_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page4_bg-768x1366.jpg",
-                "width": 768,
-                "height": 1366,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-768x1366.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page4_bg-864x1536.jpg",
-                "width": 864,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-864x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "wellbeing_page4_bg-1151x2048.jpg",
-                "width": 1151,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-1151x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page4_bg-1200x2134.jpg",
-                "width": 1200,
-                "height": 2134,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-1200x2134.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page4_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page4_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page4_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page4_bg-150x267.jpg",
-                "width": 150,
-                "height": 267,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-150x267.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page4_bg-scaled.jpg",
-                "width": 1439,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page4_bg-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "mask": {
             "type": "rectangle",
@@ -1661,16 +1470,12 @@
           "link": null
         },
         {
-          "x": -44,
-          "y": -414,
-          "width": 536,
-          "height": 532,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 52,
+          "rotationAngle": 226,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
@@ -1679,14 +1484,18 @@
               "b": 46
             }
           },
+          "type": "shape",
+          "x": -52,
+          "y": -308,
+          "width": 535,
+          "height": 535,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-4"
           },
-          "type": "shape",
-          "id": "2b8fbcd5-d3c0-4d74-8696-e9adf793d07e"
+          "id": "288e5574-246c-42b1-a62e-ea157917e0c3"
         },
         {
           "x": 74,
@@ -1816,32 +1625,33 @@
           "isDefaultBackground": true
         },
         {
-          "opacity": 50,
+          "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 100,
+          "rotationAngle": 115,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
               "r": 251,
               "g": 235,
-              "b": 186
+              "b": 186,
+              "a": 0.5
             }
           },
           "type": "shape",
-          "x": -49,
-          "y": 37,
-          "width": 569,
-          "height": 514,
+          "x": -116,
+          "y": -32,
+          "width": 716,
+          "height": 682,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-2"
           },
-          "id": "735adef9-efa7-4283-80c7-80856ad3c58e"
+          "id": "08a9f14d-e04a-4e73-8c33-ba3baba83813"
         },
         {
           "x": 26,
@@ -1872,7 +1682,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page5_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -1880,92 +1690,7 @@
             "title": "wellbeing_page5_image1",
             "alt": "wellbeing_page5_image1",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page5_image1-200x300.jpg",
-                "width": 200,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-200x300.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page5_image1-683x1024.jpg",
-                "width": 683,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-683x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page5_image1-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page5_image1-768x1152.jpg",
-                "width": 768,
-                "height": 1152,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-768x1152.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page5_image1-1024x1536.jpg",
-                "width": 1024,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-1024x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "wellbeing_page5_image1-1365x2048.jpg",
-                "width": 1365,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-1365x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page5_image1-1200x1800.jpg",
-                "width": 1200,
-                "height": 1800,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-1200x1800.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page5_image1-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page5_image1-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page5_image1-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page5_image1-150x225.jpg",
-                "width": 150,
-                "height": 225,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-150x225.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page5_image1-scaled.jpg",
-                "width": 1707,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page5_image1-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "basedOn": "8dbfe563-a930-4de7-90d7-e9681be1e98e",
           "id": "e5936b3b-e398-4cdd-a2f5-91128b4c10b9"
@@ -2343,7 +2068,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_dark.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_icon_arrow_head_dark.png",
             "width": 150,
             "height": 257,
             "posterId": 0,
@@ -2351,36 +2076,7 @@
             "title": "wellbeing_icon_arrow_head_dark",
             "alt": "wellbeing_icon_arrow_head_dark",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_icon_arrow_head_dark-175x300.png",
-                "width": 175,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_dark-175x300.png"
-              },
-              "thumbnail": {
-                "file": "wellbeing_icon_arrow_head_dark-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_dark-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_icon_arrow_head_dark-150x257.png",
-                "width": 150,
-                "height": 257,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_dark-150x257.png"
-              },
-              "full": {
-                "file": "wellbeing_icon_arrow_head_dark.png",
-                "width": 300,
-                "height": 514,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_dark.png"
-              }
-            }
+            "sizes": []
           },
           "mask": {
             "type": "rectangle",
@@ -2390,6 +2086,34 @@
           },
           "type": "image",
           "id": "49416c51-ae2e-4b5c-bad0-66da4b9247b4"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 306,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": -57,
+          "y": 57,
+          "width": 512,
+          "height": 658,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "blob-6"
+          },
+          "id": "83bb4834-fe9a-4cd9-9b51-4a2b33d42f13"
         }
       ],
       "type": "page",
@@ -2422,7 +2146,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page6_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -2430,92 +2154,7 @@
             "title": "wellbeing_page6_bg",
             "alt": "wellbeing_page6_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page6_bg-200x300.jpg",
-                "width": 200,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-200x300.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page6_bg-683x1024.jpg",
-                "width": 683,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-683x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page6_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page6_bg-768x1152.jpg",
-                "width": 768,
-                "height": 1152,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-768x1152.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page6_bg-1024x1536.jpg",
-                "width": 1024,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-1024x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "wellbeing_page6_bg-1365x2048.jpg",
-                "width": 1365,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-1365x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page6_bg-1200x1800.jpg",
-                "width": 1200,
-                "height": 1800,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-1200x1800.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page6_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page6_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page6_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page6_bg-150x225.jpg",
-                "width": 150,
-                "height": 225,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-150x225.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page6_bg-scaled.jpg",
-                "width": 1707,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page6_bg-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "mask": {
             "type": "rectangle",
@@ -2528,16 +2167,12 @@
           "isBackground": true
         },
         {
-          "x": -30,
-          "y": 410,
-          "width": 532,
-          "height": 509,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 350,
+          "rotationAngle": 354,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
@@ -2546,14 +2181,18 @@
               "b": 84
             }
           },
+          "type": "shape",
+          "x": -17,
+          "y": 315,
+          "width": 612,
+          "height": 612,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-2"
           },
-          "type": "shape",
-          "id": "7ef12ff7-7314-444a-b7f5-4369be80f297"
+          "id": "dc2f00ab-bacf-4593-a6a0-e24b777c116b"
         },
         {
           "x": 26,
@@ -2777,6 +2416,34 @@
             "horizontal": 0,
             "vertical": 0
           }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 245,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 22,
+          "y": 394,
+          "width": 373,
+          "height": 475,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "blob-6"
+          },
+          "id": "0aa52870-b073-41b1-888a-accd81a375e2"
         }
       ],
       "type": "page",
@@ -2832,7 +2499,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page7_bg.jpg",
             "width": 220,
             "height": 293,
             "posterId": 0,
@@ -2840,92 +2507,7 @@
             "title": "wellbeing_page7_bg",
             "alt": "wellbeing_page7_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page7_bg-225x300.jpg",
-                "width": 225,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-225x300.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page7_bg-768x1024.jpg",
-                "width": 768,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-768x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page7_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page7_bg-768x1024.jpg",
-                "width": 768,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-768x1024.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page7_bg-1152x1536.jpg",
-                "width": 1152,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-1152x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "wellbeing_page7_bg-1536x2048.jpg",
-                "width": 1536,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-1536x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page7_bg-1200x1600.jpg",
-                "width": 1200,
-                "height": 1600,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-1200x1600.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page7_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page7_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page7_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page7_bg-150x200.jpg",
-                "width": 150,
-                "height": 200,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg-150x200.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page7_bg.jpg",
-                "width": 1920,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page7_bg.jpg"
-              }
-            }
+            "sizes": []
           },
           "mask": {
             "type": "rectangle",
@@ -2943,7 +2525,7 @@
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 338,
+          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
@@ -2953,17 +2535,17 @@
             }
           },
           "type": "shape",
-          "x": -238,
-          "y": -148,
-          "width": 606,
-          "height": 568,
+          "x": -284,
+          "y": -217,
+          "width": 725,
+          "height": 725,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-2"
           },
-          "id": "b97dbb8f-3ce7-4cef-87d8-4f3594409415"
+          "id": "9b7290b8-f166-4e38-8213-97abb1c96ad6"
         },
         {
           "x": 144,
@@ -3090,6 +2672,34 @@
             "horizontal": 0,
             "vertical": 0
           }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 314,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": -52,
+          "y": -139,
+          "width": 569,
+          "height": 733,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "blob-6"
+          },
+          "id": "85a31443-3c26-4c04-9123-c4d86b83e1f0"
         }
       ],
       "type": "page",
@@ -3155,16 +2765,12 @@
           "isDefaultBackground": true
         },
         {
-          "x": -31,
-          "y": -335,
-          "width": 622,
-          "height": 617,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": -84,
+          "rotationAngle": 99,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
@@ -3173,14 +2779,18 @@
               "b": 84
             }
           },
+          "type": "shape",
+          "x": -171,
+          "y": -311,
+          "width": 655,
+          "height": 701,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-6"
+            "type": "blob-3"
           },
-          "type": "shape",
-          "id": "b3229ffa-a390-4633-88fb-ea7a610b651e"
+          "id": "2694e032-b61e-4adc-97a2-a97f128c88e6"
         },
         {
           "x": 26,
@@ -3211,7 +2821,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page8_image1.jpg",
             "width": 220,
             "height": 220,
             "posterId": 0,
@@ -3219,85 +2829,7 @@
             "title": "wellbeing_page8_image1",
             "alt": "wellbeing_page8_image1",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page8_image1-300x300.jpg",
-                "width": 300,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-300x300.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page8_image1-1024x1024.jpg",
-                "width": 1024,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-1024x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page8_image1-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page8_image1-768x768.jpg",
-                "width": 768,
-                "height": 768,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-768x768.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page8_image1-1536x1536.jpg",
-                "width": 1536,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-1536x1536.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page8_image1-1200x1200.jpg",
-                "width": 1200,
-                "height": 1200,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-1200x1200.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page8_image1-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page8_image1-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page8_image1-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page8_image1-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1-150x150.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page8_image1.jpg",
-                "width": 1920,
-                "height": 1920,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page8_image1.jpg"
-              }
-            }
+            "sizes": []
           },
           "basedOn": "e5936b3b-e398-4cdd-a2f5-91128b4c10b9",
           "id": "a406280f-9a0b-4140-83fb-e9cac472886f"
@@ -3710,7 +3242,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
             "width": 150,
             "height": 257,
             "posterId": 0,
@@ -3718,36 +3250,7 @@
             "title": "wellbeing_icon_arrow_head_light",
             "alt": "wellbeing_icon_arrow_head_light",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_icon_arrow_head_light-175x300.png",
-                "width": 175,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light-175x300.png"
-              },
-              "thumbnail": {
-                "file": "wellbeing_icon_arrow_head_light-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_icon_arrow_head_light-150x257.png",
-                "width": 150,
-                "height": 257,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light-150x257.png"
-              },
-              "full": {
-                "file": "wellbeing_icon_arrow_head_light.png",
-                "width": 300,
-                "height": 514,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_icon_arrow_head_light.png"
-              }
-            }
+            "sizes": []
           },
           "mask": {
             "type": "rectangle",
@@ -3789,32 +3292,90 @@
           "id": "b25e15d6-567c-41ec-ab8e-8c72c69b2b51"
         },
         {
-          "x": 213,
-          "y": 161,
-          "width": 287,
-          "height": 346,
-          "opacity": 50,
+          "opacity": 100,
           "flip": {
-            "vertical": false,
+            "vertical": true,
             "horizontal": false
           },
-          "rotationAngle": -92,
+          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
               "r": 251,
               "g": 235,
-              "b": 186
+              "b": 186,
+              "a": 0.5
             }
           },
+          "type": "shape",
+          "x": 160,
+          "y": 118,
+          "width": 394,
+          "height": 394,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-2"
+          },
+          "id": "f6ced1c2-1877-4093-a039-a8deacce21ea"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 27,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
           },
           "type": "shape",
-          "id": "b2a8e955-e246-47af-ac4e-dca6161dd703"
+          "x": -154,
+          "y": -299,
+          "width": 599,
+          "height": 628,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "blob-6"
+          },
+          "id": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 27,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 599,
+          "height": 628,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "blob-6"
+          },
+          "basedOn": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f",
+          "id": "fed8726d-5c7d-4110-ba07-c436be00523b",
+          "x": 22,
+          "y": 509
         }
       ],
       "type": "page",
@@ -3857,16 +3418,12 @@
           "isDefaultBackground": true
         },
         {
-          "x": -163,
-          "y": 95,
-          "width": 635,
-          "height": 635,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 65,
+          "rotationAngle": 69,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
@@ -3875,14 +3432,18 @@
               "b": 220
             }
           },
+          "type": "shape",
+          "x": -244,
+          "y": 39,
+          "width": 842,
+          "height": 842,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-2"
           },
-          "type": "shape",
-          "id": "3331b08e-d1a0-45af-b927-ac5328a14771"
+          "id": "1156e7c9-c922-46f0-b484-65e141757c02"
         },
         {
           "x": 45,
@@ -4729,16 +4290,12 @@
           }
         },
         {
-          "x": 171,
-          "y": 528,
-          "width": 340,
-          "height": 342,
           "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 357,
+          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
@@ -4747,14 +4304,18 @@
               "b": 46
             }
           },
+          "type": "shape",
+          "x": 192,
+          "y": 500,
+          "width": 327,
+          "height": 327,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-2"
           },
-          "type": "shape",
-          "id": "045e16e6-0389-46fd-989c-ac9350b5054e"
+          "id": "ca831afb-f22f-491a-aaf1-ace1e3423d64"
         }
       ],
       "type": "page",
@@ -4802,7 +4363,7 @@
             "vertical": false,
             "horizontal": false
           },
-          "rotationAngle": 47,
+          "rotationAngle": 230,
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
@@ -4812,17 +4373,17 @@
             }
           },
           "type": "shape",
-          "x": -5,
-          "y": -230,
-          "width": 481,
-          "height": 460,
+          "x": -55,
+          "y": -310,
+          "width": 638,
+          "height": 638,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "blob-5"
+            "type": "blob-4"
           },
-          "id": "e898b99f-329b-448f-9ec2-c49d68694307"
+          "id": "909339b8-8ec5-4997-a7e6-688504be7f23"
         },
         {
           "x": 33,
@@ -4854,7 +4415,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page10_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -4862,92 +4423,7 @@
             "title": "wellbeing_page10_image1",
             "alt": "wellbeing_page10_image1",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page10_image1-200x300.jpg",
-                "width": 200,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-200x300.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page10_image1-683x1024.jpg",
-                "width": 683,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-683x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page10_image1-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page10_image1-768x1152.jpg",
-                "width": 768,
-                "height": 1152,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-768x1152.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page10_image1-1024x1536.jpg",
-                "width": 1024,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-1024x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "wellbeing_page10_image1-1365x2048.jpg",
-                "width": 1365,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-1365x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page10_image1-1200x1800.jpg",
-                "width": 1200,
-                "height": 1800,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-1200x1800.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page10_image1-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page10_image1-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page10_image1-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page10_image1-150x225.jpg",
-                "width": 150,
-                "height": 225,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-150x225.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page10_image1-scaled.jpg",
-                "width": 1707,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image1-scaled.jpg"
-              }
-            }
+            "sizes": []
           }
         },
         {
@@ -4969,9 +4445,9 @@
               "b": 51
             }
           },
-          "scale": 130,
+          "scale": 100,
           "focalX": 50,
-          "focalY": 62.2000477299815,
+          "focalY": 50,
           "mask": {
             "type": "rectangle"
           },
@@ -4979,91 +4455,43 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2.jpg",
-            "width": 220,
-            "height": 176,
+            "creationDate": "2020-06-30T20:23:34",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_page10_image2.jpg",
+            "width": 330,
+            "height": 494,
             "posterId": 0,
-            "id": 654,
+            "id": 1932,
             "title": "wellbeing_page10_image2",
             "alt": "wellbeing_page10_image2",
             "local": false,
             "sizes": {
               "medium": {
-                "file": "wellbeing_page10_image2-300x240.jpg",
-                "width": 300,
-                "height": 240,
+                "file": "wellbeing_page10_image2-200x300.jpg",
+                "width": 200,
+                "height": 300,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-300x240.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_page10_image2-200x300.jpg"
               },
               "large": {
-                "file": "wellbeing_page10_image2-1024x819.jpg",
-                "width": 1024,
-                "height": 819,
+                "file": "wellbeing_page10_image2-683x1024.jpg",
+                "width": 683,
+                "height": 1024,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-1024x819.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_page10_image2-683x1024.jpg"
               },
               "thumbnail": {
                 "file": "wellbeing_page10_image2-150x150.jpg",
                 "width": 150,
                 "height": 150,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page10_image2-768x614.jpg",
-                "width": 768,
-                "height": 614,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-768x614.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page10_image2-1536x1229.jpg",
-                "width": 1536,
-                "height": 1229,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-1536x1229.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page10_image2-1200x960.jpg",
-                "width": 1200,
-                "height": 960,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-1200x960.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page10_image2-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page10_image2-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page10_image2-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page10_image2-150x120.jpg",
-                "width": 150,
-                "height": 120,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2-150x120.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_page10_image2-150x150.jpg"
               },
               "full": {
-                "file": "wellbeing_page10_image2.jpg",
-                "width": 1920,
-                "height": 1536,
+                "file": "wellbeing_page10_image2-scaled.jpg",
+                "width": 1707,
+                "height": 2560,
                 "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image2.jpg"
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_page10_image2-scaled.jpg"
               }
             }
           },
@@ -5099,7 +4527,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page10_image3.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
@@ -5107,92 +4535,7 @@
             "title": "wellbeing_page10_image3",
             "alt": "wellbeing_page10_image3",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "wellbeing_page10_image3-240x300.jpg",
-                "width": 240,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-240x300.jpg"
-              },
-              "large": {
-                "file": "wellbeing_page10_image3-819x1024.jpg",
-                "width": 819,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-819x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "wellbeing_page10_image3-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "wellbeing_page10_image3-768x960.jpg",
-                "width": 768,
-                "height": 960,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-768x960.jpg"
-              },
-              "1536x1536": {
-                "file": "wellbeing_page10_image3-1229x1536.jpg",
-                "width": 1229,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-1229x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "wellbeing_page10_image3-1638x2048.jpg",
-                "width": 1638,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-1638x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "wellbeing_page10_image3-1200x1500.jpg",
-                "width": 1200,
-                "height": 1500,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-1200x1500.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "wellbeing_page10_image3-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "wellbeing_page10_image3-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "wellbeing_page10_image3-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "wellbeing_page10_image3-150x188.jpg",
-                "width": 150,
-                "height": 188,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3-150x188.jpg"
-              },
-              "full": {
-                "file": "wellbeing_page10_image3.jpg",
-                "width": 1920,
-                "height": 2400,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/wellbeing_page10_image3.jpg"
-              }
-            }
+            "sizes": []
           },
           "basedOn": "70006d51-6f37-47b4-9074-b193a473caab",
           "id": "46172f61-dfd3-4105-a3b3-9e6b95e32a4c"
@@ -5684,7 +5027,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-23T00:45:25",
-            "src": "http://localhost:8899/wp-content/uploads/2020/06/wellbeing_page10_image4.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page10_image4.png",
             "width": 54,
             "height": 55,
             "posterId": 0,
