@@ -37,8 +37,16 @@ import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
+import inRange from '../../../utils/inRange';
 import { useCanvas } from '../../canvas';
 import { Close } from '../../../icons';
+
+const MIN_MAX = {
+  URL: {
+    MIN: 2,
+    MAX: 2048, // Based on sitemaps url limits (safe side)
+  },
+};
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -161,6 +169,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
+  const hasSomeLinkContent =
+    Boolean(link.url) && inRange(link.url.length, MIN_MAX.URL);
+
   return (
     <SimplePanel
       name="link"
@@ -185,6 +196,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           clear
           aria-label={__('Edit: Element link', 'web-stories')}
           data-testid="link-input-field"
+          minLength={MIN_MAX.URL.MIN}
+          maxLength={MIN_MAX.URL.MAX}
         />
       </Row>
       {Boolean(link.url) && isInvalidUrl && (
@@ -193,7 +206,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         </Row>
       )}
 
-      {Boolean(link.url) && !isInvalidUrl && (
+      {hasSomeLinkContent && !isInvalidUrl && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}

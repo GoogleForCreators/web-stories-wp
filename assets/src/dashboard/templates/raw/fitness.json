@@ -1,9 +1,13 @@
 {
-  "version": 19,
+  "version": 24,
   "pages": [
     {
       "elements": [
         {
+          "x": 97,
+          "y": -319,
+          "width": 330,
+          "height": 586,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -18,91 +22,33 @@
               "b": 31
             }
           },
-          "isFill": false,
-          "x": 10.73767307309668,
-          "y": 73.81953888501366,
-          "width": 146.66666666666666,
-          "height": 146.66666666666666,
           "mask": {
             "type": "rectangle"
           },
           "isBackground": true,
-          "type": "shape",
+          "type": "image",
           "id": "40b3440b-fdf1-4969-8469-4af6e9d49cb2",
-          "isDefaultBackground": true
-        },
-        {
-          "opacity": 10,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "isFill": false,
-          "x": 1,
-          "y": 0,
-          "width": 442,
-          "height": 660,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "id": "df4e89d1-b851-4c57-bfde-3503ce086e71",
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page1_bg-alt.png",
-            "width": 188,
-            "height": 334,
-            "posterId": 0,
-            "id": 260,
-            "title": "fitness_page1_bg-alt",
-            "alt": "fitness_page1_bg-alt",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page1_bg-red.png",
+            "width": 330,
+            "height": 586,
+            "id": 1297,
+            "title": "fitness_page1_bg-red",
+            "alt": "fitness_page1_bg-red",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page1_bg-alt-169x300.png",
-                "width": 169,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page1_bg-alt-169x300.png"
-              },
-              "thumbnail": {
-                "file": "fitness_page1_bg-alt-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page1_bg-alt-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page1_bg-alt-150x267.png",
-                "width": 150,
-                "height": 267,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page1_bg-alt-150x267.png"
-              },
-              "full": {
-                "file": "fitness_page1_bg-alt.png",
-                "width": 375,
-                "height": 667,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page1_bg-alt.png"
-              }
-            }
+            "sizes": []
           }
         },
         {
+          "x": 20,
+          "y": 225,
+          "width": 390,
+          "height": 392,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -114,18 +60,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 190,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -135,22 +105,17 @@
           },
           "lineHeight": 0.74,
           "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "x": 21,
-          "y": 240,
-          "width": 417,
-          "height": 420,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "id": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
-          "content": "<span style=\"letter-spacing: -0.0003em\"><span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">NO\nDAYS\nOFF</span></span></span>"
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em\">NO</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em\">DAYS</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.03em\">OFF</span>",
+          "fontSize": 178,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "opacity": 100,
@@ -160,58 +125,97 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "isFill": false,
-          "type": "shape",
-          "x": -9,
-          "y": -1,
-          "width": 123,
-          "height": 39,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page1_logo-generic.png",
+            "width": 79,
+            "height": 22,
+            "id": 1241,
+            "title": "fitness_page1_logo-generic",
+            "alt": "fitness_page1_logo-generic",
+            "local": false,
+            "sizes": []
           },
-          "id": "7a994fb8-7d8d-40d8-bf45-e57d8cd618c0"
+          "type": "image",
+          "x": 20,
+          "y": 24,
+          "width": 81,
+          "height": 23,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "898ed4f5-c704-459c-be51-be8daeaab737"
         }
       ],
       "type": "page",
       "id": "2572f4a4-bb11-47e2-9f77-b8371aeabe49",
-      "backgroundOverlay": "none",
       "animations": [
         {
-          "id": "44adfc51-ada9-4764-bfa2-351520f7a10a",
           "type": "move",
-          "duration": 1000,
+          "offsetX": 0,
+          "offsetY": 300,
+          "id": "367fd5ff-d751-424f-86c0-bfe45195caff",
+          "duration": 800,
           "delay": 0,
-          "targets": ["7b8c59d0-c5ed-47a9-81c6-24fd8f63d772"]
-        },
-        {
-          "id": "17cc40e3-2cb8-4779-bb48-235cf2f2caa7",
-          "type": "flip",
-          "duration": 300,
-          "delay": 1000,
-          "targets": ["7b8c59d0-c5ed-47a9-81c6-24fd8f63d772"]
-        },
-        {
-          "id": "9057c94e-cddc-41c0-9e69-31aeba23c8ef",
-          "type": "zoom",
-          "duration": 2000,
-          "delay": 1300,
-          "targets": ["df4e89d1-b851-4c57-bfde-3503ce086e71"]
+          "direction": "normal",
+          "easingPreset": "inOutQuint",
+          "easing": "",
+          "fill": "forwards",
+          "iterations": 1,
+          "targets": [
+            "9fc66e49-85dd-477d-8bb9-30ae259bc7fe"
+          ]
         }
-      ]
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 180,
+          "g": 17,
+          "b": 31
+        }
+      },
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": {
+          "color": {
+            "r": 180,
+            "g": 17,
+            "b": 31
+          }
+        },
+        "x": 10.73767307309668,
+        "y": 73.81953888501366,
+        "width": 146.66666666666666,
+        "height": 146.66666666666666,
+        "mask": {
+          "type": "rectangle"
+        },
+        "isBackground": true,
+        "type": "shape",
+        "id": "5e0a9de6-0c71-42fb-8d26-7beb33ce55c0",
+        "isDefaultBackground": true
+      }
     },
     {
       "elements": [
         {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -226,11 +230,6 @@
               "b": 26
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -240,6 +239,10 @@
           "isDefaultBackground": true
         },
         {
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 598,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -250,11 +253,10 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page2_figure-formatted.png",
             "width": 220,
             "height": 350,
             "posterId": 0,
@@ -262,69 +264,8 @@
             "title": "fitness_page2_figure-formatted",
             "alt": "fitness_page2_figure-formatted",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page2_figure-formatted-189x300.png",
-                "width": 189,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-189x300.png"
-              },
-              "large": {
-                "file": "fitness_page2_figure-formatted-644x1024.png",
-                "width": 644,
-                "height": 1024,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-644x1024.png"
-              },
-              "thumbnail": {
-                "file": "fitness_page2_figure-formatted-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-150x150.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "fitness_page2_figure-formatted-696x928.png",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-696x928.png"
-              },
-              "web-stories-poster-square": {
-                "file": "fitness_page2_figure-formatted-750x928.png",
-                "width": 750,
-                "height": 928,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-750x928.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "fitness_page2_figure-formatted-750x696.png",
-                "width": 750,
-                "height": 696,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-750x696.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page2_figure-formatted-150x238.png",
-                "width": 150,
-                "height": 238,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-150x238.png"
-              },
-              "full": {
-                "file": "fitness_page2_figure-formatted.png",
-                "width": 750,
-                "height": 1192,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted.png"
-              }
-            }
+            "sizes": []
           },
-          "x": 0,
-          "y": 0,
-          "width": 440,
-          "height": 639,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -335,6 +276,10 @@
           "id": "f7bd8df7-6f90-47c8-8c88-9c9db3183eea"
         },
         {
+          "x": 46,
+          "y": 397,
+          "width": 319,
+          "height": 178,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -346,18 +291,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 42,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -367,24 +336,23 @@
           },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "x": 80,
-          "y": 461,
-          "width": 303,
-          "height": 126,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "id": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
-          "content": "<span style=\"letter-spacing: -0.0003em\"><span style=\"color: rgba(255, 255, 255, 1)\">“DON’T BE AFRAID TO GIVE UP THE GOOD\nTO GO FOR THE GREAT.”</span></span>"
+          "content": "<span style=\"color: #fff; letter-spacing: -0.03em\">“TO GET TO GREATNESS, YOU HAVE TO BE WILLING TO GET OUT OF YOUR COMFORT ZONE .”</span>",
+          "fontSize": 46,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 117,
+          "y": 587,
+          "width": 284,
+          "height": 22,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -396,18 +364,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -417,32 +409,37 @@
           },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 303,
-          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
           "id": "7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb",
-          "x": 148,
-          "y": 600,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">-STEVE PREFONTAINE</span>"
+          "content": "<span style=\"color: #fff; letter-spacing: -0.03em\">-ANONYMOUS</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
-      "id": "708fbc22-f0ca-40ec-9a57-21d9eb0be6b7"
+      "id": "708fbc22-f0ca-40ec-9a57-21d9eb0be6b7",
+      "backgroundColor": {
+        "color": {
+          "r": 26,
+          "g": 26,
+          "b": 26
+        }
+      }
     },
     {
       "elements": [
         {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -457,11 +454,6 @@
               "b": 255
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -471,7 +463,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page3_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -479,105 +471,17 @@
             "title": "fitness_page3_bg",
             "alt": "fitness_page3_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page3_bg-200x300.jpg",
-                "width": 200,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-200x300.jpg"
-              },
-              "large": {
-                "file": "fitness_page3_bg-683x1024.jpg",
-                "width": 683,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-683x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "fitness_page3_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fitness_page3_bg-768x1152.jpg",
-                "width": 768,
-                "height": 1152,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-768x1152.jpg"
-              },
-              "1536x1536": {
-                "file": "fitness_page3_bg-1024x1536.jpg",
-                "width": 1024,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-1024x1536.jpg"
-              },
-              "2048x2048": {
-                "file": "fitness_page3_bg-1365x2048.jpg",
-                "width": 1365,
-                "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-1365x2048.jpg"
-              },
-              "post-thumbnail": {
-                "file": "fitness_page3_bg-1200x1800.jpg",
-                "width": 1200,
-                "height": 1800,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-1200x1800.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "fitness_page3_bg-1980x2970.jpg",
-                "width": 1980,
-                "height": 2970,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-1980x2970.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "fitness_page3_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "fitness_page3_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "fitness_page3_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page3_bg-150x225.jpg",
-                "width": 150,
-                "height": 225,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-150x225.jpg"
-              },
-              "full": {
-                "file": "fitness_page3_bg-scaled.jpg",
-                "width": 1707,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "scale": 150,
           "focalX": 50,
           "focalY": 46.89484126984126
         },
         {
+          "x": 65,
+          "y": 19,
+          "width": 282,
+          "height": 154,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -589,18 +493,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 190,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -610,25 +538,24 @@
           },
           "lineHeight": 0.74,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 301,
-          "height": 140,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
           "id": "8e351291-f603-459c-883b-66ba0d036694",
-          "x": 69,
-          "y": 52,
-          "content": "<span style=\"letter-spacing: -0.0003em\"><span style=\"color: rgba(207, 19, 35, 1)\"><span style=\"font-weight: 600\">RUN</span></span></span>"
+          "content": "<span style=\"font-weight: 600; color: rgba(207,19,35,0.4); letter-spacing: -0.03em\">RUN</span>",
+          "fontSize": 209,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 6,
+          "y": 138,
+          "width": 400,
+          "height": 111,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -640,18 +567,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 72,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -659,27 +610,26 @@
               "b": 196
             }
           },
-          "lineHeight": 0.74,
+          "lineHeight": 0.72,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 427,
-          "height": 104,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "8e351291-f603-459c-883b-66ba0d036694",
           "id": "b4571f66-24f3-4908-8c18-8ac378735fb9",
-          "x": 12,
-          "y": 159,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">LIKE YOU\nMEAN IT</span></span></span>"
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">LIKE YOU</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">MEAN IT</span>",
+          "fontSize": 79,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 88,
+          "y": 261,
+          "width": 235,
+          "height": 43,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -691,18 +641,42 @@
           "font": {
             "family": "Hind",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -710,151 +684,21 @@
               "b": 196
             }
           },
-          "lineHeight": 1.25,
+          "lineHeight": 1.22,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "x": 119,
-          "y": 279,
-          "width": 202,
-          "height": 40,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "id": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
-          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips onhow to best start running</span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Roboto",
-            "weights": [100, 300, 400, 500, 700, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 100],
-              [1, 100],
-              [0, 300],
-              [1, 300],
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700],
-              [0, 900],
-              [1, 900]
-            ],
-            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
-            "service": "fonts.google.com"
-          },
-          "fontSize": 15,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "center",
+          "content": "<span style=\"color: #888\">Our lead editor shares tips on how to best start running</span>",
+          "fontSize": 18,
           "padding": {
-            "vertical": 0,
             "horizontal": 0,
-            "locked": true
-          },
-          "x": 140,
-          "y": 632,
-          "width": 160,
-          "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "id": "12bef1fe-a18d-4b9f-aa0b-fd718228e0fd",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">See Full Story</span></span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "isFill": false,
-          "x": 205.5,
-          "y": 589,
-          "width": 29,
-          "height": 29,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "id": "b4e310b4-3fde-429f-83c6-1d1a9893d358"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/04/fitness_page3_arrow.png",
-            "width": 7,
-            "height": 3,
-            "posterId": 0,
-            "id": 64,
-            "title": "fitness_page3_arrow",
-            "alt": "fitness_page3_arrow",
-            "local": false,
-            "sizes": []
-          },
-          "x": 213,
-          "y": 600.5,
-          "width": 14,
-          "height": 6,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "7119765c-0597-4546-9b2b-77d88ab1fe33"
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
       "id": "2dbd86ab-dab1-4142-996a-5932a57797b3",
       "defaultBackgroundElement": {
@@ -878,11 +722,23 @@
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "c324efb7-dd3a-4cce-b780-f3fde3cc94f2"
+      },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        }
       }
     },
     {
       "elements": [
         {
+          "x": -95,
+          "y": -160,
+          "width": 330,
+          "height": 308,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -897,20 +753,33 @@
               "b": 31
             }
           },
-          "isFill": false,
-          "x": 39.995329496521926,
-          "y": 1.7158732016761635,
-          "width": 146.66666666666666,
-          "height": 146.66666666666666,
           "mask": {
             "type": "rectangle"
           },
           "isBackground": true,
-          "type": "shape",
+          "type": "image",
           "id": "0ed58ad7-eed6-4f1a-80a5-7ce92991677f",
-          "isDefaultBackground": true
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page4_bg-red.png",
+            "width": 330,
+            "height": 308,
+            "id": 1299,
+            "title": "fitness_page4_bg-red",
+            "alt": "fitness_page4_bg-red",
+            "local": false,
+            "sizes": []
+          }
         },
         {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -925,11 +794,6 @@
               "b": 31
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -939,7 +803,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page4_bg.jpg",
             "width": 220,
             "height": 288,
             "posterId": 0,
@@ -947,142 +811,18 @@
             "title": "fitness_page4_bg",
             "alt": "fitness_page4_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page4_bg-229x300.jpg",
-                "width": 229,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-229x300.jpg"
-              },
-              "large": {
-                "file": "fitness_page4_bg-782x1024.jpg",
-                "width": 782,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-782x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "fitness_page4_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fitness_page4_bg-768x1005.jpg",
-                "width": 768,
-                "height": 1005,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-768x1005.jpg"
-              },
-              "1536x1536": {
-                "file": "fitness_page4_bg-1174x1536.jpg",
-                "width": 1174,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-1174x1536.jpg"
-              },
-              "full": {
-                "file": "fitness_page4_bg-scaled.jpg",
-                "width": 1956,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "scale": 100,
           "focalX": 49.97721576668946,
           "focalY": 33.03397382344752
         },
         {
-          "opacity": 10,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "isFill": false,
-          "x": 0,
-          "y": 0,
-          "width": 441,
-          "height": 660,
-          "scale": 160,
-          "focalX": 47.07792207792208,
-          "focalY": 34.523809523809526,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "id": "5ff30b79-b3f9-4e31-aa8d-f62c4e302aec",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg.jpg",
-            "width": 220,
-            "height": 288,
-            "posterId": 0,
-            "id": 278,
-            "title": "fitness_page4_bg",
-            "alt": "fitness_page4_bg",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page4_bg-229x300.jpg",
-                "width": 229,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-229x300.jpg"
-              },
-              "large": {
-                "file": "fitness_page4_bg-782x1024.jpg",
-                "width": 782,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-782x1024.jpg"
-              },
-              "thumbnail": {
-                "file": "fitness_page4_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fitness_page4_bg-768x1005.jpg",
-                "width": 768,
-                "height": 1005,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-768x1005.jpg"
-              },
-              "1536x1536": {
-                "file": "fitness_page4_bg-1174x1536.jpg",
-                "width": 1174,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-1174x1536.jpg"
-              },
-              "full": {
-                "file": "fitness_page4_bg-scaled.jpg",
-                "width": 1956,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-scaled.jpg"
-              }
-            }
-          }
-        },
-        {
-          "opacity": 100,
+          "x": 162,
+          "y": -129,
+          "width": 235,
+          "height": 702,
+          "opacity": 40,
           "flip": {
             "vertical": false,
             "horizontal": false
@@ -1093,18 +833,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 500,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1114,24 +878,23 @@
           },
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "x": 175,
-          "y": -81,
-          "width": 251,
-          "height": 650,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "id": "37864aea-dc9e-42c6-bcf2-c1fbc93de1b1",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">5</span></span>"
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">5</span></span>",
+          "fontSize": 540,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 51,
+          "y": 326,
+          "width": 311,
+          "height": 203,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1143,18 +906,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 72,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1162,27 +949,26 @@
               "b": 196
             }
           },
-          "lineHeight": 0.74,
+          "lineHeight": 0.7,
           "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 332,
-          "height": 207,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
           "id": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
-          "x": 20,
-          "y": 325,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">TOP\nDISTANCE\nRUNNING\nSHOES</span></span></span>"
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">TOP</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">DISTANCE</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">RUNNING</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">SHOES</span>",
+          "fontSize": 74,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 52,
+          "y": 534,
+          "width": 276,
+          "height": 65,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1194,18 +980,42 @@
           "font": {
             "family": "Hind",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1213,34 +1023,66 @@
               "b": 196
             }
           },
-          "lineHeight": 1.25,
+          "lineHeight": 1.22,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 182,
-          "height": 80,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
           "id": "9832faa6-2c7e-43eb-b75a-b68051da626a",
-          "x": 20,
-          "y": 544,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Hit the trails with the latest and greatestlightweight mid-distance shoes for the season.</span>"
+          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest lightweight mid-distance shoes for the season.</span>",
+          "fontSize": 18,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
-      "id": "97a844aa-4ff5-4875-aac0-682bd51b087e"
+      "id": "97a844aa-4ff5-4875-aac0-682bd51b087e",
+      "backgroundColor": {
+        "color": {
+          "r": 180,
+          "g": 17,
+          "b": 31
+        }
+      },
+      "defaultBackgroundElement": {
+        "x": 37,
+        "y": 2,
+        "width": 137,
+        "height": 137,
+        "opacity": 100,
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": {
+          "color": {
+            "r": 180,
+            "g": 17,
+            "b": 31
+          }
+        },
+        "mask": {
+          "type": "rectangle"
+        },
+        "isBackground": true,
+        "type": "shape",
+        "id": "aef43d55-bf5e-4175-8975-1637ce53d9ca",
+        "isDefaultBackground": true
+      }
     },
     {
       "elements": [
         {
+          "x": -46,
+          "y": 475,
+          "width": 330,
+          "height": 295,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1255,11 +1097,6 @@
               "b": 31
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -1268,65 +1105,25 @@
           "id": "19e74314-7e11-49dd-ab9f-42155fb93091",
           "resource": {
             "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page5_bg.jpg",
-            "width": 229,
-            "height": 157,
-            "posterId": 0,
-            "id": 283,
-            "title": "fitness_page5_bg",
-            "alt": "fitness_page5_bg",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page5_bg-no-logo.png",
+            "width": 330,
+            "height": 295,
+            "id": 1256,
+            "title": "fitness_page5_bg-no-logo",
+            "alt": "fitness_page5_bg-no-logo",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page5_bg-300x200.jpg",
-                "width": 300,
-                "height": 200,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page5_bg-300x200.jpg"
-              },
-              "large": {
-                "file": "fitness_page5_bg-1024x683.jpg",
-                "width": 1024,
-                "height": 683,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page5_bg-1024x683.jpg"
-              },
-              "thumbnail": {
-                "file": "fitness_page5_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page5_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fitness_page5_bg-768x512.jpg",
-                "width": 768,
-                "height": 512,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page5_bg-768x512.jpg"
-              },
-              "1536x1536": {
-                "file": "fitness_page5_bg-1536x1024.jpg",
-                "width": 1536,
-                "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page5_bg-1536x1024.jpg"
-              },
-              "full": {
-                "file": "fitness_page5_bg-scaled.jpg",
-                "width": 2560,
-                "height": 1707,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page5_bg-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "scale": 100,
-          "focalX": 50,
-          "focalY": 45.45454545454545
+          "focalX": 38.367113188634875,
+          "focalY": 49.953358674938045
         },
         {
+          "x": 22,
+          "y": 16,
+          "width": 311,
+          "height": 102,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1338,18 +1135,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 72,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1357,27 +1178,26 @@
               "b": 196
             }
           },
-          "lineHeight": 0.74,
+          "lineHeight": 0.7,
           "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 332,
-          "height": 106,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
           "id": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
-          "x": 23,
-          "y": 20,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">NIKE FLYKNIT FREE RN</span></span></span>"
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">THE WOVEN</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">RUNNER</span>",
+          "fontSize": 74,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 22,
+          "y": 145,
+          "width": 154,
+          "height": 151,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1389,18 +1209,42 @@
           "font": {
             "family": "Hind",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1408,27 +1252,26 @@
               "b": 196
             }
           },
-          "lineHeight": 1.25,
+          "lineHeight": 1.22,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 196,
-          "height": 120,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "9832faa6-2c7e-43eb-b75a-b68051da626a",
           "id": "73bdf015-c3f1-41fb-bc24-79a1b881d914",
-          "x": 23,
-          "y": 143,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Ideal for runs up to 3 miles, the Nike Free RN Flyknit delivers a lightweight design and breathable slip so you can get in and hit your stride.</span>"
+          "content": "<span style=\"color: #fff\">Ideal for runs up to 3 miles, the Woven Runner delivers a lightweight design &amp; breathable slip so you can get in and hit your stride.</span>",
+          "fontSize": 18,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 225,
+          "y": 310,
+          "width": 235,
+          "height": 367,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1440,18 +1283,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 500,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1461,25 +1328,24 @@
           },
           "lineHeight": 0.9,
           "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 251,
-          "height": 450,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "37864aea-dc9e-42c6-bcf2-c1fbc93de1b1",
           "id": "a849f15a-ed9b-4589-abe0-c19da7abfcf4",
-          "x": 219,
-          "y": 283,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">3</span></span>"
+          "content": "<span style=\"font-weight: 600; color: rgba(255,255,255,0.4)\">3</span>",
+          "fontSize": 408,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 21,
+          "y": 319,
+          "width": 100,
+          "height": 32,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1494,11 +1360,6 @@
               "b": 26
             }
           },
-          "isFill": false,
-          "x": 22.5,
-          "y": 275,
-          "width": 90,
-          "height": 30,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1509,6 +1370,10 @@
           "id": "5ae621aa-0b73-4f4f-888b-ba3787156bf0"
         },
         {
+          "x": 33.5,
+          "y": 327,
+          "width": 75,
+          "height": 20,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1520,18 +1385,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1541,26 +1430,20 @@
           },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 80,
-          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb",
           "id": "d4bdc028-59aa-4adc-8762-570676202dc3",
-          "x": 27.5,
-          "y": 280.5,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">BUY NOW</span>"
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">BUY NOW</span>",
+          "fontSize": 20,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
       "id": "52b7935e-e379-4596-bfbc-3b1ea5ca3503",
       "defaultBackgroundElement": {
@@ -1584,11 +1467,23 @@
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "ff86e4bb-4a5c-446d-81c5-0bcd77bd8086"
+      },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        }
       }
     },
     {
       "elements": [
         {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1603,11 +1498,6 @@
               "b": 255
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -1617,7 +1507,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page6_bg.jpg",
             "width": 220,
             "height": 165,
             "posterId": 0,
@@ -1625,99 +1515,7 @@
             "title": "fitness_page6_bg",
             "alt": "fitness_page6_bg",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page6_bg-300x225.jpg",
-                "width": 300,
-                "height": 225,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-300x225.jpg"
-              },
-              "large": {
-                "file": "fitness_page6_bg-1024x768.jpg",
-                "width": 1024,
-                "height": 768,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-1024x768.jpg"
-              },
-              "thumbnail": {
-                "file": "fitness_page6_bg-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "fitness_page6_bg-768x576.jpg",
-                "width": 768,
-                "height": 576,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-768x576.jpg"
-              },
-              "1536x1536": {
-                "file": "fitness_page6_bg-1536x1152.jpg",
-                "width": 1536,
-                "height": 1152,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-1536x1152.jpg"
-              },
-              "2048x2048": {
-                "file": "fitness_page6_bg-2048x1536.jpg",
-                "width": 2048,
-                "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-2048x1536.jpg"
-              },
-              "post-thumbnail": {
-                "file": "fitness_page6_bg-1200x900.jpg",
-                "width": 1200,
-                "height": 900,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-1200x900.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "fitness_page6_bg-1980x1485.jpg",
-                "width": 1980,
-                "height": 1485,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-1980x1485.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "fitness_page6_bg-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "fitness_page6_bg-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "fitness_page6_bg-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page6_bg-150x113.jpg",
-                "width": 150,
-                "height": 113,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-150x113.jpg"
-              },
-              "full": {
-                "file": "fitness_page6_bg-scaled.jpg",
-                "width": 2560,
-                "height": 1920,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "scale": 100,
           "focalX": 50,
@@ -1734,91 +1532,36 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch.png",
-            "width": 220,
-            "height": 341,
-            "posterId": 0,
-            "id": 289,
-            "title": "fitness_page6_watch",
-            "alt": "fitness_page6_watch",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page6_watch-no-logo.png",
+            "width": 330,
+            "height": 394,
+            "id": 1262,
+            "title": "fitness_page6_watch-no-logo",
+            "alt": "fitness_page6_watch-no-logo",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page6_watch-193x300.png",
-                "width": 193,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch-193x300.png"
-              },
-              "large": {
-                "file": "fitness_page6_watch-660x1024.png",
-                "width": 660,
-                "height": 1024,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch-660x1024.png"
-              },
-              "thumbnail": {
-                "file": "fitness_page6_watch-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch-150x150.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "fitness_page6_watch-696x928.png",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch-696x928.png"
-              },
-              "web-stories-poster-square": {
-                "file": "fitness_page6_watch-750x928.png",
-                "width": 750,
-                "height": 928,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch-750x928.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "fitness_page6_watch-750x696.png",
-                "width": 750,
-                "height": 696,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch-750x696.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page6_watch-150x233.png",
-                "width": 150,
-                "height": 233,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch-150x233.png"
-              },
-              "full": {
-                "file": "fitness_page6_watch.png",
-                "width": 750,
-                "height": 1164,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_watch.png"
-              }
-            }
+            "sizes": []
           },
-          "x": 28,
-          "y": -1,
-          "width": 385,
-          "height": 597,
+          "type": "image",
+          "x": 69,
+          "y": 122,
+          "width": 273,
+          "height": 326,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "type": "image",
-          "id": "d5858b35-c78c-41e7-9f57-69fa65cf2af7"
+          "id": "ca5cbef2-1ef0-435d-a6e5-4b46e985fb0a"
         },
         {
+          "x": 40,
+          "y": 21,
+          "width": 252,
+          "height": 153,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1830,18 +1573,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 72,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1849,78 +1616,26 @@
               "b": 196
             }
           },
-          "lineHeight": 0.9,
+          "lineHeight": 0.7,
           "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 269,
-          "height": 64,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
           "id": "885a6a97-1fb8-4303-a27c-151395801c5b",
-          "x": 29,
-          "y": 22,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(207, 19, 35, 1)\"><span style=\"font-weight: 600\">THE BEST</span></span></span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "fontSize": 72,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.9,
-          "textAlign": "initial",
+          "content": "<span style=\"font-weight: 600; color: #cf1323\">THE BEST</span>\n<span style=\"font-weight: 600; color: #1a1a1a\">RUNNING</span>\n<span style=\"font-weight: 600; color: #cf1323\">TECH</span>",
+          "fontSize": 74,
           "padding": {
-            "vertical": 0,
             "horizontal": 0,
-            "locked": true
-          },
-          "width": 269,
-          "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "basedOn": "885a6a97-1fb8-4303-a27c-151395801c5b",
-          "id": "d67e50e4-6a13-49d7-ad18-0594b3a7a493",
-          "x": 29,
-          "y": 77,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(26, 26, 26, 1)\"><span style=\"font-weight: 600\">RUNNING</span></span></span>"
+            "vertical": 0
+          }
         },
         {
+          "x": 5,
+          "y": 462,
+          "width": 402,
+          "height": 46,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1932,69 +1647,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 72,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.9,
-          "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 269,
-          "height": 64,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "basedOn": "885a6a97-1fb8-4303-a27c-151395801c5b",
-          "id": "b2f87955-3372-4dde-bab0-08727084ec46",
-          "x": 28,
-          "y": 132,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(207, 19, 35, 1)\"><span style=\"font-weight: 600\">TECH</span></span></span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "fontSize": 46,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -2004,25 +1692,24 @@
           },
           "lineHeight": 1,
           "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 429,
-          "height": 46,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
           "id": "c432d288-5b66-4c40-8141-060cc29f9ee6",
-          "x": 5,
-          "y": 518,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(26, 26, 26, 1)\"><span style=\"font-weight: 600\">NIKE + APPLE WATCH</span></span></span>"
+          "content": "<span style=\"font-weight: 600; color: #1a1a1a; letter-spacing: -0.01em\">THE PERFECT MATE</span>",
+          "fontSize": 46,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 47,
+          "y": 504,
+          "width": 318,
+          "height": 86,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2034,18 +1721,42 @@
           "font": {
             "family": "Hind",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -2053,28 +1764,22 @@
               "b": 196
             }
           },
-          "lineHeight": 1.25,
+          "lineHeight": 1.22,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 328,
-          "height": 80,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "73bdf015-c3f1-41fb-bc24-79a1b881d914",
           "id": "ae9a760a-a4e8-4759-8407-001b3eb243f3",
-          "x": 56,
-          "y": 564,
-          "content": "<span style=\"color: rgba(26, 26, 26, 1)\">Whether you’re an elite athlete or you just want to track your daily activity, Apple Watch Series 5 helps you train smarter to get results faster.</span>"
+          "content": "<span style=\"color: #1a1a1a\">Whether you’re an elite athlete or you just want to track your daily activity, GO RUN Series 1 helps you train smarter to get results faster.</span>",
+          "fontSize": 18,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
       "id": "95ae824a-7060-46cb-a8d2-8d6a721ad1ff",
       "defaultBackgroundElement": {
@@ -2098,11 +1803,23 @@
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "506b7e72-d072-474a-9fd7-289c1ba8b707"
+      },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        }
       }
     },
     {
       "elements": [
         {
+          "x": 87,
+          "y": -221,
+          "width": 330,
+          "height": 239,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2117,88 +1834,100 @@
               "b": 31
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
           "isBackground": true,
-          "type": "shape",
+          "type": "image",
           "id": "1613baad-b2a9-42e7-b0a6-d2f4c6941f65",
-          "isDefaultBackground": true
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_bg-red.png",
+            "width": 330,
+            "height": 239,
+            "id": 1301,
+            "title": "fitness_page7_bg-red",
+            "alt": "fitness_page7_bg-red",
+            "local": false,
+            "sizes": []
+          }
         },
         {
-          "opacity": 10,
+          "x": 17,
+          "y": 28,
+          "width": 311,
+          "height": 151,
+          "opacity": 100,
           "flip": {
             "vertical": false,
             "horizontal": false
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
+            "variants": [
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
+            ]
+          },
           "backgroundColor": {
             "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
+              "r": 196,
+              "g": 196,
+              "b": 196
             }
           },
-          "isFill": false,
-          "x": -1,
-          "y": 0,
-          "width": 441,
-          "height": 661,
+          "lineHeight": 0.76,
+          "textAlign": "initial",
           "scale": 100,
-          "focalX": 49.87042306278489,
-          "focalY": 57.73748786913331,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "id": "073e252f-7c5c-40cb-b8e9-f30a999019db",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page7_bg-formatted.png",
-            "width": 188,
-            "height": 334,
-            "posterId": 0,
-            "id": 296,
-            "title": "fitness_page7_bg-formatted",
-            "alt": "fitness_page7_bg-formatted",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page7_bg-formatted-169x300.png",
-                "width": 169,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page7_bg-formatted-169x300.png"
-              },
-              "thumbnail": {
-                "file": "fitness_page7_bg-formatted-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page7_bg-formatted-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page7_bg-formatted-150x267.png",
-                "width": 150,
-                "height": 267,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page7_bg-formatted-150x267.png"
-              },
-              "full": {
-                "file": "fitness_page7_bg-formatted.png",
-                "width": 375,
-                "height": 667,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page7_bg-formatted.png"
-              }
-            }
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
+          "id": "5d25ecb0-3056-4597-ba08-44e958de6069",
+          "content": "<span style=\"font-weight: 600; color: #fff\">GEAR</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4)\">UP</span>",
+          "fontSize": 100,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
           }
         },
         {
@@ -2209,50 +1938,39 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "fontSize": 105,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.74,
-          "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 332,
-          "height": 154,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "basedOn": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
-          "id": "5d25ecb0-3056-4597-ba08-44e958de6069",
-          "x": 18,
-          "y": 30,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">GEAR\nUP</span></span></span>"
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_circle-border.png",
+            "width": 52,
+            "height": 52,
+            "id": 1273,
+            "title": "fitness_page7_circle-border",
+            "alt": "fitness_page7_circle-border",
+            "local": false,
+            "sizes": []
+          },
+          "type": "image",
+          "x": 130,
+          "y": 355.5,
+          "width": 32,
+          "height": 32,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "4aa64455-2d4f-4640-9dfe-0e985f8f057b"
         },
         {
+          "x": 139,
+          "y": 364.5,
+          "width": 14,
+          "height": 14,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2267,129 +1985,6 @@
               "b": 255
             }
           },
-          "isFill": false,
-          "x": 386,
-          "y": 115.5,
-          "width": 15,
-          "height": 15,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "id": "99e621b0-4ee7-4bce-bec7-cbfd08abc354"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255,
-              "a": 0.4
-            }
-          },
-          "isFill": false,
-          "x": 378,
-          "y": 107.5,
-          "width": 31,
-          "height": 31,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "id": "45a6292b-610f-489f-9743-959c2549e2bf"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "isFill": false,
-          "width": 15,
-          "height": 15,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "99e621b0-4ee7-4bce-bec7-cbfd08abc354",
-          "id": "cf1d4db0-d5d9-47a2-ba70-85618df23959",
-          "x": 228,
-          "y": 248.5
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255,
-              "a": 0.4
-            }
-          },
-          "isFill": false,
-          "width": 31,
-          "height": 31,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "45a6292b-610f-489f-9743-959c2549e2bf",
-          "id": "e1ab85f5-bb82-4514-b8e1-379a03bcc6ea",
-          "x": 220,
-          "y": 240.5
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "isFill": false,
-          "width": 15,
-          "height": 15,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2398,11 +1993,48 @@
           },
           "type": "shape",
           "basedOn": "cf1d4db0-d5d9-47a2-ba70-85618df23959",
-          "id": "0584e281-ec48-468c-84ad-c6bc6be4855a",
-          "x": 295,
-          "y": 585.5
+          "id": "0584e281-ec48-468c-84ad-c6bc6be4855a"
         },
         {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_circle-border.png",
+            "width": 52,
+            "height": 52,
+            "id": 1273,
+            "title": "fitness_page7_circle-border",
+            "alt": "fitness_page7_circle-border",
+            "local": false,
+            "sizes": []
+          },
+          "type": "image",
+          "width": 32,
+          "height": 32,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "4aa64455-2d4f-4640-9dfe-0e985f8f057b",
+          "id": "1faa5827-39ec-45c0-958e-d5c72bcb4d29",
+          "x": 226,
+          "y": 139.5
+        },
+        {
+          "width": 14,
+          "height": 14,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2414,13 +2046,9 @@
             "color": {
               "r": 255,
               "g": 255,
-              "b": 255,
-              "a": 0.4
+              "b": 255
             }
           },
-          "isFill": false,
-          "width": 31,
-          "height": 31,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2428,260 +2056,56 @@
             "type": "circle"
           },
           "type": "shape",
-          "basedOn": "e1ab85f5-bb82-4514-b8e1-379a03bcc6ea",
-          "id": "16d3451c-1da5-4ec7-9290-82a26679081c",
-          "x": 287,
-          "y": 577.5
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "isFill": false,
-          "x": 80,
-          "y": 299,
-          "width": 270,
-          "height": 222,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "id": "e31d98c0-1694-41d8-b228-a56103a79868"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 45,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "isFill": false,
-          "x": 220,
-          "y": 286,
-          "width": 30,
-          "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "id": "d87539da-f753-46fb-9ade-e28d37967cbe"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 229,
-          "height": 20,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "basedOn": "c432d288-5b66-4c40-8141-060cc29f9ee6",
-          "id": "0884aabc-ca1e-4b37-a87b-68a6fbf377db",
-          "x": 99,
-          "y": 325,
-          "content": "<span style=\"color: rgba(26, 26, 26, 1)\"><span style=\"font-weight: 600\">BEATS X IN-EAR HEADPHONES</span></span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Hind",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "fontSize": 16,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.25,
-          "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 215,
-          "height": 94,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "basedOn": "ae9a760a-a4e8-4759-8407-001b3eb243f3",
-          "id": "f24e628b-4f66-4815-9511-ac9adc04ace4",
-          "x": 113,
-          "y": 351,
-          "content": "<span style=\"color: rgba(26, 26, 26, 1)\">With up to 8 hours of battery life and Fast Fuel charging, these earphones let you experience authentic, clear sound throughout your day.</span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 26,
-              "g": 26,
-              "b": 26
-            }
-          },
-          "isFill": false,
-          "width": 90,
-          "height": 30,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "basedOn": "5ae621aa-0b73-4f4f-888b-ba3787156bf0",
-          "id": "9c6adc30-8758-4905-ae43-683e36001a81",
-          "x": 112.5,
-          "y": 472
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 80,
-          "height": 19,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "basedOn": "d4bdc028-59aa-4adc-8762-570676202dc3",
-          "id": "998771ef-0336-4f5e-bdea-fcc6a8491b58",
-          "x": 117.5,
-          "y": 477.5,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">BUY NOW</span>"
+          "basedOn": "0584e281-ec48-468c-84ad-c6bc6be4855a",
+          "id": "2858cbba-bfc8-49a1-b932-bb569e381864",
+          "x": 235,
+          "y": 148.5
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
-      "id": "a30a33fc-d687-4e94-8a2c-0f9546a21efe"
+      "id": "a30a33fc-d687-4e94-8a2c-0f9546a21efe",
+      "backgroundColor": {
+        "color": {
+          "r": 180,
+          "g": 17,
+          "b": 31
+        }
+      },
+      "defaultBackgroundElement": {
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "opacity": 100,
+        "flip": {
+          "vertical": false,
+          "horizontal": false
+        },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": {
+          "color": {
+            "r": 180,
+            "g": 17,
+            "b": 31
+          }
+        },
+        "mask": {
+          "type": "rectangle"
+        },
+        "isBackground": true,
+        "type": "shape",
+        "id": "6b7a12c9-81f2-4cf8-8868-6f5d741646e1",
+        "isDefaultBackground": true
+      }
     },
     {
       "elements": [
         {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2696,11 +2120,6 @@
               "b": 26
             }
           },
-          "isFill": false,
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
           "mask": {
             "type": "rectangle"
           },
@@ -2710,6 +2129,10 @@
           "isDefaultBackground": true
         },
         {
+          "x": 0,
+          "y": 447,
+          "width": 207,
+          "height": 210,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2720,71 +2143,10 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_offsetblock.png",
-            "width": 94,
-            "height": 76,
-            "posterId": 0,
-            "id": 311,
-            "title": "fitness_page8_offsetblock",
-            "alt": "fitness_page8_offsetblock",
-            "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "fitness_page8_offsetblock-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_offsetblock-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page8_offsetblock-150x121.png",
-                "width": 150,
-                "height": 121,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_offsetblock-150x121.png"
-              },
-              "full": {
-                "file": "fitness_page8_offsetblock.png",
-                "width": 187,
-                "height": 151,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_offsetblock.png"
-              }
-            }
-          },
-          "x": 220,
-          "y": 483,
-          "width": 220,
-          "height": 177,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "e8734d09-cc5d-4cdc-9353-72bcc0ab982f"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story3-formatted.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story3-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
@@ -2792,34 +2154,8 @@
             "title": "fitness_page8_story3-formatted",
             "alt": "fitness_page8_story3-formatted",
             "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "fitness_page8_story3-formatted-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story3-formatted-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page8_story3-formatted-150x153.png",
-                "width": 150,
-                "height": 153,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story3-formatted-150x153.png"
-              },
-              "full": {
-                "file": "fitness_page8_story3-formatted.png",
-                "width": 189,
-                "height": 193,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story3-formatted.png"
-              }
-            }
+            "sizes": []
           },
-          "x": -2,
-          "y": 412,
-          "width": 221,
-          "height": 224,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -2830,6 +2166,10 @@
           "id": "ffd4e077-5c4c-4baa-bc7f-56f09b29d0d6"
         },
         {
+          "x": 2,
+          "y": 178,
+          "width": 204,
+          "height": 209,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2840,11 +2180,10 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story1-formatted.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story1-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
@@ -2852,34 +2191,8 @@
             "title": "fitness_page8_story1-formatted",
             "alt": "fitness_page8_story1-formatted",
             "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "fitness_page8_story1-formatted-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story1-formatted-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page8_story1-formatted-150x153.png",
-                "width": 150,
-                "height": 153,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story1-formatted-150x153.png"
-              },
-              "full": {
-                "file": "fitness_page8_story1-formatted.png",
-                "width": 189,
-                "height": 193,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story1-formatted.png"
-              }
-            }
+            "sizes": []
           },
-          "x": 0,
-          "y": 125,
-          "width": 218,
-          "height": 223,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -2890,6 +2203,10 @@
           "id": "90f9d543-7728-49f6-a241-965847b7b4ab"
         },
         {
+          "x": -1,
+          "y": 283,
+          "width": 413,
+          "height": 213,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2900,11 +2217,10 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story2-formatted.png",
             "width": 188,
             "height": 97,
             "posterId": 0,
@@ -2912,41 +2228,8 @@
             "title": "fitness_page8_story2-formatted",
             "alt": "fitness_page8_story2-formatted",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page8_story2-formatted-300x154.png",
-                "width": 300,
-                "height": 154,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted-300x154.png"
-              },
-              "thumbnail": {
-                "file": "fitness_page8_story2-formatted-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page8_story2-formatted-150x77.png",
-                "width": 150,
-                "height": 77,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted-150x77.png"
-              },
-              "full": {
-                "file": "fitness_page8_story2-formatted.png",
-                "width": 375,
-                "height": 193,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted.png"
-              }
-            }
+            "sizes": []
           },
-          "x": -3,
-          "y": 237,
-          "width": 441,
-          "height": 227,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
@@ -2957,6 +2240,10 @@
           "id": "f8f33b69-fab8-40e2-ac67-e1dc8bb5f8ca"
         },
         {
+          "x": 49,
+          "y": 11,
+          "width": 311,
+          "height": 152,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2968,18 +2255,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 72,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -2987,78 +2298,26 @@
               "b": 196
             }
           },
-          "lineHeight": 1,
+          "lineHeight": 0.76,
           "textAlign": "initial",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 332,
-          "height": 72,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "5d25ecb0-3056-4597-ba08-44e958de6069",
           "id": "7447a2ba-a336-4618-beb2-8423ebc1ddc3",
-          "x": 12,
-          "y": 14,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(207, 19, 35, 1)\"><span style=\"font-weight: 600\">MORE</span></span></span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "fontSize": 72,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
+          "content": "<span style=\"font-weight: 600; color: #cf1323; letter-spacing: -0.01em\">MORE</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.01em\">STORIES</span>",
+          "fontSize": 100,
           "padding": {
-            "vertical": 0,
             "horizontal": 0,
-            "locked": true
-          },
-          "width": 332,
-          "height": 72,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "basedOn": "7447a2ba-a336-4618-beb2-8423ebc1ddc3",
-          "id": "cc3ac70e-1175-4b75-92eb-26f4656f4811",
-          "x": 11,
-          "y": 67,
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">STORIES</span></span></span>"
+            "vertical": 0
+          }
         },
         {
+          "x": 243,
+          "y": 207,
+          "width": 137,
+          "height": 65,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3070,18 +2329,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3091,25 +2374,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 146,
-          "height": 40,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "0884aabc-ca1e-4b37-a87b-68a6fbf377db",
           "id": "96fea994-b71e-442f-b611-16d73f520016",
-          "x": 257,
-          "y": 168,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">SWEAT RESISTENT\nEARBUDS</span></span>"
+          "content": "<span style=\"font-weight: 500; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 500; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 500; color: #fff\">EARBUDS</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 49,
+          "y": 359,
+          "width": 137,
+          "height": 65,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3121,18 +2403,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3142,25 +2448,24 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 146,
-          "height": 38,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
           "id": "9b117b87-0269-4c4b-9e0d-8cdbcb0df89a",
-          "x": 34,
-          "y": 339,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORETRAINING EXERCISES</span></span>"
+          "content": "<span style=\"font-weight: 600; color: #fff\">10 BEST CORE</span>\n<span style=\"font-weight: 600; color: #fff\">TRAINING EXERCISES</span>",
+          "fontSize": 22,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
+          "x": 242,
+          "y": 488,
+          "width": 157,
+          "height": 65,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -3172,18 +2477,42 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": [
+              "sans-serif"
+            ],
+            "weights": [
+              300,
+              400,
+              500,
+              600,
+              700
+            ],
+            "styles": [
+              "regular"
+            ],
             "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
+              [
+                0,
+                300
+              ],
+              [
+                0,
+                400
+              ],
+              [
+                0,
+                500
+              ],
+              [
+                0,
+                600
+              ],
+              [
+                0,
+                700
+              ]
             ]
           },
-          "fontSize": 20,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3193,231 +2522,29 @@
           },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "width": 146,
-          "height": 38,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "isFill": false,
           "type": "text",
           "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
           "id": "03c44ea1-7ec8-4bdf-8e49-bb43ba83b2f3",
-          "x": 256,
-          "y": 463,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">TRIATHLON TRAININGIN THE SUMMER</span></span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "fontSize": 20,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "right",
+          "content": "<span style=\"font-weight: 600; color: #fff\">TRIATHLON</span>\n<span style=\"font-weight: 600; color: #fff\">TRAININING</span>\n<span style=\"font-weight: 600; color: #fff\">IN THE SUMMER</span>",
+          "fontSize": 22,
           "padding": {
-            "vertical": 0,
             "horizontal": 0,
-            "locked": true
-          },
-          "width": 146,
-          "height": 20,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "type": "text",
-          "basedOn": "03c44ea1-7ec8-4bdf-8e49-bb43ba83b2f3",
-          "id": "0e34db64-1382-4541-83a6-fe86d3c86cd9",
-          "x": 50,
-          "y": 624,
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">SOCIAL</span></span>"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_Facebook.png",
-            "width": 6,
-            "height": 11,
-            "posterId": 0,
-            "id": 316,
-            "title": "fitness_page8_Facebook",
-            "alt": "fitness_page8_Facebook",
-            "local": false,
-            "sizes": []
-          },
-          "x": 264,
-          "y": 616.5,
-          "width": 12,
-          "height": 22,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "4e5771f8-d164-4b47-a32c-ff483070b6d4"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_Instagram.png",
-            "width": 12,
-            "height": 12,
-            "posterId": 0,
-            "id": 317,
-            "title": "fitness_page8_Instagram",
-            "alt": "fitness_page8_Instagram",
-            "local": false,
-            "sizes": []
-          },
-          "x": 294,
-          "y": 616.5,
-          "width": 22,
-          "height": 22,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "beff317a-ee85-4b5e-90d0-ae9099b66a48"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_Youtube.png",
-            "width": 13,
-            "height": 9,
-            "posterId": 0,
-            "id": 319,
-            "title": "fitness_page8_Youtube",
-            "alt": "fitness_page8_Youtube",
-            "local": false,
-            "sizes": []
-          },
-          "x": 337,
-          "y": 620,
-          "width": 22,
-          "height": 15,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "fdfa9c93-2b0e-4fb4-9c72-16bb641b7a0e"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "isFill": false,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_Twitter.png",
-            "width": 12,
-            "height": 10,
-            "posterId": 0,
-            "id": 318,
-            "title": "fitness_page8_Twitter",
-            "alt": "fitness_page8_Twitter",
-            "local": false,
-            "sizes": []
-          },
-          "x": 379,
-          "y": 617.5,
-          "width": 24,
-          "height": 20,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "6304b398-11fe-4ad6-ac0a-33e5154e7f6a"
+            "vertical": 0
+          }
         }
       ],
-      "backgroundOverlay": "none",
       "type": "page",
-      "id": "d65c11a1-5f71-48ff-8579-85d53f18d461"
+      "id": "d65c11a1-5f71-48ff-8579-85d53f18d461",
+      "backgroundColor": {
+        "color": {
+          "r": 26,
+          "g": 26,
+          "b": 26
+        }
+      }
     }
   ],
   "autoAdvance": true,

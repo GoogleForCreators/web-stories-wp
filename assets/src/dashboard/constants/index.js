@@ -94,8 +94,6 @@ export const ICON_METRICS = {
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
 
-export const ITEMS_PER_PAGE = 100; // default max per request
-
 export const DASHBOARD_VIEWS = {
   MY_STORIES: 'MY_STORIES',
   SAVED_TEMPLATES: 'SAVED_TEMPLATES',
@@ -106,6 +104,13 @@ export const RESULT_LABELS = {
   [DASHBOARD_VIEWS.SAVED_TEMPLATES]: { ...SAVED_TEMPLATES_VIEWING_LABELS },
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
+
+// API Query Constants
+export const ITEMS_PER_PAGE = 24;
+export const USERS_PER_REQUEST = 100;
+export const STORIES_PER_REQUEST = 24;
+
+export const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
 export * from './animation';
 export * from './components';

@@ -20,7 +20,7 @@
 import { Container } from './container';
 
 /**
- * The editor's canvas. Includes: display, frames, editor layers, carousel,
+ * The editor's canvas. Includes: display, frames, editor layers,
  * navigation buttons, page menu.
  */
 export class Canvas extends Container {

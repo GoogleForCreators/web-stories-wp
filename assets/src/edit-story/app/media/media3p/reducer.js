@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
+import { shallowEqual } from 'react-pure-render';
 
 /**
  * Internal dependencies
  */
-import { TemplateNavBar } from '../';
+import providerReducer from './providerReducer.js';
 
-export default {
-  title: 'Dashboard/Components/TemplateNavBar',
-};
+const providers = ['unsplash'];
 
-export const _default = () => {
-  return (
-    <TemplateNavBar
-      handleCta={action('handle cta clicked')}
-      handleBookmarkClick={action('handle bookmark clicked')}
-    />
-  );
-};
+function reducer(state = {}, { type, payload }) {
+  const result = {};
+  for (const provider of providers) {
+    result[provider] = providerReducer(state[provider], { type, payload });
+  }
+  return !shallowEqual(result, state) ? result : state;
+}
+
+export default reducer;

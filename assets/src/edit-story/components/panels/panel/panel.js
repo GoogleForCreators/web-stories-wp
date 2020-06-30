@@ -74,10 +74,8 @@ function Panel({
   );
 
   useEffect(() => {
-    if (!canCollapse) {
-      setIsCollapsed(false);
-      expand(true);
-    }
+    setIsCollapsed(!canCollapse);
+    expand(true);
   }, [canCollapse, expand]);
 
   useEffect(() => {
