@@ -75,7 +75,8 @@ function MediaGallery({ resources, onInsert, isMedia3p }) {
       <Gallery
         targetRowHeight={110}
         direction={'row'}
-        margin={PHOTO_MARGIN} // This should match up with the actual margin that each element is styled with.
+        // This should match the actual margin the element is styled with.
+        margin={PHOTO_MARGIN}
         photos={photos}
         renderImage={imageRenderer}
       />
