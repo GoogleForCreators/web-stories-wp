@@ -33,8 +33,8 @@ import formattedUsersObject from '../../../../storybookUtils/formattedUsersObjec
 // - Switch to List View - Done
 // - Switch to List view and back to Grid View - Done
 // - Sort By Title in List View - Done
-// - Sort By Author in List View
-// - Sort By Date Created in List View
+// - Sort By Author in List View - Done
+// - Sort By Date Created in List View - Done
 // - Sort By Last Modified In List View
 // - Rename Story
 // - Duplicate Story
@@ -367,5 +367,47 @@ describe('My Stories View integration', () => {
     rowAuthors = rows.map((row) => row.children[2].innerText);
 
     expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+  });
+
+  it('should sort by Date Created in List View', async () => {
+    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    await fixture.events.click(listViewButton);
+
+    const dateCreatedHeader = fixture.screen.getByRole('columnheader', {
+      name: /Date Created/,
+    });
+
+    await fixture.events.click(dateCreatedHeader);
+
+    // drop the header row using slice
+    let rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(formattedStoriesArray.length);
+
+    const storieDateCreatedSortedByDateCreated = [...formattedStoriesArray]
+      .sort(
+        (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()
+      )
+      .map(({ created }) => created.split('T')[0]); // TODO use moment to format/look up formatting in component
+
+    // author is the fourth column
+    let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
+
+    expect(rowDateCreatedValues).toEqual(storieDateCreatedSortedByDateCreated);
+
+    // sort by descending
+    await fixture.events.click(dateCreatedHeader);
+
+    rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(formattedStoriesArray.length);
+
+    // author is the fourth column
+    rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
+
+    expect(rowDateCreatedValues).toEqual(
+      storieDateCreatedSortedByDateCreated.reverse()
+    );
   });
 });
