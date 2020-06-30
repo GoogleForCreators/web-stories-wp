@@ -79,4 +79,5 @@ ignore:
   - bin/commander.js
   - web-stories.php
   - uninstall.php
+  - includes/namespace.php
   - includes/templates
