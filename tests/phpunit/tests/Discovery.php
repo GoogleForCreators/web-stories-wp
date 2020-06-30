@@ -41,9 +41,9 @@ class Discovery extends \WP_UnitTestCase {
 			]
 		);
 		self::$poster_attachment_id = $factory->attachment->create_object(
+			DIR_TESTDATA . '/images/test-image.jpg',
+			self::$story_id,
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
-				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
 			]
