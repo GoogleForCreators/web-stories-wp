@@ -323,7 +323,8 @@ function MediaPane(props) {
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
-  const innerContainer = isRowBasedGallery ? (
+  // Arranges elements in rows.
+  const rowBasedGallery = (
     <RowContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
       <MediaGallery
         resources={resources}
@@ -336,7 +337,10 @@ function MediaPane(props) {
         </Loading>
       )}
     </RowContainer>
-  ) : (
+  );
+
+  // Arranges elements in columns.
+  const columnBasedGallery = (
     <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
       <Column>
         {resources
@@ -399,8 +403,10 @@ function MediaPane(props) {
 
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
+        ) : isRowBasedGallery ? (
+          rowBasedGallery
         ) : (
-          innerContainer
+          columnBasedGallery
         )}
       </Inner>
     </StyledPane>
