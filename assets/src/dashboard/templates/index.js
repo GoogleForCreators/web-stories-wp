@@ -180,7 +180,7 @@ export default function ({ assetsURL }) {
         { label: 'White', color: '#fff' },
       ],
       description: __(
-        'With a warm color palette and soothing shapes, the Wellbeing template works best for web stories covering mindfulness, lifestyle health and related exercise and activities like Yoga, Spa treatments and the likes.',
+        'With a warm color palette and soothing shapes, the Wellbeing template works best for web stories covering mindfulness, lifestyle health and related exercise and activities like Yoga, Spa treatments and the like.',
         'web-stories'
       ),
       pages: templates.wellbeing.pages,
