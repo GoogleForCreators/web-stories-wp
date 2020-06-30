@@ -143,6 +143,7 @@ function fetchStories({
   status = STORY_STATUSES[0].value,
   searchTerm = '',
   sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
+  sortDirection,
 }) {
   const storiesState = getStoriesState();
   const statuses = status.split(',');
@@ -153,20 +154,33 @@ function fetchStories({
         statuses.includes(storyStatus) && title.includes(searchTerm)
     )
     .sort((a, b) => {
+      let value;
       switch (sortOption) {
-        case STORY_SORT_OPTIONS.DATE_CREATED:
-          return new Date(a.created).getTime() - new Date(b.created).getTime();
-        case STORY_SORT_OPTIONS.LAST_MODIFIED:
-          return a[sortOption].diff(b[sortOption]);
-        case STORY_SORT_OPTIONS.NAME:
-          return a[sortOption].localeCompare(b[sortOption]);
-        case STORY_SORT_OPTIONS.CREATED_BY:
-          return formattedUsersObject[a.author].name.localeCompare(
+        case STORY_SORT_OPTIONS.DATE_CREATED: {
+          value = new Date(a.created).getTime() - new Date(b.created).getTime();
+          break;
+        }
+        case STORY_SORT_OPTIONS.LAST_MODIFIED: {
+          value = a[sortOption].diff(b[sortOption]);
+          break;
+        }
+        case STORY_SORT_OPTIONS.NAME: {
+          value = a[sortOption].localeCompare(b[sortOption]);
+          break;
+        }
+        case STORY_SORT_OPTIONS.CREATED_BY: {
+          value = formattedUsersObject[a.author].name.localeCompare(
             formattedUsersObject[b.author].name
           );
-        default:
-          return 0;
+          break;
+        }
+        default: {
+          value = 0;
+          break;
+        }
       }
+
+      return sortDirection && sortDirection === 'desc' ? value * -1 : value;
     })
     .map(({ id }) => id);
   return storiesState;
