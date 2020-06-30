@@ -29,11 +29,19 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Label, Row, Numeric, Toggle } from '../../form';
+import clamp from '../../../utils/clamp';
+import { Label, Row, Numeric, Toggle, usePresubmitHandler } from '../../form';
 import { Lock, Unlock } from '../../../icons';
 import { useCommonObjectValue } from '../utils';
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
+
+const MIN_MAX = {
+  PADDING: {
+    MIN: 0,
+    MAX: 300,
+  },
+};
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -62,6 +70,17 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
       pushUpdateForObject('padding', newPadding, DEFAULT_PADDING, submit);
     },
     [pushUpdateForObject]
+  );
+
+  usePresubmitHandler(
+    ({ padding: { horizontal, vertical, ...rest } }) => ({
+      padding: {
+        ...rest,
+        horizontal: clamp(horizontal, MIN_MAX.PADDING),
+        vertical: clamp(vertical, MIN_MAX.PADDING),
+      },
+    }),
+    []
   );
 
   const firstInputProperties = lockPadding

@@ -27,12 +27,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useMedia, useSnackbar, useStory } from '../../app';
+import { useLocalMedia, useSnackbar, useStory } from '../../app';
 import objectPick from '../../utils/objectPick';
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
-  const { uploadMedia, uploadVideoPoster } = useMedia((state) => ({
+  const { uploadMedia, uploadVideoPoster } = useLocalMedia((state) => ({
     uploadMedia: state.actions.uploadMedia,
     uploadVideoPoster: state.actions.uploadVideoPoster,
   }));

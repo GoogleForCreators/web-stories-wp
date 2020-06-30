@@ -91,7 +91,7 @@ export function getPagePreset(page, stylePresets) {
 }
 
 function colorHasTransparency(color) {
-  return color.a && color.a < 1;
+  return color.a !== undefined && color.a < 1;
 }
 
 export function presetHasOpacity(preset) {
