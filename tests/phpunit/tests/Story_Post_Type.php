@@ -35,12 +35,29 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 */
 	protected static $subscriber_id;
 
+	/**
+	 * Story id.
+	 *
+	 * @var int
+	 */
+	protected static $story_id;
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id      = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
 		self::$subscriber_id = $factory->user->create(
 			[ 'role' => 'subscriber' ]
+		);
+
+		self::$story_id = $factory->post->create(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'   => 'Example title',
+				'post_status'  => 'publish',
+				'post_content' => 'Example content',
+				'post_author'  => self::$admin_id,
+			]
 		);
 	}
 
@@ -108,5 +125,40 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
 		$valid            = $this->call_private_method( $post_type_object, 'get_post_type_icon' );
 		$this->assertContains( 'data:image/svg+xml;base64', $valid );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\Story_Post_Type::admin_enqueue_scripts
+	 */
+	public function test_admin_enqueue_scripts() {
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		set_current_screen( 'post.php' );
+		get_current_screen()->post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
+		get_current_screen()->base      = 'post';
+		$post_type_object->admin_enqueue_scripts( 'post.php' );
+		$this->assertTrue( wp_script_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\Story_Post_Type::filter_site_kit_gtag_opt
+	 */
+	public function test_filter_site_kit_gtag_opt() {
+		global $wp_query;
+		$wp_query->queried_object = get_post( self::$story_id );
+		$post_type_object         = new \Google\Web_Stories\Story_Post_Type();
+		$gtag                     = [
+			'vars' => [
+				'gtag_id' => 'hello',
+			],
+		];
+		$result                   = $post_type_object->filter_site_kit_gtag_opt( $gtag );
+
+		$this->assertArrayHasKey( 'storyProgress', $result['triggers'] );
+		$this->assertArrayHasKey( 'storyEnd', $result['triggers'] );
+		$this->assertSame( 'Example title', $result['triggers']['storyProgress']['vars']['event_category'] );
+		$this->assertSame( 'Example title', $result['triggers']['storyEnd']['vars']['event_category'] );
+
+		unset( $wp_query->queried_object );
 	}
 }
