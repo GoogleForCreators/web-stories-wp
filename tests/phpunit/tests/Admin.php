@@ -47,6 +47,15 @@ class Admin extends \WP_UnitTestCase {
 				'post_content' => 'Example content',
 			]
 		);
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
 	public function test_init() {
