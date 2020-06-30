@@ -62,10 +62,11 @@ class Admin extends \WP_UnitTestCase {
 	public function test_admin_body_class() {
 		$admin = new \Google\Web_Stories\Admin();
 		$admin->init();
-		$GLOBALS['post']   = get_post( self::$story_id );
-		$_GET['post_type'] = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
+
 		wp_set_current_user( self::$admin_id );
 		set_current_screen( 'post.php' );
+		get_current_screen()->post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
+		get_current_screen()->base = 'post';
 		$result = $admin->admin_body_class( 'current' );
 		$this->assertContains( 'folded', $result );
 	}
