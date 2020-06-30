@@ -48,6 +48,7 @@ function PageAttachmentPanel() {
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
   const { url, ctaText = defaultCTA } = pageAttachment;
+  const [_ctaText, _setCtaText] = useState(ctaText);
 
   const updatePageAttachment = useCallback(
     (value) => {
@@ -71,7 +72,7 @@ function PageAttachmentPanel() {
     !isValidUrl(withProtocol(url || ''))
   );
 
-  const isDefault = ctaText === defaultCTA;
+  const isDefault = _ctaText === defaultCTA;
   return (
     <SimplePanel
       name="pageAttachment"
@@ -101,12 +102,13 @@ function PageAttachmentPanel() {
       {Boolean(url) && !isInvalidUrl && (
         <Row>
           <ExpandedTextInput
-            onChange={(value) =>
+            onChange={(value) => _setCtaText(value)}
+            onBlur={(value) =>
               updatePageAttachment({ ctaText: value ? value : defaultCTA })
             }
-            value={ctaText || defaultCTA}
+            value={_ctaText}
             aria-label={__('Edit: Page Attachment CTA text', 'web-stories')}
-            clear={Boolean(ctaText) && !isDefault}
+            clear={Boolean(_ctaText) && !isDefault}
             suffix={isDefault ? __('default', 'web-stories') : null}
             width={isDefault ? 85 : null}
           />
