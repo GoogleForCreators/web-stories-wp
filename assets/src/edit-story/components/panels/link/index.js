@@ -184,6 +184,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           value={link.url || ''}
           clear
           aria-label={__('Edit: Element link', 'web-stories')}
+          data-testid="link-input-field"
         />
       </Row>
       {Boolean(link.url) && isInvalidUrl && (
