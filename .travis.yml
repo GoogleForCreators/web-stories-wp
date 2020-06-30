@@ -45,21 +45,9 @@ install:
   - composer install --no-interaction
 
 script:
-  - npm run build:js
-
-before_deploy:
-  - npm run storybook:build
-  - npm run workflow:copy-template-assets
-  - npm run workflow:copy-cdn-files
+  - echo "Doing nothing, waiting for deploy..."
 
 deploy:
-  - provider: pages
-    edge: true
-    github_token: $GITHUB_TOKEN
-    keep_history: true
-    local_dir: build/storybook
-    on:
-      branch: master
   - provider: script
     edge: true
     script: bin/deploy-to-test-environment.sh
