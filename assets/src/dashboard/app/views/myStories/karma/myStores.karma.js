@@ -80,8 +80,6 @@ describe('My Stories View integration', () => {
       name: /^Drafts/,
     });
 
-    expect(draftsTabButton).toBeTruthy();
-
     await fixture.events.click(draftsTabButton);
 
     const viewDraftsText = fixture.screen.getByText(/Viewing drafts/);
@@ -290,4 +288,46 @@ describe('My Stories View integration', () => {
 
     expect(stories.length).toEqual(formattedStoriesArray.length);
   });
+
+  // it('should sort by Title in List View', async () => {
+  //   let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+  //   await fixture.events.click(listViewButton);
+
+  //   const titleHeader = fixture.screen.getByRole('columnheader', {
+  //     name: /Title/,
+  //   });
+
+  //   await fixture.events.click(titleHeader);
+
+  //   // drop the header row using slice
+  //   let rows = fixture.screen.getAllByRole('row').slice(1);
+
+  //   expect(rows.length).toEqual(formattedStoriesArray.length);
+
+  //   const storieTitlesSortedByTitle = [...formattedStoriesArray]
+  //     .sort((a, b) => a.title.localeCompare(b.title))
+  //     .map(({ title }) => title);
+
+  //   // title is the second column
+  //   let rowTitles = rows.map((row) => row.children[1].innerText);
+
+  //   expect(rowTitles).toEqual(storieTitlesSortedByTitle);
+
+  //   window.shouldDebug = true;
+
+  //   // sort by descending
+  //   await fixture.events.click(titleHeader);
+
+  //   rows = fixture.screen.getAllByRole('row').slice(1);
+
+  //   expect(rows.length).toEqual(formattedStoriesArray.length);
+
+  //   // title is the second column
+  //   rowTitles = rows.map((row) => row.children[1].innerText);
+
+  //   expect(rowTitles).toEqual(storieTitlesSortedByTitle.reverse());
+
+  //   delete window.shouldDebug;
+  // });
 });
