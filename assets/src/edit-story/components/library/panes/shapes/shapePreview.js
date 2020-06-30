@@ -25,8 +25,8 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import createSolid from '../../../../utils/createSolid';
 import { PAGE_WIDTH } from '../../../../constants';
+import createSolidFromString from '../../../../utils/createSolidFromString';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -60,7 +60,7 @@ function ShapePreview({ mask, isPreview }) {
   // Contains the data to be passed in for insertElement() calls in order
   // to insert the correct shape.
   const shapeData = {
-    backgroundColor: createSolid(255, 255, 255),
+    backgroundColor: createSolidFromString('#c4c4c4'),
     width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
     height: DEFAULT_ELEMENT_WIDTH,
     mask: {
