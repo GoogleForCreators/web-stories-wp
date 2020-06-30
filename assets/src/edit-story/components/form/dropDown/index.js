@@ -30,6 +30,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import {
+  isKeyboardUser,
+  KEYBOARD_USER_SELECTOR,
+} from '../../../utils/keyboardOnlyOutline';
 import { Dropdown as DropdownIcon } from '../../../icons';
 import Popup from '../../popup';
 import DropDownList from './list';
@@ -40,14 +44,21 @@ const DropDownContainer = styled.div`
   flex-grow: 1;
   color: ${({ theme }) => theme.colors.fg.v0};
   font-family: ${({ theme }) => theme.fonts.body1.font};
+
+  border-radius: 4px;
+  border: 1px solid transparent;
+  ${KEYBOARD_USER_SELECTOR} &:focus-within {
+    border-color: ${({ theme }) => theme.colors.whiteout};
+  }
 `;
 
-const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
+const DropDownSelect = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
+  border: 0;
   background-color: ${({ theme, lightMode }) =>
     lightMode ? rgba(theme.colors.fg.v1, 0.1) : rgba(theme.colors.bg.v0, 0.3)};
   border-radius: 4px;
@@ -60,6 +71,10 @@ const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
       pointer-events: none;
       opacity: 0.3;
     `}
+
+  :focus {
+    outline: none !important;
+  }
 
   svg {
     width: 28px;
@@ -83,9 +98,9 @@ function DropDown({
   options,
   value,
   onChange,
-  disabled,
+  disabled = false,
   lightMode = false,
-  placeholder,
+  placeholder = __('Select an option', 'web-stories'),
   ...rest
 }) {
   const selectRef = useRef();
@@ -104,6 +119,10 @@ function DropDown({
   );
   const toggleOptions = useCallback(() => {
     setIsOpen(false);
+    if (isKeyboardUser) {
+      // Return keyboard focus to button when closing dropdown
+      selectRef.current.focus();
+    }
   }, []);
 
   const handleCurrentValue = useCallback(
@@ -129,9 +148,9 @@ function DropDown({
         aria-pressed={isOpen}
         aria-haspopup={true}
         aria-expanded={isOpen}
+        aria-disabled={disabled}
         disabled={disabled}
         ref={selectRef}
-        aria-disabled={disabled}
         lightMode={lightMode}
         {...rest}
       >
@@ -166,14 +185,6 @@ DropDown.propTypes = {
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
   labelledBy: PropTypes.string,
-};
-
-DropDown.defaultProps = {
-  disabled: false,
-  value: '',
-  onChange: () => {},
-  options: [],
-  placeholder: __('Select an Option', 'web-stories'),
 };
 
 export default DropDown;

@@ -59,8 +59,10 @@ const Container = styled.div`
   align-items: center;
   background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
   flex-basis: ${({ flexBasis }) => flexBasis}px;
-
-  ${({ disabled }) => disabled && `opacity: 0.3`};
+  border: 1px solid;
+  border-color: ${({ theme, focused }) =>
+    focused ? theme.colors.whiteout : 'transparent'};
+  opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
 `;
 
 function Numeric({
@@ -115,6 +117,7 @@ function Numeric({
     <Container
       className={`${className}`}
       flexBasis={flexBasis}
+      focused={focused}
       disabled={disabled}
     >
       {label}

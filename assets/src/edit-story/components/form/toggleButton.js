@@ -71,7 +71,12 @@ const ContainerLabel = styled.label`
   user-select: none;
   justify-content: center;
   align-items: center;
+
   border-radius: 4px;
+  border: 1px solid transparent;
+  ${KEYBOARD_USER_SELECTOR} &:focus-within {
+    border-color: ${({ theme }) => theme.colors.whiteout};
+  }
 
   ${({ value, theme }) =>
     value && `background-color: ${rgba(theme.colors.fg.v1, 0.1)};`}
@@ -82,10 +87,6 @@ const ContainerLabel = styled.label`
 		pointer-events: none;
 		opacity: .2;
 	`}
-
-  ${KEYBOARD_USER_SELECTOR} &:focus-within {
-    outline: 1px solid ${({ theme }) => theme.colors.whiteout};
-  }
 
   svg {
     color: ${({ theme }) => theme.colors.mg.v2};

@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
-const ColorBox = styled.div`
+const Box = styled.div`
   height: 32px;
   width: 122px;
   color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)} !important;
@@ -28,13 +28,24 @@ const ColorBox = styled.div`
   border-radius: 4px;
   overflow: hidden;
   align-items: center;
+`;
 
-  &:focus,
-  & input:focus {
-    outline: none;
-    background: ${({ theme }) => theme.colors.fg.v1};
-    color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.55)};
+const inputStyles = css`
+  border: 1px solid;
+  border-color: transparent;
+  outline: none;
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.whiteout} !important;
+    box-shadow: none !important;
   }
 `;
 
-export default ColorBox;
+export const ColorBox = styled(Box)`
+  input {
+    ${inputStyles}
+  }
+`;
+
+export const ColorInput = styled(Box).attrs({ as: 'input' })`
+  ${inputStyles}
+`;

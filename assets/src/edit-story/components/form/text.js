@@ -57,6 +57,12 @@ const Container = styled.div`
   position: relative;
 
   ${({ disabled }) => disabled && `opacity: 0.3`};
+
+  border-radius: 4px;
+  border: 1px solid transparent;
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.whiteout};
+  }
 `;
 
 const ClearBtn = styled.button`
