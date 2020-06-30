@@ -26,10 +26,12 @@ import styled from 'styled-components';
 import Gallery from 'react-photo-gallery';
 import MediaElement from './mediaElement';
 
+const PHOTO_MARGIN = 4;
+
 const PhotoContainer = styled.div`
   width: ${({ photo }) => photo.width}px;
   height: ${({ photo }) => photo.height}px;
-  margin: 4px;
+  margin: ${PHOTO_MARGIN}px;
 `;
 
 /**
@@ -73,7 +75,7 @@ function MediaGallery({ resources, onInsert, isMedia3p }) {
       <Gallery
         targetRowHeight={110}
         direction={'row'}
-        margin={4} // This should match up with the actual margin that each element is styled with.
+        margin={PHOTO_MARGIN} // This should match up with the actual margin that each element is styled with.
         photos={photos}
         renderImage={imageRenderer}
       />
