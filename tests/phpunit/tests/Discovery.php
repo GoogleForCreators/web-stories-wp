@@ -66,6 +66,16 @@ class Discovery extends \WP_UnitTestCase {
 		parent::tearDown();
 	}
 
+	public function test_init() {
+		$object = new \Google\Web_Stories\Discovery();
+		$object->init();
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_metadata' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_schemaorg_metadata' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_open_graph_metadata' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_twitter_metadata' ] ) );
+
+	}
+
 	public function test_print_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		ob_start();
