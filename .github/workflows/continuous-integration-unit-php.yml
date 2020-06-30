@@ -9,7 +9,7 @@ on:
 
 jobs:
   unit-php:
-    name: PHP ${{ matrix.php }}
+    name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }}'
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -24,11 +24,20 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
-        php: ['7.4', '7.0', '5.6']
-        wp: ['latest']
+        php: ['7.0', '5.6']
+        wp: ['5.3', 'latest']
+        coverage: [false]
         include:
+          - php: '7.4'
+            wp: 'latest'
+            coverage: true
+          - php: '7.4'
+            wp: 'trunk'
+            coverage: false
+            experimental: true
           - php: '8.0'
             wp: 'trunk'
+            coverage: false
             experimental: true
 
     steps:
@@ -72,15 +81,19 @@ jobs:
         run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
 
       - name: Run tests
-        run: npm run test:php
-        if: ${{ matrix.wp != 'latest' || matrix.php != 7.4 }}
+        run: |
+          npm run test:php
+          npm run test:php -- -c phpunit-multisite.xml.dist
+        if: ${{ ! matrix.coverage }}
 
       - name: Run tests with coverage
-        run: npm run test:php -- --coverage-clover build/logs/clover.xml
-        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 }}
+        run: |
+          npm run test:php -- --coverage-clover build/logs/php-coverage.xml
+          npm run test:php -- --coverage-clover build/logs/php-coverage-multisite.xml -c phpunit-multisite.xml.dist
+        if: ${{ matrix.coverage }}
 
-      - name: Uplaod code coverage report
+      - name: Upload code coverage report
         uses: codecov/codecov-action@v1
         with:
-          file: build/logs/clover.xml
-        if: ${{ matrix.wp == 'latest' && matrix.php == 7.4 }}
+          file: build/logs/*.xml
+        if: ${{ matrix.coverage }}

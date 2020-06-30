@@ -60,7 +60,7 @@ function ColorPresetActions({ color }) {
     }) => ({ selectedElements, stylePresets, updateStory })
   );
 
-  const { fillColors, textColors } = stylePresets;
+  const { colors } = stylePresets;
 
   const linkRef = useRef();
 
@@ -82,15 +82,13 @@ function ColorPresetActions({ color }) {
           properties: {
             stylePresets: {
               ...stylePresets,
-              ...(isText
-                ? { textColors: [...textColors, toAdd] }
-                : { fillColors: [...fillColors, toAdd] }),
+              colors: [...colors, toAdd],
             },
           },
         });
       }
     },
-    [stylePresets, fillColors, isText, textColors, updateStory]
+    [stylePresets, isText, colors, updateStory]
   );
 
   useKeyDownEffect(

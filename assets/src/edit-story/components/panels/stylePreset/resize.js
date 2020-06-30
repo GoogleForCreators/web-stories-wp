@@ -22,6 +22,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
+import PropTypes from 'prop-types';
 import { useContext } from '../../../utils/context';
 
 /**
@@ -32,7 +33,7 @@ import panelContext from '../panel/context';
 import useInspector from '../../inspector/useInspector';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel/panel';
 
-function Resize() {
+function Resize({ position }) {
   const {
     state: { height },
     actions: { setHeight, setExpandToHeight, resetHeight },
@@ -67,8 +68,17 @@ function Resize() {
       handleHeightChange={handleHeightChange}
       handleExpandToHeightChange={handleExpandToHeightChange}
       handleDoubleClick={resetHeight}
+      position={position}
     />
   );
 }
+
+Resize.propTypes = {
+  position: PropTypes.oneOf(['top', 'bottom']),
+};
+
+DragHandle.defaultProps = {
+  position: 'top',
+};
 
 export default Resize;

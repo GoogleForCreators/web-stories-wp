@@ -46,7 +46,8 @@ function activate( $network_wide ) {
 		);
 	}
 
-	Story_Post_Type::init();
+	$story = new Story_Post_Type();
+	$story->init();
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
@@ -79,5 +80,17 @@ function deactivate( $network_wide ) {
 register_activation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\deactivate' );
 
+global $web_stories;
+
 $web_stories = new Plugin();
 $web_stories->register();
+
+/**
+ * Web stories Plugin Instance
+ *
+ * @return Plugin
+ */
+function get_plugin_instance() {
+	global $web_stories;
+	return $web_stories;
+}

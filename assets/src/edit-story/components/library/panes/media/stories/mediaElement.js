@@ -39,9 +39,11 @@ const Column = styled.div`
 
 const snackbarValue = { showSnackbar: action('snow snackbar') };
 const mediaValue = {
-  actions: {
-    deleteMediaElement: action('delete from state'),
-    updateMediaElement: action('update state'),
+  local: {
+    actions: {
+      deleteMediaElement: action('delete from state'),
+      updateMediaElement: action('update state'),
+    },
   },
 };
 const apiValue = {

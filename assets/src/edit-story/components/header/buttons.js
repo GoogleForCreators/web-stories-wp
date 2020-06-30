@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory, useMedia, useConfig, useHistory } from '../../app';
+import { useStory, useLocalMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
@@ -64,6 +64,9 @@ function PreviewButton() {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, link, status, autoSave, saveStory })
   );
+  const { isUploading } = useLocalMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
   const { previewLink: autoSaveLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
@@ -147,7 +150,7 @@ function PreviewButton() {
 
   return (
     <>
-      <Outline onClick={openPreviewLink} isDisabled={isSaving}>
+      <Outline onClick={openPreviewLink} isDisabled={isSaving || isUploading}>
         {__('Preview', 'web-stories')}
       </Outline>
       <PreviewErrorDialog
@@ -169,7 +172,7 @@ function Publish() {
       actions: { saveStory },
     }) => ({ isSaving, date, storyId, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
   const { capabilities } = useConfig();
@@ -205,7 +208,7 @@ function SwitchToDraft() {
       actions: { saveStory },
     }) => ({ isSaving, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
 
@@ -230,7 +233,7 @@ function Update() {
       actions: { saveStory },
     }) => ({ isSaving, status, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
   const {
@@ -318,7 +321,7 @@ function Buttons() {
         </List>
       </ButtonList>
       <PostPublishDialog
-        open={showDialog}
+        open={Boolean(showDialog)}
         onClose={() => setShowDialog(false)}
         confirmURL={confirmURL}
         storyURL={link}

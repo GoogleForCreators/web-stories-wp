@@ -29,6 +29,10 @@ describe('storyReducer', () => {
     totalPages: null,
   };
 
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => 1592844570916);
+  });
+
   it(`should update stories state when ${ACTION_TYPES.TRASH_STORY} is called`, () => {
     const result = storyReducer(
       {
@@ -74,6 +78,34 @@ describe('storyReducer', () => {
     });
   });
 
+  it(`should update error when ${ACTION_TYPES.TRASH_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.TRASH_STORY_FAILURE,
+        payload: {
+          message: {
+            body: 'my trash story failure message',
+            title: 'Unable to Delete Story',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          body: 'my trash story failure message',
+          title: 'Unable to Delete Story',
+        },
+        id: Date.now(),
+        code: 'my_error_code',
+      },
+    });
+  });
+
   it(`should update stories state when ${ACTION_TYPES.DUPLICATE_STORY} is called`, () => {
     const result = storyReducer(
       {
@@ -115,6 +147,34 @@ describe('storyReducer', () => {
         publish: 4,
       },
       totalPages: 4,
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.DUPLICATE_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.DUPLICATE_STORY_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Duplciate Story',
+            body: 'my duplicate story failure message',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Duplciate Story',
+          body: 'my duplicate story failure message',
+        },
+        id: Date.now(),
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -249,13 +309,26 @@ describe('storyReducer', () => {
       { ...initialState },
       {
         type: ACTION_TYPES.FETCH_STORIES_FAILURE,
-        payload: { message: 'my error message', code: 'my_error_code' },
+        payload: {
+          message: {
+            title: 'Unable to Load Stories',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      error: { message: 'my error message', code: 'my_error_code' },
+      error: {
+        message: {
+          title: 'Unable to Load Stories',
+          body: 'my error message',
+        },
+        id: Date.now(),
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -264,13 +337,26 @@ describe('storyReducer', () => {
       { ...initialState },
       {
         type: ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
-        payload: { message: 'my error message', code: 'my_error_code' },
+        payload: {
+          message: {
+            title: 'Unable to Create Story From Template',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      error: { message: 'my error message', code: 'my_error_code' },
+      error: {
+        message: {
+          title: 'Unable to Create Story From Template',
+          body: 'my error message',
+        },
+        id: Date.now(),
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -298,6 +384,34 @@ describe('storyReducer', () => {
         65: { id: 65, status: 'publish', title: 'new title for story' },
         78: { id: 78, status: 'draft', title: 'my test story 3' },
         12: { id: 12, status: 'draft', title: 'my test story 4' },
+      },
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.UPDATE_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.UPDATE_STORY_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Update Story',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Update Story',
+          body: 'my error message',
+        },
+        id: Date.now(),
+        code: 'my_error_code',
       },
     });
   });

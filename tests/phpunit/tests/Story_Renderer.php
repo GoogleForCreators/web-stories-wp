@@ -17,18 +17,17 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
-
 class Story_Renderer extends \WP_UnitTestCase {
-	protected static $user;
-
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$user = $factory->user->create( [ 'role' => 'administrator' ] );
+	public function setUp() {
+		// When running the tests, we don't have unfiltered_html capabilities.
+		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
+		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function setUp() {
-		// Avoids HTML in post_content being stripped because of lacking capabilities.
-		wp_set_current_user( self::$user );
+	public function tearDown() {
+		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
 	public function test_replace_html_start_tag() {
@@ -116,7 +115,9 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$placeholder              = \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER;
+		$renderer                 = new \Google\Web_Stories\Story_Renderer( null );
+		$placeholder              = $renderer->get_publisher_logo_placeholder();
+		$option_name              = $renderer->get_publisher_logo_option_name();
 		$post_with_publisher_logo = self::factory()->post->create_and_get(
 			[
 				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . $placeholder . '"></amp-story></body></html>',
@@ -124,11 +125,11 @@ class Story_Renderer extends \WP_UnitTestCase {
 		);
 
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
-		add_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [ 'active' => $attachment_id ] );
+		add_option( $option_name, [ 'active' => $attachment_id ] );
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
 		$rendered = $renderer->render();
 
-		delete_option( Stories_Controller::PUBLISHER_LOGOS_OPTION );
+		delete_option( $option_name );
 
 		$this->assertContains( 'attachment', $rendered );
 		$this->assertNotContains( $placeholder, $rendered );

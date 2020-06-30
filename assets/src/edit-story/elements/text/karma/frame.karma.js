@@ -62,18 +62,16 @@ describe('TextFrame integration', () => {
     });
 
     it('clicking', async () => {
-      await clickFixtureElement(fixture, canvas);
+      await fixture.events.mouse.clickOn(canvas);
 
-      frame = fixture.querySelector(
-        `[data-element-id="${element.id}"] [data-testid="textFrame"]`
-      );
+      frame = fixture.editor.canvas.framesLayer.frame(element.id);
 
-      await fixture.events.click(frame, { clickCount: 3 });
+      await fixture.events.click(frame.node, { clickCount: 3 });
 
       await fixture.events.keyboard.type('hello world after select element!');
 
       editor = fixture.querySelector(`[data-testid="textEditor"]`);
-      await clickFixtureElement(fixture, editor, { offset: { x: 10, y: 0 } });
+      await fixture.events.mouse.clickOn(editor, -10, 0);
 
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds).toEqual([element.id]);
@@ -81,26 +79,24 @@ describe('TextFrame integration', () => {
         'hello world after select element!'
       );
 
-      expect(frame.innerHTML).toEqual('hello world after select element!');
+      expect(frame.node.textContent).toEqual(
+        'hello world after select element!'
+      );
     });
 
     it('pressing Enter', async () => {
-      await clickFixtureElement(fixture, canvas);
+      await fixture.events.mouse.clickOn(canvas);
 
-      frame = fixture.querySelector(
-        `[data-element-id="${element.id}"] [data-testid="textFrame"]`
-      );
+      frame = fixture.editor.canvas.framesLayer.frame(element.id);
 
-      await clickFixtureElement(fixture, frame);
+      await fixture.events.mouse.clickOn(frame.node);
 
       await fixture.events.keyboard.press('Enter');
 
       await fixture.events.keyboard.type('hello world after press Enter!');
 
       editor = fixture.querySelector(`[data-testid="textEditor"]`);
-      await clickFixtureElement(fixture, editor, {
-        offset: { x: 10, y: 0 },
-      });
+      await fixture.events.mouse.clickOn(editor, -10, 0);
 
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds).toEqual([element.id]);
@@ -108,24 +104,20 @@ describe('TextFrame integration', () => {
         'hello world after press Enter!'
       );
 
-      expect(frame.innerHTML).toEqual('hello world after press Enter!');
+      expect(frame.node.textContent).toEqual('hello world after press Enter!');
     });
 
     it('typing', async () => {
-      await clickFixtureElement(fixture, canvas);
+      await fixture.events.mouse.clickOn(canvas);
 
-      frame = fixture.querySelector(
-        `[data-element-id="${element.id}"] [data-testid="textFrame"]`
-      );
+      frame = fixture.editor.canvas.framesLayer.frame(element.id);
 
-      await clickFixtureElement(fixture, frame);
+      await fixture.events.mouse.clickOn(frame.node);
 
       await fixture.events.keyboard.type('hello world after type!');
 
       editor = fixture.querySelector(`[data-testid="textEditor"]`);
-      await clickFixtureElement(fixture, editor, {
-        offset: { x: 10, y: 0 },
-      });
+      await fixture.events.mouse.clickOn(editor, -10, 0);
 
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds).toEqual([element.id]);
@@ -133,17 +125,7 @@ describe('TextFrame integration', () => {
         'hello world after type!'
       );
 
-      expect(frame.innerHTML).toEqual('hello world after type!');
+      expect(frame.node.textContent).toEqual('hello world after type!');
     });
   });
 });
-
-async function clickFixtureElement(fixture, target, options = {}) {
-  const { offset } = options;
-  const offsetX = offset ? offset.x : 0;
-  const offsetY = offset ? offset.y : 0;
-
-  const { x, y } = target.getBoundingClientRect();
-  await fixture.events.mouse.move(x - offsetX, y - offsetY);
-  await fixture.events.mouse.down();
-}
