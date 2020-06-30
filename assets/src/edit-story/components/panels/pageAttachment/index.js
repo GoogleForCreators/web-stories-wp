@@ -103,9 +103,17 @@ function PageAttachmentPanel() {
         <Row>
           <ExpandedTextInput
             onChange={(value) => _setCtaText(value)}
-            onBlur={(value) =>
-              updatePageAttachment({ ctaText: value ? value : defaultCTA })
-            }
+            onBlur={(atts = {}) => {
+              const { onClear } = atts;
+              if (onClear) {
+                updatePageAttachment({ ctaText: defaultCTA });
+                _setCtaText(defaultCTA);
+              } else {
+                updatePageAttachment({
+                  ctaText: _ctaText ? _ctaText : defaultCTA,
+                });
+              }
+            }}
             value={_ctaText}
             aria-label={__('Edit: Page Attachment CTA text', 'web-stories')}
             clear={Boolean(_ctaText) && !isDefault}
