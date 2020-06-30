@@ -158,7 +158,7 @@ export default function StoryListView({
     [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
   );
   return (
-    <ListView>
+    <ListView data-testid="story-list-view">
       <Table>
         <TableHeader>
           <TableRow>

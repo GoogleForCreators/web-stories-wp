@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-/**
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
@@ -26,23 +22,23 @@ import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesAr
 import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
 
 // Test coverage
-// 1. Navigate to Explore Templates - Done
-// 2. Switch to Drafts - Done
-// 3. Switch to Published - Done
-// 4. Search Stories Text Box - Done
-// 5. Sort By Date - Done
-// 6. Sort By Last Modified - Done
-// 7. Sort By Created By
-// 8. Switch to List View
-// 9. Sort By Title in List View
-// 10. Sort By Author in List View
-// 11. Sort By Date Created in List View
-// 12. Sort By Last Modified In List View
-// 13. Switch to List view and back to Grid View
-// 14. Rename Story
-// 15. Duplicate Story
-// 16. Delete Story
-// 17. Sort By Name - Done
+// - Navigate to Explore Templates - Done
+// - Switch to Drafts - Done
+// - Switch to Published - Done
+// - Search Stories Text Box - Done
+// - Sort By Date - Done
+// - Sort By Last Modified - Done
+// - Sort By Name - Done
+// - Sort By Created By - Done
+// - Switch to List View - Done
+// - Switch to List view and back to Grid View - Done
+// - Sort By Title in List View
+// - Sort By Author in List View
+// - Sort By Date Created in List View
+// - Sort By Last Modified In List View
+// - Rename Story
+// - Duplicate Story
+// - Delete Story
 
 describe('My Stories View integration', () => {
   let fixture;
@@ -56,11 +52,9 @@ describe('My Stories View integration', () => {
     fixture.restore();
   });
 
-  it('should render', async () => {
-    await waitFor(() => {
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-      expect(stories.length).toEqual(formattedStoriesArray.length);
-    });
+  it('should render', () => {
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+    expect(stories.length).toEqual(formattedStoriesArray.length);
   });
 
   it('should navigate to Explore Templates', async () => {
@@ -82,13 +76,11 @@ describe('My Stories View integration', () => {
 
     expect(numDrafts).toBeGreaterThan(0);
 
-    let draftsTabButton;
-
-    await waitFor(() => {
-      draftsTabButton = fixture.screen.getByRole('button', { name: /^Drafts/ });
-
-      expect(draftsTabButton).toBeTruthy();
+    const draftsTabButton = fixture.screen.getByRole('button', {
+      name: /^Drafts/,
     });
+
+    expect(draftsTabButton).toBeTruthy();
 
     await fixture.events.click(draftsTabButton);
 
@@ -107,15 +99,11 @@ describe('My Stories View integration', () => {
 
     expect(numPublished).toBeGreaterThan(0);
 
-    let publishedTabButton;
-
-    await waitFor(() => {
-      publishedTabButton = fixture.screen.getByRole('button', {
-        name: /^Published/,
-      });
-
-      expect(publishedTabButton).toBeTruthy();
+    const publishedTabButton = fixture.screen.getByRole('button', {
+      name: /^Published/,
     });
+
+    expect(publishedTabButton).toBeTruthy();
 
     await fixture.events.click(publishedTabButton);
 
@@ -140,14 +128,13 @@ describe('My Stories View integration', () => {
 
     await fixture.events.keyboard.type(firstStoryTitle);
 
-    await waitFor(() => {
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-      expect(stories.length).toEqual(
-        formattedStoriesArray.filter(({ title }) =>
-          title.includes(firstStoryTitle)
-        ).length
-      );
-    });
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    expect(stories.length).toEqual(
+      formattedStoriesArray.filter(({ title }) =>
+        title.includes(firstStoryTitle)
+      ).length
+    );
   });
 
   it('should sort by Date Created', async () => {
@@ -270,5 +257,37 @@ describe('My Stories View integration', () => {
       .map(({ id }) => String(id));
 
     expect(renderedStoriesById).toEqual(storyIdsSortedByTitle);
+  });
+
+  it('should switch to List View', async () => {
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    expect(listViewButton).toBeTruthy();
+
+    await fixture.events.click(listViewButton);
+
+    const listViewTable = fixture.screen.getByTestId('story-list-view');
+
+    expect(listViewTable).toBeTruthy();
+  });
+
+  it('should switch to List View and back to Grid View', async () => {
+    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    expect(listViewButton).toBeTruthy();
+
+    await fixture.events.click(listViewButton);
+
+    const listViewTable = fixture.screen.getByTestId('story-list-view');
+
+    expect(listViewTable).toBeTruthy();
+
+    const gridViewButton = fixture.screen.getByLabelText(/Switch to Grid View/);
+
+    await fixture.events.click(gridViewButton);
+
+    const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    expect(stories.length).toEqual(formattedStoriesArray.length);
   });
 });
