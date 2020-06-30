@@ -21,6 +21,11 @@
         text-rendering: optimizeLegibility;
     }
 
+    a {
+        color: #1A73E8;
+        text-decoration: none;
+    }
+
     header,
     footer,
     section {
@@ -98,9 +103,8 @@
 
     header a.download {
         margin-left: 40px;
-        color: #1A73E8;
-        text-decoration: none;
         border: none;
+        color: #1A73E8;
     }
 
     /*
@@ -112,6 +116,7 @@
         padding-bottom: 252px;
         display: flex;
         padding-right: 0;
+        justify-content: space-between;
     }
 
     section.teaser h2 {
@@ -147,6 +152,7 @@
         margin-right: 133px;
         min-width: 480px;
         padding-bottom: 58px;
+        max-width: 800px;
     }
 
     section.teaser .right {
@@ -155,6 +161,7 @@
         text-align: center;
         color: #fff;
         box-shadow: 0px 0px 40px #00000047;
+        max-width: 900px;
     }
 
     section.teaser a.download {
@@ -196,6 +203,7 @@
 
     section.about h2 a {
         border-bottom: 4px solid;
+        color: #000;
     }
 
     section.about p {
@@ -309,6 +317,7 @@
 
     section.faq h2 a {
         border-bottom: 4px solid;
+        color: #000;
     }
 
     section.faq dl {
@@ -360,45 +369,48 @@
     /*
     * Reponsiveness (TODO: check with Sam)
     */
-    header, footer, section {
-        padding: 0 7.4vw;
-    }
+    @media (max-width: 1920px) {
+        header, footer, section {
+            padding-left: 7.4vw;
+            padding-right: 7.4vw;
+        }
 
-    section.teaser {
-        padding-bottom: 13.13vw;
-        padding-top: 9.69vw;
-    }
+        section.teaser {
+            padding-bottom: 13.13vw;
+            padding-top: 9.69vw;
+        }
 
-    section.teaser h3 {
-        font-size: calc(32px + 2.4vw);
-    }
+        section.teaser h3 {
+            font-size: calc(32px + 2.4vw);
+        }
 
-    section.about {
-        padding-top: 8.13vw;
-    }
+        section.about {
+            padding-top: 8.13vw;
+        }
 
-    section.about p {
-        margin-top: 8.13vw;
-        padding-bottom: 7.92vw;
-        font-size: calc(20px + 1.98vw);
-    }
+        section.about p {
+            margin-top: 8.13vw;
+            padding-bottom: 7.92vw;
+            font-size: calc(20px + 1.98vw);
+        }
 
-    section.about-video p {
-        padding-top: 5.42vw;
-    }
+        section.about-video p {
+            padding-top: 5.42vw;
+        }
 
-    section.templates {
-        padding-top: 7.76vw;
-        padding-bottom: 6.25vw;
-    }
+        section.templates {
+            padding-top: 7.76vw;
+            padding-bottom: 6.25vw;
+        }
 
-    section.faq {
-        padding-top: 8.13vw;
-        padding-bottom: 7.4vw;
-    }
+        section.faq {
+            padding-top: 8.13vw;
+            padding-bottom: 7.4vw;
+        }
 
-    section.faq dl {
-        padding-top: 8.13vw;
+        section.faq dl {
+            padding-top: 8.13vw;
+        }
     }
 
     @media (max-width: 1000px) {
