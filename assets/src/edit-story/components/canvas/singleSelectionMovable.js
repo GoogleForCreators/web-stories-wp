@@ -33,6 +33,7 @@ import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
+import useCombinedRefs from '../../utils/useCombinedRefs';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -47,10 +48,7 @@ function SingleSelectionMovable({
   isEditMode,
   editMoveableRef,
 }) {
-  let moveable = useRef(null);
-  if (isEditMode) {
-    moveable = editMoveableRef;
-  }
+  const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
@@ -239,7 +237,7 @@ function SingleSelectionMovable({
     <Movable
       className={classNames}
       zIndex={0}
-      ref={moveable}
+      ref={useCombinedRefs(moveable, editMoveableRef)}
       target={targetEl}
       edge={true}
       draggable={actionsEnabled}
