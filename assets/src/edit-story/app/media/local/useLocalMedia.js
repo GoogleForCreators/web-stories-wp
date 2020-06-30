@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-export { default as MediaProvider } from './mediaProvider';
-export { default as useLocalMedia } from './local/useLocalMedia';
-export { default as useMedia } from './useMedia';
+/**
+ * Internal dependencies
+ */
+import { identity } from '../../../utils/context';
+import useMedia from '../useMedia';
+
+function useLocalMedia(selector) {
+  return useMedia(({ local }) => (selector ?? identity)(local));
+}
+
+export default useLocalMedia;

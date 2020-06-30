@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig, useHistory, useMedia, useStory } from '../../app';
+import { useConfig, useHistory, useLocalMedia, useStory } from '../../app';
 
 function AutoSaveHandler() {
   const { autoSaveInterval } = useConfig();
@@ -40,7 +40,7 @@ function AutoSaveHandler() {
       saveStory,
     })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
 
