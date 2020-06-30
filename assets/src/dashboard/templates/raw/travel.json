@@ -1,5 +1,5 @@
 {
-  "version": 23,
+  "version": 24,
   "pages": [
     {
       "elements": [
@@ -370,8 +370,8 @@
         {
           "x": 57,
           "y": 16,
-          "width": 297,
-          "height": 261,
+          "width": 265,
+          "height": 265,
           "font": {
             "service": "fonts.google.com",
             "family": "Oswald",
@@ -400,7 +400,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "bfd53cf2-f8e8-41f0-8449-48772b5194bb",
-          "content": "<span style=\"color: #fff\">YOUR BODY IS</span>\n<span style=\"color: #fff\">NOT A TEMPLE,</span>\n<span style=\"color: #fff\">IT'S AN</span>\n<span style=\"color: #fff\">AMUSEMENT</span>\n<span style=\"color: #fff\">PARK.”</span>",
+          "content": "<span style=\"color: #fff\">I TRAVEL TO FIND MYSELF IN THE EYES AND HEARTS OF OTHERS”</span>",
           "fontSize": 53,
           "padding": {
             "horizontal": 0,
@@ -480,7 +480,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "88df74ed-7334-4e91-957c-c48b8da344e4",
-          "content": "<span style=\"color: #fff\">– Anthony Bordain</span>",
+          "content": "<span style=\"color: #fff\">– Anonymous</span>",
           "fontSize": 18,
           "padding": {
             "horizontal": 0,
