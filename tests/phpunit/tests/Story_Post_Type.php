@@ -145,12 +145,14 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 */
 	public function test_filter_site_kit_gtag_opt() {
 		global $wp_query;
+		$wp_query->is_singular    = true;
 		$wp_query->queried_object = get_post( self::$story_id );
 		$post_type_object         = new \Google\Web_Stories\Story_Post_Type();
 		$gtag                     = [
 			'vars' => [
 				'gtag_id' => 'hello',
 			],
+			'triggers' => []
 		];
 		$result                   = $post_type_object->filter_site_kit_gtag_opt( $gtag );
 
