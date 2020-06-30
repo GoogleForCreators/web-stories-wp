@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -51,18 +51,41 @@ function Media3pPane(props) {
   // State and callback ref necessary to recalculate the padding of the list
   //  given the scrollbar width.
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  let container = null;
-  const refContainer = (element) => {
+  const refContainer = useRef();
+  const refCallbackContainer = (element) => {
+    refContainer.current = element;
     if (!element) {
       return;
     }
-    container = element;
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
   // TODO(#2368): get resources from useMedia
   // TODO(#2368): handle pagination / infinite scrolling
-  const resources = [];
+  const resources = [
+    {
+      id: 1,
+      type: 'image',
+      local: false,
+      alt: 'image alt',
+      mimeType: 'image/jpeg',
+      width: 18,
+      height: 12,
+      src:
+        'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
+    },
+    {
+      id: 1,
+      type: 'image',
+      local: false,
+      alt: 'image alt',
+      mimeType: 'image/jpeg',
+      width: 128,
+      height: 72,
+      src:
+        'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq',
+    },
+  ];
 
   // Recalculates padding of Media Pane so it stays centered.
   // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
@@ -72,18 +95,20 @@ function Media3pPane(props) {
       return;
     }
     const currentPaddingLeft = parseFloat(
-      window.getComputedStyle(container, null).getPropertyValue('padding-left')
+      window
+        .getComputedStyle(refContainer.current, null)
+        .getPropertyValue('padding-left')
     );
-    container.style['padding-right'] =
+    refContainer.current.style['padding-right'] =
       currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, container]);
+  }, [scrollbarWidth, refContainer]);
 
   // Callback for when a media element is selected.
   const onInsert = () => {};
 
   return (
     <StyledPane id={paneId} {...props}>
-      <Container ref={refContainer}>
+      <Container ref={refCallbackContainer}>
         <MediaGallery
           resources={resources}
           onInsert={onInsert}
