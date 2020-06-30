@@ -65,6 +65,7 @@ const cropMediaCSS = css`
   ${mediaWithScale}
   ${elementWithFlip}
   position: absolute;
+  cursor: grab;
   opacity: ${({ opacity }) =>
     opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
 `;
