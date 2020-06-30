@@ -32,7 +32,7 @@ import formattedUsersObject from '../../../../storybookUtils/formattedUsersObjec
 // - Sort By Created By - Done
 // - Switch to List View - Done
 // - Switch to List view and back to Grid View - Done
-// - Sort By Title in List View
+// - Sort By Title in List View - Done
 // - Sort By Author in List View
 // - Sort By Date Created in List View
 // - Sort By Last Modified In List View
@@ -325,5 +325,47 @@ describe('My Stories View integration', () => {
     rowTitles = rows.map((row) => row.children[1].innerText);
 
     expect(rowTitles).toEqual(storieTitlesSortedByTitle.reverse());
+  });
+
+  it('should sort by Author in List View', async () => {
+    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    await fixture.events.click(listViewButton);
+
+    const authorHeader = fixture.screen.getByRole('columnheader', {
+      name: /Author/,
+    });
+
+    await fixture.events.click(authorHeader);
+
+    // drop the header row using slice
+    let rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(formattedStoriesArray.length);
+
+    const storieAuthorsSortedByAuthor = [...formattedStoriesArray]
+      .sort((a, b) =>
+        formattedUsersObject[a.author].name.localeCompare(
+          formattedUsersObject[b.author].name
+        )
+      )
+      .map(({ author }) => formattedUsersObject[author].name);
+
+    // author is the third column
+    let rowAuthors = rows.map((row) => row.children[2].innerText);
+
+    expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+
+    // sort by descending
+    await fixture.events.click(authorHeader);
+
+    rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(formattedStoriesArray.length);
+
+    // author is the third column
+    rowAuthors = rows.map((row) => row.children[2].innerText);
+
+    expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
   });
 });
