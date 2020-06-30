@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests;
 
-
 class Plugin extends \WP_UnitTestCase {
 	/**
 	 * Test register()
