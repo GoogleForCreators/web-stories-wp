@@ -120,5 +120,20 @@ describe('TextEdit integration', () => {
         );
       });
     });
+
+    describe('shortcuts', () => {
+      it('should enter/exit edit mode using the keyboard', async () => {
+        // Enter edit mode using the Enter key
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        await fixture.events.keyboard.press('Enter');
+        expect(
+          fixture.querySelector('[data-testid="textEditor"]')
+        ).toBeDefined();
+
+        // Exit edit mode using the Esc key
+        await fixture.events.keyboard.press('Esc');
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+      });
+    });
   });
 });

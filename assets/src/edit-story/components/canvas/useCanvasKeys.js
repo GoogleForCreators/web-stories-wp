@@ -156,7 +156,7 @@ function useCanvasKeys(ref) {
   useGlobalKeyDownEffect(
     'enter',
     () => {
-      if (selectedElements.length === 0) {
+      if (selectedElements.length !== 1) {
         return;
       }
 
