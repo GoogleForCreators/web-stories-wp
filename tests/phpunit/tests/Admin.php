@@ -91,6 +91,24 @@ class Admin extends \WP_UnitTestCase {
 		$this->assertContains( $poster, $result );
 	}
 
+	public function test_prefill_post_content_invalid_user() {
+		$admin = new \Google\Web_Stories\Admin();
+		$admin->init();
+		wp_set_current_user( 0 );
+		$_GET['from-web-story'] = self::$story_id;
+		$result                 = $admin->prefill_post_content( 'current' );
+		$this->assertSame( 'current', $result );
+	}
+
+	public function test_prefill_post_content_invalid_id() {
+		$admin = new \Google\Web_Stories\Admin();
+		$admin->init();
+		wp_set_current_user( self::$admin_id );
+		$_GET['from-web-story'] = 999999999;
+		$result                 = $admin->prefill_post_content( 'current' );
+		$this->assertSame( 'current', $result );
+	}
+
 	public function test_prefill_post_title() {
 		$admin = new \Google\Web_Stories\Admin();
 		$admin->init();
