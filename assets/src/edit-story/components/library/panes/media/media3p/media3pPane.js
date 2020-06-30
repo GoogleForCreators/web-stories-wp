@@ -61,6 +61,7 @@ function Media3pPane(props) {
   };
 
   // TODO(#2368): get resources from useMedia
+  // TODO(#2368): handle pagination / infinite scrolling
   const resources = [];
 
   // Recalculates padding of Media Pane so it stays centered.
