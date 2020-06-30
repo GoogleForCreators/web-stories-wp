@@ -39,7 +39,7 @@ class Admin extends \WP_UnitTestCase {
 			[ 'role' => 'administrator' ]
 		);
 
-		self::$story_id = $factory->post->create(
+		self::$story_id       = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Example title',
@@ -75,8 +75,8 @@ class Admin extends \WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		set_current_screen( 'post.php' );
 		get_current_screen()->post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
-		get_current_screen()->base = 'post';
-		$result = $admin->admin_body_class( 'current' );
+		get_current_screen()->base      = 'post';
+		$result                         = $admin->admin_body_class( 'current' );
 		$this->assertContains( 'folded', $result );
 	}
 
@@ -86,7 +86,9 @@ class Admin extends \WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current' );
+		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media::STORY_POSTER_IMAGE_SIZE );
 		$this->assertContains( 'wp-block-web-stories-embed', $result );
+		$this->assertContains( $poster, $result );
 	}
 
 	public function test_prefill_post_title() {
