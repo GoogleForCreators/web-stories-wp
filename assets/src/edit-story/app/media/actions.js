@@ -27,12 +27,12 @@ export const fetchMediaSuccess = (dispatch) => ({
   media,
   mediaType,
   searchTerm,
-  pageToken,
+  nextPageToken,
   totalPages,
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
-    payload: { media, mediaType, searchTerm, pageToken, totalPages },
+    payload: { media, mediaType, searchTerm, nextPageToken, totalPages },
   });
 };
 
