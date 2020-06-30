@@ -40,7 +40,7 @@ class Discovery extends \WP_UnitTestCase {
 				'post_content' => 'Example content',
 			]
 		);
-		self::$poster_attachment_id = self::factory()->attachment->create_object(
+		self::$poster_attachment_id = $factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
 				'post_parent'    => 0,
@@ -95,7 +95,6 @@ class Discovery extends \WP_UnitTestCase {
 	public function test_get_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		$result = $this->call_private_method( $object, 'get_schemaorg_metadata' );
-		$this->assertArrayHasKey( '@type', $result );
 		$this->assertArrayHasKey( 'mainEntityOfPage', $result );
 		$this->assertArrayHasKey( 'headline', $result );
 		$this->assertArrayHasKey( 'datePublished', $result );
