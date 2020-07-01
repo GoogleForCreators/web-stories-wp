@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory, useMedia, useConfig, useHistory } from '../../app';
+import { useStory, useLocalMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
@@ -64,7 +64,7 @@ function PreviewButton() {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, link, status, autoSave, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
   const { previewLink: autoSaveLink } = useConfig();
@@ -172,7 +172,7 @@ function Publish() {
       actions: { saveStory },
     }) => ({ isSaving, date, storyId, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
   const { capabilities } = useConfig();
@@ -208,7 +208,7 @@ function SwitchToDraft() {
       actions: { saveStory },
     }) => ({ isSaving, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
 
@@ -233,7 +233,7 @@ function Update() {
       actions: { saveStory },
     }) => ({ isSaving, status, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
   const {

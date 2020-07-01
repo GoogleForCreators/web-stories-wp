@@ -25,7 +25,7 @@ import { useCallback } from 'react';
 import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
-import { useMedia, useStory } from '../../app';
+import { useLocalMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
 import useFocusCanvas from './useFocusCanvas';
 
@@ -35,7 +35,7 @@ function useInsertElement() {
   const { addElement } = useStory((state) => ({
     addElement: state.actions.addElement,
   }));
-  const { uploadVideoPoster } = useMedia((state) => ({
+  const { uploadVideoPoster } = useLocalMedia((state) => ({
     uploadVideoPoster: state.actions.uploadVideoPoster,
   }));
 

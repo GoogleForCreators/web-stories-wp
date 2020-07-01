@@ -34,7 +34,7 @@ import { format } from '@wordpress/date';
 import { useAPI } from '../../../../app/api';
 import Dialog from '../../../../components/dialog';
 import { Plain } from '../../../../components/button';
-import { useMedia } from '../../../../app/media';
+import { useLocalMedia } from '../../../../app/media';
 import { useSnackbar } from '../../../../app/snackbar';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 import StoryPropTypes from '../../../../types';
@@ -147,7 +147,7 @@ function MediaEditDialog({ resource, onClose }) {
   const {
     actions: { updateMedia },
   } = useAPI();
-  const { updateMediaElement } = useMedia((state) => ({
+  const { updateMediaElement } = useLocalMedia((state) => ({
     updateMediaElement: state.actions.updateMediaElement,
   }));
   const { showSnackbar } = useSnackbar();
