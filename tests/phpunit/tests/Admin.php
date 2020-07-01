@@ -120,7 +120,7 @@ class Admin extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::prefill_post_content
+	 * @covers ::prefill_post_title
 	 */
 	public function test_prefill_post_title() {
 		$admin = new \Google\Web_Stories\Admin();
