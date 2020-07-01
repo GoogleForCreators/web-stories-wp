@@ -2,7 +2,6 @@
 .github
 .idea
 .storybook
-__cdn__
 __mocks__
 __static__
 assets/src

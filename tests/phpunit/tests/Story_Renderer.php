@@ -113,6 +113,9 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 * Tests that publisher logo is correctly replaced.
 	 *
 	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_option_name
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
 		$renderer                 = new \Google\Web_Stories\Story_Renderer( null );

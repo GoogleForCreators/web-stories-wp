@@ -102,6 +102,13 @@ class Plugin {
 	public $tracking;
 
 	/**
+	 * Database Upgrader.
+	 *
+	 * @var Database_Upgrader
+	 */
+	public $database_upgrader;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
@@ -130,6 +137,10 @@ class Plugin {
 		// Dashboard.
 		$this->dashboard = new Dashboard();
 		add_action( 'init', [ $this->dashboard, 'init' ] );
+
+		// Migrations.
+		$this->database_upgrader = new Database_Upgrader();
+		add_action( 'admin_init', [ $this->database_upgrader, 'init' ] );
 
 		// Admin-related functionality.
 		$this->admin = new Admin();

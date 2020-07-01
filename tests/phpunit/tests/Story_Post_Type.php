@@ -17,6 +17,9 @@
 
 namespace Google\Web_Stories\Tests;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
+ */
 class Story_Post_Type extends \WP_UnitTestCase {
 
 	use Private_Access;
@@ -35,6 +38,13 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 */
 	protected static $subscriber_id;
 
+	/**
+	 * Story id.
+	 *
+	 * @var int
+	 */
+	protected static $story_id;
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id      = $factory->user->create(
 			[ 'role' => 'administrator' ]
@@ -42,8 +52,21 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		self::$subscriber_id = $factory->user->create(
 			[ 'role' => 'subscriber' ]
 		);
+
+		self::$story_id = $factory->post->create(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_title'   => 'Example title',
+				'post_status'  => 'publish',
+				'post_content' => 'Example content',
+				'post_author'  => self::$admin_id,
+			]
+		);
 	}
 
+	/**
+	 * @covers ::get_editor_settings
+	 */
 	public function test_get_editor_settings_admin() {
 		wp_set_current_user( self::$admin_id );
 		$post_type = new \Google\Web_Stories\Story_Post_Type();
@@ -51,6 +74,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
+	/**
+	 * @covers ::get_editor_settings
+	 */
 	public function test_get_editor_settings_sub() {
 		wp_set_current_user( self::$subscriber_id );
 		$post_type = new \Google\Web_Stories\Story_Post_Type();
@@ -58,6 +84,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
+	/**
+	 * @covers ::filter_rest_collection_params
+	 */
 	public function test_filter_rest_collection_params() {
 		$query_params = [
 			'foo',
@@ -80,6 +109,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		);
 	}
 
+	/**
+	 * @covers ::filter_rest_collection_params
+	 */
 	public function test_filter_rest_collection_params_incorrect_post_type() {
 		$query_params = [
 			'foo',
@@ -95,9 +127,91 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertEquals( $filtered_params, $query_params );
 	}
 
+	/**
+	 * @covers ::get_post_type_icon
+	 */
 	public function test_get_post_type_icon() {
 		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
 		$valid            = $this->call_private_method( $post_type_object, 'get_post_type_icon' );
 		$this->assertContains( 'data:image/svg+xml;base64', $valid );
+	}
+
+	/**
+	 * @covers ::admin_enqueue_scripts
+	 */
+	public function test_admin_enqueue_scripts() {
+		$post_type_object          = new \Google\Web_Stories\Story_Post_Type();
+		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$post_type_object->admin_enqueue_scripts( 'post.php' );
+		$this->assertTrue( wp_script_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
+	}
+
+	/**
+	 * @covers ::filter_site_kit_gtag_opt
+	 */
+	public function test_filter_site_kit_gtag_opt() {
+		$this->go_to( get_permalink( self::$story_id ) );
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$gtag             = [
+			'vars'     => [
+				'gtag_id' => 'hello',
+			],
+			'triggers' => [],
+		];
+		$result           = $post_type_object->filter_site_kit_gtag_opt( $gtag );
+
+		$this->assertArrayHasKey( 'storyProgress', $result['triggers'] );
+		$this->assertArrayHasKey( 'storyEnd', $result['triggers'] );
+		$this->assertSame( 'Example title', $result['triggers']['storyProgress']['vars']['event_category'] );
+		$this->assertSame( 'Example title', $result['triggers']['storyEnd']['vars']['event_category'] );
+	}
+
+	/**
+	 * @covers ::filter_use_block_editor_for_post_type
+	 */
+	public function test_filter_use_block_editor_for_post_type() {
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$use_block_editor = $post_type_object->filter_use_block_editor_for_post_type( true, $post_type_object::POST_TYPE_SLUG );
+		$this->assertFalse( $use_block_editor );
+	}
+
+	/**
+	 * @covers ::skip_amp
+	 */
+	public function test_skip_amp() {
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$skip_amp         = $post_type_object->skip_amp( true, get_post( self::$story_id ) );
+		$this->assertTrue( $skip_amp );
+	}
+
+
+	/**
+	 * @covers ::filter_template_include
+	 */
+	public function test_filter_template_include() {
+		$this->go_to( get_permalink( self::$story_id ) );
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$template_include = $post_type_object->filter_template_include( 'current' );
+		$this->assertContains( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
+	}
+
+	/**
+	 * @covers ::show_admin_bar
+	 */
+	public function test_show_admin_bar() {
+		$this->go_to( get_permalink( self::$story_id ) );
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$show_admin_bar   = $post_type_object->show_admin_bar( 'current' );
+		$this->assertFalse( $show_admin_bar );
+	}
+
+	/**
+	 * @covers ::replace_editor
+	 */
+	public function test_replace_editor() {
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$replace_editor   = $post_type_object->replace_editor( false, get_post( self::$story_id ) );
+		$this->assertTrue( $replace_editor );
 	}
 }
