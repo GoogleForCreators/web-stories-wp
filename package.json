@@ -149,7 +149,7 @@
     "puppeteer": "^4.0.1",
     "react-test-renderer": "^16.13.1",
     "rtlcss-webpack-plugin": "^4.0.3",
-    "source-map-loader": "^1.0.0",
+    "source-map-loader": "^1.0.1",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-recommended": "^3.0.0",
