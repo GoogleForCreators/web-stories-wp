@@ -26,7 +26,7 @@ function getFirstFrameOfVideo(src) {
   const video = document.createElement('video');
   video.muted = true;
   video.crossOrigin = 'anonymous';
-  video.preload = 'metadata';
+  video.preload = 'auto';
   video.currentTime = 0.5; // Needed to seek forward.
 
   return new Promise((resolve, reject) => {
