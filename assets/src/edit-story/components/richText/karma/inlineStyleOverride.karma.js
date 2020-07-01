@@ -232,6 +232,48 @@ describe('CUJ: Editor Can Style Text', () => {
       expect(actual).toBe(expected);
     });
 
+    it('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
+      // Toggle bold for entire selection
+      await data.fixture.events.keyboard.shortcut('mod+b');
+
+      // Select 2nd character
+      await setSelection(1, 2);
+
+      // Make just this character italic
+      await data.fixture.events.keyboard.shortcut('mod+i');
+
+      const {
+        italic,
+        bold,
+      } = data.fixture.editor.inspector.designPanel.textStyle;
+
+      // Verify that both italic and bold are toggled
+      expect(italic.checked).toBe(true);
+      expect(bold.checked).toBe(true);
+
+      // Wait for focus to return to text
+      await richTextHasFocus();
+
+      // Delete the italic character
+      await data.fixture.events.keyboard.press('Delete');
+
+      // Verify that bold is still on, italic is off
+      expect(bold.checked).toBe(true);
+      expect(italic.checked).toBe(false);
+
+      // Type something
+      await data.fixture.events.keyboard.type('u');
+
+      // Exit edit-mode
+      await data.fixture.events.keyboard.press('Escape');
+
+      // Expect correct result
+      const actual = getTextContent();
+      const expected =
+        '<span style="font-weight: 700">Full in some text</span>';
+      expect(actual).toBe(expected);
+    });
+
     it('should keep formatting when all text is replaced', async () => {
       // Make it all bold while selected
       await data.fixture.events.keyboard.shortcut('mod+b');
