@@ -43,11 +43,11 @@ const PickerContainer = styled.div`
   width: 100%;
   min-width: 160px;
   max-height: 355px;
+  box-shadow: 0px 8px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.15)};
   overflow: hidden;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.v14};
   background-clip: padding-box;
-  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.v0, 0.175)};
   padding: 0;
 `;
 
@@ -59,6 +59,23 @@ const List = styled(ScrollList)`
   font-size: 14px;
   text-align: left;
   list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: transparent ${({ theme }) => rgba(theme.colors.bg.v1, 0.38)};
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 8px;
+    background-color: ${({ theme }) => rgba(theme.colors.bg.v1, 0.38)};
+  }
 `;
 
 const Divider = styled.hr`
@@ -75,11 +92,13 @@ const SearchInput = styled.input.attrs({
   ['aria-autocomplete']: 'list',
   ['aria-owns']: 'editor-font-picker-list',
 })`
-  margin: 8px;
-  padding: 4px;
+  margin: 1px 1px 0;
+  padding: 6px 12px 6px 26px;
   width: 100%;
-  border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colors.bg.v5};
+  border-radius: 4px 4px 0 0;
+  background: ${({ theme }) => theme.colors.bg.v15};
+  border: none;
+  color: ${({ theme }) => theme.colors.fg.v1};
   font-size: ${({ theme }) => theme.fonts.input.size};
   line-height: ${({ theme }) => theme.fonts.input.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.input.weight};
@@ -101,6 +120,7 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
+  color: ${({ theme }) => theme.colors.fg.v1};
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
@@ -109,7 +129,7 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme.colors.bg.v12};
+    background-color: ${({ theme }) => theme.colors.bg.v15};
     outline: none;
   }
 `;
@@ -124,10 +144,10 @@ const Selected = styled(Checkmark)`
 
 const NoResult = styled.span`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
-  padding: 8px 12px 0 12px;
+  padding: 15px 12px 15px 26px;
   margin: 0;
   font-style: italic;
-  color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.54)};
+  color: ${({ theme }) => theme.colors.fg.v1};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 `;
