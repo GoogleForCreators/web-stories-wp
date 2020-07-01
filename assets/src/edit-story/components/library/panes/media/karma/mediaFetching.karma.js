@@ -28,8 +28,8 @@ import { ROOT_MARGIN } from '../mediaPane';
 
 describe('MediaPane fetching', () => {
   const flagCombinations = [
-    { rowBasedGallery: true },
     { rowBasedGallery: false },
+    { rowBasedGallery: true },
   ];
 
   flagCombinations.forEach((flag) => {
@@ -45,7 +45,8 @@ describe('MediaPane fetching', () => {
     });
 
     it(
-      'should fetch 2nd page with rowBasedGallery: ' + flag.rowBasedGallery,
+      'should fetch 2nd page with `rowBasedGallery` flag set to ' +
+        flag.rowBasedGallery,
       async () => {
         const mediaLibrary = fixture.querySelector(
           '[data-testid="mediaLibrary"]'
