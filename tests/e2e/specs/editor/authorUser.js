@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { percySnapshot } from '@percy/puppeteer';
+
+/**
  * WordPress dependencies
  */
 import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
@@ -67,6 +72,9 @@ describe('Author User', () => {
     await expect(previewPage).toMatchElement('p', {
       text: 'Fill in some text',
     });
+
+    await percySnapshot(previewPage, 'Author previewing without publishing');
+
     await editorPage.bringToFront();
     await previewPage.close();
   });
@@ -87,6 +95,9 @@ describe('Author User', () => {
     await expect(previewPage).toMatchElement('p', {
       text: 'Fill in some text',
     });
+
+    await percySnapshot(previewPage, 'Author previewing after publishing');
+
     await editorPage.bringToFront();
     await previewPage.close();
   });
@@ -107,6 +118,9 @@ describe('Author User', () => {
     await expect(previewPage).toMatchElement('p', {
       text: 'Fill in some text',
     });
+
+    await percySnapshot(previewPage, 'Autosaving and previewing');
+
     await editorPage.bringToFront();
     await previewPage.close();
   });

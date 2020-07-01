@@ -14,22 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * Internal dependencies
- */
-import { createNewStory } from '../../utils';
-
-describe('Story Editor', () => {
-  it('should be able to create a blank story', async () => {
-    await createNewStory();
-
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-
-    await percySnapshot(page, 'Empty Editor');
-  });
-});
+// Collect all Karma tests together for the test webpack config.
+const testsContext = require.context('.', true, /\.karma\.js$/);
+testsContext.keys().forEach(testsContext);
