@@ -144,24 +144,20 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Story_Post_Type::filter_site_kit_gtag_opt
 	 */
 	public function test_filter_site_kit_gtag_opt() {
-		global $wp_query;
-		$wp_query->is_singular    = true;
-		$wp_query->queried_object = get_post( self::$story_id );
-		$post_type_object         = new \Google\Web_Stories\Story_Post_Type();
-		$gtag                     = [
+		$this->go_to( get_permalink( self::$story_id ) );
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$gtag             = [
 			'vars'     => [
 				'gtag_id' => 'hello',
 			],
 			'triggers' => [],
 		];
-		$result                   = $post_type_object->filter_site_kit_gtag_opt( $gtag );
+		$result           = $post_type_object->filter_site_kit_gtag_opt( $gtag );
 
 		$this->assertArrayHasKey( 'storyProgress', $result['triggers'] );
 		$this->assertArrayHasKey( 'storyEnd', $result['triggers'] );
 		$this->assertSame( 'Example title', $result['triggers']['storyProgress']['vars']['event_category'] );
 		$this->assertSame( 'Example title', $result['triggers']['storyEnd']['vars']['event_category'] );
-
-		unset( $wp_query->queried_object );
 	}
 
 	/**

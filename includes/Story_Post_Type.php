@@ -501,7 +501,7 @@ class Story_Post_Type {
 			return $gtag_opt;
 		}
 
-		$post = get_queried_object();
+		$post = get_post();
 
 		if ( ! $post instanceof WP_Post ) {
 			return $gtag_opt;
