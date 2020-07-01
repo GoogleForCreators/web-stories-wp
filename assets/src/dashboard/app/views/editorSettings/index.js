@@ -15,11 +15,29 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import GoogleAnalyticsSettings from './googleAnalytics';
+import PublisherLogoSettings from './publisherLogo';
+import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
-  return <div>{'Editor Settings Placeholder'}</div>;
+  return (
+    <Wrapper>
+      <Header>
+        <Heading>{__('Stories Global Settings', 'web-stories')}</Heading>
+      </Header>
+      <Main>
+        <GoogleAnalyticsSettings />
+        <PublisherLogoSettings />
+      </Main>
+    </Wrapper>
+  );
 }
 
 export default EditorSettings;

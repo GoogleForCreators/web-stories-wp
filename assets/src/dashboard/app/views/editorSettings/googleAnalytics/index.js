@@ -15,11 +15,43 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import {
+  SettingForm,
+  SettingLabel,
+  TextInput,
+  TextInputHelperText,
+} from '../components';
+
+const TEXT = {
+  context: __(
+    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article.",
+    'web-stories'
+  ),
+  label: __('Google Analytics Tracking ID', 'web-stories'),
+  placeholder: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
+};
+// todo add link
 function GoogleAnalyticsSettings() {
-  return <div>{'Google Analytics Placeholder'}</div>;
+  return (
+    <SettingForm>
+      <SettingLabel htmlFor="gaTrackingID">{TEXT.label}</SettingLabel>
+      <div>
+        <TextInput
+          type="text"
+          name="gaTrackingID"
+          placeholder={TEXT.placeholder}
+        />
+        <TextInputHelperText>{TEXT.context}</TextInputHelperText>
+      </div>
+    </SettingForm>
+  );
 }
 
 export default GoogleAnalyticsSettings;

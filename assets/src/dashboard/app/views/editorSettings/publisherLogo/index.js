@@ -15,11 +15,47 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import {
+  SettingForm,
+  FileUploadHelperText,
+  FinePrintHelperText,
+  UploadContainer,
+  SettingLabel,
+} from '../components';
+
+const TEXT = {
+  label: __('Publisher Logo', 'web-stories'),
+  context: __(
+    'Upload your logos here and they will become available to any stories you create.',
+    'web-stories'
+  ),
+  instructions: __(
+    'Click on upload or drag a jpg, png, or static gif in the box above. Avoid vector files, such as svg or eps. Logos should be at least 96x96 pixels and a perfect square. The background should not be transparent.',
+    'web-stories'
+  ),
+  submit: __('Upload', 'web-stories'),
+};
 function PublisherLogoSettings() {
-  return <div>{'Publisher Logos Placeholder'}</div>;
+  return (
+    <SettingForm>
+      <SettingLabel htmlFor="publisherLogo">{TEXT.label}</SettingLabel>
+      <div>
+        <FileUploadHelperText>{TEXT.context}</FileUploadHelperText>
+        <UploadContainer>
+          <p>{'Upload Placeholder'}</p>
+          <button>{TEXT.submit}</button>
+        </UploadContainer>
+        <FinePrintHelperText>{TEXT.instructions}</FinePrintHelperText>
+      </div>
+    </SettingForm>
+  );
 }
 
 export default PublisherLogoSettings;
