@@ -67,7 +67,7 @@ const EditBtn = styled.button`
   border: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.v1};
-  background: ${({ theme }) => theme.colors.bg.v0};
+  background: ${({ theme }) => theme.colors.bg.v4};
   left: ${({ circle }) => (circle ? 0 : 4)}px;
   bottom: ${({ circle }) => (circle ? 0 : 4)}px;
   flex-direction: column;
@@ -181,7 +181,7 @@ MediaInput.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.number,
   circle: PropTypes.bool,
-  ariaLabel: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string,
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
@@ -199,6 +199,7 @@ MediaInput.defaultProps = {
   type: 'image',
   buttonInsertText: __('Choose an image', 'web-stories'),
   title: __('Choose an image', 'web-stories'),
+  ariaLabel: __('Choose an image', 'web-stories'),
 };
 
 export default MediaInput;
