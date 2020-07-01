@@ -174,6 +174,14 @@ BLOCK;
 			return $title;
 		}
 
-		return (string) get_the_title( $post_id );
+		$post = get_post( $post_id );
+
+		if ( ! $post instanceof WP_Post ) {
+			return $title;
+		}
+
+		// Not using get_the_title() because we need the raw title.
+		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
+		return isset( $post->post_title ) ? $post->post_title : '';
 	}
 }
