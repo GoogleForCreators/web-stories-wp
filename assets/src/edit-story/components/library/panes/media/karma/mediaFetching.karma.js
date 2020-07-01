@@ -27,35 +27,51 @@ import { Fixture, MEDIA_PER_PAGE } from '../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
 describe('MediaPane fetching', () => {
-  let fixture;
+  const flagCombinations = [
+    { rowBasedGallery: true },
+    { rowBasedGallery: false },
+  ];
 
-  beforeEach(async () => {
-    fixture = new Fixture();
-    await fixture.render();
-  });
+  flagCombinations.forEach((flag) => {
+    let fixture;
 
-  afterEach(() => {
-    fixture.restore();
-  });
-
-  it('should fetch 2nd page', async () => {
-    const mediaLibrary = fixture.querySelector('[data-testid="mediaLibrary"]');
-    let mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
-
-    expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
-
-    mediaLibrary.scrollTo(
-      0,
-      mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
-    );
-
-    await waitFor(() => {
-      mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
-      if (!(mediaElements.length === MEDIA_PER_PAGE * 2)) {
-        throw new Error('2nd page not yet loaded');
-      }
+    beforeEach(async () => {
+      fixture = new Fixture();
+      fixture.setFlags(flag);
+      await fixture.render();
+    });
+    afterEach(() => {
+      fixture.restore();
     });
 
-    expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
+    it(
+      'should fetch 2nd page with rowBasedGallery: ' + flag.rowBasedGallery,
+      async () => {
+        const mediaLibrary = fixture.querySelector(
+          '[data-testid="mediaLibrary"]'
+        );
+        let mediaElements = fixture.querySelectorAll(
+          '[data-testid=mediaElement]'
+        );
+
+        expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
+
+        mediaLibrary.scrollTo(
+          0,
+          mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
+        );
+
+        await waitFor(() => {
+          mediaElements = fixture.querySelectorAll(
+            '[data-testid=mediaElement]'
+          );
+          if (!(mediaElements.length === MEDIA_PER_PAGE * 2)) {
+            throw new Error('2nd page not yet loaded');
+          }
+        });
+
+        expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
+      }
+    );
   });
 });
