@@ -18,8 +18,7 @@
 namespace Google\Web_Stories\Tests;
 
 class Admin extends \WP_UnitTestCase {
-
-
+	
 	/**
 	 * Admin user for test.
 	 *
