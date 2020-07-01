@@ -59,16 +59,7 @@ class Discovery extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		global $wp_query, $post;
-		$post                     = get_post( self::$story_id );
-		$wp_query->queried_object = $post;
-	}
-
-	public function tearDown() {
-		global $wp_query, $post;
-		unset( $wp_query->queried_object );
-		unset( $post );
-		parent::tearDown();
+		$this->go_to( get_permalink( self::$story_id ) )
 	}
 
 	/**
@@ -89,10 +80,8 @@ class Discovery extends \WP_UnitTestCase {
 	 */
 	public function test_print_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
-		ob_start();
-		$object->print_metadata();
-		$page = ob_get_clean();
-		$this->assertContains( '<title>', $page );
+		$output = get_echo( [ $object, 'print_metadata' ] );
+		$this->assertContains( '<title>', $output );
 	}
 
 	/**
@@ -100,10 +89,8 @@ class Discovery extends \WP_UnitTestCase {
 	 */
 	public function test_print_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
-		ob_start();
-		$object->print_schemaorg_metadata();
-		$page = ob_get_clean();
-		$this->assertContains( 'application/ld+json', $page );
+		$output = get_echo( [ $object, 'print_schemaorg_metadata' ] );
+		$this->assertContains( 'application/ld+json', $output );
 	}
 
 	/**
@@ -125,15 +112,13 @@ class Discovery extends \WP_UnitTestCase {
 	 */
 	public function test_print_open_graph_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
-		ob_start();
-		$object->print_open_graph_metadata();
-		$page = ob_get_clean();
-		$this->assertContains( 'og:locale', $page );
-		$this->assertContains( 'og:type', $page );
-		$this->assertContains( 'og:description', $page );
-		$this->assertContains( 'article:published_time', $page );
-		$this->assertContains( 'article:modified_time', $page );
-		$this->assertContains( 'og:image', $page );
+		$output = get_echo( [ $object, 'print_open_graph_metadata' ] );
+		$this->assertContains( 'og:locale', $output );
+		$this->assertContains( 'og:type', $output );
+		$this->assertContains( 'og:description', $output );
+		$this->assertContains( 'article:published_time', $output );
+		$this->assertContains( 'article:modified_time', $output );
+		$this->assertContains( 'og:image', $output );
 	}
 
 	/**
@@ -141,11 +126,9 @@ class Discovery extends \WP_UnitTestCase {
 	 */
 	public function test_print_twitter_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
-		ob_start();
-		$object->print_twitter_metadata();
-		$page = ob_get_clean();
-		$this->assertContains( 'twitter:card', $page );
-		$this->assertContains( 'twtter:image', $page );
+		$output = get_echo( [ $object, 'print_twitter_metadata' ] );
+		$this->assertContains( 'twitter:card', $output );
+		$this->assertContains( 'twtter:image', $output );
 	}
 
 	/**
