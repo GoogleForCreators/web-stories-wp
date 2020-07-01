@@ -15,5 +15,6 @@
  */
 
 // Collect all Karma tests together for the test WebPack config.
+// eslint-disable-next-line no-undef
 const testsContext = require.context('.', true, /karma\.js$/);
 testsContext.keys().forEach(testsContext);
