@@ -44,6 +44,7 @@ import {
 import paneId from './paneId';
 import MediaElement from './mediaElement';
 import MediaGallery from './mediaGallery';
+import { ProviderType } from './providerType';
 
 export const ROOT_MARGIN = 300;
 
@@ -329,7 +330,7 @@ function MediaPane(props) {
       <MediaGallery
         resources={resources}
         onInsert={insertMediaElement}
-        isMedia3p={false}
+        providerType={ProviderType.LOCAL}
       />
       {hasMore && (
         <Loading ref={refContainerFooter}>
