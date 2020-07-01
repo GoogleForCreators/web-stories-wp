@@ -178,6 +178,27 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertTrue( $skip_amp );
 	}
 
+
+	/**
+	 * @covers \Google\Web_Stories\Story_Post_Type::filter_template_include
+	 */
+	public function test_filter_template_include() {
+		$this->go_to( get_permalink( self::$story_id ) );
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$template_include = $post_type_object->filter_template_include( 'current' );
+		$this->assertContains( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\Story_Post_Type::show_admin_bar
+	 */
+	public function test_show_admin_bar() {
+		$this->go_to( get_permalink( self::$story_id ) );
+		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$show_admin_bar   = $post_type_object->show_admin_bar( 'current' );
+		$this->assertFalse( $show_admin_bar );
+	}
+
 	/**
 	 * @covers \Google\Web_Stories\Story_Post_Type::replace_editor
 	 */
