@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-// Collect all Karma tests together for the test WebPack config.
-const testsContext = require.context('.', true, /karma\.js$/);
+// Collect all Karma tests together for the test webpack config.
+const testsContext = require.context('.', true, /\.karma\.js$/);
 testsContext.keys().forEach(testsContext);
