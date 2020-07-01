@@ -24,10 +24,30 @@ namespace Google\Web_Stories\Tests;
 class Discovery extends \WP_UnitTestCase {
 	use Private_Access;
 
+	/**
+	 * User ID.
+	 *
+	 * @var int
+	 */
 	protected static $user_id;
-	protected static $story_id;
-	protected static $poster_attachment_id;
 
+	/**
+	 * Story ID.
+	 *
+	 * @var int
+	 */
+	protected static $story_id;
+
+	/**
+	 * Image attachment id.
+	 *
+	 * @var int
+	 */
+	protected static $attachment_id;
+
+	/**
+	 * @param $factory
+	 */
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
 			[
@@ -35,7 +55,7 @@ class Discovery extends \WP_UnitTestCase {
 			]
 		);
 
-		self::$story_id             = $factory->post->create(
+		self::$story_id      = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Example title',
@@ -44,7 +64,7 @@ class Discovery extends \WP_UnitTestCase {
 				'post_author'  => self::$user_id,
 			]
 		);
-		self::$poster_attachment_id = $factory->attachment->create_object(
+		self::$attachment_id = $factory->attachment->create_object(
 			DIR_TESTDATA . '/images/test-image.jpg',
 			self::$story_id,
 			[
@@ -52,8 +72,8 @@ class Discovery extends \WP_UnitTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		wp_maybe_generate_attachment_metadata( get_post( self::$poster_attachment_id ) );
-		set_post_thumbnail( self::$story_id, self::$poster_attachment_id );
+		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
+		set_post_thumbnail( self::$story_id, self::$attachment_id );
 	}
 
 	public static function wpTearDownAfterClass() {
@@ -66,7 +86,7 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers \Google\Web_Stories\Discovery::init
+	 * @covers ::init
 	 */
 	public function test_init() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -79,7 +99,7 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers \Google\Web_Stories\Discovery::print_metadata
+	 * @covers ::print_metadata
 	 */
 	public function test_print_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -88,7 +108,7 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers \Google\Web_Stories\Discovery::print_schemaorg_metadata
+	 * @covers ::print_schemaorg_metadata
 	 */
 	public function test_print_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -97,7 +117,7 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers \Google\Web_Stories\Discovery::get_schemaorg_metadata
+	 * @covers ::get_schemaorg_metadata
 	 */
 	public function test_get_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -111,7 +131,7 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers \Google\Web_Stories\Discovery::print_open_graph_metadata
+	 * @covers ::print_open_graph_metadata
 	 */
 	public function test_print_open_graph_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -125,7 +145,7 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers \Google\Web_Stories\Discovery::print_twitter_metadata
+	 * @covers ::print_twitter_metadata
 	 */
 	public function test_print_twitter_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -135,11 +155,11 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers \Google\Web_Stories\Discovery::get_valid_publisher_image
+	 * @covers ::get_valid_publisher_image
 	 */
 	public function test_get_valid_publisher_image() {
 		$object = new \Google\Web_Stories\Discovery();
-		$result = $this->call_private_method( $object, 'get_valid_publisher_image', [ self::$poster_attachment_id ] );
+		$result = $this->call_private_method( $object, 'get_valid_publisher_image', [ self::$attachment_id ] );
 		$this->assertNotFalse( $result );
 	}
 }
