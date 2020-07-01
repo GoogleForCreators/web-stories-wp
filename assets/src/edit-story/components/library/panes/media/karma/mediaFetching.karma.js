@@ -26,33 +26,29 @@ import { waitFor } from '@testing-library/react';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-describe('MediaPane fetching', () => {
-  const flagCombinations = [
-    { rowBasedGallery: false },
-    { rowBasedGallery: true },
-  ];
-
-  flagCombinations.forEach((flag) => {
+const flagValues = [false, true];
+flagValues.forEach((value) => {
+  describe('MediaPane fetching', () => {
     let fixture;
 
     beforeEach(async () => {
       fixture = new Fixture();
-      fixture.setFlags(flag);
+      fixture.setFlags({ rowBasedGallery: value });
       await fixture.render();
     });
+
     afterEach(() => {
       fixture.restore();
     });
 
     it(
-      'should fetch 2nd page with `rowBasedGallery` flag set to ' +
-        flag.rowBasedGallery,
+      'should fetch 2nd page - `rowBasedGallery` flag set to ' + value,
       async () => {
         const mediaLibrary = fixture.querySelector(
           '[data-testid="mediaLibrary"]'
         );
         let mediaElements = fixture.querySelectorAll(
-          '[data-testid=mediaElement]'
+          '[data-testid="mediaElement"]'
         );
 
         expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
@@ -64,7 +60,7 @@ describe('MediaPane fetching', () => {
 
         await waitFor(() => {
           mediaElements = fixture.querySelectorAll(
-            '[data-testid=mediaElement]'
+            '[data-testid="mediaElement"]'
           );
           if (!(mediaElements.length === MEDIA_PER_PAGE * 2)) {
             throw new Error('2nd page not yet loaded');
