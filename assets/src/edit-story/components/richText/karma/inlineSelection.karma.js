@@ -293,7 +293,7 @@ describe('CUJ: Editor Can Style Text', () => {
 
         // Assume text content to be correctly formatted
         const actual = getTextContent();
-        const expected = `<span style="font-weight: 900">F</span><span style="font-weight: 700">il</span>l in some text`;
+        const expected = `<span style="font-weight: 900">F</span><span style="font-weight: 700">i</span><span style="font-weight: 700">l</span>l in some text`;
         expect(actual).toBe(expected);
       });
 
@@ -322,7 +322,7 @@ describe('CUJ: Editor Can Style Text', () => {
 
         // Assume text content to be correctly formatted
         const actual = getTextContent();
-        const expected = `<span style="font-weight: 900">Fil</span>l in some text`;
+        const expected = `<span style="font-weight: 900">Fi</span><span style="font-weight: 900">l</span>l in some text`;
         expect(actual).toBe(expected);
       });
     });
