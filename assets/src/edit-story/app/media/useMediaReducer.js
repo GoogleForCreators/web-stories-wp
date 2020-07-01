@@ -24,7 +24,7 @@ import { useReducer, useMemo } from 'react';
  */
 import localReducer from './local/reducer';
 import media3pReducer from './media3p/reducer';
-import * as actionsToWrap2 from './actions';
+import * as actionsToWrap2 from './local/actions';
 import * as types from './types';
 
 function rootReducer(state = {}, { type, payload }) {

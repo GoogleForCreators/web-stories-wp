@@ -17,31 +17,18 @@
 /**
  * Internal dependencies
  */
-import * as types from './types';
+import * as common from '../common/actions';
+import * as types from '../types';
 
-export const fetchMediaStart = (dispatch) => ({ pageToken }) => {
-  dispatch({ type: types.FETCH_MEDIA_START, payload: { pageToken } });
-};
-
-export const fetchMediaSuccess = (dispatch) => ({
-  media,
-  mediaType,
-  searchTerm,
-  nextPageToken,
-  totalPages,
-}) => {
-  dispatch({
-    type: types.FETCH_MEDIA_SUCCESS,
-    payload: { media, mediaType, searchTerm, nextPageToken, totalPages },
-  });
-};
+export const fetchMediaStart = common.fetchMediaStart;
+export const fetchMediaSuccess = common.fetchMediaSuccess;
+export const fetchMediaError = common.fetchMediaError;
+export const setNextPage = common.setNextPage;
+export const updateMediaElement = common.updateMediaElement;
+export const deleteMediaElement = common.deleteMediaElement;
 
 export const resetFilters = (dispatch) => () => {
   dispatch({ type: types.RESET_FILTERS });
-};
-
-export const fetchMediaError = (dispatch) => () => {
-  dispatch({ type: types.FETCH_MEDIA_ERROR });
 };
 
 export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
@@ -52,30 +39,12 @@ export const setMediaType = (dispatch) => ({ mediaType }) => {
   dispatch({ type: types.SET_MEDIA_TYPE, payload: { mediaType } });
 };
 
-export const setNextPage = (dispatch) => () => {
-  dispatch({ type: types.SET_NEXT_PAGE });
-};
-
 export const setProcessing = (dispatch) => ({ id }) => {
   dispatch({ type: types.ADD_PROCESSING, payload: { id } });
 };
 
 export const removeProcessing = (dispatch) => ({ id }) => {
   dispatch({ type: types.REMOVE_PROCESSING, payload: { id } });
-};
-
-export const updateMediaElement = (dispatch) => ({ id, ...properties }) => {
-  dispatch({
-    type: types.UPDATE_MEDIA_ELEMENT,
-    payload: {
-      id,
-      ...properties,
-    },
-  });
-};
-
-export const deleteMediaElement = (dispatch) => ({ id }) => {
-  dispatch({ type: types.DELETE_MEDIA_ELEMENT, payload: { id } });
 };
 
 export const setMedia = (dispatch) => ({ media }) => {
