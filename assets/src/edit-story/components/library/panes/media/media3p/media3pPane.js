@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -61,7 +61,7 @@ function Media3pPane(props) {
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
-  // TODO(#2368): get resources from useMedia
+  // TODO(#2368): get resources from useMedia3p
   // TODO(#2368): handle pagination / infinite scrolling
   const resources = [
     {
@@ -105,7 +105,7 @@ function Media3pPane(props) {
   }, [scrollbarWidth, refContainer]);
 
   // Callback for when a media element is selected.
-  const onInsert = () => {};
+  const onInsert = useCallback(() => {}, []);
 
   return (
     <StyledPane id={paneId} {...props}>

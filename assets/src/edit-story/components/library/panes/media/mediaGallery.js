@@ -45,34 +45,29 @@ const PhotoContainer = styled.div`
  * @return {*} The gallery element.
  */
 function MediaGallery({ resources, onInsert, providerType }) {
-  const photos = resources.map((resource) => {
-    return {
-      src: resource.src,
-      width: resource.width,
-      height: resource.height,
-    };
-  });
+  const photos = resources.map((resource) => ({
+    src: resource.src,
+    width: resource.width,
+    height: resource.height,
+  }));
 
   const imageRenderer = useCallback(
-    ({ index, photo }) => {
-      return (
-        <PhotoContainer photo={photo} key={index}>
-          <MediaElement
-            resource={resources[index]}
-            width={photo.width}
-            height={photo.height}
-            onInsert={onInsert}
-            providerType={providerType}
-          />
-        </PhotoContainer>
-      );
-    },
+    ({ index, photo }) => (
+      <PhotoContainer photo={photo} key={index}>
+        <MediaElement
+          resource={resources[index]}
+          width={photo.width}
+          height={photo.height}
+          onInsert={onInsert}
+          providerType={providerType}
+        />
+      </PhotoContainer>
+    ),
     [providerType, onInsert, resources]
   );
 
   return (
-    resources &&
-    resources.length && (
+    resources?.length && (
       <Gallery
         targetRowHeight={110}
         direction={'row'}
