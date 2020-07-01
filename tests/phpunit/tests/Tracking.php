@@ -20,6 +20,9 @@ namespace Google\Web_Stories\Tests;
 use Spy_REST_Server;
 use WP_REST_Request;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Tracking
+ */
 class Tracking extends \WP_UnitTestCase {
 	protected static $user_id;
 
@@ -35,6 +38,9 @@ class Tracking extends \WP_UnitTestCase {
 		self::delete_user( self::$user_id );
 	}
 
+	/**
+	 * @covers ::init
+	 */
 	public function test_add_optin_field_to_rest_api() {
 		wp_set_current_user( self::$user_id );
 		( new \Google\Web_Stories\Tracking() )->init();
@@ -47,6 +53,9 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertTrue( $data['meta'][ \Google\Web_Stories\Tracking::OPTIN_META_KEY ] );
 	}
 
+	/**
+	 * @covers ::init
+	 */
 	public function test_register_tracking_script() {
 		$this->assertArrayHasKey( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, wp_scripts()->registered );
 		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ]->src );
@@ -54,6 +63,9 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertNotEmpty( $after );
 	}
 
+	/**
+	 * @covers ::get_settings
+	 */
 	public function test_get_settings() {
 		wp_set_current_user( self::$user_id );
 
@@ -71,6 +83,9 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $settings );
 	}
 
+	/**
+	 * @covers ::get_settings
+	 */
 	public function test_get_settings_with_optin() {
 		wp_set_current_user( self::$user_id );
 		add_user_meta( get_current_user_id(), \Google\Web_Stories\Tracking::OPTIN_META_KEY, true );
