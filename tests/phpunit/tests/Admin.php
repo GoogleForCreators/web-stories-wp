@@ -73,10 +73,9 @@ class Admin extends \WP_UnitTestCase {
 		$admin->init();
 
 		wp_set_current_user( self::$admin_id );
-		set_current_screen( 'post.php' );
-		get_current_screen()->post_type = \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG;
-		get_current_screen()->base      = 'post';
-		$result                         = $admin->admin_body_class( 'current' );
+		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$result = $admin->admin_body_class( 'current' );
 		$this->assertContains( 'folded', $result );
 	}
 
