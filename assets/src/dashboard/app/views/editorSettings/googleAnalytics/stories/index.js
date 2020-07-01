@@ -13,10 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as MyStoriesView } from './myStories';
-export { default as EditorSettingsView } from './editorSettings';
-export { default as ExploreTemplatesView } from './exploreTemplates';
-export { default as TemplateDetailsView } from './templateDetails';
-export { default as SavedTemplatesView } from './savedTemplates';
-export { default as StoryAnimTool } from './storyAnimTool';
-export { default as ToasterView } from './toaster';
+
+/**
+ * External dependencies
+ */
+// import { text } from '@storybook/addon-knobs';
+// import { action } from '@storybook/addon-actions';
+
+/**
+ * Internal dependencies
+ */
+import GoogleAnalyticsSettings from '../';
+
+export default {
+  title: 'Dashboard/Views/EditorSettings/GoogleAnalytics',
+  component: GoogleAnalyticsSettings,
+};
+
+export const _default = () => {
+  return <GoogleAnalyticsSettings />;
+};
