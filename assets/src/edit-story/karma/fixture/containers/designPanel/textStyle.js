@@ -77,16 +77,8 @@ export class TextStyle extends AbstractPanel {
     );
   }
 
-  get fontFamily() {
-    return this._get(
-      this.getByRole('button', { name: /Font family/ }),
-      'fontFamily',
-      Select
-    );
-  }
-
   // @todo: add remaining input options:
-  // * font size
+  // * font family and size
   // * justify toggles
   // * fill style
   // * background color
