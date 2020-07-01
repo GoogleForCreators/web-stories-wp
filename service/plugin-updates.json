@@ -1,10 +1,10 @@
 {
   "name": "Web Stories",
   "slug": "web-stories",
-  "version": "1.0.0-alpha.10+780b5cf",
-  "last_updated": "2020-06-15 13:11:56",
+  "version": "1.0.0-beta.1",
+  "last_updated": "2020-07-01 07:09:36",
   "url": "https://github.com/google/web-stories-wp",
-  "download_url": "https://github.com/google/web-stories-wp/releases/download/v1.0.0-alpha.10%2B780b5cf/web-stories.zip",
+  "download_url": "https://github.com/google/web-stories-wp/releases/download/v1.0.0-beta.1/web-stories.zip",
   "tested": "5.4",
   "requires": "5.3",
   "requires_php": "5.6",
