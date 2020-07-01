@@ -70,18 +70,14 @@ class Admin extends \WP_UnitTestCase {
 
 	public function test_admin_body_class() {
 		$admin = new \Google\Web_Stories\Admin();
-		$admin->init();
-
 		wp_set_current_user( self::$admin_id );
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-
-		$result = $admin->admin_body_class( 'current' );
+		$result                    = $admin->admin_body_class( 'current' );
 		$this->assertContains( 'folded', $result );
 	}
 
 	public function test_prefill_post_content() {
 		$admin = new \Google\Web_Stories\Admin();
-		$admin->init();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current' );
@@ -92,7 +88,6 @@ class Admin extends \WP_UnitTestCase {
 
 	public function test_prefill_post_content_invalid_user() {
 		$admin = new \Google\Web_Stories\Admin();
-		$admin->init();
 		wp_set_current_user( 0 );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current' );
@@ -101,7 +96,6 @@ class Admin extends \WP_UnitTestCase {
 
 	public function test_prefill_post_content_invalid_id() {
 		$admin = new \Google\Web_Stories\Admin();
-		$admin->init();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = 999999999;
 		$result                 = $admin->prefill_post_content( 'current' );
@@ -110,7 +104,6 @@ class Admin extends \WP_UnitTestCase {
 
 	public function test_prefill_post_title() {
 		$admin = new \Google\Web_Stories\Admin();
-		$admin->init();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_title( 'current' );
