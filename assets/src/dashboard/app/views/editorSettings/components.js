@@ -41,6 +41,10 @@ export const Heading = styled.h1`
   padding: 0;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.gray800};
+
+  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+    font-size: 40.67px;
+  }
 `;
 
 export const Main = styled.main`
@@ -53,9 +57,14 @@ export const Main = styled.main`
 
 export const SettingForm = styled.form`
   display: grid;
-  grid-template-columns: 27% minmax(600px, 1fr);
+  grid-template-columns: 27% minmax(400px, 1fr);
   column-gap: 6.56%;
   padding-bottom: 52px;
+
+  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+    grid-template-columns: 100%;
+    row-gap: 20px;
+  }
 `;
 
 export const SettingLabel = styled.label`
