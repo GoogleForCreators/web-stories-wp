@@ -17,8 +17,11 @@
 
 namespace Google\Web_Stories\Tests;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Admin
+ */
 class Admin extends \WP_UnitTestCase {
-	
+
 	/**
 	 * Admin user for test.
 	 *
@@ -57,6 +60,9 @@ class Admin extends \WP_UnitTestCase {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
+	/**
+	 * @covers ::init
+	 */
 	public function test_init() {
 		$admin = new \Google\Web_Stories\Admin();
 		$admin->init();
@@ -67,6 +73,9 @@ class Admin extends \WP_UnitTestCase {
 
 	}
 
+	/**
+	 * @covers ::admin_body_class
+	 */
 	public function test_admin_body_class() {
 		$admin = new \Google\Web_Stories\Admin();
 		wp_set_current_user( self::$admin_id );
@@ -75,6 +84,9 @@ class Admin extends \WP_UnitTestCase {
 		$this->assertContains( 'folded', $result );
 	}
 
+	/**
+	 * @covers ::prefill_post_content
+	 */
 	public function test_prefill_post_content() {
 		$admin = new \Google\Web_Stories\Admin();
 		wp_set_current_user( self::$admin_id );
@@ -85,6 +97,9 @@ class Admin extends \WP_UnitTestCase {
 		$this->assertContains( $poster, $result );
 	}
 
+	/**
+	 * @covers ::prefill_post_content
+	 */
 	public function test_prefill_post_content_invalid_user() {
 		$admin = new \Google\Web_Stories\Admin();
 		wp_set_current_user( 0 );
@@ -93,6 +108,9 @@ class Admin extends \WP_UnitTestCase {
 		$this->assertSame( 'current', $result );
 	}
 
+	/**
+	 * @covers ::prefill_post_content
+	 */
 	public function test_prefill_post_content_invalid_id() {
 		$admin = new \Google\Web_Stories\Admin();
 		wp_set_current_user( self::$admin_id );
@@ -101,6 +119,9 @@ class Admin extends \WP_UnitTestCase {
 		$this->assertSame( 'current', $result );
 	}
 
+	/**
+	 * @covers ::prefill_post_content
+	 */
 	public function test_prefill_post_title() {
 		$admin = new \Google\Web_Stories\Admin();
 		wp_set_current_user( self::$admin_id );
