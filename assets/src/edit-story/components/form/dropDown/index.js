@@ -95,9 +95,9 @@ const DropDownTitle = styled.span`
 `;
 
 function DropDown({
-  options,
   value,
   onChange,
+  options = [],
   disabled = false,
   lightMode = false,
   placeholder = __('Select an option', 'web-stories'),
@@ -179,8 +179,8 @@ function DropDown({
 
 DropDown.propTypes = {
   value: PropTypes.any.isRequired,
-  options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
+  options: PropTypes.array,
   disabled: PropTypes.bool,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
