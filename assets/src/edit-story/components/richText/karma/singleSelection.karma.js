@@ -48,11 +48,11 @@ describe('CUJ: Editor Can Style Text', () => {
       data.fixture.restore();
     });
 
-    it('should have the correct initial text and formatting', () => {
+    it('should have the correct initial text and no formatting', () => {
       expect(getTextContent()).toBe('Fill in some text');
     });
 
-    it('should apply formatting correctly for single-style text field', async () => {
+    it('should apply inline formatting correctly for single-style text field', async () => {
       const {
         bold,
         italic,
@@ -81,13 +81,13 @@ describe('CUJ: Editor Can Style Text', () => {
       // Set letter spacing
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('50');
-      // Press escape to leave input field (does not leave edit-mode)
+      // Press escape to leave input field (does not unselect element)
       await data.fixture.events.keyboard.press('Escape');
 
       // Set color using hex input
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
       await data.fixture.events.keyboard.type('FF00FF');
-      // Press escape to leave input field (does not leave edit-mode)
+      // Press escape to leave input field (does not unselect element)
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles, now expected to be updated
@@ -111,7 +111,7 @@ describe('CUJ: Editor Can Style Text', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should apply formatting correctly for multi-style text field', async () => {
+    it('should apply inline formatting correctly for multi-style text field', async () => {
       const {
         bold,
         italic,
@@ -184,7 +184,7 @@ describe('CUJ: Editor Can Style Text', () => {
 
     // Disable reason: This isn't implemented yet: Filed in #1977
     // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should apply inline formats using shortcuts', async () => {
+    xit('should apply inline formatting using shortcuts', async () => {
       const {
         bold,
         italic,
@@ -284,6 +284,12 @@ describe('CUJ: Editor Can Style Text', () => {
     });
 
     it('should make black+bold+regular text field bold when toggling', async () => {
+      // Note that this works differently than multiple styles in an inline selection,
+      // where a bolding anything including non-bolds *and* black would result in the
+      // entire selection becoming black.
+      // This is on purpose and by design.
+      // See more in `richText/formatters/weight.js@toggleBold`
+
       const {
         bold,
         fontWeight,
@@ -312,7 +318,7 @@ describe('CUJ: Editor Can Style Text', () => {
       expect(bold.checked).toBe(true);
       expect(fontWeight.value).toBe('Bold');
 
-      // Assume text content to now be correctly black
+      // Assume text content to now be correctly bold
       const actual = getTextContent();
       const expected = `<span style="font-weight: 700">Fill in some text</span>`;
       expect(actual).toBe(expected);

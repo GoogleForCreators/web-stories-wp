@@ -328,7 +328,6 @@ describe('CUJ: Editor Can Style Text', () => {
     });
 
     it('should apply global formats (here line height) even when a selection is present', async () => {
-      // Expect line height to be default "Roboto"
       const getDisplayTextStyles = () => {
         const displayNode = data.fixture.editor.canvas.displayLayer.display(
           data.textId

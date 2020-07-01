@@ -37,21 +37,17 @@ describe('CUJ: Editor Can Style Text', () => {
 
       // Add a text box
       await addInitialText();
+
+      // Enter edit-mode
+      await data.fixture.events.keyboard.press('Enter');
     });
 
     afterEach(() => {
       data.fixture.restore();
     });
 
-    it('should have the correct initial text and formatting', () => {
-      expect(getTextContent()).toBe('Fill in some text');
-    });
-
     describe('when cursor is placed after second character', () => {
       beforeEach(async () => {
-        // Enter edit-mode
-        await data.fixture.events.keyboard.press('Enter');
-
         // Place cursor at start and them move to after second character
         await setSelection(2, 2);
       });
@@ -199,9 +195,6 @@ describe('CUJ: Editor Can Style Text', () => {
     });
 
     it('should have correct formatting when already italic, then inline removing italic and adding bold, then inserting text', async () => {
-      // Enter edit-mode
-      await data.fixture.events.keyboard.press('Enter');
-
       // Toggle italic for entire selection
       await data.fixture.events.keyboard.shortcut('mod+i');
 
@@ -240,9 +233,6 @@ describe('CUJ: Editor Can Style Text', () => {
     });
 
     it('should keep formatting when all text is replaced', async () => {
-      // Enter edit-mode
-      await data.fixture.events.keyboard.press('Enter');
-
       // Make it all bold while selected
       await data.fixture.events.keyboard.shortcut('mod+b');
 
@@ -258,9 +248,6 @@ describe('CUJ: Editor Can Style Text', () => {
     });
 
     it('should keep formatting when all text is removed, then replaced', async () => {
-      // Enter edit-mode
-      await data.fixture.events.keyboard.press('Enter');
-
       // Make it all bold while selected
       await data.fixture.events.keyboard.shortcut('mod+b');
 

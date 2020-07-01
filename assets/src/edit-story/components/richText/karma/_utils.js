@@ -41,6 +41,7 @@ export function initHelpers(data) {
     if (addExtra) {
       data.extraId = elements[2].id;
 
+      // Second text field is currently selected as it was last to be added
       // Change value of second text field and exit edit mode
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.type('Number #2');
