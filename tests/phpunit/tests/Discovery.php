@@ -59,7 +59,7 @@ class Discovery extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$this->go_to( get_permalink( self::$story_id ) )
+		$this->go_to( get_permalink( self::$story_id ) );
 	}
 
 	/**
