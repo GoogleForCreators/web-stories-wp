@@ -251,9 +251,6 @@ describe('CUJ: Editor Can Style Text', () => {
       expect(italic.checked).toBe(true);
       expect(bold.checked).toBe(true);
 
-      // Wait for focus to return to text
-      await richTextHasFocus();
-
       // Delete the italic character
       await data.fixture.events.keyboard.press('Delete');
 
