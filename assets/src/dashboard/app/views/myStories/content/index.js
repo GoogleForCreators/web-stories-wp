@@ -22,6 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -60,6 +61,7 @@ function Content({
   storyActions,
   users,
   view,
+  dateFormat,
 }) {
   return (
     <Layout.Scrollable>
@@ -80,6 +82,7 @@ function Content({
                   stories={stories}
                   users={users}
                   view={view}
+                  dateFormat={dateFormat}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -108,6 +111,7 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
+  dateFormat: PropTypes.string,
 };
 
-export default Content;
+export default memo(Content);

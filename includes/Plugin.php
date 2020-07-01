@@ -93,6 +93,13 @@ class Plugin {
 	 * @var Discovery
 	 */
 	public $discovery;
+
+	/**
+	 * Database Upgrader.
+	 *
+	 * @var Database_Upgrader
+	 */
+	public $database_upgrader;
 	/**
 	 * Initialize plugin functionality.
 	 *
@@ -119,6 +126,10 @@ class Plugin {
 		// Dashboard.
 		$this->dashboard = new Dashboard();
 		add_action( 'init', [ $this->dashboard, 'init' ] );
+
+		// Migrations.
+		$this->database_upgrader = new Database_Upgrader();
+		add_action( 'admin_init', [ $this->database_upgrader, 'init' ] );
 
 		// Admin-related functionality.
 		$this->admin = new Admin();

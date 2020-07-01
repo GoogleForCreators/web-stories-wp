@@ -129,11 +129,7 @@ class Dashboard {
 	 * @return void
 	 */
 	public function render() {
-		?>
-		<div id="web-stories-dashboard">
-			<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
-		</div>
-		<?php
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/dashboard.php';
 	}
 
 	/**
@@ -206,6 +202,7 @@ class Dashboard {
 			'id'     => 'web-stories-dashboard',
 			'config' => [
 				'isRTL'        => is_rtl(),
+				'dateFormat'   => get_option( 'date_format' ),
 				'newStoryURL'  => $new_story_url,
 				'editStoryURL' => $edit_story_url,
 				'wpListURL'    => $classic_wp_list_url,

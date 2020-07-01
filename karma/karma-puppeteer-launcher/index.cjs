@@ -136,6 +136,9 @@ async function exposeFunctions(page, config) {
   // mouse.
   // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
   await exposeMouseFunctions(page);
+
+  // clipboard.
+  await exposeClipboard(page);
 }
 
 function exposeFunction(page, name, func) {
@@ -200,6 +203,64 @@ async function exposeMouseFunctions(page) {
       }
       return promise.then(() => mouse[type](options));
     }, Promise.resolve());
+  });
+}
+
+async function exposeClipboard(page) {
+  await page
+    .browserContext()
+    .overridePermissions('http://localhost:9876', [
+      'clipboard-read',
+      'clipboard-write',
+    ]);
+
+  function exposeClipboardFunction(name, func) {
+    return exposeFunction(page, `clipboard_${name}`, func);
+  }
+
+  // @todo: Drop the local clipboardData once `navigator.clipboard.read()`
+  // supports text/html. It will be a lot better since it will also support
+  // native clipboard. OTOH, there's something good in not running tests on
+  // a real clipboard. E.g. a test cannot accidentally copy/print a secret
+  // value.
+  // See the https://crbug.com/931839 for "text/html" support.
+  let clipboardData;
+
+  // @todo: Implement `cut` and `set()`.
+
+  // Copy.
+  await exposeClipboardFunction('copy', async (frame) => {
+    clipboardData = await frame.evaluateHandle(() => {
+      // @todo: do `document.execCommand('copy')` inside an input or
+      // a contenteditable.
+      const target = document.activeElement;
+      const data = new DataTransfer();
+      const event = new ClipboardEvent('copy', {
+        bubbles: true,
+        cancelable: true,
+        clipboardData: data,
+      });
+      target.dispatchEvent(event);
+      return data;
+    });
+  });
+
+  // Paste.
+  await exposeClipboardFunction('paste', async (frame) => {
+    if (!clipboardData) {
+      throw new Error('clipboard is empty');
+    }
+    await frame.evaluate((data) => {
+      // @todo: do `document.execCommand('paste')` inside an input or
+      // a contenteditable.
+      const target = document.activeElement;
+      const event = new ClipboardEvent('paste', {
+        bubbles: true,
+        cancelable: true,
+        clipboardData: data,
+      });
+      target.dispatchEvent(event);
+    }, clipboardData);
   });
 }
 

@@ -300,7 +300,7 @@
         "bin/**/*.js",
         "babel.config.cjs",
         "jest-puppeteer.config.cjs",
-        "karma.config.cjs",
+        "karma-*.config.cjs",
         "webpack.*.cjs",
         ".storybook/*.cjs",
         ".storybook/*.js",

@@ -34,10 +34,11 @@ const Note = styled.p`
   color: ${({ theme }) => theme.colors.fg.v1};
   opacity: 0.86;
   font-family: ${({ theme }) => theme.fonts.label.family};
-  font-weight: ${({ theme }) => theme.fonts.label.size};
+  font-weight: ${({ theme }) => theme.fonts.label.weight};
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  margin: 0;
+  margin: 50px 0;
+  text-align: center;
 `;
 
 function NoSelectionPanel() {

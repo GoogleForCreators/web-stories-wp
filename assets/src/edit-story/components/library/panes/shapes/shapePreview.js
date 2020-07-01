@@ -25,8 +25,8 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import createSolid from '../../../../utils/createSolid';
 import { PAGE_WIDTH } from '../../../../constants';
+import createSolidFromString from '../../../../utils/createSolidFromString';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -47,7 +47,7 @@ const Path = styled.path`
   fill: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-function ShapePreview({ mask }) {
+function ShapePreview({ mask, isPreview }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -60,7 +60,7 @@ function ShapePreview({ mask }) {
   // Contains the data to be passed in for insertElement() calls in order
   // to insert the correct shape.
   const shapeData = {
-    backgroundColor: createSolid(255, 255, 255),
+    backgroundColor: createSolidFromString('#c4c4c4'),
     width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
     height: DEFAULT_ELEMENT_WIDTH,
     mask: {
@@ -70,12 +70,20 @@ function ShapePreview({ mask }) {
 
   const svg = (
     <svg
-      viewBox={`0 0 1 ${1 / mask.ratio}`}
-      width={PREVIEW_SIZE * mask.ratio}
+      viewBox={`0 0 1 ${
+        1 / (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
+      }`}
+      width={
+        PREVIEW_SIZE *
+        (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
+      }
       height={PREVIEW_SIZE}
     >
       <title>{mask.name}</title>
-      <Path d={mask.path} ref={pathRef} />
+      <Path
+        d={isPreview && mask.iconPath ? mask.iconPath : mask.path}
+        ref={pathRef}
+      />
     </svg>
   );
 
@@ -106,6 +114,7 @@ function ShapePreview({ mask }) {
 }
 ShapePreview.propTypes = {
   mask: PropTypes.object.isRequired,
+  isPreview: PropTypes.bool,
 };
 
 export default ShapePreview;

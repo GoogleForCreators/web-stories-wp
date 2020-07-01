@@ -88,6 +88,7 @@ function combineElements(state, { firstId, firstElement, secondId }) {
     'focalX',
     'focalY',
     'flip',
+    'backgroundOverlay',
   ]);
 
   const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
