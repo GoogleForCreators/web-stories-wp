@@ -114,15 +114,17 @@ ApiProviderFixture.propTypes = {
 };
 
 function getStoriesState() {
+  const copiedStories = [...formattedStoriesArray];
+  copiedStories.sort((a, b) => b.modified.diff(a.modified)); // initial sort is desc by modified
   return {
     ...defaultStoriesState,
-    stories: formattedStoriesArray.reduce((acc, curr) => {
+    stories: copiedStories.reduce((acc, curr) => {
       acc[curr.id] = curr;
 
       return acc;
     }, {}),
-    storiesOrderById: formattedStoriesArray.map(({ id }) => id),
-    totalStoriesByStatus: formattedStoriesArray.reduce(
+    storiesOrderById: copiedStories.map(({ id }) => id),
+    totalStoriesByStatus: copiedStories.reduce(
       (acc, curr) => {
         if (acc[curr.status] > 0) {
           acc[curr.status] = acc[curr.status] + 1;
@@ -133,7 +135,7 @@ function getStoriesState() {
         return acc;
       },
       {
-        all: formattedStoriesArray.length,
+        all: copiedStories.length,
         draft: 0,
         published: 0,
       }
@@ -151,7 +153,7 @@ function fetchStories(
   },
   currentStoriesState
 ) {
-  const storiesState = currentStoriesState || getStoriesState();
+  const storiesState = { ...currentStoriesState } || getStoriesState();
   const statuses = status.split(',');
 
   storiesState.storiesOrderById = formattedStoriesArray
@@ -186,7 +188,11 @@ function fetchStories(
         }
       }
 
-      return sortDirection && sortDirection === 'desc' ? value * -1 : value;
+      const shouldSortDescending =
+        (sortDirection && sortDirection === 'desc') ||
+        (!sortDirection && sortOption === STORY_SORT_OPTIONS.LAST_MODIFIED);
+
+      return shouldSortDescending ? value * -1 : value;
     })
     .map(({ id }) => id);
   return storiesState;
