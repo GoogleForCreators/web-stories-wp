@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -34,7 +34,6 @@ import {
   InfiniteScroller,
   Layout,
   StandardViewContentGutter,
-  useLayoutContext,
 } from '../../../../components';
 import {
   UsersPropType,
@@ -64,27 +63,6 @@ function Content({
   view,
   dateFormat,
 }) {
-  const {
-    actions: { scrollToTop },
-  } = useLayoutContext();
-
-  const previousFilter = useRef(filter);
-  const previousViewStyle = useRef(view.style);
-
-  useEffect(() => {
-    /**
-     * Ensure we only scroll back to top when the filter or view style change.
-     */
-    if (
-      previousFilter.current !== filter ||
-      previousViewStyle.current !== view.style
-    ) {
-      previousFilter.current = filter;
-      previousViewStyle.current = view.style;
-      scrollToTop();
-    }
-  }, [filter, scrollToTop, view]);
-
   return (
     <Layout.Scrollable>
       <FontProvider>
@@ -136,4 +114,4 @@ Content.propTypes = {
   dateFormat: PropTypes.string,
 };
 
-export default Content;
+export default memo(Content);
