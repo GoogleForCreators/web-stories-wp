@@ -149,7 +149,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::admin_enqueue_scripts
 	 */
 	public function test_admin_enqueue_scripts() {
-		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
+		$post_type_object          = new \Google\Web_Stories\Story_Post_Type();
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$post_type_object->admin_enqueue_scripts( 'post.php' );
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
