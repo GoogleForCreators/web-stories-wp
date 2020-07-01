@@ -3967,7 +3967,7 @@
           "type": "text",
           "basedOn": "c7cb3455-9a2e-4af4-8098-e5f04567b377",
           "id": "3eafb106-5681-4bba-9eef-b162d3364486",
-          "content": "<span style=\"color: #28292b\">Want to look like Hunter Schafer from “Euphoria”? We got’chyu, plus looks from the rest of the cast.</span>",
+          "content": "<span style=\"color: #28292b\">Want that timeless cinematic look? We got’chyu, plus a special Film Noir deep dive.</span>",
           "fontSize": 16,
           "padding": {
             "horizontal": 0,
@@ -4032,7 +4032,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page8_figure.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page8_figure.jpg",
             "width": 370,
             "height": 492,
             "id": 409,

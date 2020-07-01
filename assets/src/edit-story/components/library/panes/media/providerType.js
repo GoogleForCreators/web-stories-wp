@@ -13,23 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * Internal dependencies
- */
-import { createNewStory } from '../../utils';
-
-describe('Story Editor', () => {
-  it('should be able to create a blank story', async () => {
-    await createNewStory();
-
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-
-    await percySnapshot(page, 'Empty Editor');
-  });
-});
+export const ProviderType = {
+  LOCAL: 'local',
+  UNSPLASH: 'unsplash',
+};

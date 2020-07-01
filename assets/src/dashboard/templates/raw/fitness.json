@@ -1120,7 +1120,7 @@
           "focalY": 49.953358674938045
         },
         {
-          "x": 22,
+          "x": 50,
           "y": 16,
           "width": 311,
           "height": 102,
@@ -1194,7 +1194,7 @@
           }
         },
         {
-          "x": 22,
+          "x": 52,
           "y": 145,
           "width": 154,
           "height": 151,
@@ -1268,9 +1268,9 @@
           }
         },
         {
-          "x": 225,
-          "y": 310,
-          "width": 235,
+          "x": 230,
+          "y": 308,
+          "width": 170,
           "height": 367,
           "opacity": 100,
           "flip": {
@@ -1342,7 +1342,7 @@
           }
         },
         {
-          "x": 21,
+          "x": 51,
           "y": 319,
           "width": 100,
           "height": 32,
@@ -1370,7 +1370,7 @@
           "id": "5ae621aa-0b73-4f4f-888b-ba3787156bf0"
         },
         {
-          "x": 33.5,
+          "x": 64,
           "y": 327,
           "width": 75,
           "height": 20,
@@ -1529,24 +1529,83 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
+          "scale": 130,
+          "focalX": 52.684313245208656,
+          "focalY": 47.775163796764,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page6_watch-no-logo.png",
+            "creationDate": "2020-06-30T20:40:21",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch.png",
             "width": 330,
-            "height": 394,
-            "id": 1262,
-            "title": "fitness_page6_watch-no-logo",
-            "alt": "fitness_page6_watch-no-logo",
+            "height": 330,
+            "posterId": 0,
+            "id": 1940,
+            "title": "fitness_page6_watch",
+            "alt": "fitness_page6_watch",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "medium": {
+                "file": "fitness_page6_watch-300x300.png",
+                "width": 300,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-300x300.png"
+              },
+              "thumbnail": {
+                "file": "fitness_page6_watch-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-150x150.png"
+              },
+              "medium_large": {
+                "file": "fitness_page6_watch-768x768.png",
+                "width": 768,
+                "height": 768,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-768x768.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "fitness_page6_watch-696x928.png",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-696x928.png"
+              },
+              "web-stories-poster-square": {
+                "file": "fitness_page6_watch-928x928.png",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-928x928.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "fitness_page6_watch-928x696.png",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-928x696.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "fitness_page6_watch-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-150x150.png"
+              },
+              "full": {
+                "file": "fitness_page6_watch.png",
+                "width": 1000,
+                "height": 1000,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch.png"
+              }
+            }
           },
           "type": "image",
           "x": 69,
-          "y": 122,
+          "y": 142,
           "width": 273,
           "height": 326,
           "mask": {

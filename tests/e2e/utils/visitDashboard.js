@@ -15,21 +15,18 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import { percySnapshot } from '@percy/puppeteer';
+import { visitAdminPage } from '@wordpress/e2e-test-utils';
 
 /**
- * Internal dependencies
+ * Creates a new story.
  */
-import { createNewStory } from '../../utils';
+async function visitDashboard() {
+  await visitAdminPage(
+    'edit.php',
+    'post_type=web-story&page=stories-dashboard'
+  );
+}
 
-describe('Story Editor', () => {
-  it('should be able to create a blank story', async () => {
-    await createNewStory();
-
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-
-    await percySnapshot(page, 'Empty Editor');
-  });
-});
+export default visitDashboard;
