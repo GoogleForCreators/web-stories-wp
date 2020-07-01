@@ -166,7 +166,7 @@ BLOCK;
 
 		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
+		if ( ! $post_id ) {
 			return $title;
 		}
 
@@ -176,7 +176,7 @@ BLOCK;
 
 		$post = get_post( $post_id );
 
-		if ( ! $post instanceof WP_Post ) {
+		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return $title;
 		}
 
