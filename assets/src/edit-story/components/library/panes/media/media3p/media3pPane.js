@@ -25,6 +25,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
  */
 import MediaGallery from '../mediaGallery';
 import { Pane } from '../../shared';
+import { ProviderType } from '../providerType';
 import paneId from './paneId';
 
 const StyledPane = styled(Pane)`
@@ -112,7 +113,7 @@ function Media3pPane(props) {
         <MediaGallery
           resources={resources}
           onInsert={onInsert}
-          isMedia3p={true}
+          providerType={ProviderType.UNSPLASH}
         />
       </Container>
     </StyledPane>

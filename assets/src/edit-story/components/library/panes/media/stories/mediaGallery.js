@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import MediaGallery from '../mediaGallery';
+import { ProviderType } from '../providerType';
 
 export default {
   title: 'Stories Editor/Components/Media Gallery',
@@ -315,7 +316,7 @@ export const _default = () => {
       <MediaGallery
         resources={resources}
         onInsert={action('selected')}
-        isMedia3p={true}
+        providerType={ProviderType.UNSPLASH}
       />
     </Container>
   );

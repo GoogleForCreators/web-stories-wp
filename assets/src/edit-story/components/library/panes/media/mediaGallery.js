@@ -25,6 +25,7 @@ import styled from 'styled-components';
  */
 import Gallery from 'react-photo-gallery';
 import MediaElement from './mediaElement';
+import { ProviderType } from './providerType';
 
 const PHOTO_MARGIN = 4;
 
@@ -39,11 +40,11 @@ const PhotoContainer = styled.div`
  *
  * @param {Object} props Component props.
  * @param {Array.<Object>} props.resources List of resources to display.
- * @param {function(Object)} props.onInsert Function that gets when element is clicked.
- * @param {boolean} props.isMedia3p If this gallery is in the Media 3P pane.
+ * @param {function(Object)} props.onInsert Called when element is selected.
+ * @param {ProviderType} props.providerType Provider of gallery's elements.
  * @return {*} The gallery element.
  */
-function MediaGallery({ resources, onInsert, isMedia3p }) {
+function MediaGallery({ resources, onInsert, providerType }) {
   const photos = resources.map((resource) => {
     return {
       src: resource.src,
@@ -61,12 +62,12 @@ function MediaGallery({ resources, onInsert, isMedia3p }) {
             width={photo.width}
             height={photo.height}
             onInsert={onInsert}
-            isMedia3p={isMedia3p}
+            providerType={providerType}
           />
         </PhotoContainer>
       );
     },
-    [isMedia3p, onInsert, resources]
+    [providerType, onInsert, resources]
   );
 
   return (
@@ -87,7 +88,7 @@ function MediaGallery({ resources, onInsert, isMedia3p }) {
 MediaGallery.propTypes = {
   resources: PropTypes.arrayOf(PropTypes.object).isRequired,
   onInsert: PropTypes.func.isRequired,
-  isMedia3p: PropTypes.bool.isRequired,
+  providerType: PropTypes.string.isRequired,
 };
 
 export default memo(MediaGallery);
