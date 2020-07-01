@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 /**
  * Internal dependencies
@@ -40,10 +41,12 @@ export default function ApiProviderFixture({ children }) {
   const storyApi = useMemo(
     () => ({
       duplicateStory: jasmine.createSpy('duplicateStory'),
-      fetchStories: (...args) => setStoriesState(fetchStories(...args)),
+      fetchStories: (...args) =>
+        setStoriesState((currenState) => fetchStories(...args, currenState)),
       createStoryFromTemplate: jasmine.createSpy('createStoryFromTemplate'),
       trashStory: jasmine.createSpy('trashStory'),
-      updateStory: jasmine.createSpy('updateStory'),
+      updateStory: (story) =>
+        setStoriesState((currentState) => updateStory(story, currentState)),
     }),
     []
   );
@@ -139,13 +142,16 @@ function getStoriesState() {
   };
 }
 
-function fetchStories({
-  status = STORY_STATUSES[0].value,
-  searchTerm = '',
-  sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
-  sortDirection,
-}) {
-  const storiesState = getStoriesState();
+function fetchStories(
+  {
+    status = STORY_STATUSES[0].value,
+    searchTerm = '',
+    sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
+    sortDirection,
+  },
+  currentStoriesState
+) {
+  const storiesState = currentStoriesState || getStoriesState();
   const statuses = status.split(',');
 
   storiesState.storiesOrderById = formattedStoriesArray
@@ -184,4 +190,17 @@ function fetchStories({
     })
     .map(({ id }) => id);
   return storiesState;
+}
+
+function updateStory(story, currentState) {
+  const copy = { ...story };
+  copy.title = copy.title.raw;
+  copy.modified = moment(new Date(), 'MM-DD-YYYY');
+  return {
+    ...currentState,
+    stories: {
+      ...currentState.stories,
+      [copy.id]: copy,
+    },
+  };
 }
