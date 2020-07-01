@@ -410,4 +410,42 @@ describe('My Stories View integration', () => {
       storieDateCreatedSortedByDateCreated.reverse()
     );
   });
+
+  it('should sort by Last Modified in List View', async () => {
+    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    await fixture.events.click(listViewButton);
+
+    const lastModifiedHeader = fixture.screen.getByRole('columnheader', {
+      name: /Last Modified/,
+    });
+
+    await fixture.events.click(lastModifiedHeader);
+
+    // drop the header row using slice
+    let rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(formattedStoriesArray.length);
+
+    const storieModifiedSortedByModified = [...formattedStoriesArray]
+      .sort((a, b) => a.modified.diff(b.modified))
+      .map(({ modified }) => modified);
+
+    // author is the fifth column
+    let rowModifiedValues = rows.map((row) => row.children[4].innerText);
+
+    expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
+
+    // sort by descending
+    await fixture.events.click(lastModifiedHeader);
+
+    rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(formattedStoriesArray.length);
+
+    // author is the fifth column
+    rowModifiedValues = rows.map((row) => row.children[4].innerText);
+
+    expect(rowModifiedValues).toEqual(storieModifiedSortedByModified.reverse());
+  });
 });
