@@ -28,7 +28,6 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
-import { Play } from '../../../../icons';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from './dropDownMenu';
 import { ProviderType } from './providerType';
@@ -51,14 +50,6 @@ const Video = styled.video`
 const Container = styled.div`
   position: relative;
   display: flex;
-`;
-
-const PlayIcon = styled(Play)`
-  height: 24px;
-  width: 24px;
-  position: absolute;
-  top: calc(50% - 12px);
-  left: calc(50% - 12px);
 `;
 
 const Duration = styled.div`
@@ -282,7 +273,6 @@ const MediaElement = ({
       >
         <source src={src} type={mimeType} />
       </Video>
-      {showVideoDetail && <PlayIcon />}
       {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       {local && (
         <CSSTransition
