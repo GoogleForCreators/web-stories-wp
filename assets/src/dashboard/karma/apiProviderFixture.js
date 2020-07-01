@@ -40,7 +40,8 @@ export default function ApiProviderFixture({ children }) {
 
   const storyApi = useMemo(
     () => ({
-      duplicateStory: jasmine.createSpy('duplicateStory'),
+      duplicateStory: (story) =>
+        setStoriesState((currentState) => duplicateStory(story, currentState)),
       fetchStories: (...args) =>
         setStoriesState((currenState) => fetchStories(...args, currenState)),
       createStoryFromTemplate: jasmine.createSpy('createStoryFromTemplate'),
@@ -151,12 +152,12 @@ function fetchStories(
     sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
     sortDirection,
   },
-  currentStoriesState
+  currentState
 ) {
-  const storiesState = { ...currentStoriesState } || getStoriesState();
+  const storiesState = { ...currentState } || getStoriesState();
   const statuses = status.split(',');
 
-  storiesState.storiesOrderById = formattedStoriesArray
+  storiesState.storiesOrderById = [...formattedStoriesArray]
     .filter(
       ({ status: storyStatus, title }) =>
         statuses.includes(storyStatus) && title.includes(searchTerm)
@@ -209,4 +210,31 @@ function updateStory(story, currentState) {
       [copy.id]: copy,
     },
   };
+}
+
+function duplicateStory(story, currenState) {
+  const copiedState = { ...currenState };
+  const copiedStory = { ...story };
+
+  // Update fields on copy
+  copiedStory.id = Math.round(Math.random() * 1000);
+  copiedStory.title = copiedStory.title + ' (Copy)';
+  copiedStory.created = new Date().toISOString();
+  copiedStory.modified = moment(copiedStory.created, 'MM-DD-YYYY');
+  copiedStory.bottomTargetAction = copiedStory.bottomTargetAction.replace(
+    story.id,
+    copiedStory.id
+  );
+  copiedStory.editStoryLink = copiedStory.editStoryLink.replace(
+    story.id,
+    copiedStory.id
+  );
+
+  // insert into copiedState
+  copiedState.stories[copiedStory.id] = copiedStory;
+  copiedState.storiesOrderById = [
+    copiedStory.id,
+    ...copiedState.storiesOrderById,
+  ];
+  return copiedState;
 }

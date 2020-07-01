@@ -40,9 +40,9 @@ import { getFormattedDisplayDate } from '../../../../utils';
 // - Sort By Title in List View - Done
 // - Sort By Author in List View - Done
 // - Sort By Date Created in List View - Done
-// - Sort By Last Modified In List View - Done
+// - Sort By Last Modified In List View - Done But Flakey
 // - Rename Story - Done
-// - Duplicate Story
+// - Duplicate Story - Done
 // - Delete Story
 // - Rename Story in List View
 // - Duplicate Story in List View
@@ -468,5 +468,32 @@ describe('My Stories View integration', () => {
     await fixture.events.keyboard.press('Enter');
 
     expect(getByText(/A New Title/)).toBeTruthy();
+  });
+
+  it('should Duplicate a story', async () => {
+    let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+    let firstStory = stories[0];
+
+    await fixture.events.hover(firstStory);
+
+    let utils = within(firstStory);
+
+    const moreOptionsButton = utils.getByRole('button', {
+      name: /^More Options/,
+    });
+
+    await fixture.events.click(moreOptionsButton);
+
+    const duplicate = utils.getByText(/^Duplicate/);
+
+    await fixture.events.click(duplicate);
+
+    stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    firstStory = stories[0];
+
+    utils = within(firstStory);
+
+    expect(utils.getByText(/Copy/)).toBeTruthy();
   });
 });
