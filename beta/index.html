@@ -95,7 +95,7 @@
         padding-left: 0;
     }
 
-    header ul li:nth-child(3) a,
+    header ul li:nth-child(4) a,
     footer ul li:nth-child(4) a {
         border: none;
         padding-right: 0;
@@ -117,6 +117,37 @@
         display: flex;
         padding-right: 0;
         justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+    }
+
+    @keyframes rotateIn {
+        from {
+            transform: rotate(-15deg) translate(100px, 0px);
+            opacity: 0;
+        }
+
+        to {
+            transform: rotate(-9.59deg);
+            opacity: 1;
+        }
+    }
+
+    section.teaser .hero-dashboard {
+        height: 510px;
+        width: 36vw;
+        background-image: url(./assets/hero_dashboard.jpg);
+        background-size: cover;
+        position: absolute;
+        bottom: -30px;
+        right: -16vw;
+        transform: rotate(-15deg);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        box-shadow: 0px 0px 40px #00000047;
+        opacity: 0;
+        animation: 3s rotateIn;
+        animation-fill-mode: forwards;
     }
 
     section.teaser h2 {
@@ -141,6 +172,33 @@
         margin: 0;
     }
 
+    section.teaser h3 span {
+        display: inline-block;
+        opacity: 0;
+    }
+
+    @keyframes textIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    section.teaser h3 span {
+        animation: 3s textIn;
+        animation-fill-mode: forwards;
+    }
+
+    section.teaser h3 span:nth-child(2) { animation-delay: 0.2s; }
+    section.teaser h3 span:nth-child(3) { animation-delay: 0.4s; }
+    section.teaser h3 span:nth-child(4) { animation-delay: 0.6s; }
+    section.teaser h3 span:nth-child(5) { animation-delay: 0.8s; }
+    section.teaser h3 span:nth-child(6) { animation-delay: 1s; }
+    section.teaser h3 span:nth-child(7) { animation-delay: 1.2s; }
+
     section.teaser p {
         font-size: 23px;
         line-height: 44px;
@@ -155,17 +213,33 @@
         max-width: 800px;
     }
 
+    @keyframes slideIn {
+        from {
+            transform: translate(50px, 0px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translate(0px, 0px);
+            opacity: 1;
+        }
+    }
+
     section.teaser .right {
         flex: 1 1 66.6%;
-        background: #333;
         text-align: center;
         color: #fff;
         box-shadow: 0px 0px 40px #00000047;
         max-width: 900px;
+        animation: 3s slideIn;
+        background-image: url(./assets/hero_editor.jpg);
+        background-size: cover;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
     }
 
     section.teaser a.download {
-        background: #3474E0;
+        background: #1A73E8;
         color:#fff;
         font-weight: 500;
         font-size: 23px;
@@ -173,15 +247,60 @@
         text-align: center;
         text-decoration: none;
         padding: 8px 18px;
-        transition: 0.1s ease-out;
+        transition: 0.3s ease-out;
         display: inline-block;
         margin-top: 20px;
         box-shadow: 0px 0px 40px #00000047;
+        position: relative;
+        overflow: hidden;
     }
 
-    section.teaser a.download:hover {
-        background: #000;
-        color: #fff;
+    section.teaser .download-wrapper {
+        position: relative;
+    }
+
+    section.teaser .download-wrapper::before {
+        content: "Here be dragons";
+        background-image: url(./assets/arrow.png);
+        background-repeat: no-repeat;
+        color: #AD0E8A;
+        font-family: 'Caveat', cursive;
+        font-size: 32px;
+        display: block;
+        position: absolute;
+        bottom: -79%;
+        left: 15%;
+        opacity: 0;
+        transition: 0.3s ease-out;
+        padding-left: 34px;
+        padding-top: 9px;
+        background-size: 14%;
+    }
+
+    section.teaser .download-wrapper:hover::before {
+        opacity: 1;
+    }
+
+    section.teaser a span.gradient {
+        background: linear-gradient(112deg, #1A73E8, #622C71, #1A73E8);
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        transform: translateX(-100%);
+        will-change: transform;
+        transition: 0.3s ease-out;
+        opacity: 0.6;
+    }
+
+    section.teaser a.download:hover span.gradient {
+        transform: translateX(100%);
+    }
+
+    section.teaser a span.text {
+        position: relative;
     }
 
     /*
@@ -299,12 +418,87 @@
     }
 
     /*
+    * GET STARTED
+    */
+
+    section.get-started {
+        padding-top: 158px;
+        padding-bottom: 142px;
+        display: flex;
+        flex-wrap: wrap;
+        padding-right: 24.9vw;
+        padding-left: 17.2vw;
+    }
+    
+    section.get-started .left {
+        flex: 1 1 66.6%;
+        padding-right: 9.2vw;
+        box-sizing: border-box;
+    }
+
+    section.get-started .right {
+        flex: 1 1 33.3%;
+    }
+
+    section.get-started .right amp-img {
+        box-shadow: 0px 0px 0px #00000047;
+        border-radius: 26px;
+        transition: 0.3s ease-out;
+    }
+
+    section.get-started .right amp-img:hover {
+        transform: translateY(-20px);
+        box-shadow: 0px 20px 40px #00000047;
+    }
+
+    section.get-started h2 {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        text-transform: uppercase;
+        flex: 1 1 100%;
+        margin-bottom: 103px;
+    }
+
+    section.get-started h2 a {
+        border-bottom: 4px solid;
+        color: #000;
+    }
+
+    section.get-started .welcome {
+        font-size: 13px;
+        line-height: 20px;
+        opacity: 0.54;
+        text-transform: uppercase;   
+    }
+
+    section.get-started h3 {
+        font-weight: 500;
+        font-size: calc(20px + 1.98vw);
+        line-height: 1.31;
+        opacity: 0.84;
+    }
+
+    section.get-started p.desc,
+    section.get-started p.cta {
+        font-size: 23px;
+        line-height: 44px;
+        color: rgba(0,0,0,0.64);
+    }
+
+    section.get-started p.cta {
+        font-weight: bold;
+    }
+
+    /*
     * FAQ
     */
 
     section.faq {
         padding-top: 158px;
         padding-bottom: 142px;
+        background: #fff;
     }
 
     section.faq h2 {
@@ -347,11 +541,18 @@
 
     footer {
         border-top: 1px solid transparent;
-        width: 545px;
-        margin: 0 auto;
-        margin-bottom: 106px;
+        padding-bottom: 106px;
         position: relative;
         padding-top: 83px;
+        background: #fff;
+        margin-top: 0;
+    }
+
+    footer .footer-wrapper {
+        width: 545px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
     }
 
     footer::before {
@@ -369,6 +570,13 @@
     /*
     * Reponsiveness (TODO: check with Sam)
     */
+    
+    @media (min-width: 1956px) {
+        section.teaser .right {
+            margin-right: 2vw;
+        }
+    }
+
     @media (max-width: 1920px) {
         header, footer, section {
             padding-left: 7.4vw;
@@ -403,13 +611,26 @@
             padding-bottom: 6.25vw;
         }
 
-        section.faq {
+        section.faq,
+        section.get-started {
             padding-top: 8.13vw;
             padding-bottom: 7.4vw;
         }
 
         section.faq dl {
             padding-top: 8.13vw;
+        }
+    }
+
+    @media (max-width: 1550px) {
+        section.get-started {
+            padding-right: 20vw;
+        }
+    }
+
+    @media (max-width: 1300px) {
+        section.get-started {
+            padding-right: 12vw;
         }
     }
 
@@ -450,12 +671,40 @@
         section.about-video::before {
             height: 90px;
         }
-        footer {
+        footer .footer-wrapper {
             width: auto;
             flex-wrap: wrap;
         }
         footer .google {
             margin: 20px auto;
+        }
+        section.teaser .hero-dashboard {
+            display: none;
+        }
+        section.get-started .left,
+        section.get-started .right {
+            flex: 1 1 100%;
+            padding-right: 0;
+        }
+        section.get-started p.desc,
+        section.get-started p.cta,
+        section.faq dt,
+        section.teaser p,
+        section.about p {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        section.teaser {
+            padding-bottom: 0;
+        }
+        header {
+            height: auto;
+        }
+        section.get-started .welcome {
+            display: none;
+        }
+        section.get-started h2 {
+            margin-bottom: 20px;
         }
     }
 
@@ -463,7 +712,7 @@
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
 
     <link rel="canonical" href=".">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
     <title>Web Stories for WordPress - Download the Beta</title>
 </head>
 <body>
@@ -473,6 +722,7 @@
         <h1>Web Stories for WordPress</h1>
         <ul>
             <li><a href="#about">About</a></li>
+            <li><a href="#get-started">Get Started</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="https://github.com/google/web-stories-wp">GitHub</a></li>
             <li><a href="#" class="download">Download Beta</a></li>
@@ -482,11 +732,13 @@
     <section class="teaser">
         <div class="left">
             <h2>Stories Editor</h2>
-            <h3>Get Ready to Tell Stories on WordPress</h3>
+            <h3><span>Get</span> <span>Ready</span> <span>to</span> <span>Tell</span> <span>Stories</span> <span>on</span> <span>WordPress</span></h3>
             <p>We're not quite ready for prime time yet, but if you like to live dangerously, we invite you to try our first public beta.</p>
-            <a href="#" class="download">Download the Beta</a>            
+            <div class="download-wrapper"><a href="#" class="download"><span class="gradient"></span><span class="text">Download the Beta</span></a></div>
         </div>
-        <div class="right">PLACEHOLDER</div>
+        <div class="right">
+        </div>
+        <div class="hero-dashboard"></div>
     </section>
 
     <section class="about">
@@ -595,7 +847,19 @@
         </ul>
     </section>
 
-     <section class="media-gallery">
+     <section class="get-started">
+        <h2><a id="get-started">Get Started</a></h2>
+        <div class="left">
+            <p class="welcome">Welcome</p>
+            <h3>Tips to make the most of the Beta</h3>
+            <p class="desc">Welcome! Starting on a new tool can be daunting, so we created a Web Story (naturally!) with some tips to help you get started. We can't wait to see your stories!</p>
+            <p class="cta">Click <a href="./tips.html">here</a> or on the image to view.</p>
+        </div>
+        <div class="right">
+            <a href="./tips.html">
+                <amp-img layout="responsive" width="698" height="1240" src="./assets/ftue.jpg"></amp-img>
+            </a>
+        </div>
      </section>
 
      <section class="faq">
@@ -626,13 +890,15 @@
      </section>
 
      <footer>
-        <div class="google"><amp-img width="120" height="48" layout="responsive" src="./assets/google.svg" alt="Google"></div>
-         <ul>
-             <li><a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a></li>
-             <li><a href="https://www.google.com/intl/en/policies/terms/">Terms</a></li>
-             <li><a href="https://www.google.com/intl/en/about/">About Google</a></li>
-             <li><a href="https://www.google.com/intl/en/about/products/">Google Products</a></li>
-         </ul>
+         <div class="footer-wrapper">
+            <div class="google"><amp-img width="120" height="48" layout="responsive" src="./assets/google.svg" alt="Google"></div>
+                <ul>
+                    <li><a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a></li>
+                    <li><a href="https://www.google.com/intl/en/policies/terms/">Terms</a></li>
+                    <li><a href="https://www.google.com/intl/en/about/">About Google</a></li>
+                    <li><a href="https://www.google.com/intl/en/about/products/">Google Products</a></li>
+                </ul>
+         </div>
      </footer>
 
 </body>
