@@ -20,6 +20,7 @@
 import Fixture from '../../../../karma/fixture';
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
+import { getFormattedDisplayDate } from '../../../../utils';
 
 // Test coverage
 // - Navigate to Explore Templates - Done
@@ -35,7 +36,7 @@ import formattedUsersObject from '../../../../storybookUtils/formattedUsersObjec
 // - Sort By Title in List View - Done
 // - Sort By Author in List View - Done
 // - Sort By Date Created in List View - Done
-// - Sort By Last Modified In List View
+// - Sort By Last Modified In List View - Done
 // - Rename Story
 // - Duplicate Story
 // - Delete Story
@@ -389,14 +390,14 @@ describe('My Stories View integration', () => {
       .sort(
         (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()
       )
-      .map(({ created }) => created.split('T')[0]); // TODO use moment to format/look up formatting in component
+      .map(({ created }) => getFormattedDisplayDate(created))
+      .reverse(); // Default sort order in List View is Desc
 
-    // author is the fourth column
     let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
 
     expect(rowDateCreatedValues).toEqual(storieDateCreatedSortedByDateCreated);
 
-    // sort by descending
+    // sort by ascending
     await fixture.events.click(dateCreatedHeader);
 
     rows = fixture.screen.getAllByRole('row').slice(1);
@@ -411,41 +412,42 @@ describe('My Stories View integration', () => {
     );
   });
 
-  // it('should sort by Last Modified in List View', async () => {
-  //   let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+  it('should sort by Last Modified in List View', async () => {
+    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
 
-  //   await fixture.events.click(listViewButton);
+    await fixture.events.click(listViewButton);
 
-  //   const lastModifiedHeader = fixture.screen.getByRole('columnheader', {
-  //     name: /Last Modified/,
-  //   });
+    const lastModifiedHeader = fixture.screen.getByRole('columnheader', {
+      name: /^Last Modified/,
+    });
 
-  //   await fixture.events.click(lastModifiedHeader);
+    await fixture.events.click(lastModifiedHeader);
 
-  //   // drop the header row using slice
-  //   let rows = fixture.screen.getAllByRole('row').slice(1);
+    // drop the header row using slice
+    let rows = fixture.screen.getAllByRole('row').slice(1);
 
-  //   expect(rows.length).toEqual(formattedStoriesArray.length);
+    expect(rows.length).toEqual(formattedStoriesArray.length);
 
-  //   const storieModifiedSortedByModified = [...formattedStoriesArray]
-  //     .sort((a, b) => a.modified.diff(b.modified))
-  //     .map(({ modified }) => modified);
+    // Last Modified is the default/initial sort in List View so initiall clicking it will sort it to Ascending
+    const storieModifiedSortedByModified = [...formattedStoriesArray]
+      .sort((a, b) => a.modified.diff(b.modified))
+      .map(({ modified }) => getFormattedDisplayDate(modified));
 
-  //   // author is the fifth column
-  //   let rowModifiedValues = rows.map((row) => row.children[4].innerText);
+    // author is the fifth column
+    let rowModifiedValues = rows.map((row) => row.children[4].innerText);
 
-  //   expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
+    expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
 
-  //   // sort by descending
-  //   await fixture.events.click(lastModifiedHeader);
+    // // sort by descending
+    await fixture.events.click(lastModifiedHeader);
 
-  //   rows = fixture.screen.getAllByRole('row').slice(1);
+    rows = fixture.screen.getAllByRole('row').slice(1);
 
-  //   expect(rows.length).toEqual(formattedStoriesArray.length);
+    expect(rows.length).toEqual(formattedStoriesArray.length);
 
-  //   // author is the fifth column
-  //   rowModifiedValues = rows.map((row) => row.children[4].innerText);
+    // author is the fifth column
+    rowModifiedValues = rows.map((row) => row.children[4].innerText);
 
-  //   expect(rowModifiedValues).toEqual(storieModifiedSortedByModified.reverse());
-  // });
+    expect(rowModifiedValues).toEqual(storieModifiedSortedByModified.reverse());
+  });
 });
