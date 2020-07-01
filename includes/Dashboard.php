@@ -58,6 +58,7 @@ class Dashboard {
 	 */
 	public function init() {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
+		add_action( 'admin_init', [ $this, 'redirect_menu_page' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
@@ -87,6 +88,29 @@ class Dashboard {
 			[ $this, 'render' ],
 			0
 		);
+	}
+
+	/**
+	 * Redirects to the correct Dashboard page when clicking on the top-level "Stories" menu item.
+	 *
+	 * @return void
+	 */
+	public function redirect_menu_page() {
+		global $pagenow;
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'stories-dashboard' === $_GET['page'] ) {
+			wp_safe_redirect(
+				add_query_arg(
+					[
+						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+						'page'      => 'stories-dashboard',
+					],
+					admin_url( 'edit.php' )
+				)
+			);
+			exit;
+		}
 	}
 
 	/**
