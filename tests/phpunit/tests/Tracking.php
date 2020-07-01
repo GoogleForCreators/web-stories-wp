@@ -57,7 +57,7 @@ class Tracking extends \WP_UnitTestCase {
 	 * @covers ::init
 	 */
 	public function test_register_tracking_script() {
-		$this->assertArrayHasKey( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, wp_scripts()->registered );
+		$this->assertTrue(  wp_script_is( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ]->src );
 		$after = wp_scripts()->get_data( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'after' );
 		$this->assertNotEmpty( $after );
