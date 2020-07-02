@@ -39,7 +39,11 @@ function updateTemplates(templatesDir) {
       continue;
     }
 
-    const updatedTemplate = migrate(template, template.version);
+    // This ensures that the version number is always at the top.
+    const updatedTemplate = {
+      version: DATA_VERSION,
+      ...migrate(template, template.version),
+    };
     updatedTemplate.version = DATA_VERSION;
 
     const templateFileContent = JSON.stringify(updatedTemplate);
