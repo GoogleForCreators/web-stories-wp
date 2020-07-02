@@ -27,7 +27,7 @@ import DocumentInspector from './document';
 import PrepublishInspector from './prepublish';
 import { getTabId } from './utils';
 
-const InspectorWrapper = styled.div.attrs({ tabIndex: '0', role: 'tabpanel' })`
+const InspectorWrapper = styled.div.attrs({ role: 'tabpanel' })`
   height: 100%;
 `;
 
