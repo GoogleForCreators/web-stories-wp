@@ -449,12 +449,11 @@ describe('My Stories View integration', () => {
     const input = getByRole('textbox');
     const inputLength = input.value.length;
 
-    let promises = [];
     for (let iter = 0; iter < inputLength; iter++) {
-      promises.push(fixture.events.keyboard.press('Backspace'));
+      // disable eslint to prevet overlapping .act calls
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('Backspace');
     }
-
-    await Promise.all(promises);
 
     await fixture.events.keyboard.type('A New Title');
 
