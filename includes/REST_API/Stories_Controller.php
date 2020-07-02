@@ -321,7 +321,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 		}
 
-		if( $request['story_format'] ) {
+		if ( $request['story_format'] ) {
 			$current_data = $response->get_data();
 			$data         = [
 				'totals' => $statuses_count,
@@ -340,17 +340,16 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Retrieves the query params for the posts collection.
 	 *
-	 *
 	 * @return array Collection parameters.
 	 */
 	public function get_collection_params() {
 		$query_params = parent::get_collection_params();
 
-		$query_params['story_format'] = array(
+		$query_params['story_format'] = [
 			'description' => __( 'Format as story format', 'web-stories' ),
 			'type'        => 'boolean',
 			'default'     => false,
-		);
+		];
 
 		return $query_params;
 	}
