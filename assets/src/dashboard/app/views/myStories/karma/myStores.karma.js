@@ -40,7 +40,7 @@ import { getFormattedDisplayDate } from '../../../../utils';
 // - Sort By Title in List View - Done
 // - Sort By Author in List View - Done
 // - Sort By Date Created in List View - Done
-// - Sort By Last Modified In List View - Done But Flakey
+// - Sort By Last Modified In List View - Done
 // - Rename Story - Done
 // - Duplicate Story - Done
 // - Delete Story
@@ -286,9 +286,8 @@ describe('My Stories View integration', () => {
 
     await fixture.events.click(listViewButton);
 
-    const titleHeader = fixture.screen.getByRole('columnheader', {
-      name: /Title/,
-    });
+    // There is a second hidden span with the same text
+    const titleHeader = fixture.screen.getAllByText(/^Title/)[0];
 
     await fixture.events.click(titleHeader);
 
@@ -324,9 +323,7 @@ describe('My Stories View integration', () => {
 
     await fixture.events.click(listViewButton);
 
-    const authorHeader = fixture.screen.getByRole('columnheader', {
-      name: /Author/,
-    });
+    const authorHeader = fixture.screen.getByText(/^Author/);
 
     await fixture.events.click(authorHeader);
 
@@ -366,9 +363,7 @@ describe('My Stories View integration', () => {
 
     await fixture.events.click(listViewButton);
 
-    const dateCreatedHeader = fixture.screen.getByRole('columnheader', {
-      name: /Date Created/,
-    });
+    const dateCreatedHeader = fixture.screen.getByText(/^Date Created/);
 
     await fixture.events.click(dateCreatedHeader);
 
@@ -424,9 +419,7 @@ describe('My Stories View integration', () => {
     expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
 
     // sort ascending
-    const lastModifiedHeader = fixture.screen.getByRole('columnheader', {
-      name: /^Last Modified/,
-    });
+    const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
 
     await fixture.events.click(lastModifiedHeader);
 
