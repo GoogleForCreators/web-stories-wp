@@ -36,7 +36,7 @@ function updateTemplates(templatesDir) {
     );
 
     if (Number(template.version) === Number(DATA_VERSION)) {
-      return;
+      continue;
     }
 
     const updatedTemplate = migrate(template, template.version);
