@@ -22,10 +22,7 @@ import { readdirSync, readFileSync, writeFileSync } from 'fs';
 /**
  * Internal dependencies
  */
-import {
-  migrate,
-  DATA_VERSION,
-} from '../../assets/src/edit-story/migration/migrate.js';
+import { migrate, DATA_VERSION } from '../build/migrate.js';
 
 function updateTemplates(templatesDir) {
   const fileNamePattern = /^.*\.json$/;
