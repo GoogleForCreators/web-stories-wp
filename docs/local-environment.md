@@ -12,6 +12,8 @@ npm run env:start
 
 The WordPress installation should be available at `http://localhost:8899` (**Username**: `admin`, **Password**: `password`).
 
+If you want to access the instance from other LAN device, you need to set the `WordPress Address (URL)` and `Site Address (URL)` in WordPress General Settings to your local IP e.g. `http://192.168.1.48:8899`.
+
 To later turn off the local environment, you can run:
 
 ```bash
