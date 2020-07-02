@@ -41,8 +41,16 @@ function getFirstFrameOfVideo(src) {
         // Doing it inside the event listener to prevent the event
         // from being fired twice.
         // See https://github.com/google/web-stories-wp/issues/2923
-        video.currentTime = 0.5;
+        // Translates to real-world 0.28
+        // See "Reduced time precision" https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/currentTime
+        video.currentTime = 0.99;
+      },
+      { once: true } // Important because 'canplay' can be fired hundreds of times.
+    );
 
+    video.addEventListener(
+      'seeked',
+      () => {
         const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -52,7 +60,7 @@ function getFirstFrameOfVideo(src) {
 
         canvas.toBlob(resolve, 'image/jpeg');
       },
-      { once: true } // Important because 'canplay' can be fired hundreds of times.
+      { once: true }
     );
 
     video.src = src;
