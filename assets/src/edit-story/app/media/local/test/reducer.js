@@ -25,8 +25,61 @@ import { renderHook } from '@testing-library/react-hooks';
 import useMediaReducer from '../../useMediaReducer';
 import reducer from '../reducer';
 import * as actionsToWrap from '../actions';
+import { fetchMediaStart as commonFetchMediaStart } from '../../common/actions';
 
 describe('reducer', () => {
+  it('should not update for media action that`s not for local media', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, { ...actionsToWrap, commonFetchMediaStart })
+    );
+
+    result.current.actions.commonFetchMediaStart({
+      provider: 'unsplash',
+      pageToken: 'page2',
+    });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        isMediaLoading: false,
+        isMediaLoaded: false,
+      })
+    );
+  });
+
+  it('should assign isMediaLoading=true on fetchMediaStart', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, actionsToWrap)
+    );
+
+    result.current.actions.fetchMediaStart({ pageToken: 'page2' });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        isMediaLoading: true,
+        isMediaLoaded: false,
+      })
+    );
+  });
+
+  it('should assign isMediaLoaded=true on fetchMediaSuccess', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, actionsToWrap)
+    );
+
+    result.current.actions.fetchMediaSuccess({
+      media: [{ id: 'id' }],
+      searchTerm: '',
+      mediaType: '',
+    });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        isMediaLoaded: true,
+        isMediaLoading: false,
+      })
+    );
+  });
+
   it('should not update state on fetchMediaSuccess if searchTerm doesn`t match', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)

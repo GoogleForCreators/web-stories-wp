@@ -42,7 +42,7 @@ describe('reducer', () => {
     );
   });
 
-  it('should assign isMediaLoading=false on fetchMediaSuccess', () => {
+  it('should assign isMediaLoaded=true on fetchMediaSuccess', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)
     );
