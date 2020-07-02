@@ -160,7 +160,7 @@ program
   .action(() => {
     updateTemplates(TEMPLATES_DIR);
 
-    console.log('Templates updated!');
+    console.log("Templates updated! Don't forget to run prettier!");
   });
 
 program.parse(process.argv);
