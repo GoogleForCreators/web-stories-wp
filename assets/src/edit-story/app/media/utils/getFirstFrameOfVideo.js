@@ -26,6 +26,9 @@ function getFirstFrameOfVideo(src) {
   const video = document.createElement('video');
   video.muted = true;
   video.crossOrigin = 'anonymous';
+  // Since  we want to get the actual frames, we need to make sure to preload the whole video
+  // and not just metadata.
+  // See https://github.com/google/web-stories-wp/issues/2922.
   video.preload = 'auto';
 
   return new Promise((resolve, reject) => {
@@ -34,7 +37,11 @@ function getFirstFrameOfVideo(src) {
     video.addEventListener(
       'canplay',
       () => {
-        video.currentTime = 0.5; // Needed to seek forward.
+        // Need to seek forward to ensure we get a proper frame.
+        // Doing it inside the event listener to prevent the event
+        // from being fired twice.
+        // See https://github.com/google/web-stories-wp/issues/2923
+        video.currentTime = 0.5;
 
         const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth;
