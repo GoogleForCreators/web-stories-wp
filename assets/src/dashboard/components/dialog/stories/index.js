@@ -107,7 +107,7 @@ export const With2Actions = () => {
           action('close dialog clicked');
           setToggleDialog(!toggleDialog);
         }}
-        isOpen
+        isOpen={toggleDialog}
         title={text('title', 'Dialog title')}
         contentLabel={'Dialog content Label for modal'}
         actions={ActionsNode}
