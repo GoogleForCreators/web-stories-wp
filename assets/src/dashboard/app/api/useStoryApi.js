@@ -136,9 +136,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         const totalPages = response.totals && parseInt(response.totals.all);
         const totalStoriesByStatus = response.totals;
 
-        const serverStoryResponse = response.data;
-
-        const reshapedStories = serverStoryResponse
+        const reshapedStories = response.data
           .map(reshapeStoryObject(editStoryURL))
           .filter(Boolean);
 
