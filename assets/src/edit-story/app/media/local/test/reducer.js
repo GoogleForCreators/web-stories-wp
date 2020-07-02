@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -27,20 +27,16 @@ import reducer from '../reducer';
 import * as actionsToWrap from '../actions';
 
 describe('reducer', () => {
-  it('should not update state on fetchMediaSuccess if searchTerm doesn`t match', async () => {
+  it('should not update state on fetchMediaSuccess if searchTerm doesn`t match', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)
     );
-    await act(() =>
-      result.current.actions.setSearchTerm({ searchTerm: 'search term 1' })
-    );
+    result.current.actions.setSearchTerm({ searchTerm: 'search term 1' });
 
-    await act(() =>
-      result.current.actions.fetchMediaSuccess({
-        searchTerm: 'search term 2',
-        media: [{ id: 'id' }],
-      })
-    );
+    result.current.actions.fetchMediaSuccess({
+      searchTerm: 'search term 2',
+      media: [{ id: 'id' }],
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -51,20 +47,16 @@ describe('reducer', () => {
     );
   });
 
-  it('should not update state on fetchMediaSuccess if mediaType doesn`t match', async () => {
+  it('should not update state on fetchMediaSuccess if mediaType doesn`t match', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)
     );
-    await act(() =>
-      result.current.actions.setMediaType({ mediaType: 'image' })
-    );
+    result.current.actions.setMediaType({ mediaType: 'image' });
 
-    await act(() =>
-      result.current.actions.fetchMediaSuccess({
-        mediaType: 'video',
-        media: [{ id: 'id' }],
-      })
-    );
+    result.current.actions.fetchMediaSuccess({
+      mediaType: 'video',
+      media: [{ id: 'id' }],
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
