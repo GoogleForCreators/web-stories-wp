@@ -219,11 +219,9 @@
     "test:e2e:firefox:interactive": "PUPPETEER_PRODUCT=firefox npm run test:e2e:interactive",
     "test:e2e:firefox:debug": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true node --inspect-brk node_modules/.bin/jest --runInBand --config=tests/e2e/jest.config.js",
     "percy": "percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots/",
-    "preworkflow:copy-template-assets": "mkdir -p build/storybook/plugin-assets/images",
     "workflow:version": "./bin/commander.js version",
     "workflow:build-plugin": "./bin/commander.js build-plugin",
     "workflow:fonts": "./bin/commander.js build-fonts",
-    "preworkflow:templates": "rollup --config bin/rollup.config.js",
     "workflow:templates": "./bin/commander.js update-templates"
   },
   "husky": {
