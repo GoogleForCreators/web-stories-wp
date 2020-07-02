@@ -15,38 +15,17 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { within } from '@testing-library/react';
+
+/**
+ * Internal dependencies
+ */
 import Fixture from '../../../../karma/fixture';
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
 import { getFormattedDisplayDate } from '../../../../utils';
-
-// Test coverage
-// - Navigate to Explore Templates - Done
-// - Switch to Drafts - Done
-// - Switch to Published - Done
-// - Search Stories Text Box - Done
-// - Sort By Date - Done
-// - Sort By Last Modified - Done
-// - Sort By Name - Done
-// - Sort By Created By - Done
-// - Switch to List View - Done
-// - Switch to List view and back to Grid View - Done
-// - Sort By Title in List View - Done
-// - Sort By Author in List View - Done
-// - Sort By Date Created in List View - Done
-// - Sort By Last Modified In List View - Done
-// - Rename Story - Done
-// - Duplicate Story - Done
-// - Delete Story
-// - Rename Story in List View
-// - Duplicate Story in List View
-// - Delete Story in List View
 
 describe('My Stories View integration', () => {
   let fixture;
@@ -262,7 +241,7 @@ describe('My Stories View integration', () => {
   });
 
   it('should switch to List View and back to Grid View', async () => {
-    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
 
     expect(listViewButton).toBeTruthy();
 
@@ -282,7 +261,7 @@ describe('My Stories View integration', () => {
   });
 
   it('should sort by Title in List View', async () => {
-    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
 
     await fixture.events.click(listViewButton);
 
@@ -319,7 +298,7 @@ describe('My Stories View integration', () => {
   });
 
   it('should sort by Author in List View', async () => {
-    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
 
     await fixture.events.click(listViewButton);
 
@@ -359,7 +338,7 @@ describe('My Stories View integration', () => {
   });
 
   it('should sort by Date Created in List View', async () => {
-    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
 
     await fixture.events.click(listViewButton);
 
@@ -400,7 +379,7 @@ describe('My Stories View integration', () => {
 
   it('should sort by Last Modified in List View', async () => {
     // last modified desc is the default sort
-    let listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
 
     await fixture.events.click(listViewButton);
 
@@ -487,5 +466,239 @@ describe('My Stories View integration', () => {
     utils = within(firstStory);
 
     expect(utils.getByText(/Copy/)).toBeTruthy();
+  });
+
+  it('should Delete a story', async () => {
+    let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+    const initialNumStories = stories.length;
+    let firstStory = stories[0];
+
+    await fixture.events.hover(firstStory);
+
+    let utils = within(firstStory);
+
+    const moreOptionsButton = utils.getByRole('button', {
+      name: /^More Options/,
+    });
+
+    await fixture.events.click(moreOptionsButton);
+
+    const deleteStory = utils.getByText(/^Delete/);
+
+    await fixture.events.click(deleteStory);
+
+    const confirmDeleteButton = fixture.screen.getByRole('button', {
+      name: /^Delete$/,
+    });
+
+    await fixture.events.click(confirmDeleteButton);
+
+    stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    expect(stories.length).toEqual(initialNumStories - 1);
+  });
+
+  it('should not Delete a story if Cancel is clicked in the confirmation modal', async () => {
+    let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+    const initialNumStories = stories.length;
+    let firstStory = stories[0];
+
+    await fixture.events.hover(firstStory);
+
+    let utils = within(firstStory);
+
+    const moreOptionsButton = utils.getByRole('button', {
+      name: /^More Options/,
+    });
+
+    await fixture.events.click(moreOptionsButton);
+
+    const deleteStory = utils.getByText(/^Delete/);
+
+    await fixture.events.click(deleteStory);
+
+    const cancel = fixture.screen.getByRole('button', {
+      name: /^Cancel$/,
+    });
+
+    await fixture.events.click(cancel);
+
+    stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+    expect(stories.length).toEqual(initialNumStories);
+  });
+
+  it('should Rename a story in List View', async () => {
+    const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
+      b.modified.diff(a.modified)
+    );
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    expect(listViewButton).toBeTruthy();
+
+    await fixture.events.click(listViewButton);
+
+    // drop the header row using slice
+    const rows = fixture.screen.getAllByRole('row').slice(1);
+
+    const utils = within(rows[0]);
+
+    const titleCell = utils.getByRole('cell', {
+      name: storiesSortedByModified[0].title,
+    });
+
+    await fixture.events.hover(titleCell);
+
+    const moreOptionsButton = utils.getByRole('button', {
+      name: /^More Options/,
+    });
+
+    await fixture.events.click(moreOptionsButton);
+
+    const rename = utils.getByText(/^Rename/);
+
+    await fixture.events.click(rename);
+
+    const input = utils.getByRole('textbox');
+    const inputLength = input.value.length;
+
+    for (let iter = 0; iter < inputLength; iter++) {
+      // disable eslint to prevet overlapping .act calls
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('Backspace');
+    }
+
+    await fixture.events.keyboard.type('A New Title');
+
+    await fixture.events.keyboard.press('Enter');
+
+    expect(utils.getByText(/A New Title/)).toBeTruthy();
+  });
+
+  it('should Duplicate a story in List View', async () => {
+    const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
+      b.modified.diff(a.modified)
+    );
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    expect(listViewButton).toBeTruthy();
+
+    await fixture.events.click(listViewButton);
+
+    // drop the header row using slice
+    let rows = fixture.screen.getAllByRole('row').slice(1);
+
+    let utils = within(rows[0]);
+
+    const titleCell = utils.getByRole('cell', {
+      name: storiesSortedByModified[0].title,
+    });
+
+    await fixture.events.hover(titleCell);
+
+    const moreOptionsButton = utils.getByRole('button', {
+      name: /^More Options/,
+    });
+
+    await fixture.events.click(moreOptionsButton);
+
+    const duplicate = utils.getByText(/^Duplicate/);
+
+    await fixture.events.click(duplicate);
+
+    // requery rows
+    rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(storiesSortedByModified.length + 1);
+
+    utils = within(rows[0]);
+
+    expect(utils.getByText(/Copy/)).toBeTruthy();
+  });
+
+  it('should Delete a story in List View', async () => {
+    const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
+      b.modified.diff(a.modified)
+    );
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    expect(listViewButton).toBeTruthy();
+
+    await fixture.events.click(listViewButton);
+
+    // drop the header row using slice
+    let rows = fixture.screen.getAllByRole('row').slice(1);
+
+    let utils = within(rows[0]);
+
+    const titleCell = utils.getByRole('cell', {
+      name: storiesSortedByModified[0].title,
+    });
+
+    await fixture.events.hover(titleCell);
+
+    const moreOptionsButton = utils.getByRole('button', {
+      name: /^More Options/,
+    });
+
+    await fixture.events.click(moreOptionsButton);
+
+    const deleteButton = utils.getByText(/^Delete/);
+
+    await fixture.events.click(deleteButton);
+
+    const confirmDeleteButton = fixture.screen.getByRole('button', {
+      name: /^Delete$/,
+    });
+
+    await fixture.events.click(confirmDeleteButton);
+
+    // requery rows
+    rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(storiesSortedByModified.length - 1);
+  });
+
+  it('should not Delete a story if Cancel is clicked in the confirmation modal List View', async () => {
+    const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
+      b.modified.diff(a.modified)
+    );
+    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+
+    expect(listViewButton).toBeTruthy();
+
+    await fixture.events.click(listViewButton);
+
+    // drop the header row using slice
+    let rows = fixture.screen.getAllByRole('row').slice(1);
+
+    let utils = within(rows[0]);
+
+    const titleCell = utils.getByRole('cell', {
+      name: storiesSortedByModified[0].title,
+    });
+
+    await fixture.events.hover(titleCell);
+
+    const moreOptionsButton = utils.getByRole('button', {
+      name: /^More Options/,
+    });
+
+    await fixture.events.click(moreOptionsButton);
+
+    const deleteButton = utils.getByText(/^Delete/);
+
+    await fixture.events.click(deleteButton);
+
+    const cancel = fixture.screen.getByRole('button', {
+      name: /^Cancel$/,
+    });
+
+    await fixture.events.click(cancel);
+
+    // requery rows
+    rows = fixture.screen.getAllByRole('row').slice(1);
+
+    expect(rows.length).toEqual(storiesSortedByModified.length);
   });
 });

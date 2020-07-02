@@ -45,7 +45,8 @@ export default function ApiProviderFixture({ children }) {
       fetchStories: (...args) =>
         setStoriesState((currenState) => fetchStories(...args, currenState)),
       createStoryFromTemplate: jasmine.createSpy('createStoryFromTemplate'),
-      trashStory: jasmine.createSpy('trashStory'),
+      trashStory: (story) =>
+        setStoriesState((currentState) => trashStory(story, currentState)),
       updateStory: (story) =>
         setStoriesState((currentState) => updateStory(story, currentState)),
     }),
@@ -125,22 +126,7 @@ function getStoriesState() {
       return acc;
     }, {}),
     storiesOrderById: copiedStories.map(({ id }) => id),
-    totalStoriesByStatus: copiedStories.reduce(
-      (acc, curr) => {
-        if (acc[curr.status] > 0) {
-          acc[curr.status] = acc[curr.status] + 1;
-        } else {
-          acc[curr.status] = 1;
-        }
-
-        return acc;
-      },
-      {
-        all: copiedStories.length,
-        draft: 0,
-        published: 0,
-      }
-    ),
+    totalStoriesByStatus: getTotalStoriesByStatus(copiedStories),
     totalPages: 1,
   };
 }
@@ -236,5 +222,46 @@ function duplicateStory(story, currenState) {
     copiedStory.id,
     ...copiedState.storiesOrderById,
   ];
+
+  // update stories by status
+  copiedState.totalStoriesByStatus = getTotalStoriesByStatus(
+    Object.values(copiedState.stories)
+  );
+
   return copiedState;
+}
+
+function trashStory(story, currentState) {
+  const copiedState = { ...currentState };
+  // delete story from state and filter from ordered list
+  delete copiedState.stories[story.id];
+  copiedState.storiesOrderById = copiedState.storiesOrderById.filter(
+    (id) => id !== story.id
+  );
+
+  // update story status counts
+  copiedState.totalStoriesByStatus = getTotalStoriesByStatus(
+    Object.values(copiedState.stories)
+  );
+
+  return copiedState;
+}
+
+function getTotalStoriesByStatus(stories = []) {
+  return stories.reduce(
+    (acc, curr) => {
+      if (acc[curr.status] > 0) {
+        acc[curr.status] = acc[curr.status] + 1;
+      } else {
+        acc[curr.status] = 1;
+      }
+
+      return acc;
+    },
+    {
+      all: stories.length,
+      draft: 0,
+      published: 0,
+    }
+  );
 }
