@@ -14,5 +14,8 @@
  * limitations under the License.
  */
 export { default as flushPromiseQueue } from './flushPromiseQueue';
-export { default as renderWithTheme } from './renderWithTheme';
+export {
+  default as renderWithTheme,
+  renderWithThemeAndFlagsProvider,
+} from './renderWithTheme';
 export { default as createWrapperWithProps } from './createWrapperWithProps';

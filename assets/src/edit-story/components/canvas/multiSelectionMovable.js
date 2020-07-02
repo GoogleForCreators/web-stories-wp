@@ -31,6 +31,7 @@ import { useUnits } from '../../units';
 import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import isMouseUpAClick from '../../utils/isMouseUpAClick';
+import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -40,19 +41,38 @@ function MultiSelectionMovable({ selectedElements }) {
 
   const eventTracker = useRef({});
 
+  const { updateElementsById, deleteElementsById } = useStory((state) => ({
+    updateElementsById: state.actions.updateElementsById,
+    deleteElementsById: state.actions.deleteElementsById,
+  }));
   const {
-    actions: { updateElementsById },
-  } = useStory();
-  const {
-    state: {
-      pageSize: { width: canvasWidth, height: canvasHeight },
+    canvasWidth,
+    canvasHeight,
+    nodesById,
+    handleSelectElement,
+    fullbleedContainer,
+  } = useCanvas(
+    ({
+      state: {
+        pageSize: { width: canvasWidth, height: canvasHeight },
+        nodesById,
+        fullbleedContainer,
+      },
+      actions: { handleSelectElement },
+    }) => ({
+      canvasWidth,
+      canvasHeight,
+      fullbleedContainer,
       nodesById,
-    },
-    actions: { handleSelectElement },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY, dataToEditorY },
-  } = useUnits();
+      handleSelectElement,
+    })
+  );
+  const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
+
   const {
     actions: { pushTransform },
   } = useTransform();
@@ -149,11 +169,16 @@ function MultiSelectionMovable({ selectedElements }) {
   // Update elements once the event has ended.
   const onGroupEventEnd = ({ targets, isRotate, isResize }) => {
     const updates = {};
+    const toRemove = [];
     targets.forEach((target, i) => {
+      const { element, updateForResizeEvent } = targetList[i];
+      if (isTargetOutOfContainer(target, fullbleedContainer)) {
+        toRemove.push(element.id);
+        return;
+      }
       // Update position in all cases.
       const frame = frames[i];
       const { direction } = frame;
-      const { element, updateForResizeEvent } = targetList[i];
       const properties = {
         x: element.x + editorToDataX(frame.translate[0]),
         y: element.y + editorToDataY(frame.translate[1]),
@@ -181,6 +206,9 @@ function MultiSelectionMovable({ selectedElements }) {
       elementIds: Object.keys(updates),
       properties: (currentProperties) => updates[currentProperties.id],
     });
+    if (toRemove.length > 0) {
+      deleteElementsById({ elementIds: toRemove });
+    }
     resetMoveable();
   };
 

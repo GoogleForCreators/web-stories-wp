@@ -19,10 +19,12 @@
  */
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import { setDefaultOptions } from 'jsdom-screenshot';
+
 // Extend Jest matchers.
 // See https://github.com/testing-library/jest-dom.
 import 'jest-extended';
 import '@testing-library/jest-dom';
+import 'jest-axe/extend-expect';
 
 // Allow using toBeEmpty which is also defined by jest-extended.
 // See https://github.com/facebook/jest/issues/9678.

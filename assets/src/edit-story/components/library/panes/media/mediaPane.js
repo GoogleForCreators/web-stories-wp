@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useConfig } from '../../../../app/config';
-import { useMedia } from '../../../../app/media';
+import { useLocalMedia } from '../../../../app/media';
 import { useMediaPicker } from '../../../mediaPicker';
 import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
 import { MainButton, SearchInput } from '../../common';
@@ -42,6 +42,8 @@ import {
 } from '../../../../app/media/utils';
 import paneId from './paneId';
 import MediaElement from './mediaElement';
+
+export const ROOT_MARGIN = 300;
 
 const Container = styled.div`
   grid-area: infinitescroll;
@@ -128,16 +130,42 @@ const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
   const {
-    state: {
-      hasMore,
-      media,
-      isMediaLoading,
-      isMediaLoaded,
-      mediaType,
-      searchTerm,
-    },
-    actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
-  } = useMedia();
+    hasMore,
+    media,
+    isMediaLoading,
+    isMediaLoaded,
+    mediaType,
+    searchTerm,
+    setNextPage,
+    resetWithFetch,
+    setMediaType,
+    setSearchTerm,
+  } = useLocalMedia(
+    ({
+      state: {
+        hasMore,
+        media,
+        isMediaLoading,
+        isMediaLoaded,
+        mediaType,
+        searchTerm,
+      },
+      actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
+    }) => {
+      return {
+        hasMore,
+        media,
+        isMediaLoading,
+        isMediaLoaded,
+        mediaType,
+        searchTerm,
+        setNextPage,
+        resetWithFetch,
+        setMediaType,
+        setSearchTerm,
+      };
+    }
+  );
 
   const {
     allowedMimeTypes: {
@@ -146,9 +174,9 @@ function MediaPane(props) {
     },
   } = useConfig();
 
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
 
   const onClose = resetWithFetch;
 
@@ -233,12 +261,12 @@ function MediaPane(props) {
   // State and callback ref necessary to recalculate the padding of the list
   //  given the scrollbar width.
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  let container = null;
-  const refContainer = (element) => {
+  const refContainer = useRef();
+  const refCallbackContainer = (element) => {
+    refContainer.current = element;
     if (!element) {
       return;
     }
-    container = element;
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
@@ -250,18 +278,23 @@ function MediaPane(props) {
       return;
     }
     const currentPaddingLeft = parseFloat(
-      window.getComputedStyle(container, null).getPropertyValue('padding-left')
+      window
+        .getComputedStyle(refContainer.current, null)
+        .getPropertyValue('padding-left')
     );
-    container.style['padding-right'] =
+    refContainer.current.style['padding-right'] =
       currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, container]);
+  }, [scrollbarWidth, refContainer]);
 
   const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: { current: container },
-      rootMargin: '0px 0px 300px 0px',
+      root: refContainer,
+      // This rootMargin is added so that we load an extra page when the
+      // "loading" footer is "close" to the bottom of the container, even if
+      // it's not yet visible.
+      rootMargin: `0px 0px ${ROOT_MARGIN}px 0px`,
     },
     (entry) => {
       if (!isMediaLoaded || isMediaLoading) {
@@ -309,7 +342,7 @@ function MediaPane(props) {
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
-          <Container ref={refContainer}>
+          <Container data-testid="mediaLibrary" ref={refCallbackContainer}>
             <Column>
               {resources
                 .filter((_, index) => isEven(index))

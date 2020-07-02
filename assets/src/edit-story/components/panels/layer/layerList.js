@@ -50,9 +50,10 @@ const LayerSeparator = styled(ReorderableSeparator)`
 `;
 
 function LayerPanel({ layers }) {
-  const {
-    actions: { arrangeElement, setSelectedElementsById },
-  } = useStory();
+  const { arrangeElement, setSelectedElementsById } = useStory((state) => ({
+    arrangeElement: state.actions.arrangeElement,
+    setSelectedElementsById: state.actions.setSelectedElementsById,
+  }));
 
   const numLayers = layers && layers.length;
 

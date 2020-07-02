@@ -28,12 +28,24 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Label, Row, MULTIPLE_VALUE } from '../../../form';
+import clamp from '../../../../utils/clamp';
+import { Label, Row, MULTIPLE_VALUE, usePresubmitHandler } from '../../../form';
 import { useCommonObjectValue } from '../../utils';
 import LockedPaddingControls from './locked';
 import UnlockedPaddingControls from './unlocked';
 
 export const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
+
+export const MIN_MAX = {
+  HORIZONTAL_PADDING: {
+    MIN: 0,
+    MAX: 300,
+  },
+  VERTICAL_PADDING: {
+    MIN: 0,
+    MAX: 300,
+  },
+};
 
 function PaddingControls({ selectedElements, pushUpdateForObject }) {
   const padding = useCommonObjectValue(
@@ -51,6 +63,17 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
       pushUpdateForObject('padding', newPadding, DEFAULT_PADDING, submit);
     },
     [pushUpdateForObject]
+  );
+
+  usePresubmitHandler(
+    ({ padding: { horizontal, vertical, ...rest } }) => ({
+      padding: {
+        ...rest,
+        horizontal: clamp(horizontal, MIN_MAX.HORIZONTAL_PADDING),
+        vertical: clamp(vertical, MIN_MAX.VERTICAL_PADDING),
+      },
+    }),
+    []
   );
 
   return (

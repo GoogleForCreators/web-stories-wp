@@ -72,6 +72,8 @@ export const resizeRules = {
   vertical: true,
   horizontal: true,
   diagonal: true,
+  minWidth: 20,
+  minHeight: 20,
 };
 
 export const MEDIA_PANELS = [

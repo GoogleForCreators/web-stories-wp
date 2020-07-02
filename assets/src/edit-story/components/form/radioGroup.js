@@ -26,7 +26,7 @@ import { useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { Radio as Selected, RadioSelected as UnSelected } from '../../icons';
+import { Radio as UnSelected, RadioSelected as Selected } from '../../icons';
 
 const RadioButton = styled.label`
   display: block;
@@ -53,7 +53,8 @@ const Name = styled.span`
   line-height: 24px;
 `;
 
-const Radio = styled.input`
+// Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
+const Radio = styled.input.attrs({ className: 'mousetrap' })`
   opacity: 0;
   position: absolute;
   :focus + ${Label} {

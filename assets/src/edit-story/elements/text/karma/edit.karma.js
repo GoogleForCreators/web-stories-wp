@@ -57,9 +57,7 @@ describe('TextEdit integration', () => {
         })
       );
 
-      frame = fixture.querySelector(
-        `[data-element-id="${element.id}"] [data-testid="textFrame"]`
-      );
+      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
     });
 
     it('should render initial content', () => {
@@ -116,9 +114,25 @@ describe('TextEdit integration', () => {
         );
 
         // The content is updated in the frame.
-        expect(frame.innerHTML).toEqual(
+        // @todo: What to do with `<p>` and containers?
+        expect(frame.querySelector('p').innerHTML).toEqual(
           '<span style="font-weight: 700">hello world!</span>'
         );
+      });
+    });
+
+    describe('shortcuts', () => {
+      it('should enter/exit edit mode using the keyboard', async () => {
+        // Enter edit mode using the Enter key
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        await fixture.events.keyboard.press('Enter');
+        expect(
+          fixture.querySelector('[data-testid="textEditor"]')
+        ).toBeDefined();
+
+        // Exit edit mode using the Esc key
+        await fixture.events.keyboard.press('Esc');
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
       });
     });
   });

@@ -38,7 +38,9 @@ const apiValue = {
   actions: { updateMedia: action('update server') },
 };
 const mediaValue = {
-  actions: { updateMediaElement: action('update state') },
+  local: {
+    actions: { updateMediaElement: action('update state') },
+  },
 };
 const snackbarValue = { showSnackbar: action('show snackbar') };
 
@@ -48,6 +50,7 @@ export const _default = () => {
     type: 'image',
     mimeType: 'image/png',
     title: 'My Image :)',
+    creationDate: Date.now(),
     src: testImage,
     width: 910,
     height: 675,

@@ -20,21 +20,25 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
+import moment from 'moment';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
+import { format } from '@wordpress/date';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
 import Dialog from '../../../../components/dialog';
-import { Plain, Primary } from '../../../../components/button';
+import { Plain } from '../../../../components/button';
+import { useLocalMedia } from '../../../../app/media';
 import { useSnackbar } from '../../../../app/snackbar';
-import UseMedia from '../../../../app/media/useMedia';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
+import StoryPropTypes from '../../../../types';
+import { useConfig } from '../../../../app';
 
 const styledMediaThumbnail = css`
   display: flex;
@@ -51,7 +55,6 @@ const Video = styled.video`
 `;
 
 const DialogBody = styled.div`
-  max-width: 480px;
   display: flex;
   justify-content: left;
   align-items: flex-start;
@@ -62,12 +65,21 @@ const MetadataTextContainer = styled.div`
   flex-direction: column;
 `;
 
+const MediaDateText = styled.div`
+  font-family: ${({ theme }) => theme.fonts.date.family};
+  line-height: ${({ theme }) => theme.fonts.date.lineHeight};
+  font-size: ${({ theme }) => theme.fonts.date.size};
+  font-weight: ${({ theme }) => theme.fonts.date.weight};
+  color: ${({ theme }) => theme.grayout};
+  margin-bottom: 8px;
+`;
+
 const MediaTitleText = styled.div`
   font-family: ${({ theme }) => theme.fonts.title.family};
   line-height: ${({ theme }) => theme.fonts.title.lineHeight};
   font-size: ${({ theme }) => theme.fonts.title.size};
   font-weight: ${({ theme }) => theme.fonts.title.weight};
-  color: ${({ theme }) => theme.colors.bg.v11};
+  color: ${({ theme }) => theme.colors.bg.v9};
 `;
 
 const MediaSizeText = styled.div`
@@ -90,16 +102,13 @@ const Input = styled.input`
   margin-bottom: 4px;
 `;
 
-const DialogDescription = styled.div`
+const DialogDescription = styled.p`
   font-family: ${({ theme }) => theme.fonts.description.family};
   line-height: ${({ theme }) => theme.fonts.description.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.description.weight};
   font-size: ${({ theme }) => theme.fonts.description.size};
   color: ${({ theme }) => theme.grayout};
-`;
-
-const Space = styled.div`
-  width: 8px;
+  margin: 0;
 `;
 
 const imageDialogTitle = __('Edit Image', 'web-stories');
@@ -126,6 +135,7 @@ function MediaEditDialog({ resource, onClose }) {
     id,
     src,
     title,
+    creationDate,
     width,
     height,
     type,
@@ -133,14 +143,16 @@ function MediaEditDialog({ resource, onClose }) {
     poster,
     mimeType,
   } = resource;
+  const { dateFormat = 'Y-m-d' } = useConfig();
   const {
     actions: { updateMedia },
   } = useAPI();
-  const {
-    actions: { updateMediaElement },
-  } = UseMedia();
+  const { updateMediaElement } = useLocalMedia((state) => ({
+    updateMediaElement: state.actions.updateMediaElement,
+  }));
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
+  const parsedDate = moment(creationDate);
 
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
@@ -164,19 +176,17 @@ function MediaEditDialog({ resource, onClose }) {
     <Dialog
       open={true}
       onClose={onClose}
-      title={type == 'image' ? imageDialogTitle : videoDialogTitle}
+      title={type === 'image' ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
           <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Space />
-          <Primary onClick={updateMediaItem}>
-            {__('Save', 'web-stories')}
-          </Primary>
+          <Plain onClick={updateMediaItem}>{__('Save', 'web-stories')}</Plain>
         </>
       }
+      maxWidth={530}
     >
       <DialogBody>
-        {type == 'image' ? (
+        {type === 'image' ? (
           <Image src={getThumbnailUrl(resource)} alt={alt} loading={'lazy'} />
         ) : (
           <Video key={src} poster={poster} preload="none" muted>
@@ -184,6 +194,15 @@ function MediaEditDialog({ resource, onClose }) {
           </Video>
         )}
         <MetadataTextContainer>
+          {parsedDate.isValid() && (
+            <MediaDateText>
+              {sprintf(
+                /* translators: %s: upload date of media item. */
+                __('Uploaded: %s', 'web-stories'),
+                format(dateFormat, parsedDate)
+              )}
+            </MediaDateText>
+          )}
           <MediaTitleText>{title}</MediaTitleText>
           <MediaSizeText>
             {sprintf(
@@ -201,7 +220,7 @@ function MediaEditDialog({ resource, onClose }) {
             onChange={handleAltTextChange}
           />
           <DialogDescription>
-            {type == 'image' ? imageDialogDescription : videoDialogDescription}
+            {type === 'image' ? imageDialogDescription : videoDialogDescription}
           </DialogDescription>
         </MetadataTextContainer>
       </DialogBody>
@@ -210,7 +229,7 @@ function MediaEditDialog({ resource, onClose }) {
 }
 
 MediaEditDialog.propTypes = {
-  resource: PropTypes.object.isRequired,
+  resource: StoryPropTypes.resource.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

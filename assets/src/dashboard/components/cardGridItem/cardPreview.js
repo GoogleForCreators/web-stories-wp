@@ -39,7 +39,7 @@ import { ActionLabel } from './types';
 const PreviewPane = styled.div`
   position: relative;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  height: ${({ cardSize }) => `${cardSize.height}px`};
+  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
   box-shadow: ${({ theme }) => theme.storyPreview.shadow};
   border: ${({ theme }) => theme.storyPreview.border};
   width: 100%;
@@ -51,7 +51,7 @@ PreviewPane.propTypes = {
 };
 
 const EditControls = styled.div`
-  height: ${({ cardSize }) => `${cardSize.height}px`};
+  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
   width: ${({ cardSize }) => `${cardSize.width}px`};
   position: absolute;
   display: flex;
@@ -159,11 +159,12 @@ const CardPreviewContainer = ({
       <PreviewPane cardSize={pageSize}>
         <PreviewErrorBoundary>
           <PreviewPage
+            pageSize={pageSize}
             page={storyPages[pageIndex]}
             animationState={
               CARD_STATE.ACTIVE === cardState
-                ? STORY_PAGE_STATE.ANIMATE
-                : STORY_PAGE_STATE.IDLE
+                ? STORY_PAGE_STATE.PLAYING
+                : STORY_PAGE_STATE.RESET
             }
           />
         </PreviewErrorBoundary>
@@ -178,7 +179,7 @@ const CardPreviewContainer = ({
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
       >
         <EmptyActionContainer />
-        {centerAction && (
+        {centerAction?.label && (
           <ActionContainer>
             <Button
               type={BUTTON_TYPES.SECONDARY}
@@ -201,7 +202,7 @@ const CardPreviewContainer = ({
 const ActionButtonPropType = PropTypes.shape({
   targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
-  label: ActionLabel.isRequired,
+  label: ActionLabel,
 });
 
 CardPreviewContainer.propTypes = {

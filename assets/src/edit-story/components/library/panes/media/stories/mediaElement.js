@@ -39,9 +39,11 @@ const Column = styled.div`
 
 const snackbarValue = { showSnackbar: action('snow snackbar') };
 const mediaValue = {
-  actions: {
-    deleteMediaElement: action('delete from state'),
-    updateMediaElement: action('update state'),
+  local: {
+    actions: {
+      deleteMediaElement: action('delete from state'),
+      updateMediaElement: action('update state'),
+    },
   },
 };
 const apiValue = {
@@ -62,6 +64,7 @@ export const _Image = () => {
     type: 'image',
     mimeType: 'image/png',
     title: 'My Image :)',
+    uploadDate: Date.now(),
     src: testImage,
     width: 910,
     height: 675,
@@ -95,6 +98,7 @@ export const _Video = () => {
     type: 'video',
     mimeType: 'video/mp4',
     title: 'My Video :)',
+    uploadDate: Date.now(),
     src: testVideo,
     width: 640,
     height: 480,

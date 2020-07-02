@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -35,6 +36,7 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
+  SafeZone,
   Plain,
 } from '../../button';
 import {
@@ -57,11 +59,14 @@ import {
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 
+import useCanvas from '../useCanvas';
+import WithTooltip from '../../tooltip';
 import CompactIndicator from './compactIndicator';
+import useCarouselKeys from './useCarouselKeys';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid: 'space prev-navigation carousel next-navigation menu' auto / 53px 53px 1fr 53px 53px;
@@ -111,6 +116,19 @@ const OverflowButtons = styled.div`
     position: absolute;
     bottom: 10px;
   }
+`;
+
+const buttonDimensions = { width: '24', height: '24' };
+
+const StyledGridViewButton = styled(GridViewButton).attrs(buttonDimensions)``;
+
+const SafeZoneButton = styled(SafeZone).attrs(buttonDimensions)`
+  ${({ active, theme }) =>
+    active &&
+    css`
+      background: ${rgba(theme.colors.bg.v13, 0.1)};
+    `}
+  margin-bottom: 12px;
 `;
 
 const PageList = styled(Reorderable).attrs({
@@ -204,20 +222,36 @@ function calculatePageThumbSize(carouselSize) {
 
 function Carousel() {
   const {
-    state: { pages, currentPageId },
-    actions: { setCurrentPage, arrangePage },
-  } = useStory();
+    pages,
+    currentPageId,
+    setCurrentPage,
+    arrangePage,
+  } = useStory(
+    ({
+      state: { pages, currentPageId },
+      actions: { setCurrentPage, arrangePage },
+    }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
+  );
   const { isRTL } = useConfig();
+  const { showSafeZone, setShowSafeZone } = useCanvas(
+    ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
+      showSafeZone,
+      setShowSafeZone,
+    })
+  );
+  const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const listRef = useRef(null);
   const pageRefs = useRef([]);
+  const wrapperRef = useRef(null);
 
   const [carouselSize, setCarouselSize] = useState({
     width: COMPACT_THUMB_WIDTH,
     height: COMPACT_THUMB_HEIGHT,
   });
+  const [resizedForPages, setResizedForPages] = useState(0);
 
   const isCompact =
     calculateThumbnailHeight(carouselSize) < MIN_CAROUSEL_THUMB_HEIGHT;
@@ -233,6 +267,7 @@ function Carousel() {
       setHasHorizontalOverflow(Math.ceil(scrollWidth) > Math.ceil(offsetWidth));
       setScrollPercentage(scrollLeft / max);
       setCarouselSize(currentCarouselSize);
+      setResizedForPages(pages.length);
     },
     [pages.length]
   );
@@ -324,9 +359,16 @@ function Carousel() {
     [pages, isCompact, arrangePage, setCurrentPage]
   );
 
+  useCarouselKeys(wrapperRef, pageRefs, isRTL);
+
   return (
     <>
-      <Wrapper>
+      <Wrapper
+        ref={wrapperRef}
+        data-testid="PageCarousel"
+        aria-label={__('Page Carousel', 'web-stories')}
+        data-ready={resizedForPages === pages.length}
+      >
         <NavArea area="space" />
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
@@ -370,6 +412,7 @@ function Carousel() {
                   <Page
                     onClick={handleClickPage(page)}
                     role="option"
+                    data-page-id={page.id}
                     ariaLabel={
                       isCurrentPage
                         ? sprintf(
@@ -413,20 +456,43 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            <OverflowButtons>
-              <KeyboardShortcutsButton
-                width="24"
-                height="24"
-                isDisabled
-                aria-label={__('Keyboard Shortcuts', 'web-stories')}
+            {showKeyboardShortcutsButton && (
+              <OverflowButtons>
+                <KeyboardShortcutsButton
+                  width="24"
+                  height="24"
+                  isDisabled
+                  aria-label={__('Keyboard Shortcuts', 'web-stories')}
+                />
+              </OverflowButtons>
+            )}
+            <WithTooltip
+              title={
+                showSafeZone
+                  ? __('Disable Safe Zone', 'web-stories')
+                  : __('Enable Safe Zone', 'web-stories')
+              }
+              placement="left"
+            >
+              <SafeZoneButton
+                active={showSafeZone}
+                onClick={() => setShowSafeZone((current) => !current)}
+                aria-label={
+                  showSafeZone
+                    ? __('Disable Safe Zone', 'web-stories')
+                    : __('Enable Safe Zone', 'web-stories')
+                }
               />
-            </OverflowButtons>
-            <GridViewButton
-              width="24"
-              height="24"
-              onClick={openModal}
-              aria-label={__('Grid View', 'web-stories')}
-            />
+            </WithTooltip>
+            <WithTooltip
+              title={__('Grid View', 'web-stories')}
+              placement="left"
+            >
+              <StyledGridViewButton
+                onClick={openModal}
+                aria-label={__('Grid View', 'web-stories')}
+              />
+            </WithTooltip>
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>

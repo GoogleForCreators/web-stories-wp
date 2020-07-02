@@ -29,14 +29,14 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { UploadDropTarget, UploadDropTargetMessage } from '../uploadDropTarget';
-import { useMedia } from '../../app/media';
+import { useLocalMedia } from '../../app/media';
 
 const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
-  const {
-    actions: { uploadMedia },
-  } = useMedia();
+  const { uploadMedia } = useLocalMedia((state) => ({
+    uploadMedia: state.actions.uploadMedia,
+  }));
   const onDropHandler = useCallback(
     (files) => {
       uploadMedia(files);

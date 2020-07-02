@@ -33,13 +33,13 @@ import Context from './context';
 function CanvasProvider({ children }) {
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
-
   const [pageSize, setPageSize] = useState({
     width: PAGE_WIDTH,
     height: PAGE_WIDTH / PAGE_RATIO,
   });
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
+  const [showSafeZone, setShowSafeZone] = useState(true);
 
   const {
     nodesById,
@@ -48,13 +48,28 @@ function CanvasProvider({ children }) {
     setEditingElementWithState,
     setEditingElementWithoutState,
     clearEditing,
+    getNodeForElement,
     setNodeForElement,
   } = useEditingElement();
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { toggleElementInSelection, setSelectedElementsById },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    toggleElementInSelection,
+    setSelectedElementsById,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementIds },
+      actions: { toggleElementInSelection, setSelectedElementsById },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        toggleElementInSelection,
+        setSelectedElementsById,
+      };
+    }
+  );
 
   const handleSelectElement = useCallback(
     (elId, evt) => {
@@ -74,7 +89,7 @@ function CanvasProvider({ children }) {
       } else {
         setSelectedElementsById({ elementIds: [elId] });
       }
-      evt.currentTarget.focus();
+      evt.currentTarget.focus({ preventScroll: true });
       if (currentPage?.elements[0].id !== elId) {
         evt.stopPropagation();
       }
@@ -145,11 +160,13 @@ function CanvasProvider({ children }) {
         editingElementState,
         isEditing: Boolean(editingElement),
         lastSelectionEvent,
+        showSafeZone,
         pageSize,
       },
       actions: {
         setPageContainer,
         setFullbleedContainer,
+        getNodeForElement,
         setNodeForElement,
         setEditingElement: setEditingElementWithoutState,
         setEditingElementWithState,
@@ -157,6 +174,7 @@ function CanvasProvider({ children }) {
         handleSelectElement,
         selectIntersection,
         setPageSize,
+        setShowSafeZone,
       },
     }),
     [
@@ -167,8 +185,10 @@ function CanvasProvider({ children }) {
       editingElementState,
       lastSelectionEvent,
       pageSize,
+      showSafeZone,
       setPageContainer,
       setFullbleedContainer,
+      getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
       setEditingElementWithState,
@@ -176,6 +196,7 @@ function CanvasProvider({ children }) {
       handleSelectElement,
       selectIntersection,
       setPageSize,
+      setShowSafeZone,
     ]
   );
   return (

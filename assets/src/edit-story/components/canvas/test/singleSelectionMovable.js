@@ -72,6 +72,7 @@ describe('singleSelectionMovable', () => {
       state: {
         pageSize,
         nodesById: { '1': target },
+        fullbleedContainer: document.body,
       },
     };
   });

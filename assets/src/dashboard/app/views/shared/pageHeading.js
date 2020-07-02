@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -101,9 +102,12 @@ const PageHeading = ({
   searchPlaceholder,
   centerContent = false,
   stories = [],
+  showTypeahead = true,
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
+  const typeaheadResults = useMemo(() => stories.slice(0, 5), [stories]);
+
   return (
     <Container>
       <HeadingBodyWrapper>
@@ -112,16 +116,18 @@ const PageHeading = ({
           {defaultTitle}
         </StyledHeader>
         <Content centerContent={centerContent}>{children}</Content>
-        <SearchContainer>
-          <SearchInner>
-            <TypeaheadSearch
-              placeholder={searchPlaceholder}
-              currentValue={typeaheadValue}
-              stories={stories}
-              handleChange={handleTypeaheadChange}
-            />
-          </SearchInner>
-        </SearchContainer>
+        {showTypeahead && (
+          <SearchContainer>
+            <SearchInner>
+              <TypeaheadSearch
+                placeholder={searchPlaceholder}
+                currentValue={typeaheadValue}
+                stories={typeaheadResults}
+                handleChange={handleTypeaheadChange}
+              />
+            </SearchInner>
+          </SearchContainer>
+        )}
       </HeadingBodyWrapper>
     </Container>
   );
@@ -136,6 +142,7 @@ PageHeading.propTypes = {
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
   stories: StoriesPropType,
+  showTypeahead: PropTypes.bool,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
 };

@@ -20,20 +20,30 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import useInsertElement from '../useInsertElement';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
+import createSolidFromString from '../../../utils/createSolidFromString';
 
 describe('Multi-selection Movable integration', () => {
   let fixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
-
     await fixture.render();
   });
 
   afterEach(() => {
     fixture.restore();
   });
+
+  async function clickOnTarget(target, key = false) {
+    const { x, y, width, height } = target.getBoundingClientRect();
+    if (key) {
+      await fixture.events.keyboard.down(key);
+    }
+    await fixture.events.mouse.click(x + width / 2, y + height / 2);
+    if (key) {
+      await fixture.events.keyboard.up(key);
+    }
+  }
 
   describe('multi-selection', () => {
     let element1;
@@ -46,9 +56,9 @@ describe('Multi-selection Movable integration', () => {
     beforeEach(async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
       element1 = await fixture.act(() =>
-        insertElement('text', {
-          font: TEXT_ELEMENT_DEFAULT_FONT,
-          content: 'Text A',
+        insertElement('shape', {
+          backgroundColor: createSolidFromString('#ff00ff'),
+          mask: { type: 'rectangle' },
           x: 10,
           y: 10,
           width: 50,
@@ -57,9 +67,9 @@ describe('Multi-selection Movable integration', () => {
       );
 
       element2 = await fixture.act(() =>
-        insertElement('text', {
-          font: TEXT_ELEMENT_DEFAULT_FONT,
-          content: 'Text B',
+        insertElement('shape', {
+          backgroundColor: createSolidFromString('#00ff00'),
+          mask: { type: 'rectangle' },
           x: 100,
           y: 100,
           width: 50,
@@ -68,9 +78,9 @@ describe('Multi-selection Movable integration', () => {
       );
 
       element3 = await fixture.act(() =>
-        insertElement('text', {
-          font: TEXT_ELEMENT_DEFAULT_FONT,
-          content: 'Text C',
+        insertElement('shape', {
+          backgroundColor: createSolidFromString('#0000ff'),
+          mask: { type: 'rectangle' },
           x: element1.x + element1.width + 1,
           y: element1.y + element1.height + 1,
           width: 20,
@@ -78,41 +88,66 @@ describe('Multi-selection Movable integration', () => {
         })
       );
 
-      frame1 = getElementFrame(fixture, element1.id);
-      frame2 = getElementFrame(fixture, element2.id);
-      frame3 = getElementFrame(fixture, element3.id);
+      frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+      frame2 = fixture.editor.canvas.framesLayer.frame(element2.id).node;
+      frame3 = fixture.editor.canvas.framesLayer.frame(element3.id).node;
     });
 
-    it('should render initial content', () => {
-      expect(frame1.textContent).toEqual('Text A');
-      expect(frame2.textContent).toEqual('Text B');
+    it('should render initial content', async () => {
+      await fixture.snapshot();
+    });
+
+    async function getSelection() {
+      const storyContext = await fixture.renderHook(() => useStory());
+      return storyContext.state.selectedElementIds;
+    }
+
+    describe('deleting element', () => {
+      beforeEach(async () => {
+        await clickOnTarget(frame1);
+        await clickOnTarget(frame2, 'Shift');
+      });
+
+      it('should delete element that gets dragged out of the canvas to left while in multi-selection', async () => {
+        await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+          moveRel(frame1, 10, 10),
+          down(),
+          moveBy(-65, 0, { steps: 6 }),
+          up(),
+        ]);
+        expect(await getSelection()).toEqual([element2.id]);
+      });
+
+      it('should delete element that gets dragged out of the canvas to right while in multi-selection', async () => {
+        const safezone = fixture.querySelector('[data-testid="safezone"]');
+        const safezoneWidth = safezone.getBoundingClientRect().width;
+        const frameWidth = frame2.getBoundingClientRect().width;
+        await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+          moveRel(frame2, 10, 10),
+          down(),
+          moveBy(safezoneWidth - frameWidth, 0, { steps: 10 }),
+          up(),
+        ]);
+        expect(await getSelection()).toEqual([element1.id]);
+      });
     });
 
     describe('click interaction', () => {
       let safezone;
       beforeEach(async () => {
-        await clickOnTarget(fixture, frame1);
-        await clickOnTarget(fixture, frame2, 'Shift');
+        await clickOnTarget(frame1);
+        await clickOnTarget(frame2, 'Shift');
 
         safezone = fixture.querySelector('[data-testid="safezone"]');
       });
 
       it('should have multiple elements selected', async () => {
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([
-          element1.id,
-          element2.id,
-        ]);
+        expect(await getSelection()).toEqual([element1.id, element2.id]);
       });
 
       it('should select one element when clicking in multi-selection', async () => {
-        const { x, y } = safezone.getBoundingClientRect();
-        await fixture.events.mouse.click(
-          x + element1.x + 1,
-          y + element1.y + 1
-        );
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([element1.id]);
+        await fixture.events.mouse.clickOn(frame1, 10, 10);
+        expect(await getSelection()).toEqual([element1.id]);
       });
 
       it('should select bg element when clicking out of the multi-selection', async () => {
@@ -128,15 +163,12 @@ describe('Multi-selection Movable integration', () => {
       it('should de-select all elements when clicking out of the page', async () => {
         const { x, y } = safezone.getBoundingClientRect();
         await fixture.events.mouse.click(x - 10, y - 10);
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([]);
+        expect(await getSelection()).toEqual([]);
       });
 
       it('should allow adding an element to selection in the middle of multi-selection', async () => {
-        await clickOnTarget(fixture, frame3, 'Shift');
-
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([
+        await clickOnTarget(frame3, 'Shift');
+        expect(await getSelection()).toEqual([
           element1.id,
           element2.id,
           element3.id,
@@ -145,28 +177,10 @@ describe('Multi-selection Movable integration', () => {
 
       it('should allow removing an element from multi-selection', async () => {
         // Remove element2 from multi-selection.
-        await clickOnTarget(fixture, frame2, 'Shift');
+        await clickOnTarget(frame2, 'Shift');
 
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElementIds).toEqual([element1.id]);
+        expect(await getSelection()).toEqual([element1.id]);
       });
     });
   });
 });
-
-function getElementFrame(fixture, id) {
-  return fixture.querySelector(
-    `[data-element-id="${id}"] [data-testid="textFrame"]`
-  );
-}
-
-async function clickOnTarget(fixture, target, key = false) {
-  const { x, y, width, height } = target.getBoundingClientRect();
-  if (key) {
-    await fixture.events.keyboard.down(key);
-  }
-  await fixture.events.mouse.click(x + width / 2, y + height / 2);
-  if (key) {
-    await fixture.events.keyboard.up(key);
-  }
-}

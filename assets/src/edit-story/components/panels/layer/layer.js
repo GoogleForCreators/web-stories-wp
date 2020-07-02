@@ -108,9 +108,9 @@ const LayerContentContainer = styled.div`
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
-  const {
-    state: { currentPage },
-  } = useStory();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
   const isBackground = currentPage.elements[0].id === layer.id;
   const showPreview = !isBackground || layer.type !== 'shape';
 

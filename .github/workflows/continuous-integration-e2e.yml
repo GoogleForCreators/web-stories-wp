@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: ['chrome', 'firefox']
+        # TODO: add back Firefox once support is more mature.
+        browser: ['chrome']
 
     steps:
       - name: Checkout
@@ -68,15 +69,13 @@ jobs:
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      - name: Install Puppeteer with correct browser
-        run: npm install puppeteer
-        env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Build plugin
-        run: DISABLE_PREVENT=true npm run build:js
+        run: npm run build:js
+        env:
+          # TODO: remove eventually
+          DISABLE_PREVENT: true
 
       - name: Start Docker environment
         run: npm run env:start
@@ -84,11 +83,13 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e:percy
         env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Stop Docker environment
         run: npm run env:stop
+        if: always()
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true

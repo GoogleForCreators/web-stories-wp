@@ -29,26 +29,26 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Remove } from '../../../icons';
-import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
 import { StylePresetPropType } from '../../../types';
+import WithTooltip from '../../tooltip';
 import PresetGroup from './presetGroup';
-import { generatePresetStyle } from './utils';
+import { presetHasOpacity, presetHasGradient } from './utils';
 
 const REMOVE_ICON_SIZE = 18;
-const PRESET_HEIGHT = 30;
+const PRESET_SIZE = 30;
 
 const presetCSS = css`
-  display: inline-block;
-  width: 30px;
-  height: ${PRESET_HEIGHT}px;
-  border-radius: 15px;
-  border-color: transparent;
-  padding: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
   font-size: 13px;
   position: relative;
   cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
+  border-width: 0;
   svg {
     width: ${REMOVE_ICON_SIZE}px;
     height: ${REMOVE_ICON_SIZE}px;
@@ -58,32 +58,33 @@ const presetCSS = css`
   }
 `;
 
-const Color = styled.button`
+const Transparent = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: conic-gradient(
+    #fff 0.25turn,
+    #d3d4d4 0turn 0.5turn,
+    #fff 0turn 0.75turn,
+    #d3d4d4 0turn 1turn
+  );
+  background-size: 50% 50%;
+`;
+
+const ColorWrapper = styled.div`
+  display: block;
+  width: ${PRESET_SIZE}px;
+  height: ${PRESET_SIZE}px;
+  border: 1px solid ${({ theme }) => theme.colors.whiteout};
+  border-radius: 100%;
+  overflow: hidden;
+  position: relative;
+  ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
+`;
+
+const Color = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
-`;
-
-const Style = styled.button`
-  ${presetCSS}
-  padding: 0 3px;
-  background: transparent;
-  ${({ styles }) => styles}
-  width: 72px;
-  border-radius: 4px;
-`;
-
-const TextWrapper = styled.div`
-  text-align: left;
-  line-height: ${PRESET_HEIGHT}px;
-  max-height: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-`;
-
-const HighLight = styled.span`
-  padding: 0 2px;
-  ${({ background }) => generatePatternStyles(background)}
-  box-decoration-break: clone;
 `;
 
 function Presets({
@@ -91,91 +92,57 @@ function Presets({
   handleOnClick,
   isEditMode,
   isText,
-  textContent = 'Text',
+  isBackground,
 }) {
-  const { fillColors, textColors, textStyles } = stylePresets;
+  const { colors } = stylePresets;
 
-  const getStylePresetText = (preset) => {
-    const isHighLight =
-      preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
-    return (
-      <TextWrapper>
-        {isHighLight ? (
-          <HighLight background={preset.backgroundColor}>
-            {textContent}
-          </HighLight>
-        ) : (
-          textContent
-        )}
-      </TextWrapper>
-    );
-  };
-
-  const colorPresets = isText ? textColors : fillColors;
-  const hasColorPresets = colorPresets.length > 0;
-  const hasPresets = textStyles.length > 0 || hasColorPresets;
+  const hasPresets = colors.length > 0;
 
   const colorPresetRenderer = (color, i, activeIndex) => {
+    if (!color) {
+      return null;
+    }
+    const disabled =
+      !isEditMode &&
+      ((isBackground && presetHasOpacity(color)) ||
+        (isText && presetHasGradient(color)));
+    let tooltip = null;
+    if (disabled) {
+      // @todo The correct text here should be: Page background colors can not have an opacity.
+      // However, due to bug with Tooltips/Popup, the text flows out of the screen.
+      tooltip = isBackground
+        ? __('Opacity not allowed for Page', 'web-stories')
+        : __('Gradient not allowed for Text', 'web-stories');
+    }
     return (
-      <Color
-        tabIndex={activeIndex === i ? 0 : -1}
-        color={color}
-        onClick={(e) => {
-          e.preventDefault();
-          handleOnClick(color);
-        }}
-        aria-label={
-          isEditMode
-            ? __('Delete color preset', 'web-stories')
-            : __('Apply color preset', 'web-stories')
-        }
-      >
-        {isEditMode && <Remove />}
-      </Color>
+      <WithTooltip title={tooltip}>
+        <ColorWrapper disabled={disabled}>
+          <Transparent />
+          <Color
+            tabIndex={activeIndex === i ? 0 : -1}
+            color={color}
+            onClick={() => handleOnClick(color)}
+            disabled={disabled}
+            aria-label={
+              isEditMode
+                ? __('Delete color preset', 'web-stories')
+                : __('Apply color preset', 'web-stories')
+            }
+          >
+            {isEditMode && <Remove />}
+          </Color>
+        </ColorWrapper>
+      </WithTooltip>
     );
   };
 
-  const stylePresetRenderer = (style, i, activeIndex) => {
-    return (
-      <Style
-        tabIndex={activeIndex === i || (!activeIndex && i === 0) ? 0 : -1}
-        styles={generatePresetStyle(style, true)}
-        onClick={(e) => {
-          e.preventDefault();
-          handleOnClick(style);
-        }}
-        aria-label={
-          isEditMode
-            ? __('Delete style preset', 'web-stories')
-            : __('Apply style preset', 'web-stories')
-        }
-      >
-        {getStylePresetText(style)}
-        {isEditMode && <Remove />}
-      </Style>
-    );
-  };
-
-  const colorLabel = isText
-    ? __('Text colors', 'web-stories')
-    : __('Colors', 'web-stories');
   return (
     <PanelContent isPrimary padding={hasPresets ? null : '0'}>
-      {hasColorPresets && (
+      {hasPresets && (
         <PresetGroup
-          label={colorLabel}
           itemRenderer={colorPresetRenderer}
-          presets={colorPresets}
+          presets={colors}
           type={'color'}
-        />
-      )}
-      {/* Only texts support style presets currently */}
-      {textStyles.length > 0 && isText && (
-        <PresetGroup
-          label={__('Styles', 'web-stories')}
-          itemRenderer={stylePresetRenderer}
-          presets={textStyles}
-          type={'style'}
         />
       )}
     </PanelContent>
@@ -187,7 +154,7 @@ Presets.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   isText: PropTypes.bool.isRequired,
-  textContent: PropTypes.string,
+  isBackground: PropTypes.bool.isRequired,
 };
 
 export default Presets;

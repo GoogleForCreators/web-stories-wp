@@ -97,6 +97,8 @@ const theme = {
       v11: '#08223A',
       v12: '#F2F2F2',
       v13: '#FFFFFF',
+      v14: '#3E445B',
+      v15: '#212433',
     },
     mg: {
       v1: '#616877',
@@ -181,7 +183,13 @@ const theme = {
       family: 'Roboto',
       weight: 'normal',
       size: '13px',
-      lineHeight: '16px',
+      lineHeight: '18px',
+    },
+    date: {
+      family: 'Roboto',
+      weight: 'normal',
+      size: '13px',
+      lineHeight: '24px',
     },
   },
 };

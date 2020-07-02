@@ -34,6 +34,8 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { AnimationPart, throughput } from '../../animations/parts';
+import { AnimationProps } from '../../animations/parts/types';
+import { clamp } from '../../utils';
 
 const Context = createContext(null);
 
@@ -119,7 +121,10 @@ function Provider({ animations, children, onWAAPIFinish }) {
       WAAPIAnimations.forEach((animation) => {
         const { duration, delay } = animation.effect.timing;
         const animationEndTime = (delay || 0) + (duration || 0);
-        animation.currentTime = time === 'end' ? animationEndTime : time;
+        animation.currentTime =
+          time === 'end'
+            ? animationEndTime
+            : clamp(time, [0, animationEndTime]);
       });
 
     return {
@@ -192,7 +197,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
 }
 
 Provider.propTypes = {
-  animations: PropTypes.arrayOf(PropTypes.object),
+  animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
 };

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -65,24 +66,28 @@ const defaultProps = {
 };
 
 export default {
-  title: 'Dashboard/Components/exploreTemplates/Header',
+  title: 'Dashboard/Views/ExploreTemplates/Header',
   component: Header,
 };
 
 export const _default = () => (
-  <Layout.Provider>
-    <Header {...defaultProps} />
-  </Layout.Provider>
+  <FlagsProvider features={{ enableInProgressTemplateActions: false }}>
+    <Layout.Provider>
+      <Header {...defaultProps} />
+    </Layout.Provider>
+  </FlagsProvider>
 );
 
 export const ActiveSearch = () => (
-  <Layout.Provider>
-    <Header
-      {...defaultProps}
-      search={{
-        ...search,
-        keyword: 'demo search',
-      }}
-    />
-  </Layout.Provider>
+  <FlagsProvider features={{ enableInProgressTemplateActions: true }}>
+    <Layout.Provider>
+      <Header
+        {...defaultProps}
+        search={{
+          ...search,
+          keyword: 'demo search',
+        }}
+      />
+    </Layout.Provider>
+  </FlagsProvider>
 );

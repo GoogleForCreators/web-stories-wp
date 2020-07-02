@@ -44,14 +44,14 @@ class Template_Post_Type {
 	 *
 	 * @return void
 	 */
-	public static function init() {
+	public function init() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
 				'labels'                => [
 					'name'                     => _x( 'Templates', 'post type general name', 'web-stories' ),
 					'singular_name'            => _x( 'Template', 'post type singular name', 'web-stories' ),
-					'add_new'                  => _x( 'New', 'story', 'web-stories' ),
+					'add_new'                  => _x( 'Add New', 'story template', 'web-stories' ),
 					'add_new_item'             => __( 'Add New Template', 'web-stories' ),
 					'edit_item'                => __( 'Edit Template', 'web-stories' ),
 					'new_item'                 => __( 'New Template', 'web-stories' ),
@@ -64,7 +64,7 @@ class Template_Post_Type {
 					'archives'                 => __( 'Template Archives', 'web-stories' ),
 					'attributes'               => __( 'Template Attributes', 'web-stories' ),
 					'insert_into_item'         => __( 'Insert into template', 'web-stories' ),
-					'uploaded_to_this_item'    => __( 'Uploaded to this story', 'web-stories' ),
+					'uploaded_to_this_item'    => __( 'Uploaded to this template', 'web-stories' ),
 					'featured_image'           => __( 'Featured Image', 'web-stories' ),
 					'set_featured_image'       => __( 'Set featured image', 'web-stories' ),
 					'remove_featured_image'    => __( 'Remove featured image', 'web-stories' ),

@@ -27,7 +27,7 @@ import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
 import getFontDeclarations from './utils/getFontDeclarations';
-import { OutputPage } from './';
+import OutputPage from './page';
 
 function OutputStory({
   story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },
@@ -36,6 +36,7 @@ function OutputStory({
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const fontDeclarations = getFontDeclarations(pages);
+
   return (
     <html amp="" lang="en">
       <head>
@@ -54,6 +55,7 @@ function OutputStory({
         <CustomCSS />
         {/* Everything between these markers can be replaced server-side. */}
         <meta name="web-stories-replace-head-start" />
+        <title>{title}</title>
         <link rel="canonical" href={link} />
         <meta name="web-stories-replace-head-end" />
       </head>

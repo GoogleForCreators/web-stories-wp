@@ -17,24 +17,24 @@
 /**
  * Internal dependencies
  */
-import { memoize } from '../utils';
-import beauty from './raw/beauty.json';
-import cooking from './raw/cooking.json';
-import diy from './raw/diy.json';
-import entertainment from './raw/entertainment.json';
-import fashion from './raw/fashion.json';
-import fitness from './raw/fitness.json';
-import travel from './raw/travel.json';
-import wellbeing from './raw/wellbeing.json';
+import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
+import beauty from './raw/beauty';
+import cooking from './raw/cooking';
+import diy from './raw/diy';
+import entertainment from './raw/entertainment';
+import fashion from './raw/fashion';
+import fitness from './raw/fitness';
+import travel from './raw/travel';
+import wellbeing from './raw/wellbeing';
 
 export function getImageFile(url) {
   const file = (url || '').split('/').slice(-1).join('');
-  /** removes `-x` in some_file-x.jpg */
+  /* removes `-x` in some_file-x.jpg */
   return file.replace(/-\d+(?=.\w{3,4}$)/g, '');
 }
 
 export function loadTemplate(title, data, imageBaseUrl) {
-  return {
+  const template = {
     ...data,
     pages: (data.pages || []).map((page) => ({
       ...page,
@@ -43,7 +43,7 @@ export function loadTemplate(title, data, imageBaseUrl) {
           elem.resource.sizes = [];
         }
         if (elem.resource && elem.resource.src) {
-          elem.resource.src = `${imageBaseUrl}/images/templates/${title}/${getImageFile(
+          elem.resource.src = `${imageBaseUrl}images/templates/${title}/${getImageFile(
             elem.resource.src
           )}`;
         }
@@ -51,6 +51,13 @@ export function loadTemplate(title, data, imageBaseUrl) {
       }),
     })),
   };
+
+  const migratedTemplate = {
+    ...migrate(template, template.version),
+    version: DATA_VERSION,
+  };
+
+  return migratedTemplate;
 }
 
 export function loadTemplates(imageBaseUrl) {
@@ -72,4 +79,4 @@ export function loadTemplates(imageBaseUrl) {
   );
 }
 
-export default memoize(loadTemplates);
+export default loadTemplates;

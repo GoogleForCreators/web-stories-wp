@@ -28,14 +28,19 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import Link from '../../link';
 import { Row, TextInput, HelperText } from '../../form';
 import { useStory } from '../../../app/story';
 import { SimplePanel } from '../../panels/panel';
 import cleanForSlug from '../../../utils/cleanForSlug';
+import inRange from '../../../utils/inRange';
 
-const Permalink = styled.a`
-  color: ${({ theme }) => theme.colors.link};
-`;
+export const MIN_MAX = {
+  PERMALINK: {
+    MIN: 1,
+    MAX: 200,
+  },
+};
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -47,25 +52,30 @@ const BoxedTextInput = styled(TextInput)`
 `;
 
 function SlugPanel() {
-  const {
-    state: {
-      story: { slug, link, permalinkConfig },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { slug, link, permalinkConfig, updateStory } = useStory(
+    ({
+      state: {
+        story: { slug, link, permalinkConfig },
+      },
+      actions: { updateStory },
+    }) => ({ slug, link, permalinkConfig, updateStory })
+  );
   const handleChangeValue = useCallback(
     (value) => {
+      const newSlug = value.slice(0, MIN_MAX.PERMALINK.MAX);
+
       updateStory({
-        properties: { slug: cleanForSlug(value) },
+        properties: { slug: cleanForSlug(newSlug) },
       });
     },
     [updateStory]
   );
 
   const displayLink =
-    slug && permalinkConfig
+    slug && permalinkConfig && inRange(slug.length, MIN_MAX.PERMALINK)
       ? permalinkConfig.prefix + slug + permalinkConfig.suffix
       : link;
+
   return (
     <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
       <Row>
@@ -75,12 +85,14 @@ function SlugPanel() {
           onChange={handleChangeValue}
           placeholder={__('Enter slug', 'web-stories')}
           aria-label={__('Edit: URL slug', 'web-stories')}
+          minLength={MIN_MAX.PERMALINK.MIN}
+          maxLength={MIN_MAX.PERMALINK.MAX}
         />
       </Row>
       <HelperText>
-        <Permalink rel="noopener noreferrer" target="_blank" href={link}>
+        <Link rel="noopener noreferrer" target="_blank" href={link}>
           {displayLink}
-        </Permalink>
+        </Link>
       </HelperText>
     </SimplePanel>
   );

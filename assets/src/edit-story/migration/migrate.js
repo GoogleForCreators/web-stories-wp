@@ -17,27 +17,31 @@
 /**
  * Internal dependencies
  */
-import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject.js';
-import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080.js';
-import fullbleedToFill from './migrations/v0003_fullbleedToFill.js';
-import squareToShape from './migrations/v0004_squareToShape.js';
-import mediaElementToResource from './migrations/v0004_mediaElementToResource.js';
-import setOpacity from './migrations/v0005_setOpacity.js';
-import colorToPattern from './migrations/v0006_colorToPattern.js';
-import setFlip from './migrations/v0007_setFlip.js';
-import paddingToObject from './migrations/v0008_paddingToObject.js';
-import defaultBackground from './migrations/v0009_defaultBackground.js';
-import dataPixelTo440 from './migrations/v0010_dataPixelTo440.js';
-import pageAdvancement from './migrations/v0011_pageAdvancement.js';
-import setBackgroundTextMode from './migrations/v0012_setBackgroundTextMode.js';
-import videoIdToId from './migrations/v0013_videoIdToId.js';
-import oneTapLinkDeprecate from './migrations/v0014_oneTapLinkDeprecate.js';
-import fontObjects from './migrations/v0015_fontObjects.js';
-import isFullBleedDeprecate from './migrations/v0016_isFullbleedDeprecate.js';
-import inlineTextProperties from './migrations/v0017_inlineTextProperties.js';
-import defaultBackgroundElement from './migrations/v0018_defaultBackgroundElement.js';
-import conicToLinear from './migrations/v0019_conicToLinear.js';
-import isFillDeprecate from './migrations/v0020_isFillDeprecate.js';
+import storyDataArrayToObject from './migrations/v0001_storyDataArrayToObject';
+import dataPixelTo1080 from './migrations/v0002_dataPixelTo1080';
+import fullbleedToFill from './migrations/v0003_fullbleedToFill';
+import squareToShape from './migrations/v0004_squareToShape';
+import mediaElementToResource from './migrations/v0004_mediaElementToResource';
+import setOpacity from './migrations/v0005_setOpacity';
+import colorToPattern from './migrations/v0006_colorToPattern';
+import setFlip from './migrations/v0007_setFlip';
+import paddingToObject from './migrations/v0008_paddingToObject';
+import defaultBackground from './migrations/v0009_defaultBackground';
+import dataPixelTo440 from './migrations/v0010_dataPixelTo440';
+import pageAdvancement from './migrations/v0011_pageAdvancement';
+import setBackgroundTextMode from './migrations/v0012_setBackgroundTextMode';
+import videoIdToId from './migrations/v0013_videoIdToId';
+import oneTapLinkDeprecate from './migrations/v0014_oneTapLinkDeprecate';
+import fontObjects from './migrations/v0015_fontObjects';
+import isFullBleedDeprecate from './migrations/v0016_isFullbleedDeprecate';
+import inlineTextProperties from './migrations/v0017_inlineTextProperties';
+import defaultBackgroundElement from './migrations/v0018_defaultBackgroundElement';
+import conicToLinear from './migrations/v0019_conicToLinear';
+import isFillDeprecate from './migrations/v0020_isFillDeprecate';
+import backgroundColorToPage from './migrations/v0021_backgroundColorToPage';
+import dataPixelTo412 from './migrations/v0022_dataPixelTo412';
+import convertOverlayPattern from './migrations/v0023_convertOverlayPattern';
+import blobsToSingleBlob from './migrations/v0024_blobsToSingleBlob';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -60,6 +64,10 @@ const MIGRATIONS = {
   18: [defaultBackgroundElement],
   19: [conicToLinear],
   20: [isFillDeprecate],
+  21: [backgroundColorToPage],
+  22: [dataPixelTo412],
+  23: [convertOverlayPattern],
+  24: [blobsToSingleBlob],
 };
 
 export const DATA_VERSION = Math.max.apply(

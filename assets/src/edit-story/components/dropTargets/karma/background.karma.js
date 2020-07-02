@@ -34,17 +34,15 @@ describe('Background Drop-Target integration', () => {
   });
 
   describe('when there is nothing on the canvas', () => {
-    it('should by default have white background', async () => {
+    it('should by default have transparent background', async () => {
       const bgElement = await getCanvasBackgroundElement(fixture);
       // Verify that it's empty
       expect(bgElement).toBeEmpty();
-      // And that background color is white:
-      expect(bgElement).toHaveStyle('backgroundColor', 'rgb(255, 255, 255)');
+      // And that background color is transparent:
+      expect(bgElement).toHaveStyle('backgroundColor', 'rgba(0, 0, 0, 0)');
     });
 
-    // Disable reason: For unknown reasons this (dragging from library) doesn't
-    // work in the regular runner, only in debug runner.
-    xit('should correctly handle image dragged from library straight to edge', async () => {
+    it('should correctly handle image dragged from library straight to edge', async () => {
       const backgroundId = await getBackgroundElementId(fixture);
 
       // Verify that bg replacement is empty
@@ -159,9 +157,7 @@ describe('Background Drop-Target integration', () => {
       bgImageData = elements[0];
     });
 
-    // Disable reason: For unknown reasons this (dragging from library) doesn't
-    // work in the regular runner, only in debug runner.
-    xit('should correctly handle image dragged from library straight to edge replacing old image', async () => {
+    it('should correctly handle image dragged from library straight to edge replacing old image', async () => {
       const backgroundId = await getBackgroundElementId(fixture);
 
       // Verify that background element has the correct image before doing anything
@@ -316,8 +312,6 @@ describe('Background Drop-Target integration', () => {
           // Now drop the element
           await fixture.events.mouse.up();
 
-          //await karmaPause();
-
           // Verify that new background is not flipped
           const bg2 = await getCanvasBackgroundElementWrapper(fixture);
           const bgImg2 = bg2.querySelector('img');
@@ -456,24 +450,10 @@ async function dragToDropTarget(fixture, from, toId) {
   const toRect = to.getBoundingClientRect();
 
   // Schedule a sequence of events by dragging from center of image to edge of bg
-  await fixture.events.mouse.seq([
-    {
-      type: 'move',
-      x: fromRect.x + fromRect.width / 2,
-      y: fromRect.y + fromRect.height / 2,
-    },
-    {
-      type: 'down',
-    },
-    {
-      type: 'move',
-      x: toRect.x + 3,
-      y: toRect.y + 103,
-      // I don't know why it needs this many steps.
-      // I tried 2, I tried moving it one pixel first
-      // and then all the way, but neither works. 10 does
-      options: { steps: 12 },
-    },
+  await fixture.events.mouse.seq(({ move, down }) => [
+    move(fromRect.x + fromRect.width / 2, fromRect.y + fromRect.height / 2),
+    down(),
+    move(toRect.x + 3, toRect.y + 103, { steps: 5 }),
   ]);
 }
 
@@ -530,7 +510,7 @@ function getCanvasElementWrapperById(fixture, id) {
   return fixture.querySelector(`[data-element-id="${id}"]`);
 }
 
-async function getBackgroundElementId(fixture) {
+export async function getBackgroundElementId(fixture) {
   const {
     state: {
       currentPage: {

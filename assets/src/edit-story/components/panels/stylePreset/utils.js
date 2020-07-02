@@ -22,16 +22,11 @@ import convertToCSS from '../../../utils/convertToCSS';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
-import createSolid from '../../../utils/createSolid';
-import objectPick from '../../../utils/objectPick';
 import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 export function findMatchingColor(color, stylePresets, isText) {
-  const colorsToMatch = isText
-    ? stylePresets.textColors
-    : stylePresets.fillColors;
+  const colorsToMatch = stylePresets.colors;
   const patternType = isText ? 'color' : 'background';
   return colorsToMatch.find((value) =>
     isPatternEqual(value, color, patternType)
@@ -63,47 +58,21 @@ export function generatePresetStyle(preset, prepareForCSS) {
   return style;
 }
 
-function hasStylePreset({ font, backgroundTextMode }) {
-  const { family } = font;
-  return (
-    TEXT_ELEMENT_DEFAULT_FONT.family !== family ||
-    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
-  );
-}
-
 export function getTextPresets(elements, stylePresets) {
   // @todo Fix: Currently when two selected elements have the same attributes, two presets are added.
   return {
-    textColors: elements
-      .filter((text) => !hasStylePreset(text))
+    colors: elements
       .map(({ content }) => getHTMLInfo(content).color)
       .filter((color) => color !== MULTIPLE_VALUE)
-      .filter((color) => !findMatchingColor(color, stylePresets, true)),
-    textStyles: elements
-      .filter((text) => hasStylePreset(text))
-      .map((text) => {
-        const extractedColor = getHTMLInfo(text.content).color;
-        const color =
-          extractedColor === MULTIPLE_VALUE
-            ? createSolid(0, 0, 0)
-            : extractedColor;
-        return {
-          color,
-          ...objectPick(text, [
-            'backgroundColor',
-            'backgroundTextMode',
-            'font',
-          ]),
-        };
-      })
-      .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
+      .filter(
+        (color) => color && !findMatchingColor(color, stylePresets, true)
+      ),
   };
 }
 
 export function getShapePresets(elements, stylePresets) {
-  // Shapes only support fillColors currently.
   return {
-    fillColors: elements
+    colors: elements
       .map(({ backgroundColor }) => {
         return backgroundColor ? backgroundColor : null;
       })
@@ -111,4 +80,35 @@ export function getShapePresets(elements, stylePresets) {
         (color) => color && !findMatchingColor(color, stylePresets, false)
       ),
   };
+}
+
+export function getPagePreset(page, stylePresets) {
+  return {
+    colors: [page.backgroundColor].filter(
+      (color) => color && !findMatchingColor(color, stylePresets, false)
+    ),
+  };
+}
+
+function colorHasTransparency(color) {
+  return color.a !== undefined && color.a < 1;
+}
+
+export function presetHasOpacity(preset) {
+  const { color, stops } = preset;
+  if (color) {
+    return Boolean(colorHasTransparency(color));
+  }
+  let opacityFound = false;
+  for (const colorStop of stops) {
+    if (colorHasTransparency(colorStop.color)) {
+      opacityFound = true;
+      break;
+    }
+  }
+  return opacityFound;
+}
+
+export function presetHasGradient({ type }) {
+  return Boolean(type) && 'solid' !== type;
 }

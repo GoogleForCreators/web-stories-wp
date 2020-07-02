@@ -249,17 +249,23 @@
       "files": [
         "**/karma/**/*.js"
       ],
+      "extends": [
+        "plugin:jasmine/recommended"
+      ],
       "plugins": [
         "jsx-a11y",
         "header",
-        "testing-library"
+        "testing-library",
+        "jasmine"
       ],
       "env": {
         "jasmine": true
       },
       "rules": {
         "testing-library/no-debug": "error",
-        "testing-library/no-dom-import": "error"
+        "testing-library/no-dom-import": "error",
+        "jasmine/new-line-before-expect": "off",
+        "jasmine/no-disabled-tests": "error"
       },
       "globals": {
         "karmaPuppeteer": "readonly",
@@ -294,13 +300,15 @@
         "bin/**/*.js",
         "babel.config.cjs",
         "jest-puppeteer.config.cjs",
-        "karma.config.cjs",
+        "karma-*.config.cjs",
         "webpack.*.cjs",
         ".storybook/*.cjs",
         ".storybook/*.js",
         "tests/js/*.js",
         "tests/e2e/*.js",
-        "tests/e2e/config/*.js"
+        "tests/e2e/config/*.js",
+        "assets/src/dashboard/karma-tests.cjs",
+        "assets/src/edit-story/karma-tests.cjs"
       ],
       "env": {
         "node": true

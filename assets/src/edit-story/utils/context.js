@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { shallowEqual } from 'react-pure-render';
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import { useContextSelector as useContextSelectorOrig } from 'use-context-selector';
 
 export { createContext, useContext } from 'use-context-selector';
@@ -45,17 +45,14 @@ export const useContextSelector = (
 ) => {
   const ref = useRef();
 
-  const equalityFnCallback = useCallback(
-    (state) => {
-      const selected = selector(state);
-      if (equalityFn(ref.current, selected)) {
-        return ref.current;
-      }
-      ref.current = selected;
-      return selected;
-    },
-    [selector, equalityFn]
-  );
+  const equalityFnCallback = (state) => {
+    const selected = selector(state);
+    if (equalityFn(ref.current, selected)) {
+      return ref.current;
+    }
+    ref.current = selected;
+    return selected;
+  };
 
   // Update the selector fn to memoize the selected value by [equalityFn].
   const patchedSelector = equalityFn ? equalityFnCallback : selector;

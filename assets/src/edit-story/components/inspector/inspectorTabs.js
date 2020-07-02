@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -39,7 +40,7 @@ const Tabs = styled.ul.attrs({
   background-color: ${({ theme }) => theme.colors.bg.v4};
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: start;
   height: ${TABS_HEIGHT}px;
   margin: 0;
   padding: 0;
@@ -64,6 +65,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   font-weight: ${({ theme }) => theme.fonts.tab.weight};
   word-break: break-word;
   opacity: 0.84;
+  padding: 0 20px;
 
   ${({ isActive }) =>
     !isActive &&
@@ -87,11 +89,17 @@ function InspectorTabs() {
       tabs: { DESIGN, DOCUMENT, PREPUBLISH },
     },
   } = useInspector();
+  const { showPrePublishTab } = useFeatures();
+
   const tabs = [
     [DESIGN, __('Design', 'web-stories')],
     [DOCUMENT, __('Document', 'web-stories')],
-    [PREPUBLISH, __('Prepublish', 'web-stories')],
   ];
+
+  if (showPrePublishTab) {
+    tabs.push([PREPUBLISH, __('Prepublish', 'web-stories')]);
+  }
+
   return (
     <Tabs>
       {tabs.map(([id, Text]) => (

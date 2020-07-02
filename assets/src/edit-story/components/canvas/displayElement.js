@@ -34,14 +34,14 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../transform';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
-import { generateOverlayStyles } from '../../utils/backgroundOverlay';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import StoryAnimation from '../../../dashboard/components/storyAnimation';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
   ${elementWithRotation}
-  contain: layout paint;
+  contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 `;
 
@@ -74,14 +74,16 @@ AnimationWrapper.propTypes = {
   id: PropTypes.string,
 };
 
-function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
-  const {
-    actions: { getBox },
-  } = useUnits();
+function DisplayElement({ element, previewMode, isAnimatable = false }) {
+  const { getBox } = useUnits((state) => ({
+    getBox: state.actions.getBox,
+  }));
 
   const [replacement, setReplacement] = useState(null);
 
-  const replacementElement = replacement
+  const hasReplacement = Boolean(replacement);
+
+  const replacementElement = hasReplacement
     ? {
         ...element,
         type: replacement.resource.type,
@@ -93,7 +95,7 @@ function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
       }
     : null;
 
-  const { id, opacity, type, isBackground } = element;
+  const { id, opacity, type, isBackground, backgroundOverlay } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.resource.type) || {};
@@ -132,7 +134,7 @@ function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
           fill={true}
           box={box}
           style={{
-            opacity: opacity ? opacity / 100 : null,
+            opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
           }}
           previewMode={previewMode}
         >
@@ -155,10 +157,8 @@ function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
             )}
           </ReplacementContainer>
         )}
-        {Boolean(isBackground) && Boolean(page?.backgroundOverlay) && (
-          <BackgroundOverlay
-            style={generateOverlayStyles(page?.backgroundOverlay)}
-          />
+        {isBackground && backgroundOverlay && !hasReplacement && (
+          <BackgroundOverlay style={generatePatternStyles(backgroundOverlay)} />
         )}
       </AnimationWrapper>
     </Wrapper>
@@ -168,7 +168,6 @@ function DisplayElement({ element, previewMode, page, isAnimatable = false }) {
 DisplayElement.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.element.isRequired,
-  page: StoryPropTypes.page,
   isAnimatable: PropTypes.bool,
 };
 

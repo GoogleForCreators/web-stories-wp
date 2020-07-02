@@ -21,57 +21,71 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH } from '../../../../constants';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 import { dataFontEm } from '../../../../units';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 // By default, the element should be 50% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+// @todo Once none of the elements are placed randomly, default x can be moved to text/index.js
+const DEFAULT_LEFT_MARGIN = 40;
 
 const DEFAULT_PRESET = {
-  id: 'default-text',
-  content: `<span style="font-weight: 400">${__(
-    'Fill in some text',
-    'web-stories'
-  )}</span>`,
-  fontSize: dataFontEm(1),
+  content: __('Fill in some text', 'web-stories'),
+  fontSize: dataFontEm(1.2),
+  lineHeight: 1.5,
+  x: DEFAULT_LEFT_MARGIN,
+  y: (PAGE_HEIGHT - dataFontEm(1.2)) / 2,
   font: TEXT_ELEMENT_DEFAULT_FONT,
-  width: 160, // Approximately spans the text inside it.
+  width: 160,
+  textAlign: 'center',
 };
 
 const PRESETS = [
   {
-    id: 'heading',
     title: __('Heading', 'web-stories'),
-    content: `<span style="font-weight: 700">${__(
-      'Heading',
-      'web-stories'
-    )}</span>`,
-    fontSize: dataFontEm(2),
-    font: TEXT_ELEMENT_DEFAULT_FONT,
-    width: DEFAULT_ELEMENT_WIDTH,
+    element: {
+      content: `<span style="font-weight: 700">${__(
+        'Heading',
+        'web-stories'
+      )}</span>`,
+      fontSize: dataFontEm(2),
+      lineHeight: 1.5,
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
   },
   {
-    id: 'subheading',
     title: __('Subheading', 'web-stories'),
-    content: `<span style="font-weight: 600">${__(
-      'Subheading',
-      'web-stories'
-    )}</span>`,
-    fontSize: dataFontEm(1.5),
-    font: TEXT_ELEMENT_DEFAULT_FONT,
-    width: DEFAULT_ELEMENT_WIDTH,
+    element: {
+      content: `<span style="font-weight: 500">${__(
+        'Subheading',
+        'web-stories'
+      )}</span>`,
+      fontSize: dataFontEm(1.5),
+      lineHeight: 1.5,
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
   },
   {
-    id: 'body-text',
     title: __('Body text', 'web-stories'),
-    content: __(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      'web-stories'
-    ),
-    fontSize: dataFontEm(1.1),
-    font: TEXT_ELEMENT_DEFAULT_FONT,
-    width: DEFAULT_ELEMENT_WIDTH,
+    element: {
+      content: __(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'web-stories'
+      ),
+      fontSize: dataFontEm(1.2),
+      lineHeight: 1.5,
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(1.2)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
   },
 ];
 

@@ -25,9 +25,12 @@ import styled from 'styled-components';
  */
 import { Layout } from '../../../../../components';
 import { VIEW_STYLE } from '../../../../../constants';
+import {
+  STORYBOOK_PAGE_SIZE,
+  formattedTemplatesArray,
+} from '../../../../../storybookUtils';
 import { usePagePreviewSize } from '../../../../../utils';
 import Content from '../index';
-import formattedTemplatesArray from '../../../../../storybookUtils/formattedTemplatesArray';
 
 const search = {
   keyword: '',
@@ -35,7 +38,7 @@ const search = {
 };
 const view = {
   style: VIEW_STYLE.GRID,
-  pageSize: { width: 210, height: 316 },
+  pageSize: STORYBOOK_PAGE_SIZE,
 };
 const page = {
   value: 1,
@@ -43,6 +46,9 @@ const page = {
   requestNextPage: action('request next page clicked'),
 };
 
+const templateActions = {
+  createStoryFromTemplate: action('create story from template clicked'),
+};
 const defaultProps = {
   allPagesFetched: false,
   isLoading: false,
@@ -51,6 +57,7 @@ const defaultProps = {
   templates: formattedTemplatesArray,
   view: view,
   totalTemplates: 3,
+  templateActions,
 };
 
 const StorybookLayoutContainer = styled.div`
@@ -59,7 +66,7 @@ const StorybookLayoutContainer = styled.div`
 `;
 
 export default {
-  title: 'Dashboard/Components/exploreTemplates/Content',
+  title: 'Dashboard/Views/ExploreTemplates/Content',
   component: Content,
 };
 export const _default = () => {

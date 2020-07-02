@@ -167,6 +167,8 @@ function DropDownList({
     handleUpDown,
     [handleUpDown]
   );
+  // Empty handler to be consistent with up/down.
+  useKeyDownEffect(listContainerRef, ['left', 'right'], () => {}, []);
   useKeyDownEffect(
     listContainerRef,
     { key: availableKeysForSearch, shift: true },

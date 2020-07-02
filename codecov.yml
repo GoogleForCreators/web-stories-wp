@@ -25,9 +25,33 @@ coverage:
         paths:
           - assets/src/dashboard
 
+      dashboard.unit:
+        paths:
+          - assets/src/dashboard
+        flags:
+          - unittests
+
+      dashboard.karma:
+        paths:
+          - assets/src/dashboard
+        flags:
+          - karmatests
+
       editor:
         paths:
           - assets/src/edit-story
+
+      editor.unit:
+        paths:
+          - assets/src/edit-story
+        flags:
+          - unittests
+
+      editor.karma:
+        paths:
+          - assets/src/edit-story
+        flags:
+          - karmatests
 
     # Patch-level coverage (how well is the PR tested)
     patch:
@@ -49,3 +73,11 @@ comment:
   require_changes: true
   branches:
     - 'master'
+
+# See https://docs.codecov.io/docs/ignoring-paths
+ignore:
+  - bin/commander.js
+  - web-stories.php
+  - uninstall.php
+  - includes/namespace.php
+  - includes/templates

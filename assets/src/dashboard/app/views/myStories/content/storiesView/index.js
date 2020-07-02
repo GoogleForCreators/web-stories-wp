@@ -23,7 +23,8 @@ import { __, sprintf } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -37,13 +38,17 @@ import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
+import { Button, Dialog } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
+  STORY_CONTEXT_MENU_ITEMS,
+  BUTTON_TYPES,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
 
+const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
   filterValue,
   sort,
@@ -51,9 +56,24 @@ function StoriesView({
   stories,
   users,
   view,
+  dateFormat,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
+  const enableInProgressStoryActions = useFeature(
+    'enableInProgressStoryActions'
+  );
+  const [activeDialog, setActiveDialog] = useState('');
+  const [activeStory, setActiveStory] = useState(null);
+
+  const isActiveDeleteStoryDialog =
+    activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
+
+  useEffect(() => {
+    if (!activeDialog) {
+      setActiveStory(null);
+    }
+  }, [activeDialog, setActiveStory]);
 
   const handleOnRenameStory = useCallback(
     (story, newTitle) => {
@@ -83,17 +103,8 @@ function StoriesView({
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-          if (
-            window.confirm(
-              sprintf(
-                /* translators: %s: story title. */
-                __('Are you sure you want to delete "%s"?', 'web-stories'),
-                story.title
-              )
-            )
-          ) {
-            storyActions.trashStory(story);
-          }
+          setActiveStory(story);
+          setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
           break;
 
         default:
@@ -103,13 +114,26 @@ function StoriesView({
     [storyActions]
   );
 
+  const enabledMenuItems = useMemo(() => {
+    if (enableInProgressStoryActions) {
+      return STORY_CONTEXT_MENU_ITEMS;
+    }
+    return STORY_CONTEXT_MENU_ITEMS.filter((item) => !item.inProgress);
+  }, [enableInProgressStoryActions]);
+
   const storyMenu = useMemo(() => {
     return {
       handleMenuToggle: setContextMenuId,
       contextMenuId,
       handleMenuItemSelected,
+      menuItems: enabledMenuItems,
     };
-  }, [setContextMenuId, contextMenuId, handleMenuItemSelected]);
+  }, [
+    setContextMenuId,
+    contextMenuId,
+    handleMenuItemSelected,
+    enabledMenuItems,
+  ]);
 
   const renameStory = useMemo(() => {
     return {
@@ -119,28 +143,73 @@ function StoriesView({
     };
   }, [handleOnRenameStory, setTitleRenameId, titleRenameId]);
 
-  return view.style === VIEW_STYLE.LIST ? (
-    <StoryListView
-      handleSortChange={sort.set}
-      handleSortDirectionChange={sort.setDirection}
-      renameStory={renameStory}
-      sortDirection={sort.direction}
-      stories={stories}
-      storyMenu={storyMenu}
-      storySort={sort.value}
-      storyStatus={filterValue}
-      users={users}
-    />
-  ) : (
-    <StoryGridView
-      bottomActionLabel={__('Open in editor', 'web-stories')}
-      centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
-      pageSize={view.pageSize}
-      renameStory={renameStory}
-      storyMenu={storyMenu}
-      stories={stories}
-      users={users}
-    />
+  const ActiveView =
+    view.style === VIEW_STYLE.LIST ? (
+      <StoryListView
+        handleSortChange={sort.set}
+        handleSortDirectionChange={sort.setDirection}
+        pageSize={view.pageSize}
+        renameStory={renameStory}
+        sortDirection={sort.direction}
+        stories={stories}
+        storyMenu={storyMenu}
+        storySort={sort.value}
+        storyStatus={filterValue}
+        users={users}
+        dateFormat={dateFormat}
+      />
+    ) : (
+      <StoryGridView
+        bottomActionLabel={__('Open in editor', 'web-stories')}
+        centerActionLabelByStatus={
+          enableInProgressStoryActions && STORY_ITEM_CENTER_ACTION_LABELS
+        }
+        pageSize={view.pageSize}
+        renameStory={renameStory}
+        storyMenu={storyMenu}
+        stories={stories}
+        users={users}
+        dateFormat={dateFormat}
+      />
+    );
+
+  return (
+    <>
+      {ActiveView}
+      {isActiveDeleteStoryDialog && (
+        <Dialog
+          isOpen={true}
+          contentLabel={__('Dialog to confirm deleting a story', 'web-stories')}
+          title={__('Delete Story', 'web-stories')}
+          onClose={() => setActiveDialog('')}
+          actions={
+            <>
+              <Button
+                type={BUTTON_TYPES.DEFAULT}
+                onClick={() => setActiveDialog('')}
+              >
+                {__('Cancel', 'web-stories')}
+              </Button>
+              <Button
+                type={BUTTON_TYPES.CTA}
+                onClick={() => {
+                  storyActions.trashStory(activeStory);
+                  setActiveDialog('');
+                }}
+              >
+                {__('Delete', 'web-stories')}
+              </Button>
+            </>
+          }
+        >
+          {sprintf(
+            /* translators: %s: story title. */
+            __('Are you sure you want to delete "%s"?', 'web-stories'),
+            activeStory.title
+          )}
+        </Dialog>
+      )}
+    </>
   );
 }
 
@@ -151,5 +220,6 @@ StoriesView.propTypes = {
   stories: StoriesPropType,
   users: UsersPropType,
   view: ViewPropTypes,
+  dateFormat: PropTypes.string,
 };
 export default StoriesView;

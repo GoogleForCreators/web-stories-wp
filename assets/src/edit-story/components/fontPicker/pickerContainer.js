@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useDebouncedCallback } from 'use-debounce/lib';
 import useFocusOut from '../../utils/useFocusOut';
 import { ReactComponent as Checkmark } from '../../icons/checkmark.svg';
 import { useFont } from '../../app/font';
@@ -42,11 +43,11 @@ const PickerContainer = styled.div`
   width: 100%;
   min-width: 160px;
   max-height: 355px;
+  box-shadow: 0px 8px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.15)};
   overflow: hidden;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.v14};
   background-clip: padding-box;
-  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.v0, 0.175)};
   padding: 0;
 `;
 
@@ -58,6 +59,23 @@ const List = styled(ScrollList)`
   font-size: 14px;
   text-align: left;
   list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: transparent ${({ theme }) => rgba(theme.colors.bg.v1, 0.38)};
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 8px;
+    background-color: ${({ theme }) => rgba(theme.colors.bg.v1, 0.38)};
+  }
 `;
 
 const Divider = styled.hr`
@@ -66,6 +84,30 @@ const Divider = styled.hr`
   background: transparent;
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
   border-width: 1px 0 0;
+`;
+
+const SearchInput = styled.input.attrs({
+  type: 'search',
+  role: 'combobox',
+  ['aria-autocomplete']: 'list',
+  ['aria-owns']: 'editor-font-picker-list',
+})`
+  margin: 1px 1px 0;
+  padding: 6px 12px 6px 26px;
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: ${({ theme }) => theme.colors.bg.v15};
+  border: none;
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-size: ${({ theme }) => theme.fonts.input.size};
+  line-height: ${({ theme }) => theme.fonts.input.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.input.weight};
+  font-family: ${({ theme }) => theme.fonts.input.family};
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.selection};
+  }
 `;
 
 const Item = styled.div.attrs(({ fontFamily }) => ({
@@ -78,14 +120,16 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
+  color: ${({ theme }) => theme.colors.fg.v1};
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
   position: relative;
+  cursor: pointer;
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme.colors.bg.v12};
+    background-color: ${({ theme }) => theme.colors.bg.v15};
     outline: none;
   }
 `;
@@ -100,42 +144,95 @@ const Selected = styled(Checkmark)`
 
 const NoResult = styled.span`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
-  padding: 8px 12px 0 12px;
+  padding: 15px 12px 15px 26px;
   margin: 0;
   font-style: italic;
-  color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.54)};
+  color: ${({ theme }) => theme.colors.fg.v1};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 `;
 
-function FontPickerContainer({ value, onSelect, onClose }) {
+function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const {
     state: { fonts },
     actions: { ensureMenuFontsLoaded },
   } = useFont();
 
   const ref = useRef();
+  const inputRef = useRef();
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [matchingFonts, setMatchingFonts] = useState(fonts);
+
+  useEffect(() => {
+    if (isOpen) {
+      inputRef?.current?.focus();
+    }
+  }, [isOpen]);
 
   const handleScroll = useCallback(
     (startIndex, endIndex) => {
       const startFrom = Math.max(0, startIndex - 2);
-      const endAt = Math.min(fonts.length - 1, endIndex + 2);
-      const visibleFontNames = fonts
+      const endAt = Math.min(matchingFonts.length - 1, endIndex + 2);
+      const visibleFontNames = matchingFonts
         .slice(startFrom, endAt)
         .filter(({ service }) => service === 'fonts.google.com')
         .map(({ name }) => name);
       ensureMenuFontsLoaded(visibleFontNames);
     },
-    [ensureMenuFontsLoaded, fonts]
+    [ensureMenuFontsLoaded, matchingFonts]
   );
 
   useFocusOut(ref, onClose, [onClose]);
 
   // Scroll to offset for current value
-  const currentOffset = fonts.findIndex(({ name }) => name === value);
+  const [currentOffset, setCurrentOffset] = useState(
+    fonts.findIndex(({ name }) => name === value)
+  );
 
-  // This is static for now, but with search and used fonts, this will change later
-  const matchingFonts = fonts;
+  const [updateMatchingFonts] = useDebouncedCallback(
+    () => {
+      if (searchKeyword.trim() === '') {
+        setMatchingFonts(fonts);
+        return;
+      }
+      const _matchingFonts = fonts.filter(({ name }) =>
+        name.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+      setMatchingFonts(_matchingFonts);
+    },
+    250,
+    {},
+    [searchKeyword, fonts]
+  );
+
+  const handleSearchInputChanged = useCallback(
+    ({ target }) => {
+      setSearchKeyword(target.value);
+      updateMatchingFonts();
+    },
+    [updateMatchingFonts]
+  );
+
+  useEffect(() => {
+    if (searchKeyword.trim().length > 0) {
+      setCurrentOffset(-1);
+    }
+  }, [searchKeyword]);
+
+  const handleKeyPress = useCallback(
+    ({ key }) => {
+      if (key === 'Escape') {
+        onClose();
+      } else if (key === 'Enter') {
+        onSelect(matchingFonts[currentOffset].name);
+      } else if (key === 'ArrowUp') {
+        setCurrentOffset(Math.max(0, currentOffset - 1));
+      } else if (key === 'ArrowDown') {
+        setCurrentOffset(Math.min(matchingFonts.length - 1, currentOffset + 1));
+      }
+    },
+    [currentOffset, matchingFonts, onClose, onSelect]
+  );
 
   const itemRenderer = useCallback(
     ({ service, name, hasDivider }) => (
@@ -156,9 +253,19 @@ function FontPickerContainer({ value, onSelect, onClose }) {
   );
 
   return (
-    <PickerContainer ref={ref}>
+    <PickerContainer role="dialog" ref={ref}>
+      <SearchInput
+        ref={inputRef}
+        aria-expanded={Boolean(matchingFonts.length)}
+        value={searchKeyword}
+        onKeyDown={handleKeyPress}
+        placeholder={__('Search', 'web-stories')}
+        onChange={handleSearchInputChanged}
+      />
       {matchingFonts.length ? (
         <List
+          id="editor-font-picker-list"
+          onKeyDown={handleKeyPress}
           items={matchingFonts}
           onScroll={handleScroll}
           itemRenderer={itemRenderer}
@@ -172,6 +279,7 @@ function FontPickerContainer({ value, onSelect, onClose }) {
 }
 
 FontPickerContainer.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,

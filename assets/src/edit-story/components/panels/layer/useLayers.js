@@ -20,9 +20,9 @@
 import { useStory } from '../../../app';
 
 function useLayers() {
-  const {
-    state: { currentPage },
-  } = useStory();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
 
   if (!currentPage) {
     return [];

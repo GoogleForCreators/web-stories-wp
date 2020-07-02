@@ -34,6 +34,7 @@ import {
   UsersPropType,
   RenameStoryPropType,
   StoryMenuPropType,
+  PageSizePropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -60,7 +61,7 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
-import { PAGE_RATIO } from '../../../constants/pageStructure';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
@@ -78,7 +79,7 @@ const PreviewContainer = styled.div`
   position: relative;
   overflow: hidden;
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail / PAGE_RATIO}px;
+  height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   border: ${({ theme }) => theme.storyPreview.border};
@@ -135,6 +136,7 @@ const toggleSortLookup = {
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
+  pageSize,
   renameStory,
   sortDirection,
   stories,
@@ -142,6 +144,7 @@ export default function StoryListView({
   storySort,
   storyStatus,
   users,
+  dateFormat,
 }) {
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
@@ -233,7 +236,7 @@ export default function StoryListView({
               <TablePreviewCell>
                 <PreviewContainer>
                   <PreviewErrorBoundary>
-                    <PreviewPage page={story.pages[0]} />
+                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
                   </PreviewErrorBoundary>
                 </PreviewContainer>
               </TablePreviewCell>
@@ -257,6 +260,7 @@ export default function StoryListView({
                         contextMenuId={storyMenu.contextMenuId}
                         onMenuItemSelected={storyMenu.handleMenuItemSelected}
                         story={story}
+                        menuItems={storyMenu.menuItems}
                         verticalAlign="center"
                       />
                     </>
@@ -264,8 +268,12 @@ export default function StoryListView({
                 </TitleTableCellContainer>
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
-              <TableCell>{getFormattedDisplayDate(story.modified)}</TableCell>
+              <TableCell>
+                {getFormattedDisplayDate(story.created, dateFormat)}
+              </TableCell>
+              <TableCell>
+                {getFormattedDisplayDate(story.modified, dateFormat)}
+              </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
                   {story.status === STORY_STATUS.PUBLISHED &&
@@ -283,6 +291,7 @@ export default function StoryListView({
 StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
+  pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,
   sortDirection: PropTypes.string.isRequired,
   storyMenu: StoryMenuPropType.isRequired,
@@ -290,4 +299,5 @@ StoryListView.propTypes = {
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
   users: UsersPropType.isRequired,
+  dateFormat: PropTypes.string,
 };

@@ -25,19 +25,19 @@ import { useCallback } from 'react';
 import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
-import { useMedia, useStory } from '../../app';
+import { useLocalMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
 import useFocusCanvas from './useFocusCanvas';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 function useInsertElement() {
-  const {
-    actions: { addElement },
-  } = useStory();
-  const {
-    actions: { uploadVideoPoster },
-  } = useMedia();
+  const { addElement } = useStory((state) => ({
+    addElement: state.actions.addElement,
+  }));
+  const { uploadVideoPoster } = useLocalMedia((state) => ({
+    uploadVideoPoster: state.actions.uploadVideoPoster,
+  }));
 
   /**
    * @param {Object} resource The resource to verify/update.
@@ -75,9 +75,9 @@ function useInsertElement() {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
-            videoEl.play();
+            videoEl.play().catch(() => {});
           }
-        }, 0);
+        });
       }
       focusCanvas();
       return element;

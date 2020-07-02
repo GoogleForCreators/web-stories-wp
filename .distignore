@@ -14,6 +14,7 @@ node_modules
 patches
 tests
 .browserslistrc
+.DS_Store
 .distignore
 .editorconfig
 .eslintignore
@@ -39,13 +40,18 @@ composer.json
 composer.lock
 CONTRIBUTING.md
 jest-puppeteer.config.cjs
-karma.config.cjs
+karma-edit-story.config.cjs
+karma-dashboard.config.cjs
 package.json
 package-lock.json
 percy.config.yml
 phpcs.xml
+phpcs.xml.dist
 phpstan.neon.dist
+phpunit.xml
 phpunit.xml.dist
+phpunit-multisite.xml
+phpunit-multisite.xml.dist
 README.md
 webpack.config.cjs
 webpack.config.test.cjs

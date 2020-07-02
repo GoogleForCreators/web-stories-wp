@@ -34,15 +34,14 @@ import {
   Layout,
   StandardViewContentGutter,
 } from '../../../../components';
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 import {
   ViewPropTypes,
   PagePropTypes,
   SearchPropTypes,
 } from '../../../../utils/useTemplateView';
-import { TemplatesPropType } from '../../../../types';
+import { TemplatesPropType, TemplateActionsPropType } from '../../../../types';
 import FontProvider from '../../../font/fontProvider';
-import { StoryGridView } from '../../shared';
+import { TemplateGridView } from '../../shared';
 import EmptyView from './emptyView';
 
 function Content({
@@ -53,23 +52,25 @@ function Content({
   view,
   totalTemplates,
   search,
+  templateActions,
 }) {
   return (
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>
+          <UnitsProvider
+            pageSize={{
+              width: view.pageSize.width,
+              height: view.pageSize.height,
+            }}
+          >
             <StandardViewContentGutter>
               {totalTemplates > 0 ? (
                 <>
-                  <StoryGridView
-                    stories={templates}
-                    centerActionLabelByStatus={
-                      TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
-                    }
-                    bottomActionLabel={__('Use template', 'web-stories')}
-                    isTemplate
+                  <TemplateGridView
+                    templates={templates}
                     pageSize={view.pageSize}
+                    templateActions={templateActions}
                   />
                   <InfiniteScroller
                     canLoadMore={!allPagesFetched}
@@ -99,6 +100,7 @@ Content.propTypes = {
   templates: TemplatesPropType,
   totalTemplates: PropTypes.number,
   search: SearchPropTypes,
+  templateActions: TemplateActionsPropType,
   view: ViewPropTypes,
 };
 export default Content;

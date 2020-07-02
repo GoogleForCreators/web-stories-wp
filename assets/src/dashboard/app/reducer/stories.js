@@ -20,16 +20,22 @@
 import groupBy from '../../utils/groupBy';
 
 export const ACTION_TYPES = {
+  CREATING_STORY_FROM_TEMPLATE: 'creating_story_from_template',
+  CREATE_STORY_FROM_TEMPLATE_SUCCESS: 'create_story_from_template_success',
+  CREATE_STORY_FROM_TEMPLATE_FAILURE: 'create_story_from_template_failure',
   LOADING_STORIES: 'loading_stories',
   FETCH_STORIES_SUCCESS: 'fetch_stories_success',
   FETCH_STORIES_FAILURE: 'fetch_stories_failure',
   UPDATE_STORY: 'update_story',
+  UPDATE_STORY_FAILURE: 'update_story_failure',
   TRASH_STORY: 'trash_story',
+  TRASH_STORY_FAILURE: 'trash_story_failure',
   DUPLICATE_STORY: 'duplicate_story',
+  DUPLICATE_STORY_FAILURE: 'duplicate_story_failure',
 };
 
 export const defaultStoriesState = {
-  isError: false,
+  error: {},
   isLoading: false,
   stories: {},
   storiesOrderById: [],
@@ -39,21 +45,36 @@ export const defaultStoriesState = {
 
 function storyReducer(state, action) {
   switch (action.type) {
-    case ACTION_TYPES.LOADING_STORIES: {
+    case ACTION_TYPES.LOADING_STORIES:
+    case ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE: {
       return {
         ...state,
         isLoading: action.payload,
       };
     }
+
+    case ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE:
     case ACTION_TYPES.FETCH_STORIES_FAILURE:
+    case ACTION_TYPES.UPDATE_STORY_FAILURE:
+    case ACTION_TYPES.TRASH_STORY_FAILURE:
+    case ACTION_TYPES.DUPLICATE_STORY_FAILURE: {
       return {
         ...state,
-        isError: action.payload,
+        error: { ...action.payload, id: Date.now() },
       };
+    }
+
+    case ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS: {
+      return {
+        ...state,
+        error: {},
+      };
+    }
 
     case ACTION_TYPES.UPDATE_STORY:
       return {
         ...state,
+        error: {},
         stories: {
           ...state.stories,
           [action.payload.id]: action.payload,
@@ -63,6 +84,7 @@ function storyReducer(state, action) {
     case ACTION_TYPES.TRASH_STORY:
       return {
         ...state,
+        error: {},
         storiesOrderById: state.storiesOrderById.filter(
           (id) => id !== action.payload.id
         ),
@@ -83,6 +105,7 @@ function storyReducer(state, action) {
     case ACTION_TYPES.DUPLICATE_STORY:
       return {
         ...state,
+        error: {},
         storiesOrderById: [action.payload.id, ...state.storiesOrderById],
         totalStoriesByStatus: {
           ...state.totalStoriesByStatus,
@@ -104,19 +127,11 @@ function storyReducer(state, action) {
           ? fetchedStoriesById
           : [...state.storiesOrderById, ...fetchedStoriesById];
 
-      // we want to make sure that pagination is kept intact regardless of page number.
-      // we are using infinite scroll, not traditional pagination.
-      // this means we need to append our new stories to the bottom of our already existing stories.
-      // when we combine existing stories with the new ones we need to make sure we're not duplicating anything.
-      const uniqueStoryIds = combinedStoryIds.filter(
-        (storyId, index, storyIdsArray) => {
-          return storyIdsArray.indexOf(storyId) === index;
-        }
-      );
+      const uniqueStoryIds = [...new Set(combinedStoryIds)];
 
       return {
         ...state,
-        isError: false,
+        error: {},
         storiesOrderById: uniqueStoryIds,
         stories: { ...state.stories, ...groupBy(action.payload.stories, 'id') },
         totalPages: action.payload.totalPages,

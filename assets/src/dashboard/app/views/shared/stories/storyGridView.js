@@ -24,13 +24,19 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 
+import {
+  formattedStoriesArray,
+  formattedUsersObject,
+  STORYBOOK_PAGE_SIZE,
+} from '../../../../storybookUtils';
+import {
+  STORY_ITEM_CENTER_ACTION_LABELS,
+  STORY_CONTEXT_MENU_ITEMS,
+} from '../../../../constants';
 import StoryGridView from '../storyGridView';
-import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
-import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
-import { STORY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 
 export default {
-  title: 'Dashboard/Components/StoryGridView',
+  title: 'Dashboard/Views/Shared/StoryGridView',
   component: StoryGridView,
 };
 
@@ -44,11 +50,12 @@ export const _default = () => {
       storyMenu={{
         handleMenuToggle: action('handleMenuToggle'),
         contextMenuId: -1,
+        menuItems: STORY_CONTEXT_MENU_ITEMS,
         handleMenuItemSelected: action('handleMenuItemSelected'),
       }}
       isTemplate={boolean('isTemplate')}
       isSavedTemplate={boolean('isSavedTemplate')}
-      pageSize={{ width: 210, height: 316 }}
+      pageSize={STORYBOOK_PAGE_SIZE}
     />
   );
 };

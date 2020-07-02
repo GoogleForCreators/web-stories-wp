@@ -29,6 +29,7 @@ import useStory from '../../../app/story/useStory';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../displayElement';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
 
 export const THUMB_INDICATOR_HEIGHT = 6;
 export const THUMB_INDICATOR_GAP = 4;
@@ -67,19 +68,15 @@ const PreviewWrapper = styled.div`
   position: relative;
   overflow: hidden;
   background-color: white;
-  background-image: linear-gradient(45deg, #999999 25%, transparent 25%),
-    linear-gradient(-45deg, #999999 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #999999 75%),
-    linear-gradient(-45deg, transparent 75%, #999999 75%);
-  background-size: 8px 8px;
-  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  ${({ background }) => generatePatternStyles(background)}
 `;
 
 function PagePreview({ index, ...props }) {
-  const {
-    state: { pages },
-  } = useStory();
+  const { pages } = useStory((state) => ({
+    pages: state.state.pages,
+  }));
   const page = pages[index];
+  const { backgroundColor } = page;
   const { width: thumbWidth, height: thumbHeight } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;
   const height = thumbHeight - THUMB_FRAME_HEIGHT;
@@ -87,7 +84,7 @@ function PagePreview({ index, ...props }) {
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
         <Page {...props}>
-          <PreviewWrapper className="web-stories-content">
+          <PreviewWrapper background={backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
                 key={id}

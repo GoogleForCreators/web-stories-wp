@@ -17,36 +17,52 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
-import stripHTML from '../../../utils/stripHTML';
-import objectWithout from '../../../utils/objectWithout';
 import { Panel } from '../panel';
 import useRichTextFormatting from '../textStyle/useRichTextFormatting';
-import {
-  COLOR_PRESETS_PER_ROW,
-  STYLE_PRESETS_PER_ROW,
-} from '../../../constants';
-import { getShapePresets, getTextPresets } from './utils';
+import { COLOR_PRESETS_PER_ROW } from '../../../constants';
+import { getPagePreset, getShapePresets, getTextPresets } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
 
 function StylePresetPanel() {
   const {
-    state: {
-      selectedElementIds,
-      selectedElements,
-      story: { stylePresets },
-    },
-    actions: { updateStory, updateElementsById },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    selectedElements,
+    stylePresets,
+    updateStory,
+    updateElementsById,
+    updateCurrentPageProperties,
+  } = useStory(
+    ({
+      state: {
+        currentPage,
+        selectedElementIds,
+        selectedElements,
+        story: { stylePresets },
+      },
+      actions: { updateStory, updateElementsById, updateCurrentPageProperties },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        selectedElements,
+        stylePresets,
+        updateStory,
+        updateElementsById,
+        updateCurrentPageProperties,
+      };
+    }
+  );
 
-  const { fillColors, textColors, textStyles } = stylePresets;
+  const { colors } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
   const areAllType = (elType) => {
@@ -58,66 +74,59 @@ function StylePresetPanel() {
 
   const isText = areAllType('text');
   const isShape = areAllType('shape');
+  const isBackground = selectedElements[0].id === currentPage.elements[0].id;
 
   const handleDeletePreset = useCallback(
     (toDelete) => {
       updateStory({
         properties: {
           stylePresets: {
-            textStyles: textStyles.filter((style) => style !== toDelete),
-            fillColors: isText
-              ? fillColors
-              : fillColors.filter((color) => color !== toDelete),
-            textColors: !isText
-              ? textColors
-              : textColors.filter((color) => color !== toDelete),
+            ...stylePresets,
+            colors: colors.filter((color) => color !== toDelete),
           },
         },
       });
     },
-    [textStyles, fillColors, isText, textColors, updateStory]
+    [colors, stylePresets, updateStory]
   );
 
   const handleAddColorPreset = useCallback(
     (evt) => {
       evt.stopPropagation();
       let addedPresets = {
-        fillColors: [],
-        textColors: [],
-        textStyles: [],
+        colors: [],
       };
       if (isText) {
         addedPresets = {
           ...addedPresets,
           ...getTextPresets(selectedElements, stylePresets),
         };
+      } else if (isBackground) {
+        addedPresets = {
+          ...addedPresets,
+          ...getPagePreset(currentPage, stylePresets),
+        };
       } else {
-        // Currently, shape only supports fillColors.
         addedPresets = {
           ...addedPresets,
           ...getShapePresets(selectedElements, stylePresets),
         };
       }
-      if (
-        addedPresets.fillColors?.length > 0 ||
-        addedPresets.textColors?.length > 0 ||
-        addedPresets.textStyles?.length > 0
-      ) {
+      if (addedPresets.colors?.length > 0) {
         updateStory({
           properties: {
             stylePresets: {
-              textStyles: [...textStyles, ...addedPresets.textStyles],
-              fillColors: [...fillColors, ...addedPresets.fillColors],
-              textColors: [...textColors, ...addedPresets.textColors],
+              ...stylePresets,
+              colors: [...colors, ...addedPresets.colors],
             },
           },
         });
       }
     },
     [
-      fillColors,
-      textStyles,
-      textColors,
+      currentPage,
+      isBackground,
+      colors,
       isText,
       selectedElements,
       updateStory,
@@ -147,16 +156,11 @@ function StylePresetPanel() {
   const handleApplyPreset = useCallback(
     (preset) => {
       if (isText) {
-        // @todo Determine this in a better way.
-        // Only style presets have background text mode set.
-        const isStylePreset = preset.backgroundTextMode !== undefined;
-        if (isStylePreset) {
-          extraPropsToAdd.current = objectWithout(preset, ['color']);
-          handleSetColor(preset.color);
-        } else {
-          extraPropsToAdd.current = null;
-          handleSetColor(preset);
-        }
+        handleSetColor(preset);
+      } else if (isBackground) {
+        updateCurrentPageProperties({
+          properties: { backgroundColor: preset },
+        });
       } else {
         updateElementsById({
           elementIds: selectedElementIds,
@@ -164,12 +168,17 @@ function StylePresetPanel() {
         });
       }
     },
-    [isText, handleSetColor, selectedElementIds, updateElementsById]
+    [
+      isBackground,
+      updateCurrentPageProperties,
+      isText,
+      handleSetColor,
+      selectedElementIds,
+      updateElementsById,
+    ]
   );
 
-  const colorPresets = isText ? textColors : fillColors;
-  const hasColorPresets = colorPresets.length > 0;
-  const hasPresets = hasColorPresets || textStyles.length > 0;
+  const hasPresets = colors.length > 0;
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
@@ -191,40 +200,38 @@ function StylePresetPanel() {
     }
   };
 
-  const rowHeight = 40;
+  const rowHeight = 35;
 
-  // Assume at least 2 rows if there's at least 1 preset:
-  // One for presets, one for the label.
+  // Assume at least 2 lines if there are presets to leave some room.
   const colorRows =
-    colorPresets.length > 0
-      ? Math.max(2, colorPresets.length / COLOR_PRESETS_PER_ROW)
-      : 0;
-  const styleRows =
-    textStyles.length > 0 && isText
-      ? Math.max(2, textStyles.length / STYLE_PRESETS_PER_ROW)
-      : 0;
-  const initialHeight = (colorRows + styleRows) * rowHeight;
+    colors.length > 0 ? Math.max(2, colors.length / COLOR_PRESETS_PER_ROW) : 0;
+  const initialHeight = colorRows * rowHeight;
+
+  const resizeable = hasPresets;
+  const canCollapse = !isEditMode && hasPresets;
 
   return (
     <Panel
       name="stylepreset"
       initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
-      resizeable
+      resizeable={resizeable}
+      canCollapse={canCollapse}
     >
       <PresetsHeader
         handleAddColorPreset={handleAddColorPreset}
         stylePresets={stylePresets}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
+        canCollapse={canCollapse}
       />
       <Presets
         isEditMode={isEditMode}
         stylePresets={stylePresets}
         handleOnClick={handlePresetClick}
+        isBackground={isBackground}
         isText={isText}
-        textContent={isText ? stripHTML(selectedElements[0].content) : ''}
       />
-      <Resize />
+      {resizeable && <Resize position="bottom" />}
     </Panel>
   );
 }

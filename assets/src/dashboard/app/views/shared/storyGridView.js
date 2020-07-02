@@ -41,6 +41,7 @@ import {
   PageSizePropType,
   RenameStoryPropType,
 } from '../../../types';
+import { getFormattedDisplayDate } from '../../../utils';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -63,11 +64,11 @@ const StoryGridView = ({
   users,
   centerActionLabelByStatus,
   bottomActionLabel,
-  isTemplate,
   isSavedTemplate,
   pageSize,
   storyMenu,
   renameStory,
+  dateFormat,
 }) => {
   return (
     <StoryGrid pageSize={pageSize}>
@@ -82,7 +83,10 @@ const StoryGridView = ({
           : {};
 
         return (
-          <CardGridItem key={story.id} isTemplate={isTemplate}>
+          <CardGridItem
+            key={story.id}
+            data-testid={`story-grid-item-${story.id}`}
+          >
             <CardPreviewContainer
               pageSize={pageSize}
               story={story}
@@ -95,30 +99,32 @@ const StoryGridView = ({
                 label: bottomActionLabel,
               }}
             />
-            {!isTemplate && (
-              <DetailRow>
-                <CardTitle
-                  title={story.title}
-                  titleLink={story.editStoryLink}
-                  status={story?.status}
-                  id={story.id}
-                  secondaryTitle={
-                    isSavedTemplate
-                      ? __('Google', 'web-stories')
-                      : users[story.author]?.name
-                  }
-                  displayDate={story?.modified}
-                  {...titleRenameProps}
-                />
+            <DetailRow>
+              <CardTitle
+                title={story.title}
+                titleLink={story.editStoryLink}
+                status={story?.status}
+                id={story.id}
+                secondaryTitle={
+                  isSavedTemplate
+                    ? __('Google', 'web-stories')
+                    : users[story.author]?.name
+                }
+                displayDate={getFormattedDisplayDate(
+                  story?.modified,
+                  dateFormat
+                )}
+                {...titleRenameProps}
+              />
 
-                <StoryMenu
-                  onMoreButtonSelected={storyMenu.handleMenuToggle}
-                  contextMenuId={storyMenu.contextMenuId}
-                  onMenuItemSelected={storyMenu.handleMenuItemSelected}
-                  story={story}
-                />
-              </DetailRow>
-            )}
+              <StoryMenu
+                onMoreButtonSelected={storyMenu.handleMenuToggle}
+                contextMenuId={storyMenu.contextMenuId}
+                onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                story={story}
+                menuItems={storyMenu.menuItems}
+              />
+            </DetailRow>
           </CardGridItem>
         );
       })}
@@ -131,11 +137,15 @@ StoryGridView.propTypes = {
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
   users: UsersPropType,
-  centerActionLabelByStatus: PropTypes.objectOf(PropTypes.string),
+  centerActionLabelByStatus: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.bool,
+  ]),
   bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
+  dateFormat: PropTypes.string,
 };
 
 export default StoryGridView;

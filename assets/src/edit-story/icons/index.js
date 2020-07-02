@@ -55,7 +55,7 @@ export { ReactComponent as LayoutHelper } from './layout_helper.svg';
 export { ReactComponent as Link } from './link.svg';
 export { ReactComponent as LinkAlt } from './links.svg'; // todo: remove?
 export { ReactComponent as Lock } from './lock.svg';
-export { ReactComponent as Media } from './lock.svg';
+export { ReactComponent as Media } from './media.svg';
 export { ReactComponent as More } from './more_horiz.svg';
 export { ReactComponent as OffsetHorizontal } from './offset_horizontal.svg';
 export { ReactComponent as OffsetVertical } from './offset_vertical.svg';
@@ -71,6 +71,7 @@ export { ReactComponent as Rectangle } from './rectangle.svg';
 export { ReactComponent as Redo } from './redo.svg';
 export { ReactComponent as RedoAlt } from './redo_icon.svg';
 export { ReactComponent as Remove } from './remove.svg';
+export { ReactComponent as SafeZone } from './safe_zone.svg';
 export { ReactComponent as Shapes } from './shapes.svg';
 export { ReactComponent as Text } from './text.svg';
 export { ReactComponent as TextHelper } from './text_helper.svg'; // todo: remove?

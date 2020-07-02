@@ -32,20 +32,24 @@ export const PANEL_COLLAPSED_THRESHOLD = 10;
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
-function Panel({ resizeable, initialHeight, name, children }) {
+function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
   const [manuallyChanged, setManuallyChanged] = useState(false);
 
   const collapse = useCallback(() => {
+    if (!canCollapse) {
+      return;
+    }
     setIsCollapsed(true);
     if (resizeable) {
       setHeight(0);
     }
-  }, [resizeable]);
+  }, [resizeable, canCollapse]);
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
@@ -57,11 +61,12 @@ function Panel({ resizeable, initialHeight, name, children }) {
   );
 
   useEffect(() => {
-    if (
-      resizeable &&
-      height <= PANEL_COLLAPSED_THRESHOLD &&
-      isCollapsed === false
-    ) {
+    setIsCollapsed(!canCollapse);
+    expand(true);
+  }, [canCollapse, expand]);
+
+  useEffect(() => {
+    if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
       collapse();
     }
   }, [collapse, height, resizeable, isCollapsed]);
@@ -127,10 +132,13 @@ Panel.propTypes = {
   name: PropTypes.string.isRequired,
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
+  canCollapse: PropTypes.bool,
 };
 
 Panel.defaultProps = {
   initialHeight: null,
+  resizeable: false,
+  canCollapse: true,
 };
 
 export default Panel;

@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -51,7 +52,7 @@ const Wrapper = styled.div`
 `;
 
 const Box = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: transparent;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -113,13 +114,28 @@ function PageMenu() {
     actions: { undo, redo },
   } = useHistory();
   const {
-    state: { currentPageNumber, currentPage },
-    actions: { deleteCurrentPage, addPage },
-  } = useStory();
-  const {
-    state: { pageSize },
-  } = useCanvas();
+    currentPageNumber,
+    currentPage,
+    deleteCurrentPage,
+    addPage,
+  } = useStory(
+    ({
+      state: { currentPageNumber, currentPage },
+      actions: { deleteCurrentPage, addPage },
+    }) => {
+      return {
+        currentPageNumber,
+        currentPage,
+        deleteCurrentPage,
+        addPage,
+      };
+    }
+  );
+  const { pageSize } = useCanvas((state) => ({
+    pageSize: state.state.pageSize,
+  }));
   const { isRTL } = useConfig();
+  const { showTextMagicAndHelperMode } = useFeatures();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -170,7 +186,7 @@ function PageMenu() {
           <WithTooltip title={__('Duplicate page', 'web-stories')}>
             <Icon
               onClick={handleDuplicatePage}
-              aria-label={__('Dupliccate Page', 'web-stories')}
+              aria-label={__('Duplicate Page', 'web-stories')}
             >
               <Duplicate />
             </Icon>
@@ -207,15 +223,17 @@ function PageMenu() {
             </Icon>
           </WithTooltip>
         </Options>
-        <Options>
-          <Icon disabled>
-            <LayoutHelper />
-          </Icon>
-          <Space isDouble />
-          <Icon disabled>
-            <Text />
-          </Icon>
-        </Options>
+        {showTextMagicAndHelperMode && (
+          <Options>
+            <Icon disabled>
+              <LayoutHelper />
+            </Icon>
+            <Space isDouble />
+            <Icon disabled>
+              <Text />
+            </Icon>
+          </Options>
+        )}
       </Box>
     </Wrapper>
   );

@@ -95,8 +95,8 @@ function UpdateTemplateForm({ story }) {
           <input
             id="animation"
             type="checkbox"
-            onClick={toggleIncludeAnimations}
-            checked={includeAnimations}
+            onChange={toggleIncludeAnimations}
+            defaultChecked={includeAnimations}
           />
         </div>
 
@@ -107,8 +107,8 @@ function UpdateTemplateForm({ story }) {
           <input
             id="auto-migrate"
             type="checkbox"
-            onClick={toggleAutoMigrateTemplate}
-            checked={autoMigrateTemplate}
+            onChange={toggleAutoMigrateTemplate}
+            defaultChecked={autoMigrateTemplate}
           />
         </div>
         <Submit type="submit" value="Log Story Data to Console" />

@@ -54,13 +54,14 @@ DashboardGrid.propTypes = {
   columnWidth: PropTypes.number.isRequired,
 };
 
-const CardGrid = ({ children, pageSize }) => {
-  return (
-    <DashboardGrid columnWidth={pageSize.width} columnHeight={pageSize.height}>
-      {children}
-    </DashboardGrid>
-  );
-};
+const CardGrid = ({ children, pageSize }) => (
+  <DashboardGrid
+    columnWidth={pageSize.width}
+    columnHeight={pageSize.containerHeight}
+  >
+    {children}
+  </DashboardGrid>
+);
 
 CardGrid.propTypes = {
   children: PropTypes.node.isRequired,

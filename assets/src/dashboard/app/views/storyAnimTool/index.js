@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -27,14 +28,15 @@ import { TransformProvider } from '../../../../edit-story/components/transform';
 import stripHTML from '../../../../edit-story/utils/stripHTML';
 import VisibleImage from '../../../../edit-story/elements/media/visibleImage';
 import ShapeLayerContent from '../../../../edit-story/elements/shape/layer';
+import getStoryMarkup from '../../../../edit-story/output/utils/getStoryMarkup';
 import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
+  STORY_PAGE_STATE,
 } from '../../../constants';
-import { PAGE_RATIO } from '../../../constants/pageStructure';
 import { PreviewPage } from '../../../components';
-import { clamp } from '../../../utils';
+import { clamp, getPagePreviewHeights } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import UpdateTemplateForm from './updateTemplateForm';
@@ -50,14 +52,20 @@ import {
   Text,
   STORY_WIDTH,
 } from './components';
+import { emitter } from './emitter';
 
 function StoryAnimTool() {
   const [activeStory, setActiveStory] = useState(null);
   const [activeAnimation, setActiveAnimation] = useState({});
   const [activePageIndex, setActivePageIndex] = useState(0);
+  const [pageAnimationState, setPageAnimationState] = useState(
+    STORY_PAGE_STATE.RESET
+  );
 
   const [selectedElementIds, setSelectedElementIds] = useState({});
   const [isElementSelectable, setIsElementSelectable] = useState(false);
+  const globalTimeSubscription = useMemo(() => emitter(), []);
+  const flags = useFeatures();
 
   const {
     actions: {
@@ -211,6 +219,51 @@ function StoryAnimTool() {
     [activeStory, activePageIndex, saveActiveStoryUpdates]
   );
 
+  const handlePreviewClick = useCallback(() => {
+    const story = {
+      ...activeStory.originalStoryData,
+      title: activeStory.title,
+      excerpt: '',
+      featuredMedia: 0,
+      story_data: {
+        ...activeStory.originalStoryData.story_data,
+        pages: {
+          ...activeStory.pages,
+        },
+      },
+    };
+
+    const storyMarkup = getStoryMarkup(
+      story,
+      activeStory.pages,
+      {
+        fallbackPoster: '',
+        logoPlaceholder: '',
+        publisher: {
+          name: 'Demo',
+        },
+      },
+      flags
+    );
+
+    const popup = window.open('about:blank', '_blank');
+
+    popup.document.write('<!DOCTYPE html><html><head>');
+    popup.document.write(`<title>${activeStory.title}</title>`);
+    popup.document.write('</head><body style="width: 100%; height: 100vh;">');
+    popup.document.write(
+      '<iframe id="content" width="100%" height="100%" frameBorder="0"></iframe>'
+    );
+    popup.document.write('</body></html>');
+
+    const iframe = popup.document.querySelector('#content');
+    const iframeDoc = iframe.contentDocument;
+
+    iframeDoc.open();
+    iframeDoc.write(storyMarkup.toString());
+    iframeDoc.close();
+  }, [activeStory, flags]);
+
   useEffect(() => {
     setSelectedElementIds(
       (activeAnimation.targets || []).reduce(
@@ -227,6 +280,8 @@ function StoryAnimTool() {
     // Deselect animation
     setActiveAnimation({});
   }, [activePageIndex]);
+
+  const { fullBleedHeight, storyHeight } = getPagePreviewHeights(STORY_WIDTH);
 
   const renderElementContent = useCallback((element) => {
     switch (element.type) {
@@ -264,6 +319,7 @@ function StoryAnimTool() {
 
       {activeStory && (
         <>
+          <button onClick={handlePreviewClick}>{'Preview Story'}</button>
           <Container>
             <div>
               <FontProvider>
@@ -271,15 +327,27 @@ function StoryAnimTool() {
                   <UnitsProvider
                     pageSize={{
                       width: STORY_WIDTH,
-                      height: STORY_WIDTH / PAGE_RATIO,
+                      height: storyHeight,
                     }}
                   >
                     <ActiveCard
                       width={STORY_WIDTH}
-                      height={STORY_WIDTH / PAGE_RATIO}
+                      height={fullBleedHeight}
                       selectedElementIds={selectedElementIds}
                     >
-                      <PreviewPage page={activeStory.pages[activePageIndex]} />
+                      <PreviewPage
+                        pageSize={{
+                          width: STORY_WIDTH,
+                          height: storyHeight,
+                          containerHeight: fullBleedHeight,
+                        }}
+                        page={activeStory.pages[activePageIndex]}
+                        animationState={pageAnimationState}
+                        subscribeGlobalTime={globalTimeSubscription.subscribe}
+                        onAnimationComplete={() =>
+                          setPageAnimationState(STORY_PAGE_STATE.RESET)
+                        }
+                      />
                     </ActiveCard>
                   </UnitsProvider>
                 </TransformProvider>
@@ -299,6 +367,28 @@ function StoryAnimTool() {
                 }
               >
                 {'Next Page'}
+              </button>
+              <button
+                onClick={() => setPageAnimationState(STORY_PAGE_STATE.PLAYING)}
+              >
+                {'Play'}
+              </button>
+              <button
+                onClick={() => setPageAnimationState(STORY_PAGE_STATE.PAUSED)}
+              >
+                {'Pause'}
+              </button>
+              <button
+                onClick={() => setPageAnimationState(STORY_PAGE_STATE.RESET)}
+              >
+                {'Reset'}
+              </button>
+              <button
+                onClick={() =>
+                  setPageAnimationState(STORY_PAGE_STATE.SCRUBBING)
+                }
+              >
+                {'Scrub'}
               </button>
             </div>
             <ElementsContainer>
@@ -327,6 +417,8 @@ function StoryAnimTool() {
             onAnimationSelect={handleAnimationSelect}
             onAnimationDelete={handleAnimationDelete}
             onToggleTargetSelect={setIsElementSelectable}
+            emitGlobalTime={globalTimeSubscription.emit}
+            canScrub={pageAnimationState === STORY_PAGE_STATE.SCRUBBING}
           />
         </>
       )}
