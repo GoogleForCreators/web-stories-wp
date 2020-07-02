@@ -154,7 +154,7 @@ program
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
-    console.log('  # Generate the web fonts list');
+    console.log('  # Migrate templates to newest version');
     console.log('  $ commander.js update-templates');
   })
   .action(() => {
