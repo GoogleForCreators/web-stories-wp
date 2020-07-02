@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: '0 12 * * 1'
 jobs:
-  update-fonts:
+  update-template:
     name: Migrate Templates
     runs-on: ubuntu-latest
 
