@@ -17,11 +17,14 @@
 /**
  * External dependencies
  */
-import resolve from '@rollup/plugin-node-resolve';
 import path from 'path';
+import resolve from '@rollup/plugin-node-resolve';
 
 export default {
-  input: path.resolve(process.cwd(), 'assets/src/edit-story/migration/index.js'),
+  input: path.resolve(
+    process.cwd(),
+    'assets/src/edit-story/migration/index.js'
+  ),
   output: {
     file: path.resolve(process.cwd(), 'bin/build/migrate.js'),
     format: 'es',
