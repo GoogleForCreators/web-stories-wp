@@ -37,8 +37,6 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Update templates
-        env:
-          GOOGLE_FONTS_API_KEY: ${{ secrets.GOOGLE_FONTS_API_KEY }}
         run: |
           npm run workflow:templates
           npx prettier --write assets/src/dashboard/templates/raw/*.json
