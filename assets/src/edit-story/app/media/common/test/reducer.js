@@ -99,4 +99,32 @@ describe('reducer', () => {
       })
     );
   });
+
+  it('should update pageToken on setNextPage', async () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, actionsToWrap)
+    );
+
+    await act(() =>
+      result.current.actions.fetchMediaSuccess({
+        media: [{ id: 'id' }],
+        nextPageToken: 'page2',
+      })
+    );
+
+    await act(() => result.current.actions.setNextPage());
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
+    );
+
+    await act(() =>
+      result.current.actions.fetchMediaSuccess({
+        media: [{ id: 'id' }],
+        nextPageToken: 'page3',
+      })
+    );
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page3' })
+    );
+  });
 });
