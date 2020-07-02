@@ -320,11 +320,38 @@ class Stories_Controller extends Stories_Base_Controller {
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 		}
+
+		if( $request['story_format'] ) {
+			$current_data = $response->get_data();
+			$data         = [
+				'totals' => $statuses_count,
+				'data'   => $current_data,
+			];
+			$response     = rest_ensure_response( $data );
+		}
 		// Encode the array as headers do not support passing an array.
 		$encoded_statuses = wp_json_encode( $statuses_count );
 		if ( $encoded_statuses ) {
 			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
 		}
 		return $response;
+	}
+
+	/**
+	 * Retrieves the query params for the posts collection.
+	 *
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params() {
+		$query_params = parent::get_collection_params();
+
+		$query_params['story_format'] = array(
+			'description' => __( 'Format as story format', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
+		);
+
+		return $query_params;
 	}
 }
