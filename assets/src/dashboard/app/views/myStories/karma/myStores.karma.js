@@ -45,9 +45,9 @@ describe('My Stories View integration', () => {
   });
 
   it('should navigate to Explore Templates', async () => {
-    const exploreTemplatesMenuItem = fixture.screen.queryByText(
-      'Explore Templates'
-    );
+    const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
+      name: /^Explore Templates$/,
+    });
 
     await fixture.events.click(exploreTemplatesMenuItem);
 
