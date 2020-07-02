@@ -21,12 +21,13 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { v4 as uuidv4 } from 'uuid';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { Radio as UnSelected, RadioSelected as Selected } from '../../icons';
+import { Radio as UnSelected, RadioSelected as Selected } from '../../../icons';
+import useRadioNavigation from './useRadioNavigation';
 
 const RadioButton = styled.label`
   display: block;
@@ -71,8 +72,14 @@ const Helper = styled.div`
 
 function RadioGroup({ onChange, value: selectedValue, options }) {
   const radioGroupId = useMemo(() => uuidv4(), []);
+
+  // We need manual arrow key navigation here, as we have a global listener for those keys
+  // preventing default functionality.
+  const ref = useRef();
+
+  useRadioNavigation(ref);
   return (
-    <div>
+    <div ref={ref}>
       {options.map(({ value, name, helper }, i) => (
         <RadioButton key={value}>
           <Radio
