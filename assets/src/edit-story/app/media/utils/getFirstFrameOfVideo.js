@@ -26,25 +26,16 @@ function getFirstFrameOfVideo(src) {
   const video = document.createElement('video');
   video.muted = true;
   video.crossOrigin = 'anonymous';
-  video.preload = 'metadata';
-  video.currentTime = 0.5; // Needed to seek forward.
+  video.preload = 'auto';
 
   return new Promise((resolve, reject) => {
     video.addEventListener('error', reject);
-    /*
-     * In certain browsers (e.g. Firefox), the 'canplay' is fired twice,
-     * once before seeking and once after. Before seeking, the first frame
-     * is not yet available, and will be simply transparent.
-     * In other browsers it is only run once, after seeking.
-     *
-     * Nesting the event handlers here ensures that the 'canplay' callback
-     * is only fired once, and that the first frame is correctly retrieved
-     * across all browsers.
-     *
-     * @see https://github.com/google/web-stories-wp/issues/2923
-     */
-    video.addEventListener('seeked', () => {
-      video.addEventListener('canplay', () => {
+
+    video.addEventListener(
+      'canplay',
+      () => {
+        video.currentTime = 0.5; // Needed to seek forward.
+
         const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -53,8 +44,9 @@ function getFirstFrameOfVideo(src) {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         canvas.toBlob(resolve, 'image/jpeg');
-      });
-    });
+      },
+      { once: true } // Important because 'canplay' can be fired hundreds of times.
+    );
 
     video.src = src;
   });
