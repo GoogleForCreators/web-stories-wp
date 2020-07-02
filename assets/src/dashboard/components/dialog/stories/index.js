@@ -24,6 +24,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
+import { BUTTON_TYPES } from '../../../constants';
 import Button from '../../button';
 import Dialog from '..';
 
@@ -37,6 +38,7 @@ export const _default = () => {
 
   const ActionsNode = (
     <Button
+      type={BUTTON_TYPES.DEFAULT}
       onClick={() => {
         action('button clicked');
         setToggleDialog(!toggleDialog);
@@ -77,6 +79,7 @@ export const With2Actions = () => {
   const ActionsNode = (
     <>
       <Button
+        type={BUTTON_TYPES.DEFAULT}
         onClick={() => {
           action('cancel button clicked');
           setToggleDialog(!toggleDialog);
@@ -85,6 +88,7 @@ export const With2Actions = () => {
         {'cancel'}
       </Button>
       <Button
+        type={BUTTON_TYPES.DEFAULT}
         onClick={() => {
           action('button clicked');
         }}
@@ -103,7 +107,7 @@ export const With2Actions = () => {
           action('close dialog clicked');
           setToggleDialog(!toggleDialog);
         }}
-        isOpen={toggleDialog}
+        isOpen
         title={text('title', 'Dialog title')}
         contentLabel={'Dialog content Label for modal'}
         actions={ActionsNode}

@@ -66,19 +66,30 @@ const PrimaryButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
 `;
 
-const DefaultButton = styled(StyledButton)(
-  ({ theme }) => `
-    background-color: ${theme.colors.white};
-    color: ${theme.colors.gray800};
-    border: ${theme.borders.gray800};
+const DefaultButton = styled(StyledButton)`
+  ${TypographyPresets.Medium};
+  ${({ theme }) => `
+    min-width: 50px;
+    padding: 4px 14px;
+    background: transparent;
+    color: ${theme.colors.bluePrimary};
+    border: ${theme.borders.transparent};
+    border-radius: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 24px;
+
     &:focus,
     &:active,
     &:hover {
-      color: ${theme.colors.gray900};
-      border-color: ${theme.colors.gray900};
+      color: ${theme.colors.bluePrimary};
+      border-color: ${theme.colors.blueLight};
+      background-color: ${theme.colors.blueLight};
     }
-  `
-);
+
+    transition: background-color 0.6s ease 0s;
+  `}
+`;
 
 // TODO: address CTA active styling
 const CtaButton = styled(StyledButton)`
