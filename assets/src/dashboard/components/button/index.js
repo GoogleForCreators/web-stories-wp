@@ -78,6 +78,7 @@ const DefaultButton = styled(StyledButton)`
     font-weight: 500;
     text-transform: uppercase;
     line-height: 24px;
+    opacity: 1;
 
     &:focus,
     &:active,
