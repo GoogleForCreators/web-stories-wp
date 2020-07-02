@@ -24,7 +24,9 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { useRef } from 'react';
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
+import { useKeyDownEffect } from '../keyboard';
 import MULTIPLE_VALUE from './multipleValue';
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
@@ -84,9 +86,9 @@ const ContainerLabel = styled.label`
   ${({ disabled }) =>
     disabled &&
     `
-		pointer-events: none;
-		opacity: .2;
-	`}
+    pointer-events: none;
+    opacity: .2;
+  `}
 
   svg {
     color: ${({ theme }) => theme.colors.mg.v2};
@@ -107,6 +109,15 @@ function ToggleButton({
   className,
   ...rest
 }) {
+  const toggle = () => onChange(!value);
+
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const inputRef = useRef();
+  useKeyDownEffect(inputRef, 'enter', toggle, [toggle]);
+
   value = value === MULTIPLE_VALUE ? '' : value;
   return (
     <Container className={className}>
@@ -117,8 +128,9 @@ function ToggleButton({
         iconHeight={iconHeight}
       >
         <CheckBoxInput
+          ref={inputRef}
           checked={value}
-          onChange={() => onChange(!value)}
+          onChange={toggle}
           disabled={disabled}
           {...rest}
         />

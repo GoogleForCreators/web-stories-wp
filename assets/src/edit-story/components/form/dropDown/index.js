@@ -36,6 +36,7 @@ import {
 } from '../../../utils/keyboardOnlyOutline';
 import { Dropdown as DropdownIcon } from '../../../icons';
 import Popup from '../../popup';
+import { useKeyDownEffect } from '../../keyboard';
 import DropDownList from './list';
 
 const DropDownContainer = styled.div`
@@ -140,6 +141,12 @@ function DropDown({
     e.preventDefault();
     setIsOpen(!isOpen);
   };
+
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  useKeyDownEffect(selectRef, 'enter', handleSelectClick, [isOpen]);
 
   return (
     <DropDownContainer>
