@@ -18,25 +18,31 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import { useRef, useCallback } from 'react';
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { useKeyDownEffect } from '../keyboard';
 
 const rangeThumb = css`
   appearance: none;
   width: ${({ thumbSize = 16 }) => thumbSize}px;
   height: ${({ thumbSize = 16 }) => thumbSize}px;
-  background: #fff;
+  background-color: ${({ theme }) => theme.colors.fg.v1};
   cursor: pointer;
   border-radius: 50px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 `;
 
-export default styled.input.attrs(({ min, max, step, value, onChange }) => ({
+const focusedRangeThumb = css`
+  background-color: ${({ theme }) => theme.colors.action};
+`;
+
+const Input = styled.input.attrs({
   type: 'range',
-  min,
-  max,
-  step,
-  value,
-  onChange,
-}))`
+})`
   margin: 4px;
   min-width: 100px;
   cursor: pointer;
@@ -58,4 +64,52 @@ export default styled.input.attrs(({ min, max, step, value, onChange }) => ({
   &::-ms-thumb {
     ${rangeThumb}
   }
+
+  &:focus {
+    &::-webkit-slider-thumb {
+      ${focusedRangeThumb}
+    }
+
+    &::-moz-range-thumb {
+      ${focusedRangeThumb}
+    }
+
+    &::-ms-thumb {
+      ${focusedRangeThumb}
+    }
+  }
 `;
+
+function RangeInput({ minorStep, majorStep, handleChange, value, ...rest }) {
+  const ref = useRef();
+  const update = useCallback(
+    (direction, isMajor) => {
+      const diff = direction * (isMajor ? majorStep : minorStep);
+      handleChange(value + diff);
+    },
+    [minorStep, majorStep, handleChange, value]
+  );
+
+  useKeyDownEffect(ref, ['left'], () => update(-1, true), [update]);
+  useKeyDownEffect(ref, ['right'], () => update(1, true), [update]);
+  useKeyDownEffect(ref, ['shift+left'], () => update(-1, false), [update]);
+  useKeyDownEffect(ref, ['shift+right'], () => update(1, false), [update]);
+  return (
+    <Input
+      ref={ref}
+      onChange={(evt) => handleChange(evt.target.valueAsNumber)}
+      step={minorStep}
+      value={value}
+      {...rest}
+    />
+  );
+}
+
+RangeInput.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  minorStep: PropTypes.number.isRequired,
+  majorStep: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+export default RangeInput;

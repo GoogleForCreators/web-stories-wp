@@ -187,9 +187,10 @@ function ThumbnailSizeControl({ value, onChange }) {
       <FlexGrowRangeInput
         min={min}
         max={max}
-        step={step}
+        majorStep={step}
+        minorStep={step}
         value={value}
-        onChange={(evt) => onChange(Number(evt.target.value))}
+        handleChange={onChange}
         thumbSize={24}
         aria-label={__('Thumbnail size', 'web-stories')}
         aria-valuetext={valueText}
