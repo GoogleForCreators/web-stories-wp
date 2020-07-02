@@ -223,7 +223,7 @@
     "workflow:version": "./bin/commander.js version",
     "workflow:build-plugin": "./bin/commander.js build-plugin",
     "workflow:fonts": "./bin/commander.js build-fonts",
-    "preworkflow:templates": "rollup --config bin/rollup.config.cjs",
+    "preworkflow:templates": "rollup --config bin/rollup.config.js",
     "workflow:templates": "./bin/commander.js update-templates"
   },
   "husky": {
