@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -27,14 +27,12 @@ import useMediaReducer from '../../useMediaReducer';
 import * as actionsToWrap from '../../actions';
 
 describe('reducer', () => {
-  it('should assign isMediaLoading=true on fetchMediaStart', async () => {
+  it('should assign isMediaLoading=true on fetchMediaStart', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)
     );
 
-    await act(() =>
-      result.current.actions.fetchMediaStart({ pageToken: 'page2' })
-    );
+    result.current.actions.fetchMediaStart({ pageToken: 'page2' });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -44,14 +42,12 @@ describe('reducer', () => {
     );
   });
 
-  it('should assign isMediaLoading=false on fetchMediaSuccess', async () => {
+  it('should assign isMediaLoading=false on fetchMediaSuccess', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)
     );
 
-    await act(() =>
-      result.current.actions.fetchMediaSuccess({ media: [{ id: 'id' }] })
-    );
+    result.current.actions.fetchMediaSuccess({ media: [{ id: 'id' }] });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -61,18 +57,16 @@ describe('reducer', () => {
     );
   });
 
-  it('should update state on fetchMediaSuccess', async () => {
+  it('should update state on fetchMediaSuccess', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)
     );
 
-    await act(() =>
-      result.current.actions.fetchMediaSuccess({
-        media: [{ id: 'id' }],
-        nextPageToken: 'page2',
-        totalPages: 10,
-      })
-    );
+    result.current.actions.fetchMediaSuccess({
+      media: [{ id: 'id' }],
+      nextPageToken: 'page2',
+      totalPages: 10,
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -85,12 +79,12 @@ describe('reducer', () => {
     );
   });
 
-  it('should assign isMediaLoading=false on fetchMediaError', async () => {
+  it('should assign isMediaLoading=false on fetchMediaError', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)
     );
 
-    await act(() => result.current.actions.fetchMediaError());
+    result.current.actions.fetchMediaError();
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -100,29 +94,25 @@ describe('reducer', () => {
     );
   });
 
-  it('should update pageToken on setNextPage', async () => {
+  it('should update pageToken on setNextPage', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, actionsToWrap)
     );
 
-    await act(() =>
-      result.current.actions.fetchMediaSuccess({
-        media: [{ id: 'id' }],
-        nextPageToken: 'page2',
-      })
-    );
+    result.current.actions.fetchMediaSuccess({
+      media: [{ id: 'id' }],
+      nextPageToken: 'page2',
+    });
 
-    await act(() => result.current.actions.setNextPage());
+    result.current.actions.setNextPage();
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
     );
 
-    await act(() =>
-      result.current.actions.fetchMediaSuccess({
-        media: [{ id: 'id' }],
-        nextPageToken: 'page3',
-      })
-    );
+    result.current.actions.fetchMediaSuccess({
+      media: [{ id: 'id' }],
+      nextPageToken: 'page3',
+    });
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page3' })
     );
