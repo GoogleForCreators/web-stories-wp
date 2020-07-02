@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import pkg from 'polished';
-const { parseToRgb } = pkg;
+import { parseToRgb } from 'polished';
 
 function colorToPattern({ pages, ...rest }) {
   return {
