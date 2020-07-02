@@ -118,7 +118,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         context: 'edit',
         search: searchTerm || undefined,
         orderby: sortOption,
-        page,
+        page: typeof page === 'number' ? page : 1,
         per_page: perPage,
         order: sortDirection || ORDER_BY_SORT[sortOption],
         status,
