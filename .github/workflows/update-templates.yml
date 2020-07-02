@@ -39,16 +39,14 @@ jobs:
       - name: Update templates
         env:
           GOOGLE_FONTS_API_KEY: ${{ secrets.GOOGLE_FONTS_API_KEY }}
-        run: |
-          npm run workflow:templates
-          npx eslint --fix assets/src/dashboard/templates/data/*.js
+        run: npm run workflow:templates
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Update list of Google Fonts
-          title: Update templates
+          commit-message: Migrate templates to latest version
+          title: Migrate templates
           body: Update templates after running through migration
           branch: update/templates
           labels: Dependencies
