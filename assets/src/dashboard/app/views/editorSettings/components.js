@@ -26,6 +26,7 @@ import {
   TypographyPresets,
   TextInput as _TextInput,
 } from '../../../components';
+import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 
 export const Wrapper = styled.div`
   margin: 0 107px;
@@ -104,3 +105,5 @@ export const UploadContainer = styled.div`
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.gray25};
 `;
+
+export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);

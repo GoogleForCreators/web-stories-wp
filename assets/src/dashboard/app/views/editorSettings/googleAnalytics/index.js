@@ -27,6 +27,7 @@ import {
   SettingLabel,
   TextInput,
   TextInputHelperText,
+  VisuallyHiddenDescription,
 } from '../components';
 
 const TEXT = {
@@ -36,6 +37,7 @@ const TEXT = {
   ),
   label: __('Google Analytics Tracking ID', 'web-stories'),
   placeholder: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
+  ariaDescription: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
 };
 // todo add link
 function GoogleAnalyticsSettings() {
@@ -43,10 +45,15 @@ function GoogleAnalyticsSettings() {
     <SettingForm>
       <SettingLabel htmlFor="gaTrackingID">{TEXT.label}</SettingLabel>
       <div>
+        <VisuallyHiddenDescription id="ga-input-description">
+          {TEXT.ariaDescription}
+        </VisuallyHiddenDescription>
         <TextInput
           type="text"
+          id="gaTrackingID"
           name="gaTrackingID"
           placeholder={TEXT.placeholder}
+          aria-describedby="ga-input-description"
         />
         <TextInputHelperText>{TEXT.context}</TextInputHelperText>
       </div>

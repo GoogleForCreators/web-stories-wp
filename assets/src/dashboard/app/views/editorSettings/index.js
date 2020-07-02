@@ -30,7 +30,7 @@ function EditorSettings() {
   return (
     <Wrapper>
       <Header>
-        <Heading>{__('Stories Global Settings', 'web-stories')}</Heading>
+        <Heading>{__('Settings', 'web-stories')}</Heading>
       </Header>
       <Main>
         <GoogleAnalyticsSettings />
