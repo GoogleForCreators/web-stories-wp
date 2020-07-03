@@ -24,13 +24,13 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 import useMediaReducer from '../../useMediaReducer';
 import reducer from '../reducer';
-import * as actionsToWrap from '../actions';
+import * as localActionsToWrap from '../actions';
 import { fetchMediaStart as commonFetchMediaStart } from '../../common/actions';
 
 describe('reducer', () => {
   it('should not update for media action that`s not for local media', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, { ...actionsToWrap, commonFetchMediaStart })
+      useMediaReducer(reducer, { ...localActionsToWrap, commonFetchMediaStart })
     );
 
     result.current.actions.commonFetchMediaStart({
@@ -48,7 +48,7 @@ describe('reducer', () => {
 
   it('should assign isMediaLoading=true on fetchMediaStart', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, localActionsToWrap)
     );
 
     result.current.actions.fetchMediaStart({ pageToken: 'page2' });
@@ -63,7 +63,7 @@ describe('reducer', () => {
 
   it('should assign isMediaLoaded=true on fetchMediaSuccess', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, localActionsToWrap)
     );
 
     result.current.actions.fetchMediaSuccess({
@@ -82,7 +82,7 @@ describe('reducer', () => {
 
   it('should not update state on fetchMediaSuccess if searchTerm doesn`t match', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, localActionsToWrap)
     );
     result.current.actions.setSearchTerm({ searchTerm: 'search term 1' });
 
@@ -102,7 +102,7 @@ describe('reducer', () => {
 
   it('should not update state on fetchMediaSuccess if mediaType doesn`t match', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, localActionsToWrap)
     );
     result.current.actions.setMediaType({ mediaType: 'image' });
 
