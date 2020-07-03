@@ -35,6 +35,7 @@ const InlineInputForm = ({
   onEditCancel,
   onEditComplete,
   value,
+  ...rest
 }) => {
   const inputContainerRef = useRef(null);
   const [newValue, setNewValue] = useState(value);
@@ -77,6 +78,7 @@ const InlineInputForm = ({
         value={newValue}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
+        {...rest}
       />
     </div>
   );

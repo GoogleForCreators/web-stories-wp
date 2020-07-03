@@ -27,7 +27,7 @@ import {
   FileUploadHelperText,
   FinePrintHelperText,
   UploadContainer,
-  SettingLabel,
+  SettingHeading,
 } from '../components';
 
 const TEXT = {
@@ -45,7 +45,7 @@ const TEXT = {
 function PublisherLogoSettings() {
   return (
     <SettingForm>
-      <SettingLabel htmlFor="publisherLogo">{TEXT.label}</SettingLabel>
+      <SettingHeading htmlFor="publisherLogo">{TEXT.label}</SettingHeading>
       <div>
         <FileUploadHelperText>{TEXT.context}</FileUploadHelperText>
         <UploadContainer>

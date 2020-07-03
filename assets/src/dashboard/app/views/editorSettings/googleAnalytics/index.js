@@ -24,10 +24,9 @@ import { __ } from '@wordpress/i18n';
  */
 import {
   SettingForm,
-  SettingLabel,
+  SettingHeading,
   TextInput,
   TextInputHelperText,
-  VisuallyHiddenDescription,
 } from '../components';
 
 const TEXT = {
@@ -43,17 +42,13 @@ const TEXT = {
 function GoogleAnalyticsSettings() {
   return (
     <SettingForm>
-      <SettingLabel htmlFor="gaTrackingID">{TEXT.label}</SettingLabel>
+      <SettingHeading htmlFor="gaTrackingID">{TEXT.label}</SettingHeading>
       <div>
-        <VisuallyHiddenDescription id="ga-input-description">
-          {TEXT.ariaDescription}
-        </VisuallyHiddenDescription>
         <TextInput
-          type="text"
-          id="gaTrackingID"
-          name="gaTrackingID"
+          label={TEXT.ariaDescription}
+          id="gaTrackingId"
+          value=""
           placeholder={TEXT.placeholder}
-          aria-describedby="ga-input-description"
         />
         <TextInputHelperText>{TEXT.context}</TextInputHelperText>
       </div>
