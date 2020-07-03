@@ -124,8 +124,6 @@ class Dashboard {
 		$preload_paths = [
 			'/web-stories/v1/fonts',
 			'/wp/v2/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&story_format=true',
-			'/wp/v2/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish&story_format=true',
-			'/wp/v2/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=draft&story_format=true',
 		];
 
 		/**
