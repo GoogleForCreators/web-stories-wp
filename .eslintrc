@@ -13,11 +13,12 @@
     "plugin:jsdoc/recommended"
   ],
   "plugins": [
-    "react",
-    "react-hooks",
-    "jsx-a11y",
+    "@wordpress",
     "header",
-    "@wordpress"
+    "jsdoc",
+    "jsx-a11y",
+    "react",
+    "react-hooks"
   ],
   "parserOptions": {
     "ecmaFeatures": {
