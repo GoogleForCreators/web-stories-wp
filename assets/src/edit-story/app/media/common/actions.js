@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import * as types from '../types';
+import * as types from './types';
 
 export const fetchMediaStart = (dispatch, defaultProvider) => ({
   pageToken,

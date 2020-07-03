@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import * as types from '../types';
+import * as types from './types';
 
 export const INITIAL_STATE = {
   media: [],
@@ -35,9 +35,6 @@ export const INITIAL_STATE = {
 
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-    case types.INITIAL_STATE:
-      return state;
-
     case types.FETCH_MEDIA_START: {
       return {
         ...state,
