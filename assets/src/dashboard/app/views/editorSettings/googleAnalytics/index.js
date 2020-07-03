@@ -20,6 +20,11 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import { useContext, useState, useCallback, useEffect } from 'react';
+
+/**
  * Internal dependencies
  */
 import {
@@ -28,6 +33,7 @@ import {
   TextInput,
   TextInputHelperText,
 } from '../components';
+import { ApiContext } from '../../../api/apiProvider';
 
 const TEXT = {
   CONTEXT: __(
@@ -40,6 +46,32 @@ const TEXT = {
 };
 // todo add link
 function GoogleAnalyticsSettings() {
+  const {
+    actions: {
+      settingsApi: { fetchGoogleAnalyticsId, updateGoogleAnalyticsId },
+    },
+    state: {
+      settings: { googleAnalyticsId },
+    },
+  } = useContext(ApiContext);
+
+  const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
+
+  useEffect(() => {
+    fetchGoogleAnalyticsId();
+  }, [fetchGoogleAnalyticsId]);
+
+  const handleCancelUpdateId = useCallback(() => {
+    setAnalyticsId(googleAnalyticsId);
+  }, [googleAnalyticsId]);
+
+  const handleCompleteUpdateId = useCallback(
+    (newValue) => {
+      updateGoogleAnalyticsId(newValue);
+    },
+    [updateGoogleAnalyticsId]
+  );
+
   return (
     <SettingForm>
       <SettingHeading htmlFor="gaTrackingID">

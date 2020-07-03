@@ -29,6 +29,7 @@ import useFontApi from './useFontApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUserApi';
+import useSettingsApi from './useSettingsApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -51,21 +52,37 @@ export default function ApiProvider({ children }) {
 
   const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
 
+  const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
+    wordPressSettingsApi: api.settings,
+  });
+
   const value = useMemo(
     () => ({
       state: {
+        settings,
         stories,
         templates,
         users,
       },
       actions: {
+        settingsApi,
         storyApi,
         templateApi,
         fontApi,
         usersApi,
       },
     }),
-    [users, stories, templates, storyApi, templateApi, fontApi, usersApi]
+    [
+      settings,
+      stories,
+      templates,
+      users,
+      settingsApi,
+      storyApi,
+      templateApi,
+      fontApi,
+      usersApi,
+    ]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
