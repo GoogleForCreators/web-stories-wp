@@ -166,7 +166,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
-		$request->set_param( 'story_format', true );
+		$request->set_param( '_web_stories_envelope', true );
 		$response       = rest_get_server()->dispatch( $request );
 		$headers        = $response->get_headers();
 		$data           = $response->get_data();

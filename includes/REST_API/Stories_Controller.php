@@ -321,7 +321,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 		}
 
-		if ( $request['story_format'] ) {
+		if ( $request['_web_stories_envelope'] ) {
 			$current_data = $response->get_data();
 			$headers      = $response->get_headers();
 			$data         = [
@@ -350,8 +350,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	public function get_collection_params() {
 		$query_params = parent::get_collection_params();
 
-		$query_params['story_format'] = [
-			'description' => __( 'Format as story format', 'web-stories' ),
+		$query_params['_web_stories_envelope'] = [
+			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
 			'type'        => 'boolean',
 			'default'     => false,
 		];

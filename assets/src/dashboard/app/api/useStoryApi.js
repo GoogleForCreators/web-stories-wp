@@ -116,7 +116,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
       const query = {
         context: 'edit',
-        story_format: true,
+        _web_stories_envelope: true,
         search: searchTerm || undefined,
         orderby: sortOption,
         page,
