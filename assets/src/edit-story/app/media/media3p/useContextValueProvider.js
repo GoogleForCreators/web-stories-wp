@@ -23,7 +23,7 @@ import useProviderContextValueProvider from './useProviderContextValueProvider';
 // Use provider configuration json fragment.
 const providers = ['unsplash'];
 
-export default function useContextValueProvider(reducerState, reducerActions) {
+function useProviderSetContextValueProvider(reducerState, reducerActions) {
   const result = {};
 
   // The 'providers' list is a constant, and so hooks are still called in the
@@ -31,9 +31,18 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   for (const provider of providers) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     result[provider] = useProviderContextValueProvider(
-      reducerState,
+      reducerState[provider],
       reducerActions
     );
   }
   return result;
+}
+
+export default function useContextValueProvider(reducerState, reducerActions) {
+  return {
+    state: {
+      selectedProvider: reducerState.selectedProvider,
+    },
+    ...useProviderSetContextValueProvider(reducerState, reducerActions),
+  };
 }

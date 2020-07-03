@@ -27,10 +27,14 @@ describe('useContextValueProvider', () => {
     useProviderContextValueProvider.mockReturnValueOnce({
       state: { media: [] },
     });
-    const value = useContextValueProvider();
+    const value = useContextValueProvider({
+      selectedProvider: 'unsplash',
+      unsplash: {},
+    });
 
     expect(value).toStrictEqual(
       expect.objectContaining({
+        state: { selectedProvider: 'unsplash' },
         unsplash: {
           state: { media: [] },
         },

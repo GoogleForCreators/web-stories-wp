@@ -16,6 +16,8 @@
 
 // TODO(https://github.com/google/web-stories-wp/issues/2802):
 // Implement, re-using logic from media/common/useContextValueProvider.js.
-export default function useProviderContextValueProvider() {
-  return {};
+export default function useProviderContextValueProvider(reducerState) {
+  return {
+    state: reducerState,
+  };
 }

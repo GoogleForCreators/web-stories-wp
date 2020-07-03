@@ -15,10 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import { renderHook } from '@testing-library/react-hooks';
+
+/**
  * Internal dependencies
  */
-import reducer from '../reducer';
 import providerReducer from '../providerReducer';
+import reducer from '../reducer';
+import useMediaReducer from '../../useMediaReducer';
+import * as media3pActionsToWrap from '../actions';
 import * as types from '../../types';
 
 jest.mock('../providerReducer');
@@ -50,6 +57,20 @@ describe('reducer', () => {
     );
     expect(newState).toStrictEqual(
       expect.objectContaining({ unsplash: { key: 'value' } })
+    );
+  });
+
+  it('should assign selectedProvider on setSelectedProvider', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, media3pActionsToWrap)
+    );
+
+    result.current.actions.setSelectedProvider({ provider: 'unsplash' });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        selectedProvider: 'unsplash',
+      })
     );
   });
 });
