@@ -244,6 +244,7 @@
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
+        "jsdoc/require-jsdoc": "off",
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error"
       }
@@ -268,7 +269,8 @@
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
-        "jasmine/no-disabled-tests": "error"
+        "jasmine/no-disabled-tests": "error",
+        "jsdoc/require-jsdoc": "off"
       },
       "globals": {
         "karmaPuppeteer": "readonly",
