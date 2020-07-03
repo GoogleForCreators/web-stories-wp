@@ -24,12 +24,12 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 import reducer from '../reducer';
 import useMediaReducer from '../../useMediaReducer';
-import * as actionsToWrap from '../actions';
+import * as commonActionsToWrap from '../actions';
 
 describe('reducer', () => {
   it('should assign isMediaLoading=true on fetchMediaStart', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, commonActionsToWrap)
     );
 
     result.current.actions.fetchMediaStart({ pageToken: 'page2' });
@@ -44,7 +44,7 @@ describe('reducer', () => {
 
   it('should assign isMediaLoaded=true on fetchMediaSuccess', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, commonActionsToWrap)
     );
 
     result.current.actions.fetchMediaSuccess({ media: [{ id: 'id' }] });
@@ -59,7 +59,7 @@ describe('reducer', () => {
 
   it('should update state on fetchMediaSuccess', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, commonActionsToWrap)
     );
 
     result.current.actions.fetchMediaSuccess({
@@ -81,7 +81,7 @@ describe('reducer', () => {
 
   it('should assign isMediaLoading=false on fetchMediaError', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, commonActionsToWrap)
     );
 
     result.current.actions.fetchMediaError();
@@ -96,7 +96,7 @@ describe('reducer', () => {
 
   it('should update pageToken on setNextPage', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, commonActionsToWrap)
     );
 
     result.current.actions.fetchMediaSuccess({
