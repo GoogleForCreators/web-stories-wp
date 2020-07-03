@@ -48,7 +48,7 @@ jobs:
           CI: true
 
       - name: Run JavaScript unit tests
-        run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
+        run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
 
       - name: Upload mismatched image snapshots if found
         uses: actions/upload-artifact@v2

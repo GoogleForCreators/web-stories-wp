@@ -19,20 +19,20 @@
  */
 import * as types from './types';
 
-export const fetchMediaStart = (dispatch) => ({ pagingNum }) => {
-  dispatch({ type: types.FETCH_MEDIA_START, payload: { pagingNum } });
+export const fetchMediaStart = (dispatch) => ({ pageToken }) => {
+  dispatch({ type: types.FETCH_MEDIA_START, payload: { pageToken } });
 };
 
 export const fetchMediaSuccess = (dispatch) => ({
   media,
   mediaType,
   searchTerm,
-  pagingNum,
+  pageToken,
   totalPages,
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
-    payload: { media, mediaType, searchTerm, pagingNum, totalPages },
+    payload: { media, mediaType, searchTerm, pageToken, totalPages },
   });
 };
 
