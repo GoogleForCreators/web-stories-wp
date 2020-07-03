@@ -330,6 +330,9 @@ class Stories_Controller extends Stories_Base_Controller {
 				'data'    => $current_data,
 			];
 			$response     = rest_ensure_response( $data );
+			foreach ( $headers as $header => $value ) {
+				$response->header( $header, $value );
+			}
 		}
 		// Encode the array as headers do not support passing an array.
 		$encoded_statuses = wp_json_encode( $statuses_count );
