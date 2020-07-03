@@ -29,6 +29,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Google_Fonts;
 use WP_Screen;
 
 /**
@@ -37,6 +38,7 @@ use WP_Screen;
 class Dashboard {
 
 	use Assets;
+	use Google_Fonts;
 	/**
 	 * Script handle.
 	 *
@@ -168,15 +170,17 @@ class Dashboard {
 			return;
 		}
 
-		wp_register_style(
-			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500|Roboto:400',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->register_google_font( 'Roboto' );
+		$this->register_google_font( 'Google+Sans' );
 
 		$this->enqueue_script( self::SCRIPT_HANDLE );
-		$this->enqueue_style( self::SCRIPT_HANDLE, [ 'google-fonts' ] );
+		$this->enqueue_style(
+			self::SCRIPT_HANDLE,
+			[
+				$this->get_font_slug( 'Roboto' ),
+				$this->get_font_slug( 'Google+Sans' ),
+			] 
+		);
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

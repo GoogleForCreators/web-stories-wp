@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Traits\Google_Fonts;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Types;
@@ -40,6 +41,7 @@ class Story_Post_Type {
 	use Publisher;
 	use Types;
 	use Assets;
+	use Google_Fonts;
 	/**
 	 * The slug of the stories post type.
 	 *
@@ -287,15 +289,10 @@ class Story_Post_Type {
 		// Force media model to load.
 		wp_enqueue_media();
 
-		wp_register_style(
-			'roboto',
-			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->register_google_font( 'Roboto' );
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ $this->get_font_slug( 'Roboto' ) ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
