@@ -67,13 +67,13 @@ describe('Author User', () => {
 
     await addTextElement();
 
+    await percySnapshot(page, 'Author previewing without publishing');
+
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
       text: 'Fill in some text',
     });
-
-    await percySnapshot(previewPage, 'Author previewing without publishing');
 
     await editorPage.bringToFront();
     await previewPage.close();
@@ -90,13 +90,13 @@ describe('Author User', () => {
 
     await publishStory();
 
+    await percySnapshot(page, 'Author previewing after publishing');
+
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
       text: 'Fill in some text',
     });
-
-    await percySnapshot(previewPage, 'Author previewing after publishing');
 
     await editorPage.bringToFront();
     await previewPage.close();
@@ -113,13 +113,13 @@ describe('Author User', () => {
     // Make some changes _after_ publishing so previewing will cause an autosave.
     await addTextElement();
 
+    await percySnapshot(page, 'Autosaving and previewing');
+
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
       text: 'Fill in some text',
     });
-
-    await percySnapshot(previewPage, 'Autosaving and previewing');
 
     await editorPage.bringToFront();
     await previewPage.close();
