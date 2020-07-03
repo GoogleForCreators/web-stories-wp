@@ -81,8 +81,10 @@ function GoogleAnalyticsSettings() {
         <TextInput
           label={TEXT.ARIA_LABEL}
           id="gaTrackingId"
-          value=""
-          placeholder={TEXT.PLACEHOLDER}
+          value={analyticsId}
+          onEditCancel={handleCancelUpdateId}
+          onEditComplete={handleCompleteUpdateId}
+          placeholder={TEXT.placeholder}
         />
         <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
       </div>
