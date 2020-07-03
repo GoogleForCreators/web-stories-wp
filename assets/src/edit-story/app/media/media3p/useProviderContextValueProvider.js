@@ -14,9 +14,23 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Implement, re-using logic from media/common/useContextValueProvider.js.
-export default function useProviderContextValueProvider(reducerState) {
+ import useFetchMediaEffect from './useFetchMediaEffect';
+
+export default function useProviderContextValueProvider(provider, reducerState, reducerActions) {
+  const { selectedProvider } = reducerState;
+  const { pageToken } = reducerState[provider];
+  const { fetchMediaStart, fetchMediaSuccess, fetchMediaError } = reducerActions;
+
+  // Fetch or re-fetch media when the state has changed.
+  useFetchMediaEffect({
+    provider,
+    selectedProvider,
+    pageToken,
+    fetchMediaStart,
+    fetchMediaSuccess,
+    fetchMediaError,
+  });
+
   return {
     state: reducerState,
   };
