@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Re-use logic from media/common/reducer.js.
-function providerReducer(state = {}) {
-  return state;
+/**
+ * Internal dependencies
+ */
+import commonReducer, {
+  INITIAL_STATE as COMMON_INITIAL_STATE,
+} from '../common/reducer';
+
+const INITIAL_STATE = {
+  ...COMMON_INITIAL_STATE,
+};
+
+function providerReducer(state = INITIAL_STATE, { type, payload }) {
+  return commonReducer(state, { type, payload });
 }
 
 export default providerReducer;
