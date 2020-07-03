@@ -133,7 +133,8 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
         const response = await dataAdapter.get(path);
 
-        const totalPages = response.totals && parseInt(response.totals.all);
+        const totalPages =
+          response.headers && parseInt(response.headers['X-WP-TotalPages']);
         const totalStoriesByStatus = response.totals;
 
         const reshapedStories = response.data

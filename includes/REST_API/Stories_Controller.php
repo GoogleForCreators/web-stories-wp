@@ -323,9 +323,11 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		if ( $request['story_format'] ) {
 			$current_data = $response->get_data();
+			$headers      = $response->get_headers();
 			$data         = [
-				'totals' => $statuses_count,
-				'data'   => $current_data,
+				'totals'  => $statuses_count,
+				'headers' => $headers,
+				'data'    => $current_data,
 			];
 			$response     = rest_ensure_response( $data );
 		}
