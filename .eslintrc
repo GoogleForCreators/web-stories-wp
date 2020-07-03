@@ -167,10 +167,11 @@
         ]
       }
     ],
-    "jsdoc/require-jsdoc": "off",
-    "jsdoc/require-returns": "off",
-    "jsdoc/require-param-description": "off",
     "jsdoc/check-indentation": "error",
+    "jsdoc/check-syntax": "warn",
+    "jsdoc/require-jsdoc": "warn",
+    "jsdoc/require-returns": "warn",
+    "jsdoc/require-param-description": "warn",
     "eslint-comments/no-unused-disable": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
@@ -195,6 +196,7 @@
   },
   "settings": {
     "jsdoc": {
+      "mode": "typescript",
       "preferredTypes": {
         "object": "Object"
       },
