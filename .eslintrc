@@ -298,6 +298,12 @@
       }
     },
     {
+      "files": ["tests/e2e/specs/**/*.js"],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
       "files": [
         "__mocks__/**/*.js",
         "bin/**/*.js",
