@@ -27,13 +27,13 @@ import { useContext, useState, useCallback, useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { ApiContext } from '../../../api/apiProvider';
 import {
   SettingForm,
   SettingHeading,
   TextInput,
   TextInputHelperText,
 } from '../components';
-import { ApiContext } from '../../../api/apiProvider';
 
 const TEXT = {
   CONTEXT: __(
