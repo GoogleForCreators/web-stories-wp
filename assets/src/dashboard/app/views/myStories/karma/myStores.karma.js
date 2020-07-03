@@ -26,6 +26,14 @@ import Fixture from '../../../../karma/fixture';
 import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
 import { getFormattedDisplayDate } from '../../../../utils';
+import {
+  TEMPLATES_GALLERY_VIEWING_LABELS,
+  TEMPLATES_GALLERY_STATUS,
+  primaryPaths,
+  STORY_STATUS,
+  STORY_STATUSES,
+  STORY_VIEWING_LABELS,
+} from '../../../../constants';
 
 describe('My Stories View integration', () => {
   let fixture;
@@ -46,30 +54,34 @@ describe('My Stories View integration', () => {
 
   it('should navigate to Explore Templates', async () => {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Explore Templates$/,
+      name: new RegExp('^' + primaryPaths[2].label + '$'),
     });
 
     await fixture.events.click(exploreTemplatesMenuItem);
 
-    const viewTemplates = fixture.screen.queryByText('Viewing all templates');
+    const viewTemplates = fixture.screen.queryByText(
+      TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL]
+    );
 
     expect(viewTemplates).toBeTruthy();
   });
 
   it('should switch to the Drafts Tab', async () => {
     const numDrafts = formattedStoriesArray.filter(
-      ({ status }) => status === 'draft'
+      ({ status }) => status === STORY_STATUS.DRAFT
     ).length;
 
     expect(numDrafts).toBeGreaterThan(0);
 
     const draftsTabButton = fixture.screen.getByRole('button', {
-      name: /^Drafts/,
+      name: new RegExp('^' + STORY_STATUSES[1].label),
     });
 
     await fixture.events.click(draftsTabButton);
 
-    const viewDraftsText = fixture.screen.getByText(/Viewing drafts/);
+    const viewDraftsText = fixture.screen.getByText(
+      new RegExp('^' + STORY_VIEWING_LABELS[STORY_STATUS.DRAFT] + '$')
+    );
 
     expect(viewDraftsText).toBeTruthy();
 
@@ -79,13 +91,13 @@ describe('My Stories View integration', () => {
 
   it('should switch to the Published Tab', async () => {
     const numPublished = formattedStoriesArray.filter(
-      ({ status }) => status === 'publish'
+      ({ status }) => status === STORY_STATUS.PUBLISHED
     ).length;
 
     expect(numPublished).toBeGreaterThan(0);
 
     const publishedTabButton = fixture.screen.getByRole('button', {
-      name: /^Published/,
+      name: new RegExp('^' + STORY_STATUSES[2].label),
     });
 
     expect(publishedTabButton).toBeTruthy();
@@ -93,7 +105,7 @@ describe('My Stories View integration', () => {
     await fixture.events.click(publishedTabButton);
 
     const viewPublishedText = fixture.screen.getByText(
-      /Viewing published stories/
+      new RegExp('^' + STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED] + '$')
     );
 
     expect(viewPublishedText).toBeTruthy();
