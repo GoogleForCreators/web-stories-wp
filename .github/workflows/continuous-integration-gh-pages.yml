@@ -59,6 +59,7 @@ jobs:
           path: assets/images/templates
 
   deploy-gh-pages:
+    name: Deploy to GH Pages
     runs-on: ubuntu-latest
     needs: [build-storybook, upload-static-assets]
     steps:

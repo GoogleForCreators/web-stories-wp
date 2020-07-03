@@ -41,12 +41,20 @@ jobs:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
+      # todo: use eslint-output to basically run lint:js and lint:js:report in one step.
+      - name: Detect coding standard violations (ESLint)
+        run: npm run lint:js
+        continue-on-error: true
+        if: github.event.pull_request.head.repo.fork
+
       - name: Detect coding standard violations (ESLint)
         run: npm run lint:js:report
         continue-on-error: true
+        if: github.event.pull_request.head.repo.fork == false
 
       - name: Annotate Code Linting Results
         uses: ataylorme/eslint-annotate-action@1.1.2
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           report-json: 'build/lint-js-report.json'
+        if: github.event.pull_request.head.repo.fork == false
