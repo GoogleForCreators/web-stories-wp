@@ -30,6 +30,10 @@ import { ConfigProvider } from '../../config';
 jest.mock('../wpAdapter', () => ({
   get: () =>
     Promise.resolve({
+      headers: {
+        'X-WP-Total': 1,
+        'X-WP-TotalPages': 1,
+      },
       totals: {
         all: 1,
         draft: 0,
