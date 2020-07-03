@@ -21,9 +21,7 @@ import * as types from '../types';
 
 export const INITIAL_STATE = {
   media: [],
-  // TODO(https://github.com/google/web-stories-wp/issues/2828):
-  // Rename pagingNum to pageToken.
-  pagingNum: 1,
+  pageToken: 1,
   hasMore: true,
   totalPages: 1,
   isMediaLoading: false,
@@ -44,12 +42,12 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     case types.FETCH_MEDIA_SUCCESS: {
-      const { media, pagingNum, totalPages } = payload;
-      const hasMore = pagingNum < totalPages;
+      const { media, pageToken, totalPages } = payload;
+      const hasMore = pageToken < totalPages;
       return {
         ...state,
         media: [...state.media, ...media],
-        pagingNum,
+        pageToken,
         totalPages,
         hasMore,
         isMediaLoaded: true,
@@ -68,7 +66,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     case types.SET_NEXT_PAGE: {
       return {
         ...state,
-        pagingNum: state.pagingNum + 1,
+        pageToken: state.pageToken + 1,
       };
     }
 
