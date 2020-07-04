@@ -33,6 +33,9 @@ import {
   STORY_STATUS,
   STORY_STATUSES,
   STORY_VIEWING_LABELS,
+  STORY_SORT_MENU_ITEMS,
+  VIEW_STYLE_LABELS,
+  VIEW_STYLE,
 } from '../../../../constants';
 
 describe('My Stories View integration', () => {
@@ -143,7 +146,9 @@ describe('My Stories View integration', () => {
 
     await fixture.events.click(sortDropdown);
 
-    const dateCreated = fixture.screen.getByText(/Date created/);
+    const dateCreated = fixture.screen.getByText(
+      new RegExp(`^${STORY_SORT_MENU_ITEMS[1].label}$`)
+    );
 
     expect(dateCreated).toBeTruthy();
 
@@ -189,7 +194,9 @@ describe('My Stories View integration', () => {
 
     await fixture.events.click(sortDropdown);
 
-    const name = fixture.screen.getByText(/Name/);
+    const name = fixture.screen.getByText(
+      new RegExp(`^${STORY_SORT_MENU_ITEMS[0].label}$`)
+    );
 
     expect(name).toBeTruthy();
 
@@ -217,7 +224,9 @@ describe('My Stories View integration', () => {
 
     await fixture.events.click(sortDropdown);
 
-    const createdBy = fixture.screen.getByText(/Created by/);
+    const createdBy = fixture.screen.getByText(
+      new RegExp(`^${STORY_SORT_MENU_ITEMS[3].label}$`)
+    );
 
     expect(createdBy).toBeTruthy();
 
@@ -241,7 +250,9 @@ describe('My Stories View integration', () => {
   });
 
   it('should switch to List View', async () => {
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     expect(listViewButton).toBeTruthy();
 
@@ -253,7 +264,9 @@ describe('My Stories View integration', () => {
   });
 
   it('should switch to List View and back to Grid View', async () => {
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     expect(listViewButton).toBeTruthy();
 
