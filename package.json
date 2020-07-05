@@ -76,7 +76,7 @@
     "@percy/puppeteer": "^1.1.0",
     "@prettier/plugin-xml": "^0.8.0",
     "@storybook/addon-a11y": "^6.0.0-beta.39",
-    "@storybook/addon-actions": "^6.0.0-beta.39",
+    "@storybook/addon-actions": "^6.0.0-beta.42",
     "@storybook/addon-backgrounds": "^6.0.0-beta.39",
     "@storybook/addon-docs": "^6.0.0-beta.39",
     "@storybook/addon-knobs": "^6.0.0-beta.39",
