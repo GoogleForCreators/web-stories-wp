@@ -31,7 +31,7 @@ import {
 } from '../components';
 
 const TEXT = {
-  label: __('Publisher Logo', 'web-stories'),
+  sectionHeading: __('Publisher Logo', 'web-stories'),
   context: __(
     'Upload your logos here and they will become available to any stories you create.',
     'web-stories'
@@ -45,7 +45,9 @@ const TEXT = {
 function PublisherLogoSettings() {
   return (
     <SettingForm>
-      <SettingHeading htmlFor="publisherLogo">{TEXT.label}</SettingHeading>
+      <SettingHeading htmlFor="publisherLogo">
+        {TEXT.sectionHeading}
+      </SettingHeading>
       <div>
         <FileUploadHelperText>{TEXT.context}</FileUploadHelperText>
         <UploadContainer>
