@@ -1309,7 +1309,11 @@
           },
           "type": "shape",
           "id": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
-          "link": null
+          "link": {
+            "url": "http://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         },
         {
           "x": 56,
@@ -1368,7 +1372,11 @@
           "type": "shape",
           "basedOn": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
           "id": "70cd1c38-9462-47f4-9a12-c9585c16acc4",
-          "link": null
+          "link": {
+            "url": "http://example.com/",
+            "icon": null,
+            "desc": null
+          }
         },
         {
           "x": 295,
@@ -1427,7 +1435,11 @@
           "type": "shape",
           "basedOn": "70cd1c38-9462-47f4-9a12-c9585c16acc4",
           "id": "95a2a69d-7946-4fd2-97ad-7cd47fe87e04",
-          "link": null
+          "link": {
+            "url": "http://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         },
         {
           "opacity": 100,
