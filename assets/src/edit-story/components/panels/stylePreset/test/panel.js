@@ -68,6 +68,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
     actions: { updateStory, updateElementsById, updateCurrentPageProperties },
   };
   const {
+    getAllByRole,
     getByRole,
     getByText,
     queryByLabelText,
@@ -80,6 +81,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
     </StoryContext.Provider>
   );
   return {
+    getAllByRole,
     getByRole,
     getByText,
     queryByText,
@@ -388,7 +390,7 @@ describe('Panels/StylePreset', () => {
 
     it('should not apply colors with opacity as Page background', () => {
       const extraStylePresets = {
-        colors: [createSolid(1, 1, 1, 0.5)],
+        colors: [createSolid(1, 1, 1, 0.5), createSolid(1, 1, 1, 0)],
       };
       const extraStateProps = {
         selectedElements: [
@@ -398,17 +400,24 @@ describe('Panels/StylePreset', () => {
         ],
       };
       presetHasOpacity.mockImplementation((color) => {
-        return Boolean(color.color?.a && color.color.a < 1);
+        return Boolean(color.color?.a !== undefined && color.color.a < 1);
       });
-      const { getByRole, updateCurrentPageProperties } = setupPanel(
+      const { getAllByRole, updateCurrentPageProperties } = setupPanel(
         extraStylePresets,
         extraStateProps
       );
 
-      const applyPreset = getByRole('button', { name: APPLY_PRESET });
-      expect(applyPreset).toBeDefined();
+      const applyPresetButtons = getAllByRole('button', { name: APPLY_PRESET });
+      const applyPreset1 = applyPresetButtons[0];
+      expect(applyPreset1).toBeDefined();
 
-      fireEvent.click(applyPreset);
+      fireEvent.click(applyPreset1);
+      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(0);
+
+      const applyPreset2 = applyPresetButtons[1];
+      expect(applyPreset2).toBeDefined();
+
+      fireEvent.click(applyPreset2);
       expect(updateCurrentPageProperties).toHaveBeenCalledTimes(0);
     });
 

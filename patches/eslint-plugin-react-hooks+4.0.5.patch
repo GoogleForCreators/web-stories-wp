@@ -1,8 +1,8 @@
 diff --git a/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js b/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
-index ab3467d..ec54933 100644
+index aff77d4..ea26d96 100644
 --- a/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
 +++ b/node_modules/eslint-plugin-react-hooks/cjs/eslint-plugin-react-hooks.development.js
-@@ -737,7 +737,26 @@ var ExhaustiveDeps = {
+@@ -735,7 +735,26 @@ var ExhaustiveDeps = {
        enableDangerousAutofixThisMayCauseInfiniteLoops: false,
        properties: {
          additionalHooks: {
@@ -30,7 +30,7 @@ index ab3467d..ec54933 100644
          },
          enableDangerousAutofixThisMayCauseInfiniteLoops: {
            type: 'boolean'
-@@ -747,7 +766,7 @@ var ExhaustiveDeps = {
+@@ -745,7 +764,7 @@ var ExhaustiveDeps = {
    },
    create: function (context) {
      // Parse the `additionalHooks` regex.
@@ -39,7 +39,7 @@ index ab3467d..ec54933 100644
      var enableDangerousAutofixThisMayCauseInfiniteLoops = context.options && context.options[0] && context.options[0].enableDangerousAutofixThisMayCauseInfiniteLoops || false;
      var options = {
        additionalHooks: additionalHooks,
-@@ -2194,8 +2213,8 @@ function getReactiveHookCallbackIndex(calleeNode, options) {
+@@ -2195,8 +2214,8 @@ function getReactiveHookCallbackIndex(calleeNode, options) {
  
      default:
        if (node === calleeNode && options && options.additionalHooks) {
@@ -50,7 +50,7 @@ index ab3467d..ec54933 100644
          var name;
  
          try {
-@@ -2208,13 +2227,46 @@ function getReactiveHookCallbackIndex(calleeNode, options) {
+@@ -2209,13 +2228,46 @@ function getReactiveHookCallbackIndex(calleeNode, options) {
            }
          }
  

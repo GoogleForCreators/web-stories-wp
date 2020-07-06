@@ -28,12 +28,20 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Media, Row } from '../form';
+import { Media, Row, usePresubmitHandler } from '../form';
 import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 
 const DEFAULT_RESOURCE = { poster: null, title: null, alt: null };
+export const MIN_MAX = {
+  ALT_TEXT: {
+    MAX: 1000,
+  },
+  TITLE: {
+    MAX: 1000,
+  },
+};
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const resource = useCommonObjectValue(
@@ -58,6 +66,17 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     [pushUpdate]
   );
 
+  usePresubmitHandler(
+    ({ resource: newResource }) => ({
+      resource: {
+        ...newResource,
+        title: newResource.title?.slice(0, MIN_MAX.TITLE.MAX),
+        alt: newResource.alt?.slice(0, MIN_MAX.ALT_TEXT.MAX),
+      },
+    }),
+    []
+  );
+
   return (
     <SimplePanel
       name="videoAccessibility"
@@ -80,6 +99,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           onChange={(value) => pushUpdate({ title: value || null })}
           clear
           aria-label={__('Edit: Video title', 'web-stories')}
+          maxLength={MIN_MAX.TITLE.MAX}
         />
       </Row>
       <Row>
@@ -89,6 +109,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
           aria-label={__('Edit: Assistive text', 'web-stories')}
+          maxLength={MIN_MAX.ALT_TEXT.MAX}
         />
       </Row>
       <Row>

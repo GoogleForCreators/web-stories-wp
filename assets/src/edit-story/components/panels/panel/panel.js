@@ -61,10 +61,8 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   );
 
   useEffect(() => {
-    if (!canCollapse) {
-      setIsCollapsed(false);
-      expand(true);
-    }
+    setIsCollapsed(!canCollapse);
+    expand(true);
   }, [canCollapse, expand]);
 
   useEffect(() => {
