@@ -24,7 +24,7 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 import useMediaReducer from '../../useMediaReducer';
 import reducer from '../reducer';
-import * as actionsToWrap from '../../actions';
+import * as actionsToWrap from '../actions';
 
 describe('reducer', () => {
   it('should not update state on fetchMediaSuccess if searchTerm doesn`t match', () => {

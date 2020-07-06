@@ -24,7 +24,7 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 import reducer from '../reducer';
 import useMediaReducer from '../../useMediaReducer';
-import * as actionsToWrap from '../../actions';
+import * as actionsToWrap from '../actions';
 
 describe('reducer', () => {
   it('should assign isMediaLoading=true on fetchMediaStart', () => {
