@@ -27,8 +27,8 @@ import { useMemo, useState } from 'react';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import { defaultTemplatesState } from '../app/reducer/templates';
-import formattedUsersObject from '../storybookUtils/formattedUsersObject';
-import formattedStoriesArray from '../storybookUtils/formattedStoriesArray';
+import formattedUsersObject from '../dataUtils/formattedUsersObject';
+import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 

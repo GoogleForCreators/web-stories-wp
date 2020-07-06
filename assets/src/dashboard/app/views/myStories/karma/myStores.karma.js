@@ -23,8 +23,8 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import formattedStoriesArray from '../../../../storybookUtils/formattedStoriesArray';
-import formattedUsersObject from '../../../../storybookUtils/formattedUsersObject';
+import formattedStoriesArray from '../../../../dataUtils/formattedStoriesArray';
+import formattedUsersObject from '../../../../dataUtils/formattedUsersObject';
 import { getFormattedDisplayDate } from '../../../../utils';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
