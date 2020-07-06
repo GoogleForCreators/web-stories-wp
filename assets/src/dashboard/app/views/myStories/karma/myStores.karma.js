@@ -276,7 +276,9 @@ describe('My Stories View integration', () => {
 
     expect(listViewTable).toBeTruthy();
 
-    const gridViewButton = fixture.screen.getByLabelText(/Switch to Grid View/);
+    const gridViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.LIST]}$`)
+    );
 
     await fixture.events.click(gridViewButton);
 
@@ -286,7 +288,9 @@ describe('My Stories View integration', () => {
   });
 
   it('should sort by Title in List View', async () => {
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     await fixture.events.click(listViewButton);
 
@@ -323,7 +327,9 @@ describe('My Stories View integration', () => {
   });
 
   it('should sort by Author in List View', async () => {
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     await fixture.events.click(listViewButton);
 
@@ -363,7 +369,9 @@ describe('My Stories View integration', () => {
   });
 
   it('should sort by Date Created in List View', async () => {
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     await fixture.events.click(listViewButton);
 
@@ -404,7 +412,9 @@ describe('My Stories View integration', () => {
 
   it('should sort by Last Modified in List View', async () => {
     // last modified desc is the default sort
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     await fixture.events.click(listViewButton);
 
@@ -557,7 +567,9 @@ describe('My Stories View integration', () => {
     const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
       b.modified.diff(a.modified)
     );
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     expect(listViewButton).toBeTruthy();
 
@@ -604,7 +616,9 @@ describe('My Stories View integration', () => {
     const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
       b.modified.diff(a.modified)
     );
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     expect(listViewButton).toBeTruthy();
 
@@ -645,7 +659,9 @@ describe('My Stories View integration', () => {
     const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
       b.modified.diff(a.modified)
     );
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     expect(listViewButton).toBeTruthy();
 
@@ -688,7 +704,9 @@ describe('My Stories View integration', () => {
     const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
       b.modified.diff(a.modified)
     );
-    const listViewButton = fixture.screen.getByLabelText(/Switch to List View/);
+    const listViewButton = fixture.screen.getByLabelText(
+      new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+    );
 
     expect(listViewButton).toBeTruthy();
 
