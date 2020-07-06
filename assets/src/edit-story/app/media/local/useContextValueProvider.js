@@ -72,11 +72,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers.get('X-WP-TotalPages'));
           const mediaArray = data.map(getResourceFromAttachment);
+          const hasMore = p < totalPages;
           callback({
             media: mediaArray,
             mediaType: currentMediaType,
             searchTerm: currentSearchTerm,
             pageToken: p,
+            nextPageToken: hasMore ? p + 1 : undefined,
             totalPages,
           });
         })
@@ -106,7 +108,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     const { mediaType, pageToken, searchTerm } = stateRef.current;
 
     resetFilters();
-    if (!mediaType && !searchTerm && pageToken === 1) {
+    const isFirstPage = !pageToken;
+    if (!mediaType && !searchTerm && isFirstPage) {
       fetchMedia({ mediaType }, fetchMediaSuccess);
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);

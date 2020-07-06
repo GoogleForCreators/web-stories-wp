@@ -21,7 +21,12 @@ import * as types from '../types';
 
 export const INITIAL_STATE = {
   media: [],
-  pageToken: 1,
+  // The page token of the last loaded page, or undefined if at the first page
+  // or no pages have been loaded.
+  pageToken: undefined,
+  // The page token of the next page, or undefined if at the last page or no
+  // pages have been loaded.
+  nextPageToken: undefined,
   hasMore: true,
   totalPages: 1,
   isMediaLoading: false,
@@ -42,14 +47,13 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     case types.FETCH_MEDIA_SUCCESS: {
-      const { media, pageToken, totalPages } = payload;
-      const hasMore = pageToken < totalPages;
+      const { media, nextPageToken, totalPages } = payload;
       return {
         ...state,
         media: [...state.media, ...media],
-        pageToken,
+        nextPageToken,
         totalPages,
-        hasMore,
+        hasMore: Boolean(nextPageToken),
         isMediaLoaded: true,
         isMediaLoading: false,
       };
@@ -64,9 +68,14 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     case types.SET_NEXT_PAGE: {
+      if (!state.nextPageToken) {
+        return state;
+      }
       return {
         ...state,
-        pageToken: state.pageToken + 1,
+        // Updating pageToken state will trigger the media fetch useEffect()
+        // side effect to load the next page.
+        pageToken: state.nextPageToken,
       };
     }
 
