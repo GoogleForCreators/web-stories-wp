@@ -39,6 +39,6 @@ export function useMedia3p(selector) {
  * @param {function(Object):Object} selector Returns a fragment of the media
  * context value that the caller is interested in.
  */
-export function useMedia3pProvider(provider, selector) {
+export function useMedia3pForProvider(provider, selector) {
   return useMedia(({ media3p }) => selector(media3p[provider]));
 }
