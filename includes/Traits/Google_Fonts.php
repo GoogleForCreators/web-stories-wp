@@ -36,6 +36,8 @@ trait Google_Fonts {
 	 * Register font in WordPress.
 	 *
 	 * @param string $font Name of font.
+	 * 
+	 * @return void
 	 */
 	public function register_google_font( $font ) {
 		wp_register_style(
@@ -54,6 +56,6 @@ trait Google_Fonts {
 	 * @return string Slug of font.
 	 */
 	public function get_font_slug( $font ) {
-		return sanitize_title( $font ) . '-google-font';
+		return sanitize_title( $font ) . '-web-stories-font';
 	}
 }
