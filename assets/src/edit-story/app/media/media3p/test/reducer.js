@@ -39,11 +39,14 @@ describe('reducer', () => {
 
   it('should reduce each provider state', () => {
     providerReducer.mockReturnValueOnce({ key: 'value' });
-    const newState = reducer(initialValue, { type: 'action' });
+    const newState = reducer(initialValue, {
+      type: 'action',
+      payload: { provider: 'unsplash' },
+    });
 
     expect(providerReducer).toHaveBeenCalledWith(
       {},
-      { type: 'action', payload: undefined }
+      { type: 'action', payload: { provider: 'unsplash' } }
     );
     expect(newState).toStrictEqual(
       expect.objectContaining({ unsplash: { key: 'value' } })
