@@ -27,12 +27,17 @@ import { listMedia as apiListMedia } from './apiFetcher';
 import Context from './context';
 
 /**
+ * The supported providers.
+ *
+ * @enum {string}
+ */
+const Providers = {
+  UNSPLASH: 'unsplash',
+};
+
+/**
  * Provider for the Media3P API. Delegates fetching the data to apiFetcher,
  * but transforms the response into resources.
- *
- * @param children Scope where this provider is available.
- * @return {*}
- * @class
  */
 function Media3pApiProvider({ children }) {
   const MEDIA_PAGE_SIZE = 20;
@@ -70,20 +75,24 @@ function Media3pApiProvider({ children }) {
   /**
    * Get media for the given parameters.
    *
-   * @param provider The provider to get the media from. Currently only 'unsplash' is supported.
-   * @param searchTerm The search term to send, eg: 'cute cats'.
-   * @param orderBy The desired ordering of the results. 'relevance' and 'latest' are supported.
-   * @param mediaType The media type of results to get. Only 'image' is supported.
-   * @param pageToken A page token to provide, for pagination.
-   * @return {Promise<{nextPageToken: *, media: *}>}
+   * @param {Object} obj - An object with the options.
+   * @param {string} obj.provider The provider to get the media from. Currently only 'unsplash' is supported.
+   * @param {?string} obj.searchTerm Optional search term to send, eg: 'cute cats'.
+   * @param {?string} obj.orderBy The desired ordering of the results. Defaults to 'relevance' in the API.
+   * @param {?string} obj.mediaType The media type of results to get. Currently ignored by the API as Unsplash only handles images.
+   * @param {?string} obj.pageToken An optional page token to provide, for pagination.
+   * @return {Promise<{nextPageToken: *, media: *}>} An object with the media resources and a next page token.
    */
   async function listMedia({
     provider,
     searchTerm,
     orderBy,
     mediaType,
-    pageToken = null,
+    pageToken,
   }) {
+    if (provider.toLowerCase() !== Providers.UNSPLASH) {
+      throw new Error(`Unsupported providers: ${provider}`);
+    }
     const response = await apiListMedia({
       filter: constructFilter(provider, searchTerm, mediaType),
       orderBy: orderBy,
