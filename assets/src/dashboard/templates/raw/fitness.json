@@ -1536,7 +1536,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-30T20:40:21",
-            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page6_watch.png",
             "width": 330,
             "height": 330,
             "posterId": 0,
@@ -1544,64 +1544,7 @@
             "title": "fitness_page6_watch",
             "alt": "fitness_page6_watch",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fitness_page6_watch-300x300.png",
-                "width": 300,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-300x300.png"
-              },
-              "thumbnail": {
-                "file": "fitness_page6_watch-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-150x150.png"
-              },
-              "medium_large": {
-                "file": "fitness_page6_watch-768x768.png",
-                "width": 768,
-                "height": 768,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-768x768.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "fitness_page6_watch-696x928.png",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-696x928.png"
-              },
-              "web-stories-poster-square": {
-                "file": "fitness_page6_watch-928x928.png",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-928x928.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "fitness_page6_watch-928x696.png",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-928x696.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "fitness_page6_watch-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch-150x150.png"
-              },
-              "full": {
-                "file": "fitness_page6_watch.png",
-                "width": 1000,
-                "height": 1000,
-                "mime_type": "image/png",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page6_watch.png"
-              }
-            }
+            "sizes": []
           },
           "type": "image",
           "x": 69,
@@ -2052,7 +1995,12 @@
           },
           "type": "shape",
           "basedOn": "cf1d4db0-d5d9-47a2-ba70-85618df23959",
-          "id": "0584e281-ec48-468c-84ad-c6bc6be4855a"
+          "id": "0584e281-ec48-468c-84ad-c6bc6be4855a",
+          "link": {
+            "url": "http://example.com/",
+            "icon": null,
+            "desc": null
+          }
         },
         {
           "opacity": 100,
@@ -2118,7 +2066,12 @@
           "basedOn": "0584e281-ec48-468c-84ad-c6bc6be4855a",
           "id": "2858cbba-bfc8-49a1-b932-bb569e381864",
           "x": 235,
-          "y": 148.5
+          "y": 148.5,
+          "link": {
+            "url": "http://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         }
       ],
       "type": "page",
