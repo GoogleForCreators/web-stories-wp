@@ -23,14 +23,14 @@ import { renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import MediaContext from '../../../../app/media/context';
-import { useMedia3p, useMedia3pProvider } from '../useMedia3p';
+import { useMedia3p, useMedia3pForProvider } from '../useMedia3p';
 
 describe('useMedia3p', () => {
   function renderUseMedia3p(mediaContextValue, selector) {
-    return renderUseMedia3pProvider(undefined, mediaContextValue, selector);
+    return renderUseMedia3pForProvider(undefined, mediaContextValue, selector);
   }
 
-  function renderUseMedia3pProvider(provider, mediaContextValue, selector) {
+  function renderUseMedia3pForProvider(provider, mediaContextValue, selector) {
     const wrapper = (params) => (
       <MediaContext.Provider value={mediaContextValue}>
         {params.children}
@@ -40,7 +40,7 @@ describe('useMedia3p', () => {
     const { result } = renderHook(
       () =>
         provider
-          ? useMedia3pProvider(provider, selector)
+          ? useMedia3pForProvider(provider, selector)
           : useMedia3p(selector),
       { wrapper }
     );
@@ -63,7 +63,7 @@ describe('useMedia3p', () => {
   });
 
   it('should return state for media3p provider', () => {
-    const state = renderUseMedia3pProvider(
+    const state = renderUseMedia3pForProvider(
       'unsplash',
       {
         media3p: {
