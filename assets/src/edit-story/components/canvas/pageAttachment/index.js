@@ -33,6 +33,8 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   bottom: ${({ fullbleedBottom }) => -fullbleedBottom}px;
+  border-top: ${({ displayMarker, theme }) =>
+    displayMarker ? `0.5px dashed ${theme.colors.fg.v0}` : 'initial'};
   max-height: 20%;
   width: 100%;
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -93,8 +95,9 @@ function PageAttachment({ pageAttachment }) {
   const fullbleedHeight = pageSize.width / FULLBLEED_RATIO;
   const fullbleedBottom = (fullbleedHeight - pageSize.height) / 2;
   const { ctaText } = pageAttachment;
+  // @todo Display marker only if dragging / relevant input in focus.
   return (
-    <Wrapper fullbleedBottom={fullbleedBottom}>
+    <Wrapper fullbleedBottom={fullbleedBottom} displayMarker={true}>
       <Icon>
         <LeftBar />
         <RightBar />

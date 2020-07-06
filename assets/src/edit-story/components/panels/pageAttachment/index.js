@@ -33,6 +33,7 @@ import { isValidUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import { useStory } from '../../../app/story';
+import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 
 const Error = styled.span`
   font-size: 12px;
@@ -49,6 +50,9 @@ function PageAttachmentPanel() {
   const defaultCTA = __('Learn more', 'web-stories');
   const { url, ctaText = defaultCTA } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
+
+  const { getElementsInAttachmentArea } = useElementsWithLinks();
+  const linksInAttachmentArea = getElementsInAttachmentArea();
 
   const updatePageAttachment = useCallback(
     (value) => {
@@ -96,6 +100,18 @@ function PageAttachmentPanel() {
       {Boolean(url) && isInvalidUrl && (
         <Row>
           <Error>{__('Invalid web address.', 'web-stories')}</Error>
+        </Row>
+      )}
+
+      {/* @todo Display only when field in focus */}
+      {linksInAttachmentArea.length > 0 && (
+        <Row>
+          <Error>
+            {__(
+              'Links can not be located below the dashed line when a page attachment is present. The link to elements found below this line will be removed if you add a page attachment',
+              'web-stories'
+            )}
+          </Error>
         </Row>
       )}
 
