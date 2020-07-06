@@ -28,9 +28,9 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../app';
-import { Play } from '../../../../icons';
 import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from './dropDownMenu';
+import { ProviderType } from './providerType';
 
 const styledTiles = css`
   width: 100%;
@@ -50,14 +50,6 @@ const Video = styled.video`
 const Container = styled.div`
   position: relative;
   display: flex;
-`;
-
-const PlayIcon = styled(Play)`
-  height: 24px;
-  width: 24px;
-  position: absolute;
-  top: calc(50% - 12px);
-  left: calc(50% - 12px);
 `;
 
 const Duration = styled.div`
@@ -113,6 +105,7 @@ const UploadingIndicator = styled.div`
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
+ * @param {ProviderType} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
@@ -120,6 +113,7 @@ const MediaElement = ({
   width: requestedWidth,
   height: requestedHeight,
   onInsert,
+  providerType,
 }) => {
   const {
     id: resourceId,
@@ -244,7 +238,7 @@ const MediaElement = ({
             <UploadingIndicator />
           </CSSTransition>
         )}
-        {hasDropdownMenu && (
+        {hasDropdownMenu && providerType === ProviderType.LOCAL && (
           <DropDownMenu
             resource={resource}
             pointerEntered={pointerEntered}
@@ -279,7 +273,6 @@ const MediaElement = ({
       >
         <source src={src} type={mimeType} />
       </Video>
-      {showVideoDetail && <PlayIcon />}
       {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       {local && (
         <CSSTransition
@@ -291,7 +284,7 @@ const MediaElement = ({
           <UploadingIndicator />
         </CSSTransition>
       )}
-      {hasDropdownMenu && (
+      {hasDropdownMenu && !providerType === ProviderType.LOCAL && (
         <DropDownMenu
           resource={resource}
           pointerEntered={pointerEntered}
@@ -310,6 +303,11 @@ MediaElement.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   onInsert: PropTypes.func,
+  providerType: PropTypes.string,
+};
+
+MediaElement.defaultProps = {
+  providerType: ProviderType.LOCAL,
 };
 
 export default memo(MediaElement);
