@@ -26,6 +26,14 @@ import { createResource } from '../../../../../../app/media/utils';
 import { listMedia as apiListMedia } from './apiFetcher';
 import Context from './context';
 
+/**
+ * Provider for the Media3P API. Delegates fetching the data to apiFetcher,
+ * but transforms the response into resources.
+ *
+ * @param children Scope where this provider is available.
+ * @return {*}
+ * @class
+ */
 function Media3pApiProvider({ children }) {
   const MEDIA_PAGE_SIZE = 20;
 
@@ -59,6 +67,16 @@ function Media3pApiProvider({ children }) {
     throw new Error('Invalid media type.');
   }
 
+  /**
+   * Get media for the given parameters.
+   *
+   * @param provider The provider to get the media from. Currently only 'unsplash' is supported.
+   * @param searchTerm The search term to send, eg: 'cute cats'.
+   * @param orderBy The desired ordering of the results. 'relevance' and 'latest' are supported.
+   * @param mediaType The media type of results to get. Only 'image' is supported.
+   * @param pageToken A page token to provide, for pagination.
+   * @return {Promise<{nextPageToken: *, media: *}>}
+   */
   async function listMedia({
     provider,
     searchTerm,
