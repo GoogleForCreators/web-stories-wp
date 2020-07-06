@@ -69,11 +69,6 @@ jobs:
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      - name: Install Puppeteer with correct browser
-        run: npm install puppeteer
-        env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Build plugin
@@ -88,8 +83,9 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e:percy
         env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Stop Docker environment

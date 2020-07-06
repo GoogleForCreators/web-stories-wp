@@ -29,6 +29,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import clamp from '../../../utils/clamp';
 import { useStory } from '../../../app/story';
 import { Switch, Numeric, Row, Label } from '../../form';
 import RangeInput from '../../rangeInput';
@@ -46,8 +47,12 @@ const BoxedNumeric = styled(Numeric)`
 
 const DEFAULT_AUTO_ADVANCE = true;
 const DEFAULT_PAGE_DURATION = 7;
-const MIN_PAGE_DURATION = 1;
-const MAX_PAGE_DURATION = 20;
+const MIN_MAX = {
+  PAGE_DURATION: {
+    MIN: 1,
+    MAX: 20,
+  },
+};
 
 function PageAdvancementPanel() {
   const { autoAdvance, defaultPageDuration, updateStory } = useStory(
@@ -70,11 +75,10 @@ function PageAdvancementPanel() {
   );
 
   const [updateDefaultPageDuration] = useDebouncedCallback((value) => {
-    const newValue = Math.max(
-      MIN_PAGE_DURATION,
-      Math.min(MAX_PAGE_DURATION, value)
-    );
-
+    const newValue = clamp(value, MIN_MAX.PAGE_DURATION);
+    if (value !== newValue) {
+      setDuration(newValue);
+    }
     updateStory({
       properties: { defaultPageDuration: newValue },
     });
@@ -111,8 +115,8 @@ function PageAdvancementPanel() {
           <Row>
             <Label>{__('Default Page Duration', 'web-stories')}</Label>
             <RangeInput
-              min={MIN_PAGE_DURATION}
-              max={MAX_PAGE_DURATION}
+              min={MIN_MAX.PAGE_DURATION.MIN}
+              max={MIN_MAX.PAGE_DURATION.MAX}
               step={0.1}
               value={duration}
               onChange={(evt) => setDuration(Number(evt.target.value))}
@@ -125,6 +129,8 @@ function PageAdvancementPanel() {
               value={duration}
               onChange={setDuration}
               aria-label={__('Default page duration in seconds', 'web-stories')}
+              min={MIN_MAX.PAGE_DURATION.MIN}
+              max={MIN_MAX.PAGE_DURATION.MAX}
             />
           </Row>
         </>
