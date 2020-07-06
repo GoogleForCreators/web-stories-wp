@@ -30,6 +30,6 @@ module.exports = {
     headless: PUPPETEER_HEADLESS !== 'false',
     slowMo: Number(PUPPETEER_SLOWMO) || 0,
     product: PUPPETEER_PRODUCT,
-    args: ['--window-size=1680,948'],
+    args: ['--window-size=1600,1000'], // Same as in percy.config.yml.
   },
 };

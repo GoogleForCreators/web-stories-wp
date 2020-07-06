@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -105,6 +106,8 @@ const PageHeading = ({
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
+  const typeaheadResults = useMemo(() => stories.slice(0, 5), [stories]);
+
   return (
     <Container>
       <HeadingBodyWrapper>
@@ -119,7 +122,7 @@ const PageHeading = ({
               <TypeaheadSearch
                 placeholder={searchPlaceholder}
                 currentValue={typeaheadValue}
-                stories={stories}
+                stories={typeaheadResults}
                 handleChange={handleTypeaheadChange}
               />
             </SearchInner>
