@@ -20,6 +20,13 @@
 import { identity, useContextSelector } from '../../utils/context';
 import Context from './context';
 
+/**
+ * Context value consumer to select a fragment of the enire media context value
+ * (local and media3p) that's provided from {@link MediaProvider}.
+ *
+ * @param {function(Object):Object} selector Returns a fragment of the media
+ * context value that the caller is interested in.
+ */
 function useMedia(selector) {
   return useContextSelector(Context, selector ?? identity);
 }

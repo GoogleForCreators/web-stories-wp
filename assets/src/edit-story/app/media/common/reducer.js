@@ -33,6 +33,14 @@ export const INITIAL_STATE = {
   isMediaLoaded: false,
 };
 
+/**
+ * The reducer for the state of a media list pagination.
+ *
+ * This is called by the reducers for the state nodes:
+ * media/local, media/media3p/unsplash, media/media3p/coverr, etc.
+ *
+ * @param state
+ */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
     case types.FETCH_MEDIA_START: {
