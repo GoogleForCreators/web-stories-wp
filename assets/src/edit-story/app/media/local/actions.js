@@ -20,12 +20,17 @@
 import * as common from '../common/actions';
 import * as types from '../types';
 
-export const fetchMediaStart = common.fetchMediaStart;
-export const fetchMediaSuccess = common.fetchMediaSuccess;
-export const fetchMediaError = common.fetchMediaError;
-export const setNextPage = common.setNextPage;
-export const updateMediaElement = common.updateMediaElement;
-export const deleteMediaElement = common.deleteMediaElement;
+export const fetchMediaStart = (dispatch) =>
+  common.fetchMediaStart(dispatch, 'local');
+export const fetchMediaSuccess = (dispatch) =>
+  common.fetchMediaSuccess(dispatch, 'local');
+export const fetchMediaError = (dispatch) =>
+  common.fetchMediaError(dispatch, 'local');
+export const setNextPage = (dispatch) => common.setNextPage(dispatch, 'local');
+export const updateMediaElement = (dispatch) =>
+  common.updateMediaElement(dispatch, 'local');
+export const deleteMediaElement = (dispatch) =>
+  common.deleteMediaElement(dispatch, 'local');
 
 export const resetFilters = (dispatch) => () => {
   dispatch({ type: types.RESET_FILTERS });

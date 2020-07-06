@@ -19,11 +19,16 @@
  */
 import * as types from '../types';
 
-export const fetchMediaStart = (dispatch) => ({ pageToken }) => {
-  dispatch({ type: types.FETCH_MEDIA_START, payload: { pageToken } });
+export const fetchMediaStart = (dispatch, defaultProvider) => ({
+  pageToken,
+}) => {
+  dispatch({
+    type: types.FETCH_MEDIA_START,
+    payload: { provider: defaultProvider, pageToken },
+  });
 };
 
-export const fetchMediaSuccess = (dispatch) => ({
+export const fetchMediaSuccess = (dispatch, defaultProvider) => ({
   media,
   mediaType,
   searchTerm,
@@ -32,28 +37,48 @@ export const fetchMediaSuccess = (dispatch) => ({
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
-    payload: { media, mediaType, searchTerm, nextPageToken, totalPages },
+    payload: {
+      provider: defaultProvider,
+      media,
+      mediaType,
+      searchTerm,
+      nextPageToken,
+      totalPages,
+    },
   });
 };
 
-export const fetchMediaError = (dispatch) => () => {
-  dispatch({ type: types.FETCH_MEDIA_ERROR });
+export const fetchMediaError = (dispatch, defaultProvider) => () => {
+  dispatch({
+    type: types.FETCH_MEDIA_ERROR,
+    payload: { provider: defaultProvider },
+  });
 };
 
-export const setNextPage = (dispatch) => () => {
-  dispatch({ type: types.SET_NEXT_PAGE });
+export const setNextPage = (dispatch, defaultProvider) => () => {
+  dispatch({
+    type: types.SET_NEXT_PAGE,
+    payload: { provider: defaultProvider },
+  });
 };
 
-export const updateMediaElement = (dispatch) => ({ id, ...properties }) => {
+export const updateMediaElement = (dispatch, defaultProvider) => ({
+  id,
+  ...properties
+}) => {
   dispatch({
     type: types.UPDATE_MEDIA_ELEMENT,
     payload: {
+      provider: defaultProvider,
       id,
       ...properties,
     },
   });
 };
 
-export const deleteMediaElement = (dispatch) => ({ id }) => {
-  dispatch({ type: types.DELETE_MEDIA_ELEMENT, payload: { id } });
+export const deleteMediaElement = (dispatch, defaultProvider) => ({ id }) => {
+  dispatch({
+    type: types.DELETE_MEDIA_ELEMENT,
+    payload: { provider: defaultProvider, id },
+  });
 };

@@ -36,8 +36,12 @@ const INITIAL_STATE = {
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
     case types.FETCH_MEDIA_SUCCESS: {
-      const { mediaType, searchTerm } = payload;
-      if (mediaType === state.mediaType && searchTerm === state.searchTerm) {
+      const { provider, mediaType, searchTerm } = payload;
+      if (
+        provider === 'local' &&
+        mediaType === state.mediaType &&
+        searchTerm === state.searchTerm
+      ) {
         return commonReducer(state, { type, payload });
       }
       return state;
@@ -116,7 +120,10 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     default:
-      return commonReducer(state, { type, payload });
+      if (payload?.provider == 'local') {
+        return commonReducer(state, { type, payload });
+      }
+      return state;
   }
 }
 
