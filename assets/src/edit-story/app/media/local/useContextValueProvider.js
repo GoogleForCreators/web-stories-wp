@@ -32,7 +32,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     processing,
     processed,
     media,
-    pagingNum,
+    pageToken,
     mediaType,
     searchTerm,
   } = reducerState;
@@ -58,12 +58,12 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     (
       {
         searchTerm: currentSearchTerm = '',
-        pagingNum: p = 1,
+        pageToken: p = 1,
         mediaType: currentMediaType,
       } = {},
       callback
     ) => {
-      fetchMediaStart({ pagingNum: p });
+      fetchMediaStart({ pageToken: p });
       getMedia({
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,
@@ -76,7 +76,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
             media: mediaArray,
             mediaType: currentMediaType,
             searchTerm: currentSearchTerm,
-            pagingNum: p,
+            pageToken: p,
             totalPages,
           });
         })
@@ -103,17 +103,17 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const resetWithFetch = useCallback(() => {
     // eslint-disable-next-line no-shadow
-    const { mediaType, pagingNum, searchTerm } = stateRef.current;
+    const { mediaType, pageToken, searchTerm } = stateRef.current;
 
     resetFilters();
-    if (!mediaType && !searchTerm && pagingNum === 1) {
+    if (!mediaType && !searchTerm && pageToken === 1) {
       fetchMedia({ mediaType }, fetchMediaSuccess);
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 
   useEffect(() => {
-    fetchMedia({ searchTerm, pagingNum, mediaType }, fetchMediaSuccess);
-  }, [fetchMedia, fetchMediaSuccess, mediaType, pagingNum, searchTerm]);
+    fetchMedia({ searchTerm, pageToken, mediaType }, fetchMediaSuccess);
+  }, [fetchMedia, fetchMediaSuccess, mediaType, pageToken, searchTerm]);
 
   const uploadVideoPoster = useCallback(
     (id, src) => {
