@@ -32,7 +32,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Google\\Web_Stories\\Tests\\": "tests/phpunit/tests"
+      "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes"
     }
   },
   "prefer-stable": true
