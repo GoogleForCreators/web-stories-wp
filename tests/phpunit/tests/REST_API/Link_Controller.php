@@ -77,7 +77,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 	 * @return array Response data.
 	 */
 	public function mock_http_request( $preempt, $r, $url ) {
-		$this->request_count += 1;
+		++ $this->request_count;
 
 		if ( false !== strpos( $url, self::EMPTY_URL ) ) {
 			return [

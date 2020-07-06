@@ -41,6 +41,7 @@ class FixtureEvents {
     this._act = act;
     this._keyboard = new Keyboard(act);
     this._mouse = new Mouse(act);
+    this._clipboard = new Clipboard(act);
   }
 
   get keyboard() {
@@ -49,6 +50,10 @@ class FixtureEvents {
 
   get mouse() {
     return this._mouse;
+  }
+
+  get clipboard() {
+    return this._clipboard;
   }
 
   /**
@@ -450,6 +455,36 @@ class Mouse {
    */
   moveBy(dx, dy, options = {}) {
     return this.seq([this._events.moveBy(dx, dy, options)]);
+  }
+}
+
+/**
+ * Events utility for clipboard.
+ */
+class Clipboard {
+  /**
+   * @param {function():Promise} act
+   */
+  constructor(act) {
+    this._act = act;
+  }
+
+  /**
+   * Copy whatever is currently selected to the clipboard
+   *
+   * @return {!Promise} Resolves when operation completes with a boolean success flag
+   */
+  copy() {
+    return this._act(() => karmaPuppeteer.clipboard.copy());
+  }
+
+  /**
+   * Paste whatever is in the clipboard to the currently active target
+   *
+   * @return {!Promise} Yields when the event is processed.
+   */
+  paste() {
+    return this._act(() => karmaPuppeteer.clipboard.paste());
   }
 }
 
