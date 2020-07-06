@@ -20,8 +20,8 @@
 import { identity, useContextSelector } from '../../../../../../utils/context';
 import Context from './context';
 
-function useApiProvider(selector) {
+function useMedia3pApiProvider(selector) {
   return useContextSelector(Context, selector ?? identity);
 }
 
-export default useApiProvider;
+export default useMedia3pApiProvider;

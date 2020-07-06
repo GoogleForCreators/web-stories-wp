@@ -43,10 +43,6 @@ function Media3pApiProvider({ children }) {
     return tokens.join(' ');
   }
 
-  function getFullAsset(urls) {
-    return urls['full'];
-  }
-
   function getUrls(m) {
     if (m.type.toLowerCase() === 'image') {
       return Object.fromEntries(
@@ -56,46 +52,51 @@ function Media3pApiProvider({ children }) {
     throw new Error('Invalid media type.');
   }
 
-  const listMedia = (() => {
-    return async ({
-      provider,
-      searchTerm,
-      orderBy,
-      mediaType,
-      pageToken = null,
-    }) => {
-      const response = await apiListMedia({
-        filter: constructFilter(provider, searchTerm, mediaType),
-        orderBy: orderBy,
-        pageSize: MEDIA_PAGE_SIZE,
-        pageToken: pageToken,
-      });
-      return {
-        media: response.media.map((m) => {
-          const urls = getUrls(m);
-          const fullAsset = getFullAsset(urls);
-          return createResource({
-            type: m.type.toLowerCase(),
-            mimeType: fullAsset.mimeType,
-            creationDate: m.createTime,
-            src: fullAsset.url,
-            width: fullAsset.width,
-            height: fullAsset.height,
-            poster: null, // TODO: Implement for videos.
-            getPosterId: null, // TODO: Implement for videos.
-            id: m.name,
-            length: null, // TODO: Implement for videos.
-            lengthFormatted: null, // TODO: Implement for videos.
-            title: m.description,
-            alt: null,
-            local: false, // TODO: How does this interact with the rest?
-            sizes: getUrls(m), // TODO: Map with expected keys for canvas.
-          });
-        }),
-        nextPageToken: response.nextPageToken,
-      };
+  function getFullAsset(m) {
+    if (m.type.toLowerCase() === 'image') {
+      return m.imageUrls.find((i) => i.imageName === 'full');
+    }
+    throw new Error('Invalid media type.');
+  }
+
+  async function listMedia({
+    provider,
+    searchTerm,
+    orderBy,
+    mediaType,
+    pageToken = null,
+  }) {
+    const response = await apiListMedia({
+      filter: constructFilter(provider, searchTerm, mediaType),
+      orderBy: orderBy,
+      pageSize: MEDIA_PAGE_SIZE,
+      pageToken: pageToken,
+    });
+    return {
+      media: response.media.map((m) => {
+        const urls = getUrls(m);
+        const fullAsset = getFullAsset(m);
+        return createResource({
+          type: m.type.toLowerCase(),
+          mimeType: fullAsset.mimeType,
+          creationDate: m.createTime,
+          src: fullAsset.url,
+          width: fullAsset.width,
+          height: fullAsset.height,
+          poster: null, // TODO: Implement for videos.
+          posterId: null, // TODO: Implement for videos.
+          id: m.name,
+          length: null, // TODO: Implement for videos.
+          lengthFormatted: null, // TODO: Implement for videos.
+          title: m.description,
+          alt: null,
+          local: false, // TODO: How does this interact with the rest?
+          sizes: urls, // TODO: Map with expected keys for canvas.
+        });
+      }),
+      nextPageToken: response.nextPageToken,
     };
-  })();
+  }
 
   const state = {
     actions: {
@@ -107,7 +108,7 @@ function Media3pApiProvider({ children }) {
 }
 
 Media3pApiProvider.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 };
 
 export default Media3pApiProvider;

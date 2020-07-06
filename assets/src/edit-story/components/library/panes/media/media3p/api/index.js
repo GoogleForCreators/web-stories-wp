@@ -15,4 +15,4 @@
  */
 
 export { default as Media3pApiProvider } from './media3pApiProvider';
-export { default as useApiProvider } from './useApiProvider';
+export { default as useMedia3pApiProvider } from './useMedia3pApiProvider';
