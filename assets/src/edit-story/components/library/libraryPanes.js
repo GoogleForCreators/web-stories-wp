@@ -20,6 +20,7 @@
 import useLibrary from './useLibrary';
 import { getPane } from './panes';
 import { getTabId } from './panes/shared';
+import { Media3pApiProvider } from './panes/media/media3p/api';
 
 function LibraryPanes() {
   const { tab, tabs } = useLibrary((state) => ({
@@ -27,9 +28,15 @@ function LibraryPanes() {
     tabs: state.data.tabs,
   }));
   const panes = tabs.map(getPane);
-  return panes.map(({ id, Pane }) => (
-    <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
-  ));
+
+  // TODO(diegovar): Potentially move Media3pApiProvider down.
+  return (
+    <Media3pApiProvider>
+      {panes.map(({ id, Pane }) => (
+        <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
+      ))}
+    </Media3pApiProvider>
+  );
 }
 
 export default LibraryPanes;
