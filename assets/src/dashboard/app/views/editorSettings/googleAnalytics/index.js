@@ -30,29 +30,29 @@ import {
 } from '../components';
 
 const TEXT = {
-  context: __(
+  CONTEXT: __(
     "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article.",
     'web-stories'
   ),
-  sectionHeading: __('Google Analytics Tracking ID', 'web-stories'),
-  placeholder: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
-  ariaLabel: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
+  SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
+  PLACEHOLDER: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
+  ARIA_LABEL: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
 };
 // todo add link
 function GoogleAnalyticsSettings() {
   return (
     <SettingForm>
       <SettingHeading htmlFor="gaTrackingID">
-        {TEXT.sectionHeading}
+        {TEXT.SECTION_HEADING}
       </SettingHeading>
       <div>
         <TextInput
-          label={TEXT.ariaLabel}
+          label={TEXT.ARIA_LABEL}
           id="gaTrackingId"
           value=""
-          placeholder={TEXT.placeholder}
+          placeholder={TEXT.PLACEHOLDER}
         />
-        <TextInputHelperText>{TEXT.context}</TextInputHelperText>
+        <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
       </div>
     </SettingForm>
   );
