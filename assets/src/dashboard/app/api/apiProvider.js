@@ -53,7 +53,7 @@ export default function ApiProvider({ children }) {
   const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
 
   const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
-    wordPressSettingsApi: api.settings,
+    globalStoriesSettingsApi: api.settings,
   });
 
   const value = useMemo(

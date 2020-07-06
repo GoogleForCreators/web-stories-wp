@@ -66,8 +66,8 @@ function GoogleAnalyticsSettings() {
   }, [googleAnalyticsId]);
 
   const handleCompleteUpdateId = useCallback(
-    (newValue) => {
-      updateGoogleAnalyticsId(newValue);
+    (newId) => {
+      updateGoogleAnalyticsId(newId);
     },
     [updateGoogleAnalyticsId]
   );

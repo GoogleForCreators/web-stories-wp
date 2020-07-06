@@ -33,11 +33,14 @@ import settingsReducer, {
   ACTION_TYPES as SETTINGS_ACTION_TYPES,
 } from '../reducer/settings';
 
-export default function useSettingsApi(dataAdapter, { wordPressSettingsApi }) {
+export default function useSettingsApi(
+  dataAdapter,
+  { globalStoriesSettingsApi }
+) {
   const [state, dispatch] = useReducer(settingsReducer, defaultSettingsState);
 
   const fetchGoogleAnalyticsId = useCallback(async () => {
-    if (!wordPressSettingsApi) {
+    if (!globalStoriesSettingsApi) {
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_FAILURE,
         payload: {
@@ -51,7 +54,7 @@ export default function useSettingsApi(dataAdapter, { wordPressSettingsApi }) {
     try {
       const response = await dataAdapter.get(
         queryString.stringifyUrl({
-          url: wordPressSettingsApi,
+          url: globalStoriesSettingsApi,
         })
       );
 
@@ -70,32 +73,38 @@ export default function useSettingsApi(dataAdapter, { wordPressSettingsApi }) {
         },
       });
     }
-  }, [dataAdapter, wordPressSettingsApi]);
+  }, [dataAdapter, globalStoriesSettingsApi]);
 
-  const updateGoogleAnalyticsId = useCallback(async () => {
-    try {
-      const response = await dataAdapter.post(
-        queryString.stringifyUrl({
-          url: wordPressSettingsApi,
-        })
-      );
+  const updateGoogleAnalyticsId = useCallback(
+    async (newAnalyticsId) => {
+      const query = { analyticsId: newAnalyticsId };
 
-      dispatch({
-        type: SETTINGS_ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_SUCCESS,
-        payload: response.googleAnalyticsId,
-      });
-    } catch (err) {
-      dispatch({
-        type: SETTINGS_ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_FAILURE,
-        payload: {
-          message: {
-            body: err.message,
-            title: __('Unable to update google analytics ID', 'web-stories'),
+      try {
+        const response = await dataAdapter.post(
+          queryString.stringifyUrl({
+            url: globalStoriesSettingsApi,
+            query,
+          })
+        );
+
+        dispatch({
+          type: SETTINGS_ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_SUCCESS,
+          payload: response.googleAnalyticsId,
+        });
+      } catch (err) {
+        dispatch({
+          type: SETTINGS_ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to update google analytics ID', 'web-stories'),
+            },
           },
-        },
-      });
-    }
-  }, [dataAdapter, wordPressSettingsApi]);
+        });
+      }
+    },
+    [dataAdapter, globalStoriesSettingsApi]
+  );
 
   const api = useMemo(
     () => ({

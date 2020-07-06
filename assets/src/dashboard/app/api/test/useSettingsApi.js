@@ -27,7 +27,7 @@ import wpAdapter from '../wpAdapter';
 describe('useSettingsApi', () => {
   it('should return an error when fetching google analytics API request fails', async () => {
     const { result } = renderHook(() =>
-      useSettingsApi(wpAdapter, { wordPressSettingsApi: 'wordpress' })
+      useSettingsApi(wpAdapter, { globalStoriesSettingsApi: 'wordpress' })
     );
 
     await act(async () => {
@@ -42,11 +42,11 @@ describe('useSettingsApi', () => {
 
   it('should return an error when updating google analytics API request fails', async () => {
     const { result } = renderHook(() =>
-      useSettingsApi(wpAdapter, { wordPressSettingsApi: 'wordpress' })
+      useSettingsApi(wpAdapter, { globalStoriesSettingsApi: 'wordpress' })
     );
 
     await act(async () => {
-      await result.current.api.updateGoogleAnalyticsId();
+      await result.current.api.updateGoogleAnalyticsId('2738237892739');
     });
 
     expect(result.current.settings.error.message).toStrictEqual({
