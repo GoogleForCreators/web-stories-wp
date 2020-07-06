@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import groupBy from '../../utils/groupBy';
+import { reshapeStoryObject } from '../api/useStoryApi';
 
 export const ACTION_TYPES = {
   CREATING_STORY_FROM_TEMPLATE: 'creating_story_from_template',
@@ -120,7 +120,17 @@ function storyReducer(state, action) {
       };
 
     case ACTION_TYPES.FETCH_STORIES_SUCCESS: {
-      const fetchedStoriesById = action.payload.stories.map(({ id }) => id);
+      const fetchedStoriesById = [];
+      const reshapedStories = action.payload.stories.reduce((acc, current) => {
+        if (!current) {
+          return acc;
+        }
+        fetchedStoriesById.push(current.id);
+        acc[current.id] = reshapeStoryObject(action.payload.editStoryURL)(
+          current
+        );
+        return acc;
+      }, {});
 
       const combinedStoryIds =
         action.payload.page === 1
@@ -129,11 +139,16 @@ function storyReducer(state, action) {
 
       const uniqueStoryIds = [...new Set(combinedStoryIds)];
 
+      let stories = {
+        ...state.stories,
+        ...reshapedStories,
+      };
+
       return {
         ...state,
         error: {},
         storiesOrderById: uniqueStoryIds,
-        stories: { ...state.stories, ...groupBy(action.payload.stories, 'id') },
+        stories,
         totalPages: action.payload.totalPages,
         totalStoriesByStatus: action.payload.totalStoriesByStatus,
         allPagesFetched: action.payload.page >= action.payload.totalPages,

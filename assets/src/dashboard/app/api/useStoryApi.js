@@ -139,14 +139,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           response.headers &&
           JSON.parse(response.headers['X-WP-TotalByStatus']);
 
-        const reshapedStories = response.body
-          .map(reshapeStoryObject(editStoryURL))
-          .filter(Boolean);
-
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
-            stories: reshapedStories,
+            editStoryURL,
+            stories: response.body,
             totalPages,
             totalStoriesByStatus,
             page,
