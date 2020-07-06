@@ -48,7 +48,7 @@ describe('CUJ: Editor Can Style Text', () => {
       data.fixture.restore();
     });
 
-    it('should have the correct initial text and formatting', () => {
+    it('should have the correct initial text and no formatting', () => {
       expect(getTextContent()).toBe('Fill in some text');
     });
 
