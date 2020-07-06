@@ -15,12 +15,13 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+
+/**
+ * Internal dependencies
+ */
 import { useMedia3pApiProvider } from '../index';
 import Media3pApiProvider from '../media3pApiProvider';
 
