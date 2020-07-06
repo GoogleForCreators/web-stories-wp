@@ -15,12 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-// import { text } from '@storybook/addon-knobs';
-// import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import GoogleAnalyticsSettings from '../';
