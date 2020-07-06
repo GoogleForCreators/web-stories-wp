@@ -167,8 +167,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
 		$request->set_param( '_web_stories_envelope', true );
-		$response       = rest_get_server()->dispatch( $request );
-		$data           = $response->get_data();
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
 
 		// Body of request.
 		$this->assertArrayHasKey( 'headers', $data );
