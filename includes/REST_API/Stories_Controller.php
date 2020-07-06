@@ -321,23 +321,13 @@ class Stories_Controller extends Stories_Base_Controller {
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 		}
 
-		if ( $request['_web_stories_envelope'] ) {
-			$current_data = $response->get_data();
-			$headers      = $response->get_headers();
-			$data         = [
-				'totals'  => $statuses_count,
-				'headers' => $headers,
-				'data'    => $current_data,
-			];
-			$response     = rest_ensure_response( $data );
-			foreach ( $headers as $header => $value ) {
-				$response->header( $header, $value );
-			}
-		}
 		// Encode the array as headers do not support passing an array.
 		$encoded_statuses = wp_json_encode( $statuses_count );
 		if ( $encoded_statuses ) {
 			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
+		}
+		if ( $request['_web_stories_envelope'] ) {
+			$response = rest_get_server()->envelope_response( $response, false );
 		}
 		return $response;
 	}

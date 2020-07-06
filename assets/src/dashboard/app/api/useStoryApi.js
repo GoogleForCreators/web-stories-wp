@@ -135,9 +135,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
         const totalPages =
           response.headers && parseInt(response.headers['X-WP-TotalPages']);
-        const totalStoriesByStatus = response.totals;
+        const totalStoriesByStatus =
+          response.headers &&
+          JSON.parse(response.headers['X-WP-TotalByStatus']);
 
-        const reshapedStories = response.data
+        const reshapedStories = response.body
           .map(reshapeStoryObject(editStoryURL))
           .filter(Boolean);
 

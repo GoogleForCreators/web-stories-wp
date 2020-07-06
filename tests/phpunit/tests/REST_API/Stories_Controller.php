@@ -185,13 +185,17 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( 3, $headers['X-WP-Total'] );
 
 		// Body of request.
-		$this->assertArrayHasKey( 'totals', $data );
 		$this->assertArrayHasKey( 'headers', $data );
-		$this->assertArrayHasKey( 'data', $data );
+		$this->assertArrayHasKey( 'body', $data );
+		$this->assertArrayHasKey( 'status', $data );
 
-		$this->assertEquals( 10, $data['totals']['all'] );
-		$this->assertEquals( 7, $data['totals']['publish'] );
-		$this->assertEquals( 3, $data['totals']['draft'] );
+		$statues        = $data['headers']['X-WP-TotalByStatus'];
+		$statues_decode = json_decode( $statues, true );
+
+		// Headers.
+		$this->assertArrayHasKey( 'all', $statues_decode );
+		$this->assertArrayHasKey( 'publish', $statues_decode );
+		$this->assertArrayHasKey( 'draft', $statues_decode );
 
 		$this->assertEquals( 3, $data['headers']['X-WP-Total'] );
 	}

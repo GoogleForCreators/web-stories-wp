@@ -33,13 +33,9 @@ jest.mock('../wpAdapter', () => ({
       headers: {
         'X-WP-Total': 1,
         'X-WP-TotalPages': 1,
+        'X-WP-TotalByStatus': '{"all":1,"publish":1,"draft":0}',
       },
-      totals: {
-        all: 1,
-        draft: 0,
-        publish: 1,
-      },
-      data: [
+      body: [
         {
           id: 123,
           status: 'publish',
