@@ -135,13 +135,13 @@ function Media3pApiProvider({ children }) {
     };
   }
 
-  const state = {
+  const contextValue = {
     actions: {
       listMedia,
     },
   };
 
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
 
 Media3pApiProvider.propTypes = {

@@ -19,4 +19,4 @@
  */
 import { createContext } from '../../../../utils/context';
 
-export default createContext({ state: {}, actions: {} });
+export default createContext({ actions: {} });
