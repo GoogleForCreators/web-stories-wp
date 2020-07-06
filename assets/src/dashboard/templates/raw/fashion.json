@@ -333,89 +333,6 @@
           "isDefaultBackground": true
         },
         {
-          "x": 18,
-          "y": 11,
-          "width": 356,
-          "height": 300,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "d773925c-2f95-44c0-9b0e-0743d45476f2",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">“IF YOU CAN'T BE BETTER THAN YOUR COMPETITION, JUST DRESS BETTER”</span>",
-          "fontSize": 50,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 19,
-          "y": 493,
-          "width": 354,
-          "height": 100,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "d773925c-2f95-44c0-9b0e-0743d45476f2",
-          "id": "61d23551-31e3-4aad-ac15-b8fc5e4be2ec",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">— ANNA</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">WINTOUR</span>",
-          "fontSize": 50,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -479,6 +396,89 @@
           },
           "type": "image",
           "id": "99696270-286f-4c14-b062-aad2a021672a"
+        },
+        {
+          "x": 18,
+          "y": 524,
+          "width": 229,
+          "height": 28,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": [
+              "serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "d773925c-2f95-44c0-9b0e-0743d45476f2",
+          "id": "61d23551-31e3-4aad-ac15-b8fc5e4be2ec",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">— ANONYMOUS</span>",
+          "fontSize": 28,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 18,
+          "y": 11,
+          "width": 371,
+          "height": 250,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": [
+              "serif"
+            ]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "d773925c-2f95-44c0-9b0e-0743d45476f2",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">“WHEN WE DRESS WELL, WE NATURALLY BOOST OUR CONFIDENCE”</span>",
+          "fontSize": 50,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
       "type": "page",
@@ -2016,7 +2016,7 @@
           "focalY": 50,
           "type": "text",
           "id": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
-          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em\">CARDIN&nbsp;</span>",
+          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em\">KEPLER</span>",
           "fontSize": 132,
           "padding": {
             "horizontal": 0,
@@ -5538,7 +5538,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-29T20:54:29",
-            "src": "http://localhost:8899/wp-content/uploads/2020/06/fashion_page9_item4.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fashion/fashion_page9_item4.jpg",
             "width": 330,
             "height": 494,
             "posterId": 0,
@@ -5546,22 +5546,7 @@
             "title": "fashion_page9_item4",
             "alt": "fashion_page9_item4",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "fashion_page9_item4-200x300.jpg",
-                "width": 200,
-                "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fashion_page9_item4-200x300.jpg"
-              },
-              "full": {
-                "file": "fashion_page9_item4-scaled.jpg",
-                "width": 1707,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "http://localhost:8899/wp-content/uploads/2020/06/fashion_page9_item4-scaled.jpg"
-              }
-            }
+            "sizes": []
           },
           "basedOn": "ba68ba92-edcd-4c5c-a4fe-5263fc994e2b",
           "id": "40d8eaeb-1fad-4346-b56b-eef002fcb4db",

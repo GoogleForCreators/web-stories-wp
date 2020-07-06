@@ -40,6 +40,7 @@ const REMOVE_ICON_SIZE = 18;
 const PRESET_SIZE = 30;
 
 const presetCSS = css`
+  display: block;
   width: 100%;
   height: 100%;
   font-size: 13px;
