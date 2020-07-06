@@ -22,38 +22,25 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import * as actionsToWrap from '../actions';
-import reducer from '../reducer';
+import providerReducer from '../providerReducer';
 import useMediaReducer from '../../useMediaReducer';
-import * as types from '../../types';
+import * as actionsToWrap from '../actions';
 
-describe('reducer', () => {
-  let initialValue;
-
-  beforeEach(() => {
-    initialValue = reducer(undefined, { type: types.INITIAL_STATE });
-  });
-
-  it('should provide initial state for each provider', () => {
-    expect(initialValue).toStrictEqual(
-      expect.objectContaining({ unsplash: expect.anything() })
-    );
-  });
-
-  it('should reduce each provider state', () => {
+describe('providerReducer', () => {
+  it('should assign isMediaLoading=true on fetchMediaStart', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(providerReducer, actionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({
+    result.current.actions.fetchMediaStart({
       provider: 'unsplash',
-      media: [{ id: 'id' }],
+      pageToken: 'page2',
     });
 
-    expect(result.current.state.unsplash).toStrictEqual(
+    expect(result.current.state).toStrictEqual(
       expect.objectContaining({
-        isMediaLoaded: true,
-        isMediaLoading: false,
+        isMediaLoading: true,
+        isMediaLoaded: false,
       })
     );
   });

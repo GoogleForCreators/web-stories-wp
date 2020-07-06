@@ -20,15 +20,20 @@
 import * as types from './types';
 
 export const fetchMediaStart = (dispatch, defaultProvider) => ({
+  provider,
   pageToken,
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_START,
-    payload: { provider: defaultProvider, pageToken },
+    payload: {
+      provider: provider ?? defaultProvider,
+      pageToken,
+    },
   });
 };
 
 export const fetchMediaSuccess = (dispatch, defaultProvider) => ({
+  provider,
   media,
   mediaType,
   searchTerm,
@@ -38,7 +43,7 @@ export const fetchMediaSuccess = (dispatch, defaultProvider) => ({
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
     payload: {
-      provider: defaultProvider,
+      provider: provider ?? defaultProvider,
       media,
       mediaType,
       searchTerm,
@@ -48,37 +53,48 @@ export const fetchMediaSuccess = (dispatch, defaultProvider) => ({
   });
 };
 
-export const fetchMediaError = (dispatch, defaultProvider) => () => {
+export const fetchMediaError = (dispatch, defaultProvider) => ({
+  provider,
+} = {}) => {
   dispatch({
     type: types.FETCH_MEDIA_ERROR,
-    payload: { provider: defaultProvider },
+    payload: { provider: provider ?? defaultProvider },
   });
 };
 
-export const setNextPage = (dispatch, defaultProvider) => () => {
+export const setNextPage = (dispatch, defaultProvider) => ({
+  provider,
+} = {}) => {
   dispatch({
     type: types.SET_NEXT_PAGE,
-    payload: { provider: defaultProvider },
+    payload: { provider: provider ?? defaultProvider },
   });
 };
 
 export const updateMediaElement = (dispatch, defaultProvider) => ({
+  provider,
   id,
   ...properties
 }) => {
   dispatch({
     type: types.UPDATE_MEDIA_ELEMENT,
     payload: {
-      provider: defaultProvider,
+      provider: provider ?? defaultProvider,
       id,
       ...properties,
     },
   });
 };
 
-export const deleteMediaElement = (dispatch, defaultProvider) => ({ id }) => {
+export const deleteMediaElement = (dispatch, defaultProvider) => ({
+  provider,
+  id,
+}) => {
   dispatch({
     type: types.DELETE_MEDIA_ELEMENT,
-    payload: { provider: defaultProvider, id },
+    payload: {
+      provider: provider ?? defaultProvider,
+      id,
+    },
   });
 };
