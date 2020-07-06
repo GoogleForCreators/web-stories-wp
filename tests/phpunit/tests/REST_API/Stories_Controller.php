@@ -168,21 +168,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$request->set_param( 'context', 'edit' );
 		$request->set_param( '_web_stories_envelope', true );
 		$response       = rest_get_server()->dispatch( $request );
-		$headers        = $response->get_headers();
 		$data           = $response->get_data();
-		$statues        = $headers['X-WP-TotalByStatus'];
-		$statues_decode = json_decode( $statues, true );
-
-		// Headers.
-		$this->assertArrayHasKey( 'all', $statues_decode );
-		$this->assertArrayHasKey( 'publish', $statues_decode );
-		$this->assertArrayHasKey( 'draft', $statues_decode );
-
-		$this->assertEquals( 10, $statues_decode['all'] );
-		$this->assertEquals( 7, $statues_decode['publish'] );
-		$this->assertEquals( 3, $statues_decode['draft'] );
-
-		$this->assertEquals( 3, $headers['X-WP-Total'] );
 
 		// Body of request.
 		$this->assertArrayHasKey( 'headers', $data );
@@ -216,7 +202,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	}
 
 	/**
-	 * @covers ::filter_posts_orderby
+	 * @covers ::filter_posts_clauses
 	 */
 	public function test_filter_posts_by_author_display_names() {
 		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
@@ -263,7 +249,6 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	}
 
 	/**
-	 * @covers ::filter_posts_orderby
 	 * @covers ::filter_posts_clauses
 	 */
 	public function test_filter_posts_clauses_irrelevant_query() {
