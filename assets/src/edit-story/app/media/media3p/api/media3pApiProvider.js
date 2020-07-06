@@ -63,9 +63,13 @@ function Media3pApiProvider({ children }) {
 
   function getFullAsset(m) {
     if (m.type.toLowerCase() === 'image') {
-      return m.imageUrls.find((i) => i.imageName === 'full');
+      if (!m.imageUrls.length) {
+        throw new Error('No imageUrls for media resource: ' + m);
+      }
+      // Reverse sort and get the largest width to determine the full asset.
+      return m.imageUrls.sort((el1, el2) => el2.width - el1.width)[0];
     }
-    throw new Error('Invalid media type.');
+    throw new Error('Invalid media type for media resource: ' + m);
   }
 
   /**
