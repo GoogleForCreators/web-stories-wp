@@ -40,6 +40,7 @@ function CanvasProvider({ children }) {
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
+  const [showAttachmentBorder, setShowAttachmentBorder] = useState(false);
 
   const {
     nodesById,
@@ -162,6 +163,7 @@ function CanvasProvider({ children }) {
         lastSelectionEvent,
         showSafeZone,
         pageSize,
+        showAttachmentBorder,
       },
       actions: {
         setPageContainer,
@@ -175,6 +177,7 @@ function CanvasProvider({ children }) {
         selectIntersection,
         setPageSize,
         setShowSafeZone,
+        setShowAttachmentBorder,
       },
     }),
     [
@@ -197,6 +200,8 @@ function CanvasProvider({ children }) {
       selectIntersection,
       setPageSize,
       setShowSafeZone,
+      showAttachmentBorder,
+      setShowAttachmentBorder,
     ]
   );
   return (

@@ -89,15 +89,18 @@ const TextWrapper = styled.span`
 `;
 
 function PageAttachment({ pageAttachment }) {
-  const { pageSize } = useCanvas((state) => ({
+  const { pageSize, showAttachmentBorder } = useCanvas((state) => ({
+    showAttachmentBorder: state.state.showAttachmentBorder,
     pageSize: state.state.pageSize,
   }));
   const fullbleedHeight = pageSize.width / FULLBLEED_RATIO;
   const fullbleedBottom = (fullbleedHeight - pageSize.height) / 2;
   const { ctaText } = pageAttachment;
-  // @todo Display marker only if dragging / relevant input in focus.
   return (
-    <Wrapper fullbleedBottom={fullbleedBottom} displayMarker={true}>
+    <Wrapper
+      fullbleedBottom={fullbleedBottom}
+      displayMarker={showAttachmentBorder}
+    >
       <Icon>
         <LeftBar />
         <RightBar />

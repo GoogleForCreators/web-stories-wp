@@ -18,11 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useCallback, useState, useEffect } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { useCallback, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -34,6 +34,7 @@ import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import { useStory } from '../../../app/story';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
+import { useCanvas } from '../../canvas';
 
 const Error = styled.span`
   font-size: 12px;
@@ -43,16 +44,46 @@ const Error = styled.span`
 
 function PageAttachmentPanel() {
   const {
-    state: { currentPage },
-    actions: { updateCurrentPageProperties },
-  } = useStory();
+    currentPage,
+    updateCurrentPageProperties,
+    updateElementsById,
+  } = useStory((state) => ({
+    updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
+    updateElementsById: state.actions.updateElementsById,
+    currentPage: state.state.currentPage,
+  }));
+  const { setShowAttachmentBorder } = useCanvas((state) => ({
+    setShowAttachmentBorder: state.actions.setShowAttachmentBorder,
+  }));
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
   const { url, ctaText = defaultCTA } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
+  const [displayWarning, setDisplayWarning] = useState(false);
 
   const { getElementsInAttachmentArea } = useElementsWithLinks();
   const linksInAttachmentArea = getElementsInAttachmentArea();
+  const hasLinksInAttachmentArea = linksInAttachmentArea.length > 0;
+
+  useEffect(() => {
+    // @todo Only set it if the value is changing.
+    setShowAttachmentBorder(hasLinksInAttachmentArea && !url.length);
+    return () => {
+      setShowAttachmentBorder(false);
+    };
+  }, [hasLinksInAttachmentArea, setShowAttachmentBorder, url]);
+
+  const onFocus = () => {
+    if (hasLinksInAttachmentArea && !url.length) {
+      setDisplayWarning(true);
+    }
+  };
+
+  useEffect(() => {
+    if (displayWarning && url.length) {
+      setDisplayWarning(false);
+    }
+  }, [url, displayWarning]);
 
   const updatePageAttachment = useCallback(
     (value) => {
@@ -60,6 +91,15 @@ function PageAttachmentPanel() {
         const urlWithProtocol = withProtocol(value.url);
         const valid = isValidUrl(urlWithProtocol);
         setIsInvalidUrl(!valid);
+        if (hasLinksInAttachmentArea) {
+          // Remove links from elements if Page attachment was updated.
+          updateElementsById({
+            elementIds: linksInAttachmentArea.map(({ id }) => id),
+            properties: {
+              link: null,
+            },
+          });
+        }
       }
       const _pageAttachment = {
         ...pageAttachment,
@@ -69,7 +109,13 @@ function PageAttachmentPanel() {
         properties: { pageAttachment: _pageAttachment },
       });
     },
-    [updateCurrentPageProperties, pageAttachment]
+    [
+      updateCurrentPageProperties,
+      pageAttachment,
+      hasLinksInAttachmentArea,
+      linksInAttachmentArea,
+      updateElementsById,
+    ]
   );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
@@ -92,6 +138,7 @@ function PageAttachmentPanel() {
         <ExpandedTextInput
           placeholder={__('Web address', 'web-stories')}
           onChange={(value) => updatePageAttachment({ url: value })}
+          onFocus={onFocus}
           value={url || ''}
           clear
           aria-label={__('Edit: Page Attachment link', 'web-stories')}
@@ -103,8 +150,7 @@ function PageAttachmentPanel() {
         </Row>
       )}
 
-      {/* @todo Display only when field in focus */}
-      {linksInAttachmentArea.length > 0 && (
+      {displayWarning && (
         <Row>
           <Error>
             {__(
