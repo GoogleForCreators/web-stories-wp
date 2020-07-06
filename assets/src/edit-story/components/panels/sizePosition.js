@@ -42,11 +42,27 @@ import { Lock as Locked, Unlock as Unlocked } from '../../icons';
 
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
+import clamp from '../../utils/clamp';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 import FlipControls from './shared/flipControls';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
+const MIN_MAX = {
+  // TODO: with %360 logic this is not used, but can be utilized via keyboard arrows
+  ROTATION: {
+    MIN: -360,
+    MAX: 360,
+  },
+  WIDTH: {
+    MIN: 1,
+    MAX: 1000,
+  },
+  HEIGHT: {
+    MIN: 1,
+    MAX: 1000,
+  },
+};
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -137,17 +153,26 @@ function SizePositionPanel({
       const { updateForResizeEvent } = getDefinitionForType(type);
       if (updateForResizeEvent) {
         const direction = [isResizeWidth ? 1 : 0, isResizeHeight ? 1 : 0];
-        return updateForResizeEvent(newElement, direction, newWidth, newHeight);
+        return updateForResizeEvent(
+          newElement,
+          direction,
+          clamp(newWidth, MIN_MAX.WIDTH),
+          clamp(newHeight, MIN_MAX.HEIGHT)
+        );
       }
 
       // Fallback to ratio.
       if (lockAspectRatio) {
         const ratio = oldWidth / oldHeight;
         if (!isResizeWidth) {
-          return { width: dataPixels(newHeight * ratio) };
+          return {
+            width: clamp(dataPixels(newHeight * ratio), MIN_MAX.WIDTH),
+          };
         }
         if (!isResizeHeight) {
-          return { height: dataPixels(newWidth / ratio) };
+          return {
+            height: clamp(dataPixels(newWidth / ratio), MIN_MAX.HEIGHT),
+          };
         }
       }
 
@@ -156,11 +181,57 @@ function SizePositionPanel({
     [lockAspectRatio]
   );
 
-  usePresubmitHandler(
-    ({ rotationAngle: newRotationAngle }) => ({
+  usePresubmitHandler(({ rotationAngle: newRotationAngle }) => {
+    return {
       rotationAngle: newRotationAngle % 360,
-    }),
-    []
+    };
+  }, []);
+
+  const setDimensionMinMax = useCallback(
+    (value, ratio, minmax) => {
+      if (lockAspectRatio && value >= minmax.MAX) {
+        return clamp(minmax.MAX * ratio, minmax);
+      }
+
+      return clamp(value, minmax);
+    },
+    [lockAspectRatio]
+  );
+
+  usePresubmitHandler(
+    ({ height: newHeight }, { width: oldWidth, height: oldHeight }) => {
+      const ratio = oldHeight / oldWidth;
+      newHeight = clamp(newHeight, MIN_MAX.HEIGHT);
+      if (isNum(ratio)) {
+        return {
+          height: setDimensionMinMax(
+            dataPixels(newHeight),
+            ratio,
+            MIN_MAX.HEIGHT
+          ),
+        };
+      }
+      return {
+        height: clamp(newHeight, MIN_MAX.HEIGHT),
+      };
+    },
+    [height, lockAspectRatio]
+  );
+
+  usePresubmitHandler(
+    ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
+      const ratio = oldWidth / oldHeight;
+      newWidth = clamp(newWidth, MIN_MAX.WIDTH);
+      if (isNum(ratio)) {
+        return {
+          width: setDimensionMinMax(dataPixels(newWidth), ratio, MIN_MAX.WIDTH),
+        };
+      }
+      return {
+        width: clamp(newWidth, MIN_MAX.WIDTH),
+      };
+    },
+    [width, lockAspectRatio]
   );
 
   const handleSetBackground = useCallback(() => {
@@ -184,6 +255,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('W', 'The Width dimension', 'web-stories')}
           value={width}
+          min={MIN_MAX.WIDTH.MIN}
+          max={MIN_MAX.WIDTH.MAX}
           onChange={(value) => {
             const newWidth = value;
             let newHeight = height;
@@ -209,6 +282,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
           value={height}
+          min={MIN_MAX.HEIGHT.MIN}
+          max={MIN_MAX.HEIGHT.MAX}
           onChange={(value) => {
             const newHeight = value;
             let newWidth = width;
@@ -230,8 +305,11 @@ function SizePositionPanel({
           suffix={__('Rotate', 'web-stories')}
           symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
           value={rotationAngle}
+          min={MIN_MAX.ROTATION.MIN}
+          max={MIN_MAX.ROTATION.MAX}
           onChange={(value) => pushUpdate({ rotationAngle: value })}
           aria-label={__('Rotation', 'web-stories')}
+          canBeNegative
         />
         {canFlip && (
           <FlipControls

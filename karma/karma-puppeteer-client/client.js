@@ -93,10 +93,21 @@
     };
   }
 
+  function clipboard() {
+    function clipboardFunction(name) {
+      return puppeteerFunction('clipboard_' + name);
+    }
+    return {
+      copy: clipboardFunction('copy'),
+      paste: clipboardFunction('paste'),
+    };
+  }
+
   window.karmaPuppeteer = {
     saveSnapshot: puppeteerFunction('saveSnapshot'),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pageclickselector-options
     click: withSelector('click'),
+    clipboard: clipboard(),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pagefocusselector
     focus: withSelector('focus'),
     // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#framehoverselector
