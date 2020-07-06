@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { createResource } from '../../../../../../app/media/utils';
+import { createResource } from '../../utils';
 import { listMedia as apiListMedia } from './apiFetcher';
 import Context from './context';
 
@@ -43,17 +43,13 @@ function Media3pApiProvider({ children }) {
   const MEDIA_PAGE_SIZE = 20;
 
   function constructFilter(provider, searchTerm, mediaType) {
-    let tokens = [];
-    if (provider) {
-      tokens.push(`provider:${provider}`);
-    }
-    if (mediaType) {
-      tokens.push(`type:${mediaType}`);
-    }
-    if (searchTerm) {
-      tokens.push(searchTerm);
-    }
-    return tokens.join(' ');
+    return [
+      provider ? `provider:${provider}` : null,
+      mediaType ? `type:${mediaType}` : null,
+      searchTerm,
+    ]
+      .filter(Boolean)
+      .join(' ');
   }
 
   function getUrls(m) {
@@ -73,15 +69,49 @@ function Media3pApiProvider({ children }) {
   }
 
   /**
+   * Maps a media object returned from the API to a Story Editor resource.
+   *
+   * @param {Object} m The media object to map.
+   * @return {Object} The mapped resource.
+   */
+  function mapMediaToResource(m) {
+    const urls = getUrls(m);
+    const fullAsset = getFullAsset(m);
+    return createResource({
+      type: m.type.toLowerCase(),
+      mimeType: fullAsset.mimeType,
+      creationDate: m.createTime,
+      src: fullAsset.url,
+      width: fullAsset.width,
+      height: fullAsset.height,
+      poster: null, // TODO: Implement for videos.
+      posterId: null, // TODO: Implement for videos.
+      id: m.name,
+      length: null, // TODO: Implement for videos.
+      lengthFormatted: null, // TODO: Implement for videos.
+      title: m.description,
+      alt: null,
+      local: false, // TODO: How does this interact with the rest?
+      sizes: urls, // TODO: Map with expected keys for canvas.
+    });
+  }
+
+  /**
    * Get media for the given parameters.
    *
    * @param {Object} obj - An object with the options.
-   * @param {string} obj.provider The provider to get the media from. Currently only 'unsplash' is supported.
-   * @param {?string} obj.searchTerm Optional search term to send, eg: 'cute cats'.
-   * @param {?string} obj.orderBy The desired ordering of the results. Defaults to 'relevance' in the API.
-   * @param {?string} obj.mediaType The media type of results to get. Currently ignored by the API as Unsplash only handles images.
-   * @param {?string} obj.pageToken An optional page token to provide, for pagination.
-   * @return {Promise<{nextPageToken: *, media: *}>} An object with the media resources and a next page token.
+   * @param {string} obj.provider The provider to get the media from.
+   * Currently only 'unsplash' is supported.
+   * @param {?string} obj.searchTerm Optional search term to send,
+   * eg: 'cute cats'.
+   * @param {?string} obj.orderBy The desired ordering of the results.
+   * Defaults to 'relevance' in the API.
+   * @param {?string} obj.mediaType The media type of results to get.
+   * Currently ignored by the API as Unsplash only handles images.
+   * @param {?string} obj.pageToken An optional page token to provide,
+   * for pagination. If unspecified, the first page of results will be returned.
+   * @return {Promise<{nextPageToken: *, media: *}>} An object with the media
+   * resources and a next page token.
    */
   async function listMedia({
     provider,
@@ -91,7 +121,7 @@ function Media3pApiProvider({ children }) {
     pageToken,
   }) {
     if (provider.toLowerCase() !== Providers.UNSPLASH) {
-      throw new Error(`Unsupported providers: ${provider}`);
+      throw new Error(`Unsupported provider: ${provider}`);
     }
     const response = await apiListMedia({
       filter: constructFilter(provider, searchTerm, mediaType),
@@ -100,27 +130,7 @@ function Media3pApiProvider({ children }) {
       pageToken: pageToken,
     });
     return {
-      media: response.media.map((m) => {
-        const urls = getUrls(m);
-        const fullAsset = getFullAsset(m);
-        return createResource({
-          type: m.type.toLowerCase(),
-          mimeType: fullAsset.mimeType,
-          creationDate: m.createTime,
-          src: fullAsset.url,
-          width: fullAsset.width,
-          height: fullAsset.height,
-          poster: null, // TODO: Implement for videos.
-          posterId: null, // TODO: Implement for videos.
-          id: m.name,
-          length: null, // TODO: Implement for videos.
-          lengthFormatted: null, // TODO: Implement for videos.
-          title: m.description,
-          alt: null,
-          local: false, // TODO: How does this interact with the rest?
-          sizes: urls, // TODO: Map with expected keys for canvas.
-        });
-      }),
+      media: response.media.map(mapMediaToResource),
       nextPageToken: response.nextPageToken,
     };
   }

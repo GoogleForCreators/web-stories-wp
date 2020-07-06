@@ -17,6 +17,11 @@
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../../../../utils/context';
+import { identity, useContextSelector } from '../../../../utils/context';
+import Context from './context';
 
-export default createContext({ state: {}, actions: {} });
+function useMedia3pApiProvider(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useMedia3pApiProvider;

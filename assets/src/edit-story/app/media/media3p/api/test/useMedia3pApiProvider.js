@@ -20,7 +20,7 @@
 /**
  * External dependencies
  */
-import { act, renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { useMedia3pApiProvider } from '../index';
 import Media3pApiProvider from '../media3pApiProvider';
 
@@ -57,11 +57,8 @@ describe('useMedia3pApiProvider', () => {
     );
     const { result } = renderHook(() => useMedia3pApiProvider(), { wrapper });
 
-    let listMediaResult;
-    await act(async () => {
-      listMediaResult = await result.current.actions.listMedia({
-        provider: 'unsplash',
-      });
+    const listMediaResult = await result.current.actions.listMedia({
+      provider: 'unsplash',
     });
 
     expect(listMediaResult).toStrictEqual({
