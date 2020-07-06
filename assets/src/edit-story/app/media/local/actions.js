@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import * as common from '../common/actions';
-import * as types from '../types';
+import * as types from './types';
 
 export const fetchMediaStart = (dispatch) =>
   common.fetchMediaStart(dispatch, 'local');

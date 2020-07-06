@@ -14,4 +14,9 @@
  * limitations under the License.
  */
 
-export const INITIAL_STATE = 'INITIAL_STATE';
+export const RESET_FILTERS = 'RESET_FILTERS';
+export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
+export const SET_MEDIA_TYPE = 'SET_MEDIA_TYPE';
+export const SET_MEDIA = 'SET_MEDIA';
+export const REMOVE_PROCESSING = 'REMOVE_PROCESSING';
+export const ADD_PROCESSING = 'ADD_PROCESSING';

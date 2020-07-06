@@ -19,11 +19,11 @@
 /**
  * Internal dependencies
  */
-import * as types from '../types';
-
+import * as commonTypes from '../common/types';
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
 } from '../common/reducer';
+import * as types from './types';
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
@@ -35,7 +35,7 @@ const INITIAL_STATE = {
 
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-    case types.FETCH_MEDIA_SUCCESS: {
+    case commonTypes.FETCH_MEDIA_SUCCESS: {
       const { provider, mediaType, searchTerm } = payload;
       if (
         provider === 'local' &&
