@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
+import html2canvas from 'html2canvas';
 
 /**
  * WordPress dependencies
@@ -32,6 +33,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Eyedropper } from '../button';
+import { useCanvas } from '../canvas';
+import getColorFromCanvas from '../../utils/getColorFromCanvas';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
@@ -123,6 +126,43 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     [rgb, onChange]
   );
 
+  const setColor = useCallback((value) => onChange({ ...value }), [onChange]);
+
+  const {
+    state: { displayLayer, pageContainer },
+  } = useCanvas();
+
+  const handleEyeDropperClick = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      html2canvas(pageContainer).then((canvas) => {
+        const {
+          left,
+          top,
+          width,
+          height,
+        } = pageContainer.getBoundingClientRect();
+        const x = (e.clientX - left) * (canvas.width / width);
+        const y = (e.clientY - top) * (canvas.height / height);
+        const { r, g, b } = getColorFromCanvas(canvas, x, y);
+        setColor({ r, g, b });
+        displayLayer.removeEventListener('mousedown', handleEyeDropperClick, {
+          capture: true,
+        });
+      });
+      displayLayer.style.cursor = 'default';
+    },
+    [displayLayer, pageContainer, setColor]
+  );
+
+  const initEyeDropper = useCallback(() => {
+    displayLayer.style.cursor = 'cell';
+    displayLayer.addEventListener('mousedown', handleEyeDropperClick, {
+      capture: true,
+    });
+  }, [displayLayer, handleEyeDropperClick]);
+
   return (
     <Container>
       <Body showOpacity={showOpacity}>
@@ -164,12 +204,11 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         )}
       </Body>
       <Footer>
-        {/* TODO: implement (see https://github.com/google/web-stories-wp/issues/262) */}
         <EyedropperButton
           width={EYEDROPPER_ICON_SIZE}
           height={EYEDROPPER_ICON_SIZE}
           aria-label={__('Select color', 'web-stories')}
-          isDisabled
+          onClick={initEyeDropper}
         />
         <EditablePreview
           label={__('Edit hex value', 'web-stories')}

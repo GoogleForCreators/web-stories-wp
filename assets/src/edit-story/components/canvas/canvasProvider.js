@@ -39,6 +39,7 @@ function CanvasProvider({ children }) {
   });
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
+  const [displayLayer, setDisplayLayer] = useState(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
 
   const {
@@ -155,6 +156,7 @@ function CanvasProvider({ children }) {
       state: {
         pageContainer,
         fullbleedContainer,
+        displayLayer,
         nodesById,
         editingElement,
         editingElementState,
@@ -166,6 +168,7 @@ function CanvasProvider({ children }) {
       actions: {
         setPageContainer,
         setFullbleedContainer,
+        setDisplayLayer,
         getNodeForElement,
         setNodeForElement,
         setEditingElement: setEditingElementWithoutState,
@@ -180,6 +183,7 @@ function CanvasProvider({ children }) {
     [
       pageContainer,
       fullbleedContainer,
+      displayLayer,
       nodesById,
       editingElement,
       editingElementState,
@@ -188,6 +192,7 @@ function CanvasProvider({ children }) {
       showSafeZone,
       setPageContainer,
       setFullbleedContainer,
+      setDisplayLayer,
       getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,

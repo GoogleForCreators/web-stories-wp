@@ -36,15 +36,15 @@ function DisplayLayer() {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
-  const {
-    editingElement,
-    setPageContainer,
-    setFullbleedContainer,
-  } = useCanvas(
+  const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
     ({
       state: { editingElement },
       actions: { setPageContainer, setFullbleedContainer },
-    }) => ({ editingElement, setPageContainer, setFullbleedContainer })
+    }) => ({
+      editingElement,
+      setPageContainer,
+      setFullbleedContainer,
+    })
   );
 
   return (

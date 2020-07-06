@@ -36,6 +36,7 @@ import SelectionCanvas from './selectionCanvas';
 import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
+import useCanvas from './useCanvas';
 
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
@@ -53,11 +54,15 @@ function CanvasLayout() {
   useLayoutParams(backgroundRef);
   const layoutParamsCss = useLayoutParamsCssVars();
 
+  const { setDisplayLayer } = useCanvas(({ actions: { setDisplayLayer } }) => ({
+    setDisplayLayer,
+  }));
+
   return (
     <Background ref={backgroundRef} style={layoutParamsCss}>
       <CanvasUploadDropTarget>
         <CanvasElementDropzone>
-          <SelectionCanvas>
+          <SelectionCanvas ref={setDisplayLayer}>
             <DisplayLayer />
             <FramesLayer />
             <NavLayer />

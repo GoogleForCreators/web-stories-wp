@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -57,7 +57,7 @@ const Lasso = styled.div`
   z-index: 1;
 `;
 
-function SelectionCanvas({ children }) {
+function SelectionCanvas({ children }, forwardedRef) {
   const { selectedElements, currentPage, clearSelection } = useStory(
     ({
       state: { selectedElements, currentPage },
@@ -202,6 +202,7 @@ function SelectionCanvas({ children }) {
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
+      ref={forwardedRef}
     >
       {children}
       <InOverlay ref={overlayRef}>
@@ -215,4 +216,4 @@ SelectionCanvas.propTypes = {
   children: PropTypes.node,
 };
 
-export default SelectionCanvas;
+export default forwardRef(SelectionCanvas);
