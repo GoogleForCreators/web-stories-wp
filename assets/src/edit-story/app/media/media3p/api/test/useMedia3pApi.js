@@ -22,7 +22,7 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { useMedia3pApiProvider } from '../index';
+import { useMedia3pApi } from '../index';
 import Media3pApiProvider from '../media3pApiProvider';
 
 jest.mock('../apiFetcher', () => ({
@@ -51,12 +51,12 @@ jest.mock('../apiFetcher', () => ({
     }),
 }));
 
-describe('useMedia3pApiProvider', () => {
+describe('useMedia3pApi', () => {
   it('should properly call listMedia and map the results', async () => {
     const wrapper = (params) => (
       <Media3pApiProvider>{params.children}</Media3pApiProvider>
     );
-    const { result } = renderHook(() => useMedia3pApiProvider(), { wrapper });
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
 
     const listMediaResult = await result.current.actions.listMedia({
       provider: 'unsplash',
