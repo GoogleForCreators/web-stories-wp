@@ -23,6 +23,6 @@ export function useMedia3p(selector) {
   return useMedia(({ media3p }) => selector(media3p));
 }
 
-export function useMedia3pProvider(provider, selector) {
+export function useMedia3pForProvider(provider, selector) {
   return useMedia(({ media3p }) => selector(media3p[provider]));
 }
