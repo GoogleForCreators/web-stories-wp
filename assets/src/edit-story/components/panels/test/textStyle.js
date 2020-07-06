@@ -122,6 +122,7 @@ describe('Panels/TextStyle', () => {
       id: '1',
       textAlign: 'normal',
       fontSize: 30,
+      lineHeight: 1,
       font: {
         family: 'ABeeZee',
       },
@@ -172,6 +173,12 @@ describe('Panels/TextStyle', () => {
     expect(submits[textElement.id]).toStrictEqual({
       fontSize: 70,
       height: 171,
+      lineHeight: 1,
+      padding: {
+        horizontal: 0,
+        locked: true,
+        vertical: 0,
+      },
       x: dx,
       y: dy,
     });
@@ -273,18 +280,13 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should update empty horizontal padding with lock', () => {
+    it('should not update if empty padding', () => {
       const { getByRole, pushUpdateForObject } = renderTextStyle([textElement]);
       const input = getByRole('textbox', {
         name: 'Edit: Horizontal & Vertical padding',
       });
       fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        { horizontal: '', vertical: '' },
-        DEFAULT_PADDING,
-        false
-      );
+      expect(pushUpdateForObject).not.toHaveBeenCalled();
     });
 
     it('should update multi padding with lock and same padding', () => {
@@ -475,11 +477,11 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdate).toHaveBeenCalledWith({ fontSize: 32 });
     });
 
-    it('should select font size to empty value', async () => {
+    it('should not do anything if empty font size', async () => {
       const { getByRole, pushUpdate } = renderTextStyle([textElement]);
       const input = getByRole('textbox', { name: 'Font size' });
       await fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ fontSize: '' });
+      expect(pushUpdate).not.toHaveBeenCalled();
     });
   });
 
@@ -491,7 +493,7 @@ describe('Panels/TextStyle', () => {
       expect(pushUpdate).toHaveBeenCalledWith({ lineHeight: 1.5 });
     });
 
-    it('should set lineHeight to empty', () => {
+    it('should clear line height if set to empty', () => {
       const { getByRole, pushUpdate } = renderTextStyle([textElement]);
       const input = getByRole('textbox', { name: 'Line-height' });
       fireEvent.change(input, { target: { value: '' } });
@@ -512,7 +514,7 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should set letterSpacing to empty', () => {
+    it('should clear letterSpacing if set to empty', () => {
       const { getByRole, pushUpdate } = renderTextStyle([textElement]);
       const input = getByRole('textbox', { name: 'Letter-spacing' });
       fireEvent.change(input, { target: { value: '' } });

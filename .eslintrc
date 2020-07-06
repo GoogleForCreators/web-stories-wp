@@ -306,7 +306,9 @@
         ".storybook/*.js",
         "tests/js/*.js",
         "tests/e2e/*.js",
-        "tests/e2e/config/*.js"
+        "tests/e2e/config/*.js",
+        "assets/src/dashboard/karma-tests.cjs",
+        "assets/src/edit-story/karma-tests.cjs"
       ],
       "env": {
         "node": true

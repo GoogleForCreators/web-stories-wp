@@ -2,7 +2,6 @@
 .github
 .idea
 .storybook
-__cdn__
 __mocks__
 __static__
 assets/src
@@ -15,6 +14,7 @@ node_modules
 patches
 tests
 .browserslistrc
+.DS_Store
 .distignore
 .editorconfig
 .eslintignore

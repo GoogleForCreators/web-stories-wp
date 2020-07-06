@@ -41,10 +41,6 @@ class Admin {
 	 * @return void
 	 */
 	public function init() {
-		// Migrations.
-		$database_upgrader = new Database_Upgrader();
-		$database_upgrader->init();
-
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ] );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
@@ -170,7 +166,7 @@ BLOCK;
 
 		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
+		if ( ! $post_id ) {
 			return $title;
 		}
 
@@ -178,6 +174,14 @@ BLOCK;
 			return $title;
 		}
 
-		return (string) get_the_title( $post_id );
+		$post = get_post( $post_id );
+
+		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+			return $title;
+		}
+
+		// Not using get_the_title() because we need the raw title.
+		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
+		return isset( $post->post_title ) ? $post->post_title : '';
 	}
 }
