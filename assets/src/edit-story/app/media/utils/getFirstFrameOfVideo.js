@@ -26,22 +26,42 @@ function getFirstFrameOfVideo(src) {
   const video = document.createElement('video');
   video.muted = true;
   video.crossOrigin = 'anonymous';
-  video.preload = 'metadata';
-  video.currentTime = 0.5; // Needed to seek forward.
+  // Since  we want to get the actual frames, we need to make sure to preload the whole video
+  // and not just metadata.
+  // See https://github.com/google/web-stories-wp/issues/2922.
+  video.preload = 'auto';
 
   return new Promise((resolve, reject) => {
     video.addEventListener('error', reject);
 
-    video.addEventListener('canplay', () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+    video.addEventListener(
+      'canplay',
+      () => {
+        // Need to seek forward to ensure we get a proper frame.
+        // Doing it inside the event listener to prevent the event
+        // from being fired twice.
+        // See https://github.com/google/web-stories-wp/issues/2923
+        // Translates to real-world 0.28
+        // See "Reduced time precision" https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/currentTime
+        video.currentTime = 0.99;
+      },
+      { once: true } // Important because 'canplay' can be fired hundreds of times.
+    );
 
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    video.addEventListener(
+      'seeked',
+      () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
 
-      canvas.toBlob(resolve, 'image/jpeg');
-    });
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        canvas.toBlob(resolve, 'image/jpeg');
+      },
+      { once: true }
+    );
 
     video.src = src;
   });
