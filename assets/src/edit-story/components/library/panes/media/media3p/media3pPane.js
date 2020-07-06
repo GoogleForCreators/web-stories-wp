@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -26,7 +26,7 @@ import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import MediaGallery from '../mediaGallery';
 import { Pane } from '../../shared';
 import { ProviderType } from '../providerType';
-import { useMedia3pMediaProvider } from '../../../../../app/media/media3p/useMedia3p';
+import { useMedia3p, useMedia3pProvider } from '../../../../../app/media/media3p/useMedia3p';
 import paneId from './paneId';
 
 const StyledPane = styled(Pane)`
@@ -63,7 +63,9 @@ function Media3pPane(props) {
   };
 
   // TODO(#2368): handle pagination / infinite scrolling
-  const { media } = useMedia3pMediaProvider('unsplash', ({ state }) => ({ media: state.media }));
+  const { setSelectedProvider } = useMedia3p(({ actions }) => ({ setSelectedProvider: actions.setSelectedProvider }));
+  const { media } = useMedia3pProvider('unsplash', ({ state }) => ({ media: state.media }));
+  useEffect(() => setSelectedProvider({ provider: 'unsplash' }), []);
 
   // Recalculates padding of Media Pane so it stays centered.
   // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter

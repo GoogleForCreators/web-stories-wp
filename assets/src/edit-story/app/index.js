@@ -45,6 +45,7 @@ import { useLocalMedia, useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
 import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
+import { Media3pApiProvider } from '../components/library/panes/media/media3p/api';
 
 function App({ config }) {
   const { storyId, isRTL } = config;
@@ -58,20 +59,22 @@ function App({ config }) {
                 <SnackbarProvider>
                   <StoryProvider storyId={storyId}>
                     <FontProvider>
-                      <MediaProvider>
-                        <AutoSaveHandler />
-                        <TransformProvider>
-                          <DropTargetsProvider>
-                            <GlobalStyle />
-                            <DevTools />
-                            <DefaultMoveableGlobalStyle />
-                            <CropMoveableGlobalStyle />
-                            <ModalGlobalStyle />
-                            <KeyboardOnlyOutlines />
-                            <Layout />
-                          </DropTargetsProvider>
-                        </TransformProvider>
-                      </MediaProvider>
+                      <Media3pApiProvider>
+                        <MediaProvider>
+                          <AutoSaveHandler />
+                          <TransformProvider>
+                            <DropTargetsProvider>
+                              <GlobalStyle />
+                              <DevTools />
+                              <DefaultMoveableGlobalStyle />
+                              <CropMoveableGlobalStyle />
+                              <ModalGlobalStyle />
+                              <KeyboardOnlyOutlines />
+                              <Layout />
+                            </DropTargetsProvider>
+                          </TransformProvider>
+                        </MediaProvider>
+                      </Media3pApiProvider>
                     </FontProvider>
                   </StoryProvider>
                 </SnackbarProvider>

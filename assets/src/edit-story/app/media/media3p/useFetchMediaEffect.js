@@ -19,7 +19,7 @@
  */
 import { useEffect } from 'react';
 
-import { useMedia3pApiProvider } from './api';
+import { useMedia3pApiProvider } from '../../../components/library/panes/media/media3p/api';
 
 export default function useFetchMediaEffect({
   provider,
@@ -30,15 +30,14 @@ export default function useFetchMediaEffect({
   fetchMediaError,
 }) {
   const { actions: { listMedia } } = useMedia3pApiProvider();
-
   useEffect(() => {
     async function fetch() {
-      fetchMediaStart({ pageToken });
+      fetchMediaStart({ provider, pageToken });
       try {
         const { media, nextPageToken } = await listMedia({ provider, pageToken });
-        fetchMediaSuccess({ media, nextPageToken });
-      } catch {
-        fetchMediaError({ pageToken });
+        fetchMediaSuccess({ provider, media, nextPageToken });
+      } catch (ex) {
+        fetchMediaError({ provider, pageToken });
       }
     }
 
@@ -51,7 +50,6 @@ export default function useFetchMediaEffect({
     pageToken,
     // These attributes never change.
     provider,
-    fetchMedia,
     fetchMediaError,
     fetchMediaStart,
     fetchMediaSuccess,

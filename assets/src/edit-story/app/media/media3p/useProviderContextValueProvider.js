@@ -32,6 +32,6 @@ export default function useProviderContextValueProvider(provider, reducerState, 
   });
 
   return {
-    state: reducerState,
+    state: reducerState[provider],
   };
 }

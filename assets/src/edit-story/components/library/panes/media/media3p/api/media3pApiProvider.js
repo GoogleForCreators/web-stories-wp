@@ -67,7 +67,7 @@ function Media3pApiProvider({ children }) {
 
   function getFullAsset(m) {
     if (m.type.toLowerCase() === 'image') {
-      return m.imageUrls.find((i) => i.imageName === 'full');
+      return m.imageUrls[0];//.find((i) => i.imageName === 'full');
     }
     throw new Error('Invalid media type.');
   }
@@ -130,7 +130,6 @@ function Media3pApiProvider({ children }) {
       listMedia,
     },
   };
-
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
