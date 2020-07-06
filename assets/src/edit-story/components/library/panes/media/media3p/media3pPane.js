@@ -26,6 +26,7 @@ import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import MediaGallery from '../mediaGallery';
 import { Pane } from '../../shared';
 import { ProviderType } from '../providerType';
+import { useMedia3pMediaProvider } from '../../../../../app/media/media3p/useMedia3p';
 import paneId from './paneId';
 
 const StyledPane = styled(Pane)`
@@ -61,32 +62,8 @@ function Media3pPane(props) {
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
-  // TODO(#2368): get resources from useMedia3p
   // TODO(#2368): handle pagination / infinite scrolling
-  const resources = [
-    {
-      id: 1,
-      type: 'image',
-      local: false,
-      alt: 'image alt',
-      mimeType: 'image/jpeg',
-      width: 18,
-      height: 12,
-      src:
-        'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
-    },
-    {
-      id: 1,
-      type: 'image',
-      local: false,
-      alt: 'image alt',
-      mimeType: 'image/jpeg',
-      width: 128,
-      height: 72,
-      src:
-        'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq',
-    },
-  ];
+  const { media } = useMedia3pMediaProvider('unsplash', ({ state }) => ({ media: state.media }));
 
   // Recalculates padding of Media Pane so it stays centered.
   // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
@@ -111,7 +88,7 @@ function Media3pPane(props) {
     <StyledPane id={paneId} {...props}>
       <Container ref={refCallbackContainer}>
         <MediaGallery
-          resources={resources}
+          resources={media}
           onInsert={onInsert}
           providerType={ProviderType.UNSPLASH}
         />
