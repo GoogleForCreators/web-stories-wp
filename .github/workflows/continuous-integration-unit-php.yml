@@ -83,7 +83,7 @@ jobs:
       - name: Run tests
         run: |
           npm run test:php
-          npm run test:php -- -c phpunit-multisite.xml.dist
+          npm run test:php:multisite
         if: ${{ ! matrix.coverage }}
 
       - name: Run tests with coverage
