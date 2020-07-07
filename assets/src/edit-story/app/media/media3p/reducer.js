@@ -22,14 +22,18 @@ import { shallowEqual } from 'react-pure-render';
 /**
  * Internal dependencies
  */
+import { INITIAL_STATE } from '../types';
 import providerReducer from './providerReducer.js';
 
+// TODO(#2804): Use the configuration json to provide this list.
 const providers = ['unsplash'];
 
 function reducer(state = {}, { type, payload }) {
   const result = {};
   for (const provider of providers) {
-    result[provider] = providerReducer(state[provider], { type, payload });
+    if (type == INITIAL_STATE || provider == payload?.provider) {
+      result[provider] = providerReducer(state[provider], { type, payload });
+    }
   }
   return !shallowEqual(result, state) ? result : state;
 }

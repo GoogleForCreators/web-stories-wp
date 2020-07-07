@@ -60,10 +60,10 @@ jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 500 });
 
 async function setupBrowser() {
-  // 15inch screen.
+  // Same as jest-puppeteer.config.cjs and percy.config.yml
   await setBrowserViewport({
-    width: 1680,
-    height: 948,
+    width: 1600,
+    height: 1000,
   });
 }
 
