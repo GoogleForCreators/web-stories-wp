@@ -67,6 +67,10 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
   };
 
   this.onRunComplete = function () {
+    if (cujResults.length === 0) {
+      return;
+    }
+
     const tableContents = cujResults.reduce((acc, curr) => {
       const [cuj, action] = curr;
 
