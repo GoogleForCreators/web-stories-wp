@@ -75,7 +75,7 @@
     "@jsdevtools/coverage-istanbul-loader": "^3.0.3",
     "@percy/puppeteer": "^1.1.0",
     "@prettier/plugin-xml": "^0.8.0",
-    "@storybook/addon-a11y": "^6.0.0-beta.43",
+    "@storybook/addon-a11y": "^6.0.0-beta.45",
     "@storybook/addon-actions": "^6.0.0-beta.45",
     "@storybook/addon-backgrounds": "^6.0.0-beta.43",
     "@storybook/addon-docs": "^6.0.0-beta.44",
