@@ -62,8 +62,8 @@ class Activation_Notice extends \WP_UnitTestCase {
 	 * @covers ::check_hook_suffix
 	 */
 	public function test_check_hook_suffix() {
-		$activatoin_notice      = new \Google\Web_Stories\Activation_Notice( $this->activatoin_flag );
-		$result = $this->call_private_method( $activatoin_notice, 'check_hook_suffix', [ 'themes.php' ] );
-		$this->assertFalse($result);
+		$activatoin_notice = new \Google\Web_Stories\Activation_Notice( $this->activatoin_flag );
+		$result            = $this->call_private_method( $activatoin_notice, 'check_hook_suffix', [ 'themes.php' ] );
+		$this->assertFalse( $result );
 	}
 }
