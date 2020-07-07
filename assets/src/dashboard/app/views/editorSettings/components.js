@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { TypographyPresets, InlineInputForm } from '../../../components';
+import { TypographyPresets } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 
 export const Wrapper = styled.div`
@@ -72,9 +72,12 @@ export const SettingHeading = styled.h2`
   line-height: 140%;
   color: ${({ theme }) => theme.colors.gray600};
 `;
-export const TextInput = styled(InlineInputForm)`
-  width: 100%;
-  height: 32px;
+
+export const FormContainer = styled.div`
+  input {
+    width: 100%;
+    height: 32px;
+  }
 `;
 
 export const TextInputHelperText = styled.p`

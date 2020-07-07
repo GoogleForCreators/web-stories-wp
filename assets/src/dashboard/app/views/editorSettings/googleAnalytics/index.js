@@ -28,10 +28,11 @@ import { useContext, useState, useCallback, useEffect } from 'react';
  * Internal dependencies
  */
 import { ApiContext } from '../../../api/apiProvider';
+import { InlineInputForm } from '../../../../components';
 import {
+  FormContainer,
   SettingForm,
   SettingHeading,
-  TextInput,
   TextInputHelperText,
 } from '../components';
 
@@ -77,8 +78,8 @@ function GoogleAnalyticsSettings() {
       <SettingHeading htmlFor="gaTrackingID">
         {TEXT.SECTION_HEADING}
       </SettingHeading>
-      <div>
-        <TextInput
+      <FormContainer>
+        <InlineInputForm
           label={TEXT.ARIA_LABEL}
           id="gaTrackingId"
           value={analyticsId}
@@ -87,7 +88,7 @@ function GoogleAnalyticsSettings() {
           placeholder={TEXT.PLACEHOLDER}
         />
         <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
-      </div>
+      </FormContainer>
     </SettingForm>
   );
 }
