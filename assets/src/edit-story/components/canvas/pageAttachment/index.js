@@ -105,7 +105,7 @@ const Tooltip = styled.div`
   text-align: center;
 `;
 
-const spacing = { y: 0 };
+const spacing = { x: 8 };
 
 function PageAttachment({ pageAttachment }) {
   const {
