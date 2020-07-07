@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
 import { useStory } from '../app/story';
@@ -38,22 +43,24 @@ function useElementsWithLinks() {
   const { elements } = currentPage;
   const elementsWithLinks = elements.filter(({ link }) => link?.url);
 
-  // @todo callback
-  const getElementsInAttachmentArea = () => {
+  const getElementsInAttachmentArea = useCallback(() => {
     return elementsWithLinks.filter(({ y, height }) => {
       const bottomLimit = (pageSize.width / FULLBLEED_RATIO) * 0.8;
       const elBottom = dataToEditorY(y + height);
       return elBottom > bottomLimit;
     });
-  };
+  }, [dataToEditorY, pageSize, elementsWithLinks]);
 
-  const isLinkInAttachmentArea = (node) => {
-    if (!pageAttachmentContainer) {
-      return false;
-    }
-    // If the node is inside the page attachment container.
-    return !isTargetOutOfContainer(node, pageAttachmentContainer);
-  };
+  const isLinkInAttachmentArea = useCallback(
+    (node) => {
+      if (!pageAttachmentContainer) {
+        return false;
+      }
+      // If the node is inside the page attachment container.
+      return !isTargetOutOfContainer(node, pageAttachmentContainer);
+    },
+    [pageAttachmentContainer]
+  );
 
   return {
     elementsWithLinks,

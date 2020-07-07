@@ -66,20 +66,20 @@ function PageAttachmentPanel() {
   const hasLinksInAttachmentArea = linksInAttachmentArea.length > 0;
 
   useEffect(() => {
-    setHasLinkInAttachmentArea(hasLinksInAttachmentArea && !url.length);
+    setHasLinkInAttachmentArea(hasLinksInAttachmentArea && !url?.length);
     return () => {
       setHasLinkInAttachmentArea(false);
     };
   }, [hasLinksInAttachmentArea, setHasLinkInAttachmentArea, url]);
 
   const onFocus = () => {
-    if (hasLinksInAttachmentArea && !url.length) {
+    if (hasLinksInAttachmentArea && !url?.length) {
       setDisplayWarning(true);
     }
   };
 
   useEffect(() => {
-    if (displayWarning && url.length) {
+    if (displayWarning && url?.length) {
       setDisplayWarning(false);
     }
   }, [url, displayWarning]);

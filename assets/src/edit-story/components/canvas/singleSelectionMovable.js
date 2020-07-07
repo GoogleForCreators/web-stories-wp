@@ -146,7 +146,22 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
 
   const { isLinkInAttachmentArea } = useElementsWithLinks();
   const isLink = Boolean(selectedElement.link?.url);
-  const pageHasAttachment = Boolean(currentPage.pageAttachment?.url);
+  const pageHasAttachment = Boolean(
+    currentPage.pageAttachment?.url?.length > 0
+  );
+
+  const linkFoundInAttachmentArea = (target) => {
+    if (isLink && isLinkInAttachmentArea(target)) {
+      if (isDragging) {
+        resetDragging(target);
+      } else {
+        resetMoveable();
+      }
+      setHasLinkInAttachmentArea(false);
+      return true;
+    }
+    return false;
+  };
 
   // ⌘ key disables snapping
   const snapDisabled = useGlobalIsKeyPressed('meta');
@@ -277,9 +292,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         if (handleElementOutOfCanvas(target)) {
           return;
         }
-        if (isLink && isLinkInAttachmentArea(target)) {
-          resetDragging(target);
-          setHasLinkInAttachmentArea(false);
+        if (linkFoundInAttachmentArea(target)) {
           return;
         }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
@@ -359,9 +372,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         if (handleElementOutOfCanvas(target)) {
           return;
         }
-        if (isLink && isLinkInAttachmentArea(target)) {
-          resetMoveable(target);
-          setHasLinkInAttachmentArea(false);
+        if (linkFoundInAttachmentArea(target)) {
           return;
         }
         const [editorWidth, editorHeight] = frame.resize;
@@ -405,9 +416,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         if (handleElementOutOfCanvas(target)) {
           return;
         }
-        if (isLink && isLinkInAttachmentArea(target)) {
-          resetMoveable(target);
-          setHasLinkInAttachmentArea(false);
+        if (linkFoundInAttachmentArea(target)) {
           return;
         }
         const properties = { rotationAngle: Math.round(frame.rotate) };

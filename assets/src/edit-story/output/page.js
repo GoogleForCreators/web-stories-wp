@@ -80,7 +80,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {Boolean(page.pageAttachment?.url) && (
+      {Boolean(page.pageAttachment?.url?.length > 0) && (
         <amp-story-page-attachment
           layout="nodisplay"
           href={page.pageAttachment.url}

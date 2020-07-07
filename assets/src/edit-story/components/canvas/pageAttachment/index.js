@@ -107,7 +107,7 @@ const Tooltip = styled.div`
 
 const spacing = { x: 8 };
 
-function PageAttachment({ pageAttachment }) {
+function PageAttachment({ pageAttachment = {} }) {
   const {
     pageSize,
     hasLinkInAttachmentArea,
@@ -124,32 +124,36 @@ function PageAttachment({ pageAttachment }) {
   } = useTransform();
   const fullbleedHeight = pageSize.width / FULLBLEED_RATIO;
   const fullbleedBottom = (fullbleedHeight - pageSize.height) / 2;
-  const { ctaText } = pageAttachment;
+  const { ctaText = __('Learn more', 'web-stories'), url } = pageAttachment;
   return (
     <Wrapper
       fullbleedBottom={fullbleedBottom}
       displayMarker={hasLinkInAttachmentArea}
       ref={setPageAttachmentContainer}
     >
-      <Icon>
-        <LeftBar />
-        <RightBar />
-      </Icon>
-      <TextWrapper>{ctaText}</TextWrapper>
-      {pageAttachmentContainer && (
-        <Popup
-          anchor={{ current: pageAttachmentContainer }}
-          isOpen={isAnythingTransforming && hasLinkInAttachmentArea}
-          placement={'left'}
-          spacing={spacing}
-        >
-          <Tooltip>
-            {__(
-              'Links can not be located below the dashline when a page attachment is present',
-              'web-stories'
-            )}
-          </Tooltip>
-        </Popup>
+      {url?.length > 0 && (
+        <>
+          <Icon>
+            <LeftBar />
+            <RightBar />
+          </Icon>
+          <TextWrapper>{ctaText}</TextWrapper>
+          {pageAttachmentContainer && (
+            <Popup
+              anchor={{ current: pageAttachmentContainer }}
+              isOpen={isAnythingTransforming && hasLinkInAttachmentArea}
+              placement={'left'}
+              spacing={spacing}
+            >
+              <Tooltip>
+                {__(
+                  'Links can not be located below the dashline when a page attachment is present',
+                  'web-stories'
+                )}
+              </Tooltip>
+            </Popup>
+          )}
+        </>
       )}
     </Wrapper>
   );
@@ -159,7 +163,7 @@ PageAttachment.propTypes = {
   pageAttachment: PropTypes.shape({
     url: PropTypes.string,
     ctaText: PropTypes.string,
-  }).isRequired,
+  }),
 };
 
 export default PageAttachment;

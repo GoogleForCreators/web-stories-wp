@@ -260,7 +260,9 @@ function MultiSelectionMovable({ selectedElements }) {
     return false;
   };
 
-  const pageHasAttachment = Boolean(currentPage.pageAttachment?.url);
+  const pageHasAttachment = Boolean(
+    currentPage.pageAttachment?.url?.length > 0
+  );
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Movable

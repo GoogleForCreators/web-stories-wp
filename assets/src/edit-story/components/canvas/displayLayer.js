@@ -73,7 +73,7 @@ function DisplayLayer() {
               );
             })
           : null}
-        {currentPage?.pageAttachment?.url && (
+        {currentPage && (
           <PageAttachment pageAttachment={currentPage.pageAttachment} />
         )}
       </PageArea>
