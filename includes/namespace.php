@@ -126,7 +126,7 @@ if (
 	$body = html_entity_decode( str_replace( [ '<code>', '</code>' ], '`', $body ), ENT_QUOTES, 'UTF-8' );
 
 	if ( class_exists( '\WP_CLI' ) ) {
-		WP_CLI::warning( "$heading\n$body" );
+		\WP_CLI::warning( "$heading\n$body" );
 	} else {
 		echo "$heading\n$body\n"; // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
