@@ -13,3 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+describe('CUJ: Creator can Add a Page Attachment', () => {
+  describe('Action: Add Page Attachment', () => {
+    // Disable reason: Not implemented yet
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('it should allow adding Page Attachment with custom CTA Text');
+
+    // Disable reason: Not implemented yet
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('it should display warning for a link in the Page Attachment Area');
+
+    // Disable reason: Not implemented yet
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('it should display warning for an invalid link');
+  });
+
+  describe('Action: Remove Page Attachment', () => {
+    // Disable reason: Not implemented yet
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('it should allow removing a Page Attachment');
+  });
+
+  describe('Action: Transforming link with Page Attachment', () => {
+    // Disable reason: Not implemented yet
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('it should display tooltip for a link in Attachment area');
+
+    // Disable reason: Not implemented yet
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('it should cancel link transformation ending in Attachment area');
+  });
+});
