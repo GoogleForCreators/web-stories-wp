@@ -50,7 +50,7 @@ class Activation_Notice extends \WP_UnitTestCase {
 	 * @covers ::render_notice
 	 */
 	public function test_render_notice() {
-		$GLOBALS['hook_suffix'] = 'plugin.php';
+		$GLOBALS['hook_suffix'] = 'plugins.php';
 		$activatoin_notice      = new \Google\Web_Stories\Activation_Notice( $this->activatoin_flag );
 		$output                 = get_echo( [ $activatoin_notice, 'render_notice' ] );
 		$this->assertContains( 'web-stories-plugin-activation-notice', $output );
