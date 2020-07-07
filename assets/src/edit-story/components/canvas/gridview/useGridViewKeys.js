@@ -83,11 +83,6 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
           const button = thumbnail?.querySelector('button');
           if (button) {
             button.focus();
-            // button.addEventListener('blur', () => {
-            //   setFocusedPageId((currentFocusId) =>
-            //     currentFocusId === pageId ? currentPageId : currentFocusId
-            //   );
-            // });
           }
 
           break;
@@ -136,8 +131,6 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
     },
     [focusedPageId, isRTL, pageIds, pageRefs, gridRef, currentPageId]
   );
-
-  //
 }
 
 function getArrowDir(key, pos, neg, isRTL) {

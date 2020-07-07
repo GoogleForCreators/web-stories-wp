@@ -82,25 +82,20 @@ function PagePreview({ index, gridRef, ...props }) {
   const height = thumbHeight - THUMB_FRAME_HEIGHT;
   const [tabIndex, setTabIndex] = useState(isActive ? 0 : -1);
 
-  const handleOnBlur = (e) => {
+  const onBlur = (e) => {
     if (gridRef?.current?.contains(e.relatedTarget)) {
       setTabIndex(-1);
     }
   };
 
-  const handleOnFocus = () => {
+  const onFocus = () => {
     setTabIndex(0);
   };
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page
-          tabIndex={tabIndex}
-          onBlur={handleOnBlur}
-          onFocus={handleOnFocus}
-          {...props}
-        >
+        <Page tabIndex={tabIndex} onBlur={onBlur} onFocus={onFocus} {...props}>
           <PreviewWrapper background={backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
