@@ -40,6 +40,7 @@ function CanvasProvider({ children }) {
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
+  const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
   const [showAttachmentBorder, setShowAttachmentBorder] = useState(false);
 
   const {
@@ -164,6 +165,7 @@ function CanvasProvider({ children }) {
         showSafeZone,
         pageSize,
         showAttachmentBorder,
+        pageAttachmentContainer,
       },
       actions: {
         setPageContainer,
@@ -178,6 +180,7 @@ function CanvasProvider({ children }) {
         setPageSize,
         setShowSafeZone,
         setShowAttachmentBorder,
+        setPageAttachmentContainer,
       },
     }),
     [
@@ -202,6 +205,8 @@ function CanvasProvider({ children }) {
       setShowSafeZone,
       showAttachmentBorder,
       setShowAttachmentBorder,
+      pageAttachmentContainer,
+      setPageAttachmentContainer,
     ]
   );
   return (

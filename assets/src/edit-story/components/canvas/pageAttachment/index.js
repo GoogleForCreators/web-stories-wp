@@ -89,9 +89,14 @@ const TextWrapper = styled.span`
 `;
 
 function PageAttachment({ pageAttachment }) {
-  const { pageSize, showAttachmentBorder } = useCanvas((state) => ({
+  const {
+    pageSize,
+    showAttachmentBorder,
+    setPageAttachmentContainer,
+  } = useCanvas((state) => ({
     showAttachmentBorder: state.state.showAttachmentBorder,
     pageSize: state.state.pageSize,
+    setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
   }));
   const fullbleedHeight = pageSize.width / FULLBLEED_RATIO;
   const fullbleedBottom = (fullbleedHeight - pageSize.height) / 2;
@@ -100,6 +105,7 @@ function PageAttachment({ pageAttachment }) {
     <Wrapper
       fullbleedBottom={fullbleedBottom}
       displayMarker={showAttachmentBorder}
+      ref={setPageAttachmentContainer}
     >
       <Icon>
         <LeftBar />
