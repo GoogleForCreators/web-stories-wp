@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Implement, re-using logic from media/common/useContextValueProvider.js.
-export default function useProviderContextValueProvider(
-  provider,
-  reducerState
-) {
-  return {
-    state: reducerState[provider],
-  };
-}
+/**
+ * Internal dependencies
+ */
+export * from '../common/actions';
+import * as types from './types';
+
+export const setSelectedProvider = (dispatch) => ({ provider }) => {
+  dispatch({
+    type: types.SET_SELECTED_PROVIDER,
+    payload: { provider },
+  });
+};

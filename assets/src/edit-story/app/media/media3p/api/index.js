@@ -14,13 +14,5 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Implement, re-using logic from media/common/useContextValueProvider.js.
-export default function useProviderContextValueProvider(
-  provider,
-  reducerState
-) {
-  return {
-    state: reducerState[provider],
-  };
-}
+export { default as Media3pApiProvider } from './media3pApiProvider';
+export { default as useMedia3pApi } from './useMedia3pApi';
