@@ -39,7 +39,11 @@ const providers = ['unsplash'];
  * For actions that are provider specific, the `payload.provider` attribute
  * is used as the provider discriminator ('unsplash', 'coverr', etc).
  *
- * @param state
+ * @param state The state to reduce
+ * @param obj An object with the type and payload
+ * @param obj.type A constant that identifies the reducer action
+ * @param obj.payload The details of the action, specific to the action
+ * @return The new state
  */
 function reduceProviderStates(state, { type, payload }) {
   const result = { ...state };

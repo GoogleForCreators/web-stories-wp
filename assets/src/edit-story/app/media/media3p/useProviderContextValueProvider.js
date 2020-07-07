@@ -21,7 +21,8 @@
  * Context fragment provider for a single 3p media source (Unsplash, Coverr,
  * etc).
  *
- * @param reducerState
+ * @param reducerState The 'media3p/[provider]' fragment of the state
+ * returned from {@link useMediaReducer}
  */
 export default function useProviderContextValueProvider(reducerState) {
   return {

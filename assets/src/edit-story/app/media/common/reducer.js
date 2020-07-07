@@ -39,7 +39,11 @@ export const INITIAL_STATE = {
  * This is called by the reducers for the state nodes:
  * media/local, media/media3p/unsplash, media/media3p/coverr, etc.
  *
- * @param state
+ * @param state The state to reduce
+ * @param obj An object with the type and payload
+ * @param obj.type A constant that identifies the reducer action
+ * @param obj.payload The details of the action, specific to the action
+ * @return The new state
  */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
