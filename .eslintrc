@@ -170,7 +170,9 @@
     ],
     "jsdoc/check-indentation": "error",
     "jsdoc/check-syntax": "warn",
-    "jsdoc/require-jsdoc": "warn",
+    "jsdoc/require-jsdoc": ["warn", {
+      "publicOnly": true
+    }],
     "jsdoc/require-returns": "warn",
     "jsdoc/require-param-description": "warn",
     "eslint-comments/no-unused-disable": "error",
