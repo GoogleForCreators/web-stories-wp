@@ -25,6 +25,15 @@ const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
 };
 
+/**
+ * State reducer for a single 3p media provider.
+ *
+ * By the time this reducer is called, the provider discriminator will already
+ * be evaluated, so the provider-specific `state` passed here will always
+ * correspond to the `payload.provider` value.
+ *
+ * @param state
+ */
 function providerReducer(state = INITIAL_STATE, { type, payload }) {
   return commonReducer(state, { type, payload });
 }

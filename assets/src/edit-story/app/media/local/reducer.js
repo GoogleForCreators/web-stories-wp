@@ -33,6 +33,19 @@ const INITIAL_STATE = {
   searchTerm: '',
 };
 
+/**
+ * The reducer for locally uploaded media.
+ *
+ * For pagination actions, the `payload.provider` discriminator must be
+ * assigned to 'local', which is passed from the local media action dispatchers
+ * at {@link ./actions}.
+ *
+ * @param state The state to reduce
+ * @param obj An object with the type and payload
+ * @param obj.type A constant that identifies the reducer action
+ * @param obj.payload The details of the action, specific to the action
+ * @return The new state
+ */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
     case commonTypes.FETCH_MEDIA_SUCCESS: {
