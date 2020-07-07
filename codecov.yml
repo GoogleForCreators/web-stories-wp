@@ -12,10 +12,8 @@ coverage:
         # Disable once code base is more mature.
         informational: true
         only_pulls: true
-        target: 60%
-        threshold: 10%
-        if_not_found: success
-        if_ci_failed: error
+        target: auto
+        threshold: 1%
 
       php:
         paths:
@@ -60,10 +58,8 @@ coverage:
         # Disable once code base is more mature.
         informational: true
         only_pulls: true
-        target: 80%
-        threshold: 10%
-        if_not_found: success
-        if_ci_failed: error
+        target: auto
+        threshold: 50%
 
 # Pull request comments
 # See https://docs.codecov.io/docs/pull-request-comments
@@ -79,4 +75,5 @@ ignore:
   - bin/commander.js
   - web-stories.php
   - uninstall.php
+  - includes/namespace.php
   - includes/templates

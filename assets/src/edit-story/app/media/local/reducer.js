@@ -19,57 +19,32 @@
 /**
  * Internal dependencies
  */
-import * as types from '../types';
+import * as commonTypes from '../common/types';
+import commonReducer, {
+  INITIAL_STATE as COMMON_INITIAL_STATE,
+} from '../common/reducer';
+import * as types from './types';
 
 const INITIAL_STATE = {
-  media: [],
+  ...COMMON_INITIAL_STATE,
   processing: [],
   processed: [],
-  pagingNum: 1,
-  totalPages: 1,
-  hasMore: true,
   mediaType: '',
   searchTerm: '',
-  isMediaLoading: false,
-  isMediaLoaded: false,
 };
 
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-    case types.INITIAL_STATE:
-      return state;
-
-    case types.FETCH_MEDIA_START: {
-      return {
-        ...state,
-        isMediaLoaded: false,
-        isMediaLoading: true,
-      };
-    }
-
-    case types.FETCH_MEDIA_SUCCESS: {
-      const { media, mediaType, searchTerm, pagingNum, totalPages } = payload;
-      if (mediaType === state.mediaType && searchTerm === state.searchTerm) {
-        const hasMore = pagingNum < totalPages;
-        return {
-          ...state,
-          media: [...state.media, ...media],
-          pagingNum,
-          totalPages,
-          hasMore,
-          isMediaLoaded: true,
-          isMediaLoading: false,
-        };
+    case commonTypes.FETCH_MEDIA_SUCCESS: {
+      const { provider, mediaType, searchTerm } = payload;
+      if (
+        provider === 'local' &&
+        mediaType === state.mediaType &&
+        searchTerm === state.searchTerm
+      ) {
+        return commonReducer(state, { type, payload });
       }
       return state;
-    }
-
-    case types.FETCH_MEDIA_ERROR: {
-      return {
-        ...state,
-        isMediaLoaded: true,
-        isMediaLoading: false,
-      };
     }
 
     case types.RESET_FILTERS: {
@@ -109,13 +84,6 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
-    case types.SET_NEXT_PAGE: {
-      return {
-        ...state,
-        pagingNum: state.pagingNum + 1,
-      };
-    }
-
     case types.SET_MEDIA: {
       const { media } = payload;
 
@@ -151,41 +119,11 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
-    case types.UPDATE_MEDIA_ELEMENT: {
-      const { id, ...properties } = payload;
-
-      const mediaIndex = state.media.findIndex((media) => media.id === id);
-      if (mediaIndex === -1) {
-        return state;
-      }
-
-      const updatedMediaElement = {
-        ...state.media[mediaIndex],
-        ...properties,
-      };
-
-      const newMedia = [
-        ...state.media.slice(0, mediaIndex),
-        updatedMediaElement,
-        ...state.media.slice(mediaIndex + 1),
-      ];
-
-      return {
-        ...state,
-        media: newMedia,
-      };
-    }
-
-    case types.DELETE_MEDIA_ELEMENT: {
-      const { id } = payload;
-      return {
-        ...state,
-        media: state.media.filter((media) => media.id !== id),
-      };
-    }
-
     default:
-      throw new Error(`Unknown media reducer action: ${type}`);
+      if (payload?.provider == 'local') {
+        return commonReducer(state, { type, payload });
+      }
+      return state;
   }
 }
 

@@ -511,7 +511,7 @@ class Story_Post_Type {
 		$story_id    = $post->ID;
 		$tracking_id = $gtag_opt['vars']['gtag_id'];
 
-		$gtag_opt['triggers'] = $gtag_opt['triggers'] ?: [];
+		$gtag_opt['triggers'] = isset( $gtag_opt['triggers'] ) ? $gtag_opt['triggers'] : [];
 
 		if ( ! isset( $gtag_opt['triggers']['storyProgress'] ) ) {
 			$gtag_opt['triggers']['storyProgress'] = [
