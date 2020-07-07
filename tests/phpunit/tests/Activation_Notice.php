@@ -21,7 +21,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Activation_Notice
  */
-class Activation_Flag extends \WP_UnitTestCase {
+class Activation_Notice extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::init
