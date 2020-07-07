@@ -22,20 +22,40 @@ import { shallowEqual } from 'react-pure-render';
 /**
  * Internal dependencies
  */
-import { INITIAL_STATE } from '../types';
+import { INITIAL_STATE as INITIAL_STATE_ACTION } from '../types';
+import * as types from './types';
 import providerReducer from './providerReducer.js';
+
+const INITIAL_STATE = {
+  selectedProvider: undefined,
+};
 
 // TODO(#2804): Use the configuration json to provide this list.
 const providers = ['unsplash'];
 
-function reducer(state = {}, { type, payload }) {
-  const result = {};
+function reduceProviderStates(state, { type, payload }) {
+  const result = { ...state };
   for (const provider of providers) {
-    if (type == INITIAL_STATE || provider == payload?.provider) {
+    if (type == INITIAL_STATE_ACTION || provider == payload?.provider) {
       result[provider] = providerReducer(state[provider], { type, payload });
     }
   }
   return !shallowEqual(result, state) ? result : state;
+}
+
+function reducer(state = INITIAL_STATE, { type, payload }) {
+  state = reduceProviderStates(state, { type, payload });
+
+  switch (type) {
+    case types.SET_SELECTED_PROVIDER: {
+      return {
+        ...state,
+        selectedProvider: payload.provider,
+      };
+    }
+    default:
+      return state;
+  }
 }
 
 export default reducer;
