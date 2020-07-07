@@ -17,6 +17,11 @@
 'use strict';
 
 /**
+ * External dependencies
+ */
+const path = require('path');
+
+/**
  * Internal dependencies
  */
 const getWebpackConfig = require('./webpack.config.test.cjs');
@@ -31,6 +36,7 @@ module.exports = function (config) {
       'karma-coverage-istanbul-reporter',
       require('./karma/karma-puppeteer-launcher/index.cjs'),
       require('./karma/karma-puppeteer-client/index.cjs'),
+      require('./karma/karma-cuj-reporter/index.cjs'),
     ],
 
     // Frameworks to use.
@@ -78,9 +84,11 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: config.coverage
-      ? ['progress', 'coverage-istanbul']
-      : ['progress'],
+    reporters: [
+      'progress',
+      'cuj',
+      config.coverage && 'coverage-istanbul',
+    ].filter(Boolean),
 
     // web server port
     port: 9876,
@@ -90,7 +98,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
@@ -118,6 +126,13 @@ module.exports = function (config) {
     coverageIstanbulReporter: {
       dir: 'build/logs/karma-coverage/edit-story',
       reports: ['text-summary', 'lcovonly'],
+    },
+
+    cujReporter: {
+      outputFile: path.resolve(
+        process.cwd(),
+        'build/cuj-coverage-edit-story.md'
+      ),
     },
 
     // Continuous Integration mode
