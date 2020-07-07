@@ -37,12 +37,9 @@ class Activation_Flag {
 	 *
 	 * @return void
 	 */
-	public function register() {
-		add_action(
-			'web_stories_activation',
-			[ $this, 'set_activation_flag' ]
-		);
-
+	public function init() {
+		add_action( 'web_stories_activation', [ $this, 'set_activation_flag' ] );
+		add_action( 'web_stories_deactivation', [ $this, 'delete_activation_flag' ] );
 	}
 
 	/**
@@ -53,7 +50,7 @@ class Activation_Flag {
 	 */
 	public function set_activation_flag( $network_wide ) {
 		if ( $network_wide ) {
-			update_network_option( null, self::OPTION_SHOW_ACTIVATION_NOTICE, '1' );
+			update_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE, '1' );
 			return;
 		}
 
@@ -68,10 +65,10 @@ class Activation_Flag {
 	 */
 	public function get_activation_flag( $network_wide ) {
 		if ( $network_wide ) {
-			return (bool) get_network_option( null, self::OPTION_SHOW_ACTIVATION_NOTICE );
+			return (bool) get_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE, false );
 		}
 
-		return (bool) get_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
+		return (bool) get_option( self::OPTION_SHOW_ACTIVATION_NOTICE, false );
 	}
 
 	/**
@@ -83,7 +80,7 @@ class Activation_Flag {
 	 */
 	public function delete_activation_flag( $network_wide ) {
 		if ( $network_wide ) {
-			delete_network_option( null, self::OPTION_SHOW_ACTIVATION_NOTICE );
+			delete_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
 			return;
 		}
 

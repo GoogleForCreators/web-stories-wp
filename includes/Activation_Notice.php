@@ -32,14 +32,14 @@ use Google\Web_Stories\Traits\Assets;
  * Class Activation_Notice.
  */
 class Activation_Notice {
+	use Assets;
+
 	/**
 	 * Script handle.
 	 *
 	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'web-stories-activation-notice';
-
-	use Assets;
 
 	/**
 	 * Activation flag instance.
@@ -53,9 +53,7 @@ class Activation_Notice {
 	 *
 	 * @param Activation_Flag $activation_flag Activation flag instance.
 	 */
-	public function __construct(
-		Activation_Flag $activation_flag
-	) {
+	public function __construct( Activation_Flag $activation_flag ) {
 		$this->activation_flag = $activation_flag;
 	}
 
@@ -64,7 +62,7 @@ class Activation_Notice {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function init() {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'render_notice' ] );
 		add_action( 'network_admin_notices', [ $this, 'render_notice' ] );
@@ -77,7 +75,7 @@ class Activation_Notice {
 	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {
-		if ( 'plugins.php' !== $hook_suffix || ! $this->activation_flag->get_activation_flag( is_network_admin() ) ) {
+		if ( ! $this->check_hook_suffix( $hook_suffix ) || ! $this->activation_flag->get_activation_flag( is_network_admin() ) ) {
 			return;
 		}
 
@@ -126,11 +124,7 @@ class Activation_Notice {
 	public function render_notice() {
 		global $hook_suffix;
 
-		if ( empty( $hook_suffix ) ) {
-			return;
-		}
-
-		if ( 'plugins.php' !== $hook_suffix ) {
+		if ( ! $this->check_hook_suffix( $hook_suffix ) ) {
 			return;
 		}
 
@@ -145,9 +139,17 @@ class Activation_Notice {
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		// $this->activation_flag->delete_activation_flag( $network_wide );
 
-		?>
-		<div id="web-stories-plugin-activation-notice" class="notice notice-success is-dismissible">
-		</div>
-		<?php
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/activation-notice.php';
+	}
+
+	/**
+	 * Helper to checker $hook_suffix
+	 *
+	 * @param string $hook_suffix Current hook_suffix.
+	 *
+	 * @return bool
+	 */
+	protected function check_hook_suffix( $hook_suffix ) {
+		return ( ! empty( $hook_suffix ) && 'plugins.php' === $hook_suffix );
 	}
 }
