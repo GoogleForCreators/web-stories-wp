@@ -61,7 +61,6 @@ const ColumnContainer = styled.div`
 const RowContainer = styled.div`
   grid-area: infinitescroll;
   overflow: auto;
-  height: 100%;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
 `;

@@ -49,13 +49,15 @@ flagValues.forEach((value) => {
           mediaElements = fixture.querySelectorAll(
             '[data-testid="mediaElement"]'
           );
+
+          if (mediaElements.length === MEDIA_PER_PAGE) {
+            expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
+          }
         });
 
         const mediaLibrary = fixture.querySelector(
           '[data-testid="mediaLibrary"]'
         );
-        expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
-
         mediaLibrary.scrollTo(
           0,
           mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
