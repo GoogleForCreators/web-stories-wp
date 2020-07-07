@@ -60,7 +60,7 @@ const ColumnContainer = styled.div`
 
 const RowContainer = styled.div`
   grid-area: infinitescroll;
-  overflow: scroll;
+  overflow: auto;
   height: 100%;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
@@ -327,7 +327,7 @@ function MediaPane(props) {
   // Arranges elements in rows.
   const rowBasedGallery = (
     <RowContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
-      {resources && (
+      {resources.length != 0 && (
         <MediaGallery
           resources={resources}
           onInsert={insertMediaElement}

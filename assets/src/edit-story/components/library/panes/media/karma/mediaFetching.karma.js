@@ -44,13 +44,16 @@ flagValues.forEach((value) => {
     it(
       'should fetch 2nd page - `rowBasedGallery` flag set to ' + value,
       async () => {
+        let mediaElements;
+        await waitFor(() => {
+          mediaElements = fixture.querySelectorAll(
+            '[data-testid="mediaElement"]'
+          );
+        });
+
         const mediaLibrary = fixture.querySelector(
           '[data-testid="mediaLibrary"]'
         );
-        let mediaElements = fixture.querySelectorAll(
-          '[data-testid="mediaElement"]'
-        );
-
         expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
 
         mediaLibrary.scrollTo(
