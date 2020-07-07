@@ -1527,7 +1527,12 @@
           },
           "type": "shape",
           "basedOn": "98791375-1a20-4b01-8e12-cb8c3f9932ba",
-          "id": "4b924f3a-045c-4675-9b79-383ebdd1466a"
+          "id": "4b924f3a-045c-4675-9b79-383ebdd1466a",
+          "link": {
+            "url": "http://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         },
         {
           "x": 122,
@@ -1595,7 +1600,12 @@
           "basedOn": "4b924f3a-045c-4675-9b79-383ebdd1466a",
           "id": "315a02bf-d411-4cdd-aec6-2713950b1c63",
           "x": 81,
-          "y": 426
+          "y": 426,
+          "link": {
+            "url": "http://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         },
         {
           "width": 20,
@@ -1663,7 +1673,12 @@
           "basedOn": "315a02bf-d411-4cdd-aec6-2713950b1c63",
           "id": "b000d6e9-edcb-4121-9800-0e0755e0beaf",
           "x": 174,
-          "y": 135
+          "y": 135,
+          "link": {
+            "url": "http://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         },
         {
           "width": 20,
@@ -1730,9 +1745,9 @@
       },
       "backgroundColor": {
         "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
+          "r": 0,
+          "g": 0,
+          "b": 0,
           "a": 1
         }
       },
