@@ -26,7 +26,7 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 import FileUploadForm from '../';
-import { getResourceFromLocalFile } from '../../../../utils';
+import { getResourceFromLocalFile } from '../../../utils';
 
 const Container = styled.div`
   width: 600px;

@@ -28,10 +28,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
-import { DefaultButton } from '../../button';
-import { Close as UploadIcon } from '../../../icons';
-import { TypographyPresets } from '../../typography';
+import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
+import { DefaultButton } from '../button';
+import { Close as UploadIcon } from '../../icons';
+import { TypographyPresets } from '../typography';
 
 const DEFAULT_FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 
