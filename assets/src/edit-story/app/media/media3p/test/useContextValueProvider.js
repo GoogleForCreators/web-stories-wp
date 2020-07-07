@@ -27,6 +27,7 @@ describe('useContextValueProvider', () => {
     useProviderContextValueProvider.mockReturnValueOnce({
       state: { media: [] },
     });
+
     const value = useContextValueProvider(
       {
         selectedProvider: 'unsplash',
