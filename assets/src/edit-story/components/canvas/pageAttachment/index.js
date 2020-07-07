@@ -127,6 +127,7 @@ function PageAttachment({ pageAttachment = {} }) {
   const { ctaText = __('Learn more', 'web-stories'), url } = pageAttachment;
   return (
     <Wrapper
+      role="presentation"
       fullbleedBottom={fullbleedBottom}
       displayMarker={hasLinkInAttachmentArea}
       ref={setPageAttachmentContainer}
@@ -138,21 +139,23 @@ function PageAttachment({ pageAttachment = {} }) {
             <RightBar />
           </Icon>
           <TextWrapper>{ctaText}</TextWrapper>
-          {pageAttachmentContainer && (
-            <Popup
-              anchor={{ current: pageAttachmentContainer }}
-              isOpen={isAnythingTransforming && hasLinkInAttachmentArea}
-              placement={'left'}
-              spacing={spacing}
-            >
-              <Tooltip>
-                {__(
-                  'Links can not be located below the dashline when a page attachment is present',
-                  'web-stories'
-                )}
-              </Tooltip>
-            </Popup>
-          )}
+          {pageAttachmentContainer &&
+            isAnythingTransforming &&
+            hasLinkInAttachmentArea && (
+              <Popup
+                anchor={{ current: pageAttachmentContainer }}
+                isOpen={true}
+                placement={'left'}
+                spacing={spacing}
+              >
+                <Tooltip>
+                  {__(
+                    'Links can not be located below the dashline when a page attachment is present',
+                    'web-stories'
+                  )}
+                </Tooltip>
+              </Popup>
+            )}
         </>
       )}
     </Wrapper>
