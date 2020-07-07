@@ -53,6 +53,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   &:hover {
     background: ${({ isActive, theme }) =>

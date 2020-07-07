@@ -76,6 +76,7 @@ const FilterButtons = styled.div`
 
 const FilterButton = styled.button`
   border: 0;
+  cursor: pointer;
   background: none;
   padding: 0;
   margin: 0 18px 0 0;
