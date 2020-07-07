@@ -35,7 +35,7 @@ export function useMedia3p(selector) {
  * media context value that's provided from
  * {@link ./useProviderContextValueProvider}.
  *
- * @param provider The provider for which state will be returned
+ * @param {string} provider The provider for which state will be returned
  * @param {function(Object):Object} selector Returns a fragment of the media
  * context value that the caller is interested in
  */
