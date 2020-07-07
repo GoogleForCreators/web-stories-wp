@@ -459,7 +459,7 @@ class Story_Post_Type {
 				 * Issue: #2820
 				 * Creation date: 2020-06-30
 				 */
-				'rowBasedGallery'              => true,
+				'rowBasedGallery'              => false,
 			],
 
 		];

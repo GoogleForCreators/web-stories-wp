@@ -327,11 +327,13 @@ function MediaPane(props) {
   // Arranges elements in rows.
   const rowBasedGallery = (
     <RowContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
-      <MediaGallery
-        resources={resources}
-        onInsert={insertMediaElement}
-        providerType={ProviderType.LOCAL}
-      />
+      {resources && (
+        <MediaGallery
+          resources={resources}
+          onInsert={insertMediaElement}
+          providerType={ProviderType.LOCAL}
+        />
+      )}
       {hasMore && (
         <Loading ref={refContainerFooter}>
           {__('Loading…', 'web-stories')}

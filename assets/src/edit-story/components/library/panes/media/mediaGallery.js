@@ -53,11 +53,10 @@ function MediaGallery({ resources, onInsert, providerType }) {
 
   const imageRenderer = useCallback(
     ({ index, photo }) => (
-      <PhotoContainer photo={photo}>
+      <PhotoContainer photo={photo} key={index}>
         <MediaElement
           resource={resources[index]}
           width={photo.width}
-          key={index}
           height={photo.height}
           onInsert={onInsert}
           providerType={providerType}
