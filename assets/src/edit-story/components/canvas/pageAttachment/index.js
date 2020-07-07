@@ -21,10 +21,17 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import useCanvas from '../useCanvas';
 import { FULLBLEED_RATIO } from '../../../constants';
+import Popup from '../../popup';
+import { useTransform } from '../../transform';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -88,16 +95,33 @@ const TextWrapper = styled.span`
   letter-spacing: 0.3px;
 `;
 
+const Tooltip = styled.div`
+  background-color: ${({ theme }) => theme.colors.bg.v0};
+  color: ${({ theme }) => theme.colors.fg.v1};
+  width: 200px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  text-align: center;
+`;
+
+const spacing = { y: 0 };
+
 function PageAttachment({ pageAttachment }) {
   const {
     pageSize,
     showAttachmentBorder,
+    pageAttachmentContainer,
     setPageAttachmentContainer,
   } = useCanvas((state) => ({
     showAttachmentBorder: state.state.showAttachmentBorder,
     pageSize: state.state.pageSize,
+    pageAttachmentContainer: state.state.pageAttachmentContainer,
     setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
   }));
+  const {
+    state: { isAnythingTransforming },
+  } = useTransform();
   const fullbleedHeight = pageSize.width / FULLBLEED_RATIO;
   const fullbleedBottom = (fullbleedHeight - pageSize.height) / 2;
   const { ctaText } = pageAttachment;
@@ -112,6 +136,21 @@ function PageAttachment({ pageAttachment }) {
         <RightBar />
       </Icon>
       <TextWrapper>{ctaText}</TextWrapper>
+      {pageAttachmentContainer && (
+        <Popup
+          anchor={{ current: pageAttachmentContainer }}
+          isOpen={isAnythingTransforming && showAttachmentBorder}
+          placement={'left'}
+          spacing={spacing}
+        >
+          <Tooltip>
+            {__(
+              'Links can not be located below the dashline when a page attachment is present',
+              'web-stories'
+            )}
+          </Tooltip>
+        </Popup>
+      )}
     </Wrapper>
   );
 }

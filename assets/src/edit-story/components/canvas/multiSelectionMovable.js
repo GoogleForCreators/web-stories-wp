@@ -219,6 +219,7 @@ function MultiSelectionMovable({ selectedElements }) {
     });
     if (hasLinkInAttachmentArea) {
       resetMoveable();
+      setShowAttachmentBorder(false);
       return;
     }
     updateElementsById({

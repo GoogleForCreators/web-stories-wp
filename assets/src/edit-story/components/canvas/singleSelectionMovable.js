@@ -279,6 +279,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         if (isLink && isLinkInAttachmentArea(target)) {
           resetDragging(target);
+          setShowAttachmentBorder(false);
           return;
         }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
@@ -360,6 +361,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         if (isLink && isLinkInAttachmentArea(target)) {
           resetMoveable(target);
+          setShowAttachmentBorder(false);
           return;
         }
         const [editorWidth, editorHeight] = frame.resize;
@@ -405,6 +407,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         if (isLink && isLinkInAttachmentArea(target)) {
           resetMoveable(target);
+          setShowAttachmentBorder(false);
           return;
         }
         const properties = { rotationAngle: Math.round(frame.rotate) };
