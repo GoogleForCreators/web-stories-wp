@@ -31,10 +31,10 @@ import { getResourceFromAttachment } from '../utils';
  * Context fragment provider for local media.
  * This is called from {@link MediaProvider} to provide the media global state.
  *
- * @param reducerState The 'local' fragment of the state returned from
- * {@link useMediaReducer}
- * @param reducerActions The 'local' fragment of the actions returned from
- * {@link useMediaReducer}
+ * @param {Object} reducerState The 'local' fragment of the state returned from
+ * `useMediaReducer`
+ * @param {Object} reducerActions The 'local' fragment of the actions returned
+ * from `useMediaReducer`
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
   const {
