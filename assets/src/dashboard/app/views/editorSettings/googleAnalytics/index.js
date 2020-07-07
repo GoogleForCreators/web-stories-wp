@@ -40,16 +40,16 @@ const TEXT = {
   CONTEXT: __(
     "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article.",
     'web-stories'
-  ),
+  ), // TODO update this text to have link to article once confirmed what article is
   SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
   PLACEHOLDER: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
   ARIA_LABEL: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
 };
-// todo add link
+
 function GoogleAnalyticsSettings() {
   const {
     actions: {
-      settingsApi: { fetchGoogleAnalyticsId, updateGoogleAnalyticsId },
+      settingsApi: { fetchSettings, updateSettings },
     },
     state: {
       settings: { googleAnalyticsId },
@@ -59,8 +59,8 @@ function GoogleAnalyticsSettings() {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
 
   useEffect(() => {
-    fetchGoogleAnalyticsId();
-  }, [fetchGoogleAnalyticsId]);
+    fetchSettings();
+  }, [fetchSettings]);
 
   const handleCancelUpdateId = useCallback(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -68,9 +68,9 @@ function GoogleAnalyticsSettings() {
 
   const handleCompleteUpdateId = useCallback(
     (newId) => {
-      updateGoogleAnalyticsId(newId);
+      updateSettings({ googleAnalyticsId: newId });
     },
-    [updateGoogleAnalyticsId]
+    [updateSettings]
   );
 
   return (

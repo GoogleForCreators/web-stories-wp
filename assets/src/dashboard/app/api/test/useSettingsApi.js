@@ -25,33 +25,33 @@ import useSettingsApi from '../useSettingsApi';
 import wpAdapter from '../wpAdapter';
 
 describe('useSettingsApi', () => {
-  it('should return an error when fetching google analytics API request fails', async () => {
+  it('should return an error when fetching settings API request fails', async () => {
     const { result } = renderHook(() =>
       useSettingsApi(wpAdapter, { globalStoriesSettingsApi: 'wordpress' })
     );
 
     await act(async () => {
-      await result.current.api.fetchGoogleAnalyticsId();
+      await result.current.api.fetchSettings();
     });
 
     expect(result.current.settings.error.message).toStrictEqual({
       body: 'The response is not a valid JSON response.',
-      title: 'Unable to find google analytics ID',
+      title: 'Unable to find settings data',
     });
   });
 
-  it('should return an error when updating google analytics API request fails', async () => {
+  it('should return an error when updating settings API request fails', async () => {
     const { result } = renderHook(() =>
       useSettingsApi(wpAdapter, { globalStoriesSettingsApi: 'wordpress' })
     );
 
     await act(async () => {
-      await result.current.api.updateGoogleAnalyticsId('2738237892739');
+      await result.current.api.updateSettings('2738237892739');
     });
 
     expect(result.current.settings.error.message).toStrictEqual({
       body: 'The response is not a valid JSON response.',
-      title: 'Unable to update google analytics ID',
+      title: 'Unable to update settings data',
     });
   });
 });

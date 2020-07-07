@@ -39,14 +39,14 @@ export default function useSettingsApi(
 ) {
   const [state, dispatch] = useReducer(settingsReducer, defaultSettingsState);
 
-  const fetchGoogleAnalyticsId = useCallback(async () => {
+  const fetchSettings = useCallback(async () => {
     if (!globalStoriesSettingsApi) {
       dispatch({
-        type: SETTINGS_ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_FAILURE,
+        type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
           message: {
             body: __('Cannot connect to data source', 'web-stories'),
-            title: __('Unable to find google analytics ID', 'web-stories'),
+            title: __('Unable to find settings data', 'web-stories'),
           },
         },
       });
@@ -59,25 +59,25 @@ export default function useSettingsApi(
       );
 
       dispatch({
-        type: SETTINGS_ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_SUCCESS,
-        payload: response.googleAnalyticsId,
+        type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
+        payload: response,
       });
     } catch (err) {
       dispatch({
-        type: SETTINGS_ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_FAILURE,
+        type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
           message: {
             body: err.message,
-            title: __('Unable to find google analytics ID', 'web-stories'),
+            title: __('Unable to find settings data', 'web-stories'),
           },
         },
       });
     }
   }, [dataAdapter, globalStoriesSettingsApi]);
 
-  const updateGoogleAnalyticsId = useCallback(
-    async (newAnalyticsId) => {
-      const query = { analyticsId: newAnalyticsId };
+  const updateSettings = useCallback(
+    async (settings) => {
+      const query = { googleAnalyticsId: settings.googleAnalyticsId };
 
       try {
         const response = await dataAdapter.post(
@@ -88,16 +88,16 @@ export default function useSettingsApi(
         );
 
         dispatch({
-          type: SETTINGS_ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_SUCCESS,
+          type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
           payload: response.googleAnalyticsId,
         });
       } catch (err) {
         dispatch({
-          type: SETTINGS_ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_FAILURE,
+          type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_FAILURE,
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to update google analytics ID', 'web-stories'),
+              title: __('Unable to update settings data', 'web-stories'),
             },
           },
         });
@@ -108,10 +108,10 @@ export default function useSettingsApi(
 
   const api = useMemo(
     () => ({
-      fetchGoogleAnalyticsId,
-      updateGoogleAnalyticsId,
+      fetchSettings,
+      updateSettings,
     }),
-    [fetchGoogleAnalyticsId, updateGoogleAnalyticsId]
+    [fetchSettings, updateSettings]
   );
 
   return { settings: state, api };

@@ -29,9 +29,9 @@ describe('settingsReducer', () => {
     jest.spyOn(Date, 'now').mockImplementation(() => 1592844570916);
   });
 
-  it(`should update settings state when ${ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_SUCCESS} is called`, () => {
+  it(`should update settings state when ${ACTION_TYPES.FETCH_SETTINGS_SUCCESS} is called`, () => {
     const result = settingsReducer(initialState, {
-      type: ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_SUCCESS,
+      type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
       payload: 'fakeId12345',
     });
     expect(result).toMatchObject({
@@ -40,9 +40,9 @@ describe('settingsReducer', () => {
     });
   });
 
-  it(`should update settings state when ${ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_FAILURE} is called`, () => {
+  it(`should update settings state when ${ACTION_TYPES.FETCH_SETTINGS_FAILURE} is called`, () => {
     const result = settingsReducer(initialState, {
-      type: ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_FAILURE,
+      type: ACTION_TYPES.FETCH_SETTINGS_FAILURE,
       payload: {
         message: {
           body: 'The response is not a valid JSON response.',
@@ -64,9 +64,9 @@ describe('settingsReducer', () => {
     });
   });
 
-  it(`should update settings state when ${ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_FAILURE} is called`, () => {
+  it(`should update settings state when ${ACTION_TYPES.UPDATE_SETTINGS_FAILURE} is called`, () => {
     const result = settingsReducer(initialState, {
-      type: ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_FAILURE,
+      type: ACTION_TYPES.UPDATE_SETTINGS_FAILURE,
       payload: {
         message: {
           body: 'The response is not a valid JSON response.',
@@ -88,9 +88,9 @@ describe('settingsReducer', () => {
     });
   });
 
-  it(`should update settings state when ${ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_SUCCESS} is called`, () => {
+  it(`should update settings state when ${ACTION_TYPES.UPDATE_SETTINGS_SUCCESS} is called`, () => {
     const result = settingsReducer(initialState, {
-      type: ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_SUCCESS,
+      type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
       payload: 'fakeId12345NEW',
     });
     expect(result).toMatchObject({

@@ -15,10 +15,10 @@
  */
 
 export const ACTION_TYPES = {
-  UPDATE_GOOGLE_ANALYTICS_SUCCESS: 'update_google_analytics_success',
-  UPDATE_GOOGLE_ANALYTICS_FAILURE: 'update_google_analytics_failure',
-  FETCH_GOOGLE_ANALYTICS_SUCCESS: 'fetch_google_analytics_success',
-  FETCH_GOOGLE_ANALYTICS_FAILURE: 'fetch_google_analytics_failure',
+  UPDATE_SETTINGS_SUCCESS: 'update_settings_success',
+  UPDATE_SETTINGS_FAILURE: 'update_settings_failure',
+  FETCH_SETTINGS_SUCCESS: 'fetch_settings_success',
+  FETCH_SETTINGS_FAILURE: 'fetch_settings_failure',
 };
 
 export const defaultSettingsState = {
@@ -28,20 +28,20 @@ export const defaultSettingsState = {
 
 function settingsReducer(state, action) {
   switch (action.type) {
-    case ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_FAILURE:
-    case ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_FAILURE: {
+    case ACTION_TYPES.UPDATE_SETTINGS_FAILURE:
+    case ACTION_TYPES.FETCH_SETTINGS_FAILURE: {
       return {
         ...state,
         error: { ...action.payload, id: Date.now() },
       };
     }
 
-    case ACTION_TYPES.UPDATE_GOOGLE_ANALYTICS_SUCCESS:
-    case ACTION_TYPES.FETCH_GOOGLE_ANALYTICS_SUCCESS: {
+    case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS:
+    case ACTION_TYPES.FETCH_SETTINGS_SUCCESS: {
       return {
         ...state,
         error: {},
-        googleAnalyticsId: action.payload,
+        googleAnalyticsId: action.payload.googleAnalyticsId,
       };
     }
 
