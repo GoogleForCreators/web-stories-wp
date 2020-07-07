@@ -67,7 +67,12 @@ describe('multiSelectionMovable', () => {
     target2 = document.createElement('div');
 
     storyContext = {
-      state: { selectedElements: [element1, element2] },
+      state: {
+        selectedElements: [element1, element2],
+        currentPage: {
+          elements: [],
+        },
+      },
       actions: { updateElementsById, updateSelectedElements },
     };
     canvasContext = {
