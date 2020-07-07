@@ -14,15 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-export * from '../common/actions';
-import * as types from './types';
-
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
+export { default as Media3pApiProvider } from './media3pApiProvider';
+export { default as useMedia3pApi } from './useMedia3pApi';

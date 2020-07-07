@@ -31,7 +31,8 @@ function useProviderSetContextValueProvider(reducerState, reducerActions) {
   for (const provider of providers) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     result[provider] = useProviderContextValueProvider(
-      reducerState[provider],
+      provider,
+      reducerState,
       reducerActions
     );
   }
@@ -51,6 +52,9 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   return {
     state: {
       selectedProvider: reducerState.selectedProvider,
+    },
+    actions: {
+      setSelectedProvider: reducerActions.setSelectedProvider,
     },
     ...useProviderSetContextValueProvider(reducerState, reducerActions),
   };

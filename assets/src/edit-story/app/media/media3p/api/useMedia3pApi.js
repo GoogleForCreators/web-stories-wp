@@ -17,12 +17,11 @@
 /**
  * Internal dependencies
  */
-export * from '../common/actions';
-import * as types from './types';
+import { identity, useContextSelector } from '../../../../utils/context';
+import Context from './context';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
+function useMedia3pApi(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useMedia3pApi;

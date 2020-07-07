@@ -21,6 +21,9 @@ use Google\Web_Stories\Tests\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
+ */
 class Stories_Controller extends \WP_Test_REST_TestCase {
 	protected $server;
 
@@ -121,6 +124,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$wp_rest_server = null;
 	}
 
+	/**
+	 * @covers ::register_routes
+	 */
 	public function test_register_routes() {
 		$routes = rest_get_server()->get_routes();
 
@@ -128,6 +134,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertCount( 2, $routes['/wp/v2/web-story'] );
 	}
 
+	/**
+	 * @covers ::get_items
+	 */
 	public function test_get_items() {
 		wp_set_current_user( self::$user_id );
 		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
@@ -149,6 +158,37 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( 3, $headers['X-WP-Total'] );
 	}
 
+	/**
+	 * @covers ::get_items
+	 */
+	public function test_get_items_format() {
+		wp_set_current_user( self::$user_id );
+		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request->set_param( 'status', [ 'draft' ] );
+		$request->set_param( 'context', 'edit' );
+		$request->set_param( '_web_stories_envelope', true );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		// Body of request.
+		$this->assertArrayHasKey( 'headers', $data );
+		$this->assertArrayHasKey( 'body', $data );
+		$this->assertArrayHasKey( 'status', $data );
+
+		$statues        = $data['headers']['X-WP-TotalByStatus'];
+		$statues_decode = json_decode( $statues, true );
+
+		// Headers.
+		$this->assertArrayHasKey( 'all', $statues_decode );
+		$this->assertArrayHasKey( 'publish', $statues_decode );
+		$this->assertArrayHasKey( 'draft', $statues_decode );
+
+		$this->assertEquals( 3, $data['headers']['X-WP-Total'] );
+	}
+
+	/**
+	 * @covers ::get_item_schema
+	 */
 	public function test_get_item_schema() {
 		$request  = new WP_REST_Request( 'OPTIONS', '/wp/v2/web-story' );
 		$response = rest_get_server()->dispatch( $request );
@@ -161,6 +201,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'featured_media_url', $properties );
 	}
 
+	/**
+	 * @covers ::filter_posts_clauses
+	 */
 	public function test_filter_posts_by_author_display_names() {
 		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
 		$request->set_param( 'order', 'asc' );
@@ -205,6 +248,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		);
 	}
 
+	/**
+	 * @covers ::filter_posts_clauses
+	 */
 	public function test_filter_posts_clauses_irrelevant_query() {
 		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
@@ -228,6 +274,10 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( $orderby, $initial_clauses );
 	}
 
+	/**
+	 * @covers ::create_item
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::create_item
+	 */
 	public function test_create_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );
 
@@ -248,6 +298,10 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
 	}
 
+	/**
+	 * @covers ::update_item
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::update_item
+	 */
 	public function test_update_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );
 

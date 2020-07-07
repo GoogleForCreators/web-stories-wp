@@ -17,12 +17,6 @@
 /**
  * Internal dependencies
  */
-export * from '../common/actions';
-import * as types from './types';
+import { createContext } from '../../../../utils/context';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
+export default createContext({ actions: {} });
