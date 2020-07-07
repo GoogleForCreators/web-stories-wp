@@ -27,14 +27,19 @@ describe('useContextValueProvider', () => {
     useProviderContextValueProvider.mockReturnValueOnce({
       state: { media: [] },
     });
-    const value = useContextValueProvider({
-      selectedProvider: 'unsplash',
-      unsplash: {},
-    });
+
+    const value = useContextValueProvider(
+      {
+        selectedProvider: 'unsplash',
+        unsplash: {},
+      },
+      { setSelectedProvider: () => {} }
+    );
 
     expect(value).toStrictEqual(
       expect.objectContaining({
         state: { selectedProvider: 'unsplash' },
+        actions: { setSelectedProvider: expect.any(Function) },
         unsplash: {
           state: { media: [] },
         },

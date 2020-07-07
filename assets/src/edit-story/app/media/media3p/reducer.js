@@ -47,7 +47,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
   state = reduceProviderStates(state, { type, payload });
 
   switch (type) {
-    case types.SET_MEDIA3P_PROVIDER: {
+    case types.SET_SELECTED_PROVIDER: {
       return {
         ...state,
         selectedProvider: payload.provider,

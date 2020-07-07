@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export const SET_MEDIA3P_PROVIDER = 'SET_MEDIA3P_PROVIDER';
+export const SET_SELECTED_PROVIDER = 'SET_SELECTED_PROVIDER';

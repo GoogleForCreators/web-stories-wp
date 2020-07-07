@@ -22,41 +22,39 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import providerReducer from '../providerReducer';
 import reducer from '../reducer';
 import useMediaReducer from '../../useMediaReducer';
 import * as media3pActionsToWrap from '../actions';
 import * as types from '../../types';
 
-jest.mock('../providerReducer');
-
 describe('reducer', () => {
   let initialValue;
 
   beforeEach(() => {
-    providerReducer.mockReturnValueOnce({});
     initialValue = reducer(undefined, { type: types.INITIAL_STATE });
   });
 
   it('should provide initial state for each provider', () => {
     expect(initialValue).toStrictEqual(
-      expect.objectContaining({ unsplash: {} })
+      expect.objectContaining({ unsplash: expect.anything() })
     );
   });
 
   it('should reduce each provider state', () => {
-    providerReducer.mockReturnValueOnce({ key: 'value' });
-    const newState = reducer(initialValue, {
-      type: 'action',
-      payload: { provider: 'unsplash' },
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, media3pActionsToWrap)
+    );
+
+    result.current.actions.fetchMediaSuccess({
+      provider: 'unsplash',
+      media: [{ id: 'id' }],
     });
 
-    expect(providerReducer).toHaveBeenCalledWith(
-      {},
-      { type: 'action', payload: { provider: 'unsplash' } }
-    );
-    expect(newState).toStrictEqual(
-      expect.objectContaining({ unsplash: { key: 'value' } })
+    expect(result.current.state.unsplash).toStrictEqual(
+      expect.objectContaining({
+        isMediaLoaded: true,
+        isMediaLoading: false,
+      })
     );
   });
 
