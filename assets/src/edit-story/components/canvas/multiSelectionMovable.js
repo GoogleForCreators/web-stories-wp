@@ -32,6 +32,7 @@ import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
+import useElementsWithLinks from '../../utils/useElementsWithLinks';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -41,16 +42,20 @@ function MultiSelectionMovable({ selectedElements }) {
 
   const eventTracker = useRef({});
 
-  const { updateElementsById, deleteElementsById } = useStory((state) => ({
-    updateElementsById: state.actions.updateElementsById,
-    deleteElementsById: state.actions.deleteElementsById,
-  }));
+  const { updateElementsById, deleteElementsById, currentPage } = useStory(
+    (state) => ({
+      updateElementsById: state.actions.updateElementsById,
+      deleteElementsById: state.actions.deleteElementsById,
+      currentPage: state.state.currentPage,
+    })
+  );
   const {
     canvasWidth,
     canvasHeight,
     nodesById,
     handleSelectElement,
     fullbleedContainer,
+    setShowAttachmentBorder,
   } = useCanvas(
     ({
       state: {
@@ -58,13 +63,14 @@ function MultiSelectionMovable({ selectedElements }) {
         nodesById,
         fullbleedContainer,
       },
-      actions: { handleSelectElement },
+      actions: { handleSelectElement, setShowAttachmentBorder },
     }) => ({
       canvasWidth,
       canvasHeight,
       fullbleedContainer,
       nodesById,
       handleSelectElement,
+      setShowAttachmentBorder,
     })
   );
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
@@ -79,6 +85,8 @@ function MultiSelectionMovable({ selectedElements }) {
   const {
     state: { draggingResource },
   } = useDropTargets();
+
+  const { isLinkInAttachmentArea } = useElementsWithLinks();
 
   const [isDragging, setIsDragging] = useState(false);
 
@@ -170,8 +178,15 @@ function MultiSelectionMovable({ selectedElements }) {
   const onGroupEventEnd = ({ targets, isRotate, isResize }) => {
     const updates = {};
     const toRemove = [];
+    let hasLinkInAttachmentArea = false;
     targets.forEach((target, i) => {
+      if (hasLinkInAttachmentArea) {
+        return;
+      }
       const { element, updateForResizeEvent } = targetList[i];
+      if (element.link?.url && isLinkInAttachmentArea(target)) {
+        hasLinkInAttachmentArea = true;
+      }
       if (isTargetOutOfContainer(target, fullbleedContainer)) {
         toRemove.push(element.id);
         return;
@@ -202,6 +217,10 @@ function MultiSelectionMovable({ selectedElements }) {
       }
       updates[element.id] = properties;
     });
+    if (hasLinkInAttachmentArea) {
+      resetMoveable();
+      return;
+    }
     updateElementsById({
       elementIds: Object.keys(updates),
       properties: (currentProperties) => updates[currentProperties.id],
@@ -240,6 +259,7 @@ function MultiSelectionMovable({ selectedElements }) {
     return false;
   };
 
+  const pageHasAttachment = Boolean(currentPage.pageAttachment?.url);
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Movable
@@ -256,6 +276,11 @@ function MultiSelectionMovable({ selectedElements }) {
           const { element } = targetList[i];
           sFrame.translate = beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
+          if (pageHasAttachment) {
+            setShowAttachmentBorder(
+              element.link?.url && isLinkInAttachmentArea(target)
+            );
+          }
         });
       }}
       onDragGroupStart={({ events, inputEvent }) => {
@@ -281,6 +306,11 @@ function MultiSelectionMovable({ selectedElements }) {
           sFrame.rotate = ((beforeRotate % 360) + 360) % 360;
           sFrame.translate = drag.beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
+          if (pageHasAttachment) {
+            setShowAttachmentBorder(
+              element.link?.url && isLinkInAttachmentArea(target)
+            );
+          }
         });
       }}
       onRotateGroupEnd={({ targets }) => {
@@ -321,6 +351,11 @@ function MultiSelectionMovable({ selectedElements }) {
           sFrame.translate = drag.beforeTranslate;
           sFrame.updates = updates;
           setTransformStyle(element.id, target, sFrame);
+          if (pageHasAttachment) {
+            setShowAttachmentBorder(
+              element.link?.url && isLinkInAttachmentArea(target)
+            );
+          }
         });
       }}
       onResizeGroupEnd={({ targets }) => {
