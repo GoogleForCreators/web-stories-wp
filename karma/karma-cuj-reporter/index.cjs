@@ -34,7 +34,8 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
 
   const getCompletion = (cuj, action) => {
     const total = cujResults.filter(
-      ([_cuj, _action]) => _cuj === cuj && (action ? _action === action : true)
+      ([_cuj, _action]) =>
+        (cuj ? _cuj === cuj : true) && (action ? _action === action : true)
     );
     const completed = total.filter(([, , completed]) => completed);
 
@@ -49,7 +50,7 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
       emoji = '🛴';
     }
 
-    return `${emoji} ${(percentage * 100).toFixed(2)}%`;
+    return `${emoji} **${(percentage * 100).toFixed(2)}%**`;
   };
 
   this.onSpecComplete = function (browser, result) {
@@ -85,7 +86,8 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
       return acc;
     }, []);
 
-    tableContents.unshift(['CUJ', 'Action', 'Completion']);
+    tableContents.unshift(['**CUJ**', '**Action**', '**Completion**']);
+    tableContents.push(['*\\[total\\]*', '*\\[total\\]*', getCompletion()]);
     const tableString = table(tableContents);
     log.info('\n' + tableString);
 
