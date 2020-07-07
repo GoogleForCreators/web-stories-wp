@@ -22,6 +22,11 @@ import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import theme from '../theme';
@@ -30,7 +35,9 @@ function App({ config }) {
   const { isRTL } = config;
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={theme}>{'SUCCESS!'}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <p>{__('SUCCESS!', 'web-stories')}</p>
+      </ThemeProvider>
     </StyleSheetManager>
   );
 }
