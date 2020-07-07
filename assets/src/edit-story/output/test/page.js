@@ -404,6 +404,55 @@ describe('Page output', () => {
     });
   });
 
+  describe('pageAttachment', () => {
+    it('should output page attachment if the URL is set', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: 'https://example.test',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageAttachment = container.querySelector(
+        'amp-story-page-attachment'
+      );
+      await expect(pageAttachment.dataset.ctaText).toStrictEqual('Click me!');
+      await expect(pageAttachment).toBeInTheDocument();
+    });
+
+    it('should not output page attachment if the URL is empty', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: '',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageAttachment = container.querySelector(
+        'amp-story-page-attachment'
+      );
+      await expect(pageAttachment).not.toBeInTheDocument();
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       const props = {
