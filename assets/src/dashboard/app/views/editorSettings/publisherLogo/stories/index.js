@@ -13,10 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as MyStoriesView } from './myStories';
-export { default as EditorSettingsView } from './editorSettings';
-export { default as ExploreTemplatesView } from './exploreTemplates';
-export { default as TemplateDetailsView } from './templateDetails';
-export { default as SavedTemplatesView } from './savedTemplates';
-export { default as StoryAnimTool } from './storyAnimTool';
-export { default as ToasterView } from './toaster';
+
+/**
+ * Internal dependencies
+ */
+import PublisherLogoSettings from '../';
+
+export default {
+  title: 'Dashboard/Views/EditorSettings/PublisherLogo',
+  component: PublisherLogoSettings,
+};
+
+export const _default = () => {
+  return <PublisherLogoSettings />;
+};

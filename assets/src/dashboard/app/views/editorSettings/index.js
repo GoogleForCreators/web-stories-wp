@@ -13,10 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as MyStoriesView } from './myStories';
-export { default as EditorSettingsView } from './editorSettings';
-export { default as ExploreTemplatesView } from './exploreTemplates';
-export { default as TemplateDetailsView } from './templateDetails';
-export { default as SavedTemplatesView } from './savedTemplates';
-export { default as StoryAnimTool } from './storyAnimTool';
-export { default as ToasterView } from './toaster';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import GoogleAnalyticsSettings from './googleAnalytics';
+import PublisherLogoSettings from './publisherLogo';
+import { Wrapper, Header, Heading, Main } from './components';
+
+function EditorSettings() {
+  return (
+    <Wrapper>
+      <Header>
+        <Heading>{__('Settings', 'web-stories')}</Heading>
+      </Header>
+      <Main>
+        <GoogleAnalyticsSettings />
+        <PublisherLogoSettings />
+      </Main>
+    </Wrapper>
+  );
+}
+
+export default EditorSettings;
