@@ -33,3 +33,6 @@ export { default as useTemplateView } from './useTemplateView';
 export { default as addQueryArgs } from '../../edit-story/utils/addQueryArgs';
 export { default as getStoryPropsToSave } from '../../edit-story/app/story/utils/getStoryPropsToSave';
 export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffect';
+// TODO use these shared utils to structure image resources mirroring editor
+export { default as getTypeFromMime } from '../../edit-story/app/media/utils/getTypeFromMime';
+export { default as getResourceFromLocalFile } from '../../edit-story/app/media/utils/getResourceFromLocalFile';
