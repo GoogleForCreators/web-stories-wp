@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Implement, re-using logic from media/common/useContextValueProvider.js.
-export default function useProviderContextValueProvider(
-  provider,
-  reducerState
-) {
-  return {
-    state: reducerState[provider],
-  };
-}
+export const FETCH_MEDIA_START = 'FETCH_MEDIA_START';
+export const FETCH_MEDIA_SUCCESS = 'FETCH_MEDIA_SUCCESS';
+export const FETCH_MEDIA_ERROR = 'FETCH_MEDIA_ERROR';
+export const SET_NEXT_PAGE = 'SET_NEXT_PAGE';
+export const UPDATE_MEDIA_ELEMENT = 'UPDATE_MEDIA_ELEMENT';
+export const DELETE_MEDIA_ELEMENT = 'DELETE_MEDIA_ELEMENT';
