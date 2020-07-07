@@ -35,20 +35,18 @@ export const fetchMediaStart = (dispatch, defaultProvider) => ({
 export const fetchMediaSuccess = (dispatch, defaultProvider) => ({
   provider,
   media,
-  mediaType,
-  searchTerm,
   nextPageToken,
   totalPages,
+  ...otherProperties
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
     payload: {
       provider: provider ?? defaultProvider,
       media,
-      mediaType,
-      searchTerm,
       nextPageToken,
       totalPages,
+      ...otherProperties,
     },
   });
 };
