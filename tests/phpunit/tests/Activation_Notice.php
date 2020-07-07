@@ -23,6 +23,8 @@ namespace Google\Web_Stories\Tests;
  */
 class Activation_Notice extends \WP_UnitTestCase {
 
+	use Private_Access;
+
 	protected $activatoin_flag;
 
 	public function setUp() {
@@ -54,5 +56,14 @@ class Activation_Notice extends \WP_UnitTestCase {
 		$activatoin_notice      = new \Google\Web_Stories\Activation_Notice( $this->activatoin_flag );
 		$output                 = get_echo( [ $activatoin_notice, 'render_notice' ] );
 		$this->assertContains( 'web-stories-plugin-activation-notice', $output );
+	}
+
+	/**
+	 * @covers ::check_hook_suffix
+	 */
+	public function test_check_hook_suffix() {
+		$activatoin_notice      = new \Google\Web_Stories\Activation_Notice( $this->activatoin_flag );
+		$result = $this->call_private_method( $activatoin_notice, 'check_hook_suffix', [ 'themes.php' ] );
+		$this->assertFalse($result);
 	}
 }
