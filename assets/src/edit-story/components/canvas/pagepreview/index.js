@@ -77,13 +77,21 @@ function PagePreview({ index, ...props }) {
   }));
   const page = pages[index];
   const { backgroundColor } = page;
-  const { width: thumbWidth, height: thumbHeight } = props;
+  const {
+    width: thumbWidth,
+    height: thumbHeight,
+    isActive,
+    isInteractive,
+  } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;
   const height = thumbHeight - THUMB_FRAME_HEIGHT;
+
+  const shouldFocus = isActive && isInteractive;
+
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page {...props}>
+        <Page tabIndex={shouldFocus ? 0 : -1} {...props}>
           <PreviewWrapper background={backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
@@ -105,6 +113,7 @@ PagePreview.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,
+  isActive: PropTypes.bool,
 };
 
 PagePreview.defaultProps = {

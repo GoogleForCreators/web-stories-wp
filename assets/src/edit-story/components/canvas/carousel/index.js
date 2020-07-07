@@ -509,7 +509,7 @@ function Carousel() {
         }}
       >
         <GridViewContainer>
-          <PlainStyled onClick={() => closeModal()}>
+          <PlainStyled onClick={closeModal}>
             {__('Back', 'web-stories')}
           </PlainStyled>
           <GridView />
