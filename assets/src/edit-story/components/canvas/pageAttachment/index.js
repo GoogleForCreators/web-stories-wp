@@ -110,11 +110,11 @@ const spacing = { x: 8 };
 function PageAttachment({ pageAttachment }) {
   const {
     pageSize,
-    showAttachmentBorder,
+    hasLinkInAttachmentArea,
     pageAttachmentContainer,
     setPageAttachmentContainer,
   } = useCanvas((state) => ({
-    showAttachmentBorder: state.state.showAttachmentBorder,
+    hasLinkInAttachmentArea: state.state.hasLinkInAttachmentArea,
     pageSize: state.state.pageSize,
     pageAttachmentContainer: state.state.pageAttachmentContainer,
     setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
@@ -128,7 +128,7 @@ function PageAttachment({ pageAttachment }) {
   return (
     <Wrapper
       fullbleedBottom={fullbleedBottom}
-      displayMarker={showAttachmentBorder}
+      displayMarker={hasLinkInAttachmentArea}
       ref={setPageAttachmentContainer}
     >
       <Icon>
@@ -139,7 +139,7 @@ function PageAttachment({ pageAttachment }) {
       {pageAttachmentContainer && (
         <Popup
           anchor={{ current: pageAttachmentContainer }}
-          isOpen={isAnythingTransforming && showAttachmentBorder}
+          isOpen={isAnythingTransforming && hasLinkInAttachmentArea}
           placement={'left'}
           spacing={spacing}
         >

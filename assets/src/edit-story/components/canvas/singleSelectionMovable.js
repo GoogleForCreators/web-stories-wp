@@ -60,7 +60,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     canvasHeight,
     nodesById,
     fullbleedContainer,
-    setShowAttachmentBorder,
+    setHasLinkInAttachmentArea,
   } = useCanvas(
     ({
       state: {
@@ -68,13 +68,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         nodesById,
         fullbleedContainer,
       },
-      actions: { setShowAttachmentBorder },
+      actions: { setHasLinkInAttachmentArea },
     }) => ({
       canvasWidth,
       canvasHeight,
       nodesById,
       fullbleedContainer,
-      setShowAttachmentBorder,
+      setHasLinkInAttachmentArea,
     })
   );
   const {
@@ -266,7 +266,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           );
         }
         if (pageHasAttachment) {
-          setShowAttachmentBorder(isLink && isLinkInAttachmentArea(target));
+          setHasLinkInAttachmentArea(isLink && isLinkInAttachmentArea(target));
         }
       }}
       throttleDrag={0}
@@ -279,7 +279,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         if (isLink && isLinkInAttachmentArea(target)) {
           resetDragging(target);
-          setShowAttachmentBorder(false);
+          setHasLinkInAttachmentArea(false);
           return;
         }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
@@ -352,7 +352,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         frame.updates = updates;
         setTransformStyle(target);
         if (pageHasAttachment) {
-          setShowAttachmentBorder(isLink && isLinkInAttachmentArea(target));
+          setHasLinkInAttachmentArea(isLink && isLinkInAttachmentArea(target));
         }
       }}
       onResizeEnd={({ target }) => {
@@ -361,7 +361,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         if (isLink && isLinkInAttachmentArea(target)) {
           resetMoveable(target);
-          setShowAttachmentBorder(false);
+          setHasLinkInAttachmentArea(false);
           return;
         }
         const [editorWidth, editorHeight] = frame.resize;
@@ -398,7 +398,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         frame.rotate = ((beforeRotate % 360) + 360) % 360;
         setTransformStyle(target);
         if (pageHasAttachment) {
-          setShowAttachmentBorder(isLink && isLinkInAttachmentArea(target));
+          setHasLinkInAttachmentArea(isLink && isLinkInAttachmentArea(target));
         }
       }}
       onRotateEnd={({ target }) => {
@@ -407,7 +407,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         }
         if (isLink && isLinkInAttachmentArea(target)) {
           resetMoveable(target);
-          setShowAttachmentBorder(false);
+          setHasLinkInAttachmentArea(false);
           return;
         }
         const properties = { rotationAngle: Math.round(frame.rotate) };

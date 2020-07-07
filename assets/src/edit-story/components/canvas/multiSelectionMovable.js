@@ -55,7 +55,7 @@ function MultiSelectionMovable({ selectedElements }) {
     nodesById,
     handleSelectElement,
     fullbleedContainer,
-    setShowAttachmentBorder,
+    setHasLinkInAttachmentArea,
   } = useCanvas(
     ({
       state: {
@@ -63,14 +63,14 @@ function MultiSelectionMovable({ selectedElements }) {
         nodesById,
         fullbleedContainer,
       },
-      actions: { handleSelectElement, setShowAttachmentBorder },
+      actions: { handleSelectElement, setHasLinkInAttachmentArea },
     }) => ({
       canvasWidth,
       canvasHeight,
       fullbleedContainer,
       nodesById,
       handleSelectElement,
-      setShowAttachmentBorder,
+      setHasLinkInAttachmentArea,
     })
   );
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
@@ -219,7 +219,7 @@ function MultiSelectionMovable({ selectedElements }) {
     });
     if (hasLinkInAttachmentArea) {
       resetMoveable();
-      setShowAttachmentBorder(false);
+      setHasLinkInAttachmentArea(false);
       return;
     }
     updateElementsById({
@@ -278,7 +278,7 @@ function MultiSelectionMovable({ selectedElements }) {
           sFrame.translate = beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
           if (pageHasAttachment) {
-            setShowAttachmentBorder(
+            setHasLinkInAttachmentArea(
               element.link?.url && isLinkInAttachmentArea(target)
             );
           }
@@ -308,7 +308,7 @@ function MultiSelectionMovable({ selectedElements }) {
           sFrame.translate = drag.beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
           if (pageHasAttachment) {
-            setShowAttachmentBorder(
+            setHasLinkInAttachmentArea(
               element.link?.url && isLinkInAttachmentArea(target)
             );
           }
@@ -353,7 +353,7 @@ function MultiSelectionMovable({ selectedElements }) {
           sFrame.updates = updates;
           setTransformStyle(element.id, target, sFrame);
           if (pageHasAttachment) {
-            setShowAttachmentBorder(
+            setHasLinkInAttachmentArea(
               element.link?.url && isLinkInAttachmentArea(target)
             );
           }

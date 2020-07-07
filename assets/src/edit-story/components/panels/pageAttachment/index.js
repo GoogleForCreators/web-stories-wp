@@ -52,8 +52,8 @@ function PageAttachmentPanel() {
     updateElementsById: state.actions.updateElementsById,
     currentPage: state.state.currentPage,
   }));
-  const { setShowAttachmentBorder } = useCanvas((state) => ({
-    setShowAttachmentBorder: state.actions.setShowAttachmentBorder,
+  const { setHasLinkInAttachmentArea } = useCanvas((state) => ({
+    setHasLinkInAttachmentArea: state.actions.setHasLinkInAttachmentArea,
   }));
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
@@ -66,12 +66,11 @@ function PageAttachmentPanel() {
   const hasLinksInAttachmentArea = linksInAttachmentArea.length > 0;
 
   useEffect(() => {
-    // @todo Only set it if the value is changing.
-    setShowAttachmentBorder(hasLinksInAttachmentArea && !url.length);
+    setHasLinkInAttachmentArea(hasLinksInAttachmentArea && !url.length);
     return () => {
-      setShowAttachmentBorder(false);
+      setHasLinkInAttachmentArea(false);
     };
-  }, [hasLinksInAttachmentArea, setShowAttachmentBorder, url]);
+  }, [hasLinksInAttachmentArea, setHasLinkInAttachmentArea, url]);
 
   const onFocus = () => {
     if (hasLinksInAttachmentArea && !url.length) {

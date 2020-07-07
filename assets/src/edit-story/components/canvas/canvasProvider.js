@@ -41,7 +41,7 @@ function CanvasProvider({ children }) {
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
   const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
-  const [showAttachmentBorder, setShowAttachmentBorder] = useState(false);
+  const [hasLinkInAttachmentArea, setHasLinkInAttachmentArea] = useState(false);
 
   const {
     nodesById,
@@ -164,7 +164,7 @@ function CanvasProvider({ children }) {
         lastSelectionEvent,
         showSafeZone,
         pageSize,
-        showAttachmentBorder,
+        hasLinkInAttachmentArea,
         pageAttachmentContainer,
       },
       actions: {
@@ -179,7 +179,7 @@ function CanvasProvider({ children }) {
         selectIntersection,
         setPageSize,
         setShowSafeZone,
-        setShowAttachmentBorder,
+        setHasLinkInAttachmentArea,
         setPageAttachmentContainer,
       },
     }),
@@ -203,8 +203,8 @@ function CanvasProvider({ children }) {
       selectIntersection,
       setPageSize,
       setShowSafeZone,
-      showAttachmentBorder,
-      setShowAttachmentBorder,
+      hasLinkInAttachmentArea,
+      setHasLinkInAttachmentArea,
       pageAttachmentContainer,
       setPageAttachmentContainer,
     ]
