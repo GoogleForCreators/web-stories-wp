@@ -84,7 +84,7 @@ function GoogleAnalyticsSettings() {
           value={analyticsId}
           onEditCancel={handleCancelUpdateId}
           onEditComplete={handleCompleteUpdateId}
-          placeholder={TEXT.placeholder}
+          placeholder={TEXT.PLACEHOLDER}
         />
         <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
       </div>
