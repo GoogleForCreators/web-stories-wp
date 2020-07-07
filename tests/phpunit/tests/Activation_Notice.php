@@ -23,12 +23,22 @@ namespace Google\Web_Stories\Tests;
  */
 class Activation_Notice extends \WP_UnitTestCase {
 
+	protected $activatoin_flag;
+
+	public function setUp() {
+		$this->activatoin_flag = new \Google\Web_Stories\Activation_Flag();
+		$this->activatoin_flag->set_activation_flag();
+	}
+
+	public function tearDown() {
+		$this->activatoin_flag->delete_activation_flag();
+	}
+
 	/**
 	 * @covers ::init
 	 */
 	public function test_init() {
-		$activatoin_flag   = new \Google\Web_Stories\Activation_Flag();
-		$activatoin_notice = new \Google\Web_Stories\Activation_Notice( $activatoin_flag );
+		$activatoin_notice = new \Google\Web_Stories\Activation_Notice( $this->activatoin_flag );
 		$activatoin_notice->init();
 
 		$this->assertSame( 10, has_action( 'admin_enqueue_scripts', [ $activatoin_notice, 'enqueue_assets' ] ) );
@@ -41,10 +51,8 @@ class Activation_Notice extends \WP_UnitTestCase {
 	 */
 	public function test_render_notice() {
 		$GLOBALS['hook_suffix'] = 'plugin.php';
-		$activatoin_flag        = new \Google\Web_Stories\Activation_Flag();
-		$activatoin_flag->set_activation_flag( true );
-		$activatoin_notice = new \Google\Web_Stories\Activation_Notice( $activatoin_flag );
-		$output            = get_echo( [ $activatoin_notice, 'render_notice' ] );
+		$activatoin_notice      = new \Google\Web_Stories\Activation_Notice( $this->activatoin_flag );
+		$output                 = get_echo( [ $activatoin_notice, 'render_notice' ] );
 		$this->assertContains( 'web-stories-plugin-activation-notice', $output );
 	}
 }

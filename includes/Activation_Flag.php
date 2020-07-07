@@ -48,7 +48,7 @@ class Activation_Flag {
 	 * @param bool $network_wide Whether the plugin is being activated network-wide.
 	 * @return bool
 	 */
-	public function set_activation_flag( $network_wide ) {
+	public function set_activation_flag( $network_wide = false ) {
 		if ( $network_wide ) {
 			return update_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE, '1' );
 		}
@@ -62,7 +62,7 @@ class Activation_Flag {
 	 * @param bool $network_wide Whether to check the flag network-wide.
 	 * @return bool True if just activated, false otherwise.
 	 */
-	public function get_activation_flag( $network_wide ) {
+	public function get_activation_flag( $network_wide = false ) {
 		if ( $network_wide ) {
 			return (bool) get_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE, false );
 		}
@@ -78,7 +78,7 @@ class Activation_Flag {
 	 * @param bool $network_wide Whether the plugin is being activated network-wide.
 	 * @return bool
 	 */
-	public function delete_activation_flag( $network_wide ) {
+	public function delete_activation_flag( $network_wide = false ) {
 		if ( $network_wide ) {
 			return delete_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
 		}
