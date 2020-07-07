@@ -26,7 +26,7 @@ import useFetchMediaEffect from './useFetchMediaEffect';
  * @param provider The 3p provider to return the context value for
  * @param reducerState The 'media3p/[provider]' fragment of the state
  * returned from {@link useMediaReducer}
- * @param reducerAction The 'media3p/[provider]' fragment of the actions
+ * @param reducerActions The 'media3p/[provider]' fragment of the actions
  * returned from {@link useMediaReducer}
  */
 export default function useProviderContextValueProvider(

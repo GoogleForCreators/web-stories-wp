@@ -25,10 +25,21 @@ import { renderHook } from '@testing-library/react-hooks';
 import useMediaReducer from '../useMediaReducer';
 
 describe('useMediaReducer', () => {
-  it('should return the initial value for state', () => {
+  it('should return initial state', () => {
     const { result } = renderHook(() => useMediaReducer());
-    expect(result.current.state.local).toStrictEqual(
-      expect.objectContaining({ media: [], hasMore: true })
-    );
+    expect(result.current.state).toStrictEqual({
+      local: expect.objectContaining({ media: [], hasMore: true }),
+      media3p: expect.objectContaining({
+        unsplash: expect.objectContaining({ media: [], hasMore: true })
+      }),
+    });
+  });
+
+  it('should return actions', () => {
+    const { result } = renderHook(() => useMediaReducer());
+    expect(result.current.actions).toStrictEqual({
+      local: expect.objectContaining({ fetchMediaStart: expect.any(Function) }),
+      media3p: expect.objectContaining({ setSelectedProvider: expect.any(Function), fetchMediaStart: expect.any(Function) }),
+    });
   });
 });
