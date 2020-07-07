@@ -323,6 +323,7 @@
         "markdown"
       ],
       "rules": {
+        "@wordpress/dependency-group": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
         "header/header": "off"
