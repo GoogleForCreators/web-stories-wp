@@ -82,9 +82,6 @@ function deactivate( $network_wide ) {
 register_activation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\deactivate' );
 
-global $heading;
-global $body;
-
 $heading = __( 'Web Stories plugin could not be initialized.', 'web-stories' );
 $body    = sprintf(
 	/* translators: %s: build commands. */
@@ -98,6 +95,8 @@ if (
 ) {
 	/**
 	 * Displays an admin notice about why the plugin is unable to load.
+	 *
+	 * @return void
 	 */
 	function _print_missing_build_admin_notice() {
 		global $heading, $body;
