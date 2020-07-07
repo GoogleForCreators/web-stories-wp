@@ -4,7 +4,7 @@ Custom Karma reporter that tracks coverage of Critical User Journeys in the app 
 
 ## Prerequisites
 
-Use nested `describe` blocks prefixed with `CUJ: ` and `Action: `:
+Use nested `describe` blocks prefixed with `CUJ:` and `Action:`:
 
 ```js
 describe('CUJ: <Name of the Critical User Journey>', () => {
@@ -20,10 +20,10 @@ Tests without prefixes will be ignored.
 
 ```js
 // karma.conf.js
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     // reporters configuration
-    reporters: ['cuj']
+    reporters: ['cuj'],
   });
 };
 ```
@@ -46,14 +46,14 @@ Define the full path to the file the Markdown table should be written to.
 
 const path = require('path');
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     // reporters configuration
     reporters: ['cuj'],
- 
+
     cujReporter: {
       outputFile: path.resolve(process.cwd(), 'build/cuj-coverage.md'),
-    }
+    },
   });
 };
 ```
