@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Implement, re-using logic from media/common/useContextValueProvider.js.
-export default function useProviderContextValueProvider(
-  provider,
-  reducerState
-) {
-  return {
-    state: reducerState[provider],
-  };
+/**
+ * Internal dependencies
+ */
+import useMedia from '../useMedia';
+
+export function useMedia3p(selector) {
+  return useMedia(({ media3p }) => selector(media3p));
+}
+
+export function useMedia3pForProvider(provider, selector) {
+  return useMedia(({ media3p }) => selector(media3p[provider]));
 }
