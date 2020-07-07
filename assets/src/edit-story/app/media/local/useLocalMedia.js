@@ -25,7 +25,7 @@ import useMedia from '../useMedia';
  * context value that's provided from {@link ./useContextValueProvider}.
  *
  * @param {function(Object):Object} selector Returns a fragment of the media
- * context value that the caller is interested in.
+ * context value that the caller is interested in
  */
 function useLocalMedia(selector) {
   return useMedia(({ local }) => (selector ?? identity)(local));

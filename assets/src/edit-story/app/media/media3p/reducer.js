@@ -58,7 +58,11 @@ function reduceProviderStates(state, { type, payload }) {
 /**
  * State reducer for 3rd party media state.
  *
- * @param state
+ * @param state The state to reduce
+ * @param obj An object with the type and payload
+ * @param obj.type A constant that identifies the reducer action
+ * @param obj.payload The details of the action, specific to the action
+ * @return The new state
  */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   state = reduceProviderStates(state, { type, payload });

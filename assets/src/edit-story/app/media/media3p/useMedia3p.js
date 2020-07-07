@@ -24,7 +24,7 @@ import useMedia from '../useMedia';
  * value that's provided from {@link ./useContextValueProvider}.
  *
  * @param {function(Object):Object} selector Returns a fragment of the media
- * context value that the caller is interested in.
+ * context value that the caller is interested in
  */
 export function useMedia3p(selector) {
   return useMedia(({ media3p }) => selector(media3p));
@@ -37,7 +37,7 @@ export function useMedia3p(selector) {
  *
  * @param provider The provider for which state will be returned
  * @param {function(Object):Object} selector Returns a fragment of the media
- * context value that the caller is interested in.
+ * context value that the caller is interested in
  */
 export function useMedia3pForProvider(provider, selector) {
   return useMedia(({ media3p }) => selector(media3p[provider]));
