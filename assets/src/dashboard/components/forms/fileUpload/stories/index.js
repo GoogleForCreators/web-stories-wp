@@ -17,15 +17,20 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
+import styled from 'styled-components';
+import { text, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
 import FileUploadForm from '../';
 import { getResourceFromLocalFile } from '../../../../utils';
 
+const Container = styled.div`
+  width: 600px;
+`;
 export default {
   title: 'Dashboard/Components/FileUploadForm',
   component: FileUploadForm,
@@ -42,10 +47,13 @@ export const _default = () => {
         file,
       }))
     );
-
     setUploadedContent((existingUploads) => {
-      const newUploads = resources.map(({ localResource }) => {
-        return { src: localResource.src, title: localResource.title };
+      const newUploads = resources.map(({ file, localResource }) => {
+        return {
+          src: localResource.src,
+          title: file.name,
+          alt: localResource.alt,
+        };
       });
 
       return [...existingUploads, ...newUploads];
@@ -53,13 +61,19 @@ export const _default = () => {
   };
 
   return (
-    <FileUploadForm
-      handleSubmit={formatFiles}
-      id={'898989'}
-      label="Upload"
-      isMultiple={true}
-      ariaLabel={'click to upload a file'}
-      uploadedContent={uploadedContent}
-    />
+    <Container>
+      <FileUploadForm
+        handleSubmit={formatFiles}
+        id={'898989'}
+        label={text('label', 'Upload')}
+        isMultiple={boolean('isMultiple', true)}
+        ariaLabel={'click to upload a file'}
+        uploadedContent={uploadedContent}
+        emptyDragHelperText={text(
+          'emptyDragHelperText',
+          'You can also drag your logo here'
+        )}
+      />
+    </Container>
   );
 };

@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback, useEffect, useState, useRef } from 'react';
@@ -24,16 +29,85 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
+import { DefaultButton } from '../../button';
+import { Close as UploadIcon } from '../../../icons';
+import { TypographyPresets } from '../../typography';
 
 const DEFAULT_FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 
 const Input = styled.input(visuallyHiddenStyles);
 const UploadFormArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  justify-content: flex-end;
   width: 100%;
-  max-width: 600px;
-  height: 400px;
-  border: 1px solid gray;
-  background-color: ${({ isDragging }) => (isDragging ? 'blue' : 'salmon')};
+  min-height: 153px;
+  padding: 36px 36px 10px;
+  border-radius: 4px;
+  border: ${({ isDragging, theme }) =>
+    isDragging ? theme.borders.bluePrimary : theme.borders.transparent};
+  border-width: 2px;
+  background-color: ${({ theme }) => theme.colors.gray25};
+
+  transition: border-color 300ms ease-in;
+`;
+
+const StaticUploadArea = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+`;
+
+const StaticAreaText = styled.span`
+  margin: 0 auto;
+`;
+
+const StaticAreaIcon = styled(UploadIcon)`
+  width: 37.14px;
+  height: 22.29px;
+`;
+const UploadedContentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-self: flex-start;
+`;
+const UploadedContent = styled.div`
+  width: 60px;
+  margin: 0 10px 10px 0;
+`;
+
+const DisplayImage = styled.img`
+  width: 100%;
+  height: 60px;
+  margin-bottom: 5px;
+`;
+
+const DisplayTitle = styled.span`
+  ${TypographyPresets.ExtraSmall};
+  display: inline-block;
+  width: 100%;
+  margin-right: 0.5em;
+  white-space: normal;
+`;
+
+const UploadLabelAsCta = styled(DefaultButton).attrs({
+  as: 'label',
+})`
+  margin: 0 auto;
+  align-self: flex-end;
+  z-index: 10;
 `;
 
 function disableDefaults(e) {
@@ -47,6 +121,7 @@ const FileUploadForm = ({
   handleSubmit,
   isMultiple,
   ariaLabel,
+  emptyDragHelperText = __('You can also drag your file here', 'web-stories'),
   uploadedContent = [],
   acceptableFormats = DEFAULT_FILE_TYPES,
 }) => {
@@ -64,6 +139,7 @@ const FileUploadForm = ({
   const handleChange = useCallback(
     (event) => {
       handleFileVerifyPreSubmit(event.target.files);
+      fileInputRef.current.value = '';
     },
     [handleFileVerifyPreSubmit]
   );
@@ -78,10 +154,17 @@ const FileUploadForm = ({
     [handleFileVerifyPreSubmit]
   );
 
-  const handleDrag = useCallback((e) => {
-    disableDefaults(e);
-    setDragging((prevIsDragging) => !prevIsDragging);
-  }, []);
+  const handleDrag = useCallback(
+    (e) => {
+      disableDefaults(e);
+      setDragging((prevIsDragging) => !prevIsDragging);
+
+      if (isDragging) {
+        e.dataTransfer.clearData();
+      }
+    },
+    [isDragging]
+  );
 
   useEffect(() => {
     if (!fileInputRef?.current) {
@@ -94,6 +177,7 @@ const FileUploadForm = ({
     };
   }, [handleChange]);
 
+  const hasUploadedContent = uploadedContent.length > 0;
   return (
     <UploadFormArea
       ref={uploadFileContainer}
@@ -103,7 +187,23 @@ const FileUploadForm = ({
       onDragLeave={handleDrag}
       onDragOver={disableDefaults}
     >
-      <label htmlFor={id} aria-label={ariaLabel}>
+      {hasUploadedContent ? (
+        <UploadedContentContainer>
+          {uploadedContent.map((file, idx) => (
+            <UploadedContent key={idx}>
+              <DisplayImage alt={file.title} src={file.src} />
+              <DisplayTitle>{file.title}</DisplayTitle>
+            </UploadedContent>
+          ))}
+        </UploadedContentContainer>
+      ) : (
+        <StaticUploadArea aria-hidden={true}>
+          <StaticAreaIcon />
+          <StaticAreaText>{emptyDragHelperText}</StaticAreaText>
+        </StaticUploadArea>
+      )}
+
+      <UploadLabelAsCta htmlFor={id} aria-label={ariaLabel}>
         {label}
         <Input
           ref={fileInputRef}
@@ -113,10 +213,7 @@ const FileUploadForm = ({
           accept={acceptableFormats.join(',')}
           multiple={isMultiple}
         />
-      </label>
-      {uploadedContent.map((file, idx) => (
-        <img key={idx} alt={file.title} src={file.src} />
-      ))}
+      </UploadLabelAsCta>
     </UploadFormArea>
   );
 };
@@ -131,6 +228,7 @@ FileUploadForm.propTypes = {
   uploadedContent: PropTypes.arrayOf(
     PropTypes.shape({ src: PropTypes.string, name: PropTypes.string })
   ),
+  emptyDragHelperText: PropTypes.string,
 };
 
 export default FileUploadForm;
