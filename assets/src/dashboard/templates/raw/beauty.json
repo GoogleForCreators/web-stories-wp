@@ -1529,7 +1529,7 @@
           "basedOn": "98791375-1a20-4b01-8e12-cb8c3f9932ba",
           "id": "4b924f3a-045c-4675-9b79-383ebdd1466a",
           "link": {
-            "url": "http://example.com",
+            "url": "https://example.com",
             "icon": null,
             "desc": "Example Domain"
           }
@@ -1602,7 +1602,7 @@
           "x": 81,
           "y": 426,
           "link": {
-            "url": "http://example.com",
+            "url": "https://example.com",
             "icon": null,
             "desc": "Example Domain"
           }
@@ -1675,7 +1675,7 @@
           "x": 174,
           "y": 135,
           "link": {
-            "url": "http://example.com",
+            "url": "https://example.com",
             "icon": null,
             "desc": "Example Domain"
           }
