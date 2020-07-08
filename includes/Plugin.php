@@ -109,7 +109,7 @@ class Plugin {
 	public $activation_flag;
 
 	/**
-	 * Database Upgrader.
+	 * Activation Notice.
 	 *
 	 * @var Activation_Notice
 	 */
