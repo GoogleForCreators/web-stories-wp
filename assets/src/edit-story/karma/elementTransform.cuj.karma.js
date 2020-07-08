@@ -1,0 +1,92 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Internal dependencies
+ */
+import useInsertElement from '../components/canvas/useInsertElement';
+import { useStory } from '../app/story';
+import { Fixture } from './fixture';
+
+describe('CUJ: Creator can Transform an Element', () => {
+  let fixture;
+  let frame;
+
+  const clickOnTarget = async (target) => {
+    const { x, y, width, height } = target.getBoundingClientRect();
+    await fixture.events.mouse.click(x + width / 2, y + height / 2);
+  };
+
+  const addTextInEditMode = async () => {
+    const insertElement = await fixture.renderHook(() => useInsertElement());
+    const element = await fixture.act(() =>
+      insertElement('text', {
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 50,
+        content: 'Hello, Stories!',
+      })
+    );
+    frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
+    await clickOnTarget(frame);
+  };
+
+  const getSelectedElement = async () => {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements[0];
+  };
+
+  describe('Element: Text', () => {
+    beforeEach(async () => {
+      fixture = new Fixture();
+      await fixture.render();
+      // Add a text element and enter edit mode.
+      await addTextInEditMode();
+    });
+
+    afterEach(() => {
+      fixture.restore();
+    });
+
+    describe('Action: Resize', () => {
+      it('it should allow resizing in text edit mode', async () => {
+        // Test that rotation handle exists in edit mode.
+        const rotationHandle = fixture.container.querySelector(
+          '.moveable-rotation-line .moveable-control'
+        );
+        expect(rotationHandle).toBeDefined();
+
+        const elementBefore = await getSelectedElement();
+        expect(elementBefore.rotationAngle).toEqual(0);
+        await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+          moveRel(rotationHandle, 1, 1),
+          down(),
+          moveBy(10, 0, { steps: 1 }),
+          up(),
+        ]);
+        const elementAfter = await getSelectedElement();
+        await expect(elementAfter.rotationAngle).not.toEqual(0);
+      });
+    });
+
+    describe('Action: Rotate', () => {
+      // Disable reason: not implemented.
+      // eslint-disable-next-line jasmine/no-disabled-tests
+      xit('it should allow rotating in text edit mode');
+    });
+  });
+});
