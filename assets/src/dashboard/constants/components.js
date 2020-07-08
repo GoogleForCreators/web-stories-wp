@@ -56,3 +56,5 @@ export const ALERT_SEVERITY = {
 };
 
 export const AUTO_REMOVE_ALERT_TIME_INTERVAL = 10000;
+
+export const DEFAULT_FILE_UPLOAD_TYPES = ['.jpg', '.jpeg', '.png'];

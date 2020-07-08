@@ -63,10 +63,12 @@ export const _default = () => {
   return (
     <Container>
       <FileUploadForm
+        acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
         handleSubmit={formatFiles}
         id={'898989'}
         label={text('label', 'Upload')}
         isMultiple={boolean('isMultiple', true)}
+        isFileNameVisible={boolean('isFileNameVisible', false)}
         ariaLabel={'click to upload a file'}
         uploadedContent={uploadedContent}
         emptyDragHelperText={text(

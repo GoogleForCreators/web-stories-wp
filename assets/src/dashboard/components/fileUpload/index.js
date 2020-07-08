@@ -28,12 +28,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { DEFAULT_FILE_UPLOAD_TYPES } from '../../constants';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { DefaultButton } from '../button';
 import { Close as UploadIcon } from '../../icons';
 import { TypographyPresets } from '../typography';
-
-const DEFAULT_FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 
 const Input = styled.input(visuallyHiddenStyles);
 const UploadFormArea = styled.div`
@@ -55,20 +54,22 @@ const UploadFormArea = styled.div`
 `;
 
 const StaticUploadArea = styled.div`
-  width: 100%;
-  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: ${({ theme }) => theme.colors.gray500};
   z-index: 0;
 `;
 
 const StaticAreaText = styled.span`
-  margin: 0 auto;
+  ${TypographyPresets.Medium};
+  margin: 11.14px auto 0;
 `;
 
 const StaticAreaIcon = styled(UploadIcon)`
@@ -92,6 +93,7 @@ const DisplayImage = styled.img`
   width: 100%;
   height: 60px;
   margin-bottom: 5px;
+  object-fit: cover;
 `;
 
 const DisplayTitle = styled.span`
@@ -100,6 +102,7 @@ const DisplayTitle = styled.span`
   width: 100%;
   margin-right: 0.5em;
   white-space: normal;
+  word-break: break-word;
 `;
 
 const UploadLabelAsCta = styled(DefaultButton).attrs({
@@ -108,6 +111,8 @@ const UploadLabelAsCta = styled(DefaultButton).attrs({
   margin: 0 auto;
   align-self: flex-end;
   z-index: 10;
+  font-size: 14px;
+  line-height: 16px;
 `;
 
 function disableDefaults(e) {
@@ -119,11 +124,12 @@ const FileUploadForm = ({
   id,
   label,
   handleSubmit,
+  isFileNameVisible,
   isMultiple,
   ariaLabel,
   emptyDragHelperText = __('You can also drag your file here', 'web-stories'),
   uploadedContent = [],
-  acceptableFormats = DEFAULT_FILE_TYPES,
+  acceptableFormats = DEFAULT_FILE_UPLOAD_TYPES,
 }) => {
   const uploadFileContainer = useRef(null);
   const fileInputRef = useRef(null);
@@ -191,8 +197,12 @@ const FileUploadForm = ({
         <UploadedContentContainer>
           {uploadedContent.map((file, idx) => (
             <UploadedContent key={idx}>
-              <DisplayImage alt={file.title} src={file.src} />
-              <DisplayTitle>{file.title}</DisplayTitle>
+              <DisplayImage
+                alt={file.title}
+                title={file.title}
+                src={file.src}
+              />
+              {isFileNameVisible && <DisplayTitle>{file.title}</DisplayTitle>}
             </UploadedContent>
           ))}
         </UploadedContentContainer>
@@ -223,6 +233,7 @@ FileUploadForm.propTypes = {
   label: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isMultiple: PropTypes.bool,
+  isFileNameVisible: PropTypes.bool,
   ariaLabel: PropTypes.string,
   acceptableFormats: PropTypes.arrayOf(PropTypes.string),
   uploadedContent: PropTypes.arrayOf(
