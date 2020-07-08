@@ -29,8 +29,8 @@ describe('FileUpload', () => {
   it('should render empty upload component by default', () => {
     const { queryAllByTestId } = renderWithTheme(
       <FileUpload
-        handleSubmit={jest.fn}
-        handleDelete={jest.fn}
+        onSubmit={jest.fn}
+        onDelete={jest.fn}
         id={'898989'}
         label="Upload"
         ariaLabel="Click to upload a file"
@@ -40,13 +40,13 @@ describe('FileUpload', () => {
     expect(queryAllByTestId('file-upload-content-container')).toHaveLength(0);
   });
 
-  it('should trigger handleSubmit when file is added through input', () => {
-    const handleSubmitMock = jest.fn();
+  it('should trigger onSubmit when file is added through input', () => {
+    const onSubmitMock = jest.fn();
 
     const { getByTestId } = renderWithTheme(
       <FileUpload
-        handleSubmit={handleSubmitMock}
-        handleDelete={jest.fn}
+        onSubmit={onSubmitMock}
+        onDelete={jest.fn}
         id={'898989'}
         label="Upload"
         ariaLabel="Click to upload a file"
@@ -58,19 +58,19 @@ describe('FileUpload', () => {
     expect(UploadInput).toBeDefined();
     fireEvent.click(UploadInput);
     fireEvent.change(UploadInput, { target: { files: {} } });
-    expect(handleSubmitMock).toHaveBeenCalledTimes(1);
+    expect(onSubmitMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should trigger handleSubmit when file is dropped in container', () => {
-    const handleSubmitMock = jest.fn();
+  it('should trigger onSubmit when file is dropped in container', () => {
+    const onSubmitMock = jest.fn();
 
     const mockFile = new File([''], 'mockfile.png', {
       type: 'image/png',
     });
     const { getByTestId } = renderWithTheme(
       <FileUpload
-        handleSubmit={handleSubmitMock}
-        handleDelete={jest.fn}
+        onSubmit={onSubmitMock}
+        onDelete={jest.fn}
         id={'898989'}
         label="Upload"
         ariaLabel="Click to upload a file"
@@ -95,16 +95,16 @@ describe('FileUpload', () => {
 
     fireEvent(DropArea, dropEvent);
 
-    expect(handleSubmitMock).toHaveBeenCalledTimes(1);
+    expect(onSubmitMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should trigger handleDelete when delete button is clicked on an uploaded file', () => {
-    const handleDeleteMock = jest.fn();
+  it('should trigger onDelete when delete button is clicked on an uploaded file', () => {
+    const onDeleteMock = jest.fn();
 
     const { getByTestId } = renderWithTheme(
       <FileUpload
-        handleSubmit={jest.fn}
-        handleDelete={handleDeleteMock}
+        onSubmit={jest.fn}
+        onDelete={onDeleteMock}
         id={'898989'}
         label="Upload"
         ariaLabel="Click to upload a file"
@@ -121,6 +121,6 @@ describe('FileUpload', () => {
     const DeleteFileButton = getByTestId('file-upload-delete-button_0');
     expect(DeleteFileButton).toBeDefined();
     fireEvent.click(DeleteFileButton);
-    expect(handleDeleteMock).toHaveBeenCalledTimes(1);
+    expect(onDeleteMock).toHaveBeenCalledTimes(1);
   });
 });

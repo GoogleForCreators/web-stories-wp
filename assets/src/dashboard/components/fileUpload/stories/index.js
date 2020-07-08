@@ -40,7 +40,7 @@ export const _default = () => {
   const [uploadedContent, setUploadedContent] = useState([]);
 
   const formatFiles = async (files) => {
-    action('handleSubmit fired')(files);
+    action('onSubmit fired')(files);
     const resources = await Promise.all(
       files.map(async (file) => ({
         localResource: await getResourceFromLocalFile(file),
@@ -61,7 +61,7 @@ export const _default = () => {
   };
 
   const deleteUploadedContent = useCallback((index, fileData) => {
-    action('handleDelete fired')(index, fileData);
+    action('onDelete fired')(index, fileData);
     setUploadedContent((existingUploadedContent) => {
       existingUploadedContent.splice(index, 1);
       return [...existingUploadedContent];
@@ -72,8 +72,8 @@ export const _default = () => {
     <Container>
       <FileUpload
         acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
-        handleSubmit={formatFiles}
-        handleDelete={deleteUploadedContent}
+        onSubmit={formatFiles}
+        onDelete={deleteUploadedContent}
         id={'898989'}
         label={text('label', 'Upload')}
         isMultiple={boolean('isMultiple', true)}

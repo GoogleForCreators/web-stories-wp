@@ -156,8 +156,8 @@ function disableDefaults(e) {
 const FileUpload = ({
   id,
   label,
-  handleDelete,
-  handleSubmit,
+  onDelete,
+  onSubmit,
   isFileNameVisible,
   isMultiple,
   ariaLabel,
@@ -169,29 +169,29 @@ const FileUpload = ({
   const fileInputRef = useRef(null);
   const [isDragging, setDragging] = useState(false);
 
-  const handleFileStructuringPreSubmit = useCallback(
+  const handleUploadFile = useCallback(
     (files) => {
-      handleSubmit(Object.values(files));
+      onSubmit(Object.values(files));
     },
-    [handleSubmit]
+    [onSubmit]
   );
 
   const handleChange = useCallback(
     (event) => {
-      handleFileStructuringPreSubmit(event.target.files);
+      handleUploadFile(event.target.files);
       fileInputRef.current.value = '';
     },
-    [handleFileStructuringPreSubmit]
+    [handleUploadFile]
   );
 
   const handleDragDrop = useCallback(
     (e) => {
       disableDefaults(e);
       const files = e.dataTransfer?.files;
-      handleFileStructuringPreSubmit(files);
+      handleUploadFile(files);
       setDragging(false);
     },
-    [handleFileStructuringPreSubmit]
+    [handleUploadFile]
   );
 
   const handleDrag = useCallback(
@@ -206,11 +206,11 @@ const FileUpload = ({
     [isDragging]
   );
 
-  const onDeleteFile = useCallback(
+  const handleDeleteFile = useCallback(
     (index, fileData) => {
-      handleDelete(index, fileData);
+      onDelete(index, fileData);
     },
-    [handleDelete]
+    [onDelete]
   );
 
   useEffect(() => {
@@ -239,10 +239,10 @@ const FileUpload = ({
         <UploadedContentContainer data-testid="file-upload-content-container">
           {uploadedContent.map((file, idx) => (
             <UploadedContent key={idx}>
-              {Boolean(handleDelete) && (
+              {Boolean(onDelete) && (
                 <DeleteButton
                   data-testid={`file-upload-delete-button_${idx}`}
-                  onClick={() => onDeleteFile(idx, file)}
+                  onClick={() => handleDeleteFile(idx, file)}
                   aria-label={sprintf(
                     /* translators: %s is the file name to delete */
                     __('Delete %s', 'web-stories'),
@@ -286,8 +286,8 @@ const FileUpload = ({
 FileUpload.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
-  handleDelete: PropTypes.func,
-  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
   isMultiple: PropTypes.bool,
   isFileNameVisible: PropTypes.bool,
   ariaLabel: PropTypes.string,
