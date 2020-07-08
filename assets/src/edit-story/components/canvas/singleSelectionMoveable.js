@@ -25,7 +25,7 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import { useStory, useDropTargets } from '../../app';
-import Movable from '../movable';
+import Moveable from '../moveable';
 import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
@@ -44,7 +44,7 @@ const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 /**
  *
  */
-function SingleSelectionMovable({
+function SingleSelectionMoveable({
   selectedElement,
   targetEl,
   pushEvent,
@@ -168,7 +168,7 @@ function SingleSelectionMovable({
   };
 
   /**
-   * Resets Movable once the action is done, sets the initial values.
+   * Resets Moveable once the action is done, sets the initial values.
    *
    * @param {Object} target Target element.
    */
@@ -230,14 +230,14 @@ function SingleSelectionMovable({
     selectedElement.width <= resizeRules.minWidth ||
     selectedElement.height <= resizeRules.minHeight;
 
-  const classNames = classnames('default-movable', {
+  const classNames = classnames('default-moveable', {
     'hide-handles': hideHandles,
     'visually-hide-handles': visuallyHideHandles,
     'type-text': selectedElement.type === 'text',
   });
 
   return (
-    <Movable
+    <Moveable
       className={classNames}
       zIndex={0}
       ref={useCombinedRefs(moveable, editMoveableRef)}
@@ -434,7 +434,7 @@ function getRenderDirections({ vertical, horizontal, diagonal }) {
   ];
 }
 
-SingleSelectionMovable.propTypes = {
+SingleSelectionMoveable.propTypes = {
   selectedElement: PropTypes.object.isRequired,
   targetEl: PropTypes.object.isRequired,
   pushEvent: PropTypes.object,
@@ -442,4 +442,4 @@ SingleSelectionMovable.propTypes = {
   editMoveableRef: PropTypes.object,
 };
 
-export default SingleSelectionMovable;
+export default SingleSelectionMoveable;

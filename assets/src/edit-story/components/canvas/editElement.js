@@ -31,7 +31,7 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
-import SingleSelectionMovable from './singleSelectionMovable';
+import SingleSelectionMoveable from './singleSelectionMoveable';
 
 const Wrapper = styled.div`
 	${elementWithPosition}
@@ -40,6 +40,9 @@ const Wrapper = styled.div`
 	pointer-events: initial;
 `;
 
+/**
+ *
+ */
 function EditElement({ element }) {
   const { id, type } = element;
   const { getBox } = useUnits((state) => ({
@@ -48,7 +51,7 @@ function EditElement({ element }) {
 
   const [editWrapper, setEditWrapper] = useState(null);
 
-  const { Edit, hasEditModeMovable } = getDefinitionForType(type);
+  const { Edit, hasEditModeMoveable } = getDefinitionForType(type);
   const box = getBox(element);
 
   const moveable = useRef(null);
@@ -64,12 +67,12 @@ function EditElement({ element }) {
         <Edit
           element={element}
           box={box}
-          editWrapper={hasEditModeMovable && editWrapper}
+          editWrapper={hasEditModeMoveable && editWrapper}
           moveable={moveable}
         />
       </Wrapper>
-      {hasEditModeMovable && editWrapper && (
-        <SingleSelectionMovable
+      {hasEditModeMoveable && editWrapper && (
+        <SingleSelectionMoveable
           selectedElement={element}
           targetEl={editWrapper}
           isEditMode={true}
