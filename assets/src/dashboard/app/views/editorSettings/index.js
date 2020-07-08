@@ -18,22 +18,43 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+/**
+ * External dependencies
+ */
+import { useContext, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
+import { ApiContext } from '../../api/apiProvider';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import PublisherLogoSettings from './publisherLogo';
 import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
+  const {
+    actions: {
+      settingsApi: { fetchSettings, updateSettings },
+    },
+    state: {
+      settings: { googleAnalyticsId },
+    },
+  } = useContext(ApiContext);
+
+  useEffect(() => {
+    fetchSettings();
+  }, [fetchSettings]);
+
   return (
     <Wrapper>
       <Header>
         <Heading>{__('Settings', 'web-stories')}</Heading>
       </Header>
       <Main>
-        <GoogleAnalyticsSettings />
+        <GoogleAnalyticsSettings
+          onUpdateGoogleAnalytics={updateSettings}
+          googleAnalyticsId={googleAnalyticsId}
+        />
         <PublisherLogoSettings />
       </Main>
     </Wrapper>

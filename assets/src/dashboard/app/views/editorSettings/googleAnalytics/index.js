@@ -22,12 +22,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useContext, useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { ApiContext } from '../../../api/apiProvider';
 import { InlineInputForm } from '../../../../components';
 import {
   FormContainer,
@@ -46,21 +46,11 @@ const TEXT = {
   ARIA_LABEL: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
 };
 
-function GoogleAnalyticsSettings() {
-  const {
-    actions: {
-      settingsApi: { fetchSettings, updateSettings },
-    },
-    state: {
-      settings: { googleAnalyticsId },
-    },
-  } = useContext(ApiContext);
-
+function GoogleAnalyticsSettings({
+  googleAnalyticsId = '',
+  onUpdateGoogleAnalyticsId,
+}) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
-
-  useEffect(() => {
-    fetchSettings();
-  }, [fetchSettings]);
 
   const handleCancelUpdateId = useCallback(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -68,9 +58,9 @@ function GoogleAnalyticsSettings() {
 
   const handleCompleteUpdateId = useCallback(
     (newId) => {
-      updateSettings({ googleAnalyticsId: newId });
+      onUpdateGoogleAnalyticsId({ googleAnalyticsId: newId });
     },
-    [updateSettings]
+    [onUpdateGoogleAnalyticsId]
   );
 
   return (
@@ -92,5 +82,9 @@ function GoogleAnalyticsSettings() {
     </SettingForm>
   );
 }
+GoogleAnalyticsSettings.propTypes = {
+  onUpdateGoogleAnalyticsId: PropTypes.func,
+  googleAnalyticsId: PropTypes.string,
+};
 
 export default GoogleAnalyticsSettings;
