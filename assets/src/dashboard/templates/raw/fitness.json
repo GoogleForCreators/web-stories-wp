@@ -1,5 +1,4 @@
 {
-  "version": 24,
   "pages": [
     {
       "elements": [
@@ -34,14 +33,39 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page1_bg-red.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page1_bg-red.png",
             "width": 330,
             "height": 586,
             "id": 1297,
             "title": "fitness_page1_bg-red",
             "alt": "fitness_page1_bg-red",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "thumbnail": {
+                "height": 150,
+                "width": 150,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page1_bg-red-150x150.png",
+                "orientation": "landscape"
+              },
+              "medium": {
+                "height": 300,
+                "width": 169,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page1_bg-red-169x300.png",
+                "orientation": "portrait"
+              },
+              "large": {
+                "height": 1024,
+                "width": 576,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page1_bg-red-576x1024.png",
+                "orientation": "portrait"
+              },
+              "full": {
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page1_bg-red.png",
+                "height": 1464,
+                "width": 824,
+                "orientation": "portrait"
+              }
+            }
           }
         },
         {
@@ -106,14 +130,27 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page1_logo-generic.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page1_logo-generic.png",
             "width": 79,
             "height": 22,
             "id": 1241,
             "title": "fitness_page1_logo-generic",
             "alt": "fitness_page1_logo-generic",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "thumbnail": {
+                "height": 44,
+                "width": 150,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page1_logo-generic-150x44.png",
+                "orientation": "landscape"
+              },
+              "full": {
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page1_logo-generic.png",
+                "height": 44,
+                "width": 157,
+                "orientation": "landscape"
+              }
+            }
           },
           "type": "image",
           "x": 20,
@@ -133,18 +170,53 @@
       "id": "2572f4a4-bb11-47e2-9f77-b8371aeabe49",
       "animations": [
         {
+          "type": "blinkOn",
+          "blinkCount": 18,
+          "id": "ece28d4c-1bce-40d3-9532-603264a16bcc",
+          "duration": 2000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "forwards",
+          "targets": ["9fc66e49-85dd-477d-8bb9-30ae259bc7fe"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1.1,
+          "zoomTo": 1,
+          "id": "15c9fb8e-c0ca-4510-8645-fe1d13112029",
+          "duration": 7000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["40b3440b-fdf1-4969-8469-4af6e9d49cb2"]
+        },
+        {
           "type": "move",
-          "offsetX": 0,
-          "offsetY": 300,
-          "id": "367fd5ff-d751-424f-86c0-bfe45195caff",
+          "overflowHidden": true,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "227a419d-9028-4aad-ae64-f45b0e2ef7e0",
           "duration": 800,
           "delay": 0,
           "direction": "normal",
-          "easingPreset": "inOutQuint",
-          "easing": "",
-          "fill": "forwards",
-          "iterations": 1,
-          "targets": ["9fc66e49-85dd-477d-8bb9-30ae259bc7fe"]
+          "easingPreset": "outQuart",
+          "fill": "both",
+          "targets": ["898ed4f5-c704-459c-be51-be8daeaab737"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "9695fb6a-c866-48f2-8a23-92a567088c18",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outQuart",
+          "fill": "both",
+          "targets": ["898ed4f5-c704-459c-be51-be8daeaab737"]
         }
       ],
       "backgroundColor": {
@@ -229,7 +301,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page2_figure-formatted.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted.png",
             "width": 220,
             "height": 350,
             "posterId": 0,
@@ -237,7 +309,64 @@
             "title": "fitness_page2_figure-formatted",
             "alt": "fitness_page2_figure-formatted",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "medium": {
+                "file": "fitness_page2_figure-formatted-189x300.png",
+                "width": 189,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-189x300.png"
+              },
+              "large": {
+                "file": "fitness_page2_figure-formatted-644x1024.png",
+                "width": 644,
+                "height": 1024,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-644x1024.png"
+              },
+              "thumbnail": {
+                "file": "fitness_page2_figure-formatted-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-150x150.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "fitness_page2_figure-formatted-696x928.png",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-696x928.png"
+              },
+              "web-stories-poster-square": {
+                "file": "fitness_page2_figure-formatted-750x928.png",
+                "width": 750,
+                "height": 928,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-750x928.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "fitness_page2_figure-formatted-750x696.png",
+                "width": 750,
+                "height": 696,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-750x696.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "fitness_page2_figure-formatted-150x238.png",
+                "width": 150,
+                "height": 238,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted-150x238.png"
+              },
+              "full": {
+                "file": "fitness_page2_figure-formatted.png",
+                "width": 750,
+                "height": 1192,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page2_figure-formatted.png"
+              }
+            }
           },
           "mask": {
             "type": "rectangle",
@@ -354,7 +483,71 @@
           "g": 26,
           "b": 26
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "zoom",
+          "zoomFrom": 1.3,
+          "zoomTo": 1,
+          "id": "784c6e0e-6d90-441e-a6fa-8fe07bd1dbb6",
+          "duration": 1100,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["f7bd8df7-6f90-47c8-8c88-9c9db3183eea"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1.1,
+          "zoomTo": 1,
+          "id": "3747fac4-7235-480d-8f07-8f0e940cb3f7",
+          "duration": 7000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["f7bd8df7-6f90-47c8-8c88-9c9db3183eea"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50px",
+          "id": "79c9101b-e6b9-4fef-a1ef-b9a6c9d3a171",
+          "duration": 800,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outQuint",
+          "fill": "both",
+          "targets": ["e44d4b12-221b-4fbf-96be-8a3c81e26f7c"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "91445e02-5a54-40ff-9944-7d931f333db3",
+          "duration": 600,
+          "delay": 550,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["e44d4b12-221b-4fbf-96be-8a3c81e26f7c"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "150",
+          "id": "7025d542-026b-42ed-928d-b00eb7e9b325",
+          "duration": 600,
+          "delay": 1200,
+          "direction": "normal",
+          "easingPreset": "outQuint",
+          "fill": "both",
+          "targets": ["7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb"]
+        }
+      ]
     },
     {
       "elements": [
@@ -386,7 +579,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page3_bg.jpg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -394,7 +587,99 @@
             "title": "fitness_page3_bg",
             "alt": "fitness_page3_bg",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "medium": {
+                "file": "fitness_page3_bg-200x300.jpg",
+                "width": 200,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-200x300.jpg"
+              },
+              "large": {
+                "file": "fitness_page3_bg-683x1024.jpg",
+                "width": 683,
+                "height": 1024,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-683x1024.jpg"
+              },
+              "thumbnail": {
+                "file": "fitness_page3_bg-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "fitness_page3_bg-768x1152.jpg",
+                "width": 768,
+                "height": 1152,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-768x1152.jpg"
+              },
+              "1536x1536": {
+                "file": "fitness_page3_bg-1024x1536.jpg",
+                "width": 1024,
+                "height": 1536,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-1024x1536.jpg"
+              },
+              "2048x2048": {
+                "file": "fitness_page3_bg-1365x2048.jpg",
+                "width": 1365,
+                "height": 2048,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-1365x2048.jpg"
+              },
+              "post-thumbnail": {
+                "file": "fitness_page3_bg-1200x1800.jpg",
+                "width": 1200,
+                "height": 1800,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-1200x1800.jpg"
+              },
+              "twentytwenty-fullscreen": {
+                "file": "fitness_page3_bg-1980x2970.jpg",
+                "width": 1980,
+                "height": 2970,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-1980x2970.jpg"
+              },
+              "web-stories-poster-portrait": {
+                "file": "fitness_page3_bg-696x928.jpg",
+                "width": 696,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-696x928.jpg"
+              },
+              "web-stories-poster-square": {
+                "file": "fitness_page3_bg-928x928.jpg",
+                "width": 928,
+                "height": 928,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-928x928.jpg"
+              },
+              "web-stories-poster-landscape": {
+                "file": "fitness_page3_bg-928x696.jpg",
+                "width": 928,
+                "height": 696,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-928x696.jpg"
+              },
+              "web_stories_thumbnail": {
+                "file": "fitness_page3_bg-150x225.jpg",
+                "width": 150,
+                "height": 225,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-150x225.jpg"
+              },
+              "full": {
+                "file": "fitness_page3_bg-scaled.jpg",
+                "width": 1707,
+                "height": 2560,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page3_bg-scaled.jpg"
+              }
+            }
           },
           "scale": 150,
           "focalX": 50,
@@ -453,7 +738,7 @@
           "x": 6,
           "y": 138,
           "width": 400,
-          "height": 111,
+          "height": 112,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -502,7 +787,7 @@
           "x": 88,
           "y": 261,
           "width": 235,
-          "height": 43,
+          "height": 42,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -539,7 +824,7 @@
           "focalY": 50,
           "type": "text",
           "id": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
-          "content": "<span style=\"color: #888\">Our lead editor shares tips on how to best start running</span>",
+          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips on how to best start running</span>",
           "fontSize": 18,
           "padding": {
             "horizontal": 0,
@@ -613,14 +898,39 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page4_bg-red.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page4_bg-red.png",
             "width": 330,
             "height": 308,
             "id": 1299,
             "title": "fitness_page4_bg-red",
             "alt": "fitness_page4_bg-red",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "thumbnail": {
+                "height": 150,
+                "width": 150,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page4_bg-red-150x150.png",
+                "orientation": "landscape"
+              },
+              "medium": {
+                "height": 280,
+                "width": 300,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page4_bg-red-300x280.png",
+                "orientation": "landscape"
+              },
+              "large": {
+                "height": 541,
+                "width": 580,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page4_bg-red-1024x956.png",
+                "orientation": "landscape"
+              },
+              "full": {
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page4_bg-red.png",
+                "height": 1464,
+                "width": 1568,
+                "orientation": "landscape"
+              }
+            }
           }
         },
         {
@@ -651,7 +961,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page4_bg.jpg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg.jpg",
             "width": 220,
             "height": 288,
             "posterId": 0,
@@ -659,7 +969,50 @@
             "title": "fitness_page4_bg",
             "alt": "fitness_page4_bg",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "medium": {
+                "file": "fitness_page4_bg-229x300.jpg",
+                "width": 229,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-229x300.jpg"
+              },
+              "large": {
+                "file": "fitness_page4_bg-782x1024.jpg",
+                "width": 782,
+                "height": 1024,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-782x1024.jpg"
+              },
+              "thumbnail": {
+                "file": "fitness_page4_bg-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-150x150.jpg"
+              },
+              "medium_large": {
+                "file": "fitness_page4_bg-768x1005.jpg",
+                "width": 768,
+                "height": 1005,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-768x1005.jpg"
+              },
+              "1536x1536": {
+                "file": "fitness_page4_bg-1174x1536.jpg",
+                "width": 1174,
+                "height": 1536,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-1174x1536.jpg"
+              },
+              "full": {
+                "file": "fitness_page4_bg-scaled.jpg",
+                "width": 1956,
+                "height": 2560,
+                "mime_type": "image/jpeg",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page4_bg-scaled.jpg"
+              }
+            }
           },
           "scale": 100,
           "focalX": 49.97721576668946,
@@ -717,7 +1070,7 @@
           "x": 51,
           "y": 326,
           "width": 311,
-          "height": 203,
+          "height": 204,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -804,7 +1157,7 @@
           "type": "text",
           "basedOn": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
           "id": "9832faa6-2c7e-43eb-b75a-b68051da626a",
-          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest lightweight mid-distance shoes for the season.</span>",
+          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest  lightweight mid-distance shoes for the season.</span>",
           "fontSize": 18,
           "padding": {
             "horizontal": 0,
@@ -879,21 +1232,46 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page5_bg-no-logo.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page5_bg-no-logo.png",
             "width": 330,
             "height": 295,
             "id": 1256,
             "title": "fitness_page5_bg-no-logo",
             "alt": "fitness_page5_bg-no-logo",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "thumbnail": {
+                "height": 150,
+                "width": 150,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page5_bg-no-logo-150x150.png",
+                "orientation": "landscape"
+              },
+              "medium": {
+                "height": 269,
+                "width": 300,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page5_bg-no-logo-300x269.png",
+                "orientation": "landscape"
+              },
+              "large": {
+                "height": 519,
+                "width": 580,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page5_bg-no-logo-1024x917.png",
+                "orientation": "landscape"
+              },
+              "full": {
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page5_bg-no-logo.png",
+                "height": 1243,
+                "width": 1388,
+                "orientation": "landscape"
+              }
+            }
           },
           "scale": 100,
           "focalX": 38.367113188634875,
           "focalY": 49.953358674938045
         },
         {
-          "x": 50,
+          "x": 22,
           "y": 16,
           "width": 311,
           "height": 102,
@@ -942,10 +1320,10 @@
           }
         },
         {
-          "x": 52,
+          "x": 22,
           "y": 145,
           "width": 154,
-          "height": 151,
+          "height": 147,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -991,9 +1369,9 @@
           }
         },
         {
-          "x": 230,
-          "y": 308,
-          "width": 170,
+          "x": 225,
+          "y": 310,
+          "width": 235,
           "height": 367,
           "opacity": 100,
           "flip": {
@@ -1040,7 +1418,7 @@
           }
         },
         {
-          "x": 51,
+          "x": 21,
           "y": 319,
           "width": 100,
           "height": 32,
@@ -1068,7 +1446,7 @@
           "id": "5ae621aa-0b73-4f4f-888b-ba3787156bf0"
         },
         {
-          "x": 64,
+          "x": 33.5,
           "y": 327,
           "width": 75,
           "height": 20,
@@ -1180,7 +1558,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page6_bg.jpg",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page6_bg.jpg",
             "width": 220,
             "height": 165,
             "posterId": 0,
@@ -1221,7 +1599,7 @@
           },
           "type": "image",
           "x": 69,
-          "y": 142,
+          "y": 122,
           "width": 273,
           "height": 326,
           "mask": {
@@ -1331,10 +1709,10 @@
           }
         },
         {
-          "x": 47,
+          "x": 52,
           "y": 504,
-          "width": 318,
-          "height": 86,
+          "width": 307,
+          "height": 84,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1372,7 +1750,7 @@
           "type": "text",
           "basedOn": "73bdf015-c3f1-41fb-bc24-79a1b881d914",
           "id": "ae9a760a-a4e8-4759-8407-001b3eb243f3",
-          "content": "<span style=\"color: #1a1a1a\">Whether you’re an elite athlete or you just want to track your daily activity, GO RUN Series 1 helps you train smarter to get results faster.</span>",
+          "content": "<span style=\"color: rgba(26, 26, 26, 1)\">Whether you’re an elite athlete or you just want to track your daily activity, Apple Watch Series 5 helps you train smarter to get results faster.</span>",
           "fontSize": 18,
           "padding": {
             "horizontal": 0,
@@ -1446,14 +1824,39 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_bg-red.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_bg-red.png",
             "width": 330,
             "height": 239,
             "id": 1301,
             "title": "fitness_page7_bg-red",
             "alt": "fitness_page7_bg-red",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "thumbnail": {
+                "height": 150,
+                "width": 150,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_bg-red-150x150.png",
+                "orientation": "landscape"
+              },
+              "medium": {
+                "height": 218,
+                "width": 300,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_bg-red-300x218.png",
+                "orientation": "landscape"
+              },
+              "large": {
+                "height": 421,
+                "width": 580,
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_bg-red-1024x743.png",
+                "orientation": "landscape"
+              },
+              "full": {
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_bg-red.png",
+                "height": 1464,
+                "width": 2018,
+                "orientation": "landscape"
+              }
+            }
           }
         },
         {
@@ -1519,14 +1922,21 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_circle-border.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_circle-border.png",
             "width": 52,
             "height": 52,
             "id": 1273,
             "title": "fitness_page7_circle-border",
             "alt": "fitness_page7_circle-border",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "full": {
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_circle-border.png",
+                "height": 103,
+                "width": 103,
+                "orientation": "landscape"
+              }
+            }
           },
           "type": "image",
           "x": 130,
@@ -1589,14 +1999,21 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_circle-border.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_circle-border.png",
             "width": 52,
             "height": 52,
             "id": 1273,
             "title": "fitness_page7_circle-border",
             "alt": "fitness_page7_circle-border",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "full": {
+                "url": "http://localhost:8899/wp-content/uploads/2020/06/fitness_page7_circle-border.png",
+                "height": 103,
+                "width": 103,
+                "orientation": "landscape"
+              }
+            }
           },
           "type": "image",
           "width": 32,
@@ -1731,7 +2148,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story3-formatted.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story3-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
@@ -1739,7 +2156,29 @@
             "title": "fitness_page8_story3-formatted",
             "alt": "fitness_page8_story3-formatted",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "thumbnail": {
+                "file": "fitness_page8_story3-formatted-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story3-formatted-150x150.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "fitness_page8_story3-formatted-150x153.png",
+                "width": 150,
+                "height": 153,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story3-formatted-150x153.png"
+              },
+              "full": {
+                "file": "fitness_page8_story3-formatted.png",
+                "width": 189,
+                "height": 193,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story3-formatted.png"
+              }
+            }
           },
           "mask": {
             "type": "rectangle",
@@ -1768,7 +2207,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story1-formatted.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story1-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
@@ -1776,7 +2215,29 @@
             "title": "fitness_page8_story1-formatted",
             "alt": "fitness_page8_story1-formatted",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "thumbnail": {
+                "file": "fitness_page8_story1-formatted-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story1-formatted-150x150.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "fitness_page8_story1-formatted-150x153.png",
+                "width": 150,
+                "height": 153,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story1-formatted-150x153.png"
+              },
+              "full": {
+                "file": "fitness_page8_story1-formatted.png",
+                "width": 189,
+                "height": 193,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story1-formatted.png"
+              }
+            }
           },
           "mask": {
             "type": "rectangle",
@@ -1805,7 +2266,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story2-formatted.png",
+            "src": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted.png",
             "width": 188,
             "height": 97,
             "posterId": 0,
@@ -1813,7 +2274,36 @@
             "title": "fitness_page8_story2-formatted",
             "alt": "fitness_page8_story2-formatted",
             "local": false,
-            "sizes": []
+            "sizes": {
+              "medium": {
+                "file": "fitness_page8_story2-formatted-300x154.png",
+                "width": 300,
+                "height": 154,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted-300x154.png"
+              },
+              "thumbnail": {
+                "file": "fitness_page8_story2-formatted-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted-150x150.png"
+              },
+              "web_stories_thumbnail": {
+                "file": "fitness_page8_story2-formatted-150x77.png",
+                "width": 150,
+                "height": 77,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted-150x77.png"
+              },
+              "full": {
+                "file": "fitness_page8_story2-formatted.png",
+                "width": 375,
+                "height": 193,
+                "mime_type": "image/png",
+                "source_url": "http://localhost:8899/wp-content/uploads/2020/05/fitness_page8_story2-formatted.png"
+              }
+            }
           },
           "mask": {
             "type": "rectangle",
@@ -1877,7 +2367,7 @@
           "x": 243,
           "y": 207,
           "width": 137,
-          "height": 65,
+          "height": 66,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1915,7 +2405,7 @@
           "type": "text",
           "basedOn": "0884aabc-ca1e-4b37-a87b-68a6fbf377db",
           "id": "96fea994-b71e-442f-b611-16d73f520016",
-          "content": "<span style=\"font-weight: 500; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 500; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 500; color: #fff\">EARBUDS</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 600; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 600; color: #fff\"> EARBUDS</span>",
           "fontSize": 22,
           "padding": {
             "horizontal": 0,
@@ -1926,7 +2416,7 @@
           "x": 49,
           "y": 359,
           "width": 137,
-          "height": 65,
+          "height": 66,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1964,7 +2454,7 @@
           "type": "text",
           "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
           "id": "9b117b87-0269-4c4b-9e0d-8cdbcb0df89a",
-          "content": "<span style=\"font-weight: 600; color: #fff\">10 BEST CORE</span>\n<span style=\"font-weight: 600; color: #fff\">TRAINING EXERCISES</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORE TRAINING EXERCISES</span></span>",
           "fontSize": 22,
           "padding": {
             "horizontal": 0,
@@ -1975,7 +2465,7 @@
           "x": 242,
           "y": 488,
           "width": 157,
-          "height": 65,
+          "height": 66,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2032,6 +2522,7 @@
       }
     }
   ],
+  "version": 24,
   "autoAdvance": true,
   "defaultPageDuration": 7
 }
