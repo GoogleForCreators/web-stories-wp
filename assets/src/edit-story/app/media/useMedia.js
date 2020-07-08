@@ -26,6 +26,7 @@ import Context from './context';
  *
  * @param {function(Object):Object} selector Returns a fragment of the media
  * context value that the caller is interested in
+ * @return {Object} The selected context value fragment.
  */
 function useMedia(selector) {
   return useContextSelector(Context, selector ?? identity);

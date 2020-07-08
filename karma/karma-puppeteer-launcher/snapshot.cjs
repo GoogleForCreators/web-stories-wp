@@ -26,9 +26,9 @@ const STATES = ['active', 'focus', 'focus-within', 'hover'];
 const STATE_CSS_RE = new RegExp(`\\:(${STATES.join('|')})\\b`, 'ig');
 
 /**
- * @param {Object} frame
- * @param {string} testName
- * @param {string} snapshotName
+ * @param {Object} frame Frame.
+ * @param {string} testName Test name.
+ * @param {string} snapshotName Snapshot name.
  */
 async function extractAndSaveSnapshot(frame, testName, snapshotName) {
   if (!testName) {
@@ -66,9 +66,9 @@ async function extractAndSaveSnapshot(frame, testName, snapshotName) {
 }
 
 /**
- * @param {Object} frame
- * @param {string} testName
- * @param {string} snapshotName
+ * @param {Object} frame Frame.
+ * @param {string} testName Test name.
+ * @param {string} snapshotName Snapshot name.
  */
 async function extractSnapshot(frame, testName, snapshotName) {
   const { head, body } = await frame.evaluate((states) => {

@@ -22,6 +22,8 @@ import MediaOutput from '../media/output';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object} element Story element.
  */
 function ImageOutput({ element, box }) {
   const { resource } = element;

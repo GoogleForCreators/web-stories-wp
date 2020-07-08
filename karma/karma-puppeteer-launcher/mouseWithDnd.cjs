@@ -143,8 +143,8 @@ class DndClientBinding {
         }
 
         /**
-         * @param {number} clientX
-         * @param {number} clientY
+         * @param {number} clientX X coordinates.
+         * @param {number} clientY Y coordinates.
          * @return {boolean} Returns `true` if DND can be started at these
          * coordinates.
          */
@@ -154,8 +154,8 @@ class DndClientBinding {
         }
 
         /**
-         * @param {number} clientX
-         * @param {number} clientY
+         * @param {number} clientX X coordinates.
+         * @param {number} clientY Y coordinates.
          * @return {boolean} Returns `true` if DND has successfully started.
          */
         start(clientX, clientY) {
@@ -169,8 +169,8 @@ class DndClientBinding {
         }
 
         /**
-         * @param {number} clientX
-         * @param {number} clientY
+         * @param {number} clientX X coordinates.
+         * @param {number} clientY Y coordinates.
          * @param {boolean} canceled
          */
         end(clientX, clientY, canceled) {
@@ -208,8 +208,8 @@ class DndClientBinding {
         }
 
         /**
-         * @param {number} clientX
-         * @param {number} clientY
+         * @param {number} clientX X coordinates.
+         * @param {number} clientY Y coordinates.
          */
         drag(clientX, clientY) {
           const dataTransfer = this._dataTransfer;
@@ -281,8 +281,8 @@ class DndClientBinding {
   }
 
   /**
-   * @param {number} clientX
-   * @param {number} clientY
+   * @param {number} clientX X coordinates.
+   * @param {number} clientY Y coordinates.
    * @return {Promise<boolean>} Returns `true` if DND can be started at these
    * coordinates.
    */
@@ -296,8 +296,8 @@ class DndClientBinding {
   }
 
   /**
-   * @param {number} clientX
-   * @param {number} clientY
+   * @param {number} clientX X coordinates.
+   * @param {number} clientY Y coordinates.
    * @return {Promise<boolean>} Returns `true` if DND has successfully started.
    */
   async start(clientX, clientY) {
@@ -310,8 +310,8 @@ class DndClientBinding {
   }
 
   /**
-   * @param {number} clientX
-   * @param {number} clientY
+   * @param {number} clientX X coordinates.
+   * @param {number} clientY Y coordinates.
    * @return {Promise} Resolves when the event has been processed.
    */
   async drag(clientX, clientY) {
@@ -326,8 +326,8 @@ class DndClientBinding {
   /**
    * Completes the DND sequence.
    *
-   * @param {number} clientX
-   * @param {number} clientY
+   * @param {number} clientX X coordinates.
+   * @param {number} clientY Y coordinates.
    * @param {boolean} canceled
    * @return {Promise} Resolves when the event has been processed.
    */

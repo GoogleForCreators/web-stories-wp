@@ -29,7 +29,7 @@ import { duplicatePage } from '../../../elements';
 /**
  * @param {Object} ref
  * @param {Object} pageRefs
- * @param {boolean} isRTL
+ * @param {boolean} isRTL Whether we're in RTL layout or not.
  */
 function useCarouselKeys(ref, pageRefs, isRTL) {
   const {

@@ -16,9 +16,10 @@
 
 /**
  *
- * @param {string} start - css value with unit
- * @param {string} end - css value with unit
- * @param {string} progress - css variable to represent progress in range [0, 1]
+ * @param {string} start CSS value with unit.
+ * @param {string} end CSS value with unit.
+ * @param {string} progress CSS variable to represent progress in range [0, 1]
+ * @return string Resulting `calc()` CSS value.
  */
 const cssLerp = (start, end, progress) => {
   const currentProgress = `var(${progress}, 0)`;
