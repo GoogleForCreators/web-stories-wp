@@ -206,7 +206,9 @@ function SingleSelectionMovable({
   );
 
   const canSnap =
-    !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
+    !snapDisabled &&
+    !isEditMode &&
+    (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = isDragging || Boolean(draggingResource);
 
   // Removes element if it's outside of canvas.
