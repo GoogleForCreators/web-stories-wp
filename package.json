@@ -114,7 +114,7 @@
     "eslint-plugin-header": "^3.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jasmine": "^4.1.1",
-    "eslint-plugin-jest": "^23.17.1",
+    "eslint-plugin-jest": "^23.18.0",
     "eslint-plugin-jest-dom": "^3.0.1",
     "eslint-plugin-jsdoc": "^28.6.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
