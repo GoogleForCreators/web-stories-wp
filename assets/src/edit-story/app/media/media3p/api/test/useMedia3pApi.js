@@ -76,7 +76,13 @@ describe('useMedia3pApi', () => {
           poster: null,
           posterId: null,
           sizes: {
-            full: 'http://www.img.com',
+            full: {
+              file: 'media/unsplash:1234',
+              source_url: 'http://www.img.com',
+              mime_type: 'image/png',
+              width: 200,
+              height: 100,
+            },
           },
           src: 'http://www.img.com',
           title: 'A cat',

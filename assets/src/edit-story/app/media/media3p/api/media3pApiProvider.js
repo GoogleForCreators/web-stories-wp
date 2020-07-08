@@ -55,7 +55,18 @@ function Media3pApiProvider({ children }) {
   function getUrls(m) {
     if (m.type.toLowerCase() === 'image') {
       return Object.fromEntries(
-        new Map(m.imageUrls.map((u) => [u.imageName, u.url]))
+        new Map(
+          m.imageUrls.map((u) => [
+            u.imageName,
+            {
+              file: m.name,
+              source_url: u.url,
+              mime_type: u.mimeType,
+              width: u.width,
+              height: u.height,
+            },
+          ])
+        )
       );
     }
     throw new Error('Invalid media type.');
