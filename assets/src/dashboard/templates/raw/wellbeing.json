@@ -1310,7 +1310,7 @@
           "type": "shape",
           "id": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }
@@ -1373,7 +1373,7 @@
           "basedOn": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
           "id": "70cd1c38-9462-47f4-9a12-c9585c16acc4",
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": null
           }
@@ -1436,7 +1436,7 @@
           "basedOn": "70cd1c38-9462-47f4-9a12-c9585c16acc4",
           "id": "95a2a69d-7946-4fd2-97ad-7cd47fe87e04",
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }
