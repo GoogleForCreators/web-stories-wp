@@ -20,11 +20,27 @@
 import getTypeFromMime from './getTypeFromMime';
 
 /**
+ * Author object
+ *
+ * @typedef {Author} Author
+ * @property {string} displayName The display name of the author.
+ * @property {?string} url An optional URL to link to the author's profile or
+ * website.
+ */
+
+/**
+ * Attribution object
+ *
+ * @typedef {Attribution} Attribution
+ * @property {Author} author The author of the media object.
+ */
+
+/**
  * Resource object.
  *
  * TODO: Try to remove posterId (poster should be enough?)
  *
- * @typedef {Resource} Resource
+ * @typedef {Object} Resource
  * @property {string|undefined} type Resource type. Currently only "image" and
  * "video" values are allowed. If not specified, will be calculated from the
  * mime-type.
@@ -44,13 +60,15 @@ import getTypeFromMime from './getTypeFromMime';
  * resource.
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
- * @property {Object} Object of image sizes.
+ * @property {Object} sizes Object of image sizes.
+ * @property {?Attribution} attribution An optional attribution for the
+ * resource.
  */
 
 /**
  * Creates a resource object.
  *
- * @param {Object} attachment WP Attachment object.
+ * @param {Object} an object to create the resource from.
  * @return {Resource} Resource object.
  */
 function createResource({
@@ -69,6 +87,7 @@ function createResource({
   alt,
   local,
   sizes,
+  attribution,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
@@ -86,6 +105,7 @@ function createResource({
     alt,
     local,
     sizes,
+    attribution,
   };
 }
 
