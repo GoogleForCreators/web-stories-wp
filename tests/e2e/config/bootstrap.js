@@ -59,6 +59,9 @@ jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 500 });
 
+/**
+ * Set up browser.
+ */
 async function setupBrowser() {
   // Same as jest-puppeteer.config.cjs and percy.config.yml
   await setBrowserViewport({
