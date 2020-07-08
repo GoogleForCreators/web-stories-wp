@@ -170,7 +170,7 @@
     ],
     "jsdoc/check-indentation": "error",
     "jsdoc/check-syntax": "warn",
-    "jsdoc/require-jsdoc": ["warn", {
+    "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
     "jsdoc/require-returns": "warn",
