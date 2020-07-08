@@ -29,6 +29,9 @@ import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object<*>} props Props.
+ * @return {*} Rendered component.
  */
 function MediaOutput({
   element: { resource, scale, focalX, focalY },

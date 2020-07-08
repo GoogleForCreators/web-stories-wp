@@ -110,7 +110,7 @@ export default class Fixture {
    * });
    * ```
    *
-   * @param {Object} flags
+   * @param {Object} flags Flags object.
    */
   setFlags(flags) {
     this._flags = { ...flags };
@@ -124,8 +124,8 @@ export default class Fixture {
    *
    * Use sparingly. See `ComponentStub` for more info.
    *
-   * @param {Function} component
-   * @param {Function|undefined} matcher
+   * @param {Function} component Component.
+   * @param {Function|undefined} matcher Matcher.
    * @return {ComponentStub} The component's stub.
    */
   stubComponent(component, matcher) {
@@ -177,7 +177,7 @@ export default class Fixture {
    *
    * Similar to the `@testing-library/react`'s `act()` method.
    *
-   * @param {Function} callback
+   * @param {Function} callback Callback.
    * @return {Promise<Object>} Yields when the `act()` and all related
    * editor rendering activity is complete. Resolves to the result of the
    * callback.
@@ -189,7 +189,7 @@ export default class Fixture {
   /**
    * To be deprecated.
    *
-   * @param {string} selector
+   * @param {string} selector Selector.
    * @return {Element|null} The found element or null.
    */
   querySelector(selector) {
@@ -199,7 +199,7 @@ export default class Fixture {
   /**
    * To be deprecated?
    *
-   * @param {string} selector
+   * @param {string} selector Selector.
    * @return {Array.<Element>} The potentially empty list of found elements.
    */
   querySelectorAll(selector) {
@@ -207,7 +207,7 @@ export default class Fixture {
   }
 
   /**
-   * @param {Element} element
+   * @param {Element} element Element.
    * @return {Promise} Yields when the element is displayed on the screen.
    */
   waitOnScreen(element) {
@@ -230,7 +230,7 @@ export default class Fixture {
    * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
    * directory.
    *
-   * @param {string} name
+   * @param {string} name Snapshot name.
    * @return {Promise} Yields when the snapshot is completed.
    */
   snapshot(name) {

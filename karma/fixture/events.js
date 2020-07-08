@@ -35,7 +35,7 @@ const KEY_MAP = {
  */
 class FixtureEvents {
   /**
-   * @param {function():Promise} act
+   * @param {function():Promise} act Actor.
    */
   constructor(act) {
     this._act = act;
@@ -96,7 +96,7 @@ class FixtureEvents {
    * selected.
    *
    * @param {Element} target The event target.
-   * @param {Array<string>} values
+   * @param {Array<string>} values Values of options to select.
    * @return {!Promise} The promise when the event handling is complete.
    */
   select(target, ...values) {
@@ -116,7 +116,7 @@ class FixtureEvents {
  */
 class Keyboard {
   /**
-   * @param {function():Promise} act
+   * @param {function():Promise} act Actor.
    */
   constructor(act) {
     this._act = act;
@@ -143,7 +143,7 @@ class Keyboard {
    * - `type: 'up'`: [keyboard.up](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#keyboardupkey).
    * - `type: 'press'`: [keyboard.press](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#keyboardpresskey-options).
    *
-   * @param {Array<{type: string, key: string, options: Object}>|Function} arrayOrGenerator
+   * @param {Array<{type: string, key: string, options: Object}>|Function} arrayOrGenerator Sequence of key events.
    * @return {!Promise} Yields when the event is processed.
    */
   seq(arrayOrGenerator) {
@@ -163,7 +163,7 @@ class Keyboard {
    * - press KeyB
    * - up Meta
    *
-   * @param {string} shortcut
+   * @param {string} shortcut Keybord shortcut.
    * @return {!Promise} Yields when the event is processed.
    */
   shortcut(shortcut) {
@@ -175,8 +175,8 @@ class Keyboard {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#keyboarddownkey-options
    *
-   * @param {string} key
-   * @param {Object} options
+   * @param {string} key Name of key to press, such as ArrowLeft
+   * @param {Object} options Options
    * @return {!Promise} Yields when the event is processed.
    */
   down(key, options = {}) {
@@ -186,10 +186,10 @@ class Keyboard {
   /**
    * The `keyboard.up` API.
    *
-   * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#keyboardupkey-options
+   * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#keyboardupkey
    *
-   * @param {string} key
-   * @param {Object} options
+   * @param {string} key Name of key to release, such as ArrowLeft.
+   * @param {Object<{text: string}>} options Event options.
    * @return {!Promise} Yields when the event is processed.
    */
   up(key, options = {}) {
@@ -201,8 +201,8 @@ class Keyboard {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#keyboardpresskey-options
    *
-   * @param {string} key
-   * @param {Object} options Accepts `delay` and `text` options.
+   * @param {string} key Name of key to press, such as ArrowLeft
+   * @param {Object<{text: string, delay: number}>} options Event options.
    * @return {!Promise} Yields when the event is processed.
    */
   press(key, options = {}) {
@@ -217,8 +217,8 @@ class Keyboard {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#keyboardtypetext-options
    *
-   * @param {string} text
-   * @param {Object} options Accepts `delay` option to wait between key presses
+   * @param {string} text Text to type.
+   * @param {Object<{delay: number}>} options Event options. Accepts `delay` option to wait between key presses
    * in milliseconds.
    * @return {!Promise} Yields when the event is processed.
    */
@@ -234,7 +234,7 @@ class Keyboard {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#keyboardsendcharacterchar
    *
-   * @param {string} char
+   * @param {string} char Character to send into the page.
    * @return {!Promise} Yields when the event is processed.
    */
   sendCharacter(char) {
@@ -249,7 +249,7 @@ class Keyboard {
  */
 class Mouse {
   /**
-   * @param {function():Promise} act
+   * @param {function():Promise} act Actor.
    */
   constructor(act) {
     this._act = act;
@@ -326,7 +326,7 @@ class Mouse {
    * - `type: 'move'`: [mouse.move](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mousemovex-y-options).
    * - `type: 'click'`: [mouse.click](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mouseclickx-y-options).
    *
-   * @param {Array<{type: string, x: number, y: number, options: Object}>|Function} arrayOrGenerator
+   * @param {Array<{type: string, x: number, y: number, options: Object}>|Function} arrayOrGenerator Array/Generator for event sequence.
    * @return {!Promise} Yields when the event is processed.
    */
   seq(arrayOrGenerator) {
@@ -342,9 +342,9 @@ class Mouse {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mouseclickx-y-options
    *
-   * @param {number} x
-   * @param {number} y
-   * @param {Object} options
+   * @param {number} x X coordinates.
+   * @param {number} y Y coordinates.
+   * @param {Object} options Options.
    * @return {!Promise} Yields when the event is processed.
    */
   click(x, y, options = {}) {
@@ -380,8 +380,8 @@ class Mouse {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mousemovex-y-options
    *
-   * @param {number} x
-   * @param {number} y
+   * @param {number} x X coordinates.
+   * @param {number} y Y coordinates.
    * @param {Object} options Accepts `steps` option for the number of
    * intermediate mousemove events.
    * @return {!Promise} Yields when the event is processed.
@@ -406,10 +406,10 @@ class Mouse {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mouseclickx-y-options
    *
-   * @param {Element} element
+   * @param {Element} element Element.
    * @param {number|string} relX A relative pixel or percent value. Default is 0.
    * @param {number|string} relY A relative pixel or percent value. Default is 0.
-   * @param {Object} options
+   * @param {Object<{button: string, clickCount: number, delay: number}>} options Mouse click options.
    * @return {!Promise} Yields when the event is processed.
    */
   clickOn(element, relX = 0, relY = 0, options = {}) {
@@ -431,10 +431,10 @@ class Mouse {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mousemovex-y-options
    *
-   * @param {Element} element
+   * @param {Element} element Element.
    * @param {number|string} relX A relative pixel or percent value. Default is 0.
    * @param {number|string} relY A relative pixel or percent value. Default is 0.
-   * @param {Object} options Accepts `steps` option for the number of
+   * @param {Object<{steps: number}>} options Accepts `steps` option for the number of
    * intermediate mousemove events.
    * @return {!Promise} Yields when the event is processed.
    */
@@ -463,7 +463,7 @@ class Mouse {
  */
 class Clipboard {
   /**
-   * @param {function():Promise} act
+   * @param {function():Promise} act Actor.
    */
   constructor(act) {
     this._act = act;
@@ -489,7 +489,7 @@ class Clipboard {
 }
 
 /**
- * @param {Array<{type: string, key: string, options: Object}>} array
+ * @param {Array<{type: string, key: string, options: Object}>} array List of keys.
  * @return {Array<{type: string, key: string, options: Object}>} The cleaned
  * up array that can be accepted by the Puppeteer.
  */
@@ -505,7 +505,7 @@ function cleanupKeys(array) {
  * Converts a key to the allowed key set. See
  * https://github.com/puppeteer/puppeteer/blob/main/src/USKeyboardLayout.ts.
  *
- * @param {string} key
+ * @param {string} key Key name.
  * @return {string} The cleaned up key that can be accepted by the Puppeteer.
  */
 function cleanupKey(key) {
@@ -530,7 +530,9 @@ function cleanupKey(key) {
 }
 
 /**
- * @param {string} shortcut
+ * Parses a given keyboard shortcut string into a key sequence.
+ *
+ * @param {string} shortcut Keyboard shortcut.
  * @return {Array<{type: string, key: string, options: Object}>} The sequence
  * corresponding to the shortcut.
  */
@@ -553,7 +555,7 @@ function parseShortcutToSeq(shortcut) {
 }
 
 /**
- * @param {Array<{type: string, x: number, y: number, options: Object}>} array
+ * @param {Array<{type: string, x: number, y: number, options: Object}>} array List of events.
  * @return {Array<{type: string, x: number, y: number, options: Object}>} The cleaned
  * up array that can be accepted by the Puppeteer.
  */

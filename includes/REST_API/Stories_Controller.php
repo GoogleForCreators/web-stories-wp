@@ -320,11 +320,32 @@ class Stories_Controller extends Stories_Base_Controller {
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 		}
+
 		// Encode the array as headers do not support passing an array.
 		$encoded_statuses = wp_json_encode( $statuses_count );
 		if ( $encoded_statuses ) {
 			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
 		}
+		if ( $request['_web_stories_envelope'] ) {
+			$response = rest_get_server()->envelope_response( $response, false );
+		}
 		return $response;
+	}
+
+	/**
+	 * Retrieves the query params for the posts collection.
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params() {
+		$query_params = parent::get_collection_params();
+
+		$query_params['_web_stories_envelope'] = [
+			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
+		];
+
+		return $query_params;
 	}
 }
