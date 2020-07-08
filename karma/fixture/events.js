@@ -107,7 +107,7 @@ class FixtureEvents {
 /**
  * Events utility for keyboard.
  *
- * The list of all keycodes is available in https://github.com/puppeteer/puppeteer/blob/main/src/USKeyboardLayout.ts.
+ * The list of all keycodes is available in https://github.com/puppeteer/puppeteer/blob/main/src/common/USKeyboardLayout.ts.
  *
  * In addition to this, the following special codes are allowed:
  * - "mod": "Meta" on OSX and "Control" elsewhere.
