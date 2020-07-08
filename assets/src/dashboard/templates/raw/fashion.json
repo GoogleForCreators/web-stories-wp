@@ -4572,7 +4572,7 @@
           "x": 135,
           "y": 114,
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }
@@ -4635,7 +4635,7 @@
           "x": 195,
           "y": 253,
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }
@@ -4698,7 +4698,7 @@
           "x": 295,
           "y": 385,
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }
@@ -4761,7 +4761,7 @@
           "x": 161,
           "y": 546,
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": null
           }

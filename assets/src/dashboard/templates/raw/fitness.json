@@ -1997,7 +1997,7 @@
           "basedOn": "cf1d4db0-d5d9-47a2-ba70-85618df23959",
           "id": "0584e281-ec48-468c-84ad-c6bc6be4855a",
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }
@@ -2068,7 +2068,7 @@
           "x": 235,
           "y": 148.5,
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }

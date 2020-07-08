@@ -2330,7 +2330,7 @@
           "basedOn": "957322bc-5f94-4cf4-9163-6816b86d8e43",
           "id": "6c3bb33f-1d89-4624-96bb-b543e6336251",
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }
@@ -2393,7 +2393,7 @@
           "basedOn": "6c3bb33f-1d89-4624-96bb-b543e6336251",
           "id": "a0c96775-0f7f-48b3-9820-c19f6b6cc01f",
           "link": {
-            "url": "http://example.com/",
+            "url": "https://example.com/",
             "icon": null,
             "desc": "Example Domain"
           }
