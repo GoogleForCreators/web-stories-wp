@@ -94,8 +94,11 @@ describe('useFetchMediaEffect', () => {
     expect(fetchMediaError.mock.calls).toHaveLength(1);
   });
 
-  it('should not fetch media if the provider is not selected', async () => {
-    await renderUseFetchMediaEffect({ selectedProvider: 'coverr' });
+  it('should not fetch media if the provider is not the same as selected provider', async () => {
+    await renderUseFetchMediaEffect({
+      provider: 'coverr',
+      selectedProvider: 'unsplash',
+    });
     expect(fetchMediaStart.mock.calls).toHaveLength(0);
   });
 });
