@@ -13,36 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
+
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+
+/**
+ * Internal dependencies
+ */
 import { useKeyDownEffect } from '../../keyboard';
 import { useStory } from '../../../app';
 
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
-  const { currentPageId, pages } = useStory(
-    ({ state: { pages, currentPageId } }) => ({
+  const { arrangePage, currentPageId, pages } = useStory(
+    ({ state: { pages, currentPageId }, actions: { arrangePage } }) => ({
+      arrangePage,
       currentPageId,
       pages,
     })
@@ -77,13 +63,9 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
 
           setFocusedPageId(pageId);
 
-          const thumbnail = pageRefs.current && pageRefs.current[pageId];
-          // @todo: provide a cleaner `focusFirst()` API and takes into account
-          // `tabIndex`, `disabled`, links, buttons, inputs, etc.
-          const button = thumbnail?.querySelector('button');
-          if (button) {
-            button.focus();
-          }
+          const page = pageRefs.current && pageRefs.current[pageId];
+
+          focusOnPage(page);
 
           break;
         }
@@ -115,22 +97,130 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
 
           setFocusedPageId(pageId);
 
-          const thumbnail = pageRefs.current && pageRefs.current[pageId];
-          // @todo: provide a cleaner `focusFirst()` API and takes into account
-          // `tabIndex`, `disabled`, links, buttons, inputs, etc.
-          const button = thumbnail?.querySelector('button');
-          if (button) {
-            button.focus();
-          }
+          const page = pageRefs.current && pageRefs.current[pageId];
+
+          focusOnPage(page);
 
           break;
         }
         default:
-          return;
+          break;
       }
     },
     [focusedPageId, isRTL, pageIds, pageRefs, gridRef, currentPageId]
   );
+
+  // Rearrange pages
+  useKeyDownEffect(
+    ref,
+    { key: ['mod+up', 'mod+down', 'mod+left', 'mod+right'], shift: true },
+    (e) => {
+      const { key, shiftKey } = e;
+      // Cancel the default behavior of the event: it's very jarring to run
+      // into mod+left/right triggering the browser's back/forward navigation.
+      e.preventDefault();
+
+      switch (key) {
+        case 'ArrowLeft':
+        case 'ArrowRight': {
+          const dir = getArrowDir(key, 'ArrowRight', 'ArrowLeft', isRTL);
+
+          if (dir === 0) {
+            return;
+          }
+
+          const currentIndex = pageIds.indexOf(focusedPageId);
+          let nextIndex = currentIndex;
+
+          // If the user is pressing shift, jump to the beginning/end
+          if (shiftKey) {
+            nextIndex = dir < 0 ? 0 : pageIds.length - 1;
+          } else {
+            nextIndex += dir;
+          }
+
+          const canArrange =
+            nextIndex !== currentIndex &&
+            nextIndex >= 0 &&
+            nextIndex <= pageIds.length - 1;
+
+          if (canArrange) {
+            arrangePage({ pageId: focusedPageId, position: nextIndex });
+
+            // Focus on DOM element where this page is moving to
+            const page =
+              pageRefs.current && pageRefs.current[pageIds[nextIndex]];
+
+            focusOnPage(page);
+          }
+
+          break;
+        }
+        case 'ArrowUp':
+        case 'ArrowDown': {
+          const {
+            rows: numRows,
+            columns: numColumns,
+          } = getGridColumnAndRowCount(gridRef);
+          const currentIndex = pageIds.indexOf(focusedPageId);
+          const dir = key === 'ArrowDown' ? 1 : -1;
+
+          const currentRow = getRow(currentIndex, numColumns);
+          const currentColumn = getColumn(currentIndex, numColumns);
+
+          const nextIndex = getIndex(
+            currentRow + dir,
+            currentColumn,
+            numRows,
+            numColumns,
+            pageIds.length
+          );
+
+          if (nextIndex < 0) {
+            return;
+          }
+
+          const canArrange =
+            nextIndex !== currentIndex &&
+            nextIndex >= 0 &&
+            nextIndex <= pageIds.length - 1;
+
+          if (canArrange) {
+            arrangePage({ pageId: focusedPageId, position: nextIndex });
+
+            // Focus on DOM element where this page is moving to
+            const page =
+              pageRefs.current && pageRefs.current[pageIds[nextIndex]];
+
+            focusOnPage(page);
+          }
+
+          break;
+        }
+
+        default:
+          break;
+      }
+    },
+    [
+      currentPageId,
+      pageIds,
+      isRTL,
+      gridRef,
+      pageRefs,
+      focusedPageId,
+      arrangePage,
+    ]
+  );
+}
+
+// @todo: provide a cleaner `focusFirst()` API and takes into account
+// `tabIndex`, `disabled`, links, buttons, inputs, etc.
+function focusOnPage(page) {
+  const button = page?.querySelector('button');
+  if (button) {
+    button.focus();
+  }
 }
 
 function getArrowDir(key, pos, neg, isRTL) {
