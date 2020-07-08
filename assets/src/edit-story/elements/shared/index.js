@@ -40,6 +40,8 @@ export const elementWithPosition = css`
   top: ${({ y }) => `${y}px`};
 `;
 
+// Height is rounded since height adjustments in pixels use full pixels
+// whereas conversion might include partial pixels, causing inconsistencies.
 export const elementWithSize = css`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${Math.round(height)}px`};
