@@ -64,6 +64,26 @@ describe('CUJ: Creator can Transform an Element', () => {
 
     describe('Action: Resize', () => {
       it('it should allow resizing in text edit mode', async () => {
+        // Test that resize handle exists in edit mode.
+        const rightResizeHandle = fixture.container.querySelector(
+          '.moveable-control.moveable-e'
+        );
+        expect(rightResizeHandle).toBeDefined();
+
+        const widthBefore = window.getComputedStyle(frame).width;
+        await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+          moveRel(rightResizeHandle, 1, 1),
+          down(),
+          moveBy(20, 0, { steps: 1 }),
+          up(),
+        ]);
+        const widthAfter = window.getComputedStyle(frame).width;
+        expect(parseInt(widthAfter) - parseInt(widthBefore)).toBe(20);
+      });
+    });
+
+    describe('Action: Rotate', () => {
+      it('it should allow rotating in text edit mode', async () => {
         // Test that rotation handle exists in edit mode.
         const rotationHandle = fixture.container.querySelector(
           '.moveable-rotation-line .moveable-control'
@@ -81,12 +101,6 @@ describe('CUJ: Creator can Transform an Element', () => {
         const elementAfter = await getSelectedElement();
         await expect(elementAfter.rotationAngle).not.toEqual(0);
       });
-    });
-
-    describe('Action: Rotate', () => {
-      // Disable reason: not implemented.
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('it should allow rotating in text edit mode');
     });
   });
 });
