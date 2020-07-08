@@ -35,9 +35,14 @@ const Providers = {
   UNSPLASH: 'unsplash',
 };
 
+/** @typedef {import('react').ProviderProps} ProviderProps */
+
 /**
  * Provider for the Media3P API. Delegates fetching the data to apiFetcher,
  * but transforms the response into resources.
+ *
+ * @param {ProviderProps} Provider props.
+ * @return {Object} Context.
  */
 function Media3pApiProvider({ children }) {
   const MEDIA_PAGE_SIZE = 20;
@@ -55,7 +60,18 @@ function Media3pApiProvider({ children }) {
   function getUrls(m) {
     if (m.type.toLowerCase() === 'image') {
       return Object.fromEntries(
-        new Map(m.imageUrls.map((u) => [u.imageName, u.url]))
+        new Map(
+          m.imageUrls.map((u) => [
+            u.imageName,
+            {
+              file: m.name,
+              source_url: u.url,
+              mime_type: u.mimeType,
+              width: u.width,
+              height: u.height,
+            },
+          ])
+        )
       );
     }
     throw new Error('Invalid media type.');

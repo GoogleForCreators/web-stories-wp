@@ -16,6 +16,15 @@
 
 // TODO(https://github.com/google/web-stories-wp/issues/2802):
 // Implement, re-using logic from media/common/useContextValueProvider.js.
+/**
+ * Context fragment provider for a single 3p media source (Unsplash, Coverr,
+ * etc).
+ *
+ * @param {string} provider The 3p provider to return the context value for
+ * @param {Object} reducerState The 'media3p/[provider]' fragment of the state
+ * returned from `useMediaReducer`
+ * @return {Object} Context.
+ */
 export default function useProviderContextValueProvider(
   provider,
   reducerState

@@ -15,34 +15,29 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import { useCallback } from 'react';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import addQueryArgs from './addQueryArgs';
+import GoogleAnalyticsSettings from './googleAnalytics';
+import PublisherLogoSettings from './publisherLogo';
+import { Wrapper, Header, Heading, Main } from './components';
 
-/**
- * Update page URL in browser.
- *
- * @param {number} postId Current story id.
- * @return {Function} Function to refresh the post edit URL.
- */
-function useRefreshPostEditURL(postId) {
-  const refreshPostEditURL = useCallback(() => {
-    const getPostEditURL = addQueryArgs('post.php', {
-      post: postId,
-      action: 'edit',
-    });
-    window.history.replaceState(
-      { id: postId },
-      'Post ' + postId,
-      getPostEditURL
-    );
-  }, [postId]);
-  return refreshPostEditURL;
+function EditorSettings() {
+  return (
+    <Wrapper>
+      <Header>
+        <Heading>{__('Settings', 'web-stories')}</Heading>
+      </Header>
+      <Main>
+        <GoogleAnalyticsSettings />
+        <PublisherLogoSettings />
+      </Main>
+    </Wrapper>
+  );
 }
 
-export default useRefreshPostEditURL;
+export default EditorSettings;

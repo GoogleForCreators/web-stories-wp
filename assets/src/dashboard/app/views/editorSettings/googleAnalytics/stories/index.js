@@ -15,24 +15,15 @@
  */
 
 /**
- * Returns transform scale value based on the flip setting.
- *
- * @param {Object} flip Flip value.
- * @return {string} CSS transform scale value.
+ * Internal dependencies
  */
-function getTransformFlip(flip) {
-  let transformFlip = null;
-  if (!flip) {
-    return transformFlip;
-  }
-  if (flip.vertical && flip.horizontal) {
-    transformFlip = 'scale3d(-1, -1, 1)';
-  } else if (flip.horizontal) {
-    transformFlip = 'scale3d(-1, 1, 1)';
-  } else if (flip.vertical) {
-    transformFlip = 'scale3d(1, -1, 1)';
-  }
-  return transformFlip;
-}
+import GoogleAnalyticsSettings from '../';
 
-export default getTransformFlip;
+export default {
+  title: 'Dashboard/Views/EditorSettings/GoogleAnalytics',
+  component: GoogleAnalyticsSettings,
+};
+
+export const _default = () => {
+  return <GoogleAnalyticsSettings />;
+};

@@ -34,6 +34,7 @@ const InlineInputForm = ({
   label,
   onEditCancel,
   onEditComplete,
+  placeholder,
   value,
 }) => {
   const inputContainerRef = useRef(null);
@@ -77,6 +78,7 @@ const InlineInputForm = ({
         value={newValue}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
+        placeholder={placeholder}
       />
     </div>
   );
@@ -87,6 +89,7 @@ InlineInputForm.propTypes = {
   label: PropTypes.string.isRequired,
   onEditCancel: PropTypes.func.isRequired,
   onEditComplete: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
 };
 
