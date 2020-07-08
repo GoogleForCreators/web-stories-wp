@@ -97,12 +97,15 @@ if (
 			</p>
 			<p>
 				<?php
-					echo wp_kses_post(
+					echo wp_kses(
 						sprintf(
 						/* translators: %s: build commands. */
 							__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
 							'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
-						)
+						),
+						[
+							'code' => [],
+						]
 					);
 				?>
 			</p>
