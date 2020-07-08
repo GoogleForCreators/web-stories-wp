@@ -42,7 +42,7 @@ export const elementWithPosition = css`
 
 export const elementWithSize = css`
   width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
+  height: ${({ height }) => `${Math.round(height)}px`};
 `;
 
 export const elementWithRotation = css`
