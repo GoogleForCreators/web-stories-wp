@@ -25,15 +25,15 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import FileUploadForm from '../';
+import FileUpload from '../';
 import { getResourceFromLocalFile } from '../../../utils';
 
 const Container = styled.div`
   width: 600px;
 `;
 export default {
-  title: 'Dashboard/Components/FileUploadForm',
-  component: FileUploadForm,
+  title: 'Dashboard/Components/FileUpload',
+  component: FileUpload,
 };
 
 export const _default = () => {
@@ -70,7 +70,7 @@ export const _default = () => {
 
   return (
     <Container>
-      <FileUploadForm
+      <FileUpload
         acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
         handleSubmit={formatFiles}
         handleDelete={deleteUploadedContent}
@@ -78,7 +78,7 @@ export const _default = () => {
         label={text('label', 'Upload')}
         isMultiple={boolean('isMultiple', true)}
         isFileNameVisible={boolean('isFileNameVisible', false)}
-        ariaLabel={'click to upload a file'}
+        ariaLabel={'Click to upload a file'}
         uploadedContent={uploadedContent}
         emptyDragHelperText={text(
           'emptyDragHelperText',

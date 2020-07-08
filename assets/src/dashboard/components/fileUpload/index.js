@@ -153,7 +153,7 @@ function disableDefaults(e) {
   e.stopPropagation();
 }
 
-const FileUploadForm = ({
+const FileUpload = ({
   id,
   label,
   handleDelete,
@@ -233,13 +233,15 @@ const FileUploadForm = ({
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={disableDefaults}
+      data-testid="file-upload-drop-area"
     >
       {hasUploadedContent ? (
-        <UploadedContentContainer>
+        <UploadedContentContainer data-testid="file-upload-content-container">
           {uploadedContent.map((file, idx) => (
             <UploadedContent key={idx}>
               {Boolean(handleDelete) && (
                 <DeleteButton
+                  data-testid={`file-upload-delete-button_${idx}`}
                   onClick={() => onDeleteFile(idx, file)}
                   aria-label={sprintf(
                     /* translators: %s is the file name to delete */
@@ -281,7 +283,7 @@ const FileUploadForm = ({
   );
 };
 
-FileUploadForm.propTypes = {
+FileUpload.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
   handleDelete: PropTypes.func,
@@ -296,4 +298,4 @@ FileUploadForm.propTypes = {
   emptyDragHelperText: PropTypes.string,
 };
 
-export default FileUploadForm;
+export default FileUpload;
