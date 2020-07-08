@@ -60,10 +60,10 @@ function Media3pApiProvider({ children }) {
             u.imageName,
             {
               file: m.name,
-              height: u.height,
-              mime_type: u.mime_type,
               source_url: u.url,
+              mime_type: u.mimeType,
               width: u.width,
+              height: u.height,
             },
           ])
         )
