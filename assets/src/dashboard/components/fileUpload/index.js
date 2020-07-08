@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -84,9 +84,37 @@ const UploadedContentContainer = styled.div`
   align-items: flex-start;
   justify-self: flex-start;
 `;
+
+const DeleteButton = styled.button`
+  position: absolute;
+  z-index: 10;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  margin-top: -10px;
+  margin-left: -10px;
+  background-color: ${({ theme }) => theme.colors.gray75};
+  color: ${({ theme }) => theme.colors.gray500};
+  border: ${({ theme }) => theme.borders.transparent};
+`;
+
 const UploadedContent = styled.div`
   width: 60px;
   margin: 0 10px 10px 0;
+
+  ${DeleteButton} {
+    display: none;
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  &:hover,
+  &:focus {
+    ${DeleteButton} {
+      display: block;
+      opacity: 1;
+    }
+  }
 `;
 
 const DisplayImage = styled.img`
@@ -94,6 +122,11 @@ const DisplayImage = styled.img`
   height: 60px;
   margin-bottom: 5px;
   object-fit: cover;
+`;
+
+const DeleteIcon = styled(UploadIcon)`
+  width: 100%;
+  height: auto;
 `;
 
 const DisplayTitle = styled.span`
@@ -123,6 +156,7 @@ function disableDefaults(e) {
 const FileUploadForm = ({
   id,
   label,
+  handleDelete,
   handleSubmit,
   isFileNameVisible,
   isMultiple,
@@ -135,7 +169,7 @@ const FileUploadForm = ({
   const fileInputRef = useRef(null);
   const [isDragging, setDragging] = useState(false);
 
-  const handleFileVerifyPreSubmit = useCallback(
+  const handleFileStructuringPreSubmit = useCallback(
     (files) => {
       handleSubmit(Object.values(files));
     },
@@ -144,20 +178,20 @@ const FileUploadForm = ({
 
   const handleChange = useCallback(
     (event) => {
-      handleFileVerifyPreSubmit(event.target.files);
+      handleFileStructuringPreSubmit(event.target.files);
       fileInputRef.current.value = '';
     },
-    [handleFileVerifyPreSubmit]
+    [handleFileStructuringPreSubmit]
   );
 
   const handleDragDrop = useCallback(
     (e) => {
       disableDefaults(e);
       const files = e.dataTransfer?.files;
-      handleFileVerifyPreSubmit(files);
+      handleFileStructuringPreSubmit(files);
       setDragging(false);
     },
-    [handleFileVerifyPreSubmit]
+    [handleFileStructuringPreSubmit]
   );
 
   const handleDrag = useCallback(
@@ -170,6 +204,13 @@ const FileUploadForm = ({
       }
     },
     [isDragging]
+  );
+
+  const onDeleteFile = useCallback(
+    (index, fileData) => {
+      handleDelete(index, fileData);
+    },
+    [handleDelete]
   );
 
   useEffect(() => {
@@ -197,6 +238,18 @@ const FileUploadForm = ({
         <UploadedContentContainer>
           {uploadedContent.map((file, idx) => (
             <UploadedContent key={idx}>
+              {Boolean(handleDelete) && (
+                <DeleteButton
+                  onClick={() => onDeleteFile(idx, file)}
+                  aria-label={sprintf(
+                    /* translators: %s is the file name to delete */
+                    __('Delete %s', 'web-stories'),
+                    file.title
+                  )}
+                >
+                  <DeleteIcon />
+                </DeleteButton>
+              )}
               <DisplayImage
                 alt={file.title}
                 title={file.title}
@@ -231,6 +284,7 @@ const FileUploadForm = ({
 FileUploadForm.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
+  handleDelete: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
   isMultiple: PropTypes.bool,
   isFileNameVisible: PropTypes.bool,

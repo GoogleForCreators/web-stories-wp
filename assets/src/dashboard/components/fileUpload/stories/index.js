@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { text, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -40,7 +40,7 @@ export const _default = () => {
   const [uploadedContent, setUploadedContent] = useState([]);
 
   const formatFiles = async (files) => {
-    action('onSubmitClick')(files);
+    action('handleSubmit fired')(files);
     const resources = await Promise.all(
       files.map(async (file) => ({
         localResource: await getResourceFromLocalFile(file),
@@ -60,11 +60,20 @@ export const _default = () => {
     });
   };
 
+  const deleteUploadedContent = useCallback((index, fileData) => {
+    action('handleDelete fired')(index, fileData);
+    setUploadedContent((existingUploadedContent) => {
+      existingUploadedContent.splice(index, 1);
+      return [...existingUploadedContent];
+    });
+  }, []);
+
   return (
     <Container>
       <FileUploadForm
         acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
         handleSubmit={formatFiles}
+        handleDelete={deleteUploadedContent}
         id={'898989'}
         label={text('label', 'Upload')}
         isMultiple={boolean('isMultiple', true)}
