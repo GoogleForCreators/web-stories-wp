@@ -36,12 +36,36 @@ import getTypeFromMime from './getTypeFromMime';
  */
 
 /**
+ * Attachment object.
+ *
+ * @typedef {Attachment} Attachment
+ * @property {string} [type] Attachment type, e.g. video or image.
+ * @property {string} mimeType The MIME type.
+ * @property {string|null} creationDate When the attachment was created.
+ * @property {string} src The source URL.
+ * @property {number} width The natural resource width.
+ * @property {number} height The natural resource height.
+ * @property {string|null} poster The poster URL for the "video" type.
+ * @property {number|null} posterId The system poster ID.
+ * @property {number|null} id The system ID.
+ * @property {number|null} length The length for the "video" type.
+ * @property {string|null} lengthFormatted The formatted length for the "video"
+ * type.
+ * @property {string|null} title The user-readable title for the resource.
+ * @property {string|null} alt The user-readable accessibility label for the
+ * resource.
+ * @property {boolean} local Whether the resource has been already uploaded to
+ * the server.
+ * @property {Object} sizes Object of image sizes.
+ */
+
+/**
  * Resource object.
  *
  * TODO: Try to remove posterId (poster should be enough?)
  *
- * @typedef {Object} Resource
- * @property {string|undefined} type Resource type. Currently only "image" and
+ * @typedef {Resource} Resource
+ * @property {string|null} type Resource type. Currently only "image" and
  * "video" values are allowed. If not specified, will be calculated from the
  * mime-type.
  * @property {string} mimeType The MIME type.
@@ -68,7 +92,7 @@ import getTypeFromMime from './getTypeFromMime';
 /**
  * Creates a resource object.
  *
- * @param {Object} sourceObject An object to create the resource from.
+ * @param {Attachment} attachment WordPress Attachment object.
  * @return {Resource} Resource object.
  */
 function createResource({
