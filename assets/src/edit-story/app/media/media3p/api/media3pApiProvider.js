@@ -35,9 +35,14 @@ const Providers = {
   UNSPLASH: 'unsplash',
 };
 
+/** @typedef {import('react').ProviderProps} ProviderProps */
+
 /**
  * Provider for the Media3P API. Delegates fetching the data to apiFetcher,
  * but transforms the response into resources.
+ *
+ * @param {ProviderProps} Provider props.
+ * @return {Object} Context.
  */
 function Media3pApiProvider({ children }) {
   const MEDIA_PAGE_SIZE = 20;

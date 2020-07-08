@@ -26,8 +26,8 @@ const DndMode = {
  */
 class MouseWithDnd {
   /**
-   * @param {Object} page
-   * @param {Object} frame
+   * @param {Object} page Page.
+   * @param {Object} frame Frame.
    */
   constructor(page, frame) {
     this._page = page;
@@ -101,7 +101,7 @@ class MouseWithDnd {
  */
 class DndClientBinding {
   /**
-   * @param {Object} context
+   * @param {Object} context Context.
    */
   constructor(context) {
     this._context = context;
@@ -171,7 +171,7 @@ class DndClientBinding {
         /**
          * @param {number} clientX X coordinates.
          * @param {number} clientY Y coordinates.
-         * @param {boolean} canceled
+         * @param {boolean} canceled Whether the event is canceled.
          */
         end(clientX, clientY, canceled) {
           const dataTransfer = this._dataTransfer;
@@ -328,7 +328,7 @@ class DndClientBinding {
    *
    * @param {number} clientX X coordinates.
    * @param {number} clientY Y coordinates.
-   * @param {boolean} canceled
+   * @param {boolean} canceled Whether the event is canceled.
    * @return {Promise} Resolves when the event has been processed.
    */
   async end(clientX, clientY, canceled = false) {

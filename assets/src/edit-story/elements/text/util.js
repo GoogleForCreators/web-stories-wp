@@ -17,7 +17,7 @@
 /**
  * Generates paragraph text style for a text element.
  *
- * @param {Object} element Text element properties.
+ * @param {Object<*>} element Text element properties.
  * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
  * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
  * @param {function(number):any} dataToFontSizeY Converts a font-size metric to

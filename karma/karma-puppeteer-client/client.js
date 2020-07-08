@@ -24,6 +24,7 @@
    * See `karma-puppeteer-launcher`.
    *
    * @param {string} methodName The name of the karmaPuppeteer method.
+   * @return {*} Function result.
    */
   function puppeteerFunction(methodName) {
     return function() {
@@ -44,6 +45,7 @@
    * For instance, both are allowed: `click('.element1')` and `click(element1)`.
    *
    * @param {string} methodName The name of the karmaPuppeteer method.
+   * @return {*} Function result.
    */
   function withSelector(methodName) {
     var func = puppeteerFunction(methodName);

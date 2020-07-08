@@ -35,7 +35,7 @@ const KEY_MAP = {
  */
 class FixtureEvents {
   /**
-   * @param {function():Promise} act
+   * @param {function():Promise} act Actor.
    */
   constructor(act) {
     this._act = act;
@@ -96,7 +96,7 @@ class FixtureEvents {
    * selected.
    *
    * @param {Element} target The event target.
-   * @param {Array<string>} values
+   * @param {Array<string>} values Values of options to select.
    * @return {!Promise} The promise when the event handling is complete.
    */
   select(target, ...values) {
@@ -116,7 +116,7 @@ class FixtureEvents {
  */
 class Keyboard {
   /**
-   * @param {function():Promise} act
+   * @param {function():Promise} act Actor.
    */
   constructor(act) {
     this._act = act;
@@ -249,7 +249,7 @@ class Keyboard {
  */
 class Mouse {
   /**
-   * @param {function():Promise} act
+   * @param {function():Promise} act Actor.
    */
   constructor(act) {
     this._act = act;
@@ -326,7 +326,7 @@ class Mouse {
    * - `type: 'move'`: [mouse.move](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mousemovex-y-options).
    * - `type: 'click'`: [mouse.click](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mouseclickx-y-options).
    *
-   * @param {Array<{type: string, x: number, y: number, options: Object}>|Function} arrayOrGenerator
+   * @param {Array<{type: string, x: number, y: number, options: Object}>|Function} arrayOrGenerator Array/Generator for event sequence.
    * @return {!Promise} Yields when the event is processed.
    */
   seq(arrayOrGenerator) {
@@ -409,7 +409,7 @@ class Mouse {
    * @param {Element} element Element.
    * @param {number|string} relX A relative pixel or percent value. Default is 0.
    * @param {number|string} relY A relative pixel or percent value. Default is 0.
-   * @param {Object} options
+   * @param {Object<{button: string, clickCount: number, delay: number}>} options Mouse click options.
    * @return {!Promise} Yields when the event is processed.
    */
   clickOn(element, relX = 0, relY = 0, options = {}) {
@@ -431,10 +431,10 @@ class Mouse {
    *
    * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mousemovex-y-options
    *
-   * @param {Element} element
+   * @param {Element} element Element.
    * @param {number|string} relX A relative pixel or percent value. Default is 0.
    * @param {number|string} relY A relative pixel or percent value. Default is 0.
-   * @param {Object} options Accepts `steps` option for the number of
+   * @param {Object<{steps: number}>} options Accepts `steps` option for the number of
    * intermediate mousemove events.
    * @return {!Promise} Yields when the event is processed.
    */
@@ -463,7 +463,7 @@ class Mouse {
  */
 class Clipboard {
   /**
-   * @param {function():Promise} act
+   * @param {function():Promise} act Actor.
    */
   constructor(act) {
     this._act = act;
@@ -489,7 +489,7 @@ class Clipboard {
 }
 
 /**
- * @param {Array<{type: string, key: string, options: Object}>} array
+ * @param {Array<{type: string, key: string, options: Object}>} array List of keys.
  * @return {Array<{type: string, key: string, options: Object}>} The cleaned
  * up array that can be accepted by the Puppeteer.
  */
@@ -555,7 +555,7 @@ function parseShortcutToSeq(shortcut) {
 }
 
 /**
- * @param {Array<{type: string, x: number, y: number, options: Object}>} array
+ * @param {Array<{type: string, x: number, y: number, options: Object}>} array List of events.
  * @return {Array<{type: string, x: number, y: number, options: Object}>} The cleaned
  * up array that can be accepted by the Puppeteer.
  */

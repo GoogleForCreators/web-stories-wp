@@ -226,7 +226,7 @@ export default class Fixture {
    * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
    * directory.
    *
-   * @param {string} name
+   * @param {string} name Snapshot name.
    * @return {Promise} Yields when the snapshot is completed.
    */
   snapshot(name) {

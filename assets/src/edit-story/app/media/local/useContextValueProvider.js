@@ -35,6 +35,7 @@ import { getResourceFromAttachment } from '../utils';
  * `useMediaReducer`
  * @param {Object} reducerActions The 'local' fragment of the actions returned
  * from `useMediaReducer`
+ * @return {Object} Context.
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
   const {

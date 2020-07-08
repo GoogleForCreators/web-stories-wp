@@ -69,6 +69,7 @@ async function extractAndSaveSnapshot(frame, testName, snapshotName) {
  * @param {Object} frame Frame.
  * @param {string} testName Test name.
  * @param {string} snapshotName Snapshot name.
+ * @return {string} Full HTML markup.
  */
 async function extractSnapshot(frame, testName, snapshotName) {
   const { head, body } = await frame.evaluate((states) => {
