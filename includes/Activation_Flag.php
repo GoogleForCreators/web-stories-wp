@@ -75,7 +75,7 @@ class Activation_Flag {
 	 *
 	 * @since 1.10.0 Migrated from Activation class.
 	 *
-	 * @param bool $network_wide Whether the plugin is being activated network-wide.
+	 * @param bool $network_wide Whether the plugin is being deactivated network-wide.
 	 * @return bool True if flag deletion is successful, false otherwise.
 	 */
 	public function delete_activation_flag( $network_wide = false ) {
