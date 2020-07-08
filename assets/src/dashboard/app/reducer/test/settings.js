@@ -32,7 +32,7 @@ describe('settingsReducer', () => {
   it(`should update settings state when ${ACTION_TYPES.FETCH_SETTINGS_SUCCESS} is called`, () => {
     const result = settingsReducer(initialState, {
       type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
-      payload: 'fakeId12345',
+      payload: { googleAnalyticsId: 'fakeId12345' },
     });
     expect(result).toMatchObject({
       error: {},
@@ -46,7 +46,7 @@ describe('settingsReducer', () => {
       payload: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to find google analytics ID',
+          title: 'Unable to find settings data',
         },
         code: 'my_error_code',
       },
@@ -56,7 +56,7 @@ describe('settingsReducer', () => {
       error: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to find google analytics ID',
+          title: 'Unable to find settings data',
         },
         id: Date.now(),
         code: 'my_error_code',
@@ -70,7 +70,7 @@ describe('settingsReducer', () => {
       payload: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to update google analytics ID',
+          title: 'Unable to update settings data',
         },
         code: 'my_error_code',
       },
@@ -80,7 +80,7 @@ describe('settingsReducer', () => {
       error: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to update google analytics ID',
+          title: 'Unable to update settings data',
         },
         id: Date.now(),
         code: 'my_error_code',
@@ -91,7 +91,7 @@ describe('settingsReducer', () => {
   it(`should update settings state when ${ACTION_TYPES.UPDATE_SETTINGS_SUCCESS} is called`, () => {
     const result = settingsReducer(initialState, {
       type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
-      payload: 'fakeId12345NEW',
+      payload: { googleAnalyticsId: 'fakeId12345NEW' },
     });
     expect(result).toMatchObject({
       error: {},
