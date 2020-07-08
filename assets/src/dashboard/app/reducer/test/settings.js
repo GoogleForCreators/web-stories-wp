@@ -25,8 +25,10 @@ describe('settingsReducer', () => {
     googleAnalyticsId: null,
   };
 
+  const MOCK_ERROR_ID = Date.now();
+
   beforeAll(() => {
-    jest.spyOn(Date, 'now').mockImplementation(() => 1592844570916);
+    jest.spyOn(Date, 'now').mockImplementation(() => MOCK_ERROR_ID);
   });
 
   it(`should update settings state when ${ACTION_TYPES.FETCH_SETTINGS_SUCCESS} is called`, () => {
@@ -58,7 +60,7 @@ describe('settingsReducer', () => {
           body: 'The response is not a valid JSON response.',
           title: 'Unable to find settings data',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
     });
@@ -82,7 +84,7 @@ describe('settingsReducer', () => {
           body: 'The response is not a valid JSON response.',
           title: 'Unable to update settings data',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
     });
