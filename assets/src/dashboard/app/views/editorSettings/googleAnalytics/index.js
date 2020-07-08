@@ -20,12 +20,19 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
+import { InlineInputForm } from '../../../../components';
 import {
+  FormContainer,
   SettingForm,
   SettingHeading,
-  TextInput,
   TextInputHelperText,
 } from '../components';
 
@@ -33,29 +40,51 @@ const TEXT = {
   CONTEXT: __(
     "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article.",
     'web-stories'
-  ),
+  ), // TODO update this text to have link to article once confirmed what article is
   SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
   PLACEHOLDER: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
   ARIA_LABEL: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
 };
-// todo add link
-function GoogleAnalyticsSettings() {
+
+function GoogleAnalyticsSettings({
+  googleAnalyticsId = '',
+  onUpdateGoogleAnalyticsId,
+}) {
+  const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
+
+  const handleCancelUpdateId = useCallback(() => {
+    setAnalyticsId(googleAnalyticsId);
+  }, [googleAnalyticsId]);
+
+  const handleCompleteUpdateId = useCallback(
+    (newId) => {
+      onUpdateGoogleAnalyticsId({ googleAnalyticsId: newId });
+    },
+    [onUpdateGoogleAnalyticsId]
+  );
+
   return (
     <SettingForm>
       <SettingHeading htmlFor="gaTrackingID">
         {TEXT.SECTION_HEADING}
       </SettingHeading>
-      <div>
-        <TextInput
+      <FormContainer>
+        <InlineInputForm
           label={TEXT.ARIA_LABEL}
           id="gaTrackingId"
-          value=""
+          value={analyticsId}
+          onEditCancel={handleCancelUpdateId}
+          onEditComplete={handleCompleteUpdateId}
           placeholder={TEXT.PLACEHOLDER}
         />
         <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
-      </div>
+      </FormContainer>
     </SettingForm>
   );
 }
+GoogleAnalyticsSettings.propTypes = {
+  onUpdateGoogleAnalyticsId: PropTypes.func,
+  googleAnalyticsId: PropTypes.string,
+};
 
 export default GoogleAnalyticsSettings;

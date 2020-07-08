@@ -15,6 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+import { text } from '@storybook/addon-knobs';
+
+/**
  * Internal dependencies
  */
 import GoogleAnalyticsSettings from '../';
@@ -25,5 +31,10 @@ export default {
 };
 
 export const _default = () => {
-  return <GoogleAnalyticsSettings />;
+  return (
+    <GoogleAnalyticsSettings
+      onUpdateGoogleAnalyticsId={action('update google analytics id submitted')}
+      googleAnalyticsId={text('googleAnalyticsId', '638261718182736363-83737')}
+    />
+  );
 };
