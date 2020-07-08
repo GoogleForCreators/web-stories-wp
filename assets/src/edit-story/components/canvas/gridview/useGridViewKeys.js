@@ -74,7 +74,7 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
           const {
             rows: numRows,
             columns: numColumns,
-          } = getGridColumnAndRowCount(gridRef);
+          } = getGridColumnAndRowCount(gridRef.current);
           const currentIndex = pageIds.indexOf(focusedPageId);
           const dir = key === 'ArrowDown' ? 1 : -1;
 
@@ -161,7 +161,7 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
           const {
             rows: numRows,
             columns: numColumns,
-          } = getGridColumnAndRowCount(gridRef);
+          } = getGridColumnAndRowCount(gridRef.current);
           const currentIndex = pageIds.indexOf(focusedPageId);
           const dir = key === 'ArrowDown' ? 1 : -1;
 
@@ -234,9 +234,9 @@ function getArrowDir(key, pos, neg, isRTL) {
   return 0;
 }
 
-function getGridColumnAndRowCount(gridRef) {
+export function getGridColumnAndRowCount(gridElement) {
   const { gridTemplateColumns, gridTemplateRows } = getComputedStyle(
-    gridRef.current
+    gridElement
   );
   return {
     rows: gridTemplateRows.trim().split(' ').length,

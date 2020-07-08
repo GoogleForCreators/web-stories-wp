@@ -244,7 +244,7 @@ function GridView() {
     <Container>
       <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
       <Wrapper
-        aria-label={__('Pages List', 'web-stories')}
+        aria-label={__('Grid View Pages List', 'web-stories')}
         ref={wrapperRef}
         onPositionChange={(oldPos, newPos) => {
           const pageId = pages[oldPos].id;
