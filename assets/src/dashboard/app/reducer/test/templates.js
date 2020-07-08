@@ -23,8 +23,10 @@ import templateReducer, {
 } from '../templates';
 
 describe('templateReducer', () => {
+  const MOCK_ERROR_ID = Date.now();
+
   beforeAll(() => {
-    jest.spyOn(Date, 'now').mockImplementation(() => 1592844570916);
+    jest.spyOn(Date, 'now').mockImplementation(() => MOCK_ERROR_ID);
   });
 
   it(`should update templates state when ${ACTION_TYPES.FETCH_TEMPLATES_SUCCESS} is called`, () => {
@@ -209,7 +211,7 @@ describe('templateReducer', () => {
           title: 'Unable to Load Templates',
           body: 'test error message',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'test-error-code',
       },
     });
@@ -237,7 +239,7 @@ describe('templateReducer', () => {
           title: 'Unable to Create Template from Story',
           body: 'test error message',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'test-error-code',
       },
     });
