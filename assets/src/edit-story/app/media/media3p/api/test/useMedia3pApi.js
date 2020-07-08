@@ -32,6 +32,10 @@ jest.mock('../apiFetcher', () => ({
         {
           name: 'media/unsplash:1234',
           provider: 'UNSPLASH',
+          author: {
+            displayName: 'Maria',
+            url: 'http://maria.com',
+          },
           imageUrls: [
             {
               imageName: 'full',
@@ -66,6 +70,12 @@ describe('useMedia3pApi', () => {
       media: [
         {
           alt: null,
+          attribution: {
+            author: {
+              displayName: 'Maria',
+              url: 'http://maria.com',
+            },
+          },
           creationDate: '1234',
           height: 100,
           id: 'media/unsplash:1234',
