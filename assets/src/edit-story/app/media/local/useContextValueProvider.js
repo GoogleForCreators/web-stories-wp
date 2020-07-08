@@ -27,6 +27,15 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
 
+/**
+ * Context fragment provider for local media.
+ * This is called from {@link MediaProvider} to provide the media global state.
+ *
+ * @param {Object} reducerState The 'local' fragment of the state returned from
+ * `useMediaReducer`
+ * @param {Object} reducerActions The 'local' fragment of the actions returned
+ * from `useMediaReducer`
+ */
 export default function useContextValueProvider(reducerState, reducerActions) {
   const {
     processing,

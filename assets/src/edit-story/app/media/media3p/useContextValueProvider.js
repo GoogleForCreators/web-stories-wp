@@ -39,6 +39,15 @@ function useProviderSetContextValueProvider(reducerState, reducerActions) {
   return result;
 }
 
+/**
+ * Context fragment provider for 3rd party media (Unsplash, Coverr, etc).
+ * This is called from {@link MediaProvider} to provide the media global state.
+ *
+ * @param {Object} reducerState The 'media3p' fragment of the state returned
+ * from `useMediaReducer`
+ * @param {Object} reducerActions The 'media3p' fragment of the actions
+ * returned from `useMediaReducer`
+ */
 export default function useContextValueProvider(reducerState, reducerActions) {
   return {
     state: {
