@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories;
 
-global $heading, $body;
-
 /**
  * Handles plugin activation.
  *
@@ -82,13 +80,6 @@ function deactivate( $network_wide ) {
 register_activation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\deactivate' );
 
-$heading = __( 'Web Stories plugin could not be initialized.', 'web-stories' );
-$body    = sprintf(
-	/* translators: %s: build commands. */
-	__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
-	'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
-);
-
 if (
 	! class_exists( '\Google\Web_Stories\Plugin' ) ||
 	! file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' )
@@ -99,20 +90,24 @@ if (
 	 * @return void
 	 */
 	function _print_missing_build_admin_notice() {
-		global $heading, $body;
 		?>
 		<div class="notice notice-error">
 			<p>
-				<strong><?php echo esc_html( $heading ); ?></strong>
+				<strong><?php esc_html_e( 'Web Stories plugin could not be initialized.', 'web-stories' ); ?></strong>
 			</p>
 			<p>
-				<?php echo wp_kses_post( $body ); ?>
+				<?php
+					echo wp_kses_post(
+						sprintf(
+						/* translators: %s: build commands. */
+							__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
+							'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
+						) 
+					);
+				?>
 			</p>
 		</div>
 		<?php
-
-		// Don't pollute global space.
-		unset( $heading, $body );
 	}
 
 	add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
@@ -123,7 +118,12 @@ if (
 	! class_exists( '\Google\Web_Stories\Plugin' ) &&
 	( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI )
 ) {
-	$body = html_entity_decode( str_replace( [ '<code>', '</code>' ], '`', $body ), ENT_QUOTES, 'UTF-8' );
+	$heading = __( 'Web Stories plugin could not be initialized.', 'web-stories' );
+	$body    = sprintf(
+		/* translators: %s: build commands. */
+		__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
+		'`composer install &amp;&amp; npm install &amp;&amp; npm run build`'
+	);
 
 	if ( class_exists( '\WP_CLI' ) ) {
 		\WP_CLI::warning( "$heading\n$body" );
@@ -131,7 +131,6 @@ if (
 		echo "$heading\n$body\n"; // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
-	// Don't pollute global space.
 	unset( $heading, $body );
 }
 
