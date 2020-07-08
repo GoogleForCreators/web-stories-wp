@@ -19,6 +19,45 @@
  */
 import createResource from './createResource';
 
+/**
+ * @typedef {Object} Author Media3p media author.
+ * @property {string} url The url for the asset.
+ * @property {?string} imageName A name to identify this particular image url.
+ * Currently not being used.
+ * @property {number} width The width of this asset.
+ * @property {number} height The height of this asset.
+ */
+
+/**
+ * @typedef {Object} ImageUrl image url object.
+ * @property {string} displayName The display name of the author of the media.
+ * @property {?string} url A url to link to for the media author.
+ */
+
+/**
+ * @typedef {Object} Media3pMedia Media3p media object.
+ * @property {string} name The name of the media object. Format is
+ * 'media/{provider}:{id}.
+ * @property {string} provider The provider, currently only 'UNSPLASH'.
+ * @property {string} type The type of media, currently only 'IMAGE'.
+ * @property {Author} author The metadata about the author of the media object.
+ * @property {?string} title The displayable title of the media item.
+ * @property {?string} description A description of the media item.
+ * @property {string} createTime The creation time of the media element.
+ * @property {string} updateTime The last update time of the media element.
+ * @property {string} registerUsageUrl The URL to call when the media element
+ * is added to a story.
+ * @property {ImageUrl[]|undefined} imageUrls If the media element is an
+ * image, an array of urls with different size assets.
+ */
+
+/**
+ * Converts the image or video urls in a Media3P Media object to the "sizes"
+ * object required for a Resource.
+ *
+ * @param {Media3pMedia} m The Media3P Media object.
+ * @return {Object} The array of "sizes"-type objects.
+ */
 function getUrls(m) {
   if (m.type.toLowerCase() === 'image') {
     return Object.fromEntries(
@@ -39,6 +78,12 @@ function getUrls(m) {
   throw new Error('Invalid media type.');
 }
 
+/**
+ * Returns the ImageUrl object for the largest image (the full asset).
+ *
+ * @param {Media3pMedia} m The Media3P Media object.
+ * @return {*} An ImageUrl object.
+ */
 function getFullAsset(m) {
   if (m.type.toLowerCase() === 'image') {
     if (!m.imageUrls.length) {
@@ -53,7 +98,7 @@ function getFullAsset(m) {
 /**
  * Generates a resource object from a Media3P object from the API.
  *
- * @param {Object} m A Media3P Media object.
+ * @param {Media3pMedia} m A Media3P Media object.
  * @return {import('./createResource.js').Resource} Resource object.
  */
 function getResourceFromMedia3p(m) {

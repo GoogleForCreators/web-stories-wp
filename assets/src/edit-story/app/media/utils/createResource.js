@@ -68,7 +68,7 @@ import getTypeFromMime from './getTypeFromMime';
 /**
  * Creates a resource object.
  *
- * @param {Object} an object to create the resource from.
+ * @param {Object} sourceObject An object to create the resource from.
  * @return {Resource} Resource object.
  */
 function createResource({
