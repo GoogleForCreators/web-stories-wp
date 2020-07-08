@@ -20,6 +20,8 @@
 import createResource from './createResource';
 
 /**
+ * Author object.
+ *
  * @typedef {Object} Author Media3p media author.
  * @property {string} url The url for the asset.
  * @property {?string} imageName A name to identify this particular image url.
@@ -29,12 +31,16 @@ import createResource from './createResource';
  */
 
 /**
+ * ImageUrl object.
+ *
  * @typedef {Object} ImageUrl image url object.
  * @property {string} displayName The display name of the author of the media.
  * @property {?string} url A url to link to for the media author.
  */
 
 /**
+ * Media3pMedia object.
+ *
  * @typedef {Object} Media3pMedia Media3p media object.
  * @property {string} name The name of the media object. Format is
  * 'media/{provider}:{id}.
