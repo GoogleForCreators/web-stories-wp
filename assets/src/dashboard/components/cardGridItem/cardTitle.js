@@ -85,17 +85,28 @@ const CardTitle = ({
     if (!displayDate) {
       return null;
     }
-    return status === STORY_STATUS.PUBLISHED
-      ? sprintf(
+
+    switch (status) {
+      case STORY_STATUS.PUBLISH:
+        return sprintf(
           /* translators: %s: last modified date */
           __('Published %s', 'web-stories'),
           displayDate
-        )
-      : sprintf(
+        );
+      case STORY_STATUS.FUTURE:
+        return sprintf(
+          /* translators: %s: last modified date */
+          __('Scheduled %s', 'web-stories'),
+          displayDate
+        );
+
+      default:
+        return sprintf(
           /* translators: %s: last modified date */
           __('Modified %s', 'web-stories'),
           displayDate
         );
+    }
   }, [status, displayDate]);
 
   return (
