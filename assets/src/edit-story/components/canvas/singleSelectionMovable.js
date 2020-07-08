@@ -41,6 +41,9 @@ const VERTICAL_HANDLES = ['n', 's'];
 const HORIZONTAL_HANDLES = ['e', 'w'];
 const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
+/**
+ *
+ */
 function SingleSelectionMovable({
   selectedElement,
   targetEl,
@@ -203,9 +206,7 @@ function SingleSelectionMovable({
   );
 
   const canSnap =
-    !snapDisabled &&
-    !isEditMode &&
-    (!isDragging || (isDragging && !activeDropTargetId));
+    !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = isDragging || Boolean(draggingResource);
 
   // Removes element if it's outside of canvas.
