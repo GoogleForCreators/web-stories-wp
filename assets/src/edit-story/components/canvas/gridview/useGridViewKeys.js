@@ -240,10 +240,10 @@ export function getGridColumnAndRowCount(gridElement) {
   );
   return {
     rows: gridTemplateRows.includes('none')
-      ? 0
+      ? 1
       : gridTemplateRows.trim().split(' ').length,
     columns: gridTemplateColumns.includes('none')
-      ? 0
+      ? 1
       : gridTemplateColumns.trim().split(' ').length,
   };
 }
