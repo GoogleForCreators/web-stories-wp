@@ -45,7 +45,7 @@ const Wrapper = styled.div`
     `
   background-image: linear-gradient(to right, ${theme.colors.fg.v0} 50%, transparent 0%);
   background-position: top;
-  background-size: 14px 0.5px;
+  background-size: 16px 0.5px;
   background-repeat: repeat-x;`}
   height: 20%;
   width: 100%;

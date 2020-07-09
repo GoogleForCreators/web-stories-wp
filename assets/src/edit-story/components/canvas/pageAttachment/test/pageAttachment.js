@@ -93,7 +93,7 @@ describe('PageAttachment', () => {
     const pageAttachment = getByRole('presentation');
     const style = window.getComputedStyle(pageAttachment);
     // Verify the background was added for displaying dashed line.
-    expect(style.backgroundSize).toStrictEqual('14px 0.5px');
+    expect(style.backgroundSize).toStrictEqual('16px 0.5px');
     expect(style.backgroundPosition).toStrictEqual('top');
   });
 

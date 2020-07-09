@@ -66,7 +66,6 @@ function PageAttachmentPanel() {
   const hasLinksInAttachmentArea = linksInAttachmentArea.length > 0;
 
   useEffect(() => {
-    setHasLinkInAttachmentArea(hasLinksInAttachmentArea && !url?.length);
     return () => {
       setHasLinkInAttachmentArea(false);
     };
@@ -75,6 +74,7 @@ function PageAttachmentPanel() {
   const onFocus = () => {
     if (hasLinksInAttachmentArea && !url?.length) {
       setDisplayWarning(true);
+      setHasLinkInAttachmentArea(true);
     }
   };
 
