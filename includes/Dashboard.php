@@ -45,6 +45,13 @@ class Dashboard {
 	const SCRIPT_HANDLE = 'stories-dashboard';
 
 	/**
+	 * Settings handle.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME = 'web_stories_ga_tracking_id';
+
+	/**
 	 * Admin page hook suffix.
 	 *
 	 * @var string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
@@ -59,6 +66,7 @@ class Dashboard {
 	public function init() {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_init', [ $this, 'redirect_menu_page' ] );
+		add_action( 'rest_api_init', [ $this, 'register_setting' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
@@ -285,6 +293,24 @@ class Dashboard {
 		 * @param array $settings Array of settings passed to web stories dashboard.
 		 */
 		return apply_filters( 'web_stories_dashboard_settings', $settings );
+	}
+
+	/**
+	 * Regsiter setting.
+	 *
+	 * @return void
+	 */
+	public function register_setting() {
+		register_setting(
+			'web_stories',
+			self::SETTING_NAME,
+			[
+				'show_in_rest' => true,
+				'type'         => 'string',
+				'description'  => __( 'Web stories, GA settings', 'web-stories' ),
+				'default'      => '',
+			]
+		);
 	}
 
 	/**
