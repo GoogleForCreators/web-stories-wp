@@ -91,7 +91,10 @@ describe('PageAttachment', () => {
       },
     });
     const pageAttachment = getByRole('presentation');
-    const style = window.getComputedStyle(pageAttachment);
+    // The guiding line is always displayed right before the page attachment, on the same level.
+    const guideline = pageAttachment.previousSibling;
+    expect(guideline).toBeDefined();
+    const style = window.getComputedStyle(guideline);
     // Verify the background was added for displaying dashed line.
     expect(style.backgroundSize).toStrictEqual('16px 0.5px');
     expect(style.backgroundPosition).toStrictEqual('top');
