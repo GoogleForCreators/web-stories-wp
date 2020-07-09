@@ -36,7 +36,7 @@ function App({ config }) {
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={theme}>
-        <p>{__('SUCCESS!', 'web-stories')}</p>
+        <p>{__('Plugin activated.', 'web-stories')}</p>
       </ThemeProvider>
     </StyleSheetManager>
   );
