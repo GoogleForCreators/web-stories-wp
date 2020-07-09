@@ -64,15 +64,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		);
 	}
 
-	public function setUp() {
-		parent::setUp();
-
-		do_action( 'init' );
-
-		// Registered during init.
-		unregister_block_type( 'web-stories/embed' );
-	}
-
 	/**
 	 * @covers ::init
 	 */
@@ -210,7 +201,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$skip_amp         = $post_type_object->skip_amp( true, get_post( self::$story_id ) );
 		$this->assertTrue( $skip_amp );
 	}
-
 
 	/**
 	 * @covers ::filter_template_include
