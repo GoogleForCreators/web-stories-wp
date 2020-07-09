@@ -23,12 +23,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import DisplayElement from '../../edit-story/components/canvas/displayElement';
 import StoryPropTypes from '../../edit-story/types';
 import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
 import { STORY_PAGE_STATE } from '../constants';
 import { PageSizePropType } from '../types';
 import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
+import PagePreviewElements from './previewPageElements';
 
 /*
  * A quick note about how height works with the 9:16 aspect ratio (FULLBLEED_RATIO)
@@ -101,15 +101,7 @@ function PreviewPageController({
       background={page.backgroundColor}
     >
       <PreviewSafeZone pageSize={pageSize}>
-        {page.elements.map(({ id, ...rest }) => (
-          <DisplayElement
-            previewMode
-            key={id}
-            page={page}
-            element={{ id, ...rest }}
-            isAnimatable
-          />
-        ))}
+        <PagePreviewElements page={page} />
       </PreviewSafeZone>
     </FullBleedPreviewWrapper>
   );
