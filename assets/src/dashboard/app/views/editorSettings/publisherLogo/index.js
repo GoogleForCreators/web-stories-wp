@@ -81,7 +81,6 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
       <div>
         <FileUploadHelperText>{TEXT.CONTEXT}</FileUploadHelperText>
         <UploadContainer
-          acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
           onSubmit={onSubmitNewFile}
           onDelete={onSubmitDeleteFile}
           id="settings_publisher_logos"
