@@ -306,7 +306,7 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Get edittor settings as an array.
+	 * Get editor settings as an array.
 	 *
 	 * @return array
 	 */
