@@ -23,7 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import CardGallery from '../index';
-import formattedTemplatesArray from '../../../storybookUtils/formattedTemplatesArray';
+import formattedTemplatesArray from '../../../dataUtils/formattedTemplatesArray';
 import FontProvider from '../../../app/font/fontProvider';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 

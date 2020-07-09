@@ -105,6 +105,7 @@ const UploadingIndicator = styled.div`
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
+ * @param {Function} param.onInsert Insertion callback.
  * @param {ProviderType} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
  */

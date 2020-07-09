@@ -13,3 +13,8 @@ define( 'WPCOM_IS_VIP_ENV', true );
 function wpcom_vip_url_to_postid( $url ) {
 	return 123;
 }
+
+class WP_CLI {
+	public static function warning( $text ) {
+	}
+}
