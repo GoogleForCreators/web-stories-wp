@@ -20,7 +20,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { within, waitForElementToBeRemoved } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import createSolid from '../../../utils/createSolid';
 import { useStory } from '../../../app';
@@ -85,6 +85,14 @@ describe('GridView integration', () => {
     return pages.map(({ id }) => id);
   }
 
+  async function getCurrentPageId() {
+    const {
+      state: { currentPageId },
+    } = await fixture.renderHook(() => useStory());
+
+    return currentPageId;
+  }
+
   it('should open grid view', () => {
     const gridViewRegion = fixture.screen.getByRole('region', {
       name: /^Grid View$/,
@@ -93,7 +101,7 @@ describe('GridView integration', () => {
   });
 
   it('should use tab to jump between the "Back" button, Preview Size control, and page list', async () => {
-    // Tab cycle : Back -> Preview Size Control x3 stops -> Active/previously focused Page in Page List
+    // Tab cycle: Back -> Preview Size Control x3 stops -> Active/previously focused Page in Page List
 
     // Back Button
     await fixture.events.keyboard.press('tab');
@@ -195,5 +203,51 @@ describe('GridView integration', () => {
     await fixture.events.keyboard.shortcut('shift+mod+left');
     pageIds = await getPageIds();
     expect(pageIds[0]).toEqual(initialPageIds[3]);
+  });
+
+  it('should select the focused page when "Enter" is pressed', async () => {
+    await focusOnPageList();
+
+    const initialPageIds = await getPageIds();
+
+    const page2Id = initialPageIds[1];
+
+    // Focus on page 2
+    await fixture.events.keyboard.press('right');
+
+    // Press enter and make page 2 the active/selected page
+    await fixture.events.keyboard.press('Enter');
+
+    const currentPage = await getCurrentPageId();
+
+    expect(currentPage).toEqual(page2Id);
+  });
+
+  it('should trap focus', async () => {
+    // Tab cycle: Back -> Preview Size Control x3 stops -> Active/previously focused Page in Page List
+
+    // Full cycle forwards
+    await fixture.events.keyboard.seq(({ press }) => [
+      press('tab'),
+      press('tab'),
+      press('tab'),
+      press('tab'),
+      press('tab'),
+      press('tab'),
+    ]);
+
+    const backButton = gridView.getByRole('button', { name: /^Back$/ });
+    expect(document.activeElement).toEqual(backButton);
+  });
+
+  it('should use "Esc" to exit the dialog', async () => {
+    const gridViewRegion = fixture.screen.getByRole('region', {
+      name: /^Grid View$/,
+    });
+    expect(gridViewRegion).toBeTruthy();
+
+    await fixture.events.keyboard.press('Esc');
+
+    await waitForElementToBeRemoved(gridViewRegion);
   });
 });
