@@ -303,7 +303,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$statuses = [
 			'all'     => [ 'publish', 'draft', 'future' ],
 			'publish' => [ 'publish' ],
-			'future' => [ 'future' ],
+			'future'  => [ 'future' ],
 			'draft'   => 'draft',
 		];
 
