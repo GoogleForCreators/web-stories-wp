@@ -32,8 +32,5 @@ describe('initializeTracking', () => {
     await initializeTracking('Foo App');
 
     expect(config.appName).toStrictEqual('Foo App');
-    expect(gtag).toHaveBeenCalledWith('config', '1234567', {
-      app_name: 'Foo App',
-    });
   });
 });
