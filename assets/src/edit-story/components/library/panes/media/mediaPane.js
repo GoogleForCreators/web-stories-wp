@@ -19,8 +19,15 @@
  */
 import { useFeature } from 'flagged';
 import { rgba } from 'polished';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -325,16 +332,34 @@ function MediaPane(props) {
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
-  const handleScroll = (e) => {
-    if (!hasMore) {
-      return;
+  const [handleScroll] = useDebouncedCallback(
+    (e) => {
+      if (!hasMore || !isMediaLoaded || isMediaLoading) {
+        return;
+      }
+      // This rootMargin is added so that we load an extra page when the
+      // we are "close" to the bottom of the container, even if it's not
+      // yet visible.
+      const bottom =
+        e.target.scrollHeight - e.target.scrollTop <=
+        e.target.clientHeight + ROOT_MARGIN;
+      if (bottom) {
+        setNextPage();
+      }
+    },
+    800,
+    [hasMore, isMediaLoaded, isMediaLoading, setNextPage]
+  );
+
+  useEffect(() => {
+    const node = refContainer.current;
+    if (!node) {
+      return undefined;
     }
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    if (bottom) {
-      setNextPage();
-    }
-  };
+    // And when scroll changes (but debounced)
+    node.addEventListener('scroll', handleScroll);
+    return () => node.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   // Arranges elements in rows.
   const rowBasedGallery = (
