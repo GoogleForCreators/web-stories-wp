@@ -158,7 +158,7 @@ export default function StoryListView({
     [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
   );
   return (
-    <ListView>
+    <ListView data-testid="story-list-view">
       <Table>
         <TableHeader>
           <TableRow>
@@ -206,7 +206,7 @@ export default function StoryListView({
                 {__('Date Created', 'web-stories')}
                 <ArrowIconWithTitle
                   active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                  asc={sortDirection === SORT_DIRECTION.DESC}
+                  asc={sortDirection === SORT_DIRECTION.ASC}
                 >
                   <ArrowIconSvg />
                 </ArrowIconWithTitle>
@@ -221,7 +221,7 @@ export default function StoryListView({
                 {__('Last Modified', 'web-stories')}
                 <ArrowIconWithTitle
                   active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                  asc={sortDirection === SORT_DIRECTION.DESC}
+                  asc={sortDirection === SORT_DIRECTION.ASC}
                 >
                   <ArrowIconSvg />
                 </ArrowIconWithTitle>

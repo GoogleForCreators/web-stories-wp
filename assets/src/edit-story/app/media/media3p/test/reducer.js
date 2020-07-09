@@ -15,38 +15,60 @@
  */
 
 /**
+ * External dependencies
+ */
+import { renderHook } from '@testing-library/react-hooks';
+
+/**
  * Internal dependencies
  */
 import reducer from '../reducer';
-import providerReducer from '../providerReducer';
+import useMediaReducer from '../../useMediaReducer';
+import * as media3pActionsToWrap from '../actions';
 import * as types from '../../types';
-
-jest.mock('../providerReducer');
 
 describe('reducer', () => {
   let initialValue;
 
   beforeEach(() => {
-    providerReducer.mockReturnValueOnce({});
     initialValue = reducer(undefined, { type: types.INITIAL_STATE });
   });
 
   it('should provide initial state for each provider', () => {
     expect(initialValue).toStrictEqual(
-      expect.objectContaining({ unsplash: {} })
+      expect.objectContaining({ unsplash: expect.anything() })
     );
   });
 
   it('should reduce each provider state', () => {
-    providerReducer.mockReturnValueOnce({ key: 'value' });
-    const newState = reducer(initialValue, { type: 'action' });
-
-    expect(providerReducer).toHaveBeenCalledWith(
-      {},
-      { type: 'action', payload: undefined }
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, media3pActionsToWrap)
     );
-    expect(newState).toStrictEqual(
-      expect.objectContaining({ unsplash: { key: 'value' } })
+
+    result.current.actions.fetchMediaSuccess({
+      provider: 'unsplash',
+      media: [{ id: 'id' }],
+    });
+
+    expect(result.current.state.unsplash).toStrictEqual(
+      expect.objectContaining({
+        isMediaLoaded: true,
+        isMediaLoading: false,
+      })
+    );
+  });
+
+  it('should assign selectedProvider on setSelectedProvider', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, media3pActionsToWrap)
+    );
+
+    result.current.actions.setSelectedProvider({ provider: 'unsplash' });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        selectedProvider: 'unsplash',
+      })
     );
   });
 });

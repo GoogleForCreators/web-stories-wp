@@ -39,10 +39,11 @@ import { useHistory } from '../../history';
 /**
  * Custom hook to save story.
  *
- * @param {Object}    properties Properties to update.
- * @param {number}    properties.storyId Story post id.
- * @param {Array}     properties.pages Array of all pages.
- * @param {Object}    properties.story Story-global properties
+ * @param {Object} properties Properties to update.
+ * @param {number} properties.storyId Story post id.
+ * @param {Array} properties.pages Array of all pages.
+ * @param {Object} properties.story Story-global properties.
+ * @param {Function} properties.updateStory Function to update a story.
  * @return {Function} Function that can be called to save a story.
  */
 function useSaveStory({ storyId, pages, story, updateStory }) {

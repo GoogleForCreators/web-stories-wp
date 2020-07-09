@@ -23,7 +23,7 @@ import useProviderContextValueProvider from './useProviderContextValueProvider';
 // Use provider configuration json fragment.
 const providers = ['unsplash'];
 
-export default function useContextValueProvider(reducerState, reducerActions) {
+function useProviderSetContextValueProvider(reducerState, reducerActions) {
   const result = {};
 
   // The 'providers' list is a constant, and so hooks are still called in the
@@ -31,9 +31,32 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   for (const provider of providers) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     result[provider] = useProviderContextValueProvider(
+      provider,
       reducerState,
       reducerActions
     );
   }
   return result;
+}
+
+/**
+ * Context fragment provider for 3rd party media (Unsplash, Coverr, etc).
+ * This is called from {@link MediaProvider} to provide the media global state.
+ *
+ * @param {Object} reducerState The 'media3p' fragment of the state returned
+ * from `useMediaReducer`
+ * @param {Object} reducerActions The 'media3p' fragment of the actions
+ * returned from `useMediaReducer`
+ * @return {Object} Context.
+ */
+export default function useContextValueProvider(reducerState, reducerActions) {
+  return {
+    state: {
+      selectedProvider: reducerState.selectedProvider,
+    },
+    actions: {
+      setSelectedProvider: reducerActions.setSelectedProvider,
+    },
+    ...useProviderSetContextValueProvider(reducerState, reducerActions),
+  };
 }

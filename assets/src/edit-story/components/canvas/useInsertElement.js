@@ -94,7 +94,7 @@ function useInsertElement() {
  * @param {number} props.width The element's width.
  * @param {number} props.height The element's height.
  * @param {?Object} props.mask The element's mask.
- * @return {!Object} The element properties.
+ * @return {Object} The element properties.
  */
 function getElementProperties(
   type,
@@ -201,7 +201,7 @@ function getElementProperties(
 /**
  * @param {string} type Element type.
  * @param {!Object} props The element's properties.
- * @return {!Object} The new element.
+ * @return {Object} The new element.
  */
 function createElementForCanvas(type, props) {
   return createNewElement(type, getElementProperties(type, props));

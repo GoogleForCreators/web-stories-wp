@@ -116,6 +116,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
       const query = {
         context: 'edit',
+        _web_stories_envelope: true,
         search: searchTerm || undefined,
         orderby: sortOption,
         page,
@@ -130,21 +131,15 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           query,
         });
 
-        const response = await dataAdapter.get(path, {
-          parse: false,
-          cache: 'no-cache',
-        });
+        const response = await dataAdapter.get(path);
 
         const totalPages =
-          response.headers && parseInt(response.headers.get('X-WP-TotalPages'));
-
+          response.headers && parseInt(response.headers['X-WP-TotalPages']);
         const totalStoriesByStatus =
           response.headers &&
-          JSON.parse(response.headers.get('X-WP-TotalByStatus'));
+          JSON.parse(response.headers['X-WP-TotalByStatus']);
 
-        const serverStoryResponse = await response.json();
-
-        const reshapedStories = serverStoryResponse
+        const reshapedStories = response.body
           .map(reshapeStoryObject(editStoryURL))
           .filter(Boolean);
 
