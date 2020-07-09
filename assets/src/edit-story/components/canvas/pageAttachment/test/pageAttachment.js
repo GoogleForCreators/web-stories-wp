@@ -92,7 +92,9 @@ describe('PageAttachment', () => {
     });
     const pageAttachment = getByRole('presentation');
     const style = window.getComputedStyle(pageAttachment);
-    expect(style.borderTopStyle).toStrictEqual('dashed');
+    // Verify the background was added for displaying dashed line.
+    expect(style.backgroundSize).toStrictEqual('14px 0.5px');
+    expect(style.backgroundPosition).toStrictEqual('top');
   });
 
   it('should display tooltip if link is being transformed on Page Attachment', () => {

@@ -40,9 +40,14 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   bottom: ${({ fullbleedBottom }) => -fullbleedBottom}px;
-  border-top: ${({ displayMarker, theme }) =>
-    displayMarker ? `0.5px dashed ${theme.colors.fg.v0}` : 'initial'};
-  max-height: 20%;
+  ${({ displayMarker, theme }) =>
+    displayMarker &&
+    `
+  background-image: linear-gradient(to right, ${theme.colors.fg.v0} 50%, transparent 0%);
+  background-position: top;
+  background-size: 14px 0.5px;
+  background-repeat: repeat-x;`}
+  height: 20%;
   width: 100%;
   color: ${({ theme }) => theme.colors.fg.v1};
   z-index: 3;
