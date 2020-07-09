@@ -47,6 +47,7 @@ function useProviderSetContextValueProvider(reducerState, reducerActions) {
  * from `useMediaReducer`
  * @param {Object} reducerActions The 'media3p' fragment of the actions
  * returned from `useMediaReducer`
+ * @return {Object} Context.
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
   return {

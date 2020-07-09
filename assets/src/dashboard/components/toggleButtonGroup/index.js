@@ -126,9 +126,13 @@ const ToggleButtonGroup = ({ buttons }) => {
 
     const resizeContainerObserver = new ResizeObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.contentRect.width !== containerWidth) {
-          setContainerWidth(entry.contentRect.width);
-        }
+        // window.requestAnimationFrame removes potential for ResizeObserver - loop limit exceeded error
+        // see https://stackoverflow.com/a/50387233/13078978
+        window.requestAnimationFrame(() => {
+          if (entry.contentRect.width !== containerWidth) {
+            setContainerWidth(entry.contentRect.width);
+          }
+        });
       });
     });
 
