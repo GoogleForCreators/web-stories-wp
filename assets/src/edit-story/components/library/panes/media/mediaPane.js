@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
+import { useFeature } from 'flagged';
 import { rgba } from 'polished';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -59,10 +59,13 @@ const ColumnContainer = styled.div`
 `;
 
 const RowContainer = styled.div`
+  display: grid;
   grid-area: infinitescroll;
   overflow: auto;
+  grid-template-columns: 1fr;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
+  position: relative;
 `;
 
 const Column = styled.div`
@@ -285,7 +288,7 @@ function MediaPane(props) {
   // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
   // prop is not yet ready).
   useLayoutEffect(() => {
-    if (!scrollbarWidth) {
+    if (!scrollbarWidth || !isMediaLoaded) {
       return;
     }
     const currentPaddingLeft = parseFloat(
@@ -295,7 +298,7 @@ function MediaPane(props) {
     );
     refContainer.current.style['padding-right'] =
       currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
+  }, [scrollbarWidth, refContainer, isMediaLoaded]);
 
   const refContainerFooter = useRef();
   useIntersectionEffect(
@@ -308,16 +311,19 @@ function MediaPane(props) {
       rootMargin: `0px 0px ${ROOT_MARGIN}px 0px`,
     },
     (entry) => {
+      // console.log('triggered');
       if (!isMediaLoaded || isMediaLoading) {
+        // console.log('loading');
         return;
       }
       if (!hasMore) {
         return;
       }
       if (!entry.isIntersecting) {
+        // console.log('not intersecting');
         return;
       }
-
+      // console.log('really set next page');
       setNextPage();
     },
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
@@ -326,13 +332,11 @@ function MediaPane(props) {
   // Arranges elements in rows.
   const rowBasedGallery = (
     <RowContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
-      {resources.length != 0 && (
-        <MediaGallery
-          resources={resources}
-          onInsert={insertMediaElement}
-          providerType={ProviderType.LOCAL}
-        />
-      )}
+      <MediaGallery
+        resources={resources}
+        onInsert={insertMediaElement}
+        providerType={ProviderType.LOCAL}
+      />
       {hasMore && (
         <Loading ref={refContainerFooter}>
           {__('Loading…', 'web-stories')}
@@ -340,6 +344,8 @@ function MediaPane(props) {
       )}
     </RowContainer>
   );
+
+  // console.log(resources.length);
 
   // Arranges elements in columns.
   const columnBasedGallery = (

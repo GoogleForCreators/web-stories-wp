@@ -26,14 +26,15 @@ import { waitFor } from '@testing-library/react';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-const flagValues = [false, true];
-flagValues.forEach((value) => {
-  describe('MediaPane fetching', () => {
+[true].forEach((rowBasedGallery) => {
+  describe(`MediaPane fetching for ${
+    rowBasedGallery ? 'row' : 'column'
+  } gallery`, () => {
     let fixture;
 
     beforeEach(async () => {
       fixture = new Fixture();
-      fixture.setFlags({ rowBasedGallery: value });
+      fixture.setFlags({ rowBasedGallery: rowBasedGallery });
       await fixture.render();
     });
 
@@ -41,39 +42,43 @@ flagValues.forEach((value) => {
       fixture.restore();
     });
 
-    it(
-      'should fetch 2nd page - `rowBasedGallery` flag set to ' + value,
-      async () => {
-        let mediaElements;
-        await waitFor(() => {
+    it('should fetch 2nd page', async () => {
+      let mediaElements;
+
+      // Wait until first page loaded.
+      await waitFor(
+        () => {
           mediaElements = fixture.querySelectorAll(
             '[data-testid="mediaElement"]'
           );
-
-          if (mediaElements.length === MEDIA_PER_PAGE) {
-            expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
+          if (!(mediaElements.length === MEDIA_PER_PAGE)) {
+            throw new Error('1st page not yet loaded');
           }
-        });
+        },
+        { options: { timeout: 30000 } }
+      );
+      expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
 
-        const mediaLibrary = fixture.querySelector(
-          '[data-testid="mediaLibrary"]'
-        );
-        mediaLibrary.scrollTo(
-          0,
-          mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
-        );
+      // Scroll to bottom to trigger load.
+      let mediaLibrary = fixture.querySelector('[data-testid="mediaLibrary"]');
+      mediaLibrary.scrollTo(
+        0,
+        mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
+      );
 
-        await waitFor(() => {
+      // Wait until second page loaded.
+      await waitFor(
+        () => {
           mediaElements = fixture.querySelectorAll(
             '[data-testid="mediaElement"]'
           );
           if (!(mediaElements.length === MEDIA_PER_PAGE * 2)) {
             throw new Error('2nd page not yet loaded');
           }
-        });
-
-        expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
-      }
-    );
+        },
+        { options: { timeout: 30000 } }
+      );
+      expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
+    });
   });
 });

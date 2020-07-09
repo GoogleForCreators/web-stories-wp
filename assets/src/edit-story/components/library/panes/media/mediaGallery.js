@@ -29,9 +29,12 @@ import { ProviderType } from './providerType';
 
 const PHOTO_MARGIN = 4;
 
-const PhotoContainer = styled.div`
-  width: ${({ photo }) => photo.width}px;
-  height: ${({ photo }) => photo.height}px;
+const PhotoContainer = styled.div.attrs((props) => ({
+  style: {
+    width: props.photo.width + 'px',
+    height: props.photo.height + 'px',
+  },
+}))`
   margin: ${PHOTO_MARGIN}px;
 `;
 
@@ -67,7 +70,7 @@ function MediaGallery({ resources, onInsert, providerType }) {
   );
 
   return (
-    resources?.length && (
+    resources.length != 0 && (
       <Gallery
         targetRowHeight={110}
         direction={'row'}
