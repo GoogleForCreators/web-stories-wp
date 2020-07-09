@@ -70,6 +70,7 @@ const arrowBarCss = css`
   border-radius: 3px;
   top: 14px;
   background: ${({ theme }) => theme.colors.fg.v1};
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.36);
 `;
 
 const LeftBar = styled.div`
