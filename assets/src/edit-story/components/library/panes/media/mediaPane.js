@@ -347,7 +347,7 @@ function MediaPane(props) {
         setNextPage();
       }
     },
-    800,
+    500,
     [hasMore, isMediaLoaded, isMediaLoading, setNextPage]
   );
 
