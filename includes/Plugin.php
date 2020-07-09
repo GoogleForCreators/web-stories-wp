@@ -102,19 +102,6 @@ class Plugin {
 	public $database_upgrader;
 
 	/**
-	 * Activation Flag.
-	 *
-	 * @var Activation_Flag
-	 */
-	public $activation_flag;
-
-	/**
-	 * Activation Notice.
-	 *
-	 * @var Activation_Notice
-	 */
-	public $activation_notice;
-	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
@@ -159,11 +146,11 @@ class Plugin {
 
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.
-		$this->activation_flag = new Activation_Flag();
-		$this->activation_flag->init();
+		$activation_flag = new Activation_Flag();
+		$activation_flag->init();
 
-		$this->activation_notice = new Activation_Notice( $this->activation_flag );
-		$this->activation_notice->init();
+		$activation_notice = new Activation_Notice( $activation_flag );
+		$activation_notice->init();
 	}
 
 	/**
