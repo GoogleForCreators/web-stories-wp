@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
+jest.mock('../shared');
 
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
+import { config } from '../shared';
+import initializeTracking from '../initializeTracking';
 
-registerBlockType(name, settings);
+describe('initializeTracking', () => {
+  afterEach(() => {
+    config.trackingId = undefined;
+  });
 
-initializeTracking('Embed Block', false);
+  it('sets app name in config', async () => {
+    config.trackingId = '1234567';
+    await initializeTracking('Foo App');
+
+    expect(config.appName).toStrictEqual('Foo App');
+  });
+});

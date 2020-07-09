@@ -15,16 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
-
-/**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
+import initializeTracking from './initializeTracking';
+import enableTracking from './enableTracking';
+import disableTracking from './disableTracking';
+import isTrackingEnabled from './isTrackingEnabled';
+import trackEvent from './trackEvent';
+import trackScreenView from './trackScreenView';
+import trackTimingComplete from './trackTimingComplete';
 
-registerBlockType(name, settings);
-
-initializeTracking('Embed Block', false);
+export {
+  initializeTracking,
+  isTrackingEnabled,
+  enableTracking,
+  disableTracking,
+  trackEvent,
+  trackScreenView,
+  trackTimingComplete,
+};

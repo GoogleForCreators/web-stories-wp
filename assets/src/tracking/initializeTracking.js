@@ -15,16 +15,21 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
-
-/**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
+import { config } from './shared';
+import enableTracking from './enableTracking';
 
-registerBlockType(name, settings);
+/**
+ * Initializes tracking.
+ *
+ * @param {string} appName Name of the application, e.g. 'Dashboard' or 'Editor'.
+ * @param {boolean} [sendPageView=true] Whether to send an initial page view event upon loading.
+ * @return {Promise<void>} Promise.
+ */
+async function initializeTracking(appName, sendPageView = true) {
+  config.appName = appName;
+  await enableTracking(sendPageView);
+}
 
-initializeTracking('Embed Block', false);
+export default initializeTracking;

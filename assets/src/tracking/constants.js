@@ -14,17 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
-
-/**
- * Internal dependencies
- */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
-
-registerBlockType(name, settings);
-
-initializeTracking('Embed Block', false);
+export const DATA_LAYER = 'webStoriesTrackingDataLayer';

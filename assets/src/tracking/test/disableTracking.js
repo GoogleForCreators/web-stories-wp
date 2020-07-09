@@ -15,16 +15,19 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
-
-/**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
+import { config } from '../shared';
+import disableTracking from '../disableTracking';
 
-registerBlockType(name, settings);
+describe('disableTracking', () => {
+  afterEach(() => {
+    config.trackingEnabled = undefined;
+  });
 
-initializeTracking('Embed Block', false);
+  it('should return a boolean', () => {
+    config.trackingEnabled = true;
+    disableTracking();
+    expect(config.trackingEnabled).toStrictEqual(false);
+  });
+});
