@@ -221,13 +221,4 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$show_admin_bar   = $post_type_object->show_admin_bar( 'current' );
 		$this->assertFalse( $show_admin_bar );
 	}
-
-	/**
-	 * @covers ::replace_editor
-	 */
-	public function test_replace_editor() {
-		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
-		$replace_editor   = $post_type_object->replace_editor( false, get_post( self::$story_id ) );
-		$this->assertTrue( $replace_editor );
-	}
 }
