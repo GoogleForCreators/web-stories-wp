@@ -26,7 +26,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-[true].forEach((rowBasedGallery) => {
+[false, true].forEach((rowBasedGallery) => {
   describe(`MediaPane fetching for ${
     rowBasedGallery ? 'row' : 'column'
   } gallery`, () => {
@@ -42,21 +42,24 @@ import { ROOT_MARGIN } from '../mediaPane';
       fixture.restore();
     });
 
+    const waitForMediaElements = async (expectedLength) => {
+      let mediaElements;
+      await waitFor(() => {
+        mediaElements = fixture.querySelectorAll(
+          '[data-testid="mediaElement"]'
+        );
+        if (!(mediaElements.length === expectedLength)) {
+          throw new Error('1st page not yet loaded');
+        }
+      });
+      return mediaElements;
+    };
+
     it('should fetch 2nd page', async () => {
       let mediaElements;
 
       // Wait until first page loaded.
-      await waitFor(
-        () => {
-          mediaElements = fixture.querySelectorAll(
-            '[data-testid="mediaElement"]'
-          );
-          if (!(mediaElements.length === MEDIA_PER_PAGE)) {
-            throw new Error('1st page not yet loaded');
-          }
-        },
-        { options: { timeout: 30000 } }
-      );
+      mediaElements = await waitForMediaElements(MEDIA_PER_PAGE);
       expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
 
       // Scroll to bottom to trigger load.
@@ -67,17 +70,7 @@ import { ROOT_MARGIN } from '../mediaPane';
       );
 
       // Wait until second page loaded.
-      await waitFor(
-        () => {
-          mediaElements = fixture.querySelectorAll(
-            '[data-testid="mediaElement"]'
-          );
-          if (!(mediaElements.length === MEDIA_PER_PAGE * 2)) {
-            throw new Error('2nd page not yet loaded');
-          }
-        },
-        { options: { timeout: 30000 } }
-      );
+      mediaElements = await waitForMediaElements(MEDIA_PER_PAGE * 2);
       expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
     });
   });

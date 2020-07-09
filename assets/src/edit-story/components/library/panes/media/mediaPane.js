@@ -361,8 +361,8 @@ function MediaPane(props) {
     return () => node.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  // Arranges elements in rows.
-  const rowBasedGallery = (
+  const mediaLibrary = isRowBasedGallery ? (
+    // Arranges elements in rows.
     <RowContainer
       data-testid="mediaLibrary"
       onScroll={handleScroll}
@@ -375,10 +375,8 @@ function MediaPane(props) {
       />
       {hasMore && <Loading>{__('Loading…', 'web-stories')}</Loading>}
     </RowContainer>
-  );
-
-  // Arranges elements in columns.
-  const columnBasedGallery = (
+  ) : (
+    // Arranges elements in columns.
     <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
       <Column>
         {resources
@@ -441,10 +439,8 @@ function MediaPane(props) {
 
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
-        ) : isRowBasedGallery ? (
-          rowBasedGallery
         ) : (
-          columnBasedGallery
+          mediaLibrary
         )}
       </Inner>
     </StyledPane>
