@@ -108,7 +108,8 @@ export const STORY_STATUS = {
 };
 
 export const STORY_ITEM_CENTER_ACTION_LABELS = {
-  [STORY_STATUS.PUBLISHED_AND_FUTURE]: __('View', 'web-stories'),
+  [STORY_STATUS.PUBLISH]: __('View', 'web-stories'),
+  [STORY_STATUS.FUTURE]: __('View', 'web-stories'),
   [STORY_STATUS.DRAFT]: __('Preview', 'web-stories'),
 };
 
@@ -126,7 +127,7 @@ export const STORY_STATUSES = [
   {
     label: __('Published', 'web-stories'),
     value: `${STORY_STATUS.PUBLISH},${STORY_STATUS.FUTURE}`,
-    status: STORY_STATUS.PUBLISH,
+    status: STORY_STATUS.PUBLISHED_AND_FUTURE,
   },
 ];
 
