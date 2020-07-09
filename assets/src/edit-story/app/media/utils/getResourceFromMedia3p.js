@@ -70,6 +70,12 @@ function getUrls(m) {
     // "web_stories_thumbnail". We use the biggest as "full", the next biggest
     // as "large", and the smallest as "web_stories_thumbnail". The rest are
     // named according to their size.
+    if (m.imageUrls?.length < 3) {
+      throw new Error(
+        'Invalid number of urls for asset. Need at least 3: ' + m
+      );
+    }
+
     const sizesFromBiggest = m.imageUrls
       .sort((el1, el2) => el2.width - el1.width)
       .map((u) => {
