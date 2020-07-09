@@ -96,6 +96,9 @@ const DeleteButton = styled.button`
   background-color: ${({ theme }) => theme.colors.gray75};
   color: ${({ theme }) => theme.colors.gray500};
   border: ${({ theme }) => theme.borders.transparent};
+  opacity: 1;
+
+  transition: opacity 300ms ease-in-out;
 `;
 
 const UploadedContent = styled.div`
@@ -103,16 +106,15 @@ const UploadedContent = styled.div`
   margin: 0 15px 10px 0;
 
   ${DeleteButton} {
-    display: none;
     opacity: 0;
-    transition: opacity 300ms ease-in-out;
+    visibility: none;
   }
 
   &:hover,
   &:focus {
     ${DeleteButton} {
-      display: block;
       opacity: 1;
+      visibility: visible;
     }
   }
 `;
@@ -126,7 +128,7 @@ const DisplayImage = styled.img`
 
 const DeleteIcon = styled(_DeleteIcon)`
   width: 100%;
-  height: auto;
+  height: 100%;
 `;
 
 const DisplayTitle = styled.span`
@@ -179,7 +181,7 @@ const FileUpload = ({
   const handleChange = useCallback(
     (event) => {
       handleUploadFile(event.target.files);
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = null;
     },
     [handleUploadFile]
   );
@@ -187,8 +189,10 @@ const FileUpload = ({
   const handleDragDrop = useCallback(
     (e) => {
       disableDefaults(e);
-      const files = e.dataTransfer?.files;
-      handleUploadFile(files);
+      const files = e.dataTransfer.files;
+      if (files) {
+        handleUploadFile(files);
+      }
       setDragging(false);
     },
     [handleUploadFile]
