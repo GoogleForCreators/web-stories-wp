@@ -50,10 +50,13 @@ const tabs = {
   },
 };
 
+/** @typedef {import('react').ReactElement} ReactElement */
+
 /**
  * Return the necessary information to render the tab and pane for a tab ID.
  *
  * @param {string} tabId The id of the tab.
+ * @return {Object<{Tab: ReactElement, Pane: ReactElement, id: string}>} Pane object.
  */
 const getPane = (tabId) => tabs[tabId];
 

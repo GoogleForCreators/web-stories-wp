@@ -191,7 +191,7 @@ function StoriesView({
                 {__('Cancel', 'web-stories')}
               </Button>
               <Button
-                type={BUTTON_TYPES.CTA}
+                type={BUTTON_TYPES.DEFAULT}
                 onClick={() => {
                   storyActions.trashStory(activeStory);
                   setActiveDialog('');
