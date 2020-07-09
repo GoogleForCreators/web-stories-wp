@@ -86,9 +86,11 @@ function PageAttachmentPanel() {
 
   const updatePageAttachment = useCallback(
     (value) => {
+      const updatedValue = value;
       if (value.url) {
         const urlWithProtocol = withProtocol(value.url);
         const valid = isValidUrl(urlWithProtocol);
+        updatedValue.url = urlWithProtocol;
         setIsInvalidUrl(!valid);
         if (hasLinksInAttachmentArea) {
           // Remove links from elements if Page attachment was updated.
@@ -102,7 +104,7 @@ function PageAttachmentPanel() {
       }
       const _pageAttachment = {
         ...pageAttachment,
-        ...value,
+        ...updatedValue,
       };
       updateCurrentPageProperties({
         properties: { pageAttachment: _pageAttachment },
