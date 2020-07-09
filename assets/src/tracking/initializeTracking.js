@@ -17,23 +17,18 @@
 /**
  * Internal dependencies
  */
-import { gtag, config } from './shared';
+import { config } from './shared';
 import enableTracking from './enableTracking';
 
 /**
  * Initializes tracking.
  *
  * @param {string} appName Name of the application, e.g. 'Dashboard' or 'Editor'.
- * @param {boolean} [sendPageView=true] Whether to send a page view event or not upon loading.
+ * @param {boolean} [sendPageView=true] Whether to send an initial page view event upon loading.
  * @return {Promise<void>} Promise.
  */
 async function initializeTracking(appName, sendPageView = true) {
   config.appName = appName;
-  gtag('config', config.trackingId, { app_name: appName });
-
-  // eslint-disable-next-line no-console
-  //console.log('Initialize Tracking');
-
   await enableTracking(sendPageView);
 }
 

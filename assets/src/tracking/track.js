@@ -33,9 +33,6 @@ async function trackEvent(eventName, eventData) {
     return Promise.resolve();
   }
 
-  // eslint-disable-next-line no-console
-  //console.log('Tracking Event', eventName, eventData);
-
   return new Promise((resolve) => {
     // This timeout ensures a tracking event does not block the user
     // event if it is not sent (in time).

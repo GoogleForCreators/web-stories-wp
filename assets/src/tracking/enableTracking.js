@@ -45,17 +45,14 @@ function loadTrackingScript(sendPageView = true) {
     gtag('js', new Date());
     // TODO: provide custom pageview-related parameters?
     // See https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-    gtag('config', config.trackingId, { send_page_view: sendPageView });
-
-    // eslint-disable-next-line no-console
-    //console.log('Tracking Page View', config.trackingId);
+    gtag('config', config.trackingId, {
+      app_name: config.appName,
+      send_page_view: sendPageView,
+    });
   });
 }
 
 async function enableTracking(sendPageView) {
-  // eslint-disable-next-line no-console
-  //console.log('Enable Tracking', config);
-
   if (!config.trackingAllowed) {
     return Promise.resolve();
   }
