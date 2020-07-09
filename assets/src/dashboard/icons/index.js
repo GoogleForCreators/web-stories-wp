@@ -36,3 +36,4 @@ export { ReactComponent as ChevronLeft } from './chevronLeft.svg';
 export { ReactComponent as PlayArrow } from './playArrow.svg';
 export { ReactComponent as RightArrow } from './rightArrow.svg';
 export { ReactComponent as Search } from './search.svg';
+export { ReactComponent as UploadIcon } from './upload.svg';

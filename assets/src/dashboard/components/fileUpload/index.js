@@ -31,7 +31,7 @@ import styled from 'styled-components';
 import { DEFAULT_FILE_UPLOAD_TYPES } from '../../constants';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { DefaultButton } from '../button';
-import { Close as UploadIcon } from '../../icons';
+import { Close as _DeleteIcon, UploadIcon as _UploadIcon } from '../../icons';
 import { TypographyPresets } from '../typography';
 
 const Input = styled.input(visuallyHiddenStyles);
@@ -69,12 +69,12 @@ const StaticUploadArea = styled.div`
 
 const StaticAreaText = styled.span`
   ${TypographyPresets.Medium};
-  margin: 11.14px auto 0;
+  margin: 0 auto 20px;
 `;
 
-const StaticAreaIcon = styled(UploadIcon)`
-  width: 37.14px;
-  height: 22.29px;
+const StaticAreaIcon = styled(_UploadIcon)`
+  width: 52px;
+  height: 52px;
 `;
 const UploadedContentContainer = styled.div`
   width: 100%;
@@ -100,7 +100,7 @@ const DeleteButton = styled.button`
 
 const UploadedContent = styled.div`
   width: 60px;
-  margin: 0 10px 10px 0;
+  margin: 0 15px 10px 0;
 
   ${DeleteButton} {
     display: none;
@@ -124,7 +124,7 @@ const DisplayImage = styled.img`
   object-fit: cover;
 `;
 
-const DeleteIcon = styled(UploadIcon)`
+const DeleteIcon = styled(_DeleteIcon)`
   width: 100%;
   height: auto;
 `;
