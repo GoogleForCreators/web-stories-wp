@@ -17,27 +17,29 @@
 /**
  * Internal dependencies
  */
-import { config } from './shared';
 import track from './track';
 
 /**
  * Send an Analytics screen_view event.
  *
- * @see https://developers.google.com/analytics/devguides/collection/gtagjs/screens
+ * @see https://developers.google.com/analytics/devguides/collection/gtagjs/user-timings
  *
- * @param {string} screenName Screen name.
+ * @param {string} name The variable being recorded (e.g. 'load').
+ * @param {number} value The number of milliseconds in elapsed time to report to Google Analytics (e.g. 20).
+ * @param {string} eventCategory A string for categorizing all user timing variables into logical groups (e.g. 'JS Dependencies').
+ * @param {string} eventLabel A string that can be used to add flexibility in visualizing user timings in the reports (e.g. 'Google CDN').
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
-async function trackScreenView(screenName) {
-  // TODO: Provide more data like app_version?
-  // See https://developers.google.com/analytics/devguides/collection/gtagjs/screens
+async function trackTimingComplete(name, value, eventCategory, eventLabel) {
   const eventData = {
-    app_name: config.appName,
-    screen_name: screenName,
+    name,
+    value,
+    event_category: eventCategory,
+    event_label: eventLabel,
   };
 
-  return track('screen_view', eventData);
+  return track('timing_complete', eventData);
 }
 
-export default trackScreenView;
+export default trackTimingComplete;

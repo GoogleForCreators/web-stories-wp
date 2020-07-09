@@ -27,4 +27,4 @@ import { name, settings } from './block';
 
 registerBlockType(name, settings);
 
-initializeTracking('Embed Block');
+initializeTracking('Embed Block', false);

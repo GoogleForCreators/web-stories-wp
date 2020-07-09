@@ -23,6 +23,7 @@ import disableTracking from './disableTracking';
 import isTrackingEnabled from './isTrackingEnabled';
 import trackEvent from './trackEvent';
 import trackScreenView from './trackScreenView';
+import trackTimingComplete from './trackTimingComplete';
 
 export {
   initializeTracking,
@@ -31,4 +32,5 @@ export {
   disableTracking,
   trackEvent,
   trackScreenView,
+  trackTimingComplete,
 };

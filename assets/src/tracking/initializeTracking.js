@@ -20,14 +20,21 @@
 import { gtag, config } from './shared';
 import enableTracking from './enableTracking';
 
-async function initializeTracking(appName) {
+/**
+ * Initializes tracking.
+ *
+ * @param {string} appName Name of the application, e.g. 'Dashboard' or 'Editor'.
+ * @param {boolean} [sendPageView=true] Whether to send a page view event or not upon loading.
+ * @return {Promise<void>} Promise.
+ */
+async function initializeTracking(appName, sendPageView = true) {
   config.appName = appName;
   gtag('config', config.trackingId, { app_name: appName });
 
   // eslint-disable-next-line no-console
   console.log('Initialize Tracking');
 
-  await enableTracking();
+  await enableTracking(sendPageView);
 }
 
 export default initializeTracking;

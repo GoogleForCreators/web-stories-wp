@@ -17,11 +17,14 @@
 /**
  * Internal dependencies
  */
-import { config, gtag } from './shared';
+import { config } from './shared';
 import isTrackingEnabled from './isTrackingEnabled';
+import track from './track';
 
 /**
  * Send an Analytics tracking event.
+ *
+ * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
  *
  * @param {string} eventCategory The event category.
  * @param {string} eventName The event category.
@@ -49,30 +52,7 @@ async function trackEvent(
     dimension2: config.userIdHash,
   };
 
-  // eslint-disable-next-line no-console
-  console.log('Tracking Event', eventName, eventData);
-
-  return new Promise((resolve) => {
-    // This timeout ensures a tracking event does not block the user
-    // event if it is not sent (in time).
-    // If this fails, it shouldn't reject the promise since event
-    // tracking should not result in user-facing errors. It will just
-    // trigger a console warning.
-    const failTimeout = setTimeout(() => {
-      global.console.warn(
-        `Tracking event "${eventName}" (category "${eventCategory}") took too long to fire.`
-      );
-      resolve();
-    }, 1000);
-
-    gtag('event', eventName, {
-      ...eventData,
-      event_callback: () => {
-        clearTimeout(failTimeout);
-        resolve();
-      },
-    });
-  });
+  return track(eventName, eventData);
 }
 
 export default trackEvent;

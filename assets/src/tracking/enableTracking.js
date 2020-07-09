@@ -23,9 +23,10 @@ import { config, gtag } from './shared';
 /**
  * Loads the Analytics tracking script.
  *
+ * @param {boolean} [sendPageView=true] Whether to send a page view event or not upon loading.
  * @return {Promise<void>} Promise.
  */
-function loadTrackingScript() {
+function loadTrackingScript(sendPageView = true) {
   const SCRIPT_IDENTIFIER = 'data-web-stories-tracking';
 
   if (document.querySelector(`script[${SCRIPT_IDENTIFIER}]`)) {
@@ -44,17 +45,14 @@ function loadTrackingScript() {
     gtag('js', new Date());
     // TODO: provide custom pageview-related parameters?
     // See https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-    gtag('config', config.trackingId);
+    gtag('config', config.trackingId, { send_page_view: sendPageView });
 
     // eslint-disable-next-line no-console
     console.log('Tracking Page View', config.trackingId);
-
-    // TODO: Remove to make testable.
-    resolve();
   });
 }
 
-async function enableTracking() {
+async function enableTracking(sendPageView) {
   // eslint-disable-next-line no-console
   console.log('Enable Tracking', config);
 
@@ -65,7 +63,7 @@ async function enableTracking() {
   config.trackingEnabled = true;
 
   //eslint-disable-next-line no-return-await
-  return await loadTrackingScript();
+  return await loadTrackingScript(sendPageView);
 }
 
 export default enableTracking;
