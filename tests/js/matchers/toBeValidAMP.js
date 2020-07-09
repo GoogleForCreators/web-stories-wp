@@ -24,6 +24,14 @@ import { renderToStaticMarkup } from 'react-dom/server';
  */
 import { getAMPValidationErrors } from './utils';
 
+/** @typedef {import('react').ReactElement} ReactElement */
+/** @typedef {import('jest').CustomMatcherResult} CustomMatcherResult */
+
+/**
+ * @param {string|ReactElement} stringOrComponent String or React component to test.
+ * @param {Array} args Optional arguments to pass down.
+ * @return {CustomMatcherResult} Matcher result.
+ */
 async function toBeValidAMP(stringOrComponent, ...args) {
   const string = renderToStaticMarkup(stringOrComponent);
   const errors = await getAMPValidationErrors(string, ...args);

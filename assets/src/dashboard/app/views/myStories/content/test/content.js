@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
-import formattedUsersObject from '../../../../../storybookUtils/formattedUsersObject';
+import formattedUsersObject from '../../../../../dataUtils/formattedUsersObject';
 
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';

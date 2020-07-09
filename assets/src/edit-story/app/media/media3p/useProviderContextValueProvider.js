@@ -14,12 +14,45 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Implement, re-using logic from media/common/useContextValueProvider.js.
+/**
+ * Internal dependencies
+ */
+import useFetchMediaEffect from './useFetchMediaEffect';
+
+/**
+ * Context fragment provider for a single 3p media source (Unsplash, Coverr,
+ * etc).
+ *
+ * @param {string} provider The 3p provider to return the context value for
+ * @param {Object} reducerState The 'media3p/[provider]' fragment of the state
+ * returned from `useMediaReducer`
+ * @param {Object} reducerActions The 'media3p/[provider]' fragment of the
+ * actions returned from `useMediaReducer`
+ * @return {Object} Context.
+ */
 export default function useProviderContextValueProvider(
   provider,
-  reducerState
+  reducerState,
+  reducerActions
 ) {
+  const { selectedProvider } = reducerState;
+  const { pageToken } = reducerState[provider];
+  const {
+    fetchMediaStart,
+    fetchMediaSuccess,
+    fetchMediaError,
+  } = reducerActions;
+
+  // Fetch or re-fetch media when the state has changed.
+  useFetchMediaEffect({
+    provider,
+    selectedProvider,
+    pageToken,
+    fetchMediaStart,
+    fetchMediaSuccess,
+    fetchMediaError,
+  });
+
   return {
     state: reducerState[provider],
   };

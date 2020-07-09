@@ -28,6 +28,7 @@ import addQueryArgs from './addQueryArgs';
  * Update page URL in browser.
  *
  * @param {number} postId Current story id.
+ * @return {Function} Function to refresh the post edit URL.
  */
 function useRefreshPostEditURL(postId) {
   const refreshPostEditURL = useCallback(() => {

@@ -106,6 +106,14 @@ function Header({
     );
   }, [filter, scrollToTop, totalStoriesByStatus]);
 
+  const onSortChange = useCallback(
+    (newSort) => {
+      sort.set(newSort);
+      scrollToTop();
+    },
+    [scrollToTop, sort]
+  );
+
   return (
     <Layout.Squishable>
       <PageHeading
@@ -125,13 +133,7 @@ function Header({
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
-        handleSortChange={useCallback(
-          (newSort) => {
-            sort.set(newSort);
-            scrollToTop();
-          },
-          [scrollToTop, sort]
-        )}
+        handleSortChange={onSortChange}
         wpListURL={wpListURL}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',

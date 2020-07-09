@@ -40,12 +40,12 @@ import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider, RouterContext, matchPath } from './router';
 import { ConfigProvider } from './config';
 import {
-  ToasterView,
-  MyStoriesView,
-  TemplateDetailsView,
   ExploreTemplatesView,
+  MyStoriesView,
   SavedTemplatesView,
   StoryAnimTool,
+  TemplateDetailsView,
+  ToasterView,
 } from './views';
 
 const AppContent = () => {
