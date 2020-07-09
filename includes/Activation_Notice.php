@@ -136,8 +136,7 @@ class Activation_Notice {
 		}
 
 		// Unset the flag so that the notice only shows once.
-		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		// $this->activation_flag->delete_activation_flag( $network_wide );
+		$this->activation_flag->delete_activation_flag( $network_wide );
 
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/activation-notice.php';
 	}
