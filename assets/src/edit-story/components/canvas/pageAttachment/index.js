@@ -29,10 +29,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useCanvas from '../useCanvas';
-import {
-  FULLBLEED_RATIO,
-  PAGE_ATTACHMENT_HEIGHT_RATIO,
-} from '../../../constants';
 import Popup from '../../popup';
 import { useTransform } from '../../transform';
 
@@ -42,17 +38,24 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  bottom: ${({ fullbleedBottom }) => -fullbleedBottom}px;
-  ${({ displayMarker, theme }) =>
-    displayMarker &&
-    `
-  background-image: linear-gradient(to right, ${theme.colors.fg.v0} 50%, transparent 0%);
-  background-position: top;
-  background-size: 16px 0.5px;
-  background-repeat: repeat-x;`}
-  height: ${({ height }) => height}px;
+  bottom: 0;
+  height: 20%;
   width: 100%;
   color: ${({ theme }) => theme.colors.fg.v1};
+  z-index: 3;
+`;
+
+const Guideline = styled.div`
+  mix-blend-mode: difference;
+  position: absolute;
+  height: 1px;
+  bottom: 20%;
+  width: 100%;
+  background-image: ${({ theme }) =>
+    `linear-gradient(to right, ${theme.colors.fg.v0} 50%, ${theme.colors.fg.v1} 0%)`};
+  background-position: top;
+  background-size: 16px 0.5px;
+  background-repeat: repeat-x;
   z-index: 3;
 `;
 
@@ -117,57 +120,50 @@ const spacing = { x: 8 };
 
 function PageAttachment({ pageAttachment = {} }) {
   const {
-    pageSize,
     hasLinkInAttachmentArea,
     pageAttachmentContainer,
     setPageAttachmentContainer,
   } = useCanvas((state) => ({
     hasLinkInAttachmentArea: state.state.hasLinkInAttachmentArea,
-    pageSize: state.state.pageSize,
     pageAttachmentContainer: state.state.pageAttachmentContainer,
     setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
   }));
   const {
     state: { isAnythingTransforming },
   } = useTransform();
-  const fullbleedHeight = pageSize.width / FULLBLEED_RATIO;
-  const fullbleedBottom = (fullbleedHeight - pageSize.height) / 2;
   const { ctaText = __('Learn more', 'web-stories'), url } = pageAttachment;
   return (
-    <Wrapper
-      role="presentation"
-      fullbleedBottom={fullbleedBottom}
-      height={fullbleedHeight * PAGE_ATTACHMENT_HEIGHT_RATIO}
-      displayMarker={hasLinkInAttachmentArea}
-      ref={setPageAttachmentContainer}
-    >
-      {url?.length > 0 && (
-        <>
-          <Icon>
-            <LeftBar />
-            <RightBar />
-          </Icon>
-          <TextWrapper>{ctaText}</TextWrapper>
-          {pageAttachmentContainer &&
-            isAnythingTransforming &&
-            hasLinkInAttachmentArea && (
-              <Popup
-                anchor={{ current: pageAttachmentContainer }}
-                isOpen={true}
-                placement={'left'}
-                spacing={spacing}
-              >
-                <Tooltip>
-                  {__(
-                    'Links can not be located below the dashline when a page attachment is present',
-                    'web-stories'
-                  )}
-                </Tooltip>
-              </Popup>
-            )}
-        </>
-      )}
-    </Wrapper>
+    <>
+      {hasLinkInAttachmentArea && <Guideline />}
+      <Wrapper role="presentation" ref={setPageAttachmentContainer}>
+        {url?.length > 0 && (
+          <>
+            <Icon>
+              <LeftBar />
+              <RightBar />
+            </Icon>
+            <TextWrapper>{ctaText}</TextWrapper>
+            {pageAttachmentContainer &&
+              isAnythingTransforming &&
+              hasLinkInAttachmentArea && (
+                <Popup
+                  anchor={{ current: pageAttachmentContainer }}
+                  isOpen={true}
+                  placement={'left'}
+                  spacing={spacing}
+                >
+                  <Tooltip>
+                    {__(
+                      'Links can not be located below the dashline when a page attachment is present',
+                      'web-stories'
+                    )}
+                  </Tooltip>
+                </Popup>
+              )}
+          </>
+        )}
+      </Wrapper>
+    </>
   );
 }
 

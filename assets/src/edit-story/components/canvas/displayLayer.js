@@ -58,6 +58,11 @@ function DisplayLayer() {
         ref={setPageContainer}
         fullbleedRef={setFullbleedContainer}
         background={currentPage?.backgroundColor}
+        overlay={
+          currentPage && (
+            <PageAttachment pageAttachment={currentPage.pageAttachment} />
+          )
+        }
       >
         {currentPage
           ? currentPage.elements.map(({ id, ...rest }) => {
@@ -73,9 +78,6 @@ function DisplayLayer() {
               );
             })
           : null}
-        {currentPage && (
-          <PageAttachment pageAttachment={currentPage.pageAttachment} />
-        )}
       </PageArea>
     </Layer>
   );
