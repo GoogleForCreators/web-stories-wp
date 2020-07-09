@@ -288,7 +288,7 @@ function MediaPane(props) {
   // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
   // prop is not yet ready).
   useLayoutEffect(() => {
-    if (!scrollbarWidth || !isMediaLoaded) {
+    if (!scrollbarWidth) {
       return;
     }
     const currentPaddingLeft = parseFloat(
@@ -298,7 +298,7 @@ function MediaPane(props) {
     );
     refContainer.current.style['padding-right'] =
       currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer, isMediaLoaded]);
+  }, [scrollbarWidth, refContainer]);
 
   const refContainerFooter = useRef();
   useIntersectionEffect(
@@ -311,41 +311,46 @@ function MediaPane(props) {
       rootMargin: `0px 0px ${ROOT_MARGIN}px 0px`,
     },
     (entry) => {
-      // console.log('triggered');
       if (!isMediaLoaded || isMediaLoading) {
-        // console.log('loading');
         return;
       }
       if (!hasMore) {
         return;
       }
       if (!entry.isIntersecting) {
-        // console.log('not intersecting');
         return;
       }
-      // console.log('really set next page');
       setNextPage();
     },
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
+  const handleScroll = (e) => {
+    if (!hasMore) {
+      return;
+    }
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    if (bottom) {
+      setNextPage();
+    }
+  };
+
   // Arranges elements in rows.
   const rowBasedGallery = (
-    <RowContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
+    <RowContainer
+      data-testid="mediaLibrary"
+      onScroll={handleScroll}
+      ref={refCallbackContainer}
+    >
       <MediaGallery
         resources={resources}
         onInsert={insertMediaElement}
         providerType={ProviderType.LOCAL}
       />
-      {hasMore && (
-        <Loading ref={refContainerFooter}>
-          {__('Loading…', 'web-stories')}
-        </Loading>
-      )}
+      {hasMore && <Loading>{__('Loading…', 'web-stories')}</Loading>}
     </RowContainer>
   );
-
-  // console.log(resources.length);
 
   // Arranges elements in columns.
   const columnBasedGallery = (
