@@ -15,23 +15,21 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Tests;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Activation_Flag
  */
 class Activation_Flag extends \WP_UnitTestCase {
-
 	/**
 	 * @covers ::init
 	 */
 	public function test_init() {
-		$activatoin_flag = new \Google\Web_Stories\Activation_Flag();
-		$activatoin_flag->init();
+		$activation_flag = new \Google\Web_Stories\Activation_Flag();
+		$activation_flag->init();
 
-		$this->assertSame( 10, has_action( 'web_stories_activation', [ $activatoin_flag, 'set_activation_flag' ] ) );
-		$this->assertSame( 10, has_action( 'web_stories_deactivation', [ $activatoin_flag, 'delete_activation_flag' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_activation', [ $activation_flag, 'set_activation_flag' ] ) );
+		$this->assertSame( 10, has_action( 'web_stories_deactivation', [ $activation_flag, 'delete_activation_flag' ] ) );
 	}
 
 	/**
@@ -39,9 +37,9 @@ class Activation_Flag extends \WP_UnitTestCase {
 	 * @covers ::get_activation_flag
 	 */
 	public function test_set_activation_flag() {
-		$activatoin_flag = new \Google\Web_Stories\Activation_Flag();
-		$activatoin_flag->set_activation_flag( true );
-		$this->assertTrue( $activatoin_flag->get_activation_flag( true ) );
+		$activation_flag = new \Google\Web_Stories\Activation_Flag();
+		$activation_flag->set_activation_flag( true );
+		$this->assertTrue( $activation_flag->get_activation_flag( true ) );
 	}
 
 	/**
@@ -49,8 +47,8 @@ class Activation_Flag extends \WP_UnitTestCase {
 	 * @covers ::get_activation_flag
 	 */
 	public function test_delete_activation_flag() {
-		$activatoin_flag = new \Google\Web_Stories\Activation_Flag();
-		$activatoin_flag->delete_activation_flag( true );
-		$this->assertFalse( $activatoin_flag->get_activation_flag( true ) );
+		$activation_flag = new \Google\Web_Stories\Activation_Flag();
+		$activation_flag->delete_activation_flag( true );
+		$this->assertFalse( $activation_flag->get_activation_flag( true ) );
 	}
 }
