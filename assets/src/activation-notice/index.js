@@ -23,6 +23,7 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
+import { initializeTracking } from '../tracking';
 import App from './app';
 
 /**
@@ -34,6 +35,8 @@ import App from './app';
  */
 const initialize = (id, config, flags) => {
   const appElement = document.getElementById(id);
+
+  initializeTracking('Plugin Activation');
 
   render(
     <FlagsProvider features={flags}>
