@@ -23,54 +23,55 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../../../../karma/fixture';
-import Media3pApiProvider from '../../../../../../app/media/media3p/api/media3pApiProvider';
-import Media3pApiProviderFixture from '../../../../../../app/media/media3p/api/karma/media3pApiProviderFixture';
+import apiFetcher from '../../../../../../app/media/media3p/api/apiFetcher';
 
 const media = [
   {
-    id: 1,
-    type: 'image',
-    local: false,
-    alt: 'image alt',
-    mimeType: 'image/jpeg',
-    width: 18,
-    height: 12,
-    src:
-      'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
+    name: 'media/unsplash:1',
+    provider: 'UNSPLASH',
+    imageUrls: [
+      {
+        imageName: 'full',
+        url: 'http://www.img.com/1',
+        width: 200,
+        height: 100,
+        mimeType: 'image/png',
+      },
+    ],
+    description: 'A cat',
+    type: 'IMAGE',
+    createTime: '1234',
+    updateTime: '5678',
   },
   {
-    id: 1,
-    type: 'image',
-    local: false,
-    alt: 'image alt',
-    mimeType: 'image/jpeg',
-    width: 128,
-    height: 72,
-    src:
-      'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq',
+    name: 'media/unsplash:2',
+    provider: 'UNSPLASH',
+    imageUrls: [
+      {
+        imageName: 'full',
+        url: 'http://www.img.com/2',
+        width: 200,
+        height: 100,
+        mimeType: 'image/png',
+      },
+    ],
+    description: 'A dog',
+    type: 'IMAGE',
+    createTime: '91234',
+    updateTime: '95678',
   },
 ];
 
 describe('Media3pPane fetching', () => {
   let fixture;
-  let media3pApiFixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
     fixture.setFlags({ media3pTab: true });
 
-    media3pApiFixture = new Media3pApiProviderFixture();
-    fixture
-      .stubComponent(Media3pApiProvider)
-      .callFake(media3pApiFixture.Component);
-
-    media3pApiFixture.listMedia.and.callFake(() => ({ media }));
+    spyOn(apiFetcher, 'listMedia').and.callFake(() => ({ media }));
 
     await fixture.render();
-  });
-
-  afterEach(() => {
-    fixture.restore();
   });
 
   it('should fetch media resources', async () => {
