@@ -19,7 +19,7 @@ jest.mock('../shared');
 /**
  * Internal dependencies
  */
-import { config, gtag } from '../shared';
+import { config } from '../shared';
 import initializeTracking from '../initializeTracking';
 
 describe('initializeTracking', () => {
