@@ -158,7 +158,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
       if (isDragging) {
         resetDragging(target);
       } else {
-        resetMoveable();
+        resetMoveable(target);
       }
       setHasLinkInAttachmentArea(false);
       return true;
