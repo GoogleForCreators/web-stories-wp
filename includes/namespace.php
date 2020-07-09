@@ -121,10 +121,10 @@ if (
 	! class_exists( '\Google\Web_Stories\Plugin' ) &&
 	( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI )
 ) {
-	$heading = __( 'Web Stories plugin could not be initialized.', 'web-stories' );
+	$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
 	$body    = sprintf(
 		/* translators: %s: build commands. */
-		__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
+		esc_html__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
 		'`composer install && npm install && npm run build`'
 	);
 
