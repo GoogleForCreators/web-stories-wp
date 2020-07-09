@@ -186,6 +186,7 @@ function MultiSelectionMovable({ selectedElements }) {
       const { element, updateForResizeEvent } = targetList[i];
       if (element.link?.url && isLinkInAttachmentArea(target)) {
         hasLinkInAttachmentArea = true;
+        return;
       }
       if (isTargetOutOfContainer(target, fullbleedContainer)) {
         toRemove.push(element.id);
@@ -274,15 +275,17 @@ function MultiSelectionMovable({ selectedElements }) {
       resizable={!hideHandles}
       rotatable={!hideHandles}
       onDragGroup={({ events }) => {
+        let invalidPositionFound = false;
         events.forEach(({ target, beforeTranslate }, i) => {
           const sFrame = frames[i];
           const { element } = targetList[i];
           sFrame.translate = beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
-          if (pageHasAttachment) {
-            setHasLinkInAttachmentArea(
-              element.link?.url && isLinkInAttachmentArea(target)
-            );
+          if (pageHasAttachment && element.link?.url) {
+            if (!invalidPositionFound) {
+              invalidPositionFound = isLinkInAttachmentArea(target);
+              setHasLinkInAttachmentArea(invalidPositionFound);
+            }
           }
         });
       }}
@@ -303,16 +306,18 @@ function MultiSelectionMovable({ selectedElements }) {
         onGroupEventStart({ events, isRotate: true });
       }}
       onRotateGroup={({ events }) => {
+        let invalidPositionFound = false;
         events.forEach(({ target, beforeRotate, drag }, i) => {
           const sFrame = frames[i];
           const { element } = targetList[i];
           sFrame.rotate = ((beforeRotate % 360) + 360) % 360;
           sFrame.translate = drag.beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
-          if (pageHasAttachment) {
-            setHasLinkInAttachmentArea(
-              element.link?.url && isLinkInAttachmentArea(target)
-            );
+          if (pageHasAttachment && element.link?.url) {
+            if (!invalidPositionFound) {
+              invalidPositionFound = isLinkInAttachmentArea(target);
+              setHasLinkInAttachmentArea(invalidPositionFound);
+            }
           }
         });
       }}
@@ -330,6 +335,7 @@ function MultiSelectionMovable({ selectedElements }) {
         });
       }}
       onResizeGroup={({ events }) => {
+        let invalidPositionFound = false;
         events.forEach(({ target, direction, width, height, drag }, i) => {
           const sFrame = frames[i];
           const { element, updateForResizeEvent } = targetList[i];
@@ -354,10 +360,11 @@ function MultiSelectionMovable({ selectedElements }) {
           sFrame.translate = drag.beforeTranslate;
           sFrame.updates = updates;
           setTransformStyle(element.id, target, sFrame);
-          if (pageHasAttachment) {
-            setHasLinkInAttachmentArea(
-              element.link?.url && isLinkInAttachmentArea(target)
-            );
+          if (pageHasAttachment && element.link?.url) {
+            if (!invalidPositionFound) {
+              invalidPositionFound = isLinkInAttachmentArea(target);
+              setHasLinkInAttachmentArea(invalidPositionFound);
+            }
           }
         });
       }}
