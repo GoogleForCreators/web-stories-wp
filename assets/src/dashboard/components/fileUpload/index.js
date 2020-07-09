@@ -179,8 +179,9 @@ const FileUpload = ({
   );
 
   const handleChange = useCallback(
-    (event) => {
-      handleUploadFile(event.target.files);
+    (e) => {
+      disableDefaults(e);
+      handleUploadFile(e.target.files);
       fileInputRef.current.value = null;
     },
     [handleUploadFile]
