@@ -75,7 +75,7 @@ class Activation_Notice {
 	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {
-		if ( ! $this->check_hook_suffix( $hook_suffix ) || ! $this->activation_flag->get_activation_flag( is_network_admin() ) ) {
+		if ( ! $this->is_plugins_page( $hook_suffix ) || ! $this->activation_flag->get_activation_flag( is_network_admin() ) ) {
 			return;
 		}
 
@@ -124,7 +124,7 @@ class Activation_Notice {
 	public function render_notice() {
 		global $hook_suffix;
 
-		if ( ! $this->check_hook_suffix( $hook_suffix ) ) {
+		if ( ! $this->is_plugins_page( $hook_suffix ) ) {
 			return;
 		}
 
@@ -142,13 +142,13 @@ class Activation_Notice {
 	}
 
 	/**
-	 * Helper to checker $hook_suffix
+	 * Determines whether we're currently on the Plugins page or not.
 	 *
 	 * @param string $hook_suffix Current hook_suffix.
 	 *
-	 * @return bool
+	 * @return bool Whether we're on the Plugins page.
 	 */
-	protected function check_hook_suffix( $hook_suffix ) {
+	protected function is_plugins_page( $hook_suffix ) {
 		return ( ! empty( $hook_suffix ) && 'plugins.php' === $hook_suffix );
 	}
 }
