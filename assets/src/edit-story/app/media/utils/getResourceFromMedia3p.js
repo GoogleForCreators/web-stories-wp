@@ -112,7 +112,7 @@ function getResourceFromMedia3p(m) {
   const fullAsset = getFullAsset(m);
   return createResource({
     type: m.type.toLowerCase(),
-    mimeType: fullAsset.mimeType,
+    mimeType: urls.full.mime_type,
     creationDate: m.createTime,
     src: fullAsset.url,
     width: fullAsset.width,
