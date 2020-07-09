@@ -32,7 +32,7 @@ async function initializeTracking(appName, sendPageView = true) {
   gtag('config', config.trackingId, { app_name: appName });
 
   // eslint-disable-next-line no-console
-  console.log('Initialize Tracking');
+  //console.log('Initialize Tracking');
 
   await enableTracking(sendPageView);
 }

@@ -48,13 +48,13 @@ function loadTrackingScript(sendPageView = true) {
     gtag('config', config.trackingId, { send_page_view: sendPageView });
 
     // eslint-disable-next-line no-console
-    console.log('Tracking Page View', config.trackingId);
+    //console.log('Tracking Page View', config.trackingId);
   });
 }
 
 async function enableTracking(sendPageView) {
   // eslint-disable-next-line no-console
-  console.log('Enable Tracking', config);
+  //console.log('Enable Tracking', config);
 
   if (!config.trackingAllowed) {
     return Promise.resolve();
