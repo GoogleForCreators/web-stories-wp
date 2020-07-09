@@ -65,6 +65,23 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::init
+	 */
+	public function test_init() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$story_post_type->init();
+
+		$this->assertSame( 10, has_filter( 'admin_enqueue_scripts', [ $story_post_type, 'admin_enqueue_scripts' ] ) );
+		$this->assertSame( 10, has_filter( 'show_admin_bar', [ $story_post_type, 'show_admin_bar' ] ) );
+		$this->assertSame( 10, has_filter( 'replace_editor', [ $story_post_type, 'replace_editor' ] ) );
+		$this->assertSame( 10, has_filter( 'use_block_editor_for_post_type', [ $story_post_type, 'filter_use_block_editor_for_post_type' ] ) );
+		$this->assertSame( 10, has_filter( 'template_include', [ $story_post_type, 'filter_template_include' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'amp_skip_post', [ $story_post_type, 'skip_amp' ] ) );
+		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
+		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $story_post_type, 'filter_site_kit_gtag_opt' ] ) );
+	}
+
+	/**
 	 * @covers ::get_editor_settings
 	 */
 	public function test_get_editor_settings_admin() {
@@ -185,7 +202,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertTrue( $skip_amp );
 	}
 
-
 	/**
 	 * @covers ::filter_template_include
 	 */
@@ -204,14 +220,5 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
 		$show_admin_bar   = $post_type_object->show_admin_bar( 'current' );
 		$this->assertFalse( $show_admin_bar );
-	}
-
-	/**
-	 * @covers ::replace_editor
-	 */
-	public function test_replace_editor() {
-		$post_type_object = new \Google\Web_Stories\Story_Post_Type();
-		$replace_editor   = $post_type_object->replace_editor( false, get_post( self::$story_id ) );
-		$this->assertTrue( $replace_editor );
 	}
 }

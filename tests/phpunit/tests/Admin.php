@@ -130,4 +130,34 @@ class Admin extends \WP_UnitTestCase {
 		$this->assertSame( 'Example title', $result );
 	}
 
+	/**
+	 * @covers ::prefill_post_title
+	 */
+	public function test_prefill_post_title_no_texturize() {
+		$admin = new \Google\Web_Stories\Admin();
+		wp_set_current_user( self::$admin_id );
+		$_GET['from-web-story'] = self::$story_id;
+
+		$original_title = get_post( self::$story_id )->post_title;
+
+		wp_update_post(
+			[
+				'ID'         => self::$story_id,
+				// Not just a hyphen, but an en dash.
+				'post_title' => 'Story - Test',
+			] 
+		);
+
+		$result = $admin->prefill_post_title( 'current' );
+
+		// Cleanup.
+		wp_update_post(
+			[
+				'ID'         => self::$story_id,
+				'post_title' => $original_title,
+			] 
+		);
+
+		$this->assertSame( 'Story - Test', $result );
+	}
 }

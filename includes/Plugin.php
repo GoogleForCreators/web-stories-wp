@@ -154,6 +154,13 @@ class Plugin {
 		$this->discovery = new Discovery();
 		add_action( 'init', [ $this->discovery, 'init' ] );
 
+		// Register activation flag logic outside of 'init' since it hooks into
+		// plugin activation.
+		$activation_flag = new Activation_Flag();
+		$activation_flag->init();
+
+		$activation_notice = new Activation_Notice( $activation_flag );
+		$activation_notice->init();
 	}
 
 	/**

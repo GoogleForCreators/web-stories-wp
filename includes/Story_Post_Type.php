@@ -222,21 +222,19 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Highjack editor with custom editor.
+	 * Replace default post editor with our own implementation.
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @param bool    $replace Bool if to replace editor or not.
 	 * @param WP_Post $post    Current post object.
 	 *
-	 * @return bool
+	 * @return bool Whether the editor has been replaced.
 	 */
 	public function replace_editor( $replace, $post ) {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$replace = true;
-			// In lieu of an action being available to actually load the replacement editor, include it here
-			// after the current_screen action has occurred because the replace_editor filter fires twice.
-			if ( did_action( 'current_screen' ) ) {
-				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
-			}
+			require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
+			return true;
 		}
 
 		return $replace;
@@ -308,7 +306,7 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Get edittor settings as an array.
+	 * Get editor settings as an array.
 	 *
 	 * @return array
 	 */

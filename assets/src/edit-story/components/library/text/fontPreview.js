@@ -85,7 +85,7 @@ function FontPreview({ title, element, onClick }) {
 
 FontPreview.propTypes = {
   title: PropTypes.string.isRequired,
-  element: StoryPropTypes.elements.text.isRequired,
+  element: StoryPropTypes.textContent.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
