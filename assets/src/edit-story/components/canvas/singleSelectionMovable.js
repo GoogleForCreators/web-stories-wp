@@ -151,7 +151,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   );
 
   const linkFoundInAttachmentArea = (target) => {
-    if (isLink && isLinkInAttachmentArea(target)) {
+    if (!pageHasAttachment || !isLink) {
+      return false;
+    }
+    if (isLinkInAttachmentArea(target)) {
       if (isDragging) {
         resetDragging(target);
       } else {
