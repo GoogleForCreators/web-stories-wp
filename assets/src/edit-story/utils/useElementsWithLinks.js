@@ -23,33 +23,31 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../app/story';
-import { useUnits } from '../units';
 import { useCanvas } from '../components/canvas';
-import { FULLBLEED_RATIO } from '../constants';
 import isTargetOutOfContainer from './isTargetOutOfContainer';
 
 function useElementsWithLinks() {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
-  const { pageSize, pageAttachmentContainer } = useCanvas((state) => ({
+  const { nodesById, pageAttachmentContainer } = useCanvas((state) => ({
+    nodesById: state.state.nodesById,
     pageSize: state.state.pageSize,
     pageAttachmentContainer: state.state.pageAttachmentContainer,
-  }));
-  const { dataToEditorY } = useUnits((state) => ({
-    dataToEditorY: state.actions.dataToEditorY,
   }));
 
   const { elements } = currentPage;
   const elementsWithLinks = elements.filter(({ link }) => link?.url);
 
   const getElementsInAttachmentArea = useCallback(() => {
-    return elementsWithLinks.filter(({ y, height }) => {
-      const bottomLimit = (pageSize.width / FULLBLEED_RATIO) * 0.8;
-      const elBottom = dataToEditorY(y + height);
-      return elBottom > bottomLimit;
+    return elementsWithLinks.filter(({ id }) => {
+      if (!pageAttachmentContainer) {
+        return false;
+      }
+      const node = nodesById[id];
+      return !isTargetOutOfContainer(node, pageAttachmentContainer);
     });
-  }, [dataToEditorY, pageSize, elementsWithLinks]);
+  }, [nodesById, elementsWithLinks, pageAttachmentContainer]);
 
   const isLinkInAttachmentArea = useCallback(
     (node) => {

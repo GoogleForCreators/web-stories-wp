@@ -29,7 +29,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useCanvas from '../useCanvas';
-import { FULLBLEED_RATIO } from '../../../constants';
+import {
+  FULLBLEED_RATIO,
+  PAGE_ATTACHMENT_HEIGHT_RATIO,
+} from '../../../constants';
 import Popup from '../../popup';
 import { useTransform } from '../../transform';
 
@@ -47,7 +50,7 @@ const Wrapper = styled.div`
   background-position: top;
   background-size: 16px 0.5px;
   background-repeat: repeat-x;`}
-  height: 20%;
+  height: ${({ height }) => height}px;
   width: 100%;
   color: ${({ theme }) => theme.colors.fg.v1};
   z-index: 3;
@@ -96,7 +99,6 @@ const TextWrapper = styled.span`
   max-width: 90%;
   position: relative;
   padding: 0 32px;
-  margin: 0 0 20px;
   height: 16px;
   letter-spacing: 0.3px;
 `;
@@ -135,6 +137,7 @@ function PageAttachment({ pageAttachment = {} }) {
     <Wrapper
       role="presentation"
       fullbleedBottom={fullbleedBottom}
+      height={fullbleedHeight * PAGE_ATTACHMENT_HEIGHT_RATIO}
       displayMarker={hasLinkInAttachmentArea}
       ref={setPageAttachmentContainer}
     >
