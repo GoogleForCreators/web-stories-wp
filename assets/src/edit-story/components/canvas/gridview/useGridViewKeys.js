@@ -239,23 +239,27 @@ export function getGridColumnAndRowCount(gridElement) {
     gridElement
   );
   return {
-    rows: gridTemplateRows.trim().split(' ').length,
-    columns: gridTemplateColumns.trim().split(' ').length,
+    rows: gridTemplateRows.includes('none')
+      ? 0
+      : gridTemplateRows.trim().split(' ').length,
+    columns: gridTemplateColumns.includes('none')
+      ? 0
+      : gridTemplateColumns.trim().split(' ').length,
   };
 }
 
 // will return a 1 based index
-function getRow(index, numColumns) {
+export function getRow(index, numColumns) {
   return Math.ceil((index + 1) / numColumns);
 }
 
 // will return a 1 based index
-function getColumn(index, numColumns) {
+export function getColumn(index, numColumns) {
   return (index % numColumns) + 1;
 }
 
 // will return a 0 based index
-function getIndex(row, column, numRows, numColumns, numItems) {
+export function getIndex(row, column, numRows, numColumns, numItems) {
   const isOutOfBounds =
     row > numRows || row <= 0 || column > numColumns || column <= 0;
 

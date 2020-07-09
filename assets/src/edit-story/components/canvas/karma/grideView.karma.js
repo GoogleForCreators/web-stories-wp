@@ -15,12 +15,13 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { within, waitForElementToBeRemoved } from '@testing-library/react';
+
+/**
+ * Internal dependencies
+ */
 import { Fixture } from '../../../karma';
 import createSolid from '../../../utils/createSolid';
 import { useStory } from '../../../app';
