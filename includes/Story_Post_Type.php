@@ -233,6 +233,7 @@ class Story_Post_Type {
 	 */
 	public function replace_editor( $replace, $post ) {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
+			$GLOBALS['post'] = $post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
 			return true;
 		}

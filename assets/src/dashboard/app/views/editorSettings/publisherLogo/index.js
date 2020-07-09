@@ -20,6 +20,11 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import {
@@ -42,7 +47,9 @@ const TEXT = {
   ),
   SUBMIT: __('Upload', 'web-stories'),
 };
-function PublisherLogoSettings() {
+
+// eslint-disable-next-line no-unused-vars
+function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
   return (
     <SettingForm>
       <SettingHeading htmlFor="publisherLogo">
@@ -60,4 +67,15 @@ function PublisherLogoSettings() {
   );
 }
 
+PublisherLogoSettings.propTypes = {
+  onUpdatePublisherLogo: PropTypes.func,
+  publisherLogos: PropTypes.arrayOf(
+    PropTypes.shape({
+      src: PropTypes.string,
+      title: PropTypes.string,
+      alt: PropTypes.string,
+      id: PropTypes.string,
+    })
+  ),
+};
 export default PublisherLogoSettings;

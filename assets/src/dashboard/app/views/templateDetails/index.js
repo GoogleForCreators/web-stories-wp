@@ -214,7 +214,7 @@ function TemplateDetails() {
               <DetailViewNavBar
                 ctaText={__('Use template', 'web-stories')}
                 handleBookmarkClick={
-                  enableBookmarks && handleBookmarkClickSelected
+                  enableBookmarks ? handleBookmarkClickSelected : null
                 }
                 handleCta={onHandleCta}
               />
