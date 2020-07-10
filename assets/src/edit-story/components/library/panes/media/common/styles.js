@@ -32,14 +32,20 @@ export const PaneInner = styled.div`
 `;
 export const PaneHeader = styled.div`
   grid-area: header;
-  padding-top: 1.5em;
+  padding-top: 24px;
 `;
 
 export const MediaGalleryContainer = styled.div`
   grid-area: infinitescroll;
   overflow: auto;
-  padding: 0 1.5em 0 1.5em;
+  padding: 0 24px;
   margin-top: 1em;
+  width: 100%;
+`;
+
+// 312px is the width of the gallery minus the 24px paddings.
+export const MediaGalleryInnerContainer = styled.div`
+  width: 312px;
 `;
 
 export const StyledPane = styled(Pane)`
@@ -49,5 +55,5 @@ export const StyledPane = styled(Pane)`
 `;
 
 export const SearchInputContainer = styled.div`
-  padding: 0 1.5em 0 1.5em;
+  padding: 0 24px;
 `;
