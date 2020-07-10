@@ -34,6 +34,7 @@ import { ProviderType } from '../media3p/providerType';
 
 const styledTiles = css`
   width: 100%;
+  cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
   margin-bottom: 10px;
 `;
