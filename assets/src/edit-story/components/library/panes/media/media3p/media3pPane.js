@@ -46,10 +46,8 @@ const ProviderTabSection = styled.div`
   padding: 0 1.5em;
 `;
 
-// #262B3F is not in the theme currently. Given the UI is going to change,
-// might not add it.
 const CategorySection = styled.div`
-  background-color: #262b3f;
+  background-color: ${({ theme }) => theme.colors.bg.v3};
   min-height: 94px;
   padding: 30px 1.5em;
 `;
