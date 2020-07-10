@@ -20,6 +20,8 @@
 import { rgba } from 'polished';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useDebouncedCallback } from 'use-debounce';
+
 /**
  * WordPress dependencies
  */
@@ -80,6 +82,7 @@ const FilterButtons = styled.div`
 
 const FilterButton = styled.button`
   border: 0;
+  cursor: pointer;
   background: none;
   padding: 0;
   margin: 0 18px 0 0;
@@ -151,6 +154,9 @@ function MediaPane(props) {
     }
   );
 
+  // Local state so that we can debounce triggering searches.
+  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
+
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -180,12 +186,20 @@ function MediaPane(props) {
   });
 
   /**
-   * Handle search term changes.
+   * Effectively performs a search, triggered at most every 500ms.
+   */
+  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
+    setSearchTerm({ searchTerm: searchTermValue });
+  }, 500);
+
+  /**
+   * Handle search input changes. Triggers with every keystroke.
    *
    * @param {string} value the new search term.
    */
   const onSearch = (value) => {
-    setSearchTerm({ searchTerm: value });
+    setSearchTermValue(value);
+    changeSearchTermDebounced();
   };
 
   /**
@@ -302,7 +316,7 @@ function MediaPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              value={searchTerm}
+              value={searchTermValue}
               placeholder={__('Search', 'web-stories')}
               onChange={onSearch}
             />

@@ -23,13 +23,13 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Tab } from '../../shared';
-import { Media } from '../../../../../icons';
+import { Upload } from '../../../../../icons';
 import paneId from './paneId';
 
 function MediaTab(props) {
   return (
     <Tab aria-controls={paneId} {...props}>
-      <Media aria-label={__('Media library', 'web-stories')} />
+      <Upload aria-label={__('Media library', 'web-stories')} />
     </Tab>
   );
 }

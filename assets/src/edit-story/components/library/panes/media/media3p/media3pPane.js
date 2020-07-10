@@ -17,8 +17,15 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 /**
  * WordPress dependencies
@@ -29,6 +36,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import MediaGallery from '../common/mediaGallery';
+import {
+  useMedia3p,
+  useMedia3pForProvider,
+} from '../../../../../app/media/media3p/useMedia3p';
 import {
   MediaGalleryContainer,
   PaneHeader,
@@ -59,6 +70,8 @@ const CategorySection = styled.div`
  * @return {*} The media pane element for 3P integrations.
  */
 function Media3pPane(props) {
+  const { isActive } = props;
+
   // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
   // State and callback ref necessary to recalculate the padding of the list
   //  given the scrollbar width.
@@ -72,32 +85,14 @@ function Media3pPane(props) {
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
-  // TODO(#2368): get resources from useMedia3p
-  // TODO(#2368): handle pagination / infinite scrolling
-  const resources = [
-    {
-      id: 1,
-      type: 'image',
-      local: false,
-      alt: 'image alt',
-      mimeType: 'image/jpeg',
-      width: 18,
-      height: 12,
-      src:
-        'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
-    },
-    {
-      id: 1,
-      type: 'image',
-      local: false,
-      alt: 'image alt',
-      mimeType: 'image/jpeg',
-      width: 128,
-      height: 72,
-      src:
-        'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq',
-    },
-  ];
+  const { setSelectedProvider } = useMedia3p(({ actions }) => ({
+    setSelectedProvider: actions.setSelectedProvider,
+  }));
+  useEffect(() => {
+    if (isActive) {
+      setSelectedProvider({ provider: 'unsplash' });
+    }
+  }, [isActive, setSelectedProvider]);
 
   // Recalculates padding of Media Pane so it stays centered.
   // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
@@ -115,6 +110,10 @@ function Media3pPane(props) {
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, refContainer]);
 
+  const { media } = useMedia3pForProvider('unsplash', ({ state }) => ({
+    media: state.media,
+  }));
+
   // Callback for when a media element is selected.
   const onInsert = useCallback(() => {
     // TODO(#3119): wire up with inserting elements.
@@ -128,6 +127,7 @@ function Media3pPane(props) {
     // TODO(#2393): set state.
   }, []);
 
+  // TODO(#2368): handle pagination / infinite scrolling
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -150,7 +150,7 @@ function Media3pPane(props) {
         </PaneHeader>
         <MediaGalleryContainer ref={refCallbackContainer}>
           <MediaGallery
-            resources={resources}
+            resources={media}
             onInsert={onInsert}
             providerType={ProviderType.UNSPLASH}
           />
@@ -159,5 +159,9 @@ function Media3pPane(props) {
     </StyledPane>
   );
 }
+
+Media3pPane.propTypes = {
+  isActive: PropTypes.bool,
+};
 
 export default Media3pPane;
