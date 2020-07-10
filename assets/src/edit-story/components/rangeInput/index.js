@@ -80,14 +80,36 @@ const Input = styled.input.attrs({
   }
 `;
 
-function RangeInput({ minorStep, majorStep, handleChange, value, ...rest }) {
+/**
+ * A styled range input component.
+ *
+ * This component must be initialized with two step values - one value (`majorStep`)
+ * is the coarse value, that simply pressing arrow-left and arrow-right while move
+ * between (e.g. 1) and the other (`minorStep`) is the more fine-grained value (e.g. 0.1)
+ * which can be used by pressing shift+arrow.
+ *
+ * When using the mouse, only `minorStep` is considered and this is the resolution the
+ * range has.
+ */
+function RangeInput({
+  minorStep,
+  majorStep,
+  handleChange,
+  value,
+  min,
+  max,
+  ...rest
+}) {
   const ref = useRef();
   const update = useCallback(
     (direction, isMajor) => {
       const diff = direction * (isMajor ? majorStep : minorStep);
-      handleChange(value + diff);
+      let val = value + diff;
+      val = typeof min === 'number' ? Math.max(min, val) : val;
+      val = typeof max === 'number' ? Math.min(max, val) : val;
+      handleChange(val);
     },
-    [minorStep, majorStep, handleChange, value]
+    [minorStep, majorStep, handleChange, min, max, value]
   );
 
   useKeyDownEffect(ref, ['left'], () => update(-1, true), [update]);
@@ -100,6 +122,8 @@ function RangeInput({ minorStep, majorStep, handleChange, value, ...rest }) {
       onChange={(evt) => handleChange(evt.target.valueAsNumber)}
       step={minorStep}
       value={value}
+      min={min}
+      max={max}
       {...rest}
     />
   );
@@ -110,6 +134,8 @@ RangeInput.propTypes = {
   minorStep: PropTypes.number.isRequired,
   majorStep: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
 };
 
 export default RangeInput;
