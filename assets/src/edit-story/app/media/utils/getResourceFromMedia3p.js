@@ -115,7 +115,6 @@ function getResourceFromMedia3p(m) {
     height: urls.full.height,
     poster: null, // TODO: Implement for videos.
     posterId: null, // TODO: Implement for videos.
-    id: m.name,
     length: null, // TODO: Implement for videos.
     lengthFormatted: null, // TODO: Implement for videos.
     title: m.description,
