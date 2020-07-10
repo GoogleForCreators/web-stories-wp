@@ -26,7 +26,7 @@ export const PaneInner = styled.div`
   height: 100%;
   display: grid;
   grid:
-    'header   ' auto
+    'header' auto
     'infinitescroll' 1fr
     / 1fr;
 `;
