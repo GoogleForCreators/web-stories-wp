@@ -26,10 +26,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import MediaElement from '../mediaElement';
-import ApiContext from '../../../../../app/api/context';
-import MediaContext from '../../../../../app/media/context';
-import SnackbarContext from '../../../../../app/snackbar/context';
-import testImage from './test-image.jpg';
+import ApiContext from '../../../../../../app/api/context';
+import MediaContext from '../../../../../../app/media/context';
+import SnackbarContext from '../../../../../../app/snackbar/context';
+import testImage from '../../local/stories/test-image.jpg';
 import testPoster from './test-poster.png';
 import testVideo from './test-video.mp4';
 

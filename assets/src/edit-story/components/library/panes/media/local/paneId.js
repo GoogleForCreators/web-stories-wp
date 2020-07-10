@@ -17,6 +17,6 @@
 /**
  * Internal dependencies
  */
-import { getPaneId } from '../shared';
+import { getPaneId } from '../../shared';
 
 export default getPaneId('media');
