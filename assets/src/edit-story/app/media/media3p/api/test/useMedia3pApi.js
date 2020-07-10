@@ -113,7 +113,7 @@ describe('useMedia3pApi', () => {
           },
           creationDate: '1234',
           height: 3536,
-          id: 'media/unsplash:1234',
+          id: undefined,
           length: null,
           lengthFormatted: null,
           local: false,

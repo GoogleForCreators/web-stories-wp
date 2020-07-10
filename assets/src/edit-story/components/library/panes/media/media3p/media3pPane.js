@@ -49,6 +49,7 @@ import {
   StyledPane,
 } from '../common/styles';
 import { SearchInput } from '../../../common';
+import useLibrary from '../../../useLibrary';
 import { ProviderType } from './providerType';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
@@ -72,6 +73,21 @@ const CategorySection = styled.div`
  */
 function Media3pPane(props) {
   const { isActive } = props;
+
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
+
+  /**
+   * Insert element such image, video and audio into the editor.
+   *
+   * @param {Object} resource Resource object
+   * @return {null|*} Return onInsert or null.
+   */
+  const insertMediaElement = useCallback(
+    (resource) => insertElement(resource.type, { resource }),
+    [insertElement]
+  );
 
   // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
   // State and callback ref necessary to recalculate the padding of the list
@@ -115,11 +131,6 @@ function Media3pPane(props) {
     media: state.media,
   }));
 
-  // Callback for when a media element is selected.
-  const onInsert = useCallback(() => {
-    // TODO(#3119): wire up with inserting elements.
-  }, []);
-
   const onSearch = useCallback(() => {
     // TODO(#2391): Perform search.
   }, []);
@@ -153,7 +164,7 @@ function Media3pPane(props) {
           <MediaGalleryInnerContainer>
             <MediaGallery
               resources={media}
-              onInsert={onInsert}
+              onInsert={insertMediaElement}
               providerType={ProviderType.UNSPLASH}
             />
           </MediaGalleryInnerContainer>
