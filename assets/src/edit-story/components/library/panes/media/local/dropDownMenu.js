@@ -29,9 +29,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { More } from '../../../../components/button';
-import DropDownList from '../../../../components/form/dropDown/list';
-import Popup from '../../../../components/popup';
+import { More } from '../../../../button';
+import DropDownList from '../../../../form/dropDown/list';
+import Popup from '../../../../popup';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 

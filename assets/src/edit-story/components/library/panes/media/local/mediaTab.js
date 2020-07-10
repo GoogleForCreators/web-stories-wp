@@ -22,8 +22,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Tab } from '../shared';
-import { Media } from '../../../../icons';
+import { Tab } from '../../shared';
+import { Media } from '../../../../../icons';
 import paneId from './paneId';
 
 function MediaTab(props) {
