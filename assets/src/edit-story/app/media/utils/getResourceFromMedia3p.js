@@ -78,15 +78,13 @@ function getUrls(m) {
 
     const sizesFromBiggest = m.imageUrls
       .sort((el1, el2) => el2.width - el1.width)
-      .map((u) => {
-        return {
-          file: m.name,
-          source_url: u.url,
-          mime_type: u.mimeType,
-          width: u.width,
-          height: u.height,
-        };
-      });
+      .map((u) => ({
+        file: m.name,
+        source_url: u.url,
+        mime_type: u.mimeType,
+        width: u.width,
+        height: u.height,
+      }));
     const namedSizes = [
       ['full', sizesFromBiggest[0]],
       ['large', sizesFromBiggest[1]],
