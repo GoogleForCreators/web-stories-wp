@@ -42,6 +42,7 @@ import {
 } from '../../../../../app/media/media3p/useMedia3p';
 import {
   MediaGalleryContainer,
+  MediaGalleryInnerContainer,
   PaneHeader,
   PaneInner,
   SearchInputContainer,
@@ -54,13 +55,13 @@ import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
   margin-top: 30px;
-  padding: 0 1.5em;
+  padding: 0 24px;
 `;
 
 const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
   min-height: 94px;
-  padding: 30px 1.5em;
+  padding: 30px 24px;
 `;
 
 /**
@@ -149,11 +150,13 @@ function Media3pPane(props) {
           <CategorySection>{__('Coming soon', 'web-stories')}</CategorySection>
         </PaneHeader>
         <MediaGalleryContainer ref={refCallbackContainer}>
-          <MediaGallery
-            resources={media}
-            onInsert={onInsert}
-            providerType={ProviderType.UNSPLASH}
-          />
+          <MediaGalleryInnerContainer>
+            <MediaGallery
+              resources={media}
+              onInsert={onInsert}
+              providerType={ProviderType.UNSPLASH}
+            />
+          </MediaGalleryInnerContainer>
         </MediaGalleryContainer>
       </PaneInner>
     </StyledPane>
