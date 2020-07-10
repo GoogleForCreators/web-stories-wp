@@ -233,8 +233,14 @@ class Story_Post_Type {
 	 */
 	public function replace_editor( $replace, $post ) {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$GLOBALS['post'] = $post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
+
+			// Since the 'replace_editor' filter can be run multiple times, only load the
+			// custom editor after the 'current_screen' action when we can be certain the
+			// $post_type, $post_type_object, $post globals are all set by WordPress.
+			if ( did_action( 'current_screen' ) ) {
+				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
+			}
+
 			return true;
 		}
 
