@@ -247,7 +247,7 @@ class Dashboard {
 				 * Issue: 1897
 				 * Creation date: 2020-05-21
 				 */
-				'enableAnimation'                 => false,
+				'enableAnimation'                 => true,
 				/**
 				 * Description: Enables in-progress views to be accessed.
 				 * Author: @carlos-kelly

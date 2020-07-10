@@ -1878,7 +1878,123 @@
           "b": 255,
           "a": 1
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1.1,
+          "id": "8a8750b9-3a1e-4437-a699-61a7189393d5",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["117a9caa-d0cc-47d0-b00e-ee623bbcd5fc"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1,
+          "zoomTo": 0.91,
+          "id": "6087d9d9-b92f-4555-be52-21aab34e505b",
+          "duration": 5000,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["117a9caa-d0cc-47d0-b00e-ee623bbcd5fc"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "50%",
+          "offsetY": 0,
+          "id": "0616db81-0bbe-47cc-a319-07030efd4578",
+          "duration": 600,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["a518c941-56a4-4e2d-afcd-893c88dc31ae"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "56793acd-9757-4e9a-8193-bffc92307834",
+          "duration": 600,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["a518c941-56a4-4e2d-afcd-893c88dc31ae"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "673267bc-d115-49d0-a3e3-557a29d640f2",
+          "duration": 300,
+          "delay": 900,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "e024d5d3-7398-454a-b28c-52e111e33f1b",
+            "4393667f-c2ab-417b-a901-81c9aa4e3bb3"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50%",
+          "id": "ea9c8837-d292-465d-8904-2482d3655f05",
+          "duration": 600,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["c40c8eae-e683-4fa6-a632-e1d652279a37"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "d2c827ba-f71f-4238-be86-43b9c78afe61",
+          "duration": 600,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["c40c8eae-e683-4fa6-a632-e1d652279a37"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50%",
+          "id": "ddddb48f-0331-49cd-8e8f-d31a8e9efe22",
+          "duration": 600,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["ca20176a-3245-4735-9b1c-66017aa9e528"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "46426801-dfcc-412b-bf15-9995f0e544d0",
+          "duration": 600,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["ca20176a-3245-4735-9b1c-66017aa9e528"]
+        }
+      ]
     },
     {
       "elements": [
@@ -2103,7 +2219,122 @@
           "g": 255,
           "b": 255
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "50%",
+          "offsetY": "50%",
+          "id": "6dc0bf5f-05b8-4dc2-9549-206464cf974b",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["37a09535-568f-4dc6-a07d-57f3ac1c9d39"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1,
+          "id": "f27f9a15-3a4b-40cd-ba06-262a0bdc3ef4",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["37a09535-568f-4dc6-a07d-57f3ac1c9d39"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-50%",
+          "id": "9f489c87-65cb-4deb-b64f-a68d549cc229",
+          "duration": 600,
+          "delay": 650,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["3932eb5c-e456-43d8-988d-4aa01dd4a8bd"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "3b20d11e-0cdc-4205-9cbb-b95ea0ff74b2",
+          "duration": 600,
+          "delay": 650,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["3932eb5c-e456-43d8-988d-4aa01dd4a8bd"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-50%",
+          "id": "65d94114-f554-41c3-9743-89b8f46e5c7d",
+          "duration": 600,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["bc7d8800-b421-4a19-9db0-f594e9b0bd8d"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "27569516-af89-4423-835c-605667bebdd8",
+          "duration": 600,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["bc7d8800-b421-4a19-9db0-f594e9b0bd8d"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "6ddb06d9-4246-45b1-af1f-26149f6d80b3",
+          "duration": 600,
+          "delay": 900,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["7c4a2686-3bcc-4e41-92ed-f12b899b615b"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "d4ed474b-a264-4730-bde5-31b227bf575e",
+          "duration": 600,
+          "delay": 900,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["7c4a2686-3bcc-4e41-92ed-f12b899b615b"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "517c8f73-93d2-4762-9f46-497fa697d485",
+          "duration": 300,
+          "delay": 1200,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["4f71e74f-fd3f-4840-9ea4-8c0f59363952"]
+        }
+      ]
     },
     {
       "elements": [
@@ -2351,7 +2582,147 @@
           "b": 255,
           "a": 1
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "zoom",
+          "zoomFrom": 3,
+          "zoomTo": 1.1,
+          "id": "fe867ad0-a4d2-49fa-a968-386920a4c342",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["3f23fce9-2fb5-4f17-acec-f0f6f524967d"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1,
+          "zoomTo": 0.91,
+          "id": "3a3837d5-1611-4b3f-b18e-a6ac9f057259",
+          "duration": 5000,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["3f23fce9-2fb5-4f17-acec-f0f6f524967d"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "82218c50-c0de-49b5-b5da-b237e52a689c",
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["f60ae332-db13-481f-ace7-107885b1c202"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "55039a02-4f5c-4a1b-9678-063f78f84018",
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["f60ae332-db13-481f-ace7-107885b1c202"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50%",
+          "id": "0f177e6a-e539-4b88-8b8a-9aae8232f8c8",
+          "duration": 600,
+          "delay": 900,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["30716193-c4ff-4619-b485-8108d250c8b8"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "09d57ce9-6c48-484f-8242-a1f9c73ff6fa",
+          "duration": 600,
+          "delay": 900,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["30716193-c4ff-4619-b485-8108d250c8b8"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50%",
+          "id": "b7207d5f-4b8d-4374-95ff-b8c90caf4e23",
+          "duration": 600,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["41d3069f-61de-4998-8487-036ea86917a6"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "969b9ef8-6140-42c5-a980-2c33ca8fedaa",
+          "duration": 500,
+          "delay": 1100,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["41d3069f-61de-4998-8487-036ea86917a6"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "9acdd487-6dcf-4b58-bd5d-81fbe9b01f10",
+          "duration": 600,
+          "delay": 1400,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["5f598141-8e1c-4486-8d73-9fd9e8934c48"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "294ef23e-db97-4625-999b-279b04581420",
+          "duration": 600,
+          "delay": 1400,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": ["5f598141-8e1c-4486-8d73-9fd9e8934c48"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "8d2f9fb5-f801-4c7b-b1f8-3574cc240205",
+          "duration": 400,
+          "delay": 1600,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["28b135fd-63b8-456c-985d-3dfe542fffd7"]
+        }
+      ]
     },
     {
       "elements": [
@@ -2952,7 +3323,173 @@
           "g": 255,
           "b": 255
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "b2692558-de0c-414e-a5bd-6dabab432aa2",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["43b28f35-fdc3-4b59-b3da-ad9581cbeb8c"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "8010ad5b-af4a-44bd-9a5f-9e1dbdac24c0",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["43b28f35-fdc3-4b59-b3da-ad9581cbeb8c"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "60c7e1ab-d278-4435-9a27-fb53b2409147",
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["d16ef169-d80c-4e70-817a-9e3bf66d1428"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "a46c48cd-3c07-4668-a91f-ea9f8e87015d",
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["d16ef169-d80c-4e70-817a-9e3bf66d1428"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "1d1010e8-4872-48fe-b476-2e2598b90798",
+          "duration": 800,
+          "delay": 395,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["a7ca1ee4-5f88-45e3-aa3d-ea3cfda6b027"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "2724d862-fd8b-425e-88bc-bde7c4e48436",
+          "duration": 800,
+          "delay": 395,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["a7ca1ee4-5f88-45e3-aa3d-ea3cfda6b027"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "f7ff9371-3b6a-4d5b-9101-3423c13eea62",
+          "duration": 800,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["07155f07-19d8-4eca-8817-9b512fd3303f"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "3c1a8a2b-2309-4065-b83c-20e5b919c0f2",
+          "duration": 800,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["07155f07-19d8-4eca-8817-9b512fd3303f"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "41a17800-9e0b-4bb0-800b-7c73b1b4a012",
+          "duration": 800,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": [
+            "5cb07f8c-750f-437b-981f-cc3228cdeffd",
+            "adc642e3-a739-4349-9646-cb06d88f51a4"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "e5aead57-deed-4438-8ddc-aa0ecfcac57b",
+          "duration": 800,
+          "delay": 895,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": [
+            "840cd415-bf08-4186-9649-932beb2e6778",
+            "919e9a80-e851-49fe-9660-c67937a14e13"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "de38c9e9-65ae-4899-80fd-e4608f8fe58f",
+          "duration": 800,
+          "delay": 1095,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": [
+            "bbe6302e-87c0-49d2-b16b-ff787059c187",
+            "63b0bbbf-6ef4-42c1-b017-d7db0db07039"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "71591274-06c7-4871-90a5-62b32559e174",
+          "duration": 800,
+          "delay": 1300,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both",
+          "targets": [
+            "44db08e2-0900-40a6-9e52-3ab2325aeab2",
+            "300c43cc-b0b0-45de-97ba-1775028d50bb"
+          ]
+        }
+      ]
     },
     {
       "elements": [
@@ -3477,7 +4014,253 @@
           "g": 255,
           "b": 255
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "0",
+          "offsetY": "30%",
+          "id": "5d2c8ced-2a5a-4f33-93b7-b1dce1485211",
+          "duration": 600,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e5272870-2b37-4bba-abcf-eab0ffc222a4"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "edb72589-051f-4e92-88ed-0762124a98de",
+          "duration": 600,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e5272870-2b37-4bba-abcf-eab0ffc222a4"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "d8278bcb-9497-46ee-8647-2542d77724a6",
+          "duration": 800,
+          "delay": 500,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["85439d79-2100-4dc8-9b20-e6e51d2064af"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "a9b865e2-1426-4b29-aa3f-77809e9e81ab",
+          "duration": 800,
+          "delay": 500,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["85439d79-2100-4dc8-9b20-e6e51d2064af"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 3,
+          "zoomTo": 1.1,
+          "id": "3550fc5b-8c70-4693-827d-d8452d1a3650",
+          "duration": 800,
+          "delay": 500,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["85439d79-2100-4dc8-9b20-e6e51d2064af"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "7409c8b6-8bf2-4d9d-bfe2-0e3b63de24fe",
+          "duration": 800,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["19fd443d-f580-436b-82b4-ef2938c55e89"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "3fddfdf0-edb6-4388-ac89-1246259fd34d",
+          "duration": 800,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["19fd443d-f580-436b-82b4-ef2938c55e89"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 3,
+          "zoomTo": 1,
+          "id": "7e717ddd-25de-49c3-b966-9002c35b27ff",
+          "duration": 800,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["19fd443d-f580-436b-82b4-ef2938c55e89"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "adc7fe99-4cf5-42f0-9015-08ba8c035d9a",
+          "duration": 800,
+          "delay": 895,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["098c9143-7ca0-4b04-866f-02c5c48339d2"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "531cce82-e58b-4d48-9f61-e10cca808ef7",
+          "duration": 800,
+          "delay": 895,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["098c9143-7ca0-4b04-866f-02c5c48339d2"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 3,
+          "zoomTo": 1,
+          "id": "8258acbe-b4ea-48ff-9685-d22e27fa2f1f",
+          "duration": 800,
+          "delay": 895,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["098c9143-7ca0-4b04-866f-02c5c48339d2"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "c43f5e21-19b9-4d2a-a3d5-a7184ce77160",
+          "duration": 600,
+          "delay": 1300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["b542beff-39c1-4787-a8ad-a2a061c51a60"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100.5%",
+          "offsetY": 0,
+          "id": "d279ac69-254b-4c4a-8f4d-03555a38eaa9",
+          "duration": 600,
+          "delay": 1300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["b542beff-39c1-4787-a8ad-a2a061c51a60"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "id": "a6bcb98c-4da7-450a-94fa-fa064587e444",
+          "duration": 600,
+          "delay": 1700,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["12b82d84-167c-49b1-8efd-afae77b857f0"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "id": "54a4c3ff-2796-4a44-ba80-a66b9625eb65",
+          "duration": 600,
+          "delay": 1700,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["12b82d84-167c-49b1-8efd-afae77b857f0"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "e0909bff-40db-4f59-9914-1948ed11f296",
+          "duration": 600,
+          "delay": 1500,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "1c9c16f9-d920-4516-a16a-2dad87d4e474",
+          "duration": 600,
+          "delay": 1700,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["cb201d61-faec-476e-9d72-14caf813197b"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "124381e1-e1dd-4de8-a9a6-fea295aa3759",
+          "duration": 600,
+          "delay": 1900,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["fcdc8182-cfb1-4010-82cd-91b5f235f0fc"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "3b42c8b9-9667-4348-9081-d87f7242f010",
+          "duration": 800,
+          "delay": 2000,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "cf79c6e9-4f9d-4c4e-a455-aaa490458775",
+            "0a44cd76-e684-4cea-a6e8-f50e0557ce46",
+            "81ec3ab2-7eee-4d86-b981-90e8415a9419",
+            "675e2caa-2276-4b8b-9d80-0fcffd623d62"
+          ]
+        }
+      ]
     }
   ],
   "autoAdvance": true,
