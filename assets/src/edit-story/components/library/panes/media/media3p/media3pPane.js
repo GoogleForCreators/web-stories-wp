@@ -30,13 +30,13 @@ import {
 /**
  * Internal dependencies
  */
-import MediaGallery from '../mediaGallery';
+import MediaGallery from '../common/mediaGallery';
 import { Pane } from '../../shared';
-import { ProviderType } from '../providerType';
 import {
   useMedia3p,
   useMedia3pForProvider,
 } from '../../../../../app/media/media3p/useMedia3p';
+import { ProviderType } from './providerType';
 import paneId from './paneId';
 
 const StyledPane = styled(Pane)`

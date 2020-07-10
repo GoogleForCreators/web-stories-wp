@@ -63,9 +63,7 @@ export const elementWithFont = css`
   color: #000000;
 `;
 
-/**
- * See generateParagraphTextStyle for the full set of properties.
- */
+// See generateParagraphTextStyle for the full set of properties.
 export const elementWithTextParagraphStyle = css`
   margin: ${({ margin }) => margin || 0};
   padding: ${({ padding }) => padding || 0};

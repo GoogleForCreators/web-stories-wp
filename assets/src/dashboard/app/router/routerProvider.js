@@ -17,11 +17,15 @@
 /**
  * External dependencies
  */
-
 import { createContext, useRef, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
+import { parse, stringify } from 'query-string';
 import { createHashHistory } from 'history';
+
+/**
+ * Internal dependencies
+ */
+import { trackScreenView } from '../../../tracking';
 
 export const RouterContext = createContext({ state: {}, actions: {} });
 
@@ -31,15 +35,20 @@ function RouterProvider({ children, ...props }) {
     history.current.location.pathname
   );
   const [queryParams, setQueryParams] = useState(
-    queryString.parse(history.current.location.search)
+    parse(history.current.location.search)
   );
 
   useEffect(() => {
     return history.current.listen(({ location }) => {
-      setQueryParams(queryString.parse(location.search));
+      setQueryParams(parse(location.search));
       setCurrentPath(location.pathname);
     });
   }, []);
+
+  useEffect(() => {
+    const query = stringify(queryParams);
+    trackScreenView(currentPath + (query ? `?${query}` : ''));
+  }, [currentPath, queryParams]);
 
   const value = useMemo(
     () => ({

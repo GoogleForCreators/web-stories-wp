@@ -22,7 +22,7 @@
  */
 import { TAB_IDS } from '../../../components/library/libraryProvider';
 import { AnimationPane, AnimationTab } from './animation';
-import { MediaPane, MediaTab } from './media';
+import { MediaPane, MediaTab } from './media/local';
 import { Media3pPane, Media3pTab } from './media/media3p';
 import { ShapesPane, ShapesTab } from './shapes';
 import { TextPane, TextTab } from './text';
@@ -50,10 +50,13 @@ const tabs = {
   },
 };
 
+/** @typedef {import('react').ReactElement} ReactElement */
+
 /**
  * Return the necessary information to render the tab and pane for a tab ID.
  *
  * @param {string} tabId The id of the tab.
+ * @return {Object<{Tab: ReactElement, Pane: ReactElement, id: string}>} Pane object.
  */
 const getPane = (tabId) => tabs[tabId];
 

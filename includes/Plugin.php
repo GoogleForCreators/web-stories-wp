@@ -95,11 +95,19 @@ class Plugin {
 	public $discovery;
 
 	/**
+	 * Tracking.
+	 *
+	 * @var Tracking
+	 */
+	public $tracking;
+
+	/**
 	 * Database Upgrader.
 	 *
 	 * @var Database_Upgrader
 	 */
 	public $database_upgrader;
+
 	/**
 	 * Initialize plugin functionality.
 	 *
@@ -118,6 +126,9 @@ class Plugin {
 		// Beta version updater.
 		$this->updater = new Updater();
 		add_action( 'init', [ $this->updater, 'init' ], 9 );
+
+		$this->tracking = new Tracking();
+		add_action( 'init', [ $this->tracking, 'init' ] );
 
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
@@ -143,6 +154,13 @@ class Plugin {
 		$this->discovery = new Discovery();
 		add_action( 'init', [ $this->discovery, 'init' ] );
 
+		// Register activation flag logic outside of 'init' since it hooks into
+		// plugin activation.
+		$activation_flag = new Activation_Flag();
+		$activation_flag->init();
+
+		$activation_notice = new Activation_Notice( $activation_flag );
+		$activation_notice->init();
 	}
 
 	/**

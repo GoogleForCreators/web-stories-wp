@@ -16,6 +16,14 @@
 
 const MAX_WAIT_THRESHOLD = 5000;
 
+/** @typedef {import('puppeteer').Page} Page */
+
+/**
+ * Attempts to open the story preview in a new tab.
+ *
+ * @param {Page} editorPage Editor page object.
+ * @return {Promise<Page>} Preview page object.
+ */
 async function previewStory(editorPage) {
   let openTabs = await browser.pages();
   const expectedTabsCount = openTabs.length + 1;
