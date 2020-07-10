@@ -33,6 +33,20 @@ const media = [
       {
         imageName: 'full',
         url: 'http://www.img.com/1',
+        width: 640,
+        height: 480,
+        mimeType: 'image/png',
+      },
+      {
+        imageName: 'large',
+        url: 'http://www.img.com/2',
+        width: 300,
+        height: 200,
+        mimeType: 'image/png',
+      },
+      {
+        imageName: 'web_stories_thumbnail',
+        url: 'http://www.img.com/3',
         width: 200,
         height: 100,
         mimeType: 'image/png',
@@ -49,7 +63,21 @@ const media = [
     imageUrls: [
       {
         imageName: 'full',
-        url: 'http://www.img.com/2',
+        url: 'http://www.img.com/4',
+        width: 640,
+        height: 480,
+        mimeType: 'image/png',
+      },
+      {
+        imageName: 'large',
+        url: 'http://www.img.com/5',
+        width: 300,
+        height: 200,
+        mimeType: 'image/png',
+      },
+      {
+        imageName: 'web_stories_thumbnail',
+        url: 'http://www.img.com/6',
         width: 200,
         height: 100,
         mimeType: 'image/png',
