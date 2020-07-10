@@ -17,9 +17,9 @@
 /**
  * Gets point from offset.
  *
- * @param {number} side
- * @param {number} mediaElementSide
- * @param {number} offset
+ * @param {number} side Side.
+ * @param {number} mediaElementSide Media element side.
+ * @param {number} offset Offset.
  * @return {number} Focal
  */
 function getFocalFromOffset(side, mediaElementSide, offset) {

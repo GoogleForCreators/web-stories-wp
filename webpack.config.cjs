@@ -208,4 +208,31 @@ const storyEmbedBlock = {
   },
 };
 
-module.exports = [storiesEditor, dashboard, storyEmbedBlock];
+const activationNotice = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-activation-notice': './assets/src/activation-notice/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new WebpackBar({
+      name: 'Activation Notice',
+      color: '#fcd8ba',
+    }),
+  ],
+  optimization: {
+    ...sharedConfig.optimization,
+    splitChunks: {
+      cacheGroups: {
+        stories: {
+          name: 'activation-notice',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
+};
+
+module.exports = [storiesEditor, dashboard, storyEmbedBlock, activationNotice];

@@ -222,21 +222,26 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Highjack editor with custom editor.
+	 * Replace default post editor with our own implementation.
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @param bool    $replace Bool if to replace editor or not.
 	 * @param WP_Post $post    Current post object.
 	 *
-	 * @return bool
+	 * @return bool Whether the editor has been replaced.
 	 */
 	public function replace_editor( $replace, $post ) {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$replace = true;
-			// In lieu of an action being available to actually load the replacement editor, include it here
-			// after the current_screen action has occurred because the replace_editor filter fires twice.
+
+			// Since the 'replace_editor' filter can be run multiple times, only load the
+			// custom editor after the 'current_screen' action when we can be certain the
+			// $post_type, $post_type_object, $post globals are all set by WordPress.
 			if ( did_action( 'current_screen' ) ) {
 				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
 			}
+
+			return true;
 		}
 
 		return $replace;
@@ -294,7 +299,7 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE );
+		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
 
 		wp_localize_script(
@@ -308,7 +313,7 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Get edittor settings as an array.
+	 * Get editor settings as an array.
 	 *
 	 * @return array
 	 */
