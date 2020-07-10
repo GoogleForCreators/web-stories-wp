@@ -176,7 +176,7 @@ class Dashboard {
 			WEBSTORIES_VERSION
 		);
 
-		$this->enqueue_script( self::SCRIPT_HANDLE );
+		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 		$this->enqueue_style( self::SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		wp_localize_script(

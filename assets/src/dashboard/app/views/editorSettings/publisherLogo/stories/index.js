@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+
+/**
  * Internal dependencies
  */
 import PublisherLogoSettings from '../';
@@ -25,5 +30,13 @@ export default {
 };
 
 export const _default = () => {
-  return <PublisherLogoSettings />;
+  return (
+    <PublisherLogoSettings
+      onUpdatePublisherLogo={(e) => {
+        e.preventDefault();
+        action('update publisher logo clicked');
+      }}
+      publisherLogos={[]}
+    />
+  );
 };

@@ -14,9 +14,23 @@
  * limitations under the License.
  */
 
+jest.mock('../shared');
+
 /**
  * Internal dependencies
  */
-import { getPaneId } from '../shared';
+import { config } from '../shared';
+import initializeTracking from '../initializeTracking';
 
-export default getPaneId('media');
+describe('initializeTracking', () => {
+  afterEach(() => {
+    config.trackingId = undefined;
+  });
+
+  it('sets app name in config', async () => {
+    config.trackingId = '1234567';
+    await initializeTracking('Foo App');
+
+    expect(config.appName).toStrictEqual('Foo App');
+  });
+});
