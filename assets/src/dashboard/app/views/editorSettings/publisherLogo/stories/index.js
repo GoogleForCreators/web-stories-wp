@@ -32,9 +32,8 @@ export default {
 export const _default = () => {
   return (
     <PublisherLogoSettings
-      onUpdatePublisherLogo={(e) => {
-        e.preventDefault();
-        action('update publisher logo clicked');
+      onUpdatePublisherLogo={(newFiles) => {
+        action('update publisher logo clicked')(newFiles);
       }}
       publisherLogos={[]}
     />
