@@ -74,20 +74,20 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
           const {
             rows: numRows,
             columns: numColumns,
-          } = getGridColumnAndRowCount(gridRef.current);
+          } = getGridColumnAndRowCount(gridRef.current, pageIds.length);
           const currentIndex = pageIds.indexOf(focusedPageId);
           const dir = key === 'ArrowDown' ? 1 : -1;
 
           const currentRow = getRow(currentIndex, numColumns);
           const currentColumn = getColumn(currentIndex, numColumns);
 
-          const nextIndex = getIndex(
-            currentRow + dir,
-            currentColumn,
+          const nextIndex = getIndex({
+            row: currentRow + dir,
+            column: currentColumn,
             numRows,
             numColumns,
-            pageIds.length
-          );
+            numItems: pageIds.length,
+          });
 
           if (nextIndex < 0) {
             return;
@@ -161,20 +161,20 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
           const {
             rows: numRows,
             columns: numColumns,
-          } = getGridColumnAndRowCount(gridRef.current);
+          } = getGridColumnAndRowCount(gridRef.current, pageIds.length);
           const currentIndex = pageIds.indexOf(focusedPageId);
           const dir = key === 'ArrowDown' ? 1 : -1;
 
           const currentRow = getRow(currentIndex, numColumns);
           const currentColumn = getColumn(currentIndex, numColumns);
 
-          const nextIndex = getIndex(
-            currentRow + dir,
-            currentColumn,
+          const nextIndex = getIndex({
+            row: currentRow + dir,
+            column: currentColumn,
             numRows,
             numColumns,
-            pageIds.length
-          );
+            numItems: pageIds.length,
+          });
 
           if (nextIndex < 0) {
             return;
@@ -234,32 +234,35 @@ function getArrowDir(key, pos, neg, isRTL) {
   return 0;
 }
 
-export function getGridColumnAndRowCount(gridElement) {
-  const { gridTemplateColumns, gridTemplateRows } = getComputedStyle(
-    gridElement
-  );
-  return {
-    rows: gridTemplateRows.includes('none')
-      ? 0
-      : gridTemplateRows.trim().split(' ').length,
-    columns: gridTemplateColumns.includes('none')
-      ? 0
-      : gridTemplateColumns.trim().split(' ').length,
-  };
+function getGridColumnAndRowCount(grid, pageCount) {
+  let columns = 0;
+  let prevX;
+  for (const el of grid.children) {
+    const { x } = el.getBoundingClientRect();
+    if (prevX != null && x < prevX) {
+      break;
+    }
+    prevX = x;
+    columns++;
+  }
+
+  const rows = Math.ceil(pageCount / columns);
+
+  return { rows, columns };
 }
 
 // will return a 1 based index
-export function getRow(index, numColumns) {
+function getRow(index, numColumns) {
   return Math.ceil((index + 1) / numColumns);
 }
 
 // will return a 1 based index
-export function getColumn(index, numColumns) {
+function getColumn(index, numColumns) {
   return (index % numColumns) + 1;
 }
 
 // will return a 0 based index
-export function getIndex(row, column, numRows, numColumns, numItems) {
+function getIndex({ row, column, numRows, numColumns, numItems }) {
   const isOutOfBounds =
     row > numRows || row <= 0 || column > numColumns || column <= 0;
 

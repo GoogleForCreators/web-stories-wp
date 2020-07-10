@@ -139,7 +139,7 @@ describe('GridView integration', () => {
     await focusOnPageList();
 
     // The initial focus should be on the first (and active) page.
-    const page1 = gridView.getByRole('button', { name: /Page 1/ });
+    let page1 = gridView.getByRole('button', { name: /Page 1/ });
     expect(page1).toEqual(document.activeElement);
 
     // go right by 1
