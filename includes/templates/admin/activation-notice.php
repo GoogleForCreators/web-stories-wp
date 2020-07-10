@@ -1,4 +1,14 @@
-/*
+<?php
+/**
+ * Activation notice.
+ *
+ * @package   Google\Web_Stories
+ * @copyright 2020 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
+ */
+
+/**
  * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,24 +24,11 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
- * Internal dependencies
- */
-import { Tab } from '../shared';
-import { Media } from '../../../../icons';
-import paneId from './paneId';
-
-function MediaTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <Media aria-label={__('Media library', 'web-stories')} />
-    </Tab>
-  );
+// don't load directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
 }
+?>
+<div id="web-stories-plugin-activation-notice" class="notice notice-success is-dismissible">
 
-export default MediaTab;
+</div>

@@ -31,14 +31,14 @@ import { format } from '@wordpress/date';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../../../app/api';
-import Dialog from '../../../../components/dialog';
-import { Plain } from '../../../../components/button';
-import { useLocalMedia } from '../../../../app/media';
-import { useSnackbar } from '../../../../app/snackbar';
-import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
-import StoryPropTypes from '../../../../types';
-import { useConfig } from '../../../../app';
+import { useAPI } from '../../../../../app/api';
+import Dialog from '../../../../dialog';
+import { Plain } from '../../../../button';
+import { useLocalMedia } from '../../../../../app/media';
+import { useSnackbar } from '../../../../../app/snackbar';
+import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
+import StoryPropTypes from '../../../../../types';
+import { useConfig } from '../../../../../app';
 
 const styledMediaThumbnail = css`
   display: flex;

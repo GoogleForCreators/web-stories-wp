@@ -29,19 +29,19 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../app/config';
-import { useLocalMedia } from '../../../../app/media';
-import { useMediaPicker } from '../../../mediaPicker';
-import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
-import { MainButton, SearchInput } from '../../common';
-import useLibrary from '../../useLibrary';
-import { Pane } from '../shared';
+import { useConfig } from '../../../../../app/config';
+import { useLocalMedia } from '../../../../../app/media';
+import { useMediaPicker } from '../../../../mediaPicker';
+import useIntersectionEffect from '../../../../../utils/useIntersectionEffect';
+import { MainButton, SearchInput } from '../../../common';
+import useLibrary from '../../../useLibrary';
+import { Pane } from '../../shared';
 import {
   getTypeFromMime,
   getResourceFromMediaPicker,
-} from '../../../../app/media/utils';
+} from '../../../../../app/media/utils';
+import MediaElement from '../common/mediaElement';
 import paneId from './paneId';
-import MediaElement from './mediaElement';
 
 export const ROOT_MARGIN = 300;
 

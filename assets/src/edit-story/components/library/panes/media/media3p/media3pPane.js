@@ -23,9 +23,9 @@ import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import MediaGallery from '../mediaGallery';
+import MediaGallery from '../common/mediaGallery';
 import { Pane } from '../../shared';
-import { ProviderType } from '../providerType';
+import { ProviderType } from './providerType';
 import paneId from './paneId';
 
 const StyledPane = styled(Pane)`

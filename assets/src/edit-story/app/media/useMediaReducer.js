@@ -58,6 +58,7 @@ const wrapWithDispatch = (actionFnOrActionObject, dispatch) => {
  * @param {Object} actionsToWrap The action dispatcher functions, that are
  * wrapped with the `dispatch` function and may be overriden for unit testing
  * purposes
+ * @return {Object} Media reducer object.
  */
 function useMediaReducer(reducer = rootReducer, actionsToWrap) {
   const defaultActionsToWrap = useMemo(
