@@ -82,6 +82,7 @@ export function TextOutputWithUnits({
     ...bgColor,
     color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
+    overflowWrap: 'anywhere',
   };
 
   const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
@@ -99,6 +100,7 @@ export function TextOutputWithUnits({
     padding: 0,
     background: 'none',
     lineHeight,
+    overflowWrap: 'anywhere',
   };
 
   const highlightCloneStyle = {
