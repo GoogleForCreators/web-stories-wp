@@ -31,34 +31,6 @@
           "isDefaultBackground": true
         },
         {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "x": 26,
-          "y": 0,
-          "width": 360,
-          "height": 617,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "grid-4"
-          },
-          "id": "8de785a5-9d22-46db-97ad-ae0e46f3320f"
-        },
-        {
           "x": -1,
           "y": 235,
           "width": 413,
@@ -88,7 +60,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page1_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page1_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -98,6 +70,34 @@
             "local": false,
             "sizes": []
           }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 26,
+          "y": 0,
+          "width": 360,
+          "height": 617,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "grid-4"
+          },
+          "id": "8de785a5-9d22-46db-97ad-ae0e46f3320f"
         },
         {
           "x": 66,
@@ -164,7 +164,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_logo.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_logo.png",
             "width": 75,
             "height": 23,
             "id": 1627,
@@ -194,7 +194,121 @@
           "g": 146,
           "b": 46
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "zoom",
+          "zoomFrom": 0,
+          "zoomTo": 1,
+          "id": "0aaf3778-7c9b-4c11-9a0b-1c0f8ec1fd6c",
+          "duration": 1401,
+          "delay": 101,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["8de785a5-9d22-46db-97ad-ae0e46f3320f"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "77d65c4d-f7e5-4f93-9f2b-02c37c8fb218",
+          "duration": 1700,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutQuint",
+          "fill": "both",
+          "targets": ["8f4fcc58-2834-46af-a2cb-64e139f333d5"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "6330dbc9-68e5-4195-b196-89ad877eb394",
+          "duration": 1700,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutQuint",
+          "fill": "both",
+          "targets": ["8f4fcc58-2834-46af-a2cb-64e139f333d5"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1,
+          "id": "ea59eaa7-fdda-435d-b34d-8ba9a9da83a1",
+          "duration": 1501,
+          "delay": 201,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["8f4fcc58-2834-46af-a2cb-64e139f333d5"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1.15,
+          "zoomTo": 1,
+          "id": "e94a29f4-b340-4b37-9e3d-4a5d9ce033b6",
+          "duration": 6900,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["8f4fcc58-2834-46af-a2cb-64e139f333d5"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "150px",
+          "id": "d47f3607-760c-42bd-928c-ecf3d3574e0b",
+          "duration": 1400,
+          "delay": 250,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["be108bc9-3a51-48c4-b495-24be6163e44c"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "fb41be06-e7dd-49e7-bea5-1bcbcb1a6ef3",
+          "duration": 300,
+          "delay": 750,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["be108bc9-3a51-48c4-b495-24be6163e44c"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "150px",
+          "id": "2756fd60-cc66-4c21-bda0-191f388c2e01",
+          "duration": 1400,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["779cea6f-ac5b-41d1-9bb1-75511614c04d"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "d17a5472-be26-4d01-b461-ae8109a65e0a",
+          "duration": 300,
+          "delay": 650,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["779cea6f-ac5b-41d1-9bb1-75511614c04d"]
+        }
+      ]
     },
     {
       "elements": [
@@ -255,7 +369,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_radish.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_radish.png",
             "width": 220,
             "height": 309,
             "posterId": 0,
@@ -406,7 +520,107 @@
           "g": 146,
           "b": 46
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "zoom",
+          "zoomFrom": 0.05,
+          "zoomTo": 1,
+          "id": "0aaf3778-7c9b-4c11-9a0b-1c0f8ec1fd6c",
+          "duration": 1401,
+          "delay": 101,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["0271cd7e-24f8-4e8a-87c4-dac93382d742"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "100px",
+          "id": "d47f3607-760c-42bd-928c-ecf3d3574e0b",
+          "duration": 1400,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["5ad5b20a-e1ef-4341-a9ea-afc442cca079"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "100px",
+          "id": "2756fd60-cc66-4c21-bda0-191f388c2e01",
+          "duration": 1400,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["d3bb1cdf-9ab7-4444-a71b-e4a5bfd27410"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "fb41be06-e7dd-49e7-bea5-1bcbcb1a6ef3",
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["d3bb1cdf-9ab7-4444-a71b-e4a5bfd27410"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "d17a5472-be26-4d01-b461-ae8109a65e0a",
+          "duration": 600,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["5ad5b20a-e1ef-4341-a9ea-afc442cca079"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "10%",
+          "offsetY": 0,
+          "id": "20abf2a0-c4ab-46c2-9e13-00461c1b3957",
+          "duration": 7000,
+          "delay": 0,
+          "direction": "reverse",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["26a03b9b-d49f-4f87-930d-9ac98798895f"]
+        },
+        {
+          "type": "spin",
+          "rotation": "20deg",
+          "id": "d194bcf6-a300-4611-85d9-d39d7e459386",
+          "duration": 7000,
+          "delay": 0,
+          "direction": "reverse",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["26a03b9b-d49f-4f87-930d-9ac98798895f"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "5e6055fa-d2a2-4dbb-bbff-559cfb40ec30",
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["26a03b9b-d49f-4f87-930d-9ac98798895f"]
+        }
+      ]
     },
     {
       "elements": [
@@ -467,7 +681,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page3_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page3_image1.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -552,7 +766,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_persimmon.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_persimmon.png",
             "width": 220,
             "height": 228,
             "posterId": 0,
@@ -757,7 +971,196 @@
           "g": 249,
           "b": 238
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "77d65c4d-f7e5-4f93-9f2b-02c37c8fb218",
+          "duration": 1700,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutQuint",
+          "fill": "both",
+          "targets": ["4b496f17-b72e-4ead-aaa9-92936156e01f"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "6330dbc9-68e5-4195-b196-89ad877eb394",
+          "duration": 1700,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutQuint",
+          "fill": "both",
+          "targets": ["4b496f17-b72e-4ead-aaa9-92936156e01f"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1,
+          "id": "ea59eaa7-fdda-435d-b34d-8ba9a9da83a1",
+          "duration": 1501,
+          "delay": 201,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["4b496f17-b72e-4ead-aaa9-92936156e01f"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1.15,
+          "zoomTo": 1,
+          "id": "e94a29f4-b340-4b37-9e3d-4a5d9ce033b6",
+          "duration": 6900,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["4b496f17-b72e-4ead-aaa9-92936156e01f"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "-50%",
+          "offsetY": "-50%",
+          "id": "0aaf3778-7c9b-4c11-9a0b-1c0f8ec1fd6c",
+          "duration": 1401,
+          "delay": 101,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["ffa2c0e5-9b0b-4e98-82a1-8c1d7217d94e"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": "100%",
+          "id": "fa189b44-1a8e-41e8-83f9-f306749b5864",
+          "duration": 1400,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["ffa2c0e5-9b0b-4e98-82a1-8c1d7217d94e"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "-50%",
+          "offsetY": "-50%",
+          "id": "5be2327a-950c-49b3-a8a5-15d57cc00390",
+          "duration": 1400,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["ffa2c0e5-9b0b-4e98-82a1-8c1d7217d94e"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-110%",
+          "id": "1c096b2d-ca5f-4bdd-83c1-53dfaea54316",
+          "duration": 800,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "outExpo",
+          "fill": "both",
+          "targets": ["6c29ba73-482b-4759-bbc0-2a503f075b61"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "6000f35e-1854-43b1-be17-3342e76a3e37",
+          "duration": 401,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["bb94cc1e-f262-41b6-9505-398a280d3777"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "105%",
+          "offsetY": 0,
+          "id": "3ca5d7f0-dfba-4c18-bef0-d5076593272c",
+          "duration": 800,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "outQuint",
+          "fill": "both",
+          "targets": ["b5b11ecb-74eb-49e7-b5f4-317758de2b56"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-40px",
+          "offsetY": 0,
+          "id": "c5afba75-236c-403d-bd68-71aff345db2f",
+          "duration": 801,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": ["bb94cc1e-f262-41b6-9505-398a280d3777"]
+        },
+        {
+          "type": "spin",
+          "rotation": "-90deg",
+          "id": "f845b087-08c2-48df-92a1-80e8edb66312",
+          "duration": 802,
+          "delay": 601,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": ["bb94cc1e-f262-41b6-9505-398a280d3777"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-20px",
+          "id": "b3f2f4cc-42fb-463c-851f-9bdb709eef07",
+          "duration": 800,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutQuart",
+          "fill": "both",
+          "targets": ["31272720-81e0-416c-b7e6-870d7c68bf81"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "108a3a8d-5487-4fea-8545-6c8ca3108ce6",
+          "duration": 500,
+          "delay": 1101,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["31272720-81e0-416c-b7e6-870d7c68bf81"]
+        },
+        {
+          "type": "spin",
+          "rotation": "-90",
+          "id": "e80dc96b-d36f-4e8f-98e7-ba31fdba1e20",
+          "duration": 7000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["bb94cc1e-f262-41b6-9505-398a280d3777"]
+        }
+      ]
     },
     {
       "elements": [
@@ -834,7 +1237,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_radish.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_radish.png",
             "width": 220,
             "height": 309,
             "posterId": 0,
@@ -871,7 +1274,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_carrot.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_carrot.png",
             "width": 220,
             "height": 237,
             "posterId": 0,
@@ -908,7 +1311,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_persimmon.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_persimmon.png",
             "width": 220,
             "height": 228,
             "posterId": 0,
@@ -945,7 +1348,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_artichoke.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_artichoke.png",
             "width": 220,
             "height": 223,
             "posterId": 0,
@@ -1341,7 +1744,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page5_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page5_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
@@ -1584,7 +1987,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page5_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page5_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
@@ -2662,7 +3065,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page7_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page7_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -3368,7 +3771,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page8_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page8_image1.jpg",
             "width": 330,
             "height": 220,
             "id": 1648,
@@ -3763,7 +4166,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image1.jpg",
             "width": 220,
             "height": 294,
             "posterId": 0,
@@ -3807,7 +4210,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image4.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image4.jpg",
             "width": 220,
             "height": 284,
             "posterId": 0,
@@ -3849,7 +4252,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image3.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image3.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
@@ -3891,7 +4294,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image2.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image2.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -3934,7 +4337,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image1.jpg",
             "width": 220,
             "height": 294,
             "posterId": 0,
