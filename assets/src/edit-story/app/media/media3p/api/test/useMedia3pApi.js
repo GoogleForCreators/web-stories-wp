@@ -113,6 +113,7 @@ describe('useMedia3pApi', () => {
           },
           creationDate: '1234',
           height: 3536,
+          id: undefined,
           length: null,
           lengthFormatted: null,
           local: false,
