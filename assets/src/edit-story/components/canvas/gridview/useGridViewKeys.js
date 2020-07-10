@@ -63,7 +63,7 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
 
           setFocusedPageId(pageId);
 
-          const page = pageRefs.current && pageRefs.current[pageId];
+          const page = pageRefs?.current?.[pageId];
 
           focusOnPage(page);
 
@@ -97,7 +97,7 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
 
           setFocusedPageId(pageId);
 
-          const page = pageRefs.current && pageRefs.current[pageId];
+          const page = pageRefs?.current?.[pageId];
 
           focusOnPage(page);
 
@@ -148,8 +148,7 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
             arrangePage({ pageId: focusedPageId, position: nextIndex });
 
             // Focus on DOM element where this page is moving to
-            const page =
-              pageRefs.current && pageRefs.current[pageIds[nextIndex]];
+            const page = pageRefs?.current?.[pageIds[nextIndex]];
 
             focusOnPage(page);
           }
@@ -189,8 +188,7 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
             arrangePage({ pageId: focusedPageId, position: nextIndex });
 
             // Focus on DOM element where this page is moving to
-            const page =
-              pageRefs.current && pageRefs.current[pageIds[nextIndex]];
+            const page = pageRefs?.current?.[pageIds[nextIndex]];
 
             focusOnPage(page);
           }
