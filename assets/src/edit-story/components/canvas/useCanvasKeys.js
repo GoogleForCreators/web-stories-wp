@@ -34,7 +34,7 @@ import useCanvas from './useCanvas';
 const MOVE_COARSE_STEP = 10;
 
 /**
- * @param {{current: Node}} ref
+ * @param {{current: Node}} ref Reference.
  */
 function useCanvasKeys(ref) {
   const addPastedElements = useAddPastedElements();

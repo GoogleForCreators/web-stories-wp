@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../tracking';
 import addQueryArgs from '../../utils/addQueryArgs';
 import { useStory, useLocalMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
@@ -78,6 +79,8 @@ function PreviewButton() {
    * Open a preview of the story in current window.
    */
   const openPreviewLink = useCallback(() => {
+    trackEvent('editor', 'preview_story');
+
     // Display the actual link in case of a draft.
     const previewLink = isDraft
       ? addQueryArgs(link, { preview: 'true' })
@@ -181,9 +184,15 @@ function Publish() {
   const hasFutureDate = Date.now() < Date.parse(date);
 
   const handlePublish = useCallback(() => {
+    if (hasFutureDate) {
+      trackEvent('editor', 'schedule_story');
+    } else {
+      trackEvent('editor', 'publish_story');
+    }
+
     saveStory({ status: 'publish' });
     refreshPostEditURL();
-  }, [refreshPostEditURL, saveStory]);
+  }, [refreshPostEditURL, saveStory, hasFutureDate]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')

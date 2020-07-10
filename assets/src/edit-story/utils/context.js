@@ -30,7 +30,7 @@ export { createContext, useContext } from 'use-context-selector';
  * By default, a shallow equals of the selected context value is used to
  * determine if a re-render is needed.
  *
- * @param {import('react').Context} context
+ * @param {import('react').Context} context Context.
  * @param {function(Object):Object} selector Returns a fragment of the context
  * that the consumer is interested in.
  * @param {function(Object, Object):boolean} equalityFn Used to compare the
