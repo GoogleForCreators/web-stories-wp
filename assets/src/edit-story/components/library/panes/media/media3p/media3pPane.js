@@ -28,28 +28,39 @@ import {
 } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import MediaGallery from '../common/mediaGallery';
-import { Pane } from '../../shared';
 import {
   useMedia3p,
   useMedia3pForProvider,
 } from '../../../../../app/media/media3p/useMedia3p';
+import {
+  MediaGalleryContainer,
+  PaneHeader,
+  PaneInner,
+  SearchInputContainer,
+  StyledPane,
+} from '../common/styles';
+import { SearchInput } from '../../../common';
 import { ProviderType } from './providerType';
 import paneId from './paneId';
+import ProviderTab from './providerTab';
 
-const StyledPane = styled(Pane)`
-  height: 100%;
-  padding: 0;
-  overflow: hidden;
+const ProviderTabSection = styled.div`
+  margin-top: 30px;
+  padding: 0 1.5em;
 `;
 
-const Container = styled.div`
-  overflow: scroll;
-  height: 100%;
-  padding: 0 1.5em 0 1.5em;
-  margin-top: 1em;
+const CategorySection = styled.div`
+  background-color: ${({ theme }) => theme.colors.bg.v3};
+  min-height: 94px;
+  padding: 30px 1.5em;
 `;
 
 /**
@@ -104,18 +115,47 @@ function Media3pPane(props) {
   }));
 
   // Callback for when a media element is selected.
-  const onInsert = useCallback(() => {}, []);
+  const onInsert = useCallback(() => {
+    // TODO(#3119): wire up with inserting elements.
+  }, []);
+
+  const onSearch = useCallback(() => {
+    // TODO(#2391): Perform search.
+  }, []);
+
+  const onProviderTabClick = useCallback(() => {
+    // TODO(#2393): set state.
+  }, []);
 
   // TODO(#2368): handle pagination / infinite scrolling
   return (
     <StyledPane id={paneId} {...props}>
-      <Container ref={refCallbackContainer}>
-        <MediaGallery
-          resources={media}
-          onInsert={onInsert}
-          providerType={ProviderType.UNSPLASH}
-        />
-      </Container>
+      <PaneInner>
+        <PaneHeader>
+          <SearchInputContainer>
+            <SearchInput
+              value={'Not implemented'}
+              placeholder={__('Search', 'web-stories')}
+              onChange={onSearch}
+            />
+          </SearchInputContainer>
+          <ProviderTabSection>
+            <ProviderTab
+              name={'Unsplash'}
+              active={true}
+              onClick={onProviderTabClick}
+            />
+          </ProviderTabSection>
+          <CategorySection>{__('Coming soon', 'web-stories')}</CategorySection>
+        </PaneHeader>
+        <MediaGalleryContainer ref={refCallbackContainer}>
+          <MediaGallery
+            resources={media}
+            onInsert={onInsert}
+            providerType={ProviderType.UNSPLASH}
+          />
+        </MediaGalleryContainer>
+      </PaneInner>
     </StyledPane>
   );
 }
