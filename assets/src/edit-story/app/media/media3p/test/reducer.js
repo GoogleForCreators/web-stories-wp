@@ -22,9 +22,9 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import * as actionsToWrap from '../actions';
 import reducer from '../reducer';
 import useMediaReducer from '../../useMediaReducer';
+import * as media3pActionsToWrap from '../actions';
 import * as types from '../../types';
 
 describe('reducer', () => {
@@ -42,7 +42,7 @@ describe('reducer', () => {
 
   it('should reduce each provider state', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, actionsToWrap)
+      useMediaReducer(reducer, media3pActionsToWrap)
     );
 
     result.current.actions.fetchMediaSuccess({
@@ -54,6 +54,20 @@ describe('reducer', () => {
       expect.objectContaining({
         isMediaLoaded: true,
         isMediaLoading: false,
+      })
+    );
+  });
+
+  it('should assign selectedProvider on setSelectedProvider', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, media3pActionsToWrap)
+    );
+
+    result.current.actions.setSelectedProvider({ provider: 'unsplash' });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        selectedProvider: 'unsplash',
       })
     );
   });

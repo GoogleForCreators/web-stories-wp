@@ -15,9 +15,9 @@
  */
 
 export { default as AMPStoryWrapper } from './ampStoryWrapper';
-export { default as formattedStoriesArray } from './formattedStoriesArray';
-export { default as formattedTemplatesArray } from './formattedTemplatesArray';
-export { default as formattedUsersObject } from './formattedUsersObject';
+export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
+export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
+export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';
 export { default as PlayButton } from './playButton';
 
 export const STORYBOOK_PAGE_SIZE = {

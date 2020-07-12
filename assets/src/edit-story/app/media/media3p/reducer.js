@@ -22,20 +22,61 @@ import { shallowEqual } from 'react-pure-render';
 /**
  * Internal dependencies
  */
-import { INITIAL_STATE } from '../types';
+import { INITIAL_STATE as INITIAL_STATE_ACTION } from '../types';
+import * as types from './types';
 import providerReducer from './providerReducer.js';
+
+const INITIAL_STATE = {
+  selectedProvider: undefined,
+};
 
 // TODO(#2804): Use the configuration json to provide this list.
 const providers = ['unsplash'];
 
-function reducer(state = {}, { type, payload }) {
-  const result = {};
+/**
+ * State reducer for all 3p media providers (Unsplash, Coverr etc).
+ *
+ * For actions that are provider specific, the `payload.provider` attribute
+ * is used as the provider discriminator ('unsplash', 'coverr', etc).
+ *
+ * @param {Object} state The state to reduce
+ * @param {Object} obj An object with the type and payload
+ * @param {string} obj.type A constant that identifies the reducer action
+ * @param {Object} obj.payload The details of the action, specific to the action
+ * @return {Object} The new state
+ */
+function reduceProviderStates(state, { type, payload }) {
+  const result = { ...state };
   for (const provider of providers) {
-    if (type == INITIAL_STATE || provider == payload?.provider) {
+    if (type == INITIAL_STATE_ACTION || provider == payload?.provider) {
       result[provider] = providerReducer(state[provider], { type, payload });
     }
   }
   return !shallowEqual(result, state) ? result : state;
+}
+
+/**
+ * State reducer for 3rd party media state.
+ *
+ * @param {Object} state The state to reduce
+ * @param {Object} obj An object with the type and payload
+ * @param {string} obj.type A constant that identifies the reducer action
+ * @param {Object} obj.payload The details of the action, specific to the action
+ * @return {Object} The new state
+ */
+function reducer(state = INITIAL_STATE, { type, payload }) {
+  state = reduceProviderStates(state, { type, payload });
+
+  switch (type) {
+    case types.SET_SELECTED_PROVIDER: {
+      return {
+        ...state,
+        selectedProvider: payload.provider,
+      };
+    }
+    default:
+      return state;
+  }
 }
 
 export default reducer;

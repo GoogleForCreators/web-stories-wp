@@ -25,6 +25,7 @@ import { useReducer, useMemo } from 'react';
 import localReducer from './local/reducer';
 import media3pReducer from './media3p/reducer';
 import * as localActionsToWrap from './local/actions';
+import * as media3pActionsToWrap from './media3p/actions';
 import * as types from './types';
 
 function rootReducer(state = {}, { type, payload }) {
@@ -34,19 +35,38 @@ function rootReducer(state = {}, { type, payload }) {
   };
 }
 
-const wrapWithDispatch = (actions, dispatch) =>
-  Object.keys(actions).reduce(
+const wrapWithDispatch = (actionFnOrActionObject, dispatch) => {
+  if (actionFnOrActionObject instanceof Function) {
+    return actionFnOrActionObject(dispatch);
+  }
+
+  const actions = actionFnOrActionObject;
+  return Object.keys(actions).reduce(
     (collection, action) => ({
       ...collection,
-      [action]: actions[action](dispatch),
+      [action]: wrapWithDispatch(actions[action], dispatch),
     }),
     {}
   );
+};
 
-function useMediaReducer(
-  reducer = rootReducer,
-  actionsToWrap = localActionsToWrap
-) {
+/**
+ * The media state reducer and action dispatcher functions.
+ *
+ * @param {Function} reducer The reducer, which may be overriden for unit
+ * testing purposes
+ * @param {Object} actionsToWrap The action dispatcher functions, that are
+ * wrapped with the `dispatch` function and may be overriden for unit testing
+ * purposes
+ * @return {Object} Media reducer object.
+ */
+function useMediaReducer(reducer = rootReducer, actionsToWrap) {
+  const defaultActionsToWrap = useMemo(
+    () => ({ local: localActionsToWrap, media3p: media3pActionsToWrap }),
+    []
+  );
+  actionsToWrap = actionsToWrap ?? defaultActionsToWrap;
+
   const initialValue = useMemo(
     () => reducer(undefined, { type: types.INITIAL_STATE }),
     [reducer]

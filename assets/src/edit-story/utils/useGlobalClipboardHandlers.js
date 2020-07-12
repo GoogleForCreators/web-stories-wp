@@ -25,8 +25,8 @@ import { useEffect } from 'react';
 import nativeCopyPasteExpected from './nativeCopyPasteExpected';
 
 /**
- * @param {function(!ClipboardEvent)} copyCutHandler
- * @param {function(!ClipboardEvent)} pasteHandler
+ * @param {function(!ClipboardEvent)} copyCutHandler Copy & Cut handler.
+ * @param {function(!ClipboardEvent)} pasteHandler Paste handler.
  */
 function useGlobalClipboardHandlers(copyCutHandler, pasteHandler) {
   useEffect(() => {
