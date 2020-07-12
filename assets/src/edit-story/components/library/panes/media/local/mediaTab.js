@@ -15,8 +15,23 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import { getPaneId } from '../shared';
+import { Tab } from '../../shared';
+import { Upload } from '../../../../../icons';
+import paneId from './paneId';
 
-export default getPaneId('media');
+function MediaTab(props) {
+  return (
+    <Tab aria-controls={paneId} {...props}>
+      <Upload aria-label={__('Media library', 'web-stories')} />
+    </Tab>
+  );
+}
+
+export default MediaTab;

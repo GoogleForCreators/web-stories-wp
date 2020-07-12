@@ -22,7 +22,7 @@
  */
 import { TAB_IDS } from '../../../components/library/libraryProvider';
 import { AnimationPane, AnimationTab } from './animation';
-import { MediaPane, MediaTab } from './media';
+import { MediaPane, MediaTab } from './media/local';
 import { Media3pPane, Media3pTab } from './media/media3p';
 import { ShapesPane, ShapesTab } from './shapes';
 import { TextPane, TextTab } from './text';

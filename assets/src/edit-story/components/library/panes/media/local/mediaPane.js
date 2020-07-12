@@ -33,25 +33,29 @@ import { useDebouncedCallback } from 'use-debounce';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../app/config';
-import { useLocalMedia } from '../../../../app/media';
-import { useMediaPicker } from '../../../mediaPicker';
-import useIntersectionEffect from '../../../../utils/useIntersectionEffect';
-import { MainButton, SearchInput } from '../../common';
-import useLibrary from '../../useLibrary';
-import { Pane } from '../shared';
+import { useConfig } from '../../../../../app/config';
+import { useLocalMedia } from '../../../../../app/media';
+import { useMediaPicker } from '../../../../mediaPicker';
+import useIntersectionEffect from '../../../../../utils/useIntersectionEffect';
+import { MainButton, SearchInput } from '../../../common';
+import useLibrary from '../../../useLibrary';
 import {
-  getTypeFromMime,
   getResourceFromMediaPicker,
-} from '../../../../app/media/utils';
+  getTypeFromMime,
+} from '../../../../../app/media/utils';
+import MediaElement from '../common/mediaElement';
+import {
+  PaneHeader,
+  PaneInner,
+  SearchInputContainer,
+  StyledPane,
+} from '../common/styles';
+import MediaGallery from '../common/mediaGallery';
+import { ProviderType } from '../media3p/providerType';
 import paneId from './paneId';
-import MediaElement from './mediaElement';
-import MediaGallery from './mediaGallery';
-import { ProviderType } from './providerType';
 
 export const ROOT_MARGIN = 300;
 
@@ -88,6 +92,7 @@ const Message = styled.div`
 const FilterArea = styled.div`
   display: flex;
   margin-top: 30px;
+  padding: 0 1.5em 0 1.5em;
 `;
 
 const FilterButtons = styled.div`
@@ -96,6 +101,7 @@ const FilterButtons = styled.div`
 
 const FilterButton = styled.button`
   border: 0;
+  cursor: pointer;
   background: none;
   padding: 0;
   margin: 0 18px 0 0;
@@ -105,26 +111,6 @@ const FilterButton = styled.button`
   font-size: ${({ theme }) => theme.fonts.label.size};
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-`;
-
-const Padding = styled.div`
-  grid-area: header;
-  padding: 1.5em 1.5em 0 1.5em;
-`;
-
-const StyledPane = styled(Pane)`
-  height: 100%;
-  padding: 0;
-  overflow: hidden;
-`;
-
-const Inner = styled.div`
-  height: 100%;
-  display: grid;
-  grid:
-    'header   ' auto
-    'infinitescroll' 1fr
-    / 1fr;
 `;
 
 const Loading = styled.div`
@@ -188,6 +174,9 @@ function MediaPane(props) {
     }
   );
 
+  // Local state so that we can debounce triggering searches.
+  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
+
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -217,12 +206,20 @@ function MediaPane(props) {
   });
 
   /**
-   * Handle search term changes.
+   * Effectively performs a search, triggered at most every 500ms.
+   */
+  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
+    setSearchTerm({ searchTerm: searchTermValue });
+  }, 500);
+
+  /**
+   * Handle search input changes. Triggers with every keystroke.
    *
    * @param {string} value the new search term.
    */
   const onSearch = (value) => {
-    setSearchTerm({ searchTerm: value });
+    setSearchTermValue(value);
+    changeSearchTermDebounced();
   };
 
   /**
@@ -412,13 +409,15 @@ function MediaPane(props) {
 
   return (
     <StyledPane id={paneId} {...props}>
-      <Inner>
-        <Padding>
-          <SearchInput
-            value={searchTerm}
-            placeholder={__('Search', 'web-stories')}
-            onChange={onSearch}
-          />
+      <PaneInner>
+        <PaneHeader>
+          <SearchInputContainer>
+            <SearchInput
+              value={searchTermValue}
+              placeholder={__('Search', 'web-stories')}
+              onChange={onSearch}
+            />
+          </SearchInputContainer>
           <FilterArea>
             <FilterButtons>
               {FILTERS.map(({ filter, name }, index) => (
@@ -435,14 +434,14 @@ function MediaPane(props) {
               {__('Upload', 'web-stories')}
             </MainButton>
           </FilterArea>
-        </Padding>
+        </PaneHeader>
 
         {isMediaLoaded && !media.length ? (
           <Message>{__('No media found', 'web-stories')}</Message>
         ) : (
           mediaLibrary
         )}
-      </Inner>
+      </PaneInner>
     </StyledPane>
   );
 }

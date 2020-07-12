@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 
-import { Fixture, MEDIA_PER_PAGE } from '../../../../../karma/fixture';
+import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
 [false, true].forEach((rowBasedGallery) => {

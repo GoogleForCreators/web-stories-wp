@@ -28,11 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../../../app/api';
-import { Plain } from '../../../../components/button';
-import Dialog from '../../../../components/dialog';
-import { useSnackbar } from '../../../../app/snackbar';
-import { useLocalMedia } from '../../../../app/media';
+import { useAPI } from '../../../../../app/api';
+import { Plain } from '../../../../button';
+import Dialog from '../../../../dialog';
+import { useSnackbar } from '../../../../../app/snackbar';
+import { useLocalMedia } from '../../../../../app/media';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.

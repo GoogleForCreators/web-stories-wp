@@ -13,57 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { object } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import MediaEditDialog from '../mediaEditDialog';
-import ApiContext from '../../../../../app/api/context';
-import MediaContext from '../../../../../app/media/context';
-import SnackbarContext from '../../../../../app/snackbar/context';
-import testImage from './test-image.jpg';
+import DeleteDialog from '../deleteDialog';
+import ApiContext from '../../../../../../app/api/context';
+import MediaContext from '../../../../../../app/media/context';
+import SnackbarContext from '../../../../../../app/snackbar/context';
 
 export default {
-  title: 'Stories Editor/Components/Dialog/Edit Media',
-  component: MediaEditDialog,
+  title: 'Stories Editor/Components/Dialog/Delete Media',
+  component: DeleteDialog,
 };
-
-const apiValue = {
-  actions: { updateMedia: action('update server') },
-};
-const mediaValue = {
-  local: {
-    actions: { updateMediaElement: action('update state') },
-  },
-};
-const snackbarValue = { showSnackbar: action('show snackbar') };
 
 export const _default = () => {
-  const resource = object('Image Resource', {
-    id: 123,
-    type: 'image',
-    mimeType: 'image/png',
-    title: 'My Image :)',
-    creationDate: Date.now(),
-    src: testImage,
-    width: 910,
-    height: 675,
-    local: false,
-    alt: 'my image',
-    sizes: {},
-  });
+  const apiValue = {
+    actions: {
+      deleteMedia: action('delete from server'),
+    },
+  };
+  const mediaValue = {
+    local: {
+      actions: { deleteMediaElement: action('delete from state') },
+    },
+  };
+  const snackbarValue = { showSnackbar: action('show snackbar') };
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <MediaEditDialog resource={resource} onClose={action('closed')} />
+          <DeleteDialog
+            mediaId={123}
+            type={'image'}
+            onClose={action('closed')}
+          />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>

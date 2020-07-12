@@ -13,25 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import { Tab } from '../shared';
-import { Media } from '../../../../icons';
-import paneId from './paneId';
+const Tab = styled.span`
+  cursor: pointer;
+  font-size: 16px;
+  border-bottom: ${({ theme, active }) =>
+    active ? `solid 4px ${theme.colors.fg.v7};` : 'none'};
+`;
 
-function MediaTab(props) {
+function ProviderTab(props) {
   return (
-    <Tab aria-controls={paneId} {...props}>
-      <Media aria-label={__('Media library', 'web-stories')} />
+    <Tab onClick={props.onClick} active={props.active}>
+      {props.name}
     </Tab>
   );
 }
 
-export default MediaTab;
+ProviderTab.propTypes = {
+  name: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  active: PropTypes.bool.isRequired,
+};
+
+export default ProviderTab;

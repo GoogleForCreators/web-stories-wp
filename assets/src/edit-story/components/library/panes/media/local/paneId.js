@@ -15,27 +15,8 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
-import PublisherLogoSettings from '../';
+import { getPaneId } from '../../shared';
 
-export default {
-  title: 'Dashboard/Views/EditorSettings/PublisherLogo',
-  component: PublisherLogoSettings,
-};
-
-export const _default = () => {
-  return (
-    <PublisherLogoSettings
-      onUpdatePublisherLogo={(newFiles) => {
-        action('update publisher logo clicked')(newFiles);
-      }}
-      publisherLogos={[]}
-    />
-  );
-};
+export default getPaneId('media');

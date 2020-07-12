@@ -27,13 +27,14 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { useDropTargets } from '../../../../app';
-import getThumbnailUrl from '../../../../app/media/utils/getThumbnailUrl';
-import DropDownMenu from './dropDownMenu';
-import { ProviderType } from './providerType';
+import { useDropTargets } from '../../../../../app';
+import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
+import DropDownMenu from '../local/dropDownMenu';
+import { ProviderType } from '../media3p/providerType';
 
 const styledTiles = css`
   width: 100%;
+  cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
   margin-bottom: 10px;
 `;
