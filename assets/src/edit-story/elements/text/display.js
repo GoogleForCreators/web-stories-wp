@@ -63,10 +63,10 @@ const MarginedElement = styled.span`
   position: relative;
   display: inline-block;
   top: 0;
-  margin: ${({ horizontalPadding, horizontalBuffer }) =>
-    `0 ${horizontalPadding + horizontalBuffer}px`};
-  left: ${({ horizontalPadding, horizontalBuffer }) =>
-    `-${horizontalPadding + horizontalBuffer}px`};
+  margin: ${({ horizontalPadding }) =>
+    `0 ${horizontalPadding}px`};
+  left: ${({ horizontalPadding }) =>
+    `-${horizontalPadding}px`};
 `;
 
 const Span = styled.span`
@@ -121,7 +121,6 @@ function TextDisplay({
       ? {}
       : { backgroundColor }),
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
-    horizontalBuffer: 0.02 * width,
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };

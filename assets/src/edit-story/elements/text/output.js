@@ -110,11 +110,8 @@ export function TextOutputWithUnits({
   const marginStyle = {
     display: 'inline-block',
     position: 'relative',
-    // Disable reason: style lint can't figure out an interpolated calc
-    // stylelint-disable function-calc-no-invalid
-    margin: `0 calc(${paddingStyles.horizontal} + 2%)`,
-    left: `calc(-${paddingStyles.horizontal} - 2%)`,
-    // stylelint-enable function-calc-no-invalid
+    margin: `0 ${paddingStyles.horizontal}`,
+    left: `-${paddingStyles.horizontal}`,
     top: '0',
   };
 

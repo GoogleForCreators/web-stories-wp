@@ -32,6 +32,7 @@ export function generateParagraphTextStyle(
 ) {
   return {
     whiteSpace: 'pre-wrap',
+    overflowWrap: 'break-word',
     margin: 0,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
@@ -43,7 +44,11 @@ export function generateParagraphTextStyle(
   };
 }
 
-export const generateFontFamily = ({ family, fallbacks }) => {
+export const generateFontFamily = (font) => {
+  if (!font) {
+    return 'inherit';
+  }
+  const { family, fallbacks } = font;
   const genericFamilyKeywords = [
     'cursive',
     'fantasy',
