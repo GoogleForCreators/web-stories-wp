@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { AddPage, EditPencil } from '../../../icons';
+import { Add, EditPencil } from '../../../icons';
 import { StylePresetPropType } from '../../../types';
 import { useKeyDownEffect } from '../../keyboard';
 import { PanelTitle } from '../panel';
@@ -132,7 +132,7 @@ function PresetsHeader({
             onClick={handleAddColorPreset}
             aria-label={__('Add preset', 'web-stories')}
           >
-            <AddPage />
+            <Add />
           </Button>
         )}
       </>
