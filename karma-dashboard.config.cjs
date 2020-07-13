@@ -17,11 +17,6 @@
 'use strict';
 
 /**
- * External dependencies
- */
-const path = require('path');
-
-/**
  * Internal dependencies
  */
 const getWebpackConfig = require('./webpack.config.test.cjs');
@@ -129,10 +124,7 @@ module.exports = function (config) {
     },
 
     cujReporter: {
-      outputFile: path.resolve(
-        process.cwd(),
-        'build/cuj-coverage-dashboard.md'
-      ),
+      outputFile: 'build/cuj-coverage-dashboard.md',
     },
 
     // Continuous Integration mode
