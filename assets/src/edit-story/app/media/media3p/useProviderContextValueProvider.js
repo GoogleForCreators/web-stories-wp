@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
 import useFetchMediaEffect from './useFetchMediaEffect';
@@ -55,5 +60,11 @@ export default function useProviderContextValueProvider(
 
   return {
     state: reducerState[provider],
+    actions: {
+      setNextPage: useCallback(() => reducerActions.setNextPage({ provider }), [
+        reducerActions,
+        provider,
+      ]),
+    },
   };
 }

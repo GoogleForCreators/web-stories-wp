@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import getResourceFromMedia3p from '../../utils/getResourceFromMedia3p';
-import { listMedia as apiListMedia } from './apiFetcher';
+import apiFetcher from './apiFetcher';
 import Context from './context';
 
 /**
@@ -84,7 +84,7 @@ function Media3pApiProvider({ children }) {
     if (provider.toLowerCase() !== Providers.UNSPLASH) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
-    const response = await apiListMedia({
+    const response = await apiFetcher.listMedia({
       filter: constructFilter(provider, searchTerm, mediaType),
       orderBy: orderBy,
       pageSize: MEDIA_PAGE_SIZE,

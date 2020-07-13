@@ -32,6 +32,7 @@ export {
 export { DetailViewNavBar } from './detailViewNavBar';
 export { default as Dialog } from './dialog';
 export { default as Dropdown } from './dropdown';
+export { default as FileUpload } from './fileUpload';
 export { default as InfiniteScroller } from './infiniteScroller';
 export { default as InlineInputForm } from './inlineInputForm';
 export { TextInput } from './input';
