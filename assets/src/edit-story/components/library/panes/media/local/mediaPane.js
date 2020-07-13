@@ -27,6 +27,7 @@ import {
 } from 'react';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -65,9 +66,18 @@ const ColumnContainer = styled.div`
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: scroll;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background-color: ${({ theme }) => theme.colors.bg.v10};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+    }
+
 `;
 
 const RowContainer = styled.div`
