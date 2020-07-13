@@ -74,7 +74,7 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
 
     cujResults.sort();
 
-    const tableContents = cujResults.reduce((acc, curr) => {
+    let tableContents = cujResults.reduce((acc, curr) => {
       const [cuj, action] = curr;
 
       if (!acc.find(([_cuj]) => _cuj === cuj)) {
@@ -82,11 +82,20 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
       }
 
       if (!acc.find(([_cuj, _action]) => _cuj === cuj && _action === action)) {
-        acc.push(['', action, getCompletion(cuj, action)]);
+        acc.push([cuj, action, getCompletion(cuj, action)]);
       }
 
       return acc;
     }, []);
+
+    tableContents = tableContents.map((entry, i) => {
+      const [cuj, action, ...rest] = entry;
+      if (i !== tableContents.findIndex(([_cuj]) => _cuj === cuj)) {
+        return ['', action, ...rest];
+      }
+
+      return entry;
+    });
 
     tableContents.unshift(['**CUJ**', '**Action**', '**Completion**']);
     tableContents.push(['*\\[total\\]*', '*\\[total\\]*', getCompletion()]);
