@@ -57,7 +57,7 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
     const { skipped, disabled, pending, success, suite } = result;
     const incomplete = skipped || disabled || pending || !success;
 
-    if (!suite[0].startsWith('CUJ') || !suite[1].startsWith('Action')) {
+    if (!suite[0]?.startsWith('CUJ') || !suite[1]?.startsWith('Action')) {
       return;
     }
 
