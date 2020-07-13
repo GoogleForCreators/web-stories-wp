@@ -70,16 +70,14 @@ function MediaGallery({ resources, onInsert, providerType }) {
   );
 
   return (
-    resources.length != 0 && (
-      <Gallery
-        targetRowHeight={110}
-        direction={'row'}
-        // This should match the actual margin the element is styled with.
-        margin={PHOTO_MARGIN}
-        photos={photos}
-        renderImage={imageRenderer}
-      />
-    )
+    <Gallery
+      targetRowHeight={110}
+      direction={'row'}
+      // This should match the actual margin the element is styled with.
+      margin={PHOTO_MARGIN}
+      photos={photos}
+      renderImage={imageRenderer}
+    />
   );
 }
 
