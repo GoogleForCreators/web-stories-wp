@@ -33,6 +33,16 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.
+ *
+ * @param {Object<*>} props Component props.
+ * @param {Object<*>} props.element Story element.
+ * @param {Function} props.dataToStyleX dataToStyleX function.
+ * @param {Function} props.dataToStyleY dataToStyleY function.
+ * @param {Function} props.dataToFontSizeY dataToFontSizeY function. Falls back to dataToStyleY if not provided.
+ * @param {Function} props.dataToPaddingX dataToPaddingX function. Falls back to dataToStyleX if not provided.
+ * @param {Function} props.dataToPaddingY dataToPaddingY function. Falls back to dataToStyleX if not provided.
+ * @param {string} props.className Class name.
+ * @return {*} Rendered component.
  */
 export function TextOutputWithUnits({
   element: { content, backgroundColor, backgroundTextMode, padding, ...rest },
@@ -184,6 +194,9 @@ TextOutputWithUnits.propTypes = {
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object<*>} props Props.
+ * @return {*} Rendered component.
  */
 function TextOutput({ element }) {
   const { width } = element;

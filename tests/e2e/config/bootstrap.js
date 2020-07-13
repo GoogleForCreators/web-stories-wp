@@ -116,6 +116,11 @@ function observeConsoleLogging() {
       return;
     }
 
+    // WordPress still bundles jQuery Migrate, which logs to the console.
+    if (text.includes('JQMIGRATE')) {
+      return;
+    }
+
     // Firefox warns about this issue in WordPress admin.
     if (text.includes('This page uses the non standard property “zoom”')) {
       return;

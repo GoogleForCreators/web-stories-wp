@@ -22,6 +22,9 @@ import MediaOutput from '../media/output';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object<*>} props Props.
+ * @return {*} Rendered component.
  */
 function ImageOutput({ element, box }) {
   const { resource } = element;

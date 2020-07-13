@@ -20,6 +20,22 @@
 import getTypeFromMime from './getTypeFromMime';
 
 /**
+ * Author object
+ *
+ * @typedef {Author} Author
+ * @property {string} displayName The display name of the author.
+ * @property {?string} url An optional URL to link to the author's profile or
+ * website.
+ */
+
+/**
+ * Attribution object
+ *
+ * @typedef {Attribution} Attribution
+ * @property {Author} author The author of the media object.
+ */
+
+/**
  * Attachment object.
  *
  * @typedef {Attachment} Attachment
@@ -69,6 +85,8 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
  * @property {Object} sizes Object of image sizes.
+ * @property {?Attribution} attribution An optional attribution for the
+ * resource.
  */
 
 /**
@@ -93,6 +111,7 @@ function createResource({
   alt,
   local,
   sizes,
+  attribution,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
@@ -110,6 +129,7 @@ function createResource({
     alt,
     local,
     sizes,
+    attribution,
   };
 }
 

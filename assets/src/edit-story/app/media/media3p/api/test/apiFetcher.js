@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { listMedia } from '../apiFetcher';
+import apiFetcher from '../apiFetcher';
 
 const PHOTOS_BODY_JSON = {
   media: [
@@ -62,7 +62,7 @@ describe('ApiFetcher', () => {
   it('listMedia should perform a GET request', async () => {
     mockFetch(VALID_RESPONSE);
 
-    const result = await listMedia();
+    const result = await apiFetcher.listMedia();
     expect(result.media[0].name).toBe('photo 29044');
   });
 
@@ -71,7 +71,7 @@ describe('ApiFetcher', () => {
 
     expect.assertions(1);
 
-    await expect(listMedia()).rejects.toThrow(/Obtained an error/);
+    await expect(apiFetcher.listMedia()).rejects.toThrow(/Obtained an error/);
   });
 
   it('listMedia should format request params correctly', async () => {
@@ -83,7 +83,7 @@ describe('ApiFetcher', () => {
     const pageToken = '1234';
     const filter = 'cat';
 
-    const result = await listMedia({
+    const result = await apiFetcher.listMedia({
       languageCode,
       pageSize,
       orderBy,
@@ -111,7 +111,7 @@ describe('ApiFetcher', () => {
     expect.assertions(1);
 
     await expect(
-      listMedia({
+      apiFetcher.listMedia({
         pageSize: 'big',
       })
     ).rejects.toThrow(/Invalid page_size/);
@@ -121,7 +121,7 @@ describe('ApiFetcher', () => {
     expect.assertions(1);
 
     await expect(
-      listMedia({
+      apiFetcher.listMedia({
         pageSize: -30,
       })
     ).rejects.toThrow(/Invalid page_size/);
@@ -131,7 +131,7 @@ describe('ApiFetcher', () => {
     expect.assertions(1);
 
     await expect(
-      listMedia({
+      apiFetcher.listMedia({
         orderBy: 'oldest',
       })
     ).rejects.toThrow(/Invalid order_by/);
@@ -141,7 +141,7 @@ describe('ApiFetcher', () => {
     expect.assertions(1);
 
     await expect(
-      listMedia({
+      apiFetcher.listMedia({
         orderBy: '',
       })
     ).rejects.toThrow(/Invalid order_by/);
@@ -153,7 +153,7 @@ describe('ApiFetcher', () => {
     const filter = 'cat and  many dogs';
     const escapedFilter = 'cat+and++many+dogs';
 
-    await listMedia({ filter });
+    await apiFetcher.listMedia({ filter });
     const fetchArg = global.fetch.mock.calls[0][0];
     const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
     const queryParams = queryString.split('&');
@@ -168,7 +168,7 @@ describe('ApiFetcher', () => {
     const filter = 'Tom & Jerry';
     const escapedFilter = 'Tom+%26+Jerry';
 
-    await listMedia({ filter });
+    await apiFetcher.listMedia({ filter });
     const fetchArg = global.fetch.mock.calls[0][0];
     const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
     const queryParams = queryString.split('&');
