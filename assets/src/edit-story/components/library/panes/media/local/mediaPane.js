@@ -340,6 +340,7 @@ function MediaPane(props) {
     return () => node.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
+  // TODO(#3160): Update MediaPane to use PaginatedMediaGallery
   const mediaLibrary = isRowBasedGallery ? (
     // Arranges elements in rows.
     <RowContainer
