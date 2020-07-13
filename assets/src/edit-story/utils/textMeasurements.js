@@ -33,7 +33,7 @@ const MEASURER_STYLES = {
   top: '-9999px',
   left: '-9999px',
   zIndex: -1,
-  overflowWrap: 'anywhere',
+  overflowWrap: 'break-word',
   ...(false && {
     // For debugging purposes - this will show the output render on screen
     background: 'red',

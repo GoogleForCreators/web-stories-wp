@@ -70,7 +70,7 @@ export const elementWithTextParagraphStyle = css`
   padding: ${({ padding }) => padding || 0};
   line-height: ${({ lineHeight }) => lineHeight};
   text-align: ${({ textAlign }) => textAlign};
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 `;
 
 export const SHARED_DEFAULT_ATTRIBUTES = {
