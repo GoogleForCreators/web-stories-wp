@@ -20,8 +20,15 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import { useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
+import { getResourceFromLocalFile } from '../../../../utils';
 import {
   SettingForm,
   FileUploadHelperText,
@@ -41,8 +48,31 @@ const TEXT = {
     'web-stories'
   ),
   SUBMIT: __('Upload', 'web-stories'),
+  ARIA_LABEL: __('Click to upload a new logo', 'web-stories'),
+  HELPER_UPLOAD: __('You can also drag your logo here', 'web-stories'),
 };
-function PublisherLogoSettings() {
+
+function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
+  const onSubmitNewFile = useCallback(
+    async (files) => {
+      const resources = await Promise.all(
+        files.map(async (file) => ({
+          localResource: await getResourceFromLocalFile(file),
+          file,
+        }))
+      );
+      onUpdatePublisherLogo({ newPublisherLogos: resources });
+    },
+    [onUpdatePublisherLogo]
+  );
+
+  const onSubmitDeleteFile = useCallback(
+    (_, fileData) => {
+      onUpdatePublisherLogo({ deleteLogo: fileData });
+    },
+    [onUpdatePublisherLogo]
+  );
+
   return (
     <SettingForm>
       <SettingHeading htmlFor="publisherLogo">
@@ -50,14 +80,31 @@ function PublisherLogoSettings() {
       </SettingHeading>
       <div>
         <FileUploadHelperText>{TEXT.CONTEXT}</FileUploadHelperText>
-        <UploadContainer>
-          <p>{'Upload Placeholder'}</p>
-          <button>{TEXT.SUBMIT}</button>
-        </UploadContainer>
+        <UploadContainer
+          onSubmit={onSubmitNewFile}
+          onDelete={onSubmitDeleteFile}
+          id="settings_publisher_logos"
+          label={TEXT.SUBMIT}
+          isMultiple
+          ariaLabel={TEXT.ARIA_LABEL}
+          uploadedContent={publisherLogos}
+          emptyDragHelperText={TEXT.HELPER_UPLOAD}
+        />
         <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
       </div>
     </SettingForm>
   );
 }
 
+PublisherLogoSettings.propTypes = {
+  onUpdatePublisherLogo: PropTypes.func,
+  publisherLogos: PropTypes.arrayOf(
+    PropTypes.shape({
+      src: PropTypes.string,
+      title: PropTypes.string,
+      alt: PropTypes.string,
+      id: PropTypes.string,
+    })
+  ),
+};
 export default PublisherLogoSettings;

@@ -22,7 +22,7 @@ import { waitFor, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import MediaEditDialog from '../panes/media/mediaEditDialog';
+import MediaEditDialog from '../panes/media/local/mediaEditDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';

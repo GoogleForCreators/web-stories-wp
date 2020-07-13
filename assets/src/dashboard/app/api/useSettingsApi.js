@@ -87,7 +87,7 @@ export default function useSettingsApi(
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
-          payload: response.googleAnalyticsId,
+          payload: response,
         });
       } catch (err) {
         dispatch({
