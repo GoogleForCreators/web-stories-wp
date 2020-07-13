@@ -21,7 +21,7 @@ const path = require('path');
 const fs = require('fs');
 const table = require('markdown-table');
 
-const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
+const CUJReporter = function (baseReporterDecorator, config, logger) {
   baseReporterDecorator(this);
 
   const log = logger.create('reporter.cuj');
@@ -72,6 +72,8 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
       return;
     }
 
+    cujResults.sort();
+
     const tableContents = cujResults.reduce((acc, curr) => {
       const [cuj, action] = curr;
 
@@ -92,9 +94,10 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
     log.info('\n' + tableString);
 
     if (outputFile) {
-      helper.mkdirIfNotExists(path.dirname(outputFile), function () {
-        fs.writeFileSync(outputFile, tableString);
-      });
+      log.info('\nSaving CUJ coverage report to ' + outputFile);
+
+      fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+      fs.writeFileSync(outputFile, tableString);
     }
   };
 };
