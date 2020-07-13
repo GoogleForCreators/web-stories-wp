@@ -76,7 +76,7 @@ function TextEdit({
   element,
   box: { x, y, height, rotationAngle },
   editWrapper,
-  moveable,
+  onResize,
 }) {
   const {
     id,
@@ -226,12 +226,9 @@ function TextEdit({
       editWrapper.style.height = `${editorHeightRef.current}px`;
       editWrapper.style.left = `${boxRef.current.x + dx}px`;
       editWrapper.style.top = `${boxRef.current.y + dy}px`;
-      // We need to update Moveable as well.
-      if (moveable.current) {
-        moveable.current.updateRect();
-      }
+      onResize && onResize();
     }
-  }, [editWrapper, moveable]);
+  }, [editWrapper, onResize]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
@@ -293,7 +290,7 @@ function TextEdit({
 TextEdit.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   box: StoryPropTypes.box.isRequired,
-  moveable: PropTypes.object,
+  onResize: PropTypes.func,
   editWrapper: PropTypes.object,
 };
 

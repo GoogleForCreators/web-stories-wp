@@ -40,9 +40,6 @@ const Wrapper = styled.div`
 	pointer-events: initial;
 `;
 
-/**
- *
- */
 function EditElement({ element }) {
   const { id, type } = element;
   const { getBox } = useUnits((state) => ({
@@ -56,6 +53,13 @@ function EditElement({ element }) {
 
   const moveable = useRef(null);
 
+  const onResize = () => {
+    // Update moveable when resizing.
+    if (moveable.current) {
+      moveable.current.updateRect();
+    }
+  };
+
   return (
     <>
       <Wrapper
@@ -68,7 +72,7 @@ function EditElement({ element }) {
           element={element}
           box={box}
           editWrapper={hasEditModeMoveable && editWrapper}
-          moveable={moveable}
+          onResize={onResize}
         />
       </Wrapper>
       {hasEditModeMoveable && editWrapper && (
