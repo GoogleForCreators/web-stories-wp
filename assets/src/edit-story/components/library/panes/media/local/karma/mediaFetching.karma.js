@@ -26,52 +26,36 @@ import { waitFor } from '@testing-library/react';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-[false, true].forEach((rowBasedGallery) => {
-  describe(`MediaPane fetching for ${
-    rowBasedGallery ? 'row' : 'column'
-  } gallery`, () => {
-    let fixture;
+describe('MediaPane fetching', () => {
+  let fixture;
 
-    beforeEach(async () => {
-      fixture = new Fixture();
-      fixture.setFlags({ rowBasedGallery: rowBasedGallery });
-      await fixture.render();
+  beforeEach(async () => {
+    fixture = new Fixture();
+    await fixture.render();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  it('should fetch 2nd page', async () => {
+    const mediaLibrary = fixture.querySelector('[data-testid="mediaLibrary"]');
+    let mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
+
+    expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
+
+    mediaLibrary.scrollTo(
+      0,
+      mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
+    );
+
+    await waitFor(() => {
+      mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
+      if (!(mediaElements.length === MEDIA_PER_PAGE * 2)) {
+        throw new Error('2nd page not yet loaded');
+      }
     });
 
-    afterEach(() => {
-      fixture.restore();
-    });
-
-    const waitForMediaElements = async (expectedLength) => {
-      let mediaElements;
-      await waitFor(() => {
-        mediaElements = fixture.querySelectorAll(
-          '[data-testid="mediaElement"]'
-        );
-        if (!(mediaElements.length === expectedLength)) {
-          throw new Error('1st page not yet loaded');
-        }
-      });
-      return mediaElements;
-    };
-
-    it('should fetch 2nd page', async () => {
-      let mediaElements;
-
-      // Wait until first page loaded.
-      mediaElements = await waitForMediaElements(MEDIA_PER_PAGE);
-      expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
-
-      // Scroll to bottom to trigger load.
-      let mediaLibrary = fixture.querySelector('[data-testid="mediaLibrary"]');
-      mediaLibrary.scrollTo(
-        0,
-        mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
-      );
-
-      // Wait until second page loaded.
-      mediaElements = await waitForMediaElements(MEDIA_PER_PAGE * 2);
-      expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
-    });
+    expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
   });
 });
