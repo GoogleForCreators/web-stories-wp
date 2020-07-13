@@ -80,9 +80,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -165,9 +163,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6978fba6-59ce-46bc-b862-92ce2b9795bb"
-          ]
+          "targets": ["6978fba6-59ce-46bc-b862-92ce2b9795bb"]
         },
         {
           "type": "move",
@@ -181,9 +177,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6978fba6-59ce-46bc-b862-92ce2b9795bb"
-          ]
+          "targets": ["6978fba6-59ce-46bc-b862-92ce2b9795bb"]
         },
         {
           "type": "zoom",
@@ -196,9 +190,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6978fba6-59ce-46bc-b862-92ce2b9795bb"
-          ]
+          "targets": ["6978fba6-59ce-46bc-b862-92ce2b9795bb"]
         },
         {
           "type": "zoom",
@@ -211,9 +203,7 @@
           "easingPreset": "linear",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6978fba6-59ce-46bc-b862-92ce2b9795bb"
-          ]
+          "targets": ["6978fba6-59ce-46bc-b862-92ce2b9795bb"]
         },
         {
           "type": "move",
@@ -227,9 +217,7 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "a32c17e0-a46b-4821-bbdb-8dc064ac097d"
-          ]
+          "targets": ["a32c17e0-a46b-4821-bbdb-8dc064ac097d"]
         },
         {
           "type": "move",
@@ -242,9 +230,7 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "forwards",
-          "targets": [
-            "a32c17e0-a46b-4821-bbdb-8dc064ac097d"
-          ]
+          "targets": ["a32c17e0-a46b-4821-bbdb-8dc064ac097d"]
         },
         {
           "type": "move",
@@ -258,9 +244,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "a32c17e0-a46b-4821-bbdb-8dc064ac097d"
-          ]
+          "targets": ["a32c17e0-a46b-4821-bbdb-8dc064ac097d"]
         },
         {
           "type": "move",
@@ -274,9 +258,7 @@
           "easingPreset": "linear",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6b7015cc-ffc3-4130-aadb-42cd6693e6cc"
-          ]
+          "targets": ["6b7015cc-ffc3-4130-aadb-42cd6693e6cc"]
         },
         {
           "type": "move",
@@ -290,9 +272,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6b7015cc-ffc3-4130-aadb-42cd6693e6cc"
-          ]
+          "targets": ["6b7015cc-ffc3-4130-aadb-42cd6693e6cc"]
         }
       ],
       "backgroundColor": {
@@ -405,9 +385,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -447,9 +425,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -531,9 +507,7 @@
           "easingPreset": "outQuint",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "d773925c-2f95-44c0-9b0e-0743d45476f2"
-          ]
+          "targets": ["d773925c-2f95-44c0-9b0e-0743d45476f2"]
         },
         {
           "type": "move",
@@ -547,9 +521,7 @@
           "easingPreset": "outQuint",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "61d23551-31e3-4aad-ac15-b8fc5e4be2ec"
-          ]
+          "targets": ["61d23551-31e3-4aad-ac15-b8fc5e4be2ec"]
         },
         {
           "type": "spin",
@@ -607,9 +579,7 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "d773925c-2f95-44c0-9b0e-0743d45476f2"
-          ]
+          "targets": ["d773925c-2f95-44c0-9b0e-0743d45476f2"]
         }
       ],
       "backgroundColor": {
@@ -743,9 +713,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -784,9 +752,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "DM Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -840,9 +806,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6cca5fcd-80d5-4181-b9e6-2979b80c2b99"
-          ]
+          "targets": ["6cca5fcd-80d5-4181-b9e6-2979b80c2b99"]
         },
         {
           "type": "move",
@@ -856,9 +820,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6cca5fcd-80d5-4181-b9e6-2979b80c2b99"
-          ]
+          "targets": ["6cca5fcd-80d5-4181-b9e6-2979b80c2b99"]
         },
         {
           "type": "zoom",
@@ -871,9 +833,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6cca5fcd-80d5-4181-b9e6-2979b80c2b99"
-          ]
+          "targets": ["6cca5fcd-80d5-4181-b9e6-2979b80c2b99"]
         },
         {
           "type": "zoom",
@@ -886,9 +846,7 @@
           "easingPreset": "linear",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "6cca5fcd-80d5-4181-b9e6-2979b80c2b99"
-          ]
+          "targets": ["6cca5fcd-80d5-4181-b9e6-2979b80c2b99"]
         },
         {
           "type": "move",
@@ -902,9 +860,7 @@
           "easingPreset": "outQuint",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "792955f1-699b-499a-bf65-d88b60d613af"
-          ]
+          "targets": ["792955f1-699b-499a-bf65-d88b60d613af"]
         },
         {
           "type": "fade",
@@ -917,9 +873,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "792955f1-699b-499a-bf65-d88b60d613af"
-          ]
+          "targets": ["792955f1-699b-499a-bf65-d88b60d613af"]
         },
         {
           "type": "move",
@@ -933,9 +887,7 @@
           "easingPreset": "outQuint",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "9bd1600f-5d9d-4beb-bdfb-817b118a8852"
-          ]
+          "targets": ["9bd1600f-5d9d-4beb-bdfb-817b118a8852"]
         },
         {
           "type": "fade",
@@ -948,9 +900,7 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "9bd1600f-5d9d-4beb-bdfb-817b118a8852"
-          ]
+          "targets": ["9bd1600f-5d9d-4beb-bdfb-817b118a8852"]
         },
         {
           "type": "fade",
@@ -1016,70 +966,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -1119,43 +1021,16 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              400,
-              500,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -1195,70 +1070,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -1298,9 +1125,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -1339,9 +1164,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -1380,70 +1203,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -1483,9 +1258,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -1525,70 +1298,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -1629,70 +1354,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -1733,9 +1410,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -1998,9 +1673,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -2039,9 +1712,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -2081,9 +1752,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -2122,43 +1791,16 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              400,
-              500,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2199,43 +1841,16 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              400,
-              500,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2355,9 +1970,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"
-          ]
+          "targets": ["b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"]
         },
         {
           "type": "move",
@@ -2371,9 +1984,7 @@
           "easingPreset": "inOutSine",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"
-          ]
+          "targets": ["b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"]
         },
         {
           "type": "fade",
@@ -2386,9 +1997,7 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"
-          ]
+          "targets": ["b5631bd3-6a40-4d43-b4b8-9f0b7c76a742"]
         },
         {
           "type": "bounce",
@@ -2399,9 +2008,7 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "ba9ff730-74e6-478a-943e-8aa33851048d"
-          ]
+          "targets": ["ba9ff730-74e6-478a-943e-8aa33851048d"]
         },
         {
           "type": "move",
@@ -2549,9 +2156,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -2590,70 +2195,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -2694,70 +2251,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -2798,70 +2307,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -2902,70 +2363,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -3006,70 +2419,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -3147,9 +2512,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -3227,9 +2590,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -3307,9 +2668,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -3387,9 +2746,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -3467,9 +2824,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -3516,9 +2871,7 @@
           "easingPreset": "inOutCubic",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "735394cc-0da6-479c-951d-14579f0766ef"
-          ]
+          "targets": ["735394cc-0da6-479c-951d-14579f0766ef"]
         },
         {
           "type": "move",
@@ -3705,9 +3058,7 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "b9736281-90de-4a2e-b813-7faddcba9dd9"
-          ]
+          "targets": ["b9736281-90de-4a2e-b813-7faddcba9dd9"]
         },
         {
           "type": "spin",
@@ -3719,9 +3070,7 @@
           "easingPreset": "linear",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "797bc565-14f8-4635-aef9-d3aaa1d4f61f"
-          ]
+          "targets": ["797bc565-14f8-4635-aef9-d3aaa1d4f61f"]
         },
         {
           "type": "spin",
@@ -3732,9 +3081,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "8368daee-25c0-47fa-a3f8-f1d087aff0ea"
-          ]
+          "targets": ["8368daee-25c0-47fa-a3f8-f1d087aff0ea"]
         },
         {
           "type": "spin",
@@ -3745,9 +3092,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "1995d229-c3c4-4f57-8e19-dc65b333e87a"
-          ]
+          "targets": ["1995d229-c3c4-4f57-8e19-dc65b333e87a"]
         },
         {
           "type": "spin",
@@ -3758,9 +3103,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "9cc65a3f-90c8-4a6b-8994-2db0da03e2aa"
-          ]
+          "targets": ["9cc65a3f-90c8-4a6b-8994-2db0da03e2aa"]
         }
       ]
     },
@@ -3850,70 +3193,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -3991,9 +3286,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -4033,43 +3326,16 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              400,
-              500,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -4109,43 +3375,16 @@
           "font": {
             "family": "DM Sans",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              400,
-              500,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -4229,9 +3468,7 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": [
-            "7ecf93c5-2286-495d-86e9-30cdf0bf32b3"
-          ]
+          "targets": ["7ecf93c5-2286-495d-86e9-30cdf0bf32b3"]
         },
         {
           "type": "move",
@@ -4244,9 +3481,7 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "forwards",
-          "targets": [
-            "7ecf93c5-2286-495d-86e9-30cdf0bf32b3"
-          ]
+          "targets": ["7ecf93c5-2286-495d-86e9-30cdf0bf32b3"]
         },
         {
           "type": "zoom",
@@ -4258,9 +3493,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "7ecf93c5-2286-495d-86e9-30cdf0bf32b3"
-          ]
+          "targets": ["7ecf93c5-2286-495d-86e9-30cdf0bf32b3"]
         },
         {
           "type": "zoom",
@@ -4272,9 +3505,7 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": [
-            "7ecf93c5-2286-495d-86e9-30cdf0bf32b3"
-          ]
+          "targets": ["7ecf93c5-2286-495d-86e9-30cdf0bf32b3"]
         },
         {
           "type": "move",
@@ -4287,9 +3518,7 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": [
-            "8c86903b-0df0-4c1e-a75a-23f1e79522b3"
-          ]
+          "targets": ["8c86903b-0df0-4c1e-a75a-23f1e79522b3"]
         },
         {
           "type": "zoom",
@@ -4301,9 +3530,7 @@
           "direction": "normal",
           "easingPreset": "outSine",
           "fill": "both",
-          "targets": [
-            "e03c6326-6b3a-4a11-b7f1-80decd115e08"
-          ]
+          "targets": ["e03c6326-6b3a-4a11-b7f1-80decd115e08"]
         },
         {
           "type": "move",
@@ -4334,9 +3561,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "e03c6326-6b3a-4a11-b7f1-80decd115e08"
-          ]
+          "targets": ["e03c6326-6b3a-4a11-b7f1-80decd115e08"]
         },
         {
           "type": "fade",
@@ -4348,9 +3573,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "e03c6326-6b3a-4a11-b7f1-80decd115e08"
-          ]
+          "targets": ["e03c6326-6b3a-4a11-b7f1-80decd115e08"]
         },
         {
           "type": "move",
@@ -4363,9 +3586,7 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": [
-            "9ce78e9e-7568-45de-bef3-1f9438a11568"
-          ]
+          "targets": ["9ce78e9e-7568-45de-bef3-1f9438a11568"]
         },
         {
           "type": "fade",
@@ -4377,9 +3598,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "43b205d1-376b-4eaf-b493-e55d70f8703e"
-          ]
+          "targets": ["43b205d1-376b-4eaf-b493-e55d70f8703e"]
         },
         {
           "type": "move",
@@ -4392,9 +3611,7 @@
           "direction": "normal",
           "easingPreset": "outQuint",
           "fill": "both",
-          "targets": [
-            "43b205d1-376b-4eaf-b493-e55d70f8703e"
-          ]
+          "targets": ["43b205d1-376b-4eaf-b493-e55d70f8703e"]
         },
         {
           "type": "move",
@@ -4489,9 +3706,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": [
-              "serif"
-            ]
+            "fallbacks": ["serif"]
           },
           "backgroundColor": {
             "color": {
@@ -4810,9 +4025,7 @@
           "direction": "normal",
           "easingPreset": "inOutCubic",
           "fill": "both",
-          "targets": [
-            "a879eb64-3b0f-49f7-93de-e63359e6fb1a"
-          ]
+          "targets": ["a879eb64-3b0f-49f7-93de-e63359e6fb1a"]
         },
         {
           "type": "move",
@@ -4825,9 +4038,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"
-          ]
+          "targets": ["faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"]
         },
         {
           "type": "move",
@@ -4840,9 +4051,7 @@
           "direction": "normal",
           "easingPreset": "inOutQuart",
           "fill": "both",
-          "targets": [
-            "faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"
-          ]
+          "targets": ["faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"]
         },
         {
           "type": "zoom",
@@ -4854,9 +4063,7 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both",
-          "targets": [
-            "a879eb64-3b0f-49f7-93de-e63359e6fb1a"
-          ]
+          "targets": ["a879eb64-3b0f-49f7-93de-e63359e6fb1a"]
         },
         {
           "type": "zoom",
@@ -5005,70 +4212,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -5109,70 +4268,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -5213,70 +4324,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -5317,70 +4380,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -5587,70 +4602,22 @@
           "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700,
-              800,
-              900
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                0,
-                800
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                1,
-                800
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -5700,9 +4667,7 @@
           "easingPreset": "inOutQuart",
           "fill": "both",
           "iterations": 1,
-          "targets": [
-            "421f76ac-4c4d-4a44-ad77-622facf57db5"
-          ]
+          "targets": ["421f76ac-4c4d-4a44-ad77-622facf57db5"]
         },
         {
           "type": "move",
@@ -5716,9 +4681,7 @@
           "easingPreset": "outQuint",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "421f76ac-4c4d-4a44-ad77-622facf57db5"
-          ]
+          "targets": ["421f76ac-4c4d-4a44-ad77-622facf57db5"]
         },
         {
           "type": "move",

@@ -60,40 +60,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -169,9 +144,7 @@
           "easing": "",
           "fill": "forwards",
           "iterations": 1,
-          "targets": [
-            "9fc66e49-85dd-477d-8bb9-30ae259bc7fe"
-          ]
+          "targets": ["9fc66e49-85dd-477d-8bb9-30ae259bc7fe"]
         }
       ],
       "backgroundColor": {
@@ -291,40 +264,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -364,40 +312,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -493,40 +416,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -567,40 +465,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -641,40 +514,15 @@
           "font": {
             "family": "Hind",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -833,40 +681,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -906,40 +729,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -980,40 +778,15 @@
           "font": {
             "family": "Hind",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -1135,40 +908,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -1209,40 +957,15 @@
           "font": {
             "family": "Hind",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -1283,40 +1006,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -1385,40 +1083,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -1575,40 +1248,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -1649,40 +1297,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -1723,40 +1346,15 @@
           "font": {
             "family": "Hind",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -1874,40 +1472,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -2267,40 +1840,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -2341,40 +1889,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -2415,40 +1938,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
@@ -2489,40 +1987,15 @@
           "font": {
             "family": "Teko",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              300,
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
             "variants": [
-              [
-                0,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ]
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
             ]
           },
           "backgroundColor": {
