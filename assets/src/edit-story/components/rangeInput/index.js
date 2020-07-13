@@ -84,12 +84,14 @@ const Input = styled.input.attrs({
  * A styled range input component.
  *
  * This component must be initialized with two step values - one value (`majorStep`)
- * is the coarse value, that simply pressing arrow-left and arrow-right while move
+ * is the coarse value, that simply pressing arrow-left and arrow-right will move
  * between (e.g. 1) and the other (`minorStep`) is the more fine-grained value (e.g. 0.1)
  * which can be used by pressing shift+arrow.
  *
  * When using the mouse, only `minorStep` is considered and this is the resolution the
  * range has.
+ *
+ * @return {Node} Range input component
  */
 function RangeInput({
   minorStep,
