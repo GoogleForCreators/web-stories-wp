@@ -29,8 +29,10 @@ describe('storyReducer', () => {
     totalPages: null,
   };
 
+  const MOCK_ERROR_ID = Date.now();
+
   beforeAll(() => {
-    jest.spyOn(Date, 'now').mockImplementation(() => 1592844570916);
+    jest.spyOn(Date, 'now').mockImplementation(() => MOCK_ERROR_ID);
   });
 
   it(`should update stories state when ${ACTION_TYPES.TRASH_STORY} is called`, () => {
@@ -100,7 +102,7 @@ describe('storyReducer', () => {
           body: 'my trash story failure message',
           title: 'Unable to Delete Story',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
     });
@@ -172,7 +174,7 @@ describe('storyReducer', () => {
           title: 'Unable to Duplciate Story',
           body: 'my duplicate story failure message',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
     });
@@ -326,7 +328,7 @@ describe('storyReducer', () => {
           title: 'Unable to Load Stories',
           body: 'my error message',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
     });
@@ -354,7 +356,7 @@ describe('storyReducer', () => {
           title: 'Unable to Create Story From Template',
           body: 'my error message',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
     });
@@ -410,7 +412,7 @@ describe('storyReducer', () => {
           title: 'Unable to Update Story',
           body: 'my error message',
         },
-        id: Date.now(),
+        id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
     });
