@@ -137,7 +137,7 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
       await moveElementToBottom(true);
 
       const popup = fixture.screen.getByText(
-        'Links can not be located below the dashline when a page attachment is present'
+        'Links can not be located below the dashed line when a page attachment is present'
       );
       expect(popup).toBeDefined();
     });

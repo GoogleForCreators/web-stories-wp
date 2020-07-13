@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -37,7 +37,10 @@ function useElementsWithLinks() {
   }));
 
   const { elements } = currentPage;
-  const elementsWithLinks = elements.filter(({ link }) => link?.url);
+  const elementsWithLinks = useMemo(
+    () => elements.filter(({ link }) => link?.url),
+    [elements]
+  );
 
   const getElementsInAttachmentArea = useCallback(() => {
     return elementsWithLinks.filter(({ id }) => {

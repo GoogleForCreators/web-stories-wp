@@ -426,6 +426,10 @@ describe('Page output', () => {
         'amp-story-page-attachment'
       );
       await expect(pageAttachment.dataset.ctaText).toStrictEqual('Click me!');
+      await expect(pageAttachment).toHaveAttribute(
+        'href',
+        'https://example.test'
+      );
       await expect(pageAttachment).toBeInTheDocument();
     });
 
