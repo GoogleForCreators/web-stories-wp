@@ -24,6 +24,7 @@ export const ACTION_TYPES = {
 export const defaultSettingsState = {
   error: {},
   googleAnalyticsId: null,
+  publisherLogos: [],
 };
 
 function settingsReducer(state, action) {
@@ -42,6 +43,7 @@ function settingsReducer(state, action) {
         ...state,
         error: {},
         googleAnalyticsId: action.payload.googleAnalyticsId,
+        publisherLogos: action.payload.publisherLogos,
       };
     }
 

@@ -66,39 +66,36 @@ import createResource from './createResource';
  */
 function getUrls(m) {
   if (m.type.toLowerCase() === 'image') {
-    return Object.fromEntries(
-      new Map(
-        m.imageUrls.map((u) => [
-          u.imageName,
-          {
-            file: m.name,
-            source_url: u.url,
-            mime_type: u.mimeType,
-            width: u.width,
-            height: u.height,
-          },
-        ])
-      )
-    );
+    // The rest of the application expects 3 named "sizes": "full", "large" and
+    // "web_stories_thumbnail". We use the biggest as "full", the next biggest
+    // as "large", and the smallest as "web_stories_thumbnail". The rest are
+    // named according to their size.
+    if (m.imageUrls?.length < 3) {
+      throw new Error(
+        'Invalid number of urls for asset. Need at least 3: ' + m
+      );
+    }
+
+    const sizesFromBiggest = m.imageUrls
+      .sort((el1, el2) => el2.width - el1.width)
+      .map((u) => ({
+        file: m.name,
+        source_url: u.url,
+        mime_type: u.mimeType,
+        width: u.width,
+        height: u.height,
+      }));
+    const namedSizes = [
+      ['full', sizesFromBiggest[0]],
+      ['large', sizesFromBiggest[1]],
+      ...sizesFromBiggest
+        .slice(2, sizesFromBiggest.length - 1)
+        .map((u) => [u.width + '_' + u.height, u]),
+      ['web_stories_thumbnail', sizesFromBiggest[sizesFromBiggest.length - 1]],
+    ];
+    return Object.fromEntries(new Map(namedSizes));
   }
   throw new Error('Invalid media type.');
-}
-
-/**
- * Returns the ImageUrl object for the largest image (the full asset).
- *
- * @param {Media3pMedia} m The Media3P Media object.
- * @return {*} An ImageUrl object.
- */
-function getFullAsset(m) {
-  if (m.type.toLowerCase() === 'image') {
-    if (!m.imageUrls.length) {
-      throw new Error('No imageUrls for media resource: ' + m);
-    }
-    // Reverse sort and get the largest width to determine the full asset.
-    return m.imageUrls.sort((el1, el2) => el2.width - el1.width)[0];
-  }
-  throw new Error('Invalid media type for media resource: ' + m);
 }
 
 /**
@@ -109,17 +106,15 @@ function getFullAsset(m) {
  */
 function getResourceFromMedia3p(m) {
   const urls = getUrls(m);
-  const fullAsset = getFullAsset(m);
   return createResource({
     type: m.type.toLowerCase(),
-    mimeType: fullAsset.mimeType,
+    mimeType: urls.full.mime_type,
     creationDate: m.createTime,
-    src: fullAsset.url,
-    width: fullAsset.width,
-    height: fullAsset.height,
+    src: urls.full.source_url,
+    width: urls.full.width,
+    height: urls.full.height,
     poster: null, // TODO: Implement for videos.
     posterId: null, // TODO: Implement for videos.
-    id: m.name,
     length: null, // TODO: Implement for videos.
     lengthFormatted: null, // TODO: Implement for videos.
     title: m.description,

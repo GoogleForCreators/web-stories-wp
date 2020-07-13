@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { TypographyPresets } from '../../../components';
+import { TypographyPresets, FileUpload } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 
 export const Wrapper = styled.div`
@@ -90,7 +90,8 @@ export const FileUploadHelperText = styled.p`
   ${TypographyPresets.Small};
   font-size: 15px;
   padding-bottom: 10px;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.colors.gray500};
+  font-weight: 600;
 `;
 
 export const FinePrintHelperText = styled.p`
@@ -99,11 +100,8 @@ export const FinePrintHelperText = styled.p`
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
-export const UploadContainer = styled.div`
-  width: 100%;
-  height: 153px;
-  padding: 20px;
-  background-color: ${({ theme }) => theme.colors.gray25};
+export const UploadContainer = styled(FileUpload)`
+  min-height: 153px;
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);
