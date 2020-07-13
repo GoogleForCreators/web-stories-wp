@@ -36,6 +36,7 @@ module.exports = function (config) {
       'karma-coverage-istanbul-reporter',
       require('./karma/karma-puppeteer-launcher/index.cjs'),
       require('./karma/karma-puppeteer-client/index.cjs'),
+      require('./karma/karma-cuj-reporter/index.cjs'),
     ],
 
     // Frameworks to use.
