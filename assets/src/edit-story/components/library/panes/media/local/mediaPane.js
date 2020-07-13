@@ -17,7 +17,14 @@
 /**
  * External dependencies
  */
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useFeature } from 'flagged';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -47,11 +54,13 @@ import {
   SearchInputContainer,
   StyledPane,
 } from '../common/styles';
+import MediaGallery from '../common/mediaGallery';
+import { ProviderType } from '../media3p/providerType';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
 
-const Container = styled.div`
+const ColumnContainer = styled.div`
   grid-area: infinitescroll;
   display: grid;
   grid-gap: 10px;
@@ -59,6 +68,16 @@ const Container = styled.div`
   overflow: auto;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
+`;
+
+const RowContainer = styled.div`
+  display: grid;
+  grid-area: infinitescroll;
+  overflow: auto;
+  grid-template-columns: 1fr;
+  padding: 0 1.5em 0 1.5em;
+  margin-top: 1em;
+  position: relative;
 `;
 
 const Column = styled.div`
@@ -98,6 +117,7 @@ const FILTERS = [
 const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
+  const isRowBasedGallery = useFeature('rowBasedGallery');
   const {
     hasMore,
     media,
@@ -286,10 +306,91 @@ function MediaPane(props) {
       if (!entry.isIntersecting) {
         return;
       }
-
       setNextPage();
     },
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
+  );
+
+  const [handleScroll] = useDebouncedCallback(
+    (e) => {
+      if (!hasMore || !isMediaLoaded || isMediaLoading) {
+        return;
+      }
+      // This rootMargin is added so that we load an extra page when the
+      // we are "close" to the bottom of the container, even if it's not
+      // yet visible.
+      const bottom =
+        e.target.scrollHeight - e.target.scrollTop <=
+        e.target.clientHeight + ROOT_MARGIN;
+      if (bottom) {
+        setNextPage();
+      }
+    },
+    500,
+    [hasMore, isMediaLoaded, isMediaLoading, setNextPage]
+  );
+
+  useEffect(() => {
+    const node = refContainer.current;
+    if (!node) {
+      return undefined;
+    }
+    // And when scroll changes (but debounced)
+    node.addEventListener('scroll', handleScroll);
+    return () => node.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const mediaLibrary = isRowBasedGallery ? (
+    // Arranges elements in rows.
+    <RowContainer
+      data-testid="mediaLibrary"
+      onScroll={handleScroll}
+      ref={refCallbackContainer}
+    >
+      <MediaGallery
+        resources={resources}
+        onInsert={insertMediaElement}
+        providerType={ProviderType.LOCAL}
+      />
+      {hasMore && (
+        <MediaGalleryLoadingPill>
+          {__('Loading…', 'web-stories')}
+        </MediaGalleryLoadingPill>
+      )}
+    </RowContainer>
+  ) : (
+    // Arranges elements in columns.
+    <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
+      <Column>
+        {resources
+          .filter((_, index) => isEven(index))
+          .map((resource, i) => (
+            <MediaElement
+              resource={resource}
+              key={i}
+              width={PREVIEW_SIZE}
+              onInsert={insertMediaElement}
+            />
+          ))}
+      </Column>
+      <Column>
+        {resources
+          .filter((_, index) => !isEven(index))
+          .map((resource, i) => (
+            <MediaElement
+              resource={resource}
+              key={i}
+              width={PREVIEW_SIZE}
+              onInsert={insertMediaElement}
+            />
+          ))}
+      </Column>
+      {hasMore && (
+        <MediaGalleryLoadingPill ref={refContainerFooter}>
+          {__('Loading…', 'web-stories')}
+        </MediaGalleryLoadingPill>
+      )}
+    </ColumnContainer>
   );
 
   return (
@@ -326,37 +427,7 @@ function MediaPane(props) {
             {__('No media found', 'web-stories')}
           </MediaGalleryMessage>
         ) : (
-          <Container data-testid="mediaLibrary" ref={refCallbackContainer}>
-            <Column>
-              {resources
-                .filter((_, index) => isEven(index))
-                .map((resource, i) => (
-                  <MediaElement
-                    resource={resource}
-                    key={i}
-                    width={PREVIEW_SIZE}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            <Column>
-              {resources
-                .filter((_, index) => !isEven(index))
-                .map((resource, i) => (
-                  <MediaElement
-                    resource={resource}
-                    key={i}
-                    width={PREVIEW_SIZE}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            {hasMore && (
-              <MediaGalleryLoadingPill ref={refContainerFooter}>
-                {__('Loading…', 'web-stories')}
-              </MediaGalleryLoadingPill>
-            )}
-          </Container>
+          mediaLibrary
         )}
       </PaneInner>
     </StyledPane>
