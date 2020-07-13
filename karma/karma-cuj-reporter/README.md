@@ -57,3 +57,35 @@ module.exports = function (config) {
   });
 };
 ```
+
+## Result
+
+The output will look a bit like this:
+
+See console output like this:
+
+```markdown
+| **CUJ**                             | **Action**                     | **Completion** |
+| ----------------------------------- | ------------------------------ | -------------- |
+| Creator can add image/video to page | *\[total\]*                    | 🚨 **0.00%**   |
+|                                     | Search media                   | 🚨 **0.00%**   |
+|                                     | Upload media via upload button | 🚨 **0.00%**   |
+|                                     | Set as background              | 🚨 **0.00%**   |
+|                                     | Filter media                   | 🚨 **0.00%**   |
+| Creator can Add and Write Text      | *\[total\]*                    | 🛴 **66.67%**  |
+|                                     | Delete textbox                 | 🛴 **66.67%**  |
+| *\[total\]*                         | *\[total\]*                    | 🚨 **25.00%**  |
+```
+
+...which results in a rendered Markdown table like this:
+
+| **CUJ**                             | **Action**                     | **Completion** |
+| ----------------------------------- | ------------------------------ | -------------- |
+| Creator can add image/video to page | *\[total\]*                    | 🚨 **0.00%**   |
+|                                     | Search media                   | 🚨 **0.00%**   |
+|                                     | Upload media via upload button | 🚨 **0.00%**   |
+|                                     | Set as background              | 🚨 **0.00%**   |
+|                                     | Filter media                   | 🚨 **0.00%**   |
+| Creator can Add and Write Text      | *\[total\]*                    | 🛴 **66.67%**  |
+|                                     | Delete textbox                 | 🛴 **66.67%**  |
+| *\[total\]*                         | *\[total\]*                    | 🚨 **25.00%**  |
