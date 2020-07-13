@@ -72,6 +72,8 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
       return;
     }
 
+    cujResults.sort();
+
     const tableContents = cujResults.reduce((acc, curr) => {
       const [cuj, action] = curr;
 
