@@ -35,6 +35,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useDebouncedCallback } from 'use-debounce';
 import MediaGallery from '../common/mediaGallery';
 import {
   useMedia3p,
@@ -74,6 +75,17 @@ const CategorySection = styled.div`
 function Media3pPane(props) {
   const { isActive } = props;
 
+  const { media } = useMedia3pForProvider('unsplash', ({ state }) => ({
+    media: state.media,
+  }));
+
+  const { searchTerm } = useMedia3p(({ state }) => ({
+    searchTerm: state.searchTerm,
+  }));
+
+  // Local state so that we can debounce triggering searches.
+  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
+
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -102,9 +114,11 @@ function Media3pPane(props) {
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
-  const { setSelectedProvider } = useMedia3p(({ actions }) => ({
+  const { setSelectedProvider, search } = useMedia3p(({ actions }) => ({
     setSelectedProvider: actions.setSelectedProvider,
+    search: actions.search,
   }));
+
   useEffect(() => {
     if (isActive) {
       setSelectedProvider({ provider: 'unsplash' });
@@ -127,13 +141,22 @@ function Media3pPane(props) {
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, refContainer]);
 
-  const { media } = useMedia3pForProvider('unsplash', ({ state }) => ({
-    media: state.media,
-  }));
+  /**
+   * Effectively performs a search, triggered at most every 500ms.
+   */
+  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
+    search({ searchTerm: searchTermValue });
+  }, 500);
 
-  const onSearch = useCallback(() => {
-    // TODO(#2391): Perform search.
-  }, []);
+  /**
+   * Handle search input changes. Triggers with every keystroke.
+   *
+   * @param {string} value the new search term.
+   */
+  const onSearch = (value) => {
+    setSearchTermValue(value);
+    changeSearchTermDebounced();
+  };
 
   const onProviderTabClick = useCallback(() => {
     // TODO(#2393): set state.
@@ -146,7 +169,7 @@ function Media3pPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              value={'Not implemented'}
+              value={searchTermValue}
               placeholder={__('Search', 'web-stories')}
               onChange={onSearch}
             />

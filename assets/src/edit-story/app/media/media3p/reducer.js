@@ -28,6 +28,7 @@ import providerReducer from './providerReducer.js';
 
 const INITIAL_STATE = {
   selectedProvider: undefined,
+  searchTerm: '',
 };
 
 // TODO(#2804): Use the configuration json to provide this list.
@@ -72,6 +73,12 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return {
         ...state,
         selectedProvider: payload.provider,
+      };
+    }
+    case types.SEARCH: {
+      return {
+        ...state,
+        searchTerm: payload.searchTerm,
       };
     }
     default:
