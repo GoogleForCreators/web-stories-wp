@@ -32,6 +32,7 @@ import {
   getCurrentVersionNumber,
   updateVersionNumbers,
   updateAssetsURL,
+  updateTemplates,
 } from './utils/index.js';
 
 const PLUGIN_DIR = process.cwd();
@@ -39,6 +40,7 @@ const PLUGIN_FILE = `${PLUGIN_DIR}/web-stories.php`;
 const README_FILE = `${PLUGIN_DIR}/readme.txt`;
 const PLUGIN_BUILD_DIR = `${PLUGIN_DIR}/build/web-stories`;
 const FONTS_FILE = PLUGIN_DIR + '/includes/data/fonts.json';
+const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
 
 program
   .command('version')
@@ -144,6 +146,21 @@ program
     }
 
     console.log('Web fonts updated!');
+  });
+
+program
+  .command('update-templates')
+  .description('Update templates by running them through migration')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  # Migrate templates to newest version');
+    console.log('  $ commander.js update-templates');
+  })
+  .action(() => {
+    updateTemplates(TEMPLATES_DIR);
+
+    console.log("Templates updated! Don't forget to run prettier!");
   });
 
 program.parse(process.argv);

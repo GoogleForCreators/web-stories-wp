@@ -41,7 +41,9 @@ jobs:
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npx rollup --config bin/rollup.config.migrate.js
         env:
           CI: true
 

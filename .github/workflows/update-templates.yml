@@ -1,10 +1,10 @@
-name: Update Google Fonts
+name: Migrate Templates
 on:
   schedule:
     - cron: '0 12 * * 1'
 jobs:
-  update-fonts:
-    name: Update Google Fonts
+  update-template:
+    name: Migrate Templates
     runs-on: ubuntu-latest
 
     steps:
@@ -38,17 +38,17 @@ jobs:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Update list of Google Fonts
-        env:
-          GOOGLE_FONTS_API_KEY: ${{ secrets.GOOGLE_FONTS_API_KEY }}
-        run: npm run workflow:fonts
+      - name: Update templates
+        run: |
+          npm run workflow:templates
+          npx prettier --write assets/src/dashboard/templates/raw/*.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Update list of Google Fonts
-          title: Update list of Google Fonts
-          body: Fetched the currently available fonts on Google Fonts to update them in the project.
-          branch: update/google-fonts
+          commit-message: Migrate templates to latest version
+          title: Migrate templates
+          body: Update templates after running through migration
+          branch: update/templates
           labels: Dependencies
