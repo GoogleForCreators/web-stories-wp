@@ -42,7 +42,7 @@ export const elementWithPosition = css`
 
 // We need to round since otherwise there can be differences when resizing / measuring.
 export const elementWithSize = css`
-  width: ${({ width }) => `${Math.round(width)}px`};
+  width: ${({ width }) => `${Math.ceil(width)}px`};
   height: ${({ height }) => `${Math.round(height)}px`};
 `;
 
