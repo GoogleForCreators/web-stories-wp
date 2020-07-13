@@ -80,7 +80,7 @@ const CUJReporter = function (baseReporterDecorator, config, logger, helper) {
       }
 
       if (!acc.find(([_cuj, _action]) => _cuj === cuj && _action === action)) {
-        acc.push([cuj, action, getCompletion(cuj, action)]);
+        acc.push(['', action, getCompletion(cuj, action)]);
       }
 
       return acc;
