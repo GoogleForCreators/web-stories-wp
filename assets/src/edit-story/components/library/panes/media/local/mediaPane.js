@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { rgba } from 'polished';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
@@ -41,6 +40,8 @@ import {
 } from '../../../../../app/media/utils';
 import MediaElement from '../common/mediaElement';
 import {
+  MediaGalleryLoadingPill,
+  MediaGalleryMessage,
   PaneHeader,
   PaneInner,
   SearchInputContainer,
@@ -62,12 +63,6 @@ const Container = styled.div`
 
 const Column = styled.div`
   position: relative;
-`;
-
-const Message = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 16px;
-  padding: 1em;
 `;
 
 const FilterArea = styled.div`
@@ -92,19 +87,6 @@ const FilterButton = styled.button`
   font-size: ${({ theme }) => theme.fonts.label.size};
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-`;
-
-const Loading = styled.div`
-  grid-column: 1 / span 2;
-  margin-bottom: 16px;
-  text-align: center;
-  padding: 8px 80px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
-  border-radius: 100px;
-  margin-top: auto;
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  font-weight: 500;
 `;
 
 const FILTERS = [
@@ -340,7 +322,9 @@ function MediaPane(props) {
         </PaneHeader>
 
         {isMediaLoaded && !media.length ? (
-          <Message>{__('No media found', 'web-stories')}</Message>
+          <MediaGalleryMessage>
+            {__('No media found', 'web-stories')}
+          </MediaGalleryMessage>
         ) : (
           <Container data-testid="mediaLibrary" ref={refCallbackContainer}>
             <Column>
@@ -368,9 +352,9 @@ function MediaPane(props) {
                 ))}
             </Column>
             {hasMore && (
-              <Loading ref={refContainerFooter}>
+              <MediaGalleryLoadingPill ref={refContainerFooter}>
                 {__('Loading…', 'web-stories')}
-              </Loading>
+              </MediaGalleryLoadingPill>
             )}
           </Container>
         )}

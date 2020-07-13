@@ -19,13 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -35,14 +29,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import MediaGallery from '../common/mediaGallery';
+import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import {
   useMedia3p,
   useMedia3pForProvider,
 } from '../../../../../app/media/media3p/useMedia3p';
 import {
-  MediaGalleryContainer,
-  MediaGalleryInnerContainer,
   PaneHeader,
   PaneInner,
   SearchInputContainer,
@@ -89,19 +81,6 @@ function Media3pPane(props) {
     [insertElement]
   );
 
-  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-  // State and callback ref necessary to recalculate the padding of the list
-  //  given the scrollbar width.
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-    setScrollbarWidth(element.offsetWidth - element.clientWidth);
-  };
-
   const { setSelectedProvider } = useMedia3p(({ actions }) => ({
     setSelectedProvider: actions.setSelectedProvider,
   }));
@@ -111,25 +90,19 @@ function Media3pPane(props) {
     }
   }, [isActive, setSelectedProvider]);
 
-  // Recalculates padding of Media Pane so it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
-  useLayoutEffect(() => {
-    if (!scrollbarWidth) {
-      return;
-    }
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
-    );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
-
-  const { media } = useMedia3pForProvider('unsplash', ({ state }) => ({
-    media: state.media,
-  }));
+  const {
+    media,
+    hasMore,
+    setNextPage,
+    isMediaLoading,
+    isMediaLoaded,
+  } = useMedia3pForProvider(
+    'unsplash',
+    ({
+      state: { media, hasMore, isMediaLoading, isMediaLoaded },
+      actions: { setNextPage },
+    }) => ({ media, hasMore, isMediaLoading, isMediaLoaded, setNextPage })
+  );
 
   const onSearch = useCallback(() => {
     // TODO(#2391): Perform search.
@@ -160,15 +133,15 @@ function Media3pPane(props) {
           </ProviderTabSection>
           <CategorySection>{__('Coming soon', 'web-stories')}</CategorySection>
         </PaneHeader>
-        <MediaGalleryContainer ref={refCallbackContainer}>
-          <MediaGalleryInnerContainer>
-            <MediaGallery
-              resources={media}
-              onInsert={insertMediaElement}
-              providerType={ProviderType.UNSPLASH}
-            />
-          </MediaGalleryInnerContainer>
-        </MediaGalleryContainer>
+        <PaginatedMediaGallery
+          providerType={ProviderType.UNSPLASH}
+          resources={media}
+          isMediaLoading={isMediaLoading}
+          isMediaLoaded={isMediaLoaded}
+          hasMore={hasMore}
+          onInsert={insertMediaElement}
+          setNextPage={setNextPage}
+        />
       </PaneInner>
     </StyledPane>
   );

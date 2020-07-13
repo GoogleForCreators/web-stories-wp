@@ -17,6 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
@@ -36,16 +37,32 @@ export const PaneHeader = styled.div`
 `;
 
 export const MediaGalleryContainer = styled.div`
+  display: grid;
   grid-area: infinitescroll;
   overflow: auto;
-  padding: 0 24px;
+  grid-template-columns: 1fr;
+  padding: 0 1.2em 0 1.2em;
   margin-top: 1em;
-  width: 100%;
+  position: relative;
 `;
 
-// 312px is the width of the gallery minus the 24px paddings.
-export const MediaGalleryInnerContainer = styled.div`
-  width: 312px;
+export const MediaGalleryLoadingPill = styled.div`
+  grid-column: 1 / span 2;
+  margin-bottom: 16px;
+  text-align: center;
+  padding: 8px 80px;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
+  border-radius: 100px;
+  margin-top: auto;
+  font-size: ${({ theme }) => theme.fonts.label.size};
+  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-weight: 500;
+`;
+
+export const MediaGalleryMessage = styled.div`
+  color: ${({ theme }) => theme.colors.fg.v1};
+  font-size: 16px;
+  padding: 1em;
 `;
 
 export const StyledPane = styled(Pane)`
