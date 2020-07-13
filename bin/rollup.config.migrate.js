@@ -30,4 +30,5 @@ export default {
     format: 'es',
   },
   plugins: [resolve()],
+  external: ['crypto'],
 };
