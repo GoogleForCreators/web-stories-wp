@@ -41,9 +41,15 @@ export const MediaGalleryContainer = styled.div`
   grid-area: infinitescroll;
   overflow: auto;
   grid-template-columns: 1fr;
-  padding: 0 1.2em 0 1.2em;
+  padding: 0 24px;
   margin-top: 1em;
   position: relative;
+  width: 100%;
+`;
+
+// 312px is the width of the gallery minus the 24px paddings.
+export const MediaGalleryInnerContainer = styled.div`
+  width: 312px;
 `;
 
 export const MediaGalleryLoadingPill = styled.div`

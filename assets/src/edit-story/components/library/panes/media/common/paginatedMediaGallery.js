@@ -32,6 +32,7 @@ import MediaGallery from '../common/mediaGallery';
 import useIntersectionEffect from '../../../../../utils/useIntersectionEffect';
 import {
   MediaGalleryContainer,
+  MediaGalleryInnerContainer,
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
 } from '../common/styles';
@@ -127,7 +128,7 @@ function PaginatedMediaGallery({
       data-testid="media-gallery-container"
       ref={refCallbackContainer}
     >
-      {mediaGallery}
+      <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
     </MediaGalleryContainer>
   );
 }
