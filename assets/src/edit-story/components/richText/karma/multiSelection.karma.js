@@ -107,6 +107,10 @@ describe('CUJ: Editor Can Style Text', () => {
       const getExpected = (content) => `<span style="${css}">${content}</span>`;
       expect(getTextContent(0)).toBe(getExpected('Fill in some text'));
       expect(getTextContent(1)).toBe(getExpected('Number #2'));
+
+      await data.fixture.snapshot(
+        'Two texts in black,italic,underline,magenta,narrow'
+      );
     });
 
     it('should apply formatting correctly for multi-style text field', async () => {
@@ -175,6 +179,8 @@ describe('CUJ: Editor Can Style Text', () => {
       ].join('; ');
       const expected = `<span style="${css}">Fill in some text</span>`;
       expect(actual).toBe(expected);
+
+      await data.fixture.snapshot('Two texts in bold,italic,underline,green');
     });
 
     it('should make black text field + bold text field non-bold when toggling', async () => {
@@ -210,6 +216,8 @@ describe('CUJ: Editor Can Style Text', () => {
       // Assumeboth  texts' content to now be formatting-free
       expect(getTextContent(0)).toBe('Fill in some text');
       expect(getTextContent(1)).toBe('Number #2');
+
+      await data.fixture.snapshot('Two texts without formatting');
     });
 
     it('should make bold text field + light text field bold when toggling', async () => {
@@ -249,6 +257,8 @@ describe('CUJ: Editor Can Style Text', () => {
       expect(getTextContent(1)).toBe(
         '<span style="font-weight: 700">Number #2</span>'
       );
+
+      await data.fixture.snapshot('Two texts in bold');
     });
   });
 });

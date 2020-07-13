@@ -74,6 +74,10 @@ describe('CUJ: Editor Can Style Text', () => {
         const expected =
           'Fi<span style="font-weight: 700">foo</span>ll in some text';
         expect(actual).toBe(expected);
+
+        await data.fixture.snapshot(
+          '"Fifooll in some text" in mixed formatting'
+        );
       });
 
       it('should have correct formatting when pressing bold toggle, then inserting text', async () => {
@@ -98,6 +102,10 @@ describe('CUJ: Editor Can Style Text', () => {
         const expected =
           'Fi<span style="font-weight: 700">foo</span>ll in some text';
         expect(actual).toBe(expected);
+
+        await data.fixture.snapshot(
+          '"Fifooll in some text" in mixed formatting'
+        );
       });
 
       it('should have correct formatting when pressing underline toggle, then mod+i, then inserting text', async () => {
@@ -128,6 +136,10 @@ describe('CUJ: Editor Can Style Text', () => {
         const expected =
           'Fi<span style="font-style: italic; text-decoration: underline">foo</span>ll in some text';
         expect(actual).toBe(expected);
+
+        await data.fixture.snapshot(
+          '"Fifooll in some text" in mixed formatting'
+        );
       });
 
       // Disable reason: This doesn't work due to bug #1606:
@@ -161,6 +173,10 @@ describe('CUJ: Editor Can Style Text', () => {
         const expected =
           'Fi<span style="font-style: italic; text-decoration: underline">foo</span>ll in some text';
         expect(actual).toBe(expected);
+
+        await data.fixture.snapshot(
+          '"Fifooll in some text" in mixed formatting'
+        );
       });
 
       it('should have correct formatting when selecting font weight, then inserting text', async () => {
@@ -191,6 +207,10 @@ describe('CUJ: Editor Can Style Text', () => {
         const expected =
           'Fi<span style="font-weight: 900">foo</span>ll in some text';
         expect(actual).toBe(expected);
+
+        await data.fixture.snapshot(
+          '"Fifooll in some text" in mixed formatting'
+        );
       });
     });
 
@@ -230,6 +250,8 @@ describe('CUJ: Editor Can Style Text', () => {
       const expected =
         '<span style="font-style: italic">Fi</span><span style="font-weight: 700">foo</span><span style="font-style: italic">ll in some text</span>';
       expect(actual).toBe(expected);
+
+      await data.fixture.snapshot('"Fifooll in some text" in mixed formatting');
     });
 
     it('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
@@ -269,6 +291,7 @@ describe('CUJ: Editor Can Style Text', () => {
       const expected =
         '<span style="font-weight: 700">Full in some text</span>';
       expect(actual).toBe(expected);
+      await data.fixture.snapshot('"Full in some text" in bold');
     });
 
     it('should keep formatting when all text is replaced', async () => {
@@ -284,6 +307,8 @@ describe('CUJ: Editor Can Style Text', () => {
       const actual = getTextContent();
       const expected = '<span style="font-weight: 700">A new text</span>';
       expect(actual).toBe(expected);
+
+      await data.fixture.snapshot('"A new text" in bold');
     });
 
     it('should keep formatting when all text is removed, then replaced', async () => {
@@ -300,6 +325,8 @@ describe('CUJ: Editor Can Style Text', () => {
       const actual = getTextContent();
       const expected = '<span style="font-weight: 700">Even more text</span>';
       expect(actual).toBe(expected);
+
+      await data.fixture.snapshot('"Even more text" in bold');
     });
   });
 });
