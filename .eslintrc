@@ -272,6 +272,8 @@
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
         "jasmine/no-disabled-tests": "error",
+        "jasmine/no-spec-dupes": ["error", "branch"],
+        "jasmine/no-suite-dupes": ["error", "branch"],
         "jsdoc/require-jsdoc": "off"
       },
       "globals": {
