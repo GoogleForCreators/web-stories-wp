@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, useRef } from 'react';
 
@@ -108,10 +108,12 @@ const Rectangle = styled.button`
     outline: none;
   }
 
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.3;
-  }
+  ${({ disable }) =>
+    disable &&
+    css`
+      pointer-events: none;
+      opacity: 0.3;
+    `}
 
   svg {
     width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
@@ -175,11 +177,14 @@ function ThumbnailSizeControl({ value, onChange }) {
       break;
   }
 
+  const decreaseBtnDisabled = value === min;
+  const increaseBtnDisabled = value === max;
+
   return (
     <RangeInputWrapper>
       <Rectangle
-        onClick={() => updateRangeValue(-step)}
-        disabled={value === min}
+        onClick={() => !decreaseBtnDisabled && updateRangeValue(-step)}
+        disable={decreaseBtnDisabled}
         aria-label={__('Decrease thumbnail size', 'web-stories')}
       >
         <RectangleIcon />
@@ -198,8 +203,8 @@ function ThumbnailSizeControl({ value, onChange }) {
       <Space />
       <Rectangle
         isLarge
-        onClick={() => updateRangeValue(step)}
-        disabled={value === max}
+        onClick={() => !increaseBtnDisabled && updateRangeValue(step)}
+        disable={increaseBtnDisabled}
         aria-label={__('Increase thumbnail size', 'web-stories')}
       >
         <RectangleIcon />
