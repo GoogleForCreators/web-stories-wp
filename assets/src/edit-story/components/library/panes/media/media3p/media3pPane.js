@@ -50,7 +50,7 @@ import {
 } from '../common/styles';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
-import { ProviderType } from './providerType';
+import { ProviderType } from '../common/providerType';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
