@@ -71,4 +71,18 @@ describe('reducer', () => {
       })
     );
   });
+
+  it('should assign searchTerm on setSearchTerm', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, media3pActionsToWrap)
+    );
+
+    result.current.actions.setSearchTerm({ searchTerm: 'cats' });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        searchTerm: 'cats',
+      })
+    );
+  });
 });
