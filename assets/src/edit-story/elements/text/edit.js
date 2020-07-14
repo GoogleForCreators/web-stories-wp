@@ -42,7 +42,6 @@ import {
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import useUnmount from '../../utils/useUnmount';
-import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
