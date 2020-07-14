@@ -72,7 +72,7 @@ describe('reducer', () => {
     );
   });
 
-  it('should assign searchTerm on search', () => {
+  it('should assign searchTerm on setSearchTerm', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, media3pActionsToWrap)
     );
