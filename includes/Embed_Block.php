@@ -50,7 +50,7 @@ class Embed_Block {
 		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
-		$this->register_script( self::SCRIPT_HANDLE, [ 'amp-story-player' ] );
+		$this->register_script( self::SCRIPT_HANDLE, [ 'amp-story-player', Tracking::SCRIPT_HANDLE ] );
 		$this->register_style( self::SCRIPT_HANDLE, [ 'amp-story-player' ] );
 
 		// todo: use register_block_type_from_metadata() once generally available.

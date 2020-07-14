@@ -66,7 +66,7 @@ const PrimaryButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
 `;
 
-const DefaultButton = styled(StyledButton)`
+export const DefaultButton = styled(StyledButton)`
   ${TypographyPresets.Medium};
   ${({ theme }) => `
     min-width: 50px;

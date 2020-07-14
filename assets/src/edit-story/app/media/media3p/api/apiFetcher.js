@@ -36,70 +36,6 @@ const OrderBy = {
   LATEST: 'latest',
 };
 
-/**
- * Perform a GET request to the Media3P API to list media.
- * If the parameters are invalid or the server does not return a 200 response,
- * an error is thrown.
- *
- * @param {Object} obj - An object with the options for the request.
- * @param {?string} obj.languageCode The BCP-47 language code, such as "en-US"
- * or "sr-Latn".
- * @param {?string} obj.filter  Filter details for items returned.
- * Filter fields available:
- * > provider - The media provider to query, or a universal list/search if
- * left blank.
- * > type - The media type, either 'image' or 'video'.
- * > query - A keyword search string.
- * This may be specified without the 'query:' prefix.
- * @param {?string} obj.orderBy The sort order for returned results.
- * Valid sort fields are:
- * > relevance - The default. This is 'most popular' when listing results,
- * and 'most relevant' when applying a keyword search.
- * > latest - Last updated time descending.
- * @param {?number} obj.pageSize Maximum number of results to be returned by the
- * server. If unspecified or zero, at most 20 media resources will be returned.
- * @param {?string} obj.pageToken A page token, received from a previous
- * `ListMedia` call. Provide this to retrieve the subsequent page.
- * When paginating, all other parameters provided to `ListMedia` must match
- * the call that provided the page token.
- * @return {Promise<Object>} The response from the API.
- */
-export async function listMedia({
-  languageCode = null,
-  filter = null,
-  orderBy = null,
-  pageSize = null,
-  pageToken = null,
-} = {}) {
-  validateOrderBy(orderBy);
-  validatePageSize(pageSize);
-
-  const params = [
-    ['language_code', languageCode],
-    ['filter', filter],
-    ['order_by', orderBy],
-    ['page_size', pageSize],
-    ['page_token', pageToken],
-    ['key', API_KEY],
-  ].filter((entry) => Boolean(entry[1]));
-  // Querystring always has at least the api key
-  const queryString = new URLSearchParams(Object.fromEntries(new Map(params)));
-  const url = API_DOMAIN + Paths.LIST_MEDIA + '?' + queryString.toString();
-
-  const response = await window.fetch(url);
-
-  if (!response.ok) {
-    throw new Error(
-      'Obtained an error from the listMedia call, statusCode: ' +
-        response.status +
-        ', statusText: ' +
-        response.statusText
-    );
-  }
-
-  return response.json();
-}
-
 function validateOrderBy(orderBy) {
   if (
     orderBy == null ||
@@ -116,3 +52,73 @@ function validatePageSize(pageSize) {
   }
   throw new Error('Invalid page_size: ' + pageSize);
 }
+
+class ApiFetcher {
+  /**
+   * Perform a GET request to the Media3P API to list media.
+   * If the parameters are invalid or the server does not return a 200 response,
+   * an error is thrown.
+   *
+   * @param {Object} obj - An object with the options for the request.
+   * @param {?string} obj.languageCode The BCP-47 language code, such as "en-US"
+   * or "sr-Latn".
+   * @param {?string} obj.filter  Filter details for items returned.
+   * Filter fields available:
+   * > provider - The media provider to query, or a universal list/search if
+   * left blank.
+   * > type - The media type, either 'image' or 'video'.
+   * > query - A keyword search string.
+   * This may be specified without the 'query:' prefix.
+   * @param {?string} obj.orderBy The sort order for returned results.
+   * Valid sort fields are:
+   * > relevance - The default. This is 'most popular' when listing results,
+   * and 'most relevant' when applying a keyword search.
+   * > latest - Last updated time descending.
+   * @param {?number} obj.pageSize Maximum number of results to be returned by the
+   * server. If unspecified or zero, at most 20 media resources will be returned.
+   * @param {?string} obj.pageToken A page token, received from a previous
+   * `ListMedia` call. Provide this to retrieve the subsequent page.
+   * When paginating, all other parameters provided to `ListMedia` must match
+   * the call that provided the page token.
+   * @return {Promise<Object>} The response from the API.
+   */
+  async listMedia({
+    languageCode = null,
+    filter = null,
+    orderBy = null,
+    pageSize = null,
+    pageToken = null,
+  } = {}) {
+    validateOrderBy(orderBy);
+    validatePageSize(pageSize);
+
+    const params = [
+      ['language_code', languageCode],
+      ['filter', filter],
+      ['order_by', orderBy],
+      ['page_size', pageSize],
+      ['page_token', pageToken],
+      ['key', API_KEY],
+    ].filter((entry) => Boolean(entry[1]));
+    // Querystring always has at least the api key
+    const queryString = new URLSearchParams(
+      Object.fromEntries(new Map(params))
+    );
+    const url = API_DOMAIN + Paths.LIST_MEDIA + '?' + queryString.toString();
+
+    const response = await window.fetch(url);
+
+    if (!response.ok) {
+      throw new Error(
+        'Obtained an error from the listMedia call, statusCode: ' +
+          response.status +
+          ', statusText: ' +
+          response.statusText
+      );
+    }
+
+    return response.json();
+  }
+}
+
+export default new ApiFetcher();

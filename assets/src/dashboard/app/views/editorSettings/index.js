@@ -37,7 +37,7 @@ function EditorSettings() {
       settingsApi: { fetchSettings, updateSettings },
     },
     state: {
-      settings: { googleAnalyticsId },
+      settings: { googleAnalyticsId, publisherLogos },
     },
   } = useContext(ApiContext);
 
@@ -55,7 +55,10 @@ function EditorSettings() {
           onUpdateGoogleAnalytics={updateSettings}
           googleAnalyticsId={googleAnalyticsId}
         />
-        <PublisherLogoSettings />
+        <PublisherLogoSettings
+          onUpdatePublisherLogo={updateSettings}
+          publisherLogos={publisherLogos}
+        />
       </Main>
     </Wrapper>
   );
