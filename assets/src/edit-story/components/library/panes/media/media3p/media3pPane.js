@@ -19,13 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -36,14 +30,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import MediaGallery from '../common/mediaGallery';
+import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import {
   useMedia3p,
   useMedia3pForProvider,
 } from '../../../../../app/media/media3p/useMedia3p';
 import {
-  MediaGalleryContainer,
-  MediaGalleryInnerContainer,
   PaneHeader,
   PaneInner,
   SearchInputContainer,
@@ -51,7 +43,7 @@ import {
 } from '../common/styles';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
-import { ProviderType } from './providerType';
+import { ProviderType } from '../common/providerType';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -75,17 +67,6 @@ const CategorySection = styled.div`
 function Media3pPane(props) {
   const { isActive } = props;
 
-  const { media } = useMedia3pForProvider('unsplash', ({ state }) => ({
-    media: state.media,
-  }));
-
-  const { searchTerm } = useMedia3p(({ state }) => ({
-    searchTerm: state.searchTerm,
-  }));
-
-  // Local state so that we can debounce triggering searches.
-  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
-
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -101,23 +82,16 @@ function Media3pPane(props) {
     [insertElement]
   );
 
-  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-  // State and callback ref necessary to recalculate the padding of the list
-  //  given the scrollbar width.
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-    setScrollbarWidth(element.offsetWidth - element.clientWidth);
-  };
+  const { searchTerm, setSelectedProvider, setSearchTerm } = useMedia3p(
+    ({ state, actions }) => ({
+      searchTerm: state.searchTerm,
+      setSelectedProvider: actions.setSelectedProvider,
+      setSearchTerm: actions.setSearchTerm,
+    })
+  );
 
-  const { setSelectedProvider, setSearchTerm } = useMedia3p(({ actions }) => ({
-    setSelectedProvider: actions.setSelectedProvider,
-    setSearchTerm: actions.setSearchTerm,
-  }));
+  // Local state so that we can debounce triggering searches.
+  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
 
   useEffect(() => {
     if (isActive) {
@@ -125,28 +99,26 @@ function Media3pPane(props) {
     }
   }, [isActive, setSelectedProvider]);
 
-  // Recalculates padding of Media Pane so it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
-  useLayoutEffect(() => {
-    if (!scrollbarWidth) {
-      return;
-    }
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
-    );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
-
   /**
    * Effectively performs a search, triggered at most every 500ms.
    */
   const [changeSearchTermDebounced] = useDebouncedCallback(() => {
     setSearchTerm({ searchTerm: searchTermValue });
   }, 500);
+
+  const {
+    media,
+    hasMore,
+    setNextPage,
+    isMediaLoading,
+    isMediaLoaded,
+  } = useMedia3pForProvider(
+    'unsplash',
+    ({
+      state: { media, hasMore, isMediaLoading, isMediaLoaded },
+      actions: { setNextPage },
+    }) => ({ media, hasMore, isMediaLoading, isMediaLoaded, setNextPage })
+  );
 
   /**
    * Handle search input changes. Triggers with every keystroke.
@@ -184,15 +156,15 @@ function Media3pPane(props) {
           </ProviderTabSection>
           <CategorySection>{__('Coming soon', 'web-stories')}</CategorySection>
         </PaneHeader>
-        <MediaGalleryContainer ref={refCallbackContainer}>
-          <MediaGalleryInnerContainer>
-            <MediaGallery
-              resources={media}
-              onInsert={insertMediaElement}
-              providerType={ProviderType.UNSPLASH}
-            />
-          </MediaGalleryInnerContainer>
-        </MediaGalleryContainer>
+        <PaginatedMediaGallery
+          providerType={ProviderType.UNSPLASH}
+          resources={media}
+          isMediaLoading={isMediaLoading}
+          isMediaLoaded={isMediaLoaded}
+          hasMore={hasMore}
+          onInsert={insertMediaElement}
+          setNextPage={setNextPage}
+        />
       </PaneInner>
     </StyledPane>
   );

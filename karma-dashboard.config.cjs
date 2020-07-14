@@ -31,6 +31,7 @@ module.exports = function (config) {
       'karma-coverage-istanbul-reporter',
       require('./karma/karma-puppeteer-launcher/index.cjs'),
       require('./karma/karma-puppeteer-client/index.cjs'),
+      require('./karma/karma-cuj-reporter/index.cjs'),
     ],
 
     // Frameworks to use.
@@ -78,9 +79,11 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: config.coverage
-      ? ['progress', 'coverage-istanbul']
-      : ['progress'],
+    reporters: [
+      'progress',
+      config.coverage && 'cuj',
+      config.coverage && 'coverage-istanbul',
+    ].filter(Boolean),
 
     // web server port
     port: 9876,
@@ -118,6 +121,10 @@ module.exports = function (config) {
     coverageIstanbulReporter: {
       dir: 'build/logs/karma-coverage/dashboard',
       reports: ['text-summary', 'lcovonly'],
+    },
+
+    cujReporter: {
+      outputFile: 'build/cuj-coverage-dashboard.md',
     },
 
     // Continuous Integration mode

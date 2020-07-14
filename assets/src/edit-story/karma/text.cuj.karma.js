@@ -14,9 +14,20 @@
  * limitations under the License.
  */
 
-export { default as bundlePlugin } from './bundlePlugin.js';
-export { default as buildFonts } from './buildFonts.js';
-export { default as getCurrentVersionNumber } from './getCurrentVersionNumber.js';
-export { default as updateAssetsURL } from './updateAssetsURL.js';
-export { default as updateVersionNumbers } from './updateVersionNumbers.js';
-export { default as updateTemplates } from './updateTemplates.js';
+describe('CUJ: Creator can Add and Write Text', () => {
+  describe('Action: Delete textbox', () => {
+    describe('when a textbox is selected', () => {
+      it('should be removed when pressing backspace', () => {
+        // Implementation goes here
+      });
+
+      it('should be removed when pressing delete', () => {
+        // Implementation goes here
+      });
+    });
+
+    // Disable reason: Not implemented yet
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should allow you to delete a text box by dragging it off-stage', () => {});
+  });
+});

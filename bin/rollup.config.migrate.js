@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
-export { default as bundlePlugin } from './bundlePlugin.js';
-export { default as buildFonts } from './buildFonts.js';
-export { default as getCurrentVersionNumber } from './getCurrentVersionNumber.js';
-export { default as updateAssetsURL } from './updateAssetsURL.js';
-export { default as updateVersionNumbers } from './updateVersionNumbers.js';
-export { default as updateTemplates } from './updateTemplates.js';
+/**
+ * External dependencies
+ */
+import path from 'path';
+import resolve from '@rollup/plugin-node-resolve';
+
+export default {
+  input: path.resolve(
+    process.cwd(),
+    'assets/src/edit-story/migration/index.js'
+  ),
+  output: {
+    file: path.resolve(process.cwd(), 'bin/build/migrate.js'),
+    format: 'es',
+  },
+  plugins: [resolve()],
+  external: ['crypto'],
+};

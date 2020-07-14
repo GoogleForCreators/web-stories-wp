@@ -30,7 +30,7 @@ import { useFeature } from 'flagged';
 import { useDropTargets } from '../../../../../app';
 import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
-import { ProviderType } from '../media3p/providerType';
+import { ProviderType } from '../common/providerType';
 
 const styledTiles = css`
   width: 100%;
