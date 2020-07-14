@@ -131,6 +131,10 @@ class Link_Controller extends WP_REST_Controller {
 
 		$response = wp_safe_remote_get( $url, $args );
 
+		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+		}
+
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
 			// Not saving to cache since the error might be temporary.
 			return rest_ensure_response( $data );
