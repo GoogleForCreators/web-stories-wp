@@ -129,3 +129,10 @@ export const ToastMessagePropType = PropTypes.shape({
 });
 
 export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);
+
+export const DateFormattingPropType = PropTypes.shape({
+  dateFormat: PropTypes.string,
+  timeFormat: PropTypes.string,
+  gmtOffset: PropTypes.number,
+  timezone: PropTypes.string,
+});

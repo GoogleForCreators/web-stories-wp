@@ -251,6 +251,9 @@ class Dashboard {
 			'config' => [
 				'isRTL'        => is_rtl(),
 				'dateFormat'   => get_option( 'date_format' ),
+				'timeFormat'   => get_option( 'time_format'),
+				'gmtOffset'    => get_option( 'gmt_offset'),
+				'timezone'     => get_option( 'timezone_string'),
 				'newStoryURL'  => $new_story_url,
 				'editStoryURL' => $edit_story_url,
 				'wpListURL'    => $classic_wp_list_url,

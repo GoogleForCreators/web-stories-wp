@@ -16,7 +16,7 @@
 
 export { default as clamp } from './clamp';
 export { default as getCurrentYAxis } from './getCurrentYAxis';
-export { default as getFormattedDisplayDate } from './getFormattedDisplayDate';
+export { getFormattedDisplayDate, isToday, isYesterday } from '../../date';
 export { default as groupBy } from './groupBy';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as memoize } from './memoize';

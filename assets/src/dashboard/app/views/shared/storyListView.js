@@ -35,6 +35,7 @@ import {
   RenameStoryPropType,
   StoryMenuPropType,
   PageSizePropType,
+  DateFormattingPropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -68,7 +69,7 @@ import {
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
+import { getFormattedDisplayDate } from '../../../utils/';
 
 const ListView = styled.div`
   width: 100%;
@@ -144,7 +145,7 @@ export default function StoryListView({
   storySort,
   storyStatus,
   users,
-  dateFormat,
+  dateFormatting,
 }) {
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
@@ -269,10 +270,10 @@ export default function StoryListView({
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
               <TableCell>
-                {getFormattedDisplayDate(story.created, dateFormat)}
+                {getFormattedDisplayDate(story.created, dateFormatting)}
               </TableCell>
               <TableCell>
-                {getFormattedDisplayDate(story.modified, dateFormat)}
+                {getFormattedDisplayDate(story.modified, dateFormatting)}
               </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
@@ -301,5 +302,5 @@ StoryListView.propTypes = {
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
   users: UsersPropType.isRequired,
-  dateFormat: PropTypes.string,
+  dateFormatting: DateFormattingPropType,
 };

@@ -33,6 +33,7 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import {
+  dummyDateFormattingObject,
   formattedStoriesArray,
   formattedUsersObject,
   STORYBOOK_PAGE_SIZE,
@@ -167,7 +168,7 @@ export const _StoriesViewGrid = () => (
       stories={formattedStoriesArray}
       users={formattedUsersObject}
       view={view}
-      dateFormat="F j, Y"
+      dateFormatting={dummyDateFormattingObject}
     />
   </FlagsProvider>
 );
@@ -181,7 +182,7 @@ export const _StoriesViewList = () => (
       stories={formattedStoriesArray}
       users={formattedUsersObject}
       view={{ ...view, style: VIEW_STYLE.LIST }}
-      dateFormat="F j, Y"
+      dateFormatting={dummyDateFormattingObject}
     />
   </FlagsProvider>
 );

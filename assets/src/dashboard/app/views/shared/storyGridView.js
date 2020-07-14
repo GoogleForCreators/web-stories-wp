@@ -40,6 +40,7 @@ import {
   UsersPropType,
   PageSizePropType,
   RenameStoryPropType,
+  DateFormattingPropType,
 } from '../../../types';
 import { getFormattedDisplayDate } from '../../../utils';
 import { STORY_STATUS } from '../../../constants';
@@ -69,7 +70,7 @@ const StoryGridView = ({
   pageSize,
   storyMenu,
   renameStory,
-  dateFormat,
+  dateFormatting,
 }) => {
   return (
     <StoryGrid pageSize={pageSize}>
@@ -113,8 +114,8 @@ const StoryGridView = ({
                 }
                 displayDate={
                   story?.status === STORY_STATUS.DRAFT
-                    ? getFormattedDisplayDate(story?.modified, dateFormat)
-                    : getFormattedDisplayDate(story?.created, dateFormat)
+                    ? getFormattedDisplayDate(story?.modified, dateFormatting)
+                    : getFormattedDisplayDate(story?.created, dateFormatting)
                 }
                 {...titleRenameProps}
               />
@@ -147,7 +148,7 @@ StoryGridView.propTypes = {
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
-  dateFormat: PropTypes.string,
+  dateFormatting: DateFormattingPropType,
 };
 
 export default StoryGridView;

@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { dummyDateFormattingObject } from '../../../../../dataUtils/dateFormatting';
 import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
 
 import {
@@ -71,7 +72,7 @@ describe('My Stories <StoriesView />', function () {
           trashStory: jest.fn,
           updateStory: jest.fn,
         }}
-        dateFormat="F j, Y"
+        dateFormatting={dummyDateFormattingObject}
         stories={fakeStories}
         users={{}}
         view={{
