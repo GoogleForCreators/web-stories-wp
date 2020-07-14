@@ -20,49 +20,28 @@
 import { ANIMATION_TYPES } from '../../constants';
 import SimpleAnimation from '../simpleAnimation';
 
-const keyframes = {
-  transform: [
-    'scale(0)',
-    'scale(1.27)',
-    'scale(0.84)',
-    'scale(0.84)',
-    'scale(1.1)',
-    'scale(1.1)',
-    'scale(0.95)',
-    'scale(0.95)',
-    'scale(1.03)',
-    'scale(1.03)',
-    'scale(0.98)',
-    'scale(0.98)',
-    'scale(1.02)',
-    'scale(1.02)',
-    'scale(0.99)',
-    'scale(0.99)',
-    'scale(1)',
-  ],
-  offset: [
-    0.0,
-    0.18,
-    0.28,
-    0.29,
-    0.4,
-    0.41,
-    0.52,
-    0.53,
-    0.6,
-    0.61,
-    0.7,
-    0.71,
-    0.8,
-    0.81,
-    0.9,
-    0.91,
-    1.0,
-  ],
-};
+const keyframes = [
+  { transform: 'scale(0)', offset: 0.0 },
+  { transform: 'scale(1.27)', offset: 0.18 },
+  { transform: 'scale(0.84)', offset: 0.28 },
+  { transform: 'scale(0.84)', offset: 0.29 },
+  { transform: 'scale(1.1)', offset: 0.4 },
+  { transform: 'scale(1.1)', offset: 0.41 },
+  { transform: 'scale(0.95)', offset: 0.52 },
+  { transform: 'scale(0.95)', offset: 0.53 },
+  { transform: 'scale(1.03)', offset: 0.6 },
+  { transform: 'scale(1.03)', offset: 0.61 },
+  { transform: 'scale(0.98)', offset: 0.7 },
+  { transform: 'scale(0.98)', offset: 0.71 },
+  { transform: 'scale(1.02)', offset: 0.8 },
+  { transform: 'scale(1.02)', offset: 0.81 },
+  { transform: 'scale(0.99)', offset: 0.9 },
+  { transform: 'scale(0.99)', offset: 0.91 },
+  { transform: 'scale(1)', offset: 1 },
+];
 
 const defaults = {
-  fill: 'forwards',
+  fill: 'both',
   duration: 1500,
 };
 
@@ -72,8 +51,10 @@ export function AnimationBounce(args) {
     ...args,
   };
 
+  const animationName = ANIMATION_TYPES.BOUNCE;
+
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
-    ANIMATION_TYPES.BOUNCE,
+    animationName,
     keyframes,
     timings
   );
@@ -84,7 +65,7 @@ export function AnimationBounce(args) {
     AMPTarget,
     AMPAnimation,
     generatedKeyframes: {
-      [ANIMATION_TYPES.BOUNCE]: keyframes,
+      [animationName]: keyframes,
     },
   };
 }

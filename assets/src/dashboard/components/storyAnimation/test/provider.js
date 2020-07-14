@@ -17,6 +17,8 @@
 /**
  * External dependencies
  */
+jest.mock('flagged');
+import { useFeature } from 'flagged';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
@@ -30,6 +32,12 @@ const defaultWAAPIAnimation = {
   onfinish: null,
   cancel: () => {},
   play: () => {},
+  effect: {
+    timing: {
+      duration: 0,
+      delay: 0,
+    },
+  },
 };
 const mockWAAPIAnimation = (overrides = {}) => ({
   ...defaultWAAPIAnimation,
@@ -37,6 +45,8 @@ const mockWAAPIAnimation = (overrides = {}) => ({
 });
 
 describe('StoryAnimation.Provider', () => {
+  useFeature.mockImplementation(() => true);
+
   describe('getAnimationParts(target)', () => {
     it('gets all generated parts for a target', () => {
       const target = 'some-target';
@@ -182,8 +192,8 @@ describe('StoryAnimation.Provider', () => {
     });
   });
 
-  describe('playWAAPIAnimations()', () => {
-    it('calls all hoisted Animation.play() methods when called', () => {
+  describe('WAAPIAnimationMethods', () => {
+    it('calls all hoisted Animation methods when called', () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {
           animations: [],
@@ -192,15 +202,36 @@ describe('StoryAnimation.Provider', () => {
 
       const numCalls = 10;
       const play = jest.fn();
-      for (let i = 0; i < numCalls; i++) {
-        act(() => {
-          result.current.actions.hoistWAAPIAnimation(
-            mockWAAPIAnimation({ play })
-          );
+      const pause = jest.fn();
+      const animations = Array.from({ length: numCalls }, () => {
+        const animation = mockWAAPIAnimation({
+          play,
+          pause,
+          currentTime: 0,
+          effect: {
+            timing: {
+              duration: 300,
+              delay: 0,
+            },
+          },
         });
-      }
-      act(() => result.current.actions.playWAAPIAnimations());
+        act(() => {
+          result.current.actions.hoistWAAPIAnimation(animation);
+        });
+        return animation;
+      });
+
+      act(() => result.current.actions.WAAPIAnimationMethods.play());
+      act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      act(() =>
+        result.current.actions.WAAPIAnimationMethods.setCurrentTime(200)
+      );
+
       expect(play).toHaveBeenCalledTimes(numCalls);
+      expect(pause).toHaveBeenCalledTimes(numCalls);
+      animations.forEach((animation) => {
+        expect(animation.currentTime).toStrictEqual(200);
+      });
     });
 
     it('excludes cleaned up animation methods when called', () => {
@@ -210,13 +241,25 @@ describe('StoryAnimation.Provider', () => {
         }),
       });
 
+      const initialTime = 0;
+      const newTime = 200;
+
       const numAnims = 10;
       const unhoistIndex = numAnims / 2;
       const animations = Array.from({ length: numAnims }, () =>
         mockWAAPIAnimation({
           play: jest.fn(),
+          pause: jest.fn(),
+          currentTime: initialTime,
+          effect: {
+            timing: {
+              duration: 300,
+              delay: 0,
+            },
+          },
         })
       );
+
       const unhoists = animations.map((animation) => {
         let unhoist;
         act(() => {
@@ -227,14 +270,26 @@ describe('StoryAnimation.Provider', () => {
       act(() => {
         unhoists[unhoistIndex]();
       });
-      act(() => result.current.actions.playWAAPIAnimations());
-      animations.map(({ play }, i) => {
+
+      act(() => result.current.actions.WAAPIAnimationMethods.play());
+      act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      act(() =>
+        result.current.actions.WAAPIAnimationMethods.setCurrentTime(newTime)
+      );
+
+      /* eslint-disable jest/no-conditional-expect */
+      animations.map((animation, i) => {
         if (i === unhoistIndex) {
-          expect(play).toHaveBeenCalledTimes(0);
+          expect(animation.play).toHaveBeenCalledTimes(0);
+          expect(animation.pause).toHaveBeenCalledTimes(0);
+          expect(animation.currentTime).toStrictEqual(initialTime);
         } else {
-          expect(play).toHaveBeenCalledTimes(1);
+          expect(animation.play).toHaveBeenCalledTimes(1);
+          expect(animation.pause).toHaveBeenCalledTimes(1);
+          expect(animation.currentTime).toStrictEqual(newTime);
         }
       });
+      /* eslint-enable jest/no-conditional-expect */
     });
   });
 

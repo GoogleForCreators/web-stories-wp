@@ -51,12 +51,13 @@ describe('TextEdit integration', () => {
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
           content: 'hello world!',
+          x: 40,
+          y: 40,
+          width: 250,
         })
       );
 
-      frame = fixture.querySelector(
-        `[data-element-id="${element.id}"] [data-testid="textFrame"]`
-      );
+      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
     });
 
     it('should render initial content', () => {
@@ -83,7 +84,6 @@ describe('TextEdit integration', () => {
 
       it('should handle a commnad, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
-        await fixture.events.focus(draft);
 
         // Select all.
         await fixture.events.click(draft, { clickCount: 3 });
@@ -92,22 +92,17 @@ describe('TextEdit integration', () => {
 
         await fixture.snapshot('before mod+b');
 
-        // @todo: Linux uses ctrlKey.
-        // @todo: would be preferable to be more semantic here. E.g.
-        // `keys('mod+B')`.
-        await fixture.events.keyDown(draft, {
-          key: 'b',
-          code: 'KeyB',
-          keyCode: 66,
-          metaKey: true,
-        });
+        await fixture.events.keyboard.shortcut('mod+b');
 
         await fixture.snapshot('after mod+b');
 
         expect(boldToggle.checked).toEqual(true);
 
-        // Exit edit mode.
-        await fixture.events.mouseDown(editLayer);
+        // Exit edit mode by clicking right outside the editor.
+        await fixture.events.mouse.seq(({ moveRel, down }) => [
+          moveRel(editor, -10),
+          down(),
+        ]);
 
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 
@@ -119,9 +114,25 @@ describe('TextEdit integration', () => {
         );
 
         // The content is updated in the frame.
-        expect(frame.innerHTML).toEqual(
+        // @todo: What to do with `<p>` and containers?
+        expect(frame.querySelector('p').innerHTML).toEqual(
           '<span style="font-weight: 700">hello world!</span>'
         );
+      });
+    });
+
+    describe('shortcuts', () => {
+      it('should enter/exit edit mode using the keyboard', async () => {
+        // Enter edit mode using the Enter key
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        await fixture.events.keyboard.press('Enter');
+        expect(
+          fixture.querySelector('[data-testid="textEditor"]')
+        ).toBeDefined();
+
+        // Exit edit mode using the Esc key
+        await fixture.events.keyboard.press('Esc');
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
       });
     });
   });

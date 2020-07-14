@@ -19,22 +19,31 @@
  */
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
+import {
+  MEDIA_DEFAULT_ATTRIBUTES,
+  MEDIA_PANELS,
+  resizeRules as mediaResizeRules,
+} from '../media';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
+export { default as Controls } from './controls';
 export { default as Output } from './output';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
+export { default as onDropHandler } from './onDropHandler';
+
 export {
-  canFill,
   canFlip,
   isMaskable,
   isMedia,
   hasEditMode,
   editModeGrayout,
-  resizeRules,
 } from '../media';
+
+export const resizeRules = {
+  ...mediaResizeRules,
+};
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,

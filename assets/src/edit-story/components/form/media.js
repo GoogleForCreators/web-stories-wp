@@ -29,8 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DefaultImageSvg } from '../../icons/default_image.svg';
-import { ReactComponent as EditPencilSvg } from '../../icons/edit_pencil.svg';
+import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
 import { useMediaPicker } from '../mediaPicker';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -47,14 +46,14 @@ const Container = styled.div`
   ${({ circle }) => circle && 'border-radius: 50%;'}
 `;
 
-const DefaultImage = styled(DefaultImageSvg)`
+const DefaultImage = styled(DefaultImageIcon)`
   width: 100%;
   height: 100%;
   display: block;
   padding: ${({ size }) => (size ? size * 0.2 : 18)}px;
 `;
 
-const EditIcon = styled(EditPencilSvg)`
+const EditIcon = styled(EditPencil)`
   width: 100%;
   height: 100%;
   display: block;
@@ -68,7 +67,7 @@ const EditBtn = styled.button`
   border: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
   cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.v1};
-  background: ${({ theme }) => theme.colors.bg.v0};
+  background: ${({ theme }) => theme.colors.bg.v4};
   left: ${({ circle }) => (circle ? 0 : 4)}px;
   bottom: ${({ circle }) => (circle ? 0 : 4)}px;
   flex-direction: column;
@@ -166,7 +165,7 @@ function MediaInput({
         <DefaultImage size={size} />
       )}
       {loading && <LoadingDots />}
-      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={title}>
+      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={ariaLabel}>
         <EditIcon />
       </EditBtn>
     </Container>
@@ -196,11 +195,11 @@ MediaInput.defaultProps = {
   flexBasis: 100,
   textCenter: false,
   circle: false,
-  ariaLabel: __('Standard input', 'web-stories'),
   size: null,
   type: 'image',
   buttonInsertText: __('Choose an image', 'web-stories'),
   title: __('Choose an image', 'web-stories'),
+  ariaLabel: __('Choose an image', 'web-stories'),
 };
 
 export default MediaInput;

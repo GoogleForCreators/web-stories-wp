@@ -23,10 +23,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import usePagePreviewSize from '../../utils/usePagePreviewSize';
+import { PageSizePropType } from '../../types';
 
-const DashboardGrid = styled.div`
-  ${({ columnHeight, columnWidth, theme }) => `
+const DashboardGrid = styled.div(
+  ({ columnHeight, columnWidth, theme }) => `
   display: grid;
   width: 100%;
   grid-column-gap: ${theme.grid.columnGap.desktop}px;
@@ -47,22 +47,25 @@ const DashboardGrid = styled.div`
   ${theme.breakpoint.min} {
     grid-column-gap: ${theme.grid.columnGap.min}px;
   }
-
-`}
-`;
-
-const CardGrid = ({ children }) => {
-  const { pageSize } = usePagePreviewSize({ isGrid: true });
-
-  return (
-    <DashboardGrid columnWidth={pageSize.width} columnHeight={pageSize.height}>
-      {children}
-    </DashboardGrid>
-  );
+`
+);
+DashboardGrid.propTypes = {
+  columnHeight: PropTypes.number.isRequired,
+  columnWidth: PropTypes.number.isRequired,
 };
+
+const CardGrid = ({ children, pageSize }) => (
+  <DashboardGrid
+    columnWidth={pageSize.width}
+    columnHeight={pageSize.containerHeight}
+  >
+    {children}
+  </DashboardGrid>
+);
 
 CardGrid.propTypes = {
   children: PropTypes.node.isRequired,
+  pageSize: PageSizePropType.isRequired,
 };
 
 export default CardGrid;

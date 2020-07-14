@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
+
 function CustomStyles() {
+  const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
+  const fullToSafeRatio = 1 / safeToFullRatio;
   return (
     <style
       amp-custom=""
@@ -24,31 +31,29 @@ function CustomStyles() {
                 overflow: visible;
               }
 
-              .page-background-area,
-              .page-background-overlay-area,
-              .page-safe-area {
+              .page-fullbleed-area,
+              .page-background-overlay-area {
                 position: absolute;
+                overflow: hidden;
+                width: 100%;
+                left: 0;
+                height: calc(${safeToFullRatio} * 100%);
+                top: calc((1 - ${safeToFullRatio}) * 100% / 2);
+              }
+
+              .page-safe-area {
                 overflow: visible;
+                position: absolute;
                 top: 0;
                 bottom: 0;
                 left: 0;
                 right: 0;
+                width: 100%;
+                height: calc(${fullToSafeRatio} * 100%);
+                margin: auto 0;
               }
 
-              .page-cta-area {
-                position: absolute;
-                overflow: hidden;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                height: calc(100 * var(--story-page-vh, 1vh));
-              }
-
-              .page-background-area img, .page-background-area video {
-                object-fit: cover;
-              }
-
-              .wrapper {
+              .mask {
                 position: absolute;
                 overflow: hidden;
               }

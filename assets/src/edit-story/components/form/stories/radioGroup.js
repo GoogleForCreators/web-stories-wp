@@ -33,9 +33,9 @@ export default {
   title: 'Stories Editor/Components/Form/RadioGroup',
   component: RadioGroup,
   parameters: {
-    backgrounds: [
-      { name: 'dark background', value: 'rgba(0, 0, 0, 0.8)', default: true },
-    ],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 

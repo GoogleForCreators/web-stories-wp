@@ -26,42 +26,70 @@ import LayerStyle from '../layerStyle';
 import { renderPanel } from './_utils';
 
 describe('Panels/LayerStyle', () => {
+  const defaultElement = { id: 1, opacity: 100 };
+
   function renderLayerStyle(...args) {
     return renderPanel(LayerStyle, ...args);
   }
 
   it('should render <LayerStyle /> panel', () => {
-    const { getByText } = renderLayerStyle([{ opacity: 100 }]);
-    const element = getByText('Layer');
+    const { getByRole } = renderLayerStyle([
+      { ...defaultElement, opacity: 100 },
+    ]);
+    const element = getByRole('button', { name: 'Layer' });
     expect(element).toBeDefined();
   });
 
   it('should set opacity to 100 if not set', () => {
-    const { getByText } = renderLayerStyle([{}]);
-    const element = getByText('Opacity');
-    const input = element.getElementsByTagName('input')[0];
+    const { getByRole } = renderLayerStyle([{}]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.value).toStrictEqual('100%');
   });
 
-  it('should set opacity to 100 if set to 0', () => {
-    const { getByText } = renderLayerStyle([{ opacity: 0 }]);
-    const element = getByText('Opacity');
-    const input = element.getElementsByTagName('input')[0];
-    expect(input.value).toStrictEqual('100%');
+  it('should set opacity to 0 if set to 0', () => {
+    const { getByRole } = renderLayerStyle([{ ...defaultElement, opacity: 0 }]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
+    expect(input.value).toStrictEqual('0%');
   });
 
   it('should set opacity to 49 if set to 49', () => {
-    const { getByText } = renderLayerStyle([{ opacity: 49 }]);
-    const element = getByText('Opacity');
-    const input = element.getElementsByTagName('input')[0];
+    const { getByRole } = renderLayerStyle([
+      { ...defaultElement, opacity: 49 },
+    ]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.value).toStrictEqual('49%');
   });
 
   it('should update opacity value on change', () => {
-    const { getByText, pushUpdate } = renderLayerStyle([{ opacity: 49 }]);
-    const element = getByText('Opacity');
-    const input = element.getElementsByTagName('input')[0];
+    const { getByRole, pushUpdate } = renderLayerStyle([
+      { ...defaultElement, opacity: 49 },
+    ]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
     fireEvent.change(input, { target: { value: '23' } });
     expect(pushUpdate).toHaveBeenCalledWith({ opacity: 23 });
+  });
+
+  it('should set min to opacity value on change', () => {
+    const { getByRole, submit } = renderLayerStyle([
+      { ...defaultElement, opacity: 49 },
+    ]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
+    fireEvent.change(input, { target: { value: null } });
+    const submits = submit({ opacity: null });
+    expect(submits[defaultElement.id]).toStrictEqual({
+      opacity: 0,
+    });
+  });
+
+  it('should set max to opacity value on change to max', () => {
+    const { getByRole, submit } = renderLayerStyle([
+      { ...defaultElement, opacity: 49 },
+    ]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
+    fireEvent.change(input, { target: { value: 101 } });
+    const submits = submit({ opacity: 101 });
+    expect(submits[defaultElement.id]).toStrictEqual({
+      opacity: 100,
+    });
   });
 });

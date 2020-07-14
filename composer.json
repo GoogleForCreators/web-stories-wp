@@ -11,8 +11,8 @@
     "ext-libxml": "*"
   },
   "require-dev": {
-    "automattic/vipwpcs": "dev-develop",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.6",
+    "automattic/vipwpcs": "^2.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
@@ -32,7 +32,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Google\\Web_Stories\\Tests\\": "tests/phpunit/tests"
+      "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes"
     }
   },
   "prefer-stable": true

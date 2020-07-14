@@ -43,7 +43,7 @@ export function useTheme() {
 
 const themeFonts = {
   primary: "'Google Sans', sans-serif",
-  secondary: 'Roboto',
+  secondary: "'Roboto', sans-serif",
 };
 
 const colors = {
@@ -68,6 +68,8 @@ const colors = {
   action: '#47A0F4',
   danger: '#FF0000',
   selection: '#44aaff',
+  warning: '#FF9800',
+  success: '#4CAF4F',
   // todo
   placeholder: '#d9dbdd',
 };
@@ -75,6 +77,7 @@ const colors = {
 const borders = {
   gray50: `1px solid ${colors.gray50}`,
   gray100: `1px solid ${colors.gray100}`,
+  gray800: `1px solid ${colors.gray800}`,
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
   action: `1px solid ${colors.action}`,
@@ -150,7 +153,7 @@ const theme = {
   table: {
     headerCellPadding: 15,
     cellPadding: 15,
-    headerContentSize: 16,
+    headerContentSize: 20,
     border: borders.gray50,
   },
   cardItem: {

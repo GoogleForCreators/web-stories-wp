@@ -12,10 +12,8 @@ coverage:
         # Disable once code base is more mature.
         informational: true
         only_pulls: true
-        target: 60%
-        threshold: 10%
-        if_not_found: success
-        if_ci_failed: error
+        target: auto
+        threshold: 1%
 
       php:
         paths:
@@ -25,9 +23,33 @@ coverage:
         paths:
           - assets/src/dashboard
 
+      dashboard.unit:
+        paths:
+          - assets/src/dashboard
+        flags:
+          - unittests
+
+      dashboard.karma:
+        paths:
+          - assets/src/dashboard
+        flags:
+          - karmatests
+
       editor:
         paths:
           - assets/src/edit-story
+
+      editor.unit:
+        paths:
+          - assets/src/edit-story
+        flags:
+          - unittests
+
+      editor.karma:
+        paths:
+          - assets/src/edit-story
+        flags:
+          - karmatests
 
     # Patch-level coverage (how well is the PR tested)
     patch:
@@ -36,10 +58,8 @@ coverage:
         # Disable once code base is more mature.
         informational: true
         only_pulls: true
-        target: 80%
-        threshold: 10%
-        if_not_found: success
-        if_ci_failed: error
+        target: auto
+        threshold: 50%
 
 # Pull request comments
 # See https://docs.codecov.io/docs/pull-request-comments
@@ -49,3 +69,11 @@ comment:
   require_changes: true
   branches:
     - 'master'
+
+# See https://docs.codecov.io/docs/ignoring-paths
+ignore:
+  - bin/commander.js
+  - web-stories.php
+  - uninstall.php
+  - includes/namespace.php
+  - includes/templates

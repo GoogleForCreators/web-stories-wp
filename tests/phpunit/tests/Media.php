@@ -43,14 +43,17 @@ class Media extends \WP_UnitTestCase {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+		wp_set_object_terms( $video_attachment_id, 'editor', \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
 
 		$request  = new WP_REST_Request( 'GET', sprintf( '/wp/v2/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
 		$this->assertArrayHasKey( 'featured_media', $data );
+		$this->assertArrayHasKey( 'media_source', $data );
 		$this->assertEquals( $poster_attachment_id, $data['featured_media'] );
 		$this->assertEquals( wp_get_attachment_url( $poster_attachment_id ), $data['featured_media_src']['src'] );
+		$this->assertEquals( 'editor', $data['media_source'] );
 	}
 
 	public function test_delete_video_poster() {
@@ -76,7 +79,8 @@ class Media extends \WP_UnitTestCase {
 		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
 		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
-		\Google\Web_Stories\Media::delete_video_poster( $video_attachment_id );
+		$media = new \Google\Web_Stories\Media();
+		$media->delete_video_poster( $video_attachment_id );
 		$this->assertNull( get_post( $poster_attachment_id ) );
 	}
 
@@ -100,7 +104,8 @@ class Media extends \WP_UnitTestCase {
 		);
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		\Google\Web_Stories\Media::delete_video_poster( $video_attachment_id );
+		$media = new \Google\Web_Stories\Media();
+		$media->delete_video_poster( $video_attachment_id );
 		$this->assertNotNull( get_post( $poster_attachment_id ) );
 	}
 

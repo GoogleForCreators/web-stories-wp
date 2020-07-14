@@ -21,6 +21,7 @@ import Inspector from '../inspector';
 import Canvas from '../canvas';
 import CanvasProvider from '../canvas/canvasProvider';
 import RichTextProvider from '../richText/provider';
+import ErrorBoundary from '../errorBoundary';
 import { WorkspaceLayout, CanvasArea, InspectorArea } from './layout';
 
 function Workspace() {
@@ -29,10 +30,14 @@ function Workspace() {
       <RichTextProvider>
         <WorkspaceLayout>
           <CanvasArea>
-            <Canvas />
+            <ErrorBoundary>
+              <Canvas />
+            </ErrorBoundary>
           </CanvasArea>
           <InspectorArea>
-            <Inspector />
+            <ErrorBoundary>
+              <Inspector />
+            </ErrorBoundary>
           </InspectorArea>
         </WorkspaceLayout>
       </RichTextProvider>

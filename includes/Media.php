@@ -87,11 +87,31 @@ class Media {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * Key for media post type.
+	 *
+	 * @var string
+	 */
+	const STORY_MEDIA_TAXONOMY = 'web_story_media_source';
+
+	/**
 	 * Init.
 	 *
 	 * @return void
 	 */
-	public static function init() {
+	public function init() {
+
+		register_taxonomy(
+			self::STORY_MEDIA_TAXONOMY,
+			'attachment',
+			[
+				'label'        => __( 'Source', 'web-stories' ),
+				'public'       => false,
+				'rewrite'      => false,
+				'hierarchical' => false,
+				'show_in_rest' => true,
+			]
+		);
+
 		register_meta(
 			'post',
 			self::POSTER_POST_META_KEY,
@@ -129,41 +149,13 @@ class Media {
 
 		add_image_size( self::STORY_THUMBNAIL_IMAGE_SIZE, 150, 9999, false );
 
-		add_action( 'pre_get_posts', [ __CLASS__, 'filter_poster_attachments' ] );
+		add_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
 
-		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
+		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 
-		add_filter( 'wp_prepare_attachment_for_js', [ __CLASS__, 'wp_prepare_attachment_for_js' ], 10, 2 );
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
-		add_filter( 'upload_mimes', [ __CLASS__, 'upload_mimes' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
-
-		add_action( 'delete_attachment', [ __CLASS__, 'delete_video_poster' ] );
-	}
-
-	/**
-	 * Get story meta images.
-	 *
-	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
-	 *
-	 * @since 1.2.1
-	 *
-	 * @param int|\WP_Post|null $post Post.
-	 * @return string[] Images.
-	 */
-	public static function get_story_meta_images( $post = null ) {
-		$thumbnail_id = (int) get_post_thumbnail_id( $post );
-
-		if ( 0 === $thumbnail_id ) {
-			return [];
-		}
-
-		$images = [
-			'poster-portrait'  => wp_get_attachment_image_url( $thumbnail_id, self::STORY_POSTER_IMAGE_SIZE ),
-			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, self::STORY_SQUARE_IMAGE_SIZE ),
-			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, self::STORY_LANDSCAPE_IMAGE_SIZE ),
-		];
-
-		return array_filter( $images );
+		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
 	}
 
 	/**
@@ -174,7 +166,7 @@ class Media {
 	 * @param \WP_Query $query WP_Query instance, passed by reference.
 	 * @return void
 	 */
-	public static function filter_poster_attachments( &$query ) {
+	public function filter_poster_attachments( &$query ) {
 		$post_type = (array) $query->get( 'post_type' );
 
 		if ( ! in_array( 'any', $post_type, true ) && ! in_array( 'attachment', $post_type, true ) ) {
@@ -196,7 +188,7 @@ class Media {
 	 *
 	 * @return void
 	 */
-	public static function rest_api_init() {
+	public function rest_api_init() {
 		register_rest_field(
 			'attachment',
 			'featured_media',
@@ -209,20 +201,28 @@ class Media {
 			]
 		);
 
+		// Custom field, as built in term update require term id and not slug.
+		register_rest_field(
+			'attachment',
+			'media_source',
+			[
+
+				'get_callback'    => [ $this, 'get_callback_media_source' ],
+				'schema'          => [
+					'description' => __( 'Media source. ', 'web-stories' ),
+					'type'        => 'string',
+					'enum'        => [ 'editor' ],
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'update_callback' => [ $this, 'update_callback_media_source' ],
+			]
+		);
+
 		register_rest_field(
 			'attachment',
 			'featured_media_src',
 			[
-				'get_callback' => static function ( $prepared, $field_name, $request ) {
-
-					$id    = $prepared['featured_media'];
-					$image = [];
-					if ( $id ) {
-						$image = self::get_thumbnail_data( $id );
-					}
-
-					return $image;
-				},
+				'get_callback' => [ $this, 'get_callback_featured_media_src' ],
 				'schema'       => [
 					'description' => __( 'URL, width and height.', 'web-stories' ),
 					'type'        => 'object',
@@ -248,6 +248,60 @@ class Media {
 	}
 
 	/**
+	 * Force media attachment as string instead of the default array.
+	 *
+	 * @param array $prepared Prepared data before response.
+	 *
+	 * @return string
+	 */
+	public function get_callback_media_source( $prepared ) {
+		$id = $prepared['id'];
+
+		$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
+		if ( is_array( $terms ) && $terms ) {
+			$term = array_shift( $terms );
+
+			return $term->slug;
+		}
+
+		return '';
+	}
+
+	/**
+	 * Update rest field callback.
+	 *
+	 * @param mixed    $value Value to update.
+	 * @param \WP_Post $object Object to update on.
+	 *
+	 * @return true|\WP_Error
+	 */
+	public function update_callback_media_source( $value, $object ) {
+		$check = wp_set_object_terms( $object->ID, $value, self::STORY_MEDIA_TAXONOMY );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get attachment source for featured media.
+	 *
+	 * @param array $prepared Prepared data before response.
+	 *
+	 * @return array
+	 */
+	public function get_callback_featured_media_src( $prepared ) {
+		$id    = $prepared['featured_media'];
+		$image = [];
+		if ( $id ) {
+			$image = $this->get_thumbnail_data( $id );
+		}
+
+		return $image;
+	}
+
+	/**
 	 * Filters the attachment data prepared for JavaScript.
 	 *
 	 * @param array    $response   Array of prepared attachment data.
@@ -255,12 +309,12 @@ class Media {
 	 *
 	 * @return array $response;
 	 */
-	public static function wp_prepare_attachment_for_js( $response, $attachment ) {
+	public function wp_prepare_attachment_for_js( $response, $attachment ) {
 		if ( 'video' === $response['type'] ) {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
 			if ( 0 !== $thumbnail_id ) {
-				$image = self::get_thumbnail_data( $thumbnail_id );
+				$image = $this->get_thumbnail_data( $thumbnail_id );
 			}
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
@@ -276,25 +330,13 @@ class Media {
 	 *
 	 * @return array
 	 */
-	public static function get_thumbnail_data( $thumbnail_id ) {
+	public function get_thumbnail_data( $thumbnail_id ) {
 		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
 		list ( $src, $width, $height ) = $img_src;
 		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}
-	/**
-	 * Filters the list of mime types and file extensions.
-	 *
-	 * @param string[] $mime_types Mime types keyed by the file extension regex
-	 *                             corresponding to those types.
-	 *
-	 * @return string[]
-	 */
-	public static function upload_mimes( array $mime_types ) {
-		$mime_types['svg'] = 'image/svg+xml';
-		return $mime_types;
-	}
-
+	
 	/**
 	 * Deletes associated poster image when a video is deleted.
 	 *
@@ -305,7 +347,7 @@ class Media {
 	 *
 	 * @return void
 	 */
-	public static function delete_video_poster( $attachment_id ) {
+	public function delete_video_poster( $attachment_id ) {
 		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
 
 		if ( empty( $post_id ) ) {

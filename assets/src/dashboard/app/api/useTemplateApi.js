@@ -15,10 +15,16 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import moment from 'moment';
+import queryString from 'query-string';
 
 /**
  * Internal dependencies
@@ -40,6 +46,7 @@ export function reshapeTemplateObject(isLocal) {
     createdBy,
     description,
     pages,
+    version,
   }) => ({
     isLocal,
     id,
@@ -51,27 +58,52 @@ export function reshapeTemplateObject(isLocal) {
     tags,
     colors,
     pages,
+    version,
     centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
-    bottomTargetAction: () => {},
   });
 }
 
+// TODO once templates are all connected to an API this and the above reshapeTemplateObject should be able to be one and the same
+// Connecting the ability to create a template from a story I wanted to be able to see the results on saved templates, this endpoint is still missing some template related data.
+export function reshapeSavedTemplates({
+  author,
+  isLocal = true,
+  id,
+  title,
+  modified,
+  tags = [],
+  colors = [],
+  createdBy = 'N/A',
+  description,
+  pages,
+}) {
+  return {
+    author,
+    isLocal,
+    id,
+    title: title.rendered,
+    createdBy,
+    description,
+    status: 'template',
+    modified: moment(modified),
+    tags,
+    colors,
+    pages,
+    centerTargetAction: false, // `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
+  };
+}
 // TODO: Remove this eslint rule once endpoints are working
 /* eslint-disable no-unused-vars */
 const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
-  const { assetsURL } = config;
+  const { assetsURL, templateApi } = config;
 
-  const createStoryFromTemplatePages = useCallback((pages) => {
-    return Promise.resolve({ success: true, storyId: -1 });
-  }, []);
-
-  const fetchSavedTemplates = useCallback((filters) => {
+  const fetchSavedTemplates = useCallback(() => {
     // Saved Templates = Bookmarked Templates + My Templates
     dispatch({
       type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
-      paylod: {
+      payload: {
         templates: [],
         totalPages: 0,
         totalTemplates: 0,
@@ -84,7 +116,7 @@ const useTemplateApi = (dataAdapter, config) => {
   const fetchBookmarkedTemplates = useCallback((filters) => {
     dispatch({
       type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
-      paylod: {
+      payload: {
         templates: [],
         totalPages: 0,
         totalTemplates: 0,
@@ -93,17 +125,82 @@ const useTemplateApi = (dataAdapter, config) => {
     });
   }, []);
 
-  const fetchMyTemplates = useCallback((filters) => {
-    dispatch({
-      type: TEMPLATE_ACTION_TYPES.PLACEHOLDER,
-      paylod: {
-        templates: [],
-        totalPages: 0,
-        totalTemplates: 0,
-        page: 1,
-      },
-    });
-  }, []);
+  const fetchMyTemplates = useCallback(
+    async ({ page = 1 }) => {
+      dispatch({
+        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+        payload: true,
+      });
+
+      if (!templateApi) {
+        dispatch({
+          type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
+          payload: {
+            message: {
+              body: __('Cannot connect to data source', 'web-stories'),
+              title: __('Unable to Load Templates', 'web-stories'),
+            },
+          },
+        });
+      }
+
+      const query = {
+        page,
+        per_page: 100,
+        status: 'publish,draft,pending',
+      };
+
+      try {
+        const path = queryString.stringifyUrl({
+          url: templateApi,
+          query,
+        });
+        const response = await dataAdapter.get(path, {
+          parse: false,
+          cache: 'no-cache',
+        });
+
+        const totalPages =
+          response.headers && parseInt(response.headers.get('X-WP-TotalPages'));
+
+        const totalTemplates =
+          response.headers && parseInt(response.headers.get('X-WP-Total'));
+
+        const serverTemplateResponse = await response.json();
+
+        const reshapedTemplates = serverTemplateResponse.map(
+          reshapeSavedTemplates
+        );
+
+        dispatch({
+          type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_SUCCESS,
+          payload: {
+            savedTemplates: reshapedTemplates,
+            totalPages,
+            totalTemplates,
+            page,
+          },
+        });
+      } catch (err) {
+        dispatch({
+          type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Load Templates', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
+      } finally {
+        dispatch({
+          type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
+          payload: false,
+        });
+      }
+    },
+    [dataAdapter, templateApi]
+  );
 
   const fetchMyTemplateById = useCallback((templateId) => {
     return Promise.resolve({});
@@ -159,12 +256,57 @@ const useTemplateApi = (dataAdapter, config) => {
     }
   }, []);
 
-  const createTemplateFromStory = useCallback(async (story) => {
-    // api call to create a template from a story
-    await dispatch({
-      type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY,
-    });
-  }, []);
+  const createTemplateFromStory = useCallback(
+    async (story) => {
+      await dispatch({
+        type: TEMPLATE_ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY,
+        payload: true,
+      });
+
+      try {
+        const {
+          content,
+          story_data,
+          style_presets,
+          publisher_logo,
+          featured_media,
+          title,
+        } = story.originalStoryData;
+
+        await dataAdapter.post(templateApi, {
+          data: {
+            content,
+            story_data,
+            featured_media,
+            style_presets,
+            publisher_logo,
+            title,
+          },
+        });
+
+        dispatch({
+          type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_SUCCESS,
+        });
+      } catch (err) {
+        dispatch({
+          type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Create Template from Story', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
+      } finally {
+        dispatch({
+          type: TEMPLATE_ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY,
+          payload: false,
+        });
+      }
+    },
+    [dataAdapter, templateApi]
+  );
 
   const fetchRelatedTemplates = useCallback(() => {
     if (!state.templates) {
@@ -184,7 +326,6 @@ const useTemplateApi = (dataAdapter, config) => {
   const api = useMemo(
     () => ({
       bookmarkTemplateById,
-      createStoryFromTemplatePages,
       createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchExternalTemplates,
@@ -196,7 +337,6 @@ const useTemplateApi = (dataAdapter, config) => {
     }),
     [
       bookmarkTemplateById,
-      createStoryFromTemplatePages,
       createTemplateFromStory,
       fetchBookmarkedTemplates,
       fetchExternalTemplateById,

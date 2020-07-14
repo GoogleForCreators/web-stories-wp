@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
@@ -25,10 +25,32 @@ import { useDebouncedCallback } from 'use-debounce';
 import theme from '../theme';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
+  FULLBLEED_RATIO,
   PAGE_RATIO,
-  VIEWPORT_WP_LEFT_NAV_HIDES,
-  WP_LEFT_NAV_WIDTH,
-} from '../constants/pageStructure';
+  WPBODY_ID,
+} from '../constants';
+import { useResizeEffect } from './';
+
+/**
+ * Here we need to calculate two heights for every pagePreview in use.
+ * 1. The height that is 9:16 aspect ratio, this is the default FULLBLEED_RATIO
+ * This height is used anywhere we need the height of the container holding a pagePreview.
+ * It is the true boundary for overflow.
+ * It is the 'fullBleedHeight'
+ * 2. The height for the actual story, used in our shared components with edit-story
+ * This means things like the unitsProvider and displayElements that we import to the Dashboard from the editor
+ * It's maintaining a 2:3 aspect ratio.
+ * When fullbleed is visible (as it is for our reqs) we use the 2:3 aspect ratio w/ overflow to allow the fullBleed height to be visible
+ *
+ * @param {number} width  width of page to base ratios on
+ * @return {Object}       heights to use in pagePreviews { fullBleedHeight: Number, storyHeight: Number}
+ */
+export const getPagePreviewHeights = (width) => {
+  const fullBleedHeight = Math.round((width / FULLBLEED_RATIO) * 100) / 100;
+  const storyHeight = Math.round((width / PAGE_RATIO) * 100) / 100;
+
+  return { fullBleedHeight, storyHeight };
+};
 
 const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
   (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
@@ -46,14 +68,20 @@ const getCurrentBp = (availableContainerSpace) =>
 // subtract those values from the availableContainer space to get remaining space
 // divide the remaining space by the itemsInRow
 // attach that extra space to the width
-// get height by dividing new with by PAGE_RATIO
+// get heights for page and container in getPagePreviewHeights
 const sizeFromWidth = (
   width,
   { bp, respectSetWidth, availableContainerSpace }
 ) => {
   if (respectSetWidth) {
-    return { width, height: width / PAGE_RATIO };
+    const { fullBleedHeight, storyHeight } = getPagePreviewHeights(width);
+    return { width, height: storyHeight, containerHeight: fullBleedHeight };
   }
+
+  if (bp === 'desktop') {
+    availableContainerSpace -= DASHBOARD_LEFT_NAV_WIDTH;
+  }
+
   const itemsInRow = Math.floor(availableContainerSpace / width);
   const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
   const pageGutter = theme.standardViewContentGutter[bp] * 2;
@@ -62,53 +90,47 @@ const sizeFromWidth = (
   const addToWidthValue = remainingSpace / itemsInRow;
 
   const trueWidth = width + addToWidthValue;
+  const { fullBleedHeight, storyHeight } = getPagePreviewHeights(trueWidth);
+
   return {
     width: trueWidth,
-    height: trueWidth / PAGE_RATIO,
+    height: storyHeight,
+    containerHeight: fullBleedHeight,
   };
-};
-
-// we want to set the size of story pages based on the available space
-// this means we need to take the window.innerWidth value and remove the built in WP nav and the dashboard nav according to breakpoints
-const getTrueInnerWidth = () => {
-  const { innerWidth } = window;
-  if (innerWidth >= theme.breakpoint.raw.tablet) {
-    return innerWidth - WP_LEFT_NAV_WIDTH - DASHBOARD_LEFT_NAV_WIDTH;
-  } else if (innerWidth < VIEWPORT_WP_LEFT_NAV_HIDES) {
-    return innerWidth;
-  } else {
-    return innerWidth - WP_LEFT_NAV_WIDTH;
-  }
 };
 
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
+  // When the dashboard is pulled out of wordpress this id will need to be updated.
+  // For now, we need to grab wordpress instead because of how the app's rendered
+  const dashboardContainerRef = useRef(document.getElementById(WPBODY_ID));
+  // BP is contingent on the actual window size
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [bp, setBp] = useState(getCurrentBp(viewportWidth));
+
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
-    getTrueInnerWidth()
+    dashboardContainerRef.current?.offsetWidth || window.innerWidth
   );
 
-  const [debounceAvailableContainerSpace] = useDebouncedCallback(() => {
-    setAvailableContainerSpace(getTrueInnerWidth());
-  }, 250);
-
-  const [bp, setBp] = useState(getCurrentBp(availableContainerSpace));
+  const [debounceSetViewportWidth] = useDebouncedCallback((width) => {
+    setViewportWidth(width);
+  }, 500);
 
   useEffect(() => {
-    if (thumbnailMode) {
-      return () => {};
-    }
+    setBp(getCurrentBp(viewportWidth));
+  }, [viewportWidth]);
 
-    const handleResize = () => debounceAvailableContainerSpace();
+  useResizeEffect(
+    dashboardContainerRef,
+    ({ width }) => {
+      setAvailableContainerSpace(width);
 
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [thumbnailMode, debounceAvailableContainerSpace]);
-
-  useEffect(() => setBp(getCurrentBp(availableContainerSpace)), [
-    availableContainerSpace,
-  ]);
+      if (window.innerWidth !== viewportWidth) {
+        debounceSetViewportWidth(window.innerWidth);
+      }
+    },
+    [setAvailableContainerSpace, viewportWidth, debounceSetViewportWidth]
+  );
 
   return useMemo(
     () => ({

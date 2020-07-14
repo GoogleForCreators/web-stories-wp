@@ -66,6 +66,7 @@ describe('reshapeStoryObject', () => {
       pages: [{ id: 0, elements: [] }],
       centerTargetAction: '',
       bottomTargetAction: 'http://editstory.com?action=edit&post=27',
+      editStoryLink: 'http://editstory.com?action=edit&post=27',
     });
   });
 

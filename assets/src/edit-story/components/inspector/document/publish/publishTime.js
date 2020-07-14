@@ -33,7 +33,7 @@ import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useConfig } from '../../../../app/config';
 import { useStory } from '../../../../app/story';
-import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
+import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../keyboard';
 import useFocusOut from '../../../../utils/useFocusOut';
 import { getReadableDate, getReadableTime, is12Hour } from './utils';
@@ -78,12 +78,17 @@ const StyledToggleIcon = styled(ToggleIcon)`
 `;
 
 function PublishTime() {
-  const {
-    state: {
-      story: { date },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { date, updateStory } = useStory(
+    ({
+      state: {
+        story: { date },
+      },
+      actions: { updateStory },
+    }) => ({
+      date,
+      updateStory,
+    })
+  );
   const { timeFormat } = useConfig();
   const use12HourFormat = is12Hour(timeFormat);
 
@@ -111,6 +116,7 @@ function PublishTime() {
     },
     [showDatePicker, updateStory]
   );
+
   return (
     <>
       <Row>
@@ -119,6 +125,7 @@ function PublishTime() {
           aria-pressed={showDatePicker}
           aria-haspopup={true}
           aria-expanded={showDatePicker}
+          aria-label={__('Edit: Story publish time', 'web-stories')}
           onClick={(e) => {
             e.preventDefault();
             if (!showDatePicker) {
@@ -139,15 +146,18 @@ function PublishTime() {
         anchor={dateFieldRef}
         isOpen={showDatePicker}
         placement={'bottom-end'}
-        maxHeight={350}
-      >
-        <DateTime
-          value={date}
-          onChange={handleDateChange}
-          is12Hour={use12HourFormat}
-          forwardedRef={dateTimeNode}
-        />
-      </Popup>
+        renderContents={({ propagateDimensionChange }) => (
+          <DateTime
+            value={date}
+            onChange={(value, close = false) => {
+              handleDateChange(value, close);
+            }}
+            onViewChange={() => propagateDimensionChange()}
+            is12Hour={use12HourFormat}
+            forwardedRef={dateTimeNode}
+          />
+        )}
+      />
     </>
   );
 }

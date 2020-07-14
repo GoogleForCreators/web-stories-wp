@@ -17,15 +17,20 @@
 /**
  * External dependencies
  */
+jest.mock('flagged');
 import { render } from '@testing-library/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import * as useStoryAnimationContext from '../useStoryAnimationContext';
-import StoryAnimation from '..';
+import Provider from '../provider';
+import WAAPIWrapper from '../WAAPIWrapper';
 
 describe('StoryAnimation.WAAPIWrapper', () => {
+  useFeature.mockImplementation(() => true);
+
   it('renders composed animations top down', () => {
     const useStoryAnimationContextMock = jest.spyOn(
       useStoryAnimationContext,
@@ -36,7 +41,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       <div data-testid={type}>{children}</div>
     );
 
-    useStoryAnimationContextMock.mockReturnValue({
+    useStoryAnimationContextMock.mockImplementation(() => ({
       actions: {
         hoistWAAPIAnimation: () => () => {},
         getAnimationParts: () => [
@@ -45,16 +50,16 @@ describe('StoryAnimation.WAAPIWrapper', () => {
           { WAAPIAnimation: mock('anim-3') },
         ],
       },
-    });
+    }));
 
     const { container } = render(
-      <StoryAnimation.Provider animations={[]}>
+      <Provider animations={[]}>
         <div data-testid="story-element-wrapper">
-          <StoryAnimation.WAAPIWrapper target="_">
+          <WAAPIWrapper target="_">
             <div data-testid="inner-content" />
-          </StoryAnimation.WAAPIWrapper>
+          </WAAPIWrapper>
         </div>
-      </StoryAnimation.Provider>
+      </Provider>
     );
 
     expect(container.firstChild).toMatchInlineSnapshot(`

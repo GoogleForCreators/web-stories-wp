@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { act } from '@testing-library/react';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -41,6 +42,9 @@ export async function arrange({ mediaResponse = [] }) {
       hasUploadMediaAction: true,
     },
   };
+  const flags = {
+    dropdown: false,
+  };
   const getMediaPromise = Promise.resolve({
     data: mediaResponse,
     headers: { get: () => 1 },
@@ -56,13 +60,15 @@ export async function arrange({ mediaResponse = [] }) {
 
   const accessors = renderWithTheme(
     <ConfigProvider config={config}>
-      <APIContext.Provider value={apiContextValue}>
-        <FontProvider>
-          <MediaProvider>
-            <Library />
-          </MediaProvider>
-        </FontProvider>
-      </APIContext.Provider>
+      <FlagsProvider features={flags}>
+        <APIContext.Provider value={apiContextValue}>
+          <FontProvider>
+            <MediaProvider>
+              <Library />
+            </MediaProvider>
+          </FontProvider>
+        </APIContext.Provider>
+      </FlagsProvider>
     </ConfigProvider>
   );
 

@@ -24,11 +24,16 @@
    * See `karma-puppeteer-launcher`.
    *
    * @param {string} methodName The name of the karmaPuppeteer method.
+   * @return {*} Function result.
    */
   function puppeteerFunction(methodName) {
     return function() {
       var args = Array.prototype.slice.call(arguments, 0);
-      return global['__karma_puppeteer_' + methodName].apply(null, args);
+      var name = '__karma_puppeteer_' + methodName;
+      if (!global[name]) {
+        throw new Error('unknown method: ' + name);
+      }
+      return global[name].apply(null, args);
     };
   }
 
@@ -40,6 +45,7 @@
    * For instance, both are allowed: `click('.element1')` and `click(element1)`.
    *
    * @param {string} methodName The name of the karmaPuppeteer method.
+   * @return {*} Function result.
    */
   function withSelector(methodName) {
     var func = puppeteerFunction(methodName);
@@ -65,11 +71,54 @@
     };
   }
 
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard.
+  function keyboard() {
+    function keyboardFunction(name) {
+      return puppeteerFunction('keyboard_' + name);
+    }
+    return {
+      seq: keyboardFunction('seq'),
+      // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardsendcharacterchar
+      sendCharacter: keyboardFunction('sendCharacter'),
+      // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#keyboardtypetext-options
+      type: keyboardFunction('type'),
+    };
+  }
+
+  // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse.
+  function mouse() {
+    function mouseFunction(name) {
+      return puppeteerFunction('mouse_' + name);
+    }
+    return {
+      seq: mouseFunction('seq'),
+    };
+  }
+
+  function clipboard() {
+    function clipboardFunction(name) {
+      return puppeteerFunction('clipboard_' + name);
+    }
+    return {
+      copy: clipboardFunction('copy'),
+      paste: clipboardFunction('paste'),
+    };
+  }
+
   window.karmaPuppeteer = {
     saveSnapshot: puppeteerFunction('saveSnapshot'),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pageclickselector-options
     click: withSelector('click'),
+    clipboard: clipboard(),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pagefocusselector
     focus: withSelector('focus'),
+    // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#framehoverselector
+    hover: withSelector('hover'),
+    // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-keyboard.
+    keyboard: keyboard(),
+    // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse.
+    mouse: mouse(),
+    // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#frameselectselector-values
+    select: withSelector('select'),
   };
 }(typeof window !== 'undefined' ? window : global))

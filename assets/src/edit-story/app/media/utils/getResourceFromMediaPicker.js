@@ -36,6 +36,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     alt,
     description,
     height,
+    date,
     id,
     featured_media: posterId,
     featured_media_src: {
@@ -43,12 +44,13 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       width: posterWidth,
       height: posterHeight,
       generated: posterGenerated,
-    },
+    } = '',
     fileLength: lengthFormatted,
     sizes,
   } = mediaPickerEl;
   return createResource({
     mimeType,
+    uploadDate: date,
     src: url || src,
     ...getResourceSize(
       width,

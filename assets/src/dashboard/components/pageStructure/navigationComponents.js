@@ -36,11 +36,24 @@ export const Content = styled.div`
 
 export const NavButton = styled(Button)`
   margin-bottom: 0;
+  margin-top: 0;
+`;
+
+export const NavList = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
+
+export const NavListItem = styled.li`
+  margin: 8px 0;
+  padding: 0;
+  list-style-type: none;
 `;
 
 export const NavLink = styled.a`
   ${TypographyPresets.Medium};
   ${({ theme, active }) => `
+    display: block;
     padding: 4px 20px;
     margin: 4px 0;
     font-weight: ${theme.typography.weight[active ? 'bold' : 'normal']};
@@ -70,11 +83,16 @@ export const AppInfo = styled.div`
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
-export const LogoPlaceholder = styled.div(
-  ({ theme }) => `
-    height: 40px;
-    width: 145px;
-    margin: ${theme.leftRail.logoMargin};
-    background-color: ${theme.colors.gray100};
-  `
-);
+export const WebStoriesHeading = styled.h1`
+  width: 100%;
+  margin-bottom: 0;
+  font-family: ${({ theme }) => theme.typography.family.secondary};
+  line-height: 1em;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.gray900};
+  align-self: center;
+`;

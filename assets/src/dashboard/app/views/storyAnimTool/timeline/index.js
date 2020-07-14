@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -25,7 +25,9 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { StoryPropType } from '../../../../types';
-import { ANIMATION_TYPES } from '../../../../animations/constants';
+import { clamp } from '../../../../utils';
+import { ANIMATION_TYPES, FIELD_TYPES } from '../../../../animations/constants';
+import { AnimationProps } from '../../../../animations/parts';
 import {
   Container,
   AnimationList,
@@ -39,7 +41,13 @@ import {
   TimelineLabel,
   TimelineBarContainer,
   TimelineBar,
+  ScrubBarContainer,
+  ScrubBar,
 } from './components';
+
+function handleInputFocus(e) {
+  e.target.select();
+}
 
 function getOffsetAndWidth(totalDuration, duration, delay) {
   return {
@@ -47,6 +55,64 @@ function getOffsetAndWidth(totalDuration, duration, delay) {
     width: (duration / totalDuration) * 100,
   };
 }
+
+function renderFormField(name, type, value, options, onChange) {
+  switch (type) {
+    case FIELD_TYPES.HIDDEN:
+      return (
+        value && (
+          <input name={name} readOnly type={FIELD_TYPES.HIDDEN} value={value} />
+        )
+      );
+
+    case FIELD_TYPES.CHECKBOX:
+      return (
+        <input
+          name={name}
+          readOnly
+          type={FIELD_TYPES.CHECKBOX}
+          onChange={onChange}
+          defaultChecked={value}
+        />
+      );
+
+    case FIELD_TYPES.DROPDOWN:
+      return (
+        <select name={name} value={value} onBlur={onChange} onChange={onChange}>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option.toUpperCase()}
+            </option>
+          ))}
+        </select>
+      );
+
+    case FIELD_TYPES.FLOAT:
+      return (
+        <input
+          name={name}
+          type="number"
+          value={value}
+          onFocus={handleInputFocus}
+          onChange={onChange}
+        />
+      );
+
+    default:
+      return (
+        <input
+          name={name}
+          type={type}
+          value={value}
+          onFocus={handleInputFocus}
+          onChange={onChange}
+        />
+      );
+  }
+}
+
+const animationTypes = Object.values(ANIMATION_TYPES);
+const scrubBarWidth = 10;
 
 function Timeline({
   story,
@@ -58,7 +124,33 @@ function Timeline({
   onAnimationSelect,
   onAnimationDelete,
   onToggleTargetSelect,
+  emitGlobalTime,
+  canScrub,
 }) {
+  const scrubContainerRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [formFields, setFormFields] = useState({});
+
+  const { type: selectedAnimationType, props: animationProps } = useMemo(
+    () => AnimationProps(formFields.type || animationTypes[0]),
+    [formFields.type]
+  );
+
+  const defaultFieldValues = useMemo(
+    () =>
+      Object.keys(animationProps).reduce(
+        (acc, prop) => ({
+          ...acc,
+          [prop]:
+            typeof animationProps[prop].defaultValue !== 'undefined'
+              ? animationProps[prop].defaultValue
+              : '',
+        }),
+        {}
+      ),
+    [animationProps]
+  );
+
   const animations = useMemo(
     () => story.pages[activePageIndex].animations || [],
     [story, activePageIndex]
@@ -73,6 +165,28 @@ function Timeline({
     [animations]
   );
 
+  useEffect(() => {
+    if (!(canScrub && isDragging && scrubContainerRef.current)) {
+      return () => {};
+    }
+    const containerBoundingBox = scrubContainerRef.current.getBoundingClientRect();
+    const handleMouseMove = (e) => {
+      const delta = clamp(e.clientX - containerBoundingBox.left, [
+        0,
+        containerBoundingBox.width - scrubBarWidth,
+      ]);
+      emitGlobalTime((delta / containerBoundingBox.width) * totalDuration);
+      scrubContainerRef.current.style.setProperty('--scrub-offset', delta);
+    };
+    const handleMouseUp = () => setIsDragging(false);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, emitGlobalTime, totalDuration, canScrub]);
+
   const handleAnimationSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -81,18 +195,69 @@ function Timeline({
         return;
       }
 
+      // defaultFieldValues will always have the correct
+      // fields to save off, so using as the source of keys
       const animation = {
-        id: e.target.id.value || uuidv4(),
-        type: e.target.type.value,
-        duration: parseInt(e.target.duration.value),
-        delay: parseInt(e.target.delay.value),
+        ...Object.keys(defaultFieldValues).reduce((acc, name) => {
+          const type = animationProps[name].type;
+          let formatter = (value) => value;
+
+          if (type === FIELD_TYPES.NUMBER) {
+            formatter = parseInt;
+          } else if (type === FIELD_TYPES.FLOAT) {
+            formatter = parseFloat;
+          }
+
+          return {
+            ...acc,
+            [name]: formatter(formFields[name]),
+          };
+        }, {}),
+        // iterations can have numbers or the word 'infinity' as
+        // valid values
+        iterations: isNaN(parseInt(formFields.iterations))
+          ? formFields.iterations
+          : parseInt(formFields.iterations),
+        id: formFields.id || uuidv4(),
+        type: formFields.type,
       };
 
-      e.target.reset();
+      onAddOrUpdateAnimation(
+        Object.keys(animation)
+          .filter(
+            (name) =>
+              typeof animation[name] !== 'undefined' && animation[name] !== ''
+          )
+          .reduce(
+            (acc, name) => ({
+              ...acc,
+              [name]: animation[name],
+            }),
+            {}
+          )
+      );
 
-      onAddOrUpdateAnimation(animation);
+      setFormFields(defaultFieldValues);
     },
-    [isAnimationSaveable, onAddOrUpdateAnimation]
+    [
+      formFields,
+      isAnimationSaveable,
+      onAddOrUpdateAnimation,
+      animationProps,
+      defaultFieldValues,
+    ]
+  );
+
+  const createHandleOnChange = useCallback(
+    (isCheckbox = false) => (e) => {
+      const { name, value, checked } = e.target;
+
+      setFormFields((prevFormFields) => ({
+        ...prevFormFields,
+        [name]: isCheckbox ? checked : value,
+      }));
+    },
+    []
   );
 
   const handleToggleTargetSelect = useCallback(
@@ -107,8 +272,9 @@ function Timeline({
     (e) => {
       e.preventDefault();
       onAnimationSelect('');
+      setFormFields(defaultFieldValues);
     },
-    [onAnimationSelect]
+    [onAnimationSelect, defaultFieldValues]
   );
 
   const handleDeleteClick = useCallback(
@@ -120,11 +286,24 @@ function Timeline({
     [onAnimationDelete]
   );
 
-  const handleInputFocus = useCallback((e) => e.target.select(), []);
-
   useEffect(() => {
     onToggleTargetSelect(false);
   }, [activeAnimation, onToggleTargetSelect]);
+
+  useEffect(() => {
+    setFormFields((prevFormFields) => ({
+      ...defaultFieldValues,
+      ...prevFormFields,
+      type: selectedAnimationType,
+    }));
+  }, [selectedAnimationType, defaultFieldValues]);
+
+  useEffect(() => {
+    setFormFields((prevFormFields) => ({
+      ...prevFormFields,
+      ...activeAnimation,
+    }));
+  }, [activeAnimation]);
 
   return (
     <>
@@ -163,77 +342,58 @@ function Timeline({
               </TimelineBarContainer>
             </TimelineAnimation>
           ))}
+          <ScrubBarContainer ref={scrubContainerRef}>
+            <ScrubBar
+              opacity={canScrub ? 1 : 0}
+              width={scrubBarWidth}
+              onMouseDown={() => setIsDragging(true)}
+              isDragging={isDragging}
+            />
+          </ScrubBarContainer>
         </AnimationList>
         <AnimationPanel>
-          <form onSubmit={handleAnimationSubmit}>
-            <FormField>
-              <label>{'Animation Type'}</label>
-              <select
-                key={`animation-type: ${activeAnimation.id}`}
-                name="type"
-                defaultValue={activeAnimation.type}
-              >
-                {Object.values(ANIMATION_TYPES).map((animType) => (
-                  <option key={animType} value={animType}>
-                    {animType.toUpperCase()}
-                  </option>
-                ))}
-              </select>
-            </FormField>
+          {Object.keys(formFields).length > 0 && (
+            <form onSubmit={handleAnimationSubmit}>
+              {Object.keys(animationProps).map((name) => (
+                <FormField key={formFields.id + name}>
+                  {animationProps[name].type !== FIELD_TYPES.HIDDEN && (
+                    <label title={animationProps[name].tooltip}>
+                      {animationProps[name].label || name}
+                    </label>
+                  )}
+                  {renderFormField(
+                    name,
+                    animationProps[name].type,
+                    formFields[name],
+                    animationProps[name].values,
+                    createHandleOnChange(
+                      animationProps[name].type === FIELD_TYPES.CHECKBOX
+                    )
+                  )}
+                </FormField>
+              ))}
 
-            <FormField>
-              <label>{'Duration (ms)'}</label>
-              <input
-                key={`animation-duration: ${activeAnimation.id}`}
-                name="duration"
-                type="number"
-                defaultValue={activeAnimation.duration || 1000}
-                onFocus={handleInputFocus}
-              />
-            </FormField>
+              <FormField>
+                <label>{'Targets'}</label>
+                <button onClick={handleToggleTargetSelect}>
+                  {isElementSelectable
+                    ? 'Target(s) Selected'
+                    : 'Select Target(s)'}
+                </button>
+              </FormField>
 
-            <FormField>
-              <label>{'Delay (ms)'}</label>
-              <input
-                key={`animation-delay: ${activeAnimation.id}`}
-                name="delay"
-                type="number"
-                defaultValue={activeAnimation.delay || 0}
-                onFocus={handleInputFocus}
-              />
-            </FormField>
-
-            <FormField>
-              <label>{'Targets'}</label>
-              <button onClick={handleToggleTargetSelect}>
-                {isElementSelectable
-                  ? 'Target(s) Selected'
-                  : 'Select Target(s)'}
-              </button>
-            </FormField>
-
-            {isAnimationSaveable && (
-              <>
-                <input
-                  key={`animation-id: ${activeAnimation.id}`}
-                  name="id"
-                  type="hidden"
-                  defaultValue={activeAnimation.id}
-                />
-
-                {!isElementSelectable && (
-                  <>
-                    <input type="submit" value="Submit" />
-                    {activeAnimation.id && (
-                      <CancelButton onClick={handleCancelClick}>
-                        {'Cancel'}
-                      </CancelButton>
-                    )}
-                  </>
-                )}
-              </>
-            )}
-          </form>
+              {isAnimationSaveable && !isElementSelectable && (
+                <>
+                  <input type="submit" readOnly value="Submit" />
+                  {activeAnimation.id && (
+                    <CancelButton onClick={handleCancelClick}>
+                      {'Cancel'}
+                    </CancelButton>
+                  )}
+                </>
+              )}
+            </form>
+          )}
         </AnimationPanel>
       </Container>
     </>
@@ -250,6 +410,8 @@ Timeline.propTypes = {
   onAnimationSelect: PropTypes.func.isRequired,
   onAnimationDelete: PropTypes.func.isRequired,
   onToggleTargetSelect: PropTypes.func.isRequired,
+  emitGlobalTime: PropTypes.func,
+  canScrub: PropTypes.bool,
 };
 
 export default Timeline;

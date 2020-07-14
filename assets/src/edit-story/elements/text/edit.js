@@ -50,8 +50,11 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
 // on the content and properties.
+// Background color is used to make the edited element more prominent and
+// easier to see.
 const Wrapper = styled.div`
   ${elementFillContent}
+  background-color: ${({ theme }) => theme.colors.whiteout};
 
   &::after {
     content: '';
@@ -74,7 +77,8 @@ const TextBox = styled.div`
   ${elementWithTextParagraphStyle}
   ${elementWithBackgroundColor}
 
-  opacity: ${({ opacity }) => (opacity ? opacity / 100 : null)};
+  opacity: ${({ opacity }) =>
+    typeof opacity !== 'undefined' ? opacity / 100 : null};
   position: absolute;
   top: 0;
   left: 0;
@@ -104,8 +108,20 @@ function TextEdit({
   }, [content]);
 
   const {
-    actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
-  } = useUnits();
+    dataToEditorX,
+    dataToEditorY,
+    editorToDataX,
+    editorToDataY,
+  } = useUnits(
+    ({
+      actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
+    }) => ({
+      dataToEditorX,
+      dataToEditorY,
+      editorToDataX,
+      editorToDataY,
+    })
+  );
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     font,
@@ -125,9 +141,9 @@ function TextEdit({
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-  const {
-    actions: { updateElementById },
-  } = useStory();
+  const { updateElementById } = useStory((state) => ({
+    updateElementById: state.actions.updateElementById,
+  }));
 
   const setProperties = useCallback(
     (properties) => updateElementById({ elementId: id, properties }),

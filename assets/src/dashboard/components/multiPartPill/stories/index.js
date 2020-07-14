@@ -24,8 +24,7 @@ import styled from 'styled-components';
  */
 import MultiPartPill from '../';
 import Button from '../../button';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
-import { ReactComponent as RightArrow } from '../../../icons/right-arrow.svg';
+import { LeftArrow, RightArrow } from '../../../icons';
 import { BUTTON_TYPES } from '../../../constants';
 
 export default {

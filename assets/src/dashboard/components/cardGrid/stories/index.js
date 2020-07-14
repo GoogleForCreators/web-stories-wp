@@ -24,9 +24,10 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import CardGrid from '../';
-import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
 import { STORY_STATUS } from '../../../constants';
+import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
+import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
+import CardGrid from '../';
 
 export default {
   title: 'Dashboard/Components/CardGrid',
@@ -52,6 +53,7 @@ const StorybookGridItem = (
         targetAction: '',
         label: 'Preview',
       }}
+      pageSize={STORYBOOK_PAGE_SIZE}
     >
       <Card>{text('Sample Story Content', 'Sample Story')}</Card>
     </CardPreviewContainer>
@@ -70,7 +72,7 @@ const itemArray = new Array(12).fill(StorybookGridItem);
 
 export const _default = () => {
   return (
-    <CardGrid>
+    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       {itemArray.map((gridItem, index) => (
         <div key={index}>{gridItem}</div>
       ))}

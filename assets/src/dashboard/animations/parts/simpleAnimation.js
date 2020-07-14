@@ -25,10 +25,21 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { AnimationOutput, WithAnimation } from '../outputs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
+import createKeyframeEffect from '../utils/createKeyframeEffect';
 import { WAAPIAnimationProps, AMPAnimationProps } from './types';
 import FullSizeAbsolute from './components/fullSizeAbsolute';
 
-function SimpleAnimation(animationName, keyframes, timings) {
+const sanitizeTimings = (timings) => ({
+  ...timings,
+  easing: timings.easing || 'linear',
+});
+
+function SimpleAnimation(
+  animationName,
+  keyframes,
+  timings,
+  useClippingContainer
+) {
   const id = uuidv4();
 
   const WAAPIAnimation = function ({ children, hoistAnimation }) {
@@ -38,24 +49,41 @@ function SimpleAnimation(animationName, keyframes, timings) {
       if (!target.current) {
         return () => {};
       }
-      const effect = new KeyframeEffect(target.current, keyframes, timings);
+      const effect = createKeyframeEffect(
+        target.current,
+        keyframes,
+        sanitizeTimings(timings)
+      );
       return hoistAnimation(new Animation(effect, document.timeline));
     }, [hoistAnimation]);
 
-    return <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>;
+    return useClippingContainer ? (
+      <FullSizeAbsolute overflowHidden={useClippingContainer}>
+        <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
+      </FullSizeAbsolute>
+    ) : (
+      <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
+    );
   };
 
   WAAPIAnimation.propTypes = WAAPIAnimationProps;
 
-  const AMPTarget = function ({ children, style }) {
+  const AMPTarget = function ({ children, style = {} }) {
+    const options = useClippingContainer
+      ? {
+          useClippingContainer: useClippingContainer,
+          style,
+          animationStyle: getInitialStyleFromKeyframes(keyframes),
+        }
+      : {
+          style: {
+            ...style,
+            ...getInitialStyleFromKeyframes(keyframes),
+          },
+        };
+
     return (
-      <WithAnimation
-        id={`anim-${id}`}
-        style={{
-          ...style,
-          ...getInitialStyleFromKeyframes(keyframes),
-        }}
-      >
+      <WithAnimation id={`anim-${id}`} {...options}>
         {children}
       </WithAnimation>
     );
@@ -63,11 +91,10 @@ function SimpleAnimation(animationName, keyframes, timings) {
 
   AMPTarget.propTypes = AMPAnimationProps;
 
-  const AMPAnimation = function ({ prefixId }) {
+  const AMPAnimation = function () {
     return (
       <AnimationOutput
-        animation={`${prefixId}-${animationName}`}
-        config={{ selector: `#anim-${id}`, ...timings }}
+        config={{ selector: `#anim-${id}`, keyframes, ...timings }}
       />
     );
   };

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -40,16 +41,16 @@ const MESSAGE_ID = 'edit-story-canvas-upload-message';
 
 function CanvasUploadDropTarget({ children }) {
   const uploadWithPreview = useUploadWithPreview();
-
+  const onDropHandler = useCallback(
+    (files) => {
+      if (files && files.length > 0) {
+        uploadWithPreview(files);
+      }
+    },
+    [uploadWithPreview]
+  );
   return (
-    <UploadDropTarget
-      onDrop={(files) => {
-        if (files && files.length > 0) {
-          uploadWithPreview(files);
-        }
-      }}
-      labelledBy={MESSAGE_ID}
-    >
+    <UploadDropTarget onDrop={onDropHandler} labelledBy={MESSAGE_ID}>
       {children}
       <UploadDropTargetOverlay>
         <CanvasLayer>

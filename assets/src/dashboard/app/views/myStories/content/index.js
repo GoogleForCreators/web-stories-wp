@@ -22,6 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -36,8 +37,6 @@ import {
 } from '../../../../components';
 import {
   UsersPropType,
-  TagsPropType,
-  CategoriesPropType,
   StoriesPropType,
   StoryActionsPropType,
 } from '../../../../types';
@@ -53,7 +52,6 @@ import EmptyView from './emptyView';
 
 function Content({
   allPagesFetched,
-  categories,
   filter,
   isLoading,
   page,
@@ -61,26 +59,30 @@ function Content({
   sort,
   stories,
   storyActions,
-  tags,
   users,
   view,
+  dateFormat,
 }) {
   return (
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>
+          <UnitsProvider
+            pageSize={{
+              width: view.pageSize.width,
+              height: view.pageSize.height,
+            }}
+          >
             {stories.length > 0 ? (
               <StandardViewContentGutter>
                 <StoriesView
-                  categories={categories}
                   filterValue={filter.value}
                   sort={sort}
                   storyActions={storyActions}
                   stories={stories}
-                  tags={tags}
                   users={users}
-                  viewStyle={view.style}
+                  view={view}
+                  dateFormat={dateFormat}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -100,7 +102,6 @@ function Content({
 }
 Content.propTypes = {
   allPagesFetched: PropTypes.bool,
-  categories: CategoriesPropType,
   filter: FilterPropTypes,
   isLoading: PropTypes.bool,
   page: PagePropTypes,
@@ -108,9 +109,9 @@ Content.propTypes = {
   sort: SortPropTypes,
   stories: StoriesPropType,
   storyActions: StoryActionsPropType,
-  tags: TagsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
+  dateFormat: PropTypes.string,
 };
 
-export default Content;
+export default memo(Content);

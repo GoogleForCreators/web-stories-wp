@@ -57,9 +57,11 @@ if [ "$CI" != "true" ] && [ $NVM_VERSION != "v$(nvm --version)" ]; then
 	exit 1
 fi
 
+NVMRC=$(cat .nvmrc)
+
 # Check if the current node version is up to date.
-if [ "$CI" != "true" ] && [ "$(nvm current)" != "$(nvm version-remote --lts)" ]; then
-	echo -e $(warning_message "Node version does not match the latest long term support version. Please run this command to install and use it:" )
+if [ "$CI" != "true" ] && [ "$(nvm current)" != "$(nvm version-remote "$NVMRC")" ]; then
+	echo -e $(warning_message "Node version does not match the latest available one. Please run this command to install and use it:" )
 	echo -e $(warning_message "$(action_format "nvm install")" )
 	echo -e $(warning_message "After that, re-run the setup script to continue." )
 	exit 1

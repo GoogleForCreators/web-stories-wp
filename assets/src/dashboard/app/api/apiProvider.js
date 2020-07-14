@@ -28,9 +28,8 @@ import dataAdapter from './wpAdapter';
 import useFontApi from './useFontApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
-import useTagsApi from './useTagsApi';
-import useCategoriesApi from './useCategoriesApi';
 import useUsersApi from './useUserApi';
+import useSettingsApi from './useSettingsApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -38,53 +37,50 @@ export default function ApiProvider({ children }) {
   const { api, editStoryURL, assetsURL } = useConfig();
 
   const { users, api: usersApi } = useUsersApi(dataAdapter, {
-    wpApi: api.users,
-  });
-  const { tags, api: tagsApi } = useTagsApi(dataAdapter, { wpApi: api.tags });
-  const { categories, api: categoriesApi } = useCategoriesApi(dataAdapter, {
-    wpApi: api.categories,
+    userApi: api.users,
   });
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
     assetsURL,
+    templateApi: api.templates,
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
     editStoryURL,
-    wpApi: api.stories,
+    storyApi: api.stories,
   });
 
-  const { api: fontApi } = useFontApi(dataAdapter, { wpApi: api.fonts });
+  const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
+
+  const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
+    globalStoriesSettingsApi: api.settings,
+  });
 
   const value = useMemo(
     () => ({
       state: {
+        settings,
         stories,
         templates,
-        tags,
-        categories,
         users,
       },
       actions: {
+        settingsApi,
         storyApi,
         templateApi,
         fontApi,
-        tagsApi,
-        categoriesApi,
         usersApi,
       },
     }),
     [
-      users,
-      categories,
-      tags,
+      settings,
       stories,
       templates,
+      users,
+      settingsApi,
       storyApi,
       templateApi,
       fontApi,
-      tagsApi,
-      categoriesApi,
       usersApi,
     ]
   );

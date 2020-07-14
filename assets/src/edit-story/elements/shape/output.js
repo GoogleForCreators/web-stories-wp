@@ -22,9 +22,14 @@ import generatePatternStyles from '../../utils/generatePatternStyles';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object<*>} props Props.
+ * @return {*} Rendered component.
  */
-function ShapeOutput({ element: { backgroundColor } }) {
-  const style = generatePatternStyles(backgroundColor);
+function ShapeOutput({ element: { backgroundColor, isDefaultBackground } }) {
+  const style = isDefaultBackground
+    ? null
+    : generatePatternStyles(backgroundColor);
   return <div className="fill" style={style} />;
 }
 

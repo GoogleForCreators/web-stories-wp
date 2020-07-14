@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -26,7 +27,7 @@ import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
 import {
-  Heading1,
+  TypographyPresets,
   NavMenuButton,
   StandardViewContentGutter,
 } from '../../../components';
@@ -36,7 +37,9 @@ const Container = styled.div`
   padding: 10px 0 0;
 `;
 
-const StyledHeader = styled(Heading1)`
+const StyledHeader = styled.h2`
+  ${TypographyPresets.ExtraExtraLarge};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -99,9 +102,12 @@ const PageHeading = ({
   searchPlaceholder,
   centerContent = false,
   stories = [],
+  showTypeahead = true,
   handleTypeaheadChange,
   typeaheadValue = '',
 }) => {
+  const typeaheadResults = useMemo(() => stories.slice(0, 5), [stories]);
+
   return (
     <Container>
       <HeadingBodyWrapper>
@@ -110,16 +116,18 @@ const PageHeading = ({
           {defaultTitle}
         </StyledHeader>
         <Content centerContent={centerContent}>{children}</Content>
-        <SearchContainer>
-          <SearchInner>
-            <TypeaheadSearch
-              placeholder={searchPlaceholder}
-              currentValue={typeaheadValue}
-              stories={stories}
-              handleChange={handleTypeaheadChange}
-            />
-          </SearchInner>
-        </SearchContainer>
+        {showTypeahead && (
+          <SearchContainer>
+            <SearchInner>
+              <TypeaheadSearch
+                placeholder={searchPlaceholder}
+                currentValue={typeaheadValue}
+                stories={typeaheadResults}
+                handleChange={handleTypeaheadChange}
+              />
+            </SearchInner>
+          </SearchContainer>
+        )}
       </HeadingBodyWrapper>
     </Container>
   );
@@ -134,6 +142,7 @@ PageHeading.propTypes = {
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
   stories: StoriesPropType,
+  showTypeahead: PropTypes.bool,
   handleTypeaheadChange: PropTypes.func,
   typeaheadValue: PropTypes.string,
 };

@@ -31,15 +31,16 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
-import { Layer, PageArea } from './layout';
+import PageMenu from './pagemenu';
+import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
-import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
+import Selection from './selection';
+import useCanvas from './useCanvas';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
-    className: 'container web-stories-content',
-    pointerEvents: 'initial',
+    showOverflow: true,
   })``
 );
 
@@ -66,9 +67,12 @@ const Hint = styled.div`
 `;
 
 function FramesLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+  const { showSafeZone } = useCanvas(({ state: { showSafeZone } }) => ({
+    showSafeZone,
+  }));
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
@@ -86,8 +90,10 @@ function FramesLayer() {
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
+      aria-label={__('Frames', 'web-stories')}
     >
       <FramesPageArea
+        showSafeZone={showSafeZone}
         overlay={
           Boolean(draggingResource) &&
           isDropSource(draggingResource.type) &&
@@ -104,8 +110,17 @@ function FramesLayer() {
           currentPage.elements.map(({ id, ...rest }) => {
             return <FrameElement key={id} element={{ id, ...rest }} />;
           })}
-        <Selection />
       </FramesPageArea>
+      <MenuArea
+        pointerEvents="initial"
+        // Make its own stacking context.
+        zIndex={1}
+        // Cancel lasso.
+        onMouseDown={(evt) => evt.stopPropagation()}
+      >
+        <PageMenu />
+      </MenuArea>
+      <Selection />
     </Layer>
   );
 }

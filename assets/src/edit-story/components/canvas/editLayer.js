@@ -38,21 +38,15 @@ const LayerWithGrayout = styled(Layer)`
     grayout ? theme.colors.grayout : 'transparent'};
 `;
 
-const EditPageArea = withOverlay(styled(PageArea).attrs({
-  className: 'container web-stories-content',
-})`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`);
+const EditPageArea = withOverlay(PageArea);
 
 function EditLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement: editingElementId },
-  } = useCanvas();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+  const { editingElementId } = useCanvas((state) => ({
+    editingElementId: state.state.editingElement,
+  }));
 
   const editingElement =
     editingElementId &&
@@ -71,9 +65,9 @@ function EditLayerForElement({ element }) {
   const pageAreaRef = useRef(null);
   const { editModeGrayout } = getDefinitionForType(element.type);
 
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const focusCanvas = useFocusCanvas();
 
@@ -99,7 +93,7 @@ function EditLayerForElement({ element }) {
         }
       }}
     >
-      <EditPageArea ref={pageAreaRef}>
+      <EditPageArea ref={pageAreaRef} showOverflow={editModeGrayout}>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>

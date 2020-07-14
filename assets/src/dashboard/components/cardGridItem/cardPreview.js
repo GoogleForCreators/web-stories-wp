@@ -18,44 +18,51 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
-
 /**
  * Internal dependencies
  */
 import { Button } from '..';
-import { BUTTON_TYPES } from '../../constants';
-import usePagePreviewSize from '../../utils/usePagePreviewSize';
 import { resolveRoute } from '../../app/router';
+import {
+  BUTTON_TYPES,
+  DEFAULT_STORY_PAGE_ADVANCE_DURATION,
+  STORY_PAGE_STATE,
+} from '../../constants';
+import { PageSizePropType, StoryPropType } from '../../types';
+import { clamp, useFocusOut } from '../../utils';
+import PreviewErrorBoundary from '../previewErrorBoundary';
+import PreviewPage from '../previewPage';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
   position: relative;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  height: ${({ cardSize }) => `${cardSize.height}px`};
+  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
   box-shadow: ${({ theme }) => theme.storyPreview.shadow};
   border: ${({ theme }) => theme.storyPreview.border};
   width: 100%;
   overflow: hidden;
   z-index: -1;
 `;
+PreviewPane.propTypes = {
+  cardSize: PageSizePropType.isRequired,
+};
 
 const EditControls = styled.div`
-  height: ${({ cardSize }) => `${cardSize.height}px`};
+  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
   width: ${({ cardSize }) => `${cardSize.width}px`};
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 0;
-  opacity: 0;
   transition: opacity ease-in-out 300ms;
   background: ${({ theme }) => theme.cardItem.previewOverlay};
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 
-  &:hover {
-    opacity: 1;
-  }
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     button,
     a {
@@ -66,6 +73,9 @@ const EditControls = styled.div`
     }
   }
 `;
+EditControls.propTypes = {
+  cardSize: PageSizePropType.isRequired,
+};
 
 const ActionContainer = styled.div`
   padding: 20px;
@@ -84,15 +94,92 @@ const getActionAttributes = (targetAction) =>
     ? { href: resolveRoute(targetAction), isLink: true }
     : { onClick: targetAction };
 
-const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
-  const { pageSize } = usePagePreviewSize({ isGrid: true });
+const CARD_STATE = {
+  IDLE: 'idle',
+  ACTIVE: 'active',
+};
+
+const CARD_ACTION = {
+  ACTIVATE: 'activate',
+  DEACTIVATE: 'deactivate',
+};
+
+const cardMachine = {
+  [CARD_STATE.IDLE]: {
+    [CARD_ACTION.ACTIVATE]: CARD_STATE.ACTIVE,
+  },
+  [CARD_STATE.ACTIVE]: {
+    [CARD_ACTION.DEACTIVATE]: CARD_STATE.IDLE,
+  },
+};
+
+const cardReducer = (state, action) => cardMachine?.[state]?.[action] || state;
+
+const CardPreviewContainer = ({
+  centerAction,
+  bottomAction,
+  story,
+  pageSize,
+  children,
+}) => {
+  const [cardState, dispatch] = useReducer(cardReducer, CARD_STATE.IDLE);
+  const [pageIndex, setPageIndex] = useState(0);
+  const containElem = useRef(null);
+  const storyPages = story?.pages || [];
+
+  useFocusOut(containElem, () => dispatch(CARD_ACTION.DEACTIVATE), []);
+
+  useEffect(() => {
+    if (CARD_STATE.IDLE === cardState) {
+      setPageIndex(0);
+    }
+  }, [cardState]);
+
+  useEffect(() => {
+    let intervalId;
+    if (CARD_STATE.ACTIVE === cardState) {
+      /**
+       * The interval duration should eventually get pulled off the story schema's
+       * auto advance duration and if no duration provided, use a default.
+       *
+       * Can also incorporate onWAAPIFinish here to make sure the page
+       * doesn't switch before the animations finishes.
+       */
+      intervalId = setInterval(
+        () => setPageIndex((v) => clamp(v + 1, [0, storyPages.length - 1])),
+        DEFAULT_STORY_PAGE_ADVANCE_DURATION
+      );
+    }
+
+    return () => intervalId && clearInterval(intervalId);
+  }, [storyPages.length, cardState]);
 
   return (
     <>
-      <PreviewPane cardSize={pageSize}>{children}</PreviewPane>
-      <EditControls cardSize={pageSize}>
+      <PreviewPane cardSize={pageSize}>
+        <PreviewErrorBoundary>
+          <PreviewPage
+            pageSize={pageSize}
+            page={storyPages[pageIndex]}
+            animationState={
+              CARD_STATE.ACTIVE === cardState
+                ? STORY_PAGE_STATE.PLAYING
+                : STORY_PAGE_STATE.RESET
+            }
+          />
+        </PreviewErrorBoundary>
+        {children}
+      </PreviewPane>
+      <EditControls
+        ref={containElem}
+        cardSize={pageSize}
+        isActive={CARD_STATE.ACTIVE === cardState}
+        onFocus={() => dispatch(CARD_ACTION.ACTIVATE)}
+        onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
+        onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
+      >
         <EmptyActionContainer />
-        {centerAction && (
+        {centerAction?.label && (
           <ActionContainer>
             <Button
               type={BUTTON_TYPES.SECONDARY}
@@ -115,13 +202,15 @@ const CardPreviewContainer = ({ centerAction, bottomAction, children }) => {
 const ActionButtonPropType = PropTypes.shape({
   targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
-  label: ActionLabel.isRequired,
+  label: ActionLabel,
 });
 
 CardPreviewContainer.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
+  pageSize: PageSizePropType.isRequired,
+  story: StoryPropType,
 };
 
 export default CardPreviewContainer;

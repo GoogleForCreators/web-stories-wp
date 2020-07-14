@@ -28,16 +28,24 @@ import PropTypes from 'prop-types';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import { APP_ROUTES, NESTED_APP_ROUTES } from '../constants';
-import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
+
+import {
+  AppFrame,
+  LeftRail,
+  NavProvider,
+  PageContent,
+  ToastProvider,
+} from '../components';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider, RouterContext, matchPath } from './router';
 import { ConfigProvider } from './config';
 import {
+  ExploreTemplatesView,
   MyStoriesView,
-  TemplateDetail,
-  TemplatesGalleryView,
   SavedTemplatesView,
   StoryAnimTool,
+  TemplateDetailsView,
+  ToasterView,
 } from './views';
 
 const AppContent = () => {
@@ -61,11 +69,11 @@ const AppContent = () => {
         <Route
           exact
           path={APP_ROUTES.TEMPLATES_GALLERY}
-          component={<TemplatesGalleryView />}
+          component={<ExploreTemplatesView />}
         />
         <Route
           path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
-          component={<TemplateDetail />}
+          component={<TemplateDetailsView />}
         />
         <Route
           exact
@@ -74,13 +82,16 @@ const AppContent = () => {
         />
         <Route
           path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
-          component={<TemplateDetail />}
+          component={<TemplateDetailsView />}
         />
         <Route
           path={APP_ROUTES.STORY_ANIM_TOOL}
           component={<StoryAnimTool />}
         />
       </PageContent>
+      <ToastProvider>
+        <ToasterView />
+      </ToastProvider>
     </AppFrame>
   );
 };

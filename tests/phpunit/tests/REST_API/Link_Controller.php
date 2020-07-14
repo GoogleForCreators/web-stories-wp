@@ -77,7 +77,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 	 * @return array Response data.
 	 */
 	public function mock_http_request( $preempt, $r, $url ) {
-		$this->request_count += 1;
+		++ $this->request_count;
 
 		if ( false !== strpos( $url, self::EMPTY_URL ) ) {
 			return [
@@ -151,6 +151,25 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
+		$this->assertEquals( 200, $response->get_status() );
+		$this->assertEqualSetsWithIndex(
+			[
+				'title'       => '',
+				'image'       => '',
+				'description' => '',
+			],
+			$data
+		);
+	}
+
+	public function test_url_empty_string() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', '' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertEquals( 0, $this->request_count );
 		$this->assertEquals( 404, $response->get_status() );
 		$this->assertEquals( $data['code'], 'rest_invalid_url' );
 	}

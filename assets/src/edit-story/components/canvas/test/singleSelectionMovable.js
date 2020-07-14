@@ -72,6 +72,7 @@ describe('singleSelectionMovable', () => {
       state: {
         pageSize,
         nodesById: { '1': target },
+        fullbleedContainer: document.body,
       },
     };
   });
@@ -87,7 +88,7 @@ describe('singleSelectionMovable', () => {
     );
   }
 
-  function performRotatation(rotateTo) {
+  function performRotation(rotateTo) {
     const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
     moveable.onRotateStart({ set: () => {} });
     moveable.onRotate({
@@ -107,7 +108,7 @@ describe('singleSelectionMovable', () => {
     'should rotate %p',
     (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
-      performRotatation(rotateTo);
+      performRotation(rotateTo);
 
       expect(updateSelectedElements).toHaveBeenLastCalledWith({
         properties: { rotationAngle: expectedRotationAngle },

@@ -32,14 +32,14 @@ describe('Switch', () => {
     const offLabel = 'Off';
     const onChange = jest.fn();
 
-    const { getByText, getByLabelText } = renderWithTheme(
+    const { getByText, getByRole } = renderWithTheme(
       <Switch onChange={onChange} />
     );
 
     const onLabelEl = getByText(onLabel);
-    const onLabelRadio = getByLabelText(onLabel);
+    const onLabelRadio = getByRole('radio', { name: onLabel });
     const offLabelEl = getByText(offLabel);
-    const offLabelRadio = getByLabelText(offLabel);
+    const offLabelRadio = getByRole('radio', { name: offLabel });
 
     expect(onLabelEl).toBeInTheDocument();
     expect(offLabelEl).toBeInTheDocument();
@@ -58,7 +58,7 @@ describe('Switch', () => {
     const offLabel = 'Off';
     const onChange = jest.fn();
 
-    const { getByText, getByLabelText } = renderWithTheme(
+    const { getByText, getByRole } = renderWithTheme(
       <Switch
         onChange={onChange}
         onLabel={onLabel}
@@ -68,9 +68,9 @@ describe('Switch', () => {
     );
 
     const onLabelEl = getByText(onLabel);
-    const onLabelRadio = getByLabelText(onLabel);
+    const onLabelRadio = getByRole('radio', { name: onLabel });
     const offLabelEl = getByText(offLabel);
-    const offLabelRadio = getByLabelText(offLabel);
+    const offLabelRadio = getByRole('radio', { name: offLabel });
 
     expect(onLabelRadio.checked).toStrictEqual(true);
     expect(offLabelRadio.checked).toStrictEqual(false);

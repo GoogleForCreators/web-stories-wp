@@ -30,28 +30,22 @@ import {
   STYLE_PRESETS_PER_ROW,
 } from '../../../constants';
 
-const PRESET_HEIGHT = 35;
+const PRESET_SIZE = 30;
 
 const Group = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
 `;
 
 const ButtonWrapper = styled.div`
-  flex-basis: ${({ width }) => width}%;
-  height: ${PRESET_HEIGHT}px;
+  height: ${PRESET_SIZE}px;
+  width: ${PRESET_SIZE}px;
+  margin: auto;
 `;
 
-const Label = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 10px;
-  line-height: 12px;
-  text-transform: uppercase;
-  padding: 6px 0;
-`;
-
-function PresetGroup({ presets, itemRenderer, type, label }) {
+function PresetGroup({ presets, itemRenderer, type }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
 
@@ -93,21 +87,14 @@ function PresetGroup({ presets, itemRenderer, type, label }) {
     [activeIndex, presets.length, type]
   );
 
-  const buttonWidth =
-    'color' === type
-      ? 100 / COLOR_PRESETS_PER_ROW
-      : 100 / STYLE_PRESETS_PER_ROW;
   return (
-    <>
-      <Label>{label}</Label>
-      <Group ref={groupRef}>
-        {presets.map((preset, i) => (
-          <ButtonWrapper key={i} width={buttonWidth}>
-            {itemRenderer(preset, i, activeIndex)}
-          </ButtonWrapper>
-        ))}
-      </Group>
-    </>
+    <Group ref={groupRef}>
+      {presets.map((preset, i) => (
+        <ButtonWrapper key={i}>
+          {itemRenderer(preset, i, activeIndex)}
+        </ButtonWrapper>
+      ))}
+    </Group>
   );
 }
 
@@ -115,7 +102,6 @@ PresetGroup.propTypes = {
   presets: PropTypes.array.isRequired,
   itemRenderer: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
 };
 
 export default PresetGroup;

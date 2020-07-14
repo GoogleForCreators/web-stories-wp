@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useEffect, useMemo, useContext } from 'react';
 
 /**
  * Internal dependencies
@@ -38,7 +38,6 @@ import {
   DASHBOARD_VIEWS,
   SAVED_TEMPLATES_STATUSES,
   STORY_SORT_MENU_ITEMS,
-  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../constants';
 import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
 import useStoryView, {
@@ -48,12 +47,11 @@ import useStoryView, {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../utils/useStoryView';
-import getAllTemplates from '../../../templates';
 import { StoriesPropType } from '../../../types';
-import { reshapeTemplateObject } from '../../api/useTemplateApi';
-import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
-import { BodyViewOptions, PageHeading, StoryGridView } from '../shared';
+import { BodyViewOptions, PageHeading } from '../shared';
+import { ApiContext } from '../../api/apiProvider';
+import SavedTemplatesGridView from './savedTemplatesGridView';
 
 function Header({ filter, search, sort, stories, view }) {
   const resultsLabel = useDashboardResultsLabel({
@@ -73,6 +71,7 @@ function Header({ filter, search, sort, stories, view }) {
         typeaheadValue={search.keyword}
       />
       <BodyViewOptions
+        showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         currentSort={sort.value}
@@ -92,16 +91,14 @@ function Content({ stories, view, page }) {
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>
+          <UnitsProvider
+            pageSize={{
+              width: view.pageSize.width,
+              height: view.pageSize.height,
+            }}
+          >
             <StandardViewContentGutter>
-              <StoryGridView
-                stories={stories}
-                centerActionLabelByStatus={
-                  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
-                }
-                bottomActionLabel={__('Use template', 'web-stories')}
-                isSavedTemplate
-              />
+              <SavedTemplatesGridView view={view} stories={stories} />
               <InfiniteScroller
                 allDataLoadedMessage={__('No more templates.', 'web-stories')}
                 isLoading={false}
@@ -117,18 +114,29 @@ function Content({ stories, view, page }) {
 }
 
 function SavedTemplates() {
-  const config = useConfig();
+  const {
+    actions: {
+      templateApi: { fetchMyTemplates },
+    },
+    state: {
+      templates: { savedTemplates, savedTemplatesOrderById },
+    },
+  } = useContext(ApiContext);
+
   const { filter, page, sort, search, view } = useStoryView({
     filters: SAVED_TEMPLATES_STATUSES,
     totalPages: 1,
   });
 
-  /**
-   * A placeholder to just have template data in the view for now.
-   */
-  const mockTemplates = useRef(
-    getAllTemplates(config).map(reshapeTemplateObject(false))
-  );
+  const orderedSavedTemplates = useMemo(() => {
+    return savedTemplatesOrderById.map((templateId) => {
+      return savedTemplates[templateId];
+    });
+  }, [savedTemplates, savedTemplatesOrderById]);
+
+  useEffect(() => {
+    fetchMyTemplates({ page: 1 });
+  }, [fetchMyTemplates]);
 
   return (
     <Layout.Provider>
@@ -136,14 +144,14 @@ function SavedTemplates() {
         filter={filter}
         view={view}
         search={search}
-        stories={mockTemplates.current}
+        stories={orderedSavedTemplates}
         sort={sort}
       />
       <Content
         view={view}
         page={page}
         sort={sort}
-        stories={mockTemplates.current}
+        stories={orderedSavedTemplates}
       />
     </Layout.Provider>
   );

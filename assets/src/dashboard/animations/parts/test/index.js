@@ -21,7 +21,7 @@ import { render } from '@testing-library/react';
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import { AnimationPart } from '..';
+import { AnimationPart, throughput } from '..';
 
 describe('AnimationPart', () => {
   /**
@@ -65,4 +65,19 @@ describe('AnimationPart', () => {
       expect(getByTestId('child-rendered')).toBeDefined();
     }
   );
+
+  it('should return objects with the same signature for all parts and throughput', () => {
+    // throughput should have the same signature as all parts
+    const throughputNames = Array.from(Object.keys(throughput())).sort();
+
+    Object.values(ANIMATION_TYPES).forEach((type) => {
+      const properties = Array.from(
+        Object.keys(AnimationPart(type, {}))
+      ).sort();
+
+      // 'type' is being added to the assertion so we'll
+      // know which animation part was being tested
+      expect({ [type]: properties }).toStrictEqual({ [type]: throughputNames });
+    });
+  });
 });

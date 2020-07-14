@@ -28,8 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as FlipHorizontal } from '../../../icons/flip_horizontal.svg';
-import { ReactComponent as FlipVertical } from '../../../icons/flip_vertical.svg';
+import { FlipHorizontal, FlipVertical } from '../../../icons';
 import Toggle from '../../form/toggle';
 
 const ToggleContainer = styled.div`

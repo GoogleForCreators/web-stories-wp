@@ -15,27 +15,20 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import getBeautyStoryData from './data/beauty';
-import getCookingStoryData from './data/cooking';
-import getDIYStoryData from './data/diy';
-import getEntertainmentStoryData from './data/entertainment';
-import getFashionStoryData from './data/fashion';
-import getFitnessStoryData from './data/fitness';
-import getTravelStoryData from './data/travel';
-import getWellbeingStoryData from './data/wellbeing';
+import { memoize } from '../utils';
+import getTemplates from './getTemplates';
 
-export default function (config) {
-  const { assetsURL } = config;
-  const beautyStoryData = getBeautyStoryData(assetsURL);
-  const cookingStoryData = getCookingStoryData(assetsURL);
-  const diyStoryData = getDIYStoryData(assetsURL);
-  const entertainmentData = getEntertainmentStoryData(assetsURL);
-  const fashionStoryData = getFashionStoryData(assetsURL);
-  const fitnessStoryData = getFitnessStoryData(assetsURL);
-  const travelStoryData = getTravelStoryData(assetsURL);
-  const wellbeingStoryData = getWellbeingStoryData(assetsURL);
+const memoizedGetTemplates = memoize(getTemplates);
+
+export default function ({ assetsURL }) {
+  const templates = memoizedGetTemplates(assetsURL);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',
@@ -55,9 +48,12 @@ export default function (config) {
         { label: 'White', color: '#fff' },
         { label: 'Brown', color: '#eadfd6' },
       ],
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-      pages: beautyStoryData.pages,
+      description: __(
+        'The modern and bright Beauty template lends itself well as a foundation for stories covering make up, beauty products, shopping guides, instructions & tutorials and more.',
+        'web-stories'
+      ),
+      pages: templates.beauty.pages,
+      version: templates.beauty.version,
     },
     {
       id: 2,
@@ -71,9 +67,12 @@ export default function (config) {
         { label: 'Black', color: '#2a2928' },
         { label: 'White', color: '#fff' },
       ],
-      description:
-        'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
-      pages: cookingStoryData.pages,
+      description: __(
+        'Make your audience salivate by using the Cooking template to create web stories about ingredients, food recipes, how-to’s, restaurant guides and kitchen inspiration.',
+        'web-stories'
+      ),
+      pages: templates.cooking.pages,
+      version: templates.cooking.version,
     },
     {
       id: 3,
@@ -88,9 +87,12 @@ export default function (config) {
         { label: 'Light Grey', color: '#858280' },
         { label: 'White', color: '#fff' },
       ],
-      description:
-        'Mauris placerat velit ut nunc ornare porta. Integer auctor hendrerit aliquam. Proin egestas nisi et nisl commodo.',
-      pages: diyStoryData.pages,
+      description: __(
+        'Motivate your audience to get out there and make something with the bold DIY template. Use it for DIY, crafting, 3D printing, woodworking or any other content targeting makers.',
+        'web-stories'
+      ),
+      pages: templates.diy.pages,
+      version: templates.diy.version,
     },
     {
       id: 4,
@@ -103,9 +105,12 @@ export default function (config) {
         { label: 'Pink', color: '#ff00d6' },
         { label: 'Grey', color: '#525252' },
       ],
-      description:
-        'Nam a tellus tortor. Aenean non mi porta quam feugiat vehicula in a lectus. Suspendisse eget justo ac quam.',
-      pages: entertainmentData.pages,
+      description: __(
+        'Cover the world of entertainment with this template that comes with an edgy, interesting look. Works well as foundation for celebrity, movie, TV and music coverage, insights and inspiration.',
+        'web-stories'
+      ),
+      pages: templates.entertainment.pages,
+      version: templates.entertainment.version,
     },
     {
       id: 5,
@@ -119,9 +124,12 @@ export default function (config) {
         { label: 'Grey', color: '#858280' },
         { label: 'White', color: '#fff' },
       ],
-      description:
-        'Duis auctor libero vel dui tincidunt, at mattis nisi placerat. Nam id lacinia lectus.',
-      pages: fashionStoryData.pages,
+      description: __(
+        'The elegant serif Fashion template works well for New York Fashion Week highlights, high fashion shopping guides and accessory trends.',
+        'web-stories'
+      ),
+      pages: templates.fashion.pages,
+      version: templates.fashion.version,
     },
     {
       id: 6,
@@ -133,9 +141,12 @@ export default function (config) {
         { label: 'Red', color: '#cf1323' },
         { label: 'White', color: '#fff' },
       ],
-      description:
-        'Quisque dignissim urna id lectus ultricies blandit. Cras laoreet pharetra lectus. Nunc mollis suscipit feugiat.',
-      pages: fitnessStoryData.pages,
+      description: __(
+        'This modern, bold theme lends itself well for workout routines, fitness gear shopping lists, but also tech, internet and gadget news, reviews, recommendations and coverage, due to its timeless, simple look.',
+        'web-stories'
+      ),
+      pages: templates.fitness.pages,
+      version: templates.fitness.version,
     },
     {
       id: 7,
@@ -148,9 +159,12 @@ export default function (config) {
         { label: 'Yellow', color: '#fec85a' },
         { label: 'Blue', color: '#0648ad' },
       ],
-      description:
-        'Vestibulum lobortis quis nunc eget pulvinar. Duis auctor eros quis dignissim iaculis.',
-      pages: travelStoryData.pages,
+      description: __(
+        'Designed to instil a sense of wanderlust & wonder, the Travel template can be a great foundation for travel inspiration, travel itineraries, restaurant hopping guides, Best-of attraction listicles and other types of travel content.',
+        'web-stories'
+      ),
+      pages: templates.travel.pages,
+      version: templates.travel.version,
     },
     {
       id: 8,
@@ -165,9 +179,12 @@ export default function (config) {
         { label: 'Light Grey', color: '#d8d8d8' },
         { label: 'White', color: '#fff' },
       ],
-      description:
-        'In lorem est, aliquam tempus justo nec, tincidunt aliquet diam. Fusce ut nisl ex. Nam mollis dolor non arcu.',
-      pages: wellbeingStoryData.pages,
+      description: __(
+        'With a warm color palette and soothing shapes, the Wellbeing template works best for web stories covering mindfulness, lifestyle health and related exercise and activities like Yoga, Spa treatments and the like.',
+        'web-stories'
+      ),
+      pages: templates.wellbeing.pages,
+      version: templates.wellbeing.version,
     },
   ];
 }

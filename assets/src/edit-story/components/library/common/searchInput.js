@@ -19,7 +19,15 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { rgba } from 'polished';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+/**
+ * Internal dependencies
+ */
+import { ReactComponent as Close } from '../../../icons/close.svg';
+import { TextInput } from '../../form';
 
 const SearchField = styled.div`
   position: relative;
@@ -27,27 +35,18 @@ const SearchField = styled.div`
   align-items: center;
 `;
 
-const Search = styled.input.attrs({ type: 'text' })`
+const Search = styled(TextInput)`
   width: 100%;
-  background: ${({ theme }) => rgba(theme.colors.fg.v0, 0.3)};
+  flex-grow: 1;
   border: none;
   border-radius: 4px;
-  color: ${({ theme }) => theme.colors.fg.v1};
   padding: 8px 16px 8px 16px;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  &::placeholder {
-    color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
-  }
-  &:focus {
-    background: ${({ theme }) => theme.colors.bg.v13};
-    color: ${({ theme }) => theme.colors.bg.v0};
-  }
-  &:focus::placeholder {
-    color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.54)};
-  }
+`;
+
+const CloseIcon = styled(Close)`
+  width: 14px;
+  height: 14px;
+  color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
 export default function SearchInput({
@@ -63,6 +62,10 @@ export default function SearchInput({
         placeholder={placeholder}
         onChange={onChange}
         disabled={disabled}
+        aria-label={__('Search from library', 'web-stories')}
+        clear
+        clearIcon={<CloseIcon />}
+        showClearIconBackground={false}
       />
     </SearchField>
   );

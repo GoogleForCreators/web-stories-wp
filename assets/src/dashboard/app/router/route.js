@@ -38,6 +38,14 @@ export function parentRoute() {
   }
 }
 
+export function resolveRelatedTemplateRoute(relatedTemplate) {
+  return (
+    window.location.hash.split('#')[1].split('?')[0] +
+    '?' +
+    relatedTemplate.centerTargetAction.split('?')[1]
+  );
+}
+
 export function resolveRoute(route) {
   if (
     route.toLowerCase().startsWith('http://') ||

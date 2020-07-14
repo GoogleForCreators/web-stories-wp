@@ -16,6 +16,9 @@
 
 // see https://jestjs.io/docs/en/manual-mockshttps://jestjs.io/docs/en/manual-mocks
 
+/**
+ * External dependencies
+ */
 const path = require('path');
 
 const fs = jest.genMockFromModule('fs');

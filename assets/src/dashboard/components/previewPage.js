@@ -13,21 +13,144 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import DisplayElement from '../../edit-story/components/canvas/displayElement';
 import StoryPropTypes from '../../edit-story/types';
+import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
+import { STORY_PAGE_STATE } from '../constants';
+import { PageSizePropType } from '../types';
+import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 
-function PreviewPage({ page }) {
-  return page.elements.map(({ id, ...rest }) => (
-    <DisplayElement key={id} page={page} element={{ id, ...rest }} />
-  ));
+/*
+ * A quick note about how height works with the 9:16 aspect ratio (FULLBLEED_RATIO)
+ * The unitProvider that sizes page previews still needs the 2:3 ratio,
+ * this is passed in here as pageSize.height. It is the true height of the story
+ * That said, we also need a height for the 9:16 that acts as the container for the story
+ * to allow for fullBleed overflow.
+ * So, you'll notice that containerHeight is getting used to wrap the PreviewSafeZone height
+ * to make sure that the overflow has the proper size.
+ * Reference edit-story/components/canvas/layout for more details
+ *
+ */
+
+const FullBleedPreviewWrapper = styled.div`
+  height: ${({ pageSize }) => `${pageSize.containerHeight}px`};
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  ${({ background }) => generatePatternStyles(background)};
+`;
+
+const PreviewSafeZone = styled.div`
+  width: 100%;
+  height: ${({ pageSize }) => `${pageSize.height}px`};
+  overflow: visible;
+  position: absolute;
+  margin: 0;
+`;
+
+function PreviewPageController({
+  page,
+  animationState,
+  subscribeGlobalTime,
+  pageSize,
+}) {
+  const {
+    actions: { WAAPIAnimationMethods },
+  } = useStoryAnimationContext();
+
+  useEffect(() => {
+    switch (animationState) {
+      case STORY_PAGE_STATE.PLAYING:
+        WAAPIAnimationMethods.play();
+        return () => {};
+      case STORY_PAGE_STATE.RESET:
+        WAAPIAnimationMethods.reset();
+        return () => {};
+      case STORY_PAGE_STATE.SCRUBBING:
+        WAAPIAnimationMethods.pause();
+        return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
+      case STORY_PAGE_STATE.PAUSED:
+        WAAPIAnimationMethods.pause();
+        return () => {};
+      default:
+        return () => {};
+    }
+  }, [animationState, WAAPIAnimationMethods, subscribeGlobalTime]);
+
+  /**
+   * Reset everything on unmount;
+   */
+  useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
+
+  return (
+    <FullBleedPreviewWrapper
+      pageSize={pageSize}
+      background={page.backgroundColor}
+    >
+      <PreviewSafeZone pageSize={pageSize}>
+        {page.elements.map(({ id, ...rest }) => (
+          <DisplayElement
+            previewMode
+            key={id}
+            page={page}
+            element={{ id, ...rest }}
+            isAnimatable
+          />
+        ))}
+      </PreviewSafeZone>
+    </FullBleedPreviewWrapper>
+  );
+}
+
+function PreviewPage({
+  page,
+  pageSize,
+  animationState = STORY_PAGE_STATE.RESET,
+  onAnimationComplete,
+  subscribeGlobalTime,
+}) {
+  return (
+    <StoryAnimation.Provider
+      animations={page.animations}
+      onWAAPIFinish={onAnimationComplete}
+    >
+      <PreviewPageController
+        page={page}
+        pageSize={pageSize}
+        animationState={animationState}
+        onAnimationComplete={onAnimationComplete}
+        subscribeGlobalTime={subscribeGlobalTime}
+      />
+    </StoryAnimation.Provider>
+  );
 }
 
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
+  pageSize: PageSizePropType.isRequired,
+  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
+  onAnimationComplete: PropTypes.func,
+  subscribeGlobalTime: PropTypes.func,
+};
+
+PreviewPageController.propTypes = {
+  page: StoryPropTypes.page.isRequired,
+  pageSize: PageSizePropType.isRequired,
+  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
+  subscribeGlobalTime: PropTypes.func,
 };
 
 export default PreviewPage;

@@ -45,8 +45,6 @@ function MyStories() {
         totalPages,
         totalStoriesByStatus,
       },
-      categories,
-      tags,
       users,
     },
   } = useContext(ApiContext);
@@ -56,7 +54,7 @@ function MyStories() {
     totalPages,
   });
 
-  const { wpListURL } = useConfig();
+  const { wpListURL, dateFormat } = useConfig();
 
   useEffect(() => {
     fetchStories({
@@ -96,20 +94,19 @@ function MyStories() {
 
       <Content
         allPagesFetched={allPagesFetched}
-        categories={categories}
         filter={filter}
         isLoading={isLoading}
         page={page}
         search={search}
         sort={sort}
         stories={orderedStories}
+        dateFormat={dateFormat}
         storyActions={{
           createTemplateFromStory,
           duplicateStory,
           trashStory,
           updateStory,
         }}
-        tags={tags}
         users={users}
         view={view}
       />

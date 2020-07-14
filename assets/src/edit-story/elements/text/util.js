@@ -15,7 +15,9 @@
  */
 
 /**
- * @param {Object} element Text element properties.
+ * Generates paragraph text style for a text element.
+ *
+ * @param {Object<*>} element Text element properties.
  * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
  * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
  * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
@@ -23,12 +25,11 @@
  * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
-  element,
+  { font, fontSize, lineHeight, padding, textAlign },
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY = dataToStyleY
 ) {
-  const { font, fontSize, lineHeight, padding, textAlign } = element;
   return {
     whiteSpace: 'pre-wrap',
     margin: 0,

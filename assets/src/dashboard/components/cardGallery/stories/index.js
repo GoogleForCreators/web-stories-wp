@@ -15,35 +15,34 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import CardGallery from '../index';
+import formattedTemplatesArray from '../../../dataUtils/formattedTemplatesArray';
+import FontProvider from '../../../app/font/fontProvider';
+import { TransformProvider } from '../../../../edit-story/components/transform';
 
 export default {
   title: 'Dashboard/Components/CardGallery',
   component: CardGallery,
 };
 
+const CardGalleryContainer = styled.div`
+  padding: 20px;
+`;
 export const _default = () => {
-  const cards = [
-    'red',
-    'orange',
-    'green',
-    'blue',
-    'purple',
-    'aqua',
-    'yellow',
-    'grey',
-  ].map((color) => (
-    <div
-      key={color}
-      style={{ backgroundColor: color, width: '100%', height: '100%' }}
-    />
-  ));
-
   return (
-    <div style={{ padding: '20px' }}>
-      <CardGallery>{cards}</CardGallery>
-    </div>
+    <FontProvider>
+      <TransformProvider>
+        <CardGalleryContainer>
+          <CardGallery story={formattedTemplatesArray[0]} />
+        </CardGalleryContainer>
+      </TransformProvider>
+    </FontProvider>
   );
 };

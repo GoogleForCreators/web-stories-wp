@@ -20,15 +20,28 @@
 import getTypeFromMime from './getTypeFromMime';
 
 /**
- * Resource object.
+ * Author object
  *
- * TODO: Try to remove posterId (poster should be enough?)
+ * @typedef {Author} Author
+ * @property {string} displayName The display name of the author.
+ * @property {?string} url An optional URL to link to the author's profile or
+ * website.
+ */
+
+/**
+ * Attribution object
  *
- * @typedef {Resource} Resource
- * @property {string|undefined} type Resource type. Currently only "image" and
- * "video" values are allowed. If not specified, will be calculated from the
- * mime-type.
+ * @typedef {Attribution} Attribution
+ * @property {Author} author The author of the media object.
+ */
+
+/**
+ * Attachment object.
+ *
+ * @typedef {Attachment} Attachment
+ * @property {string} [type] Attachment type, e.g. video or image.
  * @property {string} mimeType The MIME type.
+ * @property {string|null} creationDate When the attachment was created.
  * @property {string} src The source URL.
  * @property {number} width The natural resource width.
  * @property {number} height The natural resource height.
@@ -43,18 +56,49 @@ import getTypeFromMime from './getTypeFromMime';
  * resource.
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
- * @property {Object} Object of image sizes.
+ * @property {Object} sizes Object of image sizes.
+ */
+
+/**
+ * Resource object.
+ *
+ * TODO: Try to remove posterId (poster should be enough?)
+ *
+ * @typedef {Resource} Resource
+ * @property {string|null} type Resource type. Currently only "image" and
+ * "video" values are allowed. If not specified, will be calculated from the
+ * mime-type.
+ * @property {string} mimeType The MIME type.
+ * @property {string|null} creationDate When resource was created.
+ * @property {string} src The source URL.
+ * @property {number} width The natural resource width.
+ * @property {number} height The natural resource height.
+ * @property {string|null} poster The poster URL for the "video" type.
+ * @property {number|null} posterId The system poster ID.
+ * @property {number|null} id The system ID.
+ * @property {number|null} length The length for the "video" type.
+ * @property {string|null} lengthFormatted The formatted length for the "video"
+ * type.
+ * @property {string|null} title The user-readable title for the resource.
+ * @property {string|null} alt The user-readable accessibility label for the
+ * resource.
+ * @property {boolean} local Whether the resource has been already uploaded to
+ * the server.
+ * @property {Object} sizes Object of image sizes.
+ * @property {?Attribution} attribution An optional attribution for the
+ * resource.
  */
 
 /**
  * Creates a resource object.
  *
- * @param {Object} attachment WP Attachment object.
+ * @param {Attachment} attachment WordPress Attachment object.
  * @return {Resource} Resource object.
  */
 function createResource({
   type,
   mimeType,
+  creationDate,
   src,
   width,
   height,
@@ -67,10 +111,12 @@ function createResource({
   alt,
   local,
   sizes,
+  attribution,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
     mimeType,
+    creationDate,
     src,
     width,
     height,
@@ -83,6 +129,7 @@ function createResource({
     alt,
     local,
     sizes,
+    attribution,
   };
 }
 

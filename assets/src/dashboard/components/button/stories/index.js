@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Button from '../';
+import Button, { PaginationButton } from '../';
 import { BUTTON_TYPES } from '../../../constants';
 
 export default {
@@ -50,6 +50,7 @@ export const _default = () => {
             cta: BUTTON_TYPES.CTA,
             primary: BUTTON_TYPES.PRIMARY,
             secondary: BUTTON_TYPES.SECONDARY,
+            default: BUTTON_TYPES.DEFAULT,
           },
           BUTTON_TYPES.PRIMARY
         )}
@@ -126,3 +127,7 @@ export const SecondaryButton = () => {
     </SecondaryButtonContainer>
   );
 };
+
+export const _PaginationButton = () => (
+  <PaginationButton rotateRight={boolean('rotateRight')} />
+);

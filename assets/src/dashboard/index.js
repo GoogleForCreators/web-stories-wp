@@ -18,10 +18,14 @@
  * External dependencies
  */
 import { render } from 'react-dom';
+import { FlagsProvider } from 'flagged';
+import Modal from 'react-modal';
+import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
  * Internal dependencies
  */
+import { initializeTracking } from '../tracking';
 import App from './app';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
@@ -30,16 +34,27 @@ import './style.css'; // This way the general dashboard styles are loaded before
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} config   Story editor settings.
+ * @param {Object} flags    The flags for the application.
  */
-const initialize = (id, config) => {
+const initialize = (id, config, flags) => {
   const appElement = document.getElementById(id);
 
-  render(<App config={config} />, appElement);
+  // see http://reactcommunity.org/react-modal/accessibility/
+  Modal.setAppElement(appElement);
+
+  initializeTracking('Dashboard');
+
+  render(
+    <FlagsProvider features={flags}>
+      <App config={config} />
+    </FlagsProvider>,
+    appElement
+  );
 };
 
 const initializeWithConfig = () => {
-  const { id, config } = window.webStoriesDashboardSettings;
-  initialize(id, config);
+  const { id, config, flags } = window.webStoriesDashboardSettings;
+  initialize(id, config, flags);
 };
 
 if ('loading' === document.readyState) {

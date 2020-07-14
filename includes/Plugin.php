@@ -31,43 +31,157 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Fonts_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
+use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
+use WP_Post;
 
 /**
  * Plugin class.
  */
 class Plugin {
 	/**
+	 * Media object.
+	 *
+	 * @var Media
+	 */
+	public $media;
+
+	/**
+	 * Story Post Type object.
+	 *
+	 * @var  Story_Post_Type
+	 */
+	public $story;
+
+	/**
+	 * Template object.
+	 *
+	 * @var Template_Post_Type
+	 */
+	public $template;
+
+	/**
+	 * Beta version updater.
+	 *
+	 * @var Updater
+	 */
+	public $updater;
+
+	/**
+	 * Dashboard.
+	 *
+	 * @var Dashboard
+	 */
+	public $dashboard;
+
+	/**
+	 * Admin-related functionality.
+	 *
+	 * @var Admin
+	 */
+	public $admin;
+
+	/**
+	 * Gutenberg Blocks.
+	 *
+	 * @var Embed_Block
+	 */
+	public $embed_block;
+
+	/**
+	 * Frontend.
+	 *
+	 * @var Discovery
+	 */
+	public $discovery;
+
+	/**
+	 * Tracking.
+	 *
+	 * @var Tracking
+	 */
+	public $tracking;
+
+	/**
+	 * Database Upgrader.
+	 *
+	 * @var Database_Upgrader
+	 */
+	public $database_upgrader;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
 	 */
 	public function register() {
-		add_action( 'init', [ Media::class, 'init' ], 9 );
-		add_action( 'init', [ Story_Post_Type::class, 'init' ] );
+		$this->media = new Media();
+		add_action( 'init', [ $this->media, 'init' ], 9 );
+
+		$this->story = new Story_Post_Type();
+		add_action( 'init', [ $this->story, 'init' ] );
+
+		$this->template = new Template_Post_Type();
+		add_action( 'init', [ $this->template, 'init' ] );
+
+		// Beta version updater.
+		$this->updater = new Updater();
+		add_action( 'init', [ $this->updater, 'init' ], 9 );
+
+		$this->tracking = new Tracking();
+		add_action( 'init', [ $this->tracking, 'init' ] );
 
 		// REST API endpoints.
-
-		$fonts_controller = new Fonts_Controller();
-		add_action( 'rest_api_init', [ $fonts_controller, 'register_routes' ] );
-
-		$link_controller = new Link_Controller();
-		add_action( 'rest_api_init', [ $link_controller, 'register_routes' ] );
-
-		$embed_controller = new Embed_Controller();
-		add_action( 'rest_api_init', [ $embed_controller, 'register_routes' ] );
+		// High priority so it runs after create_initial_rest_routes().
+		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
 		// Dashboard.
-
-		$dashboard = new Dashboard();
-		add_action( 'init', [ $dashboard, 'init' ] );
+		$this->dashboard = new Dashboard();
+		add_action( 'init', [ $this->dashboard, 'init' ] );
 
 		// Migrations.
+		$this->database_upgrader = new Database_Upgrader();
+		add_action( 'admin_init', [ $this->database_upgrader, 'init' ] );
 
-		$database_upgrader = new Database_Upgrader();
-		add_action( 'admin_init', [ $database_upgrader, 'init' ] );
+		// Admin-related functionality.
+		$this->admin = new Admin();
+		add_action( 'admin_init', [ $this->admin, 'init' ] );
 
 		// Gutenberg Blocks.
-		$embed_block = new Embed_Block();
-		add_action( 'init', [ $embed_block, 'init' ] );
+		$this->embed_block = new Embed_Block();
+		add_action( 'init', [ $this->embed_block, 'init' ] );
+
+		// Frontend.
+		$this->discovery = new Discovery();
+		add_action( 'init', [ $this->discovery, 'init' ] );
+
+		// Register activation flag logic outside of 'init' since it hooks into
+		// plugin activation.
+		$activation_flag = new Activation_Flag();
+		$activation_flag->init();
+
+		$activation_notice = new Activation_Notice( $activation_flag );
+		$activation_notice->init();
+	}
+
+	/**
+	 * Registers REST API routes.
+	 *
+	 * @return void
+	 */
+	public function register_rest_routes() {
+		$fonts_controller = new Fonts_Controller();
+		$fonts_controller->register_routes();
+
+		$link_controller = new Link_Controller();
+		$link_controller->register_routes();
+
+		$embed_controller = new Embed_Controller();
+		$embed_controller->register_routes();
+
+		$templates_autosaves = new Stories_Autosaves_Controller( Template_Post_Type::POST_TYPE_SLUG );
+		$templates_autosaves->register_routes();
+
+		$stories_autosaves = new Stories_Autosaves_Controller( Story_Post_Type::POST_TYPE_SLUG );
+		$stories_autosaves->register_routes();
 	}
 }

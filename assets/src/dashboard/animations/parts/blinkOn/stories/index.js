@@ -17,22 +17,12 @@
 /**
  * Internal dependencies
  */
-import StoryAnimation, {
-  useStoryAnimationContext,
-} from '../../../../components/storyAnimation';
+import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
+import StoryAnimation from '../../../../components/storyAnimation';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
   title: 'Dashboard/Animations/BlinkOn',
-};
-
-const PlayButton = () => {
-  const {
-    actions: { playWAAPIAnimations },
-  } = useStoryAnimationContext();
-
-  const label = 'play';
-  return <button onClick={playWAAPIAnimations}>{label}</button>;
 };
 
 const animations = [
@@ -84,41 +74,32 @@ export const _default = () => {
 
 export const AMPStory = () => {
   return (
-    <div style={{ width: '100%', height: '640px' }}>
-      <amp-story
-        standalone
-        title="My Story"
-        publisher="The AMP Team"
-        publisher-logo-src="https://example.com/logo/1x1.png"
-        poster-portrait-src="https://example.com/my-story/poster/3x4.jpg"
-      >
-        {[1, 2].map((pageId) => (
-          <amp-story-page key={pageId} id={`page-${pageId}`}>
-            <StoryAnimation.Provider animations={animations}>
-              <StoryAnimation.AMPKeyframes />
-              <StoryAnimation.AMPAnimations />
+    <AMPStoryWrapper>
+      {[1, 2].map((pageId) => (
+        <amp-story-page key={pageId} id={`page-${pageId}`}>
+          <StoryAnimation.Provider animations={animations}>
+            <StoryAnimation.AMPAnimations />
 
-              <amp-story-grid-layer template="horizontal">
-                {elements.map(({ id, color }) => (
-                  <StoryAnimation.AMPWrapper
-                    key={id}
-                    target={id}
-                    style={{ width: '50px', height: '50px' }}
-                  >
-                    <div
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: color,
-                      }}
-                    />
-                  </StoryAnimation.AMPWrapper>
-                ))}
-              </amp-story-grid-layer>
-            </StoryAnimation.Provider>
-          </amp-story-page>
-        ))}
-      </amp-story>
-    </div>
+            <amp-story-grid-layer template="horizontal">
+              {elements.map(({ id, color }) => (
+                <StoryAnimation.AMPWrapper
+                  key={id}
+                  target={id}
+                  style={{ width: '50px', height: '50px' }}
+                >
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: color,
+                    }}
+                  />
+                </StoryAnimation.AMPWrapper>
+              ))}
+            </amp-story-grid-layer>
+          </StoryAnimation.Provider>
+        </amp-story-page>
+      ))}
+    </AMPStoryWrapper>
   );
 };

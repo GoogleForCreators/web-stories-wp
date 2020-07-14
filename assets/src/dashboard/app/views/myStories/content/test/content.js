@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../testUtils';
-import formattedUsersObject from '../../../../../storybookUtils/formattedUsersObject';
+import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
+import formattedUsersObject from '../../../../../dataUtils/formattedUsersObject';
 
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
@@ -32,6 +32,7 @@ const fakeStories = [
     pages: [{ id: '10' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
   {
     id: 2,
@@ -40,6 +41,7 @@ const fakeStories = [
     pages: [{ id: '20' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
   {
     id: 3,
@@ -48,6 +50,7 @@ const fakeStories = [
     pages: [{ id: '30' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
 ];
 
@@ -62,7 +65,7 @@ describe('My Stories <Content />', function () {
   });
 
   it('should render the content grid with the correct story count.', function () {
-    const { getAllByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <Content
           filter={STORY_STATUSES[0]}
@@ -83,14 +86,15 @@ describe('My Stories <Content />', function () {
             updateStory: jest.fn,
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
 
-    expect(getAllByTestId('grid-item')).toHaveLength(fakeStories.length);
+    expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
   });
 
   it('should show "Create a story to get started!" if no stories are present.', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <Content
           filter={STORY_STATUSES[0]}
@@ -111,14 +115,15 @@ describe('My Stories <Content />', function () {
             updateStory: jest.fn,
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
 
     expect(getByText('Create a story to get started!')).toBeInTheDocument();
   });
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithThemeAndFlagsProvider(
       <LayoutProvider>
         <Content
           filter={STORY_STATUSES[0]}
@@ -139,7 +144,8 @@ describe('My Stories <Content />', function () {
             updateStory: jest.fn,
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      { enableInProgressStoryActions: false }
     );
 
     expect(

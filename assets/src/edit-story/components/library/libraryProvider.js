@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -26,23 +27,34 @@ import { useMemo, useState } from 'react';
 import { useInsertElement } from '../canvas';
 import Context from './context';
 
-const MEDIA = 'media';
-const TEXT = 'text';
-const SHAPES = 'shapes';
-const ELEMENTS = 'elements';
-const ANIMATION = 'animation';
-
-const TABS = {
-  MEDIA,
-  TEXT,
-  SHAPES,
-  ELEMENTS,
-  ANIMATION,
+export const TAB_IDS = {
+  MEDIA: 'media',
+  MEDIA3P: 'media3p',
+  TEXT: 'text',
+  SHAPES: 'shapes',
+  ELEMENTS: 'elements',
+  ANIMATION: 'animation',
 };
 
 function LibraryProvider({ children }) {
-  const [tab, setTab] = useState(MEDIA);
+  const [tab, setTab] = useState(TAB_IDS.MEDIA);
   const insertElement = useInsertElement();
+
+  const { showAnimationTab, showElementsTab, media3pTab } = useFeatures();
+
+  // Order here is important, as it denotes the actual visual order of elements.
+  const tabs = useMemo(
+    () =>
+      [
+        TAB_IDS.MEDIA,
+        media3pTab ? TAB_IDS.MEDIA3P : null,
+        TAB_IDS.TEXT,
+        TAB_IDS.SHAPES,
+        showElementsTab ? TAB_IDS.ELEMENTS : null,
+        showAnimationTab ? TAB_IDS.ANIMATION : null,
+      ].filter(Boolean),
+    [media3pTab, showAnimationTab, showElementsTab]
+  );
 
   const state = useMemo(
     () => ({
@@ -54,10 +66,10 @@ function LibraryProvider({ children }) {
         insertElement,
       },
       data: {
-        tabs: TABS,
+        tabs: tabs,
       },
     }),
-    [tab, insertElement]
+    [tab, insertElement, tabs]
   );
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

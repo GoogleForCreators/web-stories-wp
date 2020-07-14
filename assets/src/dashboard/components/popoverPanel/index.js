@@ -30,7 +30,7 @@ import styled from 'styled-components';
  */
 import { Z_INDEX } from '../../constants';
 import { PILL_LABEL_TYPES } from '../../constants/components';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
+import { Close as CloseIcon } from '../../icons';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import Pill from '../pill';

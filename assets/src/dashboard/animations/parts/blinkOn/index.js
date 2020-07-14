@@ -27,8 +27,9 @@ import SimpleAnimation from '../simpleAnimation';
 import generateLookupMap from '../../utils/generateLookupMap';
 import padArray from '../../utils/padArray';
 
+export const DEFAULT_BLINKS = 10;
+
 const AVAILABLE_OPACITY = [0, 0.25, 0.75, 1];
-const DEFAULT_BLINKS = 10;
 
 const defaults = {
   fill: 'forwards',

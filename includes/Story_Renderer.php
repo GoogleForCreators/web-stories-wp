@@ -26,10 +26,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Publisher;
+
 /**
  * Class Story_Renderer
  */
 class Story_Renderer {
+	use Publisher;
+
 	/*
 	 * Regular expressions to fetch the individual structural tags.
 	 * These patterns were optimized to avoid extreme backtracking on large documents.
@@ -120,8 +124,7 @@ class Story_Renderer {
 	 * @return string Filtered markup.
 	 */
 	protected function add_publisher_logo( $content ) {
-		$publisher_logo = Story_Post_Type::get_publisher_logo();
-		return str_replace( Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER, $publisher_logo, $content );
+		return str_replace( $this->get_publisher_logo_placeholder(), $this->get_publisher_logo(), $content );
 	}
 
 	/**
@@ -132,9 +135,7 @@ class Story_Renderer {
 	 * @return string Filtered content.
 	 */
 	protected function add_poster_images( $content ) {
-		$poster_images = Media::get_story_meta_images( $this->post );
-
-		unset( $poster_images['poster-portrait'] ); // Already exists.
+		$poster_images = $this->get_story_meta_images();
 
 		foreach ( $poster_images as $attr => $url ) {
 			$attr_markup = sprintf( '%1$s-src="%2$s"', $attr, $url );
@@ -156,113 +157,6 @@ class Story_Renderer {
 	}
 
 	/**
-	 * Prints AMP Analytics based on Site Kit configuration.
-	 *
-	 * @return void
-	 */
-	protected function print_amp_analytics() {
-		if ( ! defined( 'GOOGLESITEKIT_PLUGIN_MAIN_FILE' ) ) {
-			return;
-		}
-		$option = 'googlesitekit_analytics_settings';
-
-		$site_kit_analytics = get_option( $option, [] );
-
-		// Ensure filters used in Site Kit apply here, too.
-		$tracking_id = apply_filters( 'googlesitekit_analytics_internal_web_property_id', '' );
-		if ( empty( $tracking_id ) && ! empty( $site_kit_analytics['propertyID'] ) ) {
-			$tracking_id = $site_kit_analytics['propertyID'];
-		}
-		if ( empty( $site_kit_analytics ) || empty( $tracking_id ) ) {
-			return;
-		}
-
-		// If useSnippet is set and false, don't display anything.
-		if ( isset( $site_kit_analytics['useSnippet'] ) && false === $site_kit_analytics['useSnippet'] ) {
-			return;
-		}
-
-		if ( isset( $site_kit_analytics['trackingDisabled'] ) ) {
-			$exclusions = $site_kit_analytics['trackingDisabled'];
-			$disabled   = in_array( 'loggedinUsers', $exclusions, true ) && is_user_logged_in();
-			if ( $disabled ) {
-				return;
-			}
-		}
-
-		$title    = $this->post->post_title;
-		$story_id = $this->post->ID;
-		$gtag     = [
-			'vars'     => [
-				'gtag_id' => $tracking_id,
-				'config'  => [
-					$tracking_id => [
-						'groups' => 'default',
-					],
-				],
-			],
-			'triggers' => [
-				'storyProgress' => [
-					'on'   => 'story-page-visible',
-					'vars' => [
-						'event_name'     => 'custom',
-						'event_action'   => 'story_progress',
-						'event_category' => "$title",
-						'event_label'    => "$story_id",
-						'send_to'        => [
-							$tracking_id,
-						],
-					],
-				],
-				'storyEnd'      => [
-					'on'   => 'story-last-page-visible',
-					'vars' => [
-						'event_name'     => 'custom',
-						'event_action'   => 'story_complete',
-						'event_category' => "$title",
-						'send_to'        => [
-							$tracking_id,
-						],
-					],
-				],
-			],
-		];
-
-		/**
-		 * Filters Analytics tag configuration.
-		 *
-		 * Allows modification or removal of the tag.
-		 *
-		 * @param array $gtag Array used to generate config for analytics.
-		 */
-		$gtag_filtered = apply_filters( 'web_stories_gtag', $gtag );
-
-		// If the configuration was removed, don't display the tag.
-		if ( empty( $gtag_filtered ) ) {
-			return;
-		}
-
-		// Ensure gtag is still array.
-		if ( ! is_array( $gtag_filtered ) ) {
-			$gtag_filtered = $gtag;
-		}
-
-		if ( ! isset( $gtag_filtered['vars'] ) || ! is_array( $gtag_filtered['vars'] ) ) {
-			$gtag_filtered['vars'] = $gtag['vars'];
-		}
-
-		$gtag_filtered['vars']['gtag_id'] = $tracking_id;
-
-		?>
-			<amp-analytics type="gtag" data-credentials="include">
-				<script type="application/json">
-					<?php echo wp_json_encode( $gtag_filtered ); ?>
-				</script>
-			</amp-analytics>
-		<?php
-	}
-
-	/**
 	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
 	 *
 	 * @param string $content Story markup.
@@ -271,10 +165,7 @@ class Story_Renderer {
 	protected function maybe_add_analytics( $content ) {
 		ob_start();
 
-		// @todo This would ideally be used in Site Kit plugin directly to reuse the method already existing there.
 		do_action( 'web_stories_print_analytics' );
-
-		$this->print_amp_analytics();
 
 		$output = (string) ob_get_clean();
 
@@ -341,5 +232,27 @@ class Story_Renderer {
 		$markup = $this->replace_body_start_tag( $markup );
 		$markup = $this->replace_body_end_tag( $markup );
 		return $markup;
+	}
+
+	/**
+	 * Get story meta images.
+	 *
+	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
+	 *
+	 * @return string[] Images.
+	 */
+	protected function get_story_meta_images() {
+		$thumbnail_id = (int) get_post_thumbnail_id( $this->post );
+
+		if ( 0 === $thumbnail_id ) {
+			return [];
+		}
+
+		$images = [
+			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_SQUARE_IMAGE_SIZE ),
+			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_LANDSCAPE_IMAGE_SIZE ),
+		];
+
+		return array_filter( $images );
 	}
 }

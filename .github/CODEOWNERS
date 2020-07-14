@@ -1,39 +1,72 @@
+############################################################
 # See https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+#
+# Team Pods
+#
+# Workspace: @dvoytenko @wassgha @barklund @miina @obetomuniz @ndev1991 @merapi
+#
+# WordPress & Infrastructure: @swissspidy @spacedmonkey
+#
+# Dashboard & Templates: @carlos-kelly @BrittanyIRL @mariano-formidable @littlemilkstudio
+#
+# NOTE: Most owners are currently commented out since we cannot currently use GitHub team aliases.
+#
+############################################################
 
 # Global owners, default owners for everything in the repo
-*                                                                 @swissspidy @pbakaus
+#*                                                                 @swissspidy
 
-# All server-side logic.
-*.php                                                             @swissspidy @spacedmonkey @miina
-composer.json                                                     @swissspidy @spacedmonkey @miina
-phpcs.xml                                                         @swissspidy @spacedmonkey @miina
-phpstan.neon.dist                                                 @swissspidy @spacedmonkey @miina
-phpunit.xml.dist                                                  @swissspidy @spacedmonkey @miina
+# General Infrastructure
+__mocks__                                                         @swissspidy @spacedmonkey
+.github/                                                          @swissspidy @spacedmonkey
+.storybook/                                                       @swissspidy @spacedmonkey
+bin/                                                              @swissspidy @spacedmonkey
+.*                                                                @swissspidy @spacedmonkey
+/*.js                                                             @swissspidy @spacedmonkey
+/*.yml                                                            @swissspidy @spacedmonkey
+/*.json                                                           @swissspidy @spacedmonkey
+/*.lock                                                           @swissspidy @spacedmonkey
+/*.xml                                                            @swissspidy @spacedmonkey
+/*.dist                                                           @swissspidy @spacedmonkey
 
-# Infrastructure
-.github/                                                          @swissspidy
-.storybook/                                                       @swissspidy
-bin/                                                              @swissspidy
-.travis.yml                                                       @swissspidy @spacedmonkey
+# All server-side logic (WordPress)
+*.php                                                             @swissspidy @spacedmonkey
+/tests/phpstan                                                    @swissspidy @spacedmonkey
+/tests/phpunit                                                    @swissspidy @spacedmonkey
 
 # WordPress.org plugin directory readme file.
-readme.txt                                                        @swissspidy @pbakaus
+readme.txt                                                        @swissspidy @pbakaus @o-fernandez
 
-# Stories Editor
-assets/src/edit-story/                                            @swissspidy @dvoytenko @barklund
+# Testing
+/tests/e2e                                                        @swissspidy
+/tests/js                                                         @swissspidy
+jest-puppeteer.config.js                                          @swissspidy
+testUtils/                                                        @swissspidy
+/karma                                                            @dvoytenko
 
-# Media-related functionality
-assets/src/edit-story/app/api/                                    @spacedmonkey
-assets/src/edit-story/app/media/                                  @spacedmonkey
-assets/src/edit-story/app/uploader/                               @spacedmonkey
-assets/src/edit-story/components/uploadButton/                    @spacedmonkey
-
-# Movable
-assets/src/edit-story/components/movable/                         @miina
-assets/src/edit-story/elements/image/editCropMovable.js           @miina
-assets/src/edit-story/elements/shared/editPanMovable.js           @miina
-assets/src/edit-story/components/canvas/singleSelectionMovable.js @miina
-assets/src/edit-story/components/canvas/multiSelectionMovable.js  @miina
+# Documentation
+docs/                                                             @swissspidy
+CONTRIBUTING.md                                                   @swissspidy
 
 # Dashboard
-assets/src/dashboard/                                             @BrittanyIRL @carlos-kelly @mariano-formidable
+#assets/src/dashboard/                                             @carlos-kelly @BrittanyIRL @mariano-formidable @littlemilkstudio
+
+# Stories Editor
+#assets/src/edit-story/                                            @dvoytenko @wassgha @barklund @miina @obetomuniz @ndev1991 @merapi
+
+## Media-related functionality
+#assets/src/edit-story/app/api/                                    @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
+#assets/src/edit-story/app/media/                                  @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
+#assets/src/edit-story/app/uploader/                               @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
+#assets/src/edit-story/components/mediaPicker/                     @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
+#assets/src/edit-story/components/uploadDropTarget/                @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
+#assets/src/edit-story/elements/media/                             @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
+#assets/src/edit-story/elements/image/                             @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
+#assets/src/edit-story/elements/video/                             @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
+
+## Movable
+#assets/src/edit-story/components/movable/                         @miina
+#assets/src/edit-story/elements/image/editCropMovable.js           @miina
+#assets/src/edit-story/elements/shared/editPanMovable.js           @miina
+#assets/src/edit-story/components/canvas/singleSelectionMovable.js @miina
+#assets/src/edit-story/components/canvas/multiSelectionMovable.js  @miina

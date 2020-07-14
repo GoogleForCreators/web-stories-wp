@@ -36,7 +36,7 @@ import { __ } from '@wordpress/i18n';
  */
 import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
-import { ReactComponent as Arrow } from '../../../../icons/arrow.svg';
+import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../utils/context';
 import DragHandle from './handle';
@@ -112,7 +112,7 @@ function Title({
   isSecondary,
   secondaryAction,
   isResizable,
-  canCollapse = true,
+  canCollapse,
 }) {
   const {
     state: { isCollapsed, height, resizeable, panelContentId },
@@ -201,6 +201,7 @@ Title.defaultProps = {
   isPrimary: false,
   isSecondary: false,
   isResizable: false,
+  canCollapse: true,
 };
 
 export default Title;

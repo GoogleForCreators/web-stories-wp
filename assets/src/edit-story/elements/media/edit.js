@@ -43,7 +43,9 @@ const Element = styled.div`
 const fadedMediaCSS = css`
   position: absolute;
   opacity: ${({ opacity }) =>
-    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
+    typeof opacity !== 'undefined'
+      ? opacity * MEDIA_MASK_OPACITY
+      : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${mediaWithScale}
   ${elementWithFlip}
@@ -65,8 +67,11 @@ const cropMediaCSS = css`
   ${mediaWithScale}
   ${elementWithFlip}
   position: absolute;
+  cursor: grab;
   opacity: ${({ opacity }) =>
-    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
+    typeof opacity !== 'undefined'
+      ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY)
+      : null};
 `;
 
 const CropImage = styled.img`
@@ -89,7 +94,6 @@ function MediaEdit({ element, box }) {
     flip,
     focalX,
     focalY,
-    isFill,
     isBackground,
     type,
   } = element;
@@ -98,9 +102,9 @@ function MediaEdit({ element, box }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
 
-  const {
-    actions: { updateElementById },
-  } = useStory();
+  const { updateElementById } = useStory((state) => ({
+    updateElementById: state.actions.updateElementById,
+  }));
   const setProperties = useCallback(
     (properties) => updateElementById({ elementId: id, properties }),
     [id, updateElementById]
@@ -172,7 +176,7 @@ function MediaEdit({ element, box }) {
         />
       )}
 
-      {!isFill && !isBackground && cropBox && croppedMedia && (
+      {!isBackground && cropBox && croppedMedia && (
         <EditCropMovable
           setProperties={setProperties}
           cropBox={cropBox}

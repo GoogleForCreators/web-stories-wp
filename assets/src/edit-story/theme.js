@@ -117,6 +117,8 @@ const theme = {
       v11: '#08223A',
       v12: '#F2F2F2',
       v13: '#FFFFFF',
+      v14: '#3E445B',
+      v15: '#212433',
     },
     mg: {
       v1: '#616877',
@@ -155,6 +157,12 @@ const theme = {
     },
   },
   fonts: {
+    title: {
+      family: 'Roboto',
+      size: '18px',
+      lineHeight: '24px',
+      weight: 'bold',
+    },
     body1: {
       family: 'Roboto',
       size: '16px',
@@ -179,11 +187,29 @@ const theme = {
       lineHeight: '18px',
       weight: '400',
     },
+    input: {
+      family: 'Roboto',
+      size: '15px',
+      lineHeight: '18px',
+      weight: '400',
+    },
     duration: {
       family: 'Roboto',
       size: '12px',
       lineHeight: '1',
       weight: '500',
+    },
+    description: {
+      family: 'Roboto',
+      weight: 'normal',
+      size: '13px',
+      lineHeight: '18px',
+    },
+    date: {
+      family: 'Roboto',
+      weight: 'normal',
+      size: '13px',
+      lineHeight: '24px',
     },
   },
 };

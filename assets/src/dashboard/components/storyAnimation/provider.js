@@ -28,11 +28,14 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { AnimationPart } from '../../animations/parts';
+import { AnimationPart, throughput } from '../../animations/parts';
+import { AnimationProps } from '../../animations/parts/types';
+import { clamp } from '../../utils';
 
 const Context = createContext(null);
 
@@ -56,31 +59,35 @@ const createOnFinishPromise = (animation) => {
 };
 
 function Provider({ animations, children, onWAAPIFinish }) {
+  const enableAnimation = useFeature('enableAnimation');
   const animationPartsMap = useMemo(() => {
     return (animations || []).reduce((map, animation) => {
       const { targets, type, ...args } = animation;
 
       (targets || []).forEach((t) => {
         const generatedParts = map.get(t) || [];
-        map.set(t, [...generatedParts, AnimationPart(type, args)]);
+        map.set(t, [
+          ...generatedParts,
+          enableAnimation ? AnimationPart(type, args) : throughput(),
+        ]);
       });
 
       return map;
     }, new Map());
-  }, [animations]);
+  }, [animations, enableAnimation]);
 
   const providerId = useMemo(() => uuidv4(), []);
 
   const animationTargets = useMemo(
-    () => Array.from(animationPartsMap?.keys() || []),
-    [animationPartsMap?.keys]
+    () => Array.from(animationPartsMap.keys() || []),
+    [animationPartsMap]
   );
 
   const getAnimationParts = useCallback(
     (target) => {
-      return animationPartsMap?.get(target) || [];
+      return animationPartsMap.get(target) || [];
     },
-    [animationPartsMap?.get]
+    [animationPartsMap]
   );
 
   /**
@@ -105,8 +112,32 @@ function Provider({ animations, children, onWAAPIFinish }) {
     };
   }, []);
 
-  const playWAAPIAnimations = useCallback(() => {
-    WAAPIAnimations.forEach((animation) => animation?.play());
+  const WAAPIAnimationMethods = useMemo(() => {
+    const play = () =>
+      WAAPIAnimations.forEach((animation) => animation?.play());
+    const pause = () =>
+      WAAPIAnimations.forEach((animation) => animation?.pause());
+    const setCurrentTime = (time) =>
+      WAAPIAnimations.forEach((animation) => {
+        const { duration, delay } = animation.effect.timing;
+        const animationEndTime = (delay || 0) + (duration || 0);
+        animation.currentTime =
+          time === 'end'
+            ? animationEndTime
+            : clamp(time, [0, animationEndTime]);
+      });
+
+    return {
+      play,
+      pause,
+      setCurrentTime,
+      reset: () => {
+        pause();
+        requestAnimationFrame(() => {
+          setCurrentTime('end');
+        });
+      },
+    };
   }, [WAAPIAnimations]);
 
   /**
@@ -150,7 +181,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
       actions: {
         getAnimationParts,
         hoistWAAPIAnimation,
-        playWAAPIAnimations,
+        WAAPIAnimationMethods,
       },
     }),
     [
@@ -158,7 +189,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
       getAnimationParts,
       animationTargets,
       hoistWAAPIAnimation,
-      playWAAPIAnimations,
+      WAAPIAnimationMethods,
     ]
   );
 
@@ -166,7 +197,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
 }
 
 Provider.propTypes = {
-  animations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
 };

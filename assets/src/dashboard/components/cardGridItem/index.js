@@ -18,38 +18,34 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { MoreVerticalButton } from './cardItemMenu';
+import { MoreVerticalButton } from '../storyMenu';
 import { ActionLabel } from './types';
 
-const StyledCard = styled.div`
+const CardGridItem = styled.div`
   margin: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
 
-  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
+  ${MoreVerticalButton} {
+    margin: 12px 0;
+  }
+
+  &:hover
+    ${MoreVerticalButton},
+    &:active
+    ${MoreVerticalButton},
+    &:focus-within
+    ${MoreVerticalButton} {
     opacity: 1;
   }
 `;
-
-const CardGridItem = ({ children, isTemplate }) => (
-  <StyledCard data-testid={'grid-item'} isTemplate={isTemplate}>
-    {children}
-  </StyledCard>
-);
-
-CardGridItem.propTypes = {
-  isTemplate: PropTypes.bool,
-  children: PropTypes.node,
-};
 
 export default CardGridItem;
 export { default as CardPreviewContainer } from './cardPreview';
 export { ActionLabel };
 export { default as CardTitle } from './cardTitle';
-export { default as CardItemMenu, MoreVerticalButton } from './cardItemMenu';

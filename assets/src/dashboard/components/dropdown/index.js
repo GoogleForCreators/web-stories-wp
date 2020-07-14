@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { _n, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -31,9 +31,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
  */
 import { DROPDOWN_TYPES } from '../../constants';
 import { PILL_LABEL_TYPES } from '../../constants/components';
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
-import { ReactComponent as DropDownArrow } from '../../icons/dropDownArrow.svg';
-import { ReactComponent as DropUpArrow } from '../../icons/dropUpArrow.svg';
+import { DropDownArrow, DropUpArrow, Close as CloseIcon } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
 
 import { ColorDot } from '../colorDot';
@@ -246,7 +244,12 @@ const Dropdown = ({
                 {selectedItems.length > 1 &&
                   sprintf(
                     /* translators: %s: number selected */
-                    __(' + %s', 'web-stories'),
+                    _n(
+                      ' + %s',
+                      ' + %s',
+                      (selectedItems.length - 1).toString(10),
+                      'web-stories'
+                    ),
                     (selectedItems.length - 1).toString(10)
                   )}
               </>

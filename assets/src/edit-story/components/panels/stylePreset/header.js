@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -28,11 +29,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import PropTypes from 'prop-types';
-import { ReactComponent as Edit } from '../../../icons/edit_pencil.svg';
-import { ReactComponent as Add } from '../../../icons/add_page.svg';
-import { PanelTitle } from '../panel';
+import { AddPage, EditPencil } from '../../../icons';
 import { StylePresetPropType } from '../../../types';
+import { PanelTitle } from '../panel';
 
 const buttonCSS = css`
   border: none;
@@ -75,10 +74,10 @@ function PresetsHeader({
   isEditMode,
   setIsEditMode,
   stylePresets,
+  canCollapse,
 }) {
-  const { fillColors, textColors, textStyles } = stylePresets;
-  const hasPresets =
-    fillColors.length > 0 || textColors.length > 0 || textStyles.length > 0;
+  const { colors } = stylePresets;
+  const hasPresets = colors.length > 0;
 
   const getActions = () => {
     return !isEditMode ? (
@@ -91,14 +90,14 @@ function PresetsHeader({
             }}
             aria-label={__('Edit presets', 'web-stories')}
           >
-            <Edit />
+            <EditPencil />
           </EditModeButton>
         )}
         <AddColorPresetButton
           onClick={handleAddColorPreset}
           aria-label={__('Add preset', 'web-stories')}
         >
-          <Add />
+          <AddPage />
         </AddColorPresetButton>
       </>
     ) : (
@@ -114,12 +113,10 @@ function PresetsHeader({
     );
   };
 
+  // Todo: Rename label to 'Presets' post-beta.
   return (
-    <PanelTitle
-      secondaryAction={getActions()}
-      canCollapse={!isEditMode && hasPresets}
-    >
-      {__('Presets', 'web-stories')}
+    <PanelTitle secondaryAction={getActions()} canCollapse={canCollapse}>
+      {__('Saved Colors', 'web-stories')}
     </PanelTitle>
   );
 }
@@ -129,6 +126,7 @@ PresetsHeader.propTypes = {
   isEditMode: PropTypes.bool.isRequired,
   handleAddColorPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,
+  canCollapse: PropTypes.bool.isRequired,
 };
 
 export default PresetsHeader;

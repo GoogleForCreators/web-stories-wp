@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
-export default function pick(o, fields) {
-  return Object.assign({}, ...fields.map((prop) => ({ [prop]: o && o[prop] })));
+export default function pick(o, fields = []) {
+  if (!o || typeof o !== 'object') {
+    return {};
+  }
+  return Object.assign(
+    {},
+    ...fields.map((prop) => (o && prop in o ? { [prop]: o && o[prop] } : {}))
+  );
 }

@@ -37,24 +37,38 @@ const Container = styled.div`
 
 function CanvasElementDropzone({ children }) {
   const insertElement = useInsertElement();
-  const {
-    state: { activeDropTargetId },
-  } = useDropTargets();
-  const {
-    state: { pageContainer },
-  } = useCanvas();
-  const {
-    actions: { editorToDataX, editorToDataY },
-  } = useUnits();
+  const { activeDropTargetId } = useDropTargets((state) => ({
+    activeDropTargetId: state.state.activeDropTargetId,
+  }));
+  const { pageContainer } = useCanvas((state) => ({
+    pageContainer: state.state.pageContainer,
+  }));
+  const { editorToDataX, editorToDataY } = useUnits((state) => ({
+    editorToDataX: state.actions.editorToDataX,
+    editorToDataY: state.actions.editorToDataY,
+  }));
 
   const onDropHandler = useCallback(
     (e) => {
-      if (isDragType(e, 'resource/media') && !activeDropTargetId) {
+      // Handles onDrop for shapes.
+      if (isDragType(e, 'shape') && !activeDropTargetId) {
+        const shapeData = JSON.parse(e.dataTransfer.getData('shape'));
+        const { x, y } = pageContainer.getBoundingClientRect();
+        insertElement('shape', {
+          ...shapeData,
+          x: editorToDataX(e.clientX - x - shapeData.width / 2),
+          y: editorToDataY(e.clientY - y - shapeData.height / 2),
+        });
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      // Handles onDrop for media.
+      else if (isDragType(e, 'resource/media') && !activeDropTargetId) {
         const {
           resource,
           offset: { x: offsetX, y: offsetY, w: offsetWidth, h: offsetHeight },
         } = JSON.parse(e.dataTransfer.getData('resource/media'));
-        const { x, y } = pageContainer?.getBoundingClientRect();
+        const { x, y } = pageContainer.getBoundingClientRect();
 
         insertElement(resource.type, {
           resource,
@@ -63,14 +77,13 @@ function CanvasElementDropzone({ children }) {
           width: editorToDataX(offsetWidth),
           height: editorToDataY(offsetHeight),
         });
-
         e.stopPropagation();
         e.preventDefault();
       }
     },
     [
       activeDropTargetId,
-      pageContainer?.getBoundingClientRect,
+      pageContainer,
       insertElement,
       editorToDataX,
       editorToDataY,

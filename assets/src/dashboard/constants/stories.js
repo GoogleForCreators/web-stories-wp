@@ -19,6 +19,8 @@
  */
 import { __ } from '@wordpress/i18n';
 
+export const DEFAULT_STORY_PAGE_ADVANCE_DURATION = 2000;
+
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
   PREVIEW: 'preview-action',
@@ -36,6 +38,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Preview', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.PREVIEW,
+    inProgress: true,
   },
   { label: null, value: false, separator: true },
   {
@@ -49,6 +52,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Create Template', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE,
+    inProgress: true,
   },
   { label: null, value: false, separator: true },
   {
@@ -128,4 +132,11 @@ export const STORY_VIEWING_LABELS = {
   [STORY_STATUS.ALL]: __('Viewing all stories', 'web-stories'),
   [STORY_STATUS.DRAFT]: __('Viewing drafts', 'web-stories'),
   [STORY_STATUS.PUBLISHED]: __('Viewing published stories', 'web-stories'),
+};
+
+export const STORY_PAGE_STATE = {
+  RESET: 'reset',
+  PAUSED: 'paused',
+  SCRUBBING: 'scrubbing',
+  PLAYING: 'playing',
 };

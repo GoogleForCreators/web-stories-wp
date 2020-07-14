@@ -25,29 +25,6 @@ import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
 
-export const BUTTON_TYPES = {
-  CTA: 'cta',
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
-
-export const CHIP_TYPES = {
-  STANDARD: 'standard',
-  SMALL: 'small',
-};
-
-export const DROPDOWN_TYPES = {
-  MENU: 'menu',
-  PANEL: 'panel',
-  COLOR_PANEL: 'color_panel',
-};
-
-export const KEYS = {
-  ENTER: 'Enter',
-  UP: 'ArrowUp',
-  DOWN: 'ArrowDown',
-};
-
 export const KEYBOARD_USER_CLASS = `useskeyboard`;
 export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
@@ -57,6 +34,7 @@ export const Z_INDEX = {
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
+  TOASTER: 15,
 };
 
 export const APP_ROUTES = {
@@ -80,6 +58,7 @@ export const primaryPaths = [
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: __('Saved Templates', 'web-stories'),
+    inProgress: true,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
@@ -91,10 +70,12 @@ export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: __('Editor Settings', 'web-stories'),
+    inProgress: true,
   },
   {
     value: APP_ROUTES.SUPPORT,
     label: __('Support', 'web-stories'),
+    inProgress: true,
   },
 ];
 
@@ -104,17 +85,14 @@ export const VIEW_STYLE = {
 };
 
 export const VIEW_STYLE_LABELS = {
-  [VIEW_STYLE.GRID]: __('Grid View', 'web-stories'),
-  [VIEW_STYLE.LIST]: __('List View', 'web-stories'),
+  [VIEW_STYLE.GRID]: __('Switch to List View', 'web-stories'),
+  [VIEW_STYLE.LIST]: __('Switch to Grid View', 'web-stories'),
 };
 
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
-  UP_DOWN_ARROW: { width: 16, height: 16 },
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
 };
-
-export const ITEMS_PER_PAGE = 20;
 
 export const DASHBOARD_VIEWS = {
   MY_STORIES: 'MY_STORIES',
@@ -127,8 +105,17 @@ export const RESULT_LABELS = {
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
 
+// API Query Constants
+export const ITEMS_PER_PAGE = 24;
+export const USERS_PER_REQUEST = 100;
+export const STORIES_PER_REQUEST = 24;
+
+export const DEFAULT_DATE_FORMAT = 'Y-m-d';
+
 export * from './animation';
+export * from './components';
 export * from './direction';
+export * from './pageStructure';
 export * from './savedTemplates';
 export * from './stories';
 export * from './templates';

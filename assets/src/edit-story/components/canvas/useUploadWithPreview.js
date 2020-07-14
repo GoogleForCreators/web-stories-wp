@@ -13,25 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { useCallback } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
-import { useMedia, useStory } from '../../app';
+import { useLocalMedia, useSnackbar, useStory } from '../../app';
 import objectPick from '../../utils/objectPick';
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
-  const {
-    actions: { uploadMedia, uploadVideoPoster },
-  } = useMedia();
+  const { uploadMedia, uploadVideoPoster } = useLocalMedia((state) => ({
+    uploadMedia: state.actions.uploadMedia,
+    uploadVideoPoster: state.actions.uploadVideoPoster,
+  }));
   const insertElement = useInsertElement();
-  const {
-    actions: { updateElementById, deleteElementById },
-  } = useStory();
+  const { updateElementsByResourceId, deleteElementById } = useStory(
+    (state) => ({
+      updateElementsByResourceId: state.actions.updateElementsByResourceId,
+      deleteElementById: state.actions.deleteElementById,
+    })
+  );
+  const { showSnackbar } = useSnackbar();
 
   const onLocalFile = useCallback(
     ({ resource }) => {
@@ -43,6 +55,7 @@ function useUploadWithPreview() {
 
   const onUploadedFile = useCallback(
     async ({ resource, element }) => {
+      const blobUrl = element.resource.src;
       const keysToUpdate = objectPick(resource, [
         'src',
         'width',
@@ -51,28 +64,37 @@ function useUploadWithPreview() {
         'lengthFormatted',
         'id',
       ]);
-      const updatedResource = {
-        ...element.resource,
-        ...keysToUpdate,
-      };
-      updateElementById({
-        elementId: element.id,
-        properties: {
-          resource: updatedResource,
+      updateElementsByResourceId({
+        // We want to update all resources without id (still uploading)
+        id: undefined,
+        properties: (el) => {
+          if (el.resource?.src === blobUrl) {
+            const updatedResource = {
+              ...el.resource,
+              ...keysToUpdate,
+            };
+            return {
+              resource: updatedResource,
+            };
+          }
+          return {};
         },
       });
       if (resource.type === 'video') {
         await uploadVideoPoster(resource.id, resource.src);
       }
     },
-    [updateElementById, uploadVideoPoster]
+    [updateElementsByResourceId, uploadVideoPoster]
   );
 
   const onUploadFailure = useCallback(
     ({ element }) => {
       deleteElementById({ elementId: element.id });
+      showSnackbar({
+        message: __('Upload failed, the element was removed', 'web-stories'),
+      });
     },
-    [deleteElementById]
+    [deleteElementById, showSnackbar]
   );
 
   const uploadWithPreview = useCallback(

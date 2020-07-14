@@ -29,28 +29,28 @@ describe('Form/Toggle', () => {
   it('should render <Toggle /> form', () => {
     const onChangeMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
-      <Toggle value={0} onChange={onChangeMock} data-testid="toggle" />
+    const { getByRole } = renderWithTheme(
+      <Toggle value={0} onChange={onChangeMock} aria-label="Toggle" />
     );
 
-    const input = getByTestId('toggle');
+    const toggle = getByRole('checkbox', { name: 'Toggle' });
 
-    expect(input).toBeDefined();
+    expect(toggle).toBeDefined();
   });
 
   it('should simulate a change on <Toggle />', () => {
     const onChangeMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByRole } = renderWithTheme(
       <Toggle
         value={1}
         checked={false}
         onChange={onChangeMock}
-        data-testid="toggle"
+        aria-label="Toggle"
       />
     );
 
-    const toggle = getByTestId('toggle');
+    const toggle = getByRole('checkbox', { name: 'Toggle' });
 
     expect(toggle.checked).toStrictEqual(false);
 

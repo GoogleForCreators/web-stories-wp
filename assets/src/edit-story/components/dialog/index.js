@@ -29,7 +29,7 @@ import Modal from '../modal';
 // Shadow styles ported from @material-ui/Dialog
 const DialogBox = styled.div`
   border-radius: 4px;
-  max-width: 920px;
+  max-width: ${({ maxWidth }) => maxWidth}px;
   margin: 32px;
   position: relative;
   overflow-y: auto;
@@ -44,7 +44,7 @@ const DialogBox = styled.div`
   background-color: ${({ theme }) => theme.colors.fg.v1};
 `;
 
-const DialogTitle = styled.div`
+const DialogTitle = styled.h1`
   flex: 0 0 auto;
   margin: 0;
   padding: 24px;
@@ -83,11 +83,12 @@ function Dialog({
   open,
   onClose,
   contentLabel,
+  maxWidth,
   ...props
 }) {
   return (
     <Modal open={open} onClose={onClose} contentLabel={contentLabel} {...props}>
-      <DialogBox>
+      <DialogBox maxWidth={maxWidth}>
         {Boolean(title) && <DialogTitle>{title}</DialogTitle>}
         <DialogContent>{children}</DialogContent>
         {Boolean(actions) && <DialogActions>{actions}</DialogActions>}
@@ -106,6 +107,11 @@ Dialog.propTypes = {
     PropTypes.node,
   ]),
   children: PropTypes.node,
+  maxWidth: PropTypes.number,
+};
+
+Dialog.defaultProps = {
+  maxWidth: 920,
 };
 
 export default Dialog;

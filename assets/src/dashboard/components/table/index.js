@@ -101,6 +101,7 @@ export const TableRow = styled.tr``;
 export const TableCell = styled.td`
   padding: ${({ theme }) => theme.table.cellPadding}px;
   font-weight: ${({ theme }) => theme.typography.weight.normal};
+  word-break: break-word;
   font-size: ${({ theme }) => theme.typography.presets.s.size}px;
   color: ${({ theme }) => theme.colors.gray900};
   height: ${({ theme }) => theme.table.cellPadding * 2 + 50}px;

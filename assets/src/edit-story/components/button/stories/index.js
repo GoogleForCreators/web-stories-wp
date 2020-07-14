@@ -59,9 +59,9 @@ export const outline = () => {
   return <Outline isDisabled={isDisabled}>{label}</Outline>;
 };
 
-outline.story = {
-  parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+outline.parameters = {
+  backgrounds: {
+    default: 'Dark',
   },
 };
 
@@ -71,9 +71,9 @@ export const undo = () => {
   return <Undo isDisabled={isDisabled} />;
 };
 
-undo.story = {
-  parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+undo.parameters = {
+  backgrounds: {
+    default: 'Dark',
   },
 };
 
@@ -83,9 +83,9 @@ export const redo = () => {
   return <Redo isDisabled={isDisabled} />;
 };
 
-redo.story = {
-  parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+redo.parameters = {
+  backgrounds: {
+    default: 'Dark',
   },
 };
 
@@ -95,9 +95,9 @@ export const gridView = () => {
   return <GridView isDisabled={isDisabled} />;
 };
 
-gridView.story = {
-  parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+gridView.parameters = {
+  backgrounds: {
+    default: 'Dark',
   },
 };
 
@@ -107,9 +107,9 @@ export const close = () => {
   return <Close isDisabled={isDisabled} />;
 };
 
-close.story = {
-  parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+close.parameters = {
+  backgrounds: {
+    default: 'Dark',
   },
 };
 
@@ -119,8 +119,8 @@ export const eyedropper = () => {
   return <Eyedropper isDisabled={isDisabled} />;
 };
 
-eyedropper.story = {
-  parameters: {
-    backgrounds: [{ name: 'dark', value: '#000', default: true }],
+eyedropper.parameters = {
+  backgrounds: {
+    default: 'Dark',
   },
 };

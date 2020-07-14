@@ -45,25 +45,26 @@ export const MiniCardWrapper = styled.div`
     width: ${width}px;
     height: ${height}px;
     overflow: hidden;
-    ${isSelected ? `border: 3px solid ${theme.colors.bluePrimary600}` : ``}
+    ${isSelected ? `border: 3px solid ${theme.colors.bluePrimary600}` : ''}
   `}
 `;
 
-export const MiniCard = styled.div`
-  ${({ width, height }) => `
+export const MiniCard = styled.div(
+  ({ width, containerHeight, theme }) => `
     position: relative;
     width: ${width}px;
-    height: ${height}px;
-    overflow: hidden;
+    height: ${containerHeight}px;
     cursor: pointer;
-  `}
-`;
+    border: ${theme.storyPreview.border};
+  `
+);
 
-export const ActiveCard = styled.div`
-  ${({ height, width }) => `
+export const ActiveCard = styled.div(
+  ({ width, containerHeight, theme }) => `
     position: relative;
     width: ${width}px;
-    height: ${height}px;
-    overflow: hidden;
-  `}
-`;
+    height: ${containerHeight}px;
+    border: ${theme.storyPreview.border};
+    box-shadow: ${theme.storyPreview.shadow};
+  `
+);

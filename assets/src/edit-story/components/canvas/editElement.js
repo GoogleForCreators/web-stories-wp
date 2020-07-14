@@ -31,21 +31,18 @@ import {
 } from '../../elements/shared';
 import { useUnits } from '../../units';
 
-// Background color is used to make the edited element more prominent and
-// easier to see.
 const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
 	${elementWithRotation}
 	pointer-events: initial;
-	background-color: ${({ theme }) => theme.colors.whiteout};
 `;
 
 function EditElement({ element }) {
   const { id, type } = element;
-  const {
-    actions: { getBox },
-  } = useUnits();
+  const { getBox } = useUnits((state) => ({
+    getBox: state.actions.getBox,
+  }));
 
   const { Edit } = getDefinitionForType(type);
   const box = getBox(element);

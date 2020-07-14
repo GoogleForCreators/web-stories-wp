@@ -17,18 +17,17 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
-
 class Story_Renderer extends \WP_UnitTestCase {
-	protected static $user;
-
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$user = $factory->user->create( [ 'role' => 'administrator' ] );
+	public function setUp() {
+		// When running the tests, we don't have unfiltered_html capabilities.
+		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
+		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function setUp() {
-		// Avoids HTML in post_content being stripped because of lacking capabilities.
-		wp_set_current_user( self::$user );
+	public function tearDown() {
+		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
+		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
 	public function test_replace_html_start_tag() {
@@ -111,110 +110,17 @@ class Story_Renderer extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Tests that analytics tag is not added if tracking ID is missing.
-	 *
-	 * @covers \Google\Web_Stories\Story_Renderer::maybe_add_analytics
-	 */
-	public function test_maybe_add_analytics_empty_tracking_id() {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$options  = [
-			'accountID'             => '',
-			'adsenseLinked'         => false,
-			'anonymizeIP'           => true,
-			'internalWebPropertyID' => '',
-			'profileID'             => '',
-			'propertyID'            => '',
-			'trackingDisabled'      => [ 'loggedinUsers' ],
-			'useSnippet'            => true,
-		];
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$option   = 'googlesitekit_analytics_settings';
-
-		add_option( $option, $options );
-		$expected                  = '<html amp lang="en-US"><head></head><body><amp-story></amp-story></body></html>';
-		$actual_with_empty_options = $renderer->render();
-		$this->assertSame( $expected, $actual_with_empty_options );
-
-		delete_option( $option );
-	}
-
-	/**
-	 * Tests that analytics tag is added properly if tracking ID is added.
-	 *
-	 * @covers \Google\Web_Stories\Story_Renderer::maybe_add_analytics
-	 */
-	public function test_maybe_add_analytics_with_configuration() {
-		// Test content with amp-analytics tag and script if config set.
-		$post_with_meta_tag = self::factory()->post->create_and_get(
-			[
-				'post_content' => '<html><head><meta name="web-stories-replace-head-start"/><meta name="web-stories-replace-head-end"/></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$options = [
-			'propertyID'       => '123foo',
-			'trackingDisabled' => [],
-			'useSnippet'       => true,
-		];
-
-		$option = 'googlesitekit_analytics_settings';
-		add_option( $option, $options );
-
-		$renderer            = new \Google\Web_Stories\Story_Renderer( $post_with_meta_tag );
-		$actual_with_options = $renderer->render();
-		delete_option( $option );
-
-		$this->assertContains( '<amp-analytics', $actual_with_options );
-		$this->assertContains( '"gtag_id":"123foo"', $actual_with_options );
-		$this->assertContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual_with_options );
-	}
-
-	/**
-	 * Tests that analytics tag is correctly removed via filter.
-	 *
-	 * @covers \Google\Web_Stories\Story_Renderer::maybe_add_analytics
-	 */
-	public function test_maybe_add_analytics_remove_with_filter() {
-		// Test content with amp-analytics tag and script if config set.
-		$post_with_meta_tag = self::factory()->post->create_and_get(
-			[
-				'post_content' => '<html><head><meta name="web-stories-replace-head-start"/><meta name="web-stories-replace-head-end"/></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$options = [
-			'propertyID'       => '123foo',
-			'trackingDisabled' => [],
-			'useSnippet'       => true,
-		];
-
-		$option = 'googlesitekit_analytics_settings';
-		add_option( $option, $options );
-
-		add_filter( 'web_stories_gtag', '__return_false' );
-
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_meta_tag );
-		$actual   = $renderer->render();
-
-		delete_option( $option );
-
-		$this->assertNotContains( '<amp-analytics', $actual );
-		$this->assertNotContains( '"gtag_id":"123foo"', $actual );
-		$this->assertNotContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual );
-	}
-
-	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
 	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_option_name
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$placeholder              = \Google\Web_Stories\Story_Post_Type::PUBLISHER_LOGO_PLACEHOLDER;
+		$renderer                 = new \Google\Web_Stories\Story_Renderer( null );
+		$placeholder              = $renderer->get_publisher_logo_placeholder();
+		$option_name              = $renderer->get_publisher_logo_option_name();
 		$post_with_publisher_logo = self::factory()->post->create_and_get(
 			[
 				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . $placeholder . '"></amp-story></body></html>',
@@ -222,11 +128,11 @@ class Story_Renderer extends \WP_UnitTestCase {
 		);
 
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
-		add_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [ 'active' => $attachment_id ] );
+		add_option( $option_name, [ 'active' => $attachment_id ] );
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
 		$rendered = $renderer->render();
 
-		delete_option( Stories_Controller::PUBLISHER_LOGOS_OPTION );
+		delete_option( $option_name );
 
 		$this->assertContains( 'attachment', $rendered );
 		$this->assertNotContains( $placeholder, $rendered );

@@ -18,22 +18,23 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import queryString from 'query-string';
 
 /**
  * Internal dependencies
  */
-import queryString from 'query-string';
+import { USERS_PER_REQUEST } from '../../constants';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
-export default function useUsersApi(dataAdapter, { wpApi }) {
+export default function useUserApi(dataAdapter, { userApi }) {
   const [users, setUsers] = useState({});
   const fetchUsers = useCallback(async () => {
     try {
       const response = await dataAdapter.get(
         queryString.stringifyUrl({
-          url: wpApi,
-          query: { per_page: 100 },
+          url: userApi,
+          query: { per_page: USERS_PER_REQUEST },
         }),
         {
           parse: false,
@@ -43,7 +44,7 @@ export default function useUsersApi(dataAdapter, { wpApi }) {
       const usersJson = await fetchAllFromTotalPages(
         response,
         dataAdapter,
-        wpApi
+        userApi
       );
 
       setUsers(
@@ -55,7 +56,7 @@ export default function useUsersApi(dataAdapter, { wpApi }) {
     } catch (e) {
       setUsers({});
     }
-  }, [dataAdapter, wpApi]);
+  }, [dataAdapter, userApi]);
 
   useEffect(() => {
     fetchUsers();

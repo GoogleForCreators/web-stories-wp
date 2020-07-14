@@ -24,11 +24,13 @@ import { __ } from '@wordpress/i18n';
  */
 
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useLayoutEffect, useMemo } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../tracking';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
@@ -45,10 +47,12 @@ import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
-  LogoPlaceholder,
   NavLink,
   Rule,
   NavButton,
+  NavList,
+  NavListItem,
+  WebStoriesHeading,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -85,10 +89,11 @@ export const LeftRailContainer = styled.nav.attrs({
   background: ${({ theme }) => theme.colors.white};
   border-right: ${({ theme }) => theme.borders.gray50};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
-  transition: transform 0.25s ${BEZIER.outCubic}, visibility 0.25s linear;
+  transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     padding-left: 0;
+    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
     transform: translateX(${({ isOpen }) => (isOpen ? 'none' : `-100%`)});
   }
@@ -99,6 +104,7 @@ export function LeftRail() {
   const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
+  const enableInProgressViews = useFeature('enableInProgressViews');
 
   const {
     state: { sideBarVisible },
@@ -118,6 +124,20 @@ export function LeftRail() {
     [toggleSideBar, leftRailRef, upperContentRef]
   );
 
+  const enabledPaths = useMemo(() => {
+    if (enableInProgressViews) {
+      return primaryPaths;
+    }
+    return primaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews]);
+
+  const enabledSecondaryPaths = useMemo(() => {
+    if (enableInProgressViews) {
+      return secondaryPaths;
+    }
+    return secondaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews]);
+
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
       toggleSideBar();
@@ -126,41 +146,69 @@ export function LeftRail() {
 
   useFocusOut(leftRailRef, handleSideBarClose, [sideBarVisible]);
 
+  useLayoutEffect(() => {
+    if (sideBarVisible && leftRailRef.current) {
+      leftRailRef.current.focus();
+    }
+  }, [sideBarVisible]);
+
+  const onCreateNewStoryClick = useCallback(async () => {
+    await trackEvent('dashboard', 'create_new_story');
+  }, []);
+
   return (
     <LeftRailContainer
       onClickCapture={onContainerClickCapture}
       ref={leftRailRef}
       isOpen={sideBarVisible}
+      tabIndex={-1}
+      role="navigation"
+      aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
-        <LogoPlaceholder />
         <Content>
-          <NavButton type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
+          <WebStoriesHeading>
+            {__('Web Stories', 'web-stories')}
+          </WebStoriesHeading>
+        </Content>
+        <Content>
+          <NavButton
+            type={BUTTON_TYPES.CTA}
+            href={newStoryURL}
+            isLink
+            onClick={onCreateNewStoryClick}
+          >
             {__('Create New Story', 'web-stories')}
           </NavButton>
         </Content>
         <Content>
-          {primaryPaths.map((path) => (
-            <NavLink
-              active={path.value === state.currentPath}
-              key={path.value}
-              href={resolveRoute(path.value)}
-            >
-              {path.label}
-            </NavLink>
-          ))}
+          <NavList>
+            {enabledPaths.map((path) => (
+              <NavListItem key={path.value}>
+                <NavLink
+                  active={path.value === state.currentPath}
+                  href={resolveRoute(path.value)}
+                >
+                  {path.label}
+                </NavLink>
+              </NavListItem>
+            ))}
+          </NavList>
         </Content>
         <Rule />
         <Content>
-          {secondaryPaths.map((path) => (
-            <NavLink
-              active={path.value === state.currentPath}
-              key={path.value}
-              href={resolveRoute(path.value)}
-            >
-              {path.label}
-            </NavLink>
-          ))}
+          <NavList>
+            {enabledSecondaryPaths.map((path) => (
+              <NavListItem key={path.value}>
+                <NavLink
+                  active={path.value === state.currentPath}
+                  href={resolveRoute(path.value)}
+                >
+                  {path.label}
+                </NavLink>
+              </NavListItem>
+            ))}
+          </NavList>
         </Content>
       </div>
       <Content>

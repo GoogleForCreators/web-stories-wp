@@ -28,7 +28,7 @@ import useTransform from './useTransform';
  * @param {string} id Target element's id.
  * @param {function(?Object)} handler The transform handler. The argument is
  * the frame object. The `null` value resets the transform.
- * @param {!Array=} deps The effect's dependencies.
+ * @param {Array} [deps] The effect's dependencies.
  */
 function useTransformHandler(id, handler, deps = undefined) {
   const {

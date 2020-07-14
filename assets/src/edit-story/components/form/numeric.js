@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import Big from 'big.js';
 /**
  * WordPress dependencies
@@ -74,14 +74,20 @@ function Numeric({
   value,
   float,
   flexBasis,
-  ariaLabel,
   disabled,
+  min,
+  max,
+  canBeNegative,
+  canBeEmpty,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [dot, setDot] = useState(false);
+  const [inputValue, setInputValue] = useState(value);
   const ref = useRef();
+
+  useEffect(() => setInputValue(value), [value]);
 
   const handleUpDown = useCallback(
     ({ key, altKey }) => {
@@ -93,14 +99,20 @@ function Numeric({
       const diff = Big(float && altKey ? 0.1 : 1);
       if (key === 'ArrowUp') {
         // Increment value
-        newValue = Big(value).plus(diff);
+        newValue =
+          typeof max !== 'undefined'
+            ? Math.min(max, Big(value).plus(diff))
+            : Big(value).plus(diff);
       } else if (key === 'ArrowDown') {
         // Decrement value
-        newValue = Big(value).minus(diff);
+        newValue =
+          typeof min !== 'undefined'
+            ? Math.max(min, Big(value).minus(diff))
+            : Big(value).minus(diff);
       }
       onChange(parseFloat(newValue.toString()));
     },
-    [onChange, value, isMultiple, float]
+    [isMultiple, float, onChange, max, value, min]
   );
 
   useKeyDownEffect(
@@ -120,7 +132,9 @@ function Numeric({
     >
       {label}
       {prefix}
+      {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
+        type="text"
         ref={ref}
         placeholder={placeholder}
         prefix={prefix}
@@ -129,15 +143,24 @@ function Numeric({
         value={
           isMultiple
             ? ''
-            : `${value}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
+            : `${inputValue}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
         }
-        aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
         onChange={(evt) => {
           const newValue = evt.target.value;
           if (newValue === '') {
-            onChange('', evt);
+            // Allow input to be empty
+            if (canBeEmpty) {
+              // Send empty up-stream
+              onChange('', evt);
+            } else {
+              // Just update empty value internally but keep old value upstream
+              setInputValue('');
+            }
+          } else if (newValue === '-' && canBeNegative) {
+            // Allow a single "-" if negative values are allowed
+            setInputValue(newValue);
           } else {
             setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
             const valueAsNumber = float
@@ -154,6 +177,8 @@ function Numeric({
               new window.Event('submit', { cancelable: true })
             );
           }
+          // Always update to latest value from upstream
+          setInputValue(value);
           if (onBlur) {
             onBlur();
           }
@@ -178,8 +203,11 @@ Numeric.propTypes = {
   symbol: PropTypes.string,
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
-  ariaLabel: PropTypes.string,
   float: PropTypes.bool,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  canBeNegative: PropTypes.bool,
+  canBeEmpty: PropTypes.bool,
 };
 
 Numeric.defaultProps = {
@@ -189,7 +217,8 @@ Numeric.defaultProps = {
   flexBasis: 110,
   textCenter: false,
   float: false,
-  ariaLabel: __('Standard input', 'web-stories'),
+  canBeNegative: false,
+  canBeEmpty: false,
 };
 
 export default Numeric;

@@ -63,6 +63,15 @@ describe('bundlePlugin', () => {
     ]);
   });
 
+  it('should ignore assets folder if using cdn', () => {
+    bundlePlugin('/foo', false, false, false, true);
+    expect(copyFiles).toHaveBeenCalledWith('/foo', 'build/web-stories', [
+      'bar.txt',
+      'baz/',
+      'assets/images/templates/',
+    ]);
+  });
+
   it('should ignore vendor folder for composer builds', () => {
     bundlePlugin('/foo', true);
     expect(copyFiles).toHaveBeenCalledWith('/foo', 'build/web-stories', [
