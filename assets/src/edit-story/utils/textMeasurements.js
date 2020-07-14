@@ -33,6 +33,7 @@ const MEASURER_STYLES = {
   top: '-9999px',
   left: '-9999px',
   zIndex: -1,
+  overflowWrap: 'break-word',
   ...(false && {
     // For debugging purposes - this will show the output render on screen
     background: 'red',
@@ -67,7 +68,7 @@ export function calculateFitTextFontSize(element, width, height) {
   while (maxFontSize - minFontSize > 1) {
     const mid = (minFontSize + maxFontSize) / 2;
     setStyles(measurer, { fontSize: `${mid}px` });
-    const currentHeight = measurer.offsetHeight;
+    const currentHeight = measurer.scrollHeight;
     if (currentHeight > height) {
       maxFontSize = mid;
     } else {
