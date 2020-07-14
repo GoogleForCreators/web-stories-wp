@@ -109,7 +109,7 @@ describe('Media3pPane fetching', () => {
 
   it('should render no results message', async () => {
     spyOn(apiFetcher, 'listMedia').and.callFake(() => ({ media: [] }));
-    fixture.events.click(media3pTab);
+    await fixture.events.click(media3pTab);
 
     await waitFor(() => {
       expect(
@@ -120,13 +120,13 @@ describe('Media3pPane fetching', () => {
 
   it('should fetch media resources', async () => {
     mockListMedia();
-    fixture.events.click(media3pTab);
+    await fixture.events.click(media3pTab);
     await expectMediaElements(MEDIA_PER_PAGE);
   });
 
   it('should fetch 2nd page', async () => {
     mockListMedia();
-    fixture.events.click(media3pTab);
+    await fixture.events.click(media3pTab);
 
     const mediaGallery = media3pPane.querySelector(
       '[data-testid="media-gallery-container"]'
