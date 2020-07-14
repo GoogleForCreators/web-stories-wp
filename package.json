@@ -6,12 +6,7 @@
   "author": "Google",
   "license": "Apache-2.0",
   "type": "module",
-  "keywords": [
-    "amp",
-    "stories",
-    "storytelling",
-    "wordpress"
-  ],
+  "keywords": ["amp", "stories", "storytelling", "wordpress"],
   "homepage": "https://github.com/google/web-stories-wp",
   "repository": {
     "type": "git",
@@ -75,7 +70,7 @@
     "@jsdevtools/coverage-istanbul-loader": "^3.0.3",
     "@percy/puppeteer": "^1.1.0",
     "@prettier/plugin-xml": "^0.8.0",
-    "@rollup/plugin-node-resolve": "^8.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
     "@storybook/addon-a11y": "^6.0.0-rc.0",
     "@storybook/addon-actions": "^6.0.0-rc.0",
     "@storybook/addon-backgrounds": "^6.0.0-rc.0",
@@ -87,9 +82,9 @@
     "@storybook/client-logger": "^6.0.0-rc.0",
     "@storybook/react": "^6.0.0-rc.0",
     "@svgr/webpack": "^5.4.0",
-    "@testing-library/dom": "^7.20.0",
+    "@testing-library/dom": "^7.20.2",
     "@testing-library/jest-dom": "^5.11.0",
-    "@testing-library/react": "^10.4.5",
+    "@testing-library/react": "^10.4.6",
     "@testing-library/react-hooks": "^3.3.0",
     "@wordpress/babel-plugin-import-jsx-pragma": "^2.7.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^2.8.0",
@@ -116,7 +111,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jasmine": "^4.1.1",
     "eslint-plugin-jest": "^23.18.0",
-    "eslint-plugin-jest-dom": "^3.1.1",
+    "eslint-plugin-jest-dom": "^3.1.4",
     "eslint-plugin-jsdoc": "^29.2.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-markdown": "^1.0.2",
@@ -236,11 +231,9 @@
       "eslint --fix",
       "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
     ],
+    "*.json": ["prettier --write"],
     "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
-    "*.md": [
-      "eslint --fix",
-      "markdownlint -f"
-    ],
+    "*.md": ["eslint --fix", "markdownlint -f"],
     "*.php": "npm run lint:php:fix",
     "*.(xml|xml.dist)": "prettier --write",
     "*.yml": "prettier --write"
