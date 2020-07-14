@@ -28,7 +28,7 @@ class Settings extends \WP_UnitTestCase {
 		$settings = new \Google\Web_Stories\Settings();
 		$settings->init();
 
-		$this->assertSame( 10, has_action( 'rest_api_init', [ $settings, 'register_setting' ] ) );
+		$this->assertSame( 10, has_action( 'rest_api_init', [ $settings, 'register_settings' ] ) );
 	}
 
 	/**
