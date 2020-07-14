@@ -55,7 +55,7 @@ import {
   StyledPane,
 } from '../common/styles';
 import MediaGallery from '../common/mediaGallery';
-import { ProviderType } from '../media3p/providerType';
+import { ProviderType } from '../common/providerType';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
