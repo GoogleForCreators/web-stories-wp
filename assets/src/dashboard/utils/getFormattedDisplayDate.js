@@ -18,12 +18,12 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
 
 /**
  * External dependencies
  */
 import moment from 'moment';
+import DateFormatter from 'php-date-formatter';
 
 /**
  * Internal dependencies
@@ -53,5 +53,6 @@ export default function getFormattedDisplayDate(
   } else if (isYesterday(displayDate)) {
     return __('yesterday', 'web-stories');
   }
-  return format(dateFormat, displayDate);
+  const fmt = new DateFormatter();
+  return fmt.formatDate(displayDate.toDate(), dateFormat);
 }

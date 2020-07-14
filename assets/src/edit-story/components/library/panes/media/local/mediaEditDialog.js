@@ -15,18 +15,18 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
 import moment from 'moment';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
+import DateFormatter from 'php-date-formatter';
 
 /**
  * Internal dependencies
@@ -154,6 +154,9 @@ function MediaEditDialog({ resource, onClose }) {
   const [altText, setAltText] = useState(alt);
   const parsedDate = moment(creationDate);
 
+  const fmt = new DateFormatter();
+  const formattedDate = fmt.formatDate(parsedDate.toDate(), dateFormat);
+
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
   }, []);
@@ -199,7 +202,7 @@ function MediaEditDialog({ resource, onClose }) {
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
-                format(dateFormat, parsedDate)
+                formattedDate
               )}
             </MediaDateText>
           )}
