@@ -23,7 +23,6 @@ import { css } from 'styled-components';
  * Internal dependencies
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import convertToCSS from '../../utils/convertToCSS';
 import { generateFontFamily } from '../text/util';
 
 export const elementFillContent = css`
