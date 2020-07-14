@@ -19,6 +19,7 @@
  */
 import createSolidFromString from '../utils/createSolidFromString';
 import useInsertElement from '../components/canvas/useInsertElement';
+import { useStory } from '../app/story';
 import { Fixture } from './fixture';
 
 describe('CUJ: Creator can Add a Page Attachment', () => {
@@ -59,7 +60,7 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
     });
   };
 
-  const addElementWithLink = async () => {
+  const addElement = async (withLink = true) => {
     const insertElement = await fixture.renderHook(() => useInsertElement());
     const element = await fixture.act(() =>
       insertElement('shape', {
@@ -69,9 +70,11 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
         y: 10,
         width: 50,
         height: 50,
-        link: {
-          url: 'https://example.com',
-        },
+        link: withLink
+          ? {
+              url: 'https://example.com',
+            }
+          : null,
       })
     );
     frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
@@ -106,7 +109,7 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
     });
 
     it('it should display warning for a link in the Page Attachment Area', async () => {
-      await addElementWithLink();
+      await addElement();
       await moveElementToBottom();
 
       await clickOnTarget(safezone);
@@ -133,7 +136,7 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
   describe('Action: Transforming link with Page Attachment', () => {
     it('it should display tooltip for a link in Attachment area', async () => {
       await setPageAttachmentLink('http://example.com');
-      await addElementWithLink();
+      await addElement();
       await moveElementToBottom(true);
 
       const popup = fixture.screen.getByText(
@@ -144,12 +147,42 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
 
     it('it should cancel link transformation ending in Attachment area', async () => {
       await setPageAttachmentLink('http://example.com');
-      await addElementWithLink();
+      await addElement();
       const frameTop = frame.getBoundingClientRect().top;
       await moveElementToBottom();
 
       // Verify the same position.
       expect(frame.getBoundingClientRect().top).toBeDefined(frameTop);
+    });
+  });
+
+  describe('Action: Adding link to element in Attachment area', () => {
+    it('it should not allow adding link to Attachment area', async () => {
+      await setPageAttachmentLink('http://example.com');
+      await addElement(false);
+      await moveElementToBottom();
+
+      const input = fixture.screen.getByLabelText('Edit: Element link');
+      await fixture.events.click(input);
+
+      // Verify that the warning is displayed.
+      const warning = fixture.screen.getByText(
+        'Link can not reside below the dashed line when a page attachment is present'
+      );
+      expect(warning).toBeDefined();
+
+      await fixture.events.keyboard.type('example.com');
+      await input.dispatchEvent(new window.Event('blur'));
+
+      // Verify the link is still null after typing.
+      const {
+        state: {
+          currentPage: {
+            elements: [{ link }],
+          },
+        },
+      } = await fixture.renderHook(() => useStory());
+      expect(link).toBeUndefined();
     });
   });
 });
