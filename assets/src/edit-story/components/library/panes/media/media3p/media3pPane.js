@@ -114,9 +114,9 @@ function Media3pPane(props) {
     setScrollbarWidth(element.offsetWidth - element.clientWidth);
   };
 
-  const { setSelectedProvider, search } = useMedia3p(({ actions }) => ({
+  const { setSelectedProvider, setSearchTerm } = useMedia3p(({ actions }) => ({
     setSelectedProvider: actions.setSelectedProvider,
-    search: actions.search,
+    setSearchTerm: actions.setSearchTerm,
   }));
 
   useEffect(() => {
@@ -145,7 +145,7 @@ function Media3pPane(props) {
    * Effectively performs a search, triggered at most every 500ms.
    */
   const [changeSearchTermDebounced] = useDebouncedCallback(() => {
-    search({ searchTerm: searchTermValue });
+    setSearchTerm({ searchTerm: searchTermValue });
   }, 500);
 
   /**
@@ -169,6 +169,7 @@ function Media3pPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
+              id={'library-pane-media3p-search'}
               value={searchTermValue}
               placeholder={__('Search', 'web-stories')}
               onChange={onSearch}

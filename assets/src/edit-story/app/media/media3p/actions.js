@@ -27,9 +27,9 @@ export const setSelectedProvider = (dispatch) => ({ provider }) => {
   });
 };
 
-export const search = (dispatch) => ({ searchTerm }) => {
+export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
   dispatch({
-    type: types.SEARCH,
+    type: types.SET_SEARCH_TERM,
     payload: { searchTerm },
   });
 };

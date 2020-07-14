@@ -15,4 +15,4 @@
  */
 
 export const SET_SELECTED_PROVIDER = 'SET_SELECTED_PROVIDER';
-export const SEARCH = 'SEARCH';
+export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';

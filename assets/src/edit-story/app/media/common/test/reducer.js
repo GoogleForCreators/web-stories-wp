@@ -79,6 +79,61 @@ describe('reducer', () => {
     );
   });
 
+  it('should append media if there is a pageToken fetchMediaSuccess', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, commonActionsToWrap)
+    );
+
+    result.current.actions.fetchMediaSuccess({
+      media: [{ id: 'id1' }],
+      nextPageToken: 'page2',
+      totalPages: 10,
+    });
+
+    result.current.actions.fetchMediaSuccess({
+      media: [{ id: 'id2' }],
+      pageToken: 'page2',
+      nextPageToken: 'page3',
+      totalPages: 10,
+    });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        media: [{ id: 'id1' }, { id: 'id2' }],
+        nextPageToken: 'page3',
+        totalPages: 10,
+        hasMore: true,
+      })
+    );
+  });
+
+  it("should replace media if there isn't a pageToken in fetchMediaSuccess", () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, commonActionsToWrap)
+    );
+
+    result.current.actions.fetchMediaSuccess({
+      media: [{ id: 'id1' }],
+      nextPageToken: 'page2',
+      totalPages: 10,
+    });
+
+    result.current.actions.fetchMediaSuccess({
+      media: [{ id: 'id2' }],
+      nextPageToken: 'page2',
+      totalPages: 10,
+    });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        media: [{ id: 'id2' }],
+        nextPageToken: 'page2',
+        totalPages: 10,
+        hasMore: true,
+      })
+    );
+  });
+
   it('should assign isMediaLoading=false on fetchMediaError', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, commonActionsToWrap)

@@ -84,11 +84,12 @@ function Media3pApiProvider({ children }) {
     if (provider.toLowerCase() !== Providers.UNSPLASH) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
+    const filter = constructFilter(provider, searchTerm, mediaType);
     const response = await apiFetcher.listMedia({
-      filter: constructFilter(provider, searchTerm, mediaType),
-      orderBy: orderBy,
+      filter,
+      orderBy,
       pageSize: MEDIA_PAGE_SIZE,
-      pageToken: pageToken,
+      pageToken,
     });
     return {
       media: response.media.map(getResourceFromMedia3p),

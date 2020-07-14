@@ -75,7 +75,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         selectedProvider: payload.provider,
       };
     }
-    case types.SEARCH: {
+    case types.SET_SEARCH_TERM: {
       return {
         ...state,
         searchTerm: payload.searchTerm,
