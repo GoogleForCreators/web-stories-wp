@@ -126,7 +126,7 @@ export const STORY_STATUSES = [
   },
   {
     label: __('Published', 'web-stories'),
-    value: PUBLISHED_AND_FUTURE,
+    value: STORY_STATUS.PUBLISHED_AND_FUTURE,
     status: STORY_STATUS.PUBLISHED_AND_FUTURE,
   },
 ];
