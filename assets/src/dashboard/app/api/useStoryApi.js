@@ -23,7 +23,6 @@ import { __, sprintf } from '@wordpress/i18n';
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import moment from 'moment';
 import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 
@@ -36,52 +35,12 @@ import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
 } from '../../constants';
-import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 import { getStoryPropsToSave, addQueryArgs } from '../../utils';
-
-export function reshapeStoryObject(editStoryURL) {
-  return function (originalStoryData) {
-    const {
-      id,
-      title,
-      modified,
-      status,
-      date,
-      author,
-      story_data: storyData,
-    } = originalStoryData;
-    if (
-      !Array.isArray(storyData.pages) ||
-      !id ||
-      storyData.pages.length === 0
-    ) {
-      return null;
-    }
-
-    const updatedStoryData = {
-      ...migrate(storyData, storyData.version),
-      version: DATA_VERSION,
-    };
-
-    return {
-      id,
-      status,
-      title: title.raw,
-      modified: moment(modified),
-      created: moment(date),
-      pages: updatedStoryData.pages,
-      author,
-      centerTargetAction: '',
-      bottomTargetAction: `${editStoryURL}&post=${id}`,
-      editStoryLink: `${editStoryURL}&post=${id}`,
-      originalStoryData,
-    };
-  };
-}
+import reshapeStoryObject from '../serializers/stories';
 
 const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
@@ -139,14 +98,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           response.headers &&
           JSON.parse(response.headers['X-WP-TotalByStatus']);
 
-        const reshapedStories = response.body
-          .map(reshapeStoryObject(editStoryURL))
-          .filter(Boolean);
-
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
-            stories: reshapedStories,
+            editStoryURL,
+            stories: response.body,
             totalPages,
             totalStoriesByStatus,
             page,
