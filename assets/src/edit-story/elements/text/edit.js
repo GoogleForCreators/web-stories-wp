@@ -44,6 +44,9 @@ import { BACKGROUND_TEXT_MODE } from '../../constants';
 import useUnmount from '../../utils/useUnmount';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
+import convertToCSS from '../../utils/convertToCSS';
+import generatePatternStyles from '../../utils/generatePatternStyles';
+import useRichText from '../../components/richText/useRichText';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
@@ -53,7 +56,6 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 // easier to see.
 const Wrapper = styled.div`
   ${elementFillContent}
-  background-color: ${({ theme }) => theme.colors.whiteout};
 
   &::after {
     content: '';
@@ -82,6 +84,14 @@ const TextBox = styled.div`
   top: 0;
   left: 0;
   right: 0;
+`;
+
+const Highlight = styled.span`
+  ${({ highlightColor }) =>
+    convertToCSS(generatePatternStyles(highlightColor))};
+  border-radius: 3px;
+  box-decoration-break: clone;
+  color: transparent;
 `;
 
 function TextEdit({
@@ -131,7 +141,8 @@ function TextEdit({
         rest.lineHeight,
         dataToEditorX(rest.padding?.vertical || 0)
       ),
-      backgroundColor: createSolid(255, 255, 255),
+      backgroundColor: null,
+      highlightColor: backgroundColor,
     }),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE && {
       backgroundColor: null,
@@ -232,8 +243,23 @@ function TextEdit({
     ]);
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
+  const {
+    state: { editorState },
+    actions: { getContentFromState },
+  } = useRichText();
+
+  const editorContent = editorState && getContentFromState(editorState);
+
   return (
     <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
+      {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
+        <TextBox {...textProps}>
+          <Highlight
+            dangerouslySetInnerHTML={{ __html: editorContent }}
+            {...textProps}
+          />
+        </TextBox>
+      )}
       <TextBox ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}
