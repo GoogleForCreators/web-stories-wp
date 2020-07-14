@@ -124,7 +124,8 @@ describe('Font Picker', () => {
       fireEvent.keyDown(fontsList, { key: 'Enter' });
     });
 
-    expect(onChangeFn).toHaveBeenCalledWith('Roboto Condensed');
+    // The second font in the list.
+    expect(onChangeFn).toHaveBeenCalledWith('Abel');
   });
 
   it('should close the menu when the Esc key is pressed.', async () => {
@@ -156,6 +157,18 @@ describe('Font Picker', () => {
     const fontsList = getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
+    // Move down by 2
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+
     act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowUp',
@@ -166,7 +179,8 @@ describe('Font Picker', () => {
       fireEvent.keyDown(fontsList, { key: 'Enter' });
     });
 
-    expect(onChangeFn).toHaveBeenCalledWith('Handlee');
+    // Moving down by 2 and back 1 up should end up with the second font: Abel.
+    expect(onChangeFn).toHaveBeenCalledWith('Abel');
   });
 
   it('should search and filter the list to match the results.', async () => {
