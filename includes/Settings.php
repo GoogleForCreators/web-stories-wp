@@ -34,6 +34,14 @@ namespace Google\Web_Stories;
 class Settings {
 
 	/**
+	 * Settings group.
+	 *
+	 * @var string
+	 */
+	const SETTING_GROUP = 'web_stories';
+
+
+	/**
 	 * Settings handle.
 	 *
 	 * @var string
@@ -56,7 +64,7 @@ class Settings {
 	 */
 	public function register_setting() {
 		register_setting(
-			'web_stories',
+			self::SETTING_GROUP,
 			self::SETTING_NAME,
 			[
 				'show_in_rest' => true,
