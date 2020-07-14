@@ -181,7 +181,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const hasSomeLinkContent =
     Boolean(link.url) && inRange(link.url.length, MIN_MAX.URL);
 
-  const node = nodesById[selectedElement.id];
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
@@ -191,17 +190,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       <Row>
         <ExpandedTextInput
           placeholder={__('Web address', 'web-stories')}
-          onChange={(value) => {
-            if (!displayLinkGuidelines) {
-              // Cover the case where the user moves the element when already focusing on the link input.
-              if (!isElementInAttachmentArea(node)) {
-                handleChange({ url: value }, !value /* submit */);
-              } else {
-                setDisplayLinkGuidelines(true);
-              }
-            }
-          }}
+          onChange={(value) =>
+            !displayLinkGuidelines &&
+            handleChange({ url: value }, !value /* submit */)
+          }
           onFocus={() => {
+            const node = nodesById[selectedElement.id];
             if (isElementInAttachmentArea(node)) {
               setDisplayLinkGuidelines(true);
             }

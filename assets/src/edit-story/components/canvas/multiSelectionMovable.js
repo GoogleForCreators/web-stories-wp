@@ -218,8 +218,8 @@ function MultiSelectionMovable({ selectedElements }) {
       }
       updates[element.id] = properties;
     });
-    setDisplayLinkGuidelines(false);
     if (hasLinkInAttachmentArea) {
+      setDisplayLinkGuidelines(false);
       resetMoveable();
       return;
     }
