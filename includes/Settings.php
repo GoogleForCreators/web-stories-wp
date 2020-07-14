@@ -40,13 +40,12 @@ class Settings {
 	 */
 	const SETTING_GROUP = 'web_stories';
 
-
 	/**
 	 * Settings handle.
 	 *
 	 * @var string
 	 */
-	const SETTING_NAME = 'web_stories_ga_tracking_id';
+	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
 
 	/**
 	 * Initializes the Settings logic.
@@ -54,18 +53,18 @@ class Settings {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'rest_api_init', [ $this, 'register_setting' ] );
+		add_action( 'rest_api_init', [ $this, 'register_settings' ] );
 	}
 
 	/**
-	 * Regsiter setting.
+	 * Register settings.
 	 *
 	 * @return void
 	 */
-	public function register_setting() {
+	public function register_settings() {
 		register_setting(
 			self::SETTING_GROUP,
-			self::SETTING_NAME,
+			self::SETTING_NAME_TRACKING_ID,
 			[
 				'show_in_rest' => true,
 				'type'         => 'string',

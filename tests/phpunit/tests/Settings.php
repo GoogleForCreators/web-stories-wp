@@ -32,13 +32,13 @@ class Settings extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::register_setting
+	 * @covers ::register_settings
 	 */
-	public function test_register_setting() {
+	public function test_register_settings() {
 		$settings = new \Google\Web_Stories\Settings();
-		$settings->register_setting();
+		$settings->register_settings();
 
 		$options = get_registered_settings();
-		$this->assertArrayHasKey( $settings::SETTING_NAME, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_TRACKING_ID, $options );
 	}
 }
