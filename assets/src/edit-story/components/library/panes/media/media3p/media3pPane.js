@@ -141,7 +141,6 @@ function Media3pPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              id={'library-pane-media3p-search'}
               value={searchTermValue}
               placeholder={__('Search', 'web-stories')}
               onChange={onSearch}
