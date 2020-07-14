@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { reshapeStoryObject } from '../api/useStoryApi';
+import reshapeStoryObject from '../serializers/stories';
 
 export const ACTION_TYPES = {
   CREATING_STORY_FROM_TEMPLATE: 'creating_story_from_template',
