@@ -38,12 +38,8 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 * @param string $post_type Post type.
 	 */
 	public function __construct( $post_type ) {
-		$this->post_type = $post_type;
+		parent::__construct( $post_type );
 		$this->namespace = 'web-stories/v1';
-		$obj             = get_post_type_object( $post_type );
-		$this->rest_base = ! empty( $obj->rest_base ) ? $obj->rest_base : $obj->name;
-
-		$this->meta = new \WP_REST_Post_Meta_Fields( $this->post_type );
 	}
 
 	/**
