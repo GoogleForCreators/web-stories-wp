@@ -36,6 +36,7 @@ $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_b
 // Preload common data.
 $preload_paths = [
 	sprintf( '/wp/v2/%s/%s?context=edit', $rest_base, $post->ID ),
+	'/web-stories/v1/media?context=edit&per_page=100&page=1&_web_stories_envelope=1',
 	'/web-stories/v1/fonts',
 ];
 
