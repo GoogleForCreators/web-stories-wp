@@ -270,6 +270,9 @@ function MediaPane(props) {
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, refContainer]);
 
+  // NOTE: This infinite scrolling logic is used by the Column-based gallery.
+  // The row-based PaginatedMediaGallery has its own pagination logic and
+  // doesn't get affected by this code (it doesn't have `refContainerFooter`).
   const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
