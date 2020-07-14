@@ -61,7 +61,7 @@ class Settings {
 			[
 				'show_in_rest' => true,
 				'type'         => 'string',
-				'description'  => __( 'Web stories, GA settings', 'web-stories' ),
+				'description'  => __( 'Google Analytics Tracking ID', 'web-stories' ),
 				'default'      => '',
 			]
 		);
