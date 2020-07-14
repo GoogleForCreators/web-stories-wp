@@ -264,6 +264,16 @@ function MultiSelectionMovable({ selectedElements }) {
   const pageHasAttachment = Boolean(
     currentPage.pageAttachment?.url?.length > 0
   );
+
+  const checkForInvalidPosition = (target, element) => {
+    if (pageHasAttachment && element.link?.url) {
+      const hasInvalidPosition = isElementInAttachmentArea(target);
+      setDisplayLinkGuidelines(hasInvalidPosition);
+      return hasInvalidPosition;
+    }
+    return false;
+  };
+
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Movable
@@ -281,11 +291,8 @@ function MultiSelectionMovable({ selectedElements }) {
           const { element } = targetList[i];
           sFrame.translate = beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
-          if (pageHasAttachment && element.link?.url) {
-            if (!invalidPositionFound) {
-              invalidPositionFound = isElementInAttachmentArea(target);
-              setDisplayLinkGuidelines(invalidPositionFound);
-            }
+          if (!invalidPositionFound) {
+            invalidPositionFound = checkForInvalidPosition(target, element);
           }
         });
       }}
@@ -313,11 +320,8 @@ function MultiSelectionMovable({ selectedElements }) {
           sFrame.rotate = ((beforeRotate % 360) + 360) % 360;
           sFrame.translate = drag.beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
-          if (pageHasAttachment && element.link?.url) {
-            if (!invalidPositionFound) {
-              invalidPositionFound = isElementInAttachmentArea(target);
-              setDisplayLinkGuidelines(invalidPositionFound);
-            }
+          if (!invalidPositionFound) {
+            invalidPositionFound = checkForInvalidPosition(target, element);
           }
         });
       }}
@@ -360,11 +364,8 @@ function MultiSelectionMovable({ selectedElements }) {
           sFrame.translate = drag.beforeTranslate;
           sFrame.updates = updates;
           setTransformStyle(element.id, target, sFrame);
-          if (pageHasAttachment && element.link?.url) {
-            if (!invalidPositionFound) {
-              invalidPositionFound = isElementInAttachmentArea(target);
-              setDisplayLinkGuidelines(invalidPositionFound);
-            }
+          if (!invalidPositionFound) {
+            invalidPositionFound = checkForInvalidPosition(target, element);
           }
         });
       }}
