@@ -79,9 +79,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -121,9 +119,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -275,9 +271,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -318,9 +312,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -443,9 +435,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -486,9 +476,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -586,9 +574,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Open Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -711,9 +697,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -754,9 +738,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -906,9 +888,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -949,9 +929,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Noto Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -990,9 +968,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1163,9 +1139,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1206,9 +1180,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1249,9 +1221,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1479,9 +1449,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1522,9 +1490,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Noto Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1660,9 +1626,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1827,9 +1791,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1870,9 +1832,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1913,9 +1873,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1956,9 +1914,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -1999,9 +1955,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2042,9 +1996,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2085,9 +2037,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2237,9 +2187,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2498,9 +2446,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2541,9 +2487,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2584,9 +2528,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Noto Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2773,9 +2715,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2816,9 +2756,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Noto Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2859,9 +2797,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
@@ -2902,9 +2838,7 @@
           "font": {
             "service": "fonts.google.com",
             "family": "Noto Sans",
-            "fallbacks": [
-              "sans-serif"
-            ]
+            "fallbacks": ["sans-serif"]
           },
           "type": "text",
           "opacity": 100,
