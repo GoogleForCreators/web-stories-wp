@@ -18,6 +18,7 @@
  * Returns transform scale value based on the flip setting.
  *
  * @param {Object} flip Flip value.
+ * @return {string} CSS transform scale value.
  */
 function getTransformFlip(flip) {
   let transformFlip = null;

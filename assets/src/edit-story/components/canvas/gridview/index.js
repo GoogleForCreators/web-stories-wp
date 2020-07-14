@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app/story';
+import { useConfig, useStory } from '../../../app';
 import RangeInput from '../../rangeInput';
 import { Rectangle as RectangleIcon } from '../../../icons';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
@@ -42,6 +42,7 @@ import {
   ReorderableSeparator,
   ReorderableItem,
 } from '../../reorderable';
+import useGridViewKeys from './useGridViewKeys';
 
 const PREVIEW_WIDTH = 90;
 const PREVIEW_HEIGHT = (PREVIEW_WIDTH * PAGE_HEIGHT) / PAGE_WIDTH;
@@ -107,10 +108,12 @@ const Rectangle = styled.button`
     outline: none;
   }
 
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.3;
-  }
+  ${({ disable }) =>
+    disable &&
+    css`
+      pointer-events: none;
+      opacity: 0.3;
+    `}
 
   svg {
     width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
@@ -174,11 +177,14 @@ function ThumbnailSizeControl({ value, onChange }) {
       break;
   }
 
+  const decreaseBtnDisabled = value === min;
+  const increaseBtnDisabled = value === max;
+
   return (
     <RangeInputWrapper>
       <Rectangle
-        onClick={() => updateRangeValue(-step)}
-        disabled={value === min}
+        onClick={() => !decreaseBtnDisabled && updateRangeValue(-step)}
+        disable={decreaseBtnDisabled}
         aria-label={__('Decrease thumbnail size', 'web-stories')}
       >
         <RectangleIcon />
@@ -197,8 +203,8 @@ function ThumbnailSizeControl({ value, onChange }) {
       <Space />
       <Rectangle
         isLarge
-        onClick={() => updateRangeValue(step)}
-        disabled={value === max}
+        onClick={() => !increaseBtnDisabled && updateRangeValue(step)}
+        disable={increaseBtnDisabled}
         aria-label={__('Increase thumbnail size', 'web-stories')}
       >
         <RectangleIcon />
@@ -224,6 +230,8 @@ function GridView() {
       actions: { setCurrentPage, arrangePage },
     }) => ({ pages, currentPageIndex, setCurrentPage, arrangePage })
   );
+
+  const { isRTL } = useConfig();
   const [zoomLevel, setZoomLevel] = useState(2);
 
   const width = zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH;
@@ -231,11 +239,18 @@ function GridView() {
 
   const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
 
+  const wrapperRef = useRef();
+  const gridRef = useRef();
+  const pageRefs = useRef({});
+
+  useGridViewKeys(wrapperRef, gridRef, pageRefs, isRTL);
+
   return (
     <Container>
       <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
       <Wrapper
-        aria-label={__('Pages List', 'web-stories')}
+        aria-label={__('Grid View Pages List', 'web-stories')}
+        ref={wrapperRef}
         onPositionChange={(oldPos, newPos) => {
           const pageId = pages[oldPos].id;
           arrangePage({ pageId, position: newPos });
@@ -244,13 +259,18 @@ function GridView() {
         mode={'grid'}
         getItemSize={() => height}
       >
-        <Grid scale={zoomLevel}>
+        <Grid scale={zoomLevel} ref={gridRef}>
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
             const isInteractive = pages.length > 1;
 
             return (
-              <ItemContainer key={`page-${index}`}>
+              <ItemContainer
+                key={`page-${index}`}
+                ref={(el) => {
+                  pageRefs.current[page.id] = el;
+                }}
+              >
                 <PageSeparator
                   position={index}
                   width={width}
@@ -283,6 +303,7 @@ function GridView() {
                     dragIndicatorOffset={GRID_GAP / 2}
                     onClick={handleClickPage(page)}
                     isInteractive={isInteractive}
+                    gridRef={gridRef}
                   />
                 </ReorderableItem>
                 <PageSeparator
