@@ -21,6 +21,11 @@ import styled from 'styled-components';
 import { memo, useEffect, useRef } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
@@ -84,6 +89,7 @@ function EditLayerForElement({ element }) {
   return (
     <LayerWithGrayout
       ref={ref}
+      aria-label={__('Edit layer', 'web-stories')}
       data-testid="editLayer"
       grayout={editModeGrayout}
       zIndex={Z_INDEX.EDIT}
