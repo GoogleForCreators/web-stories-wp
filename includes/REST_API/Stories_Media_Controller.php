@@ -57,7 +57,7 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	public function get_items( $request ) {
 		$response = parent::get_items( $request );
 
-		if ( $request['_web_stories_envelope'] ) {
+		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
 			$response = rest_get_server()->envelope_response( $response, false );
 		}
 		return $response;
