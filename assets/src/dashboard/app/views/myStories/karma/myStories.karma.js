@@ -24,7 +24,9 @@ import { within } from '@testing-library/react';
  */
 import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
-import { getFormattedDisplayDate } from '../../../../utils';
+import formattedStoriesArray from '../../../../dataUtils/formattedStoriesArray';
+import formattedUsersObject from '../../../../dataUtils/formattedUsersObject';
+import { getTimeSensitiveDisplayDate } from '../../../../utils';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
@@ -731,7 +733,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getFormattedDisplayDate(stories[id].created)
+        getTimeSensitiveDisplayDate(stories[id].created)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -771,7 +773,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getFormattedDisplayDate(stories[id].modified)
+        getTimeSensitiveDisplayDate(stories[id].modified)
       );
 
       // Last Modified is the fifth column

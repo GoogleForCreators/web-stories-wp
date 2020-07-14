@@ -69,7 +69,7 @@ import {
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import { getFormattedDisplayDate } from '../../../utils/';
+import { getTimeSensitiveDisplayDate } from '../../../utils/';
 
 const ListView = styled.div`
   width: 100%;
@@ -270,10 +270,10 @@ export default function StoryListView({
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
               <TableCell>
-                {getFormattedDisplayDate(story.created, dateFormatting)}
+                {getTimeSensitiveDisplayDate(story.created, dateFormatting)}
               </TableCell>
               <TableCell>
-                {getFormattedDisplayDate(story.modified, dateFormatting)}
+                {getTimeSensitiveDisplayDate(story.modified, dateFormatting)}
               </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
