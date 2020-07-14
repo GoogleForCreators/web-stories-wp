@@ -63,10 +63,8 @@ const MarginedElement = styled.span`
   position: relative;
   display: inline-block;
   top: 0;
-  margin: ${({ horizontalPadding }) =>
-    `0 ${horizontalPadding}px`};
-  left: ${({ horizontalPadding }) =>
-    `-${horizontalPadding}px`};
+  margin: ${({ horizontalPadding }) => `0 ${horizontalPadding}px`};
+  left: ${({ horizontalPadding }) => `-${horizontalPadding}px`};
 `;
 
 const Span = styled.span`

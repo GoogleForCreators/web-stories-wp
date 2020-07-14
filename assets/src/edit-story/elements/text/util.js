@@ -33,6 +33,7 @@ export function generateParagraphTextStyle(
   return {
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
+    wordBreak: 'break-word',
     margin: 0,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),

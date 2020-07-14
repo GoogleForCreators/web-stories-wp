@@ -24,7 +24,7 @@ import { css } from 'styled-components';
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import convertToCSS from '../../utils/convertToCSS';
-import { generateFontFamily } from '../text/util'
+import { generateFontFamily } from '../text/util';
 
 export const elementFillContent = css`
   position: absolute;
@@ -59,6 +59,7 @@ export const elementWithFont = css`
   white-space: pre-wrap;
   font-family: ${({ font }) => generateFontFamily(font)};
   overflow-wrap: break-word;
+  word-break: break-word;
   letter-spacing: normal;
   font-style: ${({ fontStyle }) => fontStyle};
   font-size: ${({ fontSize }) => fontSize}px;
