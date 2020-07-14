@@ -192,7 +192,8 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
 
   const [updateMatchingFonts] = useDebouncedCallback(
     () => {
-      if (searchKeyword.trim() === '') {
+      // Restore default if less than 2 characters.
+      if (searchKeyword.trim().length < 2) {
         dividerIndexTracker.current = recentFonts.length - 1;
         setMatchingFonts([...recentFonts, ...fonts]);
         return;
