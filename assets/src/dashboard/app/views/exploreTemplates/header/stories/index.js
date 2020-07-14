@@ -30,7 +30,7 @@ import {
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../../constants';
 import Header from '../index';
-import formattedTemplatesArray from '../../../../../storybookUtils/formattedTemplatesArray';
+import formattedTemplatesArray from '../../../../../dataUtils/formattedTemplatesArray';
 
 const filter = {
   value: TEMPLATES_GALLERY_STATUS.ALL,

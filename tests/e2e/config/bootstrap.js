@@ -59,6 +59,9 @@ jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 500 });
 
+/**
+ * Set up browser.
+ */
 async function setupBrowser() {
   // Same as jest-puppeteer.config.cjs and percy.config.yml
   await setBrowserViewport({
@@ -110,6 +113,11 @@ function observeConsoleLogging() {
     // styled-components warns about dynamically created components.
     // @todo Fix issues.
     if (text.includes(' has been created dynamically.')) {
+      return;
+    }
+
+    // WordPress still bundles jQuery Migrate, which logs to the console.
+    if (text.includes('JQMIGRATE')) {
       return;
     }
 

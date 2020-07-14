@@ -175,7 +175,7 @@ const CarouselArea = styled(Area).attrs({
 })``;
 
 /**
- * @param {!{current: ?Element}} containerRef
+ * @param {!{current: ?Element}} containerRef Container reference.
  */
 function useLayoutParams(containerRef) {
   const { setPageSize } = useCanvas((state) => ({

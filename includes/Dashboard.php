@@ -123,6 +123,7 @@ class Dashboard {
 		// TODO Preload templates.
 		$preload_paths = [
 			'/web-stories/v1/fonts',
+			'/wp/v2/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
 		];
 
 		/**
@@ -175,7 +176,7 @@ class Dashboard {
 			WEBSTORIES_VERSION
 		);
 
-		$this->enqueue_script( self::SCRIPT_HANDLE );
+		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 		$this->enqueue_style( self::SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		wp_localize_script(
@@ -246,7 +247,7 @@ class Dashboard {
 				 * Issue: 1897
 				 * Creation date: 2020-05-21
 				 */
-				'enableAnimation'                 => false,
+				'enableAnimation'                 => true,
 				/**
 				 * Description: Enables in-progress views to be accessed.
 				 * Author: @carlos-kelly

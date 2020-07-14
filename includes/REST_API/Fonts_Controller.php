@@ -258,7 +258,7 @@ class Fonts_Controller extends WP_REST_Controller {
 		$query_params['context'] = $this->get_context_param( [ 'default' => 'view' ] );
 
 		$query_params['per_page']['maximum'] = 10000;
-		$query_params['per_page']['default'] = 1000;
+		$query_params['per_page']['default'] = 10000;
 
 		return $query_params;
 	}
