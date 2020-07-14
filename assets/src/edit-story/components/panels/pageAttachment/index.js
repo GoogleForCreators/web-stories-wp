@@ -52,8 +52,8 @@ function PageAttachmentPanel() {
     updateElementsById: state.actions.updateElementsById,
     currentPage: state.state.currentPage,
   }));
-  const { setHasLinkInAttachmentArea } = useCanvas((state) => ({
-    setHasLinkInAttachmentArea: state.actions.setHasLinkInAttachmentArea,
+  const { setDisplayLinkGuidelines } = useCanvas((state) => ({
+    setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
   }));
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
@@ -67,14 +67,14 @@ function PageAttachmentPanel() {
 
   useEffect(() => {
     return () => {
-      setHasLinkInAttachmentArea(false);
+      setDisplayLinkGuidelines(false);
     };
-  }, [hasLinksInAttachmentArea, setHasLinkInAttachmentArea, url]);
+  }, [hasLinksInAttachmentArea, setDisplayLinkGuidelines, url]);
 
   const onFocus = () => {
     if (hasLinksInAttachmentArea && !url?.length) {
       setDisplayWarning(true);
-      setHasLinkInAttachmentArea(true);
+      setDisplayLinkGuidelines(true);
     }
   };
 

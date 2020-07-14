@@ -40,6 +40,7 @@ import useBatchingCallback from '../../../utils/useBatchingCallback';
 import inRange from '../../../utils/inRange';
 import { useCanvas } from '../../canvas';
 import { Close } from '../../../icons';
+import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 
 const MIN_MAX = {
   URL: {
@@ -80,9 +81,19 @@ const Error = styled.span`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const { clearEditing } = useCanvas((state) => ({
+  const {
+    clearEditing,
+    nodesById,
+    setDisplayLinkGuidelines,
+    displayLinkGuidelines,
+  } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
+    setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
+    displayLinkGuidelines: state.state.displayLinkGuidelines,
+    nodesById: state.state.nodesById,
   }));
+
+  const { isElementInAttachmentArea } = useElementsWithLinks();
 
   const selectedElement = selectedElements[0];
   const defaultLink = useMemo(
@@ -180,8 +191,18 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         <ExpandedTextInput
           placeholder={__('Web address', 'web-stories')}
           onChange={(value) =>
+            !displayLinkGuidelines &&
             handleChange({ url: value }, !value /* submit */)
           }
+          onFocus={() => {
+            const node = nodesById[selectedElement.id];
+            if (isElementInAttachmentArea(node)) {
+              setDisplayLinkGuidelines(true);
+            }
+          }}
+          onBlur={() => {
+            setDisplayLinkGuidelines(false);
+          }}
           value={link.url || ''}
           clear
           aria-label={__('Edit: Element link', 'web-stories')}
@@ -189,6 +210,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           maxLength={MIN_MAX.URL.MAX}
         />
       </Row>
+      {displayLinkGuidelines && (
+        <Row>
+          <Error>
+            {__(
+              'Link can not reside below the dashed line when a page attachment is present',
+              'web-stories'
+            )}
+          </Error>
+        </Row>
+      )}
       {Boolean(link.url) && isInvalidUrl && (
         <Row>
           <Error>{__('Invalid web address.', 'web-stories')}</Error>

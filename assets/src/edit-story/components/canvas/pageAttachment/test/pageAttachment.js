@@ -36,7 +36,7 @@ function setup(props = {}) {
   const canvasContext = {
     state: {
       pageSize: {},
-      hasLinkInAttachmentArea: false,
+      displayLinkGuidelines: false,
       pageAttachmentContainer: null,
       ...canvasProps,
     },
@@ -87,7 +87,7 @@ describe('PageAttachment', () => {
   it('should display dotted line if link found in the area', () => {
     const { getByRole } = setup({
       canvasProps: {
-        hasLinkInAttachmentArea: true,
+        displayLinkGuidelines: true,
       },
     });
     const pageAttachment = getByRole('presentation');
@@ -105,7 +105,7 @@ describe('PageAttachment', () => {
       pageAttachment: { url: 'http://example.test', ctaText: 'Click me!' },
       isAnythingTransforming: true,
       canvasProps: {
-        hasLinkInAttachmentArea: true,
+        displayLinkGuidelines: true,
         pageAttachmentContainer: document.body,
       },
     });

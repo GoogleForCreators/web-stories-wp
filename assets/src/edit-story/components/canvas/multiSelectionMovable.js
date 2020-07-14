@@ -55,7 +55,7 @@ function MultiSelectionMovable({ selectedElements }) {
     nodesById,
     handleSelectElement,
     fullbleedContainer,
-    setHasLinkInAttachmentArea,
+    setDisplayLinkGuidelines,
   } = useCanvas(
     ({
       state: {
@@ -63,14 +63,14 @@ function MultiSelectionMovable({ selectedElements }) {
         nodesById,
         fullbleedContainer,
       },
-      actions: { handleSelectElement, setHasLinkInAttachmentArea },
+      actions: { handleSelectElement, setDisplayLinkGuidelines },
     }) => ({
       canvasWidth,
       canvasHeight,
       fullbleedContainer,
       nodesById,
       handleSelectElement,
-      setHasLinkInAttachmentArea,
+      setDisplayLinkGuidelines,
     })
   );
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
@@ -86,7 +86,7 @@ function MultiSelectionMovable({ selectedElements }) {
     state: { draggingResource },
   } = useDropTargets();
 
-  const { isLinkInAttachmentArea } = useElementsWithLinks();
+  const { isElementInAttachmentArea } = useElementsWithLinks();
 
   const [isDragging, setIsDragging] = useState(false);
 
@@ -184,7 +184,7 @@ function MultiSelectionMovable({ selectedElements }) {
         return;
       }
       const { element, updateForResizeEvent } = targetList[i];
-      if (element.link?.url && isLinkInAttachmentArea(target)) {
+      if (element.link?.url && isElementInAttachmentArea(target)) {
         hasLinkInAttachmentArea = true;
         return;
       }
@@ -220,7 +220,7 @@ function MultiSelectionMovable({ selectedElements }) {
     });
     if (hasLinkInAttachmentArea) {
       resetMoveable();
-      setHasLinkInAttachmentArea(false);
+      setDisplayLinkGuidelines(false);
       return;
     }
     updateElementsById({
@@ -283,8 +283,8 @@ function MultiSelectionMovable({ selectedElements }) {
           setTransformStyle(element.id, target, sFrame);
           if (pageHasAttachment && element.link?.url) {
             if (!invalidPositionFound) {
-              invalidPositionFound = isLinkInAttachmentArea(target);
-              setHasLinkInAttachmentArea(invalidPositionFound);
+              invalidPositionFound = isElementInAttachmentArea(target);
+              setDisplayLinkGuidelines(invalidPositionFound);
             }
           }
         });
@@ -315,8 +315,8 @@ function MultiSelectionMovable({ selectedElements }) {
           setTransformStyle(element.id, target, sFrame);
           if (pageHasAttachment && element.link?.url) {
             if (!invalidPositionFound) {
-              invalidPositionFound = isLinkInAttachmentArea(target);
-              setHasLinkInAttachmentArea(invalidPositionFound);
+              invalidPositionFound = isElementInAttachmentArea(target);
+              setDisplayLinkGuidelines(invalidPositionFound);
             }
           }
         });
@@ -362,8 +362,8 @@ function MultiSelectionMovable({ selectedElements }) {
           setTransformStyle(element.id, target, sFrame);
           if (pageHasAttachment && element.link?.url) {
             if (!invalidPositionFound) {
-              invalidPositionFound = isLinkInAttachmentArea(target);
-              setHasLinkInAttachmentArea(invalidPositionFound);
+              invalidPositionFound = isElementInAttachmentArea(target);
+              setDisplayLinkGuidelines(invalidPositionFound);
             }
           }
         });

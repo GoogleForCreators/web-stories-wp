@@ -52,7 +52,7 @@ function useElementsWithLinks() {
     });
   }, [nodesById, elementsWithLinks, pageAttachmentContainer]);
 
-  const isLinkInAttachmentArea = useCallback(
+  const isElementInAttachmentArea = useCallback(
     (node) => {
       if (!pageAttachmentContainer) {
         return false;
@@ -66,7 +66,7 @@ function useElementsWithLinks() {
   return {
     elementsWithLinks,
     getElementsInAttachmentArea,
-    isLinkInAttachmentArea,
+    isElementInAttachmentArea,
   };
 }
 

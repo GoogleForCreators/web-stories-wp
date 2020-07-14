@@ -80,7 +80,7 @@ describe('singleSelectionMovable', () => {
         fullbleedContainer: document.body,
       },
       actions: {
-        setHasLinkInAttachmentArea: jest.fn(),
+        setDisplayLinkGuidelines: jest.fn(),
       },
     };
   });

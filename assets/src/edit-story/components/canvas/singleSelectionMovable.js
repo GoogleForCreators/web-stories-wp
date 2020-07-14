@@ -60,7 +60,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     canvasHeight,
     nodesById,
     fullbleedContainer,
-    setHasLinkInAttachmentArea,
+    setDisplayLinkGuidelines,
   } = useCanvas(
     ({
       state: {
@@ -68,13 +68,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         nodesById,
         fullbleedContainer,
       },
-      actions: { setHasLinkInAttachmentArea },
+      actions: { setDisplayLinkGuidelines },
     }) => ({
       canvasWidth,
       canvasHeight,
       nodesById,
       fullbleedContainer,
-      setHasLinkInAttachmentArea,
+      setDisplayLinkGuidelines,
     })
   );
   const {
@@ -144,7 +144,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     moveable.current.updateRect();
   });
 
-  const { isLinkInAttachmentArea } = useElementsWithLinks();
+  const { isElementInAttachmentArea } = useElementsWithLinks();
   const isLink = Boolean(selectedElement.link?.url);
   const pageHasAttachment = Boolean(
     currentPage.pageAttachment?.url?.length > 0
@@ -154,13 +154,13 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     if (!pageHasAttachment || !isLink) {
       return false;
     }
-    if (isLinkInAttachmentArea(target)) {
+    if (isElementInAttachmentArea(target)) {
       if (isDragging) {
         resetDragging(target);
       } else {
         resetMoveable(target);
       }
-      setHasLinkInAttachmentArea(false);
+      setDisplayLinkGuidelines(false);
       return true;
     }
     return false;
@@ -284,7 +284,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           );
         }
         if (pageHasAttachment) {
-          setHasLinkInAttachmentArea(isLink && isLinkInAttachmentArea(target));
+          setDisplayLinkGuidelines(isLink && isElementInAttachmentArea(target));
         }
       }}
       throttleDrag={0}
@@ -368,7 +368,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         frame.updates = updates;
         setTransformStyle(target);
         if (pageHasAttachment) {
-          setHasLinkInAttachmentArea(isLink && isLinkInAttachmentArea(target));
+          setDisplayLinkGuidelines(isLink && isElementInAttachmentArea(target));
         }
       }}
       onResizeEnd={({ target }) => {
@@ -412,7 +412,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         frame.rotate = ((beforeRotate % 360) + 360) % 360;
         setTransformStyle(target);
         if (pageHasAttachment) {
-          setHasLinkInAttachmentArea(isLink && isLinkInAttachmentArea(target));
+          setDisplayLinkGuidelines(isLink && isElementInAttachmentArea(target));
         }
       }}
       onRotateEnd={({ target }) => {

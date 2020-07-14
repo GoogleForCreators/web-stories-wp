@@ -120,11 +120,11 @@ const spacing = { x: 8 };
 
 function PageAttachment({ pageAttachment = {} }) {
   const {
-    hasLinkInAttachmentArea,
+    displayLinkGuidelines,
     pageAttachmentContainer,
     setPageAttachmentContainer,
   } = useCanvas((state) => ({
-    hasLinkInAttachmentArea: state.state.hasLinkInAttachmentArea,
+    displayLinkGuidelines: state.state.displayLinkGuidelines,
     pageAttachmentContainer: state.state.pageAttachmentContainer,
     setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
   }));
@@ -134,7 +134,7 @@ function PageAttachment({ pageAttachment = {} }) {
   const { ctaText = __('Learn more', 'web-stories'), url } = pageAttachment;
   return (
     <>
-      {hasLinkInAttachmentArea && <Guideline />}
+      {displayLinkGuidelines && <Guideline />}
       <Wrapper role="presentation" ref={setPageAttachmentContainer}>
         {url?.length > 0 && (
           <>
@@ -145,7 +145,7 @@ function PageAttachment({ pageAttachment = {} }) {
             <TextWrapper>{ctaText}</TextWrapper>
             {pageAttachmentContainer &&
               isAnythingTransforming &&
-              hasLinkInAttachmentArea && (
+              displayLinkGuidelines && (
                 <Popup
                   anchor={{ current: pageAttachmentContainer }}
                   isOpen={true}
