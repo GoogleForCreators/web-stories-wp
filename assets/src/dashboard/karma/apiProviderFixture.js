@@ -26,16 +26,16 @@ import moment from 'moment';
 import { useMemo, useState } from 'react';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
-import { defaultTemplatesState } from '../app/reducer/templates';
 import formattedUsersObject from '../dataUtils/formattedUsersObject';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
+import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
   const [stories, setStoriesState] = useState(getStoriesState());
-  const [templates] = useState(defaultTemplatesState);
+  const [templates, setTemplatesState] = useState(getTemplatesState());
   const [users] = useState(formattedUsersObject);
 
   const storyApi = useMemo(
@@ -58,7 +58,10 @@ export default function ApiProviderFixture({ children }) {
       bookmarkTemplateById: jasmine.createSpy('bookmarkTemplateById'),
       createTemplateFromStory: jasmine.createSpy('createTemplateFromStory'),
       fetchBookmarkedTemplates: jasmine.createSpy('fetchBookmarkedTemplates'),
-      fetchExternalTemplates: jasmine.createSpy('fetchExternalTemplates'),
+      fetchExternalTemplates: () =>
+        setTemplatesState((currentState) =>
+          fetchExternalTemplates(currentState)
+        ),
       fetchExternalTemplateById: jasmine.createSpy('fetchExternalTemplateById'),
       fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
       fetchMyTemplateById: jasmine.createSpy('fetchMyTemplateById'),
@@ -264,4 +267,27 @@ function getTotalStoriesByStatus(stories = []) {
       published: 0,
     }
   );
+}
+
+function getTemplatesState() {
+  const copiedTemplates = [...formattedTemplatesArray];
+  return {
+    allPagesFetched: true,
+    error: {},
+    isLoading: false,
+    savedTemplates: {},
+    savedTemplatesOrderById: [],
+    templates: copiedTemplates.reduce((acc, curr) => {
+      acc[curr.id] = curr;
+
+      return acc;
+    }, {}),
+    templatesOrderById: copiedTemplates.map(({ id }) => id),
+    totalTemplates: copiedTemplates.length,
+    totalPages: 1,
+  };
+}
+
+function fetchExternalTemplates(currentState) {
+  return { ...currentState };
 }

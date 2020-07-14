@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
+import { within } from '@testing-library/react';
 import Fixture from '../../../../karma/fixture';
+import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 
 describe('My Stories View integration', () => {
   let fixture;
@@ -26,12 +31,26 @@ describe('My Stories View integration', () => {
     fixture = new Fixture();
     await fixture.render();
 
-    await navigateToExploreTemplates(fixture);
+    await navigateToExploreTemplates();
   });
 
   afterEach(() => {
     fixture.restore();
   });
+
+  function navigateToExploreTemplates() {
+    const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
+      name: /^Explore Templates$/,
+    });
+
+    return fixture.events.click(exploreTemplatesMenuItem);
+  }
+
+  function getTemplateElementById(id) {
+    const template = fixture.screen.getByTestId(`template-grid-item-${id}`);
+
+    return template;
+  }
 
   it('should render', () => {
     const viewTemplates = fixture.screen.queryByText('Viewing all templates');
@@ -50,12 +69,22 @@ describe('My Stories View integration', () => {
 
     expect(viewStories).toBeTruthy();
   });
-});
 
-function navigateToExploreTemplates(fixture) {
-  const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-    name: /^Explore Templates$/,
+  it('should display "View" and "Use Template" controls when hovering over a template', async () => {
+    const firstTemplate = getTemplateElementById(10);
+
+    const utils = within(firstTemplate);
+
+    await fixture.events.hover(firstTemplate);
+
+    const view = utils.getByText(
+      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+    );
+
+    expect(view).toBeTruthy();
+
+    const useTemplate = utils.getByRole('button', { name: /^Use template$/ });
+
+    expect(useTemplate).toBeTruthy();
   });
-
-  return fixture.events.click(exploreTemplatesMenuItem);
-}
+});
