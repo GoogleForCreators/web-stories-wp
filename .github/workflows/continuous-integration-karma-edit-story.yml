@@ -57,3 +57,47 @@ jobs:
           flags: '--config=percy.config.yml'
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
+      - name: Upload CUJ coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: cuj-coverage-edit-story
+          path: build/cuj-coverage-edit-story.md
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+  deploy-cuj-coverage:
+    name: Deploy CUJ Coverage
+    needs: [karma]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+  
+      - name: Download coverage file
+        uses: actions/download-artifact@v2
+        with:
+          name: cuj-coverage-edit-story
+
+      - name: Move file
+        run: |
+          mkdir -p critical-user-journeys
+          rm -rf critical-user-journeys/editor.md
+          mv cuj-coverage-edit-story.md critical-user-journeys/editor.md
+
+      - name: Commit updates
+        run: |
+          git add .
+          git status
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
+          git commit -m "Deploy CUJ coverage for ${{ github.sha }}"
+          git pull --no-edit --quiet
+          git push origin gh-pages
+        env:
+          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_COMMITTER_NAME: ${{ github.actor }}
