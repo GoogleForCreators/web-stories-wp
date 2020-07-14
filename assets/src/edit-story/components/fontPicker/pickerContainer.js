@@ -188,10 +188,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
 
   useFocusOut(ref, onClose, [onClose]);
 
-  // Scroll to offset for current value
-  const [currentOffset, setCurrentOffset] = useState(
-    fonts.findIndex(({ name }) => name === value)
-  );
+  const [currentOffset, setCurrentOffset] = useState(0);
 
   const [updateMatchingFonts] = useDebouncedCallback(
     () => {
