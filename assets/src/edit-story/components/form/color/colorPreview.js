@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
-import { parseToRgb } from 'polished';
+import { parseToRgb, getLuminance } from 'polished';
 
 /**
  * WordPress dependencies
@@ -82,8 +82,12 @@ const VisualPreview = styled.div`
 `;
 
 const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
-  border-radius: 4px 0 0 4px;
   ${buttonStyle}
+  border-radius: 4px 0 0 4px;
+  border-color: ${({ color, theme }) =>
+    getLuminance(color) > 0.2
+      ? theme.colors.bg.v1
+      : theme.colors.whiteout} !important;
 `;
 
 const VisualPreviewInsideButton = styled(VisualPreview)`
@@ -213,7 +217,10 @@ function ColorPreview({
         // If editable, only the visual preview component is a button
         // And the text is an input field
         <Preview ref={previewRef}>
-          <VisualPreviewButton {...buttonProps}>
+          <VisualPreviewButton
+            {...buttonProps}
+            color={previewStyle?.backgroundColor}
+          >
             {value.a < 1 && <Transparent />}
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewButton>
