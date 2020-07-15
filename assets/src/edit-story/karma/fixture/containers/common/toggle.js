@@ -17,19 +17,24 @@
 /**
  * Internal dependencies
  */
-export * from '../common/actions';
-import * as types from './types';
+import { Container } from '../container';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
+/**
+ * An icon-based toggle, that is either on or off and is surrounded by a label
+ * acting as the button to trigger it. The actual toggle element (the
+ * `<input type="checkbox" />`) is visually hidden so any mouse-user would
+ * click the surrounding label rather than the input.
+ */
+export class Toggle extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
 
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
-};
+  get checked() {
+    return this.node.checked;
+  }
+
+  get button() {
+    return this.node.closest('label');
+  }
+}

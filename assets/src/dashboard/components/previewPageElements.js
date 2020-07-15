@@ -15,21 +15,30 @@
  */
 
 /**
+ * External dependencies
+ */
+import { memo } from 'react';
+
+/**
  * Internal dependencies
  */
-export * from '../common/actions';
-import * as types from './types';
+import DisplayElement from '../../edit-story/components/canvas/displayElement';
+import StoryPropTypes from '../../edit-story/types';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
+function PreviewPageElements({ page }) {
+  return page.elements.map(({ id, ...rest }) => (
+    <DisplayElement
+      previewMode
+      key={id}
+      page={page}
+      element={{ id, ...rest }}
+      isAnimatable
+    />
+  ));
+}
+
+PreviewPageElements.propTypes = {
+  page: StoryPropTypes.page.isRequired,
 };
 
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
-};
+export default memo(PreviewPageElements);
