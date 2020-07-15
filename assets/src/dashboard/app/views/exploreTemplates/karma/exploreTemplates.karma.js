@@ -21,8 +21,10 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
+import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import { ApiContext } from '../../../api/apiProvider';
 
 describe('My Stories View integration', () => {
   let fixture;
@@ -52,6 +54,48 @@ describe('My Stories View integration', () => {
     return template;
   }
 
+  async function getTemplatesState() {
+    const {
+      state: { templates },
+    } = await fixture.renderHook(() => useContext(ApiContext));
+    return templates;
+  }
+
+  async function focusOnFirstTemplate() {
+    // Four tabs will bring focus to the first element in the template grid
+    await fixture.events.keyboard.seq(({ press }) => [
+      press('tab'),
+      press('tab'),
+      press('tab'),
+      press('tab'),
+    ]);
+  }
+
+  async function focusOnTemplateById(id) {
+    const { templatesOrderById } = await getTemplatesState();
+    const index = templatesOrderById.indexOf(id);
+    const firstTemplate = await getTemplateElementById(templatesOrderById[0]);
+
+    if (index === -1) {
+      throw new Error('template not found with id of: ' + id);
+    }
+
+    if (!firstTemplate.contains(document.activeElement)) {
+      await focusOnFirstTemplate();
+    }
+
+    if (index === 0) {
+      return;
+    }
+
+    await fixture.events.keyboard.seq(({ press }) =>
+      Array.from(new Array(index), () => [press('tab'), press('tab')]).reduce(
+        (acc, curr) => acc.concat(curr),
+        []
+      )
+    );
+  }
+
   it('should render', () => {
     const viewTemplates = fixture.screen.queryByText('Viewing all templates');
 
@@ -71,7 +115,8 @@ describe('My Stories View integration', () => {
   });
 
   it('should display "View" and "Use Template" controls when hovering over a template', async () => {
-    const firstTemplate = getTemplateElementById(10);
+    const { templatesOrderById } = await getTemplatesState();
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
 
     const utils = within(firstTemplate);
 
@@ -86,5 +131,22 @@ describe('My Stories View integration', () => {
     const useTemplate = utils.getByRole('button', { name: /^Use template$/ });
 
     expect(useTemplate).toBeTruthy();
+  });
+
+  it('should change focus as the user presses tab', async () => {
+    const { templates, templatesOrderById } = await getTemplatesState();
+    const firstTemplate = getTemplateElementById(
+      templates[templatesOrderById[0]].id
+    );
+
+    // focus on first template
+    await focusOnFirstTemplate();
+    expect(firstTemplate.contains(document.activeElement)).toBeTrue();
+
+    // focus on last template
+    const lastTemplateId = templatesOrderById[templatesOrderById.length - 1];
+    const lastTemplate = await getTemplateElementById(lastTemplateId);
+    await focusOnTemplateById(lastTemplateId);
+    expect(lastTemplate.contains(document.activeElement)).toBeTrue();
   });
 });
