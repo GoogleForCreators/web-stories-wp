@@ -108,10 +108,31 @@ class Activation_Notice {
 	 * @return array Script settings.
 	 */
 	protected function get_script_settings() {
+		$new_story_url = admin_url(
+			add_query_arg(
+				[
+					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				],
+				'post-new.php'
+			)
+		);
+
+		$dashboard_url = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard',
+			],
+			admin_url( 'edit.php' )
+		);
+
 		return [
 			'id'     => 'web-stories-plugin-activation-notice',
 			'config' => [
-				'isRTL' => is_rtl(),
+				'isRTL'        => is_rtl(),
+				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'demoStoryURL' => '#',
+				'newStoryURL'  => $new_story_url,
+				'dashboardURL' => $dashboard_url,
 			],
 		];
 	}
