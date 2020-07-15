@@ -93,7 +93,7 @@ class Activation_Notice {
 			WEBSTORIES_VERSION
 		);
 
-		$this->enqueue_script( self::SCRIPT_HANDLE );
+		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
