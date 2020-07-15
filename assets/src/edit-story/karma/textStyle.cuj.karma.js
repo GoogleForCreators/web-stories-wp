@@ -14,12 +14,57 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import useInsertElement from '../components/canvas/useInsertElement';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
+import { Fixture } from './fixture';
+
 describe('CUJ: Creator Can Style Text', () => {
+  let fixture;
+  let frame;
+
+  const addText = async (extraProps = null) => {
+    const insertElement = await fixture.renderHook(() => useInsertElement());
+    const element = await fixture.act(() =>
+      insertElement('text', {
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        content: 'hello world!',
+        x: 40,
+        y: 40,
+        width: 250,
+        ...extraProps,
+      })
+    );
+    frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
+  };
+
+  beforeEach(async () => {
+    fixture = new Fixture();
+    await fixture.render();
+    await addText();
+    // Select the added text by default.
+    const { x, y, width, height } = frame.getBoundingClientRect();
+    await fixture.events.mouse.click(x + width / 2, y + height / 2);
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
   describe('Action: Use font picker', () => {
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('it should display as expected when open', () => {
-      // @todo Add snapshot.
+    const openFontPicker = async () => {
+      const input = fixture.screen.getByLabelText('Edit: Font family');
+      await fixture.events.click(input);
+    };
+
+    beforeEach(async () => {
+      await openFontPicker();
+    });
+
+    it('it should render the font picker', async () => {
+      await fixture.snapshot();
     });
 
     // Disable reason: Not implemented yet
