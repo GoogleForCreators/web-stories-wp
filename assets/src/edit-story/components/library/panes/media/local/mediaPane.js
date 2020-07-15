@@ -18,13 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -54,7 +48,7 @@ import {
   SearchInputContainer,
   StyledPane,
 } from '../common/styles';
-import MediaGallery from '../common/mediaGallery';
+import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import { ProviderType } from '../common/providerType';
 import paneId from './paneId';
 
@@ -68,16 +62,6 @@ const ColumnContainer = styled.div`
   overflow: auto;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
-`;
-
-const RowContainer = styled.div`
-  display: grid;
-  grid-area: infinitescroll;
-  overflow: auto;
-  grid-template-columns: 1fr;
-  padding: 0 1.5em 0 1.5em;
-  margin-top: 1em;
-  position: relative;
 `;
 
 const Column = styled.div`
@@ -286,6 +270,9 @@ function MediaPane(props) {
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, refContainer]);
 
+  // NOTE: This infinite scrolling logic is used by the Column-based gallery.
+  // The row-based PaginatedMediaGallery has its own pagination logic and
+  // doesn't get affected by this code (it doesn't have `refContainerFooter`).
   const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
@@ -311,54 +298,17 @@ function MediaPane(props) {
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
-  const [handleScroll] = useDebouncedCallback(
-    (e) => {
-      if (!hasMore || !isMediaLoaded || isMediaLoading) {
-        return;
-      }
-      // This rootMargin is added so that we load an extra page when the
-      // we are "close" to the bottom of the container, even if it's not
-      // yet visible.
-      const bottom =
-        e.target.scrollHeight - e.target.scrollTop <=
-        e.target.clientHeight + ROOT_MARGIN;
-      if (bottom) {
-        setNextPage();
-      }
-    },
-    500,
-    [hasMore, isMediaLoaded, isMediaLoading, setNextPage]
-  );
-
-  useEffect(() => {
-    const node = refContainer.current;
-    if (!node) {
-      return undefined;
-    }
-    // And when scroll changes (but debounced)
-    node.addEventListener('scroll', handleScroll);
-    return () => node.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  // TODO(#3160): Update MediaPane to use PaginatedMediaGallery
   const mediaLibrary = isRowBasedGallery ? (
     // Arranges elements in rows.
-    <RowContainer
-      data-testid="mediaLibrary"
-      onScroll={handleScroll}
-      ref={refCallbackContainer}
-    >
-      <MediaGallery
-        resources={resources}
-        onInsert={insertMediaElement}
-        providerType={ProviderType.LOCAL}
-      />
-      {hasMore && (
-        <MediaGalleryLoadingPill>
-          {__('Loading…', 'web-stories')}
-        </MediaGalleryLoadingPill>
-      )}
-    </RowContainer>
+    <PaginatedMediaGallery
+      providerType={ProviderType.LOCAL}
+      resources={resources}
+      isMediaLoading={isMediaLoading}
+      isMediaLoaded={isMediaLoaded}
+      hasMore={hasMore}
+      onInsert={insertMediaElement}
+      setNextPage={setNextPage}
+    />
   ) : (
     // Arranges elements in columns.
     <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>

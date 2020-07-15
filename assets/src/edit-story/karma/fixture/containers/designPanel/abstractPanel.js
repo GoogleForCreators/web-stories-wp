@@ -17,19 +17,24 @@
 /**
  * Internal dependencies
  */
-export * from '../common/actions';
-import * as types from './types';
+import { Container } from '../container';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
+/**
+ * An abstract panel supporting properties that all panels have -
+ * such as title and collapsed status.
+ */
+export class AbstractPanel extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
 
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
-};
+  get title() {
+    // @todo: implement
+    return null;
+  }
+
+  get isCollapsed() {
+    // @todo: implement
+    return null;
+  }
+}

@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -39,7 +39,10 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
+  const [hasTitle, setHasTitle] = useState(false);
   const [manuallyChanged, setManuallyChanged] = useState(false);
+
+  const confirmTitle = useCallback(() => setHasTitle(true), []);
 
   const collapse = useCallback(() => {
     if (!canCollapse) {
@@ -101,6 +104,7 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   }, [expand, isCollapsed]);
 
   const panelContentId = `panel-${name}-${uuidv4()}`;
+  const panelTitleId = `panel-title-${name}-${uuidv4()}`;
 
   const contextValue = {
     state: {
@@ -108,6 +112,7 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
       resizeable,
       isCollapsed,
       panelContentId,
+      panelTitleId,
     },
     actions: {
       setHeight: manuallySetHeight,
@@ -115,13 +120,19 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
       collapse,
       expand,
       resetHeight,
+      confirmTitle,
     },
   };
 
   const ContextProvider = panelContext.Provider;
 
+  const wrapperProps = useMemo(
+    () => (hasTitle ? { 'aria-labelledby': panelTitleId } : {}),
+    [hasTitle, panelTitleId]
+  );
+
   return (
-    <Wrapper>
+    <Wrapper {...wrapperProps}>
       <ContextProvider value={contextValue}>{children}</ContextProvider>
     </Wrapper>
   );

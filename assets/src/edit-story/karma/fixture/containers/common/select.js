@@ -17,19 +17,33 @@
 /**
  * Internal dependencies
  */
-export * from '../common/actions';
-import * as types from './types';
+import { Container } from '../container';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
+/**
+ * The select dropdown, which is actually just a button that open a popup
+ * containing the actual dropdown options.
+ */
+export class Select extends Container {
+  constructor(node, path) {
+    super(node, path);
+    this.name = this.node.getAttribute('aria-label');
+  }
 
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
-};
+  get select() {
+    return this.node;
+  }
+
+  get value() {
+    return this.node.innerText;
+  }
+
+  get optionList() {
+    return this.getByRoleIn(this.node.ownerDocument, 'listbox', {
+      name: this.name,
+    });
+  }
+
+  option(name) {
+    return this.getByRoleIn(this.optionList, 'option', { name });
+  }
+}

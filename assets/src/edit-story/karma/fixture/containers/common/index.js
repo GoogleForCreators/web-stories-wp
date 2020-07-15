@@ -17,19 +17,6 @@
 /**
  * Internal dependencies
  */
-export * from '../common/actions';
-import * as types from './types';
-
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
-
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
-};
+export { Toggle } from './toggle';
+export { Select } from './select';
+export { Color } from './color';

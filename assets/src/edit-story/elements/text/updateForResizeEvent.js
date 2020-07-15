@@ -21,7 +21,7 @@ import {
   calculateFitTextFontSize,
   calculateTextHeight,
 } from '../../utils/textMeasurements';
-import { dataPixels } from '../../units/dimensions';
+import { dataPixels } from '../../units';
 
 function updateForResizeEvent(element, direction, newWidth, newHeight) {
   const isResizingWidth = direction[0] !== 0;
