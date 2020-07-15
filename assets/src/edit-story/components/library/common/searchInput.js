@@ -59,7 +59,7 @@ const CloseIcon = styled(Close)`
  * @param {Object} obj The options for the component.
  * @param {string} obj.initialValue The initial value to populate the input with.
  * @param {string} obj.placeholder A placeholder text to show when it's empty.
- * @param {string } obj.onSearch Callback to call when a search is triggered.
+ * @param {Function} obj.onSearch Callback to call when a search is triggered.
  * @param {boolean} obj.disabled Whether the input should be shown as disabled.
  * @param {boolean} obj.autoSearch If `autoSearch` is false, a search is triggered
  * when the user presses enter, or when they clear the input.
