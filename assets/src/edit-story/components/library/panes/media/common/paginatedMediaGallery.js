@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import React, { memo, useLayoutEffect, useRef, useState } from 'react';
+import React, { memo, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,12 +30,13 @@ import { __ } from '@wordpress/i18n';
  */
 import MediaGallery from '../common/mediaGallery';
 import useIntersectionEffect from '../../../../../utils/useIntersectionEffect';
+import useAddScrollbarWidth from '../../../../../utils/useAddScrollbarWidth';
 import {
   MediaGalleryContainer,
   MediaGalleryInnerContainer,
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
-} from '../common/styles';
+} from './styles';
 
 const ROOT_MARGIN = 300;
 
@@ -48,34 +49,8 @@ function PaginatedMediaGallery({
   onInsert,
   setNextPage,
 }) {
-  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-  // State and callback ref necessary to recalculate the padding of the list
-  // given the scrollbar width.
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-    setScrollbarWidth(element.offsetWidth - element.clientWidth);
-  };
-
-  // Recalculates padding so that it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
-  useLayoutEffect(() => {
-    if (!scrollbarWidth) {
-      return;
-    }
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
-    );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
+  const refCallbackContainer = useAddScrollbarWidth(refContainer);
 
   const refContainerFooter = useRef();
   useIntersectionEffect(

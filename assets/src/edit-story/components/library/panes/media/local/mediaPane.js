@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -50,6 +50,7 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import { ProviderType } from '../common/providerType';
+import useAddScrollbarWidth from '../../../../../utils/useAddScrollbarWidth';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -240,35 +241,8 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-
-  // State and callback ref necessary to recalculate the padding of the list
-  //  given the scrollbar width.
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-    setScrollbarWidth(element.offsetWidth - element.clientWidth);
-  };
-
-  // Recalculates padding of Media Pane so it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
-  useLayoutEffect(() => {
-    if (!scrollbarWidth) {
-      return;
-    }
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
-    );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
+  const refCallbackContainer = useAddScrollbarWidth(refContainer);
 
   // NOTE: This infinite scrolling logic is used by the Column-based gallery.
   // The row-based PaginatedMediaGallery has its own pagination logic and
