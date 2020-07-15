@@ -23,7 +23,7 @@ import { format } from '@wordpress/date';
 /**
  * External dependencies
  */
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
@@ -45,14 +45,15 @@ export function getTimeSensitiveDisplayDate(
   if (!date) {
     return '';
   }
-  console.log('date formatting: ', dateFormatting);
-  const displayDate = moment.isMoment(date) ? date : moment(date);
+  // Here we need to make sure we use parseZone to honor existing timezone data
+  // https://momentjs.com/guides/#/parsing/
+  const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
 
   if (isToday(displayDate)) {
     return getTimeFromNow(displayDate, dateFormatting);
   } else if (isYesterday(displayDate)) {
     return __('yesterday', 'web-stories');
   }
-
+  // todo format without wordpress
   return format(dateFormatting?.dateFormat, displayDate);
 }
