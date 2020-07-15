@@ -81,7 +81,7 @@ export default function SearchInput({
   const [localValue, setLocalValue] = useState(initialValue);
 
   /**
-   * Effectively performs a search, triggered at most every 500ms.
+   * Effectively performs a search, triggered at most every `delayMs`.
    */
   const [changeSearchTermDebounced] = useDebouncedCallback(() => {
     onSearch(localValue);
