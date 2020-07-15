@@ -491,7 +491,12 @@ class APIProviderFixture {
       );
 
       const getLinkMetadata = useCallback(
-        () => jasmine.createSpy('getLinkMetadata'),
+        () =>
+          asyncResponse({
+            url: 'https://example.com',
+            title: 'Example Site',
+            image: 'example.jpg',
+          }),
         []
       );
 
