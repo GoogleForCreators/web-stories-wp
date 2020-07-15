@@ -117,12 +117,14 @@ class Activation_Notice {
 			)
 		);
 
-		$dashboard_url = add_query_arg(
-			[
-				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
-				'page'      => 'stories-dashboard',
-			],
-			admin_url( 'edit.php' )
+		$dashboard_url = admin_url(
+				add_query_arg(
+				[
+					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+					'page'      => 'stories-dashboard',
+				],
+				'edit.php'
+			)
 		);
 
 		return [
