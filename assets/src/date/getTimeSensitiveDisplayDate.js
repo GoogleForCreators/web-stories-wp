@@ -45,7 +45,9 @@ export function getTimeSensitiveDisplayDate(
   if (!date) {
     return '';
   }
+  console.log('date formatting: ', dateFormatting);
   const displayDate = moment.isMoment(date) ? date : moment(date);
+
   if (isToday(displayDate)) {
     return getTimeFromNow(displayDate, dateFormatting);
   } else if (isYesterday(displayDate)) {
