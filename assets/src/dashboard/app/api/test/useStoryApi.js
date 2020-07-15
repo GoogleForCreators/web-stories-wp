@@ -22,7 +22,7 @@ import moment from 'moment';
 /**
  * Internal dependencies
  */
-import { reshapeStoryObject } from '../useStoryApi';
+import reshapeStoryObject from '../../serializers/stories';
 
 describe('reshapeStoryObject', () => {
   it('should reshape the response object with a Moment date', () => {
