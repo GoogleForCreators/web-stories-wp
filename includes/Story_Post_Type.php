@@ -465,6 +465,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-06-30
 				 */
 				'rowBasedGallery'              => false,
+				/**
+				 * Description: Flag for using an as-you-type search in media3p with a debouncer.
+				 * Author: @diegovar
+				 * Issue: #3206
+				 * Creation date: 2020-07-15
+				 */
+				'autoSearchDebounceMedia3p'    => false,
 			],
 
 		];
