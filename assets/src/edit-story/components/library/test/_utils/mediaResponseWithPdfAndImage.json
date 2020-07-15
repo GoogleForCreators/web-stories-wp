@@ -67,8 +67,8 @@
     "source_url": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf",
     "missing_image_sizes": [],
     "_links": {
-      "self": [{ "href": "http://localhost:8899/wp-json/wp/v2/media/775" }],
-      "collection": [{ "href": "http://localhost:8899/wp-json/wp/v2/media" }],
+      "self": [{ "href": "http://localhost:8899/wp-json/web-stories/v1/media/775" }],
+      "collection": [{ "href": "http://localhost:8899/wp-json/web-stories/v1/media" }],
       "about": [
         { "href": "http://localhost:8899/wp-json/wp/v2/types/attachment" }
       ],
@@ -85,10 +85,10 @@
         }
       ],
       "wp:action-unfiltered-html": [
-        { "href": "http://localhost:8899/wp-json/wp/v2/media/775" }
+        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/775" }
       ],
       "wp:action-assign-author": [
-        { "href": "http://localhost:8899/wp-json/wp/v2/media/775" }
+        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/775" }
       ],
       "curies": [
         { "name": "wp", "href": "https://api.w.org/{rel}", "templated": true }
@@ -215,8 +215,8 @@
     "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg",
     "missing_image_sizes": [],
     "_links": {
-      "self": [{ "href": "http://localhost:8899/wp-json/wp/v2/media/768" }],
-      "collection": [{ "href": "http://localhost:8899/wp-json/wp/v2/media" }],
+      "self": [{ "href": "http://localhost:8899/wp-json/web-stories/v1/media/768" }],
+      "collection": [{ "href": "http://localhost:8899/wp-json/web-stories/v1/media" }],
       "about": [
         { "href": "http://localhost:8899/wp-json/wp/v2/types/attachment" }
       ],
@@ -233,10 +233,10 @@
         }
       ],
       "wp:action-unfiltered-html": [
-        { "href": "http://localhost:8899/wp-json/wp/v2/media/768" }
+        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/768" }
       ],
       "wp:action-assign-author": [
-        { "href": "http://localhost:8899/wp-json/wp/v2/media/768" }
+        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/768" }
       ],
       "curies": [
         { "name": "wp", "href": "https://api.w.org/{rel}", "templated": true }
