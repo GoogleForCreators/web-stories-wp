@@ -22,37 +22,38 @@ import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
 
 /**
- * Send an Analytics tracking event.
+ * Send an Analytics tracking event for clicks.
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
  *
+ * @param {MouseEvent} event The actual click event.
  * @param {string} eventCategory The event category (e.g. 'editor'). GA defaults this to 'engagement'.
- * @param {string} eventName The event name (e.g. 'search').
- * @param {string} [eventLabel] The event label (e.g. 'search_term').
- * @param {string} [eventValue] The event value (e.g. the actual search term).
+ * @param {string} url The URL to track and navigate to.
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
-async function trackEvent(
-  eventCategory,
-  eventName,
-  eventLabel = '',
-  eventValue = ''
-) {
+async function trackClick(event, eventCategory, url = '') {
   if (!isTrackingEnabled()) {
     return Promise.resolve();
   }
+
+  event.preventDefault();
+
+  const eventName = 'click';
+  const eventLabel = 'url';
 
   const eventData = {
     send_to: config.trackingId,
     event_category: eventCategory,
     event_label: eventLabel,
-    event_value: eventValue,
+    event_value: url,
     dimension1: config.siteUrl,
     dimension2: config.userIdHash,
   };
 
-  return track(eventName, eventData);
+  return track(eventName, eventData).finally(() => {
+    document.location = url;
+  });
 }
 
-export default trackEvent;
+export default trackClick;
