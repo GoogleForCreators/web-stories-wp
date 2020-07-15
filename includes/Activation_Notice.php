@@ -118,7 +118,7 @@ class Activation_Notice {
 		);
 
 		$dashboard_url = admin_url(
-				add_query_arg(
+			add_query_arg(
 				[
 					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 					'page'      => 'stories-dashboard',
