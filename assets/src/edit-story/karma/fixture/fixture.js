@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import Modal from 'react-modal';
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
 import { render, act, screen } from '@testing-library/react';
@@ -189,6 +190,7 @@ export class Fixture {
    */
   render() {
     const root = document.querySelector('test-root');
+    Modal.setAppElement(root);
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />
