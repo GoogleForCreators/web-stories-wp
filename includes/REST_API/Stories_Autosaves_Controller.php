@@ -77,6 +77,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		}
 
 		$this->parent_controller = $parent_controller;
+		$this->rest_namespace    = 'web-stories/v1';
 	}
 
 	/**
