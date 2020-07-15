@@ -19,7 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -29,7 +30,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useDebouncedCallback } from 'use-debounce';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import {
   useMedia3p,
@@ -90,21 +90,11 @@ function Media3pPane(props) {
     })
   );
 
-  // Local state so that we can debounce triggering searches.
-  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
-
   useEffect(() => {
     if (isActive) {
       setSelectedProvider({ provider: 'unsplash' });
     }
   }, [isActive, setSelectedProvider]);
-
-  /**
-   * Effectively performs a search, triggered at most every 500ms.
-   */
-  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
-    setSearchTerm({ searchTerm: searchTermValue });
-  }, 500);
 
   const {
     media,
@@ -120,15 +110,9 @@ function Media3pPane(props) {
     }) => ({ media, hasMore, isMediaLoading, isMediaLoaded, setNextPage })
   );
 
-  /**
-   * Handle search input changes. Triggers with every keystroke.
-   *
-   * @param {string} value the new search term.
-   */
-  const onSearch = (value) => {
-    setSearchTermValue(value);
-    changeSearchTermDebounced();
-  };
+  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+
+  const autoSearchDebounceMedia3p = useFeature('autoSearchDebounceMedia3p');
 
   const onProviderTabClick = useCallback(() => {
     // TODO(#2393): set state.
@@ -141,9 +125,10 @@ function Media3pPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              value={searchTermValue}
+              initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
-              onChange={onSearch}
+              onSearch={onSearch}
+              autoSearch={autoSearchDebounceMedia3p}
             />
           </SearchInputContainer>
           <ProviderTabSection>

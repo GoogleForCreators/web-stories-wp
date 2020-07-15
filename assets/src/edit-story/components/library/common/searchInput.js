@@ -19,10 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
+
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
@@ -50,17 +54,55 @@ const CloseIcon = styled(Close)`
 `;
 
 export default function SearchInput({
-  value,
+  initialValue,
   placeholder,
-  onChange,
+  onSearch,
   disabled,
+  autoSearch,
+  delayMs,
 }) {
+  // Local state so that we can debounce triggering searches.
+  const [localValue, setLocalValue] = useState(initialValue);
+
+  /**
+   * Effectively performs a search, triggered at most every 500ms.
+   */
+  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
+    onSearch(localValue);
+  }, delayMs);
+
+  /**
+   * Handle search input changes. Triggers with every keystroke.
+   *
+   * @param {string} v the new search term.
+   */
+  const onChange = (v) => {
+    setLocalValue(v);
+    // When in non-autoSearch mode, we still trigger onSearch when the search
+    // term is empty, so that the user doesn't need to press enter in that case.
+    if (!autoSearch && v !== '') {
+      return;
+    }
+    if (autoSearch && delayMs) {
+      changeSearchTermDebounced();
+    } else {
+      onSearch(v);
+    }
+  };
+
+  const onKeyDown = (e) => {
+    if (!autoSearch && e.key === 'Enter') {
+      onSearch(localValue);
+    }
+  };
+
   return (
     <SearchField>
       <Search
-        value={value}
+        value={localValue}
         placeholder={placeholder}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         disabled={disabled}
         aria-label={__('Search from library', 'web-stories')}
         clear
@@ -72,12 +114,16 @@ export default function SearchInput({
 }
 
 SearchInput.propTypes = {
-  value: PropTypes.string.isRequired,
+  initialValue: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  autoSearch: PropTypes.bool,
+  delayMs: PropTypes.number,
 };
 
 SearchInput.defaultProps = {
   disabled: false,
+  autoSearch: false,
+  delayMs: 500,
 };
