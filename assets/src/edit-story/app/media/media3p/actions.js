@@ -26,3 +26,10 @@ export const setSelectedProvider = (dispatch) => ({ provider }) => {
     payload: { provider },
   });
 };
+
+export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
+  dispatch({
+    type: types.SET_SEARCH_TERM,
+    payload: { searchTerm },
+  });
+};

@@ -17,8 +17,14 @@
 /**
  * External dependencies
  */
-import { rgba } from 'polished';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useFeature } from 'flagged';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -41,16 +47,20 @@ import {
 } from '../../../../../app/media/utils';
 import MediaElement from '../common/mediaElement';
 import {
+  MediaGalleryLoadingPill,
+  MediaGalleryMessage,
   PaneHeader,
   PaneInner,
   SearchInputContainer,
   StyledPane,
 } from '../common/styles';
+import MediaGallery from '../common/mediaGallery';
+import { ProviderType } from '../common/providerType';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
 
-const Container = styled.div`
+const ColumnContainer = styled.div`
   grid-area: infinitescroll;
   display: grid;
   grid-gap: 10px;
@@ -60,14 +70,18 @@ const Container = styled.div`
   margin-top: 1em;
 `;
 
-const Column = styled.div`
+const RowContainer = styled.div`
+  display: grid;
+  grid-area: infinitescroll;
+  overflow: auto;
+  grid-template-columns: 1fr;
+  padding: 0 1.5em 0 1.5em;
+  margin-top: 1em;
   position: relative;
 `;
 
-const Message = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 16px;
-  padding: 1em;
+const Column = styled.div`
+  position: relative;
 `;
 
 const FilterArea = styled.div`
@@ -94,19 +108,6 @@ const FilterButton = styled.button`
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
 `;
 
-const Loading = styled.div`
-  grid-column: 1 / span 2;
-  margin-bottom: 16px;
-  text-align: center;
-  padding: 8px 80px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
-  border-radius: 100px;
-  margin-top: auto;
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  font-weight: 500;
-`;
-
 const FILTERS = [
   { filter: '', name: __('All', 'web-stories') },
   { filter: 'image', name: __('Images', 'web-stories') },
@@ -116,6 +117,7 @@ const FILTERS = [
 const PREVIEW_SIZE = 150;
 
 function MediaPane(props) {
+  const isRowBasedGallery = useFeature('rowBasedGallery');
   const {
     hasMore,
     media,
@@ -304,10 +306,92 @@ function MediaPane(props) {
       if (!entry.isIntersecting) {
         return;
       }
-
       setNextPage();
     },
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
+  );
+
+  const [handleScroll] = useDebouncedCallback(
+    (e) => {
+      if (!hasMore || !isMediaLoaded || isMediaLoading) {
+        return;
+      }
+      // This rootMargin is added so that we load an extra page when the
+      // we are "close" to the bottom of the container, even if it's not
+      // yet visible.
+      const bottom =
+        e.target.scrollHeight - e.target.scrollTop <=
+        e.target.clientHeight + ROOT_MARGIN;
+      if (bottom) {
+        setNextPage();
+      }
+    },
+    500,
+    [hasMore, isMediaLoaded, isMediaLoading, setNextPage]
+  );
+
+  useEffect(() => {
+    const node = refContainer.current;
+    if (!node) {
+      return undefined;
+    }
+    // And when scroll changes (but debounced)
+    node.addEventListener('scroll', handleScroll);
+    return () => node.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  // TODO(#3160): Update MediaPane to use PaginatedMediaGallery
+  const mediaLibrary = isRowBasedGallery ? (
+    // Arranges elements in rows.
+    <RowContainer
+      data-testid="mediaLibrary"
+      onScroll={handleScroll}
+      ref={refCallbackContainer}
+    >
+      <MediaGallery
+        resources={resources}
+        onInsert={insertMediaElement}
+        providerType={ProviderType.LOCAL}
+      />
+      {hasMore && (
+        <MediaGalleryLoadingPill>
+          {__('Loading…', 'web-stories')}
+        </MediaGalleryLoadingPill>
+      )}
+    </RowContainer>
+  ) : (
+    // Arranges elements in columns.
+    <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
+      <Column>
+        {resources
+          .filter((_, index) => isEven(index))
+          .map((resource, i) => (
+            <MediaElement
+              resource={resource}
+              key={i}
+              width={PREVIEW_SIZE}
+              onInsert={insertMediaElement}
+            />
+          ))}
+      </Column>
+      <Column>
+        {resources
+          .filter((_, index) => !isEven(index))
+          .map((resource, i) => (
+            <MediaElement
+              resource={resource}
+              key={i}
+              width={PREVIEW_SIZE}
+              onInsert={insertMediaElement}
+            />
+          ))}
+      </Column>
+      {hasMore && (
+        <MediaGalleryLoadingPill ref={refContainerFooter}>
+          {__('Loading…', 'web-stories')}
+        </MediaGalleryLoadingPill>
+      )}
+    </ColumnContainer>
   );
 
   return (
@@ -340,39 +424,11 @@ function MediaPane(props) {
         </PaneHeader>
 
         {isMediaLoaded && !media.length ? (
-          <Message>{__('No media found', 'web-stories')}</Message>
+          <MediaGalleryMessage>
+            {__('No media found', 'web-stories')}
+          </MediaGalleryMessage>
         ) : (
-          <Container data-testid="mediaLibrary" ref={refCallbackContainer}>
-            <Column>
-              {resources
-                .filter((_, index) => isEven(index))
-                .map((resource, i) => (
-                  <MediaElement
-                    resource={resource}
-                    key={i}
-                    width={PREVIEW_SIZE}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            <Column>
-              {resources
-                .filter((_, index) => !isEven(index))
-                .map((resource, i) => (
-                  <MediaElement
-                    resource={resource}
-                    key={i}
-                    width={PREVIEW_SIZE}
-                    onInsert={insertMediaElement}
-                  />
-                ))}
-            </Column>
-            {hasMore && (
-              <Loading ref={refContainerFooter}>
-                {__('Loading…', 'web-stories')}
-              </Loading>
-            )}
-          </Container>
+          mediaLibrary
         )}
       </PaneInner>
     </StyledPane>

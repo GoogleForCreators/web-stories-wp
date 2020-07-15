@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
 import useFetchMediaEffect from './useFetchMediaEffect';
@@ -35,7 +40,7 @@ export default function useProviderContextValueProvider(
   reducerState,
   reducerActions
 ) {
-  const { selectedProvider } = reducerState;
+  const { selectedProvider, searchTerm } = reducerState;
   const { pageToken } = reducerState[provider];
   const {
     fetchMediaStart,
@@ -48,6 +53,7 @@ export default function useProviderContextValueProvider(
     provider,
     selectedProvider,
     pageToken,
+    searchTerm,
     fetchMediaStart,
     fetchMediaSuccess,
     fetchMediaError,
@@ -55,5 +61,11 @@ export default function useProviderContextValueProvider(
 
   return {
     state: reducerState[provider],
+    actions: {
+      setNextPage: useCallback(() => reducerActions.setNextPage({ provider }), [
+        reducerActions,
+        provider,
+      ]),
+    },
   };
 }
