@@ -101,7 +101,9 @@ describe('Media3pPane fetching', () => {
         '[data-testid=mediaElement]'
       );
       if (!mediaElements || mediaElements.length !== expectedCount) {
-        throw new Error('Not ready');
+        throw new Error(
+          `Not ready: ${mediaElements?.length} != ${expectedCount}`
+        );
       }
     });
     expect(mediaElements.length).toBe(expectedCount);
