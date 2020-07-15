@@ -78,7 +78,7 @@ describe('Font Picker', () => {
     expect(allOptionItems).toHaveLength(fontsListResponse.length);
   });
 
-  it('should mark the currently selected font and scroll to it', async () => {
+  it('should mark the currently selected font', async () => {
     scrollTo.mockReset();
     const { getByRole } = await getFontPicker();
 
@@ -158,24 +158,24 @@ describe('Font Picker', () => {
     expect(fontsList).toBeInTheDocument();
 
     // Move down by 2
-    act(() => {
+    await act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
       });
     });
-    act(() => {
+    await act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
       });
     });
 
-    act(() => {
+    await act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowUp',
       });
     });
 
-    act(() => {
+    await act(() => {
       fireEvent.keyDown(fontsList, { key: 'Enter' });
     });
 
