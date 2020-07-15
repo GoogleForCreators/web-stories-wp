@@ -45,7 +45,7 @@ const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 function Wrapper({ children }) {
   return (
-    <FlagsProvider features={{ newFontPicker: false }}>
+    <FlagsProvider features={{ newFontPicker: true }}>
       <FontContext.Provider
         value={{
           state: {
