@@ -45,11 +45,7 @@ export function generateParagraphTextStyle(
   };
 }
 
-export const generateFontFamily = (font) => {
-  if (!font) {
-    return 'inherit';
-  }
-  const { family, fallbacks } = font;
+export const generateFontFamily = ({ family, fallbacks } = {}) => {
   const genericFamilyKeywords = [
     'cursive',
     'fantasy',
@@ -58,7 +54,7 @@ export const generateFontFamily = (font) => {
     'sans-serif',
   ];
   // Wrap into " since some fonts won't work without it.
-  let fontFamilyDisplay = family ? `"${family}"` : null;
+  let fontFamilyDisplay = family ? `"${family}"` : '';
   if (fallbacks && fallbacks.length) {
     fontFamilyDisplay += family ? `,` : ``;
     fontFamilyDisplay += fallbacks
