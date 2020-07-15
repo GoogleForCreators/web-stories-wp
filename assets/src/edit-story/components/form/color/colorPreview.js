@@ -86,6 +86,12 @@ const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
   ${buttonStyle}
 `;
 
+const VisualPreviewInsideButton = styled(VisualPreview)`
+  ${KEYBOARD_USER_SELECTOR} ${PreviewButton}:focus & {
+    margin-left: -1px;
+  }
+`;
+
 const colorStyles = css`
   position: absolute;
   left: 0;
@@ -222,10 +228,10 @@ function ColorPreview({
       ) : (
         // If not editable, the whole component is a button
         <PreviewButton ref={previewRef} {...buttonProps}>
-          <VisualPreview>
+          <VisualPreviewInsideButton>
             <Transparent />
             <CurrentColor role="status" style={previewStyle} />
-          </VisualPreview>
+          </VisualPreviewInsideButton>
           <TextualPreview>
             {isMultiple
               ? __('Multiple', 'web-stories')
