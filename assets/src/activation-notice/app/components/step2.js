@@ -72,7 +72,9 @@ function Step2() {
             _x('Head to', 'plugin activation', 'web-stories')
           }
           <br />
-          <Link href={dashboardURL} onClick={onClick}>{__('Dashboard', 'web-stories')}</Link>
+          <Link href={dashboardURL} onClick={onClick}>
+            {__('Dashboard', 'web-stories')}
+          </Link>
         </Paragraph>
       </ParagraphWrapper>
       <Link href={dashboardURL} onClick={onClick}>
