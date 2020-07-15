@@ -105,7 +105,7 @@ function TextInput({
       );
     }
     if (onBlur) {
-      onBlur();
+      onBlur({ onClear: true });
     }
   };
 
