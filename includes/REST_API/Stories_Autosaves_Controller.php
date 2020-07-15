@@ -56,6 +56,13 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	private $parent_base;
 
 	/**
+	 * The base namespace.
+	 *
+	 * @var string
+	 */
+	protected $rest_namespace;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $parent_post_type Post type of the parent.
@@ -93,7 +100,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		parent::register_routes();
 
 		register_rest_route(
-			'wp/v2',
+			$this->rest_namespace,
 			'/' . $this->parent_base . '/(?P<id>[\d]+)/autosaves',
 			[
 				'args'   => [
