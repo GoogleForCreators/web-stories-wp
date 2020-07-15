@@ -24,6 +24,14 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Media_Controller
  */
 class Stories_Media_Controller extends \WP_Test_REST_TestCase {
+	/**
+	 * @var int
+	 */
+	protected static $user_id;
+
+	/**
+	 * @param $factory
+	 */
 	public static function wpSetUpBeforeClass( $factory ) {
 		$factory->attachment->create_object(
 			[
@@ -33,10 +41,17 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
+		self::$user_id = $factory->user->create(
+			[
+				'role'         => 'administrator',
+				'display_name' => 'Andrea Adams',
+			]
+		);
 	}
 
 	public static function wpTearDownAfterClass() {
-
+		self::delete_user( self::$user_id );
 	}
 
 	public function setUp() {
@@ -55,7 +70,7 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = null;
 	}
-	
+
 	/**
 	 * @covers ::get_items
 	 */
