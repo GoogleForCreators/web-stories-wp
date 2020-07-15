@@ -136,6 +136,8 @@ describe('CUJ: Editor Can Style Text', () => {
       waitFor(() => fontColor.picker);
       await data.fixture.events.click(fontColor.picker.hexButton);
       await data.fixture.events.keyboard.type('00FF00');
+      // Wait for debounce in color picker (100ms)
+      await data.fixture.events.sleep(100);
 
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');

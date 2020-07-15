@@ -95,7 +95,9 @@ function ColorPicker({
     },
   } = useColor();
 
-  const [onDebouncedChange] = useDebouncedCallback(onChange, 100);
+  const [onDebouncedChange] = useDebouncedCallback(onChange, 100, {
+    leading: true,
+  });
 
   useEffect(() => {
     if (generatedColor) {
