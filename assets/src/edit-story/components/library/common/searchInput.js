@@ -66,7 +66,7 @@ const CloseIcon = styled(Close)`
  * If `autoSearch` is true, this occurs when the text changes, optionally
  * debounced via `delayMs`.
  * @param {number} obj.delayMs The number of milliseconds to debounce an autoSearch.
- * @return {SearchInput}
+ * @return {SearchInput} The component.
  * @class
  */
 export default function SearchInput({
