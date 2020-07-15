@@ -80,6 +80,8 @@ function deactivate( $network_wide ) {
 register_activation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\deactivate' );
 
+// WEB-STORIES-DEV-CODE.
+// This block of code is removed during the build process.
 if (
 	! class_exists( '\Google\Web_Stories\Plugin' ) ||
 	! file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' )
@@ -136,6 +138,7 @@ if (
 
 	return;
 }
+// WEB-STORIES-DEV-CODE.
 
 global $web_stories;
 

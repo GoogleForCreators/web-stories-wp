@@ -19,27 +19,19 @@
  */
 import { readFileSync, writeFileSync } from 'fs';
 
-const ASSETS_URL_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_ASSETS_URL',\s*([^)]*?)\s*\);/;
+const DEV_CODE_REGEX = /\s*\/\/ WEB-STORIES-DEV-CODE[\s\S]*\/\/ WEB-STORIES-DEV-CODE\./;
 
 /**
- * Updates the assets URL.
+ * Removes dev code from a file.
  *
- * Used for loading assets from a CDN.
+ * Removes everything between `WEB-STORIES-DEV-CODE` markers.
  *
- * @param {string} pluginFile Path to the plugin file.
- * @param {string} [cdn] CDN URL to use instead of the default.
+ * @param {string} file Path to the file.
  */
-function updateAssetsURL(pluginFile, cdn) {
-  let pluginFileContent = readFileSync(pluginFile, 'utf8');
-  const versionConstant = pluginFileContent.match(ASSETS_URL_CONSTANT_REGEX);
+function removeDevCode(file) {
+  const fileContent = readFileSync(file, 'utf8');
 
-  writeFileSync(
-    pluginFile,
-    pluginFileContent.replace(
-      versionConstant[0],
-      `define( 'WEBSTORIES_ASSETS_URL', '${cdn}' );`
-    )
-  );
+  writeFileSync(file, fileContent.replace(DEV_CODE_REGEX, ''));
 }
 
-export default updateAssetsURL;
+export default removeDevCode;

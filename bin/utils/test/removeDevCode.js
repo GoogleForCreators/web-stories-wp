@@ -22,20 +22,24 @@ import { __setMockFiles, readFileSync } from 'fs';
 /**
  * Internal dependencies
  */
-import updateAssetsURL from '../updateAssetsURL';
+import removeDevCode from '../removeDevCode';
 
 jest.mock('fs');
 
-describe('updateAssetsURL', () => {
+describe('removeDevCode', () => {
   const MOCK_FILE_INFO = {
-    '/foo/plugin.php': `
+    '/foo.php': `
       <?php
       // ...
-      define( 'WEBSTORIES_VERSION', '1.0.0-alpha' );
-      define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
-      define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
-      define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
-      define( 'WEBSTORIES_ASSETS_URL', WEBSTORIES_PLUGIN_DIR_URL . '/assets' );
+      $foo = 'bar';
+
+      // WEB-STORIES-DEV-CODE.
+      // This block of code is removed during the build process.
+      $bar = 'baz';
+      // WEB-STORIES-DEV-CODE.
+
+      // ...
+      $baz = 'foo';
     `,
   };
 
@@ -43,11 +47,18 @@ describe('updateAssetsURL', () => {
     __setMockFiles(MOCK_FILE_INFO);
   });
 
-  it('replaces assets URL constant with CDN URL', () => {
-    updateAssetsURL('/foo/plugin.php', 'https://cdn.example.com/');
-    const fileContent = readFileSync('/foo/plugin.php');
-    expect(fileContent).toContain(
-      `define( 'WEBSTORIES_ASSETS_URL', 'https://cdn.example.com/' );`
+  it('removes everything between dev code markers', () => {
+    removeDevCode('/foo.php');
+    const fileContent = readFileSync('/foo.php');
+    expect(fileContent).toStrictEqual(
+      `
+      <?php
+      // ...
+      $foo = 'bar';
+
+      // ...
+      $baz = 'foo';
+    `
     );
   });
 });
