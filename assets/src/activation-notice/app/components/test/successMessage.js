@@ -32,15 +32,12 @@ function render() {
     newStoryURL: 'foo',
     demoStoryURL: 'bar',
   };
-  const { container } = renderWithTheme(
+
+  return renderWithTheme(
     <ConfigProvider config={config}>
       <SuccessMessage />
     </ConfigProvider>
   );
-
-  return {
-    container,
-  };
 }
 
 describe('SuccessMessage', () => {

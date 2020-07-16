@@ -32,15 +32,12 @@ function render() {
     newStoryURL: 'foo',
     demoStoryURL: 'bar',
   };
-  const { container } = renderWithTheme(
+
+  return renderWithTheme(
     <ConfigProvider config={config}>
       <Step3 />
     </ConfigProvider>
   );
-
-  return {
-    container,
-  };
 }
 
 describe('Step 3', () => {
