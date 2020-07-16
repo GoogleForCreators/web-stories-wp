@@ -54,7 +54,7 @@ export function reshapeTemplateObject(isLocal) {
     createdBy,
     description,
     status: 'template',
-    modified: moment(modified),
+    modified: moment.parseZone(modified),
     tags,
     colors,
     pages,
