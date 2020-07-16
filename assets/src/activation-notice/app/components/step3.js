@@ -23,7 +23,7 @@ import { useCallback } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -73,7 +73,12 @@ function Step3() {
         />
       </Link>
       <ParagraphWrapper>
-        <Number>{3}</Number>
+        <Number>
+          {
+            /* translators: Number of the step displayed in plugin activation message. */
+            _x('3', 'Step number', 'web-stories')
+          }
+        </Number>
         <Paragraph>
           <Link href={newStoryURL} onClick={onClick}>
             {__('Jump into the editor', 'web-stories')}

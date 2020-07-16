@@ -65,7 +65,12 @@ function Step2() {
   return (
     <Wrapper>
       <ParagraphWrapper>
-        <Number>{2}</Number>
+        <Number>
+          {
+            /* translators: Number of the step displayed in plugin activation message. */
+            _x('2', 'Step number', 'web-stories')
+          }
+        </Number>
         <Paragraph $secondary>
           {
             /* translators: First half of Head to the Dashboard" */

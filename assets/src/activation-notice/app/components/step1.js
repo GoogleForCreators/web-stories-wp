@@ -76,7 +76,12 @@ function Step1() {
         />
       </Link>
       <ParagraphWrapper>
-        <Number>{1}</Number>
+        <Number>
+          {
+            /* translators: Number of the step displayed in plugin activation message. */
+            _x('1', 'Step number', 'web-stories')
+          }
+        </Number>
         <Paragraph $secondary>
           {
             /* translators: First half of "Read the Get Started story" */
