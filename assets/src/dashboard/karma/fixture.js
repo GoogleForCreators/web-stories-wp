@@ -20,6 +20,7 @@
 import React from 'react';
 import { FlagsProvider } from 'flagged';
 import { act, render, screen } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -147,6 +148,10 @@ export default class Fixture {
    */
   render() {
     const root = document.querySelector('test-root');
+
+    // see http://reactcommunity.org/react-modal/accessibility/
+    Modal.setAppElement(root);
+
     const { container } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />

@@ -42,6 +42,7 @@ env:
 install:
   - nvm install
   - npm ci
+  - npx rollup --config bin/rollup.config.migrate.js
   - composer install --no-interaction
 
 script:

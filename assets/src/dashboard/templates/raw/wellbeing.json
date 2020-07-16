@@ -87,7 +87,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page1_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page1_image1.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -189,7 +189,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_icon_logo.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_icon_logo.png",
             "width": 38,
             "height": 12,
             "id": 1693,
@@ -242,7 +242,113 @@
       ],
       "type": "page",
       "id": "80cd76d6-6c52-4892-98d7-f414dbb7619e",
-      "animations": [],
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "066b148d-5e45-40d9-93a9-e6fa57d8422a",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["8dbfe563-a930-4de7-90d7-e9681be1e98e"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "943a8b96-6a9f-464f-aa55-71063a3225a5",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["8dbfe563-a930-4de7-90d7-e9681be1e98e"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1.1,
+          "id": "a27163e4-8750-4fc0-acab-380920081e7d",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["8dbfe563-a930-4de7-90d7-e9681be1e98e"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "b0d04998-f1ec-4cfa-9d58-a6ad26c913ca",
+          "duration": 1000,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["dd32270f-eb83-45ff-917b-edf80e86b024"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50",
+          "id": "9c9c08d1-cbec-494c-b0c2-195f64291904",
+          "duration": 1000,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "8b9f4705-fd93-41ad-bb6e-a47cfee940c4",
+            "a6c0478f-00b6-4b8a-87e1-681a29605708"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "56595da6-1402-47f8-9c27-5c78a3408074",
+          "duration": 1000,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "8b9f4705-fd93-41ad-bb6e-a47cfee940c4",
+            "a6c0478f-00b6-4b8a-87e1-681a29605708"
+          ]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1,
+          "zoomTo": 0.91,
+          "id": "bc838390-d0e5-44b1-80f3-e2ba89036459",
+          "duration": 5000,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["8dbfe563-a930-4de7-90d7-e9681be1e98e"]
+        },
+        {
+          "type": "spin",
+          "rotation": "10",
+          "id": "02a54d03-9a7d-497f-a757-00e1aad57fbe",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["a413ec38-e047-4458-927f-14364d513d52"]
+        }
+      ],
       "backgroundColor": {
         "color": {
           "r": 31,
@@ -527,7 +633,71 @@
           "g": 255,
           "b": 255
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "75%",
+          "id": "ed83f34f-470e-4d84-a927-590e63e8065d",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["6977e93f-f8f3-40ee-ba03-40a671211636"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "671f3af2-cd11-4262-ac73-b74b72e69883",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["6977e93f-f8f3-40ee-ba03-40a671211636"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "29397430-5b3e-4bf2-b91b-e8eafa02a2aa",
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["fbe0221c-732c-40ac-83e9-3c982aef987a"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "3eb11e6a-8355-4024-a803-c32cd472f50e",
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["643dd508-0499-4c8e-adab-b48039c98296"]
+        },
+        {
+          "type": "spin",
+          "rotation": "10",
+          "id": "145b90b7-c7e5-4b54-b214-a8a039d8c4f6",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["8d31d477-7e91-4214-b263-c72d0a726be1"]
+        }
+      ]
     },
     {
       "elements": [
@@ -588,7 +758,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page3_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page3_bg.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -815,7 +985,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
             "width": 150,
             "height": 257,
             "posterId": 0,
@@ -928,7 +1098,74 @@
           "g": 42,
           "b": 46
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "b3ba443b-257b-4e71-a333-503fba14b8c8",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["16874f25-165a-4633-90b6-61c465d9b868"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "75%",
+          "id": "1a096d24-dfee-4463-8ad6-d4e7ca70b15f",
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e4b371be-6204-493b-be2d-a94a93a0649b"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "5f2cc6cd-080a-4670-8af7-a3e4dcf8050c",
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e4b371be-6204-493b-be2d-a94a93a0649b"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "7f2593bc-01af-455a-8ce2-cdfd63402447",
+          "duration": 800,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "1806f7cf-7686-4440-ab42-e15435b15644",
+            "a05c550f-a6fd-453c-a498-7c0840c74e80",
+            "74d501d3-4f54-4348-b718-fef474c789f2"
+          ]
+        },
+        {
+          "type": "spin",
+          "rotation": "-10",
+          "id": "d7282181-53ec-4d2e-9d88-0d249ec25eca",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["89b87d99-5afb-46bd-a3aa-14225f858bac"]
+        }
+      ]
     },
     {
       "elements": [
@@ -950,7 +1187,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page4_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page4_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
@@ -1195,9 +1432,9 @@
           "id": "414d5315-c8a7-40d3-aebb-1d0362eeea9b"
         },
         {
-          "x": 74,
+          "x": 58,
           "y": 0,
-          "width": 263,
+          "width": 297,
           "height": 158,
           "opacity": 100,
           "flip": {
@@ -1273,7 +1510,61 @@
           "b": 255,
           "a": 1
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "bounce",
+          "id": "4fc9d707-a4a0-48ab-9f01-5cbf8b163577",
+          "duration": 1200,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": [
+            "ef7706f9-3cc2-4e95-bece-0933a5e03ba8",
+            "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "5e9009af-1fe5-4404-a687-7ef2f908212f",
+          "duration": 600,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["c9c064f6-310e-4d41-b85d-0be6fedc9ea4"]
+        },
+        {
+          "type": "bounce",
+          "id": "3c3a6252-4d58-49b1-a1a8-51d883139d9b",
+          "duration": 1200,
+          "delay": 50,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": [
+            "dfb406f3-649b-415b-9c58-9f0fb89bccca",
+            "70cd1c38-9462-47f4-9a12-c9585c16acc4"
+          ]
+        },
+        {
+          "type": "bounce",
+          "id": "415b428f-ffa0-48b3-a817-aa9fa2a18e32",
+          "duration": 1200,
+          "delay": 150,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": [
+            "a22243fb-a11d-493a-a04e-8b744a0d9e86",
+            "95a2a69d-7946-4fd2-97ad-7cd47fe87e04"
+          ]
+        }
+      ]
     },
     {
       "elements": [
@@ -1362,7 +1653,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page5_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page5_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -1422,7 +1713,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_icon_arrow_head_dark.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_icon_arrow_head_dark.png",
             "width": 150,
             "height": 257,
             "posterId": 0,
@@ -1451,9 +1742,9 @@
           "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
+              "r": 196,
+              "g": 196,
+              "b": 196
             }
           },
           "type": "shape",
@@ -1649,7 +1940,124 @@
           "g": 255,
           "b": 255
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "1e030933-dbab-4798-bb1c-604952068b4e",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e5936b3b-e398-4cdd-a2f5-91128b4c10b9"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "53665c6e-6a3f-40eb-97f4-92275867f00f",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e5936b3b-e398-4cdd-a2f5-91128b4c10b9"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1.1,
+          "id": "991eb3bc-a0a4-4871-8266-2c4a9e325a85",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e5936b3b-e398-4cdd-a2f5-91128b4c10b9"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1,
+          "zoomTo": 0.91,
+          "id": "d954ad31-adf6-4da3-b464-6d4dea3310de",
+          "duration": 5000,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["e5936b3b-e398-4cdd-a2f5-91128b4c10b9"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "75%",
+          "id": "b97e2933-df09-40d4-933f-a9bc67279f1e",
+          "duration": 1000,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["7db74862-4e63-4403-b085-eced23113392"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "aa68b8df-1f0f-432b-9374-4315a0c97bb9",
+          "duration": 1000,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["7db74862-4e63-4403-b085-eced23113392"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "a51c37af-5177-4ac4-9585-269734324c89",
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["456cb303-7b53-4844-8ecf-7a07e8c267b9"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "57f0b70d-c0de-4877-8048-855336f4f195",
+          "duration": 800,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "49416c51-ae2e-4b5c-bad0-66da4b9247b4",
+            "f7b6c859-5155-4095-95ab-071d455fe7b6",
+            "4a6f10ee-b868-4ec8-80c3-7968bede7d8d"
+          ]
+        },
+        {
+          "type": "spin",
+          "rotation": "10",
+          "id": "022526da-89de-4aca-9f41-1ff2b1d2a681",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["08a9f14d-e04a-4e73-8c33-ba3baba83813"]
+        }
+      ]
     },
     {
       "elements": [
@@ -1671,7 +2079,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page6_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page6_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -1916,7 +2324,63 @@
           "b": 255,
           "a": 1
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "zoom",
+          "zoomFrom": 0,
+          "zoomTo": 1,
+          "id": "f1727b45-bd8a-4b58-bf0f-3f01da3b5c97",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["2dd45145-0aa5-442c-b900-9b49e454c0a2"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "b86c9d3a-01ab-4b32-bc85-6e6796490bf4",
+          "duration": 800,
+          "delay": 450,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "f496cd2f-5ffc-400c-b567-18478e0d1e89",
+            "561628d6-e00a-473d-8fe8-bc7fea38b5ff"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "10",
+          "id": "60bef3af-9578-45d4-86a7-0708332703e9",
+          "duration": 800,
+          "delay": 450,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "f496cd2f-5ffc-400c-b567-18478e0d1e89",
+            "561628d6-e00a-473d-8fe8-bc7fea38b5ff"
+          ]
+        },
+        {
+          "type": "spin",
+          "rotation": "10",
+          "id": "2795e678-c445-4203-be90-8cac3304e45e",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["dc2f00ab-bacf-4593-a6a0-e24b777c116b"]
+        }
+      ]
     },
     {
       "elements": [
@@ -1938,7 +2402,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page7_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page7_bg.jpg",
             "width": 220,
             "height": 293,
             "posterId": 0,
@@ -2138,7 +2602,46 @@
           "b": 255,
           "a": 1
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "96faafa5-c561-4e72-9e90-57c677facaf2",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["58899538-5ad3-4697-9fb5-bf32e92a4d0a"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "477bfd8c-4576-4aaa-a01a-0ccbc7d60e9e",
+          "duration": 1000,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["ceda6811-72ee-421e-9778-5711edabdfc3"]
+        },
+        {
+          "type": "spin",
+          "rotation": "-10",
+          "id": "4fecd592-8b36-44f1-a0e3-cae10d56ad6c",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["9b7290b8-f166-4e38-8213-97abb1c96ad6"]
+        }
+      ]
     },
     {
       "elements": [
@@ -2226,7 +2729,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page8_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page8_image1.jpg",
             "width": 220,
             "height": 220,
             "posterId": 0,
@@ -2242,7 +2745,7 @@
         {
           "x": 26,
           "y": 418,
-          "width": 54,
+          "width": 69,
           "height": 132,
           "opacity": 100,
           "flip": {
@@ -2288,9 +2791,9 @@
         },
         {
           "x": 112,
-          "y": 430,
+          "y": 427,
           "width": 124,
-          "height": 42,
+          "height": 54,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2318,7 +2821,7 @@
               "b": 196
             }
           },
-          "lineHeight": 1,
+          "lineHeight": 1.3,
           "textAlign": "left",
           "scale": 100,
           "focalX": 50,
@@ -2475,7 +2978,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
             "width": 150,
             "height": 257,
             "posterId": 0,
@@ -2619,7 +3122,137 @@
           "g": 42,
           "b": 46
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "612dfc01-4abb-424b-af11-18af5c15e8bb",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["a406280f-9a0b-4140-83fb-e9cac472886f"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "d9b11ea3-f0dd-4b87-9253-4d1f8544ae82",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["a406280f-9a0b-4140-83fb-e9cac472886f"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1.1,
+          "id": "375eafa3-b616-4ce1-bae6-66099df6281a",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["a406280f-9a0b-4140-83fb-e9cac472886f"]
+        },
+        {
+          "type": "zoom",
+          "zoomFrom": 1,
+          "zoomTo": 0.91,
+          "id": "8c658fb5-88d2-4c79-b6f8-cca4d8d358c4",
+          "duration": 5000,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["a406280f-9a0b-4140-83fb-e9cac472886f"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "ce0fdb92-556b-4ad5-813a-d1000ec849f8",
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["d9ed4ad5-3559-413c-a7b4-c9e264111621"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-50%",
+          "id": "ab5a163c-6d0e-4382-88a7-956297375e10",
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["c832531d-efa9-455f-9cb3-6d9669392c02"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "80f4f84a-2706-43fc-8ef3-eb6333539946",
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["c832531d-efa9-455f-9cb3-6d9669392c02"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "id": "df5ccbb5-5c31-41ef-b68b-030cf598ad72",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["4438e06a-84e8-4ff5-95a5-60979c6f5f49"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "a213fcf2-634a-46e5-800e-baa5d56980f2",
+          "duration": 800,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "91d4d005-9a56-49d2-8e72-053ef3fa83c3",
+            "26661b52-4485-4e7d-a168-8e0311a2c096",
+            "b25e15d6-567c-41ec-ab8e-8c72c69b2b51"
+          ]
+        },
+        {
+          "type": "spin",
+          "rotation": "10",
+          "id": "6ddc84eb-14ec-4c1e-94cb-fb1b146d71e3",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["f6ced1c2-1877-4093-a039-a8deacce21ea"]
+        }
+      ]
     },
     {
       "elements": [
@@ -3198,7 +3831,169 @@
           "g": 255,
           "b": 255
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50",
+          "id": "4aa60bff-4ca9-414d-99f8-b4ebe4146b42",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": ["e34fa932-2407-4d18-8586-e08e1f0d360f"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "5e45fe7f-6f64-41b5-86fa-0d3b54ca6b3a",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e34fa932-2407-4d18-8586-e08e1f0d360f"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50",
+          "id": "901301ec-4ec5-4447-9b26-b1e2adf79b75",
+          "duration": 1000,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": [
+            "7d7706a3-01b2-4bcd-8799-e18119b4c17d",
+            "8d0b43ae-5979-4cb2-8b12-524929fe7d9a"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "16a273ec-6dd3-4b07-b671-234f31685570",
+          "duration": 1000,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "7d7706a3-01b2-4bcd-8799-e18119b4c17d",
+            "8d0b43ae-5979-4cb2-8b12-524929fe7d9a"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50",
+          "id": "9ee733ad-fc37-4587-87cc-617a798207c0",
+          "duration": 1000,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": [
+            "e33ab4b1-8411-42c7-a407-b2d85756ff6f",
+            "e02c6ab4-de7d-437d-b2b9-271b7de9b64b"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "e27b35a4-1a63-4659-9888-4c0d97d5f39f",
+          "duration": 1000,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "e33ab4b1-8411-42c7-a407-b2d85756ff6f",
+            "e02c6ab4-de7d-437d-b2b9-271b7de9b64b"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50",
+          "id": "b803beaa-461b-4380-96cd-bc03af338f67",
+          "duration": 1000,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": [
+            "4038789a-8b44-4d77-b5dd-592a1e247933",
+            "a314d206-0252-40f6-84f4-75b84138df1b"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "fd2e320f-f100-4b9b-937d-0d62cee0d030",
+          "duration": 1000,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "4038789a-8b44-4d77-b5dd-592a1e247933",
+            "a314d206-0252-40f6-84f4-75b84138df1b"
+          ]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50",
+          "id": "85afeef1-e901-4eca-8132-8f5a61a3db4e",
+          "duration": 1000,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": [
+            "7404bfb0-bd86-4b76-8dbb-37fa50a28dfe",
+            "6398137c-148c-4469-b521-f3db9fd40b5d"
+          ]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "ca7fee8c-97c6-4727-8122-8df765afffc7",
+          "duration": 1000,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": [
+            "6398137c-148c-4469-b521-f3db9fd40b5d",
+            "7404bfb0-bd86-4b76-8dbb-37fa50a28dfe"
+          ]
+        },
+        {
+          "type": "spin",
+          "rotation": "10",
+          "id": "7fb50f59-0aa4-4aa4-9ee7-e027964663df",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "forwards",
+          "targets": ["1156e7c9-c922-46f0-b484-65e141757c02"]
+        }
+      ]
     },
     {
       "elements": [
@@ -3287,7 +4082,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page10_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page10_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -3328,7 +4123,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-30T20:23:34",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page10_image2.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page10_image2.jpg",
             "width": 330,
             "height": 494,
             "posterId": 0,
@@ -3370,7 +4165,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page10_image3.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page10_image3.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
@@ -3646,7 +4441,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-23T00:45:25",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/wellbeing/wellbeing_page10_image4.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/wellbeing/wellbeing_page10_image4.png",
             "width": 54,
             "height": 55,
             "posterId": 0,
@@ -3728,7 +4523,181 @@
           "g": 255,
           "b": 255
         }
-      }
+      },
+      "animations": [
+        {
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "id": "d677b170-cbc4-45e5-a001-2aa7f1e98e5d",
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "forwards",
+          "targets": ["d9a1df8f-5d8a-4c1f-90ba-d63b2f720ae0"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-20",
+          "offsetY": 0,
+          "id": "fec6eeba-cad8-4c19-b5c1-eb57a4238863",
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "forwards",
+          "targets": ["20ab13c0-b782-40f7-8700-a99d9b56008c"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "3316b64c-b3b8-43e3-b241-92c334588046",
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["20ab13c0-b782-40f7-8700-a99d9b56008c"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "18f6c301-53ef-4b4b-9276-3f0b68ac1c0e",
+          "duration": 800,
+          "delay": 350,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["e59766e5-94cd-4a5d-92c3-010f9b5f85ff"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-20",
+          "offsetY": 0,
+          "id": "45dfe0f6-8993-4ac4-9adc-6be4dbda7e66",
+          "duration": 800,
+          "delay": 500,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": ["70006d51-6f37-47b4-9074-b193a473caab"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "c8cdaafb-0f05-4968-902c-7dad1b956498",
+          "duration": 800,
+          "delay": 500,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["70006d51-6f37-47b4-9074-b193a473caab"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "f05f55a0-e655-4a6e-a50f-fc156b4a6f1c",
+          "duration": 800,
+          "delay": 645,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["7ac7ca60-c164-4860-8ea5-837ee07d47b0"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-20",
+          "offsetY": 0,
+          "id": "f8500a78-9a56-4f68-8cd3-9bde843b3fe4",
+          "duration": 800,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": ["46172f61-dfd3-4105-a3b3-9e6b95e32a4c"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "d694346b-6f62-4821-95a3-8c0c876475e1",
+          "duration": 800,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["46172f61-dfd3-4105-a3b3-9e6b95e32a4c"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "6c8c3ec0-d314-4c20-9c11-d43b4e901ed3",
+          "duration": 800,
+          "delay": 950,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["ad0ab4b9-9b87-4624-bfa8-45779fe6cf78"]
+        },
+        {
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-20",
+          "offsetY": 0,
+          "id": "cdb11102-99da-43cf-85fe-737179d2e58f",
+          "duration": 800,
+          "delay": 1105,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both",
+          "targets": ["b35fc13c-9f8c-4ad5-8e35-839fa4d59a50"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "9bc5fe4e-1b30-4a29-8c12-e5edb02f64e0",
+          "duration": 800,
+          "delay": 1105,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["b35fc13c-9f8c-4ad5-8e35-839fa4d59a50"]
+        },
+        {
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "id": "a79a33df-5934-4281-a699-17fa7b6d86bc",
+          "duration": 800,
+          "delay": 1250,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both",
+          "targets": ["64006e3b-b381-4321-90f5-b8c5e9efffe9"]
+        },
+        {
+          "type": "spin",
+          "rotation": "10",
+          "id": "8ab3fb06-3c0c-42fd-9abf-bdf66e1fe614",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both",
+          "targets": ["909339b8-8ec5-4997-a7e6-688504be7f23"]
+        }
+      ]
     }
   ],
   "autoAdvance": true,
