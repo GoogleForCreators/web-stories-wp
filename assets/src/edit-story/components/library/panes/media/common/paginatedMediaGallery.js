@@ -92,7 +92,9 @@ function PaginatedMediaGallery({
         !isMediaLoaded ||
         isMediaLoading ||
         !hasMore ||
-        !entry.isIntersecting
+        !entry.isIntersecting ||
+        // Avoid loading the next page while <Gallery> is rendering.
+        entry.boundingClientRect.y < ROOT_MARGIN + 50
       ) {
         return;
       }
