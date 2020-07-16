@@ -18,7 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import React, { memo, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -29,7 +36,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import MediaGallery from '../common/mediaGallery';
-import useIntersectionEffect from '../../../../../utils/useIntersectionEffect';
 import {
   MediaGalleryContainer,
   MediaGalleryInnerContainer,
@@ -77,31 +83,60 @@ function PaginatedMediaGallery({
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, refContainer]);
 
-  const refContainerFooter = useRef();
-  useIntersectionEffect(
-    refContainerFooter,
-    {
-      root: refContainer,
-      // This rootMargin is added so that we load an extra page when the
-      // "loading" footer is "close" to the bottom of the container, even if
-      // it's not yet visible.
-      rootMargin: `0px 0px ${ROOT_MARGIN}px 0px`,
-    },
-    (entry) => {
-      if (
-        !isMediaLoaded ||
-        isMediaLoading ||
-        !hasMore ||
-        !entry.isIntersecting ||
-        // Avoid loading the next page while <Gallery> is rendering.
-        entry.boundingClientRect.y < ROOT_MARGIN + 50
-      ) {
+  const [handleScroll] = useDebouncedCallback(
+    (e) => {
+      if (!hasMore || !isMediaLoaded || isMediaLoading) {
         return;
       }
-      setNextPage();
+      // This rootMargin is added so that we load an extra page when the
+      // we are "close" to the bottom of the container, even if it's not
+      // yet visible.
+      const bottom =
+        e.target.scrollHeight - e.target.scrollTop <=
+        e.target.clientHeight + ROOT_MARGIN;
+      if (bottom) {
+        setNextPage();
+      }
     },
-    [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
+    500,
+    [hasMore, isMediaLoaded, isMediaLoading, setNextPage]
   );
+
+  useEffect(() => {
+    const node = refContainer.current;
+    if (!node) {
+      return undefined;
+    }
+
+    // When the user scrolls (debounced).
+    node.addEventListener('scroll', handleScroll);
+    return () => node.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  useEffect(() => {
+    if (!hasMore || !isMediaLoaded || isMediaLoading) {
+      return;
+    }
+
+    //eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    async function setNextPageIfCurrentPageNotFull() {
+      // Wait for <Gallery> to finish rendering first.
+      await sleep(50);
+
+      const node = refContainer.current;
+      if (!node) {
+        return;
+      }
+
+      // If the page is not full (ie. scrollbar not visible), load another page.
+      if (node.clientHeight === node.scrollHeight) {
+        setNextPage();
+      }
+    }
+    setNextPageIfCurrentPageNotFull();
+  }, [hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
 
   const mediaGallery =
     isMediaLoaded && resources.length === 0 ? (
@@ -118,7 +153,7 @@ function PaginatedMediaGallery({
           />
         </div>
         {hasMore && (
-          <MediaGalleryLoadingPill ref={refContainerFooter}>
+          <MediaGalleryLoadingPill>
             {__('Loading…', 'web-stories')}
           </MediaGalleryLoadingPill>
         )}
