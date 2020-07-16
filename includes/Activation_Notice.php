@@ -127,6 +127,7 @@ class Activation_Notice {
 			)
 		);
 
+		// @todo Implement Get Started story - see https://github.com/google/web-stories-wp/pull/2845
 		return [
 			'id'     => 'web-stories-plugin-activation-notice',
 			'config' => [
