@@ -164,7 +164,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'draft', $statues_decode );
 
 		$this->assertEquals( 13, $statues_decode['all'] );
-		$this->assertEquals( 10, $statues_decode['publish'] );
+		$this->assertEquals( 7, $statues_decode['publish'] );
+		$this->assertEquals( 3, $statues_decode['future'] );
 		$this->assertEquals( 3, $statues_decode['draft'] );
 
 		$this->assertEquals( 3, $headers['X-WP-Total'] );
