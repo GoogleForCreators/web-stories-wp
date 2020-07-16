@@ -20,7 +20,6 @@
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
 } from '../common/reducer';
-import * as types from './types';
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
@@ -40,16 +39,7 @@ const INITIAL_STATE = {
  * @return {Object} The new state
  */
 function providerReducer(state = INITIAL_STATE, { type, payload }) {
-  state = commonReducer(state, { type, payload });
-
-  if (type === types.SET_SEARCH_TERM) {
-    return {
-      pageToken: undefined,
-      nextPageToken: undefined,
-      ...state,
-    };
-  }
-  return state;
+  return commonReducer(state, { type, payload });
 }
 
 export default providerReducer;
