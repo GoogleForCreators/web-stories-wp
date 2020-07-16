@@ -41,6 +41,7 @@
     "history": "^5.0.0",
     "mockdate": "^3.0.2",
     "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
     "mousetrap": "^1.6.5",
     "patch-package": "^6.2.2",
     "polished": "^3.6.5",
