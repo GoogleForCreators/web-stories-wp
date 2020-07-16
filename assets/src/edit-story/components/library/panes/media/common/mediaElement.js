@@ -286,7 +286,7 @@ const MediaElement = ({
           <UploadingIndicator />
         </CSSTransition>
       )}
-      {hasDropdownMenu && !providerType === ProviderType.LOCAL && (
+      {hasDropdownMenu && providerType === ProviderType.LOCAL && (
         <DropDownMenu
           resource={resource}
           pointerEntered={pointerEntered}
