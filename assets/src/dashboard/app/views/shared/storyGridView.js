@@ -42,8 +42,8 @@ import {
   RenameStoryPropType,
   DateFormattingPropType,
 } from '../../../types';
-import { getFormattedDisplayDate } from '../../../utils';
 import { STORY_STATUS } from '../../../constants';
+import { getTimeSensitiveDisplayDate } from '../../../utils';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -114,8 +114,14 @@ const StoryGridView = ({
                 }
                 displayDate={
                   story?.status === STORY_STATUS.DRAFT
-                    ? getFormattedDisplayDate(story?.modified, dateFormatting)
-                    : getFormattedDisplayDate(story?.created, dateFormatting)
+                    ? getTimeSensitiveDisplayDate(
+                        story?.modified,
+                        dateFormatting
+                      )
+                    : getTimeSensitiveDisplayDate(
+                        story?.created,
+                        dateFormatting
+                      )
                 }
                 {...titleRenameProps}
               />
