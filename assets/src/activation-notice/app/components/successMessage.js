@@ -32,14 +32,14 @@ import { trackClick } from '../../../tracking';
 import { useConfig } from '../config';
 
 import Paragraph from './paragraph';
-import SecondaryButton from './link';
+import SecondaryLink from './link';
 
 const Message = styled.div`
   min-width: 260px;
   margin-right: 30px;
   padding: 30px 0 30px;
 
-  ${SecondaryButton} {
+  ${SecondaryLink} {
     @media ${({ theme }) => theme.breakpoint.tabletSmall} {
       display: none;
     }
@@ -54,7 +54,7 @@ const Title = styled.h2`
   margin: 0 0 10px;
 `;
 
-const PrimaryButton = styled.a`
+const PrimaryLink = styled.a`
   font-family: ${({ theme }) => theme.fonts.button.family};
   font-size: ${({ theme }) => theme.fonts.button.size};
   line-height: ${({ theme }) => theme.fonts.button.lineHeight};
@@ -102,14 +102,14 @@ function SuccessMessage() {
         {__('Welcome to the Web Stories for WordPress beta.', 'web-stories')}
       </ParagraphWithSpace>
       <ParagraphWithSpace>
-        <PrimaryButton href={newStoryURL} onClick={onClickPrimary}>
+        <PrimaryLink href={newStoryURL} onClick={onClickPrimary}>
           {__('Launch the editor', 'web-stories')}
-        </PrimaryButton>
+        </PrimaryLink>
       </ParagraphWithSpace>
       <Paragraph>
-        <SecondaryButton href={demoStoryURL} onClick={onClickSecondary}>
+        <SecondaryLink href={demoStoryURL} onClick={onClickSecondary}>
           {__('See sample story', 'web-stories')}
-        </SecondaryButton>
+        </SecondaryLink>
       </Paragraph>
     </Message>
   );
