@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useDebouncedCallback } from 'use-debounce';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import {
   useMedia3p,
@@ -42,7 +43,7 @@ import {
 } from '../common/styles';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
-import { ProviderType } from './providerType';
+import { ProviderType } from '../common/providerType';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -81,14 +82,29 @@ function Media3pPane(props) {
     [insertElement]
   );
 
-  const { setSelectedProvider } = useMedia3p(({ actions }) => ({
-    setSelectedProvider: actions.setSelectedProvider,
-  }));
+  const { searchTerm, setSelectedProvider, setSearchTerm } = useMedia3p(
+    ({ state, actions }) => ({
+      searchTerm: state.searchTerm,
+      setSelectedProvider: actions.setSelectedProvider,
+      setSearchTerm: actions.setSearchTerm,
+    })
+  );
+
+  // Local state so that we can debounce triggering searches.
+  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
+
   useEffect(() => {
     if (isActive) {
       setSelectedProvider({ provider: 'unsplash' });
     }
   }, [isActive, setSelectedProvider]);
+
+  /**
+   * Effectively performs a search, triggered at most every 500ms.
+   */
+  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
+    setSearchTerm({ searchTerm: searchTermValue });
+  }, 500);
 
   const {
     media,
@@ -104,9 +120,15 @@ function Media3pPane(props) {
     }) => ({ media, hasMore, isMediaLoading, isMediaLoaded, setNextPage })
   );
 
-  const onSearch = useCallback(() => {
-    // TODO(#2391): Perform search.
-  }, []);
+  /**
+   * Handle search input changes. Triggers with every keystroke.
+   *
+   * @param {string} value the new search term.
+   */
+  const onSearch = (value) => {
+    setSearchTermValue(value);
+    changeSearchTermDebounced();
+  };
 
   const onProviderTabClick = useCallback(() => {
     // TODO(#2393): set state.
@@ -119,7 +141,7 @@ function Media3pPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              value={'Not implemented'}
+              value={searchTermValue}
               placeholder={__('Search', 'web-stories')}
               onChange={onSearch}
             />

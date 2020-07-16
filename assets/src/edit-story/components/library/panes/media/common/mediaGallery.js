@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Gallery from 'react-photo-gallery';
-import { ProviderType } from '../media3p/providerType';
+import { ProviderType } from './providerType';
 import MediaElement from './mediaElement';
 
 const PHOTO_MARGIN = 4;

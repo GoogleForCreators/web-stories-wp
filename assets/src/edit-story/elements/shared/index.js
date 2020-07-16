@@ -40,10 +40,9 @@ export const elementWithPosition = css`
   top: ${({ y }) => `${y}px`};
 `;
 
-// Height is rounded since height adjustments in pixels use full pixels
-// whereas conversion might include partial pixels, causing inconsistencies.
+// We need to round since otherwise there can be differences when resizing / measuring.
 export const elementWithSize = css`
-  width: ${({ width }) => `${width}px`};
+  width: ${({ width }) => `${Math.ceil(width)}px`};
   height: ${({ height }) => `${Math.round(height)}px`};
 `;
 
@@ -71,6 +70,7 @@ export const elementWithTextParagraphStyle = css`
   padding: ${({ padding }) => padding || 0};
   line-height: ${({ lineHeight }) => lineHeight};
   text-align: ${({ textAlign }) => textAlign};
+  overflow-wrap: break-word;
 `;
 
 export const SHARED_DEFAULT_ATTRIBUTES = {
