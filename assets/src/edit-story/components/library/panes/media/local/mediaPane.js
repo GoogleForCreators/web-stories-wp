@@ -279,7 +279,9 @@ function MediaPane(props) {
 
   const onSearch = (v) => setSearchTerm({ searchTerm: v });
 
-  const autoSearchDebounceMedia3p = useFeature('autoSearchDebounceMedia3p');
+  const incrementalSearchDebounceMedia = useFeature(
+    'incrementalSearchDebounceMedia'
+  );
 
   const mediaLibrary = isRowBasedGallery ? (
     // Arranges elements in rows.
@@ -336,7 +338,7 @@ function MediaPane(props) {
               initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
               onSearch={onSearch}
-              autoSearch={autoSearchDebounceMedia3p}
+              incrementala={incrementalSearchDebounceMedia}
             />
           </SearchInputContainer>
           <FilterArea>

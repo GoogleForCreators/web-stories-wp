@@ -61,9 +61,9 @@ const CloseIcon = styled(Close)`
  * @param {string} obj.placeholder A placeholder text to show when it's empty.
  * @param {Function} obj.onSearch Callback to call when a search is triggered.
  * @param {boolean} obj.disabled Whether the input should be shown as disabled.
- * @param {boolean} obj.autoSearch If `autoSearch` is false, a search is triggered
- * when the user presses enter, or when they clear the input.
- * If `autoSearch` is true, this occurs when the text changes, optionally
+ * @param {boolean} obj.incremental If `incremental` is false, a search is
+ * triggered when the user presses enter, or when they clear the input.
+ * If `incremental` is true, this occurs when the text changes, optionally
  * debounced via `delayMs`.
  * @param {number} obj.delayMs The number of milliseconds to debounce an autoSearch.
  * @return {SearchInput} The component.
@@ -74,7 +74,7 @@ export default function SearchInput({
   placeholder,
   onSearch,
   disabled,
-  autoSearch,
+  incremental,
   delayMs,
 }) {
   // Local state so that we can debounce triggering searches.
@@ -94,12 +94,12 @@ export default function SearchInput({
    */
   const onChange = (v) => {
     setLocalValue(v);
-    // When in non-autoSearch mode, we still trigger onSearch when the search
+    // When in non-incremental mode, we still trigger onSearch when the search
     // term is empty, so that the user doesn't need to press enter in that case.
-    if (!autoSearch && v !== '') {
+    if (!incremental && v !== '') {
       return;
     }
-    if (autoSearch && delayMs) {
+    if (incremental && delayMs) {
       changeSearchTermDebounced();
     } else {
       onSearch(v);
@@ -107,7 +107,7 @@ export default function SearchInput({
   };
 
   const onKeyDown = (e) => {
-    if (!autoSearch && e.key === 'Enter') {
+    if (!incremental && e.key === 'Enter') {
       onSearch(localValue);
     }
   };
@@ -134,12 +134,12 @@ SearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   onSearch: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
-  autoSearch: PropTypes.bool,
+  incremental: PropTypes.bool,
   delayMs: PropTypes.number,
 };
 
 SearchInput.defaultProps = {
   disabled: false,
-  autoSearch: false,
+  incremental: false,
   delayMs: 500,
 };

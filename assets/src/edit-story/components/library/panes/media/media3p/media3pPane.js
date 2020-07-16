@@ -112,7 +112,9 @@ function Media3pPane(props) {
 
   const onSearch = (v) => setSearchTerm({ searchTerm: v });
 
-  const autoSearchDebounceMedia3p = useFeature('autoSearchDebounceMedia3p');
+  const incrementalSearchDebounceMedia = useFeature(
+    'incrementalSearchDebounceMedia'
+  );
 
   const onProviderTabClick = useCallback(() => {
     // TODO(#2393): set state.
@@ -128,7 +130,7 @@ function Media3pPane(props) {
               initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
               onSearch={onSearch}
-              autoSearch={autoSearchDebounceMedia3p}
+              incremental={incrementalSearchDebounceMedia}
             />
           </SearchInputContainer>
           <ProviderTabSection>
