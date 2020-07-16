@@ -30,6 +30,7 @@ import moment from 'moment-timezone';
  */
 import {
   DEFAULT_DATE_FORMATTING,
+  getDateFormattedFromWordPressToMoment,
   getTimeFromNow,
   isToday,
   isYesterday,
@@ -54,6 +55,9 @@ export function getTimeSensitiveDisplayDate(
   } else if (isYesterday(displayDate)) {
     return __('yesterday', 'web-stories');
   }
-  // todo format without wordpress
-  return format(dateFormatting?.dateFormat, displayDate);
+
+  return (
+    getDateFormattedFromWordPressToMoment(date, dateFormatting.dateFormat) ||
+    format(dateFormatting?.dateFormat, date)
+  );
 }
