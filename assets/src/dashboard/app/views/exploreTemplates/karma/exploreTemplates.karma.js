@@ -62,13 +62,24 @@ describe('Explore Templates View integration', () => {
   }
 
   async function focusOnFirstTemplate() {
-    // Four tabs will bring focus to the first element in the template grid
-    await fixture.events.keyboard.seq(({ press }) => [
-      press('tab'),
-      press('tab'),
-      press('tab'),
-      press('tab'),
-    ]);
+    const { templatesOrderById } = await getTemplatesState();
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+    let count = 0;
+
+    while (
+      !firstTemplate.contains(document.activeElement) &&
+      count < templatesOrderById.length + 5
+    ) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      count++;
+    }
+
+    const found = firstTemplate.contains(document.activeElement);
+
+    if (!found) {
+      throw new Error('could not focus on first element');
+    }
   }
 
   async function focusOnTemplateById(id) {
