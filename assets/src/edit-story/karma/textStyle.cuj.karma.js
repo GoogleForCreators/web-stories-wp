@@ -23,12 +23,10 @@ import { Fixture } from './fixture';
 
 describe('CUJ: Creator Can Style Text', () => {
   let fixture;
-  let element;
-  let frame;
 
   const addText = async (extraProps = null) => {
     const insertElement = await fixture.renderHook(() => useInsertElement());
-    element = await fixture.act(() =>
+    await fixture.act(() =>
       insertElement('text', {
         font: TEXT_ELEMENT_DEFAULT_FONT,
         content: 'hello world!',
@@ -38,7 +36,6 @@ describe('CUJ: Creator Can Style Text', () => {
         ...extraProps,
       })
     );
-    frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
   };
 
   beforeEach(async () => {
@@ -52,6 +49,7 @@ describe('CUJ: Creator Can Style Text', () => {
   });
 
   describe('Action: Use font picker', () => {
+    const TOTAL_FONTS = 3;
     const openFontPicker = async () => {
       const input = await fixture.screen.getByLabelText('Edit: Font family');
       await fixture.events.click(input);
@@ -94,17 +92,41 @@ describe('CUJ: Creator Can Style Text', () => {
         expect(options[0].textContent).toBe('Abel');
       });
 
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should restore default view with less than 2 characters', () => {});
+      it('should not search with less than 2 characters', async () => {
+        await fixture.events.keyboard.type('A');
+        // Ensure the debounced callback has taken effect.
+        await wait(300);
+        let options = document
+          .getElementById('editor-font-picker-list')
+          .querySelectorAll('li');
+        expect(options.length).toBe(TOTAL_FONTS);
+      });
 
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should show empty list in case of no results', () => {});
+      it('should restore default fonts list when emptying search', async () => {
+        await fixture.events.keyboard.type('Ab');
+        // Ensure the debounced callback has taken effect.
+        await wait(300);
+        let options = document
+          .getElementById('editor-font-picker-list')
+          .querySelectorAll('li');
+        expect(options.length).toBe(2);
 
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should clear search when clicking on `X`', () => {});
+        await fixture.events.keyboard.press('Del');
+        // Ensure the debounced callback has taken effect.
+        await wait(300);
+        options = document
+          .getElementById('editor-font-picker-list')
+          .querySelectorAll('li');
+        // Back to all options.
+        expect(options.length).toBe(TOTAL_FONTS);
+      });
+
+      it('should show empty list in case of no results', async () => {
+        await fixture.events.keyboard.type('No fonts here');
+        // Ensure the debounced callback has taken effect.
+        await wait(300);
+        expect(fixture.screen.getByText('No matches found')).toBeDefined();
+      });
     });
 
     describe('with recent fonts', () => {
