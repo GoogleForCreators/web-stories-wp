@@ -123,6 +123,7 @@ class Dashboard {
 		// TODO Preload templates.
 		$preload_paths = [
 			'/web-stories/v1/fonts',
+			'/wp/v2/settings',
 			'/wp/v2/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
 		];
 
@@ -238,6 +239,9 @@ class Dashboard {
 					'users'     => '/wp/v2/users',
 					'fonts'     => '/web-stories/v1/fonts',
 					'templates' => '/wp/v2/web-story-template',
+				],
+				'capabilities' => [
+					'canManageSettings' => current_user_can( 'manage_options' ),
 				],
 			],
 			'flags'  => [
