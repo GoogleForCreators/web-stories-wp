@@ -461,6 +461,21 @@ class APIProviderFixture {
               styles: ['regular'],
               variants: [[0, 400]],
             },
+            {
+              name: 'Abhaya Libre',
+              value: 'Abhaya Libre',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [400, 500, 600, 700, 800],
+              styles: ['regular'],
+              variants: [
+                [0, 400],
+                [0, 500],
+                [0, 600],
+                [0, 700],
+                [0, 800],
+              ],
+            },
             ...[TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
               name: font.family,
               value: font.family,

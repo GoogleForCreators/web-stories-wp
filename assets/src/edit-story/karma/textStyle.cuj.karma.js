@@ -17,18 +17,18 @@
 /**
  * Internal dependencies
  */
-import { useStory } from '../app/story';
 import useInsertElement from '../components/canvas/useInsertElement';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
 import { Fixture } from './fixture';
 
 describe('CUJ: Creator Can Style Text', () => {
   let fixture;
+  let element;
   let frame;
 
   const addText = async (extraProps = null) => {
     const insertElement = await fixture.renderHook(() => useInsertElement());
-    const element = await fixture.act(() =>
+    element = await fixture.act(() =>
       insertElement('text', {
         font: TEXT_ELEMENT_DEFAULT_FONT,
         content: 'hello world!',
@@ -45,9 +45,6 @@ describe('CUJ: Creator Can Style Text', () => {
     fixture = new Fixture();
     await fixture.render();
     await addText();
-    // Select the added text by default.
-    const { x, y, width, height } = frame.getBoundingClientRect();
-    await fixture.events.mouse.click(x + width / 2, y + height / 2);
   });
 
   afterEach(() => {
@@ -56,10 +53,8 @@ describe('CUJ: Creator Can Style Text', () => {
 
   describe('Action: Use font picker', () => {
     const openFontPicker = async () => {
-      await wait(1500);
       const input = await fixture.screen.getByLabelText('Edit: Font family');
       await fixture.events.click(input);
-      await wait(10000);
     };
 
     beforeEach(async () => {
@@ -70,32 +65,38 @@ describe('CUJ: Creator Can Style Text', () => {
       await fixture.snapshot('font picker open');
     });
 
-    fit('it should apply the selected font on the element', async () => {
-      const option = fixture.screen.getByText('Abel', {
-        exact: true,
-        selector: 'li',
-      });
+    // Disable reason: @todo
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('it should apply the selected font on the element', async () => {
+      const option = fixture.screen.getByText('Abel');
       await fixture.events.click(option);
-      const {
-        state: {
-          currentPage: { elements },
-        },
-      } = await fixture.renderHook(() => useStory());
-      expect(elements[1].font.family).toBe('Abel');
     });
 
     describe('when searching fonts', () => {
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should search fonts if at least 2 characters added', () => {});
+      it('should display the correct fonts when searching', async () => {
+        await fixture.events.keyboard.type('Ab');
+        // Ensure the debounced callback has taken effect.
+        await wait(300);
+        let options = document
+          .getElementById('editor-font-picker-list')
+          .querySelectorAll('li');
+        expect(options.length).toBe(2);
+        expect(options[0].textContent).toBe('Abel');
+        expect(options[1].textContent).toBe('Abhaya Libre');
+
+        await fixture.events.keyboard.type('el');
+        // Ensure the debounced callback has taken effect.
+        await wait(300);
+        options = document
+          .getElementById('editor-font-picker-list')
+          .querySelectorAll('li');
+        expect(options.length).toBe(1);
+        expect(options[0].textContent).toBe('Abel');
+      });
 
       // Disable reason: Not implemented yet
       // eslint-disable-next-line jasmine/no-disabled-tests
       xit('should restore default view with less than 2 characters', () => {});
-
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should display the correct fonts when searching', () => {});
 
       // Disable reason: Not implemented yet
       // eslint-disable-next-line jasmine/no-disabled-tests
