@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitForElementToBeRemoved } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import useInsertElement from '../components/canvas/useInsertElement';
@@ -148,13 +153,25 @@ describe('CUJ: Creator Can Style Text', () => {
     });
 
     describe('using keyboard only', () => {
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should allow selecting a font with arrow keys and Enter', () => {});
+      it('should allow selecting a font with arrow keys and Enter', async () => {
+        await fixture.events.keyboard.press('up');
+        await fixture.events.keyboard.press('up');
+        await fixture.events.keyboard.press('Enter');
+        await openFontPicker();
+        const selected = fixture.screen.getByRole('option', {
+          name: 'Selected Abel',
+        });
+        expect(selected).toBeDefined();
+      });
 
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should close the font picker with Esc', () => {});
+      it('should close the font picker with Esc', async () => {
+        const input = await fixture.screen.getByLabelText('Edit: Font family');
+        expect(input.getAttribute('aria-expanded')).toBe('true');
+        await fixture.events.keyboard.press('Esc');
+        await waitForElementToBeRemoved(
+          document.getElementById('editor-font-picker-list')
+        );
+      });
     });
   });
 });
