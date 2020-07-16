@@ -62,13 +62,14 @@ export default function ApiProviderFixture({ children }) {
         setTemplatesState((currentState) =>
           fetchExternalTemplates(currentState)
         ),
-      fetchExternalTemplateById: jasmine.createSpy('fetchExternalTemplateById'),
+      fetchExternalTemplateById: (id) =>
+        fetchExternalTemplateById(id, templates),
       fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
-      fetchMyTemplateById: jasmine.createSpy('fetchMyTemplateById'),
-      fetchRelatedTemplates: jasmine.createSpy('fetchRelatedTemplates'),
+      fetchMyTemplateById: (id) => fetchExternalTemplateById(id, templates),
+      fetchRelatedTemplates: () => fetchRelatedTemplates(templates),
       fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
     }),
-    []
+    [templates]
   );
 
   const usersApi = useMemo(
@@ -289,5 +290,24 @@ function getTemplatesState() {
 }
 
 function fetchExternalTemplates(currentState) {
-  return { ...currentState };
+  return currentState;
+}
+
+function fetchExternalTemplateById(id, currentState) {
+  return Promise.resolve(currentState.templates?.[id] ?? {});
+}
+
+function fetchRelatedTemplates(currentState) {
+  if (!currentState.templates) {
+    return [];
+  }
+  // this will return anywhere between 1 and 5 "related" templates
+  const randomStartingIndex = Math.floor(
+    Math.random() * currentState.templatesOrderById.length
+  );
+  return [...currentState.templatesOrderById]
+    .splice(randomStartingIndex, 5)
+    .map((id) => {
+      return currentState.templates[id];
+    });
 }

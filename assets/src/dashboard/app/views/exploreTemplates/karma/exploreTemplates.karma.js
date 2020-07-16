@@ -26,7 +26,7 @@ import Fixture from '../../../../karma/fixture';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 import { ApiContext } from '../../../api/apiProvider';
 
-describe('My Stories View integration', () => {
+describe('Explore Templates View integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -74,7 +74,7 @@ describe('My Stories View integration', () => {
   async function focusOnTemplateById(id) {
     const { templatesOrderById } = await getTemplatesState();
     const index = templatesOrderById.indexOf(id);
-    const firstTemplate = await getTemplateElementById(templatesOrderById[0]);
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
 
     if (index === -1) {
       throw new Error('template not found with id of: ' + id);
@@ -134,10 +134,8 @@ describe('My Stories View integration', () => {
   });
 
   it('should change focus as the user presses tab', async () => {
-    const { templates, templatesOrderById } = await getTemplatesState();
-    const firstTemplate = getTemplateElementById(
-      templates[templatesOrderById[0]].id
-    );
+    const { templatesOrderById } = await getTemplatesState();
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
 
     // focus on first template
     await focusOnFirstTemplate();
@@ -148,5 +146,24 @@ describe('My Stories View integration', () => {
     const lastTemplate = await getTemplateElementById(lastTemplateId);
     await focusOnTemplateById(lastTemplateId);
     expect(lastTemplate.contains(document.activeElement)).toBeTrue();
+  });
+
+  it('should navigate to view an individual template', async () => {
+    const { templatesOrderById } = await getTemplatesState();
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+
+    const utils = within(firstTemplate);
+
+    await fixture.events.hover(firstTemplate);
+
+    const view = utils.getByText(
+      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+    );
+
+    await fixture.events.click(view);
+
+    const closeBtn = fixture.screen.getByRole('link', { name: /^Close$/ });
+
+    expect(closeBtn).toBeTruthy();
   });
 });
