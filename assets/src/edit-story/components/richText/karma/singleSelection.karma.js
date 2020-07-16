@@ -25,33 +25,33 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { initHelpers } from './_utils';
 
-describe('CUJ: Editor Can Style Text', () => {
-  describe('Action: Styling text in a single text field', () => {
-    const data = {};
+describe('Styling single text field', () => {
+  const data = {};
 
-    const {
-      getTextContent,
-      addInitialText,
-      setSelection,
-      richTextHasFocus,
-    } = initHelpers(data);
+  const {
+    getTextContent,
+    addInitialText,
+    setSelection,
+    richTextHasFocus,
+  } = initHelpers(data);
 
-    beforeEach(async () => {
-      data.fixture = new Fixture();
-      await data.fixture.render();
+  beforeEach(async () => {
+    data.fixture = new Fixture();
+    await data.fixture.render();
 
-      // Add a text box
-      await addInitialText();
-    });
+    // Add a text box
+    await addInitialText();
+  });
 
-    afterEach(() => {
-      data.fixture.restore();
-    });
+  afterEach(() => {
+    data.fixture.restore();
+  });
 
-    it('should have the correct initial text and no formatting', () => {
-      expect(getTextContent()).toBe('Fill in some text');
-    });
+  it('should have the correct initial text and no formatting', () => {
+    expect(getTextContent()).toBe('Fill in some text');
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     it('should apply inline formatting correctly for single-style text field', async () => {
       const {
         bold,
@@ -183,7 +183,9 @@ describe('CUJ: Editor Can Style Text', () => {
       const expected = `<span style="${css}">Fill in some text</span>`;
       expect(actual).toBe(expected);
     });
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I', () => {
     // Disable reason: This isn't implemented yet: Filed in #1977
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply inline formatting using shortcuts', async () => {
@@ -218,7 +220,9 @@ describe('CUJ: Editor Can Style Text', () => {
       const expected = `<span style="${firstCSS}">Fill in some text</span>`;
       expect(actual).toBe(expected);
     });
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     it('should make black+bold text field non-bold when toggling', async () => {
       const {
         bold,

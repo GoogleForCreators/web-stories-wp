@@ -57,14 +57,17 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
     const { skipped, disabled, pending, success, suite } = result;
     const incomplete = skipped || disabled || pending || !success;
 
-    if (!suite[0]?.startsWith('CUJ') || !suite[1]?.startsWith('Action')) {
-      return;
-    }
+    suite.forEach((suiteName) => {
+      if (!suiteName?.startsWith('CUJ')) {
+        return;
+      }
 
-    const cuj = suite[0].slice(5);
-    const action = suite[1].slice(8);
-
-    cujResults.push([cuj, action, !incomplete]);
+      const [_, cuj, actions] = suiteName.split(/: ?/);
+      const actionList = actions.split(/, ?/);
+      actionList.forEach(
+        (action) => cujResults.push([cuj, action, !incomplete])
+      );
+    });
   };
 
   this.onRunComplete = function () {

@@ -25,36 +25,36 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { initHelpers } from './_utils';
 
-describe('CUJ: Editor Can Style Text', () => {
-  describe('Action: Styling text in multiple text fields', () => {
-    const data = {};
+describe('Styling multiple text fields', () => {
+  const data = {};
 
-    const {
-      getTextContent,
-      addInitialText,
-      selectBothTextFields,
-      selectTextField,
-    } = initHelpers(data);
+  const {
+    getTextContent,
+    addInitialText,
+    selectBothTextFields,
+    selectTextField,
+  } = initHelpers(data);
 
-    beforeEach(async () => {
-      data.fixture = new Fixture();
-      await data.fixture.render();
+  beforeEach(async () => {
+    data.fixture = new Fixture();
+    await data.fixture.render();
 
-      // Add text box + extra
-      await addInitialText(true);
-    });
+    // Add text box + extra
+    await addInitialText(true);
+  });
 
-    afterEach(() => {
-      data.fixture.restore();
-    });
+  afterEach(() => {
+    data.fixture.restore();
+  });
 
-    it('should both have the correct initial text and formatting', () => {
-      // Get content of first textfield
-      expect(getTextContent(0)).toBe('Fill in some text');
-      // Get content of second textfield
-      expect(getTextContent(1)).toBe('Number #2');
-    });
+  it('should both have the correct initial text and formatting', () => {
+    // Get content of first textfield
+    expect(getTextContent(0)).toBe('Fill in some text');
+    // Get content of second textfield
+    expect(getTextContent(1)).toBe('Number #2');
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     it('should apply formatting correctly for identically styled text fields', async () => {
       const {
         bold,
@@ -184,7 +184,9 @@ describe('CUJ: Editor Can Style Text', () => {
 
       await data.fixture.snapshot('Two texts in bold,italic,underline,green');
     });
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     it('should make black text field + bold text field non-bold when toggling', async () => {
       const {
         bold,
