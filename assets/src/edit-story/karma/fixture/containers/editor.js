@@ -21,6 +21,7 @@ import { Container } from './container';
 import { Canvas } from './canvas';
 import { Carousel } from './carousel';
 import { Library } from './library';
+import { Inspector } from './inspector';
 
 /**
  * The complete editor container, including library, canvas, inspector, etc.
@@ -48,6 +49,14 @@ export class Editor extends Container {
       this.getByRole('region', { name: 'Library' }),
       'library',
       Library
+    );
+  }
+
+  get inspector() {
+    return this._get(
+      this.getByRole('region', { name: 'Inspector' }),
+      'inspector',
+      Inspector
     );
   }
 

@@ -74,6 +74,13 @@ class Plugin {
 	public $dashboard;
 
 	/**
+	 * Settings.
+	 *
+	 * @var Settings
+	 */
+	public $settings;
+
+	/**
 	 * Admin-related functionality.
 	 *
 	 * @var Admin
@@ -133,6 +140,10 @@ class Plugin {
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
+
+		// Settings.
+		$this->settings = new Settings();
+		add_action( 'init', [ $this->settings, 'init' ] );
 
 		// Dashboard.
 		$this->dashboard = new Dashboard();

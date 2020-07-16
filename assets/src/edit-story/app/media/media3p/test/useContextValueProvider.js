@@ -31,15 +31,19 @@ describe('useContextValueProvider', () => {
     const value = useContextValueProvider(
       {
         selectedProvider: 'unsplash',
+        searchTerm: '',
         unsplash: {},
       },
-      { setSelectedProvider: () => {} }
+      { setSelectedProvider: () => {}, setSearchTerm: () => {} }
     );
 
     expect(value).toStrictEqual(
       expect.objectContaining({
-        state: { selectedProvider: 'unsplash' },
-        actions: { setSelectedProvider: expect.any(Function) },
+        state: { selectedProvider: 'unsplash', searchTerm: '' },
+        actions: {
+          setSelectedProvider: expect.any(Function),
+          setSearchTerm: expect.any(Function),
+        },
         unsplash: {
           state: { media: [] },
         },

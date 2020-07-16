@@ -198,7 +198,9 @@ const ReorderablePage = styled(ReorderableItem).attrs({ role: 'option' })`
   }
 `;
 
-const GridViewContainer = styled.div`
+const GridViewContainer = styled.section.attrs({
+  'aria-label': __('Grid View', 'web-stories'),
+})`
   flex: 1;
   margin: 70px 170px 70px 170px;
   pointer-events: all;
@@ -509,7 +511,7 @@ function Carousel() {
         }}
       >
         <GridViewContainer>
-          <PlainStyled onClick={() => closeModal()}>
+          <PlainStyled onClick={closeModal}>
             {__('Back', 'web-stories')}
           </PlainStyled>
           <GridView />

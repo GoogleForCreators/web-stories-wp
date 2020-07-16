@@ -115,52 +115,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -316,52 +282,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -401,52 +333,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -689,52 +587,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -774,21 +638,10 @@
           "font": {
             "family": "Andada",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400
-            ],
-            "styles": [
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                400
-              ]
-            ]
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
           },
           "backgroundColor": {
             "color": {
@@ -827,70 +680,22 @@
           "font": {
             "family": "Roboto",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -1175,52 +980,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -1260,52 +1031,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -1346,52 +1083,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -1432,52 +1135,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -1518,52 +1187,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -1770,52 +1405,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -1855,52 +1456,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2128,70 +1695,22 @@
           "font": {
             "family": "Roboto",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -2260,52 +1779,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2346,52 +1831,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2432,52 +1883,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2518,52 +1935,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2604,52 +1987,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2690,52 +2039,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2776,52 +2091,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2862,52 +2143,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -2948,52 +2195,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3034,52 +2247,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3120,52 +2299,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3206,52 +2351,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3292,52 +2403,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3378,52 +2455,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3463,52 +2506,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3546,52 +2555,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3773,70 +2748,22 @@
           "font": {
             "family": "Roboto",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -3877,52 +2804,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -3962,73 +2855,23 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
             ],
-            "fallbacks": [
-              "Helvetica Neue",
-              "Helvetica",
-              "sans-serif"
-            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
             "service": "fonts.google.com"
           },
           "backgroundColor": {
@@ -4068,52 +2911,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -4153,73 +2962,23 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
             ],
-            "fallbacks": [
-              "Helvetica Neue",
-              "Helvetica",
-              "sans-serif"
-            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
             "service": "fonts.google.com"
           },
           "backgroundColor": {
@@ -4260,52 +3019,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -4345,73 +3070,23 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
             ],
-            "fallbacks": [
-              "Helvetica Neue",
-              "Helvetica",
-              "sans-serif"
-            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
             "service": "fonts.google.com"
           },
           "backgroundColor": {
@@ -4452,52 +3127,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -4537,73 +3178,23 @@
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
             ],
-            "fallbacks": [
-              "Helvetica Neue",
-              "Helvetica",
-              "sans-serif"
-            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
             "service": "fonts.google.com"
           },
           "backgroundColor": {
@@ -4644,52 +3235,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -4924,52 +3481,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -5010,52 +3533,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -5096,21 +3585,10 @@
           "font": {
             "family": "Andada",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400
-            ],
-            "styles": [
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                400
-              ]
-            ]
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
           },
           "backgroundColor": {
             "color": {
@@ -5148,70 +3626,22 @@
           "font": {
             "family": "Roboto",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "sans-serif"
-            ],
-            "weights": [
-              100,
-              300,
-              400,
-              500,
-              700,
-              900
-            ],
-            "styles": [
-              "italic",
-              "regular"
-            ],
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [
-                0,
-                100
-              ],
-              [
-                1,
-                100
-              ],
-              [
-                0,
-                300
-              ],
-              [
-                1,
-                300
-              ],
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ],
-              [
-                0,
-                900
-              ],
-              [
-                1,
-                900
-              ]
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
             ]
           },
           "backgroundColor": {
@@ -5559,52 +3989,18 @@
           "font": {
             "family": "Gelasio",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400,
-              500,
-              600,
-              700
-            ],
-            "styles": [
-              "regular",
-              "italic"
-            ],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
             "variants": [
-              [
-                0,
-                400
-              ],
-              [
-                1,
-                400
-              ],
-              [
-                0,
-                500
-              ],
-              [
-                1,
-                500
-              ],
-              [
-                0,
-                600
-              ],
-              [
-                1,
-                600
-              ],
-              [
-                0,
-                700
-              ],
-              [
-                1,
-                700
-              ]
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
             ]
           },
           "backgroundColor": {
@@ -5645,21 +4041,10 @@
           "font": {
             "family": "Andada",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400
-            ],
-            "styles": [
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                400
-              ]
-            ]
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
           },
           "backgroundColor": {
             "color": {
@@ -5699,21 +4084,10 @@
           "font": {
             "family": "Andada",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400
-            ],
-            "styles": [
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                400
-              ]
-            ]
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
           },
           "backgroundColor": {
             "color": {
@@ -5753,21 +4127,10 @@
           "font": {
             "family": "Andada",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400
-            ],
-            "styles": [
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                400
-              ]
-            ]
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
           },
           "backgroundColor": {
             "color": {
@@ -5807,21 +4170,10 @@
           "font": {
             "family": "Andada",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400
-            ],
-            "styles": [
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                400
-              ]
-            ]
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
           },
           "backgroundColor": {
             "color": {
@@ -5859,21 +4211,10 @@
           "font": {
             "family": "Andada",
             "service": "fonts.google.com",
-            "fallbacks": [
-              "serif"
-            ],
-            "weights": [
-              400
-            ],
-            "styles": [
-              "regular"
-            ],
-            "variants": [
-              [
-                0,
-                400
-              ]
-            ]
+            "fallbacks": ["serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]]
           },
           "backgroundColor": {
             "color": {

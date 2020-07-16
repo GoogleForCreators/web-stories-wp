@@ -52,6 +52,7 @@ describe('useFetchMediaEffect', () => {
         useFetchMediaEffect({
           provider: 'unsplash',
           selectedProvider: 'unsplash',
+          searchTerm: 'cat',
           pageToken: 'pageToken',
           fetchMediaStart,
           fetchMediaSuccess,

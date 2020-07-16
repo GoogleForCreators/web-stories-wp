@@ -186,10 +186,38 @@ describe('storyReducer', () => {
       payload: {
         page: 1,
         stories: [
-          { id: 94, status: 'draft', title: 'my test story 1' },
-          { id: 65, status: 'publish', title: 'my test story 2' },
-          { id: 78, status: 'draft', title: 'my test story 3' },
-          { id: 12, status: 'draft', title: 'my test story 4' },
+          {
+            id: 94,
+            status: 'draft',
+            title: { raw: 'my test story 1' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 65,
+            status: 'publish',
+            title: { raw: 'my test story 2' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 78,
+            status: 'draft',
+            title: { raw: 'my test story 3' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 12,
+            status: 'draft',
+            title: { raw: 'my test story 4' },
+            story_data: {
+              pages: [{}],
+            },
+          },
         ],
         totalStoriesByStatus: {
           all: 44,
@@ -228,10 +256,38 @@ describe('storyReducer', () => {
         payload: {
           page: 2,
           stories: [
-            { id: 94, status: 'draft', title: 'my test story 1' },
-            { id: 65, status: 'publish', title: 'my test story 2' },
-            { id: 78, status: 'draft', title: 'my test story 3' },
-            { id: 12, status: 'draft', title: 'my test story 4' },
+            {
+              id: 94,
+              status: 'draft',
+              title: { raw: 'my test story 1' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 65,
+              status: 'publish',
+              title: { raw: 'my test story 2' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 78,
+              status: 'draft',
+              title: { raw: 'my test story 3' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 12,
+              status: 'draft',
+              title: { raw: 'my test story 4' },
+              story_data: {
+                pages: [{}],
+              },
+            },
           ],
           totalStoriesByStatus: {
             all: 18,
