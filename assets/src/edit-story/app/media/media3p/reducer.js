@@ -76,10 +76,16 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
     case types.SET_SEARCH_TERM: {
-      return {
+      let resultState = {
         ...state,
         searchTerm: payload.searchTerm,
       };
+      // Clear out the pageToken and nextPageToken for all providers.
+      for (const provider of providers) {
+        resultState[provider].pageToken = undefined;
+        resultState[provider].nextPageToken = undefined;
+      }
+      return resultState;
     }
     default:
       return state;
