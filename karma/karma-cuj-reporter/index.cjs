@@ -50,7 +50,7 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
       emoji = '🛴';
     }
 
-    return `${emoji} **${(percentage * 100).toFixed(2)}%**`;
+    return `${emoji} **${(percentage * 100).toFixed(2)}%** *(${completed.length} / ${total.length})*`;
   };
 
   this.onSpecComplete = function (browser, result) {
@@ -64,6 +64,7 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
 
       const [_, cuj, actions] = suiteName.split(/: ?/);
       const actionList = actions.split(/, ?/);
+      cujResults.push([cuj, '_TOTAL_', !incomplete]);
       actionList.forEach(
         (action) => cujResults.push([cuj, action, !incomplete])
       );
@@ -81,7 +82,7 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
       const [cuj, action] = curr;
 
       if (!acc.find(([_cuj]) => _cuj === cuj)) {
-        acc.push([cuj, '*\\[total\\]*', getCompletion(cuj)]);
+        acc.push([cuj, '*\\[total\\]*', getCompletion(cuj, '_TOTAL_')]);
       }
 
       if (!acc.find(([_cuj, _action]) => _cuj === cuj && _action === action)) {
