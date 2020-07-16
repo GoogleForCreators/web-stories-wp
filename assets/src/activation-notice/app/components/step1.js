@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 `;
 
 const Image = styled.img`
-  transform: rotate(10.57deg);
+  transform: rotate(${(props) => props.$rotationAngle});
   margin-top: -40px;
 `;
 
@@ -56,7 +56,7 @@ const ParagraphWrapper = styled.div`
 
 // @todo Support markup in translated strings - https://github.com/google/web-stories-wp/issues/1578
 function Step1() {
-  const { assetsURL, demoStoryURL } = useConfig();
+  const { assetsURL, demoStoryURL, isRTL } = useConfig();
 
   const onClick = useCallback(
     (evt) => {
@@ -73,6 +73,7 @@ function Step1() {
           alt=""
           width={170}
           height={300}
+          $rotationAngle={isRTL ? '-10.57deg' : '10.57deg'}
         />
       </Link>
       <ParagraphWrapper>
