@@ -70,6 +70,6 @@ export function getTimeSensitiveDisplayDate(
 
   return (
     getDateFormattedFromWordPressToMoment(date, dateFormatting.dateFormat) ||
-    format(dateFormatting?.dateFormat, date)
+    format(dateFormatting.dateFormat, date)
   );
 }
