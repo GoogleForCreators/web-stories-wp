@@ -16,6 +16,13 @@
 
 // Returns string counting time pasted between display date and current time
 
+/**
+ * @summary                 Converts a wordPress date format into a Moment date format
+ * @param {Date} date       Date to format
+ * @param {string} wpFormat Format to use on date. If empty set default.
+ * @return {string}         Formatted date to display
+ * If wpFormat is a value that doesn't match a key in momentFormatWordPressKey then will return undefined
+ */
 export function getDateFormattedFromWordPressToMoment(
   date,
   wpFormat = 'Y-m-d'

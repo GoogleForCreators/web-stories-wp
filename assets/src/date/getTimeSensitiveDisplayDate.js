@@ -39,6 +39,18 @@ import {
 // Returns hours since date if date passed in matches today
 // Returns yesterday if date passed in is yesterday
 // Returns formatted date + time by default
+/**
+ * @summary                        Formats a date to display relative to time passed since date.
+ * If date to display is < 1 day ago it will display rounded time since date using timezone.
+ * If date to display matches yesterday's date it will display "yesterday".
+ * Otherwise date will come back formatted by dateFormatting.dateFormat (no time).
+ * @param {Date} date              Date to format according to how much time or how many days have passed since date
+ * If date is not an instance of moment when passed in it will create a moment from it.
+ * @param {Object} dateFormatting  Object responsible for relevant date formatting.
+ * Should contain dateFormat, timezone, gmtOffset, and timeFormat - all strings.
+ * @return {string}                Displayable relative date string
+ */
+
 export function getTimeSensitiveDisplayDate(
   date,
   dateFormatting = DEFAULT_DATE_FORMATTING

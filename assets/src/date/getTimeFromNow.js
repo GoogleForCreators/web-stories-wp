@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
 import moment from 'moment-timezone';
 
@@ -36,10 +36,5 @@ import { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
 export function getTimeFromNow(date, dateSettings) {
   const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
 
-<<<<<<< HEAD
   return displayDate.from(getDateObjectWithTimezone(dateSettings));
-=======
-export function getTimeFromNow(displayDate, dateFormatting) {
-  return displayDate.from(getDateObjectWithTimezone(dateFormatting));
->>>>>>> use parseZone on moment to honor existing gmt offset of date that is getting mapped to a moment format. By doing this combined with getting the time from now with just the .from api on moment and our custom timezone specific date for now we can get consistency in when stories are published or modified. If I publish a story at 11am in chicago it should be published at 9am in LA, so it should still have the same message of published 2 minutes ago regardless of where you are at.
 }
