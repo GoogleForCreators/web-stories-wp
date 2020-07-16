@@ -451,13 +451,22 @@ class APIProviderFixture {
       const getAllFonts = useCallback(
         // @todo: put actual data to __db__/
         () =>
-          asyncResponse(
-            [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
+          asyncResponse([
+            {
+              name: 'Abel',
+              value: 'Abel',
+              fallbacks: ['sans-serif'],
+              service: 'fonts.google.com',
+              weights: [400],
+              styles: ['regular'],
+              variants: [[0, 400]],
+            },
+            ...[TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
               name: font.family,
               value: font.family,
               ...font,
-            }))
-          ),
+            })),
+          ]),
         []
       );
 

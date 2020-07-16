@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { useStory } from '../app/story';
 import useInsertElement from '../components/canvas/useInsertElement';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
 import { Fixture } from './fixture';
@@ -55,8 +56,10 @@ describe('CUJ: Creator Can Style Text', () => {
 
   describe('Action: Use font picker', () => {
     const openFontPicker = async () => {
-      const input = fixture.screen.getByLabelText('Edit: Font family');
+      await wait(1500);
+      const input = await fixture.screen.getByLabelText('Edit: Font family');
       await fixture.events.click(input);
+      await wait(10000);
     };
 
     beforeEach(async () => {
@@ -64,12 +67,22 @@ describe('CUJ: Creator Can Style Text', () => {
     });
 
     it('it should render the font picker', async () => {
-      await fixture.snapshot();
+      await fixture.snapshot('font picker open');
     });
 
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('it should apply the selected font on the element', () => {});
+    fit('it should apply the selected font on the element', async () => {
+      const option = fixture.screen.getByText('Abel', {
+        exact: true,
+        selector: 'li',
+      });
+      await fixture.events.click(option);
+      const {
+        state: {
+          currentPage: { elements },
+        },
+      } = await fixture.renderHook(() => useStory());
+      expect(elements[1].font.family).toBe('Abel');
+    });
 
     describe('when searching fonts', () => {
       // Disable reason: Not implemented yet
@@ -122,3 +135,9 @@ describe('CUJ: Creator Can Style Text', () => {
     });
   });
 });
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
