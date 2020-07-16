@@ -70,7 +70,7 @@ function Step1() {
       <Link href={demoStoryURL} onClick={onClick}>
         <Image
           src={`${assetsURL}images/plugin-activation/tips.png`}
-          alt={__('Screenshot of the Get Started Story', 'web-stories')}
+          alt=""
           width={170}
           height={300}
         />

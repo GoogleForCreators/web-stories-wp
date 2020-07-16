@@ -67,7 +67,7 @@ function Step3() {
       <Link href={newStoryURL} onClick={onClick}>
         <Image
           src={`${assetsURL}images/plugin-activation/editor.png`}
-          alt={__('Screenshot of the Web Stories Editor', 'web-stories')}
+          alt=""
           width={320}
           height={180}
         />

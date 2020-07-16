@@ -85,7 +85,7 @@ function Step2() {
       <Link href={dashboardURL} onClick={onClick}>
         <Image
           src={`${assetsURL}images/plugin-activation/dashboard.png`}
-          alt={__('Screenshot of the Web Stories Dashboard', 'web-stories')}
+          alt=""
           width={320}
           height={190}
         />
