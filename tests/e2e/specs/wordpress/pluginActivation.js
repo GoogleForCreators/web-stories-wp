@@ -41,6 +41,12 @@ describe('Plugin Activation', () => {
     await percySnapshot(page, 'Plugin Activation');
   });
 
+  it('should dismiss plugin activation message', async () => {
+    await expect(page).toClick('button', { text: /Dismiss this notice/ });
+    await expect(page).not.toMatch("You're all set!");
+    await expect(page).not.toMatch('Tell some stories.');
+  });
+
   it('should not display message when visiting plugins screen a second time', async () => {
     await visitAdminPage('plugins.php');
     await expect(page).not.toMatch("You're all set!");
