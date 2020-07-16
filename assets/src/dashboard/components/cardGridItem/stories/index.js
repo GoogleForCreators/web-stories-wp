@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { text } from '@storybook/addon-knobs';
 
 /**
