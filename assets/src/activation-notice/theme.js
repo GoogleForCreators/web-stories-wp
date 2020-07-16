@@ -72,14 +72,14 @@ const lightTheme = {
     link: {
       fg: '#1A73E8',
       hover: {
-        fg: '#4285F4',
+        fg: '#1A1D1F',
       },
     },
     action: {
       bg: '#1A73E8',
       fg: '#ffffff',
       hover: {
-        bg: '#4285F4',
+        bg: '#1A1D1F',
       },
     },
   },
@@ -95,14 +95,14 @@ const darkTheme = {
     link: {
       fg: '#1A73E8',
       hover: {
-        fg: '#4285F4',
+        fg: '#1A1D1F',
       },
     },
     action: {
       bg: '#1A73E8',
       fg: '#ffffff',
       hover: {
-        bg: '#4285F4',
+        bg: '#1A1D1F',
       },
     },
   },
