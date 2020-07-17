@@ -22,7 +22,7 @@ function useAddScrollbarWidth(refContainer) {
   // State and callback ref necessary to recalculate the padding of the list
   //  given the scrollbar width.
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  const refCallbackContainer = (element) => {
+  const setContainer = (element) => {
     refContainer.current = element;
     if (!element) {
       return;
@@ -46,7 +46,7 @@ function useAddScrollbarWidth(refContainer) {
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, refContainer]);
 
-  return refCallbackContainer;
+  return setContainer;
 }
 
 export default useAddScrollbarWidth;

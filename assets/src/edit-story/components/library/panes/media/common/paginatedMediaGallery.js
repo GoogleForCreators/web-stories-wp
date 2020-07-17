@@ -50,7 +50,7 @@ function PaginatedMediaGallery({
   setNextPage,
 }) {
   const refContainer = useRef();
-  const refCallbackContainer = useAddScrollbarWidth(refContainer);
+  const setContainer = useAddScrollbarWidth(refContainer);
 
   const refContainerFooter = useRef();
   useIntersectionEffect(
@@ -101,7 +101,7 @@ function PaginatedMediaGallery({
   return (
     <MediaGalleryContainer
       data-testid="media-gallery-container"
-      ref={refCallbackContainer}
+      ref={setContainer}
     >
       <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
     </MediaGalleryContainer>

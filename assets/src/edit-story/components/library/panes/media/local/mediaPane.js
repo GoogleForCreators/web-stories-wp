@@ -242,7 +242,7 @@ function MediaPane(props) {
   const resources = media.filter(filterResource);
 
   const refContainer = useRef();
-  const refCallbackContainer = useAddScrollbarWidth(refContainer);
+  const setContainer = useAddScrollbarWidth(refContainer);
 
   // NOTE: This infinite scrolling logic is used by the Column-based gallery.
   // The row-based PaginatedMediaGallery has its own pagination logic and
@@ -285,7 +285,7 @@ function MediaPane(props) {
     />
   ) : (
     // Arranges elements in columns.
-    <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
+    <ColumnContainer data-testid="mediaLibrary" ref={setContainer}>
       <Column>
         {resources
           .filter((_, index) => isEven(index))
