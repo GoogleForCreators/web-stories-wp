@@ -145,6 +145,16 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::print_feed_link
+	 */
+	public function test_print_feed_link() {
+		$object = new \Google\Web_Stories\Discovery();
+		$output = get_echo( [ $object, 'print_feed_link' ] );
+		$this->assertContains( '<link rel="alternate"', $output );
+		$this->assertContains( get_bloginfo( 'name' ), $output );
+	}
+
+	/**
 	 * @covers ::print_twitter_metadata
 	 */
 	public function test_print_twitter_metadata() {
