@@ -122,7 +122,7 @@ class Story_Post_Type {
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
 				],
 				'rewrite'               => [
-					'slug'  => self::REWRITE_SLUG,
+					'slug' => self::REWRITE_SLUG,
 				],
 				'public'                => true,
 				'show_ui'               => true,

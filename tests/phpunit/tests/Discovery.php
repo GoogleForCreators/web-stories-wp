@@ -74,10 +74,13 @@ class Discovery extends \WP_UnitTestCase {
 		);
 		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
+
+		add_filter( 'current_theme_supports-automatic-feed-links', '__return_true' );
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$user_id );
+		remove_filter( 'current_theme_supports-automatic-feed-links', '__return_true' );
 	}
 
 	public function setUp() {
@@ -95,6 +98,7 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_schemaorg_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_open_graph_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_twitter_metadata' ] ) );
+		$this->assertSame( 4, has_action( 'web_stories_story_head', [ $object, 'print_feed_link' ] ) );
 
 	}
 
