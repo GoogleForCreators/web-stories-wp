@@ -120,6 +120,9 @@ wp plugin install rtl-tester --activate --force --quiet
 echo -e $(status_message "Installing Gutenberg plugin...")
 wp plugin install gutenberg --force --quiet
 
+echo -e $(status_message "Installing AMP plugin...")
+wp plugin install amp --force --quiet
+
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")
 wp rewrite structure '%postname%' --hard --quiet

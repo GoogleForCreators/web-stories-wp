@@ -29,6 +29,15 @@ import {
 } from '@wordpress/e2e-test-utils';
 
 /**
+ * Internal dependencies
+ */
+import toBeValidAMP from '../matchers/toBeValidAMP';
+
+expect.extend({
+  toBeValidAMP,
+});
+
+/**
  * Environment variables
  */
 const { PUPPETEER_TIMEOUT, EXPECT_PUPPETEER_TIMEOUT } = process.env;
