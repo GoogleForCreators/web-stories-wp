@@ -23,7 +23,6 @@ export const DEFAULT_DATE_FORMATTING = {
 
 export { isToday } from './isToday';
 export { isYesterday } from './isYesterday';
-export { getDateFormattedFromWordPressToMoment } from './getDateFormattedFromWordPressToMoment';
 export { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
 export { getTimeFromNow } from './getTimeFromNow';
-export { getTimeSensitiveDisplayDate } from './getTimeSensitiveDisplayDate';
+export { getRelativeDisplayDate } from './getRelativeDisplayDate';

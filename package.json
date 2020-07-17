@@ -44,6 +44,7 @@
     "moment-timezone": "^0.5.31",
     "mousetrap": "^1.6.5",
     "patch-package": "^6.2.2",
+    "php-date-formatter": "^1.3.6",
     "polished": "^3.6.5",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.1",

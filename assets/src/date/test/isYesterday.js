@@ -18,6 +18,7 @@
  * External dependencies
  */
 import moment from 'moment-timezone';
+import MockDate from 'mockdate';
 
 /**
  * Internal dependencies
@@ -25,6 +26,10 @@ import moment from 'moment-timezone';
 import { isYesterday } from '../';
 
 describe('date/isYesterday', () => {
+  beforeEach(() => {
+    MockDate.set(moment.parseZone('2020-06-15T22:47:26'));
+  });
+
   it('should return true that today minus 1 day is yesterday', () => {
     const dateString = moment().subtract(1, 'days');
     const formattedDate = isYesterday(dateString);

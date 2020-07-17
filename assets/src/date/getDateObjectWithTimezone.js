@@ -19,20 +19,15 @@
  */
 import moment from 'moment-timezone';
 
-// return a moment date object based on dateFormatting.timezone if one is present
-// if no timezone check for gmtOffset, if that is present use it to set timezone based on UTC
-// by default return moment date as is based on browser time
-
 /**
- * @summary                        Get a date object of the time right now in any timezone
+ * @description Get a date object of the time right now in any timezone
  * Regardless of timezone or offset we want to have the same starting point of time.
  * We need to specify moment to be created in UTC rather than browser timezone.
  * Any moment created with moment.utc() will be in UTC mode, and any moment created with moment() will not.
- * @param {Object} dateFormatting  Object responsible for relevant timezone manipulation based off an UTC date in Moment.
+ * @param {Object} dateFormatting Object responsible for relevant timezone manipulation based off an UTC date in Moment.
  * Here we are looking for 1) dateFormatting.timezone, if no timezone 2) check for gmtOffset, if no gmtOffset use UTC
- * @return {Date}                  Date object formatted to timezone specified in param, UTC by default
+ * @return {Date} Date object formatted to timezone specified in param, UTC by default
  */
-
 export function getDateObjectWithTimezone(dateFormatting = {}) {
   const { timezone, gmtOffset } = dateFormatting;
   const date = moment.utc();

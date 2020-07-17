@@ -24,12 +24,12 @@ import moment from 'moment-timezone';
 import { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
 
 /**
- * @summary                        Get the time passed from or time until a date to the time now in any timezone
- * @param {Date} date              Uses moment to find time passed since/until.
+ * @description Get the time passed from or time until a date to the time now in any timezone
+ * @param {Date} date Uses moment to find time passed since/until.
  * If date is not an instance of moment when passed in it will create a moment from it.
- * @param {Object} dateFormatting  Object responsible for relevant date formatting.
+ * @param {Object} dateFormatting Object responsible for relevant date formatting.
  * Should contain dateFormat, timezone, gmtOffset, and timeFormat - all strings.
- * @return {string}                Displayable relative date string
+ * @return {string} Displayable relative date string
  */
 export function getTimeFromNow(date, dateFormatting) {
   const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);

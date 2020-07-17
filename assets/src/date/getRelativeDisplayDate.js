@@ -18,48 +18,43 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
 
 /**
  * External dependencies
  */
 import moment from 'moment-timezone';
+import DateFormatter from 'php-date-formatter';
 
 /**
  * Internal dependencies
  */
 import {
   DEFAULT_DATE_FORMATTING,
-  getDateFormattedFromWordPressToMoment,
   getTimeFromNow,
   isToday,
   isYesterday,
-} from './';
+} from '.';
 
-// Returns hours since date if date passed in matches today
-// Returns yesterday if date passed in is yesterday
-// Returns formatted date + time by default
 /**
- * @summary                        Formats a date to display relative to time passed since date.
+ * @description Formats a date to display relative to time passed since date using moment's parseZone function to keep fixed timezone.
  * If date to display is < 1 day ago it will display rounded time since date using timezone.
  * If date to display matches yesterday's date it will display "yesterday".
  * Otherwise date will come back formatted by dateFormatting.dateFormat (no time).
- * @param {Date} date              Date to format according to how much time or how many days have passed since date
+ * https://momentjs.com/guides/#/parsing/
+ * @param {Date} date Date to format according to how much time or how many days have passed since date
  * If date is not an instance of moment when passed in it will create a moment from it.
- * @param {Object} dateFormatting  Object responsible for relevant date formatting.
+ * @param {Object} dateFormatting Object responsible for relevant date formatting.
  * Should contain dateFormat, timezone, gmtOffset, and timeFormat - all strings.
- * @return {string}                Displayable relative date string
+ * @return {string} Displayable relative date string
  */
-
-export function getTimeSensitiveDisplayDate(
+export function getRelativeDisplayDate(
   date,
   dateFormatting = DEFAULT_DATE_FORMATTING
 ) {
   if (!date) {
     return '';
   }
-  // Here we need to make sure we use parseZone to honor existing timezone data
-  // https://momentjs.com/guides/#/parsing/
+
   const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
 
   if (isToday(displayDate)) {
@@ -68,8 +63,7 @@ export function getTimeSensitiveDisplayDate(
     return __('yesterday', 'web-stories');
   }
 
-  return (
-    getDateFormattedFromWordPressToMoment(date, dateFormatting.dateFormat) ||
-    format(dateFormatting.dateFormat, date)
-  );
+  const fmt = new DateFormatter();
+
+  return fmt.formatDate(date.toDate(), dateFormatting.dateFormat);
 }
