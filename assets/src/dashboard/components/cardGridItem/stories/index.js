@@ -99,7 +99,7 @@ export const _publishedStory = () => {
           title="The 6 fingered man"
           author="Inigo Moñtoya"
           displayDate={moment('04-19-2020', 'MM-DD-YYYY')}
-          status={STORY_STATUS.PUBLISHED}
+          status={STORY_STATUS.PUBLISH}
           onEditCancel={() => {}}
           onEditComplete={() => {}}
         />

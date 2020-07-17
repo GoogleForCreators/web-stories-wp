@@ -34,6 +34,7 @@ import {
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
+  STORY_STATUS,
 } from '../../constants';
 import storyReducer, {
   defaultStoriesState,
@@ -104,7 +105,12 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
             editStoryURL,
             stories: response.body,
             totalPages,
-            totalStoriesByStatus,
+            totalStoriesByStatus: {
+              ...totalStoriesByStatus,
+              [STORY_STATUS.PUBLISHED_AND_FUTURE]:
+                totalStoriesByStatus[STORY_STATUS.PUBLISH] +
+                totalStoriesByStatus[STORY_STATUS.FUTURE],
+            },
             page,
           },
         });

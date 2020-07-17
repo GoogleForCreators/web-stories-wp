@@ -71,7 +71,11 @@ describe('My Stories <Header />', function () {
           stories={fakeStories}
           search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
-          totalStoriesByStatus={{ all: 19, draft: 9, publish: 10 }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
@@ -91,7 +95,11 @@ describe('My Stories <Header />', function () {
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
-          totalStoriesByStatus={{ all: 19, draft: 9, publish: 10 }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
@@ -112,7 +120,11 @@ describe('My Stories <Header />', function () {
           stories={fakeStories}
           search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
-          totalStoriesByStatus={{ all: 19, draft: 9, published: 10 }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
@@ -132,7 +144,11 @@ describe('My Stories <Header />', function () {
           stories={fakeStories}
           search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
-          totalStoriesByStatus={{ all: 19, draft: 9, publish: 10 }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
@@ -155,7 +171,11 @@ describe('My Stories <Header />', function () {
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: setKeywordFn }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
-          totalStoriesByStatus={{ all: 19, draft: 9, published: 10 }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
@@ -179,7 +199,11 @@ describe('My Stories <Header />', function () {
           stories={fakeStories}
           search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
-          totalStoriesByStatus={{ all: 19, draft: 9, published: 10 }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 200, height: 300 },
