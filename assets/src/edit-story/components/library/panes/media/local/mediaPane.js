@@ -18,9 +18,8 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -50,6 +49,7 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import { ProviderType } from '../common/providerType';
+import Flags from '../../../../../flags';
 import useContainerScrolling from '../../../../../utils/useContainerScrolling';
 import paneId from './paneId';
 
@@ -141,9 +141,6 @@ function MediaPane(props) {
     }
   );
 
-  // Local state so that we can debounce triggering searches.
-  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
-
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -171,23 +168,6 @@ function MediaPane(props) {
     onSelect,
     onClose,
   });
-
-  /**
-   * Effectively performs a search, triggered at most every 500ms.
-   */
-  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
-    setSearchTerm({ searchTerm: searchTermValue });
-  }, 500);
-
-  /**
-   * Handle search input changes. Triggers with every keystroke.
-   *
-   * @param {string} value the new search term.
-   */
-  const onSearch = (value) => {
-    setSearchTermValue(value);
-    changeSearchTermDebounced();
-  };
 
   /**
    * Filter REST API calls and re-request API.
@@ -271,6 +251,12 @@ function MediaPane(props) {
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
+  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+
+  const incrementalSearchDebounceMedia = useFeature(
+    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
+  );
+
   const mediaLibrary = isRowBasedGallery ? (
     // Arranges elements in rows.
     <PaginatedMediaGallery
@@ -323,9 +309,10 @@ function MediaPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              value={searchTermValue}
+              initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
-              onChange={onSearch}
+              onSearch={onSearch}
+              incrementala={incrementalSearchDebounceMedia}
             />
           </SearchInputContainer>
           <FilterArea>
