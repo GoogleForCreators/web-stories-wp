@@ -580,7 +580,7 @@ class Story_Post_Type {
 			'url'   => get_permalink(),
 		];
 		$attachment_id = get_post_thumbnail_id();
-		if ( $attachment_id ) {
+		if ( $attachment_id && is_int( $attachment_id ) ) {
 			list( $poster, $width, $height ) = wp_get_attachment_image_src( $attachment_id, Media::STORY_POSTER_IMAGE_SIZE );
 			$poster_args                     = [
 				'poster' => $poster,

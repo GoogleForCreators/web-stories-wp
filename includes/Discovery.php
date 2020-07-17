@@ -233,7 +233,11 @@ class Discovery {
 		}
 
 		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		$feed_url         = add_query_arg(
+		if ( ! ( $post_type_object instanceof \WP_Post_Type ) ) {
+			return;
+		}
+
+		$feed_url = add_query_arg(
 			'post_type',
 			Story_Post_Type::POST_TYPE_SLUG,
 			get_feed_link()
