@@ -46,7 +46,7 @@ const INITIAL_STATE = {
  * @param {Object} obj.payload The details of the action, specific to the action
  * @return {Object} The new state
  */
-function reducer(state = INITIAL_STATE, { type, payload }) {
+export function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
     case commonTypes.FETCH_MEDIA_SUCCESS: {
       const { provider, mediaType, searchTerm } = payload;
