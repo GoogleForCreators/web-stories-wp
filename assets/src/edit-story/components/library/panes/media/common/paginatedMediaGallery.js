@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import React, {
   memo,
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -83,24 +84,47 @@ function PaginatedMediaGallery({
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, refContainer]);
 
-  const [handleScroll] = useDebouncedCallback(
-    (e) => {
-      if (!hasMore || !isMediaLoaded || isMediaLoading) {
-        return;
-      }
-      // This rootMargin is added so that we load an extra page when the
-      // we are "close" to the bottom of the container, even if it's not
-      // yet visible.
-      const bottom =
-        e.target.scrollHeight - e.target.scrollTop <=
-        e.target.clientHeight + ROOT_MARGIN;
-      if (bottom) {
-        setNextPage();
-      }
-    },
+  const loadNextPageIfNeeded = useCallback(() => {
+    const node = refContainer.current;
+    if (!node || !hasMore || !isMediaLoaded || isMediaLoading) {
+      return;
+    }
+
+    // Load the next page if we are "close" (by a length of ROOT_MARGIN) to the
+    // bottom of of the container.
+    const bottom =
+      node.scrollHeight - node.scrollTop <= node.clientHeight + ROOT_MARGIN;
+    if (bottom) {
+      setNextPage();
+    }
+
+    // Load the next page if the page isn't full, ie. scrollbar is not visible.
+    if (node.clientHeight === node.scrollHeight) {
+      setNextPage();
+    }
+  }, [hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
+
+  // After scrolls or resize, see if we need the load the next page.
+  const [handleScrollOrResize] = useDebouncedCallback(
+    loadNextPageIfNeeded,
     500,
-    [hasMore, isMediaLoaded, isMediaLoading, setNextPage]
+    [loadNextPageIfNeeded]
   );
+
+  // After loading a next page, see if we need to load another,
+  // ie. when the page of results isn't full.
+  useLayoutEffect(() => {
+    //eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    async function loadNextPageIfNeededAfterGalleryRendering() {
+      // Wait for <Gallery> to finish its render layout cycles first.
+      await sleep(50);
+
+      loadNextPageIfNeeded();
+    }
+    loadNextPageIfNeededAfterGalleryRendering();
+  }, [loadNextPageIfNeeded]);
 
   useEffect(() => {
     const node = refContainer.current;
@@ -108,35 +132,14 @@ function PaginatedMediaGallery({
       return undefined;
     }
 
-    // When the user scrolls (debounced).
-    node.addEventListener('scroll', handleScroll);
-    return () => node.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  useEffect(() => {
-    if (!hasMore || !isMediaLoaded || isMediaLoading) {
-      return;
-    }
-
-    //eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-    async function setNextPageIfCurrentPageNotFull() {
-      // Wait for <Gallery> to finish rendering first.
-      await sleep(50);
-
-      const node = refContainer.current;
-      if (!node) {
-        return;
-      }
-
-      // If the page is not full (ie. scrollbar not visible), load another page.
-      if (node.clientHeight === node.scrollHeight) {
-        setNextPage();
-      }
-    }
-    setNextPageIfCurrentPageNotFull();
-  }, [hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
+    // When the user scrolls or resizes (debounced).
+    node.addEventListener('scroll', handleScrollOrResize);
+    window.addEventListener('resize', handleScrollOrResize);
+    return () => {
+      node.removeEventListener('scroll', handleScrollOrResize);
+      window.removeEventListener('resize', handleScrollOrResize);
+    };
+  }, [handleScrollOrResize]);
 
   const mediaGallery =
     isMediaLoaded && resources.length === 0 ? (
