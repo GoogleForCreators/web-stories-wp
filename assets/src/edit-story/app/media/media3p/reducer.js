@@ -65,17 +65,17 @@ function reduceProviderStates(state, { type, payload }) {
  * @param {Object} obj.payload The details of the action, specific to the action
  * @return {Object} The new state
  */
-function reducer(state = INITIAL_STATE, { type, payload }) {
+export function reducer(state = INITIAL_STATE, { type, payload }) {
   state = reduceProviderStates(state, { type, payload });
 
   switch (type) {
-    case types.SET_SELECTED_PROVIDER: {
+    case types.MEDIA3P_SET_SELECTED_PROVIDER: {
       return {
         ...state,
         selectedProvider: payload.provider,
       };
     }
-    case types.SET_SEARCH_TERM: {
+    case types.MEDIA3P_SET_SEARCH_TERM: {
       let resultState = {
         ...state,
         searchTerm: payload.searchTerm,

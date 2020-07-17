@@ -3,8 +3,8 @@
 
 codecov:
   notify:
-    # Wait for: Karma (Editopr & Dashboard), Jest, PHPUnit, and E2E tests
-    after_n_builds: 5
+    # Wait for: Karma (Editopr & Dashboard), Jest, PHPUnit
+    after_n_builds: 4
 
 # Separate PR statuses for project-level and patch-level coverage
 # See https://docs.codecov.io/docs/commit-status
