@@ -65,7 +65,7 @@ function reduceProviderStates(state, { type, payload }) {
  * @param {Object} obj.payload The details of the action, specific to the action
  * @return {Object} The new state
  */
-function reducer(state = INITIAL_STATE, { type, payload }) {
+export function reducer(state = INITIAL_STATE, { type, payload }) {
   state = reduceProviderStates(state, { type, payload });
 
   switch (type) {
