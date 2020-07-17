@@ -75,12 +75,12 @@ class Discovery extends \WP_UnitTestCase {
 		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
 
-		add_filter( 'current_theme_supports-automatic-feed-links', '__return_true' );
+		add_theme_support( 'automatic-feed-links' );
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$user_id );
-		remove_filter( 'current_theme_supports-automatic-feed-links', '__return_true' );
+		remove_theme_support( 'automatic-feed-links' );
 	}
 
 	public function setUp() {
