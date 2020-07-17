@@ -16,14 +16,15 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState, useRef } from 'react';
 
-function useAddScrollbarWidth(refContainer) {
+function useContainerScrolling() {
+  const containerRef = useRef();
   // State and callback ref necessary to recalculate the padding of the list
   //  given the scrollbar width.
   const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const setContainer = (element) => {
-    refContainer.current = element;
+    containerRef.current = element;
     if (!element) {
       return;
     }
@@ -39,14 +40,17 @@ function useAddScrollbarWidth(refContainer) {
     }
     const currentPaddingLeft = parseFloat(
       window
-        .getComputedStyle(refContainer.current, null)
+        .getComputedStyle(containerRef.current, null)
         .getPropertyValue('padding-left')
     );
-    refContainer.current.style['padding-right'] =
+    containerRef.current.style['padding-right'] =
       currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
+  }, [scrollbarWidth, containerRef]);
 
-  return setContainer;
+  return {
+    containerRef,
+    setContainer,
+  };
 }
 
-export default useAddScrollbarWidth;
+export default useContainerScrolling;

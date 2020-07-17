@@ -50,7 +50,7 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import { ProviderType } from '../common/providerType';
-import useAddScrollbarWidth from '../../../../../utils/useAddScrollbarWidth';
+import useContainerScrolling from '../../../../../utils/useContainerScrolling';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -241,8 +241,7 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  const refContainer = useRef();
-  const setContainer = useAddScrollbarWidth(refContainer);
+  const { containerRef, setContainer } = useContainerScrolling();
 
   // NOTE: This infinite scrolling logic is used by the Column-based gallery.
   // The row-based PaginatedMediaGallery has its own pagination logic and
@@ -251,7 +250,7 @@ function MediaPane(props) {
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: refContainer,
+      root: containerRef,
       // This rootMargin is added so that we load an extra page when the
       // "loading" footer is "close" to the bottom of the container, even if
       // it's not yet visible.

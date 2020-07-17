@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  */
 import MediaGallery from '../common/mediaGallery';
 import useIntersectionEffect from '../../../../../utils/useIntersectionEffect';
-import useAddScrollbarWidth from '../../../../../utils/useAddScrollbarWidth';
+import useContainerScrolling from '../../../../../utils/useContainerScrolling';
 import {
   MediaGalleryContainer,
   MediaGalleryInnerContainer,
@@ -49,14 +49,13 @@ function PaginatedMediaGallery({
   onInsert,
   setNextPage,
 }) {
-  const refContainer = useRef();
-  const setContainer = useAddScrollbarWidth(refContainer);
+  const { containerRef, setContainer } = useContainerScrolling();
 
   const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: refContainer,
+      root: containerRef,
       // This rootMargin is added so that we load an extra page when the
       // "loading" footer is "close" to the bottom of the container, even if
       // it's not yet visible.
