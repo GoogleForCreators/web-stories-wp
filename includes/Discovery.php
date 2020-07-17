@@ -243,12 +243,17 @@ class Discovery {
 			get_feed_link()
 		);
 
+		$name = '';
+		if ( property_exists( $post_type_object->labels, 'name' ) ) {
+			$name = $post_type_object->labels->name;
+		}
+
 		/* translators: Separator between blog name and feed type in feed links. */
 		$separator = _x( '&raquo;', 'feed link', 'web-stories' );
 		/* translators: 1: Blog name, 2: Separator (raquo), 3: Post type name. */
 		$post_type_title = esc_html__( '%1$s %2$s %3$s Feed', 'web-stories' );
 
-		$title = sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $post_type_object->labels->name );
+		$title = sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $name );
 
 		printf(
 			'<link rel="alternate" type="%s" title="%s" href="%s">',
