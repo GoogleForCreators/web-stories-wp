@@ -31,12 +31,12 @@ import { useDropTargets } from '../../../../../app';
 import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
 import { ProviderType } from '../common/providerType';
+import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 
 const styledTiles = css`
   width: 100%;
   cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
-  margin-bottom: 10px;
 `;
 
 const Image = styled.img`
@@ -51,6 +51,12 @@ const Video = styled.video`
 const Container = styled.div`
   position: relative;
   display: flex;
+  margin-bottom: 10px;
+  body.${KEYBOARD_USER_SELECTOR} &:focus {
+    transform: scale(1.2);
+    z-index: 100;
+    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  }
 `;
 
 const Duration = styled.div`
@@ -102,6 +108,7 @@ const UploadingIndicator = styled.div`
 /**
  * Get a formatted element for different media types.
  *
+ * @param {number} param.index Index of the media element in the gallery.
  * @param {Object} param Parameters object
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
@@ -111,6 +118,7 @@ const UploadingIndicator = styled.div`
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
+  index,
   resource,
   width: requestedWidth,
   height: requestedHeight,
@@ -211,71 +219,27 @@ const MediaElement = ({
 
   const onClick = () => onInsert(resource, width, height);
 
-  if (type === 'image') {
-    return (
-      <Container
-        data-testid="mediaElement"
-        data-id={resourceId}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
-      >
-        <Image
-          key={src}
-          src={getThumbnailUrl(resource)}
-          ref={mediaElement}
-          width={width}
-          height={height}
-          alt={alt}
-          loading={'lazy'}
-          onClick={onClick}
-          {...dropTargetsBindings}
-        />
-        {local && (
-          <CSSTransition
-            in
-            appear={true}
-            timeout={0}
-            className="uploading-indicator"
-          >
-            <UploadingIndicator />
-          </CSSTransition>
-        )}
-        {hasDropdownMenu && providerType === ProviderType.LOCAL && (
-          <DropDownMenu
-            resource={resource}
-            pointerEntered={pointerEntered}
-            isMenuOpen={isMenuOpen}
-            onMenuOpen={onMenuOpen}
-            onMenuCancelled={onMenuCancelled}
-            onMenuSelected={onMenuSelected}
-          />
-        )}
-      </Container>
-    );
-  }
+  const innerElement = getInnerElement(type, {
+    src,
+    ref: mediaElement,
+    resource,
+    alt,
+    width,
+    height,
+    onClick,
+    showVideoDetail,
+    dropTargetsBindings,
+  });
 
-  const { lengthFormatted, poster, mimeType } = resource;
   return (
     <Container
       data-testid="mediaElement"
+      data-id={resourceId}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
+      tabIndex={index === 0 ? 0 : -1}
     >
-      <Video
-        key={src}
-        ref={mediaElement}
-        poster={poster}
-        width={width}
-        height={height}
-        preload="none"
-        aria-label={alt}
-        muted
-        onClick={onClick}
-        {...dropTargetsBindings}
-      >
-        <source src={src} type={mimeType} />
-      </Video>
-      {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+      {innerElement}
       {local && (
         <CSSTransition
           in
@@ -300,7 +264,61 @@ const MediaElement = ({
   );
 };
 
+function getInnerElement(
+  type,
+  {
+    src,
+    ref,
+    resource,
+    alt,
+    width,
+    height,
+    onClick,
+    showVideoDetail,
+    dropTargetsBindings,
+  }
+) {
+  if (type === 'image') {
+    return (
+      <Image
+        key={src}
+        src={getThumbnailUrl(resource)}
+        ref={ref}
+        width={width}
+        height={height}
+        alt={alt}
+        loading={'lazy'}
+        onClick={onClick}
+        {...dropTargetsBindings}
+      />
+    );
+  } else if (type === 'video') {
+    const { lengthFormatted, poster, mimeType } = resource;
+    return (
+      <>
+        <Video
+          key={src}
+          ref={ref}
+          poster={poster}
+          width={width}
+          height={height}
+          preload="none"
+          aria-label={alt}
+          muted
+          onClick={onClick}
+          {...dropTargetsBindings}
+        >
+          <source src={src} type={mimeType} />
+        </Video>
+        {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+      </>
+    );
+  }
+  throw new Error('Invalid media element type.');
+}
+
 MediaElement.propTypes = {
+  index: PropTypes.number.isRequired,
   resource: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
