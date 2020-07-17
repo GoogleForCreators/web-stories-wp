@@ -151,7 +151,7 @@ class Embed_Block {
 		}
 
 		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-			return $this->render_block_amp( $attributes, $count );
+			return $this->render_block_amp( $attributes, absint( $count ) );
 		}
 
 		return $this->render_block_html( $attributes );
@@ -271,8 +271,8 @@ class Embed_Block {
 		?>
 		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
 			<amp-iframe
-				width="<?php echo esc_attr( absint( $attributes['width'] ) ); ?>"
-				height="<?php echo esc_attr( absint( $attributes['height'] ) ); ?>"
+				width="<?php echo esc_attr( $attributes['width'] ); ?>"
+				height="<?php echo esc_attr( $attributes['height'] ); ?>"
 				sandbox="allow-scripts"
 				layout="responsive"
 				frameborder="0"

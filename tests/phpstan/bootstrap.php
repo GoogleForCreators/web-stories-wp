@@ -18,3 +18,7 @@ class WP_CLI {
 	public static function warning( $text ) {
 	}
 }
+
+function is_amp_endpoint() {
+	return false;
+}
