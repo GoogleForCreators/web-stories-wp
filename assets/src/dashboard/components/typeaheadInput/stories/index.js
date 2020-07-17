@@ -61,7 +61,6 @@ export const _default = () => {
           }
           action(`input changed ${inputValue}`)(inputValue);
         }}
-        maxItemsVisible={number('maxItemsVisible', 7)}
         value={value}
         placeholder={text('placeholder', 'Search Stories')}
         ariaLabel={text('ariaLabel', 'my search for seasonings')}

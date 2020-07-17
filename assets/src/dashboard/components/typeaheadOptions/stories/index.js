@@ -35,6 +35,14 @@ const demoItems = [
     value: 'edge_case',
     label: 'i am a very very very very very very very long label',
   },
+  { value: 'dog', label: 'dog' },
+  { value: 'bat', label: 'bat' },
+  { value: 'cat', label: 'cat' },
+  { value: 'lemur', label: 'lemur' },
+  { value: 'rabbit', label: 'rabbit' },
+  { value: 'sloth', label: 'sloth' },
+  { value: 'turtle', label: 'turtle' },
+  { value: 'horse', label: 'horse' },
 ];
 
 export default {
@@ -50,7 +58,6 @@ export const _default = () => (
     <TypeaheadOptions
       items={demoItems}
       isOpen={boolean('isOpen', true)}
-      maxItemsVisible={number('maxItemsVisible')}
       onSelect={(item) => {
         action(`clicked on dropdown item ${item.value}`)(item);
       }}

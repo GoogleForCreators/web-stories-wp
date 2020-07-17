@@ -31,6 +31,8 @@ import { TypographyPresets } from '../typography';
 export const Menu = styled.ul`
   ${({ theme, isOpen }) => `
     width: 100%;
+    max-height: 300px;
+    overflow-y: scroll;
     align-items: flex-start;
     background-color: ${theme.colors.white};
     box-shadow: ${theme.expandedTypeahead.boxShadow};
@@ -39,7 +41,6 @@ export const Menu = styled.ul`
     flex-direction: column;
     margin: 5px 0 0;
     opacity: ${isOpen ? 1 : 0};
-    overflow: hidden;
     padding: 5px 0;
     pointer-events: ${isOpen ? 'auto' : 'none'};
     z-index: ${Z_INDEX.TYPEAHEAD_OPTIONS};
@@ -71,7 +72,7 @@ const MenuItemContent = styled.span`
   margin: auto 0;
 `;
 
-const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
+const TypeaheadOptions = ({ isOpen, items, onSelect }) => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const listRef = useRef(null);
 
@@ -85,7 +86,7 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
             if (hoveredIndex > 0) {
               setHoveredIndex(hoveredIndex - 1);
               if (listRef.current) {
-                listRef.current.scrollToItem(hoveredIndex - 1);
+                listRef.current.children[hoveredIndex - 1].scrollIntoView();
               }
             }
             break;
@@ -95,7 +96,7 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
             if (hoveredIndex < items.length - 1) {
               setHoveredIndex(hoveredIndex + 1);
               if (listRef.current) {
-                listRef.current.scrollToItem(hoveredIndex + 1);
+                listRef.current.children[hoveredIndex + 1].scrollIntoView();
               }
             }
             break;
@@ -119,7 +120,7 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
 
   useEffect(() => {
     if (listRef.current) {
-      listRef.current.scrollToItem(0);
+      listRef.current.children[0].focus();
     }
     setHoveredIndex(0);
   }, [items]);
@@ -130,7 +131,7 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
       <MenuItem
         key={`${item.value}_${index}`}
         isHovering={index === hoveredIndex}
-        onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
+        onClick={() => !itemIsDisabled && onSelect(item)}
         onMouseEnter={() => setHoveredIndex(index)}
         isDisabled={itemIsDisabled}
       >
@@ -140,8 +141,8 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
   };
 
   return (
-    <Menu isOpen={isOpen}>
-      {items.slice(0, maxItemsVisible).map((item, index) => {
+    <Menu isOpen={isOpen} ref={listRef}>
+      {items.map((item, index) => {
         return renderMenuItem(item, index);
       })}
     </Menu>
@@ -150,7 +151,6 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
 
 TypeaheadOptions.propTypes = {
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
-  maxItemsVisible: PropTypes.number,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
 };

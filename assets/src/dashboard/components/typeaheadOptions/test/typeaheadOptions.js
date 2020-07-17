@@ -69,28 +69,13 @@ describe('TypeaheadOptions', () => {
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should default to showing 5 items', () => {
+  it('should have 6 items', () => {
     const { getAllByRole } = renderWithTheme(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
     const menuItems = getAllByRole('listitem');
 
-    expect(menuItems).toHaveLength(5);
-  });
-
-  it('should only show 3 items when maxItemsVisible is set', () => {
-    const { getAllByRole } = renderWithTheme(
-      <TypeaheadOptions
-        onSelect={onClickMock}
-        items={demoItems}
-        isOpen
-        maxItemsVisible={3}
-      />
-    );
-
-    const menuItems = getAllByRole('listitem');
-
-    expect(menuItems).toHaveLength(3);
+    expect(menuItems).toHaveLength(6);
   });
 });
