@@ -72,6 +72,18 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			]
 		);
 
+		$future_date = strtotime( '+1 day' );
+
+		$factory->post->create_many(
+			3,
+			[
+				'post_status' => 'future',
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_author' => self::$user_id,
+				'post_type'   => $post_type,
+			]
+		);
+
 		$factory->post->create_many(
 			2,
 			[
@@ -151,8 +163,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'publish', $statues_decode );
 		$this->assertArrayHasKey( 'draft', $statues_decode );
 
-		$this->assertEquals( 10, $statues_decode['all'] );
+		$this->assertEquals( 13, $statues_decode['all'] );
 		$this->assertEquals( 7, $statues_decode['publish'] );
+		$this->assertEquals( 3, $statues_decode['future'] );
 		$this->assertEquals( 3, $statues_decode['draft'] );
 
 		$this->assertEquals( 3, $headers['X-WP-Total'] );

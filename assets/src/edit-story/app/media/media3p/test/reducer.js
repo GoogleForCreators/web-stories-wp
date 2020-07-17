@@ -22,16 +22,18 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import reducer from '../reducer';
+import { reducer as media3pReducer } from '../reducer';
+import { reducer as localReducer } from '../../local/reducer';
 import useMediaReducer from '../../useMediaReducer';
 import * as media3pActionsToWrap from '../actions';
+import * as localMediaActionsToWrap from '../../local/actions';
 import * as types from '../../types';
 
 describe('reducer', () => {
   let initialValue;
 
   beforeEach(() => {
-    initialValue = reducer(undefined, { type: types.INITIAL_STATE });
+    initialValue = media3pReducer(undefined, { type: types.INITIAL_STATE });
   });
 
   it('should provide initial state for each provider', () => {
@@ -42,7 +44,7 @@ describe('reducer', () => {
 
   it('should reduce each provider state', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, media3pActionsToWrap)
+      useMediaReducer(media3pReducer, media3pActionsToWrap)
     );
 
     result.current.actions.fetchMediaSuccess({
@@ -60,7 +62,7 @@ describe('reducer', () => {
 
   it('should assign selectedProvider on setSelectedProvider', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, media3pActionsToWrap)
+      useMediaReducer(media3pReducer, media3pActionsToWrap)
     );
 
     result.current.actions.setSelectedProvider({ provider: 'unsplash' });
@@ -74,7 +76,7 @@ describe('reducer', () => {
 
   it('should assign searchTerm on setSearchTerm', () => {
     const { result } = renderHook(() =>
-      useMediaReducer(reducer, media3pActionsToWrap)
+      useMediaReducer(media3pReducer, media3pActionsToWrap)
     );
 
     result.current.actions.setSearchTerm({ searchTerm: 'cats' });
@@ -82,6 +84,53 @@ describe('reducer', () => {
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
         searchTerm: 'cats',
+      })
+    );
+  });
+
+  it('setting local search term does not affect media3p search term', () => {
+    const { result: localMediaResult } = renderHook(() =>
+      useMediaReducer(localReducer, localMediaActionsToWrap)
+    );
+
+    localMediaResult.current.actions.setSearchTerm({ searchTerm: 'cats' });
+
+    const { result: media3pResult } = renderHook(() =>
+      useMediaReducer(media3pReducer, media3pActionsToWrap)
+    );
+
+    expect(localMediaResult.current.state).toStrictEqual(
+      expect.objectContaining({
+        searchTerm: 'cats',
+      })
+    );
+    expect(media3pResult.current.state).toStrictEqual(
+      expect.objectContaining({
+        searchTerm: '',
+      })
+    );
+  });
+
+  it('setting media3p search term does not affect local search term', () => {
+    const { result: media3pResult } = renderHook(() =>
+      useMediaReducer(media3pReducer, media3pActionsToWrap)
+    );
+
+    media3pResult.current.actions.setSearchTerm({ searchTerm: 'cats' });
+
+    const { result: localMediaResult } = renderHook(() =>
+      useMediaReducer(localReducer, localMediaActionsToWrap)
+    );
+
+    expect(media3pResult.current.state).toStrictEqual(
+      expect.objectContaining({
+        searchTerm: 'cats',
+      })
+    );
+
+    expect(localMediaResult.current.state).toStrictEqual(
+      expect.objectContaining({
+        searchTerm: '',
       })
     );
   });
