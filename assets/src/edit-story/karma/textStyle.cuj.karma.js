@@ -207,13 +207,34 @@ describe('CUJ: Creator Can Style Text', () => {
         expect(options[0].textContent).toBe('Yrsa');
       });
 
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should display the selected recent font with a tick', () => {});
+      it('should display the selected recent font with a tick', async () => {
+        const option = fixture.screen.getByText('Abel');
+        await fixture.events.click(option);
+        await wait(TIMEOUT);
+        await openFontPicker();
+        const selected = fixture.screen.getAllByRole('option', {
+          name: 'Selected Abel',
+        });
+        // One from the recent fonts and one from the general list.
+        expect(selected.length).toBe(2);
+      });
 
-      // Disable reason: Not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should include recent fonts to search', () => {});
+      it('should include recent fonts to search', async () => {
+        const option = fixture.screen.getByText('Abel');
+        await fixture.events.click(option);
+        await wait(TIMEOUT);
+        await openFontPicker();
+
+        await fixture.events.keyboard.type('Ab');
+        // Ensure the debounced callback has taken effect.
+        await wait(TIMEOUT);
+        let options = document
+          .getElementById('editor-font-picker-list')
+          .querySelectorAll('li');
+
+        // Twice for 'Abel', once for Abhaya Libre.
+        expect(options.length).toBe(3);
+      });
     });
 
     describe('using keyboard only', () => {
