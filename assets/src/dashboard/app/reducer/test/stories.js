@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import storyReducer, { ACTION_TYPES } from '../stories';
+import { STORY_STATUS } from '../../../constants';
 
 describe('storyReducer', () => {
   const initialState = {
@@ -48,8 +49,8 @@ describe('storyReducer', () => {
         },
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -73,8 +74,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 43,
-        draft: 40,
-        publish: 3,
+        [STORY_STATUS.DRAFT]: 40,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 3,
       },
       totalPages: 4,
     });
@@ -121,8 +122,8 @@ describe('storyReducer', () => {
         },
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -145,8 +146,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 45,
-        draft: 41,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 41,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 4,
     });
@@ -221,8 +222,8 @@ describe('storyReducer', () => {
         ],
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -240,8 +241,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 44,
-        draft: 40,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 40,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 4,
       allPagesFetched: false,
@@ -291,8 +292,8 @@ describe('storyReducer', () => {
           ],
           totalStoriesByStatus: {
             all: 18,
-            draft: 14,
-            publish: 4,
+            [STORY_STATUS.DRAFT]: 14,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
           },
           totalPages: 2,
         },
@@ -310,8 +311,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 18,
-        draft: 14,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 14,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 2,
       allPagesFetched: true,
