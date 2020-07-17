@@ -64,9 +64,12 @@ function browserHasObtrusiveScrollbars() {
  * @return {boolean} Whether scrollbars are obtrusive.
  */
 function useObtrusiveScrollbars() {
-  const [obtrusiveScrollbars, setObtrusiveScrollbars] = useState(false);
-  useEffect(() => setObtrusiveScrollbars(browserHasObtrusiveScrollbars()), []);
-  return obtrusiveScrollbars;
+  const [hasObtrusiveScrollbars, setHasObtrusiveScrollbars] = useState(false);
+  useEffect(
+    () => setHasObtrusiveScrollbars(browserHasObtrusiveScrollbars()),
+    []
+  );
+  return hasObtrusiveScrollbars;
 }
 
 export default useObtrusiveScrollbars;

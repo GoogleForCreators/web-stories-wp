@@ -75,8 +75,8 @@ const Container = styled.div.attrs(
    * Custom gray scrollbars for Chromium & Firefox.
    */
 
-  ${({ obtrusiveScrollbars }) =>
-    obtrusiveScrollbars &&
+  ${({ hasObtrusiveScrollbars }) =>
+    hasObtrusiveScrollbars &&
     `
     * {
       scrollbar-width: thin;
@@ -153,7 +153,7 @@ function Popup({
     positionPopup();
   }, [placement, spacing, anchor, dock, popup, isOpen, positionPopup]);
 
-  const obtrusiveScrollbars = useObtrusiveScrollbars();
+  const hasObtrusiveScrollbars = useObtrusiveScrollbars();
 
   return popupState && isOpen
     ? createPortal(
@@ -163,7 +163,7 @@ function Popup({
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
-          obtrusiveScrollbars={obtrusiveScrollbars}
+          hasObtrusiveScrollbars={hasObtrusiveScrollbars}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

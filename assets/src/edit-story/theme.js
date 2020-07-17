@@ -85,11 +85,11 @@ const GlobalObtrusiveScrollbarStyle = createGlobalStyle`
 `;
 
 const CombinedGlobalStyle = () => {
-  const obtrusiveScrollbars = useObtrusiveScrollbars();
+  const hasObtrusiveScrollbars = useObtrusiveScrollbars();
   return (
     <>
       <GlobalStyle />
-      {obtrusiveScrollbars && <GlobalObtrusiveScrollbarStyle />}
+      {hasObtrusiveScrollbars && <GlobalObtrusiveScrollbarStyle />}
     </>
   );
 };
