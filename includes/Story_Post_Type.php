@@ -28,6 +28,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Feed;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
@@ -40,6 +41,7 @@ class Story_Post_Type {
 	use Publisher;
 	use Types;
 	use Assets;
+	use Feed;
 	/**
 	 * The slug of the stories post type.
 	 *
@@ -120,7 +122,8 @@ class Story_Post_Type {
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
 				],
 				'rewrite'               => [
-					'slug' => self::REWRITE_SLUG,
+					'slug'  => self::REWRITE_SLUG,
+					'feeds' => true,
 				],
 				'public'                => true,
 				'show_ui'               => true,
@@ -145,6 +148,8 @@ class Story_Post_Type {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+
+		add_filter( 'the_content_feed', [ $this, 'the_content_feed' ] );
 	}
 
 	/**
@@ -555,5 +560,38 @@ class Story_Post_Type {
 		}
 
 		return $gtag_opt;
+	}
+
+	/**
+	 * Format story for Feed.
+	 *
+	 * @param string $content Current post content.
+	 *
+	 * @return string
+	 */
+	public function the_content_feed( $content ) {
+		$post_type = get_post_type();
+		if ( self::POST_TYPE_SLUG !== $post_type ) {
+			return $content;
+		}
+
+		$args          = [
+			'title' => get_the_title(),
+			'url'   => get_permalink(),
+		];
+		$attachment_id = get_post_thumbnail_id();
+		if ( $attachment_id ) {
+			list( $poster, $width, $height ) = wp_get_attachment_image_src( $attachment_id, Media::STORY_POSTER_IMAGE_SIZE );
+			$poster_args                     = [
+				'poster' => $poster,
+				'height' => $height,
+				'width'  => $width,
+			];
+
+			$args = array_merge( $args, $poster_args );
+		}
+
+		return $this->render_story_for_feed( $args );
+
 	}
 }

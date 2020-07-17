@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Feed;
 
 /**
  * Embed block class.
@@ -34,6 +35,7 @@ use Google\Web_Stories\Traits\Assets;
 class Embed_Block {
 
 	use Assets;
+	use Feed;
 	/**
 	 * Script handle.
 	 *
@@ -133,7 +135,7 @@ class Embed_Block {
 		}
 
 		if ( is_feed() ) {
-			return $this->render_block_feed( $attributes );
+			return $this->render_story_for_feed( $attributes );
 		}
 
 		return $this->render_block_html( $attributes );
@@ -171,41 +173,6 @@ class Embed_Block {
 					<?php echo esc_html( $title ); ?>
 				</a>
 			</amp-story-player>
-		</div>
-		<?php
-
-		return (string) ob_get_clean();
-	}
-
-	/**
-	 * Renders the block type output in an RSS feed context.
-	 *
-	 * @param array $attributes Block attributes.
-	 *
-	 * @return string Rendered block type output.
-	 */
-	protected function render_block_feed( array $attributes ) {
-		$url   = (string) $attributes['url'];
-		$title = (string) $attributes['title'];
-
-		ob_start();
-		?>
-		<div class="wp-block-web-stories-embed">
-			<a href="<?php echo esc_url( $url ); ?>">
-				<?php
-				if ( ! empty( $attributes['poster'] ) ) {
-					printf(
-						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
-						esc_url( $attributes['poster'] ),
-						absint( $attributes['width'] ),
-						absint( $attributes['height'] ),
-						esc_attr( $title )
-					);
-				} else {
-					echo esc_html( $title );
-				}
-				?>
-			</a>
 		</div>
 		<?php
 
