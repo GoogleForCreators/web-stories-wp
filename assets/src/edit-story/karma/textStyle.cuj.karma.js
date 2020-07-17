@@ -24,6 +24,7 @@ import { waitForElementToBeRemoved } from '@testing-library/react';
  */
 import useInsertElement from '../components/canvas/useInsertElement';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
+import { useStory } from '../app/story';
 import { Fixture } from './fixture';
 
 describe('CUJ: Creator Can Style Text', () => {
@@ -70,11 +71,22 @@ describe('CUJ: Creator Can Style Text', () => {
       await fixture.snapshot('font picker open');
     });
 
-    // Disable reason: @todo
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('it should apply the selected font on the element', async () => {
-      const option = fixture.screen.getByText('Abel');
+    it('it should apply the selected font', async () => {
+      const option = fixture.screen.getByText('Yrsa');
       await fixture.events.click(option);
+      await wait(TIMEOUT);
+      await openFontPicker();
+      const selected = fixture.screen.getAllByRole('option', {
+        name: 'Selected Yrsa',
+      });
+      expect(selected.length).toBe(2);
+
+      const {
+        state: {
+          currentPage: { elements },
+        },
+      } = await fixture.renderHook(() => useStory());
+      expect(elements[1].font.family).toBe('Yrsa');
     });
 
     describe('when searching fonts', () => {
