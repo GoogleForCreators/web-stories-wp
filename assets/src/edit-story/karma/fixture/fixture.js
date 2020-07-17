@@ -460,6 +460,7 @@ class APIProviderFixture {
             {
               name: 'Abel',
               value: 'Abel',
+              family: 'Abel',
               fallbacks: ['sans-serif'],
               service: 'fonts.google.com',
               weights: [400],
@@ -469,6 +470,7 @@ class APIProviderFixture {
             {
               name: 'Abhaya Libre',
               value: 'Abhaya Libre',
+              family: 'Abhaya Libre',
               fallbacks: ['serif'],
               service: 'fonts.google.com',
               weights: [400, 500, 600, 700, 800],
@@ -486,6 +488,51 @@ class APIProviderFixture {
               value: font.family,
               ...font,
             })),
+            {
+              name: 'Source Serif Pro',
+              value: 'Source Serif Pro',
+              family: 'Source Serif Pro',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [400, 600, 700],
+              styles: ['regular'],
+              variants: [
+                [0, 400],
+                [0, 600],
+                [0, 700],
+              ],
+            },
+            {
+              name: 'Space Mono',
+              value: 'Space Mono',
+              family: 'Space Mono',
+              fallbacks: ['monospace'],
+              service: 'fonts.google.com',
+              weights: [400, 700],
+              styles: ['regular', 'italic'],
+              variants: [
+                [0, 400],
+                [1, 400],
+                [0, 700],
+                [1, 700],
+              ],
+            },
+            {
+              name: 'Yrsa',
+              value: 'Yrsa',
+              family: 'Yrsa',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [300, 400, 500, 600, 700],
+              styles: ['regular'],
+              variants: [
+                [0, 300],
+                [0, 400],
+                [0, 500],
+                [0, 600],
+                [0, 700],
+              ],
+            },
           ]),
         []
       );
