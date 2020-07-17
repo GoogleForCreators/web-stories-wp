@@ -49,6 +49,7 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import { ProviderType } from '../common/providerType';
+import Flags from '../../../../../flags';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -280,7 +281,7 @@ function MediaPane(props) {
   const onSearch = (v) => setSearchTerm({ searchTerm: v });
 
   const incrementalSearchDebounceMedia = useFeature(
-    'incrementalSearchDebounceMedia'
+    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
 
   const mediaLibrary = isRowBasedGallery ? (

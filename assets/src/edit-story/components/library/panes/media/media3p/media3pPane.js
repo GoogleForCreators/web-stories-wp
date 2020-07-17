@@ -44,6 +44,7 @@ import {
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { ProviderType } from '../common/providerType';
+import Flags from '../../../../../flags';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -113,7 +114,7 @@ function Media3pPane(props) {
   const onSearch = (v) => setSearchTerm({ searchTerm: v });
 
   const incrementalSearchDebounceMedia = useFeature(
-    'incrementalSearchDebounceMedia'
+    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
 
   const onProviderTabClick = useCallback(() => {
