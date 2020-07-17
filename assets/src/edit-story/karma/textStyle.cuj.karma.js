@@ -255,10 +255,11 @@ describe('CUJ: Creator Can Style Text', () => {
         await fixture.events.keyboard.press('up');
         await fixture.events.keyboard.press('Enter');
         await openFontPicker();
-        const selected = fixture.screen.getByRole('option', {
+        const selected = fixture.screen.getAllByRole('option', {
           name: 'Selected Abel',
         });
-        expect(selected).toBeDefined();
+        // 1 selected + 1 recent font.
+        expect(selected.length).toBe(2);
       });
 
       it('should close the font picker with Esc', async () => {
