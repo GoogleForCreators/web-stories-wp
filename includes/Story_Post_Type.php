@@ -387,84 +387,91 @@ class Story_Post_Type {
 				 * Issue: 1903
 				 * Creation date: 2020-06-08
 				 */
-				'enableAnimation'              => false,
+				'enableAnimation'                => false,
 				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu'            => true,
+				'mediaDropdownMenu'              => true,
 				/**
 				 * Description: Flag for new font picker with typeface previews in style panel.
 				 * Author: @carlos-kelly
 				 * Issue: #1300
 				 * Creation date: 2020-06-02
 				 */
-				'newFontPicker'                => true,
+				'newFontPicker'                  => true,
 				/**
 				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
 				 * Author: @dmmulroy
 				 * Issue: #2094
 				 * Creation date: 2020-06-04
 				 */
-				'showKeyboardShortcutsButton'  => false,
+				'showKeyboardShortcutsButton'    => false,
 				/**
 				 * Description: Flag for hiding/enabling text sets.
 				 * Author: @dmmulroy
 				 * Issue: #2097
 				 * Creation date: 2020-06-04
 				 */
-				'showTextSets'                 => false,
+				'showTextSets'                   => false,
 				/**
 				 * Description: Flag for hiding/enabling the pre publish tab.
 				 * Author: @dmmulroy
 				 * Issue: #2095
 				 * Creation date: 2020-06-04
 				 */
-				'showPrePublishTab'            => false,
+				'showPrePublishTab'              => false,
 				/**
 				 * Description: Flag for displaying the animation tab/panel.
 				 * Author: @dmmulroy
 				 * Issue: #2092
 				 * Creation date: 2020-06-04
 				 */
-				'showAnimationTab'             => false,
+				'showAnimationTab'               => false,
 				/**
 				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
 				 * Author: @dmmulroy
 				 * Issue: #2044
 				 * Creation date: 2020-06-04
 				 */
-				'showTextMagicAndHelperMode'   => false,
+				'showTextMagicAndHelperMode'     => false,
 				/**
 				 * Description: Flag for hiding/enabling the search input on the text and shapes panes.
 				 * Author: @dmmulroy
 				 * Issue: #2098
 				 * Creation date: 2020-06-04
 				 */
-				'showTextAndShapesSearchInput' => false,
+				'showTextAndShapesSearchInput'   => false,
 				/**
 				 * Description: Flag for the 3P Media tab.
 				 * Author: @diegovar
 				 * Issue: #2508
 				 * Creation date: 2020-06-17
 				 */
-				'media3pTab'                   => false,
+				'media3pTab'                     => false,
 				/**
 				 * Description: Flag to show or hide the elements tab.
 				 * Author: @diegovar
 				 * Issue: #2616
 				 * Creation date: 2020-06-23
 				 */
-				'showElementsTab'              => false,
+				'showElementsTab'                => false,
 				/**
 				 * Description: Flag for using a row-based media gallery (vs column based) in the Uploads tab.
 				 * Author: @joannalee
 				 * Issue: #2820
 				 * Creation date: 2020-06-30
 				 */
-				'rowBasedGallery'              => false,
+				'rowBasedGallery'                => false,
+				/**
+				 * Description: Flag for using incremental search in media and media3p with a debouncer.
+				 * Author: @diegovar
+				 * Issue: #3206
+				 * Creation date: 2020-07-15
+				 */
+				'incrementalSearchDebounceMedia' => false,
 			],
 
 		];

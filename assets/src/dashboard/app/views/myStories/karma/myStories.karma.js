@@ -214,7 +214,8 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
     it('should switch to the Published Tab', async () => {
       const numPublished = formattedStoriesArray.filter(
-        ({ status }) => status === STORY_STATUS.PUBLISHED
+        ({ status }) =>
+          status === STORY_STATUS.PUBLISH || status === STORY_STATUS.FUTURE
       ).length;
 
       expect(numPublished).toBeGreaterThan(0);
@@ -228,7 +229,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       await fixture.events.click(publishedTabButton);
 
       const viewPublishedText = fixture.screen.getByText(
-        new RegExp('^' + STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED] + '$')
+        new RegExp(
+          '^' + STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE] + '$'
+        )
       );
 
       expect(viewPublishedText).toBeTruthy();
