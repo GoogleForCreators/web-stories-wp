@@ -123,7 +123,6 @@ class Story_Post_Type {
 				],
 				'rewrite'               => [
 					'slug'  => self::REWRITE_SLUG,
-					'feeds' => true,
 				],
 				'public'                => true,
 				'show_ui'               => true,
