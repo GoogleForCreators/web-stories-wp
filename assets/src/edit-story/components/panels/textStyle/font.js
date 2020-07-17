@@ -115,8 +115,9 @@ function FontControls({ selectedElements, pushUpdate }) {
           };
         })
       );
-
-      addRecentFont(fontObj);
+      if (hasNewFontPicker) {
+        addRecentFont(fontObj);
+      }
       pushUpdate({ font: newFont }, true);
     },
     [
@@ -124,6 +125,7 @@ function FontControls({ selectedElements, pushUpdate }) {
       fontStyle,
       fontWeight,
       fonts,
+      hasNewFontPicker,
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
