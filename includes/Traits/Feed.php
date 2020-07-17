@@ -41,7 +41,7 @@ trait Feed {
 	 */
 	protected function render_story_for_feed( array $attributes ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		ob_start();
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story-feed.php';
+		require WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story-feed.php';
 		return (string) ob_get_clean();
 	}
 }
