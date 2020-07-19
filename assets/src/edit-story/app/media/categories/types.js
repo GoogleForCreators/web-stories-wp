@@ -14,23 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-export * from '../categories/actions';
-export * from '../common/actions';
-import * as types from './types';
-
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.MEDIA3P_SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
-
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.MEDIA3P_SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
-};
+export const FETCH_MEDIA_CATEGORIES_START = 'FETCH_MEDIA_CATEGORIES_START';
+export const FETCH_MEDIA_CATEGORIES_SUCCESS = 'FETCH_MEDIA_CATEGORIES_SUCCESS';
+export const FETCH_MEDIA_CATEGORIES_ERROR = 'FETCH_MEDIA_CATEGORIES_ERROR';

@@ -17,25 +17,19 @@
 /**
  * Internal dependencies
  */
-import commonReducer, {
-  INITIAL_STATE as COMMON_INITIAL_STATE,
-} from '../common/reducer';
+import * as types from './types';
 
-import categoriesReducer, {
-  INITIAL_STATE as CATEGORIES_INITIAL_STATE,
-} from '../categories/reducer';
-
-const INITIAL_STATE = {
-  ...COMMON_INITIAL_STATE,
-  categories: CATEGORIES_INITIAL_STATE,
+export const INITIAL_STATE = {
+  isLoading: true,
+  isLoaded: false,
+  categories: [],
 };
 
 /**
- * State reducer for a single 3p media provider.
+ * The reducer for the state of a media list pagination.
  *
- * By the time this reducer is called, the provider discriminator will already
- * be evaluated, so the provider-specific `state` passed here will always
- * correspond to the `payload.provider` value.
+ * This is called by the reducers for the state nodes:
+ * media/local, media/media3p/unsplash, media/media3p/coverr, etc.
  *
  * @param {Object} state The state to reduce
  * @param {Object} obj An object with the type and payload
@@ -43,11 +37,34 @@ const INITIAL_STATE = {
  * @param {Object} obj.payload The details of the action, specific to the action
  * @return {Object} The new state
  */
-function providerReducer(state = INITIAL_STATE, { type, payload }) {
-  return {
-    ...commonReducer(state, { type, payload }),
-    categories: categoriesReducer(state.categories, { type, payload }),
-  };
+function reducer(state = INITIAL_STATE, { type, payload }) {
+  switch (type) {
+    case types.FETCH_MEDIA_CATEGORIES_START: {
+      return {
+        ...state,
+        isLoading: true,
+        isLoaded: false,
+      };
+    }
+    case types.FETCH_MEDIA_CATEGORIES_SUCCESS: {
+      const { categories } = payload;
+      return {
+        ...state,
+        categories,
+        isLoading: false,
+        isLoaded: true,
+      };
+    }
+    case types.FETCH_MEDIA_CATEGORIES_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
+        isLoaded: true,
+      };
+    }
+    default:
+      return state;
+  }
 }
 
-export default providerReducer;
+export default reducer;
