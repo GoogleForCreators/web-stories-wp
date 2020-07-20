@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}.wiki
-          ref: master
+          ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prune PR files
@@ -28,7 +28,7 @@ jobs:
           git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
           git commit -m "Prune refs/pull/${{ github.event.pull_request.number }}"
           git pull --rebase
-          git push origin master
+          git push origin main
         env:
           GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_AUTHOR_NAME: ${{ github.actor }}
