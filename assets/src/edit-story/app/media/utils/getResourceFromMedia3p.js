@@ -107,7 +107,6 @@ function getUrls(m) {
 function getResourceFromMedia3p(m) {
   const urls = getUrls(m);
   return createResource({
-    id: m.name,
     type: m.type.toLowerCase(),
     mimeType: urls.full.mime_type,
     creationDate: m.createTime,
