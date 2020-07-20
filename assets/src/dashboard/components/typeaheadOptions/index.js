@@ -126,31 +126,48 @@ const TypeaheadOptions = ({
   }, [hoveredIndex, items, onSelect, isOpen]);
 
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.children[0].focus();
+    if (!listRef.current) {
+      return () => {};
     }
+
+    listRef.current.children[0].focus();
+
+    return () => {};
   }, []);
 
   // we only want to set an existing value for currentSelection when the dropdown is newly opened
   useEffect(() => {
-    if (!isOptionMenuAlreadyOpen) {
-      setIsOptionMenuAlreadyOpen(true);
-      const existingValueOnMenuOpen = currentSelection
-        ? items.findIndex(
-            (item) =>
-              item.label.toLowerCase() === currentSelection.toLowerCase() ||
-              item.value.toLowerCase() === currentSelection.toLowerCase()
-          )
-        : -1;
-      existingValueOnMenuOpen > -1 && setSelectedIndex(existingValueOnMenuOpen);
+    if (isOptionMenuAlreadyOpen) {
+      return () => {};
     }
+
+    setIsOptionMenuAlreadyOpen(true);
+
+    const selectionToCheckFor = currentSelection.toLowerCase().trim();
+    const existingValueOnMenuOpen = selectionToCheckFor
+      ? items.findIndex(
+          (item) =>
+            (item.value &&
+              item.value.toLowerCase() === selectionToCheckFor.toLowerCase()) ||
+            item.label.toLowerCase() === selectionToCheckFor.toLowerCase()
+        )
+      : -1;
+    existingValueOnMenuOpen > -1 && setSelectedIndex(existingValueOnMenuOpen);
+
+    return () => {};
   }, [isOptionMenuAlreadyOpen, currentSelection, items]);
 
   // when selectedIndex is updated above we want to scroll it into view and focus it
   useEffect(() => {
+    if (!listRef.current || !listRef.current.children) {
+      return () => {};
+    }
+
     const selectedItem = listRef.current.children[selectedIndex];
-    selectedItem.scrollIntoView();
-    selectedItem.focus();
+    selectedItem?.scrollIntoView();
+    selectedItem?.focus();
+
+    return () => {};
   }, [selectedIndex]);
 
   const renderMenuItem = (item, index) => {

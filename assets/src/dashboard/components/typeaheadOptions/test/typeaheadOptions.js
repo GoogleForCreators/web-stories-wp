@@ -37,6 +37,9 @@ describe('TypeaheadOptions', () => {
 
   const onClickMock = jest.fn();
 
+  // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
+  window.HTMLElement.prototype.scrollIntoView = () => {};
+
   it('should render a <TypeaheadOptions />', () => {
     const { getByText } = renderWithTheme(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
@@ -77,5 +80,51 @@ describe('TypeaheadOptions', () => {
     const menuItems = getAllByRole('listitem');
 
     expect(menuItems).toHaveLength(6);
+  });
+
+  it('should show selected value if one is present when menu is rendered that matches an item', () => {
+    const { getByText } = renderWithTheme(
+      <TypeaheadOptions
+        onSelect={onClickMock}
+        items={demoItems}
+        currentSelection={demoItems[1].value}
+        isOpen
+      />
+    );
+
+    const ActiveMenuItem = getByText(demoItems[1].label).parentElement;
+    const ActiveMenuItemStyle = window.getComputedStyle(ActiveMenuItem)
+      .backgroundColor;
+
+    expect(ActiveMenuItemStyle).toBe('rgb(238, 238, 238)');
+
+    const InactiveMenuItem = getByText(demoItems[3].label).parentElement;
+    const InactiveMenuItemStyle = window.getComputedStyle(InactiveMenuItem)
+      .backgroundColor;
+
+    expect(InactiveMenuItemStyle).toBe('');
+  });
+
+  it("should not show selected value if currentSelection doesn't match an item", () => {
+    const { getByText } = renderWithTheme(
+      <TypeaheadOptions
+        onSelect={onClickMock}
+        items={demoItems}
+        currentSelection={'fo'}
+        isOpen
+      />
+    );
+
+    const ActiveMenuItem = getByText(demoItems[1].label).parentElement;
+    const ActiveMenuItemStyle = window.getComputedStyle(ActiveMenuItem)
+      .backgroundColor;
+
+    expect(ActiveMenuItemStyle).toBe('');
+
+    const InactiveMenuItem = getByText(demoItems[3].label).parentElement;
+    const InactiveMenuItemStyle = window.getComputedStyle(InactiveMenuItem)
+      .backgroundColor;
+
+    expect(InactiveMenuItemStyle).toBe('');
   });
 });
