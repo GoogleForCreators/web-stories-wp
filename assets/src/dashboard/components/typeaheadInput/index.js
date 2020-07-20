@@ -245,6 +245,7 @@ const TypeaheadInput = ({
 
       {isMenuOpen && (
         <TypeaheadOptions
+          currentSelection={value}
           isOpen={isMenuOpen}
           items={items}
           onSelect={items && handleMenuItemSelect}

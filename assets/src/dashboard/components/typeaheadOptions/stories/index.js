@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean, number } from '@storybook/addon-knobs';
+import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -56,6 +56,7 @@ const TypeaheadOptionsWrapper = styled.div`
 export const _default = () => (
   <TypeaheadOptionsWrapper>
     <TypeaheadOptions
+      currentSelection={''}
       items={demoItems}
       isOpen={boolean('isOpen', true)}
       onSelect={(item) => {
