@@ -154,14 +154,18 @@ const NoResult = styled.span`
 
 function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const {
-    state: { fonts },
+    state: { fonts, recentFonts },
     actions: { ensureMenuFontsLoaded },
   } = useFont();
 
   const ref = useRef();
   const inputRef = useRef();
+  const dividerIndexTracker = useRef(recentFonts.length - 1);
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [matchingFonts, setMatchingFonts] = useState(fonts);
+  const [matchingFonts, setMatchingFonts] = useState([
+    ...recentFonts,
+    ...fonts,
+  ]);
 
   useEffect(() => {
     if (isOpen) {
@@ -184,21 +188,24 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
 
   useFocusOut(ref, onClose, [onClose]);
 
-  // Scroll to offset for current value
-  const [currentOffset, setCurrentOffset] = useState(
-    fonts.findIndex(({ name }) => name === value)
-  );
+  const [currentOffset, setCurrentOffset] = useState(0);
 
   const [updateMatchingFonts] = useDebouncedCallback(
     () => {
-      if (searchKeyword.trim() === '') {
-        setMatchingFonts(fonts);
+      // Restore default if less than 2 characters.
+      if (searchKeyword.trim().length < 2) {
+        dividerIndexTracker.current = recentFonts.length - 1;
+        setMatchingFonts([...recentFonts, ...fonts]);
         return;
       }
-      const _matchingFonts = fonts.filter(({ name }) =>
+      const _fonts = fonts.filter(({ name }) =>
         name.toLowerCase().includes(searchKeyword.toLowerCase())
       );
-      setMatchingFonts(_matchingFonts);
+      const _recentFonts = recentFonts.filter(({ name }) =>
+        name.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+      dividerIndexTracker.current = _recentFonts.length - 1;
+      setMatchingFonts([..._recentFonts, ..._fonts]);
     },
     250,
     {},
@@ -235,7 +242,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   );
 
   const itemRenderer = useCallback(
-    ({ service, name, hasDivider }) => (
+    ({ service, name }, index) => (
       <>
         <Item
           fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
@@ -246,7 +253,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
           )}
           {name}
         </Item>
-        {hasDivider && <Divider />}
+        {index === dividerIndexTracker.current && <Divider />}
       </>
     ),
     [onSelect, value]

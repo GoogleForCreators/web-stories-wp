@@ -78,7 +78,7 @@ describe('Font Picker', () => {
     expect(allOptionItems).toHaveLength(fontsListResponse.length);
   });
 
-  it('should mark the currently selected font and scroll to it', async () => {
+  it('should mark the currently selected font', async () => {
     scrollTo.mockReset();
     const { getByRole } = await getFontPicker();
 
@@ -124,7 +124,8 @@ describe('Font Picker', () => {
       fireEvent.keyDown(fontsList, { key: 'Enter' });
     });
 
-    expect(onChangeFn).toHaveBeenCalledWith('Roboto Condensed');
+    // The second font in the list.
+    expect(onChangeFn).toHaveBeenCalledWith('Abel');
   });
 
   it('should close the menu when the Esc key is pressed.', async () => {
@@ -156,17 +157,30 @@ describe('Font Picker', () => {
     const fontsList = getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
-    act(() => {
+    // Move down by 2
+    await act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+    await act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+
+    await act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowUp',
       });
     });
 
-    act(() => {
+    await act(() => {
       fireEvent.keyDown(fontsList, { key: 'Enter' });
     });
 
-    expect(onChangeFn).toHaveBeenCalledWith('Handlee');
+    // Moving down by 2 and back 1 up should end up with the second font: Abel.
+    expect(onChangeFn).toHaveBeenCalledWith('Abel');
   });
 
   it('should search and filter the list to match the results.', async () => {
