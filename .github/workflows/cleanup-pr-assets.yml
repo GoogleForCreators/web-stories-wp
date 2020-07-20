@@ -28,7 +28,7 @@ jobs:
           git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
           git commit -m "Prune refs/pull/${{ github.event.pull_request.number }}"
           git pull --rebase
-          git push origin main
+          git push origin master
         env:
           GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_AUTHOR_NAME: ${{ github.actor }}
