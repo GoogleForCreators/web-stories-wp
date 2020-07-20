@@ -52,10 +52,8 @@ const Container = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  body.${KEYBOARD_USER_SELECTOR} &:focus {
-    transform: scale(1.2);
-    z-index: 100;
-    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  body${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: solid 2px #fff;
   }
 `;
 
@@ -108,12 +106,13 @@ const UploadingIndicator = styled.div`
 /**
  * Get a formatted element for different media types.
  *
- * @param {number} param.index Index of the media element in the gallery.
  * @param {Object} param Parameters object
+ * @param {number} param.index Index of the media element in the gallery.
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
  * @param {Function} param.onInsert Insertion callback.
+ * @param {Function} param.onKeyDown onKeyDown callback.
  * @param {ProviderType} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
  */
@@ -123,6 +122,7 @@ const MediaElement = ({
   width: requestedWidth,
   height: requestedHeight,
   onInsert,
+  onKeyDown,
   providerType,
 }) => {
   const {
@@ -231,13 +231,29 @@ const MediaElement = ({
     dropTargetsBindings,
   });
 
+  const ref = useRef();
+
+  const keyDownWrapper = (event) => {
+    if (event.key === 'Enter') {
+      onInsert(resource, width, height);
+      return;
+    }
+    onKeyDown({
+      event: event,
+      target: ref,
+    });
+  };
+
   return (
     <Container
+      ref={ref}
       data-testid="mediaElement"
       data-id={resourceId}
+      className={'mediaElement'}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
       tabIndex={index === 0 ? 0 : -1}
+      onKeyDown={keyDownWrapper}
     >
       {innerElement}
       {local && (
@@ -323,6 +339,7 @@ MediaElement.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   onInsert: PropTypes.func,
+  onKeyDown: PropTypes.func,
   providerType: PropTypes.string,
 };
 
