@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}.wiki
-          ref: main
+          ref: master
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prune PR files
