@@ -40,10 +40,10 @@ export const elementWithPosition = css`
   top: ${({ y }) => `${y}px`};
 `;
 
-// We need to round since otherwise there can be differences when resizing / measuring.
+// TODO: removed round/ceil, calculateFitTextFontSize needs to be improved?
 export const elementWithSize = css`
-  width: ${({ width }) => `${Math.ceil(width)}px`};
-  height: ${({ height }) => `${Math.round(height)}px`};
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
 `;
 
 export const elementWithRotation = css`
