@@ -61,7 +61,7 @@ function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
     >
       <Row expand={false}>
         <Button onClick={removeAsBackground} fullWidth>
-          {__('Detach from Background', 'web-stories')}
+          {__('Detach from background', 'web-stories')}
         </Button>
       </Row>
       <Row expand={false}>
