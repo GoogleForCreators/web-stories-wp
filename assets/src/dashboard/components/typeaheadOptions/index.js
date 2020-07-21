@@ -143,7 +143,8 @@ const TypeaheadOptions = ({
 
     setIsOptionMenuAlreadyOpen(true);
 
-    const selectionToCheckFor = currentSelection.toLowerCase().trim();
+    const selectionToCheckFor =
+      currentSelection && currentSelection.toLowerCase().trim();
     const existingValueOnMenuOpen = selectionToCheckFor
       ? items.findIndex(
           (item) =>
