@@ -1,5 +1,7 @@
 | **CUJ**                             | **Action**                           | **Completion** |
 | ----------------------------------- | ------------------------------------ | -------------- |
+| Creator Can Add A Link              | *\[total\]*                          | 🏆 **100.00%** |
+|                                     | Add Web Address                      | 🏆 **100.00%** |
 | Creator can Add and Write Text      | *\[total\]*                          | 🛴 **66.67%**  |
 |                                     | Delete textbox                       | 🛴 **66.67%**  |
 | Creator can add image/video to page | *\[total\]*                          | 🚨 **0.00%**   |
@@ -12,4 +14,4 @@
 |                                     | Inline style override                | 🛴 **88.89%**  |
 |                                     | Styling text in a single text field  | 🛴 **85.71%**  |
 |                                     | Styling text in multiple text fields | 🏆 **100.00%** |
-| *\[total\]*                         | *\[total\]*                          | 🛴 **77.78%**  |
+| *\[total\]*                         | *\[total\]*                          | 🛴 **78.95%**  |
