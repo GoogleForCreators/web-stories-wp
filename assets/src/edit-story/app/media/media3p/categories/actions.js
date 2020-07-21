@@ -30,13 +30,13 @@ export const fetchCategoriesStart = (dispatch) => ({ provider } = {}) => {
 
 export const fetchCategoriesSuccess = (dispatch) => ({
   provider,
-  ...otherProperties
+  categories,
 }) => {
   dispatch({
     type: types.FETCH_MEDIA_CATEGORIES_SUCCESS,
     payload: {
-      provider: provider,
-      ...otherProperties,
+      provider,
+      categories,
     },
   });
 };
