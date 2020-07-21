@@ -776,8 +776,18 @@ describe('CUJ: Creator can view their stories in list view', () => {
   });
 
   describe('Action: Go to WP list view to do any action', () => {
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should add a link to the classic WordPress list view', () => {});
+    it('should add a link to the classic WordPress list view', async () => {
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.click(listViewButton);
+
+      const wpListViewLink = fixture.screen.getByRole('link', {
+        name: /^See classic WP list view$/,
+      });
+
+      expect(wpListViewLink).toBeTruthy();
+    });
   });
 });
