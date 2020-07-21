@@ -21,9 +21,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useEffect } from 'react';
 import { useFeature } from 'flagged';
-/**
- * Internal dependencies
- */
 
 /**
  * WordPress dependencies
