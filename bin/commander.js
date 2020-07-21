@@ -21,6 +21,7 @@
  * External dependencies
  */
 import { mkdirSync, rmdirSync } from 'fs';
+import { relative } from 'path';
 import program from 'commander';
 
 /**
@@ -29,17 +30,19 @@ import program from 'commander';
 import {
   bundlePlugin,
   buildFonts,
+  createBuild,
   getCurrentVersionNumber,
   updateVersionNumbers,
   updateAssetsURL,
   updateTemplates,
 } from './utils/index.js';
+import { ASSETS_URL_CDN } from './utils/constants.js';
 
 const PLUGIN_DIR = process.cwd();
-const PLUGIN_FILE = `${PLUGIN_DIR}/web-stories.php`;
-const README_FILE = `${PLUGIN_DIR}/readme.txt`;
-const PLUGIN_BUILD_DIR = `${PLUGIN_DIR}/build/web-stories`;
-const FONTS_FILE = PLUGIN_DIR + '/includes/data/fonts.json';
+const PLUGIN_FILE = 'web-stories.php';
+const README_FILE = 'readme.txt';
+const FONTS_FILE = 'includes/data/fonts.json';
+const BUILD_DIR = 'build/web-stories';
 const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
 
 program
@@ -60,11 +63,14 @@ program
     console.log('  $ commander.js version --nightly');
   })
   .action((version, { nightly }) => {
-    const currentVersion = getCurrentVersionNumber(PLUGIN_FILE);
+    const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
+    const readmeFilePath = `${PLUGIN_DIR}/${README_FILE}`;
+
+    const currentVersion = getCurrentVersionNumber(pluginFilePath);
     const newVersion = version || currentVersion;
 
-    updateVersionNumbers(PLUGIN_FILE, README_FILE, newVersion, nightly);
-    const constantVersion = getCurrentVersionNumber(PLUGIN_FILE, true);
+    updateVersionNumbers(pluginFilePath, readmeFilePath, newVersion, nightly);
+    const constantVersion = getCurrentVersionNumber(pluginFilePath, true);
 
     console.log(
       `Version number successfully updated! New version: ${constantVersion}`
@@ -110,17 +116,28 @@ program
     );
   })
   .action(({ composer, cdn, zip, clean }) => {
-    if (cdn) {
-      updateAssetsURL(PLUGIN_FILE, cdn === true ? undefined : cdn);
-    }
+    const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
+    const pluginFilePath = `${buildDirPath}/${PLUGIN_FILE}`;
 
     // Make sure build directory exists and is empty.
-    rmdirSync(PLUGIN_BUILD_DIR, { recursive: true });
-    mkdirSync(PLUGIN_BUILD_DIR, { recursive: true });
+    rmdirSync(BUILD_DIR, { recursive: true });
+    mkdirSync(BUILD_DIR, { recursive: true });
 
-    const build = bundlePlugin(PLUGIN_DIR, composer, zip, clean, cdn);
+    createBuild(PLUGIN_DIR, buildDirPath, composer);
 
-    console.log(`Plugin successfully built! Location: ${build}`);
+    if (cdn) {
+      updateAssetsURL(pluginFilePath, cdn === true ? ASSETS_URL_CDN : cdn);
+    }
+
+    let build = BUILD_DIR;
+
+    if (zip) {
+      build = bundlePlugin(buildDirPath, composer, zip, clean);
+    }
+
+    console.log(
+      `Plugin successfully built! Location: ${relative(process.cwd(), build)}`
+    );
   });
 
 program
@@ -138,8 +155,10 @@ program
       return;
     }
 
+    const fontsFilePath = `${PLUGIN_DIR}/${FONTS_FILE}`;
+
     try {
-      await buildFonts(FONTS_FILE);
+      await buildFonts(fontsFilePath);
     } catch (err) {
       console.error('There was an error generating the web fonts list:', err);
       return;
