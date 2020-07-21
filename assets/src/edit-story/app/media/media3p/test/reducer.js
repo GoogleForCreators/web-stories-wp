@@ -22,8 +22,8 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { reducer as media3pReducer } from '../reducer';
-import { reducer as localReducer } from '../../local/reducer';
+import media3pReducer from '../reducer';
+import localReducer from '../../local/reducer';
 import useMediaReducer from '../../useMediaReducer';
 import * as media3pActionsToWrap from '../actions';
 import * as localMediaActionsToWrap from '../../local/actions';

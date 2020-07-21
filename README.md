@@ -4,7 +4,7 @@ Visual storytelling for WordPress.
 
 [![Latest Release)](https://img.shields.io/github/v/release/google/web-stories-wp?include_prereleases)](https://github.com/google/web-stories-wp/releases)
 [![Commit activity](https://img.shields.io/github/commit-activity/m/google/web-stories-wp)](https://github.com/google/web-stories-wp/pulse/monthly)
-[![Code Coverage](https://codecov.io/gh/google/web-stories-wp/branch/master/graph/badge.svg)](https://codecov.io/gh/google/web-stories-wp)
+[![Code Coverage](https://codecov.io/gh/google/web-stories-wp/branch/main/graph/badge.svg)](https://codecov.io/gh/google/web-stories-wp)
 ![License](https://img.shields.io/github/license/google/web-stories-wp)
 
 <details>

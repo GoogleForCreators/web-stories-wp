@@ -52,7 +52,7 @@ WrapperWithRef.propTypes = {
   children: PropTypes.node,
 };
 
-describe('multiSelectionMovable', () => {
+describe('multiSelectionMoveable', () => {
   let updateElementsById;
   let updateSelectedElements;
   let target1;

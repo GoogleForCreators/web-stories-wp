@@ -3,7 +3,7 @@ name: PHP Lints
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
