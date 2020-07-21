@@ -98,10 +98,6 @@ class Embed_Block {
 		);
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-
-		// AMP compatibility.
-		add_filter( 'amp_skip_post', [ $this, 'skip_amp_for_proxy_request' ] );
-		add_action( 'template_include', [ $this, 'filter_template_include' ] );
 	}
 
 	/**
@@ -134,9 +130,6 @@ class Embed_Block {
 	 * @return string Rendered block type output.
 	 */
 	public function render_block( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		static $count = 0;
-		$count++;
-
 		// The only mandatory attribute.
 		if ( empty( $attributes['url'] ) ) {
 			return '';
@@ -148,10 +141,6 @@ class Embed_Block {
 
 		if ( is_feed() ) {
 			return $this->render_block_feed( $attributes );
-		}
-
-		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
-			return $this->render_block_amp( $attributes, absint( $count ) );
 		}
 
 		return $this->render_block_html( $attributes );
@@ -228,82 +217,5 @@ class Embed_Block {
 		<?php
 
 		return (string) ob_get_clean();
-	}
-
-	/**
-	 * Filters whether AMP should be skipped for the current post.
-	 *
-	 * Disables AMP for the <amp-iframe> proxy requests.
-	 *
-	 * @param bool $skip Whether to skip AMP for the current post.
-	 *
-	 * @return bool Whether to skip AMP or not.
-	 */
-	public function skip_amp_for_proxy_request( $skip ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['_web_story_embed_proxy'] ) && has_block( self::BLOCK_NAME ) ) {
-			return true;
-		}
-
-		return $skip;
-	}
-
-	/**
-	 * Renders the block type output in AMP context.
-	 *
-	 * @param array $attributes Block attributes.
-	 * @param int   $count Counter used for the proxy URL.
-	 *
-	 * @return string Rendered block type output.
-	 */
-	protected function render_block_amp( array $attributes, $count ) {
-		$url   = (string) $attributes['url'];
-		$title = (string) $attributes['title'];
-		$align = sprintf( 'align%s', $attributes['align'] );
-
-		$iframe_url = add_query_arg(
-			[
-				'_web_story_embed_proxy' => $count,
-			]
-		);
-
-		ob_start();
-		?>
-		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-			<amp-iframe
-				width="<?php echo esc_attr( $attributes['width'] ); ?>"
-				height="<?php echo esc_attr( $attributes['height'] ); ?>"
-				sandbox="allow-scripts"
-				layout="responsive"
-				frameborder="0"
-				src="<?php echo esc_url( $iframe_url ); ?>"
-			>
-				<a href="<?php echo esc_url( $url ); ?>" placeholder>
-					<?php echo esc_html( $title ); ?>
-				</a>
-			</amp-iframe>
-		</div>
-		<?php
-
-		return (string) ob_get_clean();
-	}
-
-	/**
-	 * Set template for the block's proxy template.
-	 *
-	 * @param string $template Template.
-	 *
-	 * @return string Template.
-	 */
-	public function filter_template_include( $template ) {
-		if (
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			! isset( $_GET['_web_story_embed_proxy'] ) ||
-			! function_exists( 'is_amp_endpoint' )
-		) {
-			return $template;
-		}
-
-		return WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/embed-block-amp.php';
 	}
 }
