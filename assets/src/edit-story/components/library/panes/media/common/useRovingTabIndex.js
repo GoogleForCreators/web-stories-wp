@@ -56,22 +56,22 @@ function getDistanceSq(p1, p2) {
  * @param {string} key The key pressed.
  * @return {string} Either `previousSibling` or `nextSibling`.
  */
-function getSiblingSelector(isRTL, key) {
+function getSiblingDirection(isRTL, key) {
   return !isRTL && (key === 'ArrowLeft' || key === 'ArrowUp')
     ? ['previousSibling']
     : 'nextSibling';
 }
 
 /**
- * Given an element and a sibling selector, returns that media element's sibling.
+ * Given an element and a sibling direction, returns that media element's sibling.
  * Media elements are nested 1 level deep.
  *
  * @param {Element} e The element.
- * @param {string} siblingSelector The sibling selector (previousSibling or nextSibling).
+ * @param {string} siblingDirection The sibling direction (previousSibling or nextSibling).
  * @return {Element} The sibling.
  */
-function getNextSibling(e, siblingSelector) {
-  return e.parentNode[siblingSelector]?.firstChild;
+function getNextSibling(e, siblingDirection) {
+  return e.parentNode[siblingDirection]?.firstChild;
 }
 
 /**
@@ -79,19 +79,19 @@ function getNextSibling(e, siblingSelector) {
  * space that is in a different row.
  *
  * @param {Element} element The element.
- * @param {string} siblingSelector The sibling selector.
+ * @param {string} siblingDirection The sibling direction.
  * @return {?Element} The closest sibling in the following (or previous) row.
  */
-function getClosestValidSibling(element, siblingSelector) {
+function getClosestValidSibling(element, siblingDirection) {
   const elementCenter = getCenter(element);
   // Iterate for the next siblings and get the closest one in a different row.
   let closestValidSibling = null;
   let closestValidSiblingCenter = null;
   let closestValidSiblingDistanceSq = null;
   for (
-    let sibling = getNextSibling(element, siblingSelector);
+    let sibling = getNextSibling(element, siblingDirection);
     sibling;
-    sibling = getNextSibling(sibling, siblingSelector)
+    sibling = getNextSibling(sibling, siblingDirection)
   ) {
     const siblingCenter = getCenter(sibling);
     if (Math.floor(siblingCenter.y) === Math.floor(elementCenter.y)) {
@@ -134,16 +134,16 @@ function onKeyDown({ isRTL }) {
       e.focus();
     };
     const key = eventDetails.event.key;
-    const siblingSelector = getSiblingSelector(isRTL, key);
+    const siblingDirection = getSiblingDirection(isRTL, key);
     if (key === 'ArrowLeft' || key === 'ArrowRight') {
-      const sibling = getNextSibling(element, siblingSelector);
+      const sibling = getNextSibling(element, siblingDirection);
       if (sibling) {
         switchFocusToElement(sibling);
       }
     } else if (key === 'ArrowUp' || key === 'ArrowDown') {
       const closestValidSibling = getClosestValidSibling(
         element,
-        siblingSelector
+        siblingDirection
       );
       if (closestValidSibling) {
         element.tabIndex = -1;

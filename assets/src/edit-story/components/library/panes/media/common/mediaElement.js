@@ -239,10 +239,11 @@ const MediaElement = ({
       onInsert(resource, width, height);
       return;
     }
-    onKeyDown({
-      event: event,
-      target: ref,
-    });
+    onKeyDown &&
+      onKeyDown({
+        event: event,
+        target: ref,
+      });
   };
 
   return (

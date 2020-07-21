@@ -141,4 +141,178 @@ describe('Media3pPane fetching', () => {
     );
     await expectMediaElements(MEDIA_PER_PAGE * 2);
   });
+
+  it('should handle pressing right when focused', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(0));
+
+    await fixture.events.keyboard.press('ArrowRight');
+
+    expect(document.activeElement).toBe(mediaElements.item(1));
+  });
+
+  it('should handle pressing right when at the end of a row', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(1));
+
+    await fixture.events.keyboard.press('ArrowRight');
+
+    expect(document.activeElement).toBe(mediaElements.item(2));
+  });
+
+  it('should handle pressing right when the last element is focused', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(mediaElements.length - 1));
+
+    await fixture.events.keyboard.press('ArrowRight');
+
+    expect(document.activeElement).toBe(
+      mediaElements.item(mediaElements.length - 1)
+    );
+  });
+
+  it('should handle pressing left when focused', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(1));
+
+    await fixture.events.keyboard.press('ArrowLeft');
+
+    expect(document.activeElement).toBe(mediaElements.item(0));
+  });
+
+  it('should handle pressing left at the beginning of a row', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(2));
+
+    await fixture.events.keyboard.press('ArrowLeft');
+
+    expect(document.activeElement).toBe(mediaElements.item(1));
+  });
+
+  it('should handle pressing left when the first element is focused', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(0));
+
+    await fixture.events.keyboard.press('ArrowLeft');
+
+    expect(document.activeElement).toBe(mediaElements.item(0));
+  });
+
+  it('should handle pressing down', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(1));
+
+    await fixture.events.keyboard.press('ArrowDown');
+
+    expect(document.activeElement).toBe(mediaElements.item(3));
+  });
+
+  it('should handle pressing up', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(3));
+
+    await fixture.events.keyboard.press('ArrowUp');
+
+    expect(document.activeElement).toBe(mediaElements.item(1));
+  });
+
+  it('should handle pressing Home', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(6));
+
+    await fixture.events.keyboard.press('Home');
+
+    expect(document.activeElement).toBe(mediaElements.item(0));
+  });
+
+  it('should handle pressing End', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    let mediaElements = media3pPane.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    await fixture.events.focus(mediaElements.item(6));
+
+    await fixture.events.keyboard.press('End');
+
+    expect(document.activeElement).toBe(
+      mediaElements.item(mediaElements.length - 1)
+    );
+  });
 });
