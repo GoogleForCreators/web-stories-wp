@@ -3,7 +3,7 @@ name: Build plugin
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
@@ -146,7 +146,7 @@ jobs:
     name: Update release changelog
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
       - name: Draft release notes

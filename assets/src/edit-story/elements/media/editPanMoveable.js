@@ -23,12 +23,15 @@ import { useEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import Movable from '../../components/movable';
+import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
 import getFocalFromOffset from './getFocalFromOffset';
 
-function EditPanMovable({
+/**
+ *
+ */
+function EditPanMoveable({
   setProperties,
   fullMedia,
   croppedMedia,
@@ -63,7 +66,7 @@ function EditPanMovable({
   });
 
   return (
-    <Movable
+    <Moveable
       ref={moveableRef}
       targets={croppedMedia}
       origin={true}
@@ -118,7 +121,7 @@ function EditPanMovable({
   );
 }
 
-EditPanMovable.propTypes = {
+EditPanMoveable.propTypes = {
   setProperties: PropTypes.func.isRequired,
   fullMedia: PropTypes.object.isRequired,
   croppedMedia: PropTypes.object.isRequired,
@@ -134,4 +137,4 @@ EditPanMovable.propTypes = {
   mediaHeight: PropTypes.number.isRequired,
 };
 
-export default EditPanMovable;
+export default EditPanMoveable;
