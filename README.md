@@ -12,7 +12,7 @@ Visual storytelling for WordPress.
 Build Status
 </summary>
 
-[![Deployment Status](https://img.shields.io/travis/com/google/web-stories-wp?label=deployment)]((https://travis-ci.com/google/web-stories-wp))
+[![Deployment Status](https://img.shields.io/travis/com/google/web-stories-wp?label=deployment)](https://travis-ci.com/google/web-stories-wp)
 [![Integration Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/Integration%20Tests?label=integration%20tests)](https://github.com/google/web-stories-wp/actions?query=branch%3Amain)
 [![E2E Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/E2E%20Tests?label=e2e%20tests)](https://github.com/google/web-stories-wp/actions?query=branch%3Amain)
 [![JS Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/JavaScript%20Unit%20Tests?label=js%20tests)](https://github.com/google/web-stories-wp/actions?query=branch%3Amain)
