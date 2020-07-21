@@ -63,7 +63,7 @@ const MenuItem = styled.li`
 `;
 MenuItem.propTypes = {
   isDisabled: PropTypes.bool,
-  itemBgColor: PropTypes.oneOf('gray25', 'gray50'),
+  itemBgColor: PropTypes.oneOf(['gray25', 'gray50', false]),
 };
 
 const MenuItemContent = styled.span`
