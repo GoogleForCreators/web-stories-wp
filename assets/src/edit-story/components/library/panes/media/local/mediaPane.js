@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -50,6 +50,9 @@ import {
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import { ProviderType } from '../common/providerType';
 import Flags from '../../../../../flags';
+import useContainerScrolling from '../../../../../utils/useContainerScrolling';
+import { withScrollbarStyle } from '../../../../../theme';
+import useObtrusiveScrollbars from '../../../../../utils/useObtrusiveScrollbars';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -59,9 +62,9 @@ const ColumnContainer = styled.div`
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
-  overflow: auto;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
+  ${withScrollbarStyle}
 `;
 
 const Column = styled.div`
@@ -220,35 +223,7 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-
-  // State and callback ref necessary to recalculate the padding of the list
-  //  given the scrollbar width.
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-    setScrollbarWidth(element.offsetWidth - element.clientWidth);
-  };
-
-  // Recalculates padding of Media Pane so it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
-  useLayoutEffect(() => {
-    if (!scrollbarWidth) {
-      return;
-    }
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
-    );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
+  const { containerRef, setContainer } = useContainerScrolling();
 
   // NOTE: This infinite scrolling logic is used by the Column-based gallery.
   // The row-based PaginatedMediaGallery has its own pagination logic and
@@ -257,7 +232,7 @@ function MediaPane(props) {
   useIntersectionEffect(
     refContainerFooter,
     {
-      root: refContainer,
+      root: containerRef,
       // This rootMargin is added so that we load an extra page when the
       // "loading" footer is "close" to the bottom of the container, even if
       // it's not yet visible.
@@ -284,6 +259,8 @@ function MediaPane(props) {
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
 
+  const hasObtrusiveScrollbars = useObtrusiveScrollbars();
+
   const mediaLibrary = isRowBasedGallery ? (
     // Arranges elements in rows.
     <PaginatedMediaGallery
@@ -297,7 +274,11 @@ function MediaPane(props) {
     />
   ) : (
     // Arranges elements in columns.
-    <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
+    <ColumnContainer
+      data-testid="mediaLibrary"
+      ref={setContainer}
+      hasObtrusiveScrollbars={hasObtrusiveScrollbars}
+    >
       <Column>
         {resources
           .filter((_, index) => isEven(index))

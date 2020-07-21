@@ -26,10 +26,12 @@ import {
   useRef,
   useEffect,
 } from 'react';
+
 /**
  * Internal dependencies
  */
 import { SCROLLBAR_WIDTH } from '../../constants';
+import useObtrusiveScrollbars from '../../utils/useObtrusiveScrollbars';
 import { getTransforms, getOffset } from './utils';
 
 /**
@@ -72,16 +74,21 @@ const Container = styled.div.attrs(
   /*
    * Custom gray scrollbars for Chromium & Firefox.
    */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-      ${({ theme }) => theme.colors.bg.v12};
-  }
 
-  *::-webkit-scrollbar {
-    width: ${SCROLLBAR_WIDTH}px;
-    height: ${SCROLLBAR_WIDTH}px;
-  }
+  ${({ hasObtrusiveScrollbars }) =>
+    hasObtrusiveScrollbars &&
+    `
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+        ${({ theme }) => theme.colors.bg.v12};
+    }
+
+    *::-webkit-scrollbar {
+      width: ${SCROLLBAR_WIDTH}px;
+      height: ${SCROLLBAR_WIDTH}px;
+    }
+  `}
 
   *::-webkit-scrollbar-track {
     background: ${({ theme }) => theme.colors.bg.v12};
@@ -146,6 +153,8 @@ function Popup({
     positionPopup();
   }, [placement, spacing, anchor, dock, popup, isOpen, positionPopup]);
 
+  const hasObtrusiveScrollbars = useObtrusiveScrollbars();
+
   return popupState && isOpen
     ? createPortal(
         <Container
@@ -154,6 +163,7 @@ function Popup({
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
+          hasObtrusiveScrollbars={hasObtrusiveScrollbars}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

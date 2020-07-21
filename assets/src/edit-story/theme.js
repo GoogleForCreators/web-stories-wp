@@ -17,16 +17,17 @@
 /**
  * External dependencies
  */
-import { createGlobalStyle, ThemeContext } from 'styled-components';
+import { createGlobalStyle, ThemeContext, css } from 'styled-components';
 import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
 import { SCROLLBAR_WIDTH } from './constants';
+import useObtrusiveScrollbars from './utils/useObtrusiveScrollbars';
 import { identity, useContextSelector } from './utils/context';
 
-export const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
 	*,
 	*::after,
 	*::before {
@@ -44,22 +45,10 @@ export const GlobalStyle = createGlobalStyle`
   .web-stories-content b, .web-stories-content strong {
     font-weight: bold;
   }
-
-  /*
-   * Custom dark scrollbars for Chromium & Firefox.
-   * Scoped to <Editor> to make sure we don't mess with WP dialogs
-   * like the Backbone Media Gallery dialog.
-   */
   * {
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
     ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
-  }
-
-  *::-webkit-scrollbar {
-    width: ${SCROLLBAR_WIDTH}px;
-    height: ${SCROLLBAR_WIDTH}px;
-    position:fixed;
   }
 
   *::-webkit-scrollbar-track {
@@ -74,6 +63,53 @@ export const GlobalStyle = createGlobalStyle`
     border: 2px solid transparent;
     background-clip: content-box;
   }
+`;
+
+const CombinedGlobalStyle = () => {
+  const hasObtrusiveScrollbars = useObtrusiveScrollbars();
+  return <GlobalStyle hasObtrusiveScrollbars={hasObtrusiveScrollbars} />;
+};
+
+export { CombinedGlobalStyle as GlobalStyle };
+
+/*
+ * Custom dark scrollbars for Chromium & Firefox.
+ * Scoped to <Editor> to make sure we don't mess with WP dialogs
+ * like the Backbone Media Gallery dialog.
+ */
+export const withScrollbarStyle = css`
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: ${SCROLLBAR_WIDTH}px;
+    height: ${SCROLLBAR_WIDTH}px;
+    position: fixed;
+  }
+  ${({ hasObtrusiveScrollbars }) =>
+    !hasObtrusiveScrollbars
+      ? `
+  &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background-color: ${theme.colors.bg.v10};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${rgba(theme.colors.bg.v0, 0.1)};
+    }
+  }
+	`
+      : `
+	  &::-webkit-scrollbar-thumb {
+      background-color: ${theme.colors.bg.v10};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${rgba(theme.colors.bg.v0, 0.1)};
+    }
+	`}
 `;
 
 export function useTheme(selector) {

@@ -24,16 +24,18 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { useContext } from '../../../../utils/context';
+import { useContext } from 'use-context-selector';
 
 /**
  * Internal dependencies
  */
 import panelContext from '../context';
+import { withScrollbarStyle } from '../../../../theme';
+import useObtrusiveScrollbars from '../../../../utils/useObtrusiveScrollbars';
 
 const Container = styled.div`
   padding: ${({ padding }) => padding || '10px 20px'};
-  overflow: auto;
+  ${withScrollbarStyle}
   background-color: ${({ isSecondary, theme }) =>
     isSecondary ? rgba(theme.colors.fg.v1, 0.07) : 'transparent'};
   ${({ hasBorder, theme }) =>
@@ -49,12 +51,15 @@ function Content({ children, ...rest }) {
     height: resizeable ? `${height}px` : 'auto',
   };
 
+  const hasObtrusiveScrollbars = useObtrusiveScrollbars();
+
   return (
     <Container
       style={formStyle}
       {...rest}
       id={panelContentId}
       hidden={isCollapsed}
+      hasObtrusiveScrollbars={hasObtrusiveScrollbars}
     >
       {children}
     </Container>

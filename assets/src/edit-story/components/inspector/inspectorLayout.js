@@ -28,6 +28,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useEscapeToBlurEffect } from '../keyboard';
+import { withScrollbarStyle } from '../../theme';
+import useObtrusiveScrollbars from '../../utils/useObtrusiveScrollbars';
 import useInspector from './useInspector';
 import InspectorTabs from './inspectorTabs';
 import InspectorContent from './inspectorContent';
@@ -47,7 +49,7 @@ const InspectorBackground = styled.div`
   height: 100%;
   padding: 0;
   color: ${({ theme }) => theme.colors.fg.v1};
-  overflow: auto;
+  ${withScrollbarStyle}
 `;
 
 function InspectorLayout() {
@@ -55,13 +57,17 @@ function InspectorLayout() {
     actions: { setInspectorContentNode },
     refs: { inspector },
   } = useInspector();
+  const hasObtrusiveScrollbars = useObtrusiveScrollbars();
   useEscapeToBlurEffect(inspector);
   return (
     <Layout ref={inspector}>
       <TabsArea>
         <InspectorTabs />
       </TabsArea>
-      <InspectorBackground ref={setInspectorContentNode}>
+      <InspectorBackground
+        ref={setInspectorContentNode}
+        hasObtrusiveScrollbars={hasObtrusiveScrollbars}
+      >
         <InspectorContent />
       </InspectorBackground>
     </Layout>
