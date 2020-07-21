@@ -27,6 +27,12 @@ const List = styled.ul.attrs({ role: 'listbox' })`
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: none auto;
+  position: relative;
+`;
+
+const Placeholder = styled.div`
+  height: ${({ height }) => height}px;
+  width: 100%;
 `;
 
 const Item = styled.li.attrs({
@@ -34,6 +40,8 @@ const Item = styled.li.attrs({
   role: 'option',
 })`
   overflow: hidden;
+  position: ${({ top }) => (top ? 'absolute' : 'initial')};
+  top: ${({ top }) => top}px;
 `;
 
 // Number of additional fonts to load while scrolling.
@@ -51,15 +59,19 @@ function ScrollList({
   const ref = useRef();
   const itemRefs = useRef([]);
   const numItems = items.length;
+  const [itemHeight, setItemHeight] = useState(0);
 
   const setRef = useCallback(
     (index) => (node) => {
       if (!node) {
         return;
       }
+      if (!itemHeight && node.scrollHeight) {
+        setItemHeight(node.scrollHeight);
+      }
       itemRefs.current[index] = node;
     },
-    []
+    [itemHeight]
   );
 
   const indexRef = useRef({ startFrom: 0, endAt: FONTS_PER_LOAD });
@@ -69,34 +81,34 @@ function ScrollList({
 
   const [handleScroll] = useDebouncedCallback(
     (evt) => {
-      if (!evt.target) {
+      if (!evt.target || !itemHeight) {
         return;
       }
       const {
-        target: { scrollTop },
+        target: { scrollTop, clientHeight },
       } = evt;
-      const firstIndexInView = itemRefs.current.findIndex(
-        ({ offsetTop }) => offsetTop > scrollTop
-      );
-      const firstIndexOutOfView = firstIndexInView + FONTS_PER_LOAD;
-      const lastIndexInView =
-        firstIndexOutOfView > numItems ? numItems : firstIndexOutOfView - 1;
-      onScroll(firstIndexInView, lastIndexInView);
 
-      // We always want to include the previously rendered fonts, too.
-      // Check if the index has moved in either direction and assing new refs, if yes.
+      const startIndex = Math.max(
+        0,
+        Math.floor(scrollTop / itemHeight) - FONTS_PER_LOAD
+      );
+      const endIndex =
+        Math.min(
+          items.length - 1,
+          Math.floor((scrollTop + clientHeight) / itemHeight)
+        ) + FONTS_PER_LOAD;
+
+      onScroll(startIndex, endIndex);
+
+      const hasChanges =
+        indexRef.current.startFrom !== startIndex ||
+        indexRef.current.endAt !== endIndex;
       indexRef.current = {
-        startFrom: Math.max(firstIndexInView - FONTS_PER_LOAD, 0),
-        endAt: Math.max(lastIndexInView, indexRef.current.endAt),
+        startFrom: startIndex,
+        endAt: endIndex,
       };
-      if (
-        indexRef.current.endAt - indexRef.current.startFrom >
-        itemsToRender.length
-      ) {
-        // If the new refs indicate additional fonts, update the items to render as well.
-        setItemsToRender(
-          items.slice(indexRef.current.startFrom, indexRef.current.endAt)
-        );
+      if (hasChanges) {
+        setItemsToRender(items.slice(startIndex, endIndex));
       }
     },
     [onScroll, numItems]
@@ -163,10 +175,12 @@ function ScrollList({
           aria-posinset={index + 1}
           aria-selected={currentOffset === index}
           aria-setsize={numItems}
+          top={(index + indexRef.current.startFrom) * itemHeight}
         >
           {itemRenderer(item, index)}
         </Item>
       ))}
+      <Placeholder height={items.length * itemHeight} />
     </List>
   );
 }
