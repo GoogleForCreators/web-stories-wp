@@ -46,23 +46,28 @@ function useCanvasKeys(ref) {
     clearSelection,
     deleteSelectedElements,
     updateSelectedElements,
+    setSelectedElementsById,
+    currentPage,
   } = useStory(
     ({
-      state: { selectedElementIds, selectedElements },
+      state: { selectedElementIds, selectedElements, currentPage },
       actions: {
         arrangeSelection,
         clearSelection,
         deleteSelectedElements,
         updateSelectedElements,
+        setSelectedElementsById,
       },
     }) => {
       return {
+        currentPage,
         selectedElementIds,
         selectedElements,
         arrangeSelection,
         clearSelection,
         deleteSelectedElements,
         updateSelectedElements,
+        setSelectedElementsById,
       };
     }
   );
@@ -116,6 +121,15 @@ function useCanvasKeys(ref) {
     deleteSelectedElements,
   ]);
   useGlobalKeyDownEffect('esc', () => clearSelection(), [clearSelection]);
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+a'] },
+    () => {
+      const elementIds = currentPage.elements.map(({ id }) => id);
+      setSelectedElementsById({ elementIds });
+    },
+    [clearSelection, currentPage, setSelectedElementsById]
+  );
 
   // Position (x/y) key handler.
   useGlobalKeyDownEffect(
