@@ -51,6 +51,8 @@ import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import { ProviderType } from '../common/providerType';
 import Flags from '../../../../../flags';
 import useContainerScrolling from '../../../../../utils/useContainerScrolling';
+import { withScrollbarStyle } from '../../../../../theme';
+import useObtrusiveScrollbars from '../../../../../utils/useObtrusiveScrollbars';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -60,9 +62,9 @@ const ColumnContainer = styled.div`
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
-  overflow: auto;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
+  ${withScrollbarStyle}
 `;
 
 const Column = styled.div`
@@ -257,6 +259,8 @@ function MediaPane(props) {
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
 
+  const hasObtrusiveScrollbars = useObtrusiveScrollbars();
+
   const mediaLibrary = isRowBasedGallery ? (
     // Arranges elements in rows.
     <PaginatedMediaGallery
@@ -270,7 +274,11 @@ function MediaPane(props) {
     />
   ) : (
     // Arranges elements in columns.
-    <ColumnContainer data-testid="mediaLibrary" ref={setContainer}>
+    <ColumnContainer
+      data-testid="mediaLibrary"
+      ref={setContainer}
+      hasObtrusiveScrollbars={hasObtrusiveScrollbars}
+    >
       <Column>
         {resources
           .filter((_, index) => isEven(index))
