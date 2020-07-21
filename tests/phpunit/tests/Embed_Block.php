@@ -20,8 +20,6 @@ namespace Google\Web_Stories\Tests;
 use WP_Block_Type_Registry;
 
 class Embed_Block extends \WP_UnitTestCase {
-	use Private_Access;
-
 	public function tearDown() {
 		unregister_block_type( \Google\Web_Stories\Embed_Block::BLOCK_NAME );
 
