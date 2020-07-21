@@ -209,7 +209,13 @@ const formattedTemplatesArray = [
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
-    colors: [],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+      { label: 'White', color: '#fff' },
+      { label: 'Brown', color: '#eadfd6' },
+    ],
     title: 'Cooking',
   },
   {
@@ -401,7 +407,13 @@ const formattedTemplatesArray = [
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
-    colors: [],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+      { label: 'White', color: '#fff' },
+      { label: 'Brown', color: '#eadfd6' },
+    ],
     title: 'Cooking',
   },
   {
@@ -593,7 +605,13 @@ const formattedTemplatesArray = [
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
-    colors: [],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+      { label: 'White', color: '#fff' },
+      { label: 'Brown', color: '#eadfd6' },
+    ],
     title: 'Cooking',
   },
   {
@@ -785,7 +803,13 @@ const formattedTemplatesArray = [
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
-    colors: [],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+      { label: 'White', color: '#fff' },
+      { label: 'Brown', color: '#eadfd6' },
+    ],
     title: 'Cooking',
   },
   {
@@ -977,7 +1001,13 @@ const formattedTemplatesArray = [
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
-    colors: [],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+      { label: 'White', color: '#fff' },
+      { label: 'Brown', color: '#eadfd6' },
+    ],
     title: 'Cooking',
   },
   {
@@ -1169,7 +1199,13 @@ const formattedTemplatesArray = [
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
-    colors: [],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+      { label: 'White', color: '#fff' },
+      { label: 'Brown', color: '#eadfd6' },
+    ],
     title: 'Cooking',
   },
   {
@@ -1361,7 +1397,13 @@ const formattedTemplatesArray = [
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
-    colors: [],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+      { label: 'White', color: '#fff' },
+      { label: 'Brown', color: '#eadfd6' },
+    ],
     title: 'Cooking',
   },
   {
@@ -1553,7 +1595,13 @@ const formattedTemplatesArray = [
     ],
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
-    colors: [],
+    colors: [
+      { label: 'Pink', color: '#f3d9e1' },
+      { label: 'Green', color: '#d8ddcc' },
+      { label: 'Black', color: '#28292b' },
+      { label: 'White', color: '#fff' },
+      { label: 'Brown', color: '#eadfd6' },
+    ],
     title: 'Cooking',
   },
 ];

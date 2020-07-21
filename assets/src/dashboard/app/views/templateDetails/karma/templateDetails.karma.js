@@ -14,35 +14,20 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
- */
-
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/* Internal dependencies
- */
-/**
  * External dependencies
  */
 import { useContext } from 'react';
 import { within } from '@testing-library/react';
+/**
+ * Internal dependencies
+ */
 import Fixture from '../../../../karma/fixture';
 import { ApiContext } from '../../../api/apiProvider';
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import {
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
+  TEMPLATES_GALLERY_VIEWING_LABELS,
+  TEMPLATES_GALLERY_STATUS,
+} from '../../../../constants';
 
 fdescribe('Explore Templates View integration', () => {
   let fixture;
@@ -52,7 +37,6 @@ fdescribe('Explore Templates View integration', () => {
     await fixture.render();
 
     await navigateToFirstTemplate();
-    debugger;
   });
 
   afterEach(() => {
@@ -94,7 +78,17 @@ fdescribe('Explore Templates View integration', () => {
     return templates;
   }
 
-  fit('should pass this test', () => {
-    expect(true).toBeTrue();
+  it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
+    const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
+
+    await fixture.events.click(closeLink);
+
+    const viewTemplates = fixture.screen.queryByText(
+      TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL]
+    );
+
+    expect(viewTemplates).toBeTruthy();
   });
+
+  fit('should update the "Preview Page" when clicking on a "Thumbnail Page"', async () => {});
 });
