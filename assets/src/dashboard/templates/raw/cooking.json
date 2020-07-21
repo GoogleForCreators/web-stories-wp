@@ -31,6 +31,34 @@
           "isDefaultBackground": true
         },
         {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 26,
+          "y": 0,
+          "width": 360,
+          "height": 617,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "grid-4"
+          },
+          "id": "8de785a5-9d22-46db-97ad-ae0e46f3320f"
+        },
+        {
           "x": -1,
           "y": 235,
           "width": 413,
@@ -60,7 +88,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page1_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page1_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -70,34 +98,6 @@
             "local": false,
             "sizes": []
           }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "x": 26,
-          "y": 0,
-          "width": 360,
-          "height": 617,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "grid-4"
-          },
-          "id": "8de785a5-9d22-46db-97ad-ae0e46f3320f"
         },
         {
           "x": 66,
@@ -164,7 +164,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_logo.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_logo.png",
             "width": 75,
             "height": 23,
             "id": 1627,
@@ -369,7 +369,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_radish.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_radish.png",
             "width": 220,
             "height": 309,
             "posterId": 0,
@@ -379,6 +379,34 @@
             "local": false,
             "sizes": []
           }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 26,
+          "y": 0,
+          "width": 360,
+          "height": 617,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "grid-4"
+          },
+          "id": "0271cd7e-24f8-4e8a-87c4-dac93382d742"
         },
         {
           "x": 73.5,
@@ -482,34 +510,6 @@
             "horizontal": 0,
             "vertical": 0
           }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "x": 26,
-          "y": 0,
-          "width": 360,
-          "height": 617,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "grid-4"
-          },
-          "id": "0271cd7e-24f8-4e8a-87c4-dac93382d742"
         }
       ],
       "type": "page",
@@ -681,7 +681,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page3_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page3_image1.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -766,7 +766,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_persimmon.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_persimmon.png",
             "width": 220,
             "height": 228,
             "posterId": 0,
@@ -1237,7 +1237,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_radish.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_radish.png",
             "width": 220,
             "height": 309,
             "posterId": 0,
@@ -1274,7 +1274,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_carrot.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_carrot.png",
             "width": 220,
             "height": 237,
             "posterId": 0,
@@ -1311,7 +1311,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_persimmon.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_persimmon.png",
             "width": 220,
             "height": 228,
             "posterId": 0,
@@ -1348,7 +1348,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_icon_artichoke.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_icon_artichoke.png",
             "width": 220,
             "height": 223,
             "posterId": 0,
@@ -2026,7 +2026,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page5_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page5_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
@@ -2357,7 +2357,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page5_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page5_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
@@ -3602,7 +3602,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page7_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page7_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -4459,7 +4459,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page8_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page8_image1.jpg",
             "width": 330,
             "height": 220,
             "id": 1648,
@@ -5021,7 +5021,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image1.jpg",
             "width": 220,
             "height": 294,
             "posterId": 0,
@@ -5065,7 +5065,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image4.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image4.jpg",
             "width": 220,
             "height": 284,
             "posterId": 0,
@@ -5107,7 +5107,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image3.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image3.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
@@ -5149,7 +5149,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image2.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image2.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -5192,7 +5192,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/cooking/cooking_page9_image1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/cooking/cooking_page9_image1.jpg",
             "width": 220,
             "height": 294,
             "posterId": 0,
