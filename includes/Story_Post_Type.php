@@ -149,10 +149,10 @@ class Story_Post_Type {
 		// Add jetpack and wpcom sitemaps.  See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80 .
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			// Add to Dotcom XML sitemaps.
-			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_sitemap' ] );
+			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_or_dotcom_sitemap' ] );
 		} else {
 			// Add to Jetpack XML sitemap.
-			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_sitemap' ] );
+			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_or_dotcom_sitemap' ] );
 		}
 	}
 
@@ -573,7 +573,7 @@ class Story_Post_Type {
 	 *
 	 * @return array
 	 */
-	public function add_to_sitemap( array $post_types ) {
+	public function add_to_jetpack_or_dotcom_sitemap( array $post_types ) {
 		$post_types[] = self::POST_TYPE_SLUG;
 
 		return $post_types;
