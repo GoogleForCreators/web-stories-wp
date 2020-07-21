@@ -32,7 +32,9 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    act(() => result.current.actions.fetchCategoriesStart());
+    act(() =>
+      result.current.actions.fetchCategoriesStart({ provider: 'unsplash' })
+    );
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -49,6 +51,7 @@ describe('reducer', () => {
 
     act(() =>
       result.current.actions.fetchCategoriesSuccess({
+        provider: 'unsplash',
         categories: [{ name: 'Covid-19' }],
       })
     );
@@ -68,6 +71,7 @@ describe('reducer', () => {
 
     act(() =>
       result.current.actions.fetchCategoriesSuccess({
+        provider: 'unsplash',
         categories: [{ name: 'Covid-19' }],
       })
     );
@@ -84,7 +88,9 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    act(() => result.current.actions.fetchCategoriesError());
+    act(() =>
+      result.current.actions.fetchCategoriesError({ provider: 'unsplash' })
+    );
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({

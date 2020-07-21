@@ -19,7 +19,7 @@
  */
 import * as types from './types';
 
-export const fetchCategoriesStart = (dispatch) => ({ provider } = {}) => {
+export const fetchCategoriesStart = (dispatch) => ({ provider }) => {
   dispatch({
     type: types.FETCH_MEDIA_CATEGORIES_START,
     payload: {
@@ -41,7 +41,7 @@ export const fetchCategoriesSuccess = (dispatch) => ({
   });
 };
 
-export const fetchCategoriesError = (dispatch) => ({ provider } = {}) => {
+export const fetchCategoriesError = (dispatch) => ({ provider }) => {
   dispatch({
     type: types.FETCH_MEDIA_CATEGORIES_ERROR,
     payload: { provider: provider },
