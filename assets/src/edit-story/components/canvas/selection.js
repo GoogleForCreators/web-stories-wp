@@ -22,9 +22,6 @@ import useCanvas from '../canvas/useCanvas';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';
 
-/**
- *
- */
 function Selection() {
   const { selectedElements } = useStory((state) => ({
     selectedElements: state.state.selectedElements,

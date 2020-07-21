@@ -36,9 +36,6 @@ import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-/**
- *
- */
 function MultiSelectionMoveable({ selectedElements }) {
   const moveable = useRef();
 
