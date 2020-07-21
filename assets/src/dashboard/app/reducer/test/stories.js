@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import storyReducer, { ACTION_TYPES } from '../stories';
+import { STORY_STATUS } from '../../../constants';
 
 describe('storyReducer', () => {
   const initialState = {
@@ -48,8 +49,8 @@ describe('storyReducer', () => {
         },
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -73,8 +74,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 43,
-        draft: 40,
-        publish: 3,
+        [STORY_STATUS.DRAFT]: 40,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 3,
       },
       totalPages: 4,
     });
@@ -121,8 +122,8 @@ describe('storyReducer', () => {
         },
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -145,8 +146,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 45,
-        draft: 41,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 41,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 4,
     });
@@ -186,15 +187,43 @@ describe('storyReducer', () => {
       payload: {
         page: 1,
         stories: [
-          { id: 94, status: 'draft', title: 'my test story 1' },
-          { id: 65, status: 'publish', title: 'my test story 2' },
-          { id: 78, status: 'draft', title: 'my test story 3' },
-          { id: 12, status: 'draft', title: 'my test story 4' },
+          {
+            id: 94,
+            status: 'draft',
+            title: { raw: 'my test story 1' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 65,
+            status: 'publish',
+            title: { raw: 'my test story 2' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 78,
+            status: 'draft',
+            title: { raw: 'my test story 3' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 12,
+            status: 'draft',
+            title: { raw: 'my test story 4' },
+            story_data: {
+              pages: [{}],
+            },
+          },
         ],
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -212,8 +241,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 44,
-        draft: 40,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 40,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 4,
       allPagesFetched: false,
@@ -228,15 +257,43 @@ describe('storyReducer', () => {
         payload: {
           page: 2,
           stories: [
-            { id: 94, status: 'draft', title: 'my test story 1' },
-            { id: 65, status: 'publish', title: 'my test story 2' },
-            { id: 78, status: 'draft', title: 'my test story 3' },
-            { id: 12, status: 'draft', title: 'my test story 4' },
+            {
+              id: 94,
+              status: 'draft',
+              title: { raw: 'my test story 1' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 65,
+              status: 'publish',
+              title: { raw: 'my test story 2' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 78,
+              status: 'draft',
+              title: { raw: 'my test story 3' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 12,
+              status: 'draft',
+              title: { raw: 'my test story 4' },
+              story_data: {
+                pages: [{}],
+              },
+            },
           ],
           totalStoriesByStatus: {
             all: 18,
-            draft: 14,
-            publish: 4,
+            [STORY_STATUS.DRAFT]: 14,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
           },
           totalPages: 2,
         },
@@ -254,8 +311,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 18,
-        draft: 14,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 14,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 2,
       allPagesFetched: true,

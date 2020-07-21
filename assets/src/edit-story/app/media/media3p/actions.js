@@ -22,7 +22,14 @@ import * as types from './types';
 
 export const setSelectedProvider = (dispatch) => ({ provider }) => {
   dispatch({
-    type: types.SET_SELECTED_PROVIDER,
+    type: types.MEDIA3P_SET_SELECTED_PROVIDER,
     payload: { provider },
+  });
+};
+
+export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
+  dispatch({
+    type: types.MEDIA3P_SET_SEARCH_TERM,
+    payload: { searchTerm },
   });
 };

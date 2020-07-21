@@ -3,7 +3,7 @@ name: Dashboard Integration Tests
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
@@ -46,3 +46,47 @@ jobs:
         with:
           file: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests
+
+      - name: Upload CUJ coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: cuj-coverage-dashboard
+          path: build/cuj-coverage-dashboard.md
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+  deploy-cuj-coverage:
+    name: Deploy CUJ Coverage
+    needs: [karma]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+
+      - name: Download coverage file
+        uses: actions/download-artifact@v2
+        with:
+          name: cuj-coverage-dashboard
+
+      - name: Move file
+        run: |
+          mkdir -p critical-user-journeys
+          rm -rf critical-user-journeys/dashboard.md
+          mv cuj-coverage-dashboard.md critical-user-journeys/dashboard.md
+
+      - name: Commit updates
+        run: |
+          git add .
+          git status
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
+          git commit -m "Deploy CUJ coverage for ${{ github.sha }}"
+          git pull --no-edit --quiet
+          git push origin gh-pages
+        env:
+          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_COMMITTER_NAME: ${{ github.actor }}

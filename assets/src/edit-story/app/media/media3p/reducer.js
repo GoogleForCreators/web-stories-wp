@@ -28,6 +28,7 @@ import providerReducer from './providerReducer.js';
 
 const INITIAL_STATE = {
   selectedProvider: undefined,
+  searchTerm: '',
 };
 
 // TODO(#2804): Use the configuration json to provide this list.
@@ -68,11 +69,23 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
   state = reduceProviderStates(state, { type, payload });
 
   switch (type) {
-    case types.SET_SELECTED_PROVIDER: {
+    case types.MEDIA3P_SET_SELECTED_PROVIDER: {
       return {
         ...state,
         selectedProvider: payload.provider,
       };
+    }
+    case types.MEDIA3P_SET_SEARCH_TERM: {
+      let resultState = {
+        ...state,
+        searchTerm: payload.searchTerm,
+      };
+      // Clear out the pageToken and nextPageToken for all providers.
+      for (const provider of providers) {
+        resultState[provider].pageToken = undefined;
+        resultState[provider].nextPageToken = undefined;
+      }
+      return resultState;
     }
     default:
       return state;

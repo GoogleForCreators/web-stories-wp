@@ -20,7 +20,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-	.crop-movable .moveable-control {
+	.crop-moveable .moveable-control {
 		background: #000 !important;
 		border-radius: 0 !important;
 		border: none !important;
@@ -28,43 +28,43 @@ export const GlobalStyle = createGlobalStyle`
 		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 	}
 
-	.crop-movable .moveable-control.moveable-n,
-	.crop-movable .moveable-control.moveable-s,
-	.crop-movable .moveable-control.moveable-e,
-	.crop-movable .moveable-control.moveable-w {
+	.crop-moveable .moveable-control.moveable-n,
+	.crop-moveable .moveable-control.moveable-s,
+	.crop-moveable .moveable-control.moveable-e,
+	.crop-moveable .moveable-control.moveable-w {
 		border: 1px solid #fff !important;
 	}
 
-	.crop-movable .moveable-control.moveable-n,
-	.crop-movable .moveable-control.moveable-s {
+	.crop-moveable .moveable-control.moveable-n,
+	.crop-moveable .moveable-control.moveable-s {
 		width: 16px !important;
 		height: 4px !important;
 		margin-left: -8px !important;
 		margin-top: -1px !important;
 	}
 
-	.crop-movable .moveable-control.moveable-e,
-	.crop-movable .moveable-control.moveable-w {
+	.crop-moveable .moveable-control.moveable-e,
+	.crop-moveable .moveable-control.moveable-w {
 		width: 4px !important;
 		height: 16px !important;
 		margin-left: -1px !important;
 		margin-top: -8px !important;
 	}
 
-	.crop-movable .moveable-control.moveable-nw,
-	.crop-movable .moveable-control.moveable-ne,
-	.crop-movable .moveable-control.moveable-sw,
-	.crop-movable .moveable-control.moveable-se {
+	.crop-moveable .moveable-control.moveable-nw,
+	.crop-moveable .moveable-control.moveable-ne,
+	.crop-moveable .moveable-control.moveable-sw,
+	.crop-moveable .moveable-control.moveable-se {
 		width: 16px !important;
 		height: 16px !important;
 		background: #fff !important;
 		position: absolute !important;
 	}
 
-	.crop-movable .moveable-control.moveable-nw::before,
-	.crop-movable .moveable-control.moveable-ne::before,
-	.crop-movable .moveable-control.moveable-sw::before,
-	.crop-movable .moveable-control.moveable-se::before {
+	.crop-moveable .moveable-control.moveable-nw::before,
+	.crop-moveable .moveable-control.moveable-ne::before,
+	.crop-moveable .moveable-control.moveable-sw::before,
+	.crop-moveable .moveable-control.moveable-se::before {
 		content: "" !important;
 		width: 16px !important;
 		height: 16px !important;
@@ -74,71 +74,71 @@ export const GlobalStyle = createGlobalStyle`
 		background: #000 !important;
 	}
 
-	.crop-movable .moveable-control.moveable-nw,
-	.crop-movable .moveable-control.moveable-ne {
+	.crop-moveable .moveable-control.moveable-nw,
+	.crop-moveable .moveable-control.moveable-ne {
 		margin-top: -2px !important;
 	}
 
-	.crop-movable .moveable-control.moveable-sw,
-	.crop-movable .moveable-control.moveable-se {
+	.crop-moveable .moveable-control.moveable-sw,
+	.crop-moveable .moveable-control.moveable-se {
 		margin-top: -14px !important;
 	}
 
-	.crop-movable .moveable-control.moveable-nw,
-	.crop-movable .moveable-control.moveable-sw {
+	.crop-moveable .moveable-control.moveable-nw,
+	.crop-moveable .moveable-control.moveable-sw {
 		margin-left: -2px !important;
 	}
 
-	.crop-movable .moveable-control.moveable-ne,
-	.crop-movable .moveable-control.moveable-se {
+	.crop-moveable .moveable-control.moveable-ne,
+	.crop-moveable .moveable-control.moveable-se {
 		margin-left: -14px !important;
 	}
 
-	.crop-movable .moveable-control.moveable-nw {
+	.crop-moveable .moveable-control.moveable-nw {
 		transform-origin: 2px 2px !important;
 		clip-path: polygon(0 0, 16px 0, 16px 4px, 4px 4px, 4px 16px, 0 16px) !important;
 	}
 
-	.crop-movable .moveable-control.moveable-nw::before {
+	.crop-moveable .moveable-control.moveable-nw::before {
 		clip-path: polygon(0 0, 14px 0, 14px 2px, 2px 2px, 2px 14px, 0 14px) !important;
 		top: 1px;
 		left: 1px;
 	}
 
-	.crop-movable .moveable-control.moveable-ne {
+	.crop-moveable .moveable-control.moveable-ne {
 		transform-origin: 14px 2px !important;
 		clip-path: polygon(0 0, 16px 0, 16px 16px, 12px 16px, 12px 4px, 0 4px) !important;
 	}
 
-	.crop-movable .moveable-control.moveable-ne::before {
+	.crop-moveable .moveable-control.moveable-ne::before {
 		clip-path: polygon(0 0, 14px 0, 14px 14px, 12px 14px, 12px 2px, 0 2px) !important;
 		top: 1px;
 		right: -1px;
 	}
 
-	.crop-movable .moveable-control.moveable-sw {
+	.crop-moveable .moveable-control.moveable-sw {
 		transform-origin: 2px 14px !important;
 		clip-path: polygon(0 0, 0 16px, 16px 16px, 16px 12px, 4px 12px, 4px 0) !important;
 	}
 
-	.crop-movable .moveable-control.moveable-sw::before {
+	.crop-moveable .moveable-control.moveable-sw::before {
 		clip-path: polygon(0 0, 0 14px, 14px 14px, 14px 12px, 2px 12px, 2px 0) !important;
 		bottom: -1px;
 		left: 1px;
 	}
 
-	.crop-movable .moveable-control.moveable-se {
+	.crop-moveable .moveable-control.moveable-se {
 		transform-origin: 14px 14px !important;
 		clip-path: polygon(16px 0, 16px 16px, 0 16px, 0 12px, 12px 12px, 12px 0) !important;
 	}
 
-	.crop-movable .moveable-control.moveable-se::before {
+	.crop-moveable .moveable-control.moveable-se::before {
 		clip-path: polygon(14px 0, 14px 14px, 0 14px, 0 12px, 12px 12px, 12px 0) !important;
 		bottom: -1px;
 		right: -1px;
 	}
 
-	.crop-movable .moveable-direction.moveable-line {
+	.crop-moveable .moveable-direction.moveable-line {
 		background: #47a0f4 !important;
 		width: 2px;
 		height: 2px;

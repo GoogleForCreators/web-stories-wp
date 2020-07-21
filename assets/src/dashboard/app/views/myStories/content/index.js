@@ -22,7 +22,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -114,4 +113,4 @@ Content.propTypes = {
   dateFormat: PropTypes.string,
 };
 
-export default memo(Content);
+export default Content;

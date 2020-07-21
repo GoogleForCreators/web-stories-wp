@@ -60,7 +60,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return state;
     }
 
-    case types.RESET_FILTERS: {
+    case types.LOCAL_MEDIA_RESET_FILTERS: {
       return {
         ...INITIAL_STATE,
         processing: [...state.processing],
@@ -68,7 +68,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
-    case types.SET_SEARCH_TERM: {
+    case types.LOCAL_MEDIA_SET_SEARCH_TERM: {
       const { searchTerm } = payload;
       if (searchTerm === state.searchTerm) {
         return state;
@@ -82,7 +82,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
-    case types.SET_MEDIA_TYPE: {
+    case types.LOCAL_MEDIA_SET_MEDIA_TYPE: {
       const { mediaType } = payload;
       if (mediaType === state.mediaType) {
         return state;
@@ -97,7 +97,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
-    case types.SET_MEDIA: {
+    case types.LOCAL_MEDIA_SET_MEDIA: {
       const { media } = payload;
 
       return {
@@ -106,7 +106,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
-    case types.ADD_PROCESSING: {
+    case types.LOCAL_MEDIA_ADD_PROCESSING: {
       const { id } = payload;
       if (!id || state.processing.includes(id)) {
         return state;
@@ -117,7 +117,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
-    case types.REMOVE_PROCESSING: {
+    case types.LOCAL_MEDIA_REMOVE_PROCESSING: {
       const { id } = payload;
       if (!id || !state.processing.includes(id)) {
         return state;

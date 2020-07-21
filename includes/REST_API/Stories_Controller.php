@@ -301,8 +301,9 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// Add counts for other statuses.
 		$statuses = [
-			'all'     => [ 'publish', 'draft' ],
+			'all'     => [ 'publish', 'draft', 'future' ],
 			'publish' => 'publish',
+			'future'  => 'future',
 			'draft'   => 'draft',
 		];
 

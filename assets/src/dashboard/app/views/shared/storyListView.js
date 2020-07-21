@@ -276,8 +276,10 @@ export default function StoryListView({
               </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
-                  {story.status === STORY_STATUS.PUBLISHED &&
+                  {story.status === STORY_STATUS.PUBLISH &&
                     __('Published', 'web-stories')}
+                  {story.status === STORY_STATUS.FUTURE &&
+                    __('Scheduled', 'web-stories')}
                 </TableStatusCell>
               )}
             </TableRow>

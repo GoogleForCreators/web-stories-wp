@@ -63,12 +63,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   *::-webkit-scrollbar-track {
-    background: transparent;
+    background: ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
     border-radius: 6px;
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: transparent;
+    background-color: ${({ theme }) => theme.colors.bg.v10};
     width: 3px;
     border-radius: 6px;
     border: 2px solid transparent;

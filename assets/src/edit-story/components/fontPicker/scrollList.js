@@ -133,7 +133,7 @@ function ScrollList({
           aria-selected={currentOffset === index}
           aria-setsize={numItems}
         >
-          {itemRenderer(item)}
+          {itemRenderer(item, index)}
         </Item>
       ))}
     </List>

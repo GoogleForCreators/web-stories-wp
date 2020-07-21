@@ -48,6 +48,8 @@ export const defaultAttributes = {
 
 export const hasEditMode = true;
 
+export const hasEditModeMoveable = true;
+
 export const isMedia = false;
 
 export const canFlip = false;
