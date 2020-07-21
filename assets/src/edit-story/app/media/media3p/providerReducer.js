@@ -19,7 +19,7 @@
  */
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
-} from '../common/reducer';
+} from '../pagination/reducer';
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
