@@ -41,7 +41,7 @@ const defaultConfig = {
   assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories//assets',
   version: '1.0.0-alpha.9',
   api: {
-    stories: '/wp/v2/web-story',
+    stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     fonts: '/web-stories/v1/fonts',
   },
