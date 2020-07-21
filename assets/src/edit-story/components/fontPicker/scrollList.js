@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
@@ -35,6 +35,9 @@ const Item = styled.li.attrs({
 })`
   overflow: hidden;
 `;
+
+// Number of additional fonts to load while scrolling.
+const FONTS_PER_LOAD = 20;
 
 function ScrollList({
   id,
@@ -59,26 +62,54 @@ function ScrollList({
     []
   );
 
+  const indexRef = useRef({ startFrom: 0, endAt: FONTS_PER_LOAD });
+  const [itemsToRender, setItemsToRender] = useState(
+    items.slice(indexRef.current.startFrom, indexRef.current.endAt)
+  );
+
   const [handleScroll] = useDebouncedCallback(
     (evt) => {
       if (!evt.target) {
         return;
       }
       const {
-        target: { scrollTop, clientHeight },
+        target: { scrollTop },
       } = evt;
       const firstIndexInView = itemRefs.current.findIndex(
         ({ offsetTop }) => offsetTop > scrollTop
       );
-      const firstIndexOutOfView = itemRefs.current.findIndex(
-        ({ offsetTop }) => offsetTop > scrollTop + clientHeight
-      );
+      const firstIndexOutOfView = firstIndexInView + FONTS_PER_LOAD;
       const lastIndexInView =
-        firstIndexOutOfView === -1 ? numItems : firstIndexOutOfView - 1;
+        firstIndexOutOfView > numItems ? numItems : firstIndexOutOfView - 1;
       onScroll(firstIndexInView, lastIndexInView);
+
+      // We always want to include the previously rendered fonts, too.
+      // Check if the index has moved in either direction and assing new refs, if yes.
+      indexRef.current = {
+        startFrom: Math.max(firstIndexInView - FONTS_PER_LOAD, 0),
+        endAt: Math.max(lastIndexInView, indexRef.current.endAt),
+      };
+      if (
+        indexRef.current.endAt - indexRef.current.startFrom >
+        itemsToRender.length
+      ) {
+        // If the new refs indicate additional fonts, update the items to render as well.
+        setItemsToRender(
+          items.slice(indexRef.current.startFrom, indexRef.current.endAt)
+        );
+      }
     },
     [onScroll, numItems]
   );
+
+  // If the items list changes, default the indexes and items to render
+  // to ensure the new list is being rendered from the beginning again.
+  useEffect(() => {
+    indexRef.current = { startFrom: 0, endAt: FONTS_PER_LOAD };
+    setItemsToRender(
+      items.slice(indexRef.current.startFrom, indexRef.current.endAt)
+    );
+  }, [items]);
 
   useEffect(() => {
     const node = ref.current;
@@ -125,7 +156,7 @@ function ScrollList({
       onKeyDown={onKeyDown}
       ref={ref}
     >
-      {items.map((item, index) => (
+      {itemsToRender.map((item, index) => (
         <Item
           ref={setRef(index)}
           key={index}
