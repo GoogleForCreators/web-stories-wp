@@ -20,6 +20,7 @@
 import React from 'react';
 import { FlagsProvider } from 'flagged';
 import { act, render, screen } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -40,7 +41,7 @@ const defaultConfig = {
   assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories//assets',
   version: '1.0.0-alpha.9',
   api: {
-    stories: '/wp/v2/web-story',
+    stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     fonts: '/web-stories/v1/fonts',
   },
@@ -147,6 +148,10 @@ export default class Fixture {
    */
   render() {
     const root = document.querySelector('test-root');
+
+    // see http://reactcommunity.org/react-modal/accessibility/
+    Modal.setAppElement(root);
+
     const { container } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />

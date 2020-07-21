@@ -24,22 +24,40 @@ const API_KEY = 'AIzaSyAgauA-izuTeGWFe9d9O0d0id-pV43Y4kE'; // dev key
  */
 const Paths = {
   LIST_MEDIA: '/v1/media',
+  LIST_CATEGORIES: '/v1/categories',
 };
 
 /**
- * The supported order_by values.
+ * The supported order_by values for {@link listMedia}.
  *
  * @enum {string}
  */
-const OrderBy = {
+const ListMediaOrderBy = {
   RELEVANCE: 'relevance',
   LATEST: 'latest',
 };
 
-function validateOrderBy(orderBy) {
+/**
+ * The supported order_by values for {@link listCategories}.
+ *
+ * @enum {string}
+ */
+const CategoriesOrderBy = {
+  TRENDING: 'trending',
+};
+
+function validateListMediaOrderBy(orderBy) {
+  validateOrderBy(ListMediaOrderBy, orderBy);
+}
+
+function validateCategoriesOrderBy(orderBy) {
+  validateOrderBy(CategoriesOrderBy, orderBy);
+}
+
+function validateOrderBy(allowedOrderByValues, orderBy) {
   if (
     orderBy == null ||
-    Object.values(OrderBy).indexOf(orderBy.toLowerCase()) > -1
+    Object.values(allowedOrderByValues).indexOf(orderBy.toLowerCase()) > -1
   ) {
     return;
   }
@@ -89,7 +107,7 @@ class ApiFetcher {
     pageSize = null,
     pageToken = null,
   } = {}) {
-    validateOrderBy(orderBy);
+    validateListMediaOrderBy(orderBy);
     validatePageSize(pageSize);
 
     const params = [
@@ -100,17 +118,64 @@ class ApiFetcher {
       ['page_token', pageToken],
       ['key', API_KEY],
     ].filter((entry) => Boolean(entry[1]));
+
+    // eslint-disable-next-line no-return-await
+    return await this.fetch({ params, path: Paths.LIST_MEDIA });
+  }
+
+  /**
+   * Perform a GET request to the Media3P API to list categories.
+   * If the parameters are invalid or the server does not return a 200 response,
+   * an error is thrown.
+   *
+   * @param {Object} obj - An object with the options for the request.
+   * @param {?string} obj.filter  Filter details for items returned.
+   * Filter fields available:
+   * > provider - The media provider to query, or a universal list/search if
+   * left blank.
+   * @param {?string} obj.orderBy The sort order for returned results.
+   * Valid sort fields are:
+   * > 'trending' - The default. This is the categories that are trending now.
+   * @param {?number} obj.pageSize Maximum number of results to be returned by the
+   * server. If unspecified or zero, at most 20 media resources will be returned.
+   * @return {Promise<Object>} The response from the API.
+   */
+  async listCategories({
+    filter = null,
+    orderBy = null,
+    pageSize = null,
+  } = {}) {
+    validateCategoriesOrderBy(orderBy);
+    validatePageSize(pageSize);
+
+    const params = [
+      ['filter', filter],
+      ['order_by', orderBy],
+      ['page_size', pageSize],
+      ['key', API_KEY],
+    ].filter((entry) => Boolean(entry[1]));
+
+    // eslint-disable-next-line no-return-await
+    return await this.fetch({
+      params,
+      path: Paths.LIST_CATEGORIES,
+    });
+  }
+
+  async fetch({ params, path }) {
     // Querystring always has at least the api key
     const queryString = new URLSearchParams(
       Object.fromEntries(new Map(params))
     );
-    const url = API_DOMAIN + Paths.LIST_MEDIA + '?' + queryString.toString();
+    const url = API_DOMAIN + path + '?' + queryString.toString();
 
     const response = await window.fetch(url);
 
     if (!response.ok) {
       throw new Error(
-        'Obtained an error from the listMedia call, statusCode: ' +
+        'Obtained an error from the ' +
+          path +
+          ' call, statusCode: ' +
           response.status +
           ', statusText: ' +
           response.statusText

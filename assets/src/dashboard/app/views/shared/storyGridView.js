@@ -42,6 +42,7 @@ import {
   RenameStoryPropType,
 } from '../../../types';
 import { getFormattedDisplayDate } from '../../../utils';
+import { STORY_STATUS } from '../../../constants';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -110,10 +111,11 @@ const StoryGridView = ({
                     ? __('Google', 'web-stories')
                     : users[story.author]?.name
                 }
-                displayDate={getFormattedDisplayDate(
-                  story?.modified,
-                  dateFormat
-                )}
+                displayDate={
+                  story?.status === STORY_STATUS.DRAFT
+                    ? getFormattedDisplayDate(story?.modified, dateFormat)
+                    : getFormattedDisplayDate(story?.created, dateFormat)
+                }
                 {...titleRenameProps}
               />
 

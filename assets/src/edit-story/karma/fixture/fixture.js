@@ -20,6 +20,7 @@
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
 import { render, act, screen } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -189,6 +190,10 @@ export class Fixture {
    */
   render() {
     const root = document.querySelector('test-root');
+
+    // see http://reactcommunity.org/react-modal/accessibility/
+    Modal.setAppElement(root);
+
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />
@@ -491,7 +496,12 @@ class APIProviderFixture {
       );
 
       const getLinkMetadata = useCallback(
-        () => jasmine.createSpy('getLinkMetadata'),
+        () =>
+          asyncResponse({
+            url: 'https://example.com',
+            title: 'Example Site',
+            image: 'example.jpg',
+          }),
         []
       );
 

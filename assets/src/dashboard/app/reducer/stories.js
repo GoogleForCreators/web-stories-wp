@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { STORY_STATUS } from '../../constants';
 import reshapeStoryObject from '../serializers/stories';
 
 export const ACTION_TYPES = {
@@ -81,7 +82,12 @@ function storyReducer(state, action) {
         },
       };
 
-    case ACTION_TYPES.TRASH_STORY:
+    case ACTION_TYPES.TRASH_STORY: {
+      const storyGroupStatus =
+        action.payload.storyStatus === STORY_STATUS.DRAFT
+          ? STORY_STATUS.DRAFT
+          : STORY_STATUS.PUBLISHED_AND_FUTURE;
+
       return {
         ...state,
         error: {},
@@ -91,8 +97,7 @@ function storyReducer(state, action) {
         totalStoriesByStatus: {
           ...state.totalStoriesByStatus,
           all: state.totalStoriesByStatus.all - 1,
-          [action.payload.storyStatus]:
-            state.totalStoriesByStatus[action.payload.storyStatus] - 1,
+          [storyGroupStatus]: state.totalStoriesByStatus[storyGroupStatus] - 1,
         },
         stories: Object.keys(state.stories).reduce((memo, storyId) => {
           if (parseInt(storyId) !== action.payload.id) {
@@ -101,6 +106,7 @@ function storyReducer(state, action) {
           return memo;
         }, {}),
       };
+    }
 
     case ACTION_TYPES.DUPLICATE_STORY:
       return {
