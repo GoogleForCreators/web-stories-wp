@@ -71,9 +71,7 @@ function getSiblingSelector(isRTL, key) {
  * @return {Element} The sibling.
  */
 function getNextSibling(e, siblingSelector) {
-  return (
-    e.parentNode[siblingSelector] && e.parentNode[siblingSelector].firstChild
-  );
+  return e.parentNode[siblingSelector]?.firstChild;
 }
 
 /**
