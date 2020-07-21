@@ -248,7 +248,8 @@ const formattedStoriesArray = [
         ],
         'wp:attachment': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/media?parent=167',
+            href:
+              'http://localhost:8899/wp-json/web-stories/v1/media?parent=167',
           },
         ],
         'wp:term': [
@@ -536,7 +537,8 @@ const formattedStoriesArray = [
         ],
         'wp:attachment': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/media?parent=165',
+            href:
+              'http://localhost:8899/wp-json/web-stories/v1/media?parent=165',
           },
         ],
         'wp:term': [
@@ -1116,7 +1118,8 @@ const formattedStoriesArray = [
         ],
         'wp:attachment': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/media?parent=163',
+            href:
+              'http://localhost:8899/wp-json/web-stories/v1/media?parent=163',
           },
         ],
         'wp:term': [
@@ -1518,7 +1521,8 @@ const formattedStoriesArray = [
         ],
         'wp:attachment': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/media?parent=161',
+            href:
+              'http://localhost:8899/wp-json/web-stories/v1/media?parent=161',
           },
         ],
         'wp:term': [
