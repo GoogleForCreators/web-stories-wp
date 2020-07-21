@@ -33,7 +33,8 @@ const PillContainer = styled.span`
   margin: 4px;
   padding: 6px 12px;
   border-radius: 2px;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   user-select: none;
   background-clip: padding-box;
   :hover {
