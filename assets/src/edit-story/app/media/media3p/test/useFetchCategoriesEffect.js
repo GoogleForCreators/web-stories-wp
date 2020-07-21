@@ -46,8 +46,8 @@ describe('useFetchCategoriesEffect', () => {
     fetchCategoriesError = jest.fn();
   });
 
-  async function renderUseFetchCategoriesEffect(propertyOverrides) {
-    await act(() => {
+  function renderUseFetchCategoriesEffect(propertyOverrides) {
+    act(() => {
       renderHook(() => {
         useFetchCategoriesEffect({
           provider: 'unsplash',
@@ -63,7 +63,14 @@ describe('useFetchCategoriesEffect', () => {
 
   it('should fetch categories when the provider is set', async () => {
     mockListCategories.mockImplementation(() =>
-      Promise.resolve({ categories: [{ name: 'Covid-19' }] })
+      Promise.resolve({
+        categories: [
+          {
+            name: 'categories/unsplash:c7USHrQ0Ljw',
+            displayName: 'COVID-19',
+          },
+        ],
+      })
     );
 
     await renderUseFetchCategoriesEffect();
@@ -77,7 +84,12 @@ describe('useFetchCategoriesEffect', () => {
     expect(fetchCategoriesSuccess.mock.calls[0][0]).toStrictEqual(
       expect.objectContaining({
         provider: 'unsplash',
-        categories: [{ name: 'Covid-19' }],
+        categories: [
+          {
+            name: 'categories/unsplash:c7USHrQ0Ljw',
+            displayName: 'COVID-19',
+          },
+        ],
       })
     );
   });

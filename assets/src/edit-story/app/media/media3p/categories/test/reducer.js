@@ -52,7 +52,12 @@ describe('reducer', () => {
     act(() =>
       result.current.actions.fetchCategoriesSuccess({
         provider: 'unsplash',
-        categories: [{ name: 'Covid-19' }],
+        categories: [
+          {
+            name: 'categories/unsplash:c7USHrQ0Ljw',
+            displayName: 'COVID-19',
+          },
+        ],
       })
     );
 
@@ -72,13 +77,23 @@ describe('reducer', () => {
     act(() =>
       result.current.actions.fetchCategoriesSuccess({
         provider: 'unsplash',
-        categories: [{ name: 'Covid-19' }],
+        categories: [
+          {
+            name: 'categories/unsplash:c7USHrQ0Ljw',
+            displayName: 'COVID-19',
+          },
+        ],
       })
     );
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
-        categories: [{ name: 'Covid-19' }],
+        categories: [
+          {
+            name: 'categories/unsplash:c7USHrQ0Ljw',
+            displayName: 'COVID-19',
+          },
+        ],
       })
     );
   });
