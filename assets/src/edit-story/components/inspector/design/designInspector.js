@@ -33,7 +33,6 @@ const Wrapper = styled.div`
 `;
 
 const TopPanels = styled.div`
-  overflow: auto;
   flex: 1;
 `;
 
