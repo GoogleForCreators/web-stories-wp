@@ -73,7 +73,7 @@ comment:
   behavior: default
   require_changes: true
   branches:
-    - 'master'
+    - 'main'
 
 # See https://docs.codecov.io/docs/ignoring-paths
 ignore:

@@ -22,7 +22,7 @@ import { useStory } from '../../../app/story';
 import useInsertElement from '../useInsertElement';
 import createSolidFromString from '../../../utils/createSolidFromString';
 
-describe('Multi-selection Movable integration', () => {
+describe('Multi-selection Moveable integration', () => {
   let fixture;
 
   beforeEach(async () => {

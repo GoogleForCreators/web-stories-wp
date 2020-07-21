@@ -15,22 +15,28 @@
  */
 
 /**
+ * External dependencies
+ */
+import { forwardRef } from 'react';
+import Moveable from 'react-moveable';
+
+/**
  * Internal dependencies
  */
-export * from './categories/actions';
-export * from '../common/actions';
-import * as types from './types';
+import InOverlay from '../overlay';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.MEDIA3P_SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
-};
+const DEFAULT_Z_INDEX = 10;
 
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.MEDIA3P_SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
-};
+function MoveableWithRef({ ...moveableProps }, ref) {
+  return (
+    <InOverlay
+      zIndex={DEFAULT_Z_INDEX}
+      pointerEvents="initial"
+      render={({ container }) => {
+        return <Moveable ref={ref} container={container} {...moveableProps} />;
+      }}
+    />
+  );
+}
+
+export default forwardRef(MoveableWithRef);

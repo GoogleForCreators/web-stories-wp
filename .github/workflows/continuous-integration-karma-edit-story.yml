@@ -3,7 +3,7 @@ name: Edit Story Integration Tests
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
@@ -63,13 +63,13 @@ jobs:
         with:
           name: cuj-coverage-edit-story
           path: build/cuj-coverage-edit-story.md
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
   deploy-cuj-coverage:
     name: Deploy CUJ Coverage
     needs: [karma]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
       - name: Checkout
