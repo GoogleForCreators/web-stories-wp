@@ -55,8 +55,8 @@ export default function useFetchCategoriesEffect({
     // These attributes never change.
     provider,
     listCategories,
-    fetchCategoriesError,
     fetchCategoriesStart,
     fetchCategoriesSuccess,
+    fetchCategoriesError,
   ]);
 }

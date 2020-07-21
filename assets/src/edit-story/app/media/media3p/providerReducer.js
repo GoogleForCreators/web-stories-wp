@@ -23,7 +23,7 @@ import commonReducer, {
 
 import categoriesReducer, {
   INITIAL_STATE as CATEGORIES_INITIAL_STATE,
-} from '../categories/reducer';
+} from './categories/reducer';
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,

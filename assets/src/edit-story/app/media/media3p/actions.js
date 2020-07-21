@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-export * from '../categories/actions';
+export * from './categories/actions';
 export * from '../common/actions';
 import * as types from './types';
 

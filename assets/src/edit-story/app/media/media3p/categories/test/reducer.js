@@ -23,7 +23,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import reducer from '../reducer';
-import useMediaReducer from '../../useMediaReducer';
+import useMediaReducer from '../../../useMediaReducer';
 import * as commonActionsToWrap from '../actions';
 
 describe('reducer', () => {
