@@ -214,7 +214,8 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
     it('should switch to the Published Tab', async () => {
       const numPublished = formattedStoriesArray.filter(
-        ({ status }) => status === STORY_STATUS.PUBLISHED
+        ({ status }) =>
+          status === STORY_STATUS.PUBLISH || status === STORY_STATUS.FUTURE
       ).length;
 
       expect(numPublished).toBeGreaterThan(0);
@@ -228,7 +229,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       await fixture.events.click(publishedTabButton);
 
       const viewPublishedText = fixture.screen.getByText(
-        new RegExp('^' + STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED] + '$')
+        new RegExp(
+          '^' + STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE] + '$'
+        )
       );
 
       expect(viewPublishedText).toBeTruthy();
@@ -773,8 +776,18 @@ describe('CUJ: Creator can view their stories in list view', () => {
   });
 
   describe('Action: Go to WP list view to do any action', () => {
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should add a link to the classic WordPress list view', () => {});
+    it('should add a link to the classic WordPress list view', async () => {
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.click(listViewButton);
+
+      const wpListViewLink = fixture.screen.getByRole('link', {
+        name: /^See classic WP list view$/,
+      });
+
+      expect(wpListViewLink).toBeTruthy();
+    });
   });
 });

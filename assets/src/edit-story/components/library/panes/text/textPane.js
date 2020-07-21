@@ -47,9 +47,9 @@ function TextPane(props) {
     <Pane id={paneId} {...props}>
       {showTextAndShapesSearchInput && (
         <SearchInput
-          value={''}
+          initialValue={''}
           placeholder={__('Search', 'web-stories')}
-          onChange={() => {}}
+          onSearch={() => {}}
           disabled
         />
       )}
