@@ -21,6 +21,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useEffect } from 'react';
 import { useFeature } from 'flagged';
+/**
+ * Internal dependencies
+ */
 
 /**
  * WordPress dependencies
@@ -45,6 +48,7 @@ import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { ProviderType } from '../common/providerType';
 import Flags from '../../../../../flags';
+import Media3pCategories from './categoriesPanel';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -53,50 +57,6 @@ const ProviderTabSection = styled.div`
   padding: 0 24px;
 `;
 
-// TODO:(https://github.com/google/web-stories-wp/issues/2360)
-// Category should be collapsible and expandable.
-const CategorySection = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v3};
-  min-height: 94px;
-  padding: 30px 24px;
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-export const Pill = styled.span`
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: ${({ theme }) => theme.colors.fg.v1};
-  background-color: rgba(
-    255,
-    255,
-    255,
-    ${(props) => (props.isSelected ? 0.1 : 0)}
-  );
-  margin: 4px;
-  padding: 6px 12px;
-  border-radius: 2px;
-  font-size: 14px;
-  user-select: none;
-  background-clip: padding-box;
-  :hover {
-    background-color: rgba(
-      255,
-      255,
-      255,
-      ${(props) => (props.isSelected ? 0.1 : 0.05)}
-    );
-  }
-`;
-
-Pill.propTypes = {
-  isSelected: PropTypes.bool,
-};
-
-// TODO:(https://github.com/google/web-stories-wp/issues/2362)
-// Wire up pill list to state and remove these fake pills.
-const fakePillList = ['COVID-19', 'Nature', 'Wallpapers', 'People'];
-const selectedPill = 'Nature';
 /**
  * Pane that contains the media 3P integrations.
  *
@@ -179,13 +139,7 @@ function Media3pPane(props) {
               onClick={onProviderTabClick}
             />
           </ProviderTabSection>
-          <CategorySection>
-            {fakePillList.map((e, i) => (
-              <Pill isSelected={e == selectedPill} key={i}>
-                {e}
-              </Pill>
-            ))}
-          </CategorySection>
+          <Media3pCategories />
         </PaneHeader>
         <PaginatedMediaGallery
           providerType={ProviderType.UNSPLASH}
