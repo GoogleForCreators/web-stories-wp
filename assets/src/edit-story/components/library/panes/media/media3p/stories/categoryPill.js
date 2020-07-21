@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -35,10 +36,15 @@ const Container = styled.div`
 `;
 
 export const _default = () => {
+  const [isSelected, setIsSelected] = useState(false);
+
   return (
     <Container>
-      <CategoryPill title="Unselected" />
-      <CategoryPill title="Selected" isSelected={true} />
+      <CategoryPill
+        title="Category"
+        isSelected={isSelected}
+        onClick={() => setIsSelected(!isSelected)}
+      />
     </Container>
   );
 };
