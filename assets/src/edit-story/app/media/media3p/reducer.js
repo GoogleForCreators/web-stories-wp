@@ -32,7 +32,7 @@ const INITIAL_STATE = {
 };
 
 // TODO(#2804): Use the configuration json to provide this list.
-const providers = ['unsplash'];
+const providers = ['unsplash', 'coverr'];
 
 /**
  * State reducer for all 3p media providers (Unsplash, Coverr etc).

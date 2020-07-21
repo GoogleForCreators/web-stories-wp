@@ -78,6 +78,7 @@ class ApiFetcher {
    * an error is thrown.
    *
    * @param {Object} obj - An object with the options for the request.
+   * @param {string} obj.provider - The media provide from which to list media.
    * @param {?string} obj.languageCode The BCP-47 language code, such as "en-US"
    * or "sr-Latn".
    * @param {?string} obj.filter  Filter details for items returned.
@@ -101,6 +102,7 @@ class ApiFetcher {
    * @return {Promise<Object>} The response from the API.
    */
   async listMedia({
+    provider = 'unsplash',
     languageCode = null,
     filter = null,
     orderBy = null,
@@ -119,8 +121,21 @@ class ApiFetcher {
       ['key', API_KEY],
     ].filter((entry) => Boolean(entry[1]));
 
-    // eslint-disable-next-line no-return-await
-    return await this.fetch({ params, path: Paths.LIST_MEDIA });
+    let result = await this.fetch({ params, path: Paths.LIST_MEDIA });
+    if (provider === 'coverr') {
+      // Update 'type' to video to mock Coverr functionality
+      result = {
+        ...result,
+        media: [
+          ...result.media.map((m) => ({
+            ...m,
+            type: 'video',
+            poster: m.imageUrls[0].url,
+          })),
+        ],
+      };
+    }
+    return result;
   }
 
   /**

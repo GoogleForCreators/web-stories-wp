@@ -65,7 +65,7 @@ import createResource from './createResource';
  * @return {Object} The array of "sizes"-type objects.
  */
 function getUrls(m) {
-  if (m.type.toLowerCase() === 'image') {
+  if (m.type.toLowerCase() === 'image' || m.type.toLowerCase() === 'video') {
     // The rest of the application expects 3 named "sizes": "full", "large" and
     // "web_stories_thumbnail". We use the biggest as "full", the next biggest
     // as "large", and the smallest as "web_stories_thumbnail". The rest are
@@ -113,10 +113,10 @@ function getResourceFromMedia3p(m) {
     src: urls.full.source_url,
     width: urls.full.width,
     height: urls.full.height,
-    poster: null, // TODO: Implement for videos.
+    poster: m.poster, // TODO: Implement for videos.
     posterId: null, // TODO: Implement for videos.
-    length: null, // TODO: Implement for videos.
-    lengthFormatted: null, // TODO: Implement for videos.
+    length: 100, // TODO: Implement for videos.
+    lengthFormatted: '0:' + (Math.random() * 20 + 10).toFixed(0), // TODO: Implement for videos.
     title: m.description,
     alt: null,
     local: false, // TODO: How does this interact with the rest?

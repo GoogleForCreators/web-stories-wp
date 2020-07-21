@@ -21,7 +21,7 @@ import useProviderContextValueProvider from './useProviderContextValueProvider';
 
 // TODO(https://github.com/google/web-stories-wp/issues/2804):
 // Use provider configuration json fragment.
-const providers = ['unsplash'];
+const providers = ['unsplash', 'coverr'];
 
 function useProviderSetContextValueProvider(reducerState, reducerActions) {
   const result = {};

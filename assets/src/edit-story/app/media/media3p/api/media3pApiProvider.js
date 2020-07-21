@@ -31,9 +31,9 @@ import Context from './context';
  *
  * @enum {string}
  */
-const Providers = {
-  UNSPLASH: 'unsplash',
-};
+// const Providers = {
+//   UNSPLASH: 'unsplash',
+// };
 
 /** @typedef {import('react').ProviderProps} ProviderProps */
 
@@ -81,11 +81,12 @@ function Media3pApiProvider({ children }) {
     mediaType,
     pageToken,
   }) {
-    if (provider.toLowerCase() !== Providers.UNSPLASH) {
-      throw new Error(`Unsupported provider: ${provider}`);
-    }
-    const filter = constructFilter(provider, searchTerm, mediaType);
+    // if (provider.toLowerCase() !== Providers.UNSPLASH) {
+    //   throw new Error(`Unsupported provider: ${provider}`);
+    // }
+    const filter = constructFilter('unsplash', searchTerm, mediaType);
     const response = await apiFetcher.listMedia({
+      provider,
       filter,
       orderBy,
       pageSize: MEDIA_PAGE_SIZE,
