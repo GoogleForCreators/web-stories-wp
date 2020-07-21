@@ -126,49 +126,40 @@ const TypeaheadOptions = ({
   }, [hoveredIndex, items, onSelect, isOpen]);
 
   useEffect(() => {
-    if (!listRef.current) {
-      return () => {};
+    if (listRef.current && listRef.current.children?.[0]) {
+      listRef.current.children[0].focus();
     }
-
-    listRef.current.children[0].focus();
-
-    return () => {};
   }, []);
 
   // we only want to set an existing value for currentSelection when the dropdown is newly opened
   useEffect(() => {
-    if (isOptionMenuAlreadyOpen) {
-      return () => {};
+    if (!isOptionMenuAlreadyOpen) {
+      setIsOptionMenuAlreadyOpen(true);
+
+      const selectionToCheckFor =
+        currentSelection && currentSelection.toLowerCase().trim();
+      const existingValueOnMenuOpen = selectionToCheckFor
+        ? items.findIndex(
+            (item) =>
+              (item.value &&
+                item.value.toLowerCase() === selectionToCheckFor) ||
+              item.label.toLowerCase() === selectionToCheckFor
+          )
+        : -1;
+
+      if (existingValueOnMenuOpen > -1) {
+        setSelectedIndex(existingValueOnMenuOpen);
+      }
     }
-
-    setIsOptionMenuAlreadyOpen(true);
-
-    const selectionToCheckFor =
-      currentSelection && currentSelection.toLowerCase().trim();
-    const existingValueOnMenuOpen = selectionToCheckFor
-      ? items.findIndex(
-          (item) =>
-            (item.value &&
-              item.value.toLowerCase() === selectionToCheckFor.toLowerCase()) ||
-            item.label.toLowerCase() === selectionToCheckFor.toLowerCase()
-        )
-      : -1;
-    existingValueOnMenuOpen > -1 && setSelectedIndex(existingValueOnMenuOpen);
-
-    return () => {};
   }, [isOptionMenuAlreadyOpen, currentSelection, items]);
 
   // when selectedIndex is updated above we want to scroll it into view and focus it
   useEffect(() => {
-    if (!listRef.current || !listRef.current.children) {
-      return () => {};
+    if (listRef.current && listRef.current.children) {
+      const selectedItem = listRef.current.children[selectedIndex];
+      selectedItem?.scrollIntoView();
+      selectedItem?.focus();
     }
-
-    const selectedItem = listRef.current.children[selectedIndex];
-    selectedItem?.scrollIntoView();
-    selectedItem?.focus();
-
-    return () => {};
   }, [selectedIndex]);
 
   const renderMenuItem = (item, index) => {
