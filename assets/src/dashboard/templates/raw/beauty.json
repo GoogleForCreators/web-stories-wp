@@ -31,7 +31,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page1_bg-alt.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page1_bg-alt.png",
             "width": 206,
             "height": 366,
             "id": 1157,
@@ -199,7 +199,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page1_logo-generic.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page1_logo-generic.png",
             "width": 32,
             "height": 10,
             "id": 1155,
@@ -1193,7 +1193,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page3_figure.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page3_figure.jpg",
             "width": 220,
             "height": 258,
             "posterId": 0,
@@ -1485,7 +1485,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page4_bg.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page4_bg.png",
             "width": 220,
             "height": 391,
             "posterId": 0,
@@ -1552,7 +1552,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page_4_heart.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page_4_heart.png",
             "width": 11,
             "height": 10,
             "posterId": 0,
@@ -1570,7 +1570,12 @@
           },
           "type": "image",
           "basedOn": "23b05054-ad0e-45c8-a6e0-e676cc94c2db",
-          "id": "c63e3e3d-5c3e-4d83-b0aa-e68e88b6e8b7"
+          "id": "c63e3e3d-5c3e-4d83-b0aa-e68e88b6e8b7",
+          "link": {
+            "url": "https://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         },
         {
           "width": 40,
@@ -1623,7 +1628,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page_4_heart.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page_4_heart.png",
             "width": 11,
             "height": 10,
             "posterId": 0,
@@ -1643,7 +1648,12 @@
           "basedOn": "c63e3e3d-5c3e-4d83-b0aa-e68e88b6e8b7",
           "id": "c3c8179c-47b7-4c7d-ae5c-a75747b041c9",
           "x": 91,
-          "y": 437
+          "y": 437,
+          "link": {
+            "url": "https://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         },
         {
           "width": 40,
@@ -1696,7 +1706,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page_4_heart.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page_4_heart.png",
             "width": 11,
             "height": 10,
             "posterId": 0,
@@ -1716,7 +1726,12 @@
           "basedOn": "c3c8179c-47b7-4c7d-ae5c-a75747b041c9",
           "id": "e693f711-c9fb-4794-bc67-b6cbaaae7d64",
           "x": 184,
-          "y": 146
+          "y": 146,
+          "link": {
+            "url": "https://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          }
         }
       ],
       "type": "page",
@@ -1921,10 +1936,10 @@
           }
         },
         {
-          "x": 120,
+          "x": 88.5,
           "y": 184,
-          "width": 190,
-          "height": 79,
+          "width": 235,
+          "height": 92,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -1964,9 +1979,9 @@
           }
         },
         {
-          "x": 110,
+          "x": 83,
           "y": 184,
-          "width": 190,
+          "width": 226,
           "height": 92,
           "opacity": 100,
           "flip": {
@@ -1999,7 +2014,7 @@
           "type": "text",
           "basedOn": "20f12482-ebbd-469f-a4da-315da300cbc1",
           "id": "6ef90019-01ac-420c-851a-bd9486cd9092",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(40, 41, 43, 1)\">$20</span></span>",
+          "content": "<span style=\"color: #28292b\">$20</span>",
           "fontSize": 92,
           "padding": {
             "horizontal": 0,
@@ -2150,7 +2165,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page5_figure.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page5_figure.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -2531,7 +2546,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page6_figure.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page6_figure.jpg",
             "width": 220,
             "height": 174,
             "posterId": 0,
@@ -3070,7 +3085,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page7_product1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page7_product1.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
@@ -3111,7 +3126,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page7_product2.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page7_product2.jpg",
             "width": 220,
             "height": 184,
             "posterId": 0,
@@ -3918,7 +3933,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page8_figure.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page8_figure.jpg",
             "width": 370,
             "height": 492,
             "id": 409,
@@ -4539,7 +4554,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page9_story1.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page9_story1.jpg",
             "width": 220,
             "height": 124,
             "posterId": 0,
@@ -4581,7 +4596,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page9_story2.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page9_story2.jpg",
             "width": 352,
             "height": 528,
             "id": 515,
@@ -4622,7 +4637,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/beauty/beauty_page9_story3.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/beauty/beauty_page9_story3.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
