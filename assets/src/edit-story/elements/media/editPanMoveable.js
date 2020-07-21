@@ -28,9 +28,6 @@ import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
 import getFocalFromOffset from './getFocalFromOffset';
 
-/**
- *
- */
 function EditPanMoveable({
   setProperties,
   fullMedia,
