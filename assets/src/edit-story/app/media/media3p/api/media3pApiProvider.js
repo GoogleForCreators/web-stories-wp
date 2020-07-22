@@ -97,9 +97,35 @@ function Media3pApiProvider({ children }) {
     };
   }
 
+  /**
+   * Get categories for the given parameters.
+   *
+   * @param {Object} obj - An object with the options.
+   * @param {string} obj.provider The provider to get the media from.
+   * Currently only 'unsplash' is supported.
+   * @param {?string} obj.orderBy The desired ordering of the results.
+   * Defaults to 'trending' in the API.
+   * @return {Promise<{categories: *}>} An object with the category
+   * resources.
+   */
+  async function listCategories({ provider, orderBy }) {
+    if (provider.toLowerCase() !== Providers.UNSPLASH) {
+      throw new Error(`Unsupported provider: ${provider}`);
+    }
+    const filter = constructFilter(provider);
+    const response = await apiFetcher.listCategories({
+      filter,
+      orderBy,
+    });
+    return {
+      categories: response.categories,
+    };
+  }
+
   const contextValue = {
     actions: {
       listMedia,
+      listCategories,
     },
   };
 

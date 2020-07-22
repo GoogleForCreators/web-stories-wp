@@ -88,6 +88,19 @@ jest.mock('../apiFetcher', () => ({
       ],
       nextPageToken: 'lala',
     }),
+  listCategories: () =>
+    Promise.resolve({
+      categories: [
+        {
+          name: 'categories/unsplash:1',
+          displayName: 'Covid-19',
+        },
+        {
+          name: 'categories/unsplash:2',
+          displayName: 'Mountains',
+        },
+      ],
+    }),
 }));
 
 describe('useMedia3pApi', () => {
@@ -178,6 +191,30 @@ describe('useMedia3pApi', () => {
         },
       ],
       nextPageToken: 'lala',
+    });
+  });
+
+  it('should properly call listCategories and map the results', async () => {
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
+
+    const listCategoriesResult = await result.current.actions.listCategories({
+      provider: 'unsplash',
+    });
+
+    expect(listCategoriesResult).toStrictEqual({
+      categories: [
+        {
+          name: 'categories/unsplash:1',
+          displayName: 'Covid-19',
+        },
+        {
+          name: 'categories/unsplash:2',
+          displayName: 'Mountains',
+        },
+      ],
     });
   });
 });
