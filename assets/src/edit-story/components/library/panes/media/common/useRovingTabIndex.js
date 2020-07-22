@@ -23,6 +23,19 @@
  */
 
 /**
+ * Internal dependencies
+ */
+/**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+import { useConfig } from '../../../../../app/config';
+import { useKeyDownEffect } from '../../../../keyboard';
+/**
+ * External dependencies
+ */
+
+/**
  * Returns the center of a given element.
  *
  * @param {Element} e The element
@@ -119,71 +132,80 @@ function getClosestValidSibling(element, siblingDirection) {
   return closestValidSibling;
 }
 
-/**
- * Returns a callback for the keydown event raised by a MediaElement.
- *
- * @param {Object} obj Parameters object
- * @param {boolean} obj.isRTL Whether the document is RTL.
- * @return {function({event: Event, target: Object})} The onKeyDown handler wrapper.
- */
-function onKeyDown({ isRTL }) {
-  return (eventDetails) => {
-    const element = eventDetails.target.current;
-    const switchFocusToElement = (e) => {
-      element.tabIndex = -1;
-      e.tabIndex = 0;
-      e.focus();
-    };
-    const key = eventDetails.event.key;
-    const siblingDirection = getSiblingDirection(isRTL, key);
-    if (key === 'ArrowLeft' || key === 'ArrowRight') {
-      const sibling = getNextSibling(element, siblingDirection);
-      if (sibling) {
+export default function useRovingTabIndex({ ref }) {
+  const { isRTL } = useConfig();
+
+  /**
+   * Returns a callback for the keydown event raised by a MediaElement.
+   *
+   * @param {Object} obj Parameters object
+   * @param {boolean} obj.isRTL Whether the document is RTL.
+   * @return {function({event: Event, target: Object})} The onKeyDown handler wrapper.
+   */
+  const onKeyDown = useCallback(
+    ({ key }) => {
+      const element = ref.current;
+      const siblingDirection = getSiblingDirection(isRTL, key);
+      const switchFocusToElement = (e) => {
+        element.tabIndex = -1;
+        e.tabIndex = 0;
+        e.focus();
+        e.scrollIntoView(
+          /* alignToTop= */ siblingDirection === 'previousSibling'
+        );
+      };
+      if (key === 'ArrowLeft' || key === 'ArrowRight') {
+        const sibling = getNextSibling(element, siblingDirection);
+        if (sibling) {
+          switchFocusToElement(sibling);
+        }
+      } else if (key === 'ArrowUp' || key === 'ArrowDown') {
+        const closestValidSibling = getClosestValidSibling(
+          element,
+          siblingDirection
+        );
+        if (closestValidSibling) {
+          element.tabIndex = -1;
+          closestValidSibling.tabIndex = 0;
+          closestValidSibling.focus();
+        } else if (key === 'ArrowUp') {
+          // First sibling.
+          const sibling = element.parentNode.parentNode.firstChild.firstChild;
+          switchFocusToElement(sibling);
+        } else {
+          // Last sibling.
+          const sibling = element.parentNode.parentNode.lastChild.firstChild;
+          switchFocusToElement(sibling);
+        }
+      } else if (key === 'Home') {
+        // First sibling.
+        const sibling = element.parentNode.parentNode.firstChild.firstChild;
+        switchFocusToElement(sibling);
+      } else if (key === 'End') {
+        // Last sibling.
+        const sibling = element.parentNode.parentNode.lastChild.firstChild;
+        switchFocusToElement(sibling);
+      } else if (key === 'PageDown' || key === 'PageUp') {
+        let sibling = element;
+        for (
+          let i = 0;
+          getNextSibling(sibling, siblingDirection) && i < 5;
+          sibling = getNextSibling(sibling, siblingDirection)
+        ) {
+          i++;
+        }
         switchFocusToElement(sibling);
       }
-    } else if (key === 'ArrowUp' || key === 'ArrowDown') {
-      const closestValidSibling = getClosestValidSibling(
-        element,
-        siblingDirection
-      );
-      if (closestValidSibling) {
-        element.tabIndex = -1;
-        closestValidSibling.tabIndex = 0;
-        closestValidSibling.focus();
-      } else if (key === 'ArrowUp') {
-        // First sibling.
-        const target = element.parentNode.parentNode.firstChild.firstChild;
-        switchFocusToElement(target);
-      } else {
-        // Last sibling.
-        const target = element.parentNode.parentNode.lastChild.firstChild;
-        switchFocusToElement(target);
-      }
-    } else if (key === 'Home') {
-      // First sibling.
-      const target = element.parentNode.parentNode.firstChild.firstChild;
-      switchFocusToElement(target);
-    } else if (key === 'End') {
-      // Last sibling.
-      const target = element.parentNode.parentNode.lastChild.firstChild;
-      switchFocusToElement(target);
-    } else if (key === 'PageDown' || key === 'PageUp') {
-      let sibling = element;
-      for (
-        let i = 0;
-        getNextSibling(sibling, siblingDirection) && i < 5;
-        sibling = getNextSibling(sibling, siblingDirection)
-      ) {
-        i++;
-      }
-      switchFocusToElement(sibling);
-      eventDetails.event.preventDefault();
-    }
-  };
-}
+    },
+    [ref, isRTL]
+  );
 
-export default function useRovingTabIndex(isRTL) {
-  return {
-    onKeyDown: onKeyDown(isRTL),
-  };
+  useKeyDownEffect(
+    ref,
+    {
+      key: ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end'],
+    },
+    onKeyDown,
+    [ref, onKeyDown]
+  );
 }

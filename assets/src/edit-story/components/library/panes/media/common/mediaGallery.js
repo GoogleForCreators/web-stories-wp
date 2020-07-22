@@ -24,10 +24,8 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Gallery from 'react-photo-gallery';
-import { useConfig } from '../../../../../app/config';
 import { ProviderType } from './providerType';
 import MediaElement from './mediaElement';
-import useRovingTabIndex from './useRovingTabIndex';
 
 const PHOTO_MARGIN = 4;
 
@@ -56,10 +54,6 @@ function MediaGallery({ resources, onInsert, providerType }) {
     height: resource.height,
   }));
 
-  const { isRTL } = useConfig();
-
-  const { onKeyDown } = useRovingTabIndex({ isRTL });
-
   const imageRenderer = useCallback(
     ({ index, photo }) => (
       <PhotoContainer photo={photo} key={index}>
@@ -69,12 +63,11 @@ function MediaGallery({ resources, onInsert, providerType }) {
           width={photo.width}
           height={photo.height}
           onInsert={onInsert}
-          onKeyDown={onKeyDown}
           providerType={providerType}
         />
       </PhotoContainer>
     ),
-    [providerType, onInsert, onKeyDown, resources]
+    [providerType, onInsert, resources]
   );
 
   return (

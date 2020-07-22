@@ -32,6 +32,8 @@ import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
 import { ProviderType } from '../common/providerType';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
+import { useKeyDownEffect } from '../../../../keyboard';
+import useRovingTabIndex from './useRovingTabIndex';
 
 const styledTiles = css`
   width: 100%;
@@ -112,8 +114,6 @@ const UploadingIndicator = styled.div`
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
  * @param {Function} param.onInsert Insertion callback.
- * @param {function({event: Event, target: Object})} param.onKeyDown onKeyDown
- * callback.
  * @param {ProviderType} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
  */
@@ -123,7 +123,6 @@ const MediaElement = ({
   width: requestedWidth,
   height: requestedHeight,
   onInsert,
-  onKeyDown,
   providerType,
 }) => {
   const {
@@ -234,20 +233,27 @@ const MediaElement = ({
 
   const ref = useRef();
 
-  const keyDownWrapper = (event) => {
-    if (event.key === 'Enter') {
-      onInsert(resource, width, height);
-      return;
-    } else if (event.key === ' ') {
-      setIsMenuOpen(true);
-      event.preventDefault();
-    }
-    onKeyDown &&
-      onKeyDown({
-        event: event,
-        target: ref,
-      });
-  };
+  useRovingTabIndex({ ref });
+
+  const handleKeyDown = useCallback(
+    ({ key }) => {
+      if (key === 'Enter') {
+        onInsert(resource, width, height);
+      } else if (key === ' ') {
+        setIsMenuOpen(true);
+      }
+    },
+    [onInsert, setIsMenuOpen, resource, width, height]
+  );
+
+  useKeyDownEffect(
+    ref,
+    {
+      key: ['enter', 'space'],
+    },
+    handleKeyDown,
+    [handleKeyDown]
+  );
 
   return (
     <Container
@@ -260,7 +266,6 @@ const MediaElement = ({
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
-      onKeyDown={keyDownWrapper}
     >
       {innerElement}
       {local && (
@@ -346,7 +351,6 @@ MediaElement.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   onInsert: PropTypes.func,
-  onKeyDown: PropTypes.func,
   providerType: PropTypes.string,
 };
 
