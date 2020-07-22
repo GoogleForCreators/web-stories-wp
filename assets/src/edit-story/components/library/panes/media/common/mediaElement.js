@@ -144,7 +144,7 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
-  const [pointerEntered, setPointerEntered] = useState(false);
+  const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const {
@@ -183,13 +183,13 @@ const MediaElement = ({
     [setDraggingResource, resource, handleDrag, handleDrop]
   );
 
-  const onPointerEnter = useCallback(() => setPointerEntered(true), []);
-  const onPointerLeave = useCallback(() => setPointerEntered(false), []);
+  const makeActive = useCallback(() => setActive(true), []);
+  const makeInactive = useCallback(() => setActive(false), []);
   const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
   const onMenuCancelled = useCallback(() => setIsMenuOpen(false), []);
   const onMenuSelected = useCallback(() => {
     setIsMenuOpen(false);
-    setPointerEntered(false);
+    setActive(false);
   }, []);
 
   useEffect(() => {
@@ -200,7 +200,7 @@ const MediaElement = ({
           mediaElement.current.pause();
         }
       } else {
-        if (pointerEntered) {
+        if (active) {
           setShowVideoDetail(false);
           if (mediaElement.current) {
             // Pointer still in the media element, continue the video.
@@ -216,7 +216,7 @@ const MediaElement = ({
         }
       }
     }
-  }, [isMenuOpen, pointerEntered, type]);
+  }, [isMenuOpen, active, type]);
 
   const onClick = () => onInsert(resource, width, height);
 
@@ -238,6 +238,9 @@ const MediaElement = ({
     if (event.key === 'Enter') {
       onInsert(resource, width, height);
       return;
+    } else if (event.key === ' ') {
+      setIsMenuOpen(true);
+      event.preventDefault();
     }
     onKeyDown &&
       onKeyDown({
@@ -252,8 +255,10 @@ const MediaElement = ({
       data-testid="mediaElement"
       data-id={resourceId}
       className={'mediaElement'}
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
       onKeyDown={keyDownWrapper}
     >
@@ -271,7 +276,7 @@ const MediaElement = ({
       {hasDropdownMenu && providerType === ProviderType.LOCAL && (
         <DropDownMenu
           resource={resource}
-          pointerEntered={pointerEntered}
+          display={active}
           isMenuOpen={isMenuOpen}
           onMenuOpen={onMenuOpen}
           onMenuCancelled={onMenuCancelled}

@@ -57,7 +57,8 @@ function getDistanceSq(p1, p2) {
  * @return {string} Either `previousSibling` or `nextSibling`.
  */
 function getSiblingDirection(isRTL, key) {
-  return !isRTL && (key === 'ArrowLeft' || key === 'ArrowUp')
+  return !isRTL &&
+    (key === 'ArrowLeft' || key === 'ArrowUp' || key === 'PageUp')
     ? ['previousSibling']
     : 'nextSibling';
 }
@@ -166,6 +167,17 @@ function onKeyDown({ isRTL }) {
       // Last sibling.
       const target = element.parentNode.parentNode.lastChild.firstChild;
       switchFocusToElement(target);
+    } else if (key === 'PageDown' || key === 'PageUp') {
+      let sibling = element;
+      for (
+        let i = 0;
+        getNextSibling(sibling, siblingDirection) && i < 5;
+        sibling = getNextSibling(sibling, siblingDirection)
+      ) {
+        i++;
+      }
+      switchFocusToElement(sibling);
+      eventDetails.event.preventDefault();
     }
   };
 }
