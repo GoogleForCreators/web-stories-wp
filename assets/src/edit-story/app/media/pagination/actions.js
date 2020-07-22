@@ -19,20 +19,17 @@
  */
 import * as types from './types';
 
-export const fetchMediaStart = (dispatch, defaultProvider) => ({
-  provider,
-  pageToken,
-}) => {
+export const fetchMediaStart = (dispatch) => ({ provider, pageToken }) => {
   dispatch({
     type: types.FETCH_MEDIA_START,
     payload: {
-      provider: provider ?? defaultProvider,
+      provider,
       pageToken,
     },
   });
 };
 
-export const fetchMediaSuccess = (dispatch, defaultProvider) => ({
+export const fetchMediaSuccess = (dispatch) => ({
   provider,
   media,
   nextPageToken,
@@ -42,7 +39,7 @@ export const fetchMediaSuccess = (dispatch, defaultProvider) => ({
   dispatch({
     type: types.FETCH_MEDIA_SUCCESS,
     payload: {
-      provider: provider ?? defaultProvider,
+      provider,
       media,
       nextPageToken,
       totalPages,
@@ -51,25 +48,21 @@ export const fetchMediaSuccess = (dispatch, defaultProvider) => ({
   });
 };
 
-export const fetchMediaError = (dispatch, defaultProvider) => ({
-  provider,
-} = {}) => {
+export const fetchMediaError = (dispatch) => ({ provider }) => {
   dispatch({
     type: types.FETCH_MEDIA_ERROR,
-    payload: { provider: provider ?? defaultProvider },
+    payload: { provider },
   });
 };
 
-export const setNextPage = (dispatch, defaultProvider) => ({
-  provider,
-} = {}) => {
+export const setNextPage = (dispatch) => ({ provider }) => {
   dispatch({
     type: types.SET_NEXT_PAGE,
-    payload: { provider: provider ?? defaultProvider },
+    payload: { provider },
   });
 };
 
-export const updateMediaElement = (dispatch, defaultProvider) => ({
+export const updateMediaElement = (dispatch) => ({
   provider,
   id,
   ...properties
@@ -77,21 +70,18 @@ export const updateMediaElement = (dispatch, defaultProvider) => ({
   dispatch({
     type: types.UPDATE_MEDIA_ELEMENT,
     payload: {
-      provider: provider ?? defaultProvider,
+      provider,
       id,
       ...properties,
     },
   });
 };
 
-export const deleteMediaElement = (dispatch, defaultProvider) => ({
-  provider,
-  id,
-}) => {
+export const deleteMediaElement = (dispatch) => ({ provider, id }) => {
   dispatch({
     type: types.DELETE_MEDIA_ELEMENT,
     payload: {
-      provider: provider ?? defaultProvider,
+      provider,
       id,
     },
   });
