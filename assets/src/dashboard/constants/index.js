@@ -53,53 +53,43 @@ export const NESTED_APP_ROUTES = {
   SAVED_TEMPLATE_DETAIL: `${APP_ROUTES.SAVED_TEMPLATES}/${APP_ROUTES.TEMPLATE_DETAIL}`,
 };
 
-export const APP_ROUTE_TITLES = {
-  [APP_ROUTES.MY_STORIES]: __(
-    'My Stories ‹ Web Stories — WordPress',
-    'web-stories'
-  ),
-  [APP_ROUTES.SAVED_TEMPLATES]: __(
-    'Saved Templates ‹ Web Stories — WordPress',
-    'web-stories'
-  ),
-  [APP_ROUTES.TEMPLATES_GALLERY]: __(
-    'Explore Templates ‹ Web Stories — WordPress',
-    'web-stories'
-  ),
+export const ADMIN_TITLE = __('Web Stories', 'web-stories');
+
+export const ROUTE_TITLES = {
+  [APP_ROUTES.MY_STORIES]: __('My Stories', 'web-stories'),
+  [APP_ROUTES.SAVED_TEMPLATES]: __('Saved Templates', 'web-stories'),
+  [APP_ROUTES.TEMPLATES_GALLERY]: __('Explore Templates', 'web-stories'),
   [`${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`]: __(
-    'Template Details < Web Stories - WordPress',
+    'Template Details',
     'web-stories'
   ),
-  [APP_ROUTES.EDITOR_SETTINGS]: __(
-    'Editor Settings ‹ Web Stories — WordPress',
-    'web-stories'
-  ),
+  [APP_ROUTES.EDITOR_SETTINGS]: __('Editor Settings', 'web-stories'),
   [APP_ROUTES.SUPPORT]: __('Support ‹ Web Stories — WordPress', 'web-stories'),
-  DEFAULT: __('Dashboard ‹ Web Stories — WordPress', 'web-stories'),
+  DEFAULT: __('My Stories', 'web-stories'),
 };
 
 export const primaryPaths = [
-  { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
+  { value: APP_ROUTES.MY_STORIES, label: ROUTE_TITLES[APP_ROUTES.MY_STORIES] },
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
-    label: __('Saved Templates', 'web-stories'),
+    label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
     inProgress: true,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
-    label: __('Explore Templates', 'web-stories'),
+    label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
   },
 ];
 
 export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
-    label: __('Editor Settings', 'web-stories'),
+    label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
     inProgress: true,
   },
   {
     value: APP_ROUTES.SUPPORT,
-    label: __('Support', 'web-stories'),
+    label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
     inProgress: true,
   },
 ];

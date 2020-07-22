@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useContext, useEffect } from 'react';
@@ -27,7 +32,12 @@ import PropTypes from 'prop-types';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-import { APP_ROUTES, NESTED_APP_ROUTES, APP_ROUTE_TITLES } from '../constants';
+import {
+  APP_ROUTES,
+  NESTED_APP_ROUTES,
+  ROUTE_TITLES,
+  ADMIN_TITLE,
+} from '../constants';
 
 import {
   AppFrame,
@@ -54,8 +64,13 @@ const AppContent = () => {
   } = useContext(RouterContext);
 
   useEffect(() => {
-    window.document.title =
-      APP_ROUTE_TITLES[currentPath] || APP_ROUTE_TITLES.DEFAULT;
+    const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
+    window.document.title = sprintf(
+      /* translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
+      __('%1$s < %2$s - WordPress', 'web-stories'),
+      dynamicPageTitle,
+      ADMIN_TITLE
+    );
   }, [currentPath]);
 
   const hideLeftRail =
