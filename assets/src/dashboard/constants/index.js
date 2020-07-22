@@ -66,6 +66,10 @@ export const APP_ROUTE_TITLES = {
     'Explore Templates ‹ Web Stories — WordPress',
     'web-stories'
   ),
+  [`${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`]: __(
+    'Template Details < Web Stories - WordPress',
+    'web-stories'
+  ),
   [APP_ROUTES.EDITOR_SETTINGS]: __(
     'Editor Settings ‹ Web Stories — WordPress',
     'web-stories'
