@@ -45,18 +45,13 @@ import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { ProviderType } from '../common/providerType';
 import Flags from '../../../../../flags';
+import Media3pCategories from './media3pCategories';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
   margin-top: 30px;
   padding: 0 24px;
-`;
-
-const CategorySection = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v3};
-  min-height: 94px;
-  padding: 30px 24px;
 `;
 
 /**
@@ -141,7 +136,7 @@ function Media3pPane(props) {
               onClick={onProviderTabClick}
             />
           </ProviderTabSection>
-          <CategorySection>{__('Coming soon', 'web-stories')}</CategorySection>
+          <Media3pCategories />
         </PaneHeader>
         <PaginatedMediaGallery
           providerType={ProviderType.UNSPLASH}
