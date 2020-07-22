@@ -34,7 +34,6 @@ import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
 import useCombinedRefs from '../../utils/useCombinedRefs';
-import useElementsWithLinks from '../../utils/useElementsWithLinks';
 import useCanvas from './useCanvas';
 
 const EMPTY_HANDLES = [];
@@ -53,21 +52,17 @@ function SingleSelectionMoveable({
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
-  const {
-    updateSelectedElements,
-    deleteSelectedElements,
-    currentPage,
-  } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-    updateSelectedElements: state.actions.updateSelectedElements,
-    deleteSelectedElements: state.actions.deleteSelectedElements,
-  }));
+  const { updateSelectedElements, deleteSelectedElements } = useStory(
+    (state) => ({
+      updateSelectedElements: state.actions.updateSelectedElements,
+      deleteSelectedElements: state.actions.deleteSelectedElements,
+    })
+  );
   const {
     canvasWidth,
     canvasHeight,
     nodesById,
     fullbleedContainer,
-    setDisplayLinkGuidelines,
   } = useCanvas(
     ({
       state: {
@@ -75,14 +70,7 @@ function SingleSelectionMoveable({
         nodesById,
         fullbleedContainer,
       },
-      actions: { setDisplayLinkGuidelines },
-    }) => ({
-      canvasWidth,
-      canvasHeight,
-      nodesById,
-      fullbleedContainer,
-      setDisplayLinkGuidelines,
-    })
+    }) => ({ canvasWidth, canvasHeight, nodesById, fullbleedContainer })
   );
   const {
     getBox,
@@ -150,28 +138,6 @@ function SingleSelectionMoveable({
     }
     moveable.current.updateRect();
   });
-
-  const { isElementInAttachmentArea } = useElementsWithLinks();
-  const isLink = Boolean(selectedElement.link?.url);
-  const pageHasAttachment = Boolean(
-    currentPage.pageAttachment?.url?.length > 0
-  );
-
-  const linkFoundInAttachmentArea = (target) => {
-    if (!pageHasAttachment || !isLink) {
-      return false;
-    }
-    if (isElementInAttachmentArea(target)) {
-      if (isDragging) {
-        resetDragging(target);
-      } else {
-        resetMoveable(target);
-      }
-      setDisplayLinkGuidelines(false);
-      return true;
-    }
-    return false;
-  };
 
   // ⌘ key disables snapping
   const snapDisabled = useGlobalIsKeyPressed('meta');
@@ -295,9 +261,6 @@ function SingleSelectionMoveable({
             selectedElement.id
           );
         }
-        if (pageHasAttachment) {
-          setDisplayLinkGuidelines(isLink && isElementInAttachmentArea(target));
-        }
         return undefined;
       }}
       throttleDrag={0}
@@ -313,9 +276,6 @@ function SingleSelectionMoveable({
           return false;
         }
         if (handleElementOutOfCanvas(target)) {
-          return undefined;
-        }
-        if (linkFoundInAttachmentArea(target)) {
           return undefined;
         }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
@@ -392,15 +352,9 @@ function SingleSelectionMoveable({
         frame.translate = drag.beforeTranslate;
         frame.updates = updates;
         setTransformStyle(target);
-        if (pageHasAttachment) {
-          setDisplayLinkGuidelines(isLink && isElementInAttachmentArea(target));
-        }
       }}
       onResizeEnd={({ target }) => {
         if (handleElementOutOfCanvas(target)) {
-          return;
-        }
-        if (linkFoundInAttachmentArea(target)) {
           return;
         }
         const [editorWidth, editorHeight] = frame.resize;
@@ -440,15 +394,9 @@ function SingleSelectionMoveable({
       onRotate={({ target, beforeRotate }) => {
         frame.rotate = ((beforeRotate % 360) + 360) % 360;
         setTransformStyle(target);
-        if (pageHasAttachment) {
-          setDisplayLinkGuidelines(isLink && isElementInAttachmentArea(target));
-        }
       }}
       onRotateEnd={({ target }) => {
         if (handleElementOutOfCanvas(target)) {
-          return;
-        }
-        if (linkFoundInAttachmentArea(target)) {
           return;
         }
         const properties = { rotationAngle: Math.round(frame.rotate) };

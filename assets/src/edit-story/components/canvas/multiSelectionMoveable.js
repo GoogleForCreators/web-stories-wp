@@ -32,7 +32,6 @@ import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
-import useElementsWithLinks from '../../utils/useElementsWithLinks';
 import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
@@ -42,20 +41,16 @@ function MultiSelectionMoveable({ selectedElements }) {
 
   const eventTracker = useRef({});
 
-  const { updateElementsById, deleteElementsById, currentPage } = useStory(
-    (state) => ({
-      updateElementsById: state.actions.updateElementsById,
-      deleteElementsById: state.actions.deleteElementsById,
-      currentPage: state.state.currentPage,
-    })
-  );
+  const { updateElementsById, deleteElementsById } = useStory((state) => ({
+    updateElementsById: state.actions.updateElementsById,
+    deleteElementsById: state.actions.deleteElementsById,
+  }));
   const {
     canvasWidth,
     canvasHeight,
     nodesById,
     handleSelectElement,
     fullbleedContainer,
-    setDisplayLinkGuidelines,
   } = useCanvas(
     ({
       state: {
@@ -63,14 +58,13 @@ function MultiSelectionMoveable({ selectedElements }) {
         nodesById,
         fullbleedContainer,
       },
-      actions: { handleSelectElement, setDisplayLinkGuidelines },
+      actions: { handleSelectElement },
     }) => ({
       canvasWidth,
       canvasHeight,
       fullbleedContainer,
       nodesById,
       handleSelectElement,
-      setDisplayLinkGuidelines,
     })
   );
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
@@ -85,8 +79,6 @@ function MultiSelectionMoveable({ selectedElements }) {
   const {
     state: { draggingResource },
   } = useDropTargets();
-
-  const { isElementInAttachmentArea } = useElementsWithLinks();
 
   const [isDragging, setIsDragging] = useState(false);
 
@@ -178,16 +170,8 @@ function MultiSelectionMoveable({ selectedElements }) {
   const onGroupEventEnd = ({ targets, isRotate, isResize }) => {
     const updates = {};
     const toRemove = [];
-    let hasLinkInAttachmentArea = false;
     targets.forEach((target, i) => {
-      if (hasLinkInAttachmentArea) {
-        return;
-      }
       const { element, updateForResizeEvent } = targetList[i];
-      if (element.link?.url && isElementInAttachmentArea(target)) {
-        hasLinkInAttachmentArea = true;
-        return;
-      }
       if (isTargetOutOfContainer(target, fullbleedContainer)) {
         toRemove.push(element.id);
         return;
@@ -218,11 +202,6 @@ function MultiSelectionMoveable({ selectedElements }) {
       }
       updates[element.id] = properties;
     });
-    if (hasLinkInAttachmentArea) {
-      setDisplayLinkGuidelines(false);
-      resetMoveable();
-      return;
-    }
     updateElementsById({
       elementIds: Object.keys(updates),
       properties: (currentProperties) => updates[currentProperties.id],
@@ -261,19 +240,6 @@ function MultiSelectionMoveable({ selectedElements }) {
     return false;
   };
 
-  const pageHasAttachment = Boolean(
-    currentPage.pageAttachment?.url?.length > 0
-  );
-
-  const checkForInvalidPosition = (target, element) => {
-    if (pageHasAttachment && element.link?.url) {
-      const hasInvalidPosition = isElementInAttachmentArea(target);
-      setDisplayLinkGuidelines(hasInvalidPosition);
-      return hasInvalidPosition;
-    }
-    return false;
-  };
-
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Moveable
@@ -285,15 +251,11 @@ function MultiSelectionMoveable({ selectedElements }) {
       resizable={!hideHandles}
       rotatable={!hideHandles}
       onDragGroup={({ events }) => {
-        let invalidPositionFound = false;
         events.forEach(({ target, beforeTranslate }, i) => {
           const sFrame = frames[i];
           const { element } = targetList[i];
           sFrame.translate = beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
-          if (!invalidPositionFound) {
-            invalidPositionFound = checkForInvalidPosition(target, element);
-          }
         });
       }}
       onDragGroupStart={({ events, inputEvent }) => {
@@ -313,16 +275,12 @@ function MultiSelectionMoveable({ selectedElements }) {
         onGroupEventStart({ events, isRotate: true });
       }}
       onRotateGroup={({ events }) => {
-        let invalidPositionFound = false;
         events.forEach(({ target, beforeRotate, drag }, i) => {
           const sFrame = frames[i];
           const { element } = targetList[i];
           sFrame.rotate = ((beforeRotate % 360) + 360) % 360;
           sFrame.translate = drag.beforeTranslate;
           setTransformStyle(element.id, target, sFrame);
-          if (!invalidPositionFound) {
-            invalidPositionFound = checkForInvalidPosition(target, element);
-          }
         });
       }}
       onRotateGroupEnd={({ targets }) => {
@@ -339,7 +297,6 @@ function MultiSelectionMoveable({ selectedElements }) {
         });
       }}
       onResizeGroup={({ events }) => {
-        let invalidPositionFound = false;
         events.forEach(({ target, direction, width, height, drag }, i) => {
           const sFrame = frames[i];
           const { element, updateForResizeEvent } = targetList[i];
@@ -364,9 +321,6 @@ function MultiSelectionMoveable({ selectedElements }) {
           sFrame.translate = drag.beforeTranslate;
           sFrame.updates = updates;
           setTransformStyle(element.id, target, sFrame);
-          if (!invalidPositionFound) {
-            invalidPositionFound = checkForInvalidPosition(target, element);
-          }
         });
       }}
       onResizeGroupEnd={({ targets }) => {

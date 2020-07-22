@@ -154,7 +154,7 @@ function PageAttachment({ pageAttachment = {} }) {
                 >
                   <Tooltip>
                     {__(
-                      'Links can not be located below the dashed line when a page attachment is present',
+                      'Links can not reside below the dashed line when a page attachment is present. Your viewers will not be able to click on the link.',
                       'web-stories'
                     )}
                   </Tooltip>
