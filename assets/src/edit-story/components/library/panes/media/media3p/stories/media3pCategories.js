@@ -17,17 +17,16 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import CategoryPill from '../categoryPill';
+import Media3pCategories from '../media3pCategories';
 
 export default {
-  title: 'Stories Editor/Components/CategoryPill',
-  component: CategoryPill,
+  title: 'Stories Editor/Components/Media3pCategories',
+  component: Media3pCategories,
 };
 
 const Container = styled.div`
@@ -36,15 +35,9 @@ const Container = styled.div`
 `;
 
 export const _default = () => {
-  const [isSelected, setIsSelected] = useState(false);
-
   return (
     <Container>
-      <CategoryPill
-        title="Category"
-        isSelected={isSelected}
-        onClick={() => setIsSelected(!isSelected)}
-      />
+      <Media3pCategories />
     </Container>
   );
 };

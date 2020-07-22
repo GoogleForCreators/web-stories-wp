@@ -45,7 +45,7 @@ import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { ProviderType } from '../common/providerType';
 import Flags from '../../../../../flags';
-import Media3pCategories from './categoriesPanel';
+import Media3pCategories from './media3pCategories';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
