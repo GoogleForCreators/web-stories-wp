@@ -37,7 +37,7 @@ const Container = styled.div`
 export const _default = () => {
   return (
     <Container>
-      <Media3pCategories />
+      <Media3pCategories categories={[]} />
     </Container>
   );
 };
