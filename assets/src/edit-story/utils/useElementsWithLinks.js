@@ -57,10 +57,14 @@ function useElementsWithLinks() {
       if (!pageAttachmentContainer) {
         return false;
       }
+      // If there is no Page Attachment present, return.
+      if (!currentPage?.pageAttachment?.url.length) {
+        return false;
+      }
       // If the node is inside the page attachment container.
       return !isTargetOutOfContainer(node, pageAttachmentContainer);
     },
-    [pageAttachmentContainer]
+    [pageAttachmentContainer, currentPage]
   );
 
   return {
