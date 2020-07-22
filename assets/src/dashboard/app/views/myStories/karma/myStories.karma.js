@@ -24,9 +24,10 @@ import { within } from '@testing-library/react';
  */
 import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
+import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
 import formattedStoriesArray from '../../../../dataUtils/formattedStoriesArray';
 import formattedUsersObject from '../../../../dataUtils/formattedUsersObject';
-import { getTimeSensitiveDisplayDate } from '../../../../utils';
+import { getRelativeDisplayDate } from '../../../../utils';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,

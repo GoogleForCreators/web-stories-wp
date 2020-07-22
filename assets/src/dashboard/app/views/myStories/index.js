@@ -106,7 +106,7 @@ function MyStories() {
         search={search}
         sort={sort}
         stories={orderedStories}
-        dateFormatting={{ dateFormat, gmtOffset, timeFormat, timezone }}
+        dateSettings={{ dateFormat, gmtOffset, timeFormat, timezone }}
         storyActions={{
           createTemplateFromStory,
           duplicateStory,

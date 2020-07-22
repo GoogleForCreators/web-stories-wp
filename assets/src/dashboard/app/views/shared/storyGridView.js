@@ -40,10 +40,10 @@ import {
   UsersPropType,
   PageSizePropType,
   RenameStoryPropType,
-  DateFormattingPropType,
+  DateSettingsPropType,
 } from '../../../types';
 import { STORY_STATUS } from '../../../constants';
-import { getTimeSensitiveDisplayDate } from '../../../utils';
+import { getRelativeDisplayDate } from '../../../utils';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -70,7 +70,7 @@ const StoryGridView = ({
   pageSize,
   storyMenu,
   renameStory,
-  dateFormatting,
+  dateSettings,
 }) => {
   return (
     <StoryGrid pageSize={pageSize}>
@@ -114,14 +114,8 @@ const StoryGridView = ({
                 }
                 displayDate={
                   story?.status === STORY_STATUS.DRAFT
-                    ? getTimeSensitiveDisplayDate(
-                        story?.modified,
-                        dateFormatting
-                      )
-                    : getTimeSensitiveDisplayDate(
-                        story?.created,
-                        dateFormatting
-                      )
+                    ? getRelativeDisplayDate(story?.modified, dateSettings)
+                    : getRelativeDisplayDate(story?.created, dateSettings)
                 }
                 {...titleRenameProps}
               />
@@ -154,7 +148,7 @@ StoryGridView.propTypes = {
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
-  dateFormatting: DateFormattingPropType,
+  dateSettings: DateSettingsPropType,
 };
 
 export default StoryGridView;

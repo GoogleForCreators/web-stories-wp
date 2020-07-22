@@ -38,7 +38,7 @@ import {
   UsersPropType,
   StoriesPropType,
   StoryActionsPropType,
-  DateFormattingPropType,
+  DateSettingsPropType,
 } from '../../../../types';
 import {
   FilterPropTypes,
@@ -61,7 +61,7 @@ function Content({
   storyActions,
   users,
   view,
-  dateFormatting,
+  dateSettings,
 }) {
   return (
     <Layout.Scrollable>
@@ -82,7 +82,7 @@ function Content({
                   stories={stories}
                   users={users}
                   view={view}
-                  dateFormatting={dateFormatting}
+                  dateSettings={dateSettings}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -111,7 +111,7 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
-  dateFormatting: DateFormattingPropType,
+  dateSettings: DateSettingsPropType,
 };
 
 export default Content;

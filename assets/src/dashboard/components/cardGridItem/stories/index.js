@@ -67,7 +67,7 @@ export const _default = () => {
         <CardTitle
           title="How to be a leader in the apocalpyse"
           author="Rick Grimes"
-          displayDate={moment('04-04-2020', 'MM-DD-YYYY')}
+          displayDate={moment('04-04-2020').format('MM-DD-YYYY')}
           status={STORY_STATUS.DRAFT}
           onEditCancel={() => {}}
           onEditComplete={() => {}}
@@ -98,7 +98,7 @@ export const _publishedStory = () => {
         <CardTitle
           title="The 6 fingered man"
           author="Inigo Moñtoya"
-          displayDate={moment('04-19-2020', 'MM-DD-YYYY')}
+          displayDate={moment('04-19-2020').format('MM-DD-YYYY')}
           status={STORY_STATUS.PUBLISH}
           onEditCancel={() => {}}
           onEditComplete={() => {}}

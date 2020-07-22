@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export const dummyDateFormattingObject = {
+export const fillerDateSettingsObject = {
   dateFormat: 'F j, Y',
   timeFormat: 'g:i A',
   gmtOffset: -4,
