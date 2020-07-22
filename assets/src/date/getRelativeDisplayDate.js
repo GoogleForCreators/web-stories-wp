@@ -36,11 +36,14 @@ import {
 } from '.';
 
 /**
- * @description Formats a date to display relative to time passed since date using moment's parseZone function to keep fixed timezone.
+ * Formats a date to display relative to time passed since date using moment's parseZone function to keep fixed timezone.
+ *
  * If date to display is < 1 day ago it will display rounded time since date using timezone.
  * If date to display matches yesterday's date it will display "yesterday".
  * Otherwise date will come back formatted by dateFormatting.dateFormat (no time).
- * https://momentjs.com/guides/#/parsing/
+ *
+ * @see {@link https://momentjs.com/guides/#/parsing/}
+ *
  * @param {Date} date Date to format according to how much time or how many days have passed since date
  * If date is not an instance of moment when passed in it will create a moment from it.
  * @param {Object} dateFormatting Object responsible for relevant date formatting.
