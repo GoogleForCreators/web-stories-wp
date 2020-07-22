@@ -46,6 +46,7 @@ function loadTrackingScript(sendPageView = true) {
     // TODO: provide custom pageview-related parameters?
     // See https://developers.google.com/analytics/devguides/collection/gtagjs/pages
     gtag('config', config.trackingId, {
+      anonymize_ip: true,
       app_name: config.appName,
       send_page_view: sendPageView,
     });
