@@ -20,7 +20,8 @@
 import moment from 'moment-timezone';
 
 /**
- * @description Checks if date is yesterday
+ * Checks if date is yesterday
+ *
  * @param {Date} date Uses moment to find if date passed in is the same as "yesterday".
  * If date is not an instance of moment when passed in it will create a moment from it.
  * @return {boolean} If date matches yesterday it will be true
