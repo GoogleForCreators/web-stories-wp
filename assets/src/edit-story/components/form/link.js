@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { withProtocol } from '../../utils/url';
+import { isValidUrl, withProtocol } from '../../utils/url';
 import Row from './row';
 import TextInput from './text';
 import HelperText from './helperText';
@@ -52,15 +52,8 @@ const Error = styled.span`
   color: ${({ theme }) => theme.colors.warning};
 `;
 
-function LinkInput({
-  onChange,
-  onBlur,
-  onFocus,
-  value,
-  isValidUrl,
-  description,
-  ...rest
-}) {
+function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
+  const isValid = isValidUrl(withProtocol(value || ''));
   return (
     <>
       {description && <HelperText>{description}</HelperText>}
@@ -88,7 +81,7 @@ function LinkInput({
           {...rest}
         />
       </Row>
-      {value.length > 0 && !isValidUrl && (
+      {value.length > 0 && !isValid && (
         <Row>
           <Error>{__('Invalid web address.', 'web-stories')}</Error>
         </Row>
@@ -102,7 +95,6 @@ LinkInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  isValidUrl: PropTypes.bool.isRequired,
   description: PropTypes.string,
 };
 

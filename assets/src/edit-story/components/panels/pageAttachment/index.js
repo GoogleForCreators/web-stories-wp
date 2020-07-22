@@ -117,7 +117,6 @@ function PageAttachmentPanel() {
         )}
         onChange={(value) => updatePageAttachment({ url: value })}
         onFocus={onFocus}
-        isValidUrl={!isInvalidUrl}
         value={url || ''}
         clear
         aria-label={__('Edit: Page Attachment link', 'web-stories')}
