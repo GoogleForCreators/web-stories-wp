@@ -206,7 +206,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           }}
           onFocus={() => {
             const node = nodesById[selectedElement.id];
-            if (isElementInAttachmentArea(node)) {
+            if (isElementInAttachmentArea(node) && !link.url?.length) {
               setDisplayLinkGuidelines(true);
             }
           }}

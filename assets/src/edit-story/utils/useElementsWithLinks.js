@@ -27,8 +27,9 @@ import { useCanvas } from '../components/canvas';
 import isTargetOutOfContainer from './isTargetOutOfContainer';
 
 function useElementsWithLinks() {
-  const { currentPage } = useStory((state) => ({
+  const { currentPage, selectedElements } = useStory((state) => ({
     currentPage: state.state.currentPage,
+    selectedElements: state.state.selectedElements,
   }));
   const { nodesById, pageAttachmentContainer } = useCanvas((state) => ({
     nodesById: state.state.nodesById,
@@ -38,15 +39,33 @@ function useElementsWithLinks() {
 
   const { elements } = currentPage;
   const elementsWithLinks = useMemo(
-    () => elements.filter(({ link }) => link?.url),
+    () => elements.filter(({ link }) => link?.url?.length),
     [elements]
   );
 
-  const getElementsInAttachmentArea = useCallback(() => {
+  // Checks if there is a link with invalid position among the selection.
+  const hasInvalidLinkSelected = useCallback(() => {
+    if (!pageAttachmentContainer) {
+      return false;
+    }
+    if (!currentPage?.pageAttachment?.url?.length) {
+      return false;
+    }
+    const linksInActivePageAttachment = selectedElements
+      .filter(({ link }) => link?.url?.length)
+      .filter(({ id }) => {
+        const node = nodesById[id];
+        return !isTargetOutOfContainer(node, pageAttachmentContainer);
+      });
+    return linksInActivePageAttachment.length > 0;
+  }, [currentPage, nodesById, selectedElements, pageAttachmentContainer]);
+
+  // Checks if a link is in the attachment area, even if there's no active attachment.
+  const getLinksInAttachmentArea = useCallback(() => {
+    if (!pageAttachmentContainer) {
+      return [];
+    }
     return elementsWithLinks.filter(({ id }) => {
-      if (!pageAttachmentContainer) {
-        return false;
-      }
       const node = nodesById[id];
       return !isTargetOutOfContainer(node, pageAttachmentContainer);
     });
@@ -69,7 +88,8 @@ function useElementsWithLinks() {
 
   return {
     elementsWithLinks,
-    getElementsInAttachmentArea,
+    getLinksInAttachmentArea,
+    hasInvalidLinkSelected: hasInvalidLinkSelected(),
     isElementInAttachmentArea,
   };
 }

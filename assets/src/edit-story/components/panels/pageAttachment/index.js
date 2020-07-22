@@ -56,16 +56,18 @@ function PageAttachmentPanel() {
   const [_ctaText, _setCtaText] = useState(ctaText);
   const [displayWarning, setDisplayWarning] = useState(false);
 
-  const { getElementsInAttachmentArea } = useElementsWithLinks();
-  const linksInAttachmentArea = getElementsInAttachmentArea();
+  const { getLinksInAttachmentArea } = useElementsWithLinks();
+  const linksInAttachmentArea = getLinksInAttachmentArea();
   const hasLinksInAttachmentArea = linksInAttachmentArea.length > 0;
 
+  // Stop displaying guidelines when unmounting.
   useEffect(() => {
     return () => {
       setDisplayLinkGuidelines(false);
     };
   }, [hasLinksInAttachmentArea, setDisplayLinkGuidelines, url]);
 
+  // If we focus on the field and there are links in the area.
   const onFocus = () => {
     if (hasLinksInAttachmentArea && !url?.length) {
       setDisplayWarning(true);
@@ -73,6 +75,7 @@ function PageAttachmentPanel() {
     }
   };
 
+  // If the Page Attachment is added, stop displaying the warning.
   useEffect(() => {
     if (displayWarning && url?.length) {
       setDisplayWarning(false);

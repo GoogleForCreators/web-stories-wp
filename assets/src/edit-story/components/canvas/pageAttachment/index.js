@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  */
 import useCanvas from '../useCanvas';
 import Popup from '../../popup';
-import { useTransform } from '../../transform';
+import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -128,13 +128,13 @@ function PageAttachment({ pageAttachment = {} }) {
     pageAttachmentContainer: state.state.pageAttachmentContainer,
     setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
   }));
-  const {
-    state: { isAnythingTransforming },
-  } = useTransform();
+
+  const { hasInvalidLinkSelected } = useElementsWithLinks();
+
   const { ctaText = __('Learn more', 'web-stories'), url } = pageAttachment;
   return (
     <>
-      {displayLinkGuidelines && <Guideline />}
+      {(displayLinkGuidelines || hasInvalidLinkSelected) && <Guideline />}
       <Wrapper role="presentation" ref={setPageAttachmentContainer}>
         {url?.length > 0 && (
           <>
@@ -143,23 +143,21 @@ function PageAttachment({ pageAttachment = {} }) {
               <RightBar />
             </Icon>
             <TextWrapper>{ctaText}</TextWrapper>
-            {pageAttachmentContainer &&
-              isAnythingTransforming &&
-              displayLinkGuidelines && (
-                <Popup
-                  anchor={{ current: pageAttachmentContainer }}
-                  isOpen={true}
-                  placement={'left'}
-                  spacing={spacing}
-                >
-                  <Tooltip>
-                    {__(
-                      'Links can not reside below the dashed line when a page attachment is present. Your viewers will not be able to click on the link.',
-                      'web-stories'
-                    )}
-                  </Tooltip>
-                </Popup>
-              )}
+            {pageAttachmentContainer && hasInvalidLinkSelected && (
+              <Popup
+                anchor={{ current: pageAttachmentContainer }}
+                isOpen={true}
+                placement={'left'}
+                spacing={spacing}
+              >
+                <Tooltip>
+                  {__(
+                    'Links can not reside below the dashed line when a page attachment is present. Your viewers will not be able to click on the link.',
+                    'web-stories'
+                  )}
+                </Tooltip>
+              </Popup>
+            )}
           </>
         )}
       </Wrapper>
