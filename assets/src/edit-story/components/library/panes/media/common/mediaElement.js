@@ -233,7 +233,10 @@ const MediaElement = ({
 
   const ref = useRef();
 
-  useRovingTabIndex({ ref });
+  const rowBasedUploadGalleryEnabled = useFeature('rowBasedGallery');
+  const isRowBasedGallery =
+    providerType !== ProviderType.LOCAL || rowBasedUploadGalleryEnabled;
+  useRovingTabIndex({ ref, isRowBasedGallery });
 
   const handleKeyDown = useCallback(
     ({ key }) => {
