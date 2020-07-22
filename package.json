@@ -117,7 +117,7 @@
     "eslint-plugin-jasmine": "^4.1.1",
     "eslint-plugin-jest": "^23.18.0",
     "eslint-plugin-jest-dom": "^3.1.4",
-    "eslint-plugin-jsdoc": "^29.2.0",
+    "eslint-plugin-jsdoc": "^30.0.3",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-markdown": "^1.0.2",
     "eslint-plugin-prettier": "^3.1.4",
