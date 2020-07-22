@@ -26,35 +26,35 @@ import MockDate from 'mockdate';
 import { getDateObjectWithTimezone } from '../';
 
 // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-const daylightSavingsTimezones = {
-  'Africa/Algiers': 1,
-  'America/Anchorage': -8,
-  'America/Los_Angeles': -7,
-  'America/New_York': -4,
-  'America/Tijuana': -7,
-  'America/Sao_Paulo': -3,
-  'Asia/Dubai': 4,
-  'Asia/Hong_Kong': 8,
-  'Australia/Brisbane': 10,
-  'Europe/Amsterdam': 2,
-  'Europe/London': 1,
-  'Europe/Moscow': 3,
-};
+const daylightSavingsTimezones = [
+  ['Africa/Algiers', 1, '2020-07-12T12:30:00+01:00'],
+  ['America/Anchorage', -8, '2020-07-12T03:30:00-08:00'],
+  ['America/Los_Angeles', -7, '2020-07-12T04:30:00-07:00'],
+  ['America/New_York', -4, '2020-07-12T07:30:00-04:00'],
+  ['America/Tijuana', -7, '2020-07-12T04:30:00-07:00'],
+  ['America/Sao_Paulo', -3, '2020-07-12T08:30:00-03:00'],
+  ['Asia/Dubai', 4, '2020-07-12T15:30:00+04:00'],
+  ['Asia/Hong_Kong', 8, '2020-07-12T19:30:00+08:00'],
+  ['Australia/Brisbane', 10, '2020-07-12T21:30:00+10:00'],
+  ['Europe/Amsterdam', 2, '2020-07-12T13:30:00+02:00'],
+  ['Europe/London', 1, '2020-07-12T12:30:00+01:00'],
+  ['Europe/Moscow', 3, '2020-07-12T14:30:00+03:00'],
+];
 
-const standardTimezones = {
-  'Africa/Algiers': 1,
-  'America/Anchorage': -9,
-  'America/Los_Angeles': -8,
-  'America/New_York': -5,
-  'America/Tijuana': -8,
-  'America/Sao_Paulo': -3,
-  'Asia/Dubai': 4,
-  'Asia/Hong_Kong': 8,
-  'Australia/Brisbane': 10,
-  'Europe/Amsterdam': 1,
-  'Europe/London': 0,
-  'Europe/Moscow': 3,
-};
+const standardTimezones = [
+  ['Africa/Algiers', 1, '2020-11-12T12:30:00+01:00'],
+  ['America/Anchorage', -9, '2020-11-12T02:30:00-09:00'],
+  ['America/Los_Angeles', -8, '2020-11-12T03:30:00-08:00'],
+  ['America/New_York', -5, '2020-11-12T06:30:00-05:00'],
+  ['America/Tijuana', -8, '2020-11-12T03:30:00-08:00'],
+  ['America/Sao_Paulo', -3, '2020-11-12T08:30:00-03:00'],
+  ['Asia/Dubai', 4, '2020-11-12T15:30:00+04:00'],
+  ['Asia/Hong_Kong', 8, '2020-11-12T19:30:00+08:00'],
+  ['Australia/Brisbane', 10, '2020-11-12T21:30:00+10:00'],
+  ['Europe/Amsterdam', 1, '2020-11-12T12:30:00+01:00'],
+  ['Europe/London', 0, '2020-11-12T11:30:00Z'],
+  ['Europe/Moscow', 3, '2020-11-12T14:30:00+03:00'],
+];
 
 describe('date/getDateObjectWithTimezone - daylight savings', () => {
   const MOCK_UTC_DATE = moment.utc('2020-07-12 11:30');
@@ -62,33 +62,25 @@ describe('date/getDateObjectWithTimezone - daylight savings', () => {
   beforeEach(() => {
     MockDate.set(MOCK_UTC_DATE);
   });
-  const getUtcOffset = (offset) => {
-    return MOCK_UTC_DATE.utcOffset(offset).format();
-  };
 
   it('should return UTC by default which is default moment', () => {
     expect(getDateObjectWithTimezone()).toBe('2020-07-12T11:30:00Z');
   });
 
-  Object.keys(daylightSavingsTimezones).forEach((timezone) => {
-    const resultingUtcOffset = getUtcOffset(daylightSavingsTimezones[timezone]);
-
-    it(`should return ${resultingUtcOffset} when timezone is set to ${timezone}`, () => {
-      const date = getDateObjectWithTimezone({
+  it.each(daylightSavingsTimezones)(
+    'when timezone is %s or offset is %d it should return %s',
+    (timezone, offset, expected) => {
+      const dateWithTimezone = getDateObjectWithTimezone({
         timezone,
       });
+      expect(dateWithTimezone).toBe(expected);
 
-      expect(date).toBe(resultingUtcOffset);
-    });
-
-    it(`should return ${resultingUtcOffset} when timezone is not available and gmtOffset of ${daylightSavingsTimezones[timezone]} is used instead`, () => {
-      const date = getDateObjectWithTimezone({
-        gmtOffset: daylightSavingsTimezones[timezone],
+      const dateWithOffset = getDateObjectWithTimezone({
+        gmtOffset: offset,
       });
-
-      expect(date).toBe(resultingUtcOffset);
-    });
-  });
+      expect(dateWithOffset).toBe(expected);
+    }
+  );
 });
 
 describe('date/getDateObjectWithTimezone - standard', () => {
@@ -98,33 +90,23 @@ describe('date/getDateObjectWithTimezone - standard', () => {
     MockDate.set(MOCK_UTC_DATE);
   });
 
-  const getUtcOffset = (offset) => {
-    return MOCK_UTC_DATE.utcOffset(offset).format();
-  };
-
   it('should return UTC by default which is 2020-11-12T11:30:00Z', () => {
     const date = getDateObjectWithTimezone({});
     expect(date).toBe('2020-11-12T11:30:00Z');
   });
 
-  Object.keys(standardTimezones).forEach((timezone) => {
-    const resultingUtcOffset = getUtcOffset(standardTimezones[timezone]);
-
-    it(`should return ${resultingUtcOffset} when timezone is set to ${timezone}`, () => {
-      const date = getDateObjectWithTimezone({
-        gmtOffset: null,
+  it.each(standardTimezones)(
+    'when timezone is %s or offset is %d it should return %s',
+    (timezone, offset, expected) => {
+      const dateWithTimezone = getDateObjectWithTimezone({
         timezone,
       });
+      expect(dateWithTimezone).toBe(expected);
 
-      expect(date).toBe(resultingUtcOffset);
-    });
-
-    it(`should return ${resultingUtcOffset} when timezone is null and gmtOffset of ${standardTimezones[timezone]} is used instead`, () => {
-      const date = getDateObjectWithTimezone({
-        gmtOffset: standardTimezones[timezone],
+      const dateWithOffset = getDateObjectWithTimezone({
+        gmtOffset: offset,
       });
-
-      expect(date).toBe(resultingUtcOffset);
-    });
-  });
+      expect(dateWithOffset).toBe(expected);
+    }
+  );
 });

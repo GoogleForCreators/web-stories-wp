@@ -28,12 +28,13 @@ import { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
  *
  * @param {Date} date Uses moment to find time passed since/until.
  * If date is not an instance of moment when passed in it will create a moment from it.
- * @param {Object} dateFormatting Object responsible for relevant date formatting.
- * Should contain dateFormat, timezone, gmtOffset, and timeFormat - all strings.
+ *
+ * @param {import('./').DateSettings} dateSettings - An object that has keys to set date timezone, offset, and display {@link DateSettings}
+ *
  * @return {string} Displayable relative date string
  */
-export function getTimeFromNow(date, dateFormatting) {
+export function getTimeFromNow(date, dateSettings) {
   const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
 
-  return displayDate.from(getDateObjectWithTimezone(dateFormatting));
+  return displayDate.from(getDateObjectWithTimezone(dateSettings));
 }

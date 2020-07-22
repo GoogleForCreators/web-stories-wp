@@ -25,12 +25,12 @@ import moment from 'moment-timezone';
  * We need to specify moment to be created in UTC rather than browser timezone.
  * Any moment created with moment.utc() will be in UTC mode, and any moment created with moment() will not.
  *
- * @param {Object} dateFormatting Object responsible for relevant timezone manipulation based off an UTC date in Moment.
- * Here we are looking for 1) dateFormatting.timezone, if no timezone 2) check for gmtOffset, if no gmtOffset use UTC
+ * @param {import('./').DateSettings} dateSettings - An object that has keys to set date timezone, offset, and display {@link DateSettings}
+ *
  * @return {Date} Date object formatted to timezone specified in param, UTC by default
  */
-export function getDateObjectWithTimezone(dateFormatting = {}) {
-  const { timezone, gmtOffset } = dateFormatting;
+export function getDateObjectWithTimezone(dateSettings = {}) {
+  const { timezone, gmtOffset } = dateSettings;
   const date = moment.utc();
 
   if (timezone) {

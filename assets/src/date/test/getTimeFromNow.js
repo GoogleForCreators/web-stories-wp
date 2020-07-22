@@ -23,7 +23,7 @@ import MockDate from 'mockdate';
 /**
  * Internal dependencies
  */
-import { DEFAULT_DATE_FORMATTING, getTimeFromNow } from '../';
+import { DEFAULT_DATE_SETTINGS, getTimeFromNow } from '../';
 
 describe('date/getTimeFromNow', () => {
   const MOCK_UTC_DATE = moment.utc('2020-07-12 11:30');
@@ -34,21 +34,21 @@ describe('date/getTimeFromNow', () => {
 
   it('should return 2 minutes ago using moment', () => {
     const dateString = moment().subtract(2, 'minutes');
-    const formattedDate = getTimeFromNow(dateString, DEFAULT_DATE_FORMATTING);
+    const formattedDate = getTimeFromNow(dateString, DEFAULT_DATE_SETTINGS);
 
     expect(formattedDate).toBe('2 minutes ago');
   });
 
   it('should return an hour ago using moment', () => {
     const dateString = moment().subtract(1, 'hours');
-    const formattedDate = getTimeFromNow(dateString, DEFAULT_DATE_FORMATTING);
+    const formattedDate = getTimeFromNow(dateString, DEFAULT_DATE_SETTINGS);
 
     expect(formattedDate).toBe('an hour ago');
   });
 
   it('should return 2 hours ago using moment', () => {
     const dateString = moment().subtract(2, 'hours');
-    const formattedDate = getTimeFromNow(dateString, DEFAULT_DATE_FORMATTING);
+    const formattedDate = getTimeFromNow(dateString, DEFAULT_DATE_SETTINGS);
 
     expect(formattedDate).toBe('2 hours ago');
   });
@@ -64,7 +64,7 @@ describe('date/getTimeFromNow', () => {
 
   it('should return in 19 years', () => {
     const dateString = moment('2039-07-12 11:30');
-    const formattedDate = getTimeFromNow(dateString, DEFAULT_DATE_FORMATTING);
+    const formattedDate = getTimeFromNow(dateString, DEFAULT_DATE_SETTINGS);
 
     expect(formattedDate).toBe('in 19 years');
   });

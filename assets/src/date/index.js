@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
-export const DEFAULT_DATE_FORMATTING = {
+/**
+ * @typedef {Object} DateSettings
+ * @property {string} timezone - Indicates what the timezone to set the date
+ * @property {number} gmtOffset - Indicates the offset to use to set the date
+ * @property {string} dateFormat - Indicates the format the date should be displayed as
+ * @property {string} timeFormat - Indicates the format the time should be displayed as} date
+ * @param {*} dateSettings
+ */
+
+export const DEFAULT_DATE_SETTINGS = {
   dateFormat: 'Y-m-d',
   timeFormat: 'g:i a',
   gmtOffset: null,
