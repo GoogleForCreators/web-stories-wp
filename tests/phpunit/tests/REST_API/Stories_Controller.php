@@ -142,8 +142,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	public function test_register_routes() {
 		$routes = rest_get_server()->get_routes();
 
-		$this->assertArrayHasKey( '/wp/v2/web-story', $routes );
-		$this->assertCount( 2, $routes['/wp/v2/web-story'] );
+		$this->assertArrayHasKey( '/web-stories/v1/web-story', $routes );
+		$this->assertCount( 2, $routes['/web-stories/v1/web-story'] );
 	}
 
 	/**
@@ -151,7 +151,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 */
 	public function test_get_items() {
 		wp_set_current_user( self::$user_id );
-		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'GET', '/web-stories/v1/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
 		$response       = rest_get_server()->dispatch( $request );
@@ -176,7 +176,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 */
 	public function test_get_items_format() {
 		wp_set_current_user( self::$user_id );
-		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'GET', '/web-stories/v1/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
 		$request->set_param( '_web_stories_envelope', true );
@@ -203,7 +203,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 * @covers ::get_item_schema
 	 */
 	public function test_get_item_schema() {
-		$request  = new WP_REST_Request( 'OPTIONS', '/wp/v2/web-story' );
+		$request  = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/web-story' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -218,7 +218,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 * @covers ::filter_posts_clauses
 	 */
 	public function test_filter_posts_by_author_display_names() {
-		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'GET', '/web-stories/v1/web-story' );
 		$request->set_param( 'order', 'asc' );
 		$request->set_param( 'orderby', 'story_author' );
 
@@ -239,7 +239,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			'Expected posts ordered by author display names'
 		);
 
-		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'GET', '/web-stories/v1/web-story' );
 		$request->set_param( 'order', 'desc' );
 		$request->set_param( 'orderby', 'story_author' );
 
@@ -297,7 +297,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
 		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
 
-		$request = new WP_REST_Request( 'POST', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'POST', '/web-stories/v1/web-story' );
 		$request->set_body_params(
 			[
 				'content'    => $unsanitized_content,
@@ -327,7 +327,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			]
 		);
 
-		$request = new WP_REST_Request( 'PUT', '/wp/v2/web-story/' . $story );
+		$request = new WP_REST_Request( 'PUT', '/web-stories/v1/web-story/' . $story );
 		$request->set_body_params(
 			[
 				'content'    => $unsanitized_content,
