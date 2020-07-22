@@ -30,24 +30,16 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row, Button } from '../../form';
+import { Media, Row, Button, LinkInput } from '../../form';
 import { createLink, getLinkFromElement } from '../../elementLink';
 import { useAPI } from '../../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
-import { Note, ExpandedTextInput } from '../shared';
+import { ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
-import inRange from '../../../utils/inRange';
 import { useCanvas } from '../../canvas';
 import { Close } from '../../../icons';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
-
-const MIN_MAX = {
-  URL: {
-    MIN: 2,
-    MAX: 2048, // Based on sitemaps url limits (safe side)
-  },
-};
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.colors.fg.v1};
@@ -177,46 +169,31 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
-  const hasSomeLinkContent =
-    Boolean(link.url) && inRange(link.url.length, MIN_MAX.URL);
+  const hasLinkSet = Boolean(link.url?.length);
+  const displayMetaFields = hasLinkSet && !isInvalidUrl;
 
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
-      <Row>
-        <Note>{__('Type an address to apply a link', 'web-stories')}</Note>
-      </Row>
-
-      <Row>
-        <ExpandedTextInput
-          placeholder={__('Web address', 'web-stories')}
-          onChange={(value) =>
-            !displayLinkGuidelines &&
-            handleChange({ url: value }, !value /* submit */)
+      <LinkInput
+        description={__('Type an address to apply a link', 'web-stories')}
+        onChange={(value) =>
+          !displayLinkGuidelines &&
+          handleChange({ url: value }, !value /* submit */)
+        }
+        onBlur={() => {
+          setDisplayLinkGuidelines(false);
+        }}
+        onFocus={() => {
+          const node = nodesById[selectedElement.id];
+          if (isElementInAttachmentArea(node) && !hasLinkSet) {
+            setDisplayLinkGuidelines(true);
           }
-          onBlur={(atts = {}) => {
-            const { onClear } = atts;
-            // If the onBlur is not clearing the field, add protocol.
-            if (link.url?.length > 0 && !onClear) {
-              const urlWithProtocol = withProtocol(link.url);
-              if (urlWithProtocol !== link.url) {
-                handleChange({ url: urlWithProtocol }, true /* submit */);
-              }
-            }
-            setDisplayLinkGuidelines(false);
-          }}
-          onFocus={() => {
-            const node = nodesById[selectedElement.id];
-            if (isElementInAttachmentArea(node) && !link.url?.length) {
-              setDisplayLinkGuidelines(true);
-            }
-          }}
-          value={link.url || ''}
-          clear
-          aria-label={__('Edit: Element link', 'web-stories')}
-          minLength={MIN_MAX.URL.MIN}
-          maxLength={MIN_MAX.URL.MAX}
-        />
-      </Row>
+        }}
+        value={link.url || ''}
+        isValidUrl={!isInvalidUrl}
+        clear
+        aria-label={__('Edit: Element link', 'web-stories')}
+      />
       {displayLinkGuidelines && (
         <Row>
           <Error>
@@ -227,49 +204,46 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           </Error>
         </Row>
       )}
-      {Boolean(link.url) && isInvalidUrl && (
-        <Row>
-          <Error>{__('Invalid web address.', 'web-stories')}</Error>
-        </Row>
-      )}
 
-      {hasSomeLinkContent && !isInvalidUrl && (
-        <Row>
-          <ExpandedTextInput
-            placeholder={__('Optional description', 'web-stories')}
-            onChange={(value) =>
-              handleChange({ desc: value }, !value /* submit */)
-            }
-            value={link.desc || ''}
-            aria-label={__('Edit: Link description', 'web-stories')}
-          />
-        </Row>
-      )}
-      {Boolean(link.url) && !isInvalidUrl && (
-        <Row spaceBetween={false}>
-          <Media
-            value={link.icon || ''}
-            onChange={handleChangeIcon}
-            title={__('Select as link icon', 'web-stories')}
-            ariaLabel={__('Edit link icon', 'web-stories')}
-            buttonInsertText={__('Select as link icon', 'web-stories')}
-            type={'image'}
-            size={64}
-            loading={fetchingMetadata}
-            circle
-          />
-          <IconInfo>
-            <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
-            {link.icon && (
-              <IconRemoveButton
-                onClick={() => handleChange({ icon: null }, true /* submit */)}
-              >
-                <CloseIcon width={14} height={14} />
-                {__('Remove', 'web-stories')}
-              </IconRemoveButton>
-            )}
-          </IconInfo>
-        </Row>
+      {displayMetaFields && (
+        <>
+          <Row>
+            <ExpandedTextInput
+              placeholder={__('Optional description', 'web-stories')}
+              onChange={(value) =>
+                handleChange({ desc: value }, !value /* submit */)
+              }
+              value={link.desc || ''}
+              aria-label={__('Edit: Link description', 'web-stories')}
+            />
+          </Row>
+          <Row spaceBetween={false}>
+            <Media
+              value={link.icon || ''}
+              onChange={handleChangeIcon}
+              title={__('Select as link icon', 'web-stories')}
+              ariaLabel={__('Edit link icon', 'web-stories')}
+              buttonInsertText={__('Select as link icon', 'web-stories')}
+              type={'image'}
+              size={64}
+              loading={fetchingMetadata}
+              circle
+            />
+            <IconInfo>
+              <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
+              {link.icon && (
+                <IconRemoveButton
+                  onClick={() =>
+                    handleChange({ icon: null }, true /* submit */)
+                  }
+                >
+                  <CloseIcon width={14} height={14} />
+                  {__('Remove', 'web-stories')}
+                </IconRemoveButton>
+              )}
+            </IconInfo>
+          </Row>
+        </>
       )}
     </SimplePanel>
   );

@@ -28,10 +28,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row } from '../../form';
+import { LinkInput, Row } from '../../form';
 import { isValidUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
-import { Note, ExpandedTextInput } from '../shared';
+import { ExpandedTextInput } from '../shared';
 import { useStory } from '../../../app/story';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { useCanvas } from '../../canvas';
@@ -84,16 +84,14 @@ function PageAttachmentPanel() {
 
   const updatePageAttachment = useCallback(
     (value) => {
-      const updatedValue = value;
       if (value.url) {
         const urlWithProtocol = withProtocol(value.url);
         const valid = isValidUrl(urlWithProtocol);
-        updatedValue.url = urlWithProtocol;
         setIsInvalidUrl(!valid);
       }
       const _pageAttachment = {
         ...pageAttachment,
-        ...updatedValue,
+        ...value,
       };
       updateCurrentPageProperties({
         properties: { pageAttachment: _pageAttachment },
@@ -112,27 +110,18 @@ function PageAttachmentPanel() {
       name="pageAttachment"
       title={__('Page Attachment', 'web-stories')}
     >
-      <Row>
-        <Note>
-          {__('Type an address to add a page attachment', 'web-stories')}
-        </Note>
-      </Row>
-
-      <Row>
-        <ExpandedTextInput
-          placeholder={__('Web address', 'web-stories')}
-          onChange={(value) => updatePageAttachment({ url: value })}
-          onFocus={onFocus}
-          value={url || ''}
-          clear
-          aria-label={__('Edit: Page Attachment link', 'web-stories')}
-        />
-      </Row>
-      {Boolean(url) && isInvalidUrl && (
-        <Row>
-          <Error>{__('Invalid web address.', 'web-stories')}</Error>
-        </Row>
-      )}
+      <LinkInput
+        description={__(
+          'Type an address to add a page attachment',
+          'web-stories'
+        )}
+        onChange={(value) => updatePageAttachment({ url: value })}
+        onFocus={onFocus}
+        isValidUrl={!isInvalidUrl}
+        value={url || ''}
+        clear
+        aria-label={__('Edit: Page Attachment link', 'web-stories')}
+      />
 
       {displayWarning && (
         <Row>
