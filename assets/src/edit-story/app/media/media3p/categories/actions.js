@@ -47,3 +47,17 @@ export const fetchCategoriesError = (dispatch) => ({ provider }) => {
     payload: { provider: provider },
   });
 };
+
+export const selectCategory = (dispatch) => ({ provider, category }) => {
+  dispatch({
+    type: types.SELECT_CATEGORY,
+    payload: { provider, category },
+  });
+};
+
+export const deselectCategory = (dispatch) => ({ provider }) => {
+  dispatch({
+    type: types.DESELECT_CATEGORY,
+    payload: { provider },
+  });
+};
