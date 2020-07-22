@@ -53,6 +53,27 @@ export const NESTED_APP_ROUTES = {
   SAVED_TEMPLATE_DETAIL: `${APP_ROUTES.SAVED_TEMPLATES}/${APP_ROUTES.TEMPLATE_DETAIL}`,
 };
 
+export const APP_ROUTE_TITLES = {
+  [APP_ROUTES.MY_STORIES]: __(
+    'My Stories ‹ Web Stories — WordPress',
+    'web-stories'
+  ),
+  [APP_ROUTES.SAVED_TEMPLATES]: __(
+    'Saved Templates ‹ Web Stories — WordPress',
+    'web-stories'
+  ),
+  [APP_ROUTES.TEMPLATES_GALLERY]: __(
+    'Explore Templates ‹ Web Stories — WordPress',
+    'web-stories'
+  ),
+  [APP_ROUTES.EDITOR_SETTINGS]: __(
+    'Editor Settings ‹ Web Stories — WordPress',
+    'web-stories'
+  ),
+  [APP_ROUTES.SUPPORT]: __('Support ‹ Web Stories — WordPress', 'web-stories'),
+  DEFAULT: __('Dashboard ‹ Web Stories — WordPress', 'web-stories'),
+};
+
 export const primaryPaths = [
   { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
   {

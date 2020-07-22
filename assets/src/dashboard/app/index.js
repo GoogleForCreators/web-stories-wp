@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-import { APP_ROUTES, NESTED_APP_ROUTES } from '../constants';
+import { APP_ROUTES, NESTED_APP_ROUTES, APP_ROUTE_TITLES } from '../constants';
 
 import {
   AppFrame,
@@ -52,6 +52,11 @@ const AppContent = () => {
   const {
     state: { currentPath },
   } = useContext(RouterContext);
+
+  useEffect(() => {
+    window.document.title =
+      APP_ROUTE_TITLES[currentPath] || APP_ROUTE_TITLES.DEFAULT;
+  }, [currentPath]);
 
   const hideLeftRail =
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
