@@ -15,30 +15,35 @@
  */
 
 /**
- * External dependencies
- */
-import { forwardRef } from 'react';
-import Moveable from 'react-moveable';
-
-/**
  * Internal dependencies
  */
-import InOverlay from '../overlay';
+import * as types from './types';
 
-const DEFAULT_Z_INDEX = 10;
+export const fetchCategoriesStart = (dispatch) => ({ provider }) => {
+  dispatch({
+    type: types.FETCH_MEDIA_CATEGORIES_START,
+    payload: {
+      provider: provider,
+    },
+  });
+};
 
-function MovableWithRef({ ...moveableProps }, ref) {
-  return (
-    <InOverlay
-      zIndex={DEFAULT_Z_INDEX}
-      pointerEvents="initial"
-      render={({ container }) => {
-        return <Moveable ref={ref} container={container} {...moveableProps} />;
-      }}
-    />
-  );
-}
+export const fetchCategoriesSuccess = (dispatch) => ({
+  provider,
+  categories,
+}) => {
+  dispatch({
+    type: types.FETCH_MEDIA_CATEGORIES_SUCCESS,
+    payload: {
+      provider,
+      categories,
+    },
+  });
+};
 
-const Movable = forwardRef(MovableWithRef);
-
-export default Movable;
+export const fetchCategoriesError = (dispatch) => ({ provider }) => {
+  dispatch({
+    type: types.FETCH_MEDIA_CATEGORIES_ERROR,
+    payload: { provider: provider },
+  });
+};

@@ -25,7 +25,7 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import { useStory, useDropTargets } from '../../app';
-import Movable from '../movable';
+import Moveable from '../moveable';
 import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
 import { useUnits } from '../../units';
@@ -33,6 +33,7 @@ import { getDefinitionForType } from '../../elements';
 import { useGlobalIsKeyPressed } from '../keyboard';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
+import useCombinedRefs from '../../utils/useCombinedRefs';
 import useElementsWithLinks from '../../utils/useElementsWithLinks';
 import useCanvas from './useCanvas';
 
@@ -41,7 +42,13 @@ const VERTICAL_HANDLES = ['n', 's'];
 const HORIZONTAL_HANDLES = ['e', 'w'];
 const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
+function SingleSelectionMoveable({
+  selectedElement,
+  targetEl,
+  pushEvent,
+  isEditMode,
+  editMoveableRef,
+}) {
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
@@ -192,7 +199,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   };
 
   /**
-   * Resets Movable once the action is done, sets the initial values.
+   * Resets Moveable once the action is done, sets the initial values.
    *
    * @param {Object} target Target element.
    */
@@ -230,7 +237,9 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
   );
 
   const canSnap =
-    !snapDisabled && (!isDragging || (isDragging && !activeDropTargetId));
+    !snapDisabled &&
+    !isEditMode &&
+    (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = isDragging || Boolean(draggingResource);
 
   // Removes element if it's outside of canvas.
@@ -252,23 +261,26 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
     selectedElement.width <= resizeRules.minWidth ||
     selectedElement.height <= resizeRules.minHeight;
 
-  const classNames = classnames('default-movable', {
+  const classNames = classnames('default-moveable', {
     'hide-handles': hideHandles,
     'visually-hide-handles': visuallyHideHandles,
     'type-text': selectedElement.type === 'text',
   });
 
   return (
-    <Movable
+    <Moveable
       className={classNames}
       zIndex={0}
-      ref={moveable}
+      ref={useCombinedRefs(moveable, editMoveableRef)}
       target={targetEl}
       edge={true}
       draggable={actionsEnabled}
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
       onDrag={({ target, beforeTranslate, clientX, clientY }) => {
+        if (isEditMode) {
+          return false;
+        }
         setIsDragging(true);
         if (isDropSource(selectedElement.type)) {
           setDraggingResource(selectedElement.resource);
@@ -286,17 +298,25 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         if (pageHasAttachment) {
           setDisplayLinkGuidelines(isLink && isElementInAttachmentArea(target));
         }
+        return undefined;
       }}
       throttleDrag={0}
       onDragStart={({ set }) => {
+        if (isEditMode) {
+          return false;
+        }
         set(frame.translate);
+        return undefined;
       }}
       onDragEnd={({ target }) => {
+        if (isEditMode) {
+          return false;
+        }
         if (handleElementOutOfCanvas(target)) {
-          return;
+          return undefined;
         }
         if (linkFoundInAttachmentArea(target)) {
-          return;
+          return undefined;
         }
         // When dragging finishes, set the new properties based on the original + what moved meanwhile.
         const [deltaX, deltaY] = frame.translate;
@@ -315,6 +335,7 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
           }
         }
         resetDragging(target);
+        return undefined;
       }}
       onResizeStart={({ setOrigin, dragStart, direction }) => {
         setOrigin(['%', '%']);
@@ -327,6 +348,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         const newResizingMode = direction[0] !== 0 && direction[1] !== 0;
         if (isResizingFromCorner !== newResizingMode) {
           setIsResizingFromCorner(newResizingMode);
+        }
+        if (isEditMode) {
+          // In edit mode, we need to signal right away that the action started.
+          pushTransform(selectedElement.id, frame);
         }
       }}
       onResize={({ target, direction, width, height, drag }) => {
@@ -406,6 +431,10 @@ function SingleSelectionMovable({ selectedElement, targetEl, pushEvent }) {
         resetMoveable(target);
       }}
       onRotateStart={({ set }) => {
+        if (isEditMode) {
+          // In edit mode, we need to signal right away that the action started.
+          pushTransform(selectedElement.id, frame);
+        }
         set(frame.rotate);
       }}
       onRotate={({ target, beforeRotate }) => {
@@ -454,10 +483,12 @@ function getRenderDirections({ vertical, horizontal, diagonal }) {
   ];
 }
 
-SingleSelectionMovable.propTypes = {
+SingleSelectionMoveable.propTypes = {
   selectedElement: PropTypes.object.isRequired,
   targetEl: PropTypes.object.isRequired,
   pushEvent: PropTypes.object,
+  isEditMode: PropTypes.bool,
+  editMoveableRef: PropTypes.object,
 };
 
-export default SingleSelectionMovable;
+export default SingleSelectionMoveable;

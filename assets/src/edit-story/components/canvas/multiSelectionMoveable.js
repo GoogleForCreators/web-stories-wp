@@ -23,7 +23,7 @@ import { useRef, useEffect, useState } from 'react';
 /**
  * Internal dependencies
  */
-import Movable from '../movable';
+import Moveable from '../moveable';
 import { useStory, useDropTargets } from '../../app';
 import objectWithout from '../../utils/objectWithout';
 import { useTransform } from '../transform';
@@ -37,7 +37,7 @@ import useCanvas from './useCanvas';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-function MultiSelectionMovable({ selectedElements }) {
+function MultiSelectionMoveable({ selectedElements }) {
   const moveable = useRef();
 
   const eventTracker = useRef({});
@@ -145,7 +145,7 @@ function MultiSelectionMovable({ selectedElements }) {
     : [];
 
   /**
-   * Resets Movable once the action is done, sets the initial values.
+   * Resets Moveable once the action is done, sets the initial values.
    */
   const resetMoveable = () => {
     targetList.forEach(({ element, node }, i) => {
@@ -276,8 +276,8 @@ function MultiSelectionMovable({ selectedElements }) {
 
   const hideHandles = isDragging || Boolean(draggingResource);
   return (
-    <Movable
-      className={`default-movable ${hideHandles ? 'hide-handles' : ''}`}
+    <Moveable
+      className={`default-moveable ${hideHandles ? 'hide-handles' : ''}`}
       ref={moveable}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
@@ -387,8 +387,8 @@ function MultiSelectionMovable({ selectedElements }) {
   );
 }
 
-MultiSelectionMovable.propTypes = {
+MultiSelectionMoveable.propTypes = {
   selectedElements: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default MultiSelectionMovable;
+export default MultiSelectionMoveable;

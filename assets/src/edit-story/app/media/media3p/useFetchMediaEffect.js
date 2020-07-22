@@ -27,6 +27,7 @@ import { useMedia3pApi } from './api';
 export default function useFetchMediaEffect({
   provider,
   selectedProvider,
+  searchTerm,
   pageToken,
   fetchMediaStart,
   fetchMediaSuccess,
@@ -42,9 +43,10 @@ export default function useFetchMediaEffect({
       try {
         const { media, nextPageToken } = await listMedia({
           provider,
+          searchTerm,
           pageToken,
         });
-        fetchMediaSuccess({ provider, media, nextPageToken });
+        fetchMediaSuccess({ provider, media, pageToken, nextPageToken });
       } catch {
         fetchMediaError({ provider, pageToken });
       }
@@ -57,6 +59,7 @@ export default function useFetchMediaEffect({
     // Fetch media is triggered by changes to these.
     selectedProvider,
     pageToken,
+    searchTerm,
     // These attributes never change.
     provider,
     listMedia,

@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useEffect } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -43,6 +44,7 @@ import {
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { ProviderType } from '../common/providerType';
+import Flags from '../../../../../flags';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -81,9 +83,14 @@ function Media3pPane(props) {
     [insertElement]
   );
 
-  const { setSelectedProvider } = useMedia3p(({ actions }) => ({
-    setSelectedProvider: actions.setSelectedProvider,
-  }));
+  const { searchTerm, setSelectedProvider, setSearchTerm } = useMedia3p(
+    ({ state, actions }) => ({
+      searchTerm: state.searchTerm,
+      setSelectedProvider: actions.setSelectedProvider,
+      setSearchTerm: actions.setSearchTerm,
+    })
+  );
+
   useEffect(() => {
     if (isActive) {
       setSelectedProvider({ provider: 'unsplash' });
@@ -104,9 +111,11 @@ function Media3pPane(props) {
     }) => ({ media, hasMore, isMediaLoading, isMediaLoaded, setNextPage })
   );
 
-  const onSearch = useCallback(() => {
-    // TODO(#2391): Perform search.
-  }, []);
+  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+
+  const incrementalSearchDebounceMedia = useFeature(
+    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
+  );
 
   const onProviderTabClick = useCallback(() => {
     // TODO(#2393): set state.
@@ -119,9 +128,10 @@ function Media3pPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              value={'Not implemented'}
+              initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
-              onChange={onSearch}
+              onSearch={onSearch}
+              incremental={incrementalSearchDebounceMedia}
             />
           </SearchInputContainer>
           <ProviderTabSection>

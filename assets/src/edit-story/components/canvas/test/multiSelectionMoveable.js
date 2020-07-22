@@ -36,10 +36,8 @@ jest.mock('react-moveable', () => jest.fn(() => ({ children }) => children));
 
 const pageSize = { width: 100, height: 100 };
 
-const element = {
-  id: '1',
-  type: 'text',
-};
+const element1 = { id: '1', type: 'text', x: 0, y: 0 };
+const element2 = { id: '2', type: 'text', x: 1, y: 1 };
 
 const WrapperWithRef = ({ children }, ref) => (
   <div ref={ref}>
@@ -54,34 +52,39 @@ WrapperWithRef.propTypes = {
   children: PropTypes.node,
 };
 
-describe('singleSelectionMovable', () => {
+describe('multiSelectionMoveable', () => {
+  let updateElementsById;
   let updateSelectedElements;
-  let target;
+  let target1;
+  let target2;
   let storyContext;
   let canvasContext;
 
   beforeEach(() => {
+    updateElementsById = jest.fn();
     updateSelectedElements = jest.fn();
-    target = document.createElement('div');
+    target1 = document.createElement('div');
+    target2 = document.createElement('div');
 
     storyContext = {
       state: {
-        selectedElements: [element],
+        selectedElements: [element1, element2],
         currentPage: {
           elements: [],
         },
       },
-      actions: { updateSelectedElements },
+      actions: { updateElementsById, updateSelectedElements },
     };
     canvasContext = {
       state: {
         pageSize,
-        nodesById: { '1': target },
+        nodesById: {
+          '1': target1,
+          '2': target2,
+        },
         fullbleedContainer: document.body,
       },
-      actions: {
-        setDisplayLinkGuidelines: jest.fn(),
-      },
+      actions: { handleSelectElement: jest.fn() },
     };
   });
 
@@ -98,12 +101,22 @@ describe('singleSelectionMovable', () => {
 
   function performRotation(rotateTo) {
     const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
-    moveable.onRotateStart({ set: () => {} });
-    moveable.onRotate({
-      target,
-      beforeRotate: rotateTo,
+    moveable.onRotateGroupStart({ events: [{ set: () => {} }] });
+    moveable.onRotateGroup({
+      events: [
+        {
+          target: target1,
+          beforeRotate: rotateTo,
+          drag: { beforeTranslate: [0, 0] },
+        },
+        {
+          target: target2,
+          beforeRotate: rotateTo,
+          drag: { beforeTranslate: [0, 0] },
+        },
+      ],
     });
-    moveable.onRotateEnd({ target });
+    moveable.onRotateGroupEnd({ targets: [target1, target2] });
   }
 
   const rotateCases = [
@@ -116,11 +129,21 @@ describe('singleSelectionMovable', () => {
     'should rotate %p',
     (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
+
       performRotation(rotateTo);
 
-      expect(updateSelectedElements).toHaveBeenLastCalledWith({
-        properties: { rotationAngle: expectedRotationAngle },
+      const func = updateElementsById.mock.calls[0][0].properties;
+      expect(func(element1)).toStrictEqual({
+        x: 0,
+        y: 0,
+        rotationAngle: expectedRotationAngle,
       });
+      expect(func(element2)).toStrictEqual({
+        x: 1,
+        y: 1,
+        rotationAngle: expectedRotationAngle,
+      });
+      expect(updateElementsById).toHaveBeenCalledTimes(1);
     }
   );
 });

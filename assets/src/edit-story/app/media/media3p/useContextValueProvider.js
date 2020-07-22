@@ -53,9 +53,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   return {
     state: {
       selectedProvider: reducerState.selectedProvider,
+      searchTerm: reducerState.searchTerm,
     },
     actions: {
       setSelectedProvider: reducerActions.setSelectedProvider,
+      setSearchTerm: reducerActions.setSearchTerm,
     },
     ...useProviderSetContextValueProvider(reducerState, reducerActions),
   };
