@@ -28,7 +28,7 @@ const PillContainer = styled.span`
     255,
     255,
     255,
-    ${(props) => (props.isSelected ? 0.1 : 0)}
+    ${(props) => (props.isSelected ? 0.1 : 0.0)}
   );
   margin: 4px;
   padding: 6px 12px;
