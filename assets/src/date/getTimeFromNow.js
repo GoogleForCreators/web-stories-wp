@@ -24,7 +24,8 @@ import moment from 'moment-timezone';
 import { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
 
 /**
- * @description Get the time passed from or time until a date to the time now in any timezone
+ * Get the time passed from or time until a date to the time now in any timezone.
+ *
  * @param {Date} date Uses moment to find time passed since/until.
  * If date is not an instance of moment when passed in it will create a moment from it.
  * @param {Object} dateFormatting Object responsible for relevant date formatting.
