@@ -17,20 +17,33 @@
 /**
  * Internal dependencies
  */
-export * from './categories/actions';
-export * from '../pagination/actions';
 import * as types from './types';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
+export const fetchCategoriesStart = (dispatch) => ({ provider }) => {
   dispatch({
-    type: types.MEDIA3P_SET_SELECTED_PROVIDER,
-    payload: { provider },
+    type: types.FETCH_MEDIA_CATEGORIES_START,
+    payload: {
+      provider: provider,
+    },
   });
 };
 
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
+export const fetchCategoriesSuccess = (dispatch) => ({
+  provider,
+  categories,
+}) => {
   dispatch({
-    type: types.MEDIA3P_SET_SEARCH_TERM,
-    payload: { searchTerm },
+    type: types.FETCH_MEDIA_CATEGORIES_SUCCESS,
+    payload: {
+      provider,
+      categories,
+    },
+  });
+};
+
+export const fetchCategoriesError = (dispatch) => ({ provider }) => {
+  dispatch({
+    type: types.FETCH_MEDIA_CATEGORIES_ERROR,
+    payload: { provider: provider },
   });
 };

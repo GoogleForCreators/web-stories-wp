@@ -41,9 +41,6 @@ const VERTICAL_HANDLES = ['n', 's'];
 const HORIZONTAL_HANDLES = ['e', 'w'];
 const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-/**
- *
- */
 function SingleSelectionMoveable({
   selectedElement,
   targetEl,

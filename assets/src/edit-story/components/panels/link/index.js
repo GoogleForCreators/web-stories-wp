@@ -105,7 +105,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       pushUpdateForObject(
         'link',
         (prev) => ({
-          url,
           desc: title ? title : prev.desc,
           icon: icon ? toAbsoluteUrl(url, icon) : prev.icon,
         }),
@@ -182,6 +181,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           onChange={(value) =>
             handleChange({ url: value }, !value /* submit */)
           }
+          onBlur={(atts = {}) => {
+            const { onClear } = atts;
+            // If the onBlur is not clearing the field, add protocol.
+            if (link.url?.length > 0 && !onClear) {
+              const urlWithProtocol = withProtocol(link.url);
+              if (urlWithProtocol !== link.url) {
+                handleChange({ url: urlWithProtocol }, true /* submit */);
+              }
+            }
+          }}
           value={link.url || ''}
           clear
           aria-label={__('Edit: Element link', 'web-stories')}
