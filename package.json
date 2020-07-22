@@ -152,7 +152,7 @@
     "prettier": "^2.0.5",
     "puppeteer": "^5.2.0",
     "react-test-renderer": "^16.13.1",
-    "rollup": "^2.18.2",
+    "rollup": "^2.22.2",
     "rtlcss-webpack-plugin": "^4.0.3",
     "source-map-loader": "^1.0.1",
     "stylelint": "^13.6.1",
