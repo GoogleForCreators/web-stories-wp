@@ -43,13 +43,8 @@ const Error = styled.span`
 `;
 
 function PageAttachmentPanel() {
-  const {
-    currentPage,
-    updateCurrentPageProperties,
-    updateElementsById,
-  } = useStory((state) => ({
+  const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
     updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
-    updateElementsById: state.actions.updateElementsById,
     currentPage: state.state.currentPage,
   }));
   const { setDisplayLinkGuidelines } = useCanvas((state) => ({
@@ -92,15 +87,6 @@ function PageAttachmentPanel() {
         const valid = isValidUrl(urlWithProtocol);
         updatedValue.url = urlWithProtocol;
         setIsInvalidUrl(!valid);
-        if (hasLinksInAttachmentArea) {
-          // Remove links from elements if Page attachment was updated.
-          updateElementsById({
-            elementIds: linksInAttachmentArea.map(({ id }) => id),
-            properties: {
-              link: null,
-            },
-          });
-        }
       }
       const _pageAttachment = {
         ...pageAttachment,
@@ -110,13 +96,7 @@ function PageAttachmentPanel() {
         properties: { pageAttachment: _pageAttachment },
       });
     },
-    [
-      updateCurrentPageProperties,
-      pageAttachment,
-      hasLinksInAttachmentArea,
-      linksInAttachmentArea,
-      updateElementsById,
-    ]
+    [updateCurrentPageProperties, pageAttachment]
   );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
@@ -155,7 +135,7 @@ function PageAttachmentPanel() {
         <Row>
           <Error>
             {__(
-              'Links can not be located below the dashed line when a page attachment is present. The link to elements found below this line will be removed if you add a page attachment',
+              'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
               'web-stories'
             )}
           </Error>
