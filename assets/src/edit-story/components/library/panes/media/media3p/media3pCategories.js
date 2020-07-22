@@ -17,34 +17,35 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import CategoryPill from '../categoryPill';
+import CategoryPill from './categoryPill';
 
-export default {
-  title: 'Stories Editor/Components/CategoryPill',
-  component: CategoryPill,
-};
-
-const Container = styled.div`
+// TODO(#2360) Category should be collapsible and expandable.
+const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
-  padding: 1em;
+  min-height: 94px;
+  padding: 30px 24px;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
-export const _default = () => {
-  const [isSelected, setIsSelected] = useState(false);
+// TODO(#2362) Wire up pill list to state and remove these fake pills.
+const fakePillList = ['COVID-19', 'Nature', 'Wallpapers', 'People'];
+const selectedPill = 'Nature';
 
-  return (
-    <Container>
-      <CategoryPill
-        title="Category"
-        isSelected={isSelected}
-        onClick={() => setIsSelected(!isSelected)}
-      />
-    </Container>
-  );
-};
+const Media3pCategories = () => (
+  <CategorySection>
+    {
+      // TODO(#2362) Wire up pill list to state and remove these fake pills.
+      fakePillList.map((e, i) => (
+        <CategoryPill isSelected={e == selectedPill} key={i} title={e} />
+      ))
+    }
+  </CategorySection>
+);
+
+export default Media3pCategories;
