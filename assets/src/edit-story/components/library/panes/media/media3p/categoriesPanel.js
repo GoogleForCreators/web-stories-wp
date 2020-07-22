@@ -62,17 +62,25 @@ const fakePillList = [
   'Architecture',
   'Food & Drinks',
 ];
-const selectedPill = 'Nature';
 
 const Media3pCategories = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedPill, setSelectedPill] = useState(-1);
+
   return (
     <CategorySection>
       <CategoryPillContainer isExpanded={isExpanded}>
         {
           // TODO(#2362) Wire up pill list to state and remove these fake pills.
           fakePillList.map((e, i) => (
-            <CategoryPill isSelected={e == selectedPill} key={i} title={e} />
+            <CategoryPill
+              isSelected={i == selectedPill}
+              key={i}
+              title={e}
+              onClick={() =>
+                i !== selectedPill ? setSelectedPill(i) : setSelectedPill(-1)
+              }
+            />
           ))
         }
       </CategoryPillContainer>
