@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { useContext, useMemo, useEffect } from 'react';
+import { useCallback, useContext, useMemo, useEffect } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -30,6 +31,8 @@ import Content from './content';
 import Header from './header';
 
 function ExploreTemplates() {
+  const enableTemplatePreviews = useFeature('enableTemplatePreviews');
+
   const {
     state: {
       templates: {
@@ -47,7 +50,7 @@ function ExploreTemplates() {
     },
   } = useContext(ApiContext);
 
-  const { filter, page, search, sort, view } = useTemplateView({
+  const { filter, page, preview, search, sort, view } = useTemplateView({
     totalPages,
   });
 
@@ -60,6 +63,16 @@ function ExploreTemplates() {
       return templates[templateId];
     });
   }, [templatesOrderById, templates]);
+
+  const handlePreviewTemplate = useCallback(
+    (template) => {
+      if (!enableTemplatePreviews) {
+        return () => {};
+      }
+      return preview.set(template);
+    },
+    [enableTemplatePreviews, preview]
+  );
 
   return (
     <Layout.Provider>
@@ -79,7 +92,7 @@ function ExploreTemplates() {
         totalTemplates={totalTemplates}
         search={search}
         view={view}
-        templateActions={{ createStoryFromTemplate }}
+        templateActions={{ createStoryFromTemplate, handlePreviewTemplate }}
       />
       <Layout.Fixed>
         <ScrollToTop />
