@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -155,6 +155,14 @@ const CardPreviewContainer = ({
     return () => intervalId && clearInterval(intervalId);
   }, [storyPages.length, cardState]);
 
+  const handleKeyDownEditControls = useCallback(
+    ({ nativeEvent }) => {
+      if (nativeEvent.keyCode === 13) {
+        onClickCard();
+      }
+    },
+    [onClickCard]
+  );
   return (
     <>
       <PreviewPane cardSize={pageSize}>
@@ -179,6 +187,8 @@ const CardPreviewContainer = ({
         onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
         onClick={onClickCard}
+        onKeyDown={handleKeyDownEditControls}
+        tabIndex={0}
       >
         <EmptyActionContainer />
         {centerAction?.label && (
