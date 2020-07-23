@@ -27,7 +27,7 @@ import InOverlay from '../overlay';
 
 const DEFAULT_Z_INDEX = 10;
 
-function MovableWithRef({ ...moveableProps }, ref) {
+function MoveableWithRef({ ...moveableProps }, ref) {
   return (
     <InOverlay
       zIndex={DEFAULT_Z_INDEX}
@@ -39,6 +39,4 @@ function MovableWithRef({ ...moveableProps }, ref) {
   );
 }
 
-const Movable = forwardRef(MovableWithRef);
-
-export default Movable;
+export default forwardRef(MoveableWithRef);

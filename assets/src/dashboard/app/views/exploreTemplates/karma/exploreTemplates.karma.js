@@ -26,7 +26,7 @@ import Fixture from '../../../../karma/fixture';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 import { ApiContext } from '../../../api/apiProvider';
 
-describe('Explore Templates View integration', () => {
+describe('CUJ: Creator can browse templates in grid view', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -64,18 +64,20 @@ describe('Explore Templates View integration', () => {
   async function focusOnFirstTemplate() {
     const { templatesOrderById } = await getTemplatesState();
     const firstTemplate = getTemplateElementById(templatesOrderById[0]);
-    let count = 0;
+    const seenElements = new Set([document.activeElement]);
+    let found = firstTemplate.contains(document.activeElement);
 
-    while (
-      !firstTemplate.contains(document.activeElement) &&
-      count < templatesOrderById.length + 5
-    ) {
+    while (!firstTemplate.contains(document.activeElement) && !found) {
       // eslint-disable-next-line no-await-in-loop
       await fixture.events.keyboard.press('tab');
-      count++;
-    }
 
-    const found = firstTemplate.contains(document.activeElement);
+      found = firstTemplate.contains(document.activeElement);
+
+      if (found || seenElements.has(document.activeElement)) {
+        break;
+      }
+      seenElements.add(document.activeElement);
+    }
 
     if (!found) {
       throw new Error('could not focus on first element');
@@ -125,56 +127,60 @@ describe('Explore Templates View integration', () => {
     expect(viewStories).toBeTruthy();
   });
 
-  it('should display "View" and "Use Template" controls when hovering over a template', async () => {
-    const { templatesOrderById } = await getTemplatesState();
-    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+  describe('Action: Browse all templates', () => {
+    it('should display "View" and "Use Template" controls when hovering over a template', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
 
-    const utils = within(firstTemplate);
+      const utils = within(firstTemplate);
 
-    await fixture.events.hover(firstTemplate);
+      await fixture.events.hover(firstTemplate);
 
-    const view = utils.getByText(
-      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
-    );
+      const view = utils.getByText(
+        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+      );
 
-    expect(view).toBeTruthy();
+      expect(view).toBeTruthy();
 
-    const useTemplate = utils.getByRole('button', { name: /^Use template$/ });
+      const useTemplate = utils.getByRole('button', { name: /^Use template$/ });
 
-    expect(useTemplate).toBeTruthy();
+      expect(useTemplate).toBeTruthy();
+    });
+
+    it('should change focus as the user presses tab', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+
+      // focus on first template
+      await focusOnFirstTemplate();
+      expect(firstTemplate.contains(document.activeElement)).toBeTrue();
+
+      // focus on last template
+      const lastTemplateId = templatesOrderById[templatesOrderById.length - 1];
+      const lastTemplate = await getTemplateElementById(lastTemplateId);
+      await focusOnTemplateById(lastTemplateId);
+      expect(lastTemplate.contains(document.activeElement)).toBeTrue();
+    });
   });
 
-  it('should change focus as the user presses tab', async () => {
-    const { templatesOrderById } = await getTemplatesState();
-    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+  describe('Action: See pre-built template details page', () => {
+    it('should navigate to view an individual template', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
 
-    // focus on first template
-    await focusOnFirstTemplate();
-    expect(firstTemplate.contains(document.activeElement)).toBeTrue();
+      const utils = within(firstTemplate);
 
-    // focus on last template
-    const lastTemplateId = templatesOrderById[templatesOrderById.length - 1];
-    const lastTemplate = await getTemplateElementById(lastTemplateId);
-    await focusOnTemplateById(lastTemplateId);
-    expect(lastTemplate.contains(document.activeElement)).toBeTrue();
-  });
+      await fixture.events.hover(firstTemplate);
 
-  it('should navigate to view an individual template', async () => {
-    const { templatesOrderById } = await getTemplatesState();
-    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+      const view = utils.getByText(
+        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+      );
 
-    const utils = within(firstTemplate);
+      await fixture.events.click(view);
 
-    await fixture.events.hover(firstTemplate);
+      const closeBtn = fixture.screen.getByRole('link', { name: /^Close$/ });
 
-    const view = utils.getByText(
-      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
-    );
-
-    await fixture.events.click(view);
-
-    const closeBtn = fixture.screen.getByRole('link', { name: /^Close$/ });
-
-    expect(closeBtn).toBeTruthy();
+      expect(closeBtn).toBeTruthy();
+    });
   });
 });

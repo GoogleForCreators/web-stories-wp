@@ -25,7 +25,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import useMediaReducer from '../../useMediaReducer';
 import reducer from '../reducer';
 import * as localActionsToWrap from '../actions';
-import { fetchMediaStart as commonFetchMediaStart } from '../../common/actions';
+import { fetchMediaStart as commonFetchMediaStart } from '../../pagination/actions';
 
 describe('reducer', () => {
   it('should not update for media action that`s not for local media', () => {

@@ -67,7 +67,7 @@ class Stories_Autosaves_Controller extends \WP_Test_REST_TestCase {
 			]
 		);
 
-		$request = new WP_REST_Request( 'POST', '/wp/v2/web-story/' . $story . '/autosaves' );
+		$request = new WP_REST_Request( 'POST', '/web-stories/v1/web-story/' . $story . '/autosaves' );
 		$request->set_body_params(
 			[
 				'content'    => $unsanitized_content,
