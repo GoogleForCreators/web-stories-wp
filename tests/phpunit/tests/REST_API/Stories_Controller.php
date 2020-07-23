@@ -356,7 +356,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
 
 		$request = new WP_REST_Request( 'PUT', '/web-stories/v1/web-story/' . $story );
 		$request->set_body_params(
