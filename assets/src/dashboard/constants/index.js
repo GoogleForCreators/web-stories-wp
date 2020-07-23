@@ -64,7 +64,7 @@ export const ROUTE_TITLES = {
     'web-stories'
   ),
   [APP_ROUTES.EDITOR_SETTINGS]: __('Editor Settings', 'web-stories'),
-  [APP_ROUTES.SUPPORT]: __('Support ‹ Web Stories — WordPress', 'web-stories'),
+  [APP_ROUTES.SUPPORT]: __('Support', 'web-stories'),
   DEFAULT: __('My Stories', 'web-stories'),
 };
 
