@@ -355,6 +355,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 			]
 		);
+		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		// Reset publisher logos to default.
+		update_option( $controller->get_publisher_logo_option_name(), $controller->get_publisher_logo_option_default(), false );
 
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
 
@@ -367,7 +370,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			]
 		);
 
-		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
 
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
