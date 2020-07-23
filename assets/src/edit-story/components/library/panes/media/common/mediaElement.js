@@ -351,6 +351,8 @@ function getInnerElement(
         >
           <source src={src} type={mimeType} />
         </Video>
+        {/* This hidden image allows us to fade in the poster image in the
+        gallery as there's no event when a video's poster loads. */}
         <HiddenPosterImage src={poster} onLoad={makeImageVisible} />
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
