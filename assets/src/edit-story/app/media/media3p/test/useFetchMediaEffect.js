@@ -54,6 +54,7 @@ describe('useFetchMediaEffect', () => {
           selectedProvider: 'unsplash',
           searchTerm: 'cat',
           pageToken: 'pageToken',
+          selectedCategoryName: 'category/1',
           fetchMediaStart,
           fetchMediaSuccess,
           fetchMediaError,
@@ -70,6 +71,12 @@ describe('useFetchMediaEffect', () => {
 
     await renderUseFetchMediaEffect();
 
+    expect(mockListMedia).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      searchTerm: 'cat',
+      selectedCategoryName: 'category/1',
+      pageToken: 'pageToken',
+    });
     expect(fetchMediaStart.mock.calls).toHaveLength(1);
     expect(fetchMediaStart.mock.calls[0][0]).toStrictEqual(
       expect.objectContaining({ provider: 'unsplash', pageToken: 'pageToken' })

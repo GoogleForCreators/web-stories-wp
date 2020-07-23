@@ -139,6 +139,7 @@ function Media3pPane(props) {
               placeholder={__('Search', 'web-stories')}
               onSearch={onSearch}
               incremental={incrementalSearchDebounceMedia}
+              disabled={Boolean(categories.selectedCategoryName)}
             />
           </SearchInputContainer>
           <ProviderTabSection>
