@@ -28,6 +28,7 @@ export { ReactComponent as AlignTop } from './align_top.svg';
 export { ReactComponent as Arrow } from './arrow.svg';
 export { ReactComponent as ArrowLeft } from './arrow_left.svg';
 export { ReactComponent as ArrowRight } from './arrow_right.svg';
+export { ReactComponent as ArrowDown } from './arrow_down.svg';
 export { ReactComponent as Bold } from './bold_icon.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseAlt } from './close_icon.svg';

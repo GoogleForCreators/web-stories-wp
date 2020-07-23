@@ -23,6 +23,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import useFetchMediaEffect from './useFetchMediaEffect';
+import useFetchCategoriesEffect from './useFetchCategoriesEffect';
 
 /**
  * Context fragment provider for a single 3p media source (Unsplash, Coverr,
@@ -46,6 +47,9 @@ export default function useProviderContextValueProvider(
     fetchMediaStart,
     fetchMediaSuccess,
     fetchMediaError,
+    fetchCategoriesStart,
+    fetchCategoriesSuccess,
+    fetchCategoriesError,
   } = reducerActions;
 
   // Fetch or re-fetch media when the state has changed.
@@ -59,6 +63,14 @@ export default function useProviderContextValueProvider(
     fetchMediaError,
   });
 
+  useFetchCategoriesEffect({
+    provider,
+    selectedProvider,
+    fetchCategoriesStart,
+    fetchCategoriesSuccess,
+    fetchCategoriesError,
+  });
+
   return {
     state: reducerState[provider],
     actions: {
@@ -66,6 +78,15 @@ export default function useProviderContextValueProvider(
         reducerActions,
         provider,
       ]),
+      selectCategory: useCallback(
+        (categoryName) =>
+          reducerActions.selectCategory({ provider, categoryName }),
+        [reducerActions, provider]
+      ),
+      deselectCategory: useCallback(
+        () => reducerActions.deselectCategory({ provider }),
+        [reducerActions, provider]
+      ),
     },
   };
 }

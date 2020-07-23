@@ -89,6 +89,7 @@ function TextInput({
   className,
   onBlur,
   onChange,
+  onKeyDown,
   label,
   value,
   flexBasis,
@@ -111,7 +112,7 @@ function TextInput({
       );
     }
     if (onBlur) {
-      onBlur();
+      onBlur({ onClear: true });
     }
   };
 
@@ -130,6 +131,7 @@ function TextInput({
         disabled={disabled}
         {...rest}
         onChange={(evt) => onChange(evt.target.value, evt)}
+        onKeyDown={onKeyDown}
         onBlur={(evt) => {
           if (evt.target.form) {
             evt.target.form.dispatchEvent(
@@ -155,6 +157,7 @@ TextInput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func,
   onBlur: PropTypes.func,
   disabled: PropTypes.bool,
   flexBasis: PropTypes.number,

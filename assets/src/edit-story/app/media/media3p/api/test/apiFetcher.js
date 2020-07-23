@@ -34,10 +34,25 @@ const PHOTOS_BODY_JSON = {
   ],
 };
 
-const VALID_RESPONSE = {
+const CATEGORIES_BODY_JSON = {
+  categories: [
+    {
+      name: 'categories/unsplash:1',
+      displayName: 'Covid-19',
+    },
+  ],
+};
+
+const VALID_PHOTOS_RESPONSE = {
   ok: true,
   status: 200,
   json: () => PHOTOS_BODY_JSON,
+};
+
+const VALID_CATEGORIES_RESPONSE = {
+  ok: true,
+  status: 200,
+  json: () => CATEGORIES_BODY_JSON,
 };
 
 const ERROR_RESPONSE = {
@@ -59,121 +74,210 @@ describe('ApiFetcher', () => {
     }
   });
 
-  it('listMedia should perform a GET request', async () => {
-    mockFetch(VALID_RESPONSE);
+  describe('listMedia', () => {
+    it('should perform a GET request', async () => {
+      mockFetch(VALID_PHOTOS_RESPONSE);
 
-    const result = await apiFetcher.listMedia();
-    expect(result.media[0].name).toBe('photo 29044');
-  });
-
-  it('listMedia should throw when the API returns an error', async () => {
-    mockFetch(ERROR_RESPONSE);
-
-    expect.assertions(1);
-
-    await expect(apiFetcher.listMedia()).rejects.toThrow(/Obtained an error/);
-  });
-
-  it('listMedia should format request params correctly', async () => {
-    mockFetch(VALID_RESPONSE);
-
-    const languageCode = 'es';
-    const pageSize = 15;
-    const orderBy = 'latest';
-    const pageToken = '1234';
-    const filter = 'cat';
-
-    const result = await apiFetcher.listMedia({
-      languageCode,
-      pageSize,
-      orderBy,
-      pageToken,
-      filter,
+      const result = await apiFetcher.listMedia();
+      expect(result.media[0].name).toBe('photo 29044');
     });
-    expect(result.media[0].name).toBe('photo 29044');
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    const fetchArg = fetch.mock.calls[0][0];
-    const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
-    const queryParams = queryString.split('&');
-    expect(queryParams).toStrictEqual(
-      expect.arrayContaining([
-        'language_code=' + languageCode,
-        'page_size=' + pageSize,
-        'order_by=' + orderBy,
-        'page_token=' + pageToken,
-        'filter=' + filter,
-      ])
-    );
-    expect(queryParams).toHaveLength(6); // Also includes the key
+
+    it('should throw when the API returns an error', async () => {
+      mockFetch(ERROR_RESPONSE);
+
+      expect.assertions(1);
+
+      await expect(apiFetcher.listMedia()).rejects.toThrow(/Obtained an error/);
+    });
+
+    it('should format request params correctly', async () => {
+      mockFetch(VALID_PHOTOS_RESPONSE);
+
+      const languageCode = 'es';
+      const pageSize = 15;
+      const orderBy = 'latest';
+      const pageToken = '1234';
+      const filter = 'cat';
+
+      const result = await apiFetcher.listMedia({
+        languageCode,
+        pageSize,
+        orderBy,
+        pageToken,
+        filter,
+      });
+      expect(result.media[0].name).toBe('photo 29044');
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      const fetchArg = fetch.mock.calls[0][0];
+      const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
+      const queryParams = queryString.split('&');
+      expect(queryParams).toStrictEqual(
+        expect.arrayContaining([
+          'language_code=' + languageCode,
+          'page_size=' + pageSize,
+          'order_by=' + orderBy,
+          'page_token=' + pageToken,
+          'filter=' + filter,
+        ])
+      );
+      expect(queryParams).toHaveLength(6); // Also includes the key
+    });
+
+    it('should throw an error for an invalid pageSize type', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.listMedia({
+          pageSize: 'big',
+        })
+      ).rejects.toThrow(/Invalid page_size/);
+    });
+
+    it('should throw an error for an invalid pageSize number', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.listMedia({
+          pageSize: -30,
+        })
+      ).rejects.toThrow(/Invalid page_size/);
+    });
+
+    it('should throw an error for an invalid orderBy value', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.listMedia({
+          orderBy: 'oldest',
+        })
+      ).rejects.toThrow(/Invalid order_by/);
+    });
+
+    it('should throw an error for an empty string orderBy', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.listMedia({
+          orderBy: '',
+        })
+      ).rejects.toThrow(/Invalid order_by/);
+    });
+
+    it('should correctly escape a filter with spaces', async () => {
+      mockFetch(VALID_PHOTOS_RESPONSE);
+
+      const filter = 'cat and  many dogs';
+      const escapedFilter = 'cat+and++many+dogs';
+
+      await apiFetcher.listMedia({ filter });
+      const fetchArg = global.fetch.mock.calls[0][0];
+      const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
+      const queryParams = queryString.split('&');
+      expect(queryParams).toStrictEqual(
+        expect.arrayContaining(['filter=' + escapedFilter])
+      );
+    });
+
+    it('should correctly escape a filter with &', async () => {
+      mockFetch(VALID_PHOTOS_RESPONSE);
+
+      const filter = 'Tom & Jerry';
+      const escapedFilter = 'Tom+%26+Jerry';
+
+      await apiFetcher.listMedia({ filter });
+      const fetchArg = global.fetch.mock.calls[0][0];
+      const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
+      const queryParams = queryString.split('&');
+      expect(queryParams).toStrictEqual(
+        expect.arrayContaining(['filter=' + escapedFilter])
+      );
+    });
   });
 
-  it('listMedia should throw an error for an invalid pageSize type', async () => {
-    expect.assertions(1);
+  describe('listCategories', () => {
+    it('should perform a GET request', async () => {
+      mockFetch(VALID_CATEGORIES_RESPONSE);
 
-    await expect(
-      apiFetcher.listMedia({
-        pageSize: 'big',
-      })
-    ).rejects.toThrow(/Invalid page_size/);
-  });
+      const result = await apiFetcher.listCategories();
+      expect(result.categories[0].displayName).toBe('Covid-19');
+    });
 
-  it('listMedia should throw an error for an invalid pageSize number', async () => {
-    expect.assertions(1);
+    it('should throw when the API returns an error', async () => {
+      mockFetch(ERROR_RESPONSE);
 
-    await expect(
-      apiFetcher.listMedia({
-        pageSize: -30,
-      })
-    ).rejects.toThrow(/Invalid page_size/);
-  });
+      expect.assertions(1);
 
-  it('listMedia should throw an error for an invalid orderBy value', async () => {
-    expect.assertions(1);
+      await expect(apiFetcher.listCategories()).rejects.toThrow(
+        /Obtained an error/
+      );
+    });
 
-    await expect(
-      apiFetcher.listMedia({
-        orderBy: 'oldest',
-      })
-    ).rejects.toThrow(/Invalid order_by/);
-  });
+    it('should format request params correctly', async () => {
+      mockFetch(VALID_CATEGORIES_RESPONSE);
 
-  it('listMedia should throw an error for an empty string orderBy', async () => {
-    expect.assertions(1);
+      const pageSize = 15;
+      const orderBy = 'trending';
+      const filter = 'provider';
 
-    await expect(
-      apiFetcher.listMedia({
-        orderBy: '',
-      })
-    ).rejects.toThrow(/Invalid order_by/);
-  });
+      const result = await apiFetcher.listCategories({
+        pageSize,
+        orderBy,
+        filter,
+      });
 
-  it('listMedia should correctly escape a filter with spaces', async () => {
-    mockFetch(VALID_RESPONSE);
+      expect(result.categories[0].displayName).toBe('Covid-19');
+      expect(global.fetch).toHaveBeenCalledTimes(1);
+      const fetchArg = fetch.mock.calls[0][0];
+      const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
+      const queryParams = queryString.split('&');
+      expect(queryParams).toStrictEqual(
+        expect.arrayContaining([
+          'page_size=' + pageSize,
+          'order_by=' + orderBy,
+          'filter=' + filter,
+        ])
+      );
+      expect(queryParams).toHaveLength(4); // Also includes the key
+    });
 
-    const filter = 'cat and  many dogs';
-    const escapedFilter = 'cat+and++many+dogs';
+    it('should throw an error for an invalid pageSize type', async () => {
+      expect.assertions(1);
 
-    await apiFetcher.listMedia({ filter });
-    const fetchArg = global.fetch.mock.calls[0][0];
-    const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
-    const queryParams = queryString.split('&');
-    expect(queryParams).toStrictEqual(
-      expect.arrayContaining(['filter=' + escapedFilter])
-    );
-  });
+      await expect(
+        apiFetcher.listCategories({
+          pageSize: 'big',
+        })
+      ).rejects.toThrow(/Invalid page_size/);
+    });
 
-  it('listMedia should correctly escape a filter with &', async () => {
-    mockFetch(VALID_RESPONSE);
+    it('should throw an error for an invalid pageSize number', async () => {
+      expect.assertions(1);
 
-    const filter = 'Tom & Jerry';
-    const escapedFilter = 'Tom+%26+Jerry';
+      await expect(
+        apiFetcher.listCategories({
+          pageSize: -30,
+        })
+      ).rejects.toThrow(/Invalid page_size/);
+    });
 
-    await apiFetcher.listMedia({ filter });
-    const fetchArg = global.fetch.mock.calls[0][0];
-    const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
-    const queryParams = queryString.split('&');
-    expect(queryParams).toStrictEqual(
-      expect.arrayContaining(['filter=' + escapedFilter])
-    );
+    it('should throw an error for an invalid orderBy value', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.listCategories({
+          orderBy: 'oldest',
+        })
+      ).rejects.toThrow(/Invalid order_by/);
+    });
+
+    it('should throw an error for an empty string orderBy', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.listCategories({
+          orderBy: '',
+        })
+      ).rejects.toThrow(/Invalid order_by/);
+    });
   });
 });

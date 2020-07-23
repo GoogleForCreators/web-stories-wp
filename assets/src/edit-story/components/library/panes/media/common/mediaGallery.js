@@ -58,6 +58,7 @@ function MediaGallery({ resources, onInsert, providerType }) {
     ({ index, photo }) => (
       <PhotoContainer photo={photo} key={index}>
         <MediaElement
+          index={index}
           resource={resources[index]}
           width={photo.width}
           height={photo.height}
@@ -70,14 +71,16 @@ function MediaGallery({ resources, onInsert, providerType }) {
   );
 
   return (
-    <Gallery
-      targetRowHeight={110}
-      direction={'row'}
-      // This should match the actual margin the element is styled with.
-      margin={PHOTO_MARGIN}
-      photos={photos}
-      renderImage={imageRenderer}
-    />
+    <div role={'grid'}>
+      <Gallery
+        targetRowHeight={110}
+        direction={'row'}
+        // This should match the actual margin the element is styled with.
+        margin={PHOTO_MARGIN}
+        photos={photos}
+        renderImage={imageRenderer}
+      />
+    </div>
   );
 }
 

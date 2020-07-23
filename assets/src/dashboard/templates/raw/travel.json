@@ -2025,73 +2025,6 @@
           "isDefaultBackground": true
         },
         {
-          "x": 324.5,
-          "y": -57,
-          "width": 88,
-          "height": 88,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 9,
-              "g": 66,
-              "b": 40
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "7c4a2686-3bcc-4e41-92ed-f12b899b615b",
-          "lockAspectRatio": true
-        },
-        {
-          "x": 324.5,
-          "y": -23.5,
-          "width": 88,
-          "height": 21,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "center",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
-          "id": "4f71e74f-fd3f-4840-9ea4-8c0f59363952",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">NO. 3</span>",
-          "fontSize": 21,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
           "x": 42,
           "y": 381,
           "width": 152,
@@ -2170,7 +2103,7 @@
           }
         },
         {
-          "x": -2,
+          "x": 0,
           "y": -57,
           "width": 327,
           "height": 402,
@@ -2208,6 +2141,73 @@
             "alt": "",
             "local": false,
             "sizes": []
+          }
+        },
+        {
+          "x": 238.734375,
+          "y": 257,
+          "width": 88,
+          "height": 88,
+          "type": "shape",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "backgroundColor": {
+            "color": {
+              "r": 9,
+              "g": 66,
+              "b": 40
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "7c4a2686-3bcc-4e41-92ed-f12b899b615b",
+          "lockAspectRatio": true
+        },
+        {
+          "x": 238.734375,
+          "y": 290.5,
+          "width": 88,
+          "height": 21,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "center",
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
+          "id": "4f71e74f-fd3f-4840-9ea4-8c0f59363952",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">NO. 3</span>",
+          "fontSize": 21,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
           }
         }
       ],
@@ -2300,7 +2300,7 @@
           "type": "move",
           "overflowHidden": false,
           "offsetX": 0,
-          "offsetY": "-100%",
+          "offsetY": "100%",
           "id": "6ddb06d9-4246-45b1-af1f-26149f6d80b3",
           "duration": 600,
           "delay": 900,
@@ -2313,7 +2313,7 @@
           "type": "move",
           "overflowHidden": true,
           "offsetX": 0,
-          "offsetY": "100%",
+          "offsetY": "-100%",
           "id": "d4ed474b-a264-4730-bde5-31b227bf575e",
           "duration": 600,
           "delay": 900,

@@ -20,69 +20,69 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-	.default-movable .moveable-control,
-	.default-movable .moveable-line.moveable-rotation-line .moveable-control {
+	.default-moveable .moveable-control,
+	.default-moveable .moveable-line.moveable-rotation-line .moveable-control {
 		background: #1a73e8 !important;
 		border: 2px solid #fff !important;
 		margin-left: -6px;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 	}
 
-	.default-movable.type-text .moveable-direction.moveable-n, .default-movable.type-text .moveable-direction.moveable-s {
+	.default-moveable.type-text .moveable-direction.moveable-n, .default-moveable.type-text .moveable-direction.moveable-s {
 		pointer-events: none;
 	}
-	.default-movable .moveable-control.moveable-n {
+	.default-moveable .moveable-control.moveable-n {
 		display: none !important;
 	}
 
-	.default-movable .moveable-control.moveable-s,
-	.default-movable .moveable-control.moveable-e,
-	.default-movable .moveable-control.moveable-w {
+	.default-moveable .moveable-control.moveable-s,
+	.default-moveable .moveable-control.moveable-e,
+	.default-moveable .moveable-control.moveable-w {
 		border-radius: 8px;
 	}
 
-	.default-movable .moveable-control.moveable-s {
+	.default-moveable .moveable-control.moveable-s {
 		height: 8px !important;
 		width: 16px !important;
 		margin-top: -2px !important;
 	}
 
-	.default-movable .moveable-control.moveable-e {
+	.default-moveable .moveable-control.moveable-e {
 		height: 16px !important;
 		width: 8px !important;
 		margin-left: -4px !important;
 	}
 
-	.default-movable .moveable-control.moveable-w {
+	.default-moveable .moveable-control.moveable-w {
 		height: 16px !important;
 		width: 8px !important;
 		margin-left: -4px !important;
 	}
 
-	.default-movable.moveable-control-box .moveable-line.moveable-direction {
+	.default-moveable.moveable-control-box .moveable-line.moveable-direction {
 		background: #4285f4 !important;
 		width: 2px;
 		height: 2px;
 	}
 
-	.default-movable.moveable-control-box .moveable-line.moveable-rotation-line {
+	.default-moveable.moveable-control-box .moveable-line.moveable-rotation-line {
 		background: #4285f4 !important;
 		width: 1px;
 		top: -16px;
 		height: 16px;
 	}
 
-	.default-movable.hide-handles .moveable-line.moveable-rotation-line,
-	.default-movable.hide-handles .moveable-line.moveable-direction {
+	.default-moveable.hide-handles .moveable-line.moveable-rotation-line,
+	.default-moveable.hide-handles .moveable-line.moveable-direction {
 		display: none;
 	}
 
-  .default-movable.visually-hide-handles .moveable-control.moveable-e,
-  .default-movable.visually-hide-handles .moveable-control.moveable-w,
-  .default-movable.visually-hide-handles .moveable-control.moveable-s,
-  .default-movable.visually-hide-handles .moveable-control.moveable-ne,
-  .default-movable.visually-hide-handles .moveable-control.moveable-nw,
-  .default-movable.visually-hide-handles .moveable-control.moveable-sw {
+  .default-moveable.visually-hide-handles .moveable-control.moveable-e,
+  .default-moveable.visually-hide-handles .moveable-control.moveable-w,
+  .default-moveable.visually-hide-handles .moveable-control.moveable-s,
+  .default-moveable.visually-hide-handles .moveable-control.moveable-ne,
+  .default-moveable.visually-hide-handles .moveable-control.moveable-nw,
+  .default-moveable.visually-hide-handles .moveable-control.moveable-sw {
 	  opacity: 0;
 	}
 `;

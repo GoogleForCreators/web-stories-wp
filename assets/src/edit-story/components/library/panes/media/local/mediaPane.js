@@ -18,15 +18,8 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -54,8 +47,9 @@ import {
   SearchInputContainer,
   StyledPane,
 } from '../common/styles';
-import MediaGallery from '../common/mediaGallery';
+import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import { ProviderType } from '../common/providerType';
+import Flags from '../../../../../flags';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -68,16 +62,6 @@ const ColumnContainer = styled.div`
   overflow: auto;
   padding: 0 1.5em 0 1.5em;
   margin-top: 1em;
-`;
-
-const RowContainer = styled.div`
-  display: grid;
-  grid-area: infinitescroll;
-  overflow: auto;
-  grid-template-columns: 1fr;
-  padding: 0 1.5em 0 1.5em;
-  margin-top: 1em;
-  position: relative;
 `;
 
 const Column = styled.div`
@@ -156,9 +140,6 @@ function MediaPane(props) {
     }
   );
 
-  // Local state so that we can debounce triggering searches.
-  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
-
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -186,23 +167,6 @@ function MediaPane(props) {
     onSelect,
     onClose,
   });
-
-  /**
-   * Effectively performs a search, triggered at most every 500ms.
-   */
-  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
-    setSearchTerm({ searchTerm: searchTermValue });
-  }, 500);
-
-  /**
-   * Handle search input changes. Triggers with every keystroke.
-   *
-   * @param {string} value the new search term.
-   */
-  const onSearch = (value) => {
-    setSearchTermValue(value);
-    changeSearchTermDebounced();
-  };
 
   /**
    * Filter REST API calls and re-request API.
@@ -286,6 +250,9 @@ function MediaPane(props) {
       currentPaddingLeft - scrollbarWidth + 'px';
   }, [scrollbarWidth, refContainer]);
 
+  // NOTE: This infinite scrolling logic is used by the Column-based gallery.
+  // The row-based PaginatedMediaGallery has its own pagination logic and
+  // doesn't get affected by this code (it doesn't have `refContainerFooter`).
   const refContainerFooter = useRef();
   useIntersectionEffect(
     refContainerFooter,
@@ -311,54 +278,23 @@ function MediaPane(props) {
     [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
   );
 
-  const [handleScroll] = useDebouncedCallback(
-    (e) => {
-      if (!hasMore || !isMediaLoaded || isMediaLoading) {
-        return;
-      }
-      // This rootMargin is added so that we load an extra page when the
-      // we are "close" to the bottom of the container, even if it's not
-      // yet visible.
-      const bottom =
-        e.target.scrollHeight - e.target.scrollTop <=
-        e.target.clientHeight + ROOT_MARGIN;
-      if (bottom) {
-        setNextPage();
-      }
-    },
-    500,
-    [hasMore, isMediaLoaded, isMediaLoading, setNextPage]
+  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+
+  const incrementalSearchDebounceMedia = useFeature(
+    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
 
-  useEffect(() => {
-    const node = refContainer.current;
-    if (!node) {
-      return undefined;
-    }
-    // And when scroll changes (but debounced)
-    node.addEventListener('scroll', handleScroll);
-    return () => node.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  // TODO(#3160): Update MediaPane to use PaginatedMediaGallery
   const mediaLibrary = isRowBasedGallery ? (
     // Arranges elements in rows.
-    <RowContainer
-      data-testid="mediaLibrary"
-      onScroll={handleScroll}
-      ref={refCallbackContainer}
-    >
-      <MediaGallery
-        resources={resources}
-        onInsert={insertMediaElement}
-        providerType={ProviderType.LOCAL}
-      />
-      {hasMore && (
-        <MediaGalleryLoadingPill>
-          {__('Loading…', 'web-stories')}
-        </MediaGalleryLoadingPill>
-      )}
-    </RowContainer>
+    <PaginatedMediaGallery
+      providerType={ProviderType.LOCAL}
+      resources={resources}
+      isMediaLoading={isMediaLoading}
+      isMediaLoaded={isMediaLoaded}
+      hasMore={hasMore}
+      onInsert={insertMediaElement}
+      setNextPage={setNextPage}
+    />
   ) : (
     // Arranges elements in columns.
     <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
@@ -367,6 +303,7 @@ function MediaPane(props) {
           .filter((_, index) => isEven(index))
           .map((resource, i) => (
             <MediaElement
+              index={i}
               resource={resource}
               key={i}
               width={PREVIEW_SIZE}
@@ -379,6 +316,7 @@ function MediaPane(props) {
           .filter((_, index) => !isEven(index))
           .map((resource, i) => (
             <MediaElement
+              index={i}
               resource={resource}
               key={i}
               width={PREVIEW_SIZE}
@@ -400,9 +338,10 @@ function MediaPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              value={searchTermValue}
+              initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
-              onChange={onSearch}
+              onSearch={onSearch}
+              incrementala={incrementalSearchDebounceMedia}
             />
           </SearchInputContainer>
           <FilterArea>

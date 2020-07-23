@@ -62,7 +62,7 @@ class Embed_Block {
 			[
 				'attributes'      => [
 					'url'    => [
-						'type' => 'url',
+						'type' => 'string',
 					],
 					'title'  => [
 						'type'    => 'string',

@@ -32,7 +32,10 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaStart({ pageToken: 'page2' });
+    result.current.actions.fetchMediaStart({
+      provider: 'provider',
+      pageToken: 'page2',
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -47,7 +50,10 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({ media: [{ id: 'id' }] });
+    result.current.actions.fetchMediaSuccess({
+      provider: 'provider',
+      media: [{ id: 'id' }],
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -63,6 +69,7 @@ describe('reducer', () => {
     );
 
     result.current.actions.fetchMediaSuccess({
+      provider: 'provider',
       media: [{ id: 'id' }],
       nextPageToken: 'page2',
       totalPages: 10,
@@ -85,12 +92,14 @@ describe('reducer', () => {
     );
 
     result.current.actions.fetchMediaSuccess({
+      provider: 'provider',
       media: [{ id: 'id1' }],
       nextPageToken: 'page2',
       totalPages: 10,
     });
 
     result.current.actions.fetchMediaSuccess({
+      provider: 'provider',
       media: [{ id: 'id2' }],
       pageToken: 'page2',
       nextPageToken: 'page3',
@@ -139,7 +148,7 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaError();
+    result.current.actions.fetchMediaError({ provider: 'provider' });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -155,16 +164,18 @@ describe('reducer', () => {
     );
 
     result.current.actions.fetchMediaSuccess({
+      provider: 'provider',
       media: [{ id: 'id' }],
       nextPageToken: 'page2',
     });
 
-    result.current.actions.setNextPage();
+    result.current.actions.setNextPage({ provider: 'provider' });
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
     );
 
     result.current.actions.fetchMediaSuccess({
+      provider: 'provider',
       media: [{ id: 'id' }],
       nextPageToken: 'page3',
     });

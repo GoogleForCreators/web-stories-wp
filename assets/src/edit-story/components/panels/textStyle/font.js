@@ -69,9 +69,21 @@ function FontControls({ selectedElements, pushUpdate }) {
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
   const {
-    state: { fonts },
-    actions: { maybeEnqueueFontStyle, getFontByName },
-  } = useFont();
+    fonts,
+    addRecentFont,
+    maybeEnqueueFontStyle,
+    getFontByName,
+  } = useFont(
+    ({
+      actions: { addRecentFont, maybeEnqueueFontStyle, getFontByName },
+      state: { fonts },
+    }) => ({
+      addRecentFont,
+      maybeEnqueueFontStyle,
+      getFontByName,
+      fonts,
+    })
+  );
   const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
     getFontByName,
     fontFamily,
@@ -93,7 +105,6 @@ function FontControls({ selectedElements, pushUpdate }) {
           'variants',
         ]),
       };
-
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {
@@ -104,13 +115,17 @@ function FontControls({ selectedElements, pushUpdate }) {
           };
         })
       );
-
+      if (hasNewFontPicker) {
+        addRecentFont(fontObj);
+      }
       pushUpdate({ font: newFont }, true);
     },
     [
+      addRecentFont,
       fontStyle,
       fontWeight,
       fonts,
+      hasNewFontPicker,
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
