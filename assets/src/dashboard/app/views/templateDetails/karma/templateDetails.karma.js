@@ -216,4 +216,53 @@ describe('Explore Templates View integration', () => {
 
     expect(currentTemplateTitle.innerText).toEqual(initialTemplate.title);
   });
+
+  it('should navigate to a related templated when the view button is clicked', async () => {
+    const { templates } = await getTemplatesState();
+    // Parse the current template id from the id query param
+    const { id: initialTemplateId } = getQueryParams();
+    expect(initialTemplateId).toBeTruthy();
+
+    const initialTemplate = templates[initialTemplateId];
+
+    const templateDetailsSection = fixture.screen.getByRole('region', {
+      name: /Template Details/,
+    });
+
+    const templateDetailsUtils = within(templateDetailsSection);
+
+    // Assert that the rendered title matches the title from state
+    const initialTemplateTitle = templateDetailsUtils.getByRole('heading', {
+      name: /Template Title/,
+    });
+    expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
+
+    const relatedTemplatesSection = fixture.screen.getByRole('region', {
+      name: /Related Templates/,
+    });
+
+    // Select the first related template (all related templates have the data-testid attribute)
+    const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+      '[data-testid]'
+    );
+
+    // Hover over the first related templated and click the View Button
+    const firstRelatedTemplateUtils = within(firstRelatedTemplate);
+    await fixture.events.hover(firstRelatedTemplate);
+    const view = firstRelatedTemplateUtils.getByText(
+      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+    );
+    await fixture.events.click(view);
+
+    // Assert that the active template has changed
+    const { id: nextTemplateId } = getQueryParams();
+    expect(nextTemplateId).not.toEqual(initialTemplateId);
+
+    const nextTemplate = templates[nextTemplateId];
+
+    const nextTemplateTitle = templateDetailsUtils.getByRole('heading', {
+      name: /Template Title/,
+    });
+    expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
+  });
 });

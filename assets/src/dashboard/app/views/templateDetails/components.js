@@ -101,7 +101,9 @@ export const MetadataContainer = styled.fieldset`
   }
 `;
 
-export const RowContainer = styled.section`
+export const RowContainer = styled.section.attrs({
+  'aria-label': __('Related Templates', 'web-stories'),
+})`
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 40px;
