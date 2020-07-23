@@ -18,6 +18,8 @@
  */
 import { useContext } from 'react';
 import { within } from '@testing-library/react';
+import qs from 'query-string';
+
 /**
  * Internal dependencies
  */
@@ -29,7 +31,7 @@ import {
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../constants';
 
-fdescribe('Explore Templates View integration', () => {
+describe('Explore Templates View integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -78,6 +80,15 @@ fdescribe('Explore Templates View integration', () => {
     return templates;
   }
 
+  function getQueryParams() {
+    return qs.parse(
+      qs.extract(
+        qs.parseUrl(window.location.href, { parseFragmentIdentifier: true })
+          .fragmentIdentifier ?? ''
+      )
+    );
+  }
+
   it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
     const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
 
@@ -90,5 +101,65 @@ fdescribe('Explore Templates View integration', () => {
     expect(viewTemplates).toBeTruthy();
   });
 
-  fit('should update the "Preview Page" when clicking on a "Thumbnail Page"', async () => {});
+  it('should update the "Active Preview Page" when clicking on a "Thumbnail Preview Page"', async () => {
+    const firstPage = fixture.screen.getByLabelText('Page Preview - Page 1');
+
+    expect(firstPage).toBeTruthy();
+
+    let activePage = fixture.screen.getByLabelText(
+      'Active Page Preview - Page 1'
+    );
+
+    expect(activePage).toBeTruthy();
+
+    const secondPage = fixture.screen.getByLabelText('Page Preview - Page 2');
+
+    expect(secondPage).toBeTruthy();
+
+    await fixture.events.click(secondPage);
+
+    fixture.screen.getByLabelText('Active Page Preview - Page 2');
+
+    expect(activePage).toBeTruthy();
+  });
+
+  it('should load the next related template when clicking "View Next Template" button', async () => {
+    const { templates } = await getTemplatesState();
+    // Parse the current template id from the id query param
+    const { id: initialTemplateId } = getQueryParams();
+    expect(initialTemplateId).toBeTruthy();
+
+    const initialTemplate = templates[initialTemplateId];
+
+    const templateDetailsSection = fixture.screen.getByRole('region', {
+      name: /Template Details/,
+    });
+
+    let utils = within(templateDetailsSection);
+
+    // Assert that the rendered title matches the title from state
+    const initialTemplateTitle = utils.getByRole('heading', {
+      name: /Template Title/,
+    });
+    expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
+
+    // Click the view next button to cycle to the next related template
+    const viewNextBtn = fixture.screen.getByRole('button', {
+      name: /View next template/,
+    });
+    await fixture.events.click(viewNextBtn);
+
+    // Reparse the current template id from the id query param and assert it's different
+    const { id: nextTemplateId } = getQueryParams();
+    expect(nextTemplateId).toBeTruthy();
+    expect(nextTemplateId).not.toEqual(initialTemplateId);
+
+    const nextTemplate = templates[nextTemplateId];
+
+    // Assert that the rendered title matches the title from state
+    const nextTemplateTitle = utils.getByRole('heading', {
+      name: /Template Title/,
+    });
+    expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
+  });
 });

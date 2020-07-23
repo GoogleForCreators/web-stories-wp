@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -127,6 +132,9 @@ function CardGallery({ story }) {
                 isSelected={index === activePageIndex}
                 {...metrics.miniWrapperSize}
                 onClick={() => handleMiniCardClick(index)}
+                aria-label={
+                  __('Page Preview - Page', 'web-stories') + ` ${index + 1}`
+                }
               >
                 <MiniCard {...metrics.miniCardSize}>
                   <PreviewPage page={page} pageSize={metrics.miniCardSize} />
@@ -143,7 +151,13 @@ function CardGallery({ story }) {
             height: metrics.activeCardSize.height,
           }}
         >
-          <ActiveCard {...metrics.activeCardSize}>
+          <ActiveCard
+            aria-label={
+              __('Active Page Preview - Page', 'web-stories') +
+              ` ${activePageIndex + 1}`
+            }
+            {...metrics.activeCardSize}
+          >
             <PreviewPage
               page={pages[activePageIndex]}
               pageSize={metrics.activeCardSize}
