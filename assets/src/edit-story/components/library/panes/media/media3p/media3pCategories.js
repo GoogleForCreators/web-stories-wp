@@ -68,8 +68,8 @@ const Media3pCategories = () => {
   const [selectedPill, setSelectedPill] = useState(-1);
 
   return (
-    <CategorySection>
-      <CategoryPillContainer isExpanded={isExpanded}>
+    <CategorySection aria-expanded={isExpanded}>
+      <CategoryPillContainer isExpanded={isExpanded} role="tablist">
         {
           // TODO(#2362) Wire up pill list to state and remove these fake pills.
           fakePillList.map((e, i) => (
