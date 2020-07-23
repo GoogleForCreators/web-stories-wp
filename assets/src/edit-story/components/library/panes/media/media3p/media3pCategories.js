@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -47,42 +48,30 @@ const CategoryPillContainer = styled.div`
 const ExpandButton = styled(ArrowDown)`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
 `;
-// TODO(#2362) Wire up pill list to state and remove these fake pills.
-const fakePillList = [
-  'COVID-19',
-  'Nature',
-  'Wallpapers',
-  'People',
-  'Texture & Pattern',
-  'Business & Work',
-  'Travel',
-  'Technology',
-  'Animals',
-  'Interiors',
-  'Architecture',
-  'Food & Drinks',
-];
 
-const Media3pCategories = () => {
+const Media3pCategories = ({
+  categories,
+  selectedCategoryName,
+  selectCategory,
+  deselectCategory,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedPill, setSelectedPill] = useState(-1);
-
   return (
     <CategorySection aria-expanded={isExpanded}>
       <CategoryPillContainer isExpanded={isExpanded} role="tablist">
-        {
-          // TODO(#2362) Wire up pill list to state and remove these fake pills.
-          fakePillList.map((e, i) => (
+        {categories.map((e) => {
+          const selected = e.name === selectedCategoryName;
+          return (
             <CategoryPill
-              isSelected={i == selectedPill}
-              key={i}
-              title={e}
+              isSelected={selected}
+              key={e.name}
+              title={e.displayName}
               onClick={() =>
-                i !== selectedPill ? setSelectedPill(i) : setSelectedPill(-1)
+                selected ? deselectCategory() : selectCategory(e.name)
               }
             />
-          ))
-        }
+          );
+        })}
       </CategoryPillContainer>
       <ExpandButton
         onClick={() => setIsExpanded(!isExpanded)}
@@ -90,6 +79,13 @@ const Media3pCategories = () => {
       />
     </CategorySection>
   );
+};
+
+Media3pCategories.propTypes = {
+  categories: PropTypes.array.isRequired,
+  selectedCategoryName: PropTypes.string,
+  selectCategory: PropTypes.func,
+  deselectCategory: PropTypes.func,
 };
 
 export default Media3pCategories;

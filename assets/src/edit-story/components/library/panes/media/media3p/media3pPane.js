@@ -98,12 +98,24 @@ function Media3pPane(props) {
     setNextPage,
     isMediaLoading,
     isMediaLoaded,
+    categories,
+    selectCategory,
+    deselectCategory,
   } = useMedia3pForProvider(
     'unsplash',
     ({
-      state: { media, hasMore, isMediaLoading, isMediaLoaded },
-      actions: { setNextPage },
-    }) => ({ media, hasMore, isMediaLoading, isMediaLoaded, setNextPage })
+      state: { media, hasMore, isMediaLoading, isMediaLoaded, categories },
+      actions: { setNextPage, selectCategory, deselectCategory },
+    }) => ({
+      media,
+      hasMore,
+      isMediaLoading,
+      isMediaLoaded,
+      setNextPage,
+      categories,
+      selectCategory,
+      deselectCategory,
+    })
   );
 
   const onSearch = (v) => setSearchTerm({ searchTerm: v });
@@ -136,7 +148,12 @@ function Media3pPane(props) {
               onClick={onProviderTabClick}
             />
           </ProviderTabSection>
-          <Media3pCategories />
+          <Media3pCategories
+            categories={categories.categories}
+            selectedCategoryName={categories.selectedCategoryName}
+            selectCategory={selectCategory}
+            deselectCategory={deselectCategory}
+          />
         </PaneHeader>
         <PaginatedMediaGallery
           providerType={ProviderType.UNSPLASH}
