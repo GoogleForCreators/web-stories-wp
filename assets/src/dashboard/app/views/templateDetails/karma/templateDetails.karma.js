@@ -162,4 +162,58 @@ describe('Explore Templates View integration', () => {
     });
     expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
   });
+
+  it('should navigate to the previous related template when clicking the "View Previous Template" button', async () => {
+    const { templates } = await getTemplatesState();
+    // Parse the current template id from the id query param
+    const { id: initialTemplateId } = getQueryParams();
+
+    const initialTemplate = templates[initialTemplateId];
+
+    const templateDetailsSection = fixture.screen.getByRole('region', {
+      name: /Template Details/,
+    });
+
+    let utils = within(templateDetailsSection);
+
+    // Assert that the rendered title matches the title from state
+    const initialTemplateTitle = utils.getByRole('heading', {
+      name: /Template Title/,
+    });
+    expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
+
+    // Click the view next button to cycle to the next related template
+    const viewNextBtn = fixture.screen.getByRole('button', {
+      name: /View next template/,
+    });
+    await fixture.events.click(viewNextBtn);
+
+    // Reparse the current template id from the id query param and assert it's different
+    const { id: nextTemplateId } = getQueryParams();
+
+    const nextTemplate = templates[nextTemplateId];
+
+    // Assert that the rendered title matches the title from state
+    const nextTemplateTitle = utils.getByRole('heading', {
+      name: /Template Title/,
+    });
+    expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
+
+    // Click the previous template button and assert we went back to the initial template
+    const viewPreviousBtn = fixture.screen.getByRole('button', {
+      name: /View previous template/,
+    });
+
+    await fixture.events.click(viewPreviousBtn);
+
+    const { id: currentTemplateId } = getQueryParams();
+
+    expect(currentTemplateId).toEqual(initialTemplateId);
+
+    let currentTemplateTitle = utils.getByRole('heading', {
+      name: /Template Title/,
+    });
+
+    expect(currentTemplateTitle.innerText).toEqual(initialTemplate.title);
+  });
 });
