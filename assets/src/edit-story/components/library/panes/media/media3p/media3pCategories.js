@@ -66,7 +66,9 @@ const Media3pCategories = ({
               isSelected={selected}
               key={e.name}
               title={e.displayName}
-              onClick={selected ? deselectCategory : () => selectCategory(e.name)}
+              onClick={() =>
+                selected ? deselectCategory() : selectCategory(e.name)
+              }
             />
           );
         })}
