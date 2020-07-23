@@ -18,34 +18,78 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
  */
+import { ArrowDown } from '../../../../button/index';
 import CategoryPill from './categoryPill';
-
 // TODO(#2360) Category should be collapsible and expandable.
 const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
   min-height: 94px;
-  padding: 30px 24px;
+  padding: 30px 24px 10px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 `;
 
-// TODO(#2362) Wire up pill list to state and remove these fake pills.
-const fakePillList = ['COVID-19', 'Nature', 'Wallpapers', 'People'];
-const selectedPill = 'Nature';
+// This hides the category pills unless expanded
+const CategoryPillContainer = styled.div`
+  height: ${(props) => (props.isExpanded ? 'auto' : '36px')};
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+`;
 
-const Media3pCategories = () => (
-  <CategorySection>
-    {
-      // TODO(#2362) Wire up pill list to state and remove these fake pills.
-      fakePillList.map((e, i) => (
-        <CategoryPill isSelected={e == selectedPill} key={i} title={e} />
-      ))
-    }
-  </CategorySection>
-);
+// Flips the button upside down when expanded;
+const ExpandButton = styled(ArrowDown)`
+  ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
+`;
+// TODO(#2362) Wire up pill list to state and remove these fake pills.
+const fakePillList = [
+  'COVID-19',
+  'Nature',
+  'Wallpapers',
+  'People',
+  'Texture & Pattern',
+  'Business & Work',
+  'Travel',
+  'Technology',
+  'Animals',
+  'Interiors',
+  'Architecture',
+  'Food & Drinks',
+];
+
+const Media3pCategories = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedPill, setSelectedPill] = useState(-1);
+
+  return (
+    <CategorySection aria-expanded={isExpanded}>
+      <CategoryPillContainer isExpanded={isExpanded} role="tablist">
+        {
+          // TODO(#2362) Wire up pill list to state and remove these fake pills.
+          fakePillList.map((e, i) => (
+            <CategoryPill
+              isSelected={i == selectedPill}
+              key={i}
+              title={e}
+              onClick={() =>
+                i !== selectedPill ? setSelectedPill(i) : setSelectedPill(-1)
+              }
+            />
+          ))
+        }
+      </CategoryPillContainer>
+      <ExpandButton
+        onClick={() => setIsExpanded(!isExpanded)}
+        isExpanded={isExpanded}
+      />
+    </CategorySection>
+  );
+};
 
 export default Media3pCategories;

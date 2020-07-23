@@ -31,7 +31,7 @@ export default {
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
-  padding: 1em;
+  max-width: 350px;
 `;
 
 export const _default = () => {

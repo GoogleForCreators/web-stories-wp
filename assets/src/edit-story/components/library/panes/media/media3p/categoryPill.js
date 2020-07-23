@@ -52,7 +52,12 @@ PillContainer.propTypes = {
 };
 
 const CategoryPill = (props) => (
-  <PillContainer isSelected={props.isSelected} onClick={props.onClick}>
+  <PillContainer
+    isSelected={props.isSelected}
+    onClick={props.onClick}
+    role="tab"
+    aria-selected={props.isSelected}
+  >
     {props.title}
   </PillContainer>
 );
