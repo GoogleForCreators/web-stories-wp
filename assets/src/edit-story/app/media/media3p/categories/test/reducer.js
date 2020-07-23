@@ -114,4 +114,39 @@ describe('reducer', () => {
       })
     );
   });
+
+  it('should assign category on selectCategory', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, commonActionsToWrap)
+    );
+
+    act(() =>
+      result.current.actions.selectCategory({
+        provider: 'unsplash',
+        categoryName: 'categories/unsplash:1',
+      })
+    );
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        selectedCategoryName: 'categories/unsplash:1',
+      })
+    );
+  });
+
+  it('should unassign category on deselectCategory', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, commonActionsToWrap)
+    );
+
+    act(() =>
+      result.current.actions.deselectCategory({ provider: 'unsplash' })
+    );
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        selectedCategoryName: undefined,
+      })
+    );
+  });
 });

@@ -78,6 +78,15 @@ export default function useProviderContextValueProvider(
         reducerActions,
         provider,
       ]),
+      selectCategory: useCallback(
+        (categoryName) =>
+          reducerActions.selectCategory({ provider, categoryName }),
+        [reducerActions, provider]
+      ),
+      deselectCategory: useCallback(
+        () => reducerActions.deselectCategory({ provider }),
+        [reducerActions, provider]
+      ),
     },
   };
 }
