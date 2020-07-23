@@ -30,7 +30,7 @@ import {
   Redo as RedoIcon,
   ArrowLeft as ArrowLeftIcon,
   ArrowRight as ArrowRightIcon,
-  ArrowDown,
+  ArrowDown as ArrowDownIcon,
   GridView as GridViewIcon,
   Keyboard as KeyboardIcon,
   Close as CloseIcon,
@@ -195,9 +195,9 @@ export const Eyedropper = (props) => (
   </StyledButton>
 );
 
-export const ArrowDownButton = (props) => (
+export const ArrowDown = (props) => (
   <StyledButton {...props}>
-    <ArrowDown />
+    <ArrowDownIcon />
   </StyledButton>
 );
 

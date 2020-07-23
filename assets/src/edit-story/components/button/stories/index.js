@@ -31,7 +31,7 @@ import {
   GridView,
   Close,
   Eyedropper,
-  ArrowDownButton,
+  ArrowDown,
 } from '../';
 
 export default {
@@ -129,7 +129,7 @@ eyedropper.parameters = {
 export const arrowdown = () => {
   const isDisabled = boolean('Disabled', false);
 
-  return <ArrowDownButton isDisabled={isDisabled} />;
+  return <ArrowDown isDisabled={isDisabled} />;
 };
 
 arrowdown.parameters = {

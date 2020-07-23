@@ -23,7 +23,7 @@ import { useState } from 'react';
 /**
  * Internal dependencies
  */
-import { ArrowDownButton } from '../../../../button/index';
+import { ArrowDown } from '../../../../button/index';
 import CategoryPill from './categoryPill';
 // TODO(#2360) Category should be collapsible and expandable.
 const CategorySection = styled.div`
@@ -44,7 +44,7 @@ const CategoryPillContainer = styled.div`
 `;
 
 // Flips the button upside down when expanded;
-const ExpandButton = styled(ArrowDownButton)`
+const ExpandButton = styled(ArrowDown)`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
 `;
 // TODO(#2362) Wire up pill list to state and remove these fake pills.
