@@ -21,7 +21,7 @@ import createSolidFromString from '../utils/createSolidFromString';
 import useInsertElement from '../components/canvas/useInsertElement';
 import { Fixture } from './fixture';
 
-describe('CUJ: Creator Can Add A Link', () => {
+describe('Link panel', () => {
   let fixture;
   beforeEach(async () => {
     fixture = new Fixture();
@@ -32,7 +32,7 @@ describe('CUJ: Creator Can Add A Link', () => {
     fixture.restore();
   });
 
-  describe('Action: Add Web Address', () => {
+  describe('CUJ: Creator Can Add A Link: Add Web Address', () => {
     let frame;
     const addElement = async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
