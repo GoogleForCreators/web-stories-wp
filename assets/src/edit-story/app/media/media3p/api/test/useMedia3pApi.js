@@ -232,7 +232,7 @@ describe('useMedia3pApi', () => {
     await result.current.actions.listMedia({
       provider: 'unsplash',
       searchTerm: 'cat',
-      selectedCategoryName: 'category/1',
+      selectedCategoryId: 'category/1',
     });
 
     expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
@@ -294,11 +294,11 @@ describe('useMedia3pApi', () => {
     expect(listCategoriesResult).toStrictEqual({
       categories: [
         {
-          name: 'categories/unsplash:1',
+          id: 'categories/unsplash:1',
           displayName: 'Covid-19',
         },
         {
-          name: 'categories/unsplash:2',
+          id: 'categories/unsplash:2',
           displayName: 'Mountains',
         },
       ],

@@ -28,7 +28,7 @@ export default function useFetchMediaEffect({
   provider,
   selectedProvider,
   searchTerm,
-  selectedCategoryName,
+  selectedCategoryId,
   pageToken,
   fetchMediaStart,
   fetchMediaSuccess,
@@ -45,7 +45,7 @@ export default function useFetchMediaEffect({
         const { media, nextPageToken } = await listMedia({
           provider,
           searchTerm,
-          selectedCategoryName,
+          selectedCategoryId,
           pageToken,
         });
         fetchMediaSuccess({ provider, media, pageToken, nextPageToken });
@@ -62,7 +62,7 @@ export default function useFetchMediaEffect({
     selectedProvider,
     pageToken,
     searchTerm,
-    selectedCategoryName,
+    selectedCategoryId,
     // These attributes never change.
     provider,
     listMedia,

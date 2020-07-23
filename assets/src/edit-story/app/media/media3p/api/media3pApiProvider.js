@@ -50,13 +50,13 @@ function Media3pApiProvider({ children }) {
   function constructFilter(
     provider,
     searchTerm,
-    selectedCategoryName,
+    selectedCategoryId,
     mediaType
   ) {
     return [
       provider ? `provider:${provider}` : null,
       mediaType ? `type:${mediaType}` : null,
-      selectedCategoryName ? `category_id:${selectedCategoryName}` : searchTerm,
+      selectedCategoryId ? `category_id:${selectedCategoryId}` : searchTerm,
     ]
       .filter(Boolean)
       .join(' ');
@@ -70,7 +70,7 @@ function Media3pApiProvider({ children }) {
    * Currently only 'unsplash' is supported.
    * @param {?string} obj.searchTerm Optional search term to send,
    * eg: 'cute cats'.
-   * @param {?string} obj.selectedCategoryName Optional name of the selected
+   * @param {?string} obj.selectedCategoryId Optional name of the selected
    * category. If present, a searchTerm is ignored.
    * @param {?string} obj.orderBy The desired ordering of the results.
    * Defaults to 'relevance' in the API.
@@ -84,7 +84,7 @@ function Media3pApiProvider({ children }) {
   async function listMedia({
     provider,
     searchTerm,
-    selectedCategoryName,
+    selectedCategoryId,
     orderBy,
     mediaType,
     pageToken,
@@ -95,7 +95,7 @@ function Media3pApiProvider({ children }) {
     const filter = constructFilter(
       provider,
       searchTerm,
-      selectedCategoryName,
+      selectedCategoryId,
       mediaType
     );
     const response = await apiFetcher.listMedia({
@@ -131,7 +131,10 @@ function Media3pApiProvider({ children }) {
       orderBy,
     });
     return {
-      categories: response.categories,
+      categories: response.categories.map((m) => ({
+        id: m.name,
+        displayName: m.displayName,
+      })),
     };
   }
 
