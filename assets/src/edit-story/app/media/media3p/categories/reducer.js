@@ -23,7 +23,7 @@ export const INITIAL_STATE = {
   isLoading: true,
   isLoaded: false,
   categories: [],
-  selectedCategory: undefined,
+  selectedCategoryName: undefined,
 };
 
 /**
@@ -64,16 +64,16 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
     case types.SELECT_CATEGORY: {
-      const { category } = payload;
+      const { categoryName } = payload;
       return {
         ...state,
-        selectedCategory: category,
+        selectedCategoryName: categoryName,
       };
     }
     case types.DESELECT_CATEGORY: {
       return {
         ...state,
-        selectedCategory: undefined,
+        selectedCategoryName: undefined,
       };
     }
     default:

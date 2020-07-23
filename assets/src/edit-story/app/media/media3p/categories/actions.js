@@ -48,10 +48,10 @@ export const fetchCategoriesError = (dispatch) => ({ provider }) => {
   });
 };
 
-export const selectCategory = (dispatch) => ({ provider, category }) => {
+export const selectCategory = (dispatch) => ({ provider, categoryName }) => {
   dispatch({
     type: types.SELECT_CATEGORY,
-    payload: { provider, category },
+    payload: { provider, categoryName },
   });
 };
 
