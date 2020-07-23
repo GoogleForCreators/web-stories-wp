@@ -91,7 +91,7 @@ const formattedStoriesArray = [
     ],
     tags: [],
     categories: [],
-    author: 1,
+    author: 2,
     centerTargetAction: '',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
