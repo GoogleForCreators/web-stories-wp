@@ -39,6 +39,7 @@ const styledTiles = css`
   width: 100%;
   cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
+  opacity: 0;
 `;
 
 const Image = styled.img`
@@ -54,6 +55,7 @@ const Container = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
+  background-color: ${({ theme }) => theme.colors.bg.v3};
   body${KEYBOARD_USER_SELECTOR} &:focus {
     outline: solid 2px #fff;
   }
@@ -103,6 +105,10 @@ const UploadingIndicator = styled.div`
       transition-property: width;
     }
   }
+`;
+
+const HiddenPosterImage = styled.img`
+  display: none;
 `;
 
 /**
@@ -309,6 +315,9 @@ function getInnerElement(
     dropTargetsBindings,
   }
 ) {
+  const makeImageVisible = () => {
+    ref.current.style.opacity = '1';
+  };
   if (type === 'image') {
     return (
       <Image
@@ -320,6 +329,7 @@ function getInnerElement(
         alt={alt}
         loading={'lazy'}
         onClick={onClick}
+        onLoad={makeImageVisible}
         {...dropTargetsBindings}
       />
     );
@@ -341,6 +351,9 @@ function getInnerElement(
         >
           <source src={src} type={mimeType} />
         </Video>
+        {/* This hidden image allows us to fade in the poster image in the
+        gallery as there's no event when a video's poster loads. */}
+        <HiddenPosterImage src={poster} onLoad={makeImageVisible} />
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
     );
