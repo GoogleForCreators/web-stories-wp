@@ -31,6 +31,8 @@ import { TypographyPresets } from '../typography';
 export const Menu = styled.ul`
   ${({ theme, isOpen }) => `
     width: 100%;
+    max-height: 300px;
+    overflow-y: scroll;
     align-items: flex-start;
     background-color: ${theme.colors.white};
     box-shadow: ${theme.expandedTypeahead.boxShadow};
@@ -39,7 +41,6 @@ export const Menu = styled.ul`
     flex-direction: column;
     margin: 5px 0 0;
     opacity: ${isOpen ? 1 : 0};
-    overflow: hidden;
     padding: 5px 0;
     pointer-events: ${isOpen ? 'auto' : 'none'};
     z-index: ${Z_INDEX.TYPEAHEAD_OPTIONS};
@@ -51,9 +52,9 @@ Menu.propTypes = {
 
 const MenuItem = styled.li`
   ${TypographyPresets.Small};
-  ${({ theme, isDisabled, isHovering }) => `
+  ${({ theme, isDisabled, itemBgColor }) => `
     padding: 10px 20px;
-    background: ${isHovering ? theme.colors.gray25 : 'none'};
+    background-color: ${itemBgColor ? theme.colors[itemBgColor] : 'none'};
     color: ${theme.colors.gray700};
     cursor: ${isDisabled ? 'default' : 'pointer'};
     display: flex;
@@ -62,7 +63,7 @@ const MenuItem = styled.li`
 `;
 MenuItem.propTypes = {
   isDisabled: PropTypes.bool,
-  isHovering: PropTypes.bool,
+  itemBgColor: PropTypes.oneOf(['gray25', 'gray50', false]),
 };
 
 const MenuItemContent = styled.span`
@@ -71,8 +72,15 @@ const MenuItemContent = styled.span`
   margin: auto 0;
 `;
 
-const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
+const TypeaheadOptions = ({
+  currentSelection,
+  isOpen,
+  items = [],
+  onSelect,
+}) => {
   const [hoveredIndex, setHoveredIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isOptionMenuAlreadyOpen, setIsOptionMenuAlreadyOpen] = useState(false);
   const listRef = useRef(null);
 
   // eslint-disable-next-line consistent-return
@@ -85,7 +93,7 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
             if (hoveredIndex > 0) {
               setHoveredIndex(hoveredIndex - 1);
               if (listRef.current) {
-                listRef.current.scrollToItem(hoveredIndex - 1);
+                listRef.current.children[hoveredIndex - 1].scrollIntoView();
               }
             }
             break;
@@ -95,7 +103,7 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
             if (hoveredIndex < items.length - 1) {
               setHoveredIndex(hoveredIndex + 1);
               if (listRef.current) {
-                listRef.current.scrollToItem(hoveredIndex + 1);
+                listRef.current.children[hoveredIndex + 1].scrollIntoView();
               }
             }
             break;
@@ -118,19 +126,54 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
   }, [hoveredIndex, items, onSelect, isOpen]);
 
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollToItem(0);
+    if (listRef.current && listRef.current.children?.[0]) {
+      listRef.current.children[0].focus();
     }
-    setHoveredIndex(0);
-  }, [items]);
+  }, []);
+
+  // we only want to set an existing value for currentSelection when the dropdown is newly opened
+  useEffect(() => {
+    if (!isOptionMenuAlreadyOpen) {
+      setIsOptionMenuAlreadyOpen(true);
+
+      const selectionToCheckFor =
+        currentSelection && currentSelection.toLowerCase().trim();
+      const existingValueOnMenuOpen = selectionToCheckFor
+        ? items.findIndex(
+            (item) =>
+              (item.value &&
+                item.value.toLowerCase() === selectionToCheckFor) ||
+              item.label.toLowerCase() === selectionToCheckFor
+          )
+        : -1;
+
+      if (existingValueOnMenuOpen > -1) {
+        setSelectedIndex(existingValueOnMenuOpen);
+      }
+    }
+  }, [isOptionMenuAlreadyOpen, currentSelection, items]);
+
+  // when selectedIndex is updated above we want to scroll it into view and focus it
+  useEffect(() => {
+    if (listRef.current && listRef.current.children) {
+      const selectedItem = listRef.current.children[selectedIndex];
+      selectedItem?.scrollIntoView();
+      selectedItem?.focus();
+    }
+  }, [selectedIndex]);
 
   const renderMenuItem = (item, index) => {
     const itemIsDisabled = !item.value && item.value !== 0;
+    const itemIsSelected = index === selectedIndex;
+    const itemIsHovering = index === hoveredIndex;
+    const itemBgColor =
+      (itemIsSelected && 'gray50') || (itemIsHovering && 'gray25');
+
     return (
       <MenuItem
         key={`${item.value}_${index}`}
-        isHovering={index === hoveredIndex}
-        onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
+        itemBgColor={itemBgColor}
+        onClick={() => !itemIsDisabled && onSelect(item)}
         onMouseEnter={() => setHoveredIndex(index)}
         isDisabled={itemIsDisabled}
       >
@@ -140,8 +183,8 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
   };
 
   return (
-    <Menu isOpen={isOpen}>
-      {items.slice(0, maxItemsVisible).map((item, index) => {
+    <Menu isOpen={isOpen} ref={listRef}>
+      {items.map((item, index) => {
         return renderMenuItem(item, index);
       })}
     </Menu>
@@ -149,8 +192,8 @@ const TypeaheadOptions = ({ isOpen, items, maxItemsVisible = 5, onSelect }) => {
 };
 
 TypeaheadOptions.propTypes = {
+  currentSelection: PropTypes.string,
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
-  maxItemsVisible: PropTypes.number,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
 };
