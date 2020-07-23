@@ -28,10 +28,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Publisher;
+
 /**
  * Settings class.
  */
 class Settings {
+
+	use Publisher;
 
 	/**
 	 * Settings group.
@@ -70,6 +74,38 @@ class Settings {
 				'type'         => 'string',
 				'description'  => __( 'Google Analytics Tracking ID', 'web-stories' ),
 				'default'      => '',
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			$this->get_publisher_logo_option_name(),
+			[
+				'description'  => __( 'Publisher logo data.', 'web-stories' ),
+				'type'         => 'object',
+				'default'      => $this->get_publisher_logo_option_default(),
+				'show_in_rest' => [
+					'schema' => [
+						'type'       => 'object',
+						'properties' => [
+							'active' => [
+								'description' => __( 'Unique identifier for the object.', 'web-stories' ),
+								'type'        => 'integer',
+								'required'    => true,
+								'context'     => [ 'view', 'edit', 'embed' ],
+							],
+							'all'    => [
+								'description' => __( 'List of all possible publisher logos as an array', 'web-stories' ),
+								'type'        => 'array',
+								'items'       => [
+									'type' => 'integer',
+								],
+								'required'    => true,
+								'context'     => [ 'view', 'edit', 'embed' ],
+							],
+						],
+					],
+				],
 			]
 		);
 	}

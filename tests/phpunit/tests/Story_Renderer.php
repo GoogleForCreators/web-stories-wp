@@ -128,7 +128,13 @@ class Story_Renderer extends \WP_UnitTestCase {
 		);
 
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
-		add_option( $option_name, [ 'active' => $attachment_id ] );
+		add_option(
+			$option_name,
+			[
+				'active' => $attachment_id,
+				'all'    => [ $attachment_id ],
+			] 
+		);
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
 		$rendered = $renderer->render();
 

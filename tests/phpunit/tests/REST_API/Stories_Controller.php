@@ -340,4 +340,44 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
 	}
+
+	/**
+	 * @covers ::update_item
+	 */
+	public function test_update_item_publisher_id() {
+		wp_set_current_user( self::$user_id );
+
+		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
+		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
+
+		$story = self::factory()->post->create(
+			[
+				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+			]
+		);
+
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+
+		$request = new WP_REST_Request( 'PUT', '/web-stories/v1/web-story/' . $story );
+		$request->set_body_params(
+			[
+				'content'        => $unsanitized_content,
+				'story_data'     => $unsanitized_story_data,
+				'publisher_logo' => $attachment_id,
+			]
+		);
+
+		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$response = rest_get_server()->dispatch( $request );
+		$new_data = $response->get_data();
+		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
+		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+
+		$publisher_logo_settings = get_option( $controller->get_publisher_logo_option_name() );
+		$this->assertArrayHasKey( 'all', $publisher_logo_settings );
+		$this->assertArrayHasKey( 'active', $publisher_logo_settings );
+		$this->assertEquals( $attachment_id, $publisher_logo_settings['active'] );
+		$this->assertContains( $attachment_id, $publisher_logo_settings['all'] );
+	}
 }

@@ -217,4 +217,19 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		);
 		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
+
+	public function test_add_all_to_publisher() {
+		$object        = new \Google\Web_Stories\Database_Upgrader();
+		$option_name   = $object->get_publisher_logo_option_name();
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		update_option( $option_name, [ 'active' => $attachment_id ] );
+		$this->call_private_method( $object, 'add_all_to_publisher' );
+
+		$publisher_logo_settings = get_option( $option_name );
+		$this->assertArrayHasKey( 'all', $publisher_logo_settings );
+		$this->assertArrayHasKey( 'active', $publisher_logo_settings );
+		$this->assertEquals( $attachment_id, $publisher_logo_settings['active'] );
+		$this->assertContains( $attachment_id, $publisher_logo_settings['all'] );
+	}
+
 }

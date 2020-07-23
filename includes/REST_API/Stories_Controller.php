@@ -104,8 +104,10 @@ class Stories_Controller extends Stories_Base_Controller {
 			// If publisher logo is set, let's assign that.
 			$publisher_logo_id = $request->get_param( 'publisher_logo' );
 			if ( $publisher_logo_id ) {
-				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
-				$publisher_logo_settings           = get_option( $this->get_publisher_logo_option_name(), [] );
+				$publisher_logo_settings = get_option( $this->get_publisher_logo_option_name(), $this->get_publisher_logo_option_default() );
+				if ( ! in_array( $publisher_logo_id, $publisher_logo_settings['all'], true ) ) {
+					$publisher_logo_settings['all'][] = $publisher_logo_settings['active'];
+				}
 				$publisher_logo_settings['active'] = $publisher_logo_id;
 				update_option( $this->get_publisher_logo_option_name(), $publisher_logo_settings, false );
 			}
@@ -116,6 +118,7 @@ class Stories_Controller extends Stories_Base_Controller {
 				update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $style_presets );
 			}
 		}
+
 		return rest_ensure_response( $response );
 	}
 

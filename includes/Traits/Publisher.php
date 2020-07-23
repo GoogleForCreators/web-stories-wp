@@ -108,6 +108,18 @@ trait Publisher {
 	}
 
 	/**
+	 * Helper function to get option default.
+	 *
+	 * @return array
+	 */
+	public function get_publisher_logo_option_default() {
+		return [
+			'active' => 0,
+			'all'    => [],
+		];
+	}
+
+	/**
 	 * Get the publisher logo.
 	 *
 	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
@@ -118,7 +130,7 @@ trait Publisher {
 	public function get_publisher_logo() {
 		$logo_image_url = null;
 
-		$publisher_logo_settings = get_option( $this->get_publisher_logo_option_name(), [] );
+		$publisher_logo_settings = get_option( $this->get_publisher_logo_option_name(), $this->get_publisher_logo_option_default() );
 		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
 		if ( $has_publisher_logo ) {
 			$publisher_logo_id = absint( $publisher_logo_settings['active'] );

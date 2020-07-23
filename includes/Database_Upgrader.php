@@ -26,12 +26,16 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Publisher;
+
 /**
  * Class Database_Upgrader
  *
  * @package Google\Web_Stories
  */
 class Database_Upgrader {
+
+	use Publisher;
 
 	/**
 	 * The slug of database option.
@@ -59,6 +63,7 @@ class Database_Upgrader {
 			'2.0.1' => 'v_2_add_term',
 			'2.0.2' => 'remove_broken_text_styles',
 			'2.0.3' => 'unify_color_presets',
+			'2.0.4' => 'add_all_to_publisher',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -210,6 +215,21 @@ class Database_Upgrader {
 			'colors' => $colors,
 		];
 		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Add all field to publisher logos option.
+	 *
+	 * @return void
+	 */
+	protected function add_all_to_publisher() {
+		$publisher_logo_settings = (array) get_option( $this->get_publisher_logo_option_name(), $this->get_publisher_logo_option_default() );
+		$publisher_logo_settings = wp_parse_args( $publisher_logo_settings, $this->get_publisher_logo_option_default() );
+		$publisher_logo_id       = $publisher_logo_settings['active'];
+		if ( $publisher_logo_id ) {
+			$publisher_logo_settings['all'] = [ $publisher_logo_id ];
+		}
+		update_option( $this->get_publisher_logo_option_name(), $publisher_logo_settings, false );
 	}
 
 	/**
