@@ -51,7 +51,7 @@ const ExpandButton = styled(ArrowDown)`
 
 const Media3pCategories = ({
   categories,
-  selectedCategory,
+  selectedCategoryName,
   selectCategory,
   deselectCategory,
 }) => {
@@ -60,7 +60,7 @@ const Media3pCategories = ({
     <CategorySection aria-expanded={isExpanded}>
       <CategoryPillContainer isExpanded={isExpanded} role="tablist">
         {categories.map((e) => {
-          const selected = e.name === selectedCategory;
+          const selected = e.name === selectedCategoryName;
           return (
             <CategoryPill
               isSelected={selected}
@@ -83,7 +83,7 @@ const Media3pCategories = ({
 
 Media3pCategories.propTypes = {
   categories: PropTypes.array.isRequired,
-  selectedCategory: PropTypes.string,
+  selectedCategoryName: PropTypes.string,
   selectCategory: PropTypes.func,
   deselectCategory: PropTypes.func,
 };

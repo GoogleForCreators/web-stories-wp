@@ -150,7 +150,7 @@ function Media3pPane(props) {
           </ProviderTabSection>
           <Media3pCategories
             categories={categories.categories}
-            selectedCategory={categories.selectedCategory}
+            selectedCategoryName={categories.selectedCategoryName}
             selectCategory={selectCategory}
             deselectCategory={deselectCategory}
           />

@@ -46,7 +46,7 @@ describe('Media3pCategories', () => {
     const { getByRole } = renderWithTheme(
       <Media3pCategories
         categories={[]}
-        selectedCategory={undefined}
+        selectedCategoryName={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
@@ -59,7 +59,7 @@ describe('Media3pCategories', () => {
     const { getByRole, getByText } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategory={undefined}
+        selectedCategoryName={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
@@ -80,7 +80,7 @@ describe('Media3pCategories', () => {
     const { getByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategory={'1'}
+        selectedCategoryName={'1'}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
@@ -95,7 +95,7 @@ describe('Media3pCategories', () => {
     const { getByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategory={undefined}
+        selectedCategoryName={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
@@ -111,7 +111,7 @@ describe('Media3pCategories', () => {
     const { getByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategory={'1'}
+        selectedCategoryName={'1'}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
