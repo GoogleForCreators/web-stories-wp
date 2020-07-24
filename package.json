@@ -74,7 +74,7 @@
     "@babel/preset-react": "^7.10.4",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@percy/puppeteer": "^1.1.0",
-    "@prettier/plugin-xml": "^0.9.0",
+    "@prettier/plugin-xml": "^0.10.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@storybook/addon-a11y": "^6.0.0-rc.0",
     "@storybook/addon-actions": "^6.0.0-rc.0",
