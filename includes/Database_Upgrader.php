@@ -26,16 +26,12 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Traits\Publisher;
-
 /**
  * Class Database_Upgrader
  *
  * @package Google\Web_Stories
  */
 class Database_Upgrader {
-
-	use Publisher;
 
 	/**
 	 * The slug of database option.

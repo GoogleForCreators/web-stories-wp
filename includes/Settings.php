@@ -28,15 +28,10 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Traits\Publisher;
-
 /**
  * Settings class.
  */
 class Settings {
-
-	use Publisher;
-
 	/**
 	 * Settings group.
 	 *
