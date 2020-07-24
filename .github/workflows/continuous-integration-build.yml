@@ -95,7 +95,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: web-stories
-          path: build/web-stories-regulars
+          path: build/web-stories-regular
 
       - name: Upload development bundle
         uses: actions/upload-artifact@v2
