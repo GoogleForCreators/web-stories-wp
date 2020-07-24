@@ -117,6 +117,13 @@ class Plugin {
 	public $database_upgrader;
 
 	/**
+	 * Analytics.
+	 *
+	 * @var Analytics
+	 */
+	public $analytics;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
@@ -165,6 +172,9 @@ class Plugin {
 		// Frontend.
 		$this->discovery = new Discovery();
 		add_action( 'init', [ $this->discovery, 'init' ] );
+
+		$this->analytics = new Analytics();
+		add_action( 'init', [ $this->analytics, 'init' ] );
 
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.
