@@ -24,8 +24,6 @@ import { within } from '@testing-library/react';
  */
 import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
-// import formattedStoriesArray from '../../../../dataUtils/formattedStoriesArray';
-import formattedUsersObject from '../../../../dataUtils/formattedUsersObject';
 import { getFormattedDisplayDate } from '../../../../utils';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
@@ -395,6 +393,14 @@ describe('CUJ: Creator can view their stories in list view', () => {
     return stories;
   }
 
+  async function getUsers() {
+    const {
+      state: { users },
+    } = await fixture.renderHook(() => useContext(ApiContext));
+
+    return users;
+  }
+
   describe('Action: See stories in list view', () => {
     it('should switch to List View', async () => {
       const listViewButton = fixture.screen.getByLabelText(
@@ -681,8 +687,10 @@ describe('CUJ: Creator can view their stories in list view', () => {
 
       expect(rows.length).toEqual(storiesOrderById.length);
 
+      const users = await getUsers();
+
       const storieAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => formattedUsersObject[stories[id].author].name
+        (id) => users[stories[id].author].name
       );
 
       // author is the third column
