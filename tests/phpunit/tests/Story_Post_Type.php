@@ -78,7 +78,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'template_include', [ $story_post_type, 'filter_template_include' ] ) );
 		$this->assertSame( PHP_INT_MAX, has_filter( 'amp_skip_post', [ $story_post_type, 'skip_amp' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
-		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $story_post_type, 'filter_site_kit_gtag_opt' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
 	}
 
@@ -163,26 +162,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$story_post_type->admin_enqueue_scripts( 'post.php' );
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
-	}
-
-	/**
-	 * @covers ::filter_site_kit_gtag_opt
-	 */
-	public function test_filter_site_kit_gtag_opt() {
-		$this->go_to( get_permalink( self::$story_id ) );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$gtag            = [
-			'vars'     => [
-				'gtag_id' => 'hello',
-			],
-			'triggers' => [],
-		];
-		$result          = $story_post_type->filter_site_kit_gtag_opt( $gtag );
-
-		$this->assertArrayHasKey( 'storyProgress', $result['triggers'] );
-		$this->assertArrayHasKey( 'storyEnd', $result['triggers'] );
-		$this->assertSame( 'Example title', $result['triggers']['storyProgress']['vars']['event_category'] );
-		$this->assertSame( 'Example title', $result['triggers']['storyEnd']['vars']['event_category'] );
 	}
 
 	/**
