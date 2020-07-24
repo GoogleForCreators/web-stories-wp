@@ -121,7 +121,7 @@ const CardPreviewContainer = ({
   story,
   pageSize,
   children,
-  onClickCard = () => {},
+  containerAction = () => {},
 }) => {
   const [cardState, dispatch] = useReducer(cardReducer, CARD_STATE.IDLE);
   const [pageIndex, setPageIndex] = useState(0);
@@ -156,12 +156,12 @@ const CardPreviewContainer = ({
   }, [storyPages.length, cardState]);
 
   const handleKeyDownEditControls = useCallback(
-    ({ nativeEvent }) => {
-      if (nativeEvent.keyCode === 13) {
-        onClickCard();
+    ({ key }) => {
+      if (key === 'Enter') {
+        containerAction();
       }
     },
-    [onClickCard]
+    [containerAction]
   );
   return (
     <>
@@ -186,7 +186,7 @@ const CardPreviewContainer = ({
         onFocus={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
-        onClick={onClickCard}
+        onClick={containerAction}
         onKeyDown={handleKeyDownEditControls}
         tabIndex={0}
       >
@@ -221,7 +221,7 @@ CardPreviewContainer.propTypes = {
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
-  onClickCard: PropTypes.func,
+  containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
   story: StoryPropType,
 };

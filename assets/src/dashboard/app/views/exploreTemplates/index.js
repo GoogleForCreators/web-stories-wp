@@ -66,10 +66,9 @@ function ExploreTemplates() {
 
   const handlePreviewTemplate = useCallback(
     (template) => {
-      if (!enableTemplatePreviews) {
-        return () => {};
+      if (enableTemplatePreviews) {
+        preview.set(template);
       }
-      return preview.set(template);
     },
     [enableTemplatePreviews, preview]
   );

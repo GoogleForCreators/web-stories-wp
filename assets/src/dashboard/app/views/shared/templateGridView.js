@@ -81,7 +81,9 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
               targetAction: targetAction(template),
               label: __('Use template', 'web-stories'),
             }}
-            onClickCard={() => templateActions.handlePreviewTemplate(template)}
+            containerAction={() =>
+              templateActions.handlePreviewTemplate(template)
+            }
           />
         </CardGridItem>
       ))}
