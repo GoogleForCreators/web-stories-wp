@@ -45,11 +45,25 @@ class Settings {
 	const SETTING_GROUP = 'web_stories';
 
 	/**
-	 * Settings handle.
+	 * GA Tracking ID setting name.
 	 *
 	 * @var string
 	 */
 	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
+
+	/**
+	 * Active publisher logo setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ACTIVE_PUBLISHER_LOGO = 'web_stories_active_publisher_logo';
+
+	/**
+	 * Publisher logos setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_PUBLISHER_LOGOS = 'web_stories_publisher_logos';
 
 	/**
 	 * Initializes the Settings logic.
@@ -79,30 +93,26 @@ class Settings {
 
 		register_setting(
 			self::SETTING_GROUP,
-			$this->get_publisher_logo_option_name(),
+			self::SETTING_NAME_ACTIVE_PUBLISHER_LOGO,
 			[
-				'description'  => __( 'Publisher logo data.', 'web-stories' ),
-				'type'         => 'object',
-				'default'      => $this->get_publisher_logo_option_default(),
+				'show_in_rest' => true,
+				'type'         => 'integer',
+				'description'  => __( 'Default Publisher Logo', 'web-stories' ),
+				'default'      => 0,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_PUBLISHER_LOGOS,
+			[
+				'type'         => 'array',
+				'description'  => __( 'Publisher Logos', 'web-stories' ),
+				'default'      => [],
 				'show_in_rest' => [
 					'schema' => [
-						'type'       => 'object',
-						'properties' => [
-							'active' => [
-								'description' => __( 'Unique identifier for the object.', 'web-stories' ),
-								'type'        => 'integer',
-								'required'    => true,
-								'context'     => [ 'view', 'edit', 'embed' ],
-							],
-							'all'    => [
-								'description' => __( 'List of all possible publisher logos as an array', 'web-stories' ),
-								'type'        => 'array',
-								'items'       => [
-									'type' => 'integer',
-								],
-								'required'    => true,
-								'context'     => [ 'view', 'edit', 'embed' ],
-							],
+						'items' => [
+							'type' => 'integer',
 						],
 					],
 				],

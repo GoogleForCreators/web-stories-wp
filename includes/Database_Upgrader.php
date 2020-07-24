@@ -63,7 +63,7 @@ class Database_Upgrader {
 			'2.0.1' => 'v_2_add_term',
 			'2.0.2' => 'remove_broken_text_styles',
 			'2.0.3' => 'unify_color_presets',
-			'2.0.4' => 'add_all_to_publisher',
+			'2.0.4' => 'update_publisher_logos',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -218,18 +218,20 @@ class Database_Upgrader {
 	}
 
 	/**
-	 * Add all field to publisher logos option.
+	 * Split publisher logos into two options.
 	 *
 	 * @return void
 	 */
-	protected function add_all_to_publisher() {
-		$publisher_logo_settings = (array) get_option( $this->get_publisher_logo_option_name(), $this->get_publisher_logo_option_default() );
-		$publisher_logo_settings = wp_parse_args( $publisher_logo_settings, $this->get_publisher_logo_option_default() );
-		$publisher_logo_id       = $publisher_logo_settings['active'];
-		if ( $publisher_logo_id ) {
-			$publisher_logo_settings['all'] = [ $publisher_logo_id ];
+	protected function update_publisher_logos() {
+		$publisher_logo_id       = 0;
+		$publisher_logo_settings = (array) get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		if ( ! empty( $publisher_logo_settings['active'] ) ) {
+			$publisher_logo_id = $publisher_logo_settings['active'];
 		}
-		update_option( $this->get_publisher_logo_option_name(), $publisher_logo_settings, false );
+
+		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id, false );
+		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_filter( [ $publisher_logo_id ] ), false );
 	}
 
 	/**

@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
@@ -100,24 +101,25 @@ class Stories_Controller extends Stories_Base_Controller {
 	 */
 	public function update_item( $request ) {
 		$response = parent::update_item( $request );
-		if ( ! is_wp_error( $response ) ) {
-			// If publisher logo is set, let's assign that.
-			$publisher_logo_id = $request->get_param( 'publisher_logo' );
-			if ( $publisher_logo_id ) {
-				$publisher_logo_settings = get_option( $this->get_publisher_logo_option_name(), $this->get_publisher_logo_option_default() );
-				$publisher_logo_settings = wp_parse_args( $publisher_logo_settings, $this->get_publisher_logo_option_default() );
-				if ( ! in_array( $publisher_logo_id, $publisher_logo_settings['all'], true ) ) {
-					$publisher_logo_settings['all'][] = $publisher_logo_id;
-				}
-				$publisher_logo_settings['active'] = $publisher_logo_id;
-				update_option( $this->get_publisher_logo_option_name(), $publisher_logo_settings, false );
-			}
 
-			// If style presets are set.
-			$style_presets = $request->get_param( 'style_presets' );
-			if ( is_array( $style_presets ) ) {
-				update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $style_presets );
-			}
+		if ( is_wp_error( $response ) ) {
+			return rest_ensure_response( $response );
+		}
+
+		// If publisher logo is set, let's assign that.
+		$publisher_logo_id = $request->get_param( 'publisher_logo' );
+		if ( $publisher_logo_id ) {
+			$all_publisher_logos   = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+			$all_publisher_logos[] = $publisher_logo_id;
+
+			update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_unique( $all_publisher_logos ) );
+			update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id );
+		}
+
+		// If style presets are set.
+		$style_presets = $request->get_param( 'style_presets' );
+		if ( is_array( $style_presets ) ) {
+			update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $style_presets );
 		}
 
 		return rest_ensure_response( $response );

@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories\Traits;
 
+use Google\Web_Stories\Settings;
+
 /**
  * Trait Publisher
  *
@@ -99,27 +101,6 @@ trait Publisher {
 	}
 
 	/**
-	 * Helper function to get option name.
-	 *
-	 * @return string
-	 */
-	public function get_publisher_logo_option_name() {
-		return 'web_stories_publisher_logos';
-	}
-
-	/**
-	 * Helper function to get option default.
-	 *
-	 * @return array
-	 */
-	public function get_publisher_logo_option_default() {
-		return [
-			'active' => 0,
-			'all'    => [],
-		];
-	}
-
-	/**
 	 * Get the publisher logo.
 	 *
 	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
@@ -130,11 +111,10 @@ trait Publisher {
 	public function get_publisher_logo() {
 		$logo_image_url = null;
 
-		$publisher_logo_settings = get_option( $this->get_publisher_logo_option_name(), $this->get_publisher_logo_option_default() );
-		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
-		if ( $has_publisher_logo ) {
-			$publisher_logo_id = absint( $publisher_logo_settings['active'] );
-			$logo_image_url    = $this->get_valid_publisher_image( $publisher_logo_id );
+		$active_publisher_logo = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
+
+		if ( $active_publisher_logo ) {
+			$logo_image_url = $this->get_valid_publisher_image( $active_publisher_logo );
 		}
 
 		// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
