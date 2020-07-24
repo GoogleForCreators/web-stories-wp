@@ -145,6 +145,13 @@ class Story_Post_Type {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+
+		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
+		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
+		} else {
+			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
+		}
 	}
 
 	/**
@@ -555,5 +562,20 @@ class Story_Post_Type {
 		}
 
 		return $gtag_opt;
+	}
+
+	/**
+	 * Adds the web story post type to Jetpack / WordPress.com sitemaps.
+	 *
+	 * @see https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80
+	 *
+	 * @param array $post_types Array of post types.
+	 *
+	 * @return array Modified list of post types.
+	 */
+	public function add_to_jetpack_sitemap( $post_types ) {
+		$post_types[] = self::POST_TYPE_SLUG;
+
+		return $post_types;
 	}
 }
