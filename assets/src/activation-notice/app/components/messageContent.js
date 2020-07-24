@@ -37,6 +37,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.bg};
   box-sizing: border-box;
   display: flex;
+  justify-content: space-between;
   overflow: hidden;
   padding: 0 30px 0 45px;
 
