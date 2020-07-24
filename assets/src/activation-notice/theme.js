@@ -95,14 +95,14 @@ const darkTheme = {
     link: {
       fg: '#1A73E8',
       hover: {
-        fg: '#1A1D1F',
+        fg: '#44aaff',
       },
     },
     action: {
       bg: '#1A73E8',
       fg: '#ffffff',
       hover: {
-        bg: '#1A1D1F',
+        bg: '#44aaff',
       },
     },
   },
