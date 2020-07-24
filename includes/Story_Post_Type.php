@@ -67,6 +67,7 @@ class Story_Post_Type {
 	 * @var string
 	 */
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
+
 	/**
 	 * Registers the post type for stories.
 	 *
