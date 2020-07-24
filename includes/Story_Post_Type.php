@@ -146,13 +146,11 @@ class Story_Post_Type {
 
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
 
-		// Add jetpack and wpcom sitemaps.  See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80 .
+		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
-			// Add to Dotcom XML sitemaps.
-			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_or_dotcom_sitemap' ] );
+			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		} else {
-			// Add to Jetpack XML sitemap.
-			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_or_dotcom_sitemap' ] );
+			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		}
 	}
 
@@ -567,13 +565,15 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Add CPT to Jetpack sitemaps
+	 * Adds the web story post type to Jetpack / WordPress.com sitemaps.
+	 *
+	 * @see https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80
 	 *
 	 * @param array $post_types Array of post types.
 	 *
-	 * @return array
+	 * @return array Modified list of post types.
 	 */
-	public function add_to_jetpack_or_dotcom_sitemap( array $post_types ) {
+	public function add_to_jetpack_sitemap( $post_types ) {
 		$post_types[] = self::POST_TYPE_SLUG;
 
 		return $post_types;
