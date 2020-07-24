@@ -113,7 +113,7 @@ function APIProvider({ children }) {
         context: 'edit',
         per_page: perPage,
         page: pagingNum,
-        _web_stories_envelope: 1,
+        _web_stories_envelope: true,
       });
 
       if (mediaType) {
