@@ -78,7 +78,7 @@ function Media3pApiProvider({ children }) {
     return [
       `provider:${provider}`,
       mediaType ? `type:${mediaType}` : null,
-      selectedCategoryId ? `category_id:${selectedCategoryId}` : null,
+      selectedCategoryId ? `category:${selectedCategoryId}` : null,
       searchTerm,
     ]
       .filter(Boolean)

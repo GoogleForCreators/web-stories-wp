@@ -235,7 +235,7 @@ describe('useMedia3pApi', () => {
     });
 
     expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
-      filter: 'provider:unsplash category_id:category/1',
+      filter: 'provider:unsplash category:category/1',
       orderBy: undefined,
       pageSize: 20,
       pageToken: undefined,
