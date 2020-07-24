@@ -23,14 +23,14 @@ import { useEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import Movable from '../../components/movable';
+import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import getTransformFlip from '../shared/getTransformFlip';
 import getFocalFromOffset from './getFocalFromOffset';
 
-function EditCropMovable({
+function EditCropMoveable({
   setProperties,
   cropBox,
   croppedMedia,
@@ -60,9 +60,9 @@ function EditCropMovable({
   });
 
   return (
-    <Movable
+    <Moveable
       ref={moveableRef}
-      className="crop-movable"
+      className="crop-moveable"
       targets={cropBox}
       origin={false}
       resizable={true}
@@ -146,7 +146,7 @@ function EditCropMovable({
   );
 }
 
-EditCropMovable.propTypes = {
+EditCropMoveable.propTypes = {
   setProperties: PropTypes.func.isRequired,
   cropBox: PropTypes.object.isRequired,
   croppedMedia: PropTypes.object.isRequired,
@@ -162,4 +162,4 @@ EditCropMovable.propTypes = {
   mediaHeight: PropTypes.number.isRequired,
 };
 
-export default EditCropMovable;
+export default EditCropMoveable;

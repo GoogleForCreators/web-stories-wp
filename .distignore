@@ -53,6 +53,7 @@ phpunit.xml.dist
 phpunit-multisite.xml
 phpunit-multisite.xml.dist
 README.md
+SECURITY.md
 webpack.config.cjs
 webpack.config.test.cjs
 assets/images/templates

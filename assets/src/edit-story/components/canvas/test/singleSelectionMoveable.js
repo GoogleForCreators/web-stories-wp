@@ -54,7 +54,7 @@ WrapperWithRef.propTypes = {
   children: PropTypes.node,
 };
 
-describe('singleSelectionMovable', () => {
+describe('singleSelectionMoveable', () => {
   let updateSelectedElements;
   let target;
   let storyContext;

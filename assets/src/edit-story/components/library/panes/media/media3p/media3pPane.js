@@ -19,7 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -29,7 +30,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useDebouncedCallback } from 'use-debounce';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import {
   useMedia3p,
@@ -44,18 +44,14 @@ import {
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import { ProviderType } from '../common/providerType';
+import Flags from '../../../../../flags';
+import Media3pCategories from './media3pCategories';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
   margin-top: 30px;
   padding: 0 24px;
-`;
-
-const CategorySection = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v3};
-  min-height: 94px;
-  padding: 30px 24px;
 `;
 
 /**
@@ -90,21 +86,11 @@ function Media3pPane(props) {
     })
   );
 
-  // Local state so that we can debounce triggering searches.
-  const [searchTermValue, setSearchTermValue] = useState(searchTerm);
-
   useEffect(() => {
     if (isActive) {
       setSelectedProvider({ provider: 'unsplash' });
     }
   }, [isActive, setSelectedProvider]);
-
-  /**
-   * Effectively performs a search, triggered at most every 500ms.
-   */
-  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
-    setSearchTerm({ searchTerm: searchTermValue });
-  }, 500);
 
   const {
     media,
@@ -112,23 +98,31 @@ function Media3pPane(props) {
     setNextPage,
     isMediaLoading,
     isMediaLoaded,
+    categories,
+    selectCategory,
+    deselectCategory,
   } = useMedia3pForProvider(
     'unsplash',
     ({
-      state: { media, hasMore, isMediaLoading, isMediaLoaded },
-      actions: { setNextPage },
-    }) => ({ media, hasMore, isMediaLoading, isMediaLoaded, setNextPage })
+      state: { media, hasMore, isMediaLoading, isMediaLoaded, categories },
+      actions: { setNextPage, selectCategory, deselectCategory },
+    }) => ({
+      media,
+      hasMore,
+      isMediaLoading,
+      isMediaLoaded,
+      setNextPage,
+      categories,
+      selectCategory,
+      deselectCategory,
+    })
   );
 
-  /**
-   * Handle search input changes. Triggers with every keystroke.
-   *
-   * @param {string} value the new search term.
-   */
-  const onSearch = (value) => {
-    setSearchTermValue(value);
-    changeSearchTermDebounced();
-  };
+  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+
+  const incrementalSearchDebounceMedia = useFeature(
+    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
+  );
 
   const onProviderTabClick = useCallback(() => {
     // TODO(#2393): set state.
@@ -141,9 +135,11 @@ function Media3pPane(props) {
         <PaneHeader>
           <SearchInputContainer>
             <SearchInput
-              value={searchTermValue}
+              initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
-              onChange={onSearch}
+              onSearch={onSearch}
+              incremental={incrementalSearchDebounceMedia}
+              disabled={Boolean(categories.selectedCategoryId)}
             />
           </SearchInputContainer>
           <ProviderTabSection>
@@ -153,7 +149,12 @@ function Media3pPane(props) {
               onClick={onProviderTabClick}
             />
           </ProviderTabSection>
-          <CategorySection>{__('Coming soon', 'web-stories')}</CategorySection>
+          <Media3pCategories
+            categories={categories.categories}
+            selectedCategoryId={categories.selectedCategoryId}
+            selectCategory={selectCategory}
+            deselectCategory={deselectCategory}
+          />
         </PaneHeader>
         <PaginatedMediaGallery
           providerType={ProviderType.UNSPLASH}

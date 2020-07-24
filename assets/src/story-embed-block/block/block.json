@@ -3,7 +3,7 @@
   "category": "embed",
   "attributes": {
     "url": {
-      "type": "url"
+      "type": "string"
     },
     "title": {
       "type": "string"

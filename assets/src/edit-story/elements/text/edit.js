@@ -25,18 +25,18 @@ import {
   useCallback,
   useMemo,
 } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useStory, useFont } from '../../app';
+import { useStory, useFont, useTransform } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
 import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,
-  elementWithBackgroundColor,
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
@@ -46,13 +46,12 @@ import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import useRichText from '../../components/richText/useRichText';
+import { useTransformHandler } from '../../components/transform';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
 // on the content and properties.
-// Background color is used to make the edited element more prominent and
-// easier to see.
 const Wrapper = styled.div`
   ${elementFillContent}
 
@@ -75,7 +74,6 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
-  ${elementWithBackgroundColor}
 
   opacity: ${({ opacity }) =>
     typeof opacity !== 'undefined' ? opacity / 100 : null};
@@ -93,7 +91,12 @@ const Highlight = styled.span`
 `;
 
 function TextEdit({
-  element: {
+  element,
+  box: { x, y, height, rotationAngle },
+  editWrapper,
+  onResize,
+}) {
+  const {
     id,
     content,
     backgroundColor,
@@ -101,9 +104,7 @@ function TextEdit({
     opacity,
     height: elementHeight,
     ...rest
-  },
-  box: { x, y, height, rotationAngle },
-}) {
+  } = element;
   const { font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
@@ -129,6 +130,7 @@ function TextEdit({
       editorToDataY,
     })
   );
+
   const textProps = {
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
     font,
@@ -151,6 +153,10 @@ function TextEdit({
   } = useFont();
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
+  }));
+
+  const { isAnythingTransforming } = useTransform((state) => ({
+    isAnythingTransforming: state.state.isAnythingTransforming,
   }));
 
   const setProperties = useCallback(
@@ -214,13 +220,34 @@ function TextEdit({
   // Update content for element on unmount.
   useUnmount(updateContent);
 
+  useEffect(() => {
+    // If there are any moveable actions happening, let's update the content
+    // Otherwise the font size and measures will not be correct.
+    if (isAnythingTransforming) {
+      updateContent();
+    }
+  }, [isAnythingTransforming, updateContent]);
+
   // A function to remeasure height
   const handleResize = useCallback(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
     editorHeightRef.current = textBox.offsetHeight;
     wrapper.style.height = `${editorHeightRef.current}px`;
-  }, []);
+    if (editWrapper) {
+      const [dx, dy] = calcRotatedResizeOffset(
+        boxRef.current.rotationAngle,
+        0,
+        0,
+        0,
+        editorHeightRef.current - boxRef.current.height
+      );
+      editWrapper.style.height = `${editorHeightRef.current}px`;
+      editWrapper.style.left = `${boxRef.current.x + dx}px`;
+      editWrapper.style.top = `${boxRef.current.y + dy}px`;
+      onResize && onResize();
+    }
+  }, [editWrapper, onResize]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
@@ -240,6 +267,26 @@ function TextEdit({
       },
     ]);
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
+
+  useTransformHandler(id, (transform) => {
+    const target = textBoxRef.current;
+    const wrapper = wrapperRef.current;
+    const updatedFontSize = transform?.updates?.fontSize;
+    target.style.fontSize = updatedFontSize
+      ? `${dataToEditorY(updatedFontSize)}px`
+      : '';
+
+    if (transform === null) {
+      wrapper.style.width = '';
+      wrapper.style.height = '';
+    } else {
+      const { resize } = transform;
+      if (resize && resize[0] !== 0 && resize[1] !== 0) {
+        wrapper.style.width = `${resize[0]}px`;
+        wrapper.style.height = `${resize[1]}px`;
+      }
+    }
+  });
 
   const {
     state: { editorState },
@@ -272,6 +319,8 @@ function TextEdit({
 TextEdit.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   box: StoryPropTypes.box.isRequired,
+  onResize: PropTypes.func,
+  editWrapper: PropTypes.object,
 };
 
 export default TextEdit;

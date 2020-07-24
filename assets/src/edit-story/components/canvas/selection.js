@@ -19,8 +19,8 @@
  */
 import { useStory } from '../../app';
 import useCanvas from '../canvas/useCanvas';
-import SingleSelectionMovable from './singleSelectionMovable';
-import MultiSelectionMovable from './multiSelectionMovable';
+import SingleSelectionMoveable from './singleSelectionMoveable';
+import MultiSelectionMoveable from './multiSelectionMoveable';
 
 function Selection() {
   const { selectedElements } = useStory((state) => ({
@@ -53,7 +53,7 @@ function Selection() {
       return null;
     }
     return (
-      <SingleSelectionMovable
+      <SingleSelectionMoveable
         selectedElement={selectedElement}
         targetEl={target}
         pushEvent={lastSelectionEvent}
@@ -62,7 +62,7 @@ function Selection() {
   }
 
   // Multi-selection.
-  return <MultiSelectionMovable selectedElements={selectedElements} />;
+  return <MultiSelectionMoveable selectedElements={selectedElements} />;
 }
 
 export default Selection;

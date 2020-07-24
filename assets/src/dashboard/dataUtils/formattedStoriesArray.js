@@ -214,12 +214,12 @@ const formattedStoriesArray = [
       _links: {
         self: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         collection: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story',
           },
         ],
         about: [
@@ -236,14 +236,15 @@ const formattedStoriesArray = [
         'version-history': [
           {
             count: 1,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167/revisions',
+            href:
+              'http://localhost:8899/wp-json/web-stories/v1/web-story/167/revisions',
           },
         ],
         'predecessor-version': [
           {
             id: 168,
             href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/167/revisions/168',
+              'http://localhost:8899/wp-json/web-stories/v1/web-story/167/revisions/168',
           },
         ],
         'wp:attachment': [
@@ -265,37 +266,37 @@ const formattedStoriesArray = [
         ],
         'wp:action-publish': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         'wp:action-unfiltered-html': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         'wp:action-assign-author': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         'wp:action-create-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         'wp:action-assign-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         'wp:action-create-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         'wp:action-assign-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         curies: [
@@ -502,12 +503,12 @@ const formattedStoriesArray = [
       _links: {
         self: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         collection: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story',
           },
         ],
         about: [
@@ -524,14 +525,15 @@ const formattedStoriesArray = [
         'version-history': [
           {
             count: 1,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165/revisions',
+            href:
+              'http://localhost:8899/wp-json/web-stories/v1/web-story/165/revisions',
           },
         ],
         'predecessor-version': [
           {
             id: 166,
             href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/165/revisions/166',
+              'http://localhost:8899/wp-json/web-stories/v1/web-story/165/revisions/166',
           },
         ],
         'wp:attachment': [
@@ -553,37 +555,37 @@ const formattedStoriesArray = [
         ],
         'wp:action-publish': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         'wp:action-unfiltered-html': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         'wp:action-assign-author': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         'wp:action-create-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         'wp:action-assign-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         'wp:action-create-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         'wp:action-assign-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/165',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         curies: [
@@ -1082,12 +1084,12 @@ const formattedStoriesArray = [
       _links: {
         self: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         collection: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story',
           },
         ],
         about: [
@@ -1104,14 +1106,15 @@ const formattedStoriesArray = [
         'version-history': [
           {
             count: 1,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163/revisions',
+            href:
+              'http://localhost:8899/wp-json/web-stories/v1/web-story/163/revisions',
           },
         ],
         'predecessor-version': [
           {
             id: 164,
             href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/163/revisions/164',
+              'http://localhost:8899/wp-json/web-stories/v1/web-story/163/revisions/164',
           },
         ],
         'wp:attachment': [
@@ -1133,37 +1136,37 @@ const formattedStoriesArray = [
         ],
         'wp:action-publish': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         'wp:action-unfiltered-html': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         'wp:action-assign-author': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         'wp:action-create-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         'wp:action-assign-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         'wp:action-create-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         'wp:action-assign-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/163',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         curies: [
@@ -1484,12 +1487,12 @@ const formattedStoriesArray = [
       _links: {
         self: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         collection: [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story',
           },
         ],
         about: [
@@ -1506,14 +1509,15 @@ const formattedStoriesArray = [
         'version-history': [
           {
             count: 1,
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161/revisions',
+            href:
+              'http://localhost:8899/wp-json/web-stories/v1/web-story/161/revisions',
           },
         ],
         'predecessor-version': [
           {
             id: 162,
             href:
-              'http://localhost:8899/wp-json/wp/v2/web-story/161/revisions/162',
+              'http://localhost:8899/wp-json/web-stories/v1/web-story/161/revisions/162',
           },
         ],
         'wp:attachment': [
@@ -1535,37 +1539,37 @@ const formattedStoriesArray = [
         ],
         'wp:action-publish': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         'wp:action-unfiltered-html': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         'wp:action-assign-author': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         'wp:action-create-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         'wp:action-assign-categories': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         'wp:action-create-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         'wp:action-assign-tags': [
           {
-            href: 'http://localhost:8899/wp-json/wp/v2/web-story/161',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         curies: [

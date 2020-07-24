@@ -100,13 +100,16 @@ export const STORY_SORT_MENU_ITEMS = [
 ];
 
 export const STORY_STATUS = {
-  ALL: 'publish,draft',
-  PUBLISHED: 'publish',
+  ALL: 'publish,draft,future',
+  PUBLISHED_AND_FUTURE: 'publish,future',
   DRAFT: 'draft',
+  FUTURE: 'future',
+  PUBLISH: 'publish',
 };
 
 export const STORY_ITEM_CENTER_ACTION_LABELS = {
-  [STORY_STATUS.PUBLISHED]: __('View', 'web-stories'),
+  [STORY_STATUS.PUBLISH]: __('View', 'web-stories'),
+  [STORY_STATUS.FUTURE]: __('View', 'web-stories'),
   [STORY_STATUS.DRAFT]: __('Preview', 'web-stories'),
 };
 
@@ -123,15 +126,18 @@ export const STORY_STATUSES = [
   },
   {
     label: __('Published', 'web-stories'),
-    value: STORY_STATUS.PUBLISHED,
-    status: STORY_STATUS.PUBLISHED,
+    value: STORY_STATUS.PUBLISHED_AND_FUTURE,
+    status: STORY_STATUS.PUBLISHED_AND_FUTURE,
   },
 ];
 
 export const STORY_VIEWING_LABELS = {
   [STORY_STATUS.ALL]: __('Viewing all stories', 'web-stories'),
   [STORY_STATUS.DRAFT]: __('Viewing drafts', 'web-stories'),
-  [STORY_STATUS.PUBLISHED]: __('Viewing published stories', 'web-stories'),
+  [STORY_STATUS.PUBLISHED_AND_FUTURE]: __(
+    'Viewing published stories',
+    'web-stories'
+  ),
 };
 
 export const STORY_PAGE_STATE = {

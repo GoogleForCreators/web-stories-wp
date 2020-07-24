@@ -3,7 +3,7 @@ name: Dashboard Integration Tests
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
@@ -52,13 +52,13 @@ jobs:
         with:
           name: cuj-coverage-dashboard
           path: build/cuj-coverage-dashboard.md
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
   deploy-cuj-coverage:
     name: Deploy CUJ Coverage
     needs: [karma]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
       - name: Checkout
