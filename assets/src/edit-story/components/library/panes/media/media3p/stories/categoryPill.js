@@ -15,22 +15,36 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useState } from 'react';
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
-export * from './categories/actions';
-export * from '../pagination/actions';
-import * as types from './types';
+import CategoryPill from '../categoryPill';
 
-export const setSelectedProvider = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.MEDIA3P_SET_SELECTED_PROVIDER,
-    payload: { provider },
-  });
+export default {
+  title: 'Stories Editor/Components/CategoryPill',
+  component: CategoryPill,
 };
 
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.MEDIA3P_SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
+const Container = styled.div`
+  background-color: ${({ theme }) => theme.colors.bg.v3};
+  padding: 1em;
+`;
+
+export const _default = () => {
+  const [isSelected, setIsSelected] = useState(false);
+
+  return (
+    <Container>
+      <CategoryPill
+        title="Category"
+        isSelected={isSelected}
+        onClick={() => setIsSelected(!isSelected)}
+      />
+    </Container>
+  );
 };
