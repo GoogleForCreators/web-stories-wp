@@ -116,24 +116,24 @@ if (
 	add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
 }
 
-// In CLI context, existence of the JS files is not required.
-if (
-	! class_exists( '\Google\Web_Stories\Plugin' ) &&
-	( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI )
-) {
-	$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
-	$body    = sprintf(
-		/* translators: %s: build commands. */
-		esc_html__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
-		'`composer install && npm install && npm run build`'
-	);
+if ( ! class_exists( '\Google\Web_Stories\Plugin' ) ) {
+	// In CLI context, existence of the JS files is not required.
+	if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
+		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
+		$body    = sprintf(
+			/* translators: %s: build commands. */
+			esc_html__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
+			'`composer install && npm install && npm run build`'
+		);
 
-	if ( class_exists( '\WP_CLI' ) ) {
-		\WP_CLI::warning( "$heading\n$body" );
-	} else {
-		echo "$heading\n$body\n"; // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		if ( class_exists( '\WP_CLI' ) ) {
+			\WP_CLI::warning( "$heading\n$body" );
+		} else {
+			echo "$heading\n$body\n"; // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	}
 
+	// However, we still need to stop further execution.
 	return;
 }
 

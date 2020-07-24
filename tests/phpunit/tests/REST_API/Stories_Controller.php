@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Tests\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -67,6 +68,18 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			3,
 			[
 				'post_status' => 'publish',
+				'post_author' => self::$user_id,
+				'post_type'   => $post_type,
+			]
+		);
+
+		$future_date = strtotime( '+1 day' );
+
+		$factory->post->create_many(
+			3,
+			[
+				'post_status' => 'future',
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
 				'post_author' => self::$user_id,
 				'post_type'   => $post_type,
 			]
@@ -130,8 +143,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	public function test_register_routes() {
 		$routes = rest_get_server()->get_routes();
 
-		$this->assertArrayHasKey( '/wp/v2/web-story', $routes );
-		$this->assertCount( 2, $routes['/wp/v2/web-story'] );
+		$this->assertArrayHasKey( '/web-stories/v1/web-story', $routes );
+		$this->assertCount( 2, $routes['/web-stories/v1/web-story'] );
 	}
 
 	/**
@@ -139,7 +152,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 */
 	public function test_get_items() {
 		wp_set_current_user( self::$user_id );
-		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'GET', '/web-stories/v1/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
 		$response       = rest_get_server()->dispatch( $request );
@@ -151,8 +164,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'publish', $statues_decode );
 		$this->assertArrayHasKey( 'draft', $statues_decode );
 
-		$this->assertEquals( 10, $statues_decode['all'] );
+		$this->assertEquals( 13, $statues_decode['all'] );
 		$this->assertEquals( 7, $statues_decode['publish'] );
+		$this->assertEquals( 3, $statues_decode['future'] );
 		$this->assertEquals( 3, $statues_decode['draft'] );
 
 		$this->assertEquals( 3, $headers['X-WP-Total'] );
@@ -163,7 +177,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 */
 	public function test_get_items_format() {
 		wp_set_current_user( self::$user_id );
-		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'GET', '/web-stories/v1/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
 		$request->set_param( '_web_stories_envelope', true );
@@ -190,7 +204,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 * @covers ::get_item_schema
 	 */
 	public function test_get_item_schema() {
-		$request  = new WP_REST_Request( 'OPTIONS', '/wp/v2/web-story' );
+		$request  = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/web-story' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -205,7 +219,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 * @covers ::filter_posts_clauses
 	 */
 	public function test_filter_posts_by_author_display_names() {
-		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'GET', '/web-stories/v1/web-story' );
 		$request->set_param( 'order', 'asc' );
 		$request->set_param( 'orderby', 'story_author' );
 
@@ -226,7 +240,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			'Expected posts ordered by author display names'
 		);
 
-		$request = new WP_REST_Request( 'GET', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'GET', '/web-stories/v1/web-story' );
 		$request->set_param( 'order', 'desc' );
 		$request->set_param( 'orderby', 'story_author' );
 
@@ -284,7 +298,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
 		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
 
-		$request = new WP_REST_Request( 'POST', '/wp/v2/web-story' );
+		$request = new WP_REST_Request( 'POST', '/web-stories/v1/web-story' );
 		$request->set_body_params(
 			[
 				'content'    => $unsanitized_content,
@@ -314,7 +328,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 			]
 		);
 
-		$request = new WP_REST_Request( 'PUT', '/wp/v2/web-story/' . $story );
+		$request = new WP_REST_Request( 'PUT', '/web-stories/v1/web-story/' . $story );
 		$request->set_body_params(
 			[
 				'content'    => $unsanitized_content,
@@ -326,5 +340,47 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$new_data = $response->get_data();
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+	}
+
+	/**
+	 * @covers ::update_item
+	 */
+	public function test_update_item_publisher_id() {
+		wp_set_current_user( self::$user_id );
+
+		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
+		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
+
+		$story = self::factory()->post->create(
+			[
+				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+			]
+		);
+
+		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0, false );
+		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [], false );
+
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+
+		$request = new WP_REST_Request( 'PUT', '/web-stories/v1/web-story/' . $story );
+		$request->set_body_params(
+			[
+				'content'        => $unsanitized_content,
+				'story_data'     => $unsanitized_story_data,
+				'publisher_logo' => $attachment_id,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$all_publisher_logos   = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+		$active_publisher_logo = (int) get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+
+		$this->assertEquals( $unsanitized_content, $data['content']['raw'] );
+		$this->assertEquals( $unsanitized_story_data, $data['story_data'] );
+
+		$this->assertEquals( $attachment_id, $active_publisher_logo );
+		$this->assertContains( $attachment_id, $all_publisher_logos );
 	}
 }

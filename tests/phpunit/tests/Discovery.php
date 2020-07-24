@@ -74,10 +74,13 @@ class Discovery extends \WP_UnitTestCase {
 		);
 		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
+
+		add_theme_support( 'automatic-feed-links' );
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$user_id );
+		remove_theme_support( 'automatic-feed-links' );
 	}
 
 	public function setUp() {
@@ -95,6 +98,7 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_schemaorg_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_open_graph_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $object, 'print_twitter_metadata' ] ) );
+		$this->assertSame( 4, has_action( 'web_stories_story_head', [ $object, 'print_feed_link' ] ) );
 
 	}
 
@@ -142,6 +146,16 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( 'article:published_time', $output );
 		$this->assertContains( 'article:modified_time', $output );
 		$this->assertContains( 'og:image', $output );
+	}
+
+	/**
+	 * @covers ::print_feed_link
+	 */
+	public function test_print_feed_link() {
+		$object = new \Google\Web_Stories\Discovery();
+		$output = get_echo( [ $object, 'print_feed_link' ] );
+		$this->assertContains( '<link rel="alternate"', $output );
+		$this->assertContains( get_bloginfo( 'name' ), $output );
 	}
 
 	/**
