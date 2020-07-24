@@ -35,19 +35,27 @@ export default function useFetchMediaEffect({
   fetchMediaError,
 }) {
   const {
-    actions: { listMedia },
+    actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
 
   useEffect(() => {
     async function fetch() {
       fetchMediaStart({ provider, pageToken });
       try {
-        const { media, nextPageToken } = await listMedia({
-          provider,
-          searchTerm,
-          selectedCategoryId,
-          pageToken,
-        });
+        let media, nextPageToken;
+        if (selectedCategoryId) {
+          ({ media, nextPageToken } = await listCategoryMedia({
+            provider,
+            selectedCategoryId,
+            pageToken,
+          }));
+        } else {
+          ({ media, nextPageToken } = await listMedia({
+            provider,
+            searchTerm,
+            pageToken,
+          }));
+        }
         fetchMediaSuccess({ provider, media, pageToken, nextPageToken });
       } catch {
         fetchMediaError({ provider, pageToken });
@@ -66,6 +74,7 @@ export default function useFetchMediaEffect({
     // These attributes never change.
     provider,
     listMedia,
+    listCategoryMedia,
     fetchMediaError,
     fetchMediaStart,
     fetchMediaSuccess,

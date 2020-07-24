@@ -223,15 +223,14 @@ describe('useMedia3pApi', () => {
     });
   });
 
-  it('should call listMedia with category and ignored search term', async () => {
+  it('should call listMedia with category', async () => {
     const wrapper = (params) => (
       <Media3pApiProvider>{params.children}</Media3pApiProvider>
     );
     const { result } = renderHook(() => useMedia3pApi(), { wrapper });
 
-    await result.current.actions.listMedia({
+    await result.current.actions.listCategoryMedia({
       provider: 'unsplash',
-      searchTerm: 'cat',
       selectedCategoryId: 'category/1',
     });
 
