@@ -478,13 +478,13 @@ class APIProviderFixture {
           .fill(getMediaResponse)
           .flat()
           .map((media, i) => ({ ...media, id: i + 1 }));
-        return {
+        return asyncResponse({
           body: clonedMedia
             .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
           headers: { 'X-WP-TotalPages': 3 },
-        };
+        });
       }, []);
       const uploadMedia = useCallback(
         () => jasmine.createSpy('uploadMedia'),
