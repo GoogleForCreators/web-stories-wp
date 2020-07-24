@@ -123,13 +123,13 @@ describe('reducer', () => {
     act(() =>
       result.current.actions.selectCategory({
         provider: 'unsplash',
-        categoryName: 'categories/unsplash:1',
+        categoryId: 'categories/unsplash:1',
       })
     );
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
-        selectedCategoryName: 'categories/unsplash:1',
+        selectedCategoryId: 'categories/unsplash:1',
       })
     );
   });
@@ -145,7 +145,7 @@ describe('reducer', () => {
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
-        selectedCategoryName: undefined,
+        selectedCategoryId: undefined,
       })
     );
   });

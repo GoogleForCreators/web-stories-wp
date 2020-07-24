@@ -42,7 +42,10 @@ export default function useProviderContextValueProvider(
   reducerActions
 ) {
   const { selectedProvider, searchTerm } = reducerState;
-  const { pageToken } = reducerState[provider];
+  const {
+    pageToken,
+    categories: { selectedCategoryId },
+  } = reducerState[provider];
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -58,6 +61,7 @@ export default function useProviderContextValueProvider(
     selectedProvider,
     pageToken,
     searchTerm,
+    selectedCategoryId,
     fetchMediaStart,
     fetchMediaSuccess,
     fetchMediaError,
@@ -79,8 +83,7 @@ export default function useProviderContextValueProvider(
         provider,
       ]),
       selectCategory: useCallback(
-        (categoryName) =>
-          reducerActions.selectCategory({ provider, categoryName }),
+        (categoryId) => reducerActions.selectCategory({ provider, categoryId }),
         [reducerActions, provider]
       ),
       deselectCategory: useCallback(
