@@ -15,24 +15,25 @@
  */
 
 /**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
+import { darkTheme } from '../theme';
 
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
+// eslint-disable-next-line react/prop-types
+const WithThemeProvider = ({ children }) => {
+  return <ThemeProvider theme={darkTheme}>{children}</ThemeProvider>;
 };
+
+const renderWithTheme = (ui, options) =>
+  render(ui, {
+    wrapper: WithThemeProvider,
+    ...options,
+  });
+
+export default renderWithTheme;

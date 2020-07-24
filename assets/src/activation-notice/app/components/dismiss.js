@@ -15,24 +15,24 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
+import { useEffect } from 'react';
 
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
-};
+/**
+ * Renders a Dismiss button as required/used by WordPress.
+ *
+ * Does not actually *render* the button itself, but emits an event so that
+ * WordPress detects the notice and registers a click handler.
+ *
+ * @return {*} Rendered component.
+ */
+function Dismiss() {
+  useEffect(() => {
+    document.dispatchEvent(new Event('wp-updates-notice-added'));
+  }, []);
+
+  return null;
+}
+
+export default Dismiss;

@@ -14,25 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
-
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
-};
+export { default as renderWithTheme } from './renderWithTheme';

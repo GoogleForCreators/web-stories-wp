@@ -15,24 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useContext } from 'react';
+
+/**
  * Internal dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
+import Context from './context';
 
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
-};
+function useConfig() {
+  return useContext(Context);
+}
+
+export default useConfig;

@@ -15,24 +15,17 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
+import styled from 'styled-components';
 
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
-};
+const Paragraph = styled.p`
+  font-family: ${({ theme }) => theme.fonts.body.family};
+  font-size: ${({ theme }) => theme.fonts.body.size};
+  line-height: ${({ theme }) => theme.fonts.body.lineHeight};
+  color: ${({ theme, $secondary }) =>
+    $secondary ? theme.colors.secondary : theme.colors.primary};
+  margin: 0 !important;
+`;
+
+export default Paragraph;

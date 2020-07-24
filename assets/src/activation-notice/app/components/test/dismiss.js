@@ -17,22 +17,13 @@
 /**
  * Internal dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
+import { renderWithTheme } from '../../../testUtils';
 
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
-};
+import Dismiss from '../dismiss';
+
+describe('Dismiss', () => {
+  it('should render nothing', () => {
+    const { container } = renderWithTheme(<Dismiss />);
+    expect(container).toBeEmptyDOMElement();
+  });
+});

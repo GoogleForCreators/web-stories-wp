@@ -15,24 +15,35 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
+import { renderWithTheme } from '../../../testUtils';
 
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
-};
+import Step1 from '../step1';
+import { ConfigProvider } from '../../config';
+
+function render() {
+  const config = {
+    newStoryURL: 'foo',
+    demoStoryURL: 'bar',
+  };
+
+  return renderWithTheme(
+    <ConfigProvider config={config}>
+      <Step1 />
+    </ConfigProvider>
+  );
+}
+
+describe('Step 1', () => {
+  it('should render', () => {
+    render();
+
+    expect(screen.queryByText(/Get Started story/i)).toBeInTheDocument();
+  });
+});

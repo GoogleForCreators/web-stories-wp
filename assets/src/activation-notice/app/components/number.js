@@ -15,24 +15,16 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
+import styled from 'styled-components';
 
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
-};
+const Number = styled.span`
+  font-family: ${({ theme }) => theme.fonts.stepNumber.family};
+  font-size: ${({ theme }) => theme.fonts.stepNumber.size};
+  line-height: ${({ theme }) => theme.fonts.stepNumber.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.stepNumber.fontWeight};
+  color: ${({ theme }) => theme.colors.tertiary};
+`;
+
+export default Number;

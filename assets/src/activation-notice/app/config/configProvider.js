@@ -15,24 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackClick from './trackClick';
-import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
+import Context from './context';
 
-export {
-  initializeTracking,
-  isTrackingEnabled,
-  enableTracking,
-  disableTracking,
-  trackEvent,
-  trackClick,
-  trackScreenView,
-  trackTimingComplete,
+function ConfigProvider({ config, children }) {
+  return <Context.Provider value={config}>{children}</Context.Provider>;
+}
+
+ConfigProvider.propTypes = {
+  children: PropTypes.node,
+  config: PropTypes.object.isRequired,
 };
+
+export default ConfigProvider;
