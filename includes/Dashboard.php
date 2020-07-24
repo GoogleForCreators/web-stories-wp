@@ -224,6 +224,12 @@ class Dashboard {
 			)
 		);
 
+		// Media settings.
+		$max_upload_size = wp_max_upload_size();
+		if ( ! $max_upload_size ) {
+			$max_upload_size = 0;
+		}
+
 		$settings = [
 			'id'     => 'web-stories-dashboard',
 			'config' => [
@@ -236,12 +242,15 @@ class Dashboard {
 				'version'      => WEBSTORIES_VERSION,
 				'api'          => [
 					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'     => '/wp/v2/media',
 					'users'     => '/wp/v2/users',
 					'fonts'     => '/web-stories/v1/fonts',
 					'templates' => '/web-stories/v1/web-story-template',
 				],
+				'maxUpload'    => $max_upload_size,
 				'capabilities' => [
 					'canManageSettings' => current_user_can( 'manage_options' ),
+					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
 			],
 			'flags'  => [
