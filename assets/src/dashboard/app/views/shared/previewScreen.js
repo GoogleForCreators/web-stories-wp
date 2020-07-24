@@ -37,7 +37,7 @@ const CloseButton = styled.button`
   position: absolute;
   top: 0;
   left: 0;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   margin-top: 20px;
   margin-left: 15px;
   width: 30px;
@@ -48,15 +48,10 @@ const CloseButton = styled.button`
 `;
 // todo error handling for bad story objects
 const PreviewScreen = ({ previewStoryObject, handleClose }) => {
+  // WIP this doesn't go here long term!!
   const story = {
     ...previewStoryObject.originalStoryData,
     title: previewStoryObject.title,
-    status: previewStoryObject.status || 'template',
-    author: previewStoryObject.author || 0,
-    slug: previewStoryObject.slug || 'fake slug',
-    date: previewStoryObject.date || 'fake date',
-    modified: 'fake modified date',
-    password: false,
     excerpt: '',
     featuredMedia: 0,
     story_data: {
