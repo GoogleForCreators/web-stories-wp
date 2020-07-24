@@ -479,7 +479,7 @@ class APIProviderFixture {
           .flat()
           .map((media, i) => ({ ...media, id: i + 1 }));
         return asyncResponse({
-          body: clonedMedia
+          data: clonedMedia
             .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),

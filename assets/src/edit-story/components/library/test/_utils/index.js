@@ -47,7 +47,7 @@ export async function arrange({ mediaResponse = [] }) {
   };
   const getMediaPromise = Promise.resolve({
     data: mediaResponse,
-    headers: { get: () => 1 },
+    headers: { 'X-WP-TotalPages': 1 },
   });
   const getAllFontsPromise = Promise.resolve([]);
   const allPromises = [getMediaPromise, getAllFontsPromise];
