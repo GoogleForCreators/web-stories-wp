@@ -17,22 +17,24 @@
 /**
  * External dependencies
  */
-import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import PreviewTemplate from '../previewTemplate';
-import formattedTemplatesArray from '../../../../dataUtils/formattedTemplatesArray';
-import { fullCopyTemplate } from '../../../../storybookUtils';
+import PreviewScreen from '../previewScreen';
+import { formattedStoriesArray } from '../../../../storybookUtils';
 
 export default {
-  title: 'Dashboard/Views/Shared/PreviewTemplate',
-  component: PreviewTemplate,
+  title: 'Dashboard/Views/Shared/PreviewScreen',
+  component: PreviewScreen,
 };
 
 export const _default = () => {
-  return <PreviewTemplate template={fullCopyTemplate} />;
+  return (
+    <PreviewScreen
+      previewStoryObject={formattedStoriesArray[0]}
+      handleClose={action('close action triggered')}
+    />
+  );
 };
