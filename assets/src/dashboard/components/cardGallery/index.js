@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -132,9 +132,11 @@ function CardGallery({ story }) {
                 isSelected={index === activePageIndex}
                 {...metrics.miniWrapperSize}
                 onClick={() => handleMiniCardClick(index)}
-                aria-label={
-                  __('Page Preview - Page', 'web-stories') + ` ${index + 1}`
-                }
+                aria-label={sprintf(
+                  /* translators: %s: page number. */
+                  __('Page Preview - Page %s', 'web-stories'),
+                  index + 1
+                )}
               >
                 <MiniCard {...metrics.miniCardSize}>
                   <PreviewPage page={page} pageSize={metrics.miniCardSize} />
@@ -152,10 +154,11 @@ function CardGallery({ story }) {
           }}
         >
           <ActiveCard
-            aria-label={
-              __('Active Page Preview - Page', 'web-stories') +
-              ` ${activePageIndex + 1}`
-            }
+            aria-label={sprintf(
+              /* translators: %s: active preview page number */
+              __('Active Page Preview - Page %s', 'web-stories'),
+              activePageIndex + 1
+            )}
             {...metrics.activeCardSize}
           >
             <PreviewPage
