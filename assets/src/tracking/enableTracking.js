@@ -49,6 +49,9 @@ function loadTrackingScript(sendPageView = true) {
       anonymize_ip: true,
       app_name: config.appName,
       send_page_view: sendPageView,
+      // Setting the transport method to 'beacon' lets the hit be sent
+      // using 'navigator.sendBeacon' in browser that support it.
+      transport_type: 'beacon',
     });
   });
 }

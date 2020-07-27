@@ -99,9 +99,7 @@ function Media3pPane(props) {
   );
 
   const {
-    state: {
-      categories: { categories, selectedCategoryName },
-    },
+    state: { categories },
     actions: { selectCategory, deselectCategory },
   } = selectedProviderState;
 
@@ -132,6 +130,7 @@ function Media3pPane(props) {
               placeholder={__('Search', 'web-stories')}
               onSearch={onSearch}
               incremental={incrementalSearchDebounceMedia}
+              disabled={Boolean(categories.selectedCategoryId)}
             />
           </SearchInputContainer>
           <ProviderTabSection>
@@ -142,8 +141,8 @@ function Media3pPane(props) {
             />
           </ProviderTabSection>
           <Media3pCategories
-            categories={categories}
-            selectedCategoryName={selectedCategoryName}
+            categories={categories.categories}
+            selectedCategoryId={categories.selectedCategoryId}
             selectCategory={selectCategory}
             deselectCategory={deselectCategory}
           />

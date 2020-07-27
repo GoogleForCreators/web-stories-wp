@@ -47,10 +47,38 @@ const Providers = {
 function Media3pApiProvider({ children }) {
   const MEDIA_PAGE_SIZE = 20;
 
-  function constructFilter(provider, searchTerm, mediaType) {
+  /**
+   * Constructs the filter used for the listMedia requests.
+   *
+   * @param {Object} obj - An object with the options.
+   * @param {string} obj.provider The provider to get the media from.
+   * Currently only 'unsplash' is supported.
+   * @param {?string} obj.searchTerm Optional search term to send,
+   * eg: 'cute cats'.
+   * @param {?string} obj.selectedCategoryId Optional id of the selected
+   * category.
+   * @param {?string} obj.mediaType The media type of results to get.
+   * Currently ignored by the API as Unsplash only handles images.
+   * @return {string} A filter string.
+   */
+  function constructFilter({
+    provider,
+    searchTerm,
+    selectedCategoryId,
+    mediaType,
+  }) {
+    if (provider.toLowerCase() !== Providers.UNSPLASH) {
+      throw new Error(`Unsupported provider: ${provider}`);
+    }
+    if (selectedCategoryId && searchTerm) {
+      throw new Error(
+        `searchTerm and selectedCategoryId are mutually exclusive.`
+      );
+    }
     return [
-      provider ? `provider:${provider}` : null,
-      mediaType ? `type:${mediaType}` : null,
+      `provider:${provider}`,
+      mediaType && `type:${mediaType}`,
+      selectedCategoryId && `category:${selectedCategoryId}`,
       searchTerm,
     ]
       .filter(Boolean)
@@ -62,7 +90,6 @@ function Media3pApiProvider({ children }) {
    *
    * @param {Object} obj - An object with the options.
    * @param {string} obj.provider The provider to get the media from.
-   * Currently only 'unsplash' is supported.
    * @param {?string} obj.searchTerm Optional search term to send,
    * eg: 'cute cats'.
    * @param {?string} obj.orderBy The desired ordering of the results.
@@ -74,17 +101,58 @@ function Media3pApiProvider({ children }) {
    * @return {Promise<{nextPageToken: *, media: *}>} An object with the media
    * resources and a next page token.
    */
-  async function listMedia({
+  function listMedia({ provider, searchTerm, orderBy, mediaType, pageToken }) {
+    const filter = constructFilter({ provider, searchTerm, mediaType });
+    return listFilterMedia({
+      filter,
+      orderBy,
+      pageToken,
+    });
+  }
+
+  /**
+   * Get media for the given category.
+   *
+   * @param {Object} obj - An object with the options.
+   * @param {string} obj.provider The provider to get the media from.
+   * @param {string} obj.selectedCategoryId Id of the selected category.
+   * @param {?string} obj.orderBy The desired ordering of the results.
+   * Defaults to 'relevance' in the API.
+   * @param {?string} obj.mediaType The media type of results to get.
+   * Currently ignored by the API as Unsplash only handles images.
+   * @param {?string} obj.pageToken An optional page token to provide,
+   * for pagination. If unspecified, the first page of results will be returned.
+   * @return {Promise<{nextPageToken: *, media: *}>} An object with the media
+   * resources and a next page token.
+   */
+  function listCategoryMedia({
     provider,
-    searchTerm,
+    selectedCategoryId,
     orderBy,
     mediaType,
     pageToken,
   }) {
-    if (provider.toLowerCase() !== Providers.UNSPLASH) {
-      throw new Error(`Unsupported provider: ${provider}`);
-    }
-    const filter = constructFilter(provider, searchTerm, mediaType);
+    const filter = constructFilter({ provider, selectedCategoryId, mediaType });
+    return listFilterMedia({
+      filter,
+      orderBy,
+      pageToken,
+    });
+  }
+
+  /**
+   * Get media for the given category.
+   *
+   * @param {Object} obj - An object with the options.
+   * @param {string} obj.filter The filter to be used for fetching the media.
+   * @param {?string} obj.orderBy The desired ordering of the results.
+   * Defaults to 'relevance' in the API.
+   * @param {?string} obj.pageToken An optional page token to provide,
+   * for pagination. If unspecified, the first page of results will be returned.
+   * @return {Promise<{nextPageToken: *, media: *}>} An object with the media
+   * resources and a next page token.
+   */
+  async function listFilterMedia({ filter, orderBy, pageToken }) {
     const response = await apiFetcher.listMedia({
       filter,
       orderBy,
@@ -102,29 +170,29 @@ function Media3pApiProvider({ children }) {
    *
    * @param {Object} obj - An object with the options.
    * @param {string} obj.provider The provider to get the media from.
-   * Currently only 'unsplash' is supported.
    * @param {?string} obj.orderBy The desired ordering of the results.
    * Defaults to 'trending' in the API.
    * @return {Promise<{categories: *}>} An object with the category
    * resources.
    */
   async function listCategories({ provider, orderBy }) {
-    if (provider.toLowerCase() !== Providers.UNSPLASH) {
-      throw new Error(`Unsupported provider: ${provider}`);
-    }
-    const filter = constructFilter(provider);
+    const filter = constructFilter({ provider });
     const response = await apiFetcher.listCategories({
       filter,
       orderBy,
     });
     return {
-      categories: response.categories,
+      categories: response.categories.map((m) => ({
+        id: m.name,
+        displayName: m.displayName,
+      })),
     };
   }
 
   const contextValue = {
     actions: {
       listMedia,
+      listCategoryMedia,
       listCategories,
     },
   };

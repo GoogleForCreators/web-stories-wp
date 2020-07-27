@@ -28,24 +28,34 @@ export default function useFetchMediaEffect({
   provider,
   selectedProvider,
   searchTerm,
+  selectedCategoryId,
   pageToken,
   fetchMediaStart,
   fetchMediaSuccess,
   fetchMediaError,
 }) {
   const {
-    actions: { listMedia },
+    actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
 
   useEffect(() => {
     async function fetch() {
       fetchMediaStart({ provider, pageToken });
       try {
-        const { media, nextPageToken } = await listMedia({
-          provider,
-          searchTerm,
-          pageToken,
-        });
+        let media, nextPageToken;
+        if (selectedCategoryId) {
+          ({ media, nextPageToken } = await listCategoryMedia({
+            provider,
+            selectedCategoryId,
+            pageToken,
+          }));
+        } else {
+          ({ media, nextPageToken } = await listMedia({
+            provider,
+            searchTerm,
+            pageToken,
+          }));
+        }
         fetchMediaSuccess({ provider, media, pageToken, nextPageToken });
       } catch {
         fetchMediaError({ provider, pageToken });
@@ -60,9 +70,11 @@ export default function useFetchMediaEffect({
     selectedProvider,
     pageToken,
     searchTerm,
+    selectedCategoryId,
     // These attributes never change.
     provider,
     listMedia,
+    listCategoryMedia,
     fetchMediaError,
     fetchMediaStart,
     fetchMediaSuccess,
