@@ -132,7 +132,7 @@ class Media {
 			]
 		);
 
-		// Image sizes as per https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src
+		// Image sizes as per https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
 
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
 		add_image_size( self::STORY_POSTER_IMAGE_SIZE, 640, 853, true );
