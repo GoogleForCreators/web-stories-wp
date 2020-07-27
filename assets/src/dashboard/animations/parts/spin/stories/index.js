@@ -27,7 +27,7 @@ import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/Spin',
+  title: 'Animations/Parts/Spin',
 };
 
 const animations = [
@@ -137,8 +137,15 @@ export const AMPStory = () => {
             <StoryAnimation.AMPAnimations />
             <amp-story-grid-layer template="vertical">
               {elements.map(({ id, color }) => (
-                <div key={id} style={{ marginBottom: '20px' }}>
-                  <StoryAnimation.AMPWrapper target={id} style={defaultStyles}>
+                <div
+                  key={id}
+                  style={{
+                    position: 'relative',
+                    marginBottom: '20px',
+                    ...defaultStyles,
+                  }}
+                >
+                  <StoryAnimation.AMPWrapper target={id}>
                     <SimpleStar color={color} />
                   </StoryAnimation.AMPWrapper>
                 </div>
