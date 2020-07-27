@@ -118,7 +118,7 @@ class Media extends \WP_UnitTestCase {
 			]
 		);
 
-		$media = new \Google\Web_Stories\Media();
+		$media  = new \Google\Web_Stories\Media();
 		$result = $media->get_thumbnail_data( $attachment_id );
 		$this->assertCount( 4, $result );
 		$this->assertArrayHasKey( 'src', $result );
@@ -143,7 +143,7 @@ class Media extends \WP_UnitTestCase {
 
 		add_post_meta( $attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
 
-		$media = new \Google\Web_Stories\Media();
+		$media  = new \Google\Web_Stories\Media();
 		$result = $media->get_thumbnail_data( $attachment_id );
 		$this->assertTrue( $result['generated'] );
 	}

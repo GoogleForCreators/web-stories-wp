@@ -269,7 +269,7 @@ class Media {
 	/**
 	 * Update rest field callback.
 	 *
-	 * @param mixed    $value Value to update.
+	 * @param mixed   $value Value to update.
 	 * @param WP_Post $object Object to update on.
 	 *
 	 * @return true|\WP_Error
@@ -303,7 +303,7 @@ class Media {
 	/**
 	 * Filters the attachment data prepared for JavaScript.
 	 *
-	 * @param array    $response   Array of prepared attachment data.
+	 * @param array   $response   Array of prepared attachment data.
 	 * @param WP_Post $attachment Attachment object.
 	 *
 	 * @return array $response;
