@@ -33,8 +33,8 @@ const createMediaResource = (name) => ({
     {
       imageName: 'full',
       url: 'http://www.img.com/1',
-      width: 640,
-      height: 480,
+      width: 480,
+      height: 640,
       mimeType: 'image/png',
     },
     {
@@ -70,8 +70,6 @@ describe('Media3pPane fetching', () => {
   let media3pTab;
   let media3pPane;
 
-  let spy;
-
   beforeEach(async () => {
     fixture = new Fixture();
     fixture.setFlags({ media3pTab: true });
@@ -82,15 +80,9 @@ describe('Media3pPane fetching', () => {
     media3pPane = fixture.querySelector('#library-pane-media3p');
   });
 
-  afterEach(() => {
-    if (spy) {
-      spy.calls.reset();
-    }
-  });
-
   function mockListMedia() {
     /* eslint-disable-next-line jasmine/no-unsafe-spy */
-    spy = spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
+    spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
       switch (pageToken) {
         case undefined:
           return { media: mediaPage1, nextPageToken: 'page2' };
@@ -118,7 +110,7 @@ describe('Media3pPane fetching', () => {
   }
 
   it('should render no results message', async () => {
-    spy = spyOn(apiFetcher, 'listMedia').and.callFake(() => ({ media: [] }));
+    spyOn(apiFetcher, 'listMedia').and.callFake(() => ({ media: [] }));
     await fixture.events.click(media3pTab);
 
     await waitFor(() => {
@@ -186,7 +178,7 @@ describe('Media3pPane fetching', () => {
 
   it('should handle pressing right when the last element is focused', async () => {
     // Only mock 1 page.
-    spy = spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
+    spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
       if (!pageToken) {
         return { media: mediaPage2, nextPageToken: undefined };
       }
