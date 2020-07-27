@@ -57,27 +57,29 @@ const Media3pCategories = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
-    <CategorySection aria-expanded={isExpanded}>
-      <CategoryPillContainer isExpanded={isExpanded} role="tablist">
-        {categories.map((e) => {
-          const selected = e.name === selectedCategoryName;
-          return (
-            <CategoryPill
-              isSelected={selected}
-              key={e.name}
-              title={e.displayName}
-              onClick={() =>
-                selected ? deselectCategory() : selectCategory(e.name)
-              }
-            />
-          );
-        })}
-      </CategoryPillContainer>
-      <ExpandButton
-        onClick={() => setIsExpanded(!isExpanded)}
-        isExpanded={isExpanded}
-      />
-    </CategorySection>
+    categories.length && (
+      <CategorySection aria-expanded={isExpanded}>
+        <CategoryPillContainer isExpanded={isExpanded} role="tablist">
+          {categories.map((e) => {
+            const selected = e.name === selectedCategoryName;
+            return (
+              <CategoryPill
+                isSelected={selected}
+                key={e.name}
+                title={e.displayName}
+                onClick={() =>
+                  selected ? deselectCategory() : selectCategory(e.name)
+                }
+              />
+            );
+          })}
+        </CategoryPillContainer>
+        <ExpandButton
+          onClick={() => setIsExpanded(!isExpanded)}
+          isExpanded={isExpanded}
+        />
+      </CategorySection>
+    )
   );
 };
 
