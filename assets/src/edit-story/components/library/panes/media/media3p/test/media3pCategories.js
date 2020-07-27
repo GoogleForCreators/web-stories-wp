@@ -42,8 +42,8 @@ describe('Media3pCategories', () => {
   const selectCategoryMock = jest.fn();
   const deselectCategoryMock = jest.fn();
 
-  it('should render <Media3pCategories /> without categories', () => {
-    const { getByRole } = renderWithTheme(
+  it('should not render <Media3pCategories /> with empty category list', () => {
+    const { queryByRole } = renderWithTheme(
       <Media3pCategories
         categories={[]}
         selectedCategoryId={undefined}
@@ -51,8 +51,8 @@ describe('Media3pCategories', () => {
         deselectCategory={deselectCategoryMock}
       />
     );
-
-    expect(getByRole('tablist')).toBeDefined();
+    const categoryContainer = queryByRole('tablist');
+    expect(categoryContainer).toBeNull();
   });
 
   it('should render <Media3pCategories /> with categories', () => {

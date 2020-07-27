@@ -56,7 +56,7 @@ const Media3pCategories = ({
   deselectCategory,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  return (
+  return categories.length ? (
     <CategorySection aria-expanded={isExpanded}>
       <CategoryPillContainer isExpanded={isExpanded} role="tablist">
         {categories.map((e) => {
@@ -78,7 +78,7 @@ const Media3pCategories = ({
         isExpanded={isExpanded}
       />
     </CategorySection>
-  );
+  ) : null;
 };
 
 Media3pCategories.propTypes = {
