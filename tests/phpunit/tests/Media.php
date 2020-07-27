@@ -24,6 +24,19 @@ use WP_REST_Request;
  */
 class Media extends \WP_UnitTestCase {
 	/**
+	 * @covers ::init
+	 */
+	public function test_init() {
+		$media = new \Google\Web_Stories\Media();
+		$media->init();
+
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_POSTER_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_LANDSCAPE_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_SQUARE_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
+	}
+	/**
 	 * @covers ::rest_api_init
 	 */
 	public function test_rest_api_init() {
