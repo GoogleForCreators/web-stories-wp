@@ -15,7 +15,8 @@
  */
 
 /**
- * Choose the source URL of the smallest available size image wider than minWidth.
+ * Choose the source URL of the smallest available size image wider than
+ * minWidth, according to the device pixel ratio.
  *
  * @param {number} minWidth The minimum width of the thumbnail to return.
  * @param {*} resource Image resource object.
@@ -31,7 +32,7 @@ function getThumbnailUrl(minWidth, resource) {
 
     const smallestValidImage = Object.values(sizesWithoutThumbnail)
       .sort((s1, s2) => s1.width - s2.width)
-      .find((s) => s.width >= minWidth);
+      .find((s) => s.width >= minWidth * window.devicePixelRatio);
     if (smallestValidImage) {
       return smallestValidImage.source_url;
     }

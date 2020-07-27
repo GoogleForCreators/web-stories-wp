@@ -20,6 +20,10 @@
 import getThumbnailUrl from '../getThumbnailUrl';
 
 describe('getThumbnailUrl', () => {
+  beforeEach(() => {
+    window.devicePixelRatio = 1;
+  });
+
   it('should return the smallest available image URL greater than minWidth', () => {
     const resource = {
       src: 'default-url',
@@ -30,6 +34,19 @@ describe('getThumbnailUrl', () => {
       },
     };
     expect(getThumbnailUrl(210, resource)).toBe('med-url');
+  });
+
+  it('should return an image according to the device pixel ratio', () => {
+    window.devicePixelRatio = 2;
+    const resource = {
+      src: 'default-url',
+      sizes: {
+        img1: { width: 200, height: 1, source_url: 'full-url' },
+        img2: { width: 300, height: 1, source_url: 'med-url' },
+        img3: { width: 400, height: 1, source_url: 'large-url' },
+      },
+    };
+    expect(getThumbnailUrl(160, resource)).toBe('large-url');
   });
 
   it('should never return the one with key=thumbnail', () => {
