@@ -67,8 +67,12 @@
     "source_url": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf",
     "missing_image_sizes": [],
     "_links": {
-      "self": [{ "href": "http://localhost:8899/wp-json/web-stories/v1/media/775" }],
-      "collection": [{ "href": "http://localhost:8899/wp-json/web-stories/v1/media" }],
+      "self": [
+        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/775" }
+      ],
+      "collection": [
+        { "href": "http://localhost:8899/wp-json/web-stories/v1/media" }
+      ],
       "about": [
         { "href": "http://localhost:8899/wp-json/wp/v2/types/attachment" }
       ],
@@ -215,8 +219,12 @@
     "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg",
     "missing_image_sizes": [],
     "_links": {
-      "self": [{ "href": "http://localhost:8899/wp-json/web-stories/v1/media/768" }],
-      "collection": [{ "href": "http://localhost:8899/wp-json/web-stories/v1/media" }],
+      "self": [
+        { "href": "http://localhost:8899/wp-json/web-stories/v1/media/768" }
+      ],
+      "collection": [
+        { "href": "http://localhost:8899/wp-json/web-stories/v1/media" }
+      ],
       "about": [
         { "href": "http://localhost:8899/wp-json/wp/v2/types/attachment" }
       ],
