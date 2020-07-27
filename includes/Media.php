@@ -61,6 +61,13 @@ class Media {
 	const STORY_THUMBNAIL_IMAGE_SIZE = 'web-stories-thumbnail';
 
 	/**
+	 * The image size for the publisher logo.
+	 *
+	 * @var string
+	 */
+	const PUBLISHER_LOGO_IMAGE_SIZE = 'web-stories-publisher-logo';
+
+	/**
 	 * The poster post meta key.
 	 *
 	 * @var string
@@ -136,6 +143,11 @@ class Media {
 		// Used for amp-story[poster-landscape-src]: The story poster in square format (1x1 aspect ratio).
 		add_image_size( self::STORY_LANDSCAPE_IMAGE_SIZE, 853, 640, true );
 
+		// As per https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines.
+
+		add_image_size( self::PUBLISHER_LOGO_IMAGE_SIZE, 96, 96, true );
+
+		// Used in the editor.
 		add_image_size( self::STORY_THUMBNAIL_IMAGE_SIZE, 150, 9999, false );
 
 		add_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
