@@ -46,7 +46,7 @@ describe('MediaPane fetching', () => {
 
     mediaLibrary.scrollTo(
       0,
-      mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN
+      mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN / 2
     );
 
     await waitFor(() => {
