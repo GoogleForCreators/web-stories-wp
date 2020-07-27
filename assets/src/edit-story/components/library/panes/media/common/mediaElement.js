@@ -174,7 +174,10 @@ const MediaElement = ({
     [setDraggingResource, resource, handleDrag, handleDrop]
   );
 
-  const onPointerEnter = useCallback(() => setPointerEntered(true), []);
+  const onPointerEnter = useCallback(() => {
+    setPointerEntered(true);
+    // console.warn('\n\n\n\n\n\n\nentered\n\n\n\n\n\n');
+  }, []);
   const onPointerLeave = useCallback(() => setPointerEntered(false), []);
   const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
   const onMenuCancelled = useCallback(() => setIsMenuOpen(false), []);
@@ -242,6 +245,7 @@ const MediaElement = ({
         )}
         {hasDropdownMenu && providerType === ProviderType.LOCAL && (
           <DropDownMenu
+            data-testid="dropDownMenu"
             resource={resource}
             pointerEntered={pointerEntered}
             isMenuOpen={isMenuOpen}
@@ -288,6 +292,7 @@ const MediaElement = ({
       )}
       {hasDropdownMenu && providerType === ProviderType.LOCAL && (
         <DropDownMenu
+          data-testid="dropDownMenu"
           resource={resource}
           pointerEntered={pointerEntered}
           isMenuOpen={isMenuOpen}
