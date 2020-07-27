@@ -84,8 +84,8 @@ class Media extends \WP_UnitTestCase {
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
 		$media = new \Google\Web_Stories\Media();
-		$image = $media->wp_prepare_attachment_for_js( [ 'type' => 'image' ] );
-		$video = $media->wp_prepare_attachment_for_js( [ 'type' => 'video' ] );
+		$image = $media->wp_prepare_attachment_for_js( [ 'type' => 'image' ], get_post( $video_attachment_id ) );
+		$video = $media->wp_prepare_attachment_for_js( [ 'type' => 'video' ], get_post( $video_attachment_id ) );
 
 		$this->assertEqualSets( [ 'type' => 'image' ], $image );
 		$this->assertArrayHasKey( 'featured_media', $video );
