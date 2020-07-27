@@ -102,10 +102,11 @@ describe('CUJ: Creator can browse templates in grid view', () => {
     }
 
     await fixture.events.keyboard.seq(({ press }) =>
-      Array.from(new Array(index), () => [press('tab'), press('tab')]).reduce(
-        (acc, curr) => acc.concat(curr),
-        []
-      )
+      Array.from(new Array(index), () => [
+        press('tab'),
+        press('tab'),
+        press('tab'),
+      ]).reduce((acc, curr) => acc.concat(curr), [])
     );
   }
 
