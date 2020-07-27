@@ -37,7 +37,7 @@ import { getResourceFromAttachment } from '../utils';
  * from `useMediaReducer`
  * @return {Object} Context.
  */
-export default function useContextValueProvider(reducerState, reducerActions) {
+export default function useContextValueProvider(reducerState, paginationReducerActions, localReducerActions) {
   const {
     processing,
     processed,
@@ -50,16 +50,16 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     fetchMediaStart,
     fetchMediaSuccess,
     fetchMediaError,
+    updateMediaElement,
+  } = paginationReducerActions;
+  const {
     resetFilters,
     setMedia,
     setMediaType,
     setSearchTerm,
-    setNextPage,
     setProcessing,
     removeProcessing,
-    updateMediaElement,
-    deleteMediaElement,
-  } = reducerActions;
+  } = localReducerActions;
   const {
     actions: { getMedia },
   } = useAPI();
@@ -73,7 +73,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       } = {},
       callback
     ) => {
-      fetchMediaStart({ pageToken: p });
+      fetchMediaStart({ provider: 'local', pageToken: p });
       getMedia({
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,
@@ -92,7 +92,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
             totalPages,
           });
         })
-        .catch(fetchMediaError);
+        .catch(() => fetchMediaError({ provider: 'local' }));
     },
     [fetchMediaError, fetchMediaStart, getMedia]
   );
@@ -120,12 +120,12 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     resetFilters();
     const isFirstPage = !pageToken;
     if (!mediaType && !searchTerm && isFirstPage) {
-      fetchMedia({ mediaType }, fetchMediaSuccess);
+      fetchMedia({ mediaType }, () => fetchMediaSuccess({ provider: 'local' }));
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 
   useEffect(() => {
-    fetchMedia({ searchTerm, pageToken, mediaType }, fetchMediaSuccess);
+    fetchMedia({ searchTerm, pageToken, mediaType }, () => fetchMediaSuccess({ provider: 'local' }));
   }, [fetchMedia, fetchMediaSuccess, mediaType, pageToken, searchTerm]);
 
   const uploadVideoPoster = useCallback(
@@ -177,15 +177,12 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   return {
     state: { ...reducerState, isUploading },
     actions: {
-      setNextPage,
       setMediaType,
       setSearchTerm,
       resetFilters,
       uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
-      deleteMediaElement,
-      updateMediaElement,
     },
   };
 }

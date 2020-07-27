@@ -149,7 +149,7 @@ function MediaEditDialog({ resource, onClose }) {
   const {
     actions: { updateMedia },
   } = useAPI();
-  const { updateMediaElement } = useLocalMedia((state) => ({
+  const { updateMediaElement } = useMedia((state) => ({
     updateMediaElement: state.actions.updateMediaElement,
   }));
   const { showSnackbar } = useSnackbar();
@@ -165,7 +165,7 @@ function MediaEditDialog({ resource, onClose }) {
       // Update server.
       await updateMedia(id, { alt_text: altText });
       // Update internal state.
-      updateMediaElement({ id, alt: altText });
+      updateMediaElement({ provider: 'local', id, alt: altText });
       onClose();
     } catch (err) {
       showSnackbar({

@@ -23,7 +23,7 @@ import useProviderContextValueProvider from './useProviderContextValueProvider';
 // Use provider configuration json fragment.
 const providers = ['unsplash'];
 
-function useProviderSetContextValueProvider(reducerState, reducerActions) {
+function useProviderSetContextValueProvider(reducerState, paginationReducerActions, media3pReducerActions) {
   const result = {};
 
   // The 'providers' list is a constant, and so hooks are still called in the
@@ -33,7 +33,8 @@ function useProviderSetContextValueProvider(reducerState, reducerActions) {
     result[provider] = useProviderContextValueProvider(
       provider,
       reducerState,
-      reducerActions
+      paginationReducerActions,
+      media3pReducerActions,
     );
   }
   return result;
@@ -49,16 +50,16 @@ function useProviderSetContextValueProvider(reducerState, reducerActions) {
  * returned from `useMediaReducer`
  * @return {Object} Context.
  */
-export default function useContextValueProvider(reducerState, reducerActions) {
+export default function useContextValueProvider(reducerState, paginationReducerActions, media3pReducerActions) {
   return {
     state: {
       selectedProvider: reducerState.selectedProvider,
       searchTerm: reducerState.searchTerm,
     },
     actions: {
-      setSelectedProvider: reducerActions.setSelectedProvider,
-      setSearchTerm: reducerActions.setSearchTerm,
+      setSelectedProvider: media3pReducerActions.setSelectedProvider,
+      setSearchTerm: media3pReducerActions.setSearchTerm,
     },
-    ...useProviderSetContextValueProvider(reducerState, reducerActions),
+    ...useProviderSetContextValueProvider(reducerState, paginationReducerActions, media3pReducerActions),
   };
 }

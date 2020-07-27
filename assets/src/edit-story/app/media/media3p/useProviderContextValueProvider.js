@@ -39,7 +39,8 @@ import useFetchCategoriesEffect from './useFetchCategoriesEffect';
 export default function useProviderContextValueProvider(
   provider,
   reducerState,
-  reducerActions
+  paginationReducerActions,
+  media3pReducerActions,
 ) {
   const { selectedProvider, searchTerm } = reducerState;
   const {
@@ -50,10 +51,12 @@ export default function useProviderContextValueProvider(
     fetchMediaStart,
     fetchMediaSuccess,
     fetchMediaError,
+  } = paginationReducerActions;
+  const {
     fetchCategoriesStart,
     fetchCategoriesSuccess,
     fetchCategoriesError,
-  } = reducerActions;
+  } = media3pReducerActions;
 
   // Fetch or re-fetch media when the state has changed.
   useFetchMediaEffect({
@@ -78,17 +81,13 @@ export default function useProviderContextValueProvider(
   return {
     state: reducerState[provider],
     actions: {
-      setNextPage: useCallback(() => reducerActions.setNextPage({ provider }), [
-        reducerActions,
-        provider,
-      ]),
       selectCategory: useCallback(
-        (categoryId) => reducerActions.selectCategory({ provider, categoryId }),
-        [reducerActions, provider]
+        (categoryId) => media3pReducerActions.selectCategory({ provider, categoryId }),
+        [media3pReducerActions, provider]
       ),
       deselectCategory: useCallback(
-        () => reducerActions.deselectCategory({ provider }),
-        [reducerActions, provider]
+        () => media3pReducerActions.deselectCategory({ provider }),
+        [media3pReducerActions, provider]
       ),
     },
   };

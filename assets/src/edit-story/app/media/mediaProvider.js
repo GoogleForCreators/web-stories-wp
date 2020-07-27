@@ -30,13 +30,21 @@ import Context from './context';
 function MediaProvider({ children }) {
   const { state, actions } = useMediaReducer();
 
-  const local = useLocalContextValueProvider(state.local, actions.local);
+  const local = useLocalContextValueProvider(state.local, actions.pagination, actions.local);
   const media3p = useMedia3pContextValueProvider(
     state.media3p,
-    actions.media3p
+    actions.pagination,
+    actions.media3p,
   );
 
-  const context = { local, media3p };
+  const context = {
+    local,
+    media3p,
+    actions: {
+      setNextPage: actions.pagination.setNextPage,
+    },
+  };
+  console.warn('=======', context);
   return <Context.Provider value={context}>{children}</Context.Provider>;
 }
 

@@ -87,6 +87,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       });
       setProperties(id, newState);
       updateMediaElement({
+        provider: 'local',
         id,
         posterId,
         poster,

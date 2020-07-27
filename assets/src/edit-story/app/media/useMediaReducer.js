@@ -26,6 +26,7 @@ import localReducer from './local/reducer';
 import media3pReducer from './media3p/reducer';
 import * as localActionsToWrap from './local/actions';
 import * as media3pActionsToWrap from './media3p/actions';
+import * as paginationActionsToWrap from './pagination/actions';
 import * as types from './types';
 
 function rootReducer(state = {}, { type, payload }) {
@@ -62,7 +63,11 @@ const wrapWithDispatch = (actionFnOrActionObject, dispatch) => {
  */
 function useMediaReducer(reducer = rootReducer, actionsToWrap) {
   const defaultActionsToWrap = useMemo(
-    () => ({ local: localActionsToWrap, media3p: media3pActionsToWrap }),
+    () => ({
+      local: localActionsToWrap,
+      pagination: paginationActionsToWrap,
+      media3p: media3pActionsToWrap,
+    }),
     []
   );
   actionsToWrap = actionsToWrap ?? defaultActionsToWrap;
