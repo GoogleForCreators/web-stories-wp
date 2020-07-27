@@ -50,7 +50,7 @@ function ExploreTemplates() {
     },
   } = useContext(ApiContext);
 
-  const { filter, page, preview, search, sort, view } = useTemplateView({
+  const { filter, page, previewVisible, search, sort, view } = useTemplateView({
     totalPages,
   });
 
@@ -67,10 +67,10 @@ function ExploreTemplates() {
   const handlePreviewTemplate = useCallback(
     (template) => {
       if (enableTemplatePreviews) {
-        preview.set(template);
+        previewVisible.set(template);
       }
     },
-    [enableTemplatePreviews, preview]
+    [enableTemplatePreviews, previewVisible]
   );
 
   return (

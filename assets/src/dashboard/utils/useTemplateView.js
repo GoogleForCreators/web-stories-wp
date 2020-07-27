@@ -35,7 +35,7 @@ export default function useTemplateView({ totalPages }) {
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [sort, _setSort] = useState(TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR);
   const [page, setPage] = useState(1);
-  const [preview, setPreview] = useState();
+  const [previewVisible, setPreviewVisible] = useState();
 
   const { pageSize } = usePagePreviewSize({
     isGrid: true,
@@ -71,9 +71,9 @@ export default function useTemplateView({ totalPages }) {
 
   return useMemo(
     () => ({
-      preview: {
-        value: preview,
-        set: setPreview,
+      previewVisible: {
+        value: previewVisible,
+        set: setPreviewVisible,
       },
       view: {
         style: VIEW_STYLE.GRID,
@@ -98,8 +98,8 @@ export default function useTemplateView({ totalPages }) {
       },
     }),
     [
-      preview,
-      setPreview,
+      previewVisible,
+      setPreviewVisible,
       pageSize,
       sort,
       setSort,
