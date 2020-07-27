@@ -289,6 +289,13 @@ class Dashboard {
 				 * Creation date: 2020-06-11
 				 */
 				'enableBookmarkActions'           => false,
+				/**
+				 * Description: Enables template preview functionality.
+				 * Author: @brittanyirl
+				 * Issue: 3390
+				 * Creation date: 2020-07-23
+				 */
+				'enableTemplatePreviews'          => false,
 			],
 		];
 
