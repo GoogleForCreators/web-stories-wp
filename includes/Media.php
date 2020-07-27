@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use WP_Post;
+
 /**
  * Class Media
  */
@@ -56,21 +58,7 @@ class Media {
 	 *
 	 * @var string
 	 */
-	const STORY_THUMBNAIL_IMAGE_SIZE = 'web_stories_thumbnail';
-
-	/**
-	 * The large dimension of the AMP Story poster images.
-	 *
-	 * @var int
-	 */
-	const STORY_LARGE_IMAGE_DIMENSION = 928;
-
-	/**
-	 * The small dimension of the AMP Story poster images.
-	 *
-	 * @var int
-	 */
-	const STORY_SMALL_IMAGE_DIMENSION = 696;
+	const STORY_THUMBNAIL_IMAGE_SIZE = 'web-stories-thumbnail';
 
 	/**
 	 * The poster post meta key.
@@ -99,7 +87,6 @@ class Media {
 	 * @return void
 	 */
 	public function init() {
-
 		register_taxonomy(
 			self::STORY_MEDIA_TAXONOMY,
 			'attachment',
@@ -138,14 +125,16 @@ class Media {
 			]
 		);
 
+		// Image sizes as per https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src
+
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
-		add_image_size( self::STORY_POSTER_IMAGE_SIZE, self::STORY_SMALL_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
+		add_image_size( self::STORY_POSTER_IMAGE_SIZE, 640, 853, true );
 
 		// Used for amp-story[poster-square-src]: The story poster in square format (1x1 aspect ratio).
-		add_image_size( self::STORY_SQUARE_IMAGE_SIZE, self::STORY_LARGE_IMAGE_DIMENSION, self::STORY_LARGE_IMAGE_DIMENSION, true );
+		add_image_size( self::STORY_SQUARE_IMAGE_SIZE, 640, 640, true );
 
 		// Used for amp-story[poster-landscape-src]: The story poster in square format (1x1 aspect ratio).
-		add_image_size( self::STORY_LANDSCAPE_IMAGE_SIZE, self::STORY_LARGE_IMAGE_DIMENSION, self::STORY_SMALL_IMAGE_DIMENSION, true );
+		add_image_size( self::STORY_LANDSCAPE_IMAGE_SIZE, 853, 640, true );
 
 		add_image_size( self::STORY_THUMBNAIL_IMAGE_SIZE, 150, 9999, false );
 
@@ -258,10 +247,8 @@ class Media {
 		$id = $prepared['id'];
 
 		$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
-		if ( is_array( $terms ) && $terms ) {
-			$term = array_shift( $terms );
-
-			return $term->slug;
+		if ( is_array( $terms ) && ! empty( $terms ) ) {
+			return array_shift( $terms )->slug;
 		}
 
 		return '';
@@ -271,7 +258,7 @@ class Media {
 	 * Update rest field callback.
 	 *
 	 * @param mixed    $value Value to update.
-	 * @param \WP_Post $object Object to update on.
+	 * @param WP_Post $object Object to update on.
 	 *
 	 * @return true|\WP_Error
 	 */
@@ -305,7 +292,7 @@ class Media {
 	 * Filters the attachment data prepared for JavaScript.
 	 *
 	 * @param array    $response   Array of prepared attachment data.
-	 * @param \WP_Post $attachment Attachment object.
+	 * @param WP_Post $attachment Attachment object.
 	 *
 	 * @return array $response;
 	 */
@@ -336,7 +323,7 @@ class Media {
 		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}
-	
+
 	/**
 	 * Deletes associated poster image when a video is deleted.
 	 *
