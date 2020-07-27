@@ -177,7 +177,14 @@ describe('Media3pPane fetching', () => {
   });
 
   it('should handle pressing right when the last element is focused', async () => {
-    mockListMedia();
+    // Only mock 1 page.
+    spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
+      if (!pageToken) {
+        return { media: mediaPage2, nextPageToken: undefined };
+      }
+      throw new Error(`Unexpected pageToken: ${pageToken}`);
+    });
+
     await fixture.events.click(media3pTab);
 
     await expectMediaElements(MEDIA_PER_PAGE);
