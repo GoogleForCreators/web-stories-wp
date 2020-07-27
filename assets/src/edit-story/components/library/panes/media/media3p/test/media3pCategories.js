@@ -27,15 +27,15 @@ import { renderWithTheme } from '../../../../../../testUtils';
 describe('Media3pCategories', () => {
   const categories = [
     {
-      name: '1',
+      id: '1',
       displayName: 'Category 1',
     },
     {
-      name: '2',
+      id: '2',
       displayName: 'Category 2',
     },
     {
-      name: '3',
+      id: '3',
       displayName: 'Category 3',
     },
   ];
@@ -46,7 +46,7 @@ describe('Media3pCategories', () => {
     const { queryByRole } = renderWithTheme(
       <Media3pCategories
         categories={[]}
-        selectedCategoryName={'1'}
+        selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
@@ -59,7 +59,7 @@ describe('Media3pCategories', () => {
     const { getByRole, getByText } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategoryName={undefined}
+        selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
@@ -80,7 +80,7 @@ describe('Media3pCategories', () => {
     const { getByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategoryName={'1'}
+        selectedCategoryId={'1'}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
@@ -95,7 +95,7 @@ describe('Media3pCategories', () => {
     const { getByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategoryName={undefined}
+        selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
@@ -111,7 +111,7 @@ describe('Media3pCategories', () => {
     const { getByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategoryName={'1'}
+        selectedCategoryId={'1'}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />

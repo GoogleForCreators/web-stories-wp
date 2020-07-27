@@ -35,6 +35,7 @@ import TypeaheadOptions from '../typeaheadOptions';
 import { TypographyPresets } from '../typography';
 
 const SearchContainer = styled.div`
+  width: 100%;
   display: flex;
   align-items: flex-end;
   flex-direction: column;
