@@ -48,6 +48,8 @@ class Discovery {
 		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
 
+		add_action( 'web_stories_story_head', [ $this, 'print_feed_link' ], 4 );
+
 		// @todo Check if there's something to skip in the new version.
 		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
 		add_action( 'web_stories_story_head', 'wp_resource_hints', 2 );
@@ -218,5 +220,46 @@ class Discovery {
 		?>
 		<meta property="twtter:image" content="<?php echo esc_url( $poster ); ?>">
 		<?php
+	}
+
+	/**
+	 * Add RSS feed link for stories, if theme supports automatic-feed-links.
+	 *
+	 * @return void
+	 */
+	public static function print_feed_link() {
+		if ( ! current_theme_supports( 'automatic-feed-links' ) ) {
+			return;
+		}
+
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		if ( ! ( $post_type_object instanceof \WP_Post_Type ) ) {
+			return;
+		}
+
+		$feed_url = add_query_arg(
+			'post_type',
+			Story_Post_Type::POST_TYPE_SLUG,
+			get_feed_link()
+		);
+
+		$name = '';
+		if ( property_exists( $post_type_object->labels, 'name' ) ) {
+			$name = $post_type_object->labels->name;
+		}
+
+		/* translators: Separator between blog name and feed type in feed links. */
+		$separator = _x( '&raquo;', 'feed link', 'web-stories' );
+		/* translators: 1: Blog name, 2: Separator (raquo), 3: Post type name. */
+		$post_type_title = esc_html__( '%1$s %2$s %3$s Feed', 'web-stories' );
+
+		$title = sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $name );
+
+		printf(
+			'<link rel="alternate" type="%s" title="%s" href="%s">',
+			esc_attr( feed_content_type() ),
+			esc_attr( $title ),
+			esc_url( $feed_url )
+		);
 	}
 }

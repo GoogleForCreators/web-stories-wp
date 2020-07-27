@@ -28,6 +28,9 @@ import {
   setBrowserViewport,
 } from '@wordpress/e2e-test-utils';
 
+// Extend Jest matchers.
+import 'jest-extended';
+
 /**
  * Environment variables
  */

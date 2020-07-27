@@ -85,9 +85,6 @@ const CropVideo = styled.video`
   max-height: initial;
 `;
 
-/**
- *
- */
 function MediaEdit({ element, box }) {
   const {
     id,

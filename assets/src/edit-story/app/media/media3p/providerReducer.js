@@ -19,10 +19,15 @@
  */
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
-} from '../common/reducer';
+} from '../pagination/reducer';
+
+import categoriesReducer, {
+  INITIAL_STATE as CATEGORIES_INITIAL_STATE,
+} from './categories/reducer';
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
+  categories: CATEGORIES_INITIAL_STATE,
 };
 
 /**
@@ -39,7 +44,10 @@ const INITIAL_STATE = {
  * @return {Object} The new state
  */
 function providerReducer(state = INITIAL_STATE, { type, payload }) {
-  return commonReducer(state, { type, payload });
+  return {
+    ...commonReducer(state, { type, payload }),
+    categories: categoriesReducer(state.categories, { type, payload }),
+  };
 }
 
 export default providerReducer;

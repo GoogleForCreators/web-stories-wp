@@ -31,12 +31,15 @@ import { useDropTargets } from '../../../../../app';
 import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
 import { ProviderType } from '../common/providerType';
+import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
+import { useKeyDownEffect } from '../../../../keyboard';
+import useRovingTabIndex from './useRovingTabIndex';
 
 const styledTiles = css`
   width: 100%;
   cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
-  margin-bottom: 10px;
+  opacity: 0;
 `;
 
 const Image = styled.img`
@@ -51,6 +54,11 @@ const Video = styled.video`
 const Container = styled.div`
   position: relative;
   display: flex;
+  margin-bottom: 10px;
+  background-color: ${({ theme }) => theme.colors.bg.v3};
+  body${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: solid 2px #fff;
+  }
 `;
 
 const Duration = styled.div`
@@ -99,10 +107,15 @@ const UploadingIndicator = styled.div`
   }
 `;
 
+const HiddenPosterImage = styled.img`
+  display: none;
+`;
+
 /**
  * Get a formatted element for different media types.
  *
  * @param {Object} param Parameters object
+ * @param {number} param.index Index of the media element in the gallery.
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
@@ -111,6 +124,7 @@ const UploadingIndicator = styled.div`
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
+  index,
   resource,
   width: requestedWidth,
   height: requestedHeight,
@@ -135,7 +149,7 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
-  const [pointerEntered, setPointerEntered] = useState(false);
+  const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const {
@@ -174,13 +188,13 @@ const MediaElement = ({
     [setDraggingResource, resource, handleDrag, handleDrop]
   );
 
-  const onPointerEnter = useCallback(() => setPointerEntered(true), []);
-  const onPointerLeave = useCallback(() => setPointerEntered(false), []);
+  const makeActive = useCallback(() => setActive(true), []);
+  const makeInactive = useCallback(() => setActive(false), []);
   const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
   const onMenuCancelled = useCallback(() => setIsMenuOpen(false), []);
   const onMenuSelected = useCallback(() => {
     setIsMenuOpen(false);
-    setPointerEntered(false);
+    setActive(false);
   }, []);
 
   useEffect(() => {
@@ -191,7 +205,7 @@ const MediaElement = ({
           mediaElement.current.pause();
         }
       } else {
-        if (pointerEntered) {
+        if (active) {
           setShowVideoDetail(false);
           if (mediaElement.current) {
             // Pointer still in the media element, continue the video.
@@ -207,75 +221,62 @@ const MediaElement = ({
         }
       }
     }
-  }, [isMenuOpen, pointerEntered, type]);
+  }, [isMenuOpen, active, type]);
 
   const onClick = () => onInsert(resource, width, height);
 
-  if (type === 'image') {
-    return (
-      <Container
-        data-testid="mediaElement"
-        data-id={resourceId}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
-      >
-        <Image
-          key={src}
-          src={getThumbnailUrl(resource)}
-          ref={mediaElement}
-          width={width}
-          height={height}
-          alt={alt}
-          loading={'lazy'}
-          onClick={onClick}
-          {...dropTargetsBindings}
-        />
-        {local && (
-          <CSSTransition
-            in
-            appear={true}
-            timeout={0}
-            className="uploading-indicator"
-          >
-            <UploadingIndicator />
-          </CSSTransition>
-        )}
-        {hasDropdownMenu && providerType === ProviderType.LOCAL && (
-          <DropDownMenu
-            resource={resource}
-            pointerEntered={pointerEntered}
-            isMenuOpen={isMenuOpen}
-            onMenuOpen={onMenuOpen}
-            onMenuCancelled={onMenuCancelled}
-            onMenuSelected={onMenuSelected}
-          />
-        )}
-      </Container>
-    );
-  }
+  const innerElement = getInnerElement(type, {
+    src,
+    ref: mediaElement,
+    resource,
+    alt,
+    width,
+    height,
+    onClick,
+    showVideoDetail,
+    dropTargetsBindings,
+  });
 
-  const { lengthFormatted, poster, mimeType } = resource;
+  const ref = useRef();
+
+  const rowBasedUploadGalleryEnabled = useFeature('rowBasedGallery');
+  const isRowBasedGallery =
+    providerType !== ProviderType.LOCAL || rowBasedUploadGalleryEnabled;
+  useRovingTabIndex({ ref, isRowBasedGallery });
+
+  const handleKeyDown = useCallback(
+    ({ key }) => {
+      if (key === 'Enter') {
+        onInsert(resource, width, height);
+      } else if (key === ' ') {
+        setIsMenuOpen(true);
+      }
+    },
+    [onInsert, setIsMenuOpen, resource, width, height]
+  );
+
+  useKeyDownEffect(
+    ref,
+    {
+      key: ['enter', 'space'],
+    },
+    handleKeyDown,
+    [handleKeyDown]
+  );
+
   return (
     <Container
+      ref={ref}
       data-testid="mediaElement"
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
+      data-id={resourceId}
+      className={'mediaElement'}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
+      tabIndex={index === 0 ? 0 : -1}
     >
-      <Video
-        key={src}
-        ref={mediaElement}
-        poster={poster}
-        width={width}
-        height={height}
-        preload="none"
-        aria-label={alt}
-        muted
-        onClick={onClick}
-        {...dropTargetsBindings}
-      >
-        <source src={src} type={mimeType} />
-      </Video>
-      {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+      {innerElement}
       {local && (
         <CSSTransition
           in
@@ -289,7 +290,7 @@ const MediaElement = ({
       {hasDropdownMenu && providerType === ProviderType.LOCAL && (
         <DropDownMenu
           resource={resource}
-          pointerEntered={pointerEntered}
+          display={active}
           isMenuOpen={isMenuOpen}
           onMenuOpen={onMenuOpen}
           onMenuCancelled={onMenuCancelled}
@@ -300,7 +301,68 @@ const MediaElement = ({
   );
 };
 
+function getInnerElement(
+  type,
+  {
+    src,
+    ref,
+    resource,
+    alt,
+    width,
+    height,
+    onClick,
+    showVideoDetail,
+    dropTargetsBindings,
+  }
+) {
+  const makeImageVisible = () => {
+    ref.current.style.opacity = '1';
+  };
+  if (type === 'image') {
+    return (
+      <Image
+        key={src}
+        src={getThumbnailUrl(resource)}
+        ref={ref}
+        width={width}
+        height={height}
+        alt={alt}
+        loading={'lazy'}
+        onClick={onClick}
+        onLoad={makeImageVisible}
+        {...dropTargetsBindings}
+      />
+    );
+  } else if (type === 'video') {
+    const { lengthFormatted, poster, mimeType } = resource;
+    return (
+      <>
+        <Video
+          key={src}
+          ref={ref}
+          poster={poster}
+          width={width}
+          height={height}
+          preload="none"
+          aria-label={alt}
+          muted
+          onClick={onClick}
+          {...dropTargetsBindings}
+        >
+          <source src={src} type={mimeType} />
+        </Video>
+        {/* This hidden image allows us to fade in the poster image in the
+        gallery as there's no event when a video's poster loads. */}
+        <HiddenPosterImage src={poster} onLoad={makeImageVisible} />
+        {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+      </>
+    );
+  }
+  throw new Error('Invalid media element type.');
+}
+
 MediaElement.propTypes = {
+  index: PropTypes.number.isRequired,
   resource: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,

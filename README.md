@@ -12,17 +12,24 @@ Visual storytelling for WordPress.
 Build Status
 </summary>
 
-[![Deployment Status](https://img.shields.io/travis/com/google/web-stories-wp?label=deployment)]((https://travis-ci.com/google/web-stories-wp))
-![Integration Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/Integration%20Tests?label=integration%20tests)
-![E2E Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/E2E%20Tests?label=e2e%20tests)
-![JS Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/JavaScript%20Unit%20Tests?label=js%20tests)
-![PHP Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/PHP%20Unit%20Tests?label=php%20tests)
+[![Deployment Status](https://img.shields.io/travis/com/google/web-stories-wp?label=deployment)](https://travis-ci.com/google/web-stories-wp)
+[![Integration Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/Integration%20Tests?label=integration%20tests)](https://github.com/google/web-stories-wp/actions?query=branch%3Amain)
+[![E2E Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/E2E%20Tests?label=e2e%20tests)](https://github.com/google/web-stories-wp/actions?query=branch%3Amain)
+[![JS Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/JavaScript%20Unit%20Tests?label=js%20tests)](https://github.com/google/web-stories-wp/actions?query=branch%3Amain)
+[![PHP Tests](https://img.shields.io/github/workflow/status/google/web-stories-wp/PHP%20Unit%20Tests?label=php%20tests)](https://github.com/google/web-stories-wp/actions?query=branch%3Amain)
 
 </details>
 
 ## Installation
 
 Interested in using the Web Stories for WordPress plugin? [Get the beta today](https://google.github.io/web-stories-wp/beta/)!
+
+## Product Spec
+
+* [Product spec](https://docs.google.com/document/d/18gjAOvAf2TCWpFy_9mr1V9a2VZrM4Ty7Mfry5zdL31k/edit)
+* [Critical User Journeys](https://docs.google.com/spreadsheets/d/1zE3rdJykQY1YOQUHoczyzPNLa5_bhtv-2wfTE1-NOn0/edit)  
+    * [CUJ Coverage: Dashboard](https://google.github.io/web-stories-wp/critical-user-journeys/dashboard)
+    * [CUJ Coverage: Editor](https://google.github.io/web-stories-wp/critical-user-journeys/editor)
 
 ## Contributing
 

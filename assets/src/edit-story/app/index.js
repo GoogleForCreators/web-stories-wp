@@ -47,9 +47,6 @@ import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
 import { Media3pApiProvider } from './media/media3p/api';
 
-/**
- *
- */
 function App({ config }) {
   const { storyId, isRTL } = config;
   return (

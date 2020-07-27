@@ -41,6 +41,17 @@ use WP_REST_Response;
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
+	 * Constructor.
+	 *
+	 * Override the namespace.
+	 *
+	 * @param string $post_type Post type.
+	 */
+	public function __construct( $post_type ) {
+		parent::__construct( $post_type );
+		$this->namespace = 'web-stories/v1';
+	}
+	/**
 	 * Prepares a single template for create or update. Add post_content_filtered field to save/insert.
 	 *
 	 * @param WP_REST_Request $request Request object.
