@@ -42,6 +42,7 @@ import storyReducer, {
 } from '../reducer/stories';
 import { getStoryPropsToSave, addQueryArgs } from '../../utils';
 import reshapeStoryObject from '../serializers/stories';
+import reshapeStoryPreview from '../serializers/storyPreview';
 
 const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
@@ -187,6 +188,54 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
     [storyApi, dataAdapter]
   );
 
+  const createStoryPreviewFromTemplate = useCallback(
+    async (template) => {
+      dispatch({
+        type: STORY_ACTION_TYPES.CREATING_STORY_PREVIEW_FROM_TEMPLATE,
+        payload: true,
+      });
+
+      try {
+        const { createdBy, pages } = template;
+        const storyProps = await getStoryPropsToSave({
+          story: {
+            status: 'auto-draft',
+            title: template.title,
+            author: 1,
+            slug: template.title,
+          },
+          pages,
+          metadata: {
+            publisher: {
+              name: createdBy,
+            },
+            fallbackPoster: '',
+          },
+          flags,
+        });
+
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_SUCCESS,
+        });
+
+        return reshapeStoryPreview(storyProps);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY__PREVIEW_FROM_TEMPLATE_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Create Template Preview', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
+        return { error: __('Unable to Render Preview', 'web-stories') };
+      }
+    },
+    [flags]
+  );
+
   const createStoryFromTemplate = useCallback(
     async (template) => {
       dispatch({
@@ -302,11 +351,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       duplicateStory,
       fetchStories,
       createStoryFromTemplate,
+      createStoryPreviewFromTemplate,
       trashStory,
       updateStory,
     }),
     [
       createStoryFromTemplate,
+      createStoryPreviewFromTemplate,
       duplicateStory,
       trashStory,
       updateStory,
