@@ -165,7 +165,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [matchingFonts, setMatchingFonts] = useState([
     ...recentFonts,
-    ...fonts,
+    ...curatedFonts,
   ]);
 
   useEffect(() => {
@@ -196,7 +196,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
       // Restore default if less than 2 characters.
       if (searchKeyword.trim().length < 2) {
         dividerIndexTracker.current = recentFonts.length - 1;
-        setMatchingFonts([...recentFonts, ...fonts]);
+        setMatchingFonts([...recentFonts, ...curatedFonts]);
         return;
       }
       const _fonts = fonts.filter(({ name }) =>
@@ -210,7 +210,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
     },
     250,
     {},
-    [searchKeyword, fonts]
+    [searchKeyword, fonts, curatedFonts]
   );
 
   const handleSearchInputChanged = useCallback(
