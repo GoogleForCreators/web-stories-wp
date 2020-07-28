@@ -140,6 +140,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
   it('should Delete a story', async () => {
     let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
     const initialNumStories = stories.length;
+
     let firstStory = stories[0];
 
     await fixture.events.hover(firstStory);
