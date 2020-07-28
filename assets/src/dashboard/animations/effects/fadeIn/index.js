@@ -20,13 +20,11 @@
 import { AnimationFade } from '../../parts/fade';
 
 export function EffectFadeIn({ duration = 500, delay, easing }) {
-  return {
-    ...AnimationFade({
-      fadeFrom: 0,
-      fadeTo: 1,
-      duration,
-      delay,
-      easing,
-    }),
-  };
+  return AnimationFade({
+    fadeFrom: 0,
+    fadeTo: 1,
+    duration,
+    delay,
+    easing,
+  });
 }
