@@ -87,7 +87,10 @@ const Highlight = styled.span`
   ${({ highlightColor }) => generatePatternStyles(highlightColor)};
   border-radius: 3px;
   box-decoration-break: clone;
-  color: transparent;
+  color: transparent !important;
+  * {
+    color: transparent !important;
+  }
 `;
 
 function TextEdit({
@@ -165,6 +168,7 @@ function TextEdit({
   );
 
   const wrapperRef = useRef(null);
+  const highlightRef = useRef(null);
   const textBoxRef = useRef(null);
   const editorRef = useRef(null);
   const boxRef = useRef();
@@ -271,10 +275,12 @@ function TextEdit({
   useTransformHandler(id, (transform) => {
     const target = textBoxRef.current;
     const wrapper = wrapperRef.current;
+    const highlight = highlightRef.current;
     const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
+    highlight.style.fontSize = target.style.fontSize;
 
     if (transform === null) {
       wrapper.style.width = '';
@@ -298,7 +304,7 @@ function TextEdit({
   return (
     <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
       {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
-        <TextBox {...textProps}>
+        <TextBox ref={highlightRef} {...textProps}>
           <Highlight
             dangerouslySetInnerHTML={{ __html: editorContent }}
             {...textProps}
