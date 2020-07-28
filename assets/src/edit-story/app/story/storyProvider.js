@@ -23,7 +23,6 @@ import { useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect } from '../../components/keyboard';
 import Context from './context';
 
 import useLoadStory from './effects/useLoadStory';
@@ -108,18 +107,6 @@ function StoryProvider({ storyId, children }) {
     pages,
     story,
   });
-
-  useGlobalKeyDownEffect(
-    { key: ['mod+s'] },
-    (event) => {
-      event.preventDefault();
-      if (isSaving) {
-        return;
-      }
-      saveStory();
-    },
-    [saveStory, isSaving]
-  );
 
   const state = {
     state: {
