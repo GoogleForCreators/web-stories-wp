@@ -17,6 +17,9 @@
 
 namespace Google\Web_Stories\Tests;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Story_Renderer
+ */
 class Story_Renderer extends \WP_UnitTestCase {
 	public function setUp() {
 		// When running the tests, we don't have unfiltered_html capabilities.
@@ -30,27 +33,52 @@ class Story_Renderer extends \WP_UnitTestCase {
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function test_replace_html_start_tag() {
-		$expected = '<html amp lang="en-US"><head></head><body></body></html>';
-		$post     = self::factory()->post->create_and_get(
+	/**
+	 * @covers ::render
+	 * @covers ::__construct
+	 * @covers ::string_to_doc
+	 */
+	public function test_render() {
+		$post = self::factory()->post->create_and_get(
 			[
-				'post_content' => '<html><head></head><body></body></html>',
+				'post_content' => '<!DOCTYPE html><html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
 		$actual   = $renderer->render();
 
-		$this->assertSame( $expected, $actual );
+		$this->assertStringStartsWith( '<!DOCTYPE html>', $actual );
+		$this->assertStringEndsWith( '</html>', $actual );
 	}
 
+	/**
+	 * @covers ::transform_html_start_tag
+	 */
+	public function test_transform_html_start_tag() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$actual   = $renderer->render();
+
+		$this->assertContains( '<html amp="" lang="en-US">', $actual );
+	}
+
+	/**
+	 * @covers ::replace_html_head
+	 * @covers ::get_html_head_markup
+	 */
 	public function test_replace_html_head() {
 		$start_tag = '<meta name="web-stories-replace-head-start"/>';
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body></body></html>",
+				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body><amp-story></amp-story></body></html>",
 			]
 		);
 
@@ -58,6 +86,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$actual   = $renderer->render();
 
 		$this->assertContains( 'FOO', $actual );
+		$this->assertContains( 'BAZ', $actual );
 		$this->assertNotContains( 'BAR', $actual );
 		$this->assertNotContains( $start_tag, $actual );
 		$this->assertNotContains( $end_tag, $actual );
@@ -65,16 +94,18 @@ class Story_Renderer extends \WP_UnitTestCase {
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
 
-	public function test_replace_body_start_tag() {
-		$expected = '<html amp lang="en-US"><head></head><body>Hello World<span>Foo</span></body></html>';
-		$post     = self::factory()->post->create_and_get(
+	/**
+	 * @covers ::insert_content_after_opening_body
+	 */
+	public function test_insert_content_after_opening_body() {
+		$post = self::factory()->post->create_and_get(
 			[
-				'post_content' => '<html><head></head><body><span>Foo</span></body></html>',
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
 		$function = static function() {
-			echo 'Hello World';
+			echo '<p>Hello World</p>';
 		};
 
 		add_action( 'web_stories_body_open', $function );
@@ -84,19 +115,21 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		remove_action( 'web_stories_body_open', $function );
 
-		$this->assertSame( $expected, $actual );
+		$this->assertContains( '<body><p>Hello World</p><amp-story', $actual );
 	}
 
-	public function test_replace_body_end_tag() {
-		$expected = '<html amp lang="en-US"><head></head><body><span>Foo</span>Hello World</body></html>';
-		$post     = self::factory()->post->create_and_get(
+	/**
+	 * @covers ::insert_content_before_closing_body
+	 */
+	public function test_insert_content_before_closing_body() {
+		$post = self::factory()->post->create_and_get(
 			[
-				'post_content' => '<html><head></head><body><span>Foo</span></body></html>',
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
 		$function = static function() {
-			echo 'Hello World';
+			echo '<p>Hello World</p>';
 		};
 
 		add_action( 'web_stories_footer', $function );
@@ -106,7 +139,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		remove_action( 'web_stories_footer', $function );
 
-		$this->assertSame( $expected, $actual );
+		$this->assertContains( '</amp-story><p>Hello World</p></body>', $actual );
 	}
 
 	/**
@@ -115,27 +148,118 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
+	 * @covers ::add_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$renderer    = new \Google\Web_Stories\Story_Renderer( null );
-		$placeholder = $renderer->get_publisher_logo_placeholder();
-
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
 		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
 
-		$post_with_publisher_logo = self::factory()->post->create_and_get(
+		$post = self::factory()->post->create_and_get(
 			[
-				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . $placeholder . '"></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
+		$renderer    = new \Google\Web_Stories\Story_Renderer( $post );
+		$placeholder = $renderer->get_publisher_logo_placeholder();
+
+		wp_update_post(
+			[
+				'ID'           => $post->ID,
+				'post_content' => '<html><head></head><body><amp-story publisher-logo-src="' . $placeholder . '"></amp-story></body></html>',
+			]
+		);
+
 		$rendered = $renderer->render();
 
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$this->assertContains( 'attachment', $rendered );
 		$this->assertNotContains( $placeholder, $rendered );
+	}
 
+	/**
+	 * @covers ::add_poster_images
+	 * @covers ::get_poster_images
+	 */
+	public function test_add_poster_images() {
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		set_post_thumbnail( $post->ID, $attachment_id );
+
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$rendered = $renderer->render();
+
+		$this->assertContains( 'poster-portrait-src=', $rendered );
+		$this->assertContains( 'poster-square-src=', $rendered );
+		$this->assertContains( 'poster-landscape-src=', $rendered );
+	}
+
+	/**
+	 * @covers ::add_poster_images
+	 * @covers ::get_poster_images
+	 */
+	public function test_add_poster_images_no_featured_image() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$rendered = $renderer->render();
+
+		$this->assertContains( 'poster-portrait-src=', $rendered );
+		$this->assertNotContains( 'poster-square-src=', $rendered );
+		$this->assertNotContains( 'poster-landscape-src=', $rendered );
+	}
+
+	/**
+	 * @covers ::insert_analytics_configuration
+	 * @covers ::insert_amp_analytics_extension
+	 */
+	public function test_insert_analytics_configuration() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$function = static function() {
+			echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json"></script></amp-analytics>';
+		};
+
+		add_action( 'web_stories_insert_analytics_configuration', $function );
+
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$actual   = $renderer->render();
+
+		remove_action( 'web_stories_insert_analytics_configuration', $function );
+
+		$this->assertContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
+		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"><script type="application/json"></script></amp-analytics></amp-story></body>', $actual );
+	}
+
+	/**
+	 * @covers ::insert_analytics_configuration
+	 * @covers ::insert_amp_analytics_extension
+	 */
+	public function test_insert_analytics_configuration_no_output() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$actual   = $renderer->render();
+
+		$this->assertNotContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
 	}
 }
