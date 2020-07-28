@@ -24,6 +24,7 @@ import { action } from '@storybook/addon-actions';
  */
 import completeTemplateObject from '../../../../dataUtils/completeTemplateObject';
 import PreviewScreen from '../previewScreen';
+import { ApiContext } from '../../../api/apiProvider';
 
 export default {
   title: 'Dashboard/Views/Shared/PreviewScreen',
@@ -41,4 +42,58 @@ export const _default = () => {
 
 export const NoStoryToPreview = () => {
   return <PreviewScreen handleClose={action('close action triggered')} />;
+};
+
+export const ErrorRenderingPreview = () => {
+  return (
+    <ApiContext.Provider
+      value={{
+        state: {
+          stories: {
+            error: { message: { title: 'An error was returned!' } },
+            isLoading: false,
+            previewMarkup: '',
+          },
+        },
+        actions: {
+          storyApi: {
+            createStoryPreviewFromTemplate: action(
+              'create story from template'
+            ),
+            clearStoryPreview: action('clear preview from reducer'),
+          },
+        },
+      }}
+    >
+      <PreviewScreen
+        story={completeTemplateObject}
+        handleClose={action('close action triggered')}
+      />
+    </ApiContext.Provider>
+  );
+};
+
+export const LoadingPreview = () => {
+  return (
+    <ApiContext.Provider
+      value={{
+        state: {
+          stories: { error: {}, isLoading: true, previewMarkup: '' },
+        },
+        actions: {
+          storyApi: {
+            createStoryPreviewFromTemplate: action(
+              'create story from template'
+            ),
+            clearStoryPreview: action('clear preview from reducer'),
+          },
+        },
+      }}
+    >
+      <PreviewScreen
+        story={completeTemplateObject}
+        handleClose={action('close action triggered')}
+      />
+    </ApiContext.Provider>
+  );
 };
