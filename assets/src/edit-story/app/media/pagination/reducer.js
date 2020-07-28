@@ -31,6 +31,7 @@ export const INITIAL_STATE = {
   totalPages: 1,
   isMediaLoading: false,
   isMediaLoaded: false,
+  mediaLoadingFailed: false,
 };
 
 /**
@@ -66,6 +67,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         hasMore: Boolean(nextPageToken),
         isMediaLoaded: true,
         isMediaLoading: false,
+        mediaLoadingFailed: false,
       };
     }
 
@@ -74,6 +76,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         ...state,
         isMediaLoaded: true,
         isMediaLoading: false,
+        mediaLoadingFailed: true,
       };
     }
 
@@ -119,6 +122,14 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return {
         ...state,
         media: state.media.filter((media) => media.id !== id),
+      };
+    }
+
+    case types.SET_MEDIA_LOADING_FAILED: {
+      const { mediaLoadingFailed } = payload;
+      return {
+        ...state,
+        mediaLoadingFailed,
       };
     }
 

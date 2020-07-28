@@ -90,6 +90,22 @@ export default function useProviderContextValueProvider(
         () => reducerActions.deselectCategory({ provider }),
         [reducerActions, provider]
       ),
+      setMediaLoadingFailed: useCallback(
+        (mediaLoadingFailed) =>
+          reducerActions.setMediaLoadingFailed({
+            provider,
+            mediaLoadingFailed,
+          }),
+        [reducerActions, provider]
+      ),
+      setCategoriesLoadingFailed: useCallback(
+        (categoriesLoadingFailed) =>
+          reducerActions.setCategoriesLoadingFailed({
+            provider,
+            categoriesLoadingFailed,
+          }),
+        [reducerActions, provider]
+      ),
     },
   };
 }

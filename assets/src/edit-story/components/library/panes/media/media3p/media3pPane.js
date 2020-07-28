@@ -77,6 +77,7 @@ function Media3pPane(props) {
 
   const {
     searchTerm,
+    selectedProvider,
     setSelectedProvider,
     setSearchTerm,
     unsplash,
@@ -91,6 +92,7 @@ function Media3pPane(props) {
       media3p,
     }) => ({
       searchTerm,
+      selectedProvider,
       setSelectedProvider,
       setSearchTerm,
       unsplash,
@@ -99,8 +101,13 @@ function Media3pPane(props) {
   );
 
   const {
-    state: { categories },
-    actions: { selectCategory, deselectCategory },
+    state: { categories, mediaLoadingFailed },
+    actions: {
+      selectCategory,
+      deselectCategory,
+      setMediaLoadingFailed,
+      setCategoriesLoadingFailed,
+    },
   } = selectedProviderState;
 
   useEffect(() => {
@@ -109,7 +116,9 @@ function Media3pPane(props) {
     }
   }, [isActive, setSelectedProvider]);
 
-  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+  const onSearch = (v) => {
+    setSearchTerm({ searchTerm: v });
+  };
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
@@ -141,10 +150,13 @@ function Media3pPane(props) {
             />
           </ProviderTabSection>
           <Media3pCategories
+            providerType={selectedProvider}
             categories={categories.categories}
             selectedCategoryId={categories.selectedCategoryId}
             selectCategory={selectCategory}
             deselectCategory={deselectCategory}
+            categoriesLoadingFailed={categories.categoriesLoadingFailed}
+            setCategoriesLoadingFailed={setCategoriesLoadingFailed}
           />
         </PaneHeader>
         <PaginatedMediaGallery
@@ -155,6 +167,8 @@ function Media3pPane(props) {
           hasMore={unsplash.state.hasMore}
           setNextPage={unsplash.actions.setNextPage}
           onInsert={insertMediaElement}
+          mediaLoadingFailed={mediaLoadingFailed}
+          setMediaLoadingFailed={setMediaLoadingFailed}
         />
       </PaneInner>
     </StyledPane>

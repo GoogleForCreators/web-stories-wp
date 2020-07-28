@@ -18,13 +18,19 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 import { ArrowDown } from '../../../../button/index';
+import { ProviderType } from '../common/providerType';
+import { useSnackbar } from '../../../../../app/snackbar';
 import CategoryPill from './categoryPill';
 // TODO(#2360) Category should be collapsible and expandable.
 const CategorySection = styled.div`
@@ -50,11 +56,34 @@ const ExpandButton = styled(ArrowDown)`
 `;
 
 const Media3pCategories = ({
+  providerType,
   categories,
   selectedCategoryId,
   selectCategory,
   deselectCategory,
+  categoriesLoadingFailed,
+  setCategoriesLoadingFailed,
 }) => {
+  const { showSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (categoriesLoadingFailed) {
+      let message = null;
+      if (providerType === ProviderType.UNSPLASH) {
+        message = __('Error loading categories from Unsplash', 'web-stories');
+      } else {
+        message = __('Error loading categories', 'web-stories');
+      }
+      showSnackbar({ message });
+      setCategoriesLoadingFailed(false);
+    }
+  }, [
+    providerType,
+    showSnackbar,
+    categoriesLoadingFailed,
+    setCategoriesLoadingFailed,
+  ]);
+
   const [isExpanded, setIsExpanded] = useState(false);
   return categories.length ? (
     <CategorySection aria-expanded={isExpanded}>
@@ -82,10 +111,13 @@ const Media3pCategories = ({
 };
 
 Media3pCategories.propTypes = {
+  providerType: PropTypes.string.isRequired,
   categories: PropTypes.array.isRequired,
   selectedCategoryId: PropTypes.string,
   selectCategory: PropTypes.func,
   deselectCategory: PropTypes.func,
+  categoriesLoadingFailed: PropTypes.bool.isRequired,
+  setCategoriesLoadingFailed: PropTypes.func.isRequired,
 };
 
 export default Media3pCategories;

@@ -43,6 +43,8 @@ import {
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
 } from '../common/styles';
+import { useSnackbar } from '../../../../../app/snackbar';
+import { ProviderType } from './providerType';
 
 const ROOT_MARGIN = 300;
 
@@ -51,9 +53,11 @@ function PaginatedMediaGallery({
   resources,
   isMediaLoading,
   isMediaLoaded,
+  mediaLoadingFailed,
   hasMore,
   onInsert,
   setNextPage,
+  setMediaLoadingFailed,
 }) {
   // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
   // State and callback ref necessary to recalculate the padding of the list
@@ -141,6 +145,23 @@ function PaginatedMediaGallery({
     };
   }, [handleScrollOrResize]);
 
+  const { showSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (mediaLoadingFailed) {
+      let message = null;
+      if (providerType === ProviderType.UNSPLASH) {
+        message = __('Error loading media from Unsplash', 'web-stories');
+      } else if (providerType === ProviderType.LOCAL) {
+        message = __('Error loading WordPress media', 'web-stories');
+      } else {
+        message = __('Error loading media', 'web-stories');
+      }
+      showSnackbar({ message });
+      setMediaLoadingFailed(false);
+    }
+  }, [providerType, showSnackbar, mediaLoadingFailed, setMediaLoadingFailed]);
+
   const mediaGallery =
     isMediaLoaded && resources.length === 0 ? (
       <MediaGalleryMessage>
@@ -178,9 +199,11 @@ PaginatedMediaGallery.propTypes = {
   resources: PropTypes.arrayOf(PropTypes.object).isRequired,
   isMediaLoading: PropTypes.bool.isRequired,
   isMediaLoaded: PropTypes.bool.isRequired,
+  mediaLoadingFailed: PropTypes.bool.isRequired,
   hasMore: PropTypes.bool.isRequired,
   onInsert: PropTypes.func.isRequired,
   setNextPage: PropTypes.func.isRequired,
+  setMediaLoadingFailed: PropTypes.func.isRequired,
 };
 
 export default memo(PaginatedMediaGallery);

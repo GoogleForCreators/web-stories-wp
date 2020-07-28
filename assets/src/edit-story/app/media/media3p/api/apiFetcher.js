@@ -171,18 +171,18 @@ class ApiFetcher {
 
     const response = await window.fetch(url);
 
-    if (!response.ok) {
-      throw new Error(
-        'Obtained an error from the ' +
-          path +
-          ' call, statusCode: ' +
-          response.status +
-          ', statusText: ' +
-          response.statusText
-      );
-    }
+    // if (!response.ok) {
+    throw new Error(
+      'Obtained an error from the ' +
+        path +
+        ' call, statusCode: ' +
+        response.status +
+        ', statusText: ' +
+        response.statusText
+    );
+    // }
 
-    return response.json();
+    // return response.json();
   }
 }
 

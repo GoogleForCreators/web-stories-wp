@@ -24,6 +24,7 @@ export const INITIAL_STATE = {
   isLoaded: false,
   categories: [],
   selectedCategoryId: undefined,
+  categoriesLoadingFailed: false,
 };
 
 /**
@@ -54,6 +55,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         categories,
         isLoading: false,
         isLoaded: true,
+        categoriesLoadingFailed: false,
       };
     }
     case types.FETCH_MEDIA_CATEGORIES_ERROR: {
@@ -61,6 +63,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         ...state,
         isLoading: false,
         isLoaded: true,
+        categoriesLoadingFailed: true,
       };
     }
     case types.SELECT_CATEGORY: {
@@ -74,6 +77,13 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return {
         ...state,
         selectedCategoryId: undefined,
+      };
+    }
+    case types.SET_CATEGORIES_LOADING_FAILED: {
+      const { categoriesLoadingFailed } = payload;
+      return {
+        ...state,
+        categoriesLoadingFailed,
       };
     }
     default:

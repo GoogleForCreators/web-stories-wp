@@ -61,3 +61,16 @@ export const deselectCategory = (dispatch) => ({ provider }) => {
     payload: { provider },
   });
 };
+
+export const setCategoriesLoadingFailed = (dispatch) => ({
+  provider,
+  categoriesLoadingFailed,
+}) => {
+  dispatch({
+    type: types.SET_CATEGORIES_LOADING_FAILED,
+    payload: {
+      provider,
+      categoriesLoadingFailed,
+    },
+  });
+};

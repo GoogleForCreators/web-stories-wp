@@ -86,3 +86,16 @@ export const deleteMediaElement = (dispatch) => ({ provider, id }) => {
     },
   });
 };
+
+export const setMediaLoadingFailed = (dispatch) => ({
+  provider,
+  mediaLoadingFailed,
+}) => {
+  dispatch({
+    type: types.SET_MEDIA_LOADING_FAILED,
+    payload: {
+      provider,
+      mediaLoadingFailed,
+    },
+  });
+};
