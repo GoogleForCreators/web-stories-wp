@@ -47,7 +47,7 @@ const CategoryPillContainer = styled.div`
 // Flips the button upside down when expanded;
 const ExpandButton = styled(ArrowDown)`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
-  visibility: ${(props) => (props.hidden ? 'hidden' : 'visible')};
+  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
   align-self: center;
 `;
 
@@ -60,42 +60,38 @@ const Media3pCategories = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   function renderCategories() {
-    return categories.map((e) => {
+    return (selectedCategoryId
+      ? [categories.find((e) => e.id === selectedCategoryId)]
+      : categories
+    ).map((e) => {
+      const selected = e.id === selectedCategoryId;
       return (
         <CategoryPill
-          isSelected={false}
+          isSelected={selected}
           key={e.id}
           title={e.displayName}
           onClick={() => {
-            setIsExpanded(false);
-            selectCategory(e.id);
+            if (selected) {
+              deselectCategory();
+            } else {
+              setIsExpanded(false);
+              selectCategory(e.id);
+            }
           }}
         />
       );
     });
   }
 
-  function renderSelectedCategory() {
-    const selected = categories.find((e) => e.id === selectedCategoryId);
-    return (
-      <CategoryPill
-        isSelected={true}
-        key={selected.id}
-        title={selected.displayName}
-        onClick={() => deselectCategory()}
-      />
-    );
-  }
-
   return categories.length ? (
     <CategorySection aria-expanded={isExpanded}>
       <CategoryPillContainer isExpanded={isExpanded} role="tablist">
-        {selectedCategoryId ? renderSelectedCategory() : renderCategories()}
+        {renderCategories()}
       </CategoryPillContainer>
       <ExpandButton
         onClick={() => setIsExpanded(!isExpanded)}
         isExpanded={isExpanded}
-        hidden={selectedCategoryId}
+        visible={!selectedCategoryId}
       />
     </CategorySection>
   ) : null;
