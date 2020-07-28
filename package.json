@@ -62,7 +62,7 @@
     "use-context-selector": "^1.1.2",
     "use-debounce": "^3.4.3",
     "use-reduction": "^2.0.0",
-    "uuid": "^8.2.0",
+    "uuid": "^8.3.0",
     "valid-url": "^1.0.9",
     "web-animations-js": "^2.3.2"
   },
