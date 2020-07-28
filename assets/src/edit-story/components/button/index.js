@@ -30,6 +30,7 @@ import {
   Redo as RedoIcon,
   ArrowLeft as ArrowLeftIcon,
   ArrowRight as ArrowRightIcon,
+  ArrowDown as ArrowDownIcon,
   GridView as GridViewIcon,
   Keyboard as KeyboardIcon,
   Close as CloseIcon,
@@ -191,6 +192,12 @@ export const Close = forwardRef((props, ref) => (
 export const Eyedropper = (props) => (
   <StyledButton {...props}>
     <EyedropperIcon />
+  </StyledButton>
+);
+
+export const ArrowDown = (props) => (
+  <StyledButton {...props}>
+    <ArrowDownIcon />
   </StyledButton>
 );
 

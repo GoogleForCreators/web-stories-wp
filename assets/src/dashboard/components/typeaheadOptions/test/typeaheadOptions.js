@@ -37,6 +37,9 @@ describe('TypeaheadOptions', () => {
 
   const onClickMock = jest.fn();
 
+  // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
+  window.HTMLElement.prototype.scrollIntoView = () => {};
+
   it('should render a <TypeaheadOptions />', () => {
     const { getByText } = renderWithTheme(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
@@ -69,28 +72,59 @@ describe('TypeaheadOptions', () => {
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should default to showing 5 items', () => {
+  it('should have 6 items', () => {
     const { getAllByRole } = renderWithTheme(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
     const menuItems = getAllByRole('listitem');
 
-    expect(menuItems).toHaveLength(5);
+    expect(menuItems).toHaveLength(6);
   });
 
-  it('should only show 3 items when maxItemsVisible is set', () => {
-    const { getAllByRole } = renderWithTheme(
+  it('should show selected value if one is present when menu is rendered that matches an item', () => {
+    const { getByText } = renderWithTheme(
       <TypeaheadOptions
         onSelect={onClickMock}
         items={demoItems}
+        currentSelection={demoItems[1].value}
         isOpen
-        maxItemsVisible={3}
       />
     );
 
-    const menuItems = getAllByRole('listitem');
+    const ActiveMenuItem = getByText(demoItems[1].label).parentElement;
+    const ActiveMenuItemStyle = window.getComputedStyle(ActiveMenuItem)
+      .backgroundColor;
 
-    expect(menuItems).toHaveLength(3);
+    expect(ActiveMenuItemStyle).toBe('rgb(238, 238, 238)');
+
+    const InactiveMenuItem = getByText(demoItems[3].label).parentElement;
+    const InactiveMenuItemStyle = window.getComputedStyle(InactiveMenuItem)
+      .backgroundColor;
+
+    expect(InactiveMenuItemStyle).toBe('');
+  });
+
+  it("should not show selected value if currentSelection doesn't match an item", () => {
+    const { getByText } = renderWithTheme(
+      <TypeaheadOptions
+        onSelect={onClickMock}
+        items={demoItems}
+        currentSelection={'fo'}
+        isOpen
+      />
+    );
+
+    const ActiveMenuItem = getByText(demoItems[1].label).parentElement;
+    const ActiveMenuItemStyle = window.getComputedStyle(ActiveMenuItem)
+      .backgroundColor;
+
+    expect(ActiveMenuItemStyle).toBe('');
+
+    const InactiveMenuItem = getByText(demoItems[3].label).parentElement;
+    const InactiveMenuItemStyle = window.getComputedStyle(InactiveMenuItem)
+      .backgroundColor;
+
+    expect(InactiveMenuItemStyle).toBe('');
   });
 });

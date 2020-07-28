@@ -130,8 +130,6 @@ BLOCK;
 		$title      = (string) get_the_title( $post_id );
 		$has_poster = has_post_thumbnail( $post_id );
 
-		ob_start();
-
 		if ( $has_poster ) {
 			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
 

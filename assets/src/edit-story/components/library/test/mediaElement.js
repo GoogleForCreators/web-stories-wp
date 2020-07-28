@@ -17,53 +17,48 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
  */
-// import { Fixture } from '../../../../../../karma/fixture';
+import { Simulate } from 'react-dom/test-utils';
 import MediaElement from '../panes/media/common/mediaElement';
 import { ProviderType } from '../panes/media/common/providerType';
 import { renderWithTheme } from '../../../testUtils';
 
 function renderMediaElement(resource, providerType) {
-  const { getByRole, getByTestId } = renderWithTheme(
-    <MediaElement
-      resource={resource}
-      onInsert={() => {}}
-      providerType={providerType}
-    />
+  const { getByAriaLabel, queryByAriaLabel } = renderWithTheme(
+    <FlagsProvider features={{ mediaDropdownMenu: true }}>
+      <MediaElement
+        resource={resource}
+        onInsert={() => {}}
+        providerType={providerType}
+      />
+    </FlagsProvider>
   );
-  return { getByRole, getByTestId };
+  return { getByAriaLabel, queryByAriaLabel };
 }
 
 describe('MediaElement', () => {
-  // let fixture;
+  it("should render dropdown menu's more icon for uploaded image", () => {
+    const resource = {
+      id: 123,
+      src: 'http://image-url.com',
+      type: 'image',
+      width: 100,
+      height: 100,
+      local: false, // Already uploaded
+      alt: 'image :)',
+    };
 
-  // beforeEach(async () => {
-  //   fixture = new Fixture();
-  //   await fixture.render();
-  // });
+    const { getByAriaLabel } = renderMediaElement(resource, ProviderType.LOCAL);
 
-  // afterEach(() => {
-  //   fixture.restore();
-  // });
+    const element = getByAriaLabel('image :)');
+    Simulate.focus(element);
 
-  //a  it("should render dropdown menu's more icon for uploaded image", () => {
-  //   const firstElement = fixture.querySelectorAll(
-  //     '[data-testid=mediaElement]'
-  //   )[0];
-
-  //   // console.warn(firstElement);
-
-  //   firstElement.dispatchEvent(new Event('pointerenter'));
-
-  //   expect(fixture.querySelectorAll('[data-testid=dropDownMenu]').length).toBe(
-  //     1
-  //   );
-  //   expect(fixture.querySelectorAll('button[name=more]').length).toBe(1);
-  // });
+    expect(getByAriaLabel('More')).toBeInTheDocument();
+  });
 
   it("should render dropdown menu's more icon for uploaded video", () => {
     const resource = {
@@ -76,64 +71,55 @@ describe('MediaElement', () => {
       alt: 'video :)',
     };
 
-    const { getByRole, getByTestId } = renderMediaElement(
+    const { getByAriaLabel } = renderMediaElement(resource, ProviderType.LOCAL);
+
+    const element = getByAriaLabel('video :)');
+    Simulate.focus(element);
+
+    expect(getByAriaLabel('More')).toBeInTheDocument();
+  });
+
+  it("should not render dropdown menu's more icon for not uploaded image", () => {
+    const resource = {
+      id: 789,
+      src: 'http://image-url.com',
+      type: 'image',
+      width: 100,
+      height: 100,
+      local: true, // Not yet uploaded
+      alt: 'image :)',
+    };
+
+    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
       ProviderType.LOCAL
     );
 
-    const element = getByTestId('mediaElement');
-    //   // fireEvent.pointerEnter(element);
-    fireEvent(element, new window.MouseEvent('pointerenter', {}));
-    //   fireEvent.mouseEnter(element);
+    const element = getByAriaLabel('image :)');
+    Simulate.focus(element);
 
-    expect(
-      getByRole('button', { name: /more/i, hidden: true })
-    ).toBeInTheDocument();
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
   });
 
-  //a  it("should not render dropdown menu's more icon for not uploaded image", () => {
-  //   const resource = {
-  //     id: 123,
-  //     src: 'http://image-url.com',
-  //     type: 'image',
-  //     width: 100,
-  //     height: 100,
-  //     local: true, // Not yet uploaded
-  //     alt: 'image :)',
-  //   };
+  it("should not render dropdown menu's more icon for not uploaded video", () => {
+    const resource = {
+      id: 987,
+      src: 'http://video-url.com',
+      type: 'video',
+      width: 100,
+      height: 100,
+      local: true, // Not yet uploaded
+      alt: 'video :)',
+    };
 
-  //   const { getByRole, getByTestId } = renderMediaElement(
-  //     resource,
-  //     ProviderType.LOCAL
-  //   );
+    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+      resource,
+      ProviderType.LOCAL
+    );
 
-  //   const element = getByTestId('mediaElement');
-  //   // fireEvent.pointerEnter(element);
-  //   fireEvent.mouseEnter(element);
+    const element = getByAriaLabel('video :)');
+    Simulate.focus(element);
 
-  //   expect(getByRole('button', { name: /more/i })).not.toBeInTheDocument();
-  // });
-
-  //a it("should not render dropdown menu's more icon for not uploaded video", () => {
-  //   const resource = {
-  //     id: 456,
-  //     src: 'http://video-url.com',
-  //     type: 'video',
-  //     width: 100,
-  //     height: 100,
-  //     local: true, // Not yet uploaded
-  //     alt: 'video :)',
-  //   };
-
-  //   const { getByRole, getByTestId } = renderMediaElement(
-  //     resource,
-  //     ProviderType.LOCAL
-  //   );
-
-  //   const element = getByTestId('mediaElement');
-  //   // fireEvent.pointerEnter(element);
-  //   fireEvent.mouseEnter(element);
-
-  //   expect(getByRole('button', { name: /more/i })).not.toBeInTheDocument();
-  // });
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+  });
 });

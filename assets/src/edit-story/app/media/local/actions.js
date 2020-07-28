@@ -17,44 +17,48 @@
 /**
  * Internal dependencies
  */
-import * as common from '../common/actions';
+import * as common from '../pagination/actions';
 import * as types from './types';
 
-export const fetchMediaStart = (dispatch) =>
-  common.fetchMediaStart(dispatch, 'local');
-export const fetchMediaSuccess = (dispatch) =>
-  common.fetchMediaSuccess(dispatch, 'local');
-export const fetchMediaError = (dispatch) =>
-  common.fetchMediaError(dispatch, 'local');
-export const setNextPage = (dispatch) => common.setNextPage(dispatch, 'local');
-export const updateMediaElement = (dispatch) =>
-  common.updateMediaElement(dispatch, 'local');
-export const deleteMediaElement = (dispatch) =>
-  common.deleteMediaElement(dispatch, 'local');
+export const fetchMediaStart = (dispatch) => (properties) =>
+  common.fetchMediaStart(dispatch)({ ...properties, provider: 'local' });
+export const fetchMediaSuccess = (dispatch) => (properties) =>
+  common.fetchMediaSuccess(dispatch)({ ...properties, provider: 'local' });
+export const fetchMediaError = (dispatch) => (properties) =>
+  common.fetchMediaError(dispatch)({ ...properties, provider: 'local' });
+export const setNextPage = (dispatch) => (properties) =>
+  common.setNextPage(dispatch)({ ...properties, provider: 'local' });
+export const updateMediaElement = (dispatch) => (properties) =>
+  common.updateMediaElement(dispatch)({ ...properties, provider: 'local' });
+export const deleteMediaElement = (dispatch) => (properties) =>
+  common.deleteMediaElement(dispatch)({ ...properties, provider: 'local' });
 
 export const resetFilters = (dispatch) => () => {
-  dispatch({ type: types.RESET_FILTERS });
+  dispatch({ type: types.LOCAL_MEDIA_RESET_FILTERS });
 };
 
 export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({ type: types.SET_SEARCH_TERM, payload: { searchTerm } });
+  dispatch({
+    type: types.LOCAL_MEDIA_SET_SEARCH_TERM,
+    payload: { searchTerm },
+  });
 };
 
 export const setMediaType = (dispatch) => ({ mediaType }) => {
-  dispatch({ type: types.SET_MEDIA_TYPE, payload: { mediaType } });
+  dispatch({ type: types.LOCAL_MEDIA_SET_MEDIA_TYPE, payload: { mediaType } });
 };
 
 export const setProcessing = (dispatch) => ({ id }) => {
-  dispatch({ type: types.ADD_PROCESSING, payload: { id } });
+  dispatch({ type: types.LOCAL_MEDIA_ADD_PROCESSING, payload: { id } });
 };
 
 export const removeProcessing = (dispatch) => ({ id }) => {
-  dispatch({ type: types.REMOVE_PROCESSING, payload: { id } });
+  dispatch({ type: types.LOCAL_MEDIA_REMOVE_PROCESSING, payload: { id } });
 };
 
 export const setMedia = (dispatch) => ({ media }) => {
   dispatch({
-    type: types.SET_MEDIA,
+    type: types.LOCAL_MEDIA_SET_MEDIA,
     payload: { media },
   });
 };

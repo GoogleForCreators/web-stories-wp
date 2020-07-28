@@ -67,6 +67,7 @@ class Story_Post_Type {
 	 * @var string
 	 */
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
+
 	/**
 	 * Registers the post type for stories.
 	 *
@@ -134,7 +135,6 @@ class Story_Post_Type {
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
-
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
@@ -144,7 +144,12 @@ class Story_Post_Type {
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
-		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
+		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
+		} else {
+			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
+		}
 	}
 
 	/**
@@ -368,9 +373,9 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'stories' => sprintf( '/wp/v2/%s', $rest_base ),
-					'media'   => '/wp/v2/media',
 					'users'   => '/wp/v2/users',
+					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'   => '/web-stories/v1/media',
 					'fonts'   => '/web-stories/v1/fonts',
 					'link'    => '/web-stories/v1/link',
 				],
@@ -387,84 +392,91 @@ class Story_Post_Type {
 				 * Issue: 1903
 				 * Creation date: 2020-06-08
 				 */
-				'enableAnimation'              => false,
+				'enableAnimation'                => false,
 				/**
 				 * Description: Flag for hover dropdown menu for media element in media library.
 				 * Author: @joannag6
 				 * Issue: #1319 and #354
 				 * Creation date: 2020-05-20
 				 */
-				'mediaDropdownMenu'            => true,
+				'mediaDropdownMenu'              => true,
 				/**
 				 * Description: Flag for new font picker with typeface previews in style panel.
 				 * Author: @carlos-kelly
 				 * Issue: #1300
 				 * Creation date: 2020-06-02
 				 */
-				'newFontPicker'                => false,
+				'newFontPicker'                  => false,
 				/**
 				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
 				 * Author: @dmmulroy
 				 * Issue: #2094
 				 * Creation date: 2020-06-04
 				 */
-				'showKeyboardShortcutsButton'  => false,
+				'showKeyboardShortcutsButton'    => false,
 				/**
 				 * Description: Flag for hiding/enabling text sets.
 				 * Author: @dmmulroy
 				 * Issue: #2097
 				 * Creation date: 2020-06-04
 				 */
-				'showTextSets'                 => false,
+				'showTextSets'                   => false,
 				/**
 				 * Description: Flag for hiding/enabling the pre publish tab.
 				 * Author: @dmmulroy
 				 * Issue: #2095
 				 * Creation date: 2020-06-04
 				 */
-				'showPrePublishTab'            => false,
+				'showPrePublishTab'              => false,
 				/**
 				 * Description: Flag for displaying the animation tab/panel.
 				 * Author: @dmmulroy
 				 * Issue: #2092
 				 * Creation date: 2020-06-04
 				 */
-				'showAnimationTab'             => false,
+				'showAnimationTab'               => false,
 				/**
 				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
 				 * Author: @dmmulroy
 				 * Issue: #2044
 				 * Creation date: 2020-06-04
 				 */
-				'showTextMagicAndHelperMode'   => false,
+				'showTextMagicAndHelperMode'     => false,
 				/**
 				 * Description: Flag for hiding/enabling the search input on the text and shapes panes.
 				 * Author: @dmmulroy
 				 * Issue: #2098
 				 * Creation date: 2020-06-04
 				 */
-				'showTextAndShapesSearchInput' => false,
+				'showTextAndShapesSearchInput'   => false,
 				/**
 				 * Description: Flag for the 3P Media tab.
 				 * Author: @diegovar
 				 * Issue: #2508
 				 * Creation date: 2020-06-17
 				 */
-				'media3pTab'                   => false,
+				'media3pTab'                     => false,
 				/**
 				 * Description: Flag to show or hide the elements tab.
 				 * Author: @diegovar
 				 * Issue: #2616
 				 * Creation date: 2020-06-23
 				 */
-				'showElementsTab'              => false,
+				'showElementsTab'                => false,
 				/**
 				 * Description: Flag for using a row-based media gallery (vs column based) in the Uploads tab.
 				 * Author: @joannalee
 				 * Issue: #2820
 				 * Creation date: 2020-06-30
 				 */
-				'rowBasedGallery'              => false,
+				'rowBasedGallery'                => false,
+				/**
+				 * Description: Flag for using incremental search in media and media3p with a debouncer.
+				 * Author: @diegovar
+				 * Issue: #3206
+				 * Creation date: 2020-07-15
+				 */
+				'incrementalSearchDebounceMedia' => false,
 			],
 
 		];
@@ -493,60 +505,17 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Filters the gtag configuration options for the amp-analytics tag.
+	 * Adds the web story post type to Jetpack / WordPress.com sitemaps.
 	 *
-	 * @see https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/
-	 * @see https://github.com/ampproject/amphtml/blob/master/extensions/amp-story/amp-story-analytics.md
+	 * @see https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80
 	 *
-	 * @param array $gtag_opt Array of gtag configuration options.
-	 * @return array Modified configuration options.
+	 * @param array $post_types Array of post types.
+	 *
+	 * @return array Modified list of post types.
 	 */
-	public function filter_site_kit_gtag_opt( $gtag_opt ) {
-		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
-			return $gtag_opt;
-		}
+	public function add_to_jetpack_sitemap( $post_types ) {
+		$post_types[] = self::POST_TYPE_SLUG;
 
-		$post = get_post();
-
-		if ( ! $post instanceof WP_Post ) {
-			return $gtag_opt;
-		}
-
-		$title       = get_the_title( $post );
-		$story_id    = $post->ID;
-		$tracking_id = $gtag_opt['vars']['gtag_id'];
-
-		$gtag_opt['triggers'] = isset( $gtag_opt['triggers'] ) ? $gtag_opt['triggers'] : [];
-
-		if ( ! isset( $gtag_opt['triggers']['storyProgress'] ) ) {
-			$gtag_opt['triggers']['storyProgress'] = [
-				'on'   => 'story-page-visible',
-				'vars' => [
-					'event_name'     => 'custom',
-					'event_action'   => 'story_progress',
-					'event_category' => $title,
-					'event_label'    => $story_id,
-					'send_to'        => [
-						$tracking_id,
-					],
-				],
-			];
-		}
-
-		if ( ! isset( $gtag_opt['triggers']['storyEnd'] ) ) {
-			$gtag_opt['triggers']['storyEnd'] = [
-				'on'   => 'story-last-page-visible',
-				'vars' => [
-					'event_name'     => 'custom',
-					'event_action'   => 'story_complete',
-					'event_category' => $title,
-					'send_to'        => [
-						$tracking_id,
-					],
-				],
-			];
-		}
-
-		return $gtag_opt;
+		return $post_types;
 	}
 }

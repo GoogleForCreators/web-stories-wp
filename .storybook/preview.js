@@ -29,7 +29,7 @@ import 'web-animations-js/web-animations-next-lite.min.js';
  * Internal dependencies
  */
 import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
-import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/movable/cropStyle';
+import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/moveable/cropStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
 
 import dashboardTheme, {

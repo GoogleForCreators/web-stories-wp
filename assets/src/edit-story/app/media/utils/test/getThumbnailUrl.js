@@ -20,41 +20,61 @@
 import getThumbnailUrl from '../getThumbnailUrl';
 
 describe('getThumbnailUrl', () => {
-  it('should return the smallest available image URL (thumbnail < large < full < default)', () => {
-    const resource = {
-      src: 'default-url',
-      sizes: {
-        full: { source_url: 'full-url' },
-        web_stories_thumbnail: { source_url: 'thumbnail-url' },
-        large: { source_url: 'large-url' },
-      },
-    };
-    expect(getThumbnailUrl(resource)).toBe('thumbnail-url');
+  beforeEach(() => {
+    window.devicePixelRatio = 1;
   });
 
-  it('should return the smallest available image URL (large < full < default)', () => {
+  it('should return the smallest available image URL greater than minWidth', () => {
     const resource = {
       src: 'default-url',
       sizes: {
-        full: { source_url: 'full-url' },
-        large: { source_url: 'large-url' },
+        img1: { width: 200, height: 1, source_url: 'full-url' },
+        img2: { width: 300, height: 1, source_url: 'med-url' },
+        img3: { width: 400, height: 1, source_url: 'large-url' },
       },
     };
-    expect(getThumbnailUrl(resource)).toBe('large-url');
+    expect(getThumbnailUrl(210, resource)).toBe('med-url');
   });
 
-  it('should return the smallest available image URL (full < default)', () => {
+  it('should return an image according to the device pixel ratio', () => {
+    window.devicePixelRatio = 2;
     const resource = {
       src: 'default-url',
       sizes: {
-        full: { source_url: 'full-url' },
+        img1: { width: 200, height: 1, source_url: 'full-url' },
+        img2: { width: 300, height: 1, source_url: 'med-url' },
+        img3: { width: 400, height: 1, source_url: 'large-url' },
       },
     };
-    expect(getThumbnailUrl(resource)).toBe('full-url');
+    expect(getThumbnailUrl(160, resource)).toBe('large-url');
+  });
+
+  it('should never return the one with key=thumbnail', () => {
+    const resource = {
+      src: 'default-url',
+      sizes: {
+        thumbnail: { width: 200, height: 1, source_url: 'thumb-url' },
+        img1: { width: 300, height: 1, source_url: 'large-url' },
+        img2: { width: 400, height: 1, source_url: 'full-url' },
+      },
+    };
+    expect(getThumbnailUrl(180, resource)).toBe('large-url');
+  });
+
+  it('should return the resource.src if there is no valid thumb', () => {
+    const resource = {
+      src: 'default-url',
+      sizes: {
+        img1: { width: 200, height: 1, source_url: 'small-url' },
+        img2: { width: 300, height: 1, source_url: 'med-url' },
+        img3: { width: 400, height: 1, source_url: 'large-url' },
+      },
+    };
+    expect(getThumbnailUrl(440, resource)).toBe('default-url');
   });
 
   it('should return the default src URL if no alternatives', () => {
     const resource = { src: 'default-url' };
-    expect(getThumbnailUrl(resource)).toBe('default-url');
+    expect(getThumbnailUrl(200, resource)).toBe('default-url');
   });
 });
