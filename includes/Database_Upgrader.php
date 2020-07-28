@@ -60,6 +60,7 @@ class Database_Upgrader {
 			'2.0.2' => 'remove_broken_text_styles',
 			'2.0.3' => 'unify_color_presets',
 			'2.0.4' => 'update_publisher_logos',
+			'3.0.0' => 'add_stories_caps',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -228,6 +229,16 @@ class Database_Upgrader {
 
 		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id, false );
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_filter( [ $publisher_logo_id ] ), false );
+	}
+
+	/**
+	 * Adds story capabilities to default user roles.
+	 *
+	 * @return void
+	 */
+	protected function add_stories_caps() {
+		$story_post_type = new Story_Post_Type();
+		$story_post_type->add_caps_to_roles();
 	}
 
 	/**

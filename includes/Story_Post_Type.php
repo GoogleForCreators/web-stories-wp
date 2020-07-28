@@ -31,6 +31,7 @@ use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
+use WP_Role;
 use WP_Screen;
 
 /**
@@ -127,6 +128,8 @@ class Story_Post_Type {
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Controller::class,
+				'capability_type'       => [ 'web-story', 'web-stories' ],
+				'map_meta_cap'          => true,
 			]
 		);
 
@@ -149,6 +152,54 @@ class Story_Post_Type {
 			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		} else {
 			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
+		}
+	}
+
+	/**
+	 * Adds story capabilities to default user roles.
+	 *
+	 * This gives WordPress site owners more granular control over story management,
+	 * as they can customize this to their liking.
+	 *
+	 * @return void
+	 */
+	public function add_caps_to_roles() {
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( ! $post_type_object ) {
+			return;
+		}
+
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+
+		$administrator = get_role( 'administrator' );
+		$editor        = get_role( 'editor' );
+		$author        = get_role( 'author' );
+		$contributor   = get_role( 'contributor' );
+
+		if ( $administrator instanceof WP_Role ) {
+			foreach ( $all_capabilities as $cap ) {
+				$administrator->add_cap( $cap );
+			}
+		}
+
+		if ( $editor instanceof WP_Role ) {
+			foreach ( $all_capabilities as $cap ) {
+				$editor->add_cap( $cap );
+			}
+		}
+
+		if ( $author instanceof WP_Role ) {
+			$author->add_cap( 'edit_web-stories' );
+			$author->add_cap( 'edit_published_web-stories' );
+			$author->add_cap( 'delete_web-stories' );
+			$author->add_cap( 'delete_published_web-stories' );
+			$author->add_cap( 'publish_web-stories' );
+		}
+
+		if ( $contributor instanceof WP_Role ) {
+			$contributor->add_cap( 'edit_web-stories' );
+			$contributor->add_cap( 'delete_web-stories' );
 		}
 	}
 

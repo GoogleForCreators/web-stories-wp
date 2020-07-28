@@ -209,4 +209,20 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
 		$this->assertEqualSets( [ \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ], $story_post_type->add_to_jetpack_sitemap( [] ) );
 	}
+
+	/**
+	 * @covers ::add_caps_to_roles
+	 */
+	public function test_add_caps_to_roles() {
+		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+
+		$administrator = get_role( 'administrator' );
+		$editor        = get_role( 'editor' );
+
+		foreach ( $all_capabilities as $cap ) {
+			$administrator->has_cap( $cap );
+			$editor->has_cap( $cap );
+		}
+	}
 }
