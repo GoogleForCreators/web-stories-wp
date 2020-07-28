@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Fonts_Controller;
+use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
 use WP_Post;
@@ -116,6 +117,13 @@ class Plugin {
 	public $database_upgrader;
 
 	/**
+	 * Analytics.
+	 *
+	 * @var Analytics
+	 */
+	public $analytics;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
@@ -165,6 +173,9 @@ class Plugin {
 		$this->discovery = new Discovery();
 		add_action( 'init', [ $this->discovery, 'init' ] );
 
+		$this->analytics = new Analytics();
+		add_action( 'init', [ $this->analytics, 'init' ] );
+
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.
 		$activation_flag = new Activation_Flag();
@@ -194,5 +205,8 @@ class Plugin {
 
 		$stories_autosaves = new Stories_Autosaves_Controller( Story_Post_Type::POST_TYPE_SLUG );
 		$stories_autosaves->register_routes();
+
+		$stories_media = new Stories_Media_Controller( 'attachment' );
+		$stories_media->register_routes();
 	}
 }

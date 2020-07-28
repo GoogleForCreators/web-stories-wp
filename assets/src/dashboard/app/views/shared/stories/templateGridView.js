@@ -41,6 +41,7 @@ export const _default = () => {
       pageSize={STORYBOOK_PAGE_SIZE}
       templateActions={{
         createStoryFromTemplate: action('create story from template clicked'),
+        handlePreviewTemplate: action('card was clicked to show preview mode'),
       }}
     />
   );

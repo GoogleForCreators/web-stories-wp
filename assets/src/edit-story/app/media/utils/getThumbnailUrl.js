@@ -15,26 +15,29 @@
  */
 
 /**
- * Choose the source URL of the smallest available size image.
+ * Choose the source URL of the smallest available size image wider than
+ * minWidth, according to the device pixel ratio.
  *
+ * @param {number} minWidth The minimum width of the thumbnail to return.
  * @param {*} resource Image resource object.
  * @return {string} Source URL of the smallest available size image.
  */
-function getThumbnailUrl(resource) {
-  const { src, sizes } = resource;
+function getThumbnailUrl(minWidth, resource) {
+  if (resource.sizes) {
+    // The thumbnail is a square cropped image, we don't want that.
+    const sizesWithoutThumbnail = {
+      ...resource.sizes,
+    };
+    delete sizesWithoutThumbnail.thumbnail;
 
-  let imageSrc = src;
-  if (sizes) {
-    const { web_stories_thumbnail: webStoriesThumbnail, large, full } = sizes;
-    if (webStoriesThumbnail && webStoriesThumbnail.source_url) {
-      imageSrc = webStoriesThumbnail.source_url;
-    } else if (large && large.source_url) {
-      imageSrc = large.source_url;
-    } else if (full && full.source_url) {
-      imageSrc = full.source_url;
+    const smallestValidImage = Object.values(sizesWithoutThumbnail)
+      .sort((s1, s2) => s1.width - s2.width)
+      .find((s) => s.width >= minWidth * window.devicePixelRatio);
+    if (smallestValidImage) {
+      return smallestValidImage.source_url;
     }
   }
-  return imageSrc;
+  return resource.src;
 }
 
 export default getThumbnailUrl;

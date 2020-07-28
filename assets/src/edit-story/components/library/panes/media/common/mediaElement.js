@@ -322,7 +322,7 @@ function getInnerElement(
     return (
       <Image
         key={src}
-        src={getThumbnailUrl(resource)}
+        src={getThumbnailUrl(width, resource)}
         ref={ref}
         width={width}
         height={height}

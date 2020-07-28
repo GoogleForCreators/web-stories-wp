@@ -102,10 +102,11 @@ describe('CUJ: Creator can browse templates in grid view', () => {
     }
 
     await fixture.events.keyboard.seq(({ press }) =>
-      Array.from(new Array(index), () => [press('tab'), press('tab')]).reduce(
-        (acc, curr) => acc.concat(curr),
-        []
-      )
+      Array.from(new Array(index), () => [
+        press('tab'),
+        press('tab'),
+        press('tab'),
+      ]).reduce((acc, curr) => acc.concat(curr), [])
     );
   }
 
@@ -161,6 +162,11 @@ describe('CUJ: Creator can browse templates in grid view', () => {
       await focusOnTemplateById(lastTemplateId);
       expect(lastTemplate.contains(document.activeElement)).toBeTrue();
     });
+
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should trigger template preview when user clicks a card', () => {});
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should trigger template preview when user presses Enter while focused on a card', () => {});
   });
 
   describe('Action: See pre-built template details page', () => {
