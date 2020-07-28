@@ -25,12 +25,10 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useEffect, useRef, useCallback, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import getStoryMarkup from '../../../../edit-story/output/utils/getStoryMarkup';
 import { Modal, TypographyPresets, Button } from '../../../components';
 import { WPBODY_ID, BUTTON_TYPES } from '../../../constants';
 import dashboardTheme from '../../../theme';
@@ -63,7 +61,16 @@ const IframeContainer = styled.div`
     `${dimensions.height - CLOSE_BUTTON_SIZE.HEIGHT}px`};
 `;
 
-const ErrorContainer = styled.div`
+const HelperText = styled.p`
+  ${TypographyPresets.Large};
+  margin: 0;
+  padding-bottom: 20px;
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const HelperContainer = styled.div`
+  position: absolute;
+  bottom: 0;
   width: 100%;
   min-height: 90vh;
   display: flex;
@@ -72,20 +79,15 @@ const ErrorContainer = styled.div`
   flex-direction: column;
 `;
 
-const ErrorText = styled.p`
-  ${TypographyPresets.Large};
-  margin: 0;
-  padding-bottom: 20px;
-  color: ${({ theme }) => theme.colors.white};
-`;
-
 const PreviewScreen = ({ story, handleClose, isTemplate }) => {
   const {
+    state: {
+      stories: { previewMarkup, isLoading, error },
+    },
     actions: {
-      storyApi: { createStoryPreviewFromTemplate },
+      storyApi: { createStoryPreviewFromTemplate, clearStoryPreview },
     },
   } = useContext(ApiContext);
-  const flags = useFeatures();
 
   const containerRef = useRef(document.getElementById(WPBODY_ID));
 
@@ -94,65 +96,42 @@ const PreviewScreen = ({ story, handleClose, isTemplate }) => {
     width: containerRef.current?.offsetWidth || window.innerWidth,
     height: containerRef.current?.offsetHeight || window.innerHeight,
   });
-  const [storyMarkup, setStoryMarkup] = useState();
-  const [previewError, setPreviewError] = useState('');
+  const [previewError, setPreviewError] = useState(error.message?.title);
+
   const handleReadyToRenderPreview = useCallback(() => {
     setIsReadyToRenderPreview(true);
   }, [setIsReadyToRenderPreview]);
+
   useEffect(() => {
     // this is necessary for the #previewContainer to be findable by document
-    if (storyMarkup) {
+    if (previewMarkup.length > 0) {
       handleReadyToRenderPreview();
     }
-  }, [handleReadyToRenderPreview, storyMarkup]);
+  }, [handleReadyToRenderPreview, previewMarkup.length]);
 
   useEffect(() => {
     if (isReadyToRenderPreview) {
       let iframe = document.createElement('iframe');
       document.getElementById(PREVIEW_CONTAINER_ID).appendChild(iframe);
-      iframe.setAttribute('style', 'height:100%;width:100%');
+      iframe.setAttribute('style', 'height:100%;width:100%;border:none;');
       iframe.contentWindow.document.open();
-      iframe.contentWindow.document.write(storyMarkup.toString());
+      iframe.contentWindow.document.write(previewMarkup);
       iframe.contentWindow.document.close();
     }
-  }, [storyMarkup, isReadyToRenderPreview]);
-
-  const handleSetStoryMarkup = useCallback(
-    async (preppedStory) => {
-      const markup = await getStoryMarkup(
-        preppedStory.story,
-        preppedStory.pages,
-        preppedStory.metadata,
-        flags
-      );
-      return setStoryMarkup(markup);
-    },
-    [flags]
-  );
-
-  const handleSetTemplateAsStoryPreview = useCallback(() => {
-    createStoryPreviewFromTemplate(story).then((templateMarkup) => {
-      if (!templateMarkup.error) {
-        handleSetStoryMarkup(templateMarkup);
-      }
-      return setPreviewError(templateMarkup.error);
-    });
-  }, [createStoryPreviewFromTemplate, handleSetStoryMarkup, story]);
+  }, [previewMarkup, isReadyToRenderPreview]);
 
   useEffect(() => {
     if (!story) {
       setPreviewError(__('Unable to Render Preview', 'web-stories'));
     } else if (isTemplate) {
-      handleSetTemplateAsStoryPreview();
+      createStoryPreviewFromTemplate(story);
     } else {
-      handleSetStoryMarkup(story);
+      // TODO handle story previews. Should be the default
     }
-  }, [
-    handleSetTemplateAsStoryPreview,
-    handleSetStoryMarkup,
-    isTemplate,
-    story,
-  ]);
+    return () => {
+      clearStoryPreview();
+    };
+  }, [isTemplate, story, createStoryPreviewFromTemplate, clearStoryPreview]);
 
   useResizeEffect(
     containerRef,
@@ -194,6 +173,7 @@ const PreviewScreen = ({ story, handleClose, isTemplate }) => {
         >
           <CloseIcon />
         </CloseButton>
+
         {!previewError && (
           <IframeContainer
             dimensions={modalDimensions}
@@ -201,13 +181,19 @@ const PreviewScreen = ({ story, handleClose, isTemplate }) => {
           />
         )}
 
+        {isLoading && !previewError && (
+          <HelperContainer>
+            <HelperText>{__('Loading\u2026', 'web-stories')}</HelperText>
+          </HelperContainer>
+        )}
+
         {previewError && (
-          <ErrorContainer>
-            <ErrorText>{previewError}</ErrorText>
+          <HelperContainer>
+            <HelperText>{previewError}</HelperText>
             <Button type={BUTTON_TYPES.CTA} onClick={handleClose}>
               {__('Close Preview', 'web-stories')}
             </Button>
-          </ErrorContainer>
+          </HelperContainer>
         )}
       </>
     </Modal>
