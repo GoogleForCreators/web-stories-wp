@@ -22,9 +22,10 @@ const API_KEY = 'AIzaSyAgauA-izuTeGWFe9d9O0d0id-pV43Y4kE'; // dev key
  *
  * @enum {string}
  */
-const Paths = {
+export const Paths = {
   LIST_MEDIA: '/v1/media',
   LIST_CATEGORIES: '/v1/categories',
+  REGISTER_USAGE: '/v1/media:registerUsage',
 };
 
 /**
@@ -69,6 +70,13 @@ function validatePageSize(pageSize) {
     return;
   }
   throw new Error('Invalid page_size: ' + pageSize);
+}
+
+function validateRegisterUsagePayload(payload) {
+  if (payload && !/^\s*$/.test(payload)) {
+    return;
+  }
+  throw new Error('Invalid payload: ' + payload);
 }
 
 class ApiFetcher {
@@ -162,14 +170,41 @@ class ApiFetcher {
     });
   }
 
-  async fetch({ params, path }) {
+  /**
+   * Perform a POST request to the Media3P API to register a usage.
+   * If the parameters are invalid or the server does not return a 200 response,
+   * an error is thrown.
+   *
+   * @param {Object} obj - An object with the options for the request.
+   * @param {string} obj.payload Payload to be posted to register media usage.
+   * @return {Promise<Object>} The response from the API.
+   */
+  async registerUsage({ payload }) {
+    validateRegisterUsagePayload(payload);
+
+    const params = [
+      ['payload', payload],
+      ['key', API_KEY],
+    ].filter((entry) => Boolean(entry[1]));
+
+    // eslint-disable-next-line no-return-await
+    return await this.fetch({
+      params,
+      method: 'POST',
+      path: Paths.REGISTER_USAGE,
+    });
+  }
+
+  async fetch({ params, path, method }) {
     // Querystring always has at least the api key
     const queryString = new URLSearchParams(
       Object.fromEntries(new Map(params))
     );
     const url = API_DOMAIN + path + '?' + queryString.toString();
 
-    const response = await window.fetch(url);
+    const response = await window.fetch(url, {
+      method: method ?? 'GET',
+    });
 
     if (!response.ok) {
       throw new Error(

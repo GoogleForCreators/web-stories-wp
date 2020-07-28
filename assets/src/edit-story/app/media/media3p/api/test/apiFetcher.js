@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import apiFetcher from '../apiFetcher';
+import apiFetcher, { Paths } from '../apiFetcher';
 
 const PHOTOS_BODY_JSON = {
   media: [
@@ -55,16 +55,33 @@ const VALID_CATEGORIES_RESPONSE = {
   json: () => CATEGORIES_BODY_JSON,
 };
 
+const VALID_REGISTER_USAGE_RESPONSE = {
+  ok: true,
+  status: 200,
+  json: () => {},
+};
+
 const ERROR_RESPONSE = {
   ok: false,
   status: 400,
   statusText: 'Error',
 };
 
-function mockFetch(response) {
-  jest
-    .spyOn(global, 'fetch')
-    .mockImplementation(() => Promise.resolve(response));
+const PAYLOAD = '02647749feef0d5536c92df1d9cfa38e';
+
+function mockFetch(response, { requestPath, requestMethod }) {
+  jest.spyOn(global, 'fetch').mockImplementation((url, { method }) => {
+    const path = new URL(url).pathname;
+    if (path !== requestPath) {
+      throw new Error(`Path ${requestPath} not found. Got ${path} instead.`);
+    }
+    if ((requestMethod ?? 'GET') !== method) {
+      throw new Error(
+        `Method ${requestMethod} not found. Got ${method} instead.`
+      );
+    }
+    return Promise.resolve(response);
+  });
 }
 
 describe('ApiFetcher', () => {
@@ -76,14 +93,14 @@ describe('ApiFetcher', () => {
 
   describe('listMedia', () => {
     it('should perform a GET request', async () => {
-      mockFetch(VALID_PHOTOS_RESPONSE);
+      mockFetch(VALID_PHOTOS_RESPONSE, { requestPath: Paths.LIST_MEDIA });
 
       const result = await apiFetcher.listMedia();
       expect(result.media[0].name).toBe('photo 29044');
     });
 
     it('should throw when the API returns an error', async () => {
-      mockFetch(ERROR_RESPONSE);
+      mockFetch(ERROR_RESPONSE, { requestPath: Paths.LIST_MEDIA });
 
       expect.assertions(1);
 
@@ -91,7 +108,7 @@ describe('ApiFetcher', () => {
     });
 
     it('should format request params correctly', async () => {
-      mockFetch(VALID_PHOTOS_RESPONSE);
+      mockFetch(VALID_PHOTOS_RESPONSE, { requestPath: Paths.LIST_MEDIA });
 
       const languageCode = 'es';
       const pageSize = 15;
@@ -164,7 +181,7 @@ describe('ApiFetcher', () => {
     });
 
     it('should correctly escape a filter with spaces', async () => {
-      mockFetch(VALID_PHOTOS_RESPONSE);
+      mockFetch(VALID_PHOTOS_RESPONSE, { requestPath: Paths.LIST_MEDIA });
 
       const filter = 'cat and  many dogs';
       const escapedFilter = 'cat+and++many+dogs';
@@ -179,7 +196,7 @@ describe('ApiFetcher', () => {
     });
 
     it('should correctly escape a filter with &', async () => {
-      mockFetch(VALID_PHOTOS_RESPONSE);
+      mockFetch(VALID_PHOTOS_RESPONSE, { requestPath: Paths.LIST_MEDIA });
 
       const filter = 'Tom & Jerry';
       const escapedFilter = 'Tom+%26+Jerry';
@@ -196,14 +213,18 @@ describe('ApiFetcher', () => {
 
   describe('listCategories', () => {
     it('should perform a GET request', async () => {
-      mockFetch(VALID_CATEGORIES_RESPONSE);
+      mockFetch(VALID_CATEGORIES_RESPONSE, {
+        requestPath: Paths.LIST_CATEGORIES,
+      });
 
       const result = await apiFetcher.listCategories();
       expect(result.categories[0].displayName).toBe('Covid-19');
     });
 
     it('should throw when the API returns an error', async () => {
-      mockFetch(ERROR_RESPONSE);
+      mockFetch(ERROR_RESPONSE, {
+        requestPath: Paths.LIST_CATEGORIES,
+      });
 
       expect.assertions(1);
 
@@ -213,7 +234,9 @@ describe('ApiFetcher', () => {
     });
 
     it('should format request params correctly', async () => {
-      mockFetch(VALID_CATEGORIES_RESPONSE);
+      mockFetch(VALID_CATEGORIES_RESPONSE, {
+        requestPath: Paths.LIST_CATEGORIES,
+      });
 
       const pageSize = 15;
       const orderBy = 'trending';
@@ -278,6 +301,51 @@ describe('ApiFetcher', () => {
           orderBy: '',
         })
       ).rejects.toThrow(/Invalid order_by/);
+    });
+  });
+
+  describe('registerUsage', () => {
+    it('should perform a POST request', async () => {
+      mockFetch(VALID_REGISTER_USAGE_RESPONSE, {
+        requestPath: Paths.REGISTER_USAGE,
+        requestMethod: 'POST',
+      });
+
+      const result = await apiFetcher.registerUsage({ payload: PAYLOAD });
+      expect(result).not.toBeNull();
+    });
+
+    it('should throw when the API returns an error', async () => {
+      mockFetch(ERROR_RESPONSE, {
+        requestPath: Paths.REGISTER_USAGE,
+        requestMethod: 'POST',
+      });
+
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.registerUsage({ payload: PAYLOAD })
+      ).rejects.toThrow(/Obtained an error/);
+    });
+
+    it('should throw an error for a blank payload', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.registerUsage({
+          payload: '   ',
+        })
+      ).rejects.toThrow(/Invalid payload/);
+    });
+
+    it('should throw an error for a missing payload', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.registerUsage({
+          payload: undefined,
+        })
+      ).rejects.toThrow(/Invalid payload/);
     });
   });
 });
