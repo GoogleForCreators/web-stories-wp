@@ -29,6 +29,8 @@ jest.mock('../apiFetcher');
 
 import apiFetcherMock from '../apiFetcher';
 
+const PAYLOAD = '02647749feef0d5536c92df1d9cfa38e';
+
 describe('useMedia3pApi', () => {
   apiFetcherMock.listMedia.mockImplementation(() =>
     Promise.resolve({
@@ -107,6 +109,7 @@ describe('useMedia3pApi', () => {
       ],
     })
   );
+  apiFetcherMock.registerUsage.mockImplementation(() => Promise.resolve({}));
 
   it('should properly call listMedia and map the results', async () => {
     const wrapper = (params) => (
@@ -302,5 +305,18 @@ describe('useMedia3pApi', () => {
         },
       ],
     });
+  });
+
+  it('should properly call registerUsage', async () => {
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
+
+    const registerUsageResult = await result.current.actions.registerUsage({
+      payload: PAYLOAD,
+    });
+
+    expect(registerUsageResult).not.toBeNull();
   });
 });
