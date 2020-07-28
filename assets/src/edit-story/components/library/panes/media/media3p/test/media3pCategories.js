@@ -27,48 +27,48 @@ import { renderWithTheme } from '../../../../../../testUtils';
 describe('Media3pCategories', () => {
   const categories = [
     {
-      name: '1',
+      id: '1',
       displayName: 'Category 1',
     },
     {
-      name: '2',
+      id: '2',
       displayName: 'Category 2',
     },
     {
-      name: '3',
+      id: '3',
       displayName: 'Category 3',
     },
   ];
   const selectCategoryMock = jest.fn();
   const deselectCategoryMock = jest.fn();
 
-  it('should render <Media3pCategories /> without categories', () => {
-    const { getByRole } = renderWithTheme(
+  it('should not render <Media3pCategories /> with empty category list', () => {
+    const { queryByRole } = renderWithTheme(
       <Media3pCategories
         categories={[]}
-        selectedCategoryName={undefined}
+        selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
     );
-
-    expect(getByRole('tablist')).toBeDefined();
+    const categoryContainer = queryByRole('tablist');
+    expect(categoryContainer).toBeNull();
   });
 
   it('should render <Media3pCategories /> with categories', () => {
-    const { getByRole, getByText } = renderWithTheme(
+    const { queryByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategoryName={undefined}
+        selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
     );
 
-    const categoryContainer = getByRole('tablist');
-    const categoryPill1 = getByText('Category 1');
-    const categoryPill2 = getByText('Category 2');
-    const categoryPill3 = getByText('Category 3');
+    const categoryContainer = queryByRole('tablist');
+    const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
+    const categoryPill2 = queryByRole('tab', { name: 'Category 2' });
+    const categoryPill3 = queryByRole('tab', { name: 'Category 3' });
 
     expect(categoryContainer).toBeDefined();
     expect(categoryPill1).toHaveAttribute('aria-selected', 'false');
@@ -77,30 +77,34 @@ describe('Media3pCategories', () => {
   });
 
   it('should render <Media3pCategories /> with a selected category', () => {
-    const { getByRole } = renderWithTheme(
+    const { queryByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategoryName={'1'}
+        selectedCategoryId={'1'}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
     );
 
-    const categoryPill1 = getByRole('tab', { name: 'Category 1' });
+    const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
+    const categoryPill2 = queryByRole('tab', { name: 'Category 2' });
+    const categoryPill3 = queryByRole('tab', { name: 'Category 3' });
 
     expect(categoryPill1).toHaveAttribute('aria-selected', 'true');
+    expect(categoryPill2).toBeNull();
+    expect(categoryPill3).toBeNull();
   });
 
   it('should render <Media3pCategories /> with and allow selection', () => {
-    const { getByRole } = renderWithTheme(
+    const { queryByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategoryName={undefined}
+        selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
     );
-    const categoryPill1 = getByRole('tab', { name: 'Category 1' });
+    const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
 
     fireEvent.click(categoryPill1);
 
@@ -108,15 +112,15 @@ describe('Media3pCategories', () => {
   });
 
   it('should render <Media3pCategories /> with and allow deselection', () => {
-    const { getByRole } = renderWithTheme(
+    const { queryByRole } = renderWithTheme(
       <Media3pCategories
         categories={categories}
-        selectedCategoryName={'1'}
+        selectedCategoryId={'1'}
         selectCategory={selectCategoryMock}
         deselectCategory={deselectCategoryMock}
       />
     );
-    const categoryPill1 = getByRole('tab', { name: 'Category 1' });
+    const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
 
     fireEvent.click(categoryPill1);
 

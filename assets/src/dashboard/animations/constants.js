@@ -27,6 +27,10 @@ export const ANIMATION_TYPES = {
   ZOOM: 'zoom',
 };
 
+export const ANIMATION_EFFECTS = {
+  FADE_IN: 'effect-fade-in',
+};
+
 export const DIRECTION = {
   TOP_TO_BOTTOM: 'topToBottom',
   BOTTOM_TO_TOP: 'bottomToTop',

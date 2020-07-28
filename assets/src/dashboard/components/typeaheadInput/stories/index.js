@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean, number, text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import { useState } from 'react';
 import styled from 'styled-components';
 /**
@@ -60,8 +60,8 @@ export const _default = () => {
             setValue('');
           }
           action(`input changed ${inputValue}`)(inputValue);
+          setValue(inputValue);
         }}
-        maxItemsVisible={number('maxItemsVisible', 7)}
         value={value}
         placeholder={text('placeholder', 'Search Stories')}
         ariaLabel={text('ariaLabel', 'my search for seasonings')}

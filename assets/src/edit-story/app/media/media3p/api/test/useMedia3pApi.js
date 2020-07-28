@@ -25,8 +25,12 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useMedia3pApi } from '../index';
 import Media3pApiProvider from '../media3pApiProvider';
 
-jest.mock('../apiFetcher', () => ({
-  listMedia: () =>
+jest.mock('../apiFetcher');
+
+import apiFetcherMock from '../apiFetcher';
+
+describe('useMedia3pApi', () => {
+  apiFetcherMock.listMedia.mockImplementation(() =>
     Promise.resolve({
       media: [
         {
@@ -87,8 +91,9 @@ jest.mock('../apiFetcher', () => ({
         },
       ],
       nextPageToken: 'lala',
-    }),
-  listCategories: () =>
+    })
+  );
+  apiFetcherMock.listCategories.mockImplementation(() =>
     Promise.resolve({
       categories: [
         {
@@ -100,10 +105,9 @@ jest.mock('../apiFetcher', () => ({
           displayName: 'Mountains',
         },
       ],
-    }),
-}));
+    })
+  );
 
-describe('useMedia3pApi', () => {
   it('should properly call listMedia and map the results', async () => {
     const wrapper = (params) => (
       <Media3pApiProvider>{params.children}</Media3pApiProvider>
@@ -114,6 +118,12 @@ describe('useMedia3pApi', () => {
       provider: 'unsplash',
     });
 
+    expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
+      filter: 'provider:unsplash',
+      orderBy: undefined,
+      pageSize: 20,
+      pageToken: undefined,
+    });
     expect(listMediaResult).toStrictEqual({
       media: [
         {
@@ -194,6 +204,82 @@ describe('useMedia3pApi', () => {
     });
   });
 
+  it('should call listMedia with searchTerm', async () => {
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
+
+    await result.current.actions.listMedia({
+      provider: 'unsplash',
+      searchTerm: 'cat',
+    });
+
+    expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
+      filter: 'provider:unsplash cat',
+      orderBy: undefined,
+      pageSize: 20,
+      pageToken: undefined,
+    });
+  });
+
+  it('should call listMedia with category', async () => {
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
+
+    await result.current.actions.listCategoryMedia({
+      provider: 'unsplash',
+      selectedCategoryId: 'category/1',
+    });
+
+    expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
+      filter: 'provider:unsplash category:category/1',
+      orderBy: undefined,
+      pageSize: 20,
+      pageToken: undefined,
+    });
+  });
+
+  it('should call listMedia with pageToken', async () => {
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
+
+    await result.current.actions.listMedia({
+      provider: 'unsplash',
+      pageToken: 'token',
+    });
+
+    expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
+      filter: 'provider:unsplash',
+      orderBy: undefined,
+      pageSize: 20,
+      pageToken: 'token',
+    });
+  });
+
+  it('should call listMedia with orderBy', async () => {
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
+
+    await result.current.actions.listMedia({
+      provider: 'unsplash',
+      orderBy: 'latest',
+    });
+
+    expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
+      filter: 'provider:unsplash',
+      orderBy: 'latest',
+      pageSize: 20,
+      pageToken: undefined,
+    });
+  });
+
   it('should properly call listCategories and map the results', async () => {
     const wrapper = (params) => (
       <Media3pApiProvider>{params.children}</Media3pApiProvider>
@@ -207,11 +293,11 @@ describe('useMedia3pApi', () => {
     expect(listCategoriesResult).toStrictEqual({
       categories: [
         {
-          name: 'categories/unsplash:1',
+          id: 'categories/unsplash:1',
           displayName: 'Covid-19',
         },
         {
-          name: 'categories/unsplash:2',
+          id: 'categories/unsplash:2',
           displayName: 'Mountains',
         },
       ],

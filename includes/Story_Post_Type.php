@@ -67,6 +67,7 @@ class Story_Post_Type {
 	 * @var string
 	 */
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
+
 	/**
 	 * Registers the post type for stories.
 	 *
@@ -134,7 +135,6 @@ class Story_Post_Type {
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
-
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
@@ -144,7 +144,12 @@ class Story_Post_Type {
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
-		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
+		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
+		} else {
+			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
+		}
 	}
 
 	/**
@@ -368,9 +373,9 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'   => '/wp/v2/media',
 					'users'   => '/wp/v2/users',
+					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'   => '/web-stories/v1/media',
 					'fonts'   => '/web-stories/v1/fonts',
 					'link'    => '/web-stories/v1/link',
 				],
@@ -500,60 +505,17 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Filters the gtag configuration options for the amp-analytics tag.
+	 * Adds the web story post type to Jetpack / WordPress.com sitemaps.
 	 *
-	 * @see https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/
-	 * @see https://github.com/ampproject/amphtml/blob/master/extensions/amp-story/amp-story-analytics.md
+	 * @see https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80
 	 *
-	 * @param array $gtag_opt Array of gtag configuration options.
-	 * @return array Modified configuration options.
+	 * @param array $post_types Array of post types.
+	 *
+	 * @return array Modified list of post types.
 	 */
-	public function filter_site_kit_gtag_opt( $gtag_opt ) {
-		if ( ! is_singular( self::POST_TYPE_SLUG ) ) {
-			return $gtag_opt;
-		}
+	public function add_to_jetpack_sitemap( $post_types ) {
+		$post_types[] = self::POST_TYPE_SLUG;
 
-		$post = get_post();
-
-		if ( ! $post instanceof WP_Post ) {
-			return $gtag_opt;
-		}
-
-		$title       = get_the_title( $post );
-		$story_id    = $post->ID;
-		$tracking_id = $gtag_opt['vars']['gtag_id'];
-
-		$gtag_opt['triggers'] = isset( $gtag_opt['triggers'] ) ? $gtag_opt['triggers'] : [];
-
-		if ( ! isset( $gtag_opt['triggers']['storyProgress'] ) ) {
-			$gtag_opt['triggers']['storyProgress'] = [
-				'on'   => 'story-page-visible',
-				'vars' => [
-					'event_name'     => 'custom',
-					'event_action'   => 'story_progress',
-					'event_category' => $title,
-					'event_label'    => $story_id,
-					'send_to'        => [
-						$tracking_id,
-					],
-				],
-			];
-		}
-
-		if ( ! isset( $gtag_opt['triggers']['storyEnd'] ) ) {
-			$gtag_opt['triggers']['storyEnd'] = [
-				'on'   => 'story-last-page-visible',
-				'vars' => [
-					'event_name'     => 'custom',
-					'event_action'   => 'story_complete',
-					'event_category' => $title,
-					'send_to'        => [
-						$tracking_id,
-					],
-				],
-			];
-		}
-
-		return $gtag_opt;
+		return $post_types;
 	}
 }

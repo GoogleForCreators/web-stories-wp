@@ -48,6 +48,7 @@ const page = {
 
 const templateActions = {
   createStoryFromTemplate: action('create story from template clicked'),
+  handlePreviewTemplate: action('card was clicked to show preview mode'),
 };
 const defaultProps = {
   allPagesFetched: false,

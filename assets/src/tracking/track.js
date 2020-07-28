@@ -39,6 +39,7 @@ async function trackEvent(eventName, eventData) {
     // If this fails, it shouldn't reject the promise since event
     // tracking should not result in user-facing errors. It will just
     // trigger a console warning.
+    // See https://developers.google.com/analytics/devguides/collection/gtagjs/sending-data
     const failTimeout = setTimeout(() => {
       global.console.warn(
         `[Web Stories] Tracking event "${eventName}" took too long to fire.`
