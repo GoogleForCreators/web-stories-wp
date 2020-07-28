@@ -22,19 +22,23 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
+import completeTemplateObject from '../../../../dataUtils/completeTemplateObject';
 import PreviewScreen from '../previewScreen';
-import { formattedStoriesArray } from '../../../../storybookUtils';
 
 export default {
   title: 'Dashboard/Views/Shared/PreviewScreen',
-  component: PreviewScreen,
 };
 
 export const _default = () => {
   return (
     <PreviewScreen
-      previewStoryObject={formattedStoriesArray[0]}
+      story={completeTemplateObject}
+      isTemplate
       handleClose={action('close action triggered')}
     />
   );
+};
+
+export const NoStoryToPreview = () => {
+  return <PreviewScreen handleClose={action('close action triggered')} />;
 };
