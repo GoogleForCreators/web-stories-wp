@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useContext, useMemo, useEffect } from 'react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -26,13 +25,12 @@ import { useFeature } from 'flagged';
 import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
+import { PreviewScreen } from '../shared';
 
 import Content from './content';
 import Header from './header';
 
 function ExploreTemplates() {
-  const enableTemplatePreviews = useFeature('enableTemplatePreviews');
-
   const {
     state: {
       templates: {
@@ -66,12 +64,20 @@ function ExploreTemplates() {
 
   const handlePreviewTemplate = useCallback(
     (template) => {
-      if (enableTemplatePreviews) {
-        previewVisible.set(template);
-      }
+      previewVisible.set(template);
     },
-    [enableTemplatePreviews, previewVisible]
+    [previewVisible]
   );
+
+  if (previewVisible.value) {
+    return (
+      <PreviewScreen
+        isTemplate
+        story={previewVisible.value}
+        handleClose={() => handlePreviewTemplate()}
+      />
+    );
+  }
 
   return (
     <Layout.Provider>

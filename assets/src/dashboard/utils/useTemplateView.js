@@ -19,6 +19,7 @@
  */
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -32,10 +33,12 @@ import { PageSizePropType } from '../types';
 import { clamp, usePagePreviewSize } from './index';
 
 export default function useTemplateView({ totalPages }) {
+  const enableTemplatePreviews = useFeature('enableTemplatePreviews');
+
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [sort, _setSort] = useState(TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR);
   const [page, setPage] = useState(1);
-  const [previewVisible, setPreviewVisible] = useState();
+  const [previewVisible, _setPreviewVisible] = useState();
 
   const { pageSize } = usePagePreviewSize({
     isGrid: true,
@@ -67,6 +70,15 @@ export default function useTemplateView({ totalPages }) {
       _setSearchKeyword(newSearchKeyword);
     },
     [setPageClamped]
+  );
+
+  const setPreviewVisible = useCallback(
+    (template) => {
+      if (enableTemplatePreviews) {
+        _setPreviewVisible(template);
+      }
+    },
+    [enableTemplatePreviews]
   );
 
   return useMemo(
