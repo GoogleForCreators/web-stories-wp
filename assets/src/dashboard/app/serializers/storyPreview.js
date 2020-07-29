@@ -28,15 +28,9 @@ export default function reshapeStoryPreview(storyProps = {}) {
     fallbackPoster: '',
   };
 
-  const serializedStoryPreview = {
+  return {
     story,
     pages,
     metadata,
   };
-
-  if (!pages || pages.length === 0) {
-    return { error: 'Unable to Render Preview' };
-  }
-
-  return serializedStoryPreview;
 }
