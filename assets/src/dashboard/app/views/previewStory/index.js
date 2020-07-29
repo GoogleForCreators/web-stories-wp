@@ -41,6 +41,7 @@ const CLOSE_BUTTON_SIZE = {
   HEIGHT: 30,
   WIDTH: 30,
 };
+const AMP_LOCAL_STORAGE = 'amp-story-state';
 const PREVIEW_CONTAINER_ID = 'previewContainer';
 
 const CloseButton = styled.button`
@@ -128,6 +129,7 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
     }
     return () => {
       clearStoryPreview();
+      localStorage.removeItem(AMP_LOCAL_STORAGE);
     };
   }, [isTemplate, story, createStoryPreviewFromTemplate, clearStoryPreview]);
 
