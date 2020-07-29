@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -28,6 +29,38 @@ import { ApiContext } from '../../../api/apiProvider';
 
 export default {
   title: 'Dashboard/Views/PreviewStory',
+};
+
+const Wrapper = ({ isLoading, errorText, previewMarkup = '', children }) => {
+  return (
+    <ApiContext.Provider
+      value={{
+        state: {
+          stories: {
+            error: errorText ? { message: { title: errorText } } : {},
+            isLoading,
+            previewMarkup,
+          },
+        },
+        actions: {
+          storyApi: {
+            createStoryPreviewFromTemplate: action(
+              'create story from template'
+            ),
+            clearStoryPreview: action('clear preview from reducer'),
+          },
+        },
+      }}
+    >
+      {children}
+    </ApiContext.Provider>
+  );
+};
+Wrapper.propTypes = {
+  isLoading: PropTypes.bool,
+  errorText: PropTypes.string,
+  previewMarkup: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export const _default = () => {
@@ -46,54 +79,22 @@ export const NoStoryToPreview = () => {
 
 export const ErrorRenderingPreview = () => {
   return (
-    <ApiContext.Provider
-      value={{
-        state: {
-          stories: {
-            error: { message: { title: 'An error was returned!' } },
-            isLoading: false,
-            previewMarkup: '',
-          },
-        },
-        actions: {
-          storyApi: {
-            createStoryPreviewFromTemplate: action(
-              'create story from template'
-            ),
-            clearStoryPreview: action('clear preview from reducer'),
-          },
-        },
-      }}
-    >
+    <Wrapper errorText="An error was returned!">
       <PreviewStory
         story={completeTemplateObject}
         handleClose={action('close action triggered')}
       />
-    </ApiContext.Provider>
+    </Wrapper>
   );
 };
 
 export const LoadingPreview = () => {
   return (
-    <ApiContext.Provider
-      value={{
-        state: {
-          stories: { error: {}, isLoading: true, previewMarkup: '' },
-        },
-        actions: {
-          storyApi: {
-            createStoryPreviewFromTemplate: action(
-              'create story from template'
-            ),
-            clearStoryPreview: action('clear preview from reducer'),
-          },
-        },
-      }}
-    >
+    <Wrapper isLoading={true}>
       <PreviewStory
         story={completeTemplateObject}
         handleClose={action('close action triggered')}
       />
-    </ApiContext.Provider>
+    </Wrapper>
   );
 };
