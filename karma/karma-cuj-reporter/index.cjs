@@ -78,15 +78,11 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
 
     cujResults.sort();
 
-    let tableContents = cujResults.reduce((acc, curr) => {
-      const [cuj, action] = curr;
+    let tableContents = cujResults.reduce((acc, [cuj, action]) => {
+      const actionName = action === '_TOTAL_' ? '*\[total\]*' : action;
 
-      if (!acc.find(([_cuj]) => _cuj === cuj)) {
-        acc.push([cuj, '*\\[total\\]*', getCompletion(cuj, '_TOTAL_')]);
-      }
-
-      if (!acc.find(([_cuj, _action]) => _cuj === cuj && _action === action)) {
-        acc.push([cuj, action, getCompletion(cuj, action)]);
+      if (!acc.find(([_cuj, _action]) => _cuj === cuj && _action === actionName)) {
+        acc.push([cuj, actionName, getCompletion(cuj, action)]);
       }
 
       return acc;
