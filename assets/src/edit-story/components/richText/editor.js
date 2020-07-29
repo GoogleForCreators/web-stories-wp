@@ -30,6 +30,7 @@ import customInlineDisplay from './customInlineDisplay';
 
 function RichTextEditor({ content, onChange }, ref) {
   const editorRef = useRef(null);
+  const previousContent = useRef(content);
   const {
     state: { editorState },
     actions: {
@@ -42,9 +43,10 @@ function RichTextEditor({ content, onChange }, ref) {
   } = useRichText();
 
   // Load state from parent when content changes
-  useEffect(() => {
-    setStateFromContent(content);
-  }, [setStateFromContent, content]);
+  // useEffect(() => {
+  //   setStateFromContent(content);
+  //   previousContent.current = content;
+  // }, [setStateFromContent, content]);
 
   // Push updates to parent when state changes
   useEffect(() => {
@@ -53,7 +55,7 @@ function RichTextEditor({ content, onChange }, ref) {
     }
     const newContent = getContentFromState(editorState);
     if (newContent) {
-      onChange(newContent);
+      // onChange(newContent);
     }
   }, [onChange, getContentFromState, editorState]);
 
@@ -82,11 +84,12 @@ function RichTextEditor({ content, onChange }, ref) {
   return (
     <Editor
       ref={editorRef}
-      onChange={updateEditorState}
+      // onChange={updateEditorState}
+      onChange={() => {}}
       editorState={editorState}
-      handleKeyCommand={handleKeyCommand}
-      customStyleFn={customInlineDisplay}
-      stripPastedStyles
+      // handleKeyCommand={handleKeyCommand}
+      // customStyleFn={customInlineDisplay}
+      // stripPastedStyles
     />
   );
 }
