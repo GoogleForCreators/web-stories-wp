@@ -209,7 +209,11 @@ const MediaElement = ({
           setShowVideoDetail(false);
           if (mediaElement.current) {
             // Pointer still in the media element, continue the video.
-            mediaElement.current.play().catch(() => {});
+            const playPromise = mediaElement.current.play();
+            if (playPromise) {
+              // All supported browsers return promise but unit test runner does not.
+              playPromise.catch(() => {});
+            }
           }
         } else {
           setShowVideoDetail(true);
@@ -327,6 +331,7 @@ function getInnerElement(
         width={width}
         height={height}
         alt={alt}
+        aria-label={alt}
         loading={'lazy'}
         onClick={onClick}
         onLoad={makeImageVisible}
