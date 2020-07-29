@@ -22,7 +22,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useEffect, useRef, useCallback, useState, useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -90,26 +90,14 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
 
   const containerRef = useRef(document.getElementById(WPBODY_ID));
 
-  const [isReadyToRenderPreview, setIsReadyToRenderPreview] = useState(false);
   const [modalDimensions, setModalDimensions] = useState({
     width: containerRef.current?.offsetWidth || window.innerWidth,
     height: containerRef.current?.offsetHeight || window.innerHeight,
   });
   const [previewError, setPreviewError] = useState(error.message?.title);
 
-  const handleReadyToRenderPreview = useCallback(() => {
-    setIsReadyToRenderPreview(true);
-  }, [setIsReadyToRenderPreview]);
-
   useEffect(() => {
-    // this is necessary for the #previewContainer to be findable by document
     if (previewMarkup.length > 0) {
-      handleReadyToRenderPreview();
-    }
-  }, [handleReadyToRenderPreview, previewMarkup.length]);
-
-  useEffect(() => {
-    if (isReadyToRenderPreview) {
       let iframe = document.createElement('iframe');
       document.getElementById(PREVIEW_CONTAINER_ID).appendChild(iframe);
       iframe.setAttribute('style', 'height:100%;width:100%;border:none;');
@@ -117,7 +105,7 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
       iframe.contentWindow.document.write(previewMarkup);
       iframe.contentWindow.document.close();
     }
-  }, [previewMarkup, isReadyToRenderPreview]);
+  }, [previewMarkup]);
 
   useEffect(() => {
     if (!story) {
