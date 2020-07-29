@@ -27,9 +27,12 @@ import Media3pApiProvider from '../media3pApiProvider';
 
 jest.mock('../apiFetcher');
 
-import apiFetcherMock from '../apiFetcher';
+import apiFetcherMock, { API_DOMAIN, Paths } from '../apiFetcher';
 
-const PAYLOAD = '02647749feef0d5536c92df1d9cfa38e';
+const REGISTER_USAGE_URL =
+  API_DOMAIN +
+  Paths.REGISTER_USAGE +
+  '?payload=02647749feef0d5536c92df1d9cfa38e';
 
 describe('useMedia3pApi', () => {
   apiFetcherMock.listMedia.mockImplementation(() =>
@@ -42,6 +45,7 @@ describe('useMedia3pApi', () => {
             displayName: 'Maria',
             url: 'http://maria.com',
           },
+          registerUsageUrl: REGISTER_USAGE_URL,
           imageUrls: [
             {
               url:
@@ -109,7 +113,9 @@ describe('useMedia3pApi', () => {
       ],
     })
   );
-  apiFetcherMock.registerUsage.mockImplementation(() => Promise.resolve({}));
+  apiFetcherMock.registerUsage.mockImplementation(() =>
+    Promise.resolve(undefined)
+  );
 
   it('should properly call listMedia and map the results', async () => {
     const wrapper = (params) => (
@@ -314,9 +320,9 @@ describe('useMedia3pApi', () => {
     const { result } = renderHook(() => useMedia3pApi(), { wrapper });
 
     const registerUsageResult = await result.current.actions.registerUsage({
-      payload: PAYLOAD,
+      registerUsageUrl: REGISTER_USAGE_URL,
     });
 
-    expect(registerUsageResult).not.toBeNull();
+    expect(registerUsageResult).toBeUndefined();
   });
 });
