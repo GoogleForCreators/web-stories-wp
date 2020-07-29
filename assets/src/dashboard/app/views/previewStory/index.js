@@ -97,9 +97,10 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
   const [previewError, setPreviewError] = useState(error.message?.title);
 
   useEffect(() => {
-    if (previewMarkup.length > 0) {
+    const iframeContainer = document.getElementById(PREVIEW_CONTAINER_ID);
+    if (previewMarkup.length > 0 && iframeContainer) {
       let iframe = document.createElement('iframe');
-      document.getElementById(PREVIEW_CONTAINER_ID).appendChild(iframe);
+      iframeContainer.appendChild(iframe);
       iframe.setAttribute('style', 'height:100%;width:100%;border:none;');
       iframe.contentWindow.document.open();
       iframe.contentWindow.document.write(previewMarkup);
