@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import apiFetcher, { Paths } from '../apiFetcher';
+import apiFetcher, { Paths, API_DOMAIN } from '../apiFetcher';
 
 const PHOTOS_BODY_JSON = {
   media: [
@@ -67,7 +67,12 @@ const ERROR_RESPONSE = {
   statusText: 'Error',
 };
 
-const PAYLOAD = '02647749feef0d5536c92df1d9cfa38e';
+const INVALID_REGISTER_USAGE_URL =
+  'http://some.url.com/02647749feef0d5536c92df1d9cfa38e';
+const REGISTER_USAGE_URL =
+  API_DOMAIN +
+  Paths.REGISTER_USAGE +
+  '?payload=02647749feef0d5536c92df1d9cfa38e';
 
 function mockFetch(response, { requestPath, requestMethod }) {
   jest.spyOn(global, 'fetch').mockImplementation((url, { method }) => {
@@ -311,7 +316,9 @@ describe('ApiFetcher', () => {
         requestMethod: 'POST',
       });
 
-      const result = await apiFetcher.registerUsage({ payload: PAYLOAD });
+      const result = await apiFetcher.registerUsage({
+        registerUsageUrl: REGISTER_USAGE_URL,
+      });
       expect(result).not.toBeNull();
     });
 
@@ -324,28 +331,38 @@ describe('ApiFetcher', () => {
       expect.assertions(1);
 
       await expect(
-        apiFetcher.registerUsage({ payload: PAYLOAD })
+        apiFetcher.registerUsage({ registerUsageUrl: REGISTER_USAGE_URL })
       ).rejects.toThrow(/Obtained an error/);
     });
 
-    it('should throw an error for a blank payload', async () => {
+    it('should throw an error for a invalid url', async () => {
       expect.assertions(1);
 
       await expect(
         apiFetcher.registerUsage({
-          payload: '   ',
+          registerUsageUrl: INVALID_REGISTER_USAGE_URL,
         })
-      ).rejects.toThrow(/Invalid payload/);
+      ).rejects.toThrow(/Invalid url/);
     });
 
-    it('should throw an error for a missing payload', async () => {
+    it('should throw an error for a blank url', async () => {
       expect.assertions(1);
 
       await expect(
         apiFetcher.registerUsage({
-          payload: undefined,
+          registerUsageUrl: '   ',
         })
-      ).rejects.toThrow(/Invalid payload/);
+      ).rejects.toThrow(/Invalid url/);
+    });
+
+    it('should throw an error for a missing url', async () => {
+      expect.assertions(1);
+
+      await expect(
+        apiFetcher.registerUsage({
+          registerUsageUrl: undefined,
+        })
+      ).rejects.toThrow(/Invalid url/);
     });
   });
 });

@@ -193,14 +193,13 @@ function Media3pApiProvider({ children }) {
    * Register usage of a media for the given payload.
    *
    * @param {Object} obj - An object with the options.
-   * @param {string} obj.payload The payload to be posted to register the usage.
+   * @param {string} obj.registerUsageUrl The url to be called to register the
+   * usage.
    * @return {Promise<Object>} An object with the category
    * resources.
    */
-  async function registerUsage({ payload }) {
-    await apiFetcher.registerUsage({
-      payload,
-    });
+  async function registerUsage({ registerUsageUrl }) {
+    await apiFetcher.registerUsage({ registerUsageUrl });
   }
 
   const contextValue = {
