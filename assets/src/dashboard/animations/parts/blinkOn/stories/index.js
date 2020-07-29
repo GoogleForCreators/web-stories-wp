@@ -22,7 +22,7 @@ import StoryAnimation from '../../../../components/storyAnimation';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/BlinkOn',
+  title: 'Animations/Parts/BlinkOn',
 };
 
 const animations = [
@@ -82,19 +82,24 @@ export const AMPStory = () => {
 
             <amp-story-grid-layer template="horizontal">
               {elements.map(({ id, color }) => (
-                <StoryAnimation.AMPWrapper
+                <div
                   key={id}
-                  target={id}
-                  style={{ width: '50px', height: '50px' }}
+                  style={{
+                    position: 'relative',
+                    width: '50px',
+                    height: '50px',
+                  }}
                 >
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: color,
-                    }}
-                  />
-                </StoryAnimation.AMPWrapper>
+                  <StoryAnimation.AMPWrapper target={id}>
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: color,
+                      }}
+                    />
+                  </StoryAnimation.AMPWrapper>
+                </div>
               ))}
             </amp-story-grid-layer>
           </StoryAnimation.Provider>

@@ -22,7 +22,7 @@ import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/Move',
+  title: 'Animations/Parts/Move',
 };
 
 const duration = 600;
@@ -90,22 +90,23 @@ export const AMPStory = () => {
           <StoryAnimation.Provider animations={animations}>
             <StoryAnimation.AMPAnimations />
             {elements.map(({ id, color, ...styles }) => (
-              <StoryAnimation.AMPWrapper
+              <div
                 key={id}
-                target={id}
                 style={{
                   ...defaultStyles,
                   ...styles,
                 }}
               >
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: color,
-                  }}
-                />
-              </StoryAnimation.AMPWrapper>
+                <StoryAnimation.AMPWrapper target={id}>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: color,
+                    }}
+                  />
+                </StoryAnimation.AMPWrapper>
+              </div>
             ))}
           </StoryAnimation.Provider>
         </amp-story-page>
