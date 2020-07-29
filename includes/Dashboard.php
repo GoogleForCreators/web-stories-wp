@@ -242,7 +242,7 @@ class Dashboard {
 				'version'      => WEBSTORIES_VERSION,
 				'api'          => [
 					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'     => '/wp/v2/media',
+					'media'     => '/web-stories/v1/media',
 					'users'     => '/wp/v2/users',
 					'fonts'     => '/web-stories/v1/fonts',
 					'templates' => '/web-stories/v1/web-story-template',
@@ -289,6 +289,13 @@ class Dashboard {
 				 * Creation date: 2020-06-11
 				 */
 				'enableBookmarkActions'           => false,
+				/**
+				 * Description: Enables template preview functionality.
+				 * Author: @brittanyirl
+				 * Issue: 3390
+				 * Creation date: 2020-07-23
+				 */
+				'enableTemplatePreviews'          => false,
 			],
 		];
 

@@ -26,10 +26,10 @@ import track from './track';
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
  *
- * @param {string} eventCategory The event category.
- * @param {string} eventName The event category.
- * @param {string} [eventLabel] The event category.
- * @param {string} [eventValue] The event category.
+ * @param {string} eventCategory The event category (e.g. 'editor'). GA defaults this to 'engagement'.
+ * @param {string} eventName The event name (e.g. 'search').
+ * @param {string} [eventLabel] The event label (e.g. 'search_term').
+ * @param {string} [eventValue] The event value (e.g. the actual search term).
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
