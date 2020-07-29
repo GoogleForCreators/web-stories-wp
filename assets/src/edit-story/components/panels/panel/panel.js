@@ -35,7 +35,14 @@ const Wrapper = styled.section`
   position: relative;
 `;
 
-function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
+function Panel({
+  name,
+  children,
+  resizeable = false,
+  canCollapse = true,
+  initialHeight = null,
+  ariaLabel = null,
+}) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
@@ -127,8 +134,11 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   const ContextProvider = panelContext.Provider;
 
   const wrapperProps = useMemo(
-    () => (hasTitle ? { 'aria-labelledby': panelTitleId } : {}),
-    [hasTitle, panelTitleId]
+    () =>
+      hasTitle
+        ? { 'aria-labelledby': panelTitleId }
+        : { 'aria-label': ariaLabel },
+    [hasTitle, panelTitleId, ariaLabel]
   );
 
   return (
@@ -139,17 +149,12 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
 }
 
 Panel.propTypes = {
-  children: PropTypes.node,
   name: PropTypes.string.isRequired,
+  children: PropTypes.node,
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
-};
-
-Panel.defaultProps = {
-  initialHeight: null,
-  resizeable: false,
-  canCollapse: true,
+  ariaLabel: PropTypes.string,
 };
 
 export default Panel;

@@ -19,6 +19,7 @@
  */
 import { Container } from '../container';
 import { TextStyle } from './textStyle';
+import { Alignment } from './alignment';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -38,8 +39,11 @@ export class DesignPanel extends Container {
   }
 
   get alignment() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Alignment/ }),
+      'alignment',
+      Alignment
+    );
   }
 
   get backgroundOverlay() {
