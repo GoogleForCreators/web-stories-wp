@@ -118,12 +118,12 @@ describe('MediaElement', () => {
       local: true, // Not yet uploaded
       alt: 'video :)',
     };
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
       ProviderType.LOCAL
     );
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('video :)');
     Simulate.focus(element);
