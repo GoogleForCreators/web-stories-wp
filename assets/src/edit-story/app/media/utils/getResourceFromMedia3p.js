@@ -121,11 +121,12 @@ function getResourceFromMedia3p(m) {
     alt: null,
     local: false, // TODO: How does this interact with the rest?
     sizes: urls, // TODO: Map with expected keys for canvas.
-    attribution: m.author && {
-      author: {
+    attribution: {
+      author: m.author && {
         displayName: m.author.displayName,
         url: m.author.url,
       },
+      registerUsageUrl: m.registerUsageUrl,
     },
   });
 }
