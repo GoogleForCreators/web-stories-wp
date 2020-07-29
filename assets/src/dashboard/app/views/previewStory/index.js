@@ -79,7 +79,7 @@ const HelperContainer = styled.div`
   flex-direction: column;
 `;
 
-const PreviewScreen = ({ story, handleClose, isTemplate }) => {
+const PreviewStory = ({ story, handleClose, isTemplate }) => {
   const {
     state: {
       stories: { previewMarkup, isLoading, error },
@@ -178,6 +178,7 @@ const PreviewScreen = ({ story, handleClose, isTemplate }) => {
           <IframeContainer
             dimensions={modalDimensions}
             id={PREVIEW_CONTAINER_ID}
+            data-testid="preview-iframe"
           />
         )}
 
@@ -200,9 +201,9 @@ const PreviewScreen = ({ story, handleClose, isTemplate }) => {
   );
 };
 
-export default PreviewScreen;
+export default PreviewStory;
 
-PreviewScreen.propTypes = {
+PreviewStory.propTypes = {
   handleClose: PropTypes.func.isRequired,
   isTemplate: PropTypes.bool,
   story: StoryPropType.isRequired,

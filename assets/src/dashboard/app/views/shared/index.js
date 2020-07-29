@@ -20,7 +20,6 @@ export {
   default as PageHeading,
   HeaderToggleButtonContainer,
 } from './pageHeading';
-export { default as PreviewScreen } from './previewScreen';
 export { default as StoryGridView } from './storyGridView';
 export { default as StoryListView } from './storyListView';
 export { default as TemplateGridView } from './templateGridView';
