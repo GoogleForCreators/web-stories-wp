@@ -134,7 +134,7 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
         // trigger the animation. A workaround to avoid
         // this is to first `cancel` the animation
         // before playing.
-        animation?.cancel();
+        // animation?.cancel();
 
         animation?.play();
       });
@@ -142,7 +142,7 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
       WAAPIAnimations.forEach((animation) => animation?.pause());
     const setCurrentTime = (time) =>
       WAAPIAnimations.forEach((animation) => {
-        const { duration, delay } = animation.effect.timing;
+        const { duration, delay } = animation.effect.getTiming() ?? {};
         const animationEndTime = (delay || 0) + (duration || 0);
         animation.currentTime =
           time === 'end'
