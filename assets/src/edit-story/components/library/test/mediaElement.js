@@ -27,8 +27,8 @@ import MediaElement from '../panes/media/common/mediaElement';
 import { ProviderType } from '../panes/media/common/providerType';
 import { renderWithTheme } from '../../../testUtils';
 
-function renderMediaElement(resource, providerType) {
-  const { getByAriaLabel, queryByAriaLabel } = renderWithTheme(
+const renderMediaElement = (resource, providerType) =>
+  renderWithTheme(
     <FlagsProvider features={{ mediaDropdownMenu: true }}>
       <MediaElement
         resource={resource}
@@ -37,8 +37,6 @@ function renderMediaElement(resource, providerType) {
       />
     </FlagsProvider>
   );
-  return { getByAriaLabel, queryByAriaLabel };
-}
 
 describe('MediaElement', () => {
   it("should render dropdown menu's more icon for uploaded image", () => {
@@ -52,7 +50,11 @@ describe('MediaElement', () => {
       alt: 'image :)',
     };
 
-    const { getByAriaLabel } = renderMediaElement(resource, ProviderType.LOCAL);
+    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+      resource,
+      ProviderType.LOCAL
+    );
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('image :)');
     Simulate.focus(element);
@@ -71,7 +73,11 @@ describe('MediaElement', () => {
       alt: 'video :)',
     };
 
-    const { getByAriaLabel } = renderMediaElement(resource, ProviderType.LOCAL);
+    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+      resource,
+      ProviderType.LOCAL
+    );
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('video :)');
     Simulate.focus(element);
@@ -94,6 +100,7 @@ describe('MediaElement', () => {
       resource,
       ProviderType.LOCAL
     );
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('image :)');
     Simulate.focus(element);
@@ -111,6 +118,7 @@ describe('MediaElement', () => {
       local: true, // Not yet uploaded
       alt: 'video :)',
     };
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
