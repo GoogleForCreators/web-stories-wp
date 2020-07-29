@@ -23,16 +23,16 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 import completeTemplateObject from '../../../../dataUtils/completeTemplateObject';
-import PreviewScreen from '../previewScreen';
+import PreviewStory from '../';
 import { ApiContext } from '../../../api/apiProvider';
 
 export default {
-  title: 'Dashboard/Views/Shared/PreviewScreen',
+  title: 'Dashboard/Views/PreviewStory',
 };
 
 export const _default = () => {
   return (
-    <PreviewScreen
+    <PreviewStory
       story={completeTemplateObject}
       isTemplate
       handleClose={action('close action triggered')}
@@ -41,7 +41,7 @@ export const _default = () => {
 };
 
 export const NoStoryToPreview = () => {
-  return <PreviewScreen handleClose={action('close action triggered')} />;
+  return <PreviewStory handleClose={action('close action triggered')} />;
 };
 
 export const ErrorRenderingPreview = () => {
@@ -65,7 +65,7 @@ export const ErrorRenderingPreview = () => {
         },
       }}
     >
-      <PreviewScreen
+      <PreviewStory
         story={completeTemplateObject}
         handleClose={action('close action triggered')}
       />
@@ -90,7 +90,7 @@ export const LoadingPreview = () => {
         },
       }}
     >
-      <PreviewScreen
+      <PreviewStory
         story={completeTemplateObject}
         handleClose={action('close action triggered')}
       />

@@ -25,7 +25,7 @@ import { useCallback, useContext, useMemo, useEffect } from 'react';
 import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
-import { PreviewScreen } from '../shared';
+import { PreviewStoryView } from '../';
 
 import Content from './content';
 import Header from './header';
@@ -71,7 +71,7 @@ function ExploreTemplates() {
 
   if (previewVisible.value) {
     return (
-      <PreviewScreen
+      <PreviewStoryView
         isTemplate
         story={previewVisible.value}
         handleClose={() => handlePreviewTemplate()}
