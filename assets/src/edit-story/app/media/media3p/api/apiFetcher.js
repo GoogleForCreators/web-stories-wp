@@ -179,7 +179,7 @@ class ApiFetcher {
    *
    * @param {Object} obj - An object with the options for the request.
    * @param {string} obj.registerUsageUrl Url to call to register media usage.
-   * @return {Promise<Object>} The response from the API.
+   * @return {Promise<undefined>} The response from the API.
    */
   async registerUsage({ registerUsageUrl }) {
     validateRegisterUsageUrl(registerUsageUrl);
@@ -188,7 +188,7 @@ class ApiFetcher {
     return await this.fetchUrl({
       url: new URL(registerUsageUrl),
       method: 'POST',
-    });
+    }).then(() => undefined);
   }
 
   /**

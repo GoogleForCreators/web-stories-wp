@@ -78,11 +78,13 @@ function mockFetch(response, { requestPath, requestMethod }) {
   jest.spyOn(global, 'fetch').mockImplementation((url, { method }) => {
     const path = new URL(url).pathname;
     if (path !== requestPath) {
-      throw new Error(`Path ${requestPath} not found. Got ${path} instead.`);
+      throw new Error(
+        `Path ${requestPath} not found. Received ${path} instead.`
+      );
     }
     if ((requestMethod ?? 'GET') !== method) {
-      throw new Error(
-        `Method ${requestMethod} not found. Got ${method} instead.`
+      jest.fail(
+        `Method ${requestMethod} not found. Received ${method} instead.`
       );
     }
     return Promise.resolve(response);
@@ -319,7 +321,7 @@ describe('ApiFetcher', () => {
       const result = await apiFetcher.registerUsage({
         registerUsageUrl: REGISTER_USAGE_URL,
       });
-      expect(result).not.toBeNull();
+      expect(result).toBeUndefined();
     });
 
     it('should throw when the API returns an error', async () => {
