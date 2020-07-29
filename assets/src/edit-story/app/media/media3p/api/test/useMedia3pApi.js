@@ -142,6 +142,7 @@ describe('useMedia3pApi', () => {
               displayName: 'Maria',
               url: 'http://maria.com',
             },
+            registerUsageUrl: REGISTER_USAGE_URL,
           },
           creationDate: '1234',
           height: 3536,
