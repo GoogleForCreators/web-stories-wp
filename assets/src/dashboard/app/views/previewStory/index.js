@@ -111,6 +111,11 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
       iframe.contentWindow.document.write(previewMarkup);
       iframe.contentWindow.document.close();
     }
+    return () => {
+      if (iframeContainer) {
+        iframeContainer.innerHTML = '';
+      }
+    };
   }, [previewMarkup]);
 
   useEffect(() => {
