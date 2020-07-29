@@ -172,21 +172,26 @@ describe('Grid view', () => {
       await fixture.render();
     });
 
-    // it('should trigger template preview when user clicks a card', async () => {
-    //   const { templatesOrderById } = await getTemplatesState();
+    it('should trigger template preview when user clicks a card', async () => {
+      const { templatesOrderById } = await getTemplatesState();
 
-    //   const currentCard = await getTemplateElementById(templatesOrderById[1]);
-    //   const utils = within(currentCard);
+      const currentCard = await getTemplateElementById(templatesOrderById[1]);
+      const utils = within(currentCard);
 
-    //   const activeCard = utils.getByTestId('card-action-container');
-    //   expect(activeCard).toBeTruthy();
-    //   await fixture.events.click(activeCard);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
 
-    //   const viewPreviewStory = await fixture.screen.queryByTestId(
-    //     'preview-iframe'
-    //   );
-    //   expect(viewPreviewStory).toBeTruthy();
-    // });
+      const { x, y } = activeCard.getBoundingClientRect();
+
+      // We need to click slightly above the center of the card to avoid clicking 'View'
+      await fixture.events.mouse.click(x - 20, y);
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
 
     it('should trigger template preview when user presses Enter while focused on a card', async () => {
       const { templatesOrderById } = await getTemplatesState();
@@ -202,6 +207,7 @@ describe('Grid view', () => {
       const viewPreviewStory = await fixture.screen.queryByTestId(
         'preview-iframe'
       );
+
       expect(viewPreviewStory).toBeTruthy();
     });
   });
