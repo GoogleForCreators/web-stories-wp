@@ -40,7 +40,7 @@ function customInlineFn(element, { Style }) {
 function importHTML(html) {
   const htmlWithBreaks = (html || '')
     // Re-insert manual line-breaks for empty lines
-    .replace(/\n(?=\n)/g, '\n<br />')
+    .replace(/\n/g, '\n<br />')
     .split('\n')
     .map((s) => {
       return `<p>${getValidHTML(s)}</p>`;

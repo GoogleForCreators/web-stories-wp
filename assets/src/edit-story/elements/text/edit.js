@@ -234,13 +234,13 @@ function TextEdit({
   const handleUpdate = useCallback(
     (newContent) => {
       contentRef.current = newContent;
-      // handleResize();
+      handleResize();
     },
     [handleResize]
   );
 
   // Also invoke if the raw element height ever changes
-  // useEffect(handleResize, [elementHeight, handleResize]);
+  useEffect(handleResize, [elementHeight, handleResize]);
 
   useEffect(() => {
     maybeEnqueueFontStyle([
@@ -251,30 +251,30 @@ function TextEdit({
     ]);
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
-  // useTransformHandler(id, (transform) => {
-  //   const target = textBoxRef.current;
-  //   const wrapper = wrapperRef.current;
-  //   const updatedFontSize = transform?.updates?.fontSize;
-  //   target.style.fontSize = updatedFontSize
-  //     ? `${dataToEditorY(updatedFontSize)}px`
-  //     : '';
+  useTransformHandler(id, (transform) => {
+    const target = textBoxRef.current;
+    const wrapper = wrapperRef.current;
+    const updatedFontSize = transform?.updates?.fontSize;
+    target.style.fontSize = updatedFontSize
+      ? `${dataToEditorY(updatedFontSize)}px`
+      : '';
 
-  //   if (transform === null) {
-  //     wrapper.style.width = '';
-  //     wrapper.style.height = '';
-  //   } else {
-  //     const { resize } = transform;
-  //     if (resize && resize[0] !== 0 && resize[1] !== 0) {
-  //       wrapper.style.width = `${resize[0]}px`;
-  //       wrapper.style.height = `${resize[1]}px`;
-  //     }
-  //   }
-  // });
+    if (transform === null) {
+      wrapper.style.width = '';
+      wrapper.style.height = '';
+    } else {
+      const { resize } = transform;
+      if (resize && resize[0] !== 0 && resize[1] !== 0) {
+        wrapper.style.width = `${resize[0]}px`;
+        wrapper.style.height = `${resize[1]}px`;
+      }
+    }
+  });
 
   return (
     <Wrapper
       ref={wrapperRef}
-      // onClick={onClick}
+      onClick={onClick}
       data-testid="textEditor"
       {...textProps}
     >
@@ -283,7 +283,6 @@ function TextEdit({
           ref={editorRef}
           content={content}
           onChange={handleUpdate}
-          // onChange={() => {}}
         />
       </TextBox>
     </Wrapper>
