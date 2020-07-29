@@ -71,8 +71,6 @@ const Span = styled.span`
   ${elementWithBackgroundColor}
   ${elementWithTextParagraphStyle}
 
-  border-radius: 3px;
-  box-decoration-break: clone;
   position: relative;
 `;
 

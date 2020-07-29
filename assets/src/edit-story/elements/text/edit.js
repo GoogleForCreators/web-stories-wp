@@ -85,8 +85,6 @@ const TextBox = styled.div`
 
 const Highlight = styled.span`
   ${({ highlightColor }) => generatePatternStyles(highlightColor)};
-  border-radius: 3px;
-  box-decoration-break: clone;
   color: transparent !important;
   * {
     color: transparent !important;
