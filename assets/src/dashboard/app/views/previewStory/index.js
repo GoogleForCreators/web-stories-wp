@@ -53,6 +53,10 @@ const CloseButton = styled.button`
   border: ${({ theme }) => theme.borders.transparent};
   background-color: transparent;
   z-index: 10;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const IframeContainer = styled.div`
