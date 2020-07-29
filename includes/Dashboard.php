@@ -295,7 +295,7 @@ class Dashboard {
 				 * Issue: 3390
 				 * Creation date: 2020-07-23
 				 */
-				'enableTemplatePreviews'          => true,
+				'enableTemplatePreviews'          => false,
 			],
 		];
 
