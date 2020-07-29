@@ -27,34 +27,49 @@ import completeTemplateObject from '../../../../dataUtils/completeTemplateObject
 import { ApiContext } from '../../../api/apiProvider';
 import PreviewStory from '../';
 
+function renderPreviewInContext({
+  isLoading,
+  errorText,
+  previewMarkup,
+  hasStory,
+  onClose,
+}) {
+  return renderWithThemeAndFlagsProvider(
+    <ApiContext.Provider
+      value={{
+        state: {
+          stories: {
+            error: errorText ? { message: { title: errorText } } : {},
+            isLoading,
+            previewMarkup,
+          },
+        },
+        actions: {
+          storyApi: {
+            createStoryPreviewFromTemplate: jest.fn(),
+            clearStoryPreview: jest.fn(),
+          },
+        },
+      }}
+    >
+      <PreviewStory
+        story={hasStory && completeTemplateObject}
+        isTemplate
+        handleClose={onClose}
+      />
+    </ApiContext.Provider>
+  );
+}
+
 describe('Preview Story within Dashboard', function () {
   const onClose = jest.fn();
+
   it('should render a modal, button, and iframe for preview', function () {
-    const { getByRole, getByTestId } = renderWithThemeAndFlagsProvider(
-      <ApiContext.Provider
-        value={{
-          state: {
-            stories: {
-              error: {},
-              isLoading: false,
-              previewMarkup: '<p>some fake markup to trigger the iframe</p>',
-            },
-          },
-          actions: {
-            storyApi: {
-              createStoryPreviewFromTemplate: jest.fn(),
-              clearStoryPreview: jest.fn(),
-            },
-          },
-        }}
-      >
-        <PreviewStory
-          story={completeTemplateObject}
-          isTemplate
-          handleClose={onClose}
-        />
-      </ApiContext.Provider>
-    );
+    const { getByRole, getByTestId } = renderPreviewInContext({
+      previewMarkup: '<p>some mark up goes here</p>',
+      hasStory: true,
+      onClose,
+    });
 
     expect(getByRole('dialog')).toBeInTheDocument();
     expect(getByRole('button')).toBeInTheDocument();
@@ -65,35 +80,12 @@ describe('Preview Story within Dashboard', function () {
   });
 
   it('should render a modal, button, iframe, and loading message when error and previewMarkup are not present and isLoading is true', function () {
-    const {
-      getByRole,
-      getByTestId,
-      getByText,
-    } = renderWithThemeAndFlagsProvider(
-      <ApiContext.Provider
-        value={{
-          state: {
-            stories: {
-              error: {},
-              isLoading: true,
-              previewMarkup: '',
-            },
-          },
-          actions: {
-            storyApi: {
-              createStoryPreviewFromTemplate: jest.fn(),
-              clearStoryPreview: jest.fn(),
-            },
-          },
-        }}
-      >
-        <PreviewStory
-          story={completeTemplateObject}
-          isTemplate
-          handleClose={onClose}
-        />
-      </ApiContext.Provider>
-    );
+    const { getByRole, getByTestId, getByText } = renderPreviewInContext({
+      previewMarkup: '',
+      hasStory: true,
+      isLoading: true,
+      onClose,
+    });
 
     expect(getByRole('dialog')).toBeInTheDocument();
     expect(getByRole('button')).toBeInTheDocument();
@@ -107,31 +99,12 @@ describe('Preview Story within Dashboard', function () {
       getAllByRole,
       queryAllByTestId,
       getByText,
-    } = renderWithThemeAndFlagsProvider(
-      <ApiContext.Provider
-        value={{
-          state: {
-            stories: {
-              error: { message: { title: 'error message title' } },
-              isLoading: false,
-              previewMarkup: '',
-            },
-          },
-          actions: {
-            storyApi: {
-              createStoryPreviewFromTemplate: jest.fn(),
-              clearStoryPreview: jest.fn(),
-            },
-          },
-        }}
-      >
-        <PreviewStory
-          story={completeTemplateObject}
-          isTemplate
-          handleClose={onClose}
-        />
-      </ApiContext.Provider>
-    );
+    } = renderPreviewInContext({
+      previewMarkup: '',
+      hasStory: true,
+      errorText: 'error message title',
+      onClose,
+    });
 
     const closeButtons = getAllByRole('button');
     expect(closeButtons).toHaveLength(2);
