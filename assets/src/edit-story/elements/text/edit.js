@@ -229,7 +229,6 @@ function TextEdit({
       onResize && onResize();
     }
   }, [editWrapper, onResize]);
-
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
@@ -238,7 +237,6 @@ function TextEdit({
     },
     [handleResize]
   );
-
   // Also invoke if the raw element height ever changes
   useEffect(handleResize, [elementHeight, handleResize]);
 

@@ -52,7 +52,6 @@ function RichTextEditor({ content, onChange }, ref) {
       return;
     }
     const newContent = getContentFromState(editorState);
-
     if (newContent) {
       onChange(newContent);
     }
