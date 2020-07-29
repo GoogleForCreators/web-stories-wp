@@ -31,7 +31,7 @@ function ImageOutput({ element, box }) {
   const { resource } = element;
 
   const props = {
-    layout: 'responsive',
+    layout: 'fill',
     width: resource.width,
     height: resource.height,
     srcSet: calculateSrcSet(element.resource),
