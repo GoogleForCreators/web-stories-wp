@@ -63,6 +63,7 @@ const IframeContainer = styled.div`
   width: ${({ dimensions }) => `${dimensions.width}px`};
   height: ${({ dimensions }) =>
     `${dimensions.height - CLOSE_BUTTON_SIZE.HEIGHT}px`};
+  min-height: 90vh;
 `;
 
 const HelperText = styled.p`
@@ -73,7 +74,7 @@ const HelperText = styled.p`
 `;
 
 const HelperContainer = styled.div`
-  bottom: 0;
+  position: ${({ overlay }) => (overlay ? 'absolute' : 'inherit')};
   width: 100%;
   min-height: 90vh;
   display: flex;
@@ -175,7 +176,7 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
         )}
 
         {isLoading && !previewError && (
-          <HelperContainer>
+          <HelperContainer overlay>
             <HelperText>{__('Loading\u2026', 'web-stories')}</HelperText>
           </HelperContainer>
         )}
