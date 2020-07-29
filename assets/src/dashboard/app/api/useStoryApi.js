@@ -202,13 +202,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       });
 
       try {
-        const { createdBy, pages } = template;
+        const { createdBy, pages, title } = template;
         const storyProps = await getStoryPropsToSave({
           story: {
             status: 'auto-draft',
-            title: template.title,
+            title: title,
             author: 1,
-            slug: template.title,
+            slug: title,
           },
           pages,
           metadata: {
