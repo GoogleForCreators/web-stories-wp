@@ -20,6 +20,7 @@
 import { Container } from '../container';
 import { TextStyle } from './textStyle';
 import { Alignment } from './alignment';
+import { BackgroundOverlay } from './backgroundOverlay';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -47,8 +48,11 @@ export class DesignPanel extends Container {
   }
 
   get backgroundOverlay() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Overlay/ }),
+      'backgroundOverlay',
+      BackgroundOverlay
+    );
   }
 
   get link() {
