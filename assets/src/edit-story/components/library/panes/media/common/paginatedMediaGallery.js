@@ -60,12 +60,14 @@ const AttributionPill = styled.div`
   flex-wrap: nowrap;
   font-size: 12px;
   background-color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
 `;
 
-const LogoContainer = styled.span`
-  fill: #fff;
-  margin-left: 6px;
-`;
+const LOGO_PROPS = {
+  fill: '#fff',
+  'marginLeft': '6px',
+  height: '14px',
+};
 
 function PaginatedMediaGallery({
   providerType,
@@ -201,9 +203,7 @@ function PaginatedMediaGallery({
       {providerType === ProviderType.UNSPLASH && (
         <AttributionPill onClick={openLink}>
           {__('Powered by', 'web-stories')}
-          <LogoContainer>
-            <UnsplashLogoFull style={{ height: '14px' }} />
-          </LogoContainer>
+          <UnsplashLogoFull style={LOGO_PROPS} />
         </AttributionPill>
       )}
     </>
