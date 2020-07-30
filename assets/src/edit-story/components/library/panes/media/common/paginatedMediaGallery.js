@@ -60,6 +60,7 @@ const AttributionPill = styled.div`
   display: flex;
   flex-wrap: nowrap;
   font-size: 12px;
+  color: ${theme.colors.fg.v1};
   background-color: rgba(0, 0, 0, 0.7);
   cursor: pointer;
 `;
@@ -165,12 +166,6 @@ function PaginatedMediaGallery({
     };
   }, [handleScrollOrResize]);
 
-  const openLink = useCallback(() => {
-    if (providerType === ProviderType.UNSPLASH) {
-      window.open('https://unsplash.com');
-    }
-  }, [providerType]);
-
   const mediaGallery =
     isMediaLoaded && resources.length === 0 ? (
       <MediaGalleryMessage>
@@ -202,10 +197,12 @@ function PaginatedMediaGallery({
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
       {providerType === ProviderType.UNSPLASH && (
-        <AttributionPill onClick={openLink}>
-          {__('Powered by', 'web-stories')}
-          <UnsplashLogoFull style={LOGO_PROPS} />
-        </AttributionPill>
+        <a href={'https://unsplash.com'} target={'_blank'} rel={'noreferrer'}>
+          <AttributionPill>
+            {__('Powered by', 'web-stories')}
+            <UnsplashLogoFull style={LOGO_PROPS} />
+          </AttributionPill>
+        </a>
       )}
     </>
   );
