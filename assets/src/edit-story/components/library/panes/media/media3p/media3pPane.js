@@ -51,6 +51,12 @@ const ProviderTabSection = styled.div`
   padding: 0 24px;
 `;
 
+const MediaDisplayName = styled.div`
+  margin-top: 24px;
+  padding: 0 24px;
+  visibility: ${(props) => (props.shouldDisplay ? 'visible' : 'hidden')};
+`;
+
 /**
  * Pane that contains the media 3P integrations.
  *
@@ -119,6 +125,19 @@ function Media3pPane(props) {
     // TODO(#2393): set state.
   }, []);
 
+  const displayName = categories.selectedCategoryId
+    ? categories.categories.find((e) => e.id === categories.selectedCategoryId)
+        .displayName
+    : __('Trending', 'web-stories');
+
+  // We display the media name if there's media to display or a category has
+  // been selected.
+  // TODO: Update for Coverr.
+  const displayMediaName = Boolean(
+    (unsplash.state.isMediaLoaded && unsplash.state.media) ||
+      categories.selectedCategoryId
+  );
+
   // TODO(#2368): handle pagination / infinite scrolling
   return (
     <StyledPane id={paneId} {...props}>
@@ -146,6 +165,9 @@ function Media3pPane(props) {
             selectCategory={selectCategory}
             deselectCategory={deselectCategory}
           />
+          <MediaDisplayName shouldDisplay={displayMediaName}>
+            {displayName}
+          </MediaDisplayName>
         </PaneHeader>
         <PaginatedMediaGallery
           providerType={ProviderType.UNSPLASH}
