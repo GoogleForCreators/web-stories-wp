@@ -43,7 +43,14 @@ export function calculateSrcSet(resource) {
   if (!resource.sizes) {
     return null;
   }
-  return Object.values(resource.sizes)
+
+  // The 'thumbnail' sizes attribute is cropped, we don't want that.
+  const filteredSizes = {
+    ...resource.sizes,
+  };
+  delete filteredSizes.thumbnail;
+
+  return Object.values(filteredSizes)
     .sort((s1, s2) => s2.width - s1.width)
     .map((s) => `${s.source_url} ${s.width}w`)
     .join(',');
