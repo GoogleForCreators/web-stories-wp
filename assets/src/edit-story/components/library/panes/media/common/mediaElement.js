@@ -33,6 +33,7 @@ import DropDownMenu from '../local/dropDownMenu';
 import { ProviderType } from '../common/providerType';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
+import { useMedia3pApi } from '../../../../../app/media/media3p/api';
 import useRovingTabIndex from './useRovingTabIndex';
 
 const styledTiles = css`
@@ -156,6 +157,22 @@ const MediaElement = ({
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
+  const {
+    actions: { registerUsage },
+  } = useMedia3pApi();
+
+  const handleRegisterUsage = useCallback(() => {
+    if (
+      providerType !== ProviderType.LOCAL &&
+      resource.attribution &&
+      resource.attribution.registerUsageUrl
+    ) {
+      registerUsage({
+        registerUsageUrl: resource.attribution.registerUsageUrl,
+      });
+    }
+  }, [providerType, resource, registerUsage]);
+
   const measureMediaElement = () =>
     mediaElement?.current?.getBoundingClientRect();
 
@@ -182,10 +199,11 @@ const MediaElement = ({
       onDragEnd: (e) => {
         e.preventDefault();
         setDraggingResource(null);
+        handleRegisterUsage();
         handleDrop(resource);
       },
     }),
-    [setDraggingResource, resource, handleDrag, handleDrop]
+    [setDraggingResource, resource, handleDrag, handleDrop, handleRegisterUsage]
   );
 
   const makeActive = useCallback(() => setActive(true), []);
@@ -227,7 +245,10 @@ const MediaElement = ({
     }
   }, [isMenuOpen, active, type]);
 
-  const onClick = () => onInsert(resource, width, height);
+  const onClick = () => {
+    handleRegisterUsage();
+    onInsert(resource, width, height);
+  };
 
   const innerElement = getInnerElement(type, {
     src,
