@@ -45,6 +45,7 @@ import {
   MediaGalleryMessage,
 } from '../common/styles';
 import { ReactComponent as UnsplashLogoFull } from '../../../../../icons/unsplash_logo_full.svg';
+import theme from '../../../../../theme';
 import { ProviderType } from './providerType';
 
 const ROOT_MARGIN = 300;
@@ -64,8 +65,8 @@ const AttributionPill = styled.div`
 `;
 
 const LOGO_PROPS = {
-  fill: '#fff',
-  'marginLeft': '6px',
+  fill: theme.colors.fg.v1,
+  marginLeft: '6px',
   height: '14px',
 };
 
