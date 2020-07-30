@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 
 const Image = styled.img`
   transform: rotate(${(props) => props.$rotationAngle});
-  margin-top: -40px;
+  margin-top: -35px;
 `;
 
 const ParagraphWrapper = styled.div`
