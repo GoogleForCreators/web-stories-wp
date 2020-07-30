@@ -24,7 +24,7 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { calculateSrcSet, mediaWithScale } from '../media/util';
+import { mediaWithScale } from '../media/util';
 import { getMediaSizePositionProps } from '../media';
 import MediaDisplay from '../media/display';
 
@@ -53,7 +53,7 @@ function ImageDisplay({ element, box }) {
         ref={ref}
         draggable={false}
         src={resource.src}
-        srcSet={calculateSrcSet(resource)}
+        srcSet={resource.srcSet}
         alt={resource.alt}
         {...imgProps}
       />
