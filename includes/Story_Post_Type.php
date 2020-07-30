@@ -140,7 +140,9 @@ class Story_Post_Type {
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
 
+		// AMP compatibility.
 		add_filter( 'amp_skip_post', [ $this, 'skip_amp' ], PHP_INT_MAX, 2 );
+		add_filter( 'amp_supportable_post_types', [ $this, 'filter_amp_supportable_post_types' ] );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
@@ -176,6 +178,20 @@ class Story_Post_Type {
 			$skipped = true;
 		}
 		return $skipped;
+	}
+
+	/**
+	 * Filters the list of post types which may be supported for AMP.
+	 *
+	 * Removes this post type from that list.
+	 *
+	 * @since 2.0
+	 *
+	 * @param string[] $post_types Post types.
+	 * @return string[] Filtered list of post types eligible for AMP.
+	 */
+	public function filter_amp_supportable_post_types( $post_types ) {
+		return array_diff( $post_types, [ self::POST_TYPE_SLUG ] );
 	}
 
 	/**

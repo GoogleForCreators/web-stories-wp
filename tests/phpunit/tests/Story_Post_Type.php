@@ -77,6 +77,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'use_block_editor_for_post_type', [ $story_post_type, 'filter_use_block_editor_for_post_type' ] ) );
 		$this->assertSame( 10, has_filter( 'template_include', [ $story_post_type, 'filter_template_include' ] ) );
 		$this->assertSame( PHP_INT_MAX, has_filter( 'amp_skip_post', [ $story_post_type, 'skip_amp' ] ) );
+		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $story_post_type, 'filter_amp_supportable_post_types' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
 	}
@@ -180,6 +181,24 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
 		$skip_amp        = $story_post_type->skip_amp( true, get_post( self::$story_id ) );
 		$this->assertTrue( $skip_amp );
+	}
+
+	/**
+	 * @covers ::filter_amp_supportable_post_types
+	 */
+	public function test_filter_amp_supportable_post_types() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+
+		$expected = [ 'post', 'page' ];
+		$actual   = $story_post_type->filter_amp_supportable_post_types(
+			[
+				'post',
+				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'page',
+			]
+		);
+
+		$this->assertEqualSets( $expected, $actual );
 	}
 
 	/**
