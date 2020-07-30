@@ -19,6 +19,7 @@
  */
 import StoryPropTypes from '../../types';
 import MediaOutput from '../media/output';
+import { calculateSrcSet } from '../media/util';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
@@ -33,7 +34,7 @@ function ImageOutput({ element, box }) {
     layout: 'fill',
     width: resource.width,
     height: resource.height,
-    srcSet: resource.srcSet,
+    srcSet: calculateSrcSet(element.resource),
     src: resource.src,
     alt: element.alt !== undefined ? element.alt : resource.alt,
   };

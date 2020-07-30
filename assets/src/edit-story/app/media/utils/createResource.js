@@ -90,29 +90,6 @@ import getTypeFromMime from './getTypeFromMime';
  */
 
 /**
- * Returns a valid srcSet attribute value for the given media resource sizes.
- *
- * @param {Object} sizes The resource sizes.
- * @return {?string} The srcSet value, or null if `sizes` is falsey.
- */
-function calculateSrcSet(sizes) {
-  if (!sizes) {
-    return null;
-  }
-
-  // The 'thumbnail' sizes attribute is cropped, we don't want that.
-  const filteredSizes = {
-    ...sizes,
-  };
-  delete filteredSizes.thumbnail;
-
-  return Object.values(filteredSizes)
-    .sort((s1, s2) => s2.width - s1.width)
-    .map((s) => `${s.source_url} ${s.width}w`)
-    .join(',');
-}
-
-/**
  * Creates a resource object.
  *
  * @param {Attachment} attachment WordPress Attachment object.
@@ -141,7 +118,6 @@ function createResource({
     mimeType,
     creationDate,
     src,
-    srcSet: calculateSrcSet(sizes),
     width,
     height,
     poster,

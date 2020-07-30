@@ -31,3 +31,27 @@ export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
   // no other apparent way to execute interpolate `mediaWithScale` dynamically.
   return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }
+
+/**
+ * Returns a valid srcSet attribute value for the given media resource.
+ *
+ * @param {Object} resource The resource.
+ * @return {?string} The srcSet value, or null if the resource has no `sizes`
+ * attribute.
+ */
+export function calculateSrcSet(resource) {
+  if (!resource.sizes) {
+    return null;
+  }
+
+  // The 'thumbnail' sizes attribute is cropped, we don't want that.
+  const filteredSizes = {
+    ...resource.sizes,
+  };
+  delete filteredSizes.thumbnail;
+
+  return Object.values(filteredSizes)
+    .sort((s1, s2) => s2.width - s1.width)
+    .map((s) => `${s.source_url} ${s.width}w`)
+    .join(',');
+}

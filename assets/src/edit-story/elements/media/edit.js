@@ -29,7 +29,7 @@ import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import EditCropMoveable from './editCropMoveable';
-import { mediaWithScale } from './util';
+import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
@@ -145,7 +145,7 @@ function MediaEdit({ element, box }) {
         <FadedImage
           {...fadedMediaProps}
           src={resource.src}
-          srcSet={resource.srcSet}
+          srcSet={calculateSrcSet(resource)}
         />
       )}
       {isVideo && (

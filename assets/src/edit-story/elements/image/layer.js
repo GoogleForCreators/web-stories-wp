@@ -19,13 +19,22 @@
  */
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
+import { calculateSrcSet } from '../media/util';
 
 function ImageLayerContent({
   element: {
-    resource: { src, srcSet, alt },
+    resource,
+    resource: { src, alt },
   },
 }) {
-  return <VisibleImage src={src} srcSet={srcSet} alt={alt} height="20" />;
+  return (
+    <VisibleImage
+      src={src}
+      srcSet={calculateSrcSet(resource)}
+      alt={alt}
+      height="20"
+    />
+  );
 }
 
 ImageLayerContent.propTypes = {
