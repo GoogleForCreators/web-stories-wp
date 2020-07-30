@@ -455,7 +455,7 @@ class Story_Post_Type {
 				 * Issue: #2508
 				 * Creation date: 2020-06-17
 				 */
-				'media3pTab'                     => false,
+				'media3pTab'                     => true,
 				/**
 				 * Description: Flag to show or hide the elements tab.
 				 * Author: @diegovar
