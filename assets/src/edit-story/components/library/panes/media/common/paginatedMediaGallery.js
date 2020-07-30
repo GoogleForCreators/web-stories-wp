@@ -197,7 +197,13 @@ function PaginatedMediaGallery({
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
       {providerType === ProviderType.UNSPLASH && (
-        <a href={'https://unsplash.com'} target={'_blank'} rel={'noreferrer'}>
+        <a
+          href={
+            'https://unsplash.com?utm_source=web_stories_wordpress&utm_medium=referral'
+          }
+          target={'_blank'}
+          rel={'noreferrer'}
+        >
           <AttributionPill>
             {__('Powered by', 'web-stories')}
             <UnsplashLogoFull style={LOGO_PROPS} />
