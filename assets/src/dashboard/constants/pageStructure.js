@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
-export { FULLBLEED_RATIO, PAGE_RATIO } from '../../edit-story/constants';
+export {
+  FULLBLEED_RATIO,
+  PAGE_RATIO,
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+} from '../../edit-story/constants';
 
 export const WPBODY_ID = 'wpbody';
 
