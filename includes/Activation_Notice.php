@@ -127,13 +127,15 @@ class Activation_Notice {
 			)
 		);
 
+		$demo_story_url = 'https://google.github.io/web-stories-wp/beta/tips.html';
+
 		// @todo Implement Get Started story - see https://github.com/google/web-stories-wp/pull/2845
 		return [
 			'id'     => 'web-stories-plugin-activation-notice',
 			'config' => [
 				'isRTL'        => is_rtl(),
 				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'demoStoryURL' => '#',
+				'demoStoryURL' => $demo_story_url,
 				'newStoryURL'  => $new_story_url,
 				'dashboardURL' => $dashboard_url,
 			],
