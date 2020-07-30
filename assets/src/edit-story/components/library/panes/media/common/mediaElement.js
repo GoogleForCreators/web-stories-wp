@@ -35,6 +35,7 @@ import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
 import useRovingTabIndex from './useRovingTabIndex';
+import Attribution from './attribution';
 
 const styledTiles = css`
   width: 100%;
@@ -250,6 +251,9 @@ const MediaElement = ({
     onInsert(resource, width, height);
   };
 
+  const showAttribution =
+    active && resource.attribution && resource.attribution.author;
+
   const innerElement = getInnerElement(type, {
     src,
     ref: mediaElement,
@@ -258,7 +262,8 @@ const MediaElement = ({
     width,
     height,
     onClick,
-    showVideoDetail,
+    showVideoDetail: showVideoDetail && !showAttribution,
+    showAttribution,
     dropTargetsBindings,
   });
 
@@ -337,6 +342,7 @@ function getInnerElement(
     height,
     onClick,
     showVideoDetail,
+    showAttribution,
     dropTargetsBindings,
   }
 ) {
@@ -345,19 +351,27 @@ function getInnerElement(
   };
   if (type === 'image') {
     return (
-      <Image
-        key={src}
-        src={getThumbnailUrl(width, resource)}
-        ref={ref}
-        width={width}
-        height={height}
-        alt={alt}
-        aria-label={alt}
-        loading={'lazy'}
-        onClick={onClick}
-        onLoad={makeImageVisible}
-        {...dropTargetsBindings}
-      />
+      <>
+        <Image
+          key={src}
+          src={getThumbnailUrl(width, resource)}
+          ref={ref}
+          width={width}
+          height={height}
+          alt={alt}
+          aria-label={alt}
+          loading={'lazy'}
+          onClick={onClick}
+          onLoad={makeImageVisible}
+          {...dropTargetsBindings}
+        />
+        {showAttribution && (
+          <Attribution
+            author={resource.attribution.author.displayName}
+            url={resource.attribution.author.url}
+          />
+        )}
+      </>
     );
   } else if (type === 'video') {
     const { lengthFormatted, poster, mimeType } = resource;
@@ -381,6 +395,12 @@ function getInnerElement(
         gallery as there's no event when a video's poster loads. */}
         <HiddenPosterImage src={poster} onLoad={makeImageVisible} />
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+        {showAttribution && (
+          <Attribution
+            author={resource.attribution.author.displayName}
+            url={resource.attribution.author.url}
+          />
+        )}
       </>
     );
   }
