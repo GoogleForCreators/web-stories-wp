@@ -33,7 +33,8 @@ import getTypeFromMime from './getTypeFromMime';
  *
  * @typedef {Attribution} Attribution
  * @property {?Author} author The optional author of the media object.
- * @property {string} registerUsageUrl The url to register the media usage.
+ * @property {?string} registerUsageUrl The optional url to register the media
+ * usage.
  */
 
 /**
@@ -86,7 +87,8 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
  * @property {Object} sizes Object of image sizes.
- * @property {Attribution} attribution An attribution for the resource.
+ * @property {Attribution|null} attribution An optional attribution for the
+ * resource.
  */
 
 /**

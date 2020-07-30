@@ -162,7 +162,11 @@ const MediaElement = ({
   } = useMedia3pApi();
 
   const handleRegisterUsage = useCallback(() => {
-    if (providerType !== ProviderType.LOCAL) {
+    if (
+      providerType !== ProviderType.LOCAL &&
+      resource.attribution &&
+      resource.attribution.registerUsageUrl
+    ) {
       registerUsage({
         registerUsageUrl: resource.attribution.registerUsageUrl,
       });

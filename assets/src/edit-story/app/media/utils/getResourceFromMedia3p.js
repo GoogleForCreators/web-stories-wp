@@ -51,8 +51,8 @@ import createResource from './createResource';
  * @property {?string} description A description of the media item.
  * @property {string} createTime The creation time of the media element.
  * @property {string} updateTime The last update time of the media element.
- * @property {string} registerUsageUrl The URL to call when the media element
- * is added to a story.
+ * @property {?string} registerUsageUrl The optional URL to call when the media
+ * element is added to a story.
  * @property {ImageUrl[]|undefined} imageUrls If the media element is an
  * image, an array of urls with different size assets.
  */
@@ -121,7 +121,7 @@ function getResourceFromMedia3p(m) {
     alt: null,
     local: false, // TODO: How does this interact with the rest?
     sizes: urls, // TODO: Map with expected keys for canvas.
-    attribution: {
+    attribution: (m.author || m.registerUsageUrl) && {
       author: m.author && {
         displayName: m.author.displayName,
         url: m.author.url,
