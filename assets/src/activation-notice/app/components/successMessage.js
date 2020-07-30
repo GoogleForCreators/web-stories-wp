@@ -63,6 +63,7 @@ const PrimaryLink = styled.a`
   padding: 5px 8px;
   cursor: pointer;
   text-decoration: none;
+  border-radius: 4px;
 
   &:focus,
   &:hover {
