@@ -314,7 +314,7 @@ function SingleSelectionMoveable({
           pushTransform(selectedElement.id, frame);
         }
       }}
-      onResize={({ target, direction, width, height, drag }) => {
+      onResize={({ target, direction, width, height, drag, delta }) => {
         let newWidth = width;
         let newHeight = height;
         let updates = null;
@@ -338,19 +338,20 @@ function SingleSelectionMoveable({
             selectedElement,
             direction,
             editorToDataX(newWidth),
-            editorToDataY(newHeight)
+            editorToDataY(newHeight),
+            delta
           );
         }
         if (updates && updates.height) {
           newHeight = dataToEditorY(updates.height);
         }
 
-        target.style.width = `${newWidth}px`;
-        target.style.height = `${newHeight}px`;
+        if (!updates || updates.skipUpdates !== true) {
+          frame.resize = [newWidth, newHeight];
+          frame.updates = updates;
+        }
         frame.direction = direction;
-        frame.resize = [newWidth, newHeight];
         frame.translate = drag.beforeTranslate;
-        frame.updates = updates;
         setTransformStyle(target);
       }}
       onResizeEnd={({ target }) => {

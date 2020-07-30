@@ -22,17 +22,24 @@ import {
   calculateTextHeight,
 } from '../../utils/textMeasurements';
 import { dataPixels } from '../../units';
+import { resizeRules } from './index';
 
-function updateForResizeEvent(element, direction, newWidth, newHeight) {
+function updateForResizeEvent(element, direction, newWidth, newHeight, delta) {
   const isResizingWidth = direction[0] !== 0;
   const isResizingHeight = direction[1] !== 0;
+  const isSizingUp = delta ? delta[0] + delta[1] > 0 : true;
 
   // Vertical or diagonal resizing w/keep ratio.
   if (isResizingHeight) {
+    const fontSize = calculateFitTextFontSize(
+      element,
+      newWidth || element.width,
+      newHeight
+    );
+    const fontSizeInDataPx = dataPixels(fontSize);
     return {
-      fontSize: dataPixels(
-        calculateFitTextFontSize(element, newWidth || element.width, newHeight)
-      ),
+      fontSize: fontSizeInDataPx,
+      skipUpdates: !isSizingUp && fontSizeInDataPx < resizeRules.minFontSize,
     };
   }
 

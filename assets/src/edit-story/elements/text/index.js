@@ -62,6 +62,7 @@ export const resizeRules = {
   diagonal: true,
   minWidth: 20,
   minHeight: 0, // Enforced by min font size
+  minFontSize: 8,
 };
 
 export const panels = [
