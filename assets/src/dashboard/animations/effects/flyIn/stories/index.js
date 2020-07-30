@@ -76,7 +76,7 @@ export const _default = () => {
   return (
     <AMPStoryWrapper>
       <amp-story-page id={`page-1`}>
-        <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Drop'}</p>
+        <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Fly In'}</p>
 
         <amp-story-grid-layer
           template="vertical"
@@ -119,7 +119,7 @@ export const _default = () => {
         <StoryAnimation.Provider animations={animations} elements={elements}>
           <StoryAnimation.AMPAnimations />
           <p style={{ textAlign: 'center', color: '#fff' }}>
-            {'Custom Drop Effect'}
+            {'Custom Fly In Effect'}
           </p>
 
           <amp-story-grid-layer
