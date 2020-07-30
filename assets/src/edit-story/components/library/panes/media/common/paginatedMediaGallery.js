@@ -36,6 +36,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import styled from 'styled-components';
 import MediaGallery from '../common/mediaGallery';
 import {
   MediaGalleryContainer,
@@ -43,8 +44,28 @@ import {
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
 } from '../common/styles';
+import { ReactComponent as UnsplashLogoFull } from '../../../../../icons/unsplash_logo_full.svg';
+import { ProviderType } from './providerType';
 
 const ROOT_MARGIN = 300;
+
+const AttributionPill = styled.div`
+  position: absolute;
+  left: 24px;
+  bottom: 10px;
+  border-radius: 100px;
+  padding: 5px 8px;
+  line-height: 16px;
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.7);
+`;
+
+const LogoContainer = styled.span`
+  fill: #fff;
+  margin-left: 6px;
+`;
 
 function PaginatedMediaGallery({
   providerType,
@@ -141,6 +162,12 @@ function PaginatedMediaGallery({
     };
   }, [handleScrollOrResize]);
 
+  const openLink = useCallback(() => {
+    if (providerType === ProviderType.UNSPLASH) {
+      window.open('https://unsplash.com');
+    }
+  }, [providerType]);
+
   const mediaGallery =
     isMediaLoaded && resources.length === 0 ? (
       <MediaGalleryMessage>
@@ -164,12 +191,22 @@ function PaginatedMediaGallery({
     );
 
   return (
-    <MediaGalleryContainer
-      data-testid="media-gallery-container"
-      ref={refCallbackContainer}
-    >
-      <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
-    </MediaGalleryContainer>
+    <>
+      <MediaGalleryContainer
+        data-testid="media-gallery-container"
+        ref={refCallbackContainer}
+      >
+        <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
+      </MediaGalleryContainer>
+      {providerType === ProviderType.UNSPLASH && (
+        <AttributionPill onClick={openLink}>
+          {__('Powered by', 'web-stories')}
+          <LogoContainer>
+            <UnsplashLogoFull style={{ height: '14px' }} />
+          </LogoContainer>
+        </AttributionPill>
+      )}
+    </>
   );
 }
 
