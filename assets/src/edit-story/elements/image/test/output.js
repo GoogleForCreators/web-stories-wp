@@ -45,6 +45,18 @@ describe('Image output', () => {
         alt: 'alt text',
         height: 1920,
         width: 1080,
+        sizes: {
+          mid: {
+            source_url: 'https://example.com/image-mid.png',
+            width: 960,
+            height: 540,
+          },
+          full: {
+            source_url: 'https://example.com/image.png',
+            width: 1920,
+            height: 1080,
+          },
+        },
       },
     },
     box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
@@ -52,6 +64,21 @@ describe('Image output', () => {
 
   it('should produce valid AMP output', async () => {
     await expect(<ImageOutput {...baseProps} />).toBeValidAMPStoryElement();
+  });
+
+  it('should produce an AMP img with a srcset', async () => {
+    const output = <ImageOutput {...baseProps} />;
+    await expect(output).toBeValidAMPStoryElement();
+    const outputStr = renderToStaticMarkup(output);
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching(
+        'srcSet="https://example.com/image.png 1920w,' +
+          'https://example.com/image-mid.png 960w"'
+      )
+    );
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('src="https://example.com/image.png"')
+    );
   });
 
   it('an undefined alt tag in the element should fall back to the resource', async () => {
