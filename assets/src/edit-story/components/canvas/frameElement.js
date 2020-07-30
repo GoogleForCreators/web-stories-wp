@@ -17,12 +17,13 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../dashboard/constants';
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useStory, useTransform } from '../../app';
@@ -47,12 +48,22 @@ const Wrapper = styled.div`
 	${elementWithRotation}
   pointer-events: initial;
 
+  ${(props) =>
+    props.isAnimating &&
+    css`
+      &,
+      & * {
+        pointer-events: none;
+      }
+    `}
+
 	&:focus,
 	&:active,
 	&:hover {
-		outline: ${({ theme, hasMask }) =>
-      hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
+		outline: ${({ theme, hasMask, isAnimating }) =>
+      hasMask || isAnimating ? 'none' : `1px solid ${theme.colors.selection}`};
 	}
+  
 `;
 
 const EmptyFrame = styled.div`
@@ -80,10 +91,16 @@ function FrameElement({ element }) {
       isEditing: state.state.isEditing,
     })
   );
-  const { selectedElementIds, currentPage } = useStory((state) => ({
-    selectedElementIds: state.state.selectedElementIds,
-    currentPage: state.state.currentPage,
-  }));
+  const { selectedElementIds, currentPage, isAnimating } = useStory(
+    (state) => ({
+      selectedElementIds: state.state.selectedElementIds,
+      currentPage: state.state.currentPage,
+      isAnimating: [
+        STORY_ANIMATION_STATE.PLAYING,
+        STORY_ANIMATION_STATE.SCRUBBING,
+      ].includes(state.state.animationState),
+    })
+  );
   const { getBox } = useUnits((state) => ({
     getBox: state.actions.getBox,
   }));
@@ -147,6 +164,7 @@ function FrameElement({ element }) {
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
+        isAnimating={isAnimating}
         data-testid="frameElement"
       >
         <WithMask element={element} fill={true}>
