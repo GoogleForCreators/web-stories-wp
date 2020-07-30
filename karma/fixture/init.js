@@ -181,7 +181,7 @@ beforeAll(() => {
           pass,
           message: pass
             ? `Expected element ${actual} to not have focus`
-            : `Expected element ${actual} to have focus`,
+            : `Expected element ${actual} to have focus, but focus is on ${doc.activeElement}`,
         };
       },
     }),

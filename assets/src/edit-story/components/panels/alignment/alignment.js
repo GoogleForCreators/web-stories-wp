@@ -240,7 +240,11 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <Panel canCollapse={false} ariaLabel={__('Alignment', 'web-stories')}>
+    <Panel
+      name="alignment"
+      canCollapse={false}
+      ariaLabel={__('Alignment', 'web-stories')}
+    >
       <ElementRow ref={ref}>
         <WithTooltip title={__('Distribute horizontally', 'web-stories')}>
           <Icon
