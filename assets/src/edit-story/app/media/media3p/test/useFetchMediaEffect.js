@@ -36,6 +36,11 @@ jest.mock('../api', () => ({
   }),
 }));
 
+const mockShowSnackbar = jest.fn();
+jest.mock('../../../snackbar', () => ({
+  useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
+}));
+
 describe('useFetchMediaEffect', () => {
   let fetchMediaStart;
   let fetchMediaSuccess;
@@ -46,6 +51,7 @@ describe('useFetchMediaEffect', () => {
     fetchMediaStart = jest.fn();
     fetchMediaSuccess = jest.fn();
     fetchMediaError = jest.fn();
+    mockShowSnackbar.mockReset();
   });
 
   function renderUseFetchMediaEffect(propertyOverrides) {
@@ -86,6 +92,7 @@ describe('useFetchMediaEffect', () => {
       nextPageToken: 'nextPageToken',
       pageToken: 'pageToken',
     });
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 
   it('should fetch media when the provider is set and search term', async () => {
@@ -110,6 +117,7 @@ describe('useFetchMediaEffect', () => {
       nextPageToken: 'nextPageToken',
       pageToken: 'pageToken',
     });
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 
   it('should fetch media when the provider is set and category id', async () => {
@@ -134,6 +142,7 @@ describe('useFetchMediaEffect', () => {
       nextPageToken: 'nextPageToken',
       pageToken: 'pageToken',
     });
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 
   it('should call fetchMediaError if the fetch has failed', async () => {
@@ -144,6 +153,7 @@ describe('useFetchMediaEffect', () => {
     expect(fetchMediaStart).toHaveBeenCalledTimes(1);
     expect(fetchMediaSuccess).not.toHaveBeenCalledWith();
     expect(fetchMediaError).toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
   });
 
   it('should not fetch media if the provider is not the same as selected provider', async () => {
@@ -152,5 +162,8 @@ describe('useFetchMediaEffect', () => {
       selectedProvider: 'unsplash',
     });
     expect(fetchMediaStart).not.toHaveBeenCalledTimes(1);
+    expect(fetchMediaSuccess).not.toHaveBeenCalledTimes(1);
+    expect(fetchMediaError).not.toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).not.toHaveBeenCalledTimes(1);
   });
 });
