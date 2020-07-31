@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const API_DOMAIN = 'https://staging-media3p.sandbox.googleapis.com';
+export const API_DOMAIN = 'https://staging-media3p.sandbox.googleapis.com';
 const API_KEY = 'AIzaSyAgauA-izuTeGWFe9d9O0d0id-pV43Y4kE'; // dev key
 
 /**
@@ -22,9 +22,10 @@ const API_KEY = 'AIzaSyAgauA-izuTeGWFe9d9O0d0id-pV43Y4kE'; // dev key
  *
  * @enum {string}
  */
-const Paths = {
+export const Paths = {
   LIST_MEDIA: '/v1/media',
   LIST_CATEGORIES: '/v1/categories',
+  REGISTER_USAGE: '/v1/media:registerUsage',
 };
 
 /**
@@ -71,6 +72,13 @@ function validatePageSize(pageSize) {
   throw new Error('Invalid page_size: ' + pageSize);
 }
 
+function validateRegisterUsageUrl(url) {
+  if (url && url.includes(Paths.REGISTER_USAGE)) {
+    return;
+  }
+  throw new Error('Invalid url: ' + url);
+}
+
 class ApiFetcher {
   /**
    * Perform a GET request to the Media3P API to list media.
@@ -110,17 +118,18 @@ class ApiFetcher {
     validateListMediaOrderBy(orderBy);
     validatePageSize(pageSize);
 
-    const params = [
-      ['language_code', languageCode],
-      ['filter', filter],
-      ['order_by', orderBy],
-      ['page_size', pageSize],
-      ['page_token', pageToken],
-      ['key', API_KEY],
-    ].filter((entry) => Boolean(entry[1]));
+    const params = new URLSearchParams(
+      [
+        ['language_code', languageCode],
+        ['filter', filter],
+        ['order_by', orderBy],
+        ['page_size', pageSize],
+        ['page_token', pageToken],
+      ].filter((entry) => Boolean(entry[1]))
+    );
 
     // eslint-disable-next-line no-return-await
-    return await this.fetch({ params, path: Paths.LIST_MEDIA });
+    return await this.fetchPath({ params, path: Paths.LIST_MEDIA });
   }
 
   /**
@@ -148,40 +157,81 @@ class ApiFetcher {
     validateCategoriesOrderBy(orderBy);
     validatePageSize(pageSize);
 
-    const params = [
-      ['filter', filter],
-      ['order_by', orderBy],
-      ['page_size', pageSize],
-      ['key', API_KEY],
-    ].filter((entry) => Boolean(entry[1]));
+    const params = new URLSearchParams(
+      [
+        ['filter', filter],
+        ['order_by', orderBy],
+        ['page_size', pageSize],
+      ].filter((entry) => Boolean(entry[1]))
+    );
 
     // eslint-disable-next-line no-return-await
-    return await this.fetch({
+    return await this.fetchPath({
       params,
       path: Paths.LIST_CATEGORIES,
     });
   }
 
-  async fetch({ params, path }) {
-    // Querystring always has at least the api key
-    const queryString = new URLSearchParams(
-      Object.fromEntries(new Map(params))
-    );
-    const url = API_DOMAIN + path + '?' + queryString.toString();
+  /**
+   * Perform a POST request to the Media3P API to register a usage.
+   * If the parameters are invalid or the server does not return a 200 response,
+   * an error is thrown.
+   *
+   * @param {Object} obj - An object with the options for the request.
+   * @param {string} obj.registerUsageUrl Url to call to register media usage.
+   * @return {Promise<undefined>} The response from the API.
+   */
+  async registerUsage({ registerUsageUrl }) {
+    validateRegisterUsageUrl(registerUsageUrl);
 
-    const response = await window.fetch(url);
+    // eslint-disable-next-line no-return-await
+    return await this.fetchUrl({
+      url: new URL(registerUsageUrl),
+      method: 'POST',
+    }).then(() => undefined);
+  }
 
+  /**
+   * Perform an HTTP request for the given params.
+   *
+   * @param {Object} obj - An object with the options for the request.
+   * @param {Paths} obj.path Url to be called.
+   * @param {URLSearchParams} obj.params Url to be called.
+   * @param {?string} obj.method A string to set request's method.
+   * @return {Promise<Object>} The response from the API.
+   */
+  async fetchPath({ path, params, method }) {
+    const url = new URL(API_DOMAIN + path);
+    params.forEach((value, key) => {
+      url.searchParams.append(key, value);
+    });
+    // eslint-disable-next-line no-return-await
+    return await this.fetchUrl({ url, method });
+  }
+
+  /**
+   * Perform an HTTP request for the given params.
+   *
+   * @param {Object} obj - An object with the options for the request.
+   * @param {URL} obj.url Url to be called.
+   * @param {?string} obj.method A string to set request's method.
+   * @return {Promise<Object>} The response from the API.
+   */
+  async fetchUrl({ url, method }) {
+    url.searchParams.append('key', API_KEY);
+    const response = await window.fetch(url.href, {
+      method: method ?? 'GET',
+    });
     if (!response.ok) {
       throw new Error(
         'Obtained an error from the ' +
-          path +
+          url.pathname +
           ' call, statusCode: ' +
           response.status +
           ', statusText: ' +
           response.statusText
       );
     }
-
     return response.json();
   }
 }

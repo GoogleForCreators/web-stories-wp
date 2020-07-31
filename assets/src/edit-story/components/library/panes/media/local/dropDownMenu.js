@@ -112,6 +112,7 @@ function DropDownMenu({
               width="28"
               height="28"
               onClick={onMenuOpen}
+              aria-label={__('More', 'web-stories')}
               aria-pressed={isMenuOpen}
               aria-haspopup={true}
               aria-expanded={isMenuOpen}

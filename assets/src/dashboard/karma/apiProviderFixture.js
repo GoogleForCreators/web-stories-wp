@@ -147,7 +147,7 @@ function fetchStories(
   const storiesState = { ...currentState } || getStoriesState();
   const statuses = status.split(',');
 
-  storiesState.storiesOrderById = [...formattedStoriesArray]
+  storiesState.storiesOrderById = Object.values(storiesState.stories)
     .filter(
       ({ status: storyStatus, title }) =>
         statuses.includes(storyStatus) && title.includes(searchTerm)
