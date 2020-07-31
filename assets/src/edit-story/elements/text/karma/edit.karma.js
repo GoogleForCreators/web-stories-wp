@@ -22,7 +22,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../../components/canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-describe('TextEdit integration', () => {
+fdescribe('TextEdit integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -82,7 +82,7 @@ describe('TextEdit integration', () => {
         await fixture.snapshot();
       });
 
-      it('should handle a commnad, exit and save', async () => {
+      it('should handle a command, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
 
         // Select all.
@@ -118,6 +118,58 @@ describe('TextEdit integration', () => {
         expect(frame.querySelector('p').innerHTML).toEqual(
           '<span style="font-weight: 700">hello world!</span>'
         );
+      });
+    });
+
+    describe('shortcuts', () => {
+      it('should enter/exit edit mode using the keyboard', async () => {
+        // Enter edit mode using the Enter key
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        await fixture.events.keyboard.press('Enter');
+        expect(
+          fixture.querySelector('[data-testid="textEditor"]')
+        ).toBeDefined();
+
+        // Exit edit mode using the Esc key
+        await fixture.events.keyboard.press('Esc');
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+      });
+    });
+  });
+
+  fdescribe('add a multiline text element', () => {
+    let element;
+    let frame;
+    const text = '\n\nThis is some test text.\n\nThis is more test text.\n\n';
+
+    beforeEach(async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      element = await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: text,
+          x: 40,
+          y: 40,
+          width: 250,
+        })
+      );
+
+      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
+    });
+
+    fit('should render initial content', () => {
+      expect(frame.textContent).toEqual(text);
+      debugger;
+    });
+
+    fdescribe('edit mode', () => {
+      let editor;
+      let editLayer;
+
+      beforeEach(async () => {
+        await fixture.events.click(frame);
+        editor = fixture.querySelector('[data-testid="textEditor"]');
+        editLayer = fixture.querySelector('[data-testid="editLayer"]');
       });
     });
 
