@@ -128,7 +128,7 @@ function useCanvasKeys(ref) {
       const elementIds = currentPage.elements.map(({ id }) => id);
       setSelectedElementsById({ elementIds });
     },
-    [clearSelection, currentPage, setSelectedElementsById]
+    [currentPage, setSelectedElementsById]
   );
 
   // Position (x/y) key handler.
