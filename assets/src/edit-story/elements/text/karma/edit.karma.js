@@ -22,7 +22,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../../components/canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-fdescribe('TextEdit integration', () => {
+describe('TextEdit integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -82,7 +82,7 @@ fdescribe('TextEdit integration', () => {
         await fixture.snapshot();
       });
 
-      it('should handle a command, exit and save', async () => {
+      it('should handle a commnad, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
 
         // Select all.
@@ -133,48 +133,6 @@ fdescribe('TextEdit integration', () => {
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
-      });
-    });
-  });
-
-  fdescribe('add a multiline text element', () => {
-    let element;
-    let frame;
-    const textWithMultipleLinebreaks =
-      '\n\nThis is some test text.\n\nThis is more test text.\n\n';
-
-    beforeEach(async () => {
-      const insertElement = await fixture.renderHook(() => useInsertElement());
-
-      element = await fixture.act(() =>
-        insertElement('text', {
-          font: TEXT_ELEMENT_DEFAULT_FONT,
-          content: textWithMultipleLinebreaks,
-          x: 40,
-          y: 40,
-          width: 400,
-        })
-      );
-
-      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-    });
-
-    it('should render initial content', () => {
-      expect(frame.textContent).toEqual(textWithMultipleLinebreaks);
-    });
-
-    fdescribe('edit mode', () => {
-      let editor;
-      let editLayer;
-
-      beforeEach(async () => {
-        // await fixture.events.click(frame);
-        // editor = fixture.querySelector('[data-testid="textEditor"]');
-        // editLayer = fixture.querySelector('[data-testid="editLayer"]');
-      });
-
-      it('wip', () => {
-        debugger;
       });
     });
   });

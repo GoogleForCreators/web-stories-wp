@@ -37,10 +37,29 @@ function customInlineFn(element, { Style }) {
   return Style(styleStrings);
 }
 
+// RegExp explanation for /(?<!.+\n*)\n|(?<=.+\n)\n+/g
+// Match any new lines that have no characters preceding it with the exception of a newline
+// OR match any new line that proceeds characters and a single new line
+//
+// (?<!.+\n*)\n
+// Negative lookbehind to match any new lines that DON'T have characters
+// and 0 or more new lines preceeding it. This covers new lines that come before
+// any text and should all be converted to <br /> tags
+//
+// (?<=.+\n)\n+
+// Positive lookbehind to match any new lines that come after characters and a single new line
+// This covers empty lines that should be placed between text.
+
+const re = new RegExp(/(?<!.+\n*)\n|(?<=.+\n)\n+/g);
+
 function importHTML(html = '') {
+  const separator = `__${Date.now()}__`;
+
   const htmlWithBreaks = html
-    .split('\n')
-    .map((s) => `<p>${getValidHTML(s === '' ? '<br />' : s)}</p>`)
+    .replace(re, `${separator}<br />${separator}`)
+    .split(separator)
+    .filter(Boolean)
+    .map((s) => `<p>${getValidHTML(s)}</p>`)
     .join('');
 
   return stateFromHTML(htmlWithBreaks, { customInlineFn });
