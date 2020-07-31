@@ -49,7 +49,6 @@ function exportHTML(editorState) {
     inlineStyleFn,
     defaultBlockTag: null,
   });
-  // debugger;
 
   return html.replace(/<br ?\/?>/g, '').replace(/&nbsp;$/, '');
 }
