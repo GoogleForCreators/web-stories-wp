@@ -22,7 +22,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../app';
 import { LayerPanel } from '../../panels';
+import { STORY_ANIMATION_STATE } from '../../../../dashboard/constants';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
@@ -40,9 +42,15 @@ const TopPanels = styled.div`
 const BottomPanels = styled.div``;
 
 function DesignInspector() {
+  const resetStoryAnimationState = useStory(({ actions }) => () =>
+    actions.updateAnimationState({
+      animationState: STORY_ANIMATION_STATE.RESET,
+    })
+  );
+
   return (
     <Wrapper>
-      <TopPanels>
+      <TopPanels onFocus={resetStoryAnimationState}>
         <DesignPanels />
       </TopPanels>
       <BottomPanels>
