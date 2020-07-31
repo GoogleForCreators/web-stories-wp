@@ -50,7 +50,9 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
       emoji = '🛴';
     }
 
-    return `${emoji} **${(percentage * 100).toFixed(2)}%** *(${completed.length} / ${total.length})*`;
+    return `${emoji} **${(percentage * 100).toFixed(2)}%** *(${
+      completed.length
+    } / ${total.length})*`;
   };
 
   this.onSpecComplete = function (browser, result) {
@@ -62,11 +64,11 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
         return;
       }
 
-      const [_, cuj, actions] = suiteName.split(/: ?/);
+      const [cuj, actions] = suiteName.split(/: ?/).slice(1);
       const actionList = actions.split(/, ?/);
       cujResults.push([cuj, '_TOTAL_', !incomplete]);
-      actionList.forEach(
-        (action) => cujResults.push([cuj, action, !incomplete])
+      actionList.forEach((action) =>
+        cujResults.push([cuj, action, !incomplete])
       );
     });
   };
@@ -79,9 +81,11 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
     cujResults.sort();
 
     let tableContents = cujResults.reduce((acc, [cuj, action]) => {
-      const actionName = action === '_TOTAL_' ? '*\[total\]*' : action;
+      const actionName = action === '_TOTAL_' ? '*[total]*' : action;
 
-      if (!acc.find(([_cuj, _action]) => _cuj === cuj && _action === actionName)) {
+      if (
+        !acc.find(([_cuj, _action]) => _cuj === cuj && _action === actionName)
+      ) {
         acc.push([cuj, actionName, getCompletion(cuj, action)]);
       }
 

@@ -91,6 +91,13 @@ const Input = styled.input.attrs({
  * When using the mouse, only `minorStep` is considered and this is the resolution the
  * range has.
  *
+ * @param {Object} props Properties
+ * @param {number} props.value Current value
+ * @param {Function} props.handleChange Callback when updated
+ * @param {number} props.majorStep Major step as described
+ * @param {number} props.minorStep Minor step as described
+ * @param {number} props.min Minimum value
+ * @param {number} props.max Maximum value
  * @return {Node} Range input component
  */
 function RangeInput({
