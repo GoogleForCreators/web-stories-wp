@@ -20,7 +20,7 @@
 import { AnimationPulse } from '../../parts/pulse';
 
 export function EffectPulse({
-  pulseCount = 4,
+  iterations = 4,
   scale = 0.5,
   duration = 400,
   delay,
@@ -31,6 +31,6 @@ export function EffectPulse({
     duration,
     delay,
     easing,
-    iterations: pulseCount,
+    iterations,
   });
 }

@@ -29,13 +29,13 @@ const animations = [
   {
     targets: ['e1'],
     type: ANIMATION_TYPES.PULSE,
+    iterations: 2,
     delay: 500,
   },
   {
     targets: ['e2'],
     type: ANIMATION_TYPES.PULSE,
-    pulseCount: 4,
-    duration: 2000,
+    iterations: 4,
   },
 ];
 
