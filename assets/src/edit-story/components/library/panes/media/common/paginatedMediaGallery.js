@@ -37,6 +37,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import MediaGallery from '../common/mediaGallery';
 import {
   MediaGalleryContainer,
@@ -61,7 +62,7 @@ const AttributionPill = styled.div`
   flex-wrap: nowrap;
   font-size: 12px;
   color: ${theme.colors.fg.v1};
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: ${rgba(theme.colors.bg.v0, 0.7)};
   cursor: pointer;
 `;
 
