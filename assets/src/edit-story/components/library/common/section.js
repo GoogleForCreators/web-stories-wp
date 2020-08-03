@@ -41,7 +41,7 @@ const TitleAndTools = styled.div`
 
 const Title = styled.h2`
   flex: 1 1 auto;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   margin: 0;
   font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};

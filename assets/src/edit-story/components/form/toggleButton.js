@@ -54,7 +54,7 @@ const Container = styled.div`
 `;
 
 const Label = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -74,7 +74,7 @@ const ContainerLabel = styled.label`
   border-radius: 4px;
 
   ${({ value, theme }) =>
-    value && `background-color: ${rgba(theme.colors.fg.v1, 0.1)};`}
+    value && `background-color: ${rgba(theme.colors.fg.white, 0.1)};`}
 
   ${({ disabled }) =>
     disabled &&

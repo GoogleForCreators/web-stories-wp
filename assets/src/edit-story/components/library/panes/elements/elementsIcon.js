@@ -18,20 +18,13 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 /**
  * Internal dependencies
  */
-import { Tab } from '../../shared';
-import { Media } from '../../../../../icons';
-import paneId from './paneId';
+import { ReactComponent as ElementsTabIcon } from './elements.svg';
 
-function Media3pTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <Media aria-label={__('Third Party Media library', 'web-stories')} />
-    </Tab>
-  );
+function ElementsIcon() {
+  return <ElementsTabIcon aria-label={__('Elements library', 'web-stories')} />;
 }
 
-export default Media3pTab;
+export default ElementsIcon;

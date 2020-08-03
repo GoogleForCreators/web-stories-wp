@@ -28,8 +28,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useEscapeToBlurEffect } from '../keyboard';
+import TabView from '../tabview';
 import useInspector from './useInspector';
-import InspectorTabs from './inspectorTabs';
 import InspectorContent from './inspectorContent';
 
 const Layout = styled.section.attrs({
@@ -38,32 +38,34 @@ const Layout = styled.section.attrs({
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.bg.panel};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
-const TabsArea = styled.div``;
-
-const InspectorBackground = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v4};
+const InspectorContainer = styled.div`
   height: 100%;
   padding: 0;
-  color: ${({ theme }) => theme.colors.fg.v1};
   overflow: auto;
 `;
 
 function InspectorLayout() {
   const {
-    actions: { setInspectorContentNode },
+    state: { initialTab },
+    actions: { setInspectorContentNode, setTab },
     refs: { inspector },
+    data: { tabs },
   } = useInspector();
   useEscapeToBlurEffect(inspector);
   return (
     <Layout ref={inspector}>
-      <TabsArea>
-        <InspectorTabs />
-      </TabsArea>
-      <InspectorBackground ref={setInspectorContentNode}>
+      <TabView
+        tabs={tabs}
+        initialTab={initialTab}
+        onTabChange={(id) => setTab(id)}
+      />
+      <InspectorContainer ref={setInspectorContentNode}>
         <InspectorContent />
-      </InspectorBackground>
+      </InspectorContainer>
     </Layout>
   );
 }

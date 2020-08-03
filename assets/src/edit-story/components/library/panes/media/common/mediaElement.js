@@ -37,6 +37,7 @@ const styledTiles = css`
   cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
   margin-bottom: 10px;
+  border-radius: 4px;
 `;
 
 const Image = styled.img`
@@ -57,7 +58,7 @@ const Duration = styled.div`
   position: absolute;
   bottom: 12px;
   left: 10px;
-  background: ${({ theme }) => rgba(theme.colors.bg.v1, 0.6)};
+  background: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.6)};
   font-family: ${({ theme }) => theme.fonts.duration.family};
   font-size: ${({ theme }) => theme.fonts.duration.size};
   line-height: ${({ theme }) => theme.fonts.duration.lineHeight};

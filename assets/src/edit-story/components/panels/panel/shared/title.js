@@ -43,10 +43,10 @@ import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
   if (isPrimary) {
-    return rgba(theme.colors.bg.v0, 0.07);
+    return rgba(theme.colors.bg.black, 0.07);
   }
   if (isSecondary) {
-    return rgba(theme.colors.fg.v1, 0.07);
+    return rgba(theme.colors.fg.white, 0.07);
   }
   return 'transparent';
 }
@@ -57,7 +57,7 @@ const Header = styled.h2`
   border: 0 solid ${({ theme }) => theme.colors.bg.v9};
   border-top-width: ${({ isPrimary, isSecondary }) =>
     isPrimary || isSecondary ? 0 : '1px'};
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;

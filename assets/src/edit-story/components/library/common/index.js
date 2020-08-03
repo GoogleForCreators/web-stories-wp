@@ -26,7 +26,7 @@ export { default as SearchInput } from './searchInput';
 export { default as Section } from './section';
 
 export const Title = styled.h3`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   margin: 0;
   font-size: 19px;
   line-height: 1.4;

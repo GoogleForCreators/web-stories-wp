@@ -17,38 +17,45 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Panel, PanelContent } from './panel';
+import TabView from '../';
 
-const Note = styled.p`
-  font-style: italic;
+const TabContent = styled.div`
   color: ${({ theme }) => theme.colors.fg.white};
-  opacity: 0.86;
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  margin: 50px 0;
-  text-align: center;
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  padding: 16px;
 `;
 
-function NoSelectionPanel() {
-  return (
-    <Panel name="noselection">
-      <PanelContent hasBorder>
-        <Note>{__('Nothing selected', 'web-stories')}</Note>
-      </PanelContent>
-    </Panel>
-  );
-}
+export default {
+  title: 'Stories Editor/Components/TabView',
+  component: TabView,
+};
 
-export default NoSelectionPanel;
+export const _default = () => {
+  const [tab, setTab] = useState('design');
+  const tabs = [
+    { id: 'design', title: 'Design' },
+    { id: 'document', title: 'Document' },
+    { id: 'pre-publish', title: 'Pre-publish' },
+  ];
+
+  return (
+    <>
+      <TabView onTabChange={(id) => setTab(id)} tabs={tabs} />
+      <TabContent>{`Tab content: ${
+        tabs.find(({ id }) => id === tab).title
+      }`}</TabContent>
+    </>
+  );
+};
+
+_default.parameters = {
+  backgrounds: {
+    default: 'Dark',
+  },
+};

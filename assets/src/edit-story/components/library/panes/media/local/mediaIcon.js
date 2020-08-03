@@ -18,19 +18,14 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
-import { Tab } from '../shared';
-import paneId from './paneId';
-import { ReactComponent as ElementsIcon } from './elements.svg';
+import { Upload } from '../../../../../icons';
 
-function ElementsTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <ElementsIcon aria-label={__('Elements library', 'web-stories')} />
-    </Tab>
-  );
+function MediaIcon() {
+  return <Upload aria-label={__('Media library', 'web-stories')} />;
 }
 
-export default ElementsTab;
+export default MediaIcon;

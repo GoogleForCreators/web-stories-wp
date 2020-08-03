@@ -40,7 +40,7 @@ const ListContainer = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`
@@ -50,9 +50,9 @@ const List = styled.ul.attrs({ role: 'listbox' })`
   font-size: 14px;
   text-align: left;
   list-style: none;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
   background-clip: padding-box;
-  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.v0, 0.175)};
+  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.black, 0.175)};
 `;
 
 const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`

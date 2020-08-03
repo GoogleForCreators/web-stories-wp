@@ -42,7 +42,7 @@ import useColor from './useColor';
 const Container = styled.div`
   border-radius: 6px;
   background: ${({ theme }) => theme.colors.bg.v8};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   width: 240px;
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-style: normal;

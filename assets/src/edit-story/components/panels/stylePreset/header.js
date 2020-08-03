@@ -38,7 +38,7 @@ const buttonCSS = css`
   background: transparent;
   width: 30px;
   height: 28px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
   cursor: pointer;
   padding: 0;
 `;
@@ -53,7 +53,7 @@ const AddColorPresetButton = styled.button`
 
 const ExitEditMode = styled.button`
   ${buttonCSS}
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-size: 12px;
   line-height: 14px;
   padding: 7px;
