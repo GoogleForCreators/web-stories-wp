@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import commonReducer, {
+import paginationReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
 } from '../pagination/reducer';
 
@@ -45,7 +45,7 @@ const INITIAL_STATE = {
  */
 function providerReducer(state = INITIAL_STATE, { type, payload }) {
   return {
-    ...commonReducer(state, { type, payload }),
+    ...paginationReducer(state, { type, payload }),
     categories: categoriesReducer(state.categories, { type, payload }),
   };
 }

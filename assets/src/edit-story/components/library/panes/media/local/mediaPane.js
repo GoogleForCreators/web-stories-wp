@@ -48,7 +48,7 @@ import {
   StyledPane,
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
-import { ProviderType } from '../common/providerType';
+import { ProviderType } from '../../../../../app/media/providerType';
 import Flags from '../../../../../flags';
 import paneId from './paneId';
 

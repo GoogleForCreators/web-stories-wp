@@ -26,9 +26,10 @@ import { useEffect } from 'react';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { ProviderType } from '../../../components/library/panes/media/common/providerType';
+import { ProviderType } from '../providerType';
 import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
+import { Providers } from './providerConfiguration';
 
 function getFetchCategoriesErrorMessage(provider) {
   if (provider === ProviderType.UNSPLASH) {
@@ -62,7 +63,10 @@ export default function useFetchCategoriesEffect({
       }
     }
 
-    if (provider === selectedProvider) {
+    if (
+      provider === selectedProvider &&
+      Providers[provider].supportsCategories
+    ) {
       fetch();
     }
   }, [

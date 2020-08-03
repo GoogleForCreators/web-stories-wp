@@ -30,7 +30,7 @@ import { useFeature } from 'flagged';
 import { useDropTargets } from '../../../../../app';
 import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
-import { ProviderType } from '../common/providerType';
+import { ProviderType } from '../../../../../app/media/providerType';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';

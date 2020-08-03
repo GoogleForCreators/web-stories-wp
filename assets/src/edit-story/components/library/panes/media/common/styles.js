@@ -25,26 +25,21 @@ import { Pane } from '../../shared';
 
 export const PaneInner = styled.div`
   height: 100%;
-  display: grid;
-  grid:
-    'header' auto
-    'infinitescroll' 1fr
-    / 1fr;
+  display: flex;
+  flex-direction: column;
 `;
 export const PaneHeader = styled.div`
-  grid-area: header;
   padding-top: 24px;
+  flex: 0 1 auto;
 `;
 
 export const MediaGalleryContainer = styled.div`
-  display: grid;
-  grid-area: infinitescroll;
   overflow: auto;
-  grid-template-columns: 1fr;
   padding: 0 24px;
   margin-top: 1em;
   position: relative;
   width: 100%;
+  flex: 0 1 auto;
 `;
 
 // 312px is the width of the gallery minus the 24px paddings.

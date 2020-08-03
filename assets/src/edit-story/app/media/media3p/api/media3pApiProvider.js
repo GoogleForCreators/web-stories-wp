@@ -23,17 +23,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import getResourceFromMedia3p from '../../utils/getResourceFromMedia3p';
+import { ProviderType } from '../../providerType';
 import apiFetcher from './apiFetcher';
 import Context from './context';
-
-/**
- * The supported providers.
- *
- * @enum {string}
- */
-const Providers = {
-  UNSPLASH: 'unsplash',
-};
 
 /** @typedef {import('react').ProviderProps} ProviderProps */
 
@@ -67,9 +59,20 @@ function Media3pApiProvider({ children }) {
     selectedCategoryId,
     mediaType,
   }) {
-    if (provider.toLowerCase() !== Providers.UNSPLASH) {
+    if (
+      provider !== ProviderType.UNSPLASH &&
+      provider !== ProviderType.COVERR
+    ) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
+
+    // Temporary hack alert!: Convert coverr to unsplash for testing until
+    // Coverr backend is implemented.
+    if (provider === ProviderType.COVERR) {
+      provider = ProviderType.UNSPLASH;
+      searchTerm = 'dinosaur';
+    }
+
     if (selectedCategoryId && searchTerm) {
       throw new Error(
         `searchTerm and selectedCategoryId are mutually exclusive.`

@@ -25,14 +25,12 @@ import { shallowEqual } from 'react-pure-render';
 import { INITIAL_STATE as INITIAL_STATE_ACTION } from '../types';
 import * as types from './types';
 import providerReducer from './providerReducer.js';
+import { Providers } from './providerConfiguration';
 
 const INITIAL_STATE = {
   selectedProvider: undefined,
   searchTerm: '',
 };
-
-// TODO(#2804): Use the configuration json to provide this list.
-const providers = ['unsplash'];
 
 /**
  * State reducer for all 3p media providers (Unsplash, Coverr etc).
@@ -48,7 +46,7 @@ const providers = ['unsplash'];
  */
 function reduceProviderStates(state, { type, payload }) {
   const result = { ...state };
-  for (const provider of providers) {
+  for (const provider of Object.keys(Providers)) {
     if (type == INITIAL_STATE_ACTION || provider == payload?.provider) {
       result[provider] = providerReducer(state[provider], { type, payload });
     }
@@ -81,7 +79,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         searchTerm: payload.searchTerm,
       };
       // Clear out the pageToken and nextPageToken for all providers.
-      for (const provider of providers) {
+      for (const provider of Object.keys(Providers)) {
         resultState[provider].pageToken = undefined;
         resultState[provider].nextPageToken = undefined;
       }

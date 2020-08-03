@@ -18,17 +18,14 @@
  * Internal dependencies
  */
 import useProviderContextValueProvider from './useProviderContextValueProvider';
-
-// TODO(https://github.com/google/web-stories-wp/issues/2804):
-// Use provider configuration json fragment.
-const providers = ['unsplash'];
+import { Providers } from './providerConfiguration';
 
 function useProviderSetContextValueProvider(reducerState, reducerActions) {
   const result = {};
 
   // The 'providers' list is a constant, and so hooks are still called in the
   // same order during a re-render as per rules-of-hooks.
-  for (const provider of providers) {
+  for (const provider of Object.keys(Providers)) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     result[provider] = useProviderContextValueProvider(
       provider,

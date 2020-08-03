@@ -27,12 +27,14 @@ import { useEffect } from 'react';
  */
 import { __ } from '@wordpress/i18n';
 import { useSnackbar } from '../../snackbar';
-import { ProviderType } from '../../../components/library/panes/media/common/providerType';
+import { ProviderType } from '../providerType';
 import { useMedia3pApi } from './api';
 
 function getFetchMediaErrorMessage(provider) {
   if (provider === ProviderType.UNSPLASH) {
     return __('Error loading media from Unsplash', 'web-stories');
+  } else if (provider === ProviderType.COVERR) {
+    return __('Error loading media from Coverr', 'web-stories');
   } else if (provider === ProviderType.LOCAL) {
     return __('Error loading media from Wordpress', 'web-stories');
   }
