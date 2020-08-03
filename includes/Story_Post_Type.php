@@ -170,6 +170,16 @@ class Story_Post_Type {
 	protected function get_request_post_type() {
 		if ( did_action( 'wp' ) && is_singular() ) {
 			return get_queried_object()->post_type;
+		} elseif (
+			is_admin()
+			&&
+			isset( $_GET['action'], $_GET['post'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			&&
+			'amp_validate' === $_GET['action'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			&&
+			'amp_validated_url' === get_post_type( $_GET['post'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		) {
+			return $this->get_validated_url_post_type( get_post( $_GET['post'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		} elseif ( is_admin() && function_exists( 'get_current_screen' ) && get_current_screen() ) {
 			$current_screen_post_type = get_current_screen()->post_type;
 			if ( 'amp_validated_url' === $current_screen_post_type && get_post() ) {
