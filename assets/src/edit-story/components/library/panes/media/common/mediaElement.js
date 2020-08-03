@@ -35,6 +35,7 @@ import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
 import useRovingTabIndex from './useRovingTabIndex';
+import Attribution from './attribution';
 
 const styledTiles = css`
   width: 100%;
@@ -261,6 +262,12 @@ const MediaElement = ({
     showVideoDetail,
     dropTargetsBindings,
   });
+  const attribution = active && resource.attribution?.author && (
+    <Attribution
+      author={resource.attribution.author.displayName}
+      url={resource.attribution.author.url}
+    />
+  );
 
   const ref = useRef();
 
@@ -302,6 +309,7 @@ const MediaElement = ({
       tabIndex={index === 0 ? 0 : -1}
     >
       {innerElement}
+      {attribution}
       {local && (
         <CSSTransition
           in
