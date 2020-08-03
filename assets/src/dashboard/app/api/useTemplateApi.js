@@ -318,7 +318,7 @@ const useTemplateApi = (dataAdapter, config) => {
         Math.random() * state.templatesOrderById.length
       );
       return state.templatesOrderById
-        .filter(({ id }) => id !== currentTemplateId) // filter out the active/current template
+        .filter((id) => id !== currentTemplateId) // filter out the active/current template
         .splice(randomStartingIndex, 5)
         .map((id) => {
           return state.templates[id];
