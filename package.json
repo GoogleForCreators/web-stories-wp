@@ -207,7 +207,7 @@
     "test:js:watch": "npm run test:js -- --watch",
     "test:karma": "npm-run-all --parallel test:karma:*",
     "test:karma:edit-story": "karma start karma-edit-story.config.cjs --single-run",
-    "test:karma:edit-story:watch": "karma start karma-edit-story.config.cjs --debug",
+    "test:karma:edit-story:watch": "karma start karma-edit-story.config.cjs",
     "test:karma:dashboard": "karma start karma-dashboard.config.cjs --single-run",
     "test:karma:dashboard:watch": "karma start karma-dashboard.config.cjs --debug",
     "test:php": "vendor/bin/phpunit",
