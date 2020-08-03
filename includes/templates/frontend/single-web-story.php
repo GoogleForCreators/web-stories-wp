@@ -33,5 +33,7 @@ $current_post = get_post();
 if ( $current_post instanceof WP_Post ) {
 	echo '<!DOCTYPE html>';
 	$renderer = new Story_Renderer( $current_post );
-	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	$rendered = $renderer->render();
+	$rendered = str_replace( ' standalone="standalone"', ' standalone', $rendered ); // @todo Remove! Temporary workaround for AMP plugin validation issue.
+	echo $rendered; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
