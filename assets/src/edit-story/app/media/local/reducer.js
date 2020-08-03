@@ -19,10 +19,10 @@
 /**
  * Internal dependencies
  */
-import * as commonTypes from '../common/types';
+import * as commonTypes from '../pagination/types';
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
-} from '../common/reducer';
+} from '../pagination/reducer';
 import * as types from './types';
 
 const INITIAL_STATE = {

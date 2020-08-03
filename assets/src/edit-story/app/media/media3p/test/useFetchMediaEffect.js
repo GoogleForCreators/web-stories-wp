@@ -25,13 +25,20 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useFetchMediaEffect from '../useFetchMediaEffect';
 
 const mockListMedia = jest.fn();
+const mockListCategoryMedia = jest.fn();
 
 jest.mock('../api', () => ({
   useMedia3pApi: () => ({
     actions: {
       listMedia: mockListMedia,
+      listCategoryMedia: mockListCategoryMedia,
     },
   }),
+}));
+
+const mockShowSnackbar = jest.fn();
+jest.mock('../../../snackbar', () => ({
+  useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
 }));
 
 describe('useFetchMediaEffect', () => {
@@ -44,15 +51,15 @@ describe('useFetchMediaEffect', () => {
     fetchMediaStart = jest.fn();
     fetchMediaSuccess = jest.fn();
     fetchMediaError = jest.fn();
+    mockShowSnackbar.mockReset();
   });
 
-  async function renderUseFetchMediaEffect(propertyOverrides) {
-    await act(() => {
+  function renderUseFetchMediaEffect(propertyOverrides) {
+    act(() => {
       renderHook(() => {
         useFetchMediaEffect({
           provider: 'unsplash',
           selectedProvider: 'unsplash',
-          searchTerm: 'cat',
           pageToken: 'pageToken',
           fetchMediaStart,
           fetchMediaSuccess,
@@ -63,26 +70,79 @@ describe('useFetchMediaEffect', () => {
     });
   }
 
-  it('should fetch media when the provider is set', async () => {
+  it('should fetch media when the provider is set and not search term', async () => {
     mockListMedia.mockImplementation(() =>
       Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
     );
 
     await renderUseFetchMediaEffect();
 
-    expect(fetchMediaStart.mock.calls).toHaveLength(1);
-    expect(fetchMediaStart.mock.calls[0][0]).toStrictEqual(
-      expect.objectContaining({ provider: 'unsplash', pageToken: 'pageToken' })
+    expect(fetchMediaStart).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      pageToken: 'pageToken',
+    });
+    expect(mockListMedia).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      searchTerm: undefined,
+      pageToken: 'pageToken',
+    });
+    expect(fetchMediaSuccess).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+      pageToken: 'pageToken',
+    });
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
+  });
+
+  it('should fetch media when the provider is set and search term', async () => {
+    mockListMedia.mockImplementation(() =>
+      Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
     );
 
-    expect(fetchMediaSuccess.mock.calls).toHaveLength(1);
-    expect(fetchMediaSuccess.mock.calls[0][0]).toStrictEqual(
-      expect.objectContaining({
-        provider: 'unsplash',
-        media: [{ id: 1 }],
-        nextPageToken: 'nextPageToken',
-      })
+    await renderUseFetchMediaEffect({ searchTerm: 'cat' });
+
+    expect(fetchMediaStart).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      pageToken: 'pageToken',
+    });
+    expect(mockListMedia).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      searchTerm: 'cat',
+      pageToken: 'pageToken',
+    });
+    expect(fetchMediaSuccess).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+      pageToken: 'pageToken',
+    });
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
+  });
+
+  it('should fetch media when the provider is set and category id', async () => {
+    mockListCategoryMedia.mockImplementation(() =>
+      Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
     );
+
+    await renderUseFetchMediaEffect({ selectedCategoryId: 'category/1' });
+
+    expect(fetchMediaStart).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      pageToken: 'pageToken',
+    });
+    expect(mockListCategoryMedia).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      selectedCategoryId: 'category/1',
+      pageToken: 'pageToken',
+    });
+    expect(fetchMediaSuccess).toHaveBeenCalledWith({
+      provider: 'unsplash',
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+      pageToken: 'pageToken',
+    });
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 
   it('should call fetchMediaError if the fetch has failed', async () => {
@@ -90,9 +150,10 @@ describe('useFetchMediaEffect', () => {
 
     await renderUseFetchMediaEffect();
 
-    expect(fetchMediaStart.mock.calls).toHaveLength(1);
-    expect(fetchMediaSuccess.mock.calls).toHaveLength(0);
-    expect(fetchMediaError.mock.calls).toHaveLength(1);
+    expect(fetchMediaStart).toHaveBeenCalledTimes(1);
+    expect(fetchMediaSuccess).not.toHaveBeenCalledWith();
+    expect(fetchMediaError).toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
   });
 
   it('should not fetch media if the provider is not the same as selected provider', async () => {
@@ -100,6 +161,9 @@ describe('useFetchMediaEffect', () => {
       provider: 'coverr',
       selectedProvider: 'unsplash',
     });
-    expect(fetchMediaStart.mock.calls).toHaveLength(0);
+    expect(fetchMediaStart).not.toHaveBeenCalledTimes(1);
+    expect(fetchMediaSuccess).not.toHaveBeenCalledTimes(1);
+    expect(fetchMediaError).not.toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).not.toHaveBeenCalledTimes(1);
   });
 });

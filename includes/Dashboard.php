@@ -124,7 +124,7 @@ class Dashboard {
 		$preload_paths = [
 			'/web-stories/v1/fonts',
 			'/wp/v2/settings',
-			'/wp/v2/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2future&_web_stories_envelope=true',
+			'/web-stories/v1/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
 		];
 
 		/**
@@ -224,6 +224,12 @@ class Dashboard {
 			)
 		);
 
+		// Media settings.
+		$max_upload_size = wp_max_upload_size();
+		if ( ! $max_upload_size ) {
+			$max_upload_size = 0;
+		}
+
 		$settings = [
 			'id'     => 'web-stories-dashboard',
 			'config' => [
@@ -235,13 +241,16 @@ class Dashboard {
 				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'version'      => WEBSTORIES_VERSION,
 				'api'          => [
-					'stories'   => sprintf( '/wp/v2/%s', $rest_base ),
+					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'     => '/web-stories/v1/media',
 					'users'     => '/wp/v2/users',
 					'fonts'     => '/web-stories/v1/fonts',
-					'templates' => '/wp/v2/web-story-template',
+					'templates' => '/web-stories/v1/web-story-template',
 				],
+				'maxUpload'    => $max_upload_size,
 				'capabilities' => [
 					'canManageSettings' => current_user_can( 'manage_options' ),
+					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
 			],
 			'flags'  => [
@@ -280,6 +289,13 @@ class Dashboard {
 				 * Creation date: 2020-06-11
 				 */
 				'enableBookmarkActions'           => false,
+				/**
+				 * Description: Enables template preview functionality.
+				 * Author: @brittanyirl
+				 * Issue: 3390
+				 * Creation date: 2020-07-23
+				 */
+				'enableTemplatePreviews'          => false,
 			],
 		];
 

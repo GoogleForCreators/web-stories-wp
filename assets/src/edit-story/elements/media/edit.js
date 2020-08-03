@@ -28,10 +28,10 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
-import EditCropMovable from './editCropMovable';
+import EditCropMoveable from './editCropMoveable';
 import { mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
-import EditPanMovable from './editPanMovable';
+import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { CropBox, MEDIA_MASK_OPACITY } from './';
 
@@ -159,7 +159,7 @@ function MediaEdit({ element, box }) {
       </CropBox>
 
       {fullMedia && croppedMedia && (
-        <EditPanMovable
+        <EditPanMoveable
           setProperties={setProperties}
           fullMedia={fullMedia}
           croppedMedia={croppedMedia}
@@ -177,7 +177,7 @@ function MediaEdit({ element, box }) {
       )}
 
       {!isBackground && cropBox && croppedMedia && (
-        <EditCropMovable
+        <EditCropMoveable
           setProperties={setProperties}
           cropBox={cropBox}
           croppedMedia={croppedMedia}

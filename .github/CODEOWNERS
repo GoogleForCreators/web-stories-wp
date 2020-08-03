@@ -64,9 +64,9 @@ CONTRIBUTING.md                                                   @swissspidy
 #assets/src/edit-story/elements/image/                             @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
 #assets/src/edit-story/elements/video/                             @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
 
-## Movable
-#assets/src/edit-story/components/movable/                         @miina
-#assets/src/edit-story/elements/image/editCropMovable.js           @miina
-#assets/src/edit-story/elements/shared/editPanMovable.js           @miina
-#assets/src/edit-story/components/canvas/singleSelectionMovable.js @miina
-#assets/src/edit-story/components/canvas/multiSelectionMovable.js  @miina
+## Moveable
+#assets/src/edit-story/components/moveable/                         @miina
+#assets/src/edit-story/elements/image/editCropMoveable.js           @miina
+#assets/src/edit-story/elements/shared/editPanMoveable.js           @miina
+#assets/src/edit-story/components/canvas/singleSelectionMoveable.js @miina
+#assets/src/edit-story/components/canvas/multiSelectionMoveable.js  @miina

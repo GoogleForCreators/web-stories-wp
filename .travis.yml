@@ -33,7 +33,7 @@ cache:
 
 branches:
   only:
-    - master
+    - main
 
 env:
   global:
@@ -53,7 +53,7 @@ deploy:
     edge: true
     script: bin/deploy-to-test-environment.sh
     on:
-      branch: master
+      branch: main
 
 addons:
   ssh_known_hosts: codeserver.dev.6b7f1eeb-705b-4201-864d-2007030c8372.drush.in:2222

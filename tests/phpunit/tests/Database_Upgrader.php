@@ -217,4 +217,19 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		);
 		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
+
+	public function test_update_publisher_logos() {
+		$object = new \Google\Web_Stories\Database_Upgrader();
+
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS, [ 'active' => 123 ] );
+
+		$this->call_private_method( $object, 'update_publisher_logos' );
+
+		$all_publisher_logos   = get_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS );
+		$active_publisher_logo = (int) get_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+
+		$this->assertEqualSets( [ 123 ], $all_publisher_logos );
+		$this->assertSame( 123, $active_publisher_logo );
+	}
+
 }

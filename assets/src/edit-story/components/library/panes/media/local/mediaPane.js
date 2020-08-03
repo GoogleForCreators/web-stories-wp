@@ -303,6 +303,7 @@ function MediaPane(props) {
           .filter((_, index) => isEven(index))
           .map((resource, i) => (
             <MediaElement
+              index={i}
               resource={resource}
               key={i}
               width={PREVIEW_SIZE}
@@ -315,6 +316,7 @@ function MediaPane(props) {
           .filter((_, index) => !isEven(index))
           .map((resource, i) => (
             <MediaElement
+              index={i}
               resource={resource}
               key={i}
               width={PREVIEW_SIZE}

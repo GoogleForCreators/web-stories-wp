@@ -40,9 +40,11 @@ import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import StoryPropTypes from '../../../../../types';
 import { useConfig } from '../../../../../app';
 
+const THUMBNAIL_WIDTH = 152;
+
 const styledMediaThumbnail = css`
   display: flex;
-  width: 152px;
+  width: ${THUMBNAIL_WIDTH}px;
   margin-right: 28px;
 `;
 
@@ -187,7 +189,11 @@ function MediaEditDialog({ resource, onClose }) {
     >
       <DialogBody>
         {type === 'image' ? (
-          <Image src={getThumbnailUrl(resource)} alt={alt} loading={'lazy'} />
+          <Image
+            src={getThumbnailUrl(THUMBNAIL_WIDTH, resource)}
+            alt={alt}
+            loading={'lazy'}
+          />
         ) : (
           <Video key={src} poster={poster} preload="none" muted>
             <source src={src} type={mimeType} />
