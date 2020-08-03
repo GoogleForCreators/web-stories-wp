@@ -69,7 +69,7 @@
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.5.14",
     "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
+    "@babel/core": "^7.11.0",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-private-methods": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
