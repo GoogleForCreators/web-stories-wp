@@ -310,20 +310,16 @@ const useTemplateApi = (dataAdapter, config) => {
 
   const fetchRelatedTemplates = useCallback(
     (currentTemplateId) => {
-      if (!state.templates) {
+      if (!state.templates || !currentTemplateId) {
         return [];
       }
-      // this will return anywhere between 1 and 5 "related" templates
-      const randomStartingIndex = Math.floor(
-        Math.random() * state.templatesOrderById.length
-      );
 
-      return state.templatesOrderById
-        .filter((id) => String(id) !== String(currentTemplateId)) // filter out the active/current template
-        .splice(randomStartingIndex, 5)
-        .map((id) => {
-          return state.templates[id];
-        });
+      const shuffled = state.templatesOrderById
+        .filter((id) => id !== currentTemplateId)
+        .sort(() => 0.5 - Math.random());
+
+      // Return between 1 and 5 random templates
+      return shuffled.slice(0, Math.floor(Math.random() * 4) + 1);
     },
     [state.templatesOrderById, state.templates]
   );

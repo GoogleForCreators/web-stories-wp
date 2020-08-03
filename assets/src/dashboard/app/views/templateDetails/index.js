@@ -104,11 +104,14 @@ function TemplateDetails() {
   }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
 
   useEffect(() => {
-    if (!template) {
+    if (!template || !templateId) {
       return;
     }
+
+    const id = parseInt(templateId);
+
     setRelatedTemplates(
-      fetchRelatedTemplates(templateId).map((relatedTemplate) => ({
+      fetchRelatedTemplates(id).map((relatedTemplate) => ({
         ...relatedTemplate,
         centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
       }))
