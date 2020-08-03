@@ -22,7 +22,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../../components/canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-fdescribe('TextEdit integration', () => {
+describe('TextEdit integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -137,10 +137,10 @@ fdescribe('TextEdit integration', () => {
     });
   });
 
-  fdescribe('add a multiline text element', () => {
+  describe('add a multiline text element', () => {
     let element;
     let frame;
-    const text = '\n\nThis is some test text.\n\nThis is more test text.\n\n';
+    let text = '\n\nThis is some test text.\n\nThis is more test text.\n\n';
 
     beforeEach(async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
@@ -150,41 +150,55 @@ fdescribe('TextEdit integration', () => {
           content: text,
           x: 40,
           y: 40,
-          width: 250,
+          width: 300,
         })
       );
 
       frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
     });
 
-    fit('should render initial content', () => {
+    it('should render initial content', () => {
       expect(frame.textContent).toEqual(text);
-      debugger;
     });
 
-    fdescribe('edit mode', () => {
-      let editor;
-      let editLayer;
+    describe('edit mode', () => {
+      let textElement;
+      let initialHeight;
 
       beforeEach(async () => {
         await fixture.events.click(frame);
-        editor = fixture.querySelector('[data-testid="textEditor"]');
-        editLayer = fixture.querySelector('[data-testid="editLayer"]');
+        textElement = fixture.querySelector('[data-testid="textEditor"]');
+        initialHeight = textElement.getBoundingClientRect()?.height;
       });
-    });
 
-    describe('shortcuts', () => {
-      it('should enter/exit edit mode using the keyboard', async () => {
-        // Enter edit mode using the Enter key
-        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
-        await fixture.events.keyboard.press('Enter');
-        expect(
-          fixture.querySelector('[data-testid="textEditor"]')
-        ).toBeDefined();
+      it('should not change height when entering and exiting edit mode', async () => {
+        // Enter into editing the text
+        await fixture.events.click(frame);
+
+        expect(textElement.getBoundingClientRect().height).toEqual(
+          initialHeight
+        );
 
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
-        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        await fixture.events.keyboard.press('Esc');
+
+        const {
+          height: heightAfterExitingEditMode,
+        } = frame.getBoundingClientRect();
+
+        expect(initialHeight).toEqual(heightAfterExitingEditMode);
+
+        // Reenter edit mode
+        await fixture.events.click(frame);
+        await fixture.events.click(frame);
+        textElement = fixture.querySelector('[data-testid="textEditor"]');
+
+        const {
+          height: heightAfterReenteringEditMode,
+        } = textElement.getBoundingClientRect();
+
+        expect(heightAfterReenteringEditMode).toEqual(initialHeight);
       });
     });
   });
