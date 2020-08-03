@@ -308,20 +308,24 @@ const useTemplateApi = (dataAdapter, config) => {
     [dataAdapter, templateApi]
   );
 
-  const fetchRelatedTemplates = useCallback(() => {
-    if (!state.templates) {
-      return [];
-    }
-    // this will return anywhere between 1 and 5 "related" templates
-    const randomStartingIndex = Math.floor(
-      Math.random() * state.templatesOrderById.length
-    );
-    return [...state.templatesOrderById]
-      .splice(randomStartingIndex, 5)
-      .map((id) => {
-        return state.templates[id];
-      });
-  }, [state.templatesOrderById, state.templates]);
+  const fetchRelatedTemplates = useCallback(
+    (currentTemplateId) => {
+      if (!state.templates) {
+        return [];
+      }
+      // this will return anywhere between 1 and 5 "related" templates
+      const randomStartingIndex = Math.floor(
+        Math.random() * state.templatesOrderById.length
+      );
+      return state.templatesOrderById
+        .filter(({ id }) => id !== currentTemplateId) // filter out the active/current template
+        .splice(randomStartingIndex, 5)
+        .map((id) => {
+          return state.templates[id];
+        });
+    },
+    [state.templatesOrderById, state.templates]
+  );
 
   const api = useMemo(
     () => ({

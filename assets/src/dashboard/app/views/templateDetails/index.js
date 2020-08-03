@@ -108,7 +108,7 @@ function TemplateDetails() {
       return;
     }
     setRelatedTemplates(
-      fetchRelatedTemplates().map((relatedTemplate) => ({
+      fetchRelatedTemplates(templateId).map((relatedTemplate) => ({
         ...relatedTemplate,
         centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
       }))
@@ -118,7 +118,13 @@ function TemplateDetails() {
         (templateByOrderId) => templates[templateByOrderId]
       )
     );
-  }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
+  }, [
+    fetchRelatedTemplates,
+    template,
+    templates,
+    templatesOrderById,
+    templateId,
+  ]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
