@@ -180,6 +180,8 @@ function VideoControls({
     setHovering(isHovering);
     setShowControls(true);
     checkShowControls();
+    const videoNode = getVideoNode();
+    setIsPlaying(!videoNode.paused);
   }, 10);
 
   useEffect(() => {
