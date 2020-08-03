@@ -151,8 +151,16 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
+  const [showVideoDuration, setShowVideoDuration] = useState(false);
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useEffect(
+    () =>
+      setShowVideoDuration(
+        showVideoDetail && !(active && resource.attribution?.author)
+      ),
+    [active, resource.attribution, showVideoDetail]
+  );
 
   const {
     actions: { handleDrag, handleDrop, setDraggingResource },
@@ -251,9 +259,6 @@ const MediaElement = ({
     onInsert(resource, width, height);
   };
 
-  const showAttribution =
-    active && resource.attribution && resource.attribution.author;
-
   const innerElement = getInnerElement(type, {
     src,
     ref: mediaElement,
@@ -262,10 +267,15 @@ const MediaElement = ({
     width,
     height,
     onClick,
-    showVideoDetail: showVideoDetail && !showAttribution,
-    showAttribution,
+    showVideoDuration,
     dropTargetsBindings,
   });
+  const attribution = active && resource.attribution?.author && (
+    <Attribution
+      author={resource.attribution.author.displayName}
+      url={resource.attribution.author.url}
+    />
+  );
 
   const ref = useRef();
 
@@ -307,6 +317,7 @@ const MediaElement = ({
       tabIndex={index === 0 ? 0 : -1}
     >
       {innerElement}
+      {attribution}
       {local && (
         <CSSTransition
           in
@@ -341,8 +352,7 @@ function getInnerElement(
     width,
     height,
     onClick,
-    showVideoDetail,
-    showAttribution,
+    showVideoDuration,
     dropTargetsBindings,
   }
 ) {
@@ -351,27 +361,19 @@ function getInnerElement(
   };
   if (type === 'image') {
     return (
-      <>
-        <Image
-          key={src}
-          src={getThumbnailUrl(width, resource)}
-          ref={ref}
-          width={width}
-          height={height}
-          alt={alt}
-          aria-label={alt}
-          loading={'lazy'}
-          onClick={onClick}
-          onLoad={makeImageVisible}
-          {...dropTargetsBindings}
-        />
-        {showAttribution && (
-          <Attribution
-            author={resource.attribution.author.displayName}
-            url={resource.attribution.author.url}
-          />
-        )}
-      </>
+      <Image
+        key={src}
+        src={getThumbnailUrl(width, resource)}
+        ref={ref}
+        width={width}
+        height={height}
+        alt={alt}
+        aria-label={alt}
+        loading={'lazy'}
+        onClick={onClick}
+        onLoad={makeImageVisible}
+        {...dropTargetsBindings}
+      />
     );
   } else if (type === 'video') {
     const { lengthFormatted, poster, mimeType } = resource;
@@ -394,13 +396,7 @@ function getInnerElement(
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}
         <HiddenPosterImage src={poster} onLoad={makeImageVisible} />
-        {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
-        {showAttribution && (
-          <Attribution
-            author={resource.attribution.author.displayName}
-            url={resource.attribution.author.url}
-          />
-        )}
+        {showVideoDuration && <Duration>{lengthFormatted}</Duration>}
       </>
     );
   }

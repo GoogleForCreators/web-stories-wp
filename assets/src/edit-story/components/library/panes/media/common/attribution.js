@@ -20,14 +20,14 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
-const Container = styled.a`
+const Link = styled.a`
   display: block;
   position: absolute;
   left: 0;
   bottom: 0;
-  width: calc(100%);
+  width: 100%;
   padding: 8px;
   color: ${({ theme, active }) => rgba(theme.colors.fg.v1, active ? 1.0 : 0.6)};
   background-color: ${({ theme, active }) =>
@@ -37,7 +37,6 @@ const Container = styled.a`
   line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
   text-overflow: ellipsis;
-  word-break: break-word;
   overflow: hidden;
   white-space: nowrap;
   text-decoration: none;
@@ -45,11 +44,11 @@ const Container = styled.a`
 
 const Attribution = ({ author, url }) => {
   const [active, setActive] = useState(false);
-  const makeActive = useCallback(() => setActive(true), []);
-  const makeInactive = useCallback(() => setActive(false), []);
+  const makeActive = () => setActive(true);
+  const makeInactive = () => setActive(false);
 
   return (
-    <Container
+    <Link
       title={author}
       active={active}
       onPointerEnter={makeActive}
@@ -58,9 +57,10 @@ const Attribution = ({ author, url }) => {
       onBlur={makeInactive}
       href={url}
       target="_blank"
+      rel="noreferrer"
     >
       {author}
-    </Container>
+    </Link>
   );
 };
 
