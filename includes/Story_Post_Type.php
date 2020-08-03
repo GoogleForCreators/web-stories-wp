@@ -140,7 +140,6 @@ class Story_Post_Type {
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
 
-		add_filter( 'get_post_metadata', [ $this, 'filter_validated_environment_post_meta' ], 10, 5 );
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 
@@ -234,43 +233,6 @@ class Story_Post_Type {
 			$post_types = array_diff( $post_types, [ self::POST_TYPE_SLUG ] );
 		}
 		return array_values( $post_types );
-	}
-
-	/**
-	 * Filter postmeta to modify the validated_environment
-	 *
-	 * @param mixed  $value
-	 * @param int    $post_id
-	 * @param string $meta_key
-	 * @param bool   $single
-	 * @return mixed
-	 */
-	public function filter_validated_environment_post_meta( $value, $post_id, $meta_key, $single ) {
-		static $recursing = false;
-
-		$validated_environment_meta_key = '_amp_validated_environment';
-		if (
-			! $recursing
-			&&
-			$single
-			&&
-			$validated_environment_meta_key === $meta_key
-			&&
-			'amp_validated_url' === get_post_type( $post_id )
-			&&
-			self::POST_TYPE_SLUG === $this->get_validated_url_post_type( get_post( $post_id ) )
-		) {
-			$recursing = true;
-
-			$validated_environment = get_post_meta( $post_id, $validated_environment_meta_key, true );
-			if ( $validated_environment ) {
-				$validated_environment['options']['theme_support'] = 'standard';
-				return [ $validated_environment ];
-			}
-
-			$recursing = false;
-		}
-		return $value;
 	}
 
 	/**
