@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -67,6 +72,27 @@ describe('Autoplay video', () => {
     await fixture.events.mouse.up();
     const backgroundId = await getBackgroundElementId(fixture);
     const backgroundElVideo = fixture.querySelector(`#video-${backgroundId}`);
+    expect(backgroundElVideo.paused).toBe(false);
+
+    // Bug #2618 coverage
+    const backgroundEl = fixture.querySelector(
+      `[data-testid="safezone"] [data-element-id="${backgroundId}"]`
+    );
+    await fixture.events.mouse.seq(({ moveRel }) => [
+      moveRel(backgroundEl, '10%', '10%'),
+    ]);
+    await waitFor(() =>
+      fixture.screen.getByRole('button', { name: 'Click to pause' })
+    );
+    const pauseButton = fixture.screen.getByRole('button', {
+      name: 'Click to pause',
+    });
+    await fixture.events.click(pauseButton);
+    expect(backgroundElVideo.paused).toBe(true);
+    const playButton = fixture.screen.getByRole('button', {
+      name: 'Click to play',
+    });
+    await fixture.events.click(playButton);
     expect(backgroundElVideo.paused).toBe(false);
   });
 });

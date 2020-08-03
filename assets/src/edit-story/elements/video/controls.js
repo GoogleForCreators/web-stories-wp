@@ -214,7 +214,7 @@ function VideoControls({
     }
   };
 
-  const buttonTitle = isPlaying
+  const buttonLabel = isPlaying
     ? __('Click to pause', 'web-stories')
     : __('Click to play', 'web-stories');
   const TransitionWrapper = isPlayAbove
@@ -241,7 +241,7 @@ function VideoControls({
           timeout={100}
         >
           <ButtonWrapper
-            title={buttonTitle}
+            aria-label={buttonLabel}
             aria-pressed={isPlaying}
             key="wrapper"
             onMouseDown={handlePlayPause}
