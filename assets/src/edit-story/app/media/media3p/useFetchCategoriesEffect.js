@@ -41,6 +41,7 @@ function getFetchCategoriesErrorMessage(provider) {
 export default function useFetchCategoriesEffect({
   provider,
   selectedProvider,
+  categories,
   fetchCategoriesStart,
   fetchCategoriesSuccess,
   fetchCategoriesError,
@@ -55,8 +56,10 @@ export default function useFetchCategoriesEffect({
     async function fetch() {
       fetchCategoriesStart({ provider });
       try {
-        const { categories } = await listCategories({ provider });
-        fetchCategoriesSuccess({ provider, categories });
+        const { categories: newCategories } = await listCategories({
+          provider,
+        });
+        fetchCategoriesSuccess({ provider, categories: newCategories });
       } catch {
         fetchCategoriesError({ provider });
         showSnackbar({ message: getFetchCategoriesErrorMessage(provider) });
@@ -65,7 +68,8 @@ export default function useFetchCategoriesEffect({
 
     if (
       provider === selectedProvider &&
-      Providers[provider].supportsCategories
+      Providers[provider].supportsCategories &&
+      !categories?.length
     ) {
       fetch();
     }
@@ -73,6 +77,7 @@ export default function useFetchCategoriesEffect({
     showSnackbar,
     // Fetch categories is triggered by changes to these.
     selectedProvider,
+    categories,
     // These attributes never change.
     provider,
     listCategories,

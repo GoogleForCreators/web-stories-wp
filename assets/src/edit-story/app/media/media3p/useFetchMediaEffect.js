@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -28,6 +28,7 @@ import { useEffect, useRef } from 'react';
 import { __ } from '@wordpress/i18n';
 import { useSnackbar } from '../../snackbar';
 import { ProviderType } from '../providerType';
+import usePrevious from '../usePrevious';
 import { useMedia3pApi } from './api';
 
 function getFetchMediaErrorMessage(provider) {
@@ -39,14 +40,6 @@ function getFetchMediaErrorMessage(provider) {
     return __('Error loading media from Wordpress', 'web-stories');
   }
   return __('Error loading media', 'web-stories');
-}
-
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
 }
 
 export default function useFetchMediaEffect({
@@ -64,7 +57,11 @@ export default function useFetchMediaEffect({
     actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
 
-  const previousProps = usePrevious({ pageToken, searchTerm });
+  const previousProps = usePrevious({
+    pageToken,
+    searchTerm,
+    selectedCategoryId,
+  });
 
   const { showSnackbar } = useSnackbar();
 
@@ -105,7 +102,8 @@ export default function useFetchMediaEffect({
     const somethingChanged =
       previousProps &&
       (pageToken != previousProps.pageToken ||
-        searchTerm != previousProps.searchTerm);
+        searchTerm != previousProps.searchTerm ||
+        selectedCategoryId != previousProps.selectedCategoryId);
     const firstFetchOrSomethingChanged =
       (!pageToken && !nextPageToken) || somethingChanged;
 

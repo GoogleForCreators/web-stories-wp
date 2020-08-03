@@ -45,7 +45,7 @@ export default function useProviderContextValueProvider(
   const {
     pageToken,
     nextPageToken,
-    categories: { selectedCategoryId },
+    categories: { categories, selectedCategoryId },
   } = reducerState[provider];
   const {
     fetchMediaStart,
@@ -72,6 +72,7 @@ export default function useProviderContextValueProvider(
   useFetchCategoriesEffect({
     provider,
     selectedProvider,
+    categories,
     fetchCategoriesStart,
     fetchCategoriesSuccess,
     fetchCategoriesError,
