@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -41,12 +41,21 @@ function getFetchMediaErrorMessage(provider) {
   return __('Error loading media', 'web-stories');
 }
 
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
 export default function useFetchMediaEffect({
   provider,
   selectedProvider,
   searchTerm,
   selectedCategoryId,
   pageToken,
+  nextPageToken,
   fetchMediaStart,
   fetchMediaSuccess,
   fetchMediaError,
@@ -55,41 +64,62 @@ export default function useFetchMediaEffect({
     actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
 
+  const previousProps = usePrevious({ pageToken, searchTerm });
+
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     async function fetch() {
       fetchMediaStart({ provider, pageToken });
       try {
-        let media, nextPageToken;
+        let media, newNextPageToken;
         if (selectedCategoryId) {
-          ({ media, nextPageToken } = await listCategoryMedia({
-            provider,
-            selectedCategoryId,
-            pageToken,
-          }));
+          ({ media, nextPageToken: newNextPageToken } = await listCategoryMedia(
+            {
+              provider,
+              selectedCategoryId,
+              pageToken,
+            }
+          ));
         } else {
-          ({ media, nextPageToken } = await listMedia({
+          ({ media, nextPageToken: newNextPageToken } = await listMedia({
             provider,
             searchTerm,
             pageToken,
           }));
         }
-        fetchMediaSuccess({ provider, media, pageToken, nextPageToken });
+        fetchMediaSuccess({
+          provider,
+          media,
+          pageToken,
+          nextPageToken: newNextPageToken,
+        });
       } catch {
         fetchMediaError({ provider, pageToken });
         showSnackbar({ message: getFetchMediaErrorMessage(provider) });
       }
     }
 
-    if (provider === selectedProvider) {
+    // If we switched provider tab, and we already had loaded a page there, we
+    // don't load media again.
+    const somethingChanged =
+      previousProps &&
+      (pageToken != previousProps.pageToken ||
+        searchTerm != previousProps.searchTerm);
+    const firstFetchOrSomethingChanged =
+      (!pageToken && !nextPageToken) || somethingChanged;
+
+    if (provider === selectedProvider && firstFetchOrSomethingChanged) {
       fetch();
     }
+    // We don't want to depend on previousProps, see https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     showSnackbar,
     // Fetch media is triggered by changes to these.
     selectedProvider,
     pageToken,
+    nextPageToken,
     searchTerm,
     selectedCategoryId,
     // These attributes never change.

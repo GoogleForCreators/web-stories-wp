@@ -70,7 +70,7 @@ function Media3pApiProvider({ children }) {
     // Coverr backend is implemented.
     if (provider === ProviderType.COVERR) {
       provider = ProviderType.UNSPLASH;
-      searchTerm = 'dinosaur';
+      searchTerm = 'small ' + searchTerm;
     }
 
     if (selectedCategoryId && searchTerm) {
