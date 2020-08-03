@@ -151,16 +151,8 @@ const MediaElement = ({
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
-  const [showVideoDuration, setShowVideoDuration] = useState(false);
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  useEffect(
-    () =>
-      setShowVideoDuration(
-        showVideoDetail && !(active && resource.attribution?.author)
-      ),
-    [active, resource.attribution, showVideoDetail]
-  );
 
   const {
     actions: { handleDrag, handleDrop, setDraggingResource },
@@ -267,7 +259,7 @@ const MediaElement = ({
     width,
     height,
     onClick,
-    showVideoDuration,
+    showVideoDetail,
     dropTargetsBindings,
   });
   const attribution = active && resource.attribution?.author && (
@@ -352,7 +344,7 @@ function getInnerElement(
     width,
     height,
     onClick,
-    showVideoDuration,
+    showVideoDetail,
     dropTargetsBindings,
   }
 ) {
@@ -396,7 +388,7 @@ function getInnerElement(
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}
         <HiddenPosterImage src={poster} onLoad={makeImageVisible} />
-        {showVideoDuration && <Duration>{lengthFormatted}</Duration>}
+        {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
     );
   }
