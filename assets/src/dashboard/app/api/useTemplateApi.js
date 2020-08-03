@@ -314,13 +314,11 @@ const useTemplateApi = (dataAdapter, config) => {
         return [];
       }
 
-      const shuffled = state.templatesOrderById
-        .filter((id) => id !== currentTemplateId)
-        .sort(() => 0.5 - Math.random())
-        .map((id) => state.templates[id]);
-
-      // Return between 1 and 5 random templates
-      return shuffled.slice(0, Math.floor(Math.random() * 4) + 1);
+      return state.templatesOrderById
+        .filter((id) => id !== currentTemplateId) // Filter out the current/active template
+        .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids
+        .map((id) => state.templates[id]) // Map the ids to templates
+        .slice(0, Math.floor(Math.random() * 4) + 1); // Return between 1 and 5 templates
     },
     [state.templatesOrderById, state.templates]
   );
