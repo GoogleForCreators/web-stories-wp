@@ -140,6 +140,8 @@ class Story_Post_Type {
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
 
+		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
+		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
@@ -158,6 +160,79 @@ class Story_Post_Type {
 	 */
 	protected function get_post_type_icon() {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjMiIGhlaWdodD0iNTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOGg0djM5SDBWOHpNNTkgOGg0djM5aC00Vjh6TTUwIDBIMTN2NTVoMzdWMHoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvc3ZnPg==';
+	}
+
+	/**
+	 * Get the post type for the current request.
+	 *
+	 * @return string|null
+	 */
+	protected function get_request_post_type() {
+		if ( did_action( 'wp' ) && is_singular() ) {
+			return get_queried_object()->post_type;
+		} elseif ( is_admin() && function_exists( 'get_current_screen' ) && get_current_screen() ) {
+			$current_screen_post_type = get_current_screen()->post_type;
+			if ( 'amp_validated_url' === $current_screen_post_type && get_post() ) {
+				$validated_url_post_type = $this->get_validated_url_post_type( get_post() );
+				if ( $validated_url_post_type ) {
+					return $validated_url_post_type;
+				}
+			}
+			if ( $current_screen_post_type ) {
+				return $current_screen_post_type;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get the singular post type which is the queried object for the given validated URL post.
+	 *
+	 * @param WP_Post $post Validated URL Post Type.
+	 * @return string|null
+	 */
+	protected function get_validated_url_post_type( WP_Post $post ) {
+		if ( ! $post || 'amp_validated_url' !== get_post_type( $post ) ) {
+			return null;
+		}
+		$queried_object = get_post_meta( get_post( $post )->ID, '_amp_queried_object', true );
+		if ( isset( $queried_object['id'], $queried_object['type'] ) && 'post' === $queried_object['type'] ) {
+			return get_post_type( $queried_object['id'] );
+		}
+		return null;
+	}
+
+	/**
+	 * Filter AMP options to force Standard mode (AMP-first) when a web story is being requested.
+	 *
+	 * @param array $options Options.
+	 * @return array Filtered options.
+	 */
+	public function filter_amp_options( $options ) {
+		if ( $this->get_request_post_type() === self::POST_TYPE_SLUG ) {
+			$options['theme_support']          = 'standard';
+			$options['supported_post_types'][] = self::POST_TYPE_SLUG;
+			$options['supported_templates'][]  = 'is_singular';
+		}
+		return $options;
+	}
+
+	/**
+	 * Filter the post types which are supportable.
+	 *
+	 * Remove web-stories from the list unless the currently requested post type is for a web-story. This is done in
+	 * order to hide stories from the list of supportable post types on the AMP Settings screen.
+	 *
+	 * @param string[] $post_types Post types.
+	 * @return array Supportable post types.
+	 */
+	public function filter_supportable_post_types( $post_types ) {
+		if ( $this->get_request_post_type() === self::POST_TYPE_SLUG ) {
+			$post_types = array_merge( $post_types, [ self::POST_TYPE_SLUG ] );
+		} else {
+			$post_types = array_diff( $post_types, [ self::POST_TYPE_SLUG ] );
+		}
+		return array_values( $post_types );
 	}
 
 	/**
