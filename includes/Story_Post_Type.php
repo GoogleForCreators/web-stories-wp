@@ -181,6 +181,8 @@ class Story_Post_Type {
 			if ( $current_screen_post_type ) {
 				return $current_screen_post_type;
 			}
+		} elseif ( false !== strpos( wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) {
+			return self::POST_TYPE_SLUG;
 		}
 		return null;
 	}
