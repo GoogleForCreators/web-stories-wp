@@ -193,6 +193,7 @@ function PaginatedMediaGallery({
       </MediaGalleryContainer>
       {!displayLoadingPill && providerType === ProviderType.UNSPLASH && (
         <a
+          data-testid={'attribution'}
           href={
             'https://unsplash.com?utm_source=web_stories_wordpress&utm_medium=referral'
           }
@@ -206,7 +207,7 @@ function PaginatedMediaGallery({
         </a>
       )}
       {displayLoadingPill && (
-        <MediaGalleryLoadingPill>
+        <MediaGalleryLoadingPill data-testid={'loading-pill'}>
           {__('Loading…', 'web-stories')}
         </MediaGalleryLoadingPill>
       )}
