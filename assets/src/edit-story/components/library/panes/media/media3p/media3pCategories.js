@@ -26,14 +26,15 @@ import PropTypes from 'prop-types';
  */
 import { ArrowDown } from '../../../../button/index';
 import CategoryPill from './categoryPill';
-// TODO(#2360) Category should be collapsible and expandable.
+
+// Pills have a margin of 4, so the l/r padding is 24-4=20.
 const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
   min-height: 94px;
-  padding: 30px 24px 10px;
+  padding: 30px 20px 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 // This hides the category pills unless expanded
@@ -47,6 +48,8 @@ const CategoryPillContainer = styled.div`
 // Flips the button upside down when expanded;
 const ExpandButton = styled(ArrowDown)`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
+  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  align-self: center;
 `;
 
 const Media3pCategories = ({
@@ -56,29 +59,43 @@ const Media3pCategories = ({
   deselectCategory,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  return (
+
+  function renderCategories() {
+    return (selectedCategoryId
+      ? [categories.find((e) => e.id === selectedCategoryId)]
+      : categories
+    ).map((e) => {
+      const selected = e.id === selectedCategoryId;
+      return (
+        <CategoryPill
+          isSelected={selected}
+          key={e.id}
+          title={e.displayName}
+          onClick={() => {
+            if (selected) {
+              deselectCategory();
+            } else {
+              setIsExpanded(false);
+              selectCategory(e.id);
+            }
+          }}
+        />
+      );
+    });
+  }
+
+  return categories.length ? (
     <CategorySection aria-expanded={isExpanded}>
       <CategoryPillContainer isExpanded={isExpanded} role="tablist">
-        {categories.map((e) => {
-          const selected = e.id === selectedCategoryId;
-          return (
-            <CategoryPill
-              isSelected={selected}
-              key={e.id}
-              title={e.displayName}
-              onClick={() =>
-                selected ? deselectCategory() : selectCategory(e.id)
-              }
-            />
-          );
-        })}
+        {renderCategories()}
       </CategoryPillContainer>
       <ExpandButton
         onClick={() => setIsExpanded(!isExpanded)}
         isExpanded={isExpanded}
+        visible={!selectedCategoryId}
       />
     </CategorySection>
-  );
+  ) : null;
 };
 
 Media3pCategories.propTypes = {

@@ -56,7 +56,12 @@ function SnackbarProvider({ children, place }) {
       timeout: notification.timeout || 5000,
       ...notification,
     };
-    setNotifications([...notifications, newNotification]);
+    // React may batch state updates, so use the setter that receives the
+    // previous state.
+    setNotifications((currentNotifications) => [
+      ...currentNotifications,
+      newNotification,
+    ]);
     removeNotification(newNotification);
   };
 

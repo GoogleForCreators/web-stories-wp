@@ -31,10 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
-import {
-  useMedia3p,
-  useMedia3pForProvider,
-} from '../../../../../app/media/media3p/useMedia3p';
+import useMedia from '../../../../../app/media/useMedia';
 import {
   PaneHeader,
   PaneInner,
@@ -78,45 +75,39 @@ function Media3pPane(props) {
     [insertElement]
   );
 
-  const { searchTerm, setSelectedProvider, setSearchTerm } = useMedia3p(
-    ({ state, actions }) => ({
-      searchTerm: state.searchTerm,
-      setSelectedProvider: actions.setSelectedProvider,
-      setSearchTerm: actions.setSearchTerm,
+  const {
+    searchTerm,
+    setSelectedProvider,
+    setSearchTerm,
+    unsplash,
+    selectedProviderState,
+  } = useMedia(
+    ({
+      media3p: {
+        state: { selectedProvider, searchTerm },
+        actions: { setSelectedProvider, setSearchTerm },
+        unsplash,
+      },
+      media3p,
+    }) => ({
+      searchTerm,
+      setSelectedProvider,
+      setSearchTerm,
+      unsplash,
+      selectedProviderState: media3p[selectedProvider ?? ProviderType.UNSPLASH],
     })
   );
+
+  const {
+    state: { categories },
+    actions: { selectCategory, deselectCategory },
+  } = selectedProviderState;
 
   useEffect(() => {
     if (isActive) {
       setSelectedProvider({ provider: 'unsplash' });
     }
   }, [isActive, setSelectedProvider]);
-
-  const {
-    media,
-    hasMore,
-    setNextPage,
-    isMediaLoading,
-    isMediaLoaded,
-    categories,
-    selectCategory,
-    deselectCategory,
-  } = useMedia3pForProvider(
-    'unsplash',
-    ({
-      state: { media, hasMore, isMediaLoading, isMediaLoaded, categories },
-      actions: { setNextPage, selectCategory, deselectCategory },
-    }) => ({
-      media,
-      hasMore,
-      isMediaLoading,
-      isMediaLoaded,
-      setNextPage,
-      categories,
-      selectCategory,
-      deselectCategory,
-    })
-  );
 
   const onSearch = (v) => setSearchTerm({ searchTerm: v });
 
@@ -158,12 +149,12 @@ function Media3pPane(props) {
         </PaneHeader>
         <PaginatedMediaGallery
           providerType={ProviderType.UNSPLASH}
-          resources={media}
-          isMediaLoading={isMediaLoading}
-          isMediaLoaded={isMediaLoaded}
-          hasMore={hasMore}
+          resources={unsplash.state.media}
+          isMediaLoading={unsplash.state.isMediaLoading}
+          isMediaLoaded={unsplash.state.isMediaLoaded}
+          hasMore={unsplash.state.hasMore}
+          setNextPage={unsplash.actions.setNextPage}
           onInsert={insertMediaElement}
-          setNextPage={setNextPage}
         />
       </PaneInner>
     </StyledPane>

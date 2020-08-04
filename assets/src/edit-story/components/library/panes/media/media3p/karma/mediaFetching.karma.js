@@ -33,8 +33,8 @@ const createMediaResource = (name) => ({
     {
       imageName: 'full',
       url: 'http://www.img.com/1',
-      width: 640,
-      height: 480,
+      width: 480,
+      height: 640,
       mimeType: 'image/png',
     },
     {
@@ -137,7 +137,7 @@ describe('Media3pPane fetching', () => {
 
     mediaGallery.scrollTo(
       0,
-      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
     await expectMediaElements(MEDIA_PER_PAGE * 2);
   });

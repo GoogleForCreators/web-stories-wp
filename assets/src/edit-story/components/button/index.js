@@ -183,11 +183,13 @@ export const Keyboard = (props) => (
   </StyledButton>
 );
 
-export const Close = forwardRef((props, ref) => (
-  <StyledButton {...props} ref={ref}>
-    <CloseIcon />
-  </StyledButton>
-));
+export const Close = forwardRef(function Close(props, ref) {
+  return (
+    <StyledButton {...props} ref={ref}>
+      <CloseIcon />
+    </StyledButton>
+  );
+});
 
 export const Eyedropper = (props) => (
   <StyledButton {...props}>
@@ -201,11 +203,13 @@ export const ArrowDown = (props) => (
   </StyledButton>
 );
 
-export const More = forwardRef((props, ref) => (
-  <StyledButton {...props} ref={ref}>
-    <MoreIcon />
-  </StyledButton>
-));
+export const More = forwardRef(function More(props, ref) {
+  return (
+    <StyledButton {...props} ref={ref}>
+      <MoreIcon />
+    </StyledButton>
+  );
+});
 
 export const SafeZone = (props) => (
   <StyledButton {...props}>

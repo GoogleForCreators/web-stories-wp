@@ -22,7 +22,20 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { ProviderType } from '../../../components/library/panes/media/common/providerType';
+import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
+
+function getFetchCategoriesErrorMessage(provider) {
+  if (provider === ProviderType.UNSPLASH) {
+    return __('Error loading categories from Unsplash', 'web-stories');
+  }
+  return __('Error loading categories', 'web-stories');
+}
 
 export default function useFetchCategoriesEffect({
   provider,
@@ -35,6 +48,8 @@ export default function useFetchCategoriesEffect({
     actions: { listCategories },
   } = useMedia3pApi();
 
+  const { showSnackbar } = useSnackbar();
+
   useEffect(() => {
     async function fetch() {
       fetchCategoriesStart({ provider });
@@ -43,6 +58,7 @@ export default function useFetchCategoriesEffect({
         fetchCategoriesSuccess({ provider, categories });
       } catch {
         fetchCategoriesError({ provider });
+        showSnackbar({ message: getFetchCategoriesErrorMessage(provider) });
       }
     }
 
@@ -50,6 +66,7 @@ export default function useFetchCategoriesEffect({
       fetch();
     }
   }, [
+    showSnackbar,
     // Fetch categories is triggered by changes to these.
     selectedProvider,
     // These attributes never change.
