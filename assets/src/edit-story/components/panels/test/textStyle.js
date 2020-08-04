@@ -484,6 +484,64 @@ describe('Panels/TextStyle', () => {
       await fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).not.toHaveBeenCalled();
     });
+
+    it('should set the text bold when the key command is pressed', async () => {
+      const { pushUpdate, container } = renderTextStyle([textElement]);
+
+      await fireEvent.keyDown(container, {
+        key: 'b',
+        which: 66,
+        ctrlKey: true,
+      });
+
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content: '<span style="font-weight: 700">Hello world</span>',
+        },
+        true
+      );
+    });
+
+    it('should set the text underline when the key command is pressed', async () => {
+      const { pushUpdate, container } = renderTextStyle([textElement]);
+
+      await fireEvent.keyDown(container, {
+        key: 'u',
+        which: 85,
+        ctrlKey: true,
+      });
+
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content:
+            '<span style="text-decoration: underline">Hello world</span>',
+        },
+        true
+      );
+    });
+
+    it('should set the text italics when the key command is pressed', async () => {
+      const { pushUpdate, container } = renderTextStyle([textElement]);
+
+      await fireEvent.keyDown(container, {
+        key: 'i',
+        which: 73,
+        ctrlKey: true,
+      });
+
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content: '<span style="font-style: italic">Hello world</span>',
+        },
+        true
+      );
+    });
   });
 
   describe('TextStyleControls', () => {
