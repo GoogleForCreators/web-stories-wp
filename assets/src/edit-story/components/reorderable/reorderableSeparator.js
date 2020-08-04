@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 const Line = styled.div`
   height: 4px;
   margin: 0 0 -4px;
-  background: ${({ theme }) => theme.colors.action};
+  background: ${({ theme }) => theme.colors.accent.primary};
   width: 100%;
 `;
 

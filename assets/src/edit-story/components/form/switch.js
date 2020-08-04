@@ -37,7 +37,7 @@ const SwitchContainer = styled.div`
   position: relative;
   background: ${({ theme }) => theme.colors.bg.v3};
   border-radius: 100px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -92,7 +92,7 @@ const Label = styled.label`
 	`}
 
   ${KEYBOARD_USER_SELECTOR} &:focus-within ~ span {
-    background-color: ${({ theme }) => theme.colors.action};
+    background-color: ${({ theme }) => theme.colors.accent.primary};
   }
 `;
 

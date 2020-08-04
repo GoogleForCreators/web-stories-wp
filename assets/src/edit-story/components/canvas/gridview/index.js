@@ -102,7 +102,7 @@ const Rectangle = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 
   &:active {
     outline: none;
@@ -143,7 +143,7 @@ const PageSeparator = styled(ReorderableSeparator)`
 `;
 
 const Line = styled.div`
-  background: ${({ theme }) => theme.colors.action};
+  background: ${({ theme }) => theme.colors.accent.primary};
   height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
   width: 4px;
   margin: 0px;
