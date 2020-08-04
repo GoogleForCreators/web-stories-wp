@@ -60,7 +60,7 @@ describe('useFetchMediaEffect', () => {
         useFetchMediaEffect({
           provider: 'unsplash',
           selectedProvider: 'unsplash',
-          pageToken: 'pageToken',
+          pageToken: undefined,
           fetchMediaStart,
           fetchMediaSuccess,
           fetchMediaError,
@@ -79,18 +79,18 @@ describe('useFetchMediaEffect', () => {
 
     expect(fetchMediaStart).toHaveBeenCalledWith({
       provider: 'unsplash',
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(mockListMedia).toHaveBeenCalledWith({
       provider: 'unsplash',
       searchTerm: undefined,
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(fetchMediaSuccess).toHaveBeenCalledWith({
       provider: 'unsplash',
       media: [{ id: 1 }],
       nextPageToken: 'nextPageToken',
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
@@ -104,18 +104,18 @@ describe('useFetchMediaEffect', () => {
 
     expect(fetchMediaStart).toHaveBeenCalledWith({
       provider: 'unsplash',
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(mockListMedia).toHaveBeenCalledWith({
       provider: 'unsplash',
       searchTerm: 'cat',
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(fetchMediaSuccess).toHaveBeenCalledWith({
       provider: 'unsplash',
       media: [{ id: 1 }],
       nextPageToken: 'nextPageToken',
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
@@ -129,18 +129,18 @@ describe('useFetchMediaEffect', () => {
 
     expect(fetchMediaStart).toHaveBeenCalledWith({
       provider: 'unsplash',
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(mockListCategoryMedia).toHaveBeenCalledWith({
       provider: 'unsplash',
       selectedCategoryId: 'category/1',
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(fetchMediaSuccess).toHaveBeenCalledWith({
       provider: 'unsplash',
       media: [{ id: 1 }],
       nextPageToken: 'nextPageToken',
-      pageToken: 'pageToken',
+      pageToken: undefined,
     });
     expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
