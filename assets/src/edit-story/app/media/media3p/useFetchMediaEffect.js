@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -28,6 +28,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { __ } from '@wordpress/i18n';
 import { useSnackbar } from '../../snackbar';
 import { ProviderType } from '../providerType';
+import usePrevious from '../usePrevious';
 import { useMedia3pApi } from './api';
 
 function getFetchMediaErrorMessage(provider) {
@@ -56,113 +57,75 @@ export default function useFetchMediaEffect({
     actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
 
+  const previousProps = usePrevious({
+    pageToken,
+    searchTerm,
+    selectedCategoryId,
+  });
+
   const { showSnackbar } = useSnackbar();
 
-  const propsRef = useRef();
-  propsRef.current = {
+  useEffect(() => {
+    async function fetch() {
+      fetchMediaStart({ provider, pageToken });
+      try {
+        let media, newNextPageToken;
+        if (selectedCategoryId) {
+          ({ media, nextPageToken: newNextPageToken } = await listCategoryMedia(
+            {
+              provider,
+              selectedCategoryId,
+              pageToken,
+            }
+          ));
+        } else {
+          ({ media, nextPageToken: newNextPageToken } = await listMedia({
+            provider,
+            searchTerm,
+            pageToken,
+          }));
+        }
+        fetchMediaSuccess({
+          provider,
+          media,
+          pageToken,
+          nextPageToken: newNextPageToken,
+        });
+      } catch {
+        fetchMediaError({ provider, pageToken });
+        showSnackbar({ message: getFetchMediaErrorMessage(provider) });
+      }
+    }
+
+    // If we switched provider tab, and we already had loaded a page there, we
+    // don't load media again.
+    const somethingChanged =
+      previousProps &&
+      (pageToken != previousProps.pageToken ||
+        searchTerm != previousProps.searchTerm ||
+        selectedCategoryId != previousProps.selectedCategoryId);
+    const firstFetchOrSomethingChanged =
+      (!pageToken && !nextPageToken) || somethingChanged;
+
+    if (provider === selectedProvider && firstFetchOrSomethingChanged) {
+      fetch();
+    }
+    // We don't want to depend on previousProps, see https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    showSnackbar,
+    // Fetch media is triggered by changes to these.
     selectedProvider,
     pageToken,
     nextPageToken,
     searchTerm,
     selectedCategoryId,
-  };
-
-  const fetch = useCallback(async () => {
-    fetchMediaStart({ provider, pageToken: propsRef.current.pageToken });
-    try {
-      let media, newNextPageToken;
-      if (propsRef.current.selectedCategoryId) {
-        ({ media, nextPageToken: newNextPageToken } = await listCategoryMedia({
-          provider,
-          selectedCategoryId: propsRef.current.selectedCategoryId,
-          pageToken: propsRef.current.pageToken,
-        }));
-      } else {
-        ({ media, nextPageToken: newNextPageToken } = await listMedia({
-          provider,
-          searchTerm: propsRef.current.searchTerm,
-          pageToken: propsRef.current.pageToken,
-        }));
-      }
-      fetchMediaSuccess({
-        provider,
-        media,
-        pageToken: propsRef.current.pageToken,
-        nextPageToken: newNextPageToken,
-      });
-    } catch {
-      fetchMediaError({ provider, pageToken: propsRef.current.pageToken });
-      showSnackbar({ message: getFetchMediaErrorMessage(provider) });
-    }
-  }, [
+    // These attributes never change.
     provider,
-    showSnackbar,
     listMedia,
     listCategoryMedia,
     fetchMediaError,
     fetchMediaStart,
     fetchMediaSuccess,
   ]);
-
-  useEffect(() => {
-    // If the selected provider changes, only fetch if there is no media.
-    if (
-      provider === selectedProvider &&
-      !propsRef.current.pageToken &&
-      !propsRef.current.nextPageToken
-    ) {
-      fetch();
-    }
-  }, [
-    selectedProvider,
-    // These attributes never change.
-    fetch,
-    provider,
-  ]);
-
-  useEffect(() => {
-    if (provider === propsRef.current.selectedProvider) {
-      fetch();
-    }
-  }, [
-    pageToken,
-    searchTerm,
-    selectedCategoryId,
-    // These attributes never change.
-    fetch,
-    provider,
-  ]);
-
-  // useEffect(() => {
-  //   // If we switched provider tab, and we already had loaded a page there, we
-  //   // don't load media again.
-  //   const somethingChanged =
-  //     previousProps &&
-  //     (pageToken != previousProps.pageToken ||
-  //       searchTerm != previousProps.searchTerm ||
-  //       selectedCategoryId != previousProps.selectedCategoryId);
-  //   const firstFetchOrSomethingChanged =
-  //     (!pageToken && !nextPageToken) || somethingChanged;
-  //
-  //   if (provider === selectedProvider && firstFetchOrSomethingChanged) {
-  //     fetch();
-  //   }
-  //   // We don't want to depend on previousProps, see https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [
-  //   // Fetch media is triggered by changes to these.
-  //   selectedProvider,
-  //   pageToken,
-  //   nextPageToken,
-  //   searchTerm,
-  //   selectedCategoryId,
-  //   // These attributes never change.
-  //   showSnackbar,
-  //   provider,
-  //   listMedia,
-  //   listCategoryMedia,
-  //   fetchMediaError,
-  //   fetchMediaStart,
-  //   fetchMediaSuccess,
-  // ]);
 }
