@@ -23,8 +23,14 @@ export const ANIMATION_TYPES = {
   FLIP: 'flip',
   FLOAT_ON: 'floatOn',
   MOVE: 'move',
+  PULSE: 'pulse',
   SPIN: 'spin',
   ZOOM: 'zoom',
+};
+
+export const ANIMATION_EFFECTS = {
+  FADE_IN: 'effect-fade-in',
+  PULSE: 'effect-pulse',
 };
 
 export const DIRECTION = {

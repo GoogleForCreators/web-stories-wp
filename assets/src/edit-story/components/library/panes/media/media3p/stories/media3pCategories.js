@@ -34,10 +34,112 @@ const Container = styled.div`
   max-width: 350px;
 `;
 
-export const _default = () => {
+const categories = [
+  {
+    id: 'categories/unsplash:KHXRtL69hcY',
+    displayName: 'Sustainability',
+  },
+  {
+    id: 'categories/unsplash:bo8jQKTaE0Y',
+    displayName: 'Wallpapers',
+  },
+  {
+    id: 'categories/unsplash:c7USHrQ0Ljw',
+    displayName: 'COVID-19',
+  },
+  {
+    id: 'categories/unsplash:Fzo3zuOHN6w',
+    displayName: 'Travel',
+  },
+  {
+    id: 'categories/unsplash:6sMVjTLSkeQ',
+    displayName: 'Nature',
+  },
+  {
+    id: 'categories/unsplash:iUIsnVtjB0Y',
+    displayName: 'Textures & Patterns',
+  },
+  {
+    id: 'categories/unsplash:BJJMtteDJA4',
+    displayName: 'Current Events',
+  },
+  {
+    id: 'categories/unsplash:towJZFskpGg',
+    displayName: 'People',
+  },
+  {
+    id: 'categories/unsplash:aeu6rL-j6ew',
+    displayName: 'Business & Work',
+  },
+  {
+    id: 'categories/unsplash:J9yrPaHXRQY',
+    displayName: 'Technology',
+  },
+  {
+    id: 'categories/unsplash:Jpg6Kidl-Hk',
+    displayName: 'Animals',
+  },
+  {
+    id: 'categories/unsplash:R_Fyn-Gwtlw',
+    displayName: 'Interiors',
+  },
+  {
+    id: 'categories/unsplash:rnSKDHwwYUk',
+    displayName: 'Architecture',
+  },
+  {
+    id: 'categories/unsplash:xjPR4hlkBGA',
+    displayName: 'Food & Drink',
+  },
+  {
+    id: 'categories/unsplash:Bn-DjrcBrwo',
+    displayName: 'Athletics',
+  },
+  {
+    id: 'categories/unsplash:_8zFHuhRhyo',
+    displayName: 'Spirituality',
+  },
+  {
+    id: 'categories/unsplash:_hb-dl4Q-4U',
+    displayName: 'Health & Wellness',
+  },
+  {
+    id: 'categories/unsplash:hmenvQhUmxM',
+    displayName: 'Film',
+  },
+  {
+    id: 'categories/unsplash:S4MKLAsBB74',
+    displayName: 'Fashion',
+  },
+  {
+    id: 'categories/unsplash:qPYsDzvJOYc',
+    displayName: 'Experimental',
+  },
+];
+
+export const empty = () => {
   return (
     <Container>
-      <Media3pCategories />
+      <Media3pCategories categories={[]} />
+    </Container>
+  );
+};
+
+export const unselected = () => {
+  return (
+    <Container>
+      <Media3pCategories categories={categories} />
+    </Container>
+  );
+};
+
+export const selected = () => {
+  return (
+    <Container>
+      <Media3pCategories
+        categories={categories}
+        selectedCategoryId={categories[1].name}
+      />
     </Container>
   );
 };

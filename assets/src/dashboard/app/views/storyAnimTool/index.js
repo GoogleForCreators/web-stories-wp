@@ -112,13 +112,16 @@ function StoryAnimTool() {
         saveActiveStoryUpdates(activeStory);
       }
 
+      // Deselect animation
+      setActiveAnimation({});
+
+      // Reset active page
+      setActivePageIndex(0);
+
       const story = orderedStories.find(
         (s) => s.id === parseInt(e.target.value)
       );
       setActiveStory(story);
-
-      //Deselect animation
-      setActiveAnimation({});
     },
     [activeStory, saveActiveStoryUpdates, orderedStories]
   );

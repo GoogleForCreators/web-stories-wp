@@ -22,33 +22,61 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { useSnackbar } from '../../snackbar';
+import { ProviderType } from '../../../components/library/panes/media/common/providerType';
 import { useMedia3pApi } from './api';
+
+function getFetchMediaErrorMessage(provider) {
+  if (provider === ProviderType.UNSPLASH) {
+    return __('Error loading media from Unsplash', 'web-stories');
+  } else if (provider === ProviderType.LOCAL) {
+    return __('Error loading media from Wordpress', 'web-stories');
+  }
+  return __('Error loading media', 'web-stories');
+}
 
 export default function useFetchMediaEffect({
   provider,
   selectedProvider,
   searchTerm,
+  selectedCategoryId,
   pageToken,
   fetchMediaStart,
   fetchMediaSuccess,
   fetchMediaError,
 }) {
   const {
-    actions: { listMedia },
+    actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
+
+  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     async function fetch() {
       fetchMediaStart({ provider, pageToken });
       try {
-        const { media, nextPageToken } = await listMedia({
-          provider,
-          searchTerm,
-          pageToken,
-        });
+        let media, nextPageToken;
+        if (selectedCategoryId) {
+          ({ media, nextPageToken } = await listCategoryMedia({
+            provider,
+            selectedCategoryId,
+            pageToken,
+          }));
+        } else {
+          ({ media, nextPageToken } = await listMedia({
+            provider,
+            searchTerm,
+            pageToken,
+          }));
+        }
         fetchMediaSuccess({ provider, media, pageToken, nextPageToken });
       } catch {
         fetchMediaError({ provider, pageToken });
+        showSnackbar({ message: getFetchMediaErrorMessage(provider) });
       }
     }
 
@@ -56,13 +84,16 @@ export default function useFetchMediaEffect({
       fetch();
     }
   }, [
+    showSnackbar,
     // Fetch media is triggered by changes to these.
     selectedProvider,
     pageToken,
     searchTerm,
+    selectedCategoryId,
     // These attributes never change.
     provider,
     listMedia,
+    listCategoryMedia,
     fetchMediaError,
     fetchMediaStart,
     fetchMediaSuccess,

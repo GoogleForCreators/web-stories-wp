@@ -19,20 +19,22 @@
  */
 import styled from 'styled-components';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { ArrowDown } from '../../../../button/index';
 import CategoryPill from './categoryPill';
-// TODO(#2360) Category should be collapsible and expandable.
+
+// Pills have a margin of 4, so the l/r padding is 24-4=20.
 const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
   min-height: 94px;
-  padding: 30px 24px 10px;
+  padding: 30px 20px 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 // This hides the category pills unless expanded
@@ -46,50 +48,61 @@ const CategoryPillContainer = styled.div`
 // Flips the button upside down when expanded;
 const ExpandButton = styled(ArrowDown)`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
+  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  align-self: center;
 `;
-// TODO(#2362) Wire up pill list to state and remove these fake pills.
-const fakePillList = [
-  'COVID-19',
-  'Nature',
-  'Wallpapers',
-  'People',
-  'Texture & Pattern',
-  'Business & Work',
-  'Travel',
-  'Technology',
-  'Animals',
-  'Interiors',
-  'Architecture',
-  'Food & Drinks',
-];
 
-const Media3pCategories = () => {
+const Media3pCategories = ({
+  categories,
+  selectedCategoryId,
+  selectCategory,
+  deselectCategory,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedPill, setSelectedPill] = useState(-1);
 
-  return (
+  function renderCategories() {
+    return (selectedCategoryId
+      ? [categories.find((e) => e.id === selectedCategoryId)]
+      : categories
+    ).map((e) => {
+      const selected = e.id === selectedCategoryId;
+      return (
+        <CategoryPill
+          isSelected={selected}
+          key={e.id}
+          title={e.displayName}
+          onClick={() => {
+            if (selected) {
+              deselectCategory();
+            } else {
+              setIsExpanded(false);
+              selectCategory(e.id);
+            }
+          }}
+        />
+      );
+    });
+  }
+
+  return categories.length ? (
     <CategorySection aria-expanded={isExpanded}>
       <CategoryPillContainer isExpanded={isExpanded} role="tablist">
-        {
-          // TODO(#2362) Wire up pill list to state and remove these fake pills.
-          fakePillList.map((e, i) => (
-            <CategoryPill
-              isSelected={i == selectedPill}
-              key={i}
-              title={e}
-              onClick={() =>
-                i !== selectedPill ? setSelectedPill(i) : setSelectedPill(-1)
-              }
-            />
-          ))
-        }
+        {renderCategories()}
       </CategoryPillContainer>
       <ExpandButton
         onClick={() => setIsExpanded(!isExpanded)}
         isExpanded={isExpanded}
+        visible={!selectedCategoryId}
       />
     </CategorySection>
-  );
+  ) : null;
+};
+
+Media3pCategories.propTypes = {
+  categories: PropTypes.array.isRequired,
+  selectedCategoryId: PropTypes.string,
+  selectCategory: PropTypes.func,
+  deselectCategory: PropTypes.func,
 };
 
 export default Media3pCategories;

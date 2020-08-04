@@ -22,7 +22,7 @@ import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/Bounce',
+  title: 'Animations/Parts/Bounce',
 };
 
 const animations = [
@@ -70,19 +70,24 @@ export const AMPStory = () => {
 
             <amp-story-grid-layer template="vertical">
               {elements.map(({ id, color, width }) => (
-                <StoryAnimation.AMPWrapper
+                <div
                   key={id}
-                  target={id}
-                  style={{ width, height: '50px' }}
+                  style={{
+                    position: 'relative',
+                    height: '50px',
+                    width,
+                  }}
                 >
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: color,
-                    }}
-                  />
-                </StoryAnimation.AMPWrapper>
+                  <StoryAnimation.AMPWrapper target={id}>
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: color,
+                      }}
+                    />
+                  </StoryAnimation.AMPWrapper>
+                </div>
               ))}
             </amp-story-grid-layer>
           </StoryAnimation.Provider>
