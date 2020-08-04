@@ -104,6 +104,7 @@ const theme = {
       // v13: '#FFFFFF', <=> replaced with 'white'
       v14: '#3E445B',
       v15: '#212433',
+      v16: '#2C2C2C',
     },
     mg: {
       v1: '#616877',
@@ -123,6 +124,7 @@ const theme = {
       v6: '#232636',
       // v7: '#1A73E8', <=> replaced with accent.primary
       v8: '#E6E6E6',
+      v9: '#4D4E53',
     },
     hover: '#4285F4',
     accent: {
