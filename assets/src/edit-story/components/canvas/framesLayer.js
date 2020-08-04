@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../dashboard/constants';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
@@ -67,8 +68,12 @@ const Hint = styled.div`
 `;
 
 function FramesLayer() {
-  const { currentPage } = useStory((state) => ({
+  const { currentPage, isAnimating } = useStory((state) => ({
     currentPage: state.state.currentPage,
+    isAnimating: [
+      STORY_ANIMATION_STATE.PLAYING,
+      STORY_ANIMATION_STATE.SCRUBBING,
+    ].includes(state.state.animationState),
   }));
   const { showSafeZone } = useCanvas(({ state: { showSafeZone } }) => ({
     showSafeZone,
@@ -91,6 +96,7 @@ function FramesLayer() {
       // otherwise.
       tabIndex="-1"
       aria-label={__('Frames', 'web-stories')}
+      isHidden={isAnimating}
     >
       <FramesPageArea
         showSafeZone={showSafeZone}

@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../dashboard/constants';
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useStory, useTransform } from '../../app';
@@ -48,20 +47,11 @@ const Wrapper = styled.div`
 	${elementWithRotation}
   pointer-events: initial;
 
-  ${(props) =>
-    props.isAnimating &&
-    css`
-      &,
-      & * {
-        pointer-events: none;
-      }
-    `}
-
 	&:focus,
 	&:active,
 	&:hover {
-		outline: ${({ theme, hasMask, isAnimating }) =>
-      hasMask || isAnimating ? 'none' : `1px solid ${theme.colors.selection}`};
+		outline: ${({ theme, hasMask }) =>
+      hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
 	}
   
 `;
@@ -95,10 +85,6 @@ function FrameElement({ element }) {
     (state) => ({
       selectedElementIds: state.state.selectedElementIds,
       currentPage: state.state.currentPage,
-      isAnimating: [
-        STORY_ANIMATION_STATE.PLAYING,
-        STORY_ANIMATION_STATE.SCRUBBING,
-      ].includes(state.state.animationState),
     })
   );
   const { getBox } = useUnits((state) => ({

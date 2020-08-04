@@ -50,11 +50,11 @@ function DisplayPage({
     switch (animationState) {
       case STORY_ANIMATION_STATE.PLAYING:
         WAAPIAnimationMethods.play();
-        return () => {};
+        return;
 
       case STORY_ANIMATION_STATE.RESET:
         WAAPIAnimationMethods.reset();
-        return () => {};
+        return;
 
       case STORY_ANIMATION_STATE.SCRUBBING:
         /*
@@ -65,13 +65,13 @@ function DisplayPage({
          * - return an unsubscribe function when state changes.
          */
         WAAPIAnimationMethods.pause();
-        return () => {};
+        return;
 
       case STORY_ANIMATION_STATE.PAUSED:
         WAAPIAnimationMethods.pause();
-        return () => {};
+        return;
       default:
-        return () => {};
+        return;
     }
   }, [animationState, WAAPIAnimationMethods]);
 
