@@ -113,7 +113,6 @@ export default function useFetchMediaEffect({
     // We don't want to depend on previousProps, see https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    showSnackbar,
     // Fetch media is triggered by changes to these.
     selectedProvider,
     pageToken,
@@ -127,5 +126,6 @@ export default function useFetchMediaEffect({
     fetchMediaError,
     fetchMediaStart,
     fetchMediaSuccess,
+    showSnackbar,
   ]);
 }
