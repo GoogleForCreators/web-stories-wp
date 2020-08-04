@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 import TabView from '../tabview';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
+import { getTabId } from './panes/shared';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Library', 'web-stories'),
@@ -67,6 +68,7 @@ function LibraryLayout() {
           tabs={tabs}
           initialTab={initialTab}
           onTabChange={(id) => setTab(id)}
+          getTabId={getTabId}
         />
       </TabsArea>
       <LibraryPaneContainer>

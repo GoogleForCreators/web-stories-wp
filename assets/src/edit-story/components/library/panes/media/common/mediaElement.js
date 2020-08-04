@@ -59,7 +59,6 @@ const Container = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => theme.colors.bg.v3};
   body${KEYBOARD_USER_SELECTOR} &:focus {
     outline: solid 2px #fff;
   }

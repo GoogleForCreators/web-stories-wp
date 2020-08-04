@@ -90,6 +90,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
 
 function TabView({
   getTabId = (id) => id,
+  getAriaControlsId,
   onTabChange = () => {},
   tabs = [],
   initialTab,
@@ -134,9 +135,11 @@ function TabView({
       {tabs.map(({ id, title, icon: Icon }) => (
         <Tab
           key={id}
-          id={id}
+          id={getTabId(id)}
           isActive={tab === id}
-          aria-controls={getTabId(id)}
+          aria-controls={
+            getAriaControlsId ? getAriaControlsId(id) : getTabId(id)
+          }
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
         >
@@ -150,6 +153,7 @@ function TabView({
 
 TabView.propTypes = {
   getTabId: PropTypes.func,
+  getAriaControlsId: PropTypes.func,
   onTabChange: PropTypes.func,
   tabs: PropTypes.array.isRequired,
   initialTab: PropTypes.any,

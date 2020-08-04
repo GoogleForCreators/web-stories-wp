@@ -31,6 +31,7 @@ import { useEscapeToBlurEffect } from '../keyboard';
 import TabView from '../tabview';
 import useInspector from './useInspector';
 import InspectorContent from './inspectorContent';
+import { getTabId } from './utils';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Inspector', 'web-stories'),
@@ -62,6 +63,7 @@ function InspectorLayout() {
         tabs={tabs}
         initialTab={initialTab}
         onTabChange={(id) => setTab(id)}
+        getAriaControlsId={getTabId}
       />
       <InspectorContainer ref={setInspectorContentNode}>
         <InspectorContent />
