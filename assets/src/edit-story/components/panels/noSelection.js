@@ -31,7 +31,7 @@ import { Panel, PanelContent } from './panel';
 
 const Note = styled.p`
   font-style: italic;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   opacity: 0.86;
   font-family: ${({ theme }) => theme.fonts.label.family};
   font-weight: ${({ theme }) => theme.fonts.label.weight};

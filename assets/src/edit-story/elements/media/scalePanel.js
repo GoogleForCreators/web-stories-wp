@@ -64,8 +64,8 @@ const ResetButton = styled.button`
   height: 20px;
   text-transform: uppercase;
   font-size: 9px;
-  color: ${({ theme }) => theme.colors.fg.v1};
-  background: ${({ theme }) => theme.colors.action};
+  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.colors.accent.primary};
   border-radius: 100px;
   border: none;
   padding: 1px 8px 0 8px;

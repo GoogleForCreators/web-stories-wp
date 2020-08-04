@@ -22,16 +22,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Tab } from '../../shared';
-import { Media } from '../../../../../icons';
-import paneId from './paneId';
+import { Upload } from '../../../../../icons';
 
-function Media3pTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <Media aria-label={__('Third Party Media library', 'web-stories')} />
-    </Tab>
-  );
+function MediaIcon() {
+  return <Upload aria-label={__('Media library', 'web-stories')} />;
 }
 
-export default Media3pTab;
+export default MediaIcon;

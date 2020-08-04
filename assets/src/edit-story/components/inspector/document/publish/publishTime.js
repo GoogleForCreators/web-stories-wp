@@ -39,14 +39,14 @@ import useFocusOut from '../../../../utils/useFocusOut';
 import { getReadableDate, getReadableTime, is12Hour } from './utils';
 
 const StyledButton = styled.button`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   display: flex;
   flex-direction: row;
-  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   flex: 1;
   padding: 2px;
   border-radius: 4px;
@@ -64,11 +64,11 @@ const FieldLabel = styled(Label)`
 `;
 
 const Date = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
 `;
 
 const Time = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.4)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.4)};
   display: inline-block;
 `;
 

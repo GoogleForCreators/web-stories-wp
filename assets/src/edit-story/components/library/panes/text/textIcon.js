@@ -29,15 +29,13 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import { Tab } from '../shared';
-import paneId from './paneId';
-import { ReactComponent as TextIcon } from './text.svg';
+import { ReactComponent as TextTabIcon } from './text.svg';
 import { ReactComponent as TextAddIcon } from './text_add.svg';
 import { DEFAULT_PRESET } from './textPresets';
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
   // Necessary because of https://github.com/styled-components/styled-components/pull/2093
-  <TextIcon {...rest} />
+  <TextTabIcon {...rest} />
 )).attrs(({ isSecondary }) => ({
   style: {
     // scales 28px to 20px
@@ -63,10 +61,20 @@ const QuickAction = styled.button`
   line-height: 1;
   overflow: hidden;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
-function TextTab(props) {
+const TextIconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+`;
+
+function TextIcon(props) {
   const {
     actions: { insertElement },
   } = useLibrary();
@@ -80,7 +88,7 @@ function TextTab(props) {
   };
   const { isActive } = props;
   return (
-    <Tab aria-labelledby="text-tab-icon" aria-controls={paneId} {...props}>
+    <TextIconContainer>
       <AnimatedTextIcon
         id="text-tab-icon"
         isSecondary={isHoveringQuick || isFocusingQuick}
@@ -97,12 +105,12 @@ function TextTab(props) {
       >
         <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
       </QuickAction>
-    </Tab>
+    </TextIconContainer>
   );
 }
 
-TextTab.propTypes = {
+TextIcon.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-export default TextTab;
+export default TextIcon;

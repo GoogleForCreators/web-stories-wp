@@ -25,7 +25,7 @@ const Input = styled.input`
   box-shadow: none !important;
   outline: none;
   background: transparent;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   opacity: 0.86;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
@@ -34,7 +34,7 @@ const Input = styled.input`
 
   &:disabled {
     background: transparent;
-    color: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => theme.colors.fg.white};
   }
 `;
 

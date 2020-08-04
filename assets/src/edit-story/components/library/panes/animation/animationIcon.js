@@ -22,16 +22,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Tab } from '../../shared';
-import { Upload } from '../../../../../icons';
-import paneId from './paneId';
+import { ReactComponent as AnimationTabIcon } from './animation.svg';
 
-function MediaTab(props) {
+function AnimationIcon() {
   return (
-    <Tab aria-controls={paneId} {...props}>
-      <Upload aria-label={__('Media library', 'web-stories')} />
-    </Tab>
+    <AnimationTabIcon aria-label={__('Animation library', 'web-stories')} />
   );
 }
 
-export default MediaTab;
+export default AnimationIcon;

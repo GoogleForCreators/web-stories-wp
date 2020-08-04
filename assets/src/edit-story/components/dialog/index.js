@@ -36,12 +36,12 @@ const DialogBox = styled.div`
   display: flex;
   max-height: calc(100% - 64px);
   flex-direction: column;
-  box-shadow: 0px 11px 15px -7px ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)},
-    0px 24px 38px 3px ${({ theme }) => rgba(theme.colors.bg.v0, 0.14)},
-    0px 9px 46px 8px ${({ theme }) => rgba(theme.colors.bg.v0, 0.12)};
-  color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.87)};
+  box-shadow: 0px 11px 15px -7px ${({ theme }) => rgba(theme.colors.bg.black, 0.2)},
+    0px 24px 38px 3px ${({ theme }) => rgba(theme.colors.bg.black, 0.14)},
+    0px 9px 46px 8px ${({ theme }) => rgba(theme.colors.bg.black, 0.12)};
+  color: ${({ theme }) => rgba(theme.colors.bg.black, 0.87)};
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 const DialogTitle = styled.h1`
@@ -62,10 +62,10 @@ const DialogContent = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v0, 0.6)};
+  color: ${({ theme }) => rgba(theme.colors.fg.black, 0.6)};
 
   b {
-    color: ${({ theme }) => rgba(theme.colors.fg.v0, 0.7)};
+    color: ${({ theme }) => rgba(theme.colors.fg.black, 0.7)};
   }
 `;
 const DialogActions = styled.div`

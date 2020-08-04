@@ -15,22 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-/**
  * Internal dependencies
  */
-import { Tab } from '../shared';
-import paneId from './paneId';
-import { ReactComponent as ElementsIcon } from './elements.svg';
+import { AnimationPulse } from '../../parts/pulse';
 
-function ElementsTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <ElementsIcon aria-label={__('Elements library', 'web-stories')} />
-    </Tab>
-  );
+export function EffectPulse({
+  iterations = 4,
+  scale = 0.5,
+  duration = 400,
+  delay,
+  easing,
+}) {
+  return AnimationPulse({
+    scale,
+    duration,
+    delay,
+    easing,
+    iterations,
+  });
 }
-
-export default ElementsTab;
