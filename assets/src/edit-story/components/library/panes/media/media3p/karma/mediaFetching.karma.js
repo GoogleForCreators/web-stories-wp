@@ -200,7 +200,7 @@ describe('Media3pPane fetching', () => {
     expect(mediaElements.length).toBe(expectedCount);
   }
 
-  it('should render initial content with media3p tab', async () => {
+  it('should render initial page with media3p tab button at top', async () => {
     await fixture.snapshot();
   });
 
