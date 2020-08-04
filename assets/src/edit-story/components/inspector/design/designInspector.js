@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -42,10 +43,13 @@ const TopPanels = styled.div`
 const BottomPanels = styled.div``;
 
 function DesignInspector() {
-  const resetStoryAnimationState = useStory(({ actions }) => () =>
-    actions.updateAnimationState({
-      animationState: STORY_ANIMATION_STATE.RESET,
-    })
+  const updateAnimationState = useStory(
+    ({ actions }) => actions.updateAnimationState
+  );
+
+  const resetStoryAnimationState = useCallback(
+    () => updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET }),
+    [updateAnimationState]
   );
 
   return (
