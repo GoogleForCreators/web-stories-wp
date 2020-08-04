@@ -59,7 +59,7 @@ export const TimelineRow = styled.div`
   min-width: 100%;
   ${({ alternating, theme }) =>
     alternating && {
-      backgroundColor: rgba(theme.colors.fg.v1, 0.1),
+      backgroundColor: rgba(theme.colors.fg.white, 0.1),
     }}
 `;
 
