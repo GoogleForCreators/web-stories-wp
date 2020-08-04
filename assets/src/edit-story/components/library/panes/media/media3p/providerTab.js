@@ -23,7 +23,7 @@ const Tab = styled.span`
   cursor: pointer;
   font-size: 16px;
   border-bottom: ${({ theme, active }) =>
-    active ? `solid 4px ${theme.colors.fg.v7};` : 'none'};
+    active ? `solid 4px ${theme.colors.accent.primary};` : 'none'};
 `;
 
 function ProviderTab(props) {

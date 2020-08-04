@@ -41,6 +41,8 @@ const styledTiles = css`
   width: 100%;
   cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
+  margin-bottom: 10px;
+  border-radius: 4px;
   opacity: 0;
 `;
 
@@ -57,7 +59,6 @@ const Container = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => theme.colors.bg.v3};
   body${KEYBOARD_USER_SELECTOR} &:focus {
     outline: solid 2px #fff;
   }
@@ -67,7 +68,7 @@ const Duration = styled.div`
   position: absolute;
   bottom: 12px;
   left: 10px;
-  background: ${({ theme }) => rgba(theme.colors.bg.v1, 0.6)};
+  background: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.6)};
   font-family: ${({ theme }) => theme.fonts.duration.family};
   font-size: ${({ theme }) => theme.fonts.duration.size};
   line-height: ${({ theme }) => theme.fonts.duration.lineHeight};

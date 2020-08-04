@@ -58,12 +58,12 @@ const FrameSidebar = styled.div`
 
 const Hint = styled.div`
   padding: 12px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: 24px;
   text-align: right;
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
 `;
 
 function FramesLayer() {
