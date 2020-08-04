@@ -121,7 +121,7 @@ const theme = {
       v4: '#B3B3B3',
       v5: '#DDDDDD',
       v6: '#232636',
-      v7: '#1A73E8',
+      // v7: '#1A73E8', <=> replaced with accent.primary
       v8: '#E6E6E6',
     },
     hover: '#4285F4',

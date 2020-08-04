@@ -47,7 +47,7 @@ export const MainButton = styled.button`
   border: 0;
   padding: 0;
   text-align: right;
-  color: ${({ theme }) => theme.colors.fg.v7};
+  color: ${({ theme }) => theme.colors.accent.primary};
   flex: 1 0 0;
   font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};

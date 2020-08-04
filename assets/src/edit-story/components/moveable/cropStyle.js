@@ -139,7 +139,7 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	.crop-moveable .moveable-direction.moveable-line {
-		background: #1A73E8 !important;
+		background: ${({ theme }) => theme.colors.accent.primary} !important;
 		width: 2px;
 		height: 2px;
 		pointer-events: none;
