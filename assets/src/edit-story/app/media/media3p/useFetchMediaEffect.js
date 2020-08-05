@@ -22,7 +22,22 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { useSnackbar } from '../../snackbar';
+import { ProviderType } from '../../../components/library/panes/media/common/providerType';
 import { useMedia3pApi } from './api';
+
+function getFetchMediaErrorMessage(provider) {
+  if (provider === ProviderType.UNSPLASH) {
+    return __('Error loading media from Unsplash', 'web-stories');
+  } else if (provider === ProviderType.LOCAL) {
+    return __('Error loading media from Wordpress', 'web-stories');
+  }
+  return __('Error loading media', 'web-stories');
+}
 
 export default function useFetchMediaEffect({
   provider,
@@ -37,6 +52,8 @@ export default function useFetchMediaEffect({
   const {
     actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
+
+  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     async function fetch() {
@@ -59,6 +76,7 @@ export default function useFetchMediaEffect({
         fetchMediaSuccess({ provider, media, pageToken, nextPageToken });
       } catch {
         fetchMediaError({ provider, pageToken });
+        showSnackbar({ message: getFetchMediaErrorMessage(provider) });
       }
     }
 
@@ -66,6 +84,7 @@ export default function useFetchMediaEffect({
       fetch();
     }
   }, [
+    showSnackbar,
     // Fetch media is triggered by changes to these.
     selectedProvider,
     pageToken,

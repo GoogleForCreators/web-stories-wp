@@ -85,7 +85,7 @@ const FilterButton = styled.button`
   padding: 0;
   margin: 0 18px 0 0;
   color: ${({ theme, active }) =>
-    active ? theme.colors.fg.v1 : theme.colors.mg.v1};
+    active ? theme.colors.fg.white : theme.colors.mg.v1};
   font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
