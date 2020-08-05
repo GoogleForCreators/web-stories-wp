@@ -29,11 +29,11 @@ function getThumbnailUrl(minWidth, resource) {
       ...resource.sizes,
     };
     delete sizesWithoutThumbnail.thumbnail;
-    const isOriginalLandscape = resource.width / resource.height > 1;
+    const isLandscape = (obj) => obj.width / obj.height > 1;
 
     const smallestValidImage = Object.values(sizesWithoutThumbnail)
       .sort((s1, s2) => s1.width - s2.width)
-      .filter((s) => s.width / s.height > 1 === isOriginalLandscape)
+      .filter((s) => isLandscape(s) === isLandscape(resource))
       .find((s) => s.width >= minWidth * window.devicePixelRatio);
     if (smallestValidImage) {
       return smallestValidImage.source_url;
