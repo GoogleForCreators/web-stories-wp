@@ -49,7 +49,7 @@ class Story_Post_Type {
 	const POST_TYPE_SLUG = 'web-story';
 
 	/**
-	 * Slug if the AMP validated URL post type.
+	 * Slug of the AMP validated URL post type.
 	 *
 	 * @var string
 	 */
