@@ -90,12 +90,6 @@ const Layer = styled.section`
     / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
     ${PAGE_NAV_WIDTH}px 1fr;
   height: 100%;
-
-  ${({ isHidden }) =>
-    isHidden &&
-    css`
-      display: none;
-    `}
 `;
 
 const Area = styled.div`
