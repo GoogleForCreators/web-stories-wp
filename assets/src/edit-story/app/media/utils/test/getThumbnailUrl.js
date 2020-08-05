@@ -27,6 +27,8 @@ describe('getThumbnailUrl', () => {
   it('should return the smallest available image URL greater than minWidth', () => {
     const resource = {
       src: 'default-url',
+      width: 400,
+      height: 200,
       sizes: {
         img1: { width: 200, height: 1, source_url: 'full-url' },
         img2: { width: 300, height: 1, source_url: 'med-url' },
@@ -40,6 +42,8 @@ describe('getThumbnailUrl', () => {
     window.devicePixelRatio = 2;
     const resource = {
       src: 'default-url',
+      width: 400,
+      height: 200,
       sizes: {
         img1: { width: 200, height: 1, source_url: 'full-url' },
         img2: { width: 300, height: 1, source_url: 'med-url' },
@@ -49,9 +53,25 @@ describe('getThumbnailUrl', () => {
     expect(getThumbnailUrl(160, resource)).toBe('large-url');
   });
 
+  it('should return an image with the same orientation', () => {
+    const resource = {
+      src: 'default-url',
+      width: 400,
+      height: 200,
+      sizes: {
+        img2: { width: 200, height: 500, source_url: 'portrait-url' },
+        img1: { width: 300, height: 1, source_url: 'med-url' },
+        img3: { width: 400, height: 1, source_url: 'large-url' },
+      },
+    };
+    expect(getThumbnailUrl(150, resource)).toBe('med-url');
+  });
+
   it('should never return the one with key=thumbnail', () => {
     const resource = {
       src: 'default-url',
+      width: 400,
+      height: 200,
       sizes: {
         thumbnail: { width: 200, height: 1, source_url: 'thumb-url' },
         img1: { width: 300, height: 1, source_url: 'large-url' },
@@ -64,6 +84,8 @@ describe('getThumbnailUrl', () => {
   it('should return the resource.src if there is no valid thumb', () => {
     const resource = {
       src: 'default-url',
+      width: 400,
+      height: 200,
       sizes: {
         img1: { width: 200, height: 1, source_url: 'small-url' },
         img2: { width: 300, height: 1, source_url: 'med-url' },
@@ -74,7 +96,11 @@ describe('getThumbnailUrl', () => {
   });
 
   it('should return the default src URL if no alternatives', () => {
-    const resource = { src: 'default-url' };
+    const resource = {
+      src: 'default-url',
+      width: 400,
+      height: 200,
+    };
     expect(getThumbnailUrl(200, resource)).toBe('default-url');
   });
 });
