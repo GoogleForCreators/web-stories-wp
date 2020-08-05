@@ -41,20 +41,20 @@ const AttributionPill = styled.div`
   display: flex;
   flex-wrap: nowrap;
   font-size: 12px;
-  color: ${theme.colors.fg.v1};
-  background-color: ${rgba(theme.colors.bg.v0, 0.7)};
+  color: ${theme.colors.fg.white};
+  background-color: ${rgba(theme.colors.bg.black, 0.7)};
   cursor: pointer;
 `;
+
+const LOGO_STYLE = {
+  fill: theme.colors.fg.white,
+  marginLeft: '6px',
+  height: '14px',
+};
 
 const ContentType = {
   IMAGE: 'image',
   VIDEO: 'video',
-};
-
-const LOGO_STYLE = {
-  fill: theme.colors.fg.v1,
-  marginLeft: '6px',
-  height: '14px',
 };
 
 /**
