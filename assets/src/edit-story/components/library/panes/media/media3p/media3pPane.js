@@ -117,11 +117,6 @@ function Media3pPane(props) {
     })
   );
 
-  // const {
-  //   state: { categories },
-  //   actions: { selectCategory, deselectCategory },
-  // } = selectedProviderState;
-
   useEffect(() => {
     if (isActive && !selectedProvider) {
       setSelectedProvider({ provider: ProviderType.UNSPLASH });
