@@ -17,8 +17,6 @@
 export default function reshapeStoryPreview(storyProps = {}) {
   const story = {
     ...storyProps,
-    date: storyProps.date || '',
-    title: storyProps.title,
   };
   const pages = [...storyProps.pages];
   const metadata = {
