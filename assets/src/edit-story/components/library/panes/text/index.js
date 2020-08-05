@@ -18,4 +18,4 @@
  * Internal dependencies
  */
 export { default as TextPane } from './textPane';
-export { default as TextTab } from './textTab';
+export { default as TextIcon } from './textIcon';

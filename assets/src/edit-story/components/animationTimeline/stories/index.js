@@ -15,23 +15,24 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Tab } from '../../shared';
-import { Media } from '../../../../../icons';
-import paneId from './paneId';
 
-function Media3pTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <Media aria-label={__('Third Party Media library', 'web-stories')} />
-    </Tab>
-  );
-}
+import AnimationTimeline from '../index';
 
-export default Media3pTab;
+export default {
+  title: 'Animations/Timeline',
+  component: AnimationTimeline,
+};
+
+const animations = Array.from(Array(10).keys()).map((id) => ({
+  id,
+}));
+
+export const _default = () => {
+  return <AnimationTimeline animations={animations} />;
+};
+
+export const noAnimations = () => {
+  return <AnimationTimeline animations={[]} />;
+};

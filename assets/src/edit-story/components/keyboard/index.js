@@ -87,7 +87,7 @@ function useKeyEffectInternal(
       const handler = createKeyHandler(node, keySpec, batchingCallback);
       mousetrap.bind(keySpec.key, handler, type);
       return () => {
-        mousetrap.unbind(keySpec.key);
+        mousetrap.unbind(keySpec.key, type);
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
