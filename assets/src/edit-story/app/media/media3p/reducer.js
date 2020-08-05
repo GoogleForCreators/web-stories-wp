@@ -25,7 +25,7 @@ import { shallowEqual } from 'react-pure-render';
 import { INITIAL_STATE as INITIAL_STATE_ACTION } from '../types';
 import * as types from './types';
 import providerReducer from './providerReducer.js';
-import { Providers } from './providerConfiguration';
+import { PROVIDERS } from './providerConfiguration';
 
 const INITIAL_STATE = {
   selectedProvider: undefined,
@@ -46,7 +46,7 @@ const INITIAL_STATE = {
  */
 function reduceProviderStates(state, { type, payload }) {
   const result = { ...state };
-  for (const provider of Object.keys(Providers)) {
+  for (const provider of Object.keys(PROVIDERS)) {
     if (type == INITIAL_STATE_ACTION || provider == payload?.provider) {
       result[provider] = providerReducer(state[provider], { type, payload });
     }
@@ -79,7 +79,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         searchTerm: payload.searchTerm,
       };
       // Clear out the pageToken and nextPageToken for all providers.
-      for (const provider of Object.keys(Providers)) {
+      for (const provider of Object.keys(PROVIDERS)) {
         resultState[provider].pageToken = undefined;
         resultState[provider].nextPageToken = undefined;
       }

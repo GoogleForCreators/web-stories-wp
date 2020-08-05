@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef } from 'react';
-import { useFeature } from 'flagged';
+import { useFeature, useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -40,9 +40,8 @@ import {
 } from '../common/styles';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
-import { ProviderType } from '../../../../../app/media/providerType';
 import Flags from '../../../../../flags';
-import { Providers } from '../../../../../app/media/media3p/providerConfiguration';
+import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import Media3pCategories from './media3pCategories';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
@@ -119,7 +118,7 @@ function Media3pPane(props) {
 
   useEffect(() => {
     if (isActive && !selectedProvider) {
-      setSelectedProvider({ provider: ProviderType.UNSPLASH });
+      setSelectedProvider({ provider: Object.keys(PROVIDERS)[0] });
     }
   }, [isActive, selectedProvider, setSelectedProvider]);
 
@@ -138,6 +137,11 @@ function Media3pPane(props) {
     [setSelectedProvider]
   );
 
+  const features = useFeatures();
+  const enabledProviders = Object.keys(PROVIDERS).filter(
+    (p) => !PROVIDERS[p].featureName || features[PROVIDERS[p].featureName]
+  );
+
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -150,16 +154,16 @@ function Media3pPane(props) {
               incremental={incrementalSearchDebounceMedia}
               disabled={Boolean(
                 selectedProvider &&
-                  Providers[selectedProvider].supportsCategories &&
+                  PROVIDERS[selectedProvider].supportsCategories &&
                   media3p[selectedProvider].categories?.selectedCategoryId
               )}
             />
           </SearchInputContainer>
           <ProviderTabSection>
-            {Object.keys(Providers).map((providerType) => (
+            {enabledProviders.map((providerType) => (
               <ProviderTab
                 key={`provider-tab-${providerType}`}
-                name={Providers[providerType].displayName}
+                name={PROVIDERS[providerType].displayName}
                 active={selectedProvider === providerType}
                 onClick={() => onProviderTabClick(providerType)}
               />
@@ -167,40 +171,34 @@ function Media3pPane(props) {
           </ProviderTabSection>
         </PaneHeader>
         <PaneBottom ref={paneBottomRef}>
-          {Object.keys(Providers).map((providerType) => {
+          {Object.keys(PROVIDERS).map((providerType) => {
             const wrapperProps =
               providerType === selectedProvider
                 ? { className: 'provider-selected' }
                 : { 'aria-hidden': 'true' };
+            const state = media3p[providerType].state;
+            const actions = media3p[providerType].actions;
             return (
               <ProviderMediaCategoriesWrapper
                 dataProvider={providerType}
                 {...wrapperProps}
                 key={`provider-bottom-wrapper-${providerType}`}
               >
-                {Providers[providerType].supportsCategories && (
+                {PROVIDERS[providerType].supportsCategories && (
                   <Media3pCategories
-                    categories={
-                      media3p[providerType].state.categories.categories
-                    }
-                    selectedCategoryId={
-                      media3p[providerType].state.categories.selectedCategoryId
-                    }
-                    selectCategory={
-                      media3p[providerType].actions.selectCategory
-                    }
-                    deselectCategory={
-                      media3p[providerType].actions.deselectCategory
-                    }
+                    categories={state.categories.categories}
+                    selectedCategoryId={state.categories.selectedCategoryId}
+                    selectCategory={actions.selectCategory}
+                    deselectCategory={actions.deselectCategory}
                   />
                 )}
                 <PaginatedMediaGallery
                   providerType={providerType}
-                  resources={media3p[providerType].state.media}
-                  isMediaLoading={media3p[providerType].state.isMediaLoading}
-                  isMediaLoaded={media3p[providerType].state.isMediaLoaded}
-                  hasMore={media3p[providerType].state.hasMore}
-                  setNextPage={media3p[providerType].actions.setNextPage}
+                  resources={state.media}
+                  isMediaLoading={state.isMediaLoading}
+                  isMediaLoaded={state.isMediaLoaded}
+                  hasMore={state.hasMore}
+                  setNextPage={actions.setNextPage}
                   onInsert={insertMediaElement}
                 />
               </ProviderMediaCategoriesWrapper>

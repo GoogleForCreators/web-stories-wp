@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  */
 import getResourceFromMedia3p from '../../utils/getResourceFromMedia3p';
 import { ProviderType } from '../../providerType';
+import { PROVIDERS } from '../providerConfiguration';
 import apiFetcher from './apiFetcher';
 import Context from './context';
 
@@ -59,10 +60,7 @@ function Media3pApiProvider({ children }) {
     selectedCategoryId,
     mediaType,
   }) {
-    if (
-      provider !== ProviderType.UNSPLASH &&
-      provider !== ProviderType.COVERR
-    ) {
+    if (!Object.keys(PROVIDERS).contains(provider)) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
 

@@ -25,22 +25,10 @@ import { useEffect } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { useSnackbar } from '../../snackbar';
-import { ProviderType } from '../providerType';
 import usePrevious from '../usePrevious';
 import { useMedia3pApi } from './api';
-
-function getFetchMediaErrorMessage(provider) {
-  if (provider === ProviderType.UNSPLASH) {
-    return __('Error loading media from Unsplash', 'web-stories');
-  } else if (provider === ProviderType.COVERR) {
-    return __('Error loading media from Coverr', 'web-stories');
-  } else if (provider === ProviderType.LOCAL) {
-    return __('Error loading media from Wordpress', 'web-stories');
-  }
-  return __('Error loading media', 'web-stories');
-}
+import { PROVIDERS } from './providerConfiguration';
 
 export default function useFetchMediaEffect({
   provider,
@@ -91,9 +79,9 @@ export default function useFetchMediaEffect({
           pageToken,
           nextPageToken: newNextPageToken,
         });
-      } catch {
+      } catch (e) {
         fetchMediaError({ provider, pageToken });
-        showSnackbar({ message: getFetchMediaErrorMessage(provider) });
+        showSnackbar({ message: PROVIDERS[provider].fetchMediaErrorMessage });
       }
     }
 

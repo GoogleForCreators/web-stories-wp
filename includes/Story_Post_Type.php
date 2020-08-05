@@ -477,6 +477,13 @@ class Story_Post_Type {
 				 * Creation date: 2020-07-15
 				 */
 				'incrementalSearchDebounceMedia' => false,
+				/**
+				 * Description: Flag for showing the Coverr Media3p subtab.
+				 * Author: @diegovar
+				 * Issue: #3349
+				 * Creation date: 2020-08-05
+				 */
+				'showCoverrTab'                  => true,
 			],
 
 		];

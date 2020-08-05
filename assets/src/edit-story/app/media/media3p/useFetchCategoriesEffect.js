@@ -25,18 +25,9 @@ import { useEffect } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { ProviderType } from '../providerType';
 import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
-import { Providers } from './providerConfiguration';
-
-function getFetchCategoriesErrorMessage(provider) {
-  if (provider === ProviderType.UNSPLASH) {
-    return __('Error loading categories from Unsplash', 'web-stories');
-  }
-  return __('Error loading categories', 'web-stories');
-}
+import { PROVIDERS } from './providerConfiguration';
 
 export default function useFetchCategoriesEffect({
   provider,
@@ -60,15 +51,17 @@ export default function useFetchCategoriesEffect({
           provider,
         });
         fetchCategoriesSuccess({ provider, categories: newCategories });
-      } catch {
+      } catch (e) {
         fetchCategoriesError({ provider });
-        showSnackbar({ message: getFetchCategoriesErrorMessage(provider) });
+        showSnackbar({
+          message: PROVIDERS[provider].fetchCategoriesErrorMessage,
+        });
       }
     }
 
     if (
       provider === selectedProvider &&
-      Providers[provider].supportsCategories &&
+      PROVIDERS[provider].supportsCategories &&
       !categories?.length
     ) {
       fetch();

@@ -18,14 +18,14 @@
  * Internal dependencies
  */
 import useProviderContextValueProvider from './useProviderContextValueProvider';
-import { Providers } from './providerConfiguration';
+import { PROVIDERS } from './providerConfiguration';
 
 function useProviderSetContextValueProvider(reducerState, reducerActions) {
   const result = {};
 
   // The 'providers' list is a constant, and so hooks are still called in the
   // same order during a re-render as per rules-of-hooks.
-  for (const provider of Object.keys(Providers)) {
+  for (const provider of Object.keys(PROVIDERS)) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     result[provider] = useProviderContextValueProvider(
       provider,

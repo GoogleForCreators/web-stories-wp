@@ -43,7 +43,7 @@ import {
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
 } from '../common/styles';
-import { Providers } from '../../../../../app/media/media3p/providerConfiguration';
+import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 
 const ROOT_MARGIN = 300;
 
@@ -172,7 +172,7 @@ function PaginatedMediaGallery({
       >
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
-      {Providers[providerType].attributionBuilder()}
+      {PROVIDERS[providerType].attributionComponent()}
     </>
   );
 }
