@@ -155,7 +155,7 @@ class Embed_Block {
 		$player_style = sprintf( 'width: %dpx; height: %dpx; margin: %s', absint( $attributes['width'] ), absint( $attributes['height'] ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
-		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) { // @todo This will need to be changed when the plugin includes an is_amp_endpoint() polyfill.
+		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
 			wp_enqueue_style( 'standalone-amp-story-player' );
 			wp_enqueue_script( 'standalone-amp-story-player' );
 		}

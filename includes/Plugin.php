@@ -129,6 +129,8 @@ class Plugin {
 	 * @return void
 	 */
 	public function register() {
+		add_action( 'plugins_loaded', [ $this, 'load_plugin_compat' ] );
+
 		$this->media = new Media();
 		add_action( 'init', [ $this->media, 'init' ], 9 );
 
@@ -183,6 +185,17 @@ class Plugin {
 
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
+	}
+
+	/**
+	 * Initializes functionality to improve compatibility with other plugins.
+	 *
+	 * Loads a separate plugin-compat.php file that allows defining functions in the global namespace.
+	 *
+	 * @return void
+	 */
+	public function load_plugin_compat() {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/plugin-compat.php';
 	}
 
 	/**
