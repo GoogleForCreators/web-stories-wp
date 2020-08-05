@@ -17,14 +17,19 @@
 /**
  * Internal dependencies
  */
-export {
-  FULLBLEED_RATIO,
-  PAGE_RATIO,
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
-} from '../../edit-story/constants';
+import AnimationTimeline from '..';
+import { renderWithTheme } from '../../../testUtils';
 
-export const WPBODY_ID = 'wpbody';
-
-export const DASHBOARD_LEFT_NAV_WIDTH = 190;
-export const DASHBOARD_TOP_MARGIN = 45;
+describe('<AnimationTimeline />', function () {
+  it('should generate the number of rows for animations provided.', function () {
+    const animations = Array.from(Array(10).keys()).map((id) => ({
+      id,
+    }));
+    const { queryAllByTestId } = renderWithTheme(
+      <AnimationTimeline animations={animations} />
+    );
+    expect(queryAllByTestId('timeline-animation-item')).toHaveLength(
+      animations.length
+    );
+  });
+});

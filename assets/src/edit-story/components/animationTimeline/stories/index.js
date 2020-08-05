@@ -17,14 +17,22 @@
 /**
  * Internal dependencies
  */
-export {
-  FULLBLEED_RATIO,
-  PAGE_RATIO,
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
-} from '../../edit-story/constants';
 
-export const WPBODY_ID = 'wpbody';
+import AnimationTimeline from '../index';
 
-export const DASHBOARD_LEFT_NAV_WIDTH = 190;
-export const DASHBOARD_TOP_MARGIN = 45;
+export default {
+  title: 'Animations/Timeline',
+  component: AnimationTimeline,
+};
+
+const animations = Array.from(Array(10).keys()).map((id) => ({
+  id,
+}));
+
+export const _default = () => {
+  return <AnimationTimeline animations={animations} />;
+};
+
+export const noAnimations = () => {
+  return <AnimationTimeline animations={[]} />;
+};
