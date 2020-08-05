@@ -30,6 +30,7 @@ export const ANIMATION_TYPES = {
 
 export const ANIMATION_EFFECTS = {
   FADE_IN: 'effect-fade-in',
+  FLY_IN: 'effect-fly-in',
   PULSE: 'effect-pulse',
 };
 

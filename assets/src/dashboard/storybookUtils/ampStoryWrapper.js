@@ -19,9 +19,17 @@
  */
 import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
+import Boilerplate from '../../edit-story/output/utils/ampBoilerplate';
+import CustomCSS from '../../edit-story/output/utils/styles';
+
 function AMPStoryWrapper({ children }) {
   return (
     <div style={{ width: '100%', height: '640px' }}>
+      <Boilerplate />
+      <CustomCSS />
       <amp-story
         standalone
         title="My Story"

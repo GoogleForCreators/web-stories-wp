@@ -28,9 +28,14 @@ import { getHTMLInfo } from '../../richText/htmlManipulation';
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = stylePresets.colors;
   const patternType = isText ? 'color' : 'background';
-  return colorsToMatch.find((value) =>
-    isPatternEqual(value, color, patternType)
-  );
+  return colorsToMatch.find((value) => {
+    try {
+      return isPatternEqual(value, color, patternType);
+    } catch (e) {
+      // Some preset couldn't be rendered as patternType
+      return false;
+    }
+  });
 }
 
 export function findMatchingStylePreset(preset, stylePresets) {
