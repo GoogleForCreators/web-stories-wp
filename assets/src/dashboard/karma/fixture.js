@@ -30,6 +30,7 @@ import ApiProvider from '../app/api/apiProvider';
 import FixtureEvents from '../../../../karma/fixture/events';
 import ComponentStub from '../../../../karma/fixture/componentStub';
 import actPromise from '../../../../karma/fixture/actPromise';
+import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
 const defaultConfig = {
@@ -52,6 +53,7 @@ export default class Fixture {
     this._config = { ...defaultConfig, ...config };
     this._flags = flags;
     this._container = null;
+    this._appFrameStub = null;
     this._screen = null;
     this._componentStubs = new Map();
     this._events = new FixtureEvents(act);
@@ -77,6 +79,8 @@ export default class Fixture {
     });
 
     this.stubComponent(ApiProvider).callFake(ApiProviderFixture);
+
+    this._appFrameStub = this.stubComponent(AppFrame);
   }
 
   get container() {
@@ -174,6 +178,19 @@ export default class Fixture {
 
   restore() {
     window.location.hash = '#';
+  }
+
+  /**
+   * Calls a hook in the context of the whole dashboard.
+   *
+   * Similar to the `@testing-library/react`'s `renderHook()` method.
+   *
+   * @param {Function} func The hook function. E.g. `useStory`.
+   * @return {Promise<Object>} Resolves when the hook is rendered with the
+   * value of the hook.
+   */
+  renderHook(func) {
+    return this._appFrameStub.renderHook(func);
   }
 
   /**

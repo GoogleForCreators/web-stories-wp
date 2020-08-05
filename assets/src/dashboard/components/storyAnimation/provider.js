@@ -104,6 +104,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
   const hoistWAAPIAnimation = useCallback((WAPPIAnimation) => {
     const symbol = Symbol();
     WAAPIAnimationMap.current.set(symbol, WAPPIAnimation);
+
     setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
     return () => {
       WAPPIAnimation?.cancel();
@@ -114,7 +115,16 @@ function Provider({ animations, children, onWAAPIFinish }) {
 
   const WAAPIAnimationMethods = useMemo(() => {
     const play = () =>
-      WAAPIAnimations.forEach((animation) => animation?.play());
+      WAAPIAnimations.forEach((animation) => {
+        // Sometimes an animation part can get into a
+        // stuck state where executing `play` doesn't
+        // trigger the animation. A workaround to avoid
+        // this is to first `cancel` the animation
+        // before playing.
+        animation?.cancel();
+
+        animation?.play();
+      });
     const pause = () =>
       WAAPIAnimations.forEach((animation) => animation?.pause());
     const setCurrentTime = (time) =>

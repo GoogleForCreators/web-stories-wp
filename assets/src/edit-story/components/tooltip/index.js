@@ -36,15 +36,15 @@ const Wrapper = styled.div`
 `;
 
 const Tooltip = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v0};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.black};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: 12px;
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
   padding: ${PADDING}px ${PADDING * 2}px;
   border-radius: 6px;
-  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +61,7 @@ const TRANSPARENT_BORDER = `6px solid transparent`;
 
 const TooltipArrow = styled.div`
   position: absolute;
-  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
   ${({ placement, theme }) => {
     switch (placement) {
       case Placement.TOP:
@@ -69,7 +69,7 @@ const TooltipArrow = styled.div`
       case Placement.TOP_END:
         return `
           bottom: -6px;
-          border-top: 6px solid ${theme.colors.bg.v0};
+          border-top: 6px solid ${theme.colors.bg.black};
           border-left: ${TRANSPARENT_BORDER};
           border-right: ${TRANSPARENT_BORDER};
         `;
@@ -78,7 +78,7 @@ const TooltipArrow = styled.div`
       case Placement.BOTTOM_END:
         return `
           top: -6px;
-          border-bottom: 6px solid ${theme.colors.bg.v0};
+          border-bottom: 6px solid ${theme.colors.bg.black};
           border-left: ${TRANSPARENT_BORDER};
           border-right: ${TRANSPARENT_BORDER};
         `;
@@ -89,7 +89,7 @@ const TooltipArrow = styled.div`
           right: -6px;
           border-top: ${TRANSPARENT_BORDER};
           border-bottom: ${TRANSPARENT_BORDER};
-          border-left: 6px solid ${theme.colors.bg.v0};
+          border-left: 6px solid ${theme.colors.bg.black};
         `;
       case Placement.RIGHT:
       case Placement.RIGHT_START:
@@ -98,7 +98,7 @@ const TooltipArrow = styled.div`
           left: -6px;
           border-top: ${TRANSPARENT_BORDER};
           border-bottom: ${TRANSPARENT_BORDER};
-          border-right: 6px solid ${theme.colors.bg.v0};
+          border-right: 6px solid ${theme.colors.bg.black};
         `;
       default:
         return ``;

@@ -209,43 +209,40 @@ function useLayoutParamsCssVars() {
   };
 }
 
-const PageArea = forwardRef(
-  (
-    {
-      children,
-      showSafeZone = false,
-      showOverflow = false,
-      fullbleedRef = createRef(),
-      overlay = [],
-      background,
-    },
-    ref
-  ) => {
-    return (
-      <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
-        <PageAreaWithOverflow
-          showOverflow={showOverflow}
-          background={background}
+const PageArea = forwardRef(function PageArea(
+  {
+    children,
+    showSafeZone = false,
+    showOverflow = false,
+    fullbleedRef = createRef(),
+    overlay = [],
+    background,
+  },
+  ref
+) {
+  return (
+    <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
+      <PageAreaWithOverflow showOverflow={showOverflow} background={background}>
+        <PageAreaSafeZone
+          ref={ref}
+          data-testid="safezone"
+          showSafeZone={showSafeZone}
         >
-          <PageAreaSafeZone
-            ref={ref}
-            data-testid="safezone"
-            showSafeZone={showSafeZone}
-          >
-            {children}
-          </PageAreaSafeZone>
-        </PageAreaWithOverflow>
-        {overlay}
-      </PageAreaFullbleedContainer>
-    );
-  }
-);
+          {children}
+        </PageAreaSafeZone>
+      </PageAreaWithOverflow>
+      {overlay}
+    </PageAreaFullbleedContainer>
+  );
+});
 
 PageArea.propTypes = {
   children: PropTypes.node,
-  overlay: PropTypes.node,
   showSafeZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
+  fullbleedRef: PropTypes.object,
+  overlay: PropTypes.node,
+  background: PropTypes.object,
 };
 
 export {

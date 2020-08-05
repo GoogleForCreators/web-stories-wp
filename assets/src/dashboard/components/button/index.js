@@ -145,6 +145,7 @@ const Button = ({
     <StyledButtonByType
       as={isLink ? 'a' : 'button'}
       disabled={isDisabled}
+      onClick={(e) => e.stopPropagation()} // this is here so that links stacked on containers that have click handlers don't bubble. if an onClick is present as a prop it'll override this with ...rest
       {...rest}
     >
       <StyledChildren isSecondary={type === BUTTON_TYPES.SECONDARY}>

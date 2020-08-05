@@ -169,10 +169,10 @@ class Story_Renderer {
 
 		$output = (string) ob_get_clean();
 
-		// If analytics tag was added, let's include the required script, too.
 		if ( ! empty( $output ) ) {
 			add_action( 'web_stories_story_head', [ $this, 'print_analytics_script' ] );
 		}
+
 		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
 	}
 

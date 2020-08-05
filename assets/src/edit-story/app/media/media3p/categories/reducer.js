@@ -23,6 +23,7 @@ export const INITIAL_STATE = {
   isLoading: true,
   isLoaded: false,
   categories: [],
+  selectedCategoryId: undefined,
 };
 
 /**
@@ -60,6 +61,19 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         ...state,
         isLoading: false,
         isLoaded: true,
+      };
+    }
+    case types.SELECT_CATEGORY: {
+      const { categoryId } = payload;
+      return {
+        ...state,
+        selectedCategoryId: categoryId,
+      };
+    }
+    case types.DESELECT_CATEGORY: {
+      return {
+        ...state,
+        selectedCategoryId: undefined,
       };
     }
     default:

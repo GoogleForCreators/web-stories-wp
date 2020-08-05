@@ -40,6 +40,8 @@ jobs:
 
       - name: Run integration tests
         run: npm run test:karma:edit-story -- --headless --snapshots --viewport=1600:1000 --coverage
+        env:
+          DISABLE_ERROR_BOUNDARIES: true
 
       - name: Add files for snapshotting
         run: cp -r __static__ .test_artifacts/karma_snapshots/

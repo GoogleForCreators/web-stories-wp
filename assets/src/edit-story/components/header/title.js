@@ -33,7 +33,7 @@ import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
 
 const Input = styled.input`
-  color: ${({ theme }) => `${theme.colors.fg.v1} !important`};
+  color: ${({ theme }) => `${theme.colors.fg.white} !important`};
   margin: 0;
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};

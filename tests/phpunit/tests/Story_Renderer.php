@@ -114,25 +114,25 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 *
 	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_option_name
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$renderer                 = new \Google\Web_Stories\Story_Renderer( null );
-		$placeholder              = $renderer->get_publisher_logo_placeholder();
-		$option_name              = $renderer->get_publisher_logo_option_name();
+		$renderer    = new \Google\Web_Stories\Story_Renderer( null );
+		$placeholder = $renderer->get_publisher_logo_placeholder();
+
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
+
 		$post_with_publisher_logo = self::factory()->post->create_and_get(
 			[
 				'post_content' => '<html><head></head><body><amp-story publisher-logo-src=""' . $placeholder . '"></amp-story></body></html>',
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
-		add_option( $option_name, [ 'active' => $attachment_id ] );
 		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
 		$rendered = $renderer->render();
 
-		delete_option( $option_name );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$this->assertContains( 'attachment', $rendered );
 		$this->assertNotContains( $placeholder, $rendered );

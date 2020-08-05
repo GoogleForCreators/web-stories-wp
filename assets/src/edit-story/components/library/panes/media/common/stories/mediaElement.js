@@ -92,6 +92,46 @@ export const _Image = () => {
   );
 };
 
+export const _Image_With_Attribution = () => {
+  const resource = object('Image Resource', {
+    id: 123,
+    type: 'image',
+    mimeType: 'image/png',
+    title: 'My Image :)',
+    uploadDate: Date.now(),
+    src: testImage,
+    width: 910,
+    height: 675,
+    local: false,
+    alt: 'my image',
+    sizes: {},
+    attribution: {
+      author: {
+        displayName: 'Some Author',
+        url: 'http://www.google.com',
+      },
+    },
+  });
+
+  return (
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <FlagsProvider features={{ mediaDropdownMenu: true }}>
+            <Column>
+              <MediaElement
+                resource={resource}
+                width={150}
+                onInsert={action('insert into canvas')}
+              />
+            </Column>
+          </FlagsProvider>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
+  );
+};
+
 export const _Video = () => {
   const resource = object('Video Resource', {
     id: 456,
@@ -107,6 +147,48 @@ export const _Video = () => {
     local: false,
     alt: 'my video',
     sizes: {},
+  });
+
+  return (
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <FlagsProvider features={{ mediaDropdownMenu: true }}>
+            <Column>
+              <MediaElement
+                resource={resource}
+                width={150}
+                onInsert={action('insert into canvas')}
+              />
+            </Column>
+          </FlagsProvider>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
+  );
+};
+
+export const _Video_With_Attribution = () => {
+  const resource = object('Video Resource', {
+    id: 456,
+    type: 'video',
+    mimeType: 'video/mp4',
+    title: 'My Video :)',
+    uploadDate: Date.now(),
+    src: testVideo,
+    width: 640,
+    height: 480,
+    poster: testPoster,
+    lengthFormatted: '0:26',
+    local: false,
+    alt: 'my video',
+    sizes: {},
+    attribution: {
+      author: {
+        displayName: 'Some Author',
+        url: 'http://www.google.com',
+      },
+    },
   });
 
   return (

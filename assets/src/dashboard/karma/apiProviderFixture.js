@@ -26,16 +26,16 @@ import moment from 'moment';
 import { useMemo, useState } from 'react';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
-import { defaultTemplatesState } from '../app/reducer/templates';
 import formattedUsersObject from '../dataUtils/formattedUsersObject';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
+import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
   const [stories, setStoriesState] = useState(getStoriesState());
-  const [templates] = useState(defaultTemplatesState);
+  const [templates, setTemplatesState] = useState(getTemplatesState());
   const [users] = useState(formattedUsersObject);
 
   const storyApi = useMemo(
@@ -58,14 +58,18 @@ export default function ApiProviderFixture({ children }) {
       bookmarkTemplateById: jasmine.createSpy('bookmarkTemplateById'),
       createTemplateFromStory: jasmine.createSpy('createTemplateFromStory'),
       fetchBookmarkedTemplates: jasmine.createSpy('fetchBookmarkedTemplates'),
-      fetchExternalTemplates: jasmine.createSpy('fetchExternalTemplates'),
-      fetchExternalTemplateById: jasmine.createSpy('fetchExternalTemplateById'),
+      fetchExternalTemplates: () =>
+        setTemplatesState((currentState) =>
+          fetchExternalTemplates(currentState)
+        ),
+      fetchExternalTemplateById: (id) =>
+        fetchExternalTemplateById(id, templates),
       fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
-      fetchMyTemplateById: jasmine.createSpy('fetchMyTemplateById'),
-      fetchRelatedTemplates: jasmine.createSpy('fetchRelatedTemplates'),
+      fetchMyTemplateById: (id) => fetchExternalTemplateById(id, templates),
+      fetchRelatedTemplates: () => fetchRelatedTemplates(templates),
       fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
     }),
-    []
+    [templates]
   );
 
   const usersApi = useMemo(
@@ -143,7 +147,7 @@ function fetchStories(
   const storiesState = { ...currentState } || getStoriesState();
   const statuses = status.split(',');
 
-  storiesState.storiesOrderById = [...formattedStoriesArray]
+  storiesState.storiesOrderById = Object.values(storiesState.stories)
     .filter(
       ({ status: storyStatus, title }) =>
         statuses.includes(storyStatus) && title.includes(searchTerm)
@@ -264,4 +268,46 @@ function getTotalStoriesByStatus(stories = []) {
       published: 0,
     }
   );
+}
+
+function getTemplatesState() {
+  const copiedTemplates = [...formattedTemplatesArray];
+  return {
+    allPagesFetched: true,
+    error: {},
+    isLoading: false,
+    savedTemplates: {},
+    savedTemplatesOrderById: [],
+    templates: copiedTemplates.reduce((acc, curr) => {
+      acc[curr.id] = curr;
+
+      return acc;
+    }, {}),
+    templatesOrderById: copiedTemplates.map(({ id }) => id),
+    totalTemplates: copiedTemplates.length,
+    totalPages: 1,
+  };
+}
+
+function fetchExternalTemplates(currentState) {
+  return currentState;
+}
+
+function fetchExternalTemplateById(id, currentState) {
+  return Promise.resolve(currentState.templates?.[id] ?? {});
+}
+
+function fetchRelatedTemplates(currentState) {
+  if (!currentState.templates) {
+    return [];
+  }
+  // this will return anywhere between 1 and 5 "related" templates
+  const randomStartingIndex = Math.floor(
+    Math.random() * currentState.templatesOrderById.length
+  );
+  return [...currentState.templatesOrderById]
+    .splice(randomStartingIndex, 5)
+    .map((id) => {
+      return currentState.templates[id];
+    });
 }

@@ -18,4 +18,4 @@
  * Internal dependencies
  */
 export { default as AnimationPane } from './animationPane';
-export { default as AnimationTab } from './animationTab';
+export { default as AnimationIcon } from './animationIcon';
