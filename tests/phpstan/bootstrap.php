@@ -18,3 +18,8 @@ class WP_CLI {
 	public static function warning( $text ) {
 	}
 }
+
+// This may need to be revised when the Web Stories plugin includes this function by itself.
+function is_amp_endpoint() {
+	return true;
+}
