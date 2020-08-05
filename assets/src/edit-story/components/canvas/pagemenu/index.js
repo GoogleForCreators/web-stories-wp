@@ -36,7 +36,7 @@ import {
   Duplicate,
   UndoAlt as LeftArrow,
   RedoAlt as RightArrow,
-  AddPage,
+  Add,
   LayoutHelper,
   Text,
 } from '../../../icons';
@@ -197,7 +197,7 @@ function PageMenu() {
               onClick={handleAddPage}
               aria-label={__('Add New Page', 'web-stories')}
             >
-              <AddPage />
+              <Add />
             </Icon>
           </WithTooltip>
           <Space />

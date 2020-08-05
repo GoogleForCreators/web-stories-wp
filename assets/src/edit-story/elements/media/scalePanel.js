@@ -78,9 +78,10 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
         <RangeInput
           min={100}
           max={MAX_SCALE}
-          step={10}
+          majorStep={10}
+          minorStep={1}
           value={scale}
-          onChange={(evt) => setProperties({ scale: evt.target.valueAsNumber })}
+          handleChange={(value) => setProperties({ scale: value })}
         />
         <ResetButton onClick={() => setProperties({ scale: 100 })}>
           {__('Reset', 'web-stories')}
