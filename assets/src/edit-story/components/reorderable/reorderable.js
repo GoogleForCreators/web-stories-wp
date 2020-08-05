@@ -33,65 +33,64 @@ const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
   display: flex;
 `;
 
-const Reorderable = forwardRef(
-  (
-    {
-      children,
-      onPositionChange = () => {},
-      getItemSize = () => 10,
-      mode = 'horizontal',
-      ...props
-    },
-    forwardedRef
-  ) => {
-    const ref = useRef(null);
-    const containerRef = forwardedRef || ref;
-    const {
+const Reorderable = forwardRef(function Reorderable(
+  {
+    children,
+    onPositionChange = () => {},
+    getItemSize = () => 10,
+    mode = 'horizontal',
+    ...props
+  },
+  forwardedRef
+) {
+  const ref = useRef(null);
+  const containerRef = forwardedRef || ref;
+  const {
+    isReordering,
+    currentSeparator,
+    setCurrentSeparator,
+    handleStartReordering,
+  } = useReordering(onPositionChange, children.length);
+
+  const { startScroll, canScrollEnd, canScrollStart } = useScroll(
+    mode,
+    isReordering,
+    containerRef,
+    getItemSize()
+  );
+
+  const state = {
+    state: {
       isReordering,
       currentSeparator,
+      containerRef,
+      mode,
+      canScrollEnd,
+      canScrollStart,
+    },
+    actions: {
       setCurrentSeparator,
       handleStartReordering,
-    } = useReordering(onPositionChange, children.length);
+      startScroll,
+    },
+  };
 
-    const { startScroll, canScrollEnd, canScrollStart } = useScroll(
-      mode,
-      isReordering,
-      containerRef,
-      getItemSize()
-    );
-
-    const state = {
-      state: {
-        isReordering,
-        currentSeparator,
-        containerRef,
-        mode,
-        canScrollEnd,
-        canScrollStart,
-      },
-      actions: {
-        setCurrentSeparator,
-        handleStartReordering,
-        startScroll,
-      },
-    };
-
-    return (
-      <Context.Provider value={state}>
-        <ReorderableContainer ref={containerRef} {...props}>
-          <ReorderableScroller direction={-1} size={getItemSize()} />
-          {children}
-          <ReorderableScroller direction={1} size={getItemSize()} />
-        </ReorderableContainer>
-      </Context.Provider>
-    );
-  }
-);
+  return (
+    <Context.Provider value={state}>
+      <ReorderableContainer ref={containerRef} {...props}>
+        <ReorderableScroller direction={-1} size={getItemSize()} />
+        {children}
+        <ReorderableScroller direction={1} size={getItemSize()} />
+      </ReorderableContainer>
+    </Context.Provider>
+  );
+});
 
 Reorderable.propTypes = {
   children: PropTypes.node,
   onPositionChange: PropTypes.func.isRequired,
   getItemSize: PropTypes.func.isRequired,
+  mode: PropTypes.string,
 };
 
 export default Reorderable;

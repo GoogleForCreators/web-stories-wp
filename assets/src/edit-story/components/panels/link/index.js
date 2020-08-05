@@ -42,7 +42,7 @@ import { Close } from '../../../icons';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 
 const IconText = styled.span`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};

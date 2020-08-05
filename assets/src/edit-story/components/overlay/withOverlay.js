@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useState, forwardRef } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -37,7 +38,7 @@ const Overlay = styled.div`
 `;
 
 function withOverlay(Comp) {
-  return forwardRef(({ children, ...rest }, ref) => {
+  function WithOverlay({ children, ...rest }, ref) {
     const [overlay, setOverlay] = useState(null);
     const [container, setContainer] = useState(null);
     return (
@@ -48,7 +49,15 @@ function withOverlay(Comp) {
         </Comp>
       </Context.Provider>
     );
-  });
+  }
+
+  const ReffedWithOverlay = forwardRef(WithOverlay);
+
+  WithOverlay.propTypes = {
+    children: PropTypes.node,
+  };
+
+  return ReffedWithOverlay;
 }
 
 export default withOverlay;

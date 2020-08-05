@@ -39,8 +39,8 @@ const MoreButton = styled(More)`
   position: absolute;
   top: 8px;
   right: 8px;
-  background: ${({ theme }) => theme.colors.bg.v4};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  background: ${({ theme }) => theme.colors.bg.panel};
+  color: ${({ theme }) => theme.colors.fg.white};
   border-radius: 100%;
 `;
 
@@ -53,7 +53,7 @@ const DropDownContainer = styled.div`
  *
  * @param {Object} props Component props.
  * @param {Object} props.resource Selected media element's resource object.
- * @param {boolean} props.pointerEntered If the user's pointer is in the media element.
+ * @param {boolean} props.display Whether the more icon should be displayed.
  * @param {boolean} props.isMenuOpen If the dropdown menu is open.
  * @param {Function} props.onMenuOpen Callback for when menu is opened.
  * @param {Function} props.onMenuCancelled Callback for when menu is closed without any selections.
@@ -62,7 +62,7 @@ const DropDownContainer = styled.div`
  */
 function DropDownMenu({
   resource,
-  pointerEntered,
+  display,
   isMenuOpen,
   onMenuOpen,
   onMenuCancelled,
@@ -105,13 +105,14 @@ function DropDownMenu({
   return (
     !resource.local && ( // Don't show menu if resource not uploaded to server yet.
       <div>
-        {(pointerEntered || isMenuOpen) && (
+        {(display || isMenuOpen) && (
           <>
             <MoreButton
               ref={moreButtonRef}
               width="28"
               height="28"
               onClick={onMenuOpen}
+              aria-label={__('More', 'web-stories')}
               aria-pressed={isMenuOpen}
               aria-haspopup={true}
               aria-expanded={isMenuOpen}
@@ -145,7 +146,7 @@ function DropDownMenu({
 
 DropDownMenu.propTypes = {
   resource: PropTypes.object.isRequired,
-  pointerEntered: PropTypes.bool.isRequired,
+  display: PropTypes.bool.isRequired,
   isMenuOpen: PropTypes.bool.isRequired,
   onMenuOpen: PropTypes.func.isRequired,
   onMenuCancelled: PropTypes.func.isRequired,

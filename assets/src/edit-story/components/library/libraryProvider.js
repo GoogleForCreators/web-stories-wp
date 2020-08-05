@@ -26,6 +26,12 @@ import { useFeatures } from 'flagged';
  */
 import { useInsertElement } from '../canvas';
 import Context from './context';
+import { AnimationPane, AnimationIcon } from './panes/animation';
+import { MediaPane, MediaIcon } from './panes/media/local';
+import { Media3pPane, Media3pIcon } from './panes/media/media3p';
+import { ShapesPane, ShapesIcon } from './panes/shapes';
+import { TextPane, TextIcon } from './panes/text';
+import { ElementsPane, ElementsIcon } from './panes/elements';
 
 export const TAB_IDS = {
   MEDIA: 'media',
@@ -37,22 +43,50 @@ export const TAB_IDS = {
 };
 
 function LibraryProvider({ children }) {
-  const [tab, setTab] = useState(TAB_IDS.MEDIA);
+  const initialTab = TAB_IDS.MEDIA;
+  const [tab, setTab] = useState(initialTab);
   const insertElement = useInsertElement();
 
   const { showAnimationTab, showElementsTab, media3pTab } = useFeatures();
 
   // Order here is important, as it denotes the actual visual order of elements.
   const tabs = useMemo(
-    () =>
-      [
-        TAB_IDS.MEDIA,
-        media3pTab ? TAB_IDS.MEDIA3P : null,
-        TAB_IDS.TEXT,
-        TAB_IDS.SHAPES,
-        showElementsTab ? TAB_IDS.ELEMENTS : null,
-        showAnimationTab ? TAB_IDS.ANIMATION : null,
-      ].filter(Boolean),
+    () => [
+      { icon: MediaIcon, Pane: MediaPane, id: TAB_IDS.MEDIA },
+      ...(media3pTab
+        ? [
+            {
+              icon: Media3pIcon,
+              Pane: Media3pPane,
+              id: TAB_IDS.MEDIA3P,
+            },
+          ]
+        : []),
+      { icon: TextIcon, Pane: TextPane, id: TAB_IDS.TEXT },
+      {
+        icon: ShapesIcon,
+        Pane: ShapesPane,
+        id: TAB_IDS.SHAPES,
+      },
+      ...(showElementsTab
+        ? [
+            {
+              icon: ElementsIcon,
+              Pane: ElementsPane,
+              id: TAB_IDS.ELEMENTS,
+            },
+          ]
+        : []),
+      ...(showAnimationTab
+        ? [
+            {
+              icon: AnimationIcon,
+              Pane: AnimationPane,
+              id: TAB_IDS.ANIMATION,
+            },
+          ]
+        : []),
+    ],
     [media3pTab, showAnimationTab, showElementsTab]
   );
 
@@ -60,6 +94,7 @@ function LibraryProvider({ children }) {
     () => ({
       state: {
         tab,
+        initialTab,
       },
       actions: {
         setTab,
@@ -69,7 +104,7 @@ function LibraryProvider({ children }) {
         tabs: tabs,
       },
     }),
-    [tab, insertElement, tabs]
+    [tab, insertElement, initialTab, tabs]
   );
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

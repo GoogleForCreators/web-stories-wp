@@ -72,7 +72,7 @@ describe('PageAdvancementPanel', () => {
     const slider = getByRole('slider', { name: 'Default Page Duration' });
 
     fireEvent.change(slider, {
-      target: { value: 0 },
+      target: { valueAsNumber: 0, value: '0' },
     });
 
     await waitFor(() =>
@@ -85,7 +85,7 @@ describe('PageAdvancementPanel', () => {
 
     updateStory.mockClear();
     fireEvent.change(slider, {
-      target: { value: 1 },
+      target: { valueAsNumber: 1, value: '1' },
     });
 
     await waitFor(() => {
@@ -98,7 +98,7 @@ describe('PageAdvancementPanel', () => {
     });
 
     fireEvent.change(slider, {
-      target: { value: 21 },
+      target: { valueAsNumber: 21, value: '21' },
     });
 
     await waitFor(() =>

@@ -51,7 +51,7 @@
     var func = puppeteerFunction(methodName);
     return function() {
       var args = Array.prototype.slice.call(arguments, 0);
-      var node = args[0].nodeType ? args[0] : null;
+      var node = args[0] && args[0].nodeType ? args[0] : null;
       var cleanup = noCleanup;
       if (node) {
         var uniqueId = Math.random();
