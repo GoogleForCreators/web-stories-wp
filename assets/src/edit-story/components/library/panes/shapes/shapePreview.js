@@ -44,7 +44,7 @@ const ShapePreviewContainer = styled.button`
 `;
 
 const Path = styled.path`
-  fill: ${({ theme }) => theme.colors.fg.v1};
+  fill: ${({ theme }) => theme.colors.fg.white};
 `;
 
 function ShapePreview({ mask, isPreview }) {

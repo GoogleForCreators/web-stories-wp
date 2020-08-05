@@ -73,7 +73,7 @@ const IconButton = styled.button`
   border-radius: 4px;
 
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+    background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   }
 
   &:disabled {
@@ -89,7 +89,7 @@ const IconButton = styled.button`
 `;
 
 const SeparateBorder = styled.div`
-  border-left: 1px dashed ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  border-left: 1px dashed ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
   height: 12px;
   margin-left: 4px;
   margin-right: 4px;

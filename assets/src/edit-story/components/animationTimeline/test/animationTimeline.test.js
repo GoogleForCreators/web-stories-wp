@@ -15,23 +15,21 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Tab } from '../../shared';
-import { Upload } from '../../../../../icons';
-import paneId from './paneId';
+import AnimationTimeline from '..';
+import { renderWithTheme } from '../../../testUtils';
 
-function MediaTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <Upload aria-label={__('Media library', 'web-stories')} />
-    </Tab>
-  );
-}
-
-export default MediaTab;
+describe('<AnimationTimeline />', function () {
+  it('should generate the number of rows for animations provided.', function () {
+    const animations = Array.from(Array(10).keys()).map((id) => ({
+      id,
+    }));
+    const { queryAllByTestId } = renderWithTheme(
+      <AnimationTimeline animations={animations} />
+    );
+    expect(queryAllByTestId('timeline-animation-item')).toHaveLength(
+      animations.length
+    );
+  });
+});

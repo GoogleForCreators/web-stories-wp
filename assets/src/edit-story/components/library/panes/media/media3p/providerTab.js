@@ -24,7 +24,7 @@ const Tab = styled.span`
   font-size: 16px;
   margin-right: 16px;
   border-bottom: ${({ theme, active }) =>
-    active ? `solid 4px ${theme.colors.fg.v7};` : 'none'};
+    active ? `solid 4px ${theme.colors.accent.primary};` : 'none'};
   &:last-child: {
     margin-right: 0;
   }

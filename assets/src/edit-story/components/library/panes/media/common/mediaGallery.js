@@ -71,7 +71,7 @@ function MediaGallery({ resources, onInsert, providerType }) {
   );
 
   return (
-    <div role={'grid'}>
+    <div>
       <Gallery
         targetRowHeight={110}
         direction={'row'}
