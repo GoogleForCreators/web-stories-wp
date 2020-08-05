@@ -120,6 +120,10 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
   }, [previewMarkup]);
 
   useEffect(() => {
+    if (localStorage.getItem(AMP_LOCAL_STORAGE)) {
+      localStorage.removeItem(AMP_LOCAL_STORAGE);
+    }
+
     if (!story) {
       setPreviewError(__('Unable to Render Preview', 'web-stories'));
     } else if (isTemplate) {
