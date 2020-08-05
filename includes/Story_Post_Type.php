@@ -40,12 +40,20 @@ class Story_Post_Type {
 	use Publisher;
 	use Types;
 	use Assets;
+
 	/**
 	 * The slug of the stories post type.
 	 *
 	 * @var string
 	 */
 	const POST_TYPE_SLUG = 'web-story';
+
+	/**
+	 * Slug if the AMP validated URL post type.
+	 *
+	 * @var string
+	 */
+	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
 	/**
 	 * Web Stories editor script handle.
@@ -168,9 +176,10 @@ class Story_Post_Type {
 	 * @return string|null
 	 */
 	protected function get_request_post_type() {
-		$amp_validated_url_post_type = 'amp_validated_url';
+		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 		if ( did_action( 'wp' ) && is_singular() ) {
-			return get_post_type( get_queried_object_id() );
+			$post_type = get_post_type( get_queried_object_id() );
+			return $post_type ? $post_type : null;
 		} elseif (
 			is_admin()
 			&&
@@ -178,22 +187,21 @@ class Story_Post_Type {
 			&&
 			'amp_validate' === $_GET['action'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			&&
-			get_post_type( (int) $_GET['post'] ) === $amp_validated_url_post_type // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			get_post_type( (int) $_GET['post'] ) === self::AMP_VALIDATED_URL_POST_TYPE // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		} elseif ( is_admin() && function_exists( 'get_current_screen' ) && get_current_screen() ) {
-			$current_post             = get_post();
-			$current_screen_post_type = get_current_screen()->post_type;
-			if ( $amp_validated_url_post_type === $current_screen_post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen_post_type ) {
+		} elseif ( $current_screen instanceof WP_Screen ) {
+			$current_post = get_post();
+			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen->post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen->post_type ) {
 				$validated_url_post_type = $this->get_validated_url_post_type( $current_post->ID );
 				if ( $validated_url_post_type ) {
 					return $validated_url_post_type;
 				}
 			}
-			if ( $current_screen_post_type ) {
-				return $current_screen_post_type;
+			if ( $current_screen->post_type ) {
+				return $current_screen->post_type;
 			}
-		} elseif ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		} elseif ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			return self::POST_TYPE_SLUG;
 		}
 		return null;
@@ -202,16 +210,29 @@ class Story_Post_Type {
 	/**
 	 * Get the singular post type which is the queried object for the given validated URL post.
 	 *
-	 * @param int $post Validated URL Post Type.
-	 * @return string|null
+	 * @param int $post_id Post ID for Validated URL Post.
+	 * @return string|null Post type or null if validated URL is not for a singular post.
 	 */
-	protected function get_validated_url_post_type( $post ) {
-		if ( ! $post || 'amp_validated_url' !== get_post_type( $post ) ) {
+	protected function get_validated_url_post_type( $post_id ) {
+		if ( empty( $post_id ) ) {
 			return null;
 		}
-		$queried_object = get_post_meta( get_post( $post )->ID, '_amp_queried_object', true );
+
+		$post = get_post( $post_id );
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return null;
+		}
+
+		if ( self::AMP_VALIDATED_URL_POST_TYPE !== $post->post_type ) {
+			return null;
+		}
+
+		$queried_object = get_post_meta( $post->ID, '_amp_queried_object', true );
 		if ( isset( $queried_object['id'], $queried_object['type'] ) && 'post' === $queried_object['type'] ) {
-			return get_post_type( $queried_object['id'] );
+			$post_type = get_post_type( $queried_object['id'] );
+			if ( $post_type ) {
+				return $post_type;
+			}
 		}
 		return null;
 	}
