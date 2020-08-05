@@ -61,7 +61,7 @@ function OutputStory({
       </head>
       <body>
         <amp-story
-          standalone
+          standalone=""
           publisher={publisher.name}
           publisher-logo-src={logoPlaceholder}
           title={title}
