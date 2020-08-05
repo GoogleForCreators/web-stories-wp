@@ -39,13 +39,14 @@ import {
   PaginationButton,
   Pill,
 } from '../../../components';
-import { clamp, usePagePreviewSize } from '../../../utils/';
+import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { TemplateGridView } from '../shared';
+import { PreviewStoryView } from '..';
 import {
   ByLine,
   Column,
@@ -77,7 +78,7 @@ function TemplateDetails() {
 
   const {
     state: {
-      templates: { templates, templatesOrderById },
+      templates: { templates, templatesOrderById, totalPages },
     },
     actions: {
       storyApi: { createStoryFromTemplate },
@@ -88,6 +89,8 @@ function TemplateDetails() {
       },
     },
   } = useContext(ApiContext);
+
+  const { previewVisible } = useTemplateView({ totalPages });
 
   useEffect(() => {
     if (!templateId) {
@@ -210,8 +213,25 @@ function TemplateDetails() {
     createStoryFromTemplate(template);
   }, [createStoryFromTemplate, template]);
 
+  const handlePreviewTemplate = useCallback(
+    (previewTemplate) => {
+      previewVisible.set(previewTemplate);
+    },
+    [previewVisible]
+  );
+
   if (!template) {
     return null;
+  }
+
+  if (previewVisible.value) {
+    return (
+      <PreviewStoryView
+        isTemplate
+        story={previewVisible.value}
+        handleClose={() => handlePreviewTemplate()}
+      />
+    );
   }
 
   return (
@@ -282,7 +302,10 @@ function TemplateDetails() {
                       <TemplateGridView
                         templates={relatedTemplates}
                         pageSize={pageSize}
-                        templateActions={{ createStoryFromTemplate }}
+                        templateActions={{
+                          createStoryFromTemplate,
+                          handlePreviewTemplate,
+                        }}
                       />
                     </UnitsProvider>
                   </RowContainer>
