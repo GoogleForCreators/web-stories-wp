@@ -168,8 +168,9 @@ class Story_Post_Type {
 	 * @return string|null
 	 */
 	protected function get_request_post_type() {
+		$amp_validated_url_post_type = 'amp_validated_url';
 		if ( did_action( 'wp' ) && is_singular() ) {
-			return get_queried_object()->post_type;
+			return get_post_type( get_queried_object_id() );
 		} elseif (
 			is_admin()
 			&&
@@ -177,13 +178,14 @@ class Story_Post_Type {
 			&&
 			'amp_validate' === $_GET['action'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			&&
-			'amp_validated_url' === get_post_type( $_GET['post'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			get_post_type( (int) $_GET['post'] ) === $amp_validated_url_post_type // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
-			return $this->get_validated_url_post_type( get_post( $_GET['post'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return $this->get_validated_url_post_type( (int) $_GET['post'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		} elseif ( is_admin() && function_exists( 'get_current_screen' ) && get_current_screen() ) {
+			$current_post             = get_post();
 			$current_screen_post_type = get_current_screen()->post_type;
-			if ( 'amp_validated_url' === $current_screen_post_type && get_post() ) {
-				$validated_url_post_type = $this->get_validated_url_post_type( get_post() );
+			if ( $amp_validated_url_post_type === $current_screen_post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen_post_type ) {
+				$validated_url_post_type = $this->get_validated_url_post_type( $current_post->ID );
 				if ( $validated_url_post_type ) {
 					return $validated_url_post_type;
 				}
@@ -191,7 +193,7 @@ class Story_Post_Type {
 			if ( $current_screen_post_type ) {
 				return $current_screen_post_type;
 			}
-		} elseif ( false !== strpos( wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) {
+		} elseif ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			return self::POST_TYPE_SLUG;
 		}
 		return null;
@@ -200,10 +202,10 @@ class Story_Post_Type {
 	/**
 	 * Get the singular post type which is the queried object for the given validated URL post.
 	 *
-	 * @param WP_Post $post Validated URL Post Type.
+	 * @param int $post Validated URL Post Type.
 	 * @return string|null
 	 */
-	protected function get_validated_url_post_type( WP_Post $post ) {
+	protected function get_validated_url_post_type( $post ) {
 		if ( ! $post || 'amp_validated_url' !== get_post_type( $post ) ) {
 			return null;
 		}
