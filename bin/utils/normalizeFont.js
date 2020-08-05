@@ -77,6 +77,11 @@ function normalizeFont(font) {
     variants.push(variantTuple);
   }
 
+  let fontFileURL =
+    font.files['regular'] ||
+    font.files[400] ||
+    font.files[Object.keys(font.files)[0]];
+
   return {
     family,
     fallbacks: [getFontFallback(category)],
@@ -84,6 +89,7 @@ function normalizeFont(font) {
     styles: [...new Set(styles)],
     variants,
     service: 'fonts.google.com',
+    fontFileURL,
   };
 }
 

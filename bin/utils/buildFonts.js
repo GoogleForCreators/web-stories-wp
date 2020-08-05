@@ -17,7 +17,9 @@
 /**
  * External dependencies
  */
-import { writeFileSync } from 'fs';
+import { writeFileSync, unlinkSync } from 'fs';
+import opentype from 'opentype.js';
+import got from 'got';
 
 /**
  * Internal dependencies
@@ -51,6 +53,43 @@ async function buildFonts(targetFile) {
   }
 
   const fonts = [...SYSTEM_FONTS, ...googleFonts.items.map(normalizeFont)];
+
+  const tempFile = 'temp.ttf';
+  for (let i = 0, n = fonts.length; i < n; i++) {
+    const font = fonts[i];
+    if (font.fontFileURL) {
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        const response = await got(font.fontFileURL);
+        writeFileSync(tempFile, response.rawBody);
+        const fontInfo = opentype.loadSync(tempFile);
+
+        fonts[i].metrics = {
+          upm: fontInfo.unitsPerEm,
+          asc: fontInfo.ascender,
+          des: fontInfo.descender,
+          tAsc: fontInfo.tables.os2.sTypoAscender,
+          tDes: fontInfo.tables.os2.sTypoDescender,
+          tLGap: fontInfo.tables.os2.sTypoLineGap,
+          wAsc: fontInfo.tables.os2.winAscent,
+          wDes: fontInfo.tables.os2.winDescent,
+          xH: fontInfo.tables.os2.sxHeight,
+          capH: fontInfo.tables.os2.sCapHeight,
+          yMin: fontInfo.tables.head.yMin,
+          yMax: fontInfo.tables.head.yMax,
+          hAsc: fontInfo.tables.hhea.ascender,
+          hDes: fontInfo.tables.hhea.descender,
+          lGap: fontInfo.tables.hhea.lineGap,
+        };
+        process.stdout.write('.');
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(font.family, font.fontFileURL, error);
+      }
+    }
+    delete font.fontFileURL;
+  }
+  unlinkSync(tempFile);
 
   fonts.sort((a, b) => a.family.localeCompare(b.family));
 
