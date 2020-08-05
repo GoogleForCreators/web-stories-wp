@@ -96,23 +96,37 @@ function CoverrAttribution() {
   );
 }
 
+const showCoverrTab = false;
+
 /**
  *
  * @type {Object.<string, ProviderConfiguration>}
  */
-export const Providers = {
-  [ProviderType.UNSPLASH]: {
-    displayName: 'Unsplash',
-    supportedContentTypes: [ContentType.IMAGE],
-    supportsCategories: true,
-    requiresAuthorAttribution: true,
-    attributionBuilder: UnsplashAttribution,
-  },
-  [ProviderType.COVERR]: {
-    displayName: 'Coverr',
-    supportedContentTypes: [ContentType.VIDEO],
-    supportsCategories: false,
-    requiresAuthorAttribution: false,
-    attributionBuilder: CoverrAttribution,
-  },
-};
+export const Providers = Object.fromEntries(
+  new Map(
+    [
+      [
+        ProviderType.UNSPLASH,
+        {
+          displayName: 'Unsplash',
+          supportedContentTypes: [ContentType.IMAGE],
+          supportsCategories: true,
+          requiresAuthorAttribution: true,
+          attributionBuilder: UnsplashAttribution,
+        },
+      ],
+      showCoverrTab
+        ? [
+            ProviderType.COVERR,
+            {
+              displayName: 'Coverr',
+              supportedContentTypes: [ContentType.VIDEO],
+              supportsCategories: false,
+              requiresAuthorAttribution: false,
+              attributionBuilder: CoverrAttribution,
+            },
+          ]
+        : null,
+    ].filter((e) => e != null)
+  )
+);
