@@ -44,6 +44,8 @@ describe('Grid view', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ enableStoryPreviews: true });
+
     await fixture.render();
   });
 
@@ -57,6 +59,12 @@ describe('Grid view', () => {
     } = await fixture.renderHook(() => useContext(ApiContext));
 
     return stories;
+  }
+
+  function getGridElementById(id) {
+    const gridElement = fixture.screen.getByTestId(`story-grid-item-${id}`);
+
+    return gridElement;
   }
 
   it('should render', async () => {
@@ -371,6 +379,52 @@ describe('Grid view', () => {
       );
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
+    });
+  });
+
+  describe('Action: Creator can preview their story from grid view', () => {
+    beforeEach(async () => {
+      fixture.setFlags({ enableStoryPreviews: true });
+      await fixture.render();
+    });
+
+    it('should trigger template preview when user clicks a card', async () => {
+      const { storiesOrderById } = await getStoriesState();
+
+      const currentCard = await getGridElementById(storiesOrderById[1]);
+      const utils = within(currentCard);
+
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      const { x, y } = activeCard.getBoundingClientRect();
+
+      // We need to click slightly above the center of the card to avoid clicking 'View'
+      await fixture.events.mouse.click(x - 20, y);
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+
+    it('should trigger template preview when user presses Enter while focused on a card', async () => {
+      const { storiesOrderById } = await getStoriesState();
+
+      const currentCard = await getGridElementById(storiesOrderById[1]);
+      const utils = within(currentCard);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      await fixture.events.focus(activeCard);
+      await fixture.events.keyboard.press('Enter');
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
     });
   });
 });
