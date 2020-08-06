@@ -122,11 +122,13 @@ function PaginatedMediaGallery({
       node.scrollHeight - node.scrollTop <= node.clientHeight + ROOT_MARGIN;
     if (bottom) {
       setNextPage();
+      return;
     }
 
     // Load the next page if the page isn't full, ie. scrollbar is not visible.
     if (node.clientHeight === node.scrollHeight) {
       setNextPage();
+      return;
     }
   }, [hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
 

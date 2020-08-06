@@ -28,34 +28,47 @@ import { ROOT_MARGIN } from '../mediaPane';
 
 describe('MediaPane fetching', () => {
   let fixture;
+  let localPane;
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ rowBasedGallery: true });
     await fixture.render();
+
+    localPane = fixture.querySelector('#library-pane-media');
   });
 
   afterEach(() => {
     fixture.restore();
   });
 
-  it('should fetch 2nd page', async () => {
-    const mediaLibrary = fixture.querySelector('[data-testid="mediaLibrary"]');
-    let mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
-
-    expect(mediaElements.length).toBe(MEDIA_PER_PAGE);
-
-    mediaLibrary.scrollTo(
-      0,
-      mediaLibrary.scrollHeight - mediaLibrary.clientHeight - ROOT_MARGIN / 2
-    );
-
+  async function expectMediaElements(expectedCount) {
+    let mediaElements;
     await waitFor(() => {
-      mediaElements = fixture.querySelectorAll('[data-testid=mediaElement]');
-      if (!(mediaElements.length === MEDIA_PER_PAGE * 2)) {
-        throw new Error('2nd page not yet loaded');
+      mediaElements = localPane.querySelectorAll('[data-testid=mediaElement]');
+      if (!mediaElements || mediaElements.length !== expectedCount) {
+        throw new Error(
+          `Not ready: ${mediaElements?.length} != ${expectedCount}`
+        );
       }
     });
+    expect(mediaElements.length).toBe(expectedCount);
+  }
 
-    expect(mediaElements.length).toBe(MEDIA_PER_PAGE * 2);
+  it('should fetch 2nd page', async () => {
+    const mediaGallery = localPane.querySelector(
+      '[data-testid="media-gallery-container"]'
+    );
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    // await karmaPause();
+
+    mediaGallery.scrollTo(
+      0,
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
+    );
+
+    await expectMediaElements(MEDIA_PER_PAGE * 2);
   });
 });
