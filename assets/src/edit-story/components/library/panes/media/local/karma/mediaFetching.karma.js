@@ -62,8 +62,6 @@ describe('MediaPane fetching', () => {
 
     await expectMediaElements(MEDIA_PER_PAGE);
 
-    // await karmaPause();
-
     mediaGallery.scrollTo(
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
