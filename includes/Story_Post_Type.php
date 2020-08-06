@@ -483,7 +483,7 @@ class Story_Post_Type {
 				 * Issue: #3349
 				 * Creation date: 2020-08-05
 				 */
-				'showCoverrTab'                  => true,
+				'showCoverrTab'                  => false,
 			],
 
 		];
