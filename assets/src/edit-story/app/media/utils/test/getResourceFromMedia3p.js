@@ -50,8 +50,8 @@ describe('getResourceFromMedia3p', () => {
           url:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT/preview?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
           mimeType: 'video/mp4',
-          width: 1080,
-          height: 1920,
+          width: 360,
+          height: 640,
         },
         {
           url:
@@ -101,8 +101,8 @@ describe('getResourceFromMedia3p', () => {
           source_url:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT/preview?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
           mime_type: 'video/mp4',
-          width: 1080,
-          height: 1920,
+          width: 360,
+          height: 640,
         },
       },
       attribution: undefined,

@@ -35,8 +35,8 @@ import createResource from './createResource';
  *
  * @typedef {Object} ImageUrl image url object.
  * @property {string} mimeType The mime type of the image.
- * @property {int} width The width of the image.
- * @property {int} height The height of the image.
+ * @property {number} width The width of the image.
+ * @property {number} height The height of the image.
  * @property {?string} url The url.
  */
 
@@ -45,8 +45,8 @@ import createResource from './createResource';
  *
  * @typedef {Object} VideoUrl video url object.
  * @property {string} mimeType The mime type of the video.
- * @property {int} width The width of the image.
- * @property {int} height The height of the image.
+ * @property {number} width The width of the image.
+ * @property {number} height The height of the image.
  * @property {?string} url The url.
  */
 
@@ -131,7 +131,8 @@ function getVideoUrls(m) {
     throw new Error('Invalid number of urls for asset. Need at least 2: ' + m);
   }
 
-  const sizesFromLowToHighFidelity = m.videoUrls
+  const sizesFromBiggest = m.videoUrls
+    .sort((x, y) => y.width - x.width)
     .map((u) => ({
       file: m.name,
       source_url: u.url,
@@ -140,19 +141,21 @@ function getVideoUrls(m) {
       height: u.height,
     }));
   return {
-    full: sizesFromLowToHighFidelity[sizesFromLowToHighFidelity.length - 1],
-    preview: sizesFromLowToHighFidelity[0],
+    full: sizesFromBiggest[0],
+    preview: sizesFromBiggest[sizesFromBiggest.length - 1],
   };
 }
 
 function getAttributionFromMedia3p(m) {
-  return (m.author || m.registerUsageUrl) && {
-    author: m.author && {
-      displayName: m.author.displayName,
-      url: m.author.url,
-    },
-    registerUsageUrl: m.registerUsageUrl,
-  };
+  return (
+    (m.author || m.registerUsageUrl) && {
+      author: m.author && {
+        displayName: m.author.displayName,
+        url: m.author.url,
+      },
+      registerUsageUrl: m.registerUsageUrl,
+    }
+  );
 }
 
 function formatVideoLength(length) {
