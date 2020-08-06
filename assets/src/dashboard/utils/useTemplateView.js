@@ -73,7 +73,7 @@ export default function useTemplateView({ totalPages }) {
   );
 
   const setPreviewVisible = useCallback(
-    (template) => {
+    (_, template) => {
       if (enableTemplatePreviews) {
         _setPreviewVisible(template);
       }

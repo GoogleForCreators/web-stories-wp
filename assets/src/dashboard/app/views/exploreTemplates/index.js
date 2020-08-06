@@ -63,8 +63,8 @@ function ExploreTemplates() {
   }, [templatesOrderById, templates]);
 
   const handlePreviewTemplate = useCallback(
-    (template) => {
-      previewVisible.set(template);
+    (e, template) => {
+      previewVisible.set(e, template);
     },
     [previewVisible]
   );
@@ -74,7 +74,7 @@ function ExploreTemplates() {
       <PreviewStoryView
         isTemplate
         story={previewVisible.value}
-        handleClose={() => handlePreviewTemplate()}
+        handleClose={handlePreviewTemplate}
       />
     );
   }
