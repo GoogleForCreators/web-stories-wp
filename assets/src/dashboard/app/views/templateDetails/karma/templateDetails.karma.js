@@ -264,67 +264,66 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       });
       expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
     });
+  });
 
-    describe('Action: See template preview from detail template view', () => {
-      beforeEach(async () => {
-        fixture.setFlags({ enableTemplatePreviews: true });
+  describe('Action: See template preview from detail template view', () => {
+    beforeEach(async () => {
+      fixture.setFlags({ enableTemplatePreviews: true });
+      await fixture.render();
+    });
 
-        await fixture.render();
+    it('should trigger template preview when user clicks a related template', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
+      await getTemplatesState();
+
+      const relatedTemplatesSection = await fixture.screen.getByRole('region', {
+        name: /Related Templates/,
       });
 
-      it('should trigger template preview when user clicks a related template', async () => {
-        await getTemplatesState();
+      // // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+      const utils = within(firstRelatedTemplate);
 
-        const relatedTemplatesSection = await fixture.screen.getByRole(
-          'region',
-          {
-            name: /Related Templates/,
-          }
-        );
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
 
-        // // Select the first related template (all related templates have the data-testid attribute)
-        const firstRelatedTemplate = relatedTemplatesSection.querySelector(
-          '[data-testid]'
-        );
-        const utils = within(firstRelatedTemplate);
+      const { x, y } = activeCard.getBoundingClientRect();
+      // x, y of the first related template in detail view gives us the outer edge and top, we need to add slightly to these dimension to have anything be clickable
+      await fixture.events.mouse.click(x + 20, y + 10);
 
-        const activeCard = utils.getByTestId('card-action-container');
-        expect(activeCard).toBeTruthy();
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
 
-        const { x, y } = activeCard.getBoundingClientRect();
-        // x, y of the first related template in detail view gives us the outer edge and top, we need to add slightly to these dimension to have anything be clickable
-        await fixture.events.mouse.click(x + 20, y + 10);
+      expect(viewPreviewStory).toBeTruthy();
+    });
 
-        const viewPreviewStory = await fixture.screen.queryByTestId(
-          'preview-iframe'
-        );
-
-        expect(viewPreviewStory).toBeTruthy();
+    it('should trigger template preview when user presses Enter while focused on a card', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
+      await getTemplatesState();
+      const relatedTemplatesSection = fixture.screen.getByRole('region', {
+        name: /Related Templates/,
       });
+      // // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+      const utils = within(firstRelatedTemplate);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
 
-      it('should trigger template preview when user presses Enter while focused on a card', async () => {
-        await getTemplatesState();
-        const relatedTemplatesSection = fixture.screen.getByRole('region', {
-          name: /Related Templates/,
-        });
+      await fixture.events.focus(activeCard);
+      await fixture.events.keyboard.press('Enter');
 
-        // // Select the first related template (all related templates have the data-testid attribute)
-        const firstRelatedTemplate = relatedTemplatesSection.querySelector(
-          '[data-testid]'
-        );
-        const utils = within(firstRelatedTemplate);
-        const activeCard = utils.getByTestId('card-action-container');
-        expect(activeCard).toBeTruthy();
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
 
-        await fixture.events.focus(activeCard);
-        await fixture.events.keyboard.press('Enter');
-
-        const viewPreviewStory = await fixture.screen.queryByTestId(
-          'preview-iframe'
-        );
-
-        expect(viewPreviewStory).toBeTruthy();
-      });
+      expect(viewPreviewStory).toBeTruthy();
     });
   });
 });
