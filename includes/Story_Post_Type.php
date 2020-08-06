@@ -69,6 +69,22 @@ class Story_Post_Type {
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Dashboard constructor.
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
+
+	/**
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
@@ -138,7 +154,7 @@ class Story_Post_Type {
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
-		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
+		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
 
 		add_filter( 'amp_skip_post', [ $this, 'skip_amp' ], PHP_INT_MAX, 2 );
 
@@ -385,100 +401,10 @@ class Story_Post_Type {
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
-			'flags'  => [
-				/**
-				 * Description: Enables user facing animations.
-				 * Author: @mariano-formidable
-				 * Issue: 1903
-				 * Creation date: 2020-06-08
-				 */
-				'enableAnimation'                => false,
-				/**
-				 * Description: Flag for hover dropdown menu for media element in media library.
-				 * Author: @joannag6
-				 * Issue: #1319 and #354
-				 * Creation date: 2020-05-20
-				 */
-				'mediaDropdownMenu'              => true,
-				/**
-				 * Description: Flag for new font picker with typeface previews in style panel.
-				 * Author: @carlos-kelly
-				 * Issue: #1300
-				 * Creation date: 2020-06-02
-				 */
-				'newFontPicker'                  => false,
-				/**
-				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
-				 * Author: @dmmulroy
-				 * Issue: #2094
-				 * Creation date: 2020-06-04
-				 */
-				'showKeyboardShortcutsButton'    => false,
-				/**
-				 * Description: Flag for hiding/enabling text sets.
-				 * Author: @dmmulroy
-				 * Issue: #2097
-				 * Creation date: 2020-06-04
-				 */
-				'showTextSets'                   => false,
-				/**
-				 * Description: Flag for hiding/enabling the pre publish tab.
-				 * Author: @dmmulroy
-				 * Issue: #2095
-				 * Creation date: 2020-06-04
-				 */
-				'showPrePublishTab'              => false,
-				/**
-				 * Description: Flag for displaying the animation tab/panel.
-				 * Author: @dmmulroy
-				 * Issue: #2092
-				 * Creation date: 2020-06-04
-				 */
-				'showAnimationTab'               => false,
-				/**
-				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
-				 * Author: @dmmulroy
-				 * Issue: #2044
-				 * Creation date: 2020-06-04
-				 */
-				'showTextMagicAndHelperMode'     => false,
-				/**
-				 * Description: Flag for hiding/enabling the search input on the text and shapes panes.
-				 * Author: @dmmulroy
-				 * Issue: #2098
-				 * Creation date: 2020-06-04
-				 */
-				'showTextAndShapesSearchInput'   => false,
-				/**
-				 * Description: Flag for the 3P Media tab.
-				 * Author: @diegovar
-				 * Issue: #2508
-				 * Creation date: 2020-06-17
-				 */
-				'media3pTab'                     => false,
-				/**
-				 * Description: Flag to show or hide the elements tab.
-				 * Author: @diegovar
-				 * Issue: #2616
-				 * Creation date: 2020-06-23
-				 */
-				'showElementsTab'                => false,
-				/**
-				 * Description: Flag for using a row-based media gallery (vs column based) in the Uploads tab.
-				 * Author: @joannalee
-				 * Issue: #2820
-				 * Creation date: 2020-06-30
-				 */
-				'rowBasedGallery'                => false,
-				/**
-				 * Description: Flag for using incremental search in media and media3p with a debouncer.
-				 * Author: @diegovar
-				 * Issue: #3206
-				 * Creation date: 2020-07-15
-				 */
-				'incrementalSearchDebounceMedia' => false,
-			],
-
+			'flags'  => array_merge(
+				$this->experiments->get_experiment_statuses( 'general' ),
+				$this->experiments->get_experiment_statuses( 'editor' )
+			),
 		];
 
 		/**

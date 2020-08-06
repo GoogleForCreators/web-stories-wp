@@ -21,6 +21,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -94,11 +95,15 @@ function ColorPicker({
     },
   } = useColor();
 
+  const [onDebouncedChange] = useDebouncedCallback(onChange, 100, {
+    leading: true,
+  });
+
   useEffect(() => {
     if (generatedColor) {
-      onChange(generatedColor);
+      onDebouncedChange(generatedColor);
     }
-  }, [color, generatedColor, onChange]);
+  }, [color, generatedColor, onDebouncedChange]);
 
   useEffect(() => {
     if (color) {

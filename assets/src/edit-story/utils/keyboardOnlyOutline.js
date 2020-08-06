@@ -70,6 +70,10 @@ const KeyboardOnlyOutline = () => {
   return <OutlineStyles />;
 };
 
+export function isKeyboardUser() {
+  return document.body.classList.contains(KEYBOARD_USER_CLASS);
+}
+
 KeyboardOnlyOutline.propTypes = {};
 
 export default KeyboardOnlyOutline;
