@@ -16,16 +16,13 @@
 /**
  * Internal dependencies
  */
-import { editorToDataY } from '../../../../edit-story/units/dimensions';
 import SimpleAnimation from '../../parts/simpleAnimation';
 import getOffPageOffset from '../../utils/getOffPageOffset';
-
-const animationName = 'drop-effect';
 
 const getMinTopOffset = (element) =>
   getOffPageOffset({
     ...element,
-    y: editorToDataY(160, 100),
+    y: 160,
   }).offsetTop;
 
 export function EffectDrop({
@@ -36,8 +33,10 @@ export function EffectDrop({
 }) {
   const minTopOffset = getMinTopOffset(element);
   const { offsetTop } = getOffPageOffset(element);
-  const maxBounceHeight = Math.max(minTopOffset, offsetTop);
+  const maxBounceHeight =
+    -1 * Math.max(Math.abs(minTopOffset), Math.abs(offsetTop));
 
+  const animationName = `drop-effect-${maxBounceHeight}`;
   const keyframes = [
     {
       offset: 0,
