@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Story_Renderer;
 
-class Story_Renderer extends \WP_UnitTestCase {
+class HTML extends \WP_UnitTestCase {
 	public function setUp() {
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -38,7 +38,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		$this->assertSame( $expected, $actual );
@@ -54,7 +54,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		$this->assertContains( 'FOO', $actual );
@@ -79,7 +79,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_body_open', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		remove_action( 'web_stories_body_open', $function );
@@ -101,7 +101,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_footer', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		remove_action( 'web_stories_footer', $function );
@@ -117,7 +117,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$renderer    = new \Google\Web_Stories\Story_Renderer( null );
+		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( null );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
 
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
@@ -129,7 +129,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post_with_publisher_logo );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post_with_publisher_logo );
 		$rendered = $renderer->render();
 
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );

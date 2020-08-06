@@ -24,14 +24,15 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Story_Renderer;
 
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Model\Story;
 
 /**
  * Class Story_Renderer
  */
-class Story_Renderer {
+class HTML {
 	use Publisher;
 
 	/*
@@ -43,17 +44,17 @@ class Story_Renderer {
 	/**
 	 * Current post.
 	 *
-	 * @var \WP_Post Post object.
+	 * @var Story Story object.
 	 */
-	protected $post;
+	protected $story;
 
 	/**
 	 * Story_Renderer constructor.
 	 *
-	 * @param \WP_Post $post Post object.
+	 * @param Story $story Story object.
 	 */
-	public function __construct( $post ) {
-		$this->post = $post;
+	public function __construct( $story ) {
+		$this->story = $story;
 	}
 
 	/**
@@ -135,9 +136,9 @@ class Story_Renderer {
 	 * @return string Filtered content.
 	 */
 	protected function add_poster_images( $content ) {
-		$poster_images = $this->get_story_meta_images();
+		$storyer_images = $this->get_story_meta_images();
 
-		foreach ( $poster_images as $attr => $url ) {
+		foreach ( $storyer_images as $attr => $url ) {
 			$attr_markup = sprintf( '%1$s-src="%2$s"', $attr, $url );
 			$content     = str_replace( 'poster-portrait-src=', $attr_markup . ' poster-portrait-src=', $content );
 		}
@@ -222,7 +223,7 @@ class Story_Renderer {
 	 * @return string The complete HTML markup for the story.
 	 */
 	public function render() {
-		$markup = $this->post->post_content;
+		$markup = $this->story->markup;
 		$markup = $this->replace_html_start_tag( $markup );
 		// Add before replace_html_head to leverage the `web_stories_story_head` action.
 		$markup = $this->maybe_add_analytics( $markup );
@@ -242,15 +243,9 @@ class Story_Renderer {
 	 * @return string[] Images.
 	 */
 	protected function get_story_meta_images() {
-		$thumbnail_id = (int) get_post_thumbnail_id( $this->post );
-
-		if ( 0 === $thumbnail_id ) {
-			return [];
-		}
-
 		$images = [
-			'poster-square'    => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_SQUARE_IMAGE_SIZE ),
-			'poster-landscape' => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_LANDSCAPE_IMAGE_SIZE ),
+			'poster-square'    => $this->story->poster_square,
+			'poster-landscape' => $this->story->poster_landscape,
 		];
 
 		return array_filter( $images );
