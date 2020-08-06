@@ -16,32 +16,101 @@
 /**
  * Internal dependencies
  */
-import { AMPStoryWrapper } from '../../../../storybookUtils';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../../../edit-story/constants';
+import StoryAnimation from '../../../../components/storyAnimation';
+import {
+  AMPStoryWrapper,
+  AMP_STORY_ASPECT_RATIO,
+} from '../../../../storybookUtils';
+import { ANIMATION_EFFECTS } from '../../../constants';
+import { getBox } from '../../../../../edit-story/units/dimensions';
 
 export default {
   title: 'Animations/Effects/Drop',
 };
 
-const redSquareStyles = {
-  backgroundColor: 'red',
-  height: '50px',
-  width: '50px',
-  top: 'calc(100% - 50px)',
-  left: 'calc(50% - 25px)',
-  position: 'absolute',
-};
+const elements = [
+  {
+    id: 'e1',
+    color: 'red',
+    x: (PAGE_WIDTH - 50) / 2,
+    y: PAGE_HEIGHT - 50,
+    width: 50,
+    height: 50,
+  },
+];
 
-export const _default = () => (
-  <AMPStoryWrapper>
-    <amp-story-page id="page-1">
-      <amp-story-grid-layer template="vertical">
-        <div animate-in="drop" style={redSquareStyles} />
-      </amp-story-grid-layer>
-    </amp-story-page>
-    <amp-story-page id="page-2">
-      <amp-story-grid-layer template="vertical">
-        <div animate-in="drop" style={redSquareStyles} />
-      </amp-story-grid-layer>
-    </amp-story-page>
-  </AMPStoryWrapper>
-);
+const animations = [{ targets: ['e1'], type: ANIMATION_EFFECTS.DROP }];
+
+export const _default = () => {
+  const elementBoxes = elements.map((element) => ({
+    ...element,
+    ...getBox(element, 100, 100),
+  }));
+
+  return (
+    <AMPStoryWrapper>
+      <amp-story-page id="page-1">
+        <p style={{ textAlign: 'center', color: '#fff' }}>
+          {'AMP Drop Effect'}
+        </p>
+        <amp-story-grid-layer
+          template="vertical"
+          aspect-ration={AMP_STORY_ASPECT_RATIO}
+        >
+          <div
+            animate-in="drop"
+            style={{
+              position: 'absolute',
+              height: '50px',
+              width: '50px',
+              top: 'calc(100% - 50px)',
+              left: 'calc(50% - 25px)',
+              backgroundColor: 'red',
+            }}
+          />
+        </amp-story-grid-layer>
+      </amp-story-page>
+      <amp-story-page id="page-2">
+        <StoryAnimation.Provider animations={animations} elements={elements}>
+          <StoryAnimation.AMPAnimations />
+          <p style={{ textAlign: 'center', color: '#fff' }}>
+            {'Custom Drop Effect'}
+          </p>
+
+          <amp-story-grid-layer
+            template="vertical"
+            aspect-ration={AMP_STORY_ASPECT_RATIO}
+          >
+            <div className="page-fullbleed-area">
+              <div className="page-safe-area">
+                {elementBoxes.map((elem) => (
+                  <div
+                    key={elem.id}
+                    style={{
+                      position: 'absolute',
+                      top: `${elem.y}%`,
+                      left: `${elem.x}%`,
+                      width: `${elem.width}%`,
+                      height: `${elem.height}%`,
+                    }}
+                  >
+                    <StoryAnimation.AMPWrapper target={elem.id}>
+                      <div
+                        style={{
+                          height: '100%',
+                          width: '100%',
+                          backgroundColor: elem.color,
+                        }}
+                      />
+                    </StoryAnimation.AMPWrapper>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </amp-story-grid-layer>
+        </StoryAnimation.Provider>
+      </amp-story-page>
+    </AMPStoryWrapper>
+  );
+};

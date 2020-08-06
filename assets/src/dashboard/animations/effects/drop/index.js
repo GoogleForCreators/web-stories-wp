@@ -13,53 +13,81 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
-'drop': {
-    duration: 1600,
-    keyframes(dimensions) {
-      const maxBounceHeight = Math.max(
-        160,
-        dimensions.targetY + dimensions.targetHeight
-      );
+/**
+ * Internal dependencies
+ */
+import { editorToDataY } from '../../../../edit-story/units/dimensions';
+import SimpleAnimation from '../../parts/simpleAnimation';
+import getOffPageOffset from '../../utils/getOffPageOffset';
 
-      return [
-        {
-          offset: 0,
-          transform: `translateY(${px(-maxBounceHeight)})`,
-          easing: 'cubic-bezier(.75,.05,.86,.08)',
-        },
-        {
-          offset: 0.3,
-          transform: 'translateY(0)',
-          easing: 'cubic-bezier(.22,.61,.35,1)',
-        },
-        {
-          offset: 0.52,
-          transform: `translateY(${px(-0.6 * maxBounceHeight)})`,
-          easing: 'cubic-bezier(.75,.05,.86,.08)',
-        },
-        {
-          offset: 0.74,
-          transform: 'translateY(0)',
-          easing: 'cubic-bezier(.22,.61,.35,1)',
-        },
-        {
-          offset: 0.83,
-          transform: `translateY(${px(-0.3 * maxBounceHeight)})`,
-          easing: 'cubic-bezier(.75,.05,.86,.08)',
-        },
-        {
-          offset: 1,
-          transform: 'translateY(0)',
-          easing: 'cubic-bezier(.22,.61,.35,1)',
-        },
-      ];
+const animationName = 'drop-effect';
+
+const getMinTopOffset = (element) =>
+  getOffPageOffset({
+    ...element,
+    y: editorToDataY(160, 100),
+  }).offsetTop;
+
+export function EffectDrop({
+  element,
+  fill = 'both',
+  duration = 1600,
+  delay = 0,
+}) {
+  const minTopOffset = getMinTopOffset(element);
+  const { offsetTop } = getOffPageOffset(element);
+  const maxBounceHeight = Math.max(minTopOffset, offsetTop);
+
+  const keyframes = [
+    {
+      offset: 0,
+      transform: `translateY(${maxBounceHeight}%)`,
+      easing: 'cubic-bezier(.75,.05,.86,.08)',
     },
-  },
-*/
-export function EffectDrop({ duration = 1600 }) {
-  // const { offsetTop, offsetLeft, offsetRight, offsetBottom } = getOffPageOffset(
-  //   element
-  // );
-  return duration;
+    {
+      offset: 0.3,
+      transform: 'translateY(0)',
+      easing: 'cubic-bezier(.22,.61,.35,1)',
+    },
+    {
+      offset: 0.52,
+      transform: `translateY(${0.6 * maxBounceHeight}%)`,
+      easing: 'cubic-bezier(.75,.05,.86,.08)',
+    },
+    {
+      offset: 0.74,
+      transform: 'translateY(0)',
+      easing: 'cubic-bezier(.22,.61,.35,1)',
+    },
+    {
+      offset: 0.83,
+      transform: `translateY(${0.3 * maxBounceHeight}%)`,
+      easing: 'cubic-bezier(.75,.05,.86,.08)',
+    },
+    {
+      offset: 1,
+      transform: 'translateY(0)',
+      easing: 'cubic-bezier(.22,.61,.35,1)',
+    },
+  ];
+
+  const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
+    animationName,
+    keyframes,
+    {
+      fill,
+      duration,
+      delay,
+    }
+  );
+
+  return {
+    id,
+    WAAPIAnimation,
+    AMPTarget,
+    AMPAnimation,
+    generatedKeyframes: {
+      [animationName]: keyframes,
+    },
+  };
 }
