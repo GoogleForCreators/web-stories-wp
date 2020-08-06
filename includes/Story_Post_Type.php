@@ -201,6 +201,15 @@ class Story_Post_Type {
 			$contributor->add_cap( 'edit_web-stories' );
 			$contributor->add_cap( 'delete_web-stories' );
 		}
+
+		/**
+		 * Fires when adding the custom capabilities to existing roles.
+		 *
+		 * Can be used to add the capabilities to other, custom roles.
+		 *
+		 * @param array $all_capabilities List of all post type capabilities, for reference.
+		 */
+		do_action( 'web_stories_add_capabilities', $all_capabilities );
 	}
 
 	/**
