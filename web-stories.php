@@ -49,7 +49,7 @@ define( 'WEBSTORIES_ASSETS_URL', WEBSTORIES_PLUGIN_DIR_URL . 'assets' );
 define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6.0' );
 
 if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
-	define( 'WEBSTORIES_DEV_MODE', true );
+	define( 'WEBSTORIES_DEV_MODE', false );
 }
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
