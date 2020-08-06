@@ -44,8 +44,6 @@ describe('Grid view', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableStoryPreviews: true });
-
     await fixture.render();
   });
 
