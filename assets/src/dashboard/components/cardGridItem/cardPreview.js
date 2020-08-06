@@ -195,6 +195,7 @@ const CardPreviewContainer = ({
         {centerAction?.label && (
           <ActionContainer>
             <Button
+              data-testid="card-center-action"
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
             >

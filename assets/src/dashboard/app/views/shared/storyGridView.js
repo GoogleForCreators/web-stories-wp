@@ -95,7 +95,7 @@ const StoryGridView = ({
               pageSize={pageSize}
               story={story}
               centerAction={{
-                targetAction: story.centerTargetAction,
+                targetAction: (e) => previewStory(e, story),
                 label: centerActionLabelByStatus[story.status],
               }}
               bottomAction={{

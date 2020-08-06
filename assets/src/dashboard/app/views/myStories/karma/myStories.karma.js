@@ -426,6 +426,44 @@ describe('Grid view', () => {
 
       expect(viewPreviewStory).toBeTruthy();
     });
+
+    it('should trigger template preview when user clicks the center button (view or preview)', async () => {
+      const { storiesOrderById } = await getStoriesState();
+
+      const currentCard = await getGridElementById(storiesOrderById[1]);
+      const utils = within(currentCard);
+
+      const centerActionButton = utils.getByTestId('card-center-action');
+      expect(centerActionButton).toBeTruthy();
+
+      // We need to click slightly above the center of the card to avoid clicking 'View'
+      await fixture.events.click(centerActionButton);
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+
+    it('should trigger template preview when user presses Enter while focused on the center button (view or preview)', async () => {
+      const { storiesOrderById } = await getStoriesState();
+
+      const currentCard = await getGridElementById(storiesOrderById[1]);
+      const utils = within(currentCard);
+
+      const centerActionButton = utils.getByTestId('card-center-action');
+      expect(centerActionButton).toBeTruthy();
+
+      await fixture.events.focus(centerActionButton);
+      await fixture.events.keyboard.press('Enter');
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
   });
 });
 
