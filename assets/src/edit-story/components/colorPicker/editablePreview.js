@@ -32,7 +32,7 @@ const Preview = styled.button`
   margin: 0;
   border: none;
   background: ${({ theme }) => theme.colors.bg.v8};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 function EditablePreview({ label, value, width, format, onChange }) {

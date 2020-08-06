@@ -34,6 +34,11 @@ jest.mock('../api', () => ({
   }),
 }));
 
+const mockShowSnackbar = jest.fn();
+jest.mock('../../../snackbar', () => ({
+  useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
+}));
+
 describe('useFetchCategoriesEffect', () => {
   let fetchCategoriesStart;
   let fetchCategoriesSuccess;
@@ -44,6 +49,7 @@ describe('useFetchCategoriesEffect', () => {
     fetchCategoriesStart = jest.fn();
     fetchCategoriesSuccess = jest.fn();
     fetchCategoriesError = jest.fn();
+    mockShowSnackbar.mockReset();
   });
 
   function renderUseFetchCategoriesEffect(propertyOverrides) {
@@ -92,6 +98,7 @@ describe('useFetchCategoriesEffect', () => {
         ],
       })
     );
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 
   it('should call fetchCategoriesError if the fetch has failed', async () => {
@@ -102,6 +109,7 @@ describe('useFetchCategoriesEffect', () => {
     expect(fetchCategoriesStart.mock.calls).toHaveLength(1);
     expect(fetchCategoriesSuccess.mock.calls).toHaveLength(0);
     expect(fetchCategoriesError.mock.calls).toHaveLength(1);
+    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
   });
 
   it('should not fetch media if the provider is not the same as selected provider', async () => {
@@ -109,6 +117,9 @@ describe('useFetchCategoriesEffect', () => {
       provider: 'coverr',
       selectedProvider: 'unsplash',
     });
-    expect(fetchCategoriesStart.mock.calls).toHaveLength(0);
+    expect(fetchCategoriesStart).not.toHaveBeenCalledTimes(1);
+    expect(fetchCategoriesSuccess).not.toHaveBeenCalledTimes(1);
+    expect(fetchCategoriesError).not.toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 });

@@ -64,6 +64,88 @@ const mediaPage1 = [...new Array(20).keys()].map((n) =>
 const mediaPage2 = [...new Array(20).keys()].map((n) =>
   createMediaResource(`media/unsplash:${n + 21}`)
 );
+const categories = [
+  {
+    id: 'categories/unsplash:KHXRtL69hcY',
+    displayName: 'Sustainability',
+  },
+  {
+    id: 'categories/unsplash:bo8jQKTaE0Y',
+    displayName: 'Wallpapers',
+  },
+  {
+    id: 'categories/unsplash:c7USHrQ0Ljw',
+    displayName: 'COVID-19',
+  },
+  {
+    id: 'categories/unsplash:Fzo3zuOHN6w',
+    displayName: 'Travel',
+  },
+  {
+    id: 'categories/unsplash:6sMVjTLSkeQ',
+    displayName: 'Nature',
+  },
+  {
+    id: 'categories/unsplash:iUIsnVtjB0Y',
+    displayName: 'Textures & Patterns',
+  },
+  {
+    id: 'categories/unsplash:BJJMtteDJA4',
+    displayName: 'Current Events',
+  },
+  {
+    id: 'categories/unsplash:towJZFskpGg',
+    displayName: 'People',
+  },
+  {
+    id: 'categories/unsplash:aeu6rL-j6ew',
+    displayName: 'Business & Work',
+  },
+  {
+    id: 'categories/unsplash:J9yrPaHXRQY',
+    displayName: 'Technology',
+  },
+  {
+    id: 'categories/unsplash:Jpg6Kidl-Hk',
+    displayName: 'Animals',
+  },
+  {
+    id: 'categories/unsplash:R_Fyn-Gwtlw',
+    displayName: 'Interiors',
+  },
+  {
+    id: 'categories/unsplash:rnSKDHwwYUk',
+    displayName: 'Architecture',
+  },
+  {
+    id: 'categories/unsplash:xjPR4hlkBGA',
+    displayName: 'Food & Drink',
+  },
+  {
+    id: 'categories/unsplash:Bn-DjrcBrwo',
+    displayName: 'Athletics',
+  },
+  {
+    id: 'categories/unsplash:_8zFHuhRhyo',
+    displayName: 'Spirituality',
+  },
+  {
+    id: 'categories/unsplash:_hb-dl4Q-4U',
+    displayName: 'Health & Wellness',
+  },
+  {
+    id: 'categories/unsplash:hmenvQhUmxM',
+    displayName: 'Film',
+  },
+  {
+    id: 'categories/unsplash:S4MKLAsBB74',
+    displayName: 'Fashion',
+  },
+  {
+    id: 'categories/unsplash:qPYsDzvJOYc',
+    displayName: 'Experimental',
+  },
+];
 
 describe('Media3pPane fetching', () => {
   let fixture;
@@ -94,6 +176,15 @@ describe('Media3pPane fetching', () => {
     });
   }
 
+  function mockListCategories() {
+    /* eslint-disable-next-line jasmine/no-unsafe-spy */
+    spyOn(apiFetcher, 'listCategories').and.callFake(() => {
+      return {
+        categories: categories,
+      };
+    });
+  }
+
   async function expectMediaElements(expectedCount) {
     let mediaElements;
     await waitFor(() => {
@@ -109,6 +200,10 @@ describe('Media3pPane fetching', () => {
     expect(mediaElements.length).toBe(expectedCount);
   }
 
+  it('should render initial page with media3p tab button at top', async () => {
+    await fixture.snapshot();
+  });
+
   it('should render no results message', async () => {
     spyOn(apiFetcher, 'listMedia').and.callFake(() => ({ media: [] }));
     await fixture.events.click(media3pTab);
@@ -118,12 +213,21 @@ describe('Media3pPane fetching', () => {
         fixture.screen.getByText(new RegExp('^No media found$'))
       ).toBeTruthy();
     });
+
+    await fixture.snapshot();
   });
 
   it('should fetch media resources', async () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
     await expectMediaElements(MEDIA_PER_PAGE);
+  });
+
+  it('should render categories and media resources', async () => {
+    mockListMedia();
+    mockListCategories();
+    await fixture.events.click(media3pTab);
+    await fixture.snapshot();
   });
 
   it('should fetch 2nd page', async () => {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -31,13 +31,14 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
+import { useKeyDownEffect } from '../keyboard';
 
 const SwitchContainer = styled.div`
   appearance: none;
   position: relative;
   background: ${({ theme }) => theme.colors.bg.v3};
   border-radius: 100px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -89,10 +90,10 @@ const Label = styled.label`
     `
     cursor: default;
     opacity: 0.3;
-	`}
+  `}
 
   ${KEYBOARD_USER_SELECTOR} &:focus-within ~ span {
-    background-color: ${({ theme }) => theme.colors.action};
+    background-color: ${({ theme }) => theme.colors.accent.primary};
   }
 `;
 
@@ -120,9 +121,16 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
     },
     [onChange]
   );
+  const ref = useRef();
+  useKeyDownEffect(
+    ref,
+    ['space', 'enter', 'left', 'right'],
+    () => handleChange(!value),
+    [handleChange, value]
+  );
 
   return (
-    <SwitchContainer>
+    <SwitchContainer ref={ref}>
       <Label disabled={disabled}>
         {onLabel}
         <RadioButton

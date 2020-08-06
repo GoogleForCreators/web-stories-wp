@@ -57,6 +57,16 @@ class FixtureEvents {
   }
 
   /**
+   * Return a promise sleeping for a given number of milliseconds.
+   *
+   * @param {number} ms Number of milliseconds to wait
+   * @return {!Promise} A promise resolving after the given time
+   */
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  /**
    * See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pageclickselector-options.
    *
    * @param {Element} target The event target.

@@ -36,7 +36,7 @@ import {
   Duplicate,
   UndoAlt as LeftArrow,
   RedoAlt as RightArrow,
-  AddPage,
+  Add,
   LayoutHelper,
   Text,
 } from '../../../icons';
@@ -62,7 +62,7 @@ const Box = styled.div`
 `;
 
 const PageCount = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   width: 62px;
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};
@@ -76,7 +76,7 @@ const Options = styled.div`
 `;
 
 const Divider = styled.span`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
   opacity: 0.3;
   height: ${HEIGHT}px;
   width: 1px;
@@ -92,7 +92,7 @@ const Icon = styled.button`
   border: 0;
   padding: 0;
   display: block;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 
   ${({ disabled }) =>
     disabled &&
@@ -197,7 +197,7 @@ function PageMenu() {
               onClick={handleAddPage}
               aria-label={__('Add New Page', 'web-stories')}
             >
-              <AddPage />
+              <Add />
             </Icon>
           </WithTooltip>
           <Space />

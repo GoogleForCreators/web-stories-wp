@@ -18,6 +18,7 @@ export const PILL_LABEL_TYPES = {
   SWATCH: 'swatch',
   DEFAULT: 'default',
 };
+
 export const PILL_INPUT_TYPES = {
   CHECKBOX: 'checkbox',
   RADIO: 'radio',
