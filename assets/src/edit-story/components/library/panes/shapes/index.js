@@ -18,4 +18,4 @@
  * Internal dependencies
  */
 export { default as ShapesPane } from './shapesPane';
-export { default as ShapesTab } from './shapesTab';
+export { default as ShapesIcon } from './shapesIcon';

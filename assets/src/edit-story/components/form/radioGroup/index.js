@@ -21,12 +21,14 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { v4 as uuidv4 } from 'uuid';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { Radio as UnSelected, RadioSelected as Selected } from '../../icons';
+import { Radio as UnSelected, RadioSelected as Selected } from '../../../icons';
+import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
+import useRadioNavigation from './useRadioNavigation';
 
 const RadioButton = styled.label`
   display: block;
@@ -57,22 +59,28 @@ const Name = styled.span`
 const Radio = styled.input.attrs({ className: 'mousetrap' })`
   opacity: 0;
   position: absolute;
-  :focus + ${Label} {
+  ${KEYBOARD_USER_SELECTOR} &:focus + ${Label} {
     outline: -webkit-focus-ring-color auto 5px;
   }
 `;
 
 const Helper = styled.div`
   margin-left: ${TEXT_OFFSET}px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
   font-size: 12px;
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
 `;
 
 function RadioGroup({ onChange, value: selectedValue, options }) {
   const radioGroupId = useMemo(() => uuidv4(), []);
+
+  // We need manual arrow key navigation here, as we have a global listener for those keys
+  // preventing default functionality.
+  const ref = useRef();
+
+  useRadioNavigation(ref);
   return (
-    <div>
+    <div ref={ref}>
       {options.map(({ value, name, helper }, i) => (
         <RadioButton key={value}>
           <Radio

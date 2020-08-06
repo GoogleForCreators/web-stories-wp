@@ -15,20 +15,17 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Numeric } from '../../../form';
+import { Media } from '../../../../../icons';
 
-export const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
+function Media3pIcon() {
+  return <Media aria-label={__('Third Party Media library', 'web-stories')} />;
+}
 
-export const Space = styled.div`
-  flex: 0 0 10px;
-`;
+export default Media3pIcon;

@@ -23,7 +23,7 @@ const PillContainer = styled.span`
   cursor: pointer;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   background-color: rgba(
     255,
     255,

@@ -120,6 +120,7 @@ class Media {
 				'type'              => 'boolean',
 				'description'       => __( 'Whether the attachment is a poster image.', 'web-stories' ),
 				'show_in_rest'      => true,
+				'default'           => false,
 				'single'            => true,
 				'object_subtype'    => 'attachment',
 			]
@@ -133,6 +134,7 @@ class Media {
 				'type'              => 'integer',
 				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
 				'show_in_rest'      => true,
+				'default'           => 0,
 				'single'            => true,
 				'object_subtype'    => 'attachment',
 			]
@@ -336,7 +338,7 @@ class Media {
 		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}
-	
+
 	/**
 	 * Deletes associated poster image when a video is deleted.
 	 *

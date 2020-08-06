@@ -15,23 +15,21 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Tab } from '../shared';
-import { Shapes } from '../../../../icons';
-import paneId from './paneId';
+import AnimationTimeline from '..';
+import { renderWithTheme } from '../../../testUtils';
 
-function ShapesTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <Shapes aria-label={__('Shapes library', 'web-stories')} />
-    </Tab>
-  );
-}
-
-export default ShapesTab;
+describe('<AnimationTimeline />', function () {
+  it('should generate the number of rows for animations provided.', function () {
+    const animations = Array.from(Array(10).keys()).map((id) => ({
+      id,
+    }));
+    const { queryAllByTestId } = renderWithTheme(
+      <AnimationTimeline animations={animations} />
+    );
+    expect(queryAllByTestId('timeline-animation-item')).toHaveLength(
+      animations.length
+    );
+  });
+});

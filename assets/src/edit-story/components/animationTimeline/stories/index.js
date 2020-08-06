@@ -14,4 +14,25 @@
  * limitations under the License.
  */
 
-export { default } from './padding';
+/**
+ * Internal dependencies
+ */
+
+import AnimationTimeline from '../index';
+
+export default {
+  title: 'Animations/Timeline',
+  component: AnimationTimeline,
+};
+
+const animations = Array.from(Array(10).keys()).map((id) => ({
+  id,
+}));
+
+export const _default = () => {
+  return <AnimationTimeline animations={animations} />;
+};
+
+export const noAnimations = () => {
+  return <AnimationTimeline animations={[]} />;
+};

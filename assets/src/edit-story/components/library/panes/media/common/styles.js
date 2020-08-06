@@ -62,7 +62,7 @@ export const MediaGalleryLoadingPill = styled.div`
   width: 240px;
   text-align: center;
   padding: 8px 80px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.4)};
   border-radius: 100px;
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
@@ -70,7 +70,7 @@ export const MediaGalleryLoadingPill = styled.div`
 `;
 
 export const MediaGalleryMessage = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-size: 16px;
   padding: 1em;
 `;
