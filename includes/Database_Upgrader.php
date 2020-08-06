@@ -237,7 +237,7 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function add_stories_caps() {
-		$story_post_type = new Story_Post_Type();
+		$story_post_type = new Story_Post_Type( new Experiments() );
 		$story_post_type->add_caps_to_roles();
 	}
 

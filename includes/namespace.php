@@ -46,7 +46,7 @@ function activate( $network_wide ) {
 		);
 	}
 
-	$story = new Story_Post_Type();
+	$story = new Story_Post_Type( new Experiments() );
 	$story->init();
 	$story->add_caps_to_roles();
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
