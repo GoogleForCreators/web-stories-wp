@@ -44,7 +44,8 @@ export default function useProviderContextValueProvider(
   const { selectedProvider, searchTerm } = reducerState;
   const {
     pageToken,
-    nextPageToken,
+    isMediaLoading,
+    isMediaLoaded,
     categories: { categories, selectedCategoryId },
   } = reducerState[provider];
   const {
@@ -61,7 +62,8 @@ export default function useProviderContextValueProvider(
     provider,
     selectedProvider,
     pageToken,
-    nextPageToken,
+    isMediaLoading,
+    isMediaLoaded,
     searchTerm,
     selectedCategoryId,
     fetchMediaStart,

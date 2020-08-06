@@ -60,7 +60,7 @@ function Media3pApiProvider({ children }) {
     selectedCategoryId,
     mediaType,
   }) {
-    if (!Object.keys(PROVIDERS).contains(provider)) {
+    if (!Object.keys(PROVIDERS).includes(provider)) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
 

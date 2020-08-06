@@ -61,6 +61,8 @@ describe('useFetchMediaEffect', () => {
           provider: 'unsplash',
           selectedProvider: 'unsplash',
           pageToken: undefined,
+          isMediaLoaded: false,
+          isMediaLoading: false,
           fetchMediaStart,
           fetchMediaSuccess,
           fetchMediaError,

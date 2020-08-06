@@ -36,7 +36,8 @@ export default function useFetchMediaEffect({
   searchTerm,
   selectedCategoryId,
   pageToken,
-  nextPageToken,
+  isMediaLoading,
+  isMediaLoaded,
   fetchMediaStart,
   fetchMediaSuccess,
   fetchMediaError,
@@ -49,6 +50,8 @@ export default function useFetchMediaEffect({
     pageToken,
     searchTerm,
     selectedCategoryId,
+    isMediaLoading,
+    isMediaLoaded,
   });
 
   const { showSnackbar } = useSnackbar();
@@ -57,17 +60,15 @@ export default function useFetchMediaEffect({
     async function fetch() {
       fetchMediaStart({ provider, pageToken });
       try {
-        let media, newNextPageToken;
+        let media, nextPageToken;
         if (selectedCategoryId) {
-          ({ media, nextPageToken: newNextPageToken } = await listCategoryMedia(
-            {
-              provider,
-              selectedCategoryId,
-              pageToken,
-            }
-          ));
+          ({ media, nextPageToken } = await listCategoryMedia({
+            provider,
+            selectedCategoryId,
+            pageToken,
+          }));
         } else {
-          ({ media, nextPageToken: newNextPageToken } = await listMedia({
+          ({ media, nextPageToken } = await listMedia({
             provider,
             searchTerm,
             pageToken,
@@ -77,7 +78,7 @@ export default function useFetchMediaEffect({
           provider,
           media,
           pageToken,
-          nextPageToken: newNextPageToken,
+          nextPageToken,
         });
       } catch (e) {
         fetchMediaError({ provider, pageToken });
@@ -93,7 +94,9 @@ export default function useFetchMediaEffect({
         searchTerm != previousProps.searchTerm ||
         selectedCategoryId != previousProps.selectedCategoryId);
     const firstFetchOrSomethingChanged =
-      (!pageToken && !nextPageToken) || somethingChanged;
+      !previousProps ||
+      (!previousProps.isMediaLoading && !previousProps.isMediaLoaded) ||
+      somethingChanged;
 
     if (provider === selectedProvider && firstFetchOrSomethingChanged) {
       fetch();
@@ -104,7 +107,6 @@ export default function useFetchMediaEffect({
     // Fetch media is triggered by changes to these.
     selectedProvider,
     pageToken,
-    nextPageToken,
     searchTerm,
     selectedCategoryId,
     // These attributes never change.
