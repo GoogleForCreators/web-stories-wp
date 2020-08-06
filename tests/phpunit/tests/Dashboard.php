@@ -18,6 +18,9 @@
 
 namespace Google\Web_Stories\Tests;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Dashboard
+ */
 class Dashboard extends \WP_UnitTestCase {
 	protected static $user_id;
 
@@ -33,21 +36,43 @@ class Dashboard extends \WP_UnitTestCase {
 		self::delete_user( self::$user_id );
 	}
 
-	public function test_add_menu_page_no_permissions() {
+	/**
+	 * @covers ::add_menu_page
+	 */
+	public function test_add_menu_page_no_user() {
 		$dashboard = new \Google\Web_Stories\Dashboard();
 		$this->assertNull( $dashboard->get_hook_suffix() );
 		$dashboard->add_menu_page();
 		$this->assertFalse( $dashboard->get_hook_suffix() );
 	}
 
-	public function test_add_menu_page() {
+	/**
+	 * @covers ::add_menu_page
+	 */
+	public function test_add_menu_page_user_without_permission() {
 		wp_set_current_user( self::$user_id );
 
 		$dashboard = new \Google\Web_Stories\Dashboard();
 		$dashboard->add_menu_page();
+		$this->assertFalse( $dashboard->get_hook_suffix() );
+	}
+
+	/**
+	 * @covers ::add_menu_page
+	 */
+	public function test_add_menu_page() {
+		wp_set_current_user( self::$user_id );
+		wp_get_current_user()->add_cap( 'edit_web-stories' );
+
+		$dashboard = new \Google\Web_Stories\Dashboard();
+		$dashboard->add_menu_page();
+		$this->assertNotFalse( $dashboard->get_hook_suffix() );
 		$this->assertNotEmpty( $dashboard->get_hook_suffix() );
 	}
 
+	/**
+	 * @covers ::enqueue_assets
+	 */
 	public function test_enqueue_assets_wrong_page() {
 		wp_set_current_user( self::$user_id );
 
@@ -58,6 +83,9 @@ class Dashboard extends \WP_UnitTestCase {
 		$this->assertFalse( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
 	}
 
+	/**
+	 * @covers ::enqueue_assets
+	 */
 	public function test_enqueue_assets() {
 		wp_set_current_user( self::$user_id );
 
