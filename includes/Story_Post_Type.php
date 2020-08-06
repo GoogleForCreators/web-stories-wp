@@ -138,7 +138,7 @@ class Story_Post_Type {
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
-		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
+		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
 
 		add_filter( 'amp_skip_post', [ $this, 'skip_amp' ], PHP_INT_MAX, 2 );
 
