@@ -50,13 +50,16 @@ const Handle = styled.div`
   width: 100%;
 `;
 
-// @todo This needs blue outline when in focus.
 const Bar = styled.div.attrs({
   tabIndex: 0,
 })`
-  width: 36px;
+  width: 100%;
   height: 4px;
-  border-radius: 2px;
+
+  &:focus {
+    height: 3px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.whiteout};
+  }
 `;
 
 function DragHandle({

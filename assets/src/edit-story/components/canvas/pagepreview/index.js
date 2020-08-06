@@ -44,7 +44,7 @@ const Page = styled.button`
   border: 0;
   border-top: ${THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
-      isActive ? theme.colors.selection : theme.colors.bg.v1};
+      isActive ? theme.colors.selection : theme.colors.bg.workspace};
   height: ${({ height }) => height}px;
   background-color: transparent;
   width: ${({ width }) => width}px;
@@ -68,6 +68,7 @@ const PreviewWrapper = styled.div`
   position: relative;
   overflow: hidden;
   background-color: white;
+  border-radius: 4.5px;
   ${({ background }) => generatePatternStyles(background)}
 `;
 

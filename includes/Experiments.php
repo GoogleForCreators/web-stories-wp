@@ -368,10 +368,11 @@ class Experiments {
 			 * Creation date: 2020-06-30
 			 */
 			[
-				'name'        => 'showElementsTab',
+				'name'        => 'rowBasedGallery',
 				'label'       => __( 'Uploads', 'web-stories' ),
 				'description' => __( 'Enable row-based media gallery', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @diegovar

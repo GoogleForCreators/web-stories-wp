@@ -20,38 +20,38 @@
 import { Fixture } from '../../../karma';
 import { initHelpers } from './_utils';
 
-describe('CUJ: Editor Can Style Text', () => {
-  describe('Action: Inline style override', () => {
-    const data = {};
+describe('Inline style override', () => {
+  const data = {};
 
-    const {
-      getTextContent,
-      addInitialText,
-      setSelection,
-      richTextHasFocus,
-    } = initHelpers(data);
+  const {
+    getTextContent,
+    addInitialText,
+    setSelection,
+    richTextHasFocus,
+  } = initHelpers(data);
 
+  beforeEach(async () => {
+    data.fixture = new Fixture();
+    await data.fixture.render();
+
+    // Add a text box
+    await addInitialText();
+
+    // Enter edit-mode
+    await data.fixture.events.keyboard.press('Enter');
+  });
+
+  afterEach(() => {
+    data.fixture.restore();
+  });
+
+  describe('when cursor is placed after second character', () => {
     beforeEach(async () => {
-      data.fixture = new Fixture();
-      await data.fixture.render();
-
-      // Add a text box
-      await addInitialText();
-
-      // Enter edit-mode
-      await data.fixture.events.keyboard.press('Enter');
+      // Place cursor at start and them move to after second character
+      await setSelection(2, 2);
     });
 
-    afterEach(() => {
-      data.fixture.restore();
-    });
-
-    describe('when cursor is placed after second character', () => {
-      beforeEach(async () => {
-        // Place cursor at start and them move to after second character
-        await setSelection(2, 2);
-      });
-
+    describe('CUJ: Creator Can Style Text: Apply B', () => {
       it('should have correct formatting when pressing mod+b for bold, then inserting text', async () => {
         // Verify that bold is untoggled in design panel
         const { bold } = data.fixture.editor.inspector.designPanel.textStyle;
@@ -107,7 +107,9 @@ describe('CUJ: Editor Can Style Text', () => {
           '"Fifooll in some text" in mixed formatting'
         );
       });
+    });
 
+    describe('CUJ: Creator Can Style Text: Apply U, Apply I', () => {
       it('should have correct formatting when pressing underline toggle, then mod+i, then inserting text', async () => {
         // Verify that italic and underline are untoggled in design panel
         const {
@@ -178,7 +180,9 @@ describe('CUJ: Editor Can Style Text', () => {
           '"Fifooll in some text" in mixed formatting'
         );
       });
+    });
 
+    describe('CUJ: Creator Can Style Text: Select weight', () => {
       it('should have correct formatting when selecting font weight, then inserting text', async () => {
         // Verify that bold is untoggled in design panel
         const {
@@ -213,7 +217,9 @@ describe('CUJ: Editor Can Style Text', () => {
         );
       });
     });
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Apply I', () => {
     it('should have correct formatting when already italic, then inline removing italic and adding bold, then inserting text', async () => {
       // Toggle italic for entire selection
       await data.fixture.events.keyboard.shortcut('mod+i');
@@ -253,64 +259,65 @@ describe('CUJ: Editor Can Style Text', () => {
 
       await data.fixture.snapshot('"Fifooll in some text" in mixed formatting');
     });
+  });
 
-    it('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
-      // Toggle bold for entire selection
-      await data.fixture.events.keyboard.shortcut('mod+b');
+  it('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
+    // Toggle bold for entire selection
+    await data.fixture.events.keyboard.shortcut('mod+b');
 
-      // Select 2nd character
-      await setSelection(1, 2);
+    // Select 2nd character
+    await setSelection(1, 2);
 
-      // Make just this character italic
-      await data.fixture.events.keyboard.shortcut('mod+i');
+    // Make just this character italic
+    await data.fixture.events.keyboard.shortcut('mod+i');
 
-      const {
-        italic,
-        bold,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+    const {
+      italic,
+      bold,
+    } = data.fixture.editor.inspector.designPanel.textStyle;
 
-      // Verify that both italic and bold are toggled
-      expect(italic.checked).toBe(true);
-      expect(bold.checked).toBe(true);
+    // Verify that both italic and bold are toggled
+    expect(italic.checked).toBe(true);
+    expect(bold.checked).toBe(true);
 
-      // Delete the italic character
-      await data.fixture.events.keyboard.press('Delete');
+    // Delete the italic character
+    await data.fixture.events.keyboard.press('Delete');
 
-      // Verify that bold is still on, italic is off
-      expect(bold.checked).toBe(true);
-      expect(italic.checked).toBe(false);
+    // Verify that bold is still on, italic is off
+    expect(bold.checked).toBe(true);
+    expect(italic.checked).toBe(false);
 
-      // Type something
-      await data.fixture.events.keyboard.type('u');
+    // Type something
+    await data.fixture.events.keyboard.type('u');
 
-      // Exit edit-mode
-      await data.fixture.events.keyboard.press('Escape');
+    // Exit edit-mode
+    await data.fixture.events.keyboard.press('Escape');
 
-      // Expect correct result
-      const actual = getTextContent();
-      const expected =
-        '<span style="font-weight: 700">Full in some text</span>';
-      expect(actual).toBe(expected);
-      await data.fixture.snapshot('"Full in some text" in bold');
-    });
+    // Expect correct result
+    const actual = getTextContent();
+    const expected = '<span style="font-weight: 700">Full in some text</span>';
+    expect(actual).toBe(expected);
+    await data.fixture.snapshot('"Full in some text" in bold');
+  });
 
-    it('should keep formatting when all text is replaced', async () => {
-      // Make it all bold while selected
-      await data.fixture.events.keyboard.shortcut('mod+b');
+  it('should keep formatting when all text is replaced', async () => {
+    // Make it all bold while selected
+    await data.fixture.events.keyboard.shortcut('mod+b');
 
-      // Replace text while entire text is selected
-      await data.fixture.events.keyboard.type('A new text');
+    // Replace text while entire text is selected
+    await data.fixture.events.keyboard.type('A new text');
 
-      // Exit edit-mode
-      await data.fixture.events.keyboard.press('Escape');
+    // Exit edit-mode
+    await data.fixture.events.keyboard.press('Escape');
 
-      const actual = getTextContent();
-      const expected = '<span style="font-weight: 700">A new text</span>';
-      expect(actual).toBe(expected);
+    const actual = getTextContent();
+    const expected = '<span style="font-weight: 700">A new text</span>';
+    expect(actual).toBe(expected);
 
-      await data.fixture.snapshot('"A new text" in bold');
-    });
+    await data.fixture.snapshot('"A new text" in bold');
+  });
 
+  describe('CUJ: Creator can Add and Write Text: Select all text inside a textbox, Write/edit text', () => {
     it('should keep formatting when all text is removed, then replaced', async () => {
       // Make it all bold while selected
       await data.fixture.events.keyboard.shortcut('mod+b');

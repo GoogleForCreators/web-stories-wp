@@ -18,4 +18,4 @@
  * Internal dependencies
  */
 export { default as MediaPane } from './mediaPane';
-export { default as MediaTab } from './mediaTab';
+export { default as MediaIcon } from './mediaIcon';

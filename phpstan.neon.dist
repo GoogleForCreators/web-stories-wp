@@ -14,6 +14,7 @@ parameters:
     - WPCOM_IS_VIP_ENV
     - IS_WPCOM
     - WP_CLI
+    - GOOGLESITEKIT_VERSION
   ignoreErrors:
     # Uses func_get_args()
     - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
