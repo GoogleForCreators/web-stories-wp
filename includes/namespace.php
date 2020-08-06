@@ -46,7 +46,7 @@ function activate( $network_wide ) {
 		);
 	}
 
-	$story = new Story_Post_Type();
+	$story = new Story_Post_Type( new Experiments() );
 	$story->init();
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules

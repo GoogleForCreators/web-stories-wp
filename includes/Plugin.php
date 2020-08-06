@@ -124,6 +124,13 @@ class Plugin {
 	public $analytics;
 
 	/**
+	 * Experiments.
+	 *
+	 * @var Experiments
+	 */
+	public $experiments;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
@@ -132,41 +139,45 @@ class Plugin {
 		// Plugin compatibility / polyfills.
 		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
 
-		$this->media = new Media();
-		add_action( 'init', [ $this->media, 'init' ], 9 );
+		// Settings.
+		$this->settings = new Settings();
+		add_action( 'init', [ $this->settings, 'init' ], 5 );
 
-		$this->story = new Story_Post_Type();
-		add_action( 'init', [ $this->story, 'init' ] );
 
-		$this->template = new Template_Post_Type();
-		add_action( 'init', [ $this->template, 'init' ] );
+		$this->experiments = new Experiments();
+		add_action( 'init', [ $this->experiments, 'init' ], 7 );
 
 		// Beta version updater.
 		$this->updater = new Updater();
 		add_action( 'init', [ $this->updater, 'init' ], 9 );
 
+		// Admin-related functionality.
+
+		// Migrations.
+		$this->database_upgrader = new Database_Upgrader();
+		add_action( 'admin_init', [ $this->database_upgrader, 'init' ], 5 );
+
+		$this->admin = new Admin();
+		add_action( 'admin_init', [ $this->admin, 'init' ] );
+
+		$this->media = new Media();
+		add_action( 'init', [ $this->media, 'init' ] );
+
 		$this->tracking = new Tracking();
 		add_action( 'init', [ $this->tracking, 'init' ] );
+
+		$this->template = new Template_Post_Type();
+		add_action( 'init', [ $this->template, 'init' ] );
+
+		$this->dashboard = new Dashboard( $this->experiments );
+		add_action( 'init', [ $this->dashboard, 'init' ] );
+
+		$this->story = new Story_Post_Type( $this->experiments );
+		add_action( 'init', [ $this->story, 'init' ] );
 
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
-
-		// Settings.
-		$this->settings = new Settings();
-		add_action( 'init', [ $this->settings, 'init' ] );
-
-		// Dashboard.
-		$this->dashboard = new Dashboard();
-		add_action( 'init', [ $this->dashboard, 'init' ] );
-
-		// Migrations.
-		$this->database_upgrader = new Database_Upgrader();
-		add_action( 'admin_init', [ $this->database_upgrader, 'init' ] );
-
-		// Admin-related functionality.
-		$this->admin = new Admin();
-		add_action( 'admin_init', [ $this->admin, 'init' ] );
 
 		// Gutenberg Blocks.
 		$this->embed_block = new Embed_Block();
