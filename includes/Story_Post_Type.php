@@ -579,7 +579,7 @@ class Story_Post_Type {
 				 * Issue: #2820
 				 * Creation date: 2020-06-30
 				 */
-				'rowBasedGallery'                => false,
+				'rowBasedGallery'                => true,
 				/**
 				 * Description: Flag for using incremental search in media and media3p with a debouncer.
 				 * Author: @diegovar

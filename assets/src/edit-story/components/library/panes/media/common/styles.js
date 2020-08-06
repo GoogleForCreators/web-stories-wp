@@ -37,10 +37,8 @@ export const PaneHeader = styled.div`
 `;
 
 export const MediaGalleryContainer = styled.div`
-  display: grid;
   grid-area: infinitescroll;
   overflow: auto;
-  grid-template-columns: 1fr;
   padding: 0 24px;
   margin-top: 1em;
   position: relative;
@@ -57,13 +55,15 @@ export const MediaGalleryInnerContainer = styled.div`
 `;
 
 export const MediaGalleryLoadingPill = styled.div`
-  grid-column: 1 / span 2;
-  margin-bottom: 16px;
+  position: absolute;
+  bottom: 20px;
+  left: 60px;
+  right: 60px;
+  width: 240px;
   text-align: center;
   padding: 8px 80px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.4)};
   border-radius: 100px;
-  margin-top: auto;
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: 500;
