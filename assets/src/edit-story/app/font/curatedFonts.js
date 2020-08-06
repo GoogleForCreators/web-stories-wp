@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+// Curated Fonts list source:
+// https://github.com/google/web-stories-wp/issues/1989#issuecomment-662253222
 export const curatedFontNames = [
   'Karla',
   'Lato',
