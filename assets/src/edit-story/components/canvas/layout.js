@@ -24,6 +24,10 @@ import { forwardRef, createRef } from 'react';
 /**
  * Internal dependencies
  */
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 import {
   FULLBLEED_RATIO,
   PAGE_RATIO,
@@ -221,7 +225,12 @@ const PageArea = forwardRef(function PageArea(
   ref
 ) {
   return (
-    <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
+    <PageAreaFullbleedContainer
+      ref={fullbleedRef}
+      data-testid="fullbleed"
+      aria-label={__('Fullbleed', 'web-stories')}
+      role="region"
+    >
       <PageAreaWithOverflow showOverflow={showOverflow} background={background}>
         <PageAreaSafeZone
           ref={ref}

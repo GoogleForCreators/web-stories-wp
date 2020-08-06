@@ -51,6 +51,14 @@ export class Canvas extends Container {
       EditLayer
     );
   }
+
+  get fullbleed() {
+    return this._get(
+      this.getAllByRole('region', { name: 'Fullbleed' })[0],
+      'fullbleed',
+      Fullbleed
+    );
+  }
 }
 
 /**
@@ -119,6 +127,19 @@ class FramesLayer extends Container {
       `frames[${elementId}]`,
       Frame
     );
+  }
+}
+
+/**
+ * Contains fullbleed.
+ */
+class Fullbleed extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get container() {
+    return this.node;
   }
 }
 
