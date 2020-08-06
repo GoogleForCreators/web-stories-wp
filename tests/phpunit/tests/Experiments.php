@@ -110,6 +110,25 @@ class Experiments extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::display_experiment_field
+	 */
+	public function test_display_experiment_field_enabled_by_default() {
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'fooExperiment' => true ], false );
+		$experiments = new \Google\Web_Stories\Experiments();
+		$output      = get_echo(
+			[ $experiments, 'display_experiment_field' ],
+			[
+				[
+					'label'   => 'Experiment',
+					'id'      => 'fooExperiment',
+					'default' => true,
+				],
+			]
+		);
+		$this->assertContains( 'disabled', $output );
+	}
+
+	/**
 	 * @covers ::get_experiment_groups
 	 */
 	public function test_get_experiment_groups() {

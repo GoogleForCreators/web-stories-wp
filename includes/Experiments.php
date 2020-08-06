@@ -112,10 +112,6 @@ class Experiments {
 		$experiments = $this->get_experiments();
 
 		foreach ( $experiments as $experiment ) {
-			if ( array_key_exists( 'default', $experiment ) ) {
-				continue;
-			}
-
 			add_settings_field(
 				$experiment['name'],
 				$experiment['label'],
@@ -123,8 +119,9 @@ class Experiments {
 				self::PAGE_NAME,
 				$experiment['group'],
 				[
-					'label' => $experiment['description'],
-					'id'    => $experiment['name'],
+					'label'   => $experiment['description'],
+					'id'      => $experiment['name'],
+					'default' => array_key_exists( 'default', $experiment ) && $experiment['default'],
 				]
 			);
 		}
@@ -133,12 +130,20 @@ class Experiments {
 	/**
 	 * Display a checkbox field for a single experiment.
 	 *
-	 * @param array $args Field args.
+	 * @param array $args {
+	 *     Array of arguments for displaying a single field.
+	 *
+	 *     @type string $id      Experiment ID.
+	 *     @type string $label   Experiment label.
+	 *     @type bool   $default Whether the experiment is enabled by default.
+	 * }
 	 *
 	 * @return void
 	 */
 	public function display_experiment_field( $args ) {
-		$checked = $this->is_experiment_enabled( $args['id'] );
+		$is_enabled_by_default = ! empty( $args['default'] );
+		$checked               = $is_enabled_by_default || $this->is_experiment_enabled( $args['id'] );
+		$disabled              = $is_enabled_by_default ? 'disabled' : '';
 		?>
 		<label for="<?php echo esc_attr( $args['id'] ); ?>">
 			<input
@@ -146,6 +151,7 @@ class Experiments {
 				name="<?php echo esc_attr( sprintf( '%1$s[%2$s]', Settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>"
 				id="<?php echo esc_attr( $args['id'] ); ?>"
 				value="1"
+				<?php echo esc_attr( $disabled ); ?>
 				<?php checked( $checked ); ?>
 			/>
 			<?php echo esc_html( $args['label'] ); ?>
