@@ -276,6 +276,8 @@ describe('CUJ: Creator can browse templates in grid view', () => {
     });
 
     it('should trigger template preview when user clicks a related template', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
       await getTemplatesState();
 
       const relatedTemplatesSection = await fixture.screen.getByRole('region', {
@@ -303,6 +305,8 @@ describe('CUJ: Creator can browse templates in grid view', () => {
     });
 
     it('should trigger template preview when user presses Enter while focused on a card', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
       await getTemplatesState();
       const relatedTemplatesSection = fixture.screen.getByRole('region', {
         name: /Related Templates/,
