@@ -178,7 +178,7 @@ class Story_Post_Type {
 	 */
 	protected function get_request_post_type() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
 		if ( did_action( 'wp' ) && is_singular() ) {
 			$post_type = get_post_type( get_queried_object_id() );
 			return $post_type ?: null;
@@ -195,6 +195,8 @@ class Story_Post_Type {
 		) {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] );
 		}
+
+		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		if ( $current_screen instanceof WP_Screen ) {
 			$current_post = get_post();
@@ -282,6 +284,7 @@ class Story_Post_Type {
 		} else {
 			$post_types = array_diff( $post_types, [ self::POST_TYPE_SLUG ] );
 		}
+
 		return array_values( $post_types );
 	}
 

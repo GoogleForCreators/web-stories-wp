@@ -21,7 +21,6 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
 class Story_Post_Type extends \WP_UnitTestCase {
-
 	use Private_Access;
 
 	/**
@@ -64,6 +63,12 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		);
 	}
 
+	public function tearDown() {
+		unset( $GLOBALS['current_screen'] );
+
+		parent::tearDown();
+	}
+
 	/**
 	 * @covers ::init
 	 */
@@ -76,7 +81,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'replace_editor', [ $story_post_type, 'replace_editor' ] ) );
 		$this->assertSame( 10, has_filter( 'use_block_editor_for_post_type', [ $story_post_type, 'filter_use_block_editor_for_post_type' ] ) );
 		$this->assertSame( 10, has_filter( 'template_include', [ $story_post_type, 'filter_template_include' ] ) );
-		$this->assertSame( PHP_INT_MAX, has_filter( 'amp_skip_post', [ $story_post_type, 'skip_amp' ] ) );
+		$this->assertSame( 10, has_filter( 'option_amp-options', [ $story_post_type, 'filter_amp_options' ] ) );
+		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $story_post_type, 'filter_supportable_post_types' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
 	}
@@ -160,6 +166,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$story_post_type           = new \Google\Web_Stories\Story_Post_Type();
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$story_post_type->admin_enqueue_scripts( 'post.php' );
+
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
 		$this->assertTrue( wp_style_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
 	}
@@ -174,12 +181,55 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::skip_amp
+	 * @covers ::filter_amp_options
 	 */
-	public function test_skip_amp() {
+	public function test_filter_amp_options_if_not_requested_post_type() {
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
-		$skip_amp        = $story_post_type->skip_amp( true, get_post( self::$story_id ) );
-		$this->assertTrue( $skip_amp );
+		$this->assertEqualSets( [], $story_post_type->filter_amp_options( [] ) );
+	}
+
+	/**
+	 * @covers ::filter_amp_options
+	 */
+	public function test_filter_amp_options() {
+		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$before = [
+			'theme_support'        => 'reader',
+			'supported_post_types' => [ 'post' ],
+			'supported_templates'  => [ 'is_page' ],
+		];
+
+		$expected = [
+			'theme_support'        => 'standard',
+			'supported_post_types' => [ 'post', \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ],
+			'supported_templates'  => [ 'is_page', 'is_singular' ],
+		];
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $story_post_type->filter_amp_options( $before );
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_supportable_post_types
+	 */
+	public function test_filter_supportable_post_types_if_not_requested_post_type() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$this->assertEqualSets( [], $story_post_type->filter_supportable_post_types( [ \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] ) );
+	}
+
+	/**
+	 * @covers ::filter_supportable_post_types
+	 */
+	public function test_filter_supportable_post_types() {
+		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$actual          = $story_post_type->filter_supportable_post_types( [] );
+
+		$this->assertEqualSets( [ \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ], $actual );
 	}
 
 	/**
