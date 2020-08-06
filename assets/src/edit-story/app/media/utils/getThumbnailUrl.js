@@ -39,13 +39,7 @@ function getThumbnailUrl(minWidth, resource) {
   };
 
   if (resource.sizes) {
-    // The thumbnail is a square cropped image, we don't want that.
-    const sizesWithoutThumbnail = {
-      ...resource.sizes,
-    };
-    delete sizesWithoutThumbnail.thumbnail;
-
-    const smallestValidImage = Object.values(sizesWithoutThumbnail)
+    const smallestValidImage = Object.values(resource.sizes)
       .sort((s1, s2) => s1.width - s2.width)
       .filter((s) => getOrientation(s) === getOrientation(resource))
       .find((s) => s.width >= minWidth * window.devicePixelRatio);
