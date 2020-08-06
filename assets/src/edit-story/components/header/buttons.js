@@ -35,6 +35,7 @@ import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
 import escapeHTML from '../../utils/escapeHTML';
+import { useGlobalKeyDownEffect } from '../keyboard';
 import PreviewErrorDialog from './previewErrorDialog';
 import PostPublishDialog from './postPublishDialog';
 
@@ -248,6 +249,18 @@ function Update() {
   const {
     state: { hasNewChanges },
   } = useHistory();
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+s'] },
+    (event) => {
+      event.preventDefault();
+      if (isSaving) {
+        return;
+      }
+      saveStory();
+    },
+    [saveStory, isSaving]
+  );
 
   let text;
   switch (status) {

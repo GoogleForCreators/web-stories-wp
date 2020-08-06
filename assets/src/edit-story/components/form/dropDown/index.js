@@ -30,26 +30,40 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import {
+  isKeyboardUser,
+  KEYBOARD_USER_SELECTOR,
+} from '../../../utils/keyboardOnlyOutline';
 import { Dropdown as DropdownIcon } from '../../../icons';
 import Popup from '../../popup';
+import { useKeyDownEffect } from '../../keyboard';
 import DropDownList from './list';
 
 const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  color: ${({ theme }) => theme.colors.fg.v0};
+  color: ${({ theme }) => theme.colors.fg.black};
   font-family: ${({ theme }) => theme.fonts.body1.font};
+
+  border-radius: 4px;
+  border: 1px solid transparent;
+  ${KEYBOARD_USER_SELECTOR} &:focus-within {
+    border-color: ${({ theme }) => theme.colors.whiteout};
+  }
 `;
 
-const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
+const DropDownSelect = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
+  border: 0;
   background-color: ${({ theme, lightMode }) =>
-    lightMode ? rgba(theme.colors.fg.v1, 0.1) : rgba(theme.colors.bg.v0, 0.3)};
+    lightMode
+      ? rgba(theme.colors.fg.white, 0.1)
+      : rgba(theme.colors.bg.black, 0.3)};
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
@@ -61,17 +75,21 @@ const DropDownSelect = styled.div.attrs({ role: 'button', tabIndex: '0' })`
       opacity: 0.3;
     `}
 
+  :focus {
+    outline: none !important;
+  }
+
   svg {
     width: 28px;
     height: 28px;
     color: ${({ theme, lightMode }) =>
-      lightMode ? theme.colors.fg.v1 : rgba(theme.colors.fg.v1, 0.3)};
+      lightMode ? theme.colors.fg.white : rgba(theme.colors.fg.white, 0.3)};
   }
 `;
 
 const DropDownTitle = styled.span`
   user-select: none;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
@@ -80,12 +98,12 @@ const DropDownTitle = styled.span`
 `;
 
 function DropDown({
-  options,
   value,
   onChange,
-  disabled,
+  options = [],
+  disabled = false,
   lightMode = false,
-  placeholder,
+  placeholder = __('Select an option', 'web-stories'),
   ...rest
 }) {
   const selectRef = useRef();
@@ -104,6 +122,10 @@ function DropDown({
   );
   const toggleOptions = useCallback(() => {
     setIsOpen(false);
+    if (isKeyboardUser) {
+      // Return keyboard focus to button when closing dropdown
+      selectRef.current.focus();
+    }
   }, []);
 
   const handleCurrentValue = useCallback(
@@ -122,6 +144,12 @@ function DropDown({
     setIsOpen(!isOpen);
   };
 
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  useKeyDownEffect(selectRef, 'enter', handleSelectClick, [isOpen]);
+
   return (
     <DropDownContainer>
       <DropDownSelect
@@ -129,9 +157,9 @@ function DropDown({
         aria-pressed={isOpen}
         aria-haspopup={true}
         aria-expanded={isOpen}
+        aria-disabled={disabled}
         disabled={disabled}
         ref={selectRef}
-        aria-disabled={disabled}
         lightMode={lightMode}
         {...rest}
       >
@@ -160,20 +188,12 @@ function DropDown({
 
 DropDown.propTypes = {
   value: PropTypes.any.isRequired,
-  options: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
+  options: PropTypes.array,
   disabled: PropTypes.bool,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
   labelledBy: PropTypes.string,
-};
-
-DropDown.defaultProps = {
-  disabled: false,
-  value: '',
-  onChange: () => {},
-  options: [],
-  placeholder: __('Select an Option', 'web-stories'),
 };
 
 export default DropDown;

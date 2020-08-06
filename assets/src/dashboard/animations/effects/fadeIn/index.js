@@ -15,23 +15,16 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Tab } from '../../shared';
-import { Media } from '../../../../../icons';
-import paneId from './paneId';
+import { AnimationFade } from '../../parts/fade';
 
-function Media3pTab(props) {
-  return (
-    <Tab aria-controls={paneId} {...props}>
-      <Media aria-label={__('Third Party Media library', 'web-stories')} />
-    </Tab>
-  );
+export function EffectFadeIn({ duration = 500, delay, easing }) {
+  return AnimationFade({
+    fadeFrom: 0,
+    fadeTo: 1,
+    duration,
+    delay,
+    easing,
+  });
 }
-
-export default Media3pTab;

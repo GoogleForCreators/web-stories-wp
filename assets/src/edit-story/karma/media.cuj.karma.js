@@ -14,32 +14,18 @@
  * limitations under the License.
  */
 
-describe('CUJ: Creator can add image/video to page', () => {
-  describe('Action: Upload media via upload button', () => {
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('it should upload image via upload button');
+describe('CUJ: Creator Can Add Image/Video to Page: Upload media via upload button', () => {
+  // Disable reason: Not implemented yet
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('it should upload image via upload button');
 
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('it should upload video via upload button');
-  });
+  // Disable reason: Not implemented yet
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('it should upload video via upload button');
 
-  describe('Action: Search media', () => {
+  describe('CUJ: Creator Can Add Image/Video to Page: Search media, Drag image/video from desktop to canvas', () => {
     // Disable reason: Not implemented yet
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('it should allow searching for media and adding it to the canvas');
-  });
-
-  describe('Action: Filter media', () => {
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('it should allow filtering media by type');
-  });
-
-  describe('Action: Set as background', () => {
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('it should allow setting media as background via design panel');
   });
 });
