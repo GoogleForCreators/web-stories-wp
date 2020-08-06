@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin compatibility functionality
+ * AMP plugin compatibility functionality.
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -27,7 +27,7 @@
 namespace { // Ensure global namespace.
 	use Google\Web_Stories\Story_Post_Type;
 
-	if ( ! function_exists( '\is_amp_endpoint' ) && is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+	if ( ! function_exists( '\is_amp_endpoint' ) ) {
 		/**
 		 * Determine whether the current response being served as AMP.
 		 *
@@ -37,7 +37,7 @@ namespace { // Ensure global namespace.
 		 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 		 */
 		function is_amp_endpoint() {
-			return true;
+			return is_singular( Story_Post_Type::POST_TYPE_SLUG );
 		}
 	}
 }

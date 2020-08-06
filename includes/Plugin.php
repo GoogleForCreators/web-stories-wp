@@ -129,7 +129,8 @@ class Plugin {
 	 * @return void
 	 */
 	public function register() {
-		add_action( 'plugins_loaded', [ $this, 'load_plugin_compat' ] );
+		// Plugin compatibility / polyfills.
+		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
 
 		$this->media = new Media();
 		add_action( 'init', [ $this->media, 'init' ], 9 );
@@ -188,14 +189,16 @@ class Plugin {
 	}
 
 	/**
-	 * Initializes functionality to improve compatibility with other plugins.
+	 * Initializes functionality to improve compatibility with the AMP plugin.
 	 *
-	 * Loads a separate plugin-compat.php file that allows defining functions in the global namespace.
+	 * Loads a separate PHP file that allows defining functions in the global namespace.
+	 *
+	 * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
 	 *
 	 * @return void
 	 */
-	public function load_plugin_compat() {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/plugin-compat.php';
+	public function load_amp_plugin_compat() {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/plugin-compat/amp.php';
 	}
 
 	/**
