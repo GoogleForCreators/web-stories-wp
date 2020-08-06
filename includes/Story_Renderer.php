@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use DOMNode;
 use Google\Web_Stories\Traits\Publisher;
 use DOMDocument;
 use DOMElement;
@@ -101,13 +102,24 @@ class Story_Renderer {
 	}
 
 	/**
+	 * Returns the first found element with a given tag name.
+	 *
+	 * @param string $name Tag name.
+	 *
+	 * @return DOMNode|null
+	 */
+	protected function get_element_by_tag_name( $name ) {
+		return $this->document->getElementsByTagName( $name )->item( 0 );
+	}
+
+	/**
 	 * Replaces the HTML start tag to make the language attributes dynamic.
 	 *
 	 * @return void
 	 */
 	protected function transform_html_start_tag() {
 		/* @var DOMElement $html The <html> element */
-		$html = $this->document->getElementsByTagName( 'html' )[0];
+		$html = $this->get_element_by_tag_name( 'html' );
 		$html->setAttribute( 'amp', null );
 
 		// See get_language_attributes().
@@ -169,7 +181,7 @@ class Story_Renderer {
 	 */
 	protected function add_publisher_logo() {
 		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element  = $this->document->getElementsByTagName( 'amp-story' )[0];
+		$story_element  = $this->get_element_by_tag_name( 'amp-story' );
 		$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
 		if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
@@ -184,7 +196,7 @@ class Story_Renderer {
 	 */
 	protected function add_poster_images() {
 		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->document->getElementsByTagName( 'amp-story' )[0];
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
 
 		$poster_images = $this->get_poster_images();
 
@@ -205,7 +217,7 @@ class Story_Renderer {
 		$script->setAttribute( 'custom-element', 'amp-analytics' );
 
 		/* @var DOMElement $head The <head> element. */
-		$head = $this->document->getElementsByTagName( 'head' )[0];
+		$head = $this->get_element_by_tag_name( 'head' );
 		$head->appendChild( $this->document->importNode( $script, true ) );
 	}
 
@@ -232,7 +244,7 @@ class Story_Renderer {
 		}
 
 		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->document->getElementsByTagName( 'amp-story' )[0];
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
 		$story_element->appendChild( $this->document->importNode( $new_content->documentElement, true ) );
 
 		$this->insert_amp_analytics_extension();
@@ -264,7 +276,7 @@ class Story_Renderer {
 		}
 
 		/* @var DOMElement $story_element The <amp-story> element */
-		$story_element = $this->document->getElementsByTagName( 'amp-story' )[0];
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
 		$story_element->parentNode->insertBefore(
 			$this->document->importNode( $new_content->documentElement, true ),
 			$story_element
@@ -297,7 +309,7 @@ class Story_Renderer {
 		}
 
 		/* @var DOMElement $body The <body> element. */
-		$body = $this->document->getElementsByTagName( 'body' )[0];
+		$body = $this->get_element_by_tag_name( 'body' );
 		$body->appendChild( $this->document->importNode( $new_content->documentElement, true ) );
 	}
 
