@@ -147,12 +147,12 @@ describe('useMedia3pApi', () => {
           creationDate: '1234',
           height: 3536,
           id: undefined,
-          length: null,
-          lengthFormatted: null,
+          length: undefined,
+          lengthFormatted: undefined,
           local: false,
           mimeType: 'image/jpeg',
-          poster: null,
-          posterId: null,
+          poster: undefined,
+          posterId: undefined,
           sizes: {
             web_stories_thumbnail: {
               file: 'media/unsplash:1234',
