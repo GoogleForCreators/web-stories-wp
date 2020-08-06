@@ -124,7 +124,7 @@ class Story_Renderer {
 			return;
 		}
 
-		$html->setAttribute( 'amp', null );
+		$html->setAttribute( 'amp', '' );
 
 		// See get_language_attributes().
 		if ( is_rtl() ) {
@@ -185,7 +185,12 @@ class Story_Renderer {
 	 */
 	protected function add_publisher_logo() {
 		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element  = $this->get_element_by_tag_name( 'amp-story' );
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+
+		if ( ! $story_element ) {
+			return;
+		}
+
 		$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
 		if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
@@ -296,7 +301,7 @@ class Story_Renderer {
 		/* @var DOMElement $story_element The <amp-story> element */
 		$story_element = $this->get_element_by_tag_name( 'amp-story' );
 
-		if ( ! $story_element ) {
+		if ( ! $story_element || ! $story_element->parentNode ) {
 			return;
 		}
 
