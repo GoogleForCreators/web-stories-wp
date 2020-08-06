@@ -51,8 +51,9 @@ class Experiments extends \WP_UnitTestCase {
 		$experiments = new \Google\Web_Stories\Experiments();
 		$experiments->init();
 
-		$this->assertSame( 10, has_action( 'admin_menu', [ $experiments, 'add_menu_page' ] ) );
-		$this->assertSame( 10, has_action( 'admin_init', [ $experiments, 'initialize_settings' ] ) );
+		// Because WEBSTORIES_DEV_MODE is false by default.
+		$this->assertFalse( has_action( 'admin_menu', [ $experiments, 'add_menu_page' ] ) );
+		$this->assertFalse( has_action( 'admin_init', [ $experiments, 'initialize_settings' ] ) );
 	}
 
 	/**
