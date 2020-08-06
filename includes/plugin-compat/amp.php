@@ -24,20 +24,18 @@
  * limitations under the License.
  */
 
-namespace { // Ensure global namespace.
-	use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Story_Post_Type;
 
-	if ( ! function_exists( '\is_amp_endpoint' ) ) {
-		/**
-		 * Determine whether the current response being served as AMP.
-		 *
-		 * Polyfill to ensure compatibility with plugins checking for AMP
-		 * when the AMP plugin itself is not available.
-		 *
-		 * @return bool Whether it is singular story post (and thus an AMP endpoint).
-		 */
-		function is_amp_endpoint() {
-			return is_singular( Story_Post_Type::POST_TYPE_SLUG );
-		}
+if ( ! function_exists( '\is_amp_endpoint' ) ) {
+	/**
+	 * Determine whether the current response being served as AMP.
+	 *
+	 * Polyfill to ensure compatibility with plugins checking for AMP
+	 * when the AMP plugin itself is not available.
+	 *
+	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
+	 */
+	function is_amp_endpoint() {
+		return is_singular( Story_Post_Type::POST_TYPE_SLUG );
 	}
 }
