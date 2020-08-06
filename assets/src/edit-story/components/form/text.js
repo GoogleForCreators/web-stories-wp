@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { CloseAlt as Close } from '../../icons';
+import { useKeyDownEffect } from '../keyboard';
 import MULTIPLE_VALUE from './multipleValue';
 import { Input } from '.';
 
@@ -57,6 +59,12 @@ const Container = styled.div`
   position: relative;
 
   ${({ disabled }) => disabled && `opacity: 0.3`};
+
+  border-radius: 4px;
+  border: 1px solid transparent;
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.whiteout};
+  }
 `;
 
 const ClearBtn = styled.button`
@@ -79,6 +87,27 @@ const CloseIcon = styled(Close)`
   height: 12px;
 `;
 
+function Clear({ onClear, showClearIconBackground, children }) {
+  const ref = useRef();
+  useKeyDownEffect(ref, ['enter'], onClear, [onClear]);
+
+  return (
+    <ClearBtn
+      ref={ref}
+      onClick={onClear}
+      showBackground={showClearIconBackground}
+    >
+      {children}
+    </ClearBtn>
+  );
+}
+
+Clear.propTypes = {
+  onClear: PropTypes.func,
+  showClearIconBackground: PropTypes.bool,
+  children: PropTypes.node,
+};
+
 function TextInput({
   className,
   onBlur,
@@ -94,21 +123,19 @@ function TextInput({
   placeholder,
   ...rest
 }) {
+  const inputRef = useRef();
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
   placeholder = isMultiple ? __('multiple', 'web-stories') : placeholder;
 
-  const onClear = (evt) => {
+  const onClear = useCallback(() => {
     onChange('');
-    if (evt.target.form) {
-      evt.target.form.dispatchEvent(
-        new window.Event('submit', { cancelable: true })
-      );
-    }
     if (onBlur) {
       onBlur({ onClear: true });
     }
-  };
+    // Return focus to text input as otherwise focus will revert to current selection
+    inputRef.current?.focus();
+  }, [onChange, onBlur]);
 
   return (
     <Container
@@ -119,6 +146,7 @@ function TextInput({
       {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
         type="text"
+        ref={inputRef}
         placeholder={placeholder}
         label={label}
         value={value}
@@ -138,9 +166,14 @@ function TextInput({
         }}
       />
       {Boolean(value) && clear && (
-        <ClearBtn onClick={onClear} showBackground={showClearIconBackground}>
-          {clearIcon ?? <CloseIcon />}
-        </ClearBtn>
+        <Clear
+          onClear={onClear}
+          showClearIconBackground={showClearIconBackground}
+        >
+          {clearIcon ?? (
+            <CloseIcon aria-label={__('Clear input', 'web-stories')} />
+          )}
+        </Clear>
       )}
     </Container>
   );

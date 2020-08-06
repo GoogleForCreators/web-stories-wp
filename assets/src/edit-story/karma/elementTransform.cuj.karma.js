@@ -21,7 +21,7 @@ import useInsertElement from '../components/canvas/useInsertElement';
 import { useStory } from '../app/story';
 import { Fixture } from './fixture';
 
-describe('CUJ: Creator can Transform an Element', () => {
+describe('Element transform', () => {
   let fixture;
   let frame;
 
@@ -62,7 +62,7 @@ describe('CUJ: Creator can Transform an Element', () => {
       fixture.restore();
     });
 
-    describe('Action: Resize', () => {
+    describe('CUJ: Creator can Transform an Element: Resize', () => {
       it('it should allow resizing in text edit mode', async () => {
         // Test that resize handle exists in edit mode.
         const rightResizeHandle = fixture.container.querySelector(
@@ -82,7 +82,7 @@ describe('CUJ: Creator can Transform an Element', () => {
       });
     });
 
-    describe('Action: Rotate', () => {
+    describe('CUJ: Creator can Transform an Element: Rotate', () => {
       it('it should allow rotating in text edit mode', async () => {
         // Test that rotation handle exists in edit mode.
         const rotationHandle = fixture.container.querySelector(

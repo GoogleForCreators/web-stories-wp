@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -39,6 +39,7 @@ import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../utils/context';
+import { useKeyDownEffect } from '../../../keyboard';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
@@ -106,6 +107,32 @@ const Collapse = styled.button`
   }
 `;
 
+function Toggle({ children, toggle, ...rest }) {
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const ref = useRef();
+  useKeyDownEffect(ref, 'enter', toggle, [toggle]);
+  return (
+    <Collapse
+      ref={ref}
+      onClick={(evt) => {
+        evt.stopPropagation();
+        toggle();
+      }}
+      {...rest}
+    >
+      {children}
+    </Collapse>
+  );
+}
+
+Toggle.propTypes = {
+  children: PropTypes.node.isRequired,
+  toggle: PropTypes.func.isRequired,
+};
+
 function Title({
   children,
   isPrimary,
@@ -154,6 +181,8 @@ function Title({
     ? __('Expand panel', 'web-stories')
     : __('Collapse panel', 'web-stories');
 
+  const toggle = isCollapsed ? expand : collapse;
+
   return (
     <Header
       isPrimary={isPrimary}
@@ -170,23 +199,20 @@ function Title({
           handleDoubleClick={resetHeight}
         />
       )}
-      <HeaderButton onClick={isCollapsed ? expand : collapse}>
+      <HeaderButton onClick={toggle}>
         <Heading id={panelTitleId}>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
           {canCollapse && (
-            <Collapse
+            <Toggle
               isCollapsed={isCollapsed}
-              onClick={(evt) => {
-                evt.stopPropagation();
-                isCollapsed ? expand() : collapse();
-              }}
+              toggle={toggle}
               aria-label={titleLabel}
               aria-expanded={!isCollapsed}
               aria-controls={panelContentId}
             >
               <Arrow />
-            </Collapse>
+            </Toggle>
           )}
         </HeaderActions>
       </HeaderButton>

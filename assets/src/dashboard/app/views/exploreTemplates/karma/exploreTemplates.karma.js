@@ -26,7 +26,7 @@ import Fixture from '../../../../karma/fixture';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 import { ApiContext } from '../../../api/apiProvider';
 
-describe('CUJ: Creator can browse templates in grid view', () => {
+describe('Grid view', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -128,7 +128,7 @@ describe('CUJ: Creator can browse templates in grid view', () => {
     expect(viewStories).toBeTruthy();
   });
 
-  describe('Action: Browse all templates', () => {
+  describe('CUJ: Creator can browse templates in grid view: Browse all templates', () => {
     it('should display "View" and "Use Template" controls when hovering over a template', async () => {
       const { templatesOrderById } = await getTemplatesState();
       const firstTemplate = getTemplateElementById(templatesOrderById[0]);
@@ -169,7 +169,7 @@ describe('CUJ: Creator can browse templates in grid view', () => {
     xit('should trigger template preview when user presses Enter while focused on a card', () => {});
   });
 
-  describe('Action: See pre-built template details page', () => {
+  describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
     it('should navigate to view an individual template', async () => {
       const { templatesOrderById } = await getTemplatesState();
       const firstTemplate = getTemplateElementById(templatesOrderById[0]);

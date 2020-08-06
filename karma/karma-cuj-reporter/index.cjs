@@ -50,21 +50,27 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
       emoji = '🛴';
     }
 
-    return `${emoji} **${(percentage * 100).toFixed(2)}%**`;
+    return `${emoji} **${(percentage * 100).toFixed(2)}%** *(${
+      completed.length
+    } / ${total.length})*`;
   };
 
   this.onSpecComplete = function (browser, result) {
     const { skipped, disabled, pending, success, suite } = result;
     const incomplete = skipped || disabled || pending || !success;
 
-    if (!suite[0]?.startsWith('CUJ') || !suite[1]?.startsWith('Action')) {
-      return;
-    }
+    suite.forEach((suiteName) => {
+      if (!suiteName?.startsWith('CUJ')) {
+        return;
+      }
 
-    const cuj = suite[0].slice(5);
-    const action = suite[1].slice(8);
-
-    cujResults.push([cuj, action, !incomplete]);
+      const [cuj, actions] = suiteName.split(/: ?/).slice(1);
+      const actionList = actions.split(/, ?/);
+      cujResults.push([cuj, '_TOTAL_', !incomplete]);
+      actionList.forEach((action) =>
+        cujResults.push([cuj, action, !incomplete])
+      );
+    });
   };
 
   this.onRunComplete = function () {
@@ -74,15 +80,13 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
 
     cujResults.sort();
 
-    let tableContents = cujResults.reduce((acc, curr) => {
-      const [cuj, action] = curr;
+    let tableContents = cujResults.reduce((acc, [cuj, action]) => {
+      const actionName = action === '_TOTAL_' ? '*[total]*' : action;
 
-      if (!acc.find(([_cuj]) => _cuj === cuj)) {
-        acc.push([cuj, '*\\[total\\]*', getCompletion(cuj)]);
-      }
-
-      if (!acc.find(([_cuj, _action]) => _cuj === cuj && _action === action)) {
-        acc.push([cuj, action, getCompletion(cuj, action)]);
+      if (
+        !acc.find(([_cuj, _action]) => _cuj === cuj && _action === actionName)
+      ) {
+        acc.push([cuj, actionName, getCompletion(cuj, action)]);
       }
 
       return acc;

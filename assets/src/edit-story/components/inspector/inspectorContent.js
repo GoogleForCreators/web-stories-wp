@@ -24,7 +24,7 @@ import styled from 'styled-components';
 import useInspector from './useInspector';
 import { getTabId } from './utils';
 
-const InspectorWrapper = styled.div.attrs({ tabIndex: '0', role: 'tabpanel' })`
+const InspectorWrapper = styled.div.attrs({ role: 'tabpanel' })`
   height: 100%;
 `;
 
