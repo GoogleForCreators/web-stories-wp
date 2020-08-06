@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +27,7 @@ import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
+import { PreviewStoryView } from '..';
 import Content from './content';
 import Header from './header';
 
@@ -49,7 +50,7 @@ function MyStories() {
     },
   } = useContext(ApiContext);
 
-  const { filter, page, search, sort, view } = useStoryView({
+  const { filter, page, previewVisible, search, sort, view } = useStoryView({
     filters: STORY_STATUSES,
     totalPages,
   });
@@ -86,6 +87,22 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
+  const handlePreviewStory = useCallback(
+    (e, story) => {
+      previewVisible.set(e, story);
+    },
+    [previewVisible]
+  );
+
+  if (previewVisible.value) {
+    return (
+      <PreviewStoryView
+        story={previewVisible.value}
+        handleClose={handlePreviewStory}
+      />
+    );
+  }
+
   return (
     <Layout.Provider>
       <Header
@@ -112,6 +129,7 @@ function MyStories() {
           duplicateStory,
           trashStory,
           updateStory,
+          handlePreviewStory,
         }}
         users={users}
         view={view}

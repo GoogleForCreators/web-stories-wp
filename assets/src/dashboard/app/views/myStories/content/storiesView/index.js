@@ -167,6 +167,7 @@ function StoriesView({
         }
         pageSize={view.pageSize}
         renameStory={renameStory}
+        previewStory={storyActions.handlePreviewStory}
         storyMenu={storyMenu}
         stories={stories}
         users={users}

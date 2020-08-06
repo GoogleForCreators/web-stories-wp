@@ -227,7 +227,6 @@ function TemplateDetails() {
   if (previewVisible.value) {
     return (
       <PreviewStoryView
-        isTemplate
         story={previewVisible.value}
         handleClose={handlePreviewTemplate}
       />

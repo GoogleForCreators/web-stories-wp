@@ -19,6 +19,7 @@
  */
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -28,6 +29,8 @@ import { PageSizePropType } from '../types';
 import { clamp, usePagePreviewSize } from './index';
 
 export default function useStoryView({ filters, totalPages }) {
+  const enableStoryPreviews = useFeature('enableStoryPreviews');
+
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
@@ -36,6 +39,7 @@ export default function useStoryView({ filters, totalPages }) {
   const [sortDirection, setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
+  const [previewVisible, _setPreviewVisible] = useState();
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -87,6 +91,15 @@ export default function useStoryView({ filters, totalPages }) {
     [setPageClamped]
   );
 
+  const setPreviewVisible = useCallback(
+    (_, story) => {
+      if (enableStoryPreviews) {
+        _setPreviewVisible(story);
+      }
+    },
+    [enableStoryPreviews]
+  );
+
   const requestNextPage = useCallback(() => setPageClamped(page + 1), [
     page,
     setPageClamped,
@@ -94,6 +107,10 @@ export default function useStoryView({ filters, totalPages }) {
 
   return useMemo(
     () => ({
+      previewVisible: {
+        value: previewVisible,
+        set: setPreviewVisible,
+      },
       view: {
         style: viewStyle,
         toggleStyle: toggleViewStyle,
@@ -120,6 +137,8 @@ export default function useStoryView({ filters, totalPages }) {
       },
     }),
     [
+      previewVisible,
+      setPreviewVisible,
       viewStyle,
       toggleViewStyle,
       pageSize,
