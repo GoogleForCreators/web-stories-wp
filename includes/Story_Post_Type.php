@@ -31,6 +31,7 @@ use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
+use WP_Post_Type;
 use WP_Screen;
 
 /**
@@ -176,34 +177,48 @@ class Story_Post_Type {
 	 * @return string|null
 	 */
 	protected function get_request_post_type() {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 		if ( did_action( 'wp' ) && is_singular() ) {
 			$post_type = get_post_type( get_queried_object_id() );
-			return $post_type ? $post_type : null;
-		} elseif (
+			return $post_type ?: null;
+		}
+
+		if (
 			is_admin()
 			&&
-			isset( $_GET['action'], $_GET['post'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			isset( $_GET['action'], $_GET['post'] )
 			&&
-			'amp_validate' === $_GET['action'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'amp_validate' === $_GET['action']
 			&&
-			get_post_type( (int) $_GET['post'] ) === self::AMP_VALIDATED_URL_POST_TYPE // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			get_post_type( (int) $_GET['post'] ) === self::AMP_VALIDATED_URL_POST_TYPE
 		) {
-			return $this->get_validated_url_post_type( (int) $_GET['post'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		} elseif ( $current_screen instanceof WP_Screen ) {
+			return $this->get_validated_url_post_type( (int) $_GET['post'] );
+		}
+
+		if ( $current_screen instanceof WP_Screen ) {
 			$current_post = get_post();
+
 			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen->post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen->post_type ) {
 				$validated_url_post_type = $this->get_validated_url_post_type( $current_post->ID );
 				if ( $validated_url_post_type ) {
 					return $validated_url_post_type;
 				}
 			}
+
 			if ( $current_screen->post_type ) {
 				return $current_screen->post_type;
 			}
-		} elseif ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+			return null;
+		}
+
+		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) {
 			return self::POST_TYPE_SLUG;
 		}
+
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
 		return null;
 	}
 
@@ -273,8 +288,8 @@ class Story_Post_Type {
 	/**
 	 * Add story_author as allowed orderby value for REST API.
 	 *
-	 * @param array         $query_params Array of allowed query params.
-	 * @param \WP_Post_Type $post_type Post type.
+	 * @param array        $query_params Array of allowed query params.
+	 * @param WP_Post_Type $post_type Post type.
 	 * @return array Array of query params.
 	 */
 	public function filter_rest_collection_params( $query_params, $post_type ) {
@@ -423,7 +438,7 @@ class Story_Post_Type {
 		$has_upload_media_action  = current_user_can( 'upload_files' );
 		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
 
-		if ( $post_type_object instanceof \WP_Post_Type ) {
+		if ( $post_type_object instanceof WP_Post_Type ) {
 			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
 				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
