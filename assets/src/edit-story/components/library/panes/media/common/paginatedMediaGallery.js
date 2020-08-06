@@ -175,22 +175,16 @@ function PaginatedMediaGallery({
         {__('No media found', 'web-stories')}
       </MediaGalleryMessage>
     ) : (
-      <>
-        <div style={{ marginBottom: 15 }}>
-          <MediaGallery
-            providerType={providerType}
-            resources={resources}
-            onInsert={onInsert}
-          />
-        </div>
-        {hasMore && (
-          <MediaGalleryLoadingPill>
-            {__('Loading…', 'web-stories')}
-          </MediaGalleryLoadingPill>
-        )}
-      </>
+      <div style={{ marginBottom: 15 }}>
+        <MediaGallery
+          providerType={providerType}
+          resources={resources}
+          onInsert={onInsert}
+        />
+      </div>
     );
 
+  const displayLoadingPill = isMediaLoading && hasMore;
   return (
     <>
       <MediaGalleryContainer
@@ -199,8 +193,9 @@ function PaginatedMediaGallery({
       >
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
-      {providerType === ProviderType.UNSPLASH && (
+      {!displayLoadingPill && providerType === ProviderType.UNSPLASH && (
         <a
+          data-testid={'attribution'}
           href={
             'https://unsplash.com?utm_source=web_stories_wordpress&utm_medium=referral'
           }
@@ -212,6 +207,11 @@ function PaginatedMediaGallery({
             <UnsplashLogoFull style={LOGO_PROPS} />
           </AttributionPill>
         </a>
+      )}
+      {displayLoadingPill && (
+        <MediaGalleryLoadingPill data-testid={'loading-pill'}>
+          {__('Loading…', 'web-stories')}
+        </MediaGalleryLoadingPill>
       )}
     </>
   );
