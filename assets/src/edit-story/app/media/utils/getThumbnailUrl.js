@@ -23,17 +23,31 @@
  * @return {string} Source URL of the smallest available size image.
  */
 function getThumbnailUrl(minWidth, resource) {
+  const getOrientation = (obj) => {
+    if (obj.width / obj.height > 1) {
+      return Orientation.LANDSCAPE;
+    } else if (obj.width / obj.height < 1) {
+      return Orientation.PORTRAIT;
+    }
+    return Orientation.SQUARE;
+  };
+
+  const Orientation = {
+    PORTRAIT: 'portrait',
+    LANDSCAPE: 'landscape',
+    SQUARE: 'square',
+  };
+
   if (resource.sizes) {
     // The thumbnail is a square cropped image, we don't want that.
     const sizesWithoutThumbnail = {
       ...resource.sizes,
     };
     delete sizesWithoutThumbnail.thumbnail;
-    const isLandscape = (obj) => obj.width / obj.height > 1;
 
     const smallestValidImage = Object.values(sizesWithoutThumbnail)
       .sort((s1, s2) => s1.width - s2.width)
-      .filter((s) => isLandscape(s) === isLandscape(resource))
+      .filter((s) => getOrientation(s) === getOrientation(resource))
       .find((s) => s.width >= minWidth * window.devicePixelRatio);
     if (smallestValidImage) {
       return smallestValidImage.source_url;

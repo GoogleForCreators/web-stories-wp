@@ -59,9 +59,10 @@ describe('getThumbnailUrl', () => {
       width: 400,
       height: 200,
       sizes: {
-        img2: { width: 200, height: 500, source_url: 'portrait-url' },
-        img1: { width: 300, height: 1, source_url: 'med-url' },
-        img3: { width: 400, height: 1, source_url: 'large-url' },
+        img1: { width: 200, height: 500, source_url: 'portrait-url' },
+        img2: { width: 250, height: 250, source_url: 'square-url' },
+        img3: { width: 300, height: 1, source_url: 'med-url' },
+        img4: { width: 400, height: 1, source_url: 'large-url' },
       },
     };
     expect(getThumbnailUrl(150, resource)).toBe('med-url');
