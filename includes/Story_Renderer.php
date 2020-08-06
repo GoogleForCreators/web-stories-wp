@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use DOMNode;
 use Google\Web_Stories\Traits\Publisher;
 use DOMDocument;
 use DOMElement;
@@ -106,7 +105,7 @@ class Story_Renderer {
 	 *
 	 * @param string $name Tag name.
 	 *
-	 * @return DOMNode|null
+	 * @return DOMElement|null
 	 */
 	protected function get_element_by_tag_name( $name ) {
 		return $this->document->getElementsByTagName( $name )->item( 0 );
