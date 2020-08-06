@@ -93,6 +93,8 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
     it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
       const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
 
+      await fixture.events.click(closeLink);
+
       const viewTemplates = fixture.screen.queryByText(
         TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL]
       );
