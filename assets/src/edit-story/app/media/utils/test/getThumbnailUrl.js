@@ -68,20 +68,6 @@ describe('getThumbnailUrl', () => {
     expect(getThumbnailUrl(150, resource)).toBe('med-url');
   });
 
-  it('should never return the one with key=thumbnail', () => {
-    const resource = {
-      src: 'default-url',
-      width: 400,
-      height: 200,
-      sizes: {
-        thumbnail: { width: 200, height: 1, source_url: 'thumb-url' },
-        img1: { width: 300, height: 1, source_url: 'large-url' },
-        img2: { width: 400, height: 1, source_url: 'full-url' },
-      },
-    };
-    expect(getThumbnailUrl(180, resource)).toBe('large-url');
-  });
-
   it('should return the resource.src if there is no valid thumb', () => {
     const resource = {
       src: 'default-url',
