@@ -120,6 +120,11 @@ class Story_Renderer {
 	protected function transform_html_start_tag() {
 		/* @var DOMElement $html The <html> element */
 		$html = $this->get_element_by_tag_name( 'html' );
+
+		if ( ! $html ) {
+			return;
+		}
+
 		$html->setAttribute( 'amp', null );
 
 		// See get_language_attributes().
@@ -198,6 +203,10 @@ class Story_Renderer {
 		/* @var DOMElement $story_element The <amp-story> element. */
 		$story_element = $this->get_element_by_tag_name( 'amp-story' );
 
+		if ( ! $story_element ) {
+			return;
+		}
+
 		$poster_images = $this->get_poster_images();
 
 		foreach ( $poster_images as $attr => $url ) {
@@ -218,6 +227,11 @@ class Story_Renderer {
 
 		/* @var DOMElement $head The <head> element. */
 		$head = $this->get_element_by_tag_name( 'head' );
+
+		if ( ! $head ) {
+			return;
+		}
+
 		$head->appendChild( $this->document->importNode( $script, true ) );
 	}
 
@@ -245,6 +259,11 @@ class Story_Renderer {
 
 		/* @var DOMElement $story_element The <amp-story> element. */
 		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+
+		if ( ! $story_element ) {
+			return;
+		}
+
 		$story_element->appendChild( $this->document->importNode( $new_content->documentElement, true ) );
 
 		$this->insert_amp_analytics_extension();
@@ -277,6 +296,11 @@ class Story_Renderer {
 
 		/* @var DOMElement $story_element The <amp-story> element */
 		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+
+		if ( ! $story_element ) {
+			return;
+		}
+
 		$story_element->parentNode->insertBefore(
 			$this->document->importNode( $new_content->documentElement, true ),
 			$story_element
@@ -310,6 +334,11 @@ class Story_Renderer {
 
 		/* @var DOMElement $body The <body> element. */
 		$body = $this->get_element_by_tag_name( 'body' );
+
+		if ( ! $body ) {
+			return;
+		}
+
 		$body->appendChild( $this->document->importNode( $new_content->documentElement, true ) );
 	}
 
