@@ -16,4 +16,5 @@
 export const ProviderType = {
   LOCAL: 'local',
   UNSPLASH: 'unsplash',
+  COVERR: 'coverr',
 };

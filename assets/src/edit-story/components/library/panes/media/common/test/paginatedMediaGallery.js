@@ -18,7 +18,7 @@
  */
 import { renderWithTheme } from '../../../../../../testUtils';
 import PaginatedMediaGallery from '../paginatedMediaGallery';
-import { ProviderType } from '../providerType';
+import { ProviderType } from '../../../../../../app/media/providerType';
 
 describe('paginatedMediaGallery', () => {
   const providerType = ProviderType.UNSPLASH;

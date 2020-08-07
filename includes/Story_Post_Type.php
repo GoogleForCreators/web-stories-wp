@@ -31,6 +31,8 @@ use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
+use WP_Role;
+use WP_Post_Type;
 use WP_Screen;
 
 /**
@@ -40,12 +42,20 @@ class Story_Post_Type {
 	use Publisher;
 	use Types;
 	use Assets;
+
 	/**
 	 * The slug of the stories post type.
 	 *
 	 * @var string
 	 */
 	const POST_TYPE_SLUG = 'web-story';
+
+	/**
+	 * Slug of the AMP validated URL post type.
+	 *
+	 * @var string
+	 */
+	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
 	/**
 	 * Web Stories editor script handle.
@@ -67,6 +77,22 @@ class Story_Post_Type {
 	 * @var string
 	 */
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
+
+	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Dashboard constructor.
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
 
 	/**
 	 * Registers the post type for stories.
@@ -127,6 +153,8 @@ class Story_Post_Type {
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Controller::class,
+				'capability_type'       => [ 'web-story', 'web-stories' ],
+				'map_meta_cap'          => true,
 			]
 		);
 
@@ -138,9 +166,10 @@ class Story_Post_Type {
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
-		add_filter( 'template_include', [ $this, 'filter_template_include' ] );
+		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
 
-		add_filter( 'amp_skip_post', [ $this, 'skip_amp' ], PHP_INT_MAX, 2 );
+		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
+		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
@@ -153,6 +182,63 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Adds story capabilities to default user roles.
+	 *
+	 * This gives WordPress site owners more granular control over story management,
+	 * as they can customize this to their liking.
+	 *
+	 * @return void
+	 */
+	public function add_caps_to_roles() {
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( ! $post_type_object ) {
+			return;
+		}
+
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+
+		$administrator = get_role( 'administrator' );
+		$editor        = get_role( 'editor' );
+		$author        = get_role( 'author' );
+		$contributor   = get_role( 'contributor' );
+
+		if ( $administrator instanceof WP_Role ) {
+			foreach ( $all_capabilities as $cap ) {
+				$administrator->add_cap( $cap );
+			}
+		}
+
+		if ( $editor instanceof WP_Role ) {
+			foreach ( $all_capabilities as $cap ) {
+				$editor->add_cap( $cap );
+			}
+		}
+
+		if ( $author instanceof WP_Role ) {
+			$author->add_cap( 'edit_web-stories' );
+			$author->add_cap( 'edit_published_web-stories' );
+			$author->add_cap( 'delete_web-stories' );
+			$author->add_cap( 'delete_published_web-stories' );
+			$author->add_cap( 'publish_web-stories' );
+		}
+
+		if ( $contributor instanceof WP_Role ) {
+			$contributor->add_cap( 'edit_web-stories' );
+			$contributor->add_cap( 'delete_web-stories' );
+		}
+
+		/**
+		 * Fires when adding the custom capabilities to existing roles.
+		 *
+		 * Can be used to add the capabilities to other, custom roles.
+		 *
+		 * @param array $all_capabilities List of all post type capabilities, for reference.
+		 */
+		do_action( 'web_stories_add_capabilities', $all_capabilities );
+	}
+
+	/**
 	 * Base64 encoded svg icon.
 	 *
 	 * @return string Base64-encoded SVG icon.
@@ -162,27 +248,127 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * AMP plugin compatibility.
+	 * Get the post type for the current request.
 	 *
-	 * @todo Improve AMP plugin compatibility, see https://github.com/google/web-stories-wp/issues/967
-	 *
-	 * @param bool    $skipped Should this post type be skipped.
-	 * @param WP_Post $post Post object.
-	 *
-	 * @return bool
+	 * @return string|null
 	 */
-	public function skip_amp( $skipped, $post ) {
-		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-			$skipped = true;
+	protected function get_request_post_type() {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		if ( did_action( 'wp' ) && is_singular() ) {
+			$post_type = get_post_type( get_queried_object_id() );
+			return $post_type ?: null;
 		}
-		return $skipped;
+
+		if (
+			is_admin()
+			&&
+			isset( $_GET['action'], $_GET['post'] )
+			&&
+			'amp_validate' === $_GET['action']
+			&&
+			get_post_type( (int) $_GET['post'] ) === self::AMP_VALIDATED_URL_POST_TYPE
+		) {
+			return $this->get_validated_url_post_type( (int) $_GET['post'] );
+		}
+
+		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+		if ( $current_screen instanceof WP_Screen ) {
+			$current_post = get_post();
+
+			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen->post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen->post_type ) {
+				$validated_url_post_type = $this->get_validated_url_post_type( $current_post->ID );
+				if ( $validated_url_post_type ) {
+					return $validated_url_post_type;
+				}
+			}
+
+			if ( $current_screen->post_type ) {
+				return $current_screen->post_type;
+			}
+
+			return null;
+		}
+
+		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) {
+			return self::POST_TYPE_SLUG;
+		}
+
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		return null;
+	}
+
+	/**
+	 * Get the singular post type which is the queried object for the given validated URL post.
+	 *
+	 * @param int $post_id Post ID for Validated URL Post.
+	 * @return string|null Post type or null if validated URL is not for a singular post.
+	 */
+	protected function get_validated_url_post_type( $post_id ) {
+		if ( empty( $post_id ) ) {
+			return null;
+		}
+
+		$post = get_post( $post_id );
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return null;
+		}
+
+		if ( self::AMP_VALIDATED_URL_POST_TYPE !== $post->post_type ) {
+			return null;
+		}
+
+		$queried_object = get_post_meta( $post->ID, '_amp_queried_object', true );
+		if ( isset( $queried_object['id'], $queried_object['type'] ) && 'post' === $queried_object['type'] ) {
+			$post_type = get_post_type( $queried_object['id'] );
+			if ( $post_type ) {
+				return $post_type;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Filter AMP options to force Standard mode (AMP-first) when a web story is being requested.
+	 *
+	 * @param array $options Options.
+	 * @return array Filtered options.
+	 */
+	public function filter_amp_options( $options ) {
+		if ( $this->get_request_post_type() === self::POST_TYPE_SLUG ) {
+			$options['theme_support']          = 'standard';
+			$options['supported_post_types'][] = self::POST_TYPE_SLUG;
+			$options['supported_templates'][]  = 'is_singular';
+		}
+		return $options;
+	}
+
+	/**
+	 * Filter the post types which are supportable.
+	 *
+	 * Remove web-stories from the list unless the currently requested post type is for a web-story. This is done in
+	 * order to hide stories from the list of supportable post types on the AMP Settings screen.
+	 *
+	 * @param string[] $post_types Post types.
+	 * @return array Supportable post types.
+	 */
+	public function filter_supportable_post_types( $post_types ) {
+		if ( $this->get_request_post_type() === self::POST_TYPE_SLUG ) {
+			$post_types = array_merge( $post_types, [ self::POST_TYPE_SLUG ] );
+		} else {
+			$post_types = array_diff( $post_types, [ self::POST_TYPE_SLUG ] );
+		}
+
+		return array_values( $post_types );
 	}
 
 	/**
 	 * Add story_author as allowed orderby value for REST API.
 	 *
-	 * @param array         $query_params Array of allowed query params.
-	 * @param \WP_Post_Type $post_type Post type.
+	 * @param array        $query_params Array of allowed query params.
+	 * @param WP_Post_Type $post_type Post type.
 	 * @return array Array of query params.
 	 */
 	public function filter_rest_collection_params( $query_params, $post_type ) {
@@ -331,7 +517,7 @@ class Story_Post_Type {
 		$has_upload_media_action  = current_user_can( 'upload_files' );
 		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
 
-		if ( $post_type_object instanceof \WP_Post_Type ) {
+		if ( $post_type_object instanceof WP_Post_Type ) {
 			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
 				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
@@ -385,100 +571,10 @@ class Story_Post_Type {
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
-			'flags'  => [
-				/**
-				 * Description: Enables user facing animations.
-				 * Author: @mariano-formidable
-				 * Issue: 1903
-				 * Creation date: 2020-06-08
-				 */
-				'enableAnimation'                => false,
-				/**
-				 * Description: Flag for hover dropdown menu for media element in media library.
-				 * Author: @joannag6
-				 * Issue: #1319 and #354
-				 * Creation date: 2020-05-20
-				 */
-				'mediaDropdownMenu'              => true,
-				/**
-				 * Description: Flag for new font picker with typeface previews in style panel.
-				 * Author: @carlos-kelly
-				 * Issue: #1300
-				 * Creation date: 2020-06-02
-				 */
-				'newFontPicker'                  => false,
-				/**
-				 * Description: Flag for hiding/enabling the keyboard shortcuts button.
-				 * Author: @dmmulroy
-				 * Issue: #2094
-				 * Creation date: 2020-06-04
-				 */
-				'showKeyboardShortcutsButton'    => false,
-				/**
-				 * Description: Flag for hiding/enabling text sets.
-				 * Author: @dmmulroy
-				 * Issue: #2097
-				 * Creation date: 2020-06-04
-				 */
-				'showTextSets'                   => false,
-				/**
-				 * Description: Flag for hiding/enabling the pre publish tab.
-				 * Author: @dmmulroy
-				 * Issue: #2095
-				 * Creation date: 2020-06-04
-				 */
-				'showPrePublishTab'              => false,
-				/**
-				 * Description: Flag for displaying the animation tab/panel.
-				 * Author: @dmmulroy
-				 * Issue: #2092
-				 * Creation date: 2020-06-04
-				 */
-				'showAnimationTab'               => false,
-				/**
-				 * Description: Flag for hiding/enabling the text magic and helper mode icons.
-				 * Author: @dmmulroy
-				 * Issue: #2044
-				 * Creation date: 2020-06-04
-				 */
-				'showTextMagicAndHelperMode'     => false,
-				/**
-				 * Description: Flag for hiding/enabling the search input on the text and shapes panes.
-				 * Author: @dmmulroy
-				 * Issue: #2098
-				 * Creation date: 2020-06-04
-				 */
-				'showTextAndShapesSearchInput'   => false,
-				/**
-				 * Description: Flag for the 3P Media tab.
-				 * Author: @diegovar
-				 * Issue: #2508
-				 * Creation date: 2020-06-17
-				 */
-				'media3pTab'                     => false,
-				/**
-				 * Description: Flag to show or hide the elements tab.
-				 * Author: @diegovar
-				 * Issue: #2616
-				 * Creation date: 2020-06-23
-				 */
-				'showElementsTab'                => false,
-				/**
-				 * Description: Flag for using a row-based media gallery (vs column based) in the Uploads tab.
-				 * Author: @joannalee
-				 * Issue: #2820
-				 * Creation date: 2020-06-30
-				 */
-				'rowBasedGallery'                => true,
-				/**
-				 * Description: Flag for using incremental search in media and media3p with a debouncer.
-				 * Author: @diegovar
-				 * Issue: #3206
-				 * Creation date: 2020-07-15
-				 */
-				'incrementalSearchDebounceMedia' => false,
-			],
-
+			'flags'  => array_merge(
+				$this->experiments->get_experiment_statuses( 'general' ),
+				$this->experiments->get_experiment_statuses( 'editor' )
+			),
 		];
 
 		/**

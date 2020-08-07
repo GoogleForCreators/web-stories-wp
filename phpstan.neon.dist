@@ -10,6 +10,7 @@ parameters:
     - tests/phpstan/bootstrap.php
     - includes/namespace.php
   dynamicConstantNames:
+    - WEBSTORIES_DEV_MODE
     - WPCOM_IS_VIP_ENV
     - IS_WPCOM
     - WP_CLI

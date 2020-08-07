@@ -24,7 +24,7 @@ import { FlagsProvider } from 'flagged';
  */
 import { Simulate } from 'react-dom/test-utils';
 import MediaElement from '../panes/media/common/mediaElement';
-import { ProviderType } from '../panes/media/common/providerType';
+import { ProviderType } from '../../../app/media/providerType';
 import { renderWithTheme } from '../../../testUtils';
 
 const renderMediaElement = (resource, providerType) =>

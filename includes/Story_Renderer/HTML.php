@@ -24,57 +24,117 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Story_Renderer;
+namespace Google\Web_Stories;
 
 use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Model\Story;
+use DOMDocument;
+use DOMElement;
+use WP_Post;
 
 /**
  * Class Story_Renderer
  */
-class HTML {
+class Story_Renderer {
 	use Publisher;
-
-	/*
-	 * Regular expressions to fetch the individual structural tags.
-	 * These patterns were optimized to avoid extreme backtracking on large documents.
-	 */
-	const HTML_STRUCTURE_HTML_START_TAG = '/^(?<html_start>[^<]*(?:\s*<!--[^>]*>\s*)*<html(?:\s+[^>]*)?>)/i';
 
 	/**
 	 * Current post.
 	 *
-	 * @var Story Story object.
+	 * @var WP_Post Post object.
 	 */
-	protected $story;
+	protected $post;
+
+	/**
+	 * DOMDocument instance.
+	 *
+	 * @var DOMDocument DOMDocument instance.
+	 */
+	protected $document;
 
 	/**
 	 * Story_Renderer constructor.
 	 *
-	 * @param Story $story Story object.
+	 * @param WP_Post $post Post object.
 	 */
-	public function __construct( $story ) {
-		$this->story = $story;
+	public function __construct( $post ) {
+		$this->post = $post;
+	}
+
+	/**
+	 * Renders the story.
+	 *
+	 * @return string The complete HTML markup for the story.
+	 */
+	public function render() {
+		$markup = $this->post->post_content;
+		$markup = $this->replace_html_head( $markup );
+
+		$this->document = $this->string_to_doc( $markup );
+
+		// Run all further transformations on the DOMDocument.
+
+		$this->transform_html_start_tag();
+		$this->insert_content_after_opening_body();
+		$this->insert_content_before_closing_body();
+		$this->insert_analytics_configuration();
+
+		$this->add_poster_images();
+		$this->add_publisher_logo();
+
+		return trim( (string) $this->document->saveHTML() );
+	}
+
+	/**
+	 * Returns a DOMDocument from a string.
+	 *
+	 * @param string $string Input string.
+	 *
+	 * @return DOMDocument DOMDocument instance.
+	 */
+	private function string_to_doc( $string ) {
+		$doc = new DOMDocument();
+		libxml_use_internal_errors( true );
+		$doc->loadHTML( $string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_clear_errors();
+
+		return $doc;
+	}
+
+	/**
+	 * Returns the first found element with a given tag name.
+	 *
+	 * @param string $name Tag name.
+	 *
+	 * @return DOMElement|null
+	 */
+	protected function get_element_by_tag_name( $name ) {
+		return $this->document->getElementsByTagName( $name )->item( 0 );
 	}
 
 	/**
 	 * Replaces the HTML start tag to make the language attributes dynamic.
 	 *
-	 * @param string $content Story markup.
-	 *
-	 * @return string Filtered content.
+	 * @return void
 	 */
-	protected function replace_html_start_tag( $content ) {
-		if ( preg_match( self::HTML_STRUCTURE_HTML_START_TAG, $content, $matches ) ) {
-			$replacement = sprintf( '<html amp %s>', get_language_attributes( 'html' ) );
-			$result      = preg_replace( self::HTML_STRUCTURE_HTML_START_TAG, $replacement, $content, 1 );
+	protected function transform_html_start_tag() {
+		/* @var DOMElement $html The <html> element */
+		$html = $this->get_element_by_tag_name( 'html' );
 
-			if ( null !== $result ) {
-				return $result;
-			}
+		if ( ! $html ) {
+			return;
 		}
 
-		return $content;
+		$html->setAttribute( 'amp', '' );
+
+		// See get_language_attributes().
+		if ( is_rtl() ) {
+			$html->setAttribute( 'dir', 'rtl' );
+		}
+
+		$lang = get_bloginfo( 'language' );
+		if ( $lang ) {
+			$html->setAttribute( 'lang', esc_attr( $lang ) );
+		}
 	}
 
 	/**
@@ -121,29 +181,41 @@ class HTML {
 	/**
 	 * Replaces the placeholder of publisher logo in the content.
 	 *
-	 * @param string $content Original markup.
-	 * @return string Filtered markup.
+	 * @return void
 	 */
-	protected function add_publisher_logo( $content ) {
-		return str_replace( $this->get_publisher_logo_placeholder(), $this->get_publisher_logo(), $content );
+	protected function add_publisher_logo() {
+		/* @var DOMElement $story_element The <amp-story> element. */
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+
+		if ( ! $story_element ) {
+			return;
+		}
+
+		$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
+
+		if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
+			$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
+		}
 	}
 
 	/**
 	 * Adds square, and landscape poster images to the <amp-story>.
 	 *
-	 * @param string $content Story markup.
-	 *
-	 * @return string Filtered content.
+	 * @return void
 	 */
-	protected function add_poster_images( $content ) {
-		$storyer_images = $this->get_story_meta_images();
+	protected function add_poster_images() {
+		/* @var DOMElement $story_element The <amp-story> element. */
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
 
-		foreach ( $storyer_images as $attr => $url ) {
-			$attr_markup = sprintf( '%1$s-src="%2$s"', $attr, $url );
-			$content     = str_replace( 'poster-portrait-src=', $attr_markup . ' poster-portrait-src=', $content );
+		if ( ! $story_element ) {
+			return;
 		}
 
-		return $content;
+		$poster_images = $this->get_poster_images();
+
+		foreach ( $poster_images as $attr => $url ) {
+			$story_element->setAttribute( $attr, esc_url( $url ) );
+		}
 	}
 
 	/**
@@ -151,40 +223,62 @@ class HTML {
 	 *
 	 * @return void
 	 */
-	public function print_analytics_script() {
-		?>
-		<script async="async" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" custom-element="amp-analytics"></script>
-		<?php
+	protected function insert_amp_analytics_extension() {
+		$script = $this->document->createElement( 'script' );
+		$script->setAttribute( 'src', 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js' );
+		$script->setAttribute( 'async', 'async' );
+		$script->setAttribute( 'custom-element', 'amp-analytics' );
+
+		/* @var DOMElement $head The <head> element. */
+		$head = $this->get_element_by_tag_name( 'head' );
+
+		if ( ! $head ) {
+			return;
+		}
+
+		$head->appendChild( $this->document->importNode( $script, true ) );
 	}
 
 	/**
 	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
 	 *
-	 * @param string $content Story markup.
-	 * @return string Updated story markup.
+	 * @return void
 	 */
-	protected function maybe_add_analytics( $content ) {
+	protected function insert_analytics_configuration() {
 		ob_start();
 
-		do_action( 'web_stories_print_analytics' );
+		do_action( 'web_stories_insert_analytics_configuration' );
 
 		$output = (string) ob_get_clean();
 
-		if ( ! empty( $output ) ) {
-			add_action( 'web_stories_story_head', [ $this, 'print_analytics_script' ] );
+		if ( empty( $output ) ) {
+			return;
 		}
 
-		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
+		$new_content = $this->string_to_doc( $output );
+
+		if ( ! $new_content->documentElement ) {
+			return;
+		}
+
+		/* @var DOMElement $story_element The <amp-story> element. */
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+
+		if ( ! $story_element ) {
+			return;
+		}
+
+		$story_element->appendChild( $this->document->importNode( $new_content->documentElement, true ) );
+
+		$this->insert_amp_analytics_extension();
 	}
 
 	/**
 	 * Replaces the body start tag to fire a custom action.
 	 *
-	 * @param string $content Story markup.
-	 *
-	 * @return string Filtered content.
+	 * @return void
 	 */
-	protected function replace_body_start_tag( $content ) {
+	protected function insert_content_after_opening_body() {
 		ob_start();
 
 		/**
@@ -194,17 +288,35 @@ class HTML {
 
 		$output = (string) ob_get_clean();
 
-		return str_replace( '<body>', '<body>' . $output, $content );
+		if ( empty( $output ) ) {
+			return;
+		}
+
+		$new_content = $this->string_to_doc( $output );
+
+		if ( ! $new_content->documentElement ) {
+			return;
+		}
+
+		/* @var DOMElement $story_element The <amp-story> element */
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+
+		if ( ! $story_element || ! $story_element->parentNode ) {
+			return;
+		}
+
+		$story_element->parentNode->insertBefore(
+			$this->document->importNode( $new_content->documentElement, true ),
+			$story_element
+		);
 	}
 
 	/**
 	 * Replaces the body end tag to fire a custom action.
 	 *
-	 * @param string $content Story markup.
-	 *
-	 * @return string Filtered content.
+	 * @return void
 	 */
-	protected function replace_body_end_tag( $content ) {
+	protected function insert_content_before_closing_body() {
 		ob_start();
 
 		/**
@@ -214,38 +326,44 @@ class HTML {
 
 		$output = (string) ob_get_clean();
 
-		return str_replace( '</body>', $output . '</body>', $content );
-	}
+		if ( empty( $output ) ) {
+			return;
+		}
 
-	/**
-	 * Renders the story.
-	 *
-	 * @return string The complete HTML markup for the story.
-	 */
-	public function render() {
-		$markup = $this->story->markup;
-		$markup = $this->replace_html_start_tag( $markup );
-		// Add before replace_html_head to leverage the `web_stories_story_head` action.
-		$markup = $this->maybe_add_analytics( $markup );
-		$markup = $this->replace_html_head( $markup );
-		$markup = $this->add_poster_images( $markup );
-		$markup = $this->add_publisher_logo( $markup );
-		$markup = $this->replace_body_start_tag( $markup );
-		$markup = $this->replace_body_end_tag( $markup );
-		return $markup;
+		$new_content = $this->string_to_doc( $output );
+
+		if ( ! $new_content->documentElement ) {
+			return;
+		}
+
+		/* @var DOMElement $body The <body> element. */
+		$body = $this->get_element_by_tag_name( 'body' );
+
+		if ( ! $body ) {
+			return;
+		}
+
+		$body->appendChild( $this->document->importNode( $new_content->documentElement, true ) );
 	}
 
 	/**
 	 * Get story meta images.
 	 *
-	 * There is a fallback poster-portrait image added via a filter, in case there's no featured image.
-	 *
 	 * @return string[] Images.
 	 */
-	protected function get_story_meta_images() {
+	protected function get_poster_images() {
+		$thumbnail_id = (int) get_post_thumbnail_id( $this->post );
+
+		if ( 0 === $thumbnail_id ) {
+			return [
+				'poster-portrait-src' => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
+			];
+		}
+
 		$images = [
-			'poster-square'    => $this->story->poster_square,
-			'poster-landscape' => $this->story->poster_landscape,
+			'poster-portrait-src'  => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_POSTER_IMAGE_SIZE ),
+			'poster-square-src'    => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_SQUARE_IMAGE_SIZE ),
+			'poster-landscape-src' => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_LANDSCAPE_IMAGE_SIZE ),
 		];
 
 		return array_filter( $images );
