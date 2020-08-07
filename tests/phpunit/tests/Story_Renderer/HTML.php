@@ -155,7 +155,7 @@ class HTML extends \WP_UnitTestCase {
 	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
-	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
+	 * @covers \Google\Web_Stories\Story_Renderer\HTML::add_publisher_logo
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 * @covers ::add_publisher_logo
