@@ -27,9 +27,11 @@ import { EffectFadeIn } from '../effects/fadeIn';
 import { EffectFlyIn } from '../effects/flyIn';
 import { EffectPulse } from '../effects/pulse';
 import { EffectTwirlIn } from '../effects/twirlIn';
+import { EffectWhooshIn } from '../effects/whooshIn';
 import { EffectZoom } from '../effects/zoom';
 import flyInProps from '../effects/flyIn/animationsProps';
 import pulseProps from '../effects/pulse/animationProps';
+import whooshInProps from '../effects/whooshIn/animationProps';
 
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
@@ -84,6 +86,7 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.FLY_IN]: EffectFlyIn,
       [ANIMATION_EFFECTS.PULSE]: EffectPulse,
       [ANIMATION_EFFECTS.TWIRL_IN]: EffectTwirlIn,
+      [ANIMATION_EFFECTS.WHOOSH_IN]: EffectWhooshIn,
       [ANIMATION_EFFECTS.ZOOM]: EffectZoom,
     }[type] || throughput;
 
@@ -104,6 +107,7 @@ export function AnimationProps(type) {
     [ANIMATION_TYPES.ZOOM]: zoomProps,
     [ANIMATION_EFFECTS.FLY_IN]: flyInProps,
     [ANIMATION_EFFECTS.PULSE]: pulseProps,
+    [ANIMATION_EFFECTS.WHOOSH_IN]: whooshInProps,
   };
 
   const { type: animationType, ...remaining } = defaultAnimationProps;
