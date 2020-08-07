@@ -24,6 +24,16 @@ import {
 import { dataPixels } from '../../units';
 import { resizeRules } from './index';
 
+/**
+ * Callback used in Moveable resize event
+ *
+ * @param {Element} element The element
+ * @param {Array} direction Moveable direction
+ * @param {number} newWidth New element width
+ * @param {number} newHeight New element height
+ * @param {Array} delta Moveable delta
+ * @return {null|{skipUpdates: boolean, fontSize: number}|{height: number}} Information about properties to update
+ */
 function updateForResizeEvent(element, direction, newWidth, newHeight, delta) {
   const isResizingWidth = direction[0] !== 0;
   const isResizingHeight = direction[1] !== 0;
