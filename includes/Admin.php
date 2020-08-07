@@ -28,6 +28,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Story_Renderer\Embed;
 use WP_Post;
 use WP_Screen;
 
@@ -104,50 +106,11 @@ class Admin {
 			return $content;
 		}
 
-		$block_markup_with_poster = <<<BLOCK
-<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":"%3\$s"} -->
-<div class="wp-block-web-stories-embed alignnone">
-	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
-			href="%1\$s"
-			style="--story-player-poster:url('%3\$s')">%4\$s</a>
-	</amp-story-player>
-</div>
-<!-- /wp:web-stories/embed -->
-BLOCK;
+		$story = new Story();
+		$story->load_from_post( $post_id );
 
-		$block_markup_without_poster = <<<BLOCK
-<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":""} -->
-<div class="wp-block-web-stories-embed alignnone">
-	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
-			href="%1\$s"
-			>%3\$s</a>
-	</amp-story-player>
-</div>
-<!-- /wp:web-stories/embed -->
-BLOCK;
-
-		$url        = (string) get_the_permalink( $post_id );
-		$title      = (string) get_the_title( $post_id );
-		$has_poster = has_post_thumbnail( $post_id );
-
-		if ( $has_poster ) {
-			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
-
-			return sprintf(
-				$block_markup_with_poster,
-				esc_url( $url ),
-				esc_js( $title ),
-				esc_url( $poster ),
-				esc_html( $title )
-			);
-		}
-
-		return sprintf(
-			$block_markup_without_poster,
-			esc_url( $url ),
-			esc_js( $title ),
-			esc_html( $title )
-		);
+		$renderer = new Embed( $story, 360, 600, 'none' );
+		return $renderer->render();
 	}
 
 	/**
@@ -178,8 +141,11 @@ BLOCK;
 			return $title;
 		}
 
+		$story = new Story();
+		$story->load_from_post( $post );
+
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
-		return isset( $post->post_title ) ? $post->post_title : '';
+		return $story->get_title();
 	}
 }
