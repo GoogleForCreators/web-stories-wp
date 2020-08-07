@@ -24,7 +24,9 @@ import PropTypes from 'prop-types';
  */
 import { ANIMATION_TYPES, ANIMATION_EFFECTS, BEZIER } from '../constants';
 import { EffectFadeIn } from '../effects/fadeIn';
+import { EffectFlyIn } from '../effects/flyIn';
 import { EffectPulse } from '../effects/pulse';
+import { EffectTwirlIn } from '../effects/twirlIn';
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
 import { AnimationFade } from './fade';
@@ -75,7 +77,9 @@ export function AnimationPart(type, args) {
       [ANIMATION_TYPES.SPIN]: AnimationSpin,
       [ANIMATION_TYPES.ZOOM]: AnimationZoom,
       [ANIMATION_EFFECTS.FADE_IN]: EffectFadeIn,
+      [ANIMATION_EFFECTS.FLY_IN]: EffectFlyIn,
       [ANIMATION_EFFECTS.PULSE]: EffectPulse,
+      [ANIMATION_EFFECTS.TWIRL_IN]: EffectTwirlIn,
     }[type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];

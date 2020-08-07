@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -86,6 +86,13 @@ function PresetGroup({ presets, itemRenderer, type }) {
     },
     [activeIndex, presets.length, type]
   );
+
+  // Make sure index stays within the length (user can delete last element)
+  useEffect(() => {
+    if (activeIndex >= presets.length) {
+      setActiveIndex(presets.length - 1);
+    }
+  }, [activeIndex, presets.length]);
 
   return (
     <Group ref={groupRef}>

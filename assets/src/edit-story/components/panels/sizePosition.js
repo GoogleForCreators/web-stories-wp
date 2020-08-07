@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useCallback, useMemo } from 'react';
 
 /**
@@ -69,15 +69,8 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
-const withMargin = css`
+const StyledToggle = styled(Toggle)`
   margin: 0 10px;
-`;
-
-const StyledLocked = styled(Locked)`
-  ${withMargin}
-`;
-const StyledUnlocked = styled(Unlocked)`
-  ${withMargin}
 `;
 
 function isNum(v) {
@@ -271,11 +264,11 @@ function SizePositionPanel({
           }}
           aria-label={__('Width', 'web-stories')}
         />
-        <Toggle
+        <StyledToggle
           aria-label={__('Aspect ratio lock', 'web-stories')}
           title={__('Constrain proportions', 'web-stories')}
-          icon={<StyledLocked />}
-          uncheckedIcon={<StyledUnlocked />}
+          icon={<Locked />}
+          uncheckedIcon={<Unlocked />}
           value={lockAspectRatio}
           onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
         />

@@ -51,11 +51,13 @@ function withOverlay(Comp) {
     );
   }
 
+  const ReffedWithOverlay = forwardRef(WithOverlay);
+
   WithOverlay.propTypes = {
     children: PropTypes.node,
   };
 
-  return forwardRef(WithOverlay);
+  return ReffedWithOverlay;
 }
 
 export default withOverlay;
