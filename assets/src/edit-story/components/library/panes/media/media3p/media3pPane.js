@@ -51,7 +51,7 @@ const ProviderTabSection = styled.div`
   padding: 0 24px;
 `;
 
-const MediaDisplayName = styled.div`
+const MediaSubheading = styled.div`
   margin-top: 24px;
   padding: 0 24px;
   visibility: ${(props) => (props.shouldDisplay ? 'visible' : 'hidden')};
@@ -164,8 +164,7 @@ function Media3pPane(props) {
 
     // We display the media name if there's media to display or a category has
     // been selected.
-    // TODO: Update for Coverr.
-    const shouldDisplayMediaName = Boolean(
+    const shouldDisplayMediaSubheading = Boolean(
       (state.isMediaLoaded && state.media) ||
         state.categories.selectedCategoryId
     );
@@ -183,9 +182,9 @@ function Media3pPane(props) {
               selectCategory={actions.selectCategory}
               deselectCategory={actions.deselectCategory}
             />
-            <MediaDisplayName shouldDisplay={shouldDisplayMediaName}>
+            <MediaSubheading shouldDisplay={shouldDisplayMediaSubheading}>
               {displayName}
-            </MediaDisplayName>
+            </MediaSubheading>
           </>
         )}
         <PaginatedMediaGallery
