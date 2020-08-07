@@ -36,8 +36,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import styled from 'styled-components';
-import { rgba } from 'polished';
 import MediaGallery from '../common/mediaGallery';
 import {
   MediaGalleryContainer,
@@ -45,32 +43,10 @@ import {
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
 } from '../common/styles';
-import { ReactComponent as UnsplashLogoFull } from '../../../../../icons/unsplash_logo_full.svg';
-import theme from '../../../../../theme';
-import { ProviderType } from './providerType';
+import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import { ProviderType } from '../../../../../app/media/providerType';
 
 const ROOT_MARGIN = 300;
-
-const AttributionPill = styled.div`
-  position: absolute;
-  left: 24px;
-  bottom: 10px;
-  border-radius: 100px;
-  padding: 5px 8px;
-  line-height: 16px;
-  display: flex;
-  flex-wrap: nowrap;
-  font-size: 12px;
-  color: ${theme.colors.fg.white};
-  background-color: ${rgba(theme.colors.bg.black, 0.7)};
-  cursor: pointer;
-`;
-
-const LOGO_PROPS = {
-  fill: theme.colors.fg.white,
-  marginLeft: '6px',
-  height: '14px',
-};
 
 function PaginatedMediaGallery({
   providerType,
@@ -185,6 +161,9 @@ function PaginatedMediaGallery({
     );
 
   const displayLoadingPill = isMediaLoading && hasMore;
+  const attribution =
+    providerType !== ProviderType.LOCAL &&
+    PROVIDERS[providerType].attributionComponent();
   return (
     <>
       <MediaGalleryContainer
@@ -193,26 +172,12 @@ function PaginatedMediaGallery({
       >
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
-      {!displayLoadingPill && providerType === ProviderType.UNSPLASH && (
-        <a
-          data-testid={'attribution'}
-          href={
-            'https://unsplash.com?utm_source=web_stories_wordpress&utm_medium=referral'
-          }
-          target={'_blank'}
-          rel={'noreferrer'}
-        >
-          <AttributionPill>
-            {__('Powered by', 'web-stories')}
-            <UnsplashLogoFull style={LOGO_PROPS} />
-          </AttributionPill>
-        </a>
-      )}
       {displayLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
           {__('Loading…', 'web-stories')}
         </MediaGalleryLoadingPill>
       )}
+      {!displayLoadingPill && attribution}
     </>
   );
 }
