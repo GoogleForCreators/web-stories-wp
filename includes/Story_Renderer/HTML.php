@@ -211,9 +211,9 @@ class HTML {
 			return;
 		}
 
-		$storyer_images = $this->get_poster_images();
+		$poster_images = $this->get_poster_images();
 
-		foreach ( $storyer_images as $attr => $url ) {
+		foreach ( $poster_images as $attr => $url ) {
 			$story_element->setAttribute( $attr, esc_url( $url ) );
 		}
 	}

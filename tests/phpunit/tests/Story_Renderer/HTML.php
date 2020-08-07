@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Story_Renderer;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Story_Renderer
+ * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
  */
-class Story_Renderer extends \WP_UnitTestCase {
+class HTML extends \WP_UnitTestCase {
 	public function setUp() {
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -45,7 +45,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		$this->assertStringStartsWith( '<!DOCTYPE html>', $actual );
@@ -62,7 +62,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		$this->assertContains( '<html amp="" lang="en-US">', $actual );
@@ -82,7 +82,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		$this->assertContains( 'FOO', $actual );
@@ -110,7 +110,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_body_open', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		remove_action( 'web_stories_body_open', $function );
@@ -134,7 +134,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_footer', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		remove_action( 'web_stories_footer', $function );
@@ -160,7 +160,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer    = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
 
 		wp_update_post(
@@ -193,7 +193,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		set_post_thumbnail( $post->ID, $attachment_id );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$rendered = $renderer->render();
 
 		$this->assertContains( 'poster-portrait-src=', $rendered );
@@ -212,7 +212,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$rendered = $renderer->render();
 
 		$this->assertContains( 'poster-portrait-src=', $rendered );
@@ -237,7 +237,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_insert_analytics_configuration', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		remove_action( 'web_stories_insert_analytics_configuration', $function );
@@ -257,7 +257,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
 		$actual   = $renderer->render();
 
 		$this->assertNotContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
