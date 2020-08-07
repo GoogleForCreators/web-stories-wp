@@ -37,21 +37,42 @@ class Media {
 	 *
 	 * @var string
 	 */
-	const STORY_POSTER_IMAGE_SIZE = 'web-stories-poster-portrait';
+	const POSTER_PORTRAIT_IMAGE_SIZE = 'web-stories-poster-portrait';
+
+	/**
+	 * The image dimensions for the poster-portrait-src.
+	 *
+	 * @var string
+	 */
+	const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
 
 	/**
 	 * The image size for the poster-landscape-src.
 	 *
 	 * @var string
 	 */
-	const STORY_LANDSCAPE_IMAGE_SIZE = 'web-stories-poster-landscape';
+	const POSTER_LANDSCAPE_IMAGE_SIZE = 'web-stories-poster-landscape';
+
+	/**
+	 * The image dimensions for the poster-landscape-src.
+	 *
+	 * @var string
+	 */
+	const POSTER_LANDSCAPE_IMAGE_DIMENSIONS = [ 853, 640 ];
 
 	/**
 	 * The image size for the poster-square-src.
 	 *
 	 * @var string
 	 */
-	const STORY_SQUARE_IMAGE_SIZE = 'web-stories-poster-square';
+	const POSTER_SQUARE_IMAGE_SIZE = 'web-stories-poster-square';
+
+	/**
+	 * The image dimensions for the poster-square-src.
+	 *
+	 * @var string
+	 */
+	const POSTER_SQUARE_IMAGE_DIMENSIONS = [ 640, 640 ];
 
 	/**
 	 * Name of size used in media library.
@@ -61,11 +82,25 @@ class Media {
 	const STORY_THUMBNAIL_IMAGE_SIZE = 'web-stories-thumbnail';
 
 	/**
+	 * The image dimensions for media library thumbnails.
+	 *
+	 * @var string
+	 */
+	const STORY_THUMBNAIL_IMAGE_DIMENSIONS = [ 150, 9999 ];
+
+	/**
 	 * The image size for the publisher logo.
 	 *
 	 * @var string
 	 */
 	const PUBLISHER_LOGO_IMAGE_SIZE = 'web-stories-publisher-logo';
+
+	/**
+	 * The image dimensions for the publisher logo.
+	 *
+	 * @var string
+	 */
+	const PUBLISHER_LOGO_IMAGE_DIMENSIONS = [ 96, 96 ];
 
 	/**
 	 * The poster post meta key.
@@ -137,20 +172,44 @@ class Media {
 		// Image sizes as per https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
 
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
-		add_image_size( self::STORY_POSTER_IMAGE_SIZE, 640, 853, true );
+		add_image_size(
+			self::POSTER_PORTRAIT_IMAGE_SIZE,
+			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0],
+			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1],
+			true
+		);
+
+		// Used for amp-story[poster-landscape-src]: The story poster in landscape format (4x3 aspect ratio).
+		add_image_size(
+			self::POSTER_LANDSCAPE_IMAGE_SIZE,
+			self::POSTER_LANDSCAPE_IMAGE_DIMENSIONS[0],
+			self::POSTER_LANDSCAPE_IMAGE_DIMENSIONS[1],
+			true
+		);
 
 		// Used for amp-story[poster-square-src]: The story poster in square format (1x1 aspect ratio).
-		add_image_size( self::STORY_SQUARE_IMAGE_SIZE, 640, 640, true );
-
-		// Used for amp-story[poster-landscape-src]: The story poster in square format (1x1 aspect ratio).
-		add_image_size( self::STORY_LANDSCAPE_IMAGE_SIZE, 853, 640, true );
+		add_image_size(
+			self::POSTER_SQUARE_IMAGE_SIZE,
+			self::POSTER_SQUARE_IMAGE_DIMENSIONS[0],
+			self::POSTER_SQUARE_IMAGE_DIMENSIONS[1],
+			true
+		);
 
 		// As per https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines.
-
-		add_image_size( self::PUBLISHER_LOGO_IMAGE_SIZE, 96, 96, true );
+		add_image_size(
+			self::PUBLISHER_LOGO_IMAGE_SIZE,
+			self::PUBLISHER_LOGO_IMAGE_DIMENSIONS[0],
+			self::PUBLISHER_LOGO_IMAGE_DIMENSIONS[1],
+			true
+		);
 
 		// Used in the editor.
-		add_image_size( self::STORY_THUMBNAIL_IMAGE_SIZE, 150, 9999, false );
+		add_image_size(
+			self::STORY_THUMBNAIL_IMAGE_SIZE,
+			self::STORY_THUMBNAIL_IMAGE_DIMENSIONS[0],
+			self::STORY_THUMBNAIL_IMAGE_DIMENSIONS[1],
+			false
+		);
 
 		add_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
 
@@ -262,7 +321,9 @@ class Media {
 
 		$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
-			return array_shift( $terms )->slug;
+			$term = array_shift( $terms );
+
+			return $term->slug;
 		}
 
 		return '';
