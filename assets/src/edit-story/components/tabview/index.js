@@ -59,23 +59,22 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   padding: 12px 0px;
   margin: 0px 16px;
   margin-bottom: -1px;
-  outline: none;
 
   ${({ isActive }) =>
     !isActive &&
     `
-		opacity: .34;
-		&:hover { opacity: 1; }
-	`}
+    opacity: .34;
+    &:hover { opacity: 1; }
+  `}
 
   ${({ isActive, theme }) =>
     isActive &&
     `
-		border-bottom: 1px solid ${theme.colors.accent.primary};
-	`}
+    border-bottom: 1px solid ${theme.colors.accent.primary};
+  `}
 
   &:active,
-	&:hover {
+  &:hover {
     opacity: 0.84;
   }
 
@@ -93,48 +92,64 @@ function TabView({
   getAriaControlsId,
   onTabChange = () => {},
   tabs = [],
+  label = '',
   initialTab,
 }) {
   const [tab, setTab] = useState(initialTab || tabs[0]?.id);
   const { isRTL } = useConfig();
 
   const ref = useRef();
+  const tabRefs = useRef({});
 
   const tabChanged = useCallback(
     (id) => {
       setTab(id);
+      if (tabRefs.current[id]) {
+        tabRefs.current[id].focus();
+      }
       onTabChange(id);
     },
     [setTab, onTabChange]
   );
 
-  const handleNavigation = useCallback(
-    (direction) => {
-      const currentIndex = tabs.findIndex(({ id }) => id === tab);
-      const nextTab = tabs[currentIndex + direction];
+  const selectTabByIndex = useCallback(
+    (index) => {
+      // Index wraps, so -1 is last element
+      const nextTab = tabs[index < 0 ? tabs.length - index : index];
       if (!nextTab) {
         return;
       }
       tabChanged(nextTab.id);
     },
-    [tab, tabs, tabChanged]
+    [tabs, tabChanged]
   );
-  useKeyDownEffect(ref, 'left', () => handleNavigation(isRTL ? 1 : -1), [
-    handleNavigation,
-    isRTL,
-  ]);
-  useKeyDownEffect(ref, 'right', () => handleNavigation(isRTL ? -1 : 1), [
-    handleNavigation,
-    isRTL,
-  ]);
+
+  const handleNavigation = useCallback(
+    (direction) => {
+      const directionWithRTL = isRTL ? -direction : direction;
+      const currentIndex = tabs.findIndex(({ id }) => id === tab);
+      selectTabByIndex(currentIndex + directionWithRTL);
+    },
+    [isRTL, tab, tabs, selectTabByIndex]
+  );
+
+  // Left-right keys navigate to next tab
+  useKeyDownEffect(ref, 'left', () => handleNavigation(-1), [handleNavigation]);
+  useKeyDownEffect(ref, 'right', () => handleNavigation(1), [handleNavigation]);
+
   // Empty up/down handlers for consistency with left/right.
   useKeyDownEffect(ref, ['up', 'down'], () => {}, []);
 
+  // Home/end keys navigate to first/last tab regardless of direction
+  useKeyDownEffect(ref, 'home', () => selectTabByIndex(0), [selectTabByIndex]);
+  useKeyDownEffect(ref, 'end', () => selectTabByIndex(-1), [selectTabByIndex]);
+
   return (
-    <Tabs ref={ref}>
+    <Tabs aria-label={label} ref={ref}>
       {tabs.map(({ id, title, icon: Icon }) => (
         <Tab
           key={id}
+          ref={(tabRef) => (tabRefs.current[id] = tabRef)}
           id={getTabId(id)}
           isActive={tab === id}
           aria-controls={
@@ -157,6 +172,7 @@ TabView.propTypes = {
   onTabChange: PropTypes.func,
   tabs: PropTypes.array.isRequired,
   initialTab: PropTypes.any,
+  label: PropTypes.string,
 };
 
 export default TabView;
