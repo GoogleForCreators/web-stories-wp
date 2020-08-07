@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -26,7 +26,7 @@ import { useEffect } from 'react';
  * WordPress dependencies
  */
 import { useSnackbar } from '../../snackbar';
-import usePrevious from '../usePrevious';
+// import usePrevious from '../usePrevious';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
@@ -46,17 +46,28 @@ export default function useFetchMediaEffect({
     actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
 
-  const previousProps = usePrevious({
-    pageToken,
-    searchTerm,
-    selectedCategoryId,
-    isMediaLoading,
-    isMediaLoaded,
-  });
+  // const previousProps = usePrevious({
+  //   pageToken,
+  //   searchTerm,
+  //   selectedCategoryId,
+  //   isMediaLoading,
+  //   isMediaLoaded,
+  // });
 
   const { showSnackbar } = useSnackbar();
 
+  const previousPropsRef = useRef();
+
   useEffect(() => {
+    const previousProps = previousPropsRef.current;
+    previousPropsRef.current = {
+      pageToken,
+      searchTerm,
+      selectedCategoryId,
+      isMediaLoading,
+      isMediaLoaded,
+    };
+
     async function fetch() {
       fetchMediaStart({ provider, pageToken });
       try {
@@ -117,5 +128,6 @@ export default function useFetchMediaEffect({
     fetchMediaStart,
     fetchMediaSuccess,
     showSnackbar,
+    previousPropsRef,
   ]);
 }

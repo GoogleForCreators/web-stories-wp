@@ -44,6 +44,7 @@ import {
   MediaGalleryMessage,
 } from '../common/styles';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import { ProviderType } from '../../../../../app/media/providerType';
 
 const ROOT_MARGIN = 300;
 
@@ -160,6 +161,9 @@ function PaginatedMediaGallery({
     );
 
   const displayLoadingPill = isMediaLoading && hasMore;
+  const attribution =
+    providerType !== ProviderType.LOCAL &&
+    PROVIDERS[providerType].attributionComponent();
   return (
     <>
       <MediaGalleryContainer
@@ -168,12 +172,12 @@ function PaginatedMediaGallery({
       >
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
-      {PROVIDERS[providerType].attributionComponent()}
       {displayLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
           {__('Loading…', 'web-stories')}
         </MediaGalleryLoadingPill>
       )}
+      {!displayLoadingPill && attribution}
     </>
   );
 }

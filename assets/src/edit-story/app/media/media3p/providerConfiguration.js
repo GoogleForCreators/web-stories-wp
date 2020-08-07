@@ -44,7 +44,7 @@ const ContentType = {
  * @property {boolean} requiresAuthorAttribution Whether this provider
  * requires showing author
  * attribution on each media element.
- * @property {function(): ReactComponent} attributionBuilder A function that
+ * @property {function(): ReactComponent} attributionComponent A function that
  * constructs an attribution React Component for this provider.
  * @property {string} fetchMediaErrorMessage An error message to show if
  * fetching media from this provider fails.

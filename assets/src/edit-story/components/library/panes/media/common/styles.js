@@ -40,6 +40,7 @@ export const MediaGalleryContainer = styled.div`
   position: relative;
   width: 100%;
   flex: 0 1 auto;
+  min-height: 100px;
 `;
 
 // 312px is the width of the gallery minus the 24px paddings.
