@@ -30,9 +30,9 @@ class Media extends \WP_UnitTestCase {
 		$media = new \Google\Web_Stories\Media();
 		$media->init();
 
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_POSTER_IMAGE_SIZE ) );
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_LANDSCAPE_IMAGE_SIZE ) );
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_SQUARE_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_LANDSCAPE_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_SQUARE_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
 	}
