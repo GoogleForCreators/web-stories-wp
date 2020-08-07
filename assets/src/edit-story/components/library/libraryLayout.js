@@ -27,20 +27,20 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { HEADER_HEIGHT } from '../../constants';
+import TabView from '../tabview';
 import LibraryPanes from './libraryPanes';
-import LibraryTabs from './libraryTabs';
+import useLibrary from './useLibrary';
+import { getTabId } from './panes/shared';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Library', 'web-stories'),
   'data-testid': 'libraryLayout',
 })`
   height: 100%;
-  display: grid;
-  grid:
-    'tabs   ' ${HEADER_HEIGHT}px
-    'library' 1fr
-    / 1fr;
+  display: flex;
+  flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.bg.panel};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 // @todo Verify that L10N works with the translation happening here.
@@ -50,22 +50,30 @@ const TabsArea = styled.nav.attrs({
   grid-area: tabs;
 `;
 
-const LibraryBackground = styled.div`
-  grid-area: library;
-  background-color: ${({ theme }) => theme.colors.bg.v4};
-  color: ${({ theme }) => theme.colors.fg.v1};
+const LibraryPaneContainer = styled.div`
   overflow: auto;
 `;
 
 function LibraryLayout() {
+  const { initialTab, setTab, tabs } = useLibrary((state) => ({
+    initialTab: state.state.initialTab,
+    setTab: state.actions.setTab,
+    tabs: state.data.tabs,
+  }));
+
   return (
     <Layout>
       <TabsArea>
-        <LibraryTabs />
+        <TabView
+          tabs={tabs}
+          initialTab={initialTab}
+          onTabChange={(id) => setTab(id)}
+          getTabId={getTabId}
+        />
       </TabsArea>
-      <LibraryBackground>
+      <LibraryPaneContainer>
         <LibraryPanes />
-      </LibraryBackground>
+      </LibraryPaneContainer>
     </Layout>
   );
 }

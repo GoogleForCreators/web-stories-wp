@@ -30,15 +30,19 @@ import { useFeature } from 'flagged';
 import { useDropTargets } from '../../../../../app';
 import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
-import { ProviderType } from '../common/providerType';
+import { ProviderType } from '../../../../../app/media/providerType';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
+import { useMedia3pApi } from '../../../../../app/media/media3p/api';
 import useRovingTabIndex from './useRovingTabIndex';
+import Attribution from './attribution';
 
 const styledTiles = css`
   width: 100%;
   cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
+  margin-bottom: 10px;
+  border-radius: 4px;
   opacity: 0;
 `;
 
@@ -55,7 +59,6 @@ const Container = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => theme.colors.bg.v3};
   body${KEYBOARD_USER_SELECTOR} &:focus {
     outline: solid 2px #fff;
   }
@@ -65,7 +68,7 @@ const Duration = styled.div`
   position: absolute;
   bottom: 12px;
   left: 10px;
-  background: ${({ theme }) => rgba(theme.colors.bg.v1, 0.6)};
+  background: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.6)};
   font-family: ${({ theme }) => theme.fonts.duration.family};
   font-size: ${({ theme }) => theme.fonts.duration.size};
   line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
@@ -156,6 +159,22 @@ const MediaElement = ({
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
+  const {
+    actions: { registerUsage },
+  } = useMedia3pApi();
+
+  const handleRegisterUsage = useCallback(() => {
+    if (
+      providerType !== ProviderType.LOCAL &&
+      resource.attribution &&
+      resource.attribution.registerUsageUrl
+    ) {
+      registerUsage({
+        registerUsageUrl: resource.attribution.registerUsageUrl,
+      });
+    }
+  }, [providerType, resource, registerUsage]);
+
   const measureMediaElement = () =>
     mediaElement?.current?.getBoundingClientRect();
 
@@ -182,10 +201,11 @@ const MediaElement = ({
       onDragEnd: (e) => {
         e.preventDefault();
         setDraggingResource(null);
+        handleRegisterUsage();
         handleDrop(resource);
       },
     }),
-    [setDraggingResource, resource, handleDrag, handleDrop]
+    [setDraggingResource, resource, handleDrag, handleDrop, handleRegisterUsage]
   );
 
   const makeActive = useCallback(() => setActive(true), []);
@@ -209,7 +229,11 @@ const MediaElement = ({
           setShowVideoDetail(false);
           if (mediaElement.current) {
             // Pointer still in the media element, continue the video.
-            mediaElement.current.play().catch(() => {});
+            const playPromise = mediaElement.current.play();
+            if (playPromise) {
+              // All supported browsers return promise but unit test runner does not.
+              playPromise.catch(() => {});
+            }
           }
         } else {
           setShowVideoDetail(true);
@@ -223,7 +247,10 @@ const MediaElement = ({
     }
   }, [isMenuOpen, active, type]);
 
-  const onClick = () => onInsert(resource, width, height);
+  const onClick = () => {
+    handleRegisterUsage();
+    onInsert(resource, width, height);
+  };
 
   const innerElement = getInnerElement(type, {
     src,
@@ -236,6 +263,12 @@ const MediaElement = ({
     showVideoDetail,
     dropTargetsBindings,
   });
+  const attribution = active && resource.attribution?.author && (
+    <Attribution
+      author={resource.attribution.author.displayName}
+      url={resource.attribution.author.url}
+    />
+  );
 
   const ref = useRef();
 
@@ -277,6 +310,7 @@ const MediaElement = ({
       tabIndex={index === 0 ? 0 : -1}
     >
       {innerElement}
+      {attribution}
       {local && (
         <CSSTransition
           in
@@ -327,6 +361,7 @@ function getInnerElement(
         width={width}
         height={height}
         alt={alt}
+        aria-label={alt}
         loading={'lazy'}
         onClick={onClick}
         onLoad={makeImageVisible}

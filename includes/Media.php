@@ -114,6 +114,7 @@ class Media {
 				'type'              => 'boolean',
 				'description'       => __( 'Whether the attachment is a poster image.', 'web-stories' ),
 				'show_in_rest'      => true,
+				'default'           => false,
 				'single'            => true,
 				'object_subtype'    => 'attachment',
 			]
@@ -127,6 +128,7 @@ class Media {
 				'type'              => 'integer',
 				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
 				'show_in_rest'      => true,
+				'default'           => 0,
 				'single'            => true,
 				'object_subtype'    => 'attachment',
 			]

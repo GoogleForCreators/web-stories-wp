@@ -34,12 +34,9 @@ import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { MULTIPLE_VALUE } from '../';
 import getPreviewText from './getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
-import ColorBox from './colorBox';
+import { ColorInput } from './colorBox';
 
-const Input = styled(ColorBox).attrs({
-  as: 'input',
-})`
-  border: none !important;
+const Input = styled(ColorInput)`
   margin-left: 6px;
   width: 54px;
   line-height: 32px;

@@ -22,11 +22,17 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+/**
+ * WordPress dependencies
+ */
+import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
+import { PROVIDERS } from './providerConfiguration';
 
 export default function useFetchCategoriesEffect({
   provider,
   selectedProvider,
+  categories,
   fetchCategoriesStart,
   fetchCategoriesSuccess,
   fetchCategoriesError,
@@ -35,23 +41,36 @@ export default function useFetchCategoriesEffect({
     actions: { listCategories },
   } = useMedia3pApi();
 
+  const { showSnackbar } = useSnackbar();
+
   useEffect(() => {
     async function fetch() {
       fetchCategoriesStart({ provider });
       try {
-        const { categories } = await listCategories({ provider });
-        fetchCategoriesSuccess({ provider, categories });
-      } catch {
+        const { categories: newCategories } = await listCategories({
+          provider,
+        });
+        fetchCategoriesSuccess({ provider, categories: newCategories });
+      } catch (e) {
         fetchCategoriesError({ provider });
+        showSnackbar({
+          message: PROVIDERS[provider].fetchCategoriesErrorMessage,
+        });
       }
     }
 
-    if (provider === selectedProvider) {
+    if (
+      provider === selectedProvider &&
+      PROVIDERS[provider].supportsCategories &&
+      !categories?.length
+    ) {
       fetch();
     }
   }, [
+    showSnackbar,
     // Fetch categories is triggered by changes to these.
     selectedProvider,
+    categories,
     // These attributes never change.
     provider,
     listCategories,

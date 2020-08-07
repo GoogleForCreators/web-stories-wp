@@ -42,7 +42,7 @@ const ActionsWrapper = styled.div`
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => rgba(theme.colors.fg.v7, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.accent.primary, 0.84)};
   cursor: pointer;
   padding: 12px 0px;
   line-height: 18px;

@@ -22,7 +22,7 @@ import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/Fade',
+  title: 'Animations/Parts/Fade',
 };
 
 const animations = [
@@ -42,6 +42,7 @@ const elements = [
 ];
 
 const defaultStyles = {
+  position: 'relative',
   width: '50px',
   height: '50px',
 };
@@ -77,19 +78,17 @@ export const AMPStory = () => {
 
             <amp-story-grid-layer template="horizontal">
               {elements.map(({ id, color }) => (
-                <StoryAnimation.AMPWrapper
-                  key={id}
-                  target={id}
-                  style={defaultStyles}
-                >
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: color,
-                    }}
-                  />
-                </StoryAnimation.AMPWrapper>
+                <div key={id} style={defaultStyles}>
+                  <StoryAnimation.AMPWrapper target={id}>
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: color,
+                      }}
+                    />
+                  </StoryAnimation.AMPWrapper>
+                </div>
               ))}
             </amp-story-grid-layer>
           </StoryAnimation.Provider>

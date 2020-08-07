@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -121,6 +121,7 @@ const CardPreviewContainer = ({
   story,
   pageSize,
   children,
+  containerAction = () => {},
 }) => {
   const [cardState, dispatch] = useReducer(cardReducer, CARD_STATE.IDLE);
   const [pageIndex, setPageIndex] = useState(0);
@@ -154,6 +155,14 @@ const CardPreviewContainer = ({
     return () => intervalId && clearInterval(intervalId);
   }, [storyPages.length, cardState]);
 
+  const handleKeyDownEditControls = useCallback(
+    ({ key }) => {
+      if (key === 'Enter') {
+        containerAction();
+      }
+    },
+    [containerAction]
+  );
   return (
     <>
       <PreviewPane cardSize={pageSize}>
@@ -177,6 +186,9 @@ const CardPreviewContainer = ({
         onFocus={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
+        onClick={containerAction}
+        onKeyDown={handleKeyDownEditControls}
+        tabIndex={0}
       >
         <EmptyActionContainer />
         {centerAction?.label && (
@@ -209,6 +221,7 @@ CardPreviewContainer.propTypes = {
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
+  containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
   story: StoryPropType,
 };

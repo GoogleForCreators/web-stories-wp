@@ -52,10 +52,10 @@ describe('StoryAnimation.Provider', () => {
       const target = 'some-target';
       const targets = [target];
       const animations = [
-        { targets, type: 'TYPE1' },
-        { targets, type: 'TYPE2' },
-        { targets: ['other-target'], type: 'TYPE1' },
-        { targets: [target, 'other-target'], type: 'TYPE5' },
+        { id: '1', targets, type: 'move' },
+        { id: '2', targets, type: 'spin' },
+        { id: '3', targets: ['other-target'], type: 'move' },
+        { id: '4', targets: [target, 'other-target'], type: 'zoom' },
       ];
 
       const { result } = renderHook(() => useStoryAnimationContext(), {
@@ -77,11 +77,11 @@ describe('StoryAnimation.Provider', () => {
       const target = 'some-target';
       const targets = [target];
       const args = { someProp: 1 };
-      const type = ['TYPE1', 'TYPE2', 'TYPE3'];
+      const type = ['move', 'spin', 'zoom'];
       const animations = [
-        { targets, type: type[0], ...args },
-        { targets, type: type[1], ...args },
-        { targets, type: type[2], ...args },
+        { id: '1', targets, type: type[0], ...args },
+        { id: '2', targets, type: type[1], ...args },
+        { id: '3', targets, type: type[2], ...args },
       ];
 
       const AnimationPartMock = jest
@@ -102,7 +102,10 @@ describe('StoryAnimation.Provider', () => {
       } = result.current;
 
       getAnimationParts(target).forEach((animationPart, i) => {
-        expect(animationPart).toStrictEqual({ type: type[i], args });
+        expect(animationPart).toStrictEqual({
+          type: type[i],
+          args: { ...args, element: undefined },
+        });
       });
 
       AnimationPartMock.mockRestore();
@@ -110,17 +113,37 @@ describe('StoryAnimation.Provider', () => {
 
     it('calls generators for a target with propper args', () => {
       const target = 'some-target';
+      const target2 = 'that-target';
       const targets = [target];
-      const type = 'SOME_TYPE';
+      const element1 = {
+        id: target,
+        type: 'text',
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+        rotationAngle: 0,
+      };
+      const element2 = {
+        id: target2,
+        type: 'text',
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+        rotationAngle: 0,
+      };
+      const elements = [element1, element2];
+      const type = 'move';
       const args = [
         { bounces: 3 },
-        { columns: 4, duration: 400 },
         { blinks: 2, offset: 20, blarks: 6 },
+        { columns: 4, duration: 400 },
       ];
       const animations = [
-        { targets, type: type, ...args[0] },
-        { targets, type: type, ...args[1] },
-        { targets, type: type, ...args[2] },
+        { id: '1', targets, type: type, ...args[0] },
+        { id: '2', targets, type: type, ...args[1] },
+        { id: '3', targets: [target2], type: type, ...args[2] },
       ];
 
       const AnimationPartMock = jest
@@ -133,6 +156,7 @@ describe('StoryAnimation.Provider', () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {
           animations,
+          elements,
         }),
       });
 
@@ -141,7 +165,17 @@ describe('StoryAnimation.Provider', () => {
       } = result.current;
 
       getAnimationParts(target).forEach((animationPart, i) => {
-        expect(animationPart).toStrictEqual({ type, args: { ...args[i] } });
+        expect(animationPart).toStrictEqual({
+          type,
+          args: { ...args[i], element: element1 },
+        });
+      });
+
+      getAnimationParts(target2).forEach((animationPart) => {
+        expect(animationPart).toStrictEqual({
+          type,
+          args: { ...args[2], element: element2 },
+        });
       });
 
       AnimationPartMock.mockRestore();

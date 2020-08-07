@@ -18,4 +18,4 @@
  * Internal dependencies
  */
 export { default as Media3pPane } from './media3pPane';
-export { default as Media3pTab } from './media3pTab';
+export { default as Media3pIcon } from './media3pIcon';
