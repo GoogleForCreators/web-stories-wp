@@ -26,7 +26,6 @@ import { useEffect, useRef } from 'react';
  * WordPress dependencies
  */
 import { useSnackbar } from '../../snackbar';
-// import usePrevious from '../usePrevious';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
@@ -46,19 +45,13 @@ export default function useFetchMediaEffect({
     actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
 
-  // const previousProps = usePrevious({
-  //   pageToken,
-  //   searchTerm,
-  //   selectedCategoryId,
-  //   isMediaLoading,
-  //   isMediaLoaded,
-  // });
-
   const { showSnackbar } = useSnackbar();
 
   const previousPropsRef = useRef();
 
   useEffect(() => {
+    // Previous props are read from current, and stored to current after that.
+    // This allows us to get the previous values and compare for changes.
     const previousProps = previousPropsRef.current;
     previousPropsRef.current = {
       pageToken,
