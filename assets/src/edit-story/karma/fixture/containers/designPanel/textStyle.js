@@ -77,8 +77,12 @@ export class TextStyle extends AbstractPanel {
     );
   }
 
+  get fontSize() {
+    return this.getByRole('textbox', { name: /Font size/ });
+  }
+
   // @todo: add remaining input options:
-  // * font family and size
+  // * font family
   // * justify toggles
   // * fill style
   // * background color

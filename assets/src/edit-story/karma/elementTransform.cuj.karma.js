@@ -63,6 +63,36 @@ describe('CUJ: Creator can Transform an Element', () => {
     });
 
     describe('Action: Resize', () => {
+      it('it should not allow resizing text below 8px font size', async () => {
+        // Test that resize handle exists in edit mode.
+        const bottomRightResizeHandle = fixture.container.querySelector(
+          '.moveable-control.moveable-se'
+        );
+        expect(bottomRightResizeHandle).toBeDefined();
+
+        expect(
+          fixture.editor.inspector.designPanel.textStyle.fontSize.value
+        ).toBe('36');
+        await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+          moveRel(bottomRightResizeHandle, 1, 1),
+          down(),
+          moveBy(-80, -50),
+          up(),
+        ]);
+        expect(
+          fixture.editor.inspector.designPanel.textStyle.fontSize.value
+        ).toBe('8');
+        await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+          moveRel(bottomRightResizeHandle, 1, 1),
+          down(),
+          moveBy(-20, -20),
+          up(),
+        ]);
+        expect(
+          fixture.editor.inspector.designPanel.textStyle.fontSize.value
+        ).toBe('8');
+      });
+
       it('it should allow resizing in text edit mode', async () => {
         // Test that resize handle exists in edit mode.
         const rightResizeHandle = fixture.container.querySelector(
