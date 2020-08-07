@@ -64,8 +64,8 @@ function Media3pApiProvider({ children }) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
 
-    // Temporary hack alert!: Convert coverr to unsplash for testing until
-    // Coverr backend is implemented.
+    // TODO(#3712): Temporary hack alert!: Convert coverr to unsplash for
+    // testing until Coverr backend is implemented.
     if (provider === ProviderType.COVERR) {
       provider = ProviderType.UNSPLASH;
       searchTerm = 'small ' + searchTerm;

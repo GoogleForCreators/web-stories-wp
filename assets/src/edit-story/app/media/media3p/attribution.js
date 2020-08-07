@@ -27,7 +27,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { ReactComponent as UnsplashLogoFull } from '../../../icons/unsplash_logo_full.svg';
-import theme from '../../../theme';
 
 const AttributionPill = styled.div`
   position: absolute;
@@ -39,16 +38,18 @@ const AttributionPill = styled.div`
   display: flex;
   flex-wrap: nowrap;
   font-size: 12px;
-  color: ${theme.colors.fg.white};
-  background-color: ${rgba(theme.colors.bg.black, 0.7)};
+  color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.7)};
   cursor: pointer;
 `;
 
-const LOGO_STYLE = {
-  fill: theme.colors.fg.white,
-  marginLeft: '6px',
-  height: '14px',
-};
+const UnsplashLogo = styled(UnsplashLogoFull)`
+  fill: ${({ theme }) => theme.colors.fg.white};
+  margin-left: 6px;
+  height: 14px;
+`;
+
+const LOGO_STYLE = {};
 
 const unsplashUrl =
   'https://unsplash.com?utm_source=web_stories_wordpress&utm_medium=referral';
@@ -59,7 +60,7 @@ export function UnsplashAttribution() {
     <a href={unsplashUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
         {__('Powered by', 'web-stories')}
-        <UnsplashLogoFull style={LOGO_STYLE} />
+        <UnsplashLogo />
       </AttributionPill>
     </a>
   );
