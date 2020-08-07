@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { sprintf, _n } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -45,7 +45,7 @@ const RULER_HEIGHT = 24.0;
 const isMajor = (index) => index % 10 === 0;
 
 export default function AnimationRuler({ duration }) {
-  const numberOfMarks = Math.ceil((duration / 60) * 10);
+  const numberOfMarks = Math.ceil(duration / 100);
   const range = [...Array(numberOfMarks).keys()];
   return (
     <svg
@@ -61,8 +61,11 @@ export default function AnimationRuler({ duration }) {
             <>
               {isValueMajor && (
                 <Text x={value * MARK_OFFSET + 5} y={20}>
-                  {index / 10}
-                  {__('s', 'web-stories')}
+                  {sprintf(
+                    /* translators: %s: number of seconds */
+                    _n('%ss', '%ss', index / 10, 'web-stories'),
+                    index / 10
+                  )}
                 </Text>
               )}
               <Path
