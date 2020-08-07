@@ -98,7 +98,7 @@ class Admin {
 
 		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
+		if ( ! $post_id ) {
 			return $content;
 		}
 
@@ -107,7 +107,9 @@ class Admin {
 		}
 
 		$story = new Story();
-		$story->load_from_post( $post_id );
+		if ( ! $story->load_from_post( $post_id ) ) {
+			return $content;
+		}
 
 		$renderer = new Embed( $story, 360, 600, 'none' );
 		$html     = $renderer->render();
@@ -145,14 +147,10 @@ class Admin {
 			return $title;
 		}
 
-		$post = get_post( $post_id );
-
-		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+		$story = new Story();
+		if ( ! $story->load_from_post( $post_id ) ) {
 			return $title;
 		}
-
-		$story = new Story();
-		$story->load_from_post( $post );
 
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
