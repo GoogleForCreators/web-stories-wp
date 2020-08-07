@@ -24,7 +24,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { ReactComponent as UnsplashLogoFull } from '../../../icons/unsplash_logo_full.svg';
 
@@ -43,13 +43,19 @@ const AttributionPill = styled.div`
   cursor: pointer;
 `;
 
-const UnsplashLogo = styled(UnsplashLogoFull)`
+const logo = css`
   fill: ${({ theme }) => theme.colors.fg.white};
   margin-left: 6px;
   height: 14px;
 `;
 
-const LOGO_STYLE = {};
+const UnsplashLogo = styled(UnsplashLogoFull)`
+  ${logo}
+`;
+
+const CoverrLogoSpan = styled.span`
+  ${logo}
+`;
 
 const unsplashUrl =
   'https://unsplash.com?utm_source=web_stories_wordpress&utm_medium=referral';
@@ -71,7 +77,7 @@ export function CoverrAttribution() {
     <a href={coverrUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
         {__('Powered by', 'web-stories')}
-        <span style={LOGO_STYLE}>{'COVERR'}</span>
+        <CoverrLogoSpan>{'COVERR'}</CoverrLogoSpan>
       </AttributionPill>
     </a>
   );
