@@ -135,8 +135,8 @@ function deactivate( $network_wide ) {
 	do_action( 'web_stories_deactivation', $network_wide );
 }
 
-register_activation_hook( WEBSTORIES_PLUGIN_FILE,  __NAMESPACE__ . '\activate' );
-register_deactivation_hook( WEBSTORIES_PLUGIN_FILE,  __NAMESPACE__ . '\deactivate' );
+register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
+register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate' );
 
 global $web_stories;
 
