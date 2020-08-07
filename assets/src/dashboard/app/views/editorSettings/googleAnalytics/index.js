@@ -36,7 +36,7 @@ import {
   TextInputHelperText,
 } from '../components';
 
-const TEXT = {
+export const TEXT = {
   CONTEXT: __(
     "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article.",
     'web-stories'

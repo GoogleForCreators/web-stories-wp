@@ -35,6 +35,16 @@ export const _default = () => {
     <GoogleAnalyticsSettings
       onUpdateGoogleAnalyticsId={action('update google analytics id submitted')}
       googleAnalyticsId={text('googleAnalyticsId', '638261718182736363-83737')}
+      canManageSettings={true}
+    />
+  );
+};
+
+export const _CannotManageSettings = () => {
+  return (
+    <GoogleAnalyticsSettings
+      onUpdateGoogleAnalyticsId={action('update google analytics id submitted')}
+      googleAnalyticsId={text('googleAnalyticsId', '638261718182736363-83737')}
     />
   );
 };
