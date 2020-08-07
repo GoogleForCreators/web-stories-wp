@@ -27,6 +27,7 @@ import { EffectFadeIn } from '../effects/fadeIn';
 import { EffectFlyIn } from '../effects/flyIn';
 import { EffectPulse } from '../effects/pulse';
 import { EffectTwirlIn } from '../effects/twirlIn';
+import { EffectZoom } from '../effects/zoom';
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
 import { AnimationFade } from './fade';
@@ -80,6 +81,7 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.FLY_IN]: EffectFlyIn,
       [ANIMATION_EFFECTS.PULSE]: EffectPulse,
       [ANIMATION_EFFECTS.TWIRL_IN]: EffectTwirlIn,
+      [ANIMATION_EFFECTS.ZOOM]: EffectZoom,
     }[type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];
