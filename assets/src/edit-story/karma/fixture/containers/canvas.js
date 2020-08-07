@@ -28,6 +28,14 @@ export class Canvas extends Container {
     super(node, path);
   }
 
+  get moveable() {
+    return this._get(
+      this.node.querySelector(`.moveable-control-box.default-moveable`),
+      `moveable`,
+      Moveable
+    );
+  }
+
   get displayLayer() {
     return this._get(
       this.getByRole('region', { name: 'Display' }),
@@ -145,5 +153,26 @@ class Frame extends Container {
 
   get textContentHTML() {
     return this.node.querySelector('p')?.innerHTML;
+  }
+}
+
+/**
+ * Moveable box.
+ */
+class Moveable extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get resizeSE() {
+    return this.node.querySelector('.moveable-se');
+  }
+
+  get resizeE() {
+    return this.node.querySelector('.moveable-e');
+  }
+
+  get rotate() {
+    return this.node.querySelector('.moveable-rotation');
   }
 }

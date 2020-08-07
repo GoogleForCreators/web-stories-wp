@@ -65,9 +65,7 @@ describe('CUJ: Creator can Transform an Element', () => {
     describe('Action: Resize', () => {
       it('it should not allow resizing text below 8px font size', async () => {
         // Test that resize handle exists in edit mode.
-        const bottomRightResizeHandle = fixture.container.querySelector(
-          '.moveable-control.moveable-se'
-        );
+        const bottomRightResizeHandle = fixture.editor.canvas.moveable.resizeSE;
         expect(bottomRightResizeHandle).toBeDefined();
 
         expect(
@@ -76,7 +74,7 @@ describe('CUJ: Creator can Transform an Element', () => {
         await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
           moveRel(bottomRightResizeHandle, 1, 1),
           down(),
-          moveBy(-80, -50),
+          moveBy(-95, -95),
           up(),
         ]);
         expect(
@@ -95,9 +93,7 @@ describe('CUJ: Creator can Transform an Element', () => {
 
       it('it should allow resizing in text edit mode', async () => {
         // Test that resize handle exists in edit mode.
-        const rightResizeHandle = fixture.container.querySelector(
-          '.moveable-control.moveable-e'
-        );
+        const rightResizeHandle = fixture.editor.canvas.moveable.resizeE;
         expect(rightResizeHandle).toBeDefined();
 
         const widthBefore = window.getComputedStyle(frame).width;
@@ -115,9 +111,7 @@ describe('CUJ: Creator can Transform an Element', () => {
     describe('Action: Rotate', () => {
       it('it should allow rotating in text edit mode', async () => {
         // Test that rotation handle exists in edit mode.
-        const rotationHandle = fixture.container.querySelector(
-          '.moveable-rotation-line .moveable-control'
-        );
+        const rotationHandle = fixture.editor.canvas.moveable.rotate;
         expect(rotationHandle).toBeDefined();
 
         const elementBefore = await getSelectedElement();
