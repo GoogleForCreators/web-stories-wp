@@ -137,7 +137,9 @@ class Embed_Block {
 
 		$defaults = [
 			'align'  => 'none',
-			'poster' => ''
+			'height' => 0,
+			'poster' => '',
+			'width'  => 0,
 		];
 
 		$attributes = wp_parse_args( $attributes, $defaults );
