@@ -135,6 +135,13 @@ class Embed_Block {
 			$attributes['title'] = __( 'Web Story', 'web-stories' );
 		}
 
+		$defaults = [
+			'align'  => 'none',
+			'poster' => ''
+		];
+
+		$attributes = wp_parse_args( $attributes, $defaults );
+
 		$data = [
 			'title'            => $attributes['title'],
 			'url'              => $attributes['url'],
