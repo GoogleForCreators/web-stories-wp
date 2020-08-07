@@ -32,6 +32,7 @@ export const ANIMATION_EFFECTS = {
   FADE_IN: 'effect-fade-in',
   FLY_IN: 'effect-fly-in',
   PULSE: 'effect-pulse',
+  TWIRL_IN: 'twirl-in',
 };
 
 export const DIRECTION = {

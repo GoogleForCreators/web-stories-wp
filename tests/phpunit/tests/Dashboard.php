@@ -34,7 +34,7 @@ class Dashboard extends \WP_UnitTestCase {
 	}
 
 	public function test_add_menu_page_no_permissions() {
-		$dashboard = new \Google\Web_Stories\Dashboard();
+		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$this->assertNull( $dashboard->get_hook_suffix() );
 		$dashboard->add_menu_page();
 		$this->assertFalse( $dashboard->get_hook_suffix() );
@@ -43,7 +43,7 @@ class Dashboard extends \WP_UnitTestCase {
 	public function test_add_menu_page() {
 		wp_set_current_user( self::$user_id );
 
-		$dashboard = new \Google\Web_Stories\Dashboard();
+		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$dashboard->add_menu_page();
 		$this->assertNotEmpty( $dashboard->get_hook_suffix() );
 	}
@@ -51,7 +51,7 @@ class Dashboard extends \WP_UnitTestCase {
 	public function test_enqueue_assets_wrong_page() {
 		wp_set_current_user( self::$user_id );
 
-		$dashboard = new \Google\Web_Stories\Dashboard();
+		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$dashboard->add_menu_page();
 		$dashboard->enqueue_assets( 'foo' );
 		$this->assertFalse( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
@@ -61,7 +61,11 @@ class Dashboard extends \WP_UnitTestCase {
 	public function test_enqueue_assets() {
 		wp_set_current_user( self::$user_id );
 
-		$dashboard = new \Google\Web_Stories\Dashboard();
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'get_experiment_statuses' )
+					->willReturn( [] );
+
+		$dashboard = new \Google\Web_Stories\Dashboard( $experiments );
 		$dashboard->add_menu_page();
 		$dashboard->enqueue_assets( $dashboard->get_hook_suffix() );
 		$this->assertTrue( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
