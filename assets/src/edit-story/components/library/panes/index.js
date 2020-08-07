@@ -17,9 +17,6 @@
 /**
  * Internal dependencies
  */
-/**
- * External dependencies
- */
 import { TAB_IDS } from '../../../components/library/libraryProvider';
 import { AnimationPane, AnimationTab } from './animation';
 import { MediaPane, MediaTab } from './media/local';

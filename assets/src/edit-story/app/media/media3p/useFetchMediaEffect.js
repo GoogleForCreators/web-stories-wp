@@ -20,12 +20,13 @@
 import { useEffect } from 'react';
 
 /**
- * Internal dependencies
- */
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
 import { useSnackbar } from '../../snackbar';
 import { ProviderType } from '../../../components/library/panes/media/common/providerType';
 import { useMedia3pApi } from './api';

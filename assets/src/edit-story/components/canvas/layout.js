@@ -22,12 +22,13 @@ import PropTypes from 'prop-types';
 import { forwardRef, createRef } from 'react';
 
 /**
- * Internal dependencies
- */
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
 import {
   FULLBLEED_RATIO,
   PAGE_RATIO,
