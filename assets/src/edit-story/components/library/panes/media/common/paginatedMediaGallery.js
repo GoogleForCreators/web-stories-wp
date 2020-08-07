@@ -163,6 +163,7 @@ function PaginatedMediaGallery({
   const displayLoadingPill = isMediaLoading && hasMore;
   const attribution =
     providerType !== ProviderType.LOCAL &&
+    PROVIDERS[providerType].attributionComponent &&
     PROVIDERS[providerType].attributionComponent();
   return (
     <>
