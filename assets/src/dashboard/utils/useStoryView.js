@@ -39,7 +39,7 @@ export default function useStoryView({ filters, totalPages }) {
   const [sortDirection, setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
-  const [previewVisible, _setPreviewVisible] = useState();
+  const [activePreview, _setActivePreview] = useState();
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -91,10 +91,10 @@ export default function useStoryView({ filters, totalPages }) {
     [setPageClamped]
   );
 
-  const setPreviewVisible = useCallback(
+  const setActivePreview = useCallback(
     (_, story) => {
       if (enableStoryPreviews) {
-        _setPreviewVisible(story);
+        _setActivePreview(story);
       }
     },
     [enableStoryPreviews]
@@ -107,9 +107,9 @@ export default function useStoryView({ filters, totalPages }) {
 
   return useMemo(
     () => ({
-      previewVisible: {
-        value: previewVisible,
-        set: setPreviewVisible,
+      activePreview: {
+        value: activePreview,
+        set: setActivePreview,
       },
       view: {
         style: viewStyle,
@@ -137,8 +137,8 @@ export default function useStoryView({ filters, totalPages }) {
       },
     }),
     [
-      previewVisible,
-      setPreviewVisible,
+      activePreview,
+      setActivePreview,
       viewStyle,
       toggleViewStyle,
       pageSize,

@@ -90,7 +90,7 @@ function TemplateDetails() {
     },
   } = useContext(ApiContext);
 
-  const { previewVisible } = useTemplateView({ totalPages });
+  const { activePreview } = useTemplateView({ totalPages });
 
   useEffect(() => {
     if (!templateId) {
@@ -215,19 +215,19 @@ function TemplateDetails() {
 
   const handlePreviewTemplate = useCallback(
     (e, previewTemplate) => {
-      previewVisible.set(e, previewTemplate);
+      activePreview.set(e, previewTemplate);
     },
-    [previewVisible]
+    [activePreview]
   );
 
   if (!template) {
     return null;
   }
 
-  if (previewVisible.value) {
+  if (activePreview.value) {
     return (
       <PreviewStoryView
-        story={previewVisible.value}
+        story={activePreview.value}
         handleClose={handlePreviewTemplate}
       />
     );

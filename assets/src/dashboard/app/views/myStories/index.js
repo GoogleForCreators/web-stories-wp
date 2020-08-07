@@ -50,7 +50,7 @@ function MyStories() {
     },
   } = useContext(ApiContext);
 
-  const { filter, page, previewVisible, search, sort, view } = useStoryView({
+  const { filter, page, activePreview, search, sort, view } = useStoryView({
     filters: STORY_STATUSES,
     totalPages,
   });
@@ -89,15 +89,15 @@ function MyStories() {
 
   const handlePreviewStory = useCallback(
     (e, story) => {
-      previewVisible.set(e, story);
+      activePreview.set(e, story);
     },
-    [previewVisible]
+    [activePreview]
   );
 
-  if (previewVisible.value) {
+  if (activePreview.value) {
     return (
       <PreviewStoryView
-        story={previewVisible.value}
+        story={activePreview.value}
         handleClose={handlePreviewStory}
       />
     );
