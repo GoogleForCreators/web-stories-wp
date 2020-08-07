@@ -43,7 +43,7 @@ const PickerContainer = styled.div`
   width: 100%;
   min-width: 160px;
   max-height: 355px;
-  box-shadow: 0px 8px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.15)};
+  box-shadow: 0px 8px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.15)};
   overflow: hidden;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.bg.v14};
@@ -60,7 +60,8 @@ const List = styled(ScrollList)`
   text-align: left;
   list-style: none;
   scrollbar-width: thin;
-  scrollbar-color: transparent ${({ theme }) => rgba(theme.colors.bg.v1, 0.38)};
+  scrollbar-color: transparent
+    ${({ theme }) => rgba(theme.colors.bg.workspace, 0.38)};
 
   ::-webkit-scrollbar {
     width: 8px;
@@ -74,7 +75,7 @@ const List = styled(ScrollList)`
     border: 2px solid transparent;
     background-clip: padding-box;
     border-radius: 8px;
-    background-color: ${({ theme }) => rgba(theme.colors.bg.v1, 0.38)};
+    background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.38)};
   }
 `;
 
@@ -82,7 +83,7 @@ const Divider = styled.hr`
   margin: 5px 0;
   height: 0;
   background: transparent;
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
   border-width: 1px 0 0;
 `;
 
@@ -98,7 +99,7 @@ const SearchInput = styled.input.attrs({
   border-radius: 4px 4px 0 0;
   background: ${({ theme }) => theme.colors.bg.v15};
   border: none;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-size: ${({ theme }) => theme.fonts.input.size};
   line-height: ${({ theme }) => theme.fonts.input.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.input.weight};
@@ -120,7 +121,7 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-size: ${({ theme }) => theme.fonts.label.size};
   line-height: ${({ theme }) => theme.fonts.label.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
@@ -147,14 +148,14 @@ const NoResult = styled.span`
   padding: 15px 12px 15px 26px;
   margin: 0;
   font-style: italic;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 `;
 
 function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const {
-    state: { fonts, recentFonts },
+    state: { fonts, recentFonts, curatedFonts },
     actions: { ensureMenuFontsLoaded },
   } = useFont();
 
@@ -164,7 +165,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [matchingFonts, setMatchingFonts] = useState([
     ...recentFonts,
-    ...fonts,
+    ...curatedFonts,
   ]);
 
   useEffect(() => {
@@ -195,7 +196,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
       // Restore default if less than 2 characters.
       if (searchKeyword.trim().length < 2) {
         dividerIndexTracker.current = recentFonts.length - 1;
-        setMatchingFonts([...recentFonts, ...fonts]);
+        setMatchingFonts([...recentFonts, ...curatedFonts]);
         return;
       }
       const _fonts = fonts.filter(({ name }) =>
@@ -209,7 +210,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
     },
     250,
     {},
-    [searchKeyword, fonts]
+    [searchKeyword, fonts, curatedFonts]
   );
 
   const handleSearchInputChanged = useCallback(

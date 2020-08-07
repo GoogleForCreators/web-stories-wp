@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-describe('CUJ: Creator can Add and Write Text', () => {
-  describe('Action: Delete textbox', () => {
-    describe('when a textbox is selected', () => {
-      it('should be removed when pressing backspace', () => {
-        // Implementation goes here
-      });
-
-      it('should be removed when pressing delete', () => {
-        // Implementation goes here
-      });
+describe('CUJ: Creator can Add and Write Text: Delete textbox', () => {
+  describe('when a textbox is selected', () => {
+    it('should be removed when pressing backspace', () => {
+      // Implementation goes here
     });
 
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should allow you to delete a text box by dragging it off-stage', () => {});
+    it('should be removed when pressing delete', () => {
+      // Implementation goes here
+    });
   });
+
+  // Disable reason: Not implemented yet
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should allow you to delete a text box by dragging it off-stage', () => {});
 });

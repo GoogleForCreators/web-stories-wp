@@ -25,21 +25,14 @@ import { useEffect } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { ProviderType } from '../../../components/library/panes/media/common/providerType';
 import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
-
-function getFetchCategoriesErrorMessage(provider) {
-  if (provider === ProviderType.UNSPLASH) {
-    return __('Error loading categories from Unsplash', 'web-stories');
-  }
-  return __('Error loading categories', 'web-stories');
-}
+import { PROVIDERS } from './providerConfiguration';
 
 export default function useFetchCategoriesEffect({
   provider,
   selectedProvider,
+  categories,
   fetchCategoriesStart,
   fetchCategoriesSuccess,
   fetchCategoriesError,
@@ -54,21 +47,30 @@ export default function useFetchCategoriesEffect({
     async function fetch() {
       fetchCategoriesStart({ provider });
       try {
-        const { categories } = await listCategories({ provider });
-        fetchCategoriesSuccess({ provider, categories });
-      } catch {
+        const { categories: newCategories } = await listCategories({
+          provider,
+        });
+        fetchCategoriesSuccess({ provider, categories: newCategories });
+      } catch (e) {
         fetchCategoriesError({ provider });
-        showSnackbar({ message: getFetchCategoriesErrorMessage(provider) });
+        showSnackbar({
+          message: PROVIDERS[provider].fetchCategoriesErrorMessage,
+        });
       }
     }
 
-    if (provider === selectedProvider) {
+    if (
+      provider === selectedProvider &&
+      PROVIDERS[provider].supportsCategories &&
+      !categories?.length
+    ) {
       fetch();
     }
   }, [
     showSnackbar,
     // Fetch categories is triggered by changes to these.
     selectedProvider,
+    categories,
     // These attributes never change.
     provider,
     listCategories,

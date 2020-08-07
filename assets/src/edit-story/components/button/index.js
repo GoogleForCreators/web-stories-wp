@@ -79,7 +79,7 @@ const StyledButton = styled(Base)`
   height: ${({ height }) => height}px;
   min-width: initial;
   visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 
   svg {
     width: ${({ width }) => width}px;
@@ -98,18 +98,18 @@ const StyledButtonWithOpacity = styled(StyledButton)`
 `;
 
 const PrimaryButton = styled(Base)`
-  border-color: ${({ theme }) => theme.colors.action};
-  background-color: ${({ theme }) => theme.colors.action};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  border-color: ${({ theme }) => theme.colors.accent.primary};
+  background-color: ${({ theme }) => theme.colors.accent.primary};
+  color: ${({ theme }) => theme.colors.fg.white};
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => theme.colors.fg.white};
   }
 `;
 
 const SecondaryButton = styled(Base)`
-  border-color: ${({ theme }) => theme.colors.fg.v1};
+  border-color: ${({ theme }) => theme.colors.fg.white};
   background-color: ${({ theme }) => theme.colors.fg.v3};
   color: ${({ theme }) => theme.colors.bg.v5};
   &:focus,
@@ -121,16 +121,16 @@ const SecondaryButton = styled(Base)`
 
 const OutlineButton = styled(Base)`
   border-color: ${({ theme }) => theme.colors.fg.v4};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => theme.colors.fg.white};
   }
 `;
 
 const PlainButton = styled(Base)`
-  color: ${({ theme }) => theme.colors.action};
+  color: ${({ theme }) => theme.colors.accent.primary};
   border: none;
   transition: background-color 0.6s ease;
   text-transform: uppercase;
@@ -143,7 +143,7 @@ const PlainButton = styled(Base)`
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
 
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.action, 0.15)};
+    background-color: ${({ theme }) => rgba(theme.colors.accent.primary, 0.15)};
   }
 `;
 

@@ -35,6 +35,7 @@ const CategorySection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex: 1 0 auto;
 `;
 
 // This hides the category pills unless expanded

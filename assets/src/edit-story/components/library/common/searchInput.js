@@ -50,7 +50,7 @@ const Search = styled(TextInput)`
 const CloseIcon = styled(Close)`
   width: 14px;
   height: 14px;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 /**
