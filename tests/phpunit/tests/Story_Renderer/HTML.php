@@ -45,7 +45,9 @@ class HTML extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$actual   = $renderer->render();
 
 		$this->assertStringStartsWith( '<!DOCTYPE html>', $actual );
@@ -62,7 +64,9 @@ class HTML extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$actual   = $renderer->render();
 
 		$this->assertContains( '<html amp="" lang="en-US">', $actual );
@@ -82,7 +86,9 @@ class HTML extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$actual   = $renderer->render();
 
 		$this->assertContains( 'FOO', $actual );
@@ -110,7 +116,9 @@ class HTML extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_body_open', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$actual   = $renderer->render();
 
 		remove_action( 'web_stories_body_open', $function );
@@ -134,7 +142,9 @@ class HTML extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_footer', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$actual   = $renderer->render();
 
 		remove_action( 'web_stories_footer', $function );
@@ -160,7 +170,9 @@ class HTML extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
 
 		wp_update_post(
@@ -193,7 +205,9 @@ class HTML extends \WP_UnitTestCase {
 
 		set_post_thumbnail( $post->ID, $attachment_id );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$rendered = $renderer->render();
 
 		$this->assertContains( 'poster-portrait-src=', $rendered );
@@ -212,7 +226,9 @@ class HTML extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$rendered = $renderer->render();
 
 		$this->assertContains( 'poster-portrait-src=', $rendered );
@@ -237,7 +253,9 @@ class HTML extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_insert_analytics_configuration', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$actual   = $renderer->render();
 
 		remove_action( 'web_stories_insert_analytics_configuration', $function );
@@ -257,7 +275,9 @@ class HTML extends \WP_UnitTestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$actual   = $renderer->render();
 
 		$this->assertNotContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
