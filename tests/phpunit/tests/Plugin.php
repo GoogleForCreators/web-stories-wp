@@ -17,9 +17,12 @@
 
 namespace Google\Web_Stories\Tests;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Plugin
+ */
 class Plugin extends \WP_UnitTestCase {
 	/**
-	 * Test register()
+	 * @covers ::registerr
 	 */
 	public function test_register() {
 		$plugin = new \Google\Web_Stories\Plugin();
@@ -37,5 +40,16 @@ class Plugin extends \WP_UnitTestCase {
 		$this->assertSame( 5, has_action( 'init', [ $plugin->settings, 'init' ] ) );
 		$this->assertSame( 7, has_action( 'init', [ $plugin->experiments, 'init' ] ) );
 		$this->assertSame( 100, has_action( 'rest_api_init', [ $plugin, 'register_rest_routes' ] ) );
+	}
+
+	/**
+	 * @covers ::load_amp_plugin_compat
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_is_am_endpoint_polyfill_on_wp_action() {
+		$this->assertFalse( function_exists( '\is_amp_endpoint' ) );
+		$this->go_to( '/' );
+		$this->assertTrue( function_exists( '\is_amp_endpoint' ) );
 	}
 }
