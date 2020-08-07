@@ -21,17 +21,22 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { ApiContext } from '../../api/apiProvider';
+import { useConfig } from '../../config';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import PublisherLogoSettings from './publisherLogo';
 import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
+  const {
+    capabilities: { canManageSettings },
+  } = useConfig();
+
   const {
     actions: {
       settingsApi: { fetchSettings, updateSettings },
@@ -45,6 +50,18 @@ function EditorSettings() {
     fetchSettings();
   }, [fetchSettings]);
 
+  const handleCompleteUpdateId = useCallback(
+    ({ newGoogleAnalyticsId }) => {
+      const updatedSettings = {
+        googleAnalyticsId:
+          typeof newGoogleAnalyticsId === 'string' && newGoogleAnalyticsId,
+      };
+
+      updateSettings(updatedSettings);
+    },
+    [updateSettings]
+  );
+
   return (
     <Wrapper>
       <Header>
@@ -52,8 +69,9 @@ function EditorSettings() {
       </Header>
       <Main>
         <GoogleAnalyticsSettings
-          onUpdateGoogleAnalytics={updateSettings}
+          handleUpdateSettings={handleCompleteUpdateId}
           googleAnalyticsId={googleAnalyticsId}
+          canManageSettings={canManageSettings}
         />
         <PublisherLogoSettings
           onUpdatePublisherLogo={updateSettings}

@@ -50,6 +50,7 @@ import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider, RouterContext, matchPath } from './router';
 import { ConfigProvider } from './config';
 import {
+  EditorSettingsView,
   ExploreTemplatesView,
   MyStoriesView,
   SavedTemplatesView,
@@ -103,6 +104,10 @@ const AppContent = () => {
         <Route
           path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
           component={<TemplateDetailsView />}
+        />
+        <Route
+          path={APP_ROUTES.EDITOR_SETTINGS}
+          component={<EditorSettingsView />}
         />
         <Route
           path={APP_ROUTES.STORY_ANIM_TOOL}

@@ -48,7 +48,8 @@ const TEXT = {
 
 function GoogleAnalyticsSettings({
   googleAnalyticsId = '',
-  onUpdateGoogleAnalyticsId,
+  handleUpdateSettings,
+  canManageSettings,
 }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
 
@@ -56,11 +57,12 @@ function GoogleAnalyticsSettings({
     setAnalyticsId(googleAnalyticsId);
   }, [googleAnalyticsId]);
 
-  const handleCompleteUpdateId = useCallback(
-    (newId) => {
-      onUpdateGoogleAnalyticsId({ googleAnalyticsId: newId });
+  const handleUpdateId = useCallback(
+    (value) => {
+      // todo add validation to string format
+      handleUpdateSettings({ newGoogleAnalyticsId: value });
     },
-    [onUpdateGoogleAnalyticsId]
+    [handleUpdateSettings]
   );
 
   return (
@@ -74,8 +76,9 @@ function GoogleAnalyticsSettings({
           id="gaTrackingId"
           value={analyticsId}
           onEditCancel={handleCancelUpdateId}
-          onEditComplete={handleCompleteUpdateId}
+          onEditComplete={handleUpdateId}
           placeholder={TEXT.PLACEHOLDER}
+          disabled={!canManageSettings}
         />
         <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
       </FormContainer>
@@ -83,7 +86,8 @@ function GoogleAnalyticsSettings({
   );
 }
 GoogleAnalyticsSettings.propTypes = {
-  onUpdateGoogleAnalyticsId: PropTypes.func,
+  handleUpdateSettings: PropTypes.func,
+  canManageSettings: PropTypes.bool,
   googleAnalyticsId: PropTypes.string,
 };
 
