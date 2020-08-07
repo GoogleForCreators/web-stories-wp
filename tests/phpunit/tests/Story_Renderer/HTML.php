@@ -41,6 +41,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_render() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<!DOCTYPE html><html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -60,6 +61,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_transform_html_start_tag() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -82,6 +84,7 @@ class HTML extends \WP_UnitTestCase {
 
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body><amp-story></amp-story></body></html>",
 			]
 		);
@@ -106,6 +109,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_insert_content_after_opening_body() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -132,6 +136,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_insert_content_before_closing_body() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -166,6 +171,7 @@ class HTML extends \WP_UnitTestCase {
 
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -199,6 +205,7 @@ class HTML extends \WP_UnitTestCase {
 
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -222,6 +229,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_add_poster_images_no_featured_image() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -243,6 +251,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_insert_analytics_configuration() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -271,6 +280,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_insert_analytics_configuration_no_output() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
