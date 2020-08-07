@@ -41,46 +41,48 @@ class Story {
 	 *
 	 * @var string
 	 */
-	public $title = '';
+	protected $title = '';
 	/**
 	 * URL.
 	 *
 	 * @var string
 	 */
-	public $url = '';
+	protected $url = '';
 	/**
 	 * Markup.
 	 *
 	 * @var string
 	 */
-	public $markup = '';
+	protected $markup = '';
 	/**
 	 * Poster url - portrait.
 	 *
 	 * @var string
 	 */
-	public $poster_portrait;
+	protected $poster_portrait;
 	/**
 	 * Poster url - landscape.
 	 *
 	 * @var string
 	 */
-	public $poster_landscape;
+	protected $poster_landscape;
 	/**
 	 * Poster url - square.
 	 *
 	 * @var string
 	 */
-	public $poster_square;
+	protected $poster_square;
 
 	/**
 	 * Story constructor.
 	 *
-	 * @param Object $story Story object. Default to null.
+	 * @param Array $story Array of attributes.
 	 */
-	public function __construct( $story = null ) {
-		if ( is_object( $story ) ) {
-			foreach ( get_object_vars( $story ) as $key => $value ) {
+	public function __construct( array $story = [] ) {
+		$this->poster_portrait = plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
+
+		if ( ! empty( $story ) && is_array( $story ) ) {
+			foreach ( $story as $key => $value ) {
 				$this->$key = $value;
 			}
 		}
@@ -107,10 +109,65 @@ class Story {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
+			$this->poster_portrait  = wp_get_attachment_image_url( $thumbnail_id, Media::STORY_POSTER_IMAGE_SIZE );
 			$this->poster_square    = wp_get_attachment_image_url( $thumbnail_id, Media::STORY_SQUARE_IMAGE_SIZE );
 			$this->poster_landscape = wp_get_attachment_image_url( $thumbnail_id, Media::STORY_LANDSCAPE_IMAGE_SIZE );
 		}
 
 		return true;
+	}
+
+	/**
+	 * Getter for title attribute.
+	 *
+	 * @return string
+	 */
+	public function get_title() {
+		return $this->title;
+	}
+
+	/**
+	 * Getter for url attribute.
+	 *
+	 * @return string
+	 */
+	public function get_url() {
+		return $this->url;
+	}
+
+	/**
+	 * Getter for markup attribute.
+	 *
+	 * @return string
+	 */
+	public function get_markup() {
+		return $this->markup;
+	}
+
+	/**
+	 * Getter for poster portrait attribute.
+	 *
+	 * @return string
+	 */
+	public function get_poster_portrait() {
+		return $this->poster_portrait;
+	}
+
+	/**
+	 * Getter for poster landscape attribute.
+	 *
+	 * @return string
+	 */
+	public function get_poster_landscape() {
+		return $this->poster_landscape;
+	}
+
+	/**
+	 * Getter for poster square attribute.
+	 *
+	 * @return string
+	 */
+	public function get_poster_square() {
+		return $this->poster_square;
 	}
 }
