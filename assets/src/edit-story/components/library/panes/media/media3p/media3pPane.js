@@ -182,7 +182,10 @@ function Media3pPane(props) {
               selectCategory={actions.selectCategory}
               deselectCategory={actions.deselectCategory}
             />
-            <MediaSubheading shouldDisplay={shouldDisplayMediaSubheading}>
+            <MediaSubheading
+              data-testid={'media-subheading'}
+              shouldDisplay={shouldDisplayMediaSubheading}
+            >
               {displayName}
             </MediaSubheading>
           </>
