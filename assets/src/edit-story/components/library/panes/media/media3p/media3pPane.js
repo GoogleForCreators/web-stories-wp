@@ -231,9 +231,9 @@ function Media3pPane(props) {
           </ProviderTabSection>
         </PaneHeader>
         <PaneBottom ref={paneBottomRef}>
-          {Object.keys(PROVIDERS).map((providerType) => {
-            getProviderMediaAndCategories(providerType);
-          })}
+          {enabledProviders.map((providerType) =>
+            getProviderMediaAndCategories(providerType)
+          )}
         </PaneBottom>
       </PaneInner>
     </StyledPane>
