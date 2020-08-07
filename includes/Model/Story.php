@@ -79,8 +79,6 @@ class Story {
 	 * @param Array $story Array of attributes.
 	 */
 	public function __construct( array $story = [] ) {
-		$this->poster_portrait = plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
-
 		if ( ! empty( $story ) && is_array( $story ) ) {
 			foreach ( $story as $key => $value ) {
 				$this->$key = $value;
@@ -108,11 +106,16 @@ class Story {
 
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
-		if ( 0 !== $thumbnail_id ) {
-			$this->poster_portrait  = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
-			$this->poster_square    = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_SQUARE_IMAGE_SIZE );
-			$this->poster_landscape = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_LANDSCAPE_IMAGE_SIZE );
+		if ( 0 === $thumbnail_id ) {
+			$poster                 = plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
+			$this->poster_portrait  = $poster;
+			$this->poster_square    = $poster;
+			$this->poster_landscape = $poster;
 		}
+
+		$this->poster_portrait  = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+		$this->poster_square    = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_SQUARE_IMAGE_SIZE );
+		$this->poster_landscape = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_LANDSCAPE_IMAGE_SIZE );
 
 		return true;
 	}
