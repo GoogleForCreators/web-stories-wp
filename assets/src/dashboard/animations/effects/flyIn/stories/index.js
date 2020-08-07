@@ -38,19 +38,19 @@ const animations = [
     targets: ['e2'],
     type: ANIMATION_EFFECTS.FLY_IN,
     delay: 500,
-    direction: DIRECTION.LEFT_TO_RIGHT,
+    flyInDir: DIRECTION.LEFT_TO_RIGHT,
   },
   {
     targets: ['e3'],
     type: ANIMATION_EFFECTS.FLY_IN,
     delay: 1000,
-    direction: DIRECTION.RIGHT_TO_LEFT,
+    flyInDir: DIRECTION.RIGHT_TO_LEFT,
   },
   {
     targets: ['e4'],
     type: ANIMATION_EFFECTS.FLY_IN,
     delay: 1500,
-    direction: DIRECTION.BOTTOM_TO_TOP,
+    flyInDir: DIRECTION.BOTTOM_TO_TOP,
   },
 ];
 
