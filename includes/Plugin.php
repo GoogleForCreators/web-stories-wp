@@ -136,9 +136,13 @@ class Plugin {
 	 * @return void
 	 */
 	public function register() {
+		// Plugin compatibility / polyfills.
+		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
+
 		// Settings.
 		$this->settings = new Settings();
 		add_action( 'init', [ $this->settings, 'init' ], 5 );
+
 
 		$this->experiments = new Experiments();
 		add_action( 'init', [ $this->experiments, 'init' ], 7 );
@@ -193,6 +197,19 @@ class Plugin {
 
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
+	}
+
+	/**
+	 * Initializes functionality to improve compatibility with the AMP plugin.
+	 *
+	 * Loads a separate PHP file that allows defining functions in the global namespace.
+	 *
+	 * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
+	 *
+	 * @return void
+	 */
+	public function load_amp_plugin_compat() {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/plugin-compat/amp.php';
 	}
 
 	/**

@@ -269,18 +269,6 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @joannag6
-			 * Issue: #1319 and #354
-			 * Creation date: 2020-05-20
-			 */
-			[
-				'name'        => 'mediaDropdownMenu',
-				'label'       => __( 'Media Dropdown Menu', 'web-stories' ),
-				'description' => __( 'Display dropdown menu on hover in media library', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @carlos-kelly
 			 * Issue: #1300
 			 * Creation date: 2020-06-02
@@ -348,17 +336,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @diegovar
-			 * Issue: #2508
-			 * Creation date: 2020-06-17
-			 */
-			[
-				'name'        => 'showTextAndShapesSearchInput',
-				'label'       => __( 'Third-Party Media', 'web-stories' ),
-				'description' => __( 'Enable third-party media tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @diegovar
 			 * Issue: #2616
 			 * Creation date: 2020-06-23
 			 */
@@ -375,8 +352,20 @@ class Experiments {
 			 */
 			[
 				'name'        => 'rowBasedGallery',
-				'label'       => __( 'Uploads', 'web-stories' ),
-				'description' => __( 'Enable row-based media gallery', 'web-stories' ),
+				'label'       => __( 'Row Based Uploads Gallery', 'web-stories' ),
+				'description' => __( 'Enable the row-based media gallery in the Upload tab.', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @joannag6
+			 * Issue: #1319 and #354
+			 * Creation date: 2020-05-20
+			 */
+			[
+				'name'        => 'mediaDropdownMenu',
+				'label'       => __( 'Media Dropdown Menu', 'web-stories' ),
+				'description' => __( 'Display dropdown menu on hover in media library', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -387,8 +376,31 @@ class Experiments {
 			 */
 			[
 				'name'        => 'incrementalSearchDebounceMedia',
-				'label'       => __( 'Uploads', 'web-stories' ),
-				'description' => __( 'Enable incremental search in media tab', 'web-stories' ),
+				'label'       => __( 'Incremental Search', 'web-stories' ),
+				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @diegovar
+			 * Issue: #2508
+			 * Creation date: 2020-06-17
+			 */
+			[
+				'name'        => 'media3pTab',
+				'label'       => __( 'Third-Party Media', 'web-stories' ),
+				'description' => __( 'Enable third-party media tab', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Description: Flag for showing the Coverr Media3p subtab.
+			 * Author: @diegovar
+			 * Issue: #3349
+			 * Creation date: 2020-08-05
+			 */
+			[
+				'name'        => 'showCoverrTab',
+				'label'       => __( 'Coverr', 'web-stories' ),
+				'description' => __( 'Enable the Coverr tab in the Third-party media tab.', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];
