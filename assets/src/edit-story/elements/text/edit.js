@@ -266,7 +266,9 @@ function TextEdit({
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
-    highlight.style.fontSize = target.style.fontSize;
+    if (highlight) {
+      highlight.style.fontSize = target.style.fontSize;
+    }
 
     if (transform === null) {
       wrapper.style.width = '';
