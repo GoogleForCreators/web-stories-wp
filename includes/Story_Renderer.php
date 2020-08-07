@@ -361,9 +361,9 @@ class Story_Renderer {
 		}
 
 		$images = [
-			'poster-portrait-src'  => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_POSTER_IMAGE_SIZE ),
-			'poster-square-src'    => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_SQUARE_IMAGE_SIZE ),
-			'poster-landscape-src' => wp_get_attachment_image_url( $thumbnail_id, Media::STORY_LANDSCAPE_IMAGE_SIZE ),
+			'poster-portrait-src'  => wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE ),
+			'poster-landscape-src' => wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_LANDSCAPE_IMAGE_DIMENSIONS ),
+			'poster-square-src'    => wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_SQUARE_IMAGE_SIZE ),
 		];
 
 		return array_filter( $images );
