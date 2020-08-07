@@ -57,17 +57,24 @@ class Embed {
 	protected $width;
 
 	/**
-	 * Image constructor.
+	 * Align class.
 	 *
-	 * @param Story  $story Story Object.
-	 * @param int    $width Width of image.
-	 * @param int    $height  Height of image.
-	 * @param string $align  Align embed.
+	 * @var string
 	 */
-	public function __construct( $story, $width, $height, $align ) {
+	protected $align;
+
+	/**
+	 * Embed constructor.
+	 *
+	 * @param Story  $story   Story Object.
+	 * @param int    $width   Width of image.
+	 * @param int    $height  Height of image.
+	 * @param string $align   Align Image. Default: none.
+	 */
+	public function __construct( $story, $width, $height, $align = 'none' ) {
 		$this->story  = $story;
-		$this->width  = $height;
-		$this->height = $width;
+		$this->width  = $width;
+		$this->height = $height;
 		$this->align  = $align;
 	}
 
@@ -93,15 +100,8 @@ class Embed {
 		ob_start();
 		?>
 		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-			<amp-story-player
-				style="<?php echo esc_attr( $player_style ); ?>"
-			>
-				<a
-					href="<?php echo esc_url( $url ); ?>"
-					style="<?php echo esc_attr( $poster_style ); ?>"
-				>
-					<?php echo esc_html( $title ); ?>
-				</a>
+			<amp-story-player style="<?php echo esc_attr( $player_style ); ?>">
+				<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
 			</amp-story-player>
 		</div>
 		<?php

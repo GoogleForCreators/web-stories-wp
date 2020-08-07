@@ -110,7 +110,17 @@ class Admin {
 		$story->load_from_post( $post_id );
 
 		$renderer = new Embed( $story, 360, 600, 'none' );
-		return $renderer->render();
+		$html     = $renderer->render();
+
+		$block_markup = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s"} -->%4$s<!-- /wp:web-stories/embed -->';
+
+		return sprintf(
+			$block_markup,
+			esc_url( $story->get_url() ),
+			esc_js( $story->get_title() ),
+			esc_url( $story->get_poster_portrait() ),
+			$html
+		);
 	}
 
 	/**

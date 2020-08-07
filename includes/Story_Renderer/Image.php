@@ -57,16 +57,26 @@ class Image {
 	protected $width;
 
 	/**
+	 * Align class.
+	 *
+	 * @var string
+	 */
+	protected $align;
+
+
+	/**
 	 * Image constructor.
 	 *
-	 * @param Story $story Story Object.
-	 * @param int   $width Width of image.
-	 * @param int   $height  Height of image.
+	 * @param Story  $story   Story Object.
+	 * @param int    $width   Width of image.
+	 * @param int    $height  Height of image.
+	 * @param string $align   Align Image. Default: none.
 	 */
-	public function __construct( $story, $width, $height ) {
+	public function __construct( $story, $width, $height, $align = 'none' ) {
 		$this->story  = $story;
 		$this->width  = $height;
 		$this->height = $width;
+		$this->align  = $align;
 	}
 
 	/**
@@ -75,9 +85,11 @@ class Image {
 	 * @return string Rendered block type output.
 	 */
 	public function render() {
+		$align = sprintf( 'align%s', $this->align );
+
 		ob_start();
 		?>
-		<div class="wp-block-web-stories-embed">
+		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
 			<a href="<?php echo esc_url( $this->story->get_url() ); ?>">
 				<?php
 				if ( ! empty( $this->story->get_poster_square() ) ) {
