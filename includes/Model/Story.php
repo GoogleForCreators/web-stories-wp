@@ -104,14 +104,14 @@ class Story {
 
 		$this->title  = $post->post_title;
 		$this->markup = $post->post_content;
-		$this->url    = get_permalink( $post );
+		$this->url    = (string) get_permalink( $post );
 
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$this->poster_portrait  = wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
-			$this->poster_square    = wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_SQUARE_IMAGE_SIZE );
-			$this->poster_landscape = wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_LANDSCAPE_IMAGE_SIZE );
+			$this->poster_portrait  = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+			$this->poster_square    = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_SQUARE_IMAGE_SIZE );
+			$this->poster_landscape = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_LANDSCAPE_IMAGE_SIZE );
 		}
 
 		return true;
