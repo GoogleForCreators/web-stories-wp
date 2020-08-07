@@ -166,7 +166,7 @@ class HTML extends \WP_UnitTestCase {
 	 * @covers ::add_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
 		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
 
 		$post = self::factory()->post->create_and_get(
@@ -201,7 +201,7 @@ class HTML extends \WP_UnitTestCase {
 	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
 
 		$post = self::factory()->post->create_and_get(
 			[
