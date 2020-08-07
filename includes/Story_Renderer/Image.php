@@ -92,10 +92,10 @@ class Image {
 		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
 			<a href="<?php echo esc_url( $this->story->get_url() ); ?>">
 				<?php
-				if ( ! empty( $this->story->get_poster_square() ) ) {
+				if ( ! empty( $this->story->get_poster_portrait() ) ) {
 					printf(
 						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
-						esc_url( $this->story->get_poster_square() ),
+						esc_url( $this->story->get_poster_portrait() ),
 						absint( $this->width ),
 						absint( $this->height ),
 						esc_attr( $this->story->get_title() )

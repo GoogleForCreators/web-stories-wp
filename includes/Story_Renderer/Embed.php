@@ -86,7 +86,7 @@ class Embed {
 	public function render() {
 		$url          = $this->story->get_url();
 		$title        = $this->story->get_title();
-		$poster       = ! empty( $this->story->get_poster_square() ) ? esc_url( $this->story->get_poster_square() ) : '';
+		$poster       = ! empty( $this->story->get_poster_portrait() ) ? esc_url( $this->story->get_poster_portrait() ) : '';
 		$align        = sprintf( 'align%s', $this->align );
 		$margin       = ( 'center' === $this->align ) ? 'auto' : '0';
 		$player_style = sprintf( 'width: %dpx; height: %dpx; margin: %s', absint( $this->width ), absint( $this->height ), esc_attr( $margin ) );
