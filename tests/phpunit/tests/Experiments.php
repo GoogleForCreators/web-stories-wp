@@ -142,9 +142,20 @@ class Experiments extends \WP_UnitTestCase {
 	 * @covers ::get_experiments
 	 */
 	public function test_get_experiments() {
-		$experiments     = new \Google\Web_Stories\Experiments();
-		$all_experiments = $experiments->get_experiments();
-		$this->assertInternalType( 'array', $all_experiments );
+		$experiments           = new \Google\Web_Stories\Experiments();
+		$all_experiments       = $experiments->get_experiments();
+		$all_experiment_groups = array_keys( $experiments->get_experiment_groups() );
+
+		$experiment_names  = wp_list_pluck( $all_experiments, 'name' );
+		$experiment_groups = wp_list_pluck( $all_experiments, 'group' );
+
+		foreach ( $experiment_groups as $group ) {
+			$this->assertContains( $group, $all_experiment_groups, sprintf( 'Invalid experiment group %s', $group ) );
+		}
+
+		$duplicates = array_unique( array_diff_assoc( $experiment_names, array_unique( $experiment_names ) ) );
+
+		$this->assertEmpty( $duplicates, sprintf( 'Duplicate experiments definition: %s', implode( ',', $duplicates ) ) );
 	}
 
 	/**
