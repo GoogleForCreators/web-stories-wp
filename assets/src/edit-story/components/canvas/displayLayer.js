@@ -126,6 +126,7 @@ function DisplayLayer() {
   return (
     <StoryAnimation.Provider
       animations={currentPage?.animations}
+      elements={currentPage?.elements}
       onWAAPIFinish={resetAnimationState}
     >
       <Layer
