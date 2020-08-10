@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Gallery from 'react-photo-gallery';
-import { ProviderType } from './providerType';
+import { ProviderType } from '../../../../../app/media/providerType';
 import MediaElement from './mediaElement';
 
 const PHOTO_MARGIN = 4;
@@ -71,7 +71,7 @@ function MediaGallery({ resources, onInsert, providerType }) {
   );
 
   return (
-    <div role={'grid'}>
+    <div>
       <Gallery
         targetRowHeight={110}
         direction={'row'}

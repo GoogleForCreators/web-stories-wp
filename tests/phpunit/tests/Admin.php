@@ -92,7 +92,7 @@ class Admin extends \WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current' );
-		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media::STORY_POSTER_IMAGE_SIZE );
+		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertContains( 'wp-block-web-stories-embed', $result );
 		$this->assertContains( $poster, $result );
 	}
@@ -145,7 +145,7 @@ class Admin extends \WP_UnitTestCase {
 				'ID'         => self::$story_id,
 				// Not just a hyphen, but an en dash.
 				'post_title' => 'Story - Test',
-			] 
+			]
 		);
 
 		$result = $admin->prefill_post_title( 'current' );
@@ -155,7 +155,7 @@ class Admin extends \WP_UnitTestCase {
 			[
 				'ID'         => self::$story_id,
 				'post_title' => $original_title,
-			] 
+			]
 		);
 
 		$this->assertSame( 'Story - Test', $result );

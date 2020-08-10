@@ -23,6 +23,8 @@ use Google\Web_Stories\Settings;
  * @coversDefaultClass \Google\Web_Stories\Analytics
  */
 class Analytics extends \WP_UnitTestCase {
+	use Private_Access;
+
 	/**
 	 * Story id.
 	 *
@@ -116,5 +118,50 @@ class Analytics extends \WP_UnitTestCase {
 
 		$this->assertEmpty( $actual_before );
 		$this->assertContains( '<amp-analytics', $actual_after );
+	}
+
+	/**
+	 * @covers ::print_analytics_tag
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_print_analytics_tag_with_site_kit() {
+		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+
+		$analytics = new \Google\Web_Stories\Analytics();
+
+		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
+		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
+
+		$actual = get_echo( [ $analytics, 'print_analytics_tag' ] );
+
+		$this->assertEmpty( $actual );
+	}
+
+	/**
+	 * @covers ::is_site_kit_analytics_module_active
+	 * @covers ::get_site_kit_active_modules_option
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_is_site_kit_analytics_module_active() {
+		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+
+		$analytics = new \Google\Web_Stories\Analytics();
+
+		$actual_before = $this->call_private_method( $analytics, 'is_site_kit_analytics_module_active' );
+
+		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
+
+		$actual_after = $this->call_private_method( $analytics, 'is_site_kit_analytics_module_active' );
+
+		delete_option( 'googlesitekit_active_modules', [ 'analytics' ] );
+		update_option( 'googlesitekit-active-modules', [ 'analytics' ], false );
+
+		$actual_after_legacy = $this->call_private_method( $analytics, 'is_site_kit_analytics_module_active' );
+
+		$this->assertFalse( $actual_before );
+		$this->assertTrue( $actual_after );
+		$this->assertTrue( $actual_after_legacy );
 	}
 }

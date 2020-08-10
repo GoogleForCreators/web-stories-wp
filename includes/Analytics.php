@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Site_Kit\Core\Modules\Modules;
-
 /**
  * Class Analytics
  */
@@ -48,13 +46,40 @@ class Analytics {
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
 	protected function is_site_kit_analytics_module_active() {
-		if ( ! class_exists( 'Google\Site_Kit\Core\Modules\Modules' ) ) {
-			return false;
+		$modules = $this->get_site_kit_active_modules_option();
+
+		return in_array( 'analytics', $modules, true );
+	}
+
+	/**
+	 * Gets the option containing the active Site Kit modules.
+	 *
+	 * Checks two options as it was renamed at some point in Site Kit.
+	 *
+	 * Bails early if the Site Kit plugin itself is not active.
+	 *
+	 * @see \Google\Site_Kit\Core\Modules\Modules::get_active_modules_option
+	 *
+	 * @return array List of active module slugs.
+	 */
+	private function get_site_kit_active_modules_option() {
+		if ( ! defined( 'GOOGLESITEKIT_VERSION' ) ) {
+			return [];
 		}
 
-		$modules = (array) get_option( Modules::OPTION_ACTIVE_MODULES, [] );
+		$option = get_option( 'googlesitekit_active_modules' );
 
-		return array_key_exists( 'analytics', $modules );
+		if ( is_array( $option ) ) {
+			return $option;
+		}
+
+		$legacy_option = get_option( 'googlesitekit-active-modules' );
+
+		if ( is_array( $legacy_option ) ) {
+			return $legacy_option;
+		}
+
+		return [];
 	}
 
 	/**

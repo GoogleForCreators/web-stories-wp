@@ -39,8 +39,8 @@ const MoreButton = styled(More)`
   position: absolute;
   top: 8px;
   right: 8px;
-  background: ${({ theme }) => theme.colors.bg.v4};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  background: ${({ theme }) => theme.colors.bg.panel};
+  color: ${({ theme }) => theme.colors.fg.white};
   border-radius: 100%;
 `;
 
@@ -112,6 +112,7 @@ function DropDownMenu({
               width="28"
               height="28"
               onClick={onMenuOpen}
+              aria-label={__('More', 'web-stories')}
               aria-pressed={isMenuOpen}
               aria-haspopup={true}
               aria-expanded={isMenuOpen}

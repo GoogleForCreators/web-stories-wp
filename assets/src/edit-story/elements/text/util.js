@@ -32,6 +32,8 @@ export function generateParagraphTextStyle(
 ) {
   return {
     whiteSpace: 'pre-wrap',
+    overflowWrap: 'break-word',
+    wordBreak: 'break-word',
     margin: 0,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
@@ -43,7 +45,7 @@ export function generateParagraphTextStyle(
   };
 }
 
-export const generateFontFamily = ({ family, fallbacks }) => {
+export const generateFontFamily = ({ family, fallbacks } = {}) => {
   const genericFamilyKeywords = [
     'cursive',
     'fantasy',
@@ -52,7 +54,7 @@ export const generateFontFamily = ({ family, fallbacks }) => {
     'sans-serif',
   ];
   // Wrap into " since some fonts won't work without it.
-  let fontFamilyDisplay = family ? `"${family}"` : null;
+  let fontFamilyDisplay = family ? `"${family}"` : '';
   if (fallbacks && fallbacks.length) {
     fontFamilyDisplay += family ? `,` : ``;
     fontFamilyDisplay += fallbacks

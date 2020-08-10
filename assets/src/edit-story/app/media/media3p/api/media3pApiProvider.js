@@ -23,17 +23,10 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import getResourceFromMedia3p from '../../utils/getResourceFromMedia3p';
+import { ProviderType } from '../../providerType';
+import { PROVIDERS } from '../providerConfiguration';
 import apiFetcher from './apiFetcher';
 import Context from './context';
-
-/**
- * The supported providers.
- *
- * @enum {string}
- */
-const Providers = {
-  UNSPLASH: 'unsplash',
-};
 
 /** @typedef {import('react').ProviderProps} ProviderProps */
 
@@ -67,9 +60,17 @@ function Media3pApiProvider({ children }) {
     selectedCategoryId,
     mediaType,
   }) {
-    if (provider.toLowerCase() !== Providers.UNSPLASH) {
+    if (!Object.keys(PROVIDERS).includes(provider)) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
+
+    // TODO(#3712): Temporary hack alert!: Convert coverr to unsplash for
+    // testing until Coverr backend is implemented.
+    if (provider === ProviderType.COVERR) {
+      provider = ProviderType.UNSPLASH;
+      searchTerm = 'small ' + searchTerm;
+    }
+
     if (selectedCategoryId && searchTerm) {
       throw new Error(
         `searchTerm and selectedCategoryId are mutually exclusive.`
@@ -160,7 +161,7 @@ function Media3pApiProvider({ children }) {
       pageToken,
     });
     return {
-      media: response.media.map(getResourceFromMedia3p),
+      media: (response.media || []).map(getResourceFromMedia3p),
       nextPageToken: response.nextPageToken,
     };
   }
@@ -189,11 +190,25 @@ function Media3pApiProvider({ children }) {
     };
   }
 
+  /**
+   * Register usage of a media for the given payload.
+   *
+   * @param {Object} obj - An object with the options.
+   * @param {string} obj.registerUsageUrl The url to be called to register the
+   * usage.
+   * @return {Promise<undefined>} An object with the category
+   * resources.
+   */
+  async function registerUsage({ registerUsageUrl }) {
+    await apiFetcher.registerUsage({ registerUsageUrl });
+  }
+
   const contextValue = {
     actions: {
       listMedia,
       listCategoryMedia,
       listCategories,
+      registerUsage,
     },
   };
 

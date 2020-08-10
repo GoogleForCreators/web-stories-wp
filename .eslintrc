@@ -210,7 +210,15 @@
     },
     "react": {
       "version": "detect"
-    }
+    },
+    "linkComponents": [
+      "Link",
+      {"name": "Plain", "linkAttribute": "href"},
+      {"name": "Primary", "linkAttribute": "href"},
+      "PrimaryLink",
+      "SecondaryLink",
+      "ExternalLink"
+    ]
   },
   "overrides": [
     {

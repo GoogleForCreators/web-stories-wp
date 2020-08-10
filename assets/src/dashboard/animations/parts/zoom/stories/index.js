@@ -22,7 +22,7 @@ import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import { ANIMATION_TYPES } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/Zoom',
+  title: 'Animations/Parts/Zoom',
 };
 
 const animations = [
@@ -45,18 +45,22 @@ const animations = [
 const elements = [
   {
     id: 'e1',
-    src: 'https://i.picsum.photos/id/1025/4951/3301.jpg',
+    src:
+      'https://i.picsum.photos/id/1025/4951/3301.jpg?hmac=_aGh5AtoOChip_iaMo8ZvvytfEojcgqbCH7dzaz-H8Y',
     transform: 'translate(0px, 100px) scale(2)',
   },
   {
     id: 'e2',
-    src: 'https://i.picsum.photos/id/1062/5092/3395.jpg',
+    src:
+      'https://i.picsum.photos/id/1062/5092/3395.jpg?hmac=o9m7qeU51uOLfXvepXcTrk2ZPiSBJEkiiOp-Qvxja-k',
   },
 ];
 
 const defaultStyles = {
+  position: 'relative',
   width: '300px',
   height: '200px',
+  overflow: 'hidden',
 };
 
 export const _default = () => {
@@ -67,7 +71,6 @@ export const _default = () => {
         <div
           key={id}
           style={{
-            position: 'relative',
             marginBottom: '20px',
             ...defaultStyles,
           }}
@@ -99,21 +102,19 @@ export const AMPStory = () => {
 
             <amp-story-grid-layer template="vertical">
               {elements.map(({ id, src, ...style }) => (
-                <StoryAnimation.AMPWrapper
-                  key={id}
-                  target={id}
-                  style={defaultStyles}
-                >
-                  <img
-                    alt=""
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      ...style,
-                    }}
-                    src={src}
-                  />
-                </StoryAnimation.AMPWrapper>
+                <div key={id} style={defaultStyles}>
+                  <StoryAnimation.AMPWrapper target={id}>
+                    <img
+                      alt=""
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        ...style,
+                      }}
+                      src={src}
+                    />
+                  </StoryAnimation.AMPWrapper>
+                </div>
               ))}
             </amp-story-grid-layer>
           </StoryAnimation.Provider>

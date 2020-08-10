@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
@@ -62,7 +62,7 @@ describe('reshapeStoryObject', () => {
       id: 27,
       title: 'Carlos Draft',
       status: 'draft',
-      modified: moment('2020-03-26T21:42:14'),
+      modified: moment.parseZone('2020-03-26T21:42:14'),
       pages: [{ id: 0, elements: [] }],
       centerTargetAction: '',
       bottomTargetAction: 'http://editstory.com?action=edit&post=27',

@@ -43,12 +43,16 @@ import {
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
 } from '../common/styles';
+import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import { ProviderType } from '../../../../../app/media/providerType';
 
 const ROOT_MARGIN = 300;
 
 function PaginatedMediaGallery({
   providerType,
   resources,
+  searchTerm,
+  selectedCategoryId,
   isMediaLoading,
   isMediaLoaded,
   hasMore,
@@ -96,13 +100,20 @@ function PaginatedMediaGallery({
       node.scrollHeight - node.scrollTop <= node.clientHeight + ROOT_MARGIN;
     if (bottom) {
       setNextPage();
+      return;
     }
 
     // Load the next page if the page isn't full, ie. scrollbar is not visible.
     if (node.clientHeight === node.scrollHeight) {
       setNextPage();
+      return;
     }
   }, [hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
+
+  // Scroll to the top when the searchTerm or selected category changes.
+  useEffect(() => {
+    refContainer.current?.scrollTo(0, 0);
+  }, [searchTerm, selectedCategoryId]);
 
   // After scrolls or resize, see if we need the load the next page.
   const [handleScrollOrResize] = useDebouncedCallback(
@@ -119,7 +130,7 @@ function PaginatedMediaGallery({
 
     async function loadNextPageIfNeededAfterGalleryRendering() {
       // Wait for <Gallery> to finish its render layout cycles first.
-      await sleep(50);
+      await sleep(200);
 
       loadNextPageIfNeeded();
     }
@@ -147,29 +158,34 @@ function PaginatedMediaGallery({
         {__('No media found', 'web-stories')}
       </MediaGalleryMessage>
     ) : (
-      <>
-        <div style={{ marginBottom: 15 }}>
-          <MediaGallery
-            providerType={providerType}
-            resources={resources}
-            onInsert={onInsert}
-          />
-        </div>
-        {hasMore && (
-          <MediaGalleryLoadingPill>
-            {__('Loading…', 'web-stories')}
-          </MediaGalleryLoadingPill>
-        )}
-      </>
+      <div style={{ marginBottom: 15 }}>
+        <MediaGallery
+          providerType={providerType}
+          resources={resources}
+          onInsert={onInsert}
+        />
+      </div>
     );
 
+  const displayLoadingPill = isMediaLoading && hasMore;
+  const attribution =
+    providerType !== ProviderType.LOCAL &&
+    PROVIDERS[providerType].attributionComponent();
   return (
-    <MediaGalleryContainer
-      data-testid="media-gallery-container"
-      ref={refCallbackContainer}
-    >
-      <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
-    </MediaGalleryContainer>
+    <>
+      <MediaGalleryContainer
+        data-testid="media-gallery-container"
+        ref={refCallbackContainer}
+      >
+        <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
+      </MediaGalleryContainer>
+      {displayLoadingPill && (
+        <MediaGalleryLoadingPill data-testid={'loading-pill'}>
+          {__('Loading…', 'web-stories')}
+        </MediaGalleryLoadingPill>
+      )}
+      {!displayLoadingPill && attribution}
+    </>
   );
 }
 
@@ -181,6 +197,8 @@ PaginatedMediaGallery.propTypes = {
   hasMore: PropTypes.bool.isRequired,
   onInsert: PropTypes.func.isRequired,
   setNextPage: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string,
+  selectedCategoryId: PropTypes.string,
 };
 
 export default memo(PaginatedMediaGallery);

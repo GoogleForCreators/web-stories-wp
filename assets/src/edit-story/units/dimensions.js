@@ -87,10 +87,15 @@ export function dataToEditorY(y, pageHeight) {
  *
  * @param {number} x The value to be converted.
  * @param {number} pageWidth The basis value for the page's width in the "editor" space.
+ * @param {boolean} [withRounding=true] Whether the dataPixels rounding should occur.
  * @return {number} The value in the "data" space.
  */
-export function editorToDataX(x, pageWidth) {
-  return dataPixels((x * PAGE_WIDTH) / pageWidth);
+export function editorToDataX(x, pageWidth, withRounding = true) {
+  const v = (x * PAGE_WIDTH) / pageWidth;
+  if (withRounding === false) {
+    return v;
+  }
+  return dataPixels(v);
 }
 
 /**
@@ -99,10 +104,15 @@ export function editorToDataX(x, pageWidth) {
  *
  * @param {number} y The value to be converted.
  * @param {number} pageHeight The basis value for the page's height in the "editor" space.
+ * @param {boolean} [withRounding=true] Whether the dataPixels rounding should occur.
  * @return {number} The value in the "data" space.
  */
-export function editorToDataY(y, pageHeight) {
-  return dataPixels((y * PAGE_HEIGHT) / pageHeight);
+export function editorToDataY(y, pageHeight, withRounding = true) {
+  const v = (y * PAGE_HEIGHT) / pageHeight;
+  if (withRounding === false) {
+    return v;
+  }
+  return dataPixels(v);
 }
 
 /**
