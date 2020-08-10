@@ -117,8 +117,10 @@ class Story {
 
 	/**
 	 * Setup default poster image.
+	 *
+	 * @return void
 	 */
-	public function setup_default_poster(){
+	public function setup_default_poster() {
 		$this->poster_portrait = plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
 	}
 
