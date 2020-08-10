@@ -222,9 +222,9 @@ export class Fixture {
     let mediaElements;
     await waitFor(() => {
       mediaElements = this.querySelectorAll('[data-testid=mediaElement]');
-      if (!mediaElements || mediaElements.length !== MEDIA_PER_PAGE) {
+      if (!mediaElements?.length) {
         throw new Error(
-          `Not ready: ${mediaElements?.length} != ${MEDIA_PER_PAGE}`
+          `Not ready: only found ${mediaElements?.length} media elements`
         );
       }
     });
