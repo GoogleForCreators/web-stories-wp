@@ -71,7 +71,10 @@ export class Fixture {
   constructor() {
     this._config = { ...DEFAULT_CONFIG };
 
-    this._flags = {};
+    this._flags = {
+      rowBasedGallery: true,
+      mediaDropdownMenu: true,
+    };
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
