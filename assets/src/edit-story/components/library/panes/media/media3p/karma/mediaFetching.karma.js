@@ -66,83 +66,83 @@ const mediaPage2 = [...new Array(20).keys()].map((n) =>
 );
 const categories = [
   {
-    id: 'categories/unsplash:KHXRtL69hcY',
+    name: 'categories/unsplash:KHXRtL69hcY',
     displayName: 'Sustainability',
   },
   {
-    id: 'categories/unsplash:bo8jQKTaE0Y',
+    name: 'categories/unsplash:bo8jQKTaE0Y',
     displayName: 'Wallpapers',
   },
   {
-    id: 'categories/unsplash:c7USHrQ0Ljw',
+    name: 'categories/unsplash:c7USHrQ0Ljw',
     displayName: 'COVID-19',
   },
   {
-    id: 'categories/unsplash:Fzo3zuOHN6w',
+    name: 'categories/unsplash:Fzo3zuOHN6w',
     displayName: 'Travel',
   },
   {
-    id: 'categories/unsplash:6sMVjTLSkeQ',
+    name: 'categories/unsplash:6sMVjTLSkeQ',
     displayName: 'Nature',
   },
   {
-    id: 'categories/unsplash:iUIsnVtjB0Y',
+    name: 'categories/unsplash:iUIsnVtjB0Y',
     displayName: 'Textures & Patterns',
   },
   {
-    id: 'categories/unsplash:BJJMtteDJA4',
+    name: 'categories/unsplash:BJJMtteDJA4',
     displayName: 'Current Events',
   },
   {
-    id: 'categories/unsplash:towJZFskpGg',
+    name: 'categories/unsplash:towJZFskpGg',
     displayName: 'People',
   },
   {
-    id: 'categories/unsplash:aeu6rL-j6ew',
+    name: 'categories/unsplash:aeu6rL-j6ew',
     displayName: 'Business & Work',
   },
   {
-    id: 'categories/unsplash:J9yrPaHXRQY',
+    name: 'categories/unsplash:J9yrPaHXRQY',
     displayName: 'Technology',
   },
   {
-    id: 'categories/unsplash:Jpg6Kidl-Hk',
+    name: 'categories/unsplash:Jpg6Kidl-Hk',
     displayName: 'Animals',
   },
   {
-    id: 'categories/unsplash:R_Fyn-Gwtlw',
+    name: 'categories/unsplash:R_Fyn-Gwtlw',
     displayName: 'Interiors',
   },
   {
-    id: 'categories/unsplash:rnSKDHwwYUk',
+    name: 'categories/unsplash:rnSKDHwwYUk',
     displayName: 'Architecture',
   },
   {
-    id: 'categories/unsplash:xjPR4hlkBGA',
+    name: 'categories/unsplash:xjPR4hlkBGA',
     displayName: 'Food & Drink',
   },
   {
-    id: 'categories/unsplash:Bn-DjrcBrwo',
+    name: 'categories/unsplash:Bn-DjrcBrwo',
     displayName: 'Athletics',
   },
   {
-    id: 'categories/unsplash:_8zFHuhRhyo',
+    name: 'categories/unsplash:_8zFHuhRhyo',
     displayName: 'Spirituality',
   },
   {
-    id: 'categories/unsplash:_hb-dl4Q-4U',
+    name: 'categories/unsplash:_hb-dl4Q-4U',
     displayName: 'Health & Wellness',
   },
   {
-    id: 'categories/unsplash:hmenvQhUmxM',
+    name: 'categories/unsplash:hmenvQhUmxM',
     displayName: 'Film',
   },
   {
-    id: 'categories/unsplash:S4MKLAsBB74',
+    name: 'categories/unsplash:S4MKLAsBB74',
     displayName: 'Fashion',
   },
   {
-    id: 'categories/unsplash:qPYsDzvJOYc',
+    name: 'categories/unsplash:qPYsDzvJOYc',
     displayName: 'Experimental',
   },
 ];
@@ -248,6 +248,33 @@ describe('Media3pPane fetching', () => {
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
     await expectMediaElements(MEDIA_PER_PAGE * 2);
+  });
+
+  it('should scroll to the top when a category is selected', async () => {
+    mockListMedia();
+    mockListCategories();
+
+    await fixture.events.click(media3pTab);
+
+    const mediaGallery = media3pPane.querySelector(
+      '[data-testid="media-gallery-container"]'
+    );
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    mediaGallery.scrollTo(
+      0,
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
+    );
+    await expectMediaElements(MEDIA_PER_PAGE * 2);
+
+    const mediaCategories = media3pPane.querySelectorAll(
+      '[data-testid="mediaCategory"]'
+    );
+    await fixture.events.click(mediaCategories[0]);
+
+    await waitFor(() => {
+      expect(mediaGallery.scrollTop).toBe(0);
+    });
   });
 
   it('should handle pressing right when focused', async () => {
