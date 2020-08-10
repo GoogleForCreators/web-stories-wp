@@ -26,7 +26,7 @@ export { default as SearchInput } from './searchInput';
 export { default as Section } from './section';
 
 export const Title = styled.h3`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   margin: 0;
   font-size: 19px;
   line-height: 1.4;
@@ -47,7 +47,7 @@ export const MainButton = styled.button`
   border: 0;
   padding: 0;
   text-align: right;
-  color: ${({ theme }) => theme.colors.fg.v7};
+  color: ${({ theme }) => theme.colors.accent.primary};
   flex: 1 0 0;
   font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};

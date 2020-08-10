@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
+import { useContext } from 'react';
 
 /**
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import formattedStoriesArray from '../../../../dataUtils/formattedStoriesArray';
-import formattedUsersObject from '../../../../dataUtils/formattedUsersObject';
-import { getFormattedDisplayDate } from '../../../../utils';
+import { getRelativeDisplayDate } from '../../../../utils';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
@@ -37,8 +36,10 @@ import {
   VIEW_STYLE_LABELS,
   VIEW_STYLE,
 } from '../../../../constants';
+import { ApiContext } from '../../../api/apiProvider';
+import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
 
-describe('CUJ: Creator can view their stories in grid view', () => {
+describe('Grid view', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -50,9 +51,18 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     fixture.restore();
   });
 
-  it('should render', () => {
+  async function getStoriesState() {
+    const {
+      state: { stories },
+    } = await fixture.renderHook(() => useContext(ApiContext));
+
+    return stories;
+  }
+
+  it('should render', async () => {
+    const { storiesOrderById } = await getStoriesState();
     const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-    expect(stories.length).toEqual(formattedStoriesArray.length);
+    expect(stories.length).toEqual(storiesOrderById.length);
   });
 
   it('should navigate to Explore Templates', async () => {
@@ -131,6 +141,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
   it('should Delete a story', async () => {
     let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
     const initialNumStories = stories.length;
+
     let firstStory = stories[0];
 
     await fixture.events.hover(firstStory);
@@ -188,9 +199,10 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     expect(stories.length).toEqual(initialNumStories);
   });
 
-  describe('Action: Filter their stories by All stories, Drafts and Published', () => {
+  describe('CUJ: Creator can view their stories in grid view: Filter their stories by All stories and Drafts and Published', () => {
     it('should switch to the Drafts Tab', async () => {
-      const numDrafts = formattedStoriesArray.filter(
+      const { stories } = await getStoriesState();
+      const numDrafts = Object.values(stories).filter(
         ({ status }) => status === STORY_STATUS.DRAFT
       ).length;
 
@@ -208,12 +220,13 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       expect(viewDraftsText).toBeTruthy();
 
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-      expect(stories.length).toEqual(numDrafts);
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
+      expect(storyElements.length).toEqual(numDrafts);
     });
 
     it('should switch to the Published Tab', async () => {
-      const numPublished = formattedStoriesArray.filter(
+      const { stories } = await getStoriesState();
+      const numPublished = Object.values(stories).filter(
         ({ status }) =>
           status === STORY_STATUS.PUBLISH || status === STORY_STATUS.FUTURE
       ).length;
@@ -236,14 +249,16 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       expect(viewPublishedText).toBeTruthy();
 
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
-      expect(stories.length).toEqual(numPublished);
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
+      expect(storyElements.length).toEqual(numPublished);
     });
   });
 
-  describe('Action: Sort their stories (last modified, date created, author, title)', () => {
+  describe('CUJ: Creator can view their stories in grid view: Sort their stories (last modified / date created / author / title)', () => {
     it('should should search/filter using the Search Stories search input', async () => {
-      const firstStoryTitle = formattedStoriesArray[0].title;
+      const { stories } = await getStoriesState();
+
+      const firstStoryTitle = Object.values(stories)[0].title;
 
       const searchInput = fixture.screen.getByPlaceholderText('Search Stories');
 
@@ -253,10 +268,10 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.keyboard.type(firstStoryTitle);
 
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
-      expect(stories.length).toEqual(
-        formattedStoriesArray.filter(({ title }) =>
+      expect(storyElements.length).toEqual(
+        Object.values(stories).filter(({ title }) =>
           title.includes(firstStoryTitle)
         ).length
       );
@@ -279,36 +294,27 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(dateCreated);
 
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
-      const renderedStoriesById = stories.map(
-        ({ dataset }) => dataset['testid'].split('-').slice(-1)[0]
+      const renderedStoriesById = storyElements.map(({ dataset }) =>
+        Number(dataset['testid'].split('-').slice(-1)[0])
       );
 
-      const storyIdsSortedByCreated = formattedStoriesArray
-        .sort(
-          (a, b) =>
-            new Date(a.created).getTime() - new Date(b.created).getTime()
-        )
-        .map(({ id }) => String(id));
+      const { storiesOrderById } = await getStoriesState();
 
-      expect(renderedStoriesById).toEqual(storyIdsSortedByCreated);
+      expect(renderedStoriesById).toEqual(storiesOrderById);
     });
 
-    it('should sort by Last Modified', () => {
+    it('should sort by Last Modified', async () => {
+      const { storiesOrderById } = await getStoriesState();
       // last modified desc is the default sort
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
-      const renderedStoriesById = stories.map(
-        ({ dataset }) => dataset['testid'].split('-').slice(-1)[0]
+      const renderedStoriesById = storyElements.map(({ dataset }) =>
+        Number(dataset['testid'].split('-').slice(-1)[0])
       );
-      let copy = [...formattedStoriesArray];
 
-      const storyIdsSortedByLastModified = copy
-        .sort((a, b) => b.modified.diff(a.modified)) // initial sort is desc by modified
-        .map(({ id }) => String(id));
-
-      expect(renderedStoriesById).toEqual(storyIdsSortedByLastModified);
+      expect(renderedStoriesById).toEqual(storiesOrderById);
     });
 
     it('should sort by Name', async () => {
@@ -328,17 +334,15 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(name);
 
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
-      const renderedStoriesById = stories.map(
-        ({ dataset }) => dataset['testid'].split('-').slice(-1)[0]
+      const renderedStoriesById = storyElements.map(({ dataset }) =>
+        Number(dataset['testid'].split('-').slice(-1)[0])
       );
 
-      const storyIdsSortedByTitle = formattedStoriesArray
-        .sort((a, b) => a.title.localeCompare(b.title))
-        .map(({ id }) => String(id));
+      const { storiesOrderById } = await getStoriesState();
 
-      expect(renderedStoriesById).toEqual(storyIdsSortedByTitle);
+      expect(renderedStoriesById).toEqual(storiesOrderById);
     });
 
     it('should sort by Created By', async () => {
@@ -358,26 +362,20 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(createdBy);
 
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const { storiesOrderById } = await getStoriesState();
 
-      const renderedStoriesById = stories.map(
-        ({ dataset }) => dataset['testid'].split('-').slice(-1)[0]
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+      const renderedStoriesById = storyElements.map(({ dataset }) =>
+        Number(dataset['testid'].split('-').slice(-1)[0])
       );
 
-      const storyIdsSortedByTitle = formattedStoriesArray
-        .sort((a, b) =>
-          formattedUsersObject[a.author].name.localeCompare(
-            formattedUsersObject[b.author].name
-          )
-        )
-        .map(({ id }) => String(id));
-
-      expect(renderedStoriesById).toEqual(storyIdsSortedByTitle);
+      expect(renderedStoriesById).toEqual(storiesOrderById);
     });
   });
 });
 
-describe('CUJ: Creator can view their stories in list view', () => {
+describe('List view', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -389,7 +387,23 @@ describe('CUJ: Creator can view their stories in list view', () => {
     fixture.restore();
   });
 
-  describe('Action: See stories in list view', () => {
+  async function getStoriesState() {
+    const {
+      state: { stories },
+    } = await fixture.renderHook(() => useContext(ApiContext));
+
+    return stories;
+  }
+
+  async function getUsers() {
+    const {
+      state: { users },
+    } = await fixture.renderHook(() => useContext(ApiContext));
+
+    return users;
+  }
+
+  describe('CUJ: Creator can view their stories in list view: See stories in list view', () => {
     it('should switch to List View', async () => {
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
@@ -423,15 +437,18 @@ describe('CUJ: Creator can view their stories in list view', () => {
 
       await fixture.events.click(gridViewButton);
 
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
-      expect(stories.length).toEqual(formattedStoriesArray.length);
+      const { storiesOrderById } = await getStoriesState();
+
+      expect(storyElements.length).toEqual(storiesOrderById.length);
     });
 
     it('should Rename a story', async () => {
-      const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
-        b.modified.diff(a.modified)
-      );
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
       );
@@ -478,9 +495,10 @@ describe('CUJ: Creator can view their stories in list view', () => {
     });
 
     it('should Duplicate a story', async () => {
-      const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
-        b.modified.diff(a.modified)
-      );
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
       );
@@ -521,9 +539,9 @@ describe('CUJ: Creator can view their stories in list view', () => {
     });
 
     it('should Delete a story', async () => {
-      const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
-        b.modified.diff(a.modified)
-      );
+      const { stories, storiesOrderById } = await getStoriesState();
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
       );
@@ -566,9 +584,9 @@ describe('CUJ: Creator can view their stories in list view', () => {
     });
 
     it('should not Delete a story if Cancel is clicked in the confirmation modal', async () => {
-      const storiesSortedByModified = [...formattedStoriesArray].sort((a, b) =>
-        b.modified.diff(a.modified)
-      );
+      const { stories, storiesOrderById } = await getStoriesState();
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
       );
@@ -611,7 +629,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
     });
   });
 
-  describe('Action: Sort their stories (last modified, date created, author, title)', () => {
+  describe('CUJ: Creator can view their stories in list view: Sort their stories (last modified / date created / author / title)', () => {
     it('should sort by Title in List View', async () => {
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
@@ -627,11 +645,13 @@ describe('CUJ: Creator can view their stories in list view', () => {
       // drop the header row using slice
       let rows = fixture.screen.getAllByRole('row').slice(1);
 
-      expect(rows.length).toEqual(formattedStoriesArray.length);
+      const { stories, storiesOrderById } = await getStoriesState();
 
-      const storieTitlesSortedByTitle = [...formattedStoriesArray]
-        .sort((a, b) => a.title.localeCompare(b.title))
-        .map(({ title }) => title);
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storieTitlesSortedByTitle = storiesOrderById.map(
+        (id) => stories[id].title
+      );
 
       // title is the second column
       let rowTitles = rows.map((row) => row.children[1].innerText);
@@ -643,7 +663,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
 
       rows = fixture.screen.getAllByRole('row').slice(1);
 
-      expect(rows.length).toEqual(formattedStoriesArray.length);
+      expect(rows.length).toEqual(storiesOrderById.length);
 
       // title is the second column
       rowTitles = rows.map((row) => row.children[1].innerText);
@@ -665,15 +685,15 @@ describe('CUJ: Creator can view their stories in list view', () => {
       // drop the header row using slice
       let rows = fixture.screen.getAllByRole('row').slice(1);
 
-      expect(rows.length).toEqual(formattedStoriesArray.length);
+      const { stories, storiesOrderById } = await getStoriesState();
 
-      const storieAuthorsSortedByAuthor = [...formattedStoriesArray]
-        .sort((a, b) =>
-          formattedUsersObject[a.author].name.localeCompare(
-            formattedUsersObject[b.author].name
-          )
-        )
-        .map(({ author }) => formattedUsersObject[author].name);
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const users = await getUsers();
+
+      const storieAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => users[stories[id].author].name
+      );
 
       // author is the third column
       let rowAuthors = rows.map((row) => row.children[2].innerText);
@@ -685,7 +705,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
 
       rows = fixture.screen.getAllByRole('row').slice(1);
 
-      expect(rows.length).toEqual(formattedStoriesArray.length);
+      expect(rows.length).toEqual(storiesOrderById.length);
 
       // author is the third column
       rowAuthors = rows.map((row) => row.children[2].innerText);
@@ -707,20 +727,18 @@ describe('CUJ: Creator can view their stories in list view', () => {
       // drop the header row using slice
       let rows = fixture.screen.getAllByRole('row').slice(1);
 
-      expect(rows.length).toEqual(formattedStoriesArray.length);
+      const { stories, storiesOrderById } = await getStoriesState();
 
-      const storieDateCreatedSortedByDateCreated = [...formattedStoriesArray]
-        .sort(
-          (a, b) =>
-            new Date(a.created).getTime() - new Date(b.created).getTime()
-        )
-        .map(({ created }) => getFormattedDisplayDate(created))
-        .reverse(); // Default sort order in List View is Desc
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
+        getRelativeDisplayDate(stories[id].created, fillerDateSettingsObject)
+      );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
 
       expect(rowDateCreatedValues).toEqual(
-        storieDateCreatedSortedByDateCreated
+        storiesDateCreatedSortedByDateCreated
       );
 
       // sort by ascending
@@ -728,13 +746,13 @@ describe('CUJ: Creator can view their stories in list view', () => {
 
       rows = fixture.screen.getAllByRole('row').slice(1);
 
-      expect(rows.length).toEqual(formattedStoriesArray.length);
+      expect(rows.length).toEqual(storiesOrderById.length);
 
       // author is the fourth column
       rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
 
       expect(rowDateCreatedValues).toEqual(
-        storieDateCreatedSortedByDateCreated.reverse()
+        storiesDateCreatedSortedByDateCreated.reverse()
       );
     });
 
@@ -749,11 +767,13 @@ describe('CUJ: Creator can view their stories in list view', () => {
       // drop the header row using slice
       let rows = fixture.screen.getAllByRole('row').slice(1);
 
-      expect(rows.length).toEqual(formattedStoriesArray.length);
+      const { stories, storiesOrderById } = await getStoriesState();
 
-      const storieModifiedSortedByModified = [...formattedStoriesArray]
-        .sort((a, b) => b.modified.diff(a.modified)) //initial sort is desc by modified
-        .map(({ modified }) => getFormattedDisplayDate(modified));
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storieModifiedSortedByModified = storiesOrderById.map((id) =>
+        getRelativeDisplayDate(stories[id].modified, fillerDateSettingsObject)
+      );
 
       // Last Modified is the fifth column
       let rowModifiedValues = rows.map((row) => row.children[4].innerText);
@@ -775,7 +795,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
     });
   });
 
-  describe('Action: Go to WP list view to do any action', () => {
+  describe('CUJ: Creator can view their stories in list view: Go to WP list view to do any action', () => {
     it('should add a link to the classic WordPress list view', async () => {
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)

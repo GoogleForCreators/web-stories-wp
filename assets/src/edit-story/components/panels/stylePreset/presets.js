@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,6 +34,7 @@ import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
 import { StylePresetPropType } from '../../../types';
 import WithTooltip from '../../tooltip';
+import { useKeyDownEffect } from '../../keyboard';
 import PresetGroup from './presetGroup';
 import { presetHasOpacity, presetHasGradient } from './utils';
 
@@ -80,12 +82,40 @@ const ColorWrapper = styled.div`
   overflow: hidden;
   position: relative;
   ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
+
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.fg.v1};
+    border-width: 3px;
+  }
 `;
 
-const Color = styled.button.attrs({ type: 'button' })`
+const ColorButton = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
+
+  &:focus {
+    outline: none !important;
+  }
 `;
+
+function Color({ onClick, children, ...rest }) {
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const ref = useRef();
+  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
+  return (
+    <ColorButton ref={ref} onClick={onClick} {...rest}>
+      {children}
+    </ColorButton>
+  );
+}
+
+Color.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 function Presets({
   stylePresets,

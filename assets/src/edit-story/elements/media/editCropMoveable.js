@@ -30,9 +30,6 @@ import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import getTransformFlip from '../shared/getTransformFlip';
 import getFocalFromOffset from './getFocalFromOffset';
 
-/**
- *
- */
 function EditCropMoveable({
   setProperties,
   cropBox,

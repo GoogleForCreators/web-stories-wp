@@ -49,7 +49,7 @@ const MIN_MAX = {
 };
 
 const IconText = styled.span`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -105,7 +105,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       pushUpdateForObject(
         'link',
         (prev) => ({
-          url,
           desc: title ? title : prev.desc,
           icon: icon ? toAbsoluteUrl(url, icon) : prev.icon,
         }),
@@ -182,6 +181,16 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           onChange={(value) =>
             handleChange({ url: value }, !value /* submit */)
           }
+          onBlur={(atts = {}) => {
+            const { onClear } = atts;
+            // If the onBlur is not clearing the field, add protocol.
+            if (link.url?.length > 0 && !onClear) {
+              const urlWithProtocol = withProtocol(link.url);
+              if (urlWithProtocol !== link.url) {
+                handleChange({ url: urlWithProtocol }, true /* submit */);
+              }
+            }
+          }}
           value={link.url || ''}
           clear
           aria-label={__('Edit: Element link', 'web-stories')}

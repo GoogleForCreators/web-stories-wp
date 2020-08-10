@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
+import { render } from 'react-dom';
 
 /**
  * Internal dependencies

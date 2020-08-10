@@ -23,6 +23,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import useFetchMediaEffect from './useFetchMediaEffect';
+import useFetchCategoriesEffect from './useFetchCategoriesEffect';
 
 /**
  * Context fragment provider for a single 3p media source (Unsplash, Coverr,
@@ -41,11 +42,19 @@ export default function useProviderContextValueProvider(
   reducerActions
 ) {
   const { selectedProvider, searchTerm } = reducerState;
-  const { pageToken } = reducerState[provider];
+  const {
+    pageToken,
+    isMediaLoading,
+    isMediaLoaded,
+    categories: { categories, selectedCategoryId },
+  } = reducerState[provider];
   const {
     fetchMediaStart,
     fetchMediaSuccess,
     fetchMediaError,
+    fetchCategoriesStart,
+    fetchCategoriesSuccess,
+    fetchCategoriesError,
   } = reducerActions;
 
   // Fetch or re-fetch media when the state has changed.
@@ -53,10 +62,22 @@ export default function useProviderContextValueProvider(
     provider,
     selectedProvider,
     pageToken,
+    isMediaLoading,
+    isMediaLoaded,
     searchTerm,
+    selectedCategoryId,
     fetchMediaStart,
     fetchMediaSuccess,
     fetchMediaError,
+  });
+
+  useFetchCategoriesEffect({
+    provider,
+    selectedProvider,
+    categories,
+    fetchCategoriesStart,
+    fetchCategoriesSuccess,
+    fetchCategoriesError,
   });
 
   return {
@@ -66,6 +87,14 @@ export default function useProviderContextValueProvider(
         reducerActions,
         provider,
       ]),
+      selectCategory: useCallback(
+        (categoryId) => reducerActions.selectCategory({ provider, categoryId }),
+        [reducerActions, provider]
+      ),
+      deselectCategory: useCallback(
+        () => reducerActions.deselectCategory({ provider }),
+        [reducerActions, provider]
+      ),
     },
   };
 }

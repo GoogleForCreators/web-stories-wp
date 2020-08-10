@@ -104,11 +104,14 @@ function TemplateDetails() {
   }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
 
   useEffect(() => {
-    if (!template) {
+    if (!template || !templateId) {
       return;
     }
+
+    const id = parseInt(templateId);
+
     setRelatedTemplates(
-      fetchRelatedTemplates().map((relatedTemplate) => ({
+      fetchRelatedTemplates(id).map((relatedTemplate) => ({
         ...relatedTemplate,
         centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
       }))
@@ -118,7 +121,13 @@ function TemplateDetails() {
         (templateByOrderId) => templates[templateByOrderId]
       )
     );
-  }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
+  }, [
+    fetchRelatedTemplates,
+    template,
+    templates,
+    templatesOrderById,
+    templateId,
+  ]);
 
   const { byLine } = useMemo(() => {
     if (!template) {

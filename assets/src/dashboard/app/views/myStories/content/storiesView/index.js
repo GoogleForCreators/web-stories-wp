@@ -30,6 +30,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import {
+  DateSettingsPropType,
   StoriesPropType,
   StoryActionsPropType,
   UsersPropType,
@@ -56,7 +57,7 @@ function StoriesView({
   stories,
   users,
   view,
-  dateFormat,
+  dateSettings,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -156,7 +157,7 @@ function StoriesView({
         storySort={sort.value}
         storyStatus={filterValue}
         users={users}
-        dateFormat={dateFormat}
+        dateSettings={dateSettings}
       />
     ) : (
       <StoryGridView
@@ -169,7 +170,7 @@ function StoriesView({
         storyMenu={storyMenu}
         stories={stories}
         users={users}
-        dateFormat={dateFormat}
+        dateSettings={dateSettings}
       />
     );
 
@@ -220,6 +221,6 @@ StoriesView.propTypes = {
   stories: StoriesPropType,
   users: UsersPropType,
   view: ViewPropTypes,
-  dateFormat: PropTypes.string,
+  dateSettings: DateSettingsPropType,
 };
 export default StoriesView;

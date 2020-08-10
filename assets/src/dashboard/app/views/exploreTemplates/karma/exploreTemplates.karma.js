@@ -17,21 +17,98 @@
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
+import { within } from '@testing-library/react';
+import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
+import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
+import { ApiContext } from '../../../api/apiProvider';
 
-describe('My Stories View integration', () => {
+describe('Grid view', () => {
   let fixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
 
-    await navigateToExploreTemplates(fixture);
+    await navigateToExploreTemplates();
   });
 
   afterEach(() => {
     fixture.restore();
   });
+
+  function navigateToExploreTemplates() {
+    const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
+      name: /^Explore Templates$/,
+    });
+
+    return fixture.events.click(exploreTemplatesMenuItem);
+  }
+
+  function getTemplateElementById(id) {
+    const template = fixture.screen.getByTestId(`template-grid-item-${id}`);
+
+    return template;
+  }
+
+  async function getTemplatesState() {
+    const {
+      state: { templates },
+    } = await fixture.renderHook(() => useContext(ApiContext));
+    return templates;
+  }
+
+  async function focusOnFirstTemplate() {
+    const { templatesOrderById } = await getTemplatesState();
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+    const seenElements = new Set([document.activeElement]);
+    let found = firstTemplate.contains(document.activeElement);
+
+    while (!firstTemplate.contains(document.activeElement) && !found) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+
+      found = firstTemplate.contains(document.activeElement);
+
+      if (found || seenElements.has(document.activeElement)) {
+        break;
+      }
+      seenElements.add(document.activeElement);
+    }
+
+    if (!found) {
+      throw new Error('could not focus on first element');
+    }
+  }
+
+  async function focusOnTemplateById(id) {
+    const { templatesOrderById } = await getTemplatesState();
+    const index = templatesOrderById.indexOf(id);
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+
+    if (index === -1) {
+      throw new Error('template not found with id of: ' + id);
+    }
+
+    if (!firstTemplate.contains(document.activeElement)) {
+      await focusOnFirstTemplate();
+    }
+
+    if (index === 0) {
+      return;
+    }
+
+    await fixture.events.keyboard.seq(({ press }) =>
+      Array.from(new Array(index), () => [
+        press('tab'),
+        press('tab'),
+        press('tab'),
+      ]).reduce((acc, curr) => acc.concat(curr), [])
+    );
+  }
 
   it('should render', () => {
     const viewTemplates = fixture.screen.queryByText('Viewing all templates');
@@ -50,12 +127,66 @@ describe('My Stories View integration', () => {
 
     expect(viewStories).toBeTruthy();
   });
-});
 
-function navigateToExploreTemplates(fixture) {
-  const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-    name: /^Explore Templates$/,
+  describe('CUJ: Creator can browse templates in grid view: Browse all templates', () => {
+    it('should display "View" and "Use Template" controls when hovering over a template', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+
+      const utils = within(firstTemplate);
+
+      await fixture.events.hover(firstTemplate);
+
+      const view = utils.getByText(
+        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+      );
+
+      expect(view).toBeTruthy();
+
+      const useTemplate = utils.getByRole('button', { name: /^Use template$/ });
+
+      expect(useTemplate).toBeTruthy();
+    });
+
+    it('should change focus as the user presses tab', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+
+      // focus on first template
+      await focusOnFirstTemplate();
+      expect(firstTemplate.contains(document.activeElement)).toBeTrue();
+
+      // focus on last template
+      const lastTemplateId = templatesOrderById[templatesOrderById.length - 1];
+      const lastTemplate = await getTemplateElementById(lastTemplateId);
+      await focusOnTemplateById(lastTemplateId);
+      expect(lastTemplate.contains(document.activeElement)).toBeTrue();
+    });
+
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should trigger template preview when user clicks a card', () => {});
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should trigger template preview when user presses Enter while focused on a card', () => {});
   });
 
-  return fixture.events.click(exploreTemplatesMenuItem);
-}
+  describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
+    it('should navigate to view an individual template', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+
+      const utils = within(firstTemplate);
+
+      await fixture.events.hover(firstTemplate);
+
+      const view = utils.getByText(
+        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+      );
+
+      await fixture.events.click(view);
+
+      const closeBtn = fixture.screen.getByRole('link', { name: /^Close$/ });
+
+      expect(closeBtn).toBeTruthy();
+    });
+  });
+});

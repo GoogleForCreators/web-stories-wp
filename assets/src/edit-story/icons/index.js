@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { ReactComponent as AddPage } from './add_page.svg';
+export { ReactComponent as Add } from './add.svg';
 export { ReactComponent as AlignBottom } from './align_bottom.svg';
 export { ReactComponent as AlignCenter } from './align_center.svg';
 export { ReactComponent as AlignCenterAlt } from './center_align.svg';
@@ -28,6 +28,7 @@ export { ReactComponent as AlignTop } from './align_top.svg';
 export { ReactComponent as Arrow } from './arrow.svg';
 export { ReactComponent as ArrowLeft } from './arrow_left.svg';
 export { ReactComponent as ArrowRight } from './arrow_right.svg';
+export { ReactComponent as ArrowDown } from './arrow_down.svg';
 export { ReactComponent as Bold } from './bold_icon.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseAlt } from './close_icon.svg';

@@ -41,9 +41,6 @@ const VERTICAL_HANDLES = ['n', 's'];
 const HORIZONTAL_HANDLES = ['e', 'w'];
 const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-/**
- *
- */
 function SingleSelectionMoveable({
   selectedElement,
   targetEl,
@@ -340,8 +337,8 @@ function SingleSelectionMoveable({
           updates = updateForResizeEvent(
             selectedElement,
             direction,
-            editorToDataX(newWidth),
-            editorToDataY(newHeight)
+            editorToDataX(newWidth, false),
+            editorToDataY(newHeight, false)
           );
         }
         if (updates && updates.height) {

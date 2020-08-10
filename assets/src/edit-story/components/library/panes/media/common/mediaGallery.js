@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Gallery from 'react-photo-gallery';
-import { ProviderType } from './providerType';
+import { ProviderType } from '../../../../../app/media/providerType';
 import MediaElement from './mediaElement';
 
 const PHOTO_MARGIN = 4;
@@ -58,6 +58,7 @@ function MediaGallery({ resources, onInsert, providerType }) {
     ({ index, photo }) => (
       <PhotoContainer photo={photo} key={index}>
         <MediaElement
+          index={index}
           resource={resources[index]}
           width={photo.width}
           height={photo.height}
@@ -70,14 +71,16 @@ function MediaGallery({ resources, onInsert, providerType }) {
   );
 
   return (
-    <Gallery
-      targetRowHeight={110}
-      direction={'row'}
-      // This should match the actual margin the element is styled with.
-      margin={PHOTO_MARGIN}
-      photos={photos}
-      renderImage={imageRenderer}
-    />
+    <div>
+      <Gallery
+        targetRowHeight={110}
+        direction={'row'}
+        // This should match the actual margin the element is styled with.
+        margin={PHOTO_MARGIN}
+        photos={photos}
+        renderImage={imageRenderer}
+      />
+    </div>
   );
 }
 

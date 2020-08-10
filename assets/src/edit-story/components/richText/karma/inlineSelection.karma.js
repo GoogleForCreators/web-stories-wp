@@ -25,33 +25,33 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { initHelpers } from './_utils';
 
-describe('CUJ: Editor Can Style Text', () => {
-  describe('Action: Inline selection', () => {
-    const data = {};
+describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
+  const data = {};
 
-    const {
-      getTextContent,
-      addInitialText,
-      setSelection,
-      richTextHasFocus,
-    } = initHelpers(data);
+  const {
+    getTextContent,
+    addInitialText,
+    setSelection,
+    richTextHasFocus,
+  } = initHelpers(data);
 
-    beforeEach(async () => {
-      data.fixture = new Fixture();
-      await data.fixture.render();
+  beforeEach(async () => {
+    data.fixture = new Fixture();
+    await data.fixture.render();
 
-      // Add a text box
-      await addInitialText();
-    });
+    // Add a text box
+    await addInitialText();
+  });
 
-    afterEach(() => {
-      data.fixture.restore();
-    });
+  afterEach(() => {
+    data.fixture.restore();
+  });
 
-    it('should have the correct initial text and no formatting', () => {
-      expect(getTextContent()).toBe('Fill in some text');
-    });
+  it('should have the correct initial text and no formatting', () => {
+    expect(getTextContent()).toBe('Fill in some text');
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     it('should apply inline formats correctly for both single style and multiple styles', async () => {
       const {
         bold,
@@ -136,6 +136,8 @@ describe('CUJ: Editor Can Style Text', () => {
       waitFor(() => fontColor.picker);
       await data.fixture.events.click(fontColor.picker.hexButton);
       await data.fixture.events.keyboard.type('00FF00');
+      // Wait for debounce in color picker (100ms)
+      await data.fixture.events.sleep(100);
 
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
@@ -171,7 +173,9 @@ describe('CUJ: Editor Can Style Text', () => {
       const expected = `Fill <span style="${firstCSS}">i</span><span style="${secondCSS}">n</span><span style="${secondCSS}"> s</span>ome text`;
       expect(actual).toBe(expected);
     });
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I', () => {
     it('should apply inline formats using shortcuts', async () => {
       const {
         bold,
@@ -213,7 +217,9 @@ describe('CUJ: Editor Can Style Text', () => {
       const expected = `Fill <span style="${firstCSS}">in</span> some text`;
       expect(actual).toBe(expected);
     });
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     describe('when there is a mix of font weights', () => {
       beforeEach(async () => {
         const {
@@ -326,7 +332,9 @@ describe('CUJ: Editor Can Style Text', () => {
         expect(actual).toBe(expected);
       });
     });
+  });
 
+  describe('CUJ: Creator Can Style Text: Apply B, Set line height', () => {
     it('should apply global formats (here line height) even when a selection is present', async () => {
       const getDisplayTextStyles = () => {
         const displayNode = data.fixture.editor.canvas.displayLayer.display(

@@ -82,6 +82,7 @@ export const StoryActionsPropType = PropTypes.shape({
 
 export const TemplateActionsPropType = PropTypes.shape({
   createStoryFromTemplate: PropTypes.func,
+  handlePreviewTemplate: PropTypes.func,
 });
 
 export const TotalStoriesByStatusPropType = PropTypes.shape({
@@ -128,3 +129,10 @@ export const ToastMessagePropType = PropTypes.shape({
 });
 
 export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);
+
+export const DateSettingsPropType = PropTypes.shape({
+  dateFormat: PropTypes.string,
+  timeFormat: PropTypes.string,
+  gmtOffset: PropTypes.number,
+  timezone: PropTypes.string,
+});

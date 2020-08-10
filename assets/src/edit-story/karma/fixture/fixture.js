@@ -554,7 +554,7 @@ class APIProviderFixture {
             .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { get: () => 3 },
+          headers: { 'X-WP-TotalPages': 3 },
         });
       }, []);
       const uploadMedia = useCallback(
@@ -567,7 +567,12 @@ class APIProviderFixture {
       );
 
       const getLinkMetadata = useCallback(
-        () => jasmine.createSpy('getLinkMetadata'),
+        () =>
+          asyncResponse({
+            url: 'https://example.com',
+            title: 'Example Site',
+            image: 'example.jpg',
+          }),
         []
       );
 

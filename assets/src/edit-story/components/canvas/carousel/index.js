@@ -70,8 +70,8 @@ const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid: 'space prev-navigation carousel next-navigation menu' auto / 53px 53px 1fr 53px 53px;
-  background-color: ${({ theme }) => theme.colors.bg.v1};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  color: ${({ theme }) => theme.colors.fg.white};
   width: 100%;
   height: 100%;
 `;
@@ -91,10 +91,10 @@ const NavArea = styled(Area)`
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
 
 const PlainStyled = styled(Plain)`
-  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.25)};
+    background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.25)};
   }
 `;
 
@@ -126,7 +126,7 @@ const SafeZoneButton = styled(SafeZone).attrs(buttonDimensions)`
   ${({ active, theme }) =>
     active &&
     css`
-      background: ${rgba(theme.colors.bg.v13, 0.1)};
+      background: ${rgba(theme.colors.bg.white, 0.1)};
     `}
   margin-bottom: 12px;
 `;
@@ -151,14 +151,14 @@ const PageList = styled(Reorderable).attrs({
    * look the same. We do this only here because this scrollbar is always visible.
    */
   scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-    ${({ theme }) => theme.colors.bg.v1} !important;
+    ${({ theme }) => theme.colors.bg.workspace} !important;
 
   &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.v1} !important;
+    background: ${({ theme }) => theme.colors.bg.workspace} !important;
   }
 
   &::-webkit-scrollbar-thumb {
-    border: 2px solid ${({ theme }) => theme.colors.bg.v1} !important;
+    border: 2px solid ${({ theme }) => theme.colors.bg.workspace} !important;
     border-top-width: 3px !important;
   }
 `;
@@ -178,7 +178,7 @@ const PageSeparator = styled(ReorderableSeparator)`
 `;
 
 const Line = styled.div`
-  background: ${({ theme }) => theme.colors.action};
+  background: ${({ theme }) => theme.colors.accent.primary};
   height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
   width: 4px;
   margin: 0px;

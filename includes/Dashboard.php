@@ -52,6 +52,22 @@ class Dashboard {
 	private $hook_suffix;
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Dashboard constructor.
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
+
+	/**
 	 * Initializes the dashboard logic.
 	 *
 	 * @return void
@@ -83,7 +99,7 @@ class Dashboard {
 			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
 			__( 'Dashboard', 'web-stories' ),
 			__( 'Dashboard', 'web-stories' ),
-			'edit_posts',
+			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],
 			0
@@ -124,7 +140,7 @@ class Dashboard {
 		$preload_paths = [
 			'/web-stories/v1/fonts',
 			'/wp/v2/settings',
-			'/wp/v2/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2future&_web_stories_envelope=true',
+			'/web-stories/v1/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
 		];
 
 		/**
@@ -224,63 +240,42 @@ class Dashboard {
 			)
 		);
 
+		// Media settings.
+		$max_upload_size = wp_max_upload_size();
+		if ( ! $max_upload_size ) {
+			$max_upload_size = 0;
+		}
+
 		$settings = [
 			'id'     => 'web-stories-dashboard',
 			'config' => [
 				'isRTL'        => is_rtl(),
 				'dateFormat'   => get_option( 'date_format' ),
+				'timeFormat'   => get_option( 'time_format' ),
+				'gmtOffset'    => get_option( 'gmt_offset' ),
+				'timezone'     => get_option( 'timezone_string' ),
 				'newStoryURL'  => $new_story_url,
 				'editStoryURL' => $edit_story_url,
 				'wpListURL'    => $classic_wp_list_url,
 				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'version'      => WEBSTORIES_VERSION,
 				'api'          => [
-					'stories'   => sprintf( '/wp/v2/%s', $rest_base ),
+					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'     => '/web-stories/v1/media',
 					'users'     => '/wp/v2/users',
 					'fonts'     => '/web-stories/v1/fonts',
-					'templates' => '/wp/v2/web-story-template',
+					'templates' => '/web-stories/v1/web-story-template',
 				],
+				'maxUpload'    => $max_upload_size,
 				'capabilities' => [
 					'canManageSettings' => current_user_can( 'manage_options' ),
+					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
 			],
-			'flags'  => [
-				/**
-				 * Description: Enables user facing animations.
-				 * Author: @littlemilkstudio
-				 * Issue: 1897
-				 * Creation date: 2020-05-21
-				 */
-				'enableAnimation'                 => false,
-				/**
-				 * Description: Enables in-progress views to be accessed.
-				 * Author: @carlos-kelly
-				 * Issue: 2081
-				 * Creation date: 2020-05-28
-				 */
-				'enableInProgressViews'           => false,
-				/**
-				 * Description: Enables in-progress story actions.
-				 * Author: @brittanyirl
-				 * Issue: 2344
-				 * Creation date: 2020-06-10
-				 */
-				'enableInProgressStoryActions'    => false,
-				/**
-				 * Description: Enables in-progress template actions.
-				 * Author: @brittanyirl
-				 * Issue: 2381
-				 * Creation date: 2020-06-11
-				 */
-				'enableInProgressTemplateActions' => false,
-				/**
-				 * Description: Enables bookmark actions.
-				 * Author: @brittanyirl
-				 * Issue: 2292
-				 * Creation date: 2020-06-11
-				 */
-				'enableBookmarkActions'           => false,
-			],
+			'flags'  => array_merge(
+				$this->experiments->get_experiment_statuses( 'general' ),
+				$this->experiments->get_experiment_statuses( 'dashboard' )
+			),
 		];
 
 		/**

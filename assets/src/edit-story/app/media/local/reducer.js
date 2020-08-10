@@ -19,10 +19,11 @@
 /**
  * Internal dependencies
  */
-import * as commonTypes from '../common/types';
+import * as commonTypes from '../pagination/types';
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
-} from '../common/reducer';
+} from '../pagination/reducer';
+import { ProviderType } from '../providerType';
 import * as types from './types';
 
 const INITIAL_STATE = {
@@ -51,7 +52,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     case commonTypes.FETCH_MEDIA_SUCCESS: {
       const { provider, mediaType, searchTerm } = payload;
       if (
-        provider === 'local' &&
+        provider === ProviderType.LOCAL &&
         mediaType === state.mediaType &&
         searchTerm === state.searchTerm
       ) {
@@ -133,7 +134,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     default:
-      if (payload?.provider == 'local') {
+      if (payload?.provider == ProviderType.LOCAL) {
         return commonReducer(state, { type, payload });
       }
       return state;

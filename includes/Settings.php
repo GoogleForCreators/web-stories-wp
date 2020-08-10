@@ -32,20 +32,47 @@ namespace Google\Web_Stories;
  * Settings class.
  */
 class Settings {
-
 	/**
 	 * Settings group.
 	 *
 	 * @var string
 	 */
-	const SETTING_GROUP = 'web_stories';
+	const SETTING_GROUP = 'web-stories';
 
 	/**
-	 * Settings handle.
+	 * Experiments settings group.
+	 *
+	 * @var string
+	 */
+	const SETTING_GROUP_EXPERIMENTS = 'web-stories-experiments';
+
+	/**
+	 * Experiments setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_EXPERIMENTS = 'web_stories_experiments';
+
+	/**
+	 * GA Tracking ID setting name.
 	 *
 	 * @var string
 	 */
 	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
+
+	/**
+	 * Active publisher logo setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ACTIVE_PUBLISHER_LOGO = 'web_stories_active_publisher_logo';
+
+	/**
+	 * Publisher logos setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_PUBLISHER_LOGOS = 'web_stories_publisher_logos';
 
 	/**
 	 * Initializes the Settings logic.
@@ -53,7 +80,7 @@ class Settings {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'rest_api_init', [ $this, 'register_settings' ] );
+		add_action( 'init', [ $this, 'register_settings' ] );
 	}
 
 	/**
@@ -66,10 +93,53 @@ class Settings {
 			self::SETTING_GROUP,
 			self::SETTING_NAME_TRACKING_ID,
 			[
-				'show_in_rest' => true,
-				'type'         => 'string',
 				'description'  => __( 'Google Analytics Tracking ID', 'web-stories' ),
+				'type'         => 'string',
 				'default'      => '',
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_ACTIVE_PUBLISHER_LOGO,
+			[
+				'description'  => __( 'Default Publisher Logo', 'web-stories' ),
+				'type'         => 'integer',
+				'default'      => 0,
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_PUBLISHER_LOGOS,
+			[
+				'description'  => __( 'Publisher Logos', 'web-stories' ),
+				'type'         => 'array',
+				'default'      => [],
+				'show_in_rest' => [
+					'schema' => [
+						'items' => [
+							'type' => 'integer',
+						],
+					],
+				],
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP_EXPERIMENTS,
+			self::SETTING_NAME_EXPERIMENTS,
+			[
+				'description'  => __( 'Experiments', 'web-stories' ),
+				'type'         => 'object',
+				'default'      => [],
+				'show_in_rest' => [
+					'schema' => [
+						'properties' => [],
+					],
+				],
 			]
 		);
 	}

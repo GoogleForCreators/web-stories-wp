@@ -30,10 +30,15 @@ import ApiProvider from '../app/api/apiProvider';
 import FixtureEvents from '../../../../karma/fixture/events';
 import ComponentStub from '../../../../karma/fixture/componentStub';
 import actPromise from '../../../../karma/fixture/actPromise';
+import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
 const defaultConfig = {
   isRTL: false,
+  dateFormat: 'F j, Y',
+  timeFormat: 'g:i a',
+  gmtOffset: -4,
+  timezone: 'America/New_York',
   newStoryURL:
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
@@ -41,7 +46,7 @@ const defaultConfig = {
   assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories//assets',
   version: '1.0.0-alpha.9',
   api: {
-    stories: '/wp/v2/web-story',
+    stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     fonts: '/web-stories/v1/fonts',
   },
@@ -52,6 +57,7 @@ export default class Fixture {
     this._config = { ...defaultConfig, ...config };
     this._flags = flags;
     this._container = null;
+    this._appFrameStub = null;
     this._screen = null;
     this._componentStubs = new Map();
     this._events = new FixtureEvents(act);
@@ -77,6 +83,8 @@ export default class Fixture {
     });
 
     this.stubComponent(ApiProvider).callFake(ApiProviderFixture);
+
+    this._appFrameStub = this.stubComponent(AppFrame);
   }
 
   get container() {
@@ -174,6 +182,19 @@ export default class Fixture {
 
   restore() {
     window.location.hash = '#';
+  }
+
+  /**
+   * Calls a hook in the context of the whole dashboard.
+   *
+   * Similar to the `@testing-library/react`'s `renderHook()` method.
+   *
+   * @param {Function} func The hook function. E.g. `useStory`.
+   * @return {Promise<Object>} Resolves when the hook is rendered with the
+   * value of the hook.
+   */
+  renderHook(func) {
+    return this._appFrameStub.renderHook(func);
   }
 
   /**

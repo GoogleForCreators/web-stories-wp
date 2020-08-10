@@ -17,12 +17,14 @@
 /**
  * Internal dependencies
  */
+import * as media3pTypes from '../types';
 import * as types from './types';
 
 export const INITIAL_STATE = {
   isLoading: true,
   isLoaded: false,
   categories: [],
+  selectedCategoryId: undefined,
 };
 
 /**
@@ -60,6 +62,25 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         ...state,
         isLoading: false,
         isLoaded: true,
+      };
+    }
+    case types.SELECT_CATEGORY: {
+      const { categoryId } = payload;
+      return {
+        ...state,
+        selectedCategoryId: categoryId,
+      };
+    }
+    case types.DESELECT_CATEGORY: {
+      return {
+        ...state,
+        selectedCategoryId: undefined,
+      };
+    }
+    case media3pTypes.MEDIA3P_SET_SEARCH_TERM: {
+      return {
+        ...state,
+        selectedCategoryId: undefined,
       };
     }
     default:
