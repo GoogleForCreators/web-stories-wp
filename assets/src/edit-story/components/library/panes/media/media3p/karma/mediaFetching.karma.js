@@ -226,7 +226,11 @@ describe('Media3pPane fetching', () => {
   it('should render categories and media resources', async () => {
     mockListMedia();
     mockListCategories();
+
     await fixture.events.click(media3pTab);
+
+    await expectMediaElements(MEDIA_PER_PAGE);
+
     await fixture.snapshot();
   });
 
