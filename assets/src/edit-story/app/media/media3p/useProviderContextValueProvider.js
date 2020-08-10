@@ -22,6 +22,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
+import './typedefs';
 import useFetchMediaEffect from './useFetchMediaEffect';
 import useFetchCategoriesEffect from './useFetchCategoriesEffect';
 
@@ -30,11 +31,11 @@ import useFetchCategoriesEffect from './useFetchCategoriesEffect';
  * etc).
  *
  * @param {string} provider The 3p provider to return the context value for
- * @param {Object} reducerState The 'media3p/[provider]' fragment of the state
+ * @param {MediaReducerState} reducerState The 'media3p/[provider]' fragment of the state
  * returned from `useMediaReducer`
- * @param {Object} reducerActions The 'media3p/[provider]' fragment of the
+ * @param {MediaReducerActions} reducerActions The 'media3p/[provider]' fragment of the
  * actions returned from `useMediaReducer`
- * @return {Object} Context.
+ * @return {Media3pProviderContext} Context.
  */
 export default function useProviderContextValueProvider(
   provider,

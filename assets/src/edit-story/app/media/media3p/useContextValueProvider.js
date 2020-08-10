@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import './typedefs';
 import useProviderContextValueProvider from './useProviderContextValueProvider';
 import { PROVIDERS } from './providerConfiguration';
 
@@ -40,14 +41,14 @@ function useProviderSetContextValueProvider(reducerState, reducerActions) {
  * Context fragment provider for 3rd party media (Unsplash, Coverr, etc).
  * This is called from {@link MediaProvider} to provide the media global state.
  *
- * @param {Object} reducerState The 'media3p' fragment of the state returned
+ * @param {import('.typedef').MediaReducerState} reducerState The 'media3p' fragment of the state returned
  * from `useMediaReducer`
- * @param {Object} reducerActions The 'media3p' fragment of the actions
+ * @param {import('.typedef').MediaReducerActions} reducerActions The 'media3p' fragment of the actions
  * returned from `useMediaReducer`
- * @return {Object} Context.
+ * @return {import('.typedef').Media3pContext} Context.
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
-  return {
+  let result = {
     state: {
       selectedProvider: reducerState.selectedProvider,
       searchTerm: reducerState.searchTerm,
@@ -58,4 +59,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     },
     ...useProviderSetContextValueProvider(reducerState, reducerActions),
   };
+  console.log('useContextValueProvider');
+  console.log(result);
+  return result;
 }
