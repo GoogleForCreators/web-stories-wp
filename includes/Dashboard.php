@@ -99,7 +99,7 @@ class Dashboard {
 			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
 			__( 'Dashboard', 'web-stories' ),
 			__( 'Dashboard', 'web-stories' ),
-			'edit_posts',
+			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],
 			0

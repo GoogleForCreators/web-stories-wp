@@ -33,6 +33,7 @@ export const ANIMATION_EFFECTS = {
   FLY_IN: 'effect-fly-in',
   PULSE: 'effect-pulse',
   TWIRL_IN: 'twirl-in',
+  ZOOM: 'effect-zoom',
 };
 
 export const DIRECTION = {
