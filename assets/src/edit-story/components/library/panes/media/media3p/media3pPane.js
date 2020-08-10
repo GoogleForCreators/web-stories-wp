@@ -201,6 +201,8 @@ function Media3pPane(props) {
                   hasMore={state.hasMore}
                   setNextPage={actions.setNextPage}
                   onInsert={insertMediaElement}
+                  searchTerm={searchTerm}
+                  selectedCategoryId={state.categories.selectedCategoryId}
                 />
               </ProviderMediaCategoriesWrapper>
             );
