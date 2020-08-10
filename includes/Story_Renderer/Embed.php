@@ -100,7 +100,7 @@ class Embed {
 		ob_start();
 		?>
 		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-			<amp-story-player style="<?php echo esc_attr( $player_style ); ?>">
+			<amp-story-player style="<?php echo esc_attr( $player_style ); ?>" data-testid="amp-story-player">
 				<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
 			</amp-story-player>
 		</div>
