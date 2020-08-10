@@ -19,7 +19,6 @@
  */
 import React, { useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -28,15 +27,6 @@ import { ProviderType } from '../../../../../app/media/providerType';
 import MediaElement from './mediaElement';
 
 const PHOTO_MARGIN = 4;
-
-const PhotoContainer = styled.div.attrs((props) => ({
-  style: {
-    width: props.photo.width + 'px',
-    height: props.photo.height + 'px',
-  },
-}))`
-  margin: ${PHOTO_MARGIN}px;
-`;
 
 /**
  * Displays a gallery of media elements arranged in a row-based format.
@@ -56,16 +46,15 @@ function MediaGallery({ resources, onInsert, providerType }) {
 
   const imageRenderer = useCallback(
     ({ index, photo }) => (
-      <PhotoContainer photo={photo} key={index}>
-        <MediaElement
-          index={index}
-          resource={resources[index]}
-          width={photo.width}
-          height={photo.height}
-          onInsert={onInsert}
-          providerType={providerType}
-        />
-      </PhotoContainer>
+      <MediaElement
+        index={index}
+        margin={PHOTO_MARGIN + 'px'}
+        resource={resources[index]}
+        width={photo.width}
+        height={photo.height}
+        onInsert={onInsert}
+        providerType={providerType}
+      />
     ),
     [providerType, onInsert, resources]
   );
