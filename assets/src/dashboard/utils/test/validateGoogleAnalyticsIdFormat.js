@@ -19,26 +19,19 @@
  */
 import { validateGoogleAnalyticsIdFormat } from '../';
 
-const validIdFormats = [
+const idsToValidate = [
   ['UA-000000-56', true],
   ['ua-098765432-9875', true],
-];
-const invalidIdFormats = [
   ['78787878', false],
   ['ua--123448-0', false],
   ['clearly wrong', false],
 ];
 
 describe('validateGoogleAnalyticsIdFormat', () => {
-  it.each(validIdFormats)('should return %s as true', (validId, expected) => {
-    const bool = validateGoogleAnalyticsIdFormat(validId);
-    expect(bool).toBe(expected);
-  });
-
-  it.each(invalidIdFormats)(
-    'should return %s as false',
-    (invalidId, expected) => {
-      const bool = validateGoogleAnalyticsIdFormat(invalidId);
+  it.each(idsToValidate)(
+    'should check if %s is valid %p %p',
+    (validId, expected) => {
+      const bool = validateGoogleAnalyticsIdFormat(validId);
       expect(bool).toBe(expected);
     }
   );

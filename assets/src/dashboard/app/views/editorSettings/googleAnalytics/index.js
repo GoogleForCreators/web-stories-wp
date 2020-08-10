@@ -45,6 +45,7 @@ export const TEXT = {
   SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
   PLACEHOLDER: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
   ARIA_LABEL: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
+  INPUT_ERROR: __('Invalid ID format', 'web-stories'),
 };
 
 function GoogleAnalyticsSettings({
@@ -61,12 +62,11 @@ function GoogleAnalyticsSettings({
 
   const handleUpdateId = useCallback(
     (value) => {
-      // todo add validation to string format
       if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
         setInputError('');
         return handleUpdateSettings({ newGoogleAnalyticsId: value });
       }
-      return setInputError('Invalid ID format');
+      return setInputError(TEXT.INPUT_ERROR);
     },
     [handleUpdateSettings, setInputError]
   );

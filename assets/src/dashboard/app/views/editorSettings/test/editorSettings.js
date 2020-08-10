@@ -22,9 +22,10 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../../testUtils';
-import EditorSettings from '../';
 import { ApiContext } from '../../../api/apiProvider';
 import { ConfigProvider } from '../../../config';
+import EditorSettings from '../';
+import { TEXT as GA_TEXT } from '../googleAnalytics';
 
 const mockFetchSettings = jest.fn();
 
@@ -63,11 +64,8 @@ describe('Editor Settings: <Editor Settings />', function () {
       <SettingsWrapper googleAnalyticsId="123-45-98-not-an-id" />
     );
 
-    const googleAnalyticsHeading = getByText('Google Analytics Tracking ID');
+    const googleAnalyticsHeading = getByText(GA_TEXT.SECTION_HEADING);
     expect(googleAnalyticsHeading).toBeInTheDocument();
-
-    const publisherLogoHeading = getByText('Publisher Logo');
-    expect(publisherLogoHeading).toBeInTheDocument();
 
     const input = getByRole('textbox');
     expect(input).toBeDefined();
