@@ -72,8 +72,8 @@ const Duration = styled.div`
   font-size: ${({ theme }) => theme.fonts.duration.size};
   line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
-  padding: 2px 8px;
-  border-radius: 8px;
+  padding: 0 6px;
+  border-radius: 10px;
 `;
 
 const gradientAnimation = keyframes`
