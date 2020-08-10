@@ -57,6 +57,7 @@ const CategoryPill = (props) => (
     onClick={props.onClick}
     role="tab"
     aria-selected={props.isSelected}
+    data-testid="mediaCategory"
   >
     {props.title}
   </PillContainer>

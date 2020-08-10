@@ -47,9 +47,11 @@ const CategoryPillContainer = styled.div`
 `;
 
 // Flips the button upside down when expanded;
+// Important: the visibily is 'inherit' when props.visible because otherwise
+// it gets shown even when the provider is not the selectedProvider!
 const ExpandButton = styled(ArrowDown)`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
-  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  visibility: ${(props) => (props.visible ? 'inherit' : 'hidden')};
   align-self: center;
 `;
 
