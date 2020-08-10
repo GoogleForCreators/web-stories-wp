@@ -91,27 +91,5 @@ describe('Settings View', () => {
     expect(newInput.value).toBe(googleAnalyticsId);
   });
 
-  it("it should not allow an update of google analytics id when id format doesn't match required format", async () => {
-    const settingsView = await fixture.screen.getByTestId('editor-settings');
-
-    const input = within(settingsView).getByRole('textbox');
-
-    await fixture.events.hover(input);
-
-    await fixture.events.click(input);
-
-    const inputLength = input.value.length;
-
-    for (let iter = 0; iter < inputLength; iter++) {
-      // disable eslint to prevent overlapping .act calls
-      // eslint-disable-next-line no-await-in-loop
-      await fixture.events.keyboard.press('Backspace');
-    }
-
-    await fixture.events.keyboard.type('Clearly not a valid id');
-    await fixture.events.keyboard.press('Enter');
-
-    const errorMessage = await fixture.screen.getByText('Invalid ID format');
-    expect(errorMessage).toBeTruthy();
-  });
+  // it("it should not allow an update of google analytics id when id format doesn't match required format", () => {});
 });

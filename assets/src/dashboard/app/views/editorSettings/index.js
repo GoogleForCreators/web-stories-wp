@@ -32,6 +32,8 @@ import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
+  const { capabilities: { canManageSettings } = {} } = useConfig();
+
   const {
     actions: {
       settingsApi: { fetchSettings, updateSettings },
