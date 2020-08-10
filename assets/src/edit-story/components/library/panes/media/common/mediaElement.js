@@ -55,11 +55,22 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
+// TODO(cvolzke): Make 'PhotoContainer' a more general thing
+const PhotoContainer = styled.div.attrs((props) => ({
+  style: {
+    width: props.photo.width + 'px',
+    height: props.photo.height + 'px',
+  },
+}))`
+  margin: 4px;
+`;
+
 const Container = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  body${KEYBOARD_USER_SELECTOR} &:focus {
+
+  body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
 `;
@@ -128,6 +139,7 @@ const HiddenPosterImage = styled.img`
  */
 const MediaElement = ({
   index,
+  photo,
   resource,
   width: requestedWidth,
   height: requestedHeight,
@@ -297,8 +309,11 @@ const MediaElement = ({
     [handleKeyDown]
   );
 
+  // TODO(cvolzke): Make 'PhotoContainer' a more general thing
   return (
-    <Container
+    <PhotoContainer
+      // TODO(cvolzke): remove 'photo' / make more general
+      photo={photo}
       ref={ref}
       data-testid="mediaElement"
       data-id={resourceId}
@@ -308,30 +323,32 @@ const MediaElement = ({
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
-    >
-      {innerElement}
-      {attribution}
-      {local && (
-        <CSSTransition
-          in
-          appear={true}
-          timeout={0}
-          className="uploading-indicator"
-        >
-          <UploadingIndicator />
-        </CSSTransition>
-      )}
-      {hasDropdownMenu && providerType === ProviderType.LOCAL && (
-        <DropDownMenu
-          resource={resource}
-          display={active}
-          isMenuOpen={isMenuOpen}
-          onMenuOpen={onMenuOpen}
-          onMenuCancelled={onMenuCancelled}
-          onMenuSelected={onMenuSelected}
-        />
-      )}
-    </Container>
+  >
+      <Container>
+        {innerElement}
+        {attribution}
+        {local && (
+          <CSSTransition
+            in
+            appear={true}
+            timeout={0}
+            className="uploading-indicator"
+          >
+            <UploadingIndicator />
+          </CSSTransition>
+        )}
+        {hasDropdownMenu && providerType === ProviderType.LOCAL && (
+          <DropDownMenu
+            resource={resource}
+            display={active}
+            isMenuOpen={isMenuOpen}
+            onMenuOpen={onMenuOpen}
+            onMenuCancelled={onMenuCancelled}
+            onMenuSelected={onMenuSelected}
+          />
+        )}
+      </Container>
+    </PhotoContainer>
   );
 };
 

@@ -72,7 +72,7 @@ function getDistanceSq(p1, p2) {
 function getSiblingDirection(isRTL, key) {
   return !isRTL &&
     (key === 'ArrowLeft' || key === 'ArrowUp' || key === 'PageUp')
-    ? ['previousSibling']
+    ? 'previousSibling'
     : 'nextSibling';
 }
 
@@ -85,7 +85,7 @@ function getSiblingDirection(isRTL, key) {
  * @return {Element} The sibling.
  */
 function getNextSibling(e, siblingDirection) {
-  return e.parentNode[siblingDirection]?.firstChild;
+  return e[siblingDirection];
 }
 
 /**
@@ -170,20 +170,20 @@ export default function useRovingTabIndex({ ref, isRowBasedGallery }) {
           closestValidSibling.focus();
         } else if (key === 'ArrowUp') {
           // First sibling.
-          const sibling = element.parentNode.parentNode.firstChild.firstChild;
+          const sibling = element.parentNode.firstChild;
           switchFocusToElement(sibling);
         } else {
           // Last sibling.
-          const sibling = element.parentNode.parentNode.lastChild.firstChild;
+          const sibling = element.parentNode.lastChild;
           switchFocusToElement(sibling);
         }
       } else if (key === 'Home') {
         // First sibling.
-        const sibling = element.parentNode.parentNode.firstChild.firstChild;
+        const sibling = element.parentNode.firstChild;
         switchFocusToElement(sibling);
       } else if (key === 'End') {
         // Last sibling.
-        const sibling = element.parentNode.parentNode.lastChild.firstChild;
+        const sibling = element.parentNode.lastChild;
         switchFocusToElement(sibling);
       } else if (key === 'PageDown' || key === 'PageUp') {
         let sibling = element;
