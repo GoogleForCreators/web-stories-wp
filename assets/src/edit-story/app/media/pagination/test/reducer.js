@@ -25,6 +25,8 @@ import { renderHook } from '@testing-library/react-hooks';
 import reducer from '../reducer';
 import useMediaReducer from '../../useMediaReducer';
 import * as commonActionsToWrap from '../actions';
+import * as media3pActionsToWrap from '../../media3p/actions';
+import * as categoryActionsToWrap from '../../media3p/categories/actions';
 
 describe('reducer', () => {
   it('should assign isMediaLoading=true on fetchMediaStart', () => {
@@ -181,6 +183,64 @@ describe('reducer', () => {
     });
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page3' })
+    );
+  });
+
+  it('should reset {next}pageToken when the search term changes', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, {
+        ...commonActionsToWrap,
+        ...media3pActionsToWrap,
+      })
+    );
+
+    result.current.actions.fetchMediaSuccess({
+      provider: 'provider',
+      media: [{ id: 'id' }],
+      nextPageToken: 'page2',
+    });
+
+    result.current.actions.setNextPage({ provider: 'provider' });
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
+    );
+
+    result.current.actions.setSearchTerm({ searchTerm: 'lala' });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        pageToken: undefined,
+        nextPageToken: undefined,
+      })
+    );
+  });
+
+  it('should reset {next}pageToken when the selected category changes', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(reducer, {
+        ...commonActionsToWrap,
+        ...categoryActionsToWrap,
+      })
+    );
+
+    result.current.actions.fetchMediaSuccess({
+      provider: 'provider',
+      media: [{ id: 'id' }],
+      nextPageToken: 'page2',
+    });
+
+    result.current.actions.setNextPage({ provider: 'provider' });
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
+    );
+
+    result.current.actions.selectCategory({ categoryId: 'lala' });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        pageToken: undefined,
+        nextPageToken: undefined,
+      })
     );
   });
 });
