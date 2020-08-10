@@ -54,7 +54,7 @@ const ProviderTabSection = styled.div`
 const MediaSubheading = styled.div`
   margin-top: 24px;
   padding: 0 24px;
-  visibility: ${(props) => (props.shouldDisplay ? 'visible' : 'hidden')};
+  visibility: ${(props) => (props.shouldDisplay ? 'inherit' : 'hidden')};
 `;
 
 const PaneBottom = styled.div`
@@ -165,7 +165,8 @@ function Media3pPane(props) {
     // We display the media name if there's media to display or a category has
     // been selected.
     const shouldDisplayMediaSubheading = Boolean(
-      (state.isMediaLoaded && state.media) ||
+      state.isMediaLoaded ||
+        state?.media.length ||
         state.categories.selectedCategoryId
     );
     return (
