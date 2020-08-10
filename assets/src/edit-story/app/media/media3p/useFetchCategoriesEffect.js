@@ -29,6 +29,17 @@ import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
+/**
+ *
+ * @param {{
+ * provider: string,
+ * selectedProvider: string,
+ * categories:  import('./typedefs').CategoriesState,
+ * fetchCategoriesStart: import('./typedefs').FetchCategoriesStart
+ * fetchCategoriesSuccess: import('./typedefs').FetchCategoriesSuccess
+ * fetchCategoriesError: import('./typedefs').FetchCategoriesError
+ * }} parameter required actions and parameters
+ */
 export default function useFetchCategoriesEffect({
   provider,
   selectedProvider,

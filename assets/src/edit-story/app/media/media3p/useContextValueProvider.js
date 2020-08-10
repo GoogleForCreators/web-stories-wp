@@ -48,7 +48,7 @@ function useProviderSetContextValueProvider(reducerState, reducerActions) {
  * @return {import('.typedef').Media3pContext} Context.
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
-  let result = {
+  return {
     state: {
       selectedProvider: reducerState.selectedProvider,
       searchTerm: reducerState.searchTerm,
@@ -59,7 +59,4 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     },
     ...useProviderSetContextValueProvider(reducerState, reducerActions),
   };
-  console.log('useContextValueProvider');
-  console.log(result);
-  return result;
 }

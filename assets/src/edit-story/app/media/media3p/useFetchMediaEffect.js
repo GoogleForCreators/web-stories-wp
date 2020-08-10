@@ -29,6 +29,21 @@ import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
+/**
+ *
+ * @param {{
+ * provider: string,
+ * selectedProvider: string,
+ * searchTerm: string,
+ * selectedCategoryId: string,
+ * pageToken: string,
+ * isMediaLoading: boolean,
+ * isMediaLoaded: boolean,
+ * fetchMediaStart: import('./typedefs').FetchMediaStart
+ * fetchMediaSuccess: import('./typedefs').FetchMediaSuccess
+ * fetchMediaError: import('./typedefs').FetchMediaError
+ * }} param0 required actions and parameters
+ */
 export default function useFetchMediaEffect({
   provider,
   selectedProvider,
