@@ -29,7 +29,7 @@ const idsToValidate = [
 
 describe('validateGoogleAnalyticsIdFormat', () => {
   it.each(idsToValidate)(
-    'should check if %s is valid %p %p',
+    'should take " %s " and return as %p google analytic id format',
     (validId, expected) => {
       const bool = validateGoogleAnalyticsIdFormat(validId);
       expect(bool).toBe(expected);
