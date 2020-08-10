@@ -35,6 +35,7 @@ describe('StoryPlayer', () => {
     expect(container.firstChild).toMatchInlineSnapshot(`
       <amp-story-player
         data-testid="amp-story-player"
+        style="margin: 0px;"
       >
         <a
           href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
@@ -52,6 +53,7 @@ describe('StoryPlayer', () => {
     expect(container.firstChild).toMatchInlineSnapshot(`
       <amp-story-player
         data-testid="amp-story-player"
+        style="margin: 0px;"
       >
         <a
           href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
