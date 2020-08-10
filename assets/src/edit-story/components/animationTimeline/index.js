@@ -25,42 +25,42 @@ import propTypes from 'prop-types';
  */
 import {
   TimelineContainer,
-  TimelineContent,
   TimelineLegend,
   TimelineTimingContainer,
   TimelineTitleBar,
   TimelineRow,
 } from './components';
+import AnimationRuler from './ruler';
 
-export default function AnimationTimeline({ animations }) {
+export default function AnimationTimeline({ animations, duration }) {
   return (
     <TimelineContainer>
-      <TimelineTitleBar>
-        <TimelineLegend />
-      </TimelineTitleBar>
-      <TimelineContent>
-        <TimelineLegend>
-          {animations.map((animation, index) => (
-            <TimelineRow
-              key={`timeline-animation-item-${animation.id}-legend`}
-              alternating={Boolean(index % 2)}
-            />
-          ))}
-        </TimelineLegend>
-        <TimelineTimingContainer>
-          {animations.map((animation, index) => (
-            <TimelineRow
-              data-testid="timeline-animation-item"
-              key={`timeline-animation-item-${animation.id}`}
-              alternating={Boolean(index % 2)}
-            />
-          ))}
-        </TimelineTimingContainer>
-      </TimelineContent>
+      <TimelineLegend>
+        <TimelineTitleBar />
+        {animations.map((animation, index) => (
+          <TimelineRow
+            key={`timeline-animation-item-${animation.id}-legend`}
+            alternating={Boolean(index % 2)}
+          />
+        ))}
+      </TimelineLegend>
+      <TimelineTimingContainer>
+        <TimelineTitleBar>
+          <AnimationRuler duration={duration} />
+        </TimelineTitleBar>
+        {animations.map((animation, index) => (
+          <TimelineRow
+            data-testid="timeline-animation-item"
+            key={`timeline-animation-item-${animation.id}`}
+            alternating={Boolean(index % 2)}
+          />
+        ))}
+      </TimelineTimingContainer>
     </TimelineContainer>
   );
 }
 
 AnimationTimeline.propTypes = {
   animations: propTypes.arrayOf(propTypes.object).isRequired,
+  duration: propTypes.number.isRequired,
 };
