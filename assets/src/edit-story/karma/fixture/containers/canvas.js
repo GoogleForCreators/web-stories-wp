@@ -128,6 +128,14 @@ class FramesLayer extends Container {
       Frame
     );
   }
+
+  controls(elementId) {
+    return this._get(
+      this.node.querySelector(`[data-controls-id="${elementId}"]`),
+      `controls[${elementId}]`,
+      Controls
+    );
+  }
 }
 
 /**
@@ -166,5 +174,22 @@ class Frame extends Container {
 
   get textContentHTML() {
     return this.node.querySelector('p')?.innerHTML;
+  }
+}
+
+/**
+ * An element's controls.
+ */
+class Controls extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get play() {
+    return this.getByRole('button', { name: 'Click to play' });
+  }
+
+  get pause() {
+    return this.getByRole('button', { name: 'Click to pause' });
   }
 }

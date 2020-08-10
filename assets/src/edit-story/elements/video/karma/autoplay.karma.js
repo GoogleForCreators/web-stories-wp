@@ -84,18 +84,16 @@ describe('Autoplay video', () => {
     await fixture.events.mouse.seq(({ moveRel }) => [
       moveRel(fullbleed, '10%', '10%'),
     ]);
-    await waitFor(() =>
-      fixture.screen.getByRole('button', { name: 'Click to pause' })
+    await waitFor(
+      () => fixture.editor.canvas.framesLayer.controls(backgroundId).pause
     );
-    const pauseButton = fixture.screen.getByRole('button', {
-      name: 'Click to pause',
-    });
-    await fixture.events.click(pauseButton);
+    await fixture.events.click(
+      fixture.editor.canvas.framesLayer.controls(backgroundId).pause
+    );
     expect(backgroundElVideo.paused).toBe(true);
-    const playButton = fixture.screen.getByRole('button', {
-      name: 'Click to play',
-    });
-    await fixture.events.click(playButton);
+    await fixture.events.click(
+      fixture.editor.canvas.framesLayer.controls(backgroundId).play
+    );
     expect(backgroundElVideo.paused).toBe(false);
   });
 });

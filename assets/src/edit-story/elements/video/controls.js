@@ -232,7 +232,7 @@ function VideoControls({
     : CSSTransition;
 
   return (
-    <Controls {...box}>
+    <Controls data-controls-id={id} {...box}>
       {showControls && (
         <TransitionWrapper
           in={hovering}
