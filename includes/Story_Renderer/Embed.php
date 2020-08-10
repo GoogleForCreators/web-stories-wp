@@ -89,7 +89,7 @@ class Embed {
 		$poster       = ! empty( $this->story->get_poster_portrait() ) ? esc_url( $this->story->get_poster_portrait() ) : '';
 		$align        = sprintf( 'align%s', $this->align );
 		$margin       = ( 'center' === $this->align ) ? 'auto' : '0';
-		$player_style = sprintf( 'width: %dpx; height: %dpx; margin: %s', absint( $this->width ), absint( $this->height ), esc_attr( $margin ) );
+		$player_style = sprintf( 'width: %dpx;height: %dpx;margin: %s', absint( $this->width ), absint( $this->height ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
 		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
