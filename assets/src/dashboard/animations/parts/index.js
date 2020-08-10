@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ANIMATION_TYPES, ANIMATION_EFFECTS, BEZIER } from '../constants';
+import { EffectDrop } from '../effects/drop';
 import { EffectFadeIn } from '../effects/fadeIn';
 import { EffectFlyIn } from '../effects/flyIn';
 import { EffectPulse } from '../effects/pulse';
@@ -85,6 +86,7 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.PULSE]: EffectPulse,
       [ANIMATION_EFFECTS.TWIRL_IN]: EffectTwirlIn,
       [ANIMATION_EFFECTS.ZOOM]: EffectZoom,
+      [ANIMATION_EFFECTS.DROP]: EffectDrop,
     }[type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];
