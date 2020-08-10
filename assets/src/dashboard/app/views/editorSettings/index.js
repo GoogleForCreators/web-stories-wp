@@ -33,9 +33,7 @@ import PublisherLogoSettings from './publisherLogo';
 import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
-  const {
-    capabilities: { canManageSettings },
-  } = useConfig();
+  const { capabilities: { canManageSettings } = {} } = useConfig();
 
   const {
     actions: {
@@ -63,7 +61,7 @@ function EditorSettings() {
   );
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="editor-settings">
       <Header>
         <Heading>{__('Settings', 'web-stories')}</Heading>
       </Header>
