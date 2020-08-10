@@ -45,9 +45,9 @@ export function EffectWhooshIn({
       : `${offsetLeft}%`;
 
   const {
-    WAAPIAnimation: moveWAAPIAnimation,
-    AMPTarget: moveAMPTarget,
-    AMPAnimation: moveAMPAnimation,
+    WAAPIAnimation: MoveWAAPIAnimation,
+    AMPTarget: MoveAMPTarget,
+    AMPAnimation: MoveAMPAnimation,
     generatedKeyframes: moveKeyframes,
   } = AnimationMove({
     offsetX,
@@ -57,9 +57,9 @@ export function EffectWhooshIn({
   });
 
   const {
-    WAAPIAnimation: fadeWAAPIAnimation,
-    AMPTarget: fadeAMPTarget,
-    AMPAnimation: fadeAMPAnimation,
+    WAAPIAnimation: FadeWAAPIAnimation,
+    AMPTarget: FadeAMPTarget,
+    AMPAnimation: FadeAMPAnimation,
     generatedKeyframes: fadeKeyframes,
   } = AnimationFade({
     fadeFrom: 0,
@@ -70,9 +70,9 @@ export function EffectWhooshIn({
   });
 
   const {
-    WAAPIAnimation: zoomWAAPIAnimation,
-    AMPTarget: zoomAMPTarget,
-    AMPAnimation: zoomAMPAnimation,
+    WAAPIAnimation: ZoomWAAPIAnimation,
+    AMPTarget: ZoomAMPTarget,
+    AMPAnimation: ZoomAMPAnimation,
     generatedKeyframes: zoomKeyframes,
   } = AnimationZoom({
     zoomFrom: 0.15,
@@ -84,28 +84,34 @@ export function EffectWhooshIn({
 
   return {
     id,
-    WAAPIAnimation: ({ children, ...args }) =>
-      moveWAAPIAnimation({
-        children: fadeWAAPIAnimation({
-          children: zoomWAAPIAnimation({ children, ...args }),
-          ...args,
-        }),
-        ...args,
-      }),
-    AMPTarget: ({ children, ...args }) =>
-      moveAMPTarget({
-        children: fadeAMPTarget({
-          children: zoomAMPTarget({ children, ...args }),
-          ...args,
-        }),
-        ...args,
-      }),
+    // eslint-disable-next-line react/prop-types
+    WAAPIAnimation: function WAAPIAnimation({ children, hoistAnimation }) {
+      return (
+        <MoveWAAPIAnimation hoistAnimation={hoistAnimation}>
+          <FadeWAAPIAnimation hoistAnimation={hoistAnimation}>
+            <ZoomWAAPIAnimation hoistAnimation={hoistAnimation}>
+              {children}
+            </ZoomWAAPIAnimation>
+          </FadeWAAPIAnimation>
+        </MoveWAAPIAnimation>
+      );
+    },
+    // eslint-disable-next-line react/prop-types
+    AMPTarget: function AMPTarget({ children, style }) {
+      return (
+        <MoveAMPTarget style={style}>
+          <FadeAMPTarget style={style}>
+            <ZoomAMPTarget style={style}>{children}</ZoomAMPTarget>
+          </FadeAMPTarget>
+        </MoveAMPTarget>
+      );
+    },
     AMPAnimation: function AMPAnimation() {
       return (
         <>
-          {moveAMPAnimation()}
-          {fadeAMPAnimation()}
-          {zoomAMPAnimation()}
+          <MoveAMPAnimation />
+          <FadeAMPAnimation />
+          <ZoomAMPAnimation />
         </>
       );
     },
