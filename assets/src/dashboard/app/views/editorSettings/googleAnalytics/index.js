@@ -28,6 +28,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
 import { InlineInputForm } from '../../../../components';
 import {
   FormContainer,
@@ -52,6 +53,7 @@ function GoogleAnalyticsSettings({
   canManageSettings,
 }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
+  const [inputError, setInputError] = useState('');
 
   const handleCancelUpdateId = useCallback(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -60,9 +62,13 @@ function GoogleAnalyticsSettings({
   const handleUpdateId = useCallback(
     (value) => {
       // todo add validation to string format
-      handleUpdateSettings({ newGoogleAnalyticsId: value });
+      if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
+        setInputError('');
+        return handleUpdateSettings({ newGoogleAnalyticsId: value });
+      }
+      return setInputError('Invalid ID format');
     },
-    [handleUpdateSettings]
+    [handleUpdateSettings, setInputError]
   );
 
   return (
@@ -79,6 +85,7 @@ function GoogleAnalyticsSettings({
           onEditComplete={handleUpdateId}
           placeholder={TEXT.PLACEHOLDER}
           disabled={!canManageSettings}
+          error={inputError}
         />
         <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
       </FormContainer>

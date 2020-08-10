@@ -53,9 +53,22 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     );
 
     const input = getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'UA-098754-33' } });
 
     fireEvent.keyDown(input, { key: 'enter', keyCode: 13 });
 
     expect(mockUpdate).toHaveBeenCalledTimes(1);
+
+    fireEvent.change(input, { target: { value: '' } });
+
+    fireEvent.keyDown(input, { key: 'enter', keyCode: 13 });
+
+    expect(mockUpdate).toHaveBeenCalledTimes(2);
+
+    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+
+    fireEvent.keyDown(input, { key: 'enter', keyCode: 13 });
+
+    expect(mockUpdate).toHaveBeenCalledTimes(2);
   });
 });

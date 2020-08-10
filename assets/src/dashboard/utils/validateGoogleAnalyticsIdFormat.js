@@ -14,25 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import { TypographyPresets } from '../typography';
-
-export const TextInput = styled.input`
-  ${TypographyPresets.Small};
-  margin: 0;
-  padding: 1px 8px;
-  border-radius: 6px;
-  border: ${({ theme, error }) =>
-    error ? theme.borders.danger : theme.borders.gray100};
-  &:active {
-    border: ${({ theme, error }) =>
-      error ? theme.borders.danger : theme.borders.action};
-  }
-`;
+export default function validateGoogleAnalyticsIdFormat(value = '') {
+  const googleAnalyticsIdFormatRegex = /^ua-\d+-\d+$/;
+  return Boolean(value.toLowerCase().match(googleAnalyticsIdFormatRegex));
+}
