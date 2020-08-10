@@ -48,6 +48,8 @@ import { ProviderType } from '../../../../../app/media/providerType';
 
 const ROOT_MARGIN = 300;
 
+const SHOW_LOADING_PILL_DELAY_MS = 1000;
+
 function PaginatedMediaGallery({
   providerType,
   resources,
@@ -160,7 +162,21 @@ function PaginatedMediaGallery({
       </div>
     );
 
-  const displayLoadingPill = isMediaLoading && hasMore;
+  const [showLoadingPill, setShowLoadingPill] = useState(false);
+
+  useEffect(() => {
+    if (isMediaLoading) {
+      const showLoadingTimeout = setTimeout(() => {
+        setShowLoadingPill(isMediaLoading);
+      }, SHOW_LOADING_PILL_DELAY_MS);
+      return () => clearTimeout(showLoadingTimeout);
+    } else {
+      setShowLoadingPill(false);
+    }
+    return undefined;
+  }, [isMediaLoading]);
+
+  const displayLoadingPill = isMediaLoading && hasMore && showLoadingPill;
   const attribution =
     providerType !== ProviderType.LOCAL &&
     PROVIDERS[providerType].attributionComponent();
