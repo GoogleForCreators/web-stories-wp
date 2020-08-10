@@ -226,7 +226,7 @@ class Link_Controller extends WP_REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function parse_link_permissions_check() {
-		if ( ! current_user_can( 'edit_posts' ) ) {
+		if ( ! current_user_can( 'edit_web-stories' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
