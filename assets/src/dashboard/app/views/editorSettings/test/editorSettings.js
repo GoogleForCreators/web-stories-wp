@@ -59,9 +59,9 @@ SettingsWrapper.propTypes = {
 };
 
 describe('Editor Settings: <Editor Settings />', function () {
-  it('should render settings page with google analytics and publisher logo sections', function () {
+  it('should render settings page with google analytics section', function () {
     const { getByText, getByRole } = renderWithTheme(
-      <SettingsWrapper googleAnalyticsId="123-45-98-not-an-id" />
+      <SettingsWrapper googleAnalyticsId="UA-098909-05" />
     );
 
     const googleAnalyticsHeading = getByText(GA_TEXT.SECTION_HEADING);
@@ -70,7 +70,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     const input = getByRole('textbox');
     expect(input).toBeDefined();
 
-    expect(input.value).toBe('123-45-98-not-an-id');
+    expect(input.value).toBe('UA-098909-05');
 
     expect(mockFetchSettings).toHaveBeenCalledTimes(1);
   });
