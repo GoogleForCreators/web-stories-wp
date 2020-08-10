@@ -29,7 +29,6 @@ import { useCallback, useContext, useEffect } from 'react';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import GoogleAnalyticsSettings from './googleAnalytics';
-import PublisherLogoSettings from './publisherLogo';
 import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
@@ -40,7 +39,7 @@ function EditorSettings() {
       settingsApi: { fetchSettings, updateSettings },
     },
     state: {
-      settings: { googleAnalyticsId, publisherLogos },
+      settings: { googleAnalyticsId },
     },
   } = useContext(ApiContext);
 
@@ -70,10 +69,6 @@ function EditorSettings() {
           handleUpdateSettings={handleCompleteUpdateId}
           googleAnalyticsId={googleAnalyticsId}
           canManageSettings={canManageSettings}
-        />
-        <PublisherLogoSettings
-          onUpdatePublisherLogo={updateSettings}
-          publisherLogos={publisherLogos}
         />
       </Main>
     </Wrapper>

@@ -40,6 +40,7 @@ import {
   primaryPaths,
   secondaryPaths,
   Z_INDEX,
+  APP_ROUTES,
 } from '../../constants';
 
 import useFocusOut from '../../utils/useFocusOut';
@@ -104,7 +105,9 @@ export function LeftRail() {
   const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
+
   const enableInProgressViews = useFeature('enableInProgressViews');
+  const enableSettingsViews = useFeature('enableSettingsView');
 
   const {
     state: { sideBarVisible },
@@ -132,11 +135,17 @@ export function LeftRail() {
   }, [enableInProgressViews]);
 
   const enabledSecondaryPaths = useMemo(() => {
+    let copyOfSecondaryPaths = enableSettingsViews
+      ? [...secondaryPaths]
+      : secondaryPaths.filter(
+          (path) => !path.value.includes(APP_ROUTES.EDITOR_SETTINGS)
+        );
+
     if (enableInProgressViews) {
-      return secondaryPaths;
+      return copyOfSecondaryPaths;
     }
-    return secondaryPaths.filter((path) => !path.inProgress);
-  }, [enableInProgressViews]);
+    return copyOfSecondaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews, enableSettingsViews]);
 
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {

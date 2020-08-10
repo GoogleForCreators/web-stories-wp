@@ -31,6 +31,7 @@ describe('Settings View', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ enableSettingsView: true });
 
     await fixture.render();
 
