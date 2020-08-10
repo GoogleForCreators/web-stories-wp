@@ -164,7 +164,7 @@ class HTML extends \WP_UnitTestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->setup_default_poster();
 		$story->load_from_post( $post );
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
 
 		wp_update_post(
