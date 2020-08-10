@@ -89,180 +89,243 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
     );
   }
 
-  it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
-    const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
+  describe('Action: See pre-built template details page', () => {
+    it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
+      const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
 
-    await fixture.events.click(closeLink);
+      await fixture.events.click(closeLink);
 
-    const viewTemplates = fixture.screen.queryByText(
-      TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL]
-    );
+      const viewTemplates = fixture.screen.queryByText(
+        TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL]
+      );
 
-    expect(viewTemplates).toBeTruthy();
+      expect(viewTemplates).toBeTruthy();
+    });
+
+    it('should update the "Active Preview Page" when clicking on a "Thumbnail Preview Page"', async () => {
+      const firstPage = fixture.screen.getByLabelText('Page Preview - Page 1');
+
+      expect(firstPage).toBeTruthy();
+
+      let activePage = fixture.screen.getByLabelText(
+        'Active Page Preview - Page 1'
+      );
+
+      expect(activePage).toBeTruthy();
+
+      const secondPage = fixture.screen.getByLabelText('Page Preview - Page 2');
+
+      expect(secondPage).toBeTruthy();
+
+      await fixture.events.click(secondPage);
+
+      fixture.screen.getByLabelText('Active Page Preview - Page 2');
+
+      expect(activePage).toBeTruthy();
+    });
+
+    it('should load the next related template when clicking "View Next Template" button', async () => {
+      const { templates } = await getTemplatesState();
+      // Parse the current template id from the id query param
+      const { id: initialTemplateId } = getQueryParams();
+      expect(initialTemplateId).toBeTruthy();
+
+      const initialTemplate = templates[initialTemplateId];
+
+      const templateDetailsSection = fixture.screen.getByRole('region', {
+        name: /Template Details/,
+      });
+
+      let utils = within(templateDetailsSection);
+
+      // Assert that the rendered title matches the title from state
+      const initialTemplateTitle = utils.getByRole('heading', {
+        name: /Template Title/,
+      });
+      expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
+
+      // Click the view next button to cycle to the next related template
+      const viewNextBtn = fixture.screen.getByRole('button', {
+        name: /View next template/,
+      });
+      await fixture.events.click(viewNextBtn);
+
+      // Reparse the current template id from the id query param and assert it's different
+      const { id: nextTemplateId } = getQueryParams();
+      expect(nextTemplateId).toBeTruthy();
+      expect(nextTemplateId).not.toEqual(initialTemplateId);
+
+      const nextTemplate = templates[nextTemplateId];
+
+      // Assert that the rendered title matches the title from state
+      const nextTemplateTitle = utils.getByRole('heading', {
+        name: /Template Title/,
+      });
+      expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
+    });
+
+    it('should navigate to the previous related template when clicking the "View Previous Template" button', async () => {
+      const { templates } = await getTemplatesState();
+      // Parse the current template id from the id query param
+      const { id: initialTemplateId } = getQueryParams();
+
+      const initialTemplate = templates[initialTemplateId];
+
+      const templateDetailsSection = fixture.screen.getByRole('region', {
+        name: /Template Details/,
+      });
+
+      let utils = within(templateDetailsSection);
+
+      // Assert that the rendered title matches the title from state
+      const initialTemplateTitle = utils.getByRole('heading', {
+        name: /Template Title/,
+      });
+      expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
+
+      // Click the view next button to cycle to the next related template
+      const viewNextBtn = fixture.screen.getByRole('button', {
+        name: /View next template/,
+      });
+      await fixture.events.click(viewNextBtn);
+
+      // Reparse the current template id from the id query param and assert it's different
+      const { id: nextTemplateId } = getQueryParams();
+
+      const nextTemplate = templates[nextTemplateId];
+
+      // Assert that the rendered title matches the title from state
+      const nextTemplateTitle = utils.getByRole('heading', {
+        name: /Template Title/,
+      });
+      expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
+
+      // Click the previous template button and assert we went back to the initial template
+      const viewPreviousBtn = fixture.screen.getByRole('button', {
+        name: /View previous template/,
+      });
+
+      await fixture.events.click(viewPreviousBtn);
+
+      const { id: currentTemplateId } = getQueryParams();
+
+      expect(currentTemplateId).toEqual(initialTemplateId);
+
+      let currentTemplateTitle = utils.getByRole('heading', {
+        name: /Template Title/,
+      });
+
+      expect(currentTemplateTitle.innerText).toEqual(initialTemplate.title);
+    });
+
+    it('should navigate to a related templated when the view button is clicked', async () => {
+      const { templates } = await getTemplatesState();
+      // Parse the current template id from the id query param
+      const { id: initialTemplateId } = getQueryParams();
+      expect(initialTemplateId).toBeTruthy();
+
+      const initialTemplate = templates[initialTemplateId];
+
+      const templateDetailsSection = fixture.screen.getByRole('region', {
+        name: /Template Details/,
+      });
+
+      const templateDetailsUtils = within(templateDetailsSection);
+
+      // Assert that the rendered title matches the title from state
+      const initialTemplateTitle = templateDetailsUtils.getByRole('heading', {
+        name: /Template Title/,
+      });
+      expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
+
+      const relatedTemplatesSection = fixture.screen.getByRole('region', {
+        name: /Related Templates/,
+      });
+
+      // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+
+      // Hover over the first related templated and click the View Button
+      const firstRelatedTemplateUtils = within(firstRelatedTemplate);
+      await fixture.events.hover(firstRelatedTemplate);
+      const view = firstRelatedTemplateUtils.getByText(
+        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+      );
+      await fixture.events.click(view);
+
+      // Assert that the active template has changed
+      const { id: nextTemplateId } = getQueryParams();
+      expect(nextTemplateId).not.toEqual(initialTemplateId);
+
+      const nextTemplate = templates[nextTemplateId];
+
+      const nextTemplateTitle = templateDetailsUtils.getByRole('heading', {
+        name: /Template Title/,
+      });
+      expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
+    });
   });
 
-  it('should update the "Active Preview Page" when clicking on a "Thumbnail Preview Page"', async () => {
-    const firstPage = fixture.screen.getByLabelText('Page Preview - Page 1');
-
-    expect(firstPage).toBeTruthy();
-
-    let activePage = fixture.screen.getByLabelText(
-      'Active Page Preview - Page 1'
-    );
-
-    expect(activePage).toBeTruthy();
-
-    const secondPage = fixture.screen.getByLabelText('Page Preview - Page 2');
-
-    expect(secondPage).toBeTruthy();
-
-    await fixture.events.click(secondPage);
-
-    fixture.screen.getByLabelText('Active Page Preview - Page 2');
-
-    expect(activePage).toBeTruthy();
-  });
-
-  it('should load the next related template when clicking "View Next Template" button', async () => {
-    const { templates } = await getTemplatesState();
-    // Parse the current template id from the id query param
-    const { id: initialTemplateId } = getQueryParams();
-    expect(initialTemplateId).toBeTruthy();
-
-    const initialTemplate = templates[initialTemplateId];
-
-    const templateDetailsSection = fixture.screen.getByRole('region', {
-      name: /Template Details/,
+  describe('Action: See template preview from detail template view', () => {
+    beforeEach(async () => {
+      fixture.setFlags({ enableTemplatePreviews: true });
+      await fixture.render();
     });
 
-    let utils = within(templateDetailsSection);
+    it('should trigger template preview when user clicks a related template', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
+      await getTemplatesState();
 
-    // Assert that the rendered title matches the title from state
-    const initialTemplateTitle = utils.getByRole('heading', {
-      name: /Template Title/,
-    });
-    expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
+      const relatedTemplatesSection = await fixture.screen.getByRole('region', {
+        name: /Related Templates/,
+      });
 
-    // Click the view next button to cycle to the next related template
-    const viewNextBtn = fixture.screen.getByRole('button', {
-      name: /View next template/,
-    });
-    await fixture.events.click(viewNextBtn);
+      // // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+      const utils = within(firstRelatedTemplate);
 
-    // Reparse the current template id from the id query param and assert it's different
-    const { id: nextTemplateId } = getQueryParams();
-    expect(nextTemplateId).toBeTruthy();
-    expect(nextTemplateId).not.toEqual(initialTemplateId);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
 
-    const nextTemplate = templates[nextTemplateId];
+      const { x, y } = activeCard.getBoundingClientRect();
+      // x, y of the first related template in detail view gives us the outer edge and top, we need to add slightly to these dimension to have anything be clickable
+      await fixture.events.mouse.click(x + 20, y + 10);
 
-    // Assert that the rendered title matches the title from state
-    const nextTemplateTitle = utils.getByRole('heading', {
-      name: /Template Title/,
-    });
-    expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
-  });
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
 
-  it('should navigate to the previous related template when clicking the "View Previous Template" button', async () => {
-    const { templates } = await getTemplatesState();
-    // Parse the current template id from the id query param
-    const { id: initialTemplateId } = getQueryParams();
-
-    const initialTemplate = templates[initialTemplateId];
-
-    const templateDetailsSection = fixture.screen.getByRole('region', {
-      name: /Template Details/,
+      expect(viewPreviewStory).toBeTruthy();
     });
 
-    let utils = within(templateDetailsSection);
+    it('should trigger template preview when user presses Enter while focused on a card', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
+      await getTemplatesState();
+      const relatedTemplatesSection = fixture.screen.getByRole('region', {
+        name: /Related Templates/,
+      });
+      // // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+      const utils = within(firstRelatedTemplate);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
 
-    // Assert that the rendered title matches the title from state
-    const initialTemplateTitle = utils.getByRole('heading', {
-      name: /Template Title/,
+      await fixture.events.focus(activeCard);
+      await fixture.events.keyboard.press('Enter');
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
     });
-    expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
-
-    // Click the view next button to cycle to the next related template
-    const viewNextBtn = fixture.screen.getByRole('button', {
-      name: /View next template/,
-    });
-    await fixture.events.click(viewNextBtn);
-
-    // Reparse the current template id from the id query param and assert it's different
-    const { id: nextTemplateId } = getQueryParams();
-
-    const nextTemplate = templates[nextTemplateId];
-
-    // Assert that the rendered title matches the title from state
-    const nextTemplateTitle = utils.getByRole('heading', {
-      name: /Template Title/,
-    });
-    expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
-
-    // Click the previous template button and assert we went back to the initial template
-    const viewPreviousBtn = fixture.screen.getByRole('button', {
-      name: /View previous template/,
-    });
-
-    await fixture.events.click(viewPreviousBtn);
-
-    const { id: currentTemplateId } = getQueryParams();
-
-    expect(currentTemplateId).toEqual(initialTemplateId);
-
-    let currentTemplateTitle = utils.getByRole('heading', {
-      name: /Template Title/,
-    });
-
-    expect(currentTemplateTitle.innerText).toEqual(initialTemplate.title);
-  });
-
-  it('should navigate to a related templated when the view button is clicked', async () => {
-    const { templates } = await getTemplatesState();
-    // Parse the current template id from the id query param
-    const { id: initialTemplateId } = getQueryParams();
-    expect(initialTemplateId).toBeTruthy();
-
-    const initialTemplate = templates[initialTemplateId];
-
-    const templateDetailsSection = fixture.screen.getByRole('region', {
-      name: /Template Details/,
-    });
-
-    const templateDetailsUtils = within(templateDetailsSection);
-
-    // Assert that the rendered title matches the title from state
-    const initialTemplateTitle = templateDetailsUtils.getByRole('heading', {
-      name: /Template Title/,
-    });
-    expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
-
-    const relatedTemplatesSection = fixture.screen.getByRole('region', {
-      name: /Related Templates/,
-    });
-
-    // Select the first related template (all related templates have the data-testid attribute)
-    const firstRelatedTemplate = relatedTemplatesSection.querySelector(
-      '[data-testid]'
-    );
-
-    // Hover over the first related templated and click the View Button
-    const firstRelatedTemplateUtils = within(firstRelatedTemplate);
-    await fixture.events.hover(firstRelatedTemplate);
-    const view = firstRelatedTemplateUtils.getByText(
-      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
-    );
-    await fixture.events.click(view);
-
-    // Assert that the active template has changed
-    const { id: nextTemplateId } = getQueryParams();
-    expect(nextTemplateId).not.toEqual(initialTemplateId);
-
-    const nextTemplate = templates[nextTemplateId];
-
-    const nextTemplateTitle = templateDetailsUtils.getByRole('heading', {
-      name: /Template Title/,
-    });
-    expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
   });
 });
