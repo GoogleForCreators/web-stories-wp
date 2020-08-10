@@ -41,7 +41,7 @@ class Story extends \WP_UnitTestCase {
 	public function test_load_from_post() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'title'        => 'test title',
+				'post_title'   => 'test title',
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
@@ -60,7 +60,7 @@ class Story extends \WP_UnitTestCase {
 	public function test_invalid_load_from_post() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'title'        => 'test title',
+				'post_title'   => 'test title',
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -78,7 +78,7 @@ class Story extends \WP_UnitTestCase {
 	public function test_setup_default_poster() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'title'        => 'test title',
+				'post_title'   => 'test title',
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
