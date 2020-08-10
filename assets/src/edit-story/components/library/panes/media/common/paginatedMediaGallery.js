@@ -170,9 +170,8 @@ function PaginatedMediaGallery({
         setShowLoadingPill(isMediaLoading);
       }, SHOW_LOADING_PILL_DELAY_MS);
       return () => clearTimeout(showLoadingTimeout);
-    } else {
-      setShowLoadingPill(false);
     }
+    setShowLoadingPill(false);
     return undefined;
   }, [isMediaLoading]);
 
