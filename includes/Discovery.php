@@ -218,7 +218,7 @@ class Discovery {
 			return;
 		}
 		?>
-		<meta property="twtter:image" content="<?php echo esc_url( $poster ); ?>">
+		<meta property="twitter:image" content="<?php echo esc_url( $poster ); ?>">
 		<?php
 	}
 
