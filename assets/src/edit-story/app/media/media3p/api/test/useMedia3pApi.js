@@ -326,4 +326,15 @@ describe('useMedia3pApi', () => {
 
     expect(registerUsageResult).toBeUndefined();
   });
+
+  it('should properly handle an empty listMedia response', () => {
+    apiFetcherMock.listMedia.mockImplementation(() => Promise.resolve({}));
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+
+    expect(async () => {
+      await renderHook(() => useMedia3pApi(), { wrapper });
+    }).not.toThrow();
+  });
 });

@@ -53,6 +53,8 @@ const SHOW_LOADING_PILL_DELAY_MS = 1000;
 function PaginatedMediaGallery({
   providerType,
   resources,
+  searchTerm,
+  selectedCategoryId,
   isMediaLoading,
   isMediaLoaded,
   hasMore,
@@ -109,6 +111,11 @@ function PaginatedMediaGallery({
       return;
     }
   }, [hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
+
+  // Scroll to the top when the searchTerm or selected category changes.
+  useEffect(() => {
+    refContainer.current?.scrollTo(0, 0);
+  }, [searchTerm, selectedCategoryId]);
 
   // After scrolls or resize, see if we need the load the next page.
   const [handleScrollOrResize] = useDebouncedCallback(
@@ -205,6 +212,8 @@ PaginatedMediaGallery.propTypes = {
   hasMore: PropTypes.bool.isRequired,
   onInsert: PropTypes.func.isRequired,
   setNextPage: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string,
+  selectedCategoryId: PropTypes.string,
 };
 
 export default memo(PaginatedMediaGallery);
