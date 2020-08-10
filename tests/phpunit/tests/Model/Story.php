@@ -88,6 +88,6 @@ class Story extends \WP_UnitTestCase {
 		$story->setup_default_poster();
 		$story->load_from_post( $post );
 
-		$this->assertContains( $story->get_poster_portrait(), 'assets/images/fallback-poster.jpg' );
+		$this->assertContains( 'assets/images/fallback-poster.jpg', $story->get_poster_portrait() );
 	}
 }
