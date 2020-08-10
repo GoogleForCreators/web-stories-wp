@@ -72,7 +72,6 @@ const StoryGridView = ({
   renameStory,
   dateSettings,
   previewStory,
-  dateFormat,
 }) => {
   return (
     <StoryGrid pageSize={pageSize}>
