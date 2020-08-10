@@ -271,7 +271,7 @@ class HTML extends \WP_UnitTestCase {
 	 *
 	 * @return string
 	 */
-	protected function setup_renderer( $post ){
+	protected function setup_renderer( $post ) {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->setup_default_poster();
 		$story->load_from_post( $post );
