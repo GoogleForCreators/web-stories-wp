@@ -18,20 +18,36 @@
  * Internal dependencies
  */
 import * as common from '../pagination/actions';
+import { ProviderType } from '../providerType';
 import * as types from './types';
 
 export const fetchMediaStart = (dispatch) => (properties) =>
-  common.fetchMediaStart(dispatch)({ ...properties, provider: 'local' });
+  common.fetchMediaStart(dispatch)({
+    ...properties,
+    provider: ProviderType.LOCAL,
+  });
 export const fetchMediaSuccess = (dispatch) => (properties) =>
-  common.fetchMediaSuccess(dispatch)({ ...properties, provider: 'local' });
+  common.fetchMediaSuccess(dispatch)({
+    ...properties,
+    provider: ProviderType.LOCAL,
+  });
 export const fetchMediaError = (dispatch) => (properties) =>
-  common.fetchMediaError(dispatch)({ ...properties, provider: 'local' });
+  common.fetchMediaError(dispatch)({
+    ...properties,
+    provider: ProviderType.LOCAL,
+  });
 export const setNextPage = (dispatch) => (properties) =>
-  common.setNextPage(dispatch)({ ...properties, provider: 'local' });
+  common.setNextPage(dispatch)({ ...properties, provider: ProviderType.LOCAL });
 export const updateMediaElement = (dispatch) => (properties) =>
-  common.updateMediaElement(dispatch)({ ...properties, provider: 'local' });
+  common.updateMediaElement(dispatch)({
+    ...properties,
+    provider: ProviderType.LOCAL,
+  });
 export const deleteMediaElement = (dispatch) => (properties) =>
-  common.deleteMediaElement(dispatch)({ ...properties, provider: 'local' });
+  common.deleteMediaElement(dispatch)({
+    ...properties,
+    provider: ProviderType.LOCAL,
+  });
 
 export const resetFilters = (dispatch) => () => {
   dispatch({ type: types.LOCAL_MEDIA_RESET_FILTERS });

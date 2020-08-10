@@ -47,11 +47,11 @@ class Embed_Block {
 	 * @return void
 	 */
 	public function init() {
-		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
-		wp_register_style( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
+		wp_register_script( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
+		wp_register_style( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
-		$this->register_script( self::SCRIPT_HANDLE, [ 'amp-story-player', Tracking::SCRIPT_HANDLE ] );
-		$this->register_style( self::SCRIPT_HANDLE, [ 'amp-story-player' ] );
+		$this->register_script( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player', Tracking::SCRIPT_HANDLE ] );
+		$this->register_style( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player' ] );
 
 		// todo: use register_block_type_from_metadata() once generally available.
 
@@ -155,8 +155,10 @@ class Embed_Block {
 		$player_style = sprintf( 'width: %dpx; height: %dpx; margin: %s', absint( $attributes['width'] ), absint( $attributes['height'] ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
-		wp_enqueue_style( 'amp-story-player' );
-		wp_enqueue_script( 'amp-story-player' );
+		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
+			wp_enqueue_style( 'standalone-amp-story-player' );
+			wp_enqueue_script( 'standalone-amp-story-player' );
+		}
 
 		ob_start();
 		?>

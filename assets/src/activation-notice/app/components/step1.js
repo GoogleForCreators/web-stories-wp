@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 
 const Image = styled.img`
   transform: rotate(${(props) => props.$rotationAngle});
-  margin-top: -40px;
+  margin-top: -35px;
 `;
 
 const ParagraphWrapper = styled.div`
@@ -67,7 +67,12 @@ function Step1() {
 
   return (
     <Wrapper>
-      <Link href={demoStoryURL} onClick={onClick}>
+      <Link
+        href={demoStoryURL}
+        onClick={onClick}
+        target="_blank"
+        rel="noreferrer"
+      >
         <Image
           src={`${assetsURL}images/plugin-activation/tips.png`}
           alt=""
@@ -89,7 +94,12 @@ function Step1() {
             _x('Read the', 'plugin activation', 'web-stories')
           }
           <br />
-          <Link href={demoStoryURL} onClick={onClick}>
+          <Link
+            href={demoStoryURL}
+            onClick={onClick}
+            target="_blank"
+            rel="noreferrer"
+          >
             {__('Get Started story', 'web-stories')}
           </Link>
         </Paragraph>

@@ -17,15 +17,15 @@
 /**
  * External dependencies
  */
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const formattedStoriesArray = [
   {
     id: 167,
     status: 'publish',
     title: 'ORANGE SHAPES',
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
-    created: '2020-05-21T23:25:51.000Z',
+    modified: moment.parseZone('2020-05-21T23:25:51.000Z'),
+    created: moment.parseZone('2020-05-21T23:25:51.000Z'),
     pages: [
       {
         elements: [
@@ -91,7 +91,7 @@ const formattedStoriesArray = [
     ],
     tags: [],
     categories: [],
-    author: 1,
+    author: 2,
     centerTargetAction: '',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
@@ -314,8 +314,8 @@ const formattedStoriesArray = [
     id: 165,
     status: 'draft',
     title: 'GREEN SHAPES',
-    modified: moment('05-04-2020', 'MM-DD-YYYY'),
-    created: '2020-05-21T23:25:22.000Z',
+    modified: moment.parseZone('2020-05-21T23:25:22.000Z'),
+    created: moment.parseZone('2020-05-21T23:25:22.000Z'),
     pages: [
       {
         elements: [
@@ -604,8 +604,8 @@ const formattedStoriesArray = [
     id: 163,
     status: 'draft',
     title: 'RED SHAPES',
-    modified: moment('05-21-2020', 'MM-DD-YYYY'),
-    created: '2020-05-21T23:24:47.000Z',
+    modified: moment('2020-05-21T23:24:47.000Z'),
+    created: moment('2020-05-21T23:24:47.000Z'),
     pages: [
       {
         elements: [
@@ -1186,8 +1186,8 @@ const formattedStoriesArray = [
     id: 161,
     status: 'draft',
     title: 'BLUE SHAPES',
-    modified: moment('05-20-2020', 'MM-DD-YYYY'),
-    created: '2020-05-21T23:24:06.000Z',
+    modified: moment.parseZone('2020-05-21T23:24:06.000Z'),
+    created: moment.parseZone('2020-05-21T23:24:06.000Z'),
     pages: [
       {
         elements: [

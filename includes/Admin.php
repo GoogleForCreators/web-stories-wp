@@ -131,7 +131,7 @@ BLOCK;
 		$has_poster = has_post_thumbnail( $post_id );
 
 		if ( $has_poster ) {
-			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
+			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::POSTER_PORTRAIT_IMAGE_SIZE );
 
 			return sprintf(
 				$block_markup_with_poster,

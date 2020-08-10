@@ -27,13 +27,15 @@ import PropTypes from 'prop-types';
 import { ArrowDown } from '../../../../button/index';
 import CategoryPill from './categoryPill';
 
+// Pills have a margin of 4, so the l/r padding is 24-4=20.
 const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
   min-height: 94px;
-  padding: 30px 24px 10px;
+  padding: 30px 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex: 1 0 auto;
 `;
 
 // This hides the category pills unless expanded
@@ -45,9 +47,11 @@ const CategoryPillContainer = styled.div`
 `;
 
 // Flips the button upside down when expanded;
+// Important: the visibily is 'inherit' when props.visible because otherwise
+// it gets shown even when the provider is not the selectedProvider!
 const ExpandButton = styled(ArrowDown)`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
-  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  visibility: ${(props) => (props.visible ? 'inherit' : 'hidden')};
   align-self: center;
 `;
 

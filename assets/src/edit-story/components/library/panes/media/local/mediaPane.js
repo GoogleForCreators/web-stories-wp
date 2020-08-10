@@ -48,7 +48,7 @@ import {
   StyledPane,
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
-import { ProviderType } from '../common/providerType';
+import { ProviderType } from '../../../../../app/media/providerType';
 import Flags from '../../../../../flags';
 import paneId from './paneId';
 
@@ -85,7 +85,7 @@ const FilterButton = styled.button`
   padding: 0;
   margin: 0 18px 0 0;
   color: ${({ theme, active }) =>
-    active ? theme.colors.fg.v1 : theme.colors.mg.v1};
+    active ? theme.colors.fg.white : theme.colors.mg.v1};
   font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: ${({ theme }) => theme.fonts.label.size};
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
@@ -294,6 +294,7 @@ function MediaPane(props) {
       hasMore={hasMore}
       onInsert={insertMediaElement}
       setNextPage={setNextPage}
+      searchTerm={searchTerm}
     />
   ) : (
     // Arranges elements in columns.
@@ -324,7 +325,7 @@ function MediaPane(props) {
             />
           ))}
       </Column>
-      {hasMore && (
+      {isMediaLoading && hasMore && (
         <MediaGalleryLoadingPill ref={refContainerFooter}>
           {__('Loading…', 'web-stories')}
         </MediaGalleryLoadingPill>
