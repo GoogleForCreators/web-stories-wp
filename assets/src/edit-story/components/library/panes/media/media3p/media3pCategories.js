@@ -67,10 +67,11 @@ const Media3pCategories = ({
     return (selectedCategoryId
       ? [categories.find((e) => e.id === selectedCategoryId)]
       : categories
-    ).map((e) => {
+    ).map((e, i) => {
       const selected = e.id === selectedCategoryId;
       return (
         <CategoryPill
+          index={i}
           isSelected={selected}
           key={e.id}
           title={e.displayName}
@@ -93,6 +94,7 @@ const Media3pCategories = ({
         {renderCategories()}
       </CategoryPillContainer>
       <ExpandButton
+        data-testid="category-expand-button"
         onClick={() => setIsExpanded(!isExpanded)}
         isExpanded={isExpanded}
         visible={!selectedCategoryId}

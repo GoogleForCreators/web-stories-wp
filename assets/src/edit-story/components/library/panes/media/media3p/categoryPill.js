@@ -18,8 +18,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useRef } from 'react';
+/**
+ * Internal dependencies
+ */
+import useRovingTabIndex from '../common/useRovingTabIndex';
 
-const PillContainer = styled.span`
+const PillContainer = styled.button`
   cursor: pointer;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -51,19 +56,28 @@ PillContainer.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-const CategoryPill = (props) => (
-  <PillContainer
-    isSelected={props.isSelected}
-    onClick={props.onClick}
-    role="tab"
-    aria-selected={props.isSelected}
-    data-testid="mediaCategory"
-  >
-    {props.title}
-  </PillContainer>
-);
+const CategoryPill = (props) => {
+  const ref = useRef();
+
+  useRovingTabIndex({ ref, isRowBasedGallery: true });
+
+  return (
+    <PillContainer
+      ref={ref}
+      tabIndex={props.index === 0 ? 0 : -1}
+      isSelected={props.isSelected}
+      onClick={props.onClick}
+      role="tab"
+      aria-selected={props.isSelected}
+      data-testid="mediaCategory"
+    >
+      {props.title}
+    </PillContainer>
+  );
+};
 
 CategoryPill.propTypes = {
+  index: PropTypes.number,
   isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,

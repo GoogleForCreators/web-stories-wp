@@ -234,6 +234,24 @@ describe('Media3pPane fetching', () => {
     await fixture.snapshot();
   });
 
+  it('should arrow navigate between category pills', async () => {
+    mockListMedia();
+    mockListCategories();
+    await fixture.events.click(media3pTab);
+
+    await fixture.events.keyboard.press('tab');
+    await fixture.events.keyboard.press('tab');
+    expect(document.activeElement.textContent).toBe('Sustainability');
+
+    await fixture.events.keyboard.press('ArrowRight');
+    expect(document.activeElement.textContent).toBe('Wallpapers');
+
+    await fixture.events.keyboard.press('tab');
+    expect(document.activeElement).toBe(
+      fixture.screen.getByTestId('category-expand-button')
+    );
+  });
+
   it('should fetch 2nd page', async () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
