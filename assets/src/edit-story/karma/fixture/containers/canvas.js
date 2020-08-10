@@ -30,7 +30,7 @@ export class Canvas extends Container {
 
   get displayLayer() {
     return this._get(
-      this.getByRole('region', { name: 'Display' }),
+      this.getByRole('region', { name: 'Display layer' }),
       'displayLayer',
       DisplayLayer
     );
@@ -38,7 +38,7 @@ export class Canvas extends Container {
 
   get framesLayer() {
     return this._get(
-      this.getByRole('region', { name: 'Frames' }),
+      this.getByRole('region', { name: 'Frames layer' }),
       'framesLayer',
       FramesLayer
     );
@@ -54,7 +54,7 @@ export class Canvas extends Container {
 
   get fullbleed() {
     return this._get(
-      this.getAllByRole('region', { name: 'Fullbleed' })[0],
+      this.getAllByRole('region', { name: 'Fullbleed area' })[0],
       'fullbleed',
       Fullbleed
     );

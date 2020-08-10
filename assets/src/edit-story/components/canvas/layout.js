@@ -229,7 +229,7 @@ const PageArea = forwardRef(function PageArea(
     <PageAreaFullbleedContainer
       ref={fullbleedRef}
       data-testid="fullbleed"
-      aria-label={__('Fullbleed', 'web-stories')}
+      aria-label={__('Fullbleed area', 'web-stories')}
       role="region"
     >
       <PageAreaWithOverflow showOverflow={showOverflow} background={background}>

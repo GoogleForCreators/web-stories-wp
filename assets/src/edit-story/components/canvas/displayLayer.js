@@ -51,7 +51,7 @@ function DisplayLayer() {
     <Layer
       data-testid="DisplayLayer"
       pointerEvents="none"
-      aria-label={__('Display', 'web-stories')}
+      aria-label={__('Display layer', 'web-stories')}
     >
       <PageArea
         ref={setPageContainer}
