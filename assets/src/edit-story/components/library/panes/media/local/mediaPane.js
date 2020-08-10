@@ -294,6 +294,7 @@ function MediaPane(props) {
       hasMore={hasMore}
       onInsert={insertMediaElement}
       setNextPage={setNextPage}
+      searchTerm={searchTerm}
     />
   ) : (
     // Arranges elements in columns.

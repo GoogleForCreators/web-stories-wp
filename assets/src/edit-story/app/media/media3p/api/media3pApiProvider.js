@@ -161,7 +161,7 @@ function Media3pApiProvider({ children }) {
       pageToken,
     });
     return {
-      media: response.media.map(getResourceFromMedia3p),
+      media: (response.media || []).map(getResourceFromMedia3p),
       nextPageToken: response.nextPageToken,
     };
   }
