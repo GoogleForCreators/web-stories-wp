@@ -72,7 +72,7 @@ function GoogleAnalyticsSettings({
   );
 
   return (
-    <SettingForm>
+    <SettingForm onSubmit={(e) => e.preventDefault()}>
       <SettingHeading htmlFor="gaTrackingID">
         {TEXT.SECTION_HEADING}
       </SettingHeading>
