@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES } from '../constants';
+import { ANIMATION_TYPES, ANIMATION_EFFECTS } from '../constants';
 import { GeneralAnimationPropTypes } from '../outputs/types';
 
 export const WAAPIAnimationProps = {
@@ -39,7 +39,10 @@ export const AMPAnimationProps = {
 
 export const AnimationProps = {
   id: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(Object.values(ANIMATION_TYPES)),
+  type: PropTypes.oneOf([
+    ...Object.values(ANIMATION_TYPES),
+    ...Object.values(ANIMATION_EFFECTS),
+  ]),
   targets: PropTypes.arrayOf(PropTypes.string),
   ...GeneralAnimationPropTypes,
 };

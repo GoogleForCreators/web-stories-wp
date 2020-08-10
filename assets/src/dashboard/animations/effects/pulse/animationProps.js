@@ -17,17 +17,12 @@
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
+import { FIELD_TYPES } from '../../constants';
 
 export default {
-  floatOnDir: {
-    type: FIELD_TYPES.DROPDOWN,
-    values: [
-      DIRECTION.TOP_TO_BOTTOM,
-      DIRECTION.BOTTOM_TO_TOP,
-      DIRECTION.LEFT_TO_RIGHT,
-      DIRECTION.RIGHT_TO_LEFT,
-    ],
-    defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  scale: {
+    tooltip: 'Valid values are greater than or equal to 0',
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 0.5,
   },
 };
