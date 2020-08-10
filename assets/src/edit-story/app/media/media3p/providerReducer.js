@@ -24,6 +24,8 @@ import paginationReducer, {
 import categoriesReducer, {
   INITIAL_STATE as CATEGORIES_INITIAL_STATE,
 } from './categories/reducer';
+import * as media3pTypes from './types';
+import * as categoryTypes from './categories/types';
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
@@ -44,10 +46,35 @@ const INITIAL_STATE = {
  * @return {Object} The new state
  */
 function providerReducer(state = INITIAL_STATE, { type, payload }) {
-  return {
+  state = {
     ...paginationReducer(state, { type, payload }),
     categories: categoriesReducer(state.categories, { type, payload }),
   };
+
+  switch (type) {
+    case media3pTypes.MEDIA3P_SET_SEARCH_TERM: {
+      // This action doesn't have a provider in its payload, so effectively
+      // clears out the pageToken and nextPageToken for all providers.
+      return {
+        ...state,
+        pageToken: undefined,
+        nextPageToken: undefined,
+      };
+    }
+
+    case categoryTypes.SELECT_CATEGORY: {
+      // This is called only for the provider in the payload, so it clears
+      // out only that provider's pageToken and nextPageToken.
+      return {
+        ...state,
+        pageToken: undefined,
+        nextPageToken: undefined,
+      };
+    }
+
+    default:
+      return state;
+  }
 }
 
 export default providerReducer;

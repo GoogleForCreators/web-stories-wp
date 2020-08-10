@@ -175,21 +175,19 @@ function Media3pPane(props) {
         key={`provider-bottom-wrapper-${providerType}`}
       >
         {PROVIDERS[providerType].supportsCategories && (
-          <>
-            <Media3pCategories
-              categories={state.categories.categories}
-              selectedCategoryId={state.categories.selectedCategoryId}
-              selectCategory={actions.selectCategory}
-              deselectCategory={actions.deselectCategory}
-            />
-            <MediaSubheading
-              data-testid={'media-subheading'}
-              shouldDisplay={shouldDisplayMediaSubheading}
-            >
-              {displayName}
-            </MediaSubheading>
-          </>
+          <Media3pCategories
+            categories={state.categories.categories}
+            selectedCategoryId={state.categories.selectedCategoryId}
+            selectCategory={actions.selectCategory}
+            deselectCategory={actions.deselectCategory}
+          />
         )}
+        <MediaSubheading
+          data-testid={'media-subheading'}
+          shouldDisplay={shouldDisplayMediaSubheading}
+        >
+          {displayName}
+        </MediaSubheading>
         <PaginatedMediaGallery
           providerType={providerType}
           resources={state.media}
@@ -198,6 +196,8 @@ function Media3pPane(props) {
           hasMore={state.hasMore}
           setNextPage={actions.setNextPage}
           onInsert={insertMediaElement}
+          searchTerm={searchTerm}
+          selectedCategoryId={state.categories.selectedCategoryId}
         />
       </ProviderMediaCategoriesWrapper>
     );
