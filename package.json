@@ -78,7 +78,7 @@
     "@percy/puppeteer": "^1.1.0",
     "@prettier/plugin-xml": "^0.10.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
-    "@storybook/addon-a11y": "^6.0.0-rc.18",
+    "@storybook/addon-a11y": "^6.0.2",
     "@storybook/addon-actions": "^6.0.0-rc.18",
     "@storybook/addon-backgrounds": "^6.0.0-rc.18",
     "@storybook/addon-docs": "^6.0.0-rc.18",
