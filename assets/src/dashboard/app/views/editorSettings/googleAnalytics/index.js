@@ -32,6 +32,7 @@ import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
 import { InlineInputForm } from '../../../../components';
 import {
   FormContainer,
+  InlineLink,
   SettingForm,
   SettingHeading,
   TextInputHelperText,
@@ -39,9 +40,12 @@ import {
 
 export const TEXT = {
   CONTEXT: __(
-    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article.",
+    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article:",
     'web-stories'
-  ), // TODO update this text to have link to article once confirmed what article is
+  ),
+  CONTEXT_ARTICLE_LINK:
+    'https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/',
+  CONTEXT_ARTICLE: __('Analytics for your Web Stories', 'web-stories'),
   SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
   PLACEHOLDER: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
   ARIA_LABEL: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
@@ -85,7 +89,13 @@ function GoogleAnalyticsSettings({
           placeholder={TEXT.PLACEHOLDER}
           error={inputError}
         />
-        <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
+        <TextInputHelperText>
+          {TEXT.CONTEXT}
+          <InlineLink href={TEXT.CONTEXT_ARTICLE_LINK}>
+            {TEXT.CONTEXT_ARTICLE}
+          </InlineLink>
+          {'.'}
+        </TextInputHelperText>
       </FormContainer>
     </SettingForm>
   );
