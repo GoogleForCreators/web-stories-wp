@@ -76,7 +76,7 @@ class Story {
 	/**
 	 * Story constructor.
 	 *
-	 * @param Array $story Array of attributes.
+	 * @param array $story Array of attributes.
 	 */
 	public function __construct( array $story = [] ) {
 		if ( ! empty( $story ) && is_array( $story ) ) {
