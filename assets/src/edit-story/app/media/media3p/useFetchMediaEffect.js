@@ -31,16 +31,19 @@ import { PROVIDERS } from './providerConfiguration';
 
 /**
  * @typedef {Object} FetchMediaEffectParams
- * @property {string} provider
- * @property {string} selectedProvider
- * @property {string} searchTerm
- * @property {string} selectedCategoryId
- * @property {string} pageToken
- * @property {boolean} isMediaLoading
- * @property {boolean} isMediaLoaded
- * @property {import('./typedefs').FetchMediaStartFn} fetchMediaStart
- * @property {import('./typedefs').FetchMediaSuccessFn} fetchMediaSuccess
- * @property {import('./typedefs').FetchMediaErrorFn} fetchMediaError
+ * @property {string} provider provider name
+ * @property {string} selectedProvider selected provider
+ * @property {string} searchTerm current search term
+ * @property {string} selectedCategoryId current category id
+ * @property {string} pageToken current page token
+ * @property {boolean} isMediaLoading is the media loading
+ * @property {boolean} isMediaLoaded is media loaded
+ * @property {import('./typedefs').FetchMediaStartFn} fetchMediaStart oction
+ * dispatched when fetch media process starts.
+ * @property {import('./typedefs').FetchMediaSuccessFn} fetchMediaSuccess action
+ * dispatched when fetching media has been a success
+ * @property {import('./typedefs').FetchMediaErrorFn} fetchMediaError action
+ * dispatched when fetching media returns an error
  */
 
 /**

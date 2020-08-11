@@ -23,21 +23,21 @@
  * as well as media3p.
  *
  * @typedef Media
- * @property {Object} attribution
- * @property {string} creationDate
- * @property {number} height
- * @property {number} width
- * @property {string} id
- * @property {number} length
- * @property {string} lengthFormatted
- * @property {boolean} local
- * @property {string} mimeType
- * @property {string} poster
- * @property {string} posterId
- * @property {Object} sizes
- * @property {string} src
- * @property {string} title
- * @property {string} type
+ * @property {Object} attribution object describing the attribution
+ * @property {string} creationDate date created
+ * @property {number} height in pixels
+ * @property {number} width in pixels
+ * @property {string} id media id
+ * @property {number} length length
+ * @property {string} lengthFormatted lengthFormatted
+ * @property {boolean} local whether the media is a locally uploaded media
+ * @property {string} mimeType mimeType
+ * @property {string} poster poster
+ * @property {string} posterId poster id
+ * @property {Object} sizes object representing the different sizes of the media
+ * @property {string} src url of media
+ * @property {string} title title of media
+ * @property {string} type type of media
  */
 
 /**
@@ -45,34 +45,34 @@
  */
 
 /**
+ * @typedef FetchMediaSuccessPayload
+ * @property {string} provider media provider name
+ * @property {*} media the media that is fetched
+ * @property {string} nextPageToken token representing the next page
+ * @property {number} totalPages total number of pages
+ * @property {string} pageToken the current page token
+ */
+
+/**
+ * @typedef UpdateMediaElementPayload
+ * @property {string} provider media provider name
+ * @property {string} id id of the media to update
+ * @property {string} posterId poster id
+ * @property {string} poster poster
+ * @property {number} height height in pixels
+ * @property {number} width width in pixels
+ * @property {string} alt alt string that describes the media
+ */
+
+/**
  * 'media3p/[provider]' action typedefs not specific to any provider.
  *
- * @typedef FetchMediaSuccessPayload
- * @property {string} provider
- * @property {*} media
- * @property {string} nextPageToken
- * @property {number} totalPages
- * @property {string} pageToken
- *
- * @typedef UpdateMediaElementPayload
- * @property {string} provider
- * @property {string} id
- * @property {string} posterId
- * @property {string} poster
- * @property {number} height
- * @property {number} width
- * @property {string} alt
- *
- * @typedef {(payload: {provider: string, id: string}) => undefined}
- * DeleteMediaElementFn
+ * @typedef {(payload: {provider: string, id: string}) => undefined} DeleteMediaElementFn
  * @typedef {(payload: {provider: string}) => undefined} FetchMediaErrorFn
- * @typedef {(payload: {provider: string, pageToken: string}) => undefined}
- * FetchMediaStartFn
- * @typedef {(payload: FetchMediaSuccessPayload) => undefined}
- * FetchMediaSuccessFn
+ * @typedef {(payload: {provider: string, pageToken: string}) => undefined} FetchMediaStartFn
+ * @typedef {(payload: FetchMediaSuccessPayload) => undefined} FetchMediaSuccessFn
  * @typedef {(payload: {provider: string}) => undefined} SetNextPageFn
- * @typedef {(payload: UpdateMediaElementPayload) => undefined}
- * UpdateMediaElementFn
+ * @typedef {(payload: UpdateMediaElementPayload) => undefined} UpdateMediaElementFn
  */
 
 /**
@@ -91,7 +91,8 @@
  * of application through context providers.
  *
  * @typedef {Object} Media3pProviderContextState
- * @property {CategoriesState} categories Category state object
+ * @property {import('./categories/typedefs').CategoriesContextState} categories
+ * Category state object
  * @property {boolean} hasMore has more media
  * @property {boolean} isMediaLoaded is media loaded
  * @property {boolean} isMediaLoading is media loading
@@ -106,7 +107,8 @@
  * reducer.
  *
  * @typedef {Object} Media3pProviderReducerState
- * @property {CategoriesState} categories Category state object
+ * @property {import('./categories/typedefs').CategoriesContextState} categories
+ * Category state object
  * @property {boolean} hasMore has more media
  * @property {boolean} isMediaLoaded is media loaded
  * @property {boolean} isMediaLoading is media loading
@@ -179,8 +181,8 @@
  * @typedef {Object} Media3pReducerActions
  * @property {DeleteMediaElementFn} deleteMediaElement Action dispatched when
  * media element is deleted
- * @property {DeselectCategoryFn} deselectCategory Action dispatched when current
- * category is deselected
+ * @property {import('./categories/typedefs').DeselectCategoryFn} deselectCategory
+ * Action dispatched when current category is deselected
  * @property {import('./categories/typedefs').FetchCategoriesStartFn}
  * fetchCategoriesStart Action dispatched when fetching categories starts
  * @property {import('./categories/typedefs').FetchCategoriesErrorFn}

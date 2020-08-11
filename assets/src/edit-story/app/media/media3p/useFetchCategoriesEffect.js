@@ -31,15 +31,16 @@ import { PROVIDERS } from './providerConfiguration';
 
 /**
  * @typedef {Object} FetchCategoriesEffectParams
- * @property {string} provider
- * @property {string} selectedProvider
+ * @property {string} provider provider name
+ * @property {string} selectedProvider current selected provider
  * @property {Array.<import('./categories/typedefs').Category>} categories
+ * list of categories
  * @property {import('./categories/typedefs').FetchCategoriesStartFn}
- * fetchCategoriesStart
+ * fetchCategoriesStart action dispatched when fetching process starts
  * @property {import('./categories/typedefs').FetchCategoriesSuccessFn}
- * fetchCategoriesSuccess
+ * fetchCategoriesSuccess action dispatched when fetching is sucessful
  * @property {import('./categories/typedefs').FetchCategoriesErrorFn}
- * fetchCategoriesError
+ * fetchCategoriesError action dispatched when fetching returns an error
  */
 
 /**

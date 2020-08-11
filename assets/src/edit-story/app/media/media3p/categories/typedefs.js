@@ -28,8 +28,8 @@
 
 /**
  * @typedef {Object} Category
- * @property {string} id
- * @property {string} displayName
+ * @property {string} id category id
+ * @property {string} displayName the name of the category
  */
 
 /**
