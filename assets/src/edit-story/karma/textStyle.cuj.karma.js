@@ -73,6 +73,9 @@ describe('CUJ: Creator Can Style Text', () => {
     });
 
     it('should apply the selected font', async () => {
+      await fixture.events.keyboard.type('Yrsa');
+      // Ensure the debounced callback has taken effect.
+      await wait(TIMEOUT);
       const option = fixture.screen.getByText('Yrsa');
       await fixture.events.click(option);
       await wait(TIMEOUT);
@@ -80,7 +83,7 @@ describe('CUJ: Creator Can Style Text', () => {
       const selected = fixture.screen.getAllByRole('option', {
         name: 'Selected Yrsa',
       });
-      expect(selected.length).toBe(2);
+      expect(selected.length).toBe(1);
 
       const {
         state: {
