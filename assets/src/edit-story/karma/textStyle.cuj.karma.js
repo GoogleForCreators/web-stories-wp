@@ -141,7 +141,7 @@ describe('Element: Text', () => {
           .querySelectorAll('li');
         expect(options.length).toBe(2);
 
-        await fixture.events.keyboard.press('Del');
+        await fixture.events.keyboard.press('Backspace');
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         const defaultOptions = document
