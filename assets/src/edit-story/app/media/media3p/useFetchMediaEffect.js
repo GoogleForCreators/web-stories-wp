@@ -42,7 +42,7 @@ import { PROVIDERS } from './providerConfiguration';
  * fetchMediaStart: import('./typedefs').FetchMediaStart
  * fetchMediaSuccess: import('./typedefs').FetchMediaSuccess
  * fetchMediaError: import('./typedefs').FetchMediaError
- * }} param0 required actions and parameters
+ * }} obj required actions and parameters
  */
 export default function useFetchMediaEffect({
   provider,

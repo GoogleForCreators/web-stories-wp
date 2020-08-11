@@ -38,7 +38,7 @@ import { PROVIDERS } from './providerConfiguration';
  * fetchCategoriesStart: import('./categories/typedefs').FetchCategoriesStart
  * fetchCategoriesSuccess: import('./categories/typedefs').FetchCategoriesSuccess
  * fetchCategoriesError: import('./categories/typedefs').FetchCategoriesError
- * }} parameter required actions and parameters
+ * }} obj required actions and parameters
  */
 export default function useFetchCategoriesEffect({
   provider,
