@@ -172,7 +172,7 @@ function PaginatedMediaGallery({
   const [showLoadingPill, setShowLoadingPill] = useState(false);
 
   useEffect(() => {
-    if (isMediaLoading) {
+    if (isMediaLoading && hasMore) {
       const showLoadingTimeout = setTimeout(() => {
         setShowLoadingPill(isMediaLoading);
       }, SHOW_LOADING_PILL_DELAY_MS);
@@ -180,9 +180,8 @@ function PaginatedMediaGallery({
     }
     setShowLoadingPill(false);
     return undefined;
-  }, [isMediaLoading]);
+  }, [isMediaLoading, hasMore]);
 
-  const displayLoadingPill = isMediaLoading && hasMore && showLoadingPill;
   const attribution =
     providerType !== ProviderType.LOCAL &&
     PROVIDERS[providerType].attributionComponent();
@@ -194,12 +193,12 @@ function PaginatedMediaGallery({
       >
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
-      {displayLoadingPill && (
+      {showLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
           {__('Loading…', 'web-stories')}
         </MediaGalleryLoadingPill>
       )}
-      {!displayLoadingPill && attribution}
+      {!showLoadingPill && attribution}
     </>
   );
 }
