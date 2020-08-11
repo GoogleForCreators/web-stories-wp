@@ -33,7 +33,7 @@
 /**
  * The categories state returned by the context value.
  *
- * @typedef {Object} CategoriesState
+ * @typedef {Object} CategoriesContextState
  * @property {Array.<Category>} categories array of category objects
  * @property {boolean} isLoading are categories loading
  * @property {boolean} isLoaded are categories loaded

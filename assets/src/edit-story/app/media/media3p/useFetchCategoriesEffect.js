@@ -34,7 +34,7 @@ import { PROVIDERS } from './providerConfiguration';
  * @param {{
  * provider: string,
  * selectedProvider: string,
- * categories:  import('./categories/typedefs').CategoriesState,
+ * categories:  import('./categories/typedefs').CategoriesReducerState,
  * fetchCategoriesStart: import('./categories/typedefs').FetchCategoriesStart
  * fetchCategoriesSuccess: import('./categories/typedefs').FetchCategoriesSuccess
  * fetchCategoriesError: import('./categories/typedefs').FetchCategoriesError
