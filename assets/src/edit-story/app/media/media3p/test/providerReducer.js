@@ -26,7 +26,6 @@ import providerReducer from '../providerReducer';
 import useMediaReducer from '../../useMediaReducer';
 import * as actionsToWrap from '../actions';
 import * as paginationActionsToWrap from '../../pagination/actions';
-import * as media3pActionsToWrap from '../actions';
 import * as categoryActionsToWrap from '../categories/actions';
 
 describe('providerReducer', () => {
@@ -55,7 +54,6 @@ describe('providerReducer', () => {
       useMediaReducer(providerReducer, {
         ...actionsToWrap,
         ...paginationActionsToWrap,
-        ...media3pActionsToWrap,
       })
     );
 
