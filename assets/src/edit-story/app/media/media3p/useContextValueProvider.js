@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import './typedefs';
 import useProviderContextValueProvider from './useProviderContextValueProvider';
 import { PROVIDERS } from './providerConfiguration';
 
