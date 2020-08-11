@@ -27,6 +27,7 @@ export default {
 
 const animations = Array.from(Array(10).keys()).map((id) => ({
   id,
+  duration: id * 10 + 20,
 }));
 
 export const _default = () => {

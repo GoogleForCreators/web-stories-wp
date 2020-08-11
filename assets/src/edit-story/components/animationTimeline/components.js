@@ -64,6 +64,8 @@ export const TimelineTitleBar = styled.div`
 `;
 
 export const TimelineRow = styled.div`
+  display: flex;
+  align-items: center;
   height: ${ROW_HEIGHT}px;
   min-width: 100%;
   ${({ alternating, theme }) =>

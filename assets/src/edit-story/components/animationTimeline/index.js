@@ -31,6 +31,7 @@ import {
   TimelineRow,
 } from './components';
 import AnimationRuler from './ruler';
+import TimingBar from './timingBar';
 
 export default function AnimationTimeline({ animations, duration }) {
   return (
@@ -53,7 +54,9 @@ export default function AnimationTimeline({ animations, duration }) {
             data-testid="timeline-animation-item"
             key={`timeline-animation-item-${animation.id}`}
             alternating={Boolean(index % 2)}
-          />
+          >
+            <TimingBar duration={animation.duration} />
+          </TimelineRow>
         ))}
       </TimelineTimingContainer>
     </TimelineContainer>
