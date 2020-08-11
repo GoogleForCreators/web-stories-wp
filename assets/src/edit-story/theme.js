@@ -191,8 +191,7 @@ const theme = {
     duration: {
       family: 'Roboto',
       size: '12px',
-      lineHeight: '1',
-      weight: '500',
+      lineHeight: '20px',
     },
     description: {
       family: 'Roboto',

@@ -35,6 +35,10 @@ import ApiProviderFixture from './apiProviderFixture';
 
 const defaultConfig = {
   isRTL: false,
+  dateFormat: 'F j, Y',
+  timeFormat: 'g:i a',
+  gmtOffset: -4,
+  timezone: 'America/New_York',
   newStoryURL:
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',

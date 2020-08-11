@@ -72,6 +72,7 @@ const colors = {
   success: '#4CAF4F',
   // todo
   placeholder: '#d9dbdd',
+  storyPreviewBackground: '#202125',
 };
 
 const borders = {

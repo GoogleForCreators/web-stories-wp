@@ -47,7 +47,11 @@ const INITIAL_STATE = {
 function reduceProviderStates(state, { type, payload }) {
   const result = { ...state };
   for (const provider of Object.keys(PROVIDERS)) {
-    if (type == INITIAL_STATE_ACTION || provider == payload?.provider) {
+    if (
+      type == INITIAL_STATE_ACTION ||
+      !payload?.provider ||
+      provider == payload?.provider
+    ) {
       result[provider] = providerReducer(state[provider], { type, payload });
     }
   }
@@ -74,16 +78,10 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
     case types.MEDIA3P_SET_SEARCH_TERM: {
-      let resultState = {
+      return {
         ...state,
         searchTerm: payload.searchTerm,
       };
-      // Clear out the pageToken and nextPageToken for all providers.
-      for (const provider of Object.keys(PROVIDERS)) {
-        resultState[provider].pageToken = undefined;
-        resultState[provider].nextPageToken = undefined;
-      }
-      return resultState;
     }
     default:
       return state;

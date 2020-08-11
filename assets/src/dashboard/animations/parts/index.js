@@ -23,11 +23,15 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ANIMATION_TYPES, ANIMATION_EFFECTS, BEZIER } from '../constants';
+import { EffectDrop } from '../effects/drop';
 import { EffectFadeIn } from '../effects/fadeIn';
 import { EffectFlyIn } from '../effects/flyIn';
 import { EffectPulse } from '../effects/pulse';
 import { EffectTwirlIn } from '../effects/twirlIn';
 import { EffectZoom } from '../effects/zoom';
+import flyInProps from '../effects/flyIn/animationsProps';
+import pulseProps from '../effects/pulse/animationProps';
+
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
 import { AnimationFade } from './fade';
@@ -82,6 +86,7 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.PULSE]: EffectPulse,
       [ANIMATION_EFFECTS.TWIRL_IN]: EffectTwirlIn,
       [ANIMATION_EFFECTS.ZOOM]: EffectZoom,
+      [ANIMATION_EFFECTS.DROP]: EffectDrop,
     }[type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];
@@ -99,6 +104,8 @@ export function AnimationProps(type) {
     [ANIMATION_TYPES.MOVE]: moveProps,
     [ANIMATION_TYPES.SPIN]: spinProps,
     [ANIMATION_TYPES.ZOOM]: zoomProps,
+    [ANIMATION_EFFECTS.FLY_IN]: flyInProps,
+    [ANIMATION_EFFECTS.PULSE]: pulseProps,
   };
 
   const { type: animationType, ...remaining } = defaultAnimationProps;

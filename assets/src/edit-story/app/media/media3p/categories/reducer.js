@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import * as media3pTypes from '../types';
 import * as types from './types';
 
 export const INITIAL_STATE = {
@@ -71,6 +72,12 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
     case types.DESELECT_CATEGORY: {
+      return {
+        ...state,
+        selectedCategoryId: undefined,
+      };
+    }
+    case media3pTypes.MEDIA3P_SET_SEARCH_TERM: {
       return {
         ...state,
         selectedCategoryId: undefined,
