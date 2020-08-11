@@ -148,7 +148,6 @@ class Embed_Block {
 			'title'           => $attributes['title'],
 			'url'             => $attributes['url'],
 			'poster_portrait' => $attributes['poster'],
-
 		];
 
 		$story = new Story( $data );
