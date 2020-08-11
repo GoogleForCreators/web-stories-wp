@@ -13,11 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as MyStoriesView } from './myStories';
-export { default as EditorSettingsView } from './editorSettings';
-export { default as ExploreTemplatesView } from './exploreTemplates';
-export { default as PreviewStoryView } from './previewStory';
-export { default as TemplateDetailsView } from './templateDetails';
-export { default as SavedTemplatesView } from './savedTemplates';
-export { default as StoryAnimTool } from './storyAnimTool';
-export { default as ToasterView } from './toaster';
+
+/**
+ * External dependencies
+ */
+import { useEffect, useState } from 'react';
+
+function usePrefersDarkMode() {
+  const [prefersDarkMode, setPrefersDarkMode] = useState(false);
+
+  useEffect(() => {
+    setPrefersDarkMode(
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    );
+  }, []);
+
+  return prefersDarkMode;
+}
+
+export default usePrefersDarkMode;

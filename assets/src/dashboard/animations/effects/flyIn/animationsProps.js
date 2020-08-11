@@ -13,11 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as MyStoriesView } from './myStories';
-export { default as EditorSettingsView } from './editorSettings';
-export { default as ExploreTemplatesView } from './exploreTemplates';
-export { default as PreviewStoryView } from './previewStory';
-export { default as TemplateDetailsView } from './templateDetails';
-export { default as SavedTemplatesView } from './savedTemplates';
-export { default as StoryAnimTool } from './storyAnimTool';
-export { default as ToasterView } from './toaster';
+
+/**
+ * Internal dependencies
+ */
+import { FIELD_TYPES, DIRECTION } from '../../constants';
+
+export default {
+  flyInDir: {
+    type: FIELD_TYPES.DROPDOWN,
+    values: [
+      DIRECTION.TOP_TO_BOTTOM,
+      DIRECTION.BOTTOM_TO_TOP,
+      DIRECTION.LEFT_TO_RIGHT,
+      DIRECTION.RIGHT_TO_LEFT,
+    ],
+    defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  },
+};

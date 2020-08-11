@@ -13,11 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as MyStoriesView } from './myStories';
-export { default as EditorSettingsView } from './editorSettings';
-export { default as ExploreTemplatesView } from './exploreTemplates';
-export { default as PreviewStoryView } from './previewStory';
-export { default as TemplateDetailsView } from './templateDetails';
-export { default as SavedTemplatesView } from './savedTemplates';
-export { default as StoryAnimTool } from './storyAnimTool';
-export { default as ToasterView } from './toaster';
+
+/**
+ * Internal dependencies
+ */
+import { FIELD_TYPES } from '../../constants';
+
+export default {
+  scale: {
+    tooltip: 'Valid values are greater than or equal to 0',
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 0.5,
+  },
+};
