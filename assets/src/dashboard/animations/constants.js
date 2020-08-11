@@ -34,6 +34,7 @@ export const ANIMATION_EFFECTS = {
   FLY_IN: 'effect-fly-in',
   PULSE: 'effect-pulse',
   TWIRL_IN: 'effect-twirl-in',
+  WHOOSH_IN: 'effect-whoosh-in',
   ZOOM: 'effect-zoom',
 };
 
