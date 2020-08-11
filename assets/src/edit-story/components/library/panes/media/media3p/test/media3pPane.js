@@ -49,13 +49,6 @@ jest.mock('../../../../../../app/media/media3p/providerConfiguration', () => ({
       fetchMediaErrorMessage: 'Error loading media from Provider 1',
       fetchCategoriesErrorMessage: 'Error loading categories from Provider 1',
     },
-    PROVIDER_2: {
-      displayName: 'Provider 2',
-      supportedContentTypes: ['video'],
-      supportsCategories: false,
-      requiresAuthorAttribution: false,
-      fetchMediaErrorMessage: 'Error loading media from Provider 2',
-    },
   },
 }));
 
@@ -128,7 +121,6 @@ const DEFAULT_USE_MEDIA_RESULT = {
   setSearchTerm: jest.fn(),
   media3p: {
     PROVIDER_1: DEFAULT_PROVIDER_STATE(1),
-    PROVIDER_2: DEFAULT_PROVIDER_STATE(2),
   },
 };
 
@@ -146,6 +138,9 @@ describe('Media3pPane', () => {
       })
     );
     useMedia.mockImplementation(() => useMediaResult);
+
+    // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
+    window.HTMLElement.prototype.scrollTo = () => {};
   });
 
   beforeEach(() => {
@@ -156,6 +151,27 @@ describe('Media3pPane', () => {
     const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
 
     expect(queryByText('No media found')).toBeDefined();
+    expect(getComputedStyle(queryByText('Trending')).visibility).toBe('hidden');
+  });
+
+  it('should render <Media3pPane /> with no "Trending" text while media is being loaded', () => {
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = false;
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = true;
+    useMediaResult.media3p.PROVIDER_1.state.media = [];
+    const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
+
+    expect(getComputedStyle(queryByText('Trending')).visibility).toBe('hidden');
+  });
+
+  it('should render <Media3pPane /> with the "Trending" text while a new page is being loaded', () => {
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = false;
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = true;
+    useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
+    const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
+
+    expect(getComputedStyle(queryByText('Trending')).visibility).not.toBe(
+      'hidden'
+    );
   });
 
   it('should render <Media3pPane /> with the "Trending" text', () => {
@@ -163,7 +179,9 @@ describe('Media3pPane', () => {
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
     const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
 
-    expect(queryByText('Trending')).toBeDefined();
+    expect(getComputedStyle(queryByText('Trending')).visibility).not.toBe(
+      'hidden'
+    );
   });
 
   it('should render <Media3pPane /> with the category display name when selected', () => {
@@ -174,6 +192,9 @@ describe('Media3pPane', () => {
     const { queryByTestId } = renderWithTheme(<Media3pPane isActive={true} />);
 
     expect(queryByTestId('media-subheading')).toBeDefined();
+    expect(
+      getComputedStyle(queryByTestId('media-subheading')).visibility
+    ).not.toBe('hidden');
     expect(queryByTestId('media-subheading')).toHaveTextContent(
       'Tiny dogs for provider 1'
     );

@@ -166,7 +166,7 @@ function Media3pPane(props) {
     // been selected.
     const shouldDisplayMediaSubheading = Boolean(
       state.isMediaLoaded ||
-        state?.media.length ||
+        state?.media?.length ||
         state.categories.selectedCategoryId
     );
     return (
