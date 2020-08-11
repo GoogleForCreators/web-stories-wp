@@ -37,6 +37,7 @@
  * @property {Object} sizes
  * @property {string} src
  * @property {string} title
+ * @property {string} type
  */
 
 /**
