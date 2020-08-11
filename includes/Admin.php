@@ -147,13 +147,14 @@ class Admin {
 			return $title;
 		}
 
-		$story = new Story();
-		if ( ! $story->load_from_post( $post_id ) ) {
+		$post = get_post( $post_id );
+
+		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return $title;
 		}
 
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
-		return $story->get_title();
+		return isset( $post->post_title ) ? $post->post_title : '';
 	}
 }
