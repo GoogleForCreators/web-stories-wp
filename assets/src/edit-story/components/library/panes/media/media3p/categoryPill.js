@@ -56,7 +56,7 @@ PillContainer.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-const CategoryPill = (props) => {
+const CategoryPill = ({ index, title, isSelected, onClick }) => {
   const ref = useRef();
 
   useRovingTabIndex({ ref, isRowBasedGallery: true });
@@ -64,14 +64,16 @@ const CategoryPill = (props) => {
   return (
     <PillContainer
       ref={ref}
-      tabIndex={props.index === 0 ? 0 : -1}
-      isSelected={props.isSelected}
-      onClick={props.onClick}
+      // Initially, the first category will be in focus for roving
+      // (arrow-based) navigation.
+      tabIndex={index === 0 || isSelected ? 0 : -1}
+      isSelected={isSelected}
+      onClick={onClick}
       role="tab"
-      aria-selected={props.isSelected}
+      aria-selected={isSelected}
       data-testid="mediaCategory"
     >
-      {props.title}
+      {title}
     </PillContainer>
   );
 };
