@@ -70,6 +70,8 @@ const colors = {
   selection: '#44aaff',
   warning: '#FF9800',
   success: '#4CAF4F',
+  // Updated design colors
+  black: '#000',
   // todo
   placeholder: '#d9dbdd',
   storyPreviewBackground: '#202125',
@@ -176,11 +178,11 @@ const theme = {
     presets: {
       xxl: {
         family: themeFonts.primary,
-        size: 32,
+        size: 36,
         minSize: 18,
-        lineHeight: 53,
-        minLineHeight: 43,
-        letterSpacing: -0.005,
+        lineHeight: 40,
+        minLineHeight: 40,
+        letterSpacing: -0.01,
         minLetterSpacing: -0.01,
       },
       xl: {
