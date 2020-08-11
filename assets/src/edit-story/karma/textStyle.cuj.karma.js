@@ -27,7 +27,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../app/font/defaultFonts';
 import { useStory } from '../app/story';
 import { Fixture } from './fixture';
 
-describe('CUJ: Creator Can Style Text', () => {
+describe('Element: Text', () => {
   let fixture;
 
   const addText = async (extraProps = null) => {
@@ -54,7 +54,7 @@ describe('CUJ: Creator Can Style Text', () => {
     fixture.restore();
   });
 
-  describe('Action: Use font picker', () => {
+  describe('CUJ: Creator Can Style Text: Use font picker', () => {
     // There are 3 curated fonts included by default even though the total is more.
     const DEFAULT_VISIBLE_FONTS = 3;
     // Timeout used for submitting / search update + 50ms (250 + 50).
