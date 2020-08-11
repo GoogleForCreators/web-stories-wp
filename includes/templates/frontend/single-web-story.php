@@ -34,7 +34,6 @@ $current_post = get_post();
 if ( $current_post instanceof WP_Post ) {
 	echo '<!DOCTYPE html>';
 	$story = new Story();
-	$story->setup_default_poster();
 	$story->load_from_post( $current_post );
 	$renderer = new HTML( $story );
 	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

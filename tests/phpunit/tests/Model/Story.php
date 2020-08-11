@@ -71,23 +71,4 @@ class Story extends \WP_UnitTestCase {
 		$this->assertEquals( $story->get_title(), '' );
 		$this->assertEquals( $story->get_url(), '' );
 	}
-
-	/**
-	 * @covers ::setup_default_poster
-	 */
-	public function test_setup_default_poster() {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_title'   => 'test title',
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$story = new \Google\Web_Stories\Model\Story();
-		$story->setup_default_poster();
-		$story->load_from_post( $post );
-
-		$this->assertContains( 'assets/images/fallback-poster.jpg', $story->get_poster_portrait() );
-	}
 }

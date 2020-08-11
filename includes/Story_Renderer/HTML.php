@@ -358,6 +358,10 @@ class HTML {
 			'poster-landscape-src' => $this->story->get_poster_landscape(),
 		];
 
+		if ( ! $images['poster-portrait-src'] ) {
+			$images['poster-portrait-src'] = plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
+		}
+
 		return array_filter( $images );
 	}
 }
