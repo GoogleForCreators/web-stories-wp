@@ -180,6 +180,7 @@ const CardPreviewContainer = ({
         {children}
       </PreviewPane>
       <EditControls
+        data-testid="card-action-container"
         ref={containElem}
         cardSize={pageSize}
         isActive={CARD_STATE.ACTIVE === cardState}

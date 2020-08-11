@@ -117,6 +117,7 @@ function PreviewPage({
   return (
     <StoryAnimation.Provider
       animations={page.animations}
+      elements={page.elements}
       onWAAPIFinish={onAnimationComplete}
     >
       <PreviewPageController

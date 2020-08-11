@@ -337,8 +337,8 @@ function SingleSelectionMoveable({
           updates = updateForResizeEvent(
             selectedElement,
             direction,
-            editorToDataX(newWidth),
-            editorToDataY(newHeight)
+            editorToDataX(newWidth, false),
+            editorToDataY(newHeight, false)
           );
         }
         if (updates && updates.height) {
