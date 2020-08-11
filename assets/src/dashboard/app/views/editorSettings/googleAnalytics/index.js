@@ -51,7 +51,6 @@ export const TEXT = {
 function GoogleAnalyticsSettings({
   googleAnalyticsId = '',
   handleUpdateSettings,
-  canManageSettings,
 }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
@@ -84,7 +83,6 @@ function GoogleAnalyticsSettings({
           onEditCancel={handleCancelUpdateId}
           onEditComplete={handleUpdateId}
           placeholder={TEXT.PLACEHOLDER}
-          disabled={!canManageSettings}
           error={inputError}
         />
         <TextInputHelperText>{TEXT.CONTEXT}</TextInputHelperText>
@@ -94,7 +92,6 @@ function GoogleAnalyticsSettings({
 }
 GoogleAnalyticsSettings.propTypes = {
   handleUpdateSettings: PropTypes.func,
-  canManageSettings: PropTypes.bool,
   googleAnalyticsId: PropTypes.string,
 };
 

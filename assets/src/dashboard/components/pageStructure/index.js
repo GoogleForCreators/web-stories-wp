@@ -102,12 +102,17 @@ export const LeftRailContainer = styled.nav.attrs({
 
 export function LeftRail() {
   const { state } = useRouteHistory();
-  const { newStoryURL, version } = useConfig();
+  const {
+    newStoryURL,
+    version,
+    capabilities: { canManageSettings } = {},
+  } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
 
   const enableInProgressViews = useFeature('enableInProgressViews');
-  const enableSettingsViews = useFeature('enableSettingsView');
+  const enableSettingsViews =
+    useFeature('enableSettingsView') && canManageSettings;
 
   const {
     state: { sideBarVisible },

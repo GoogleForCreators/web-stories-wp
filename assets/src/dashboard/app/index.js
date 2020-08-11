@@ -49,7 +49,7 @@ import {
 } from '../components';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider, RouterContext, matchPath } from './router';
-import { ConfigProvider } from './config';
+import { ConfigProvider, useConfig } from './config';
 import {
   EditorSettingsView,
   ExploreTemplatesView,
@@ -65,7 +65,9 @@ const AppContent = () => {
     state: { currentPath },
   } = useContext(RouterContext);
 
-  const enableSettingsView = useFeature('enableSettingsView');
+  const { capabilities: { canManageSettings } = {} } = useConfig();
+  const enableSettingsView =
+    useFeature('enableSettingsView') && canManageSettings;
 
   useEffect(() => {
     const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;

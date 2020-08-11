@@ -23,39 +23,35 @@ import PropTypes from 'prop-types';
  */
 import { renderWithTheme } from '../../../../testUtils';
 import { ApiContext } from '../../../api/apiProvider';
-import { ConfigProvider } from '../../../config';
 import EditorSettings from '../';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 
 const mockFetchSettings = jest.fn();
 
-const SettingsWrapper = ({ canManageSettings, googleAnalyticsId }) => {
+const SettingsWrapper = ({ googleAnalyticsId }) => {
   return (
-    <ConfigProvider config={{ capabilities: { canManageSettings } }}>
-      <ApiContext.Provider
-        value={{
-          state: {
-            settings: {
-              googleAnalyticsId,
-            },
+    <ApiContext.Provider
+      value={{
+        state: {
+          settings: {
+            googleAnalyticsId,
           },
-          actions: {
-            settingsApi: {
-              fetchSettings: mockFetchSettings,
-              updateSettings: jest.fn(),
-            },
+        },
+        actions: {
+          settingsApi: {
+            fetchSettings: mockFetchSettings,
+            updateSettings: jest.fn(),
           },
-        }}
-      >
-        <EditorSettings />
-      </ApiContext.Provider>
-    </ConfigProvider>
+        },
+      }}
+    >
+      <EditorSettings />
+    </ApiContext.Provider>
   );
 };
 
 SettingsWrapper.propTypes = {
   googleAnalyticsId: PropTypes.string,
-  canManageSettings: PropTypes.bool,
 };
 
 describe('Editor Settings: <Editor Settings />', function () {

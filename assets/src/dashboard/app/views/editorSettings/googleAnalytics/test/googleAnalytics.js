@@ -32,7 +32,6 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={''}
         handleUpdateSettings={mockUpdate}
-        canManageSettings={true}
       />
     );
 
@@ -48,7 +47,6 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={''}
         handleUpdateSettings={mockUpdate}
-        canManageSettings={true}
       />
     );
 

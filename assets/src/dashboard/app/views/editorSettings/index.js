@@ -27,13 +27,10 @@ import { useCallback, useContext, useEffect } from 'react';
  * Internal dependencies
  */
 import { ApiContext } from '../../api/apiProvider';
-import { useConfig } from '../../config';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
-  const { capabilities: { canManageSettings } = {} } = useConfig();
-
   const {
     actions: {
       settingsApi: { fetchSettings, updateSettings },
@@ -68,7 +65,6 @@ function EditorSettings() {
         <GoogleAnalyticsSettings
           handleUpdateSettings={handleCompleteUpdateId}
           googleAnalyticsId={googleAnalyticsId}
-          canManageSettings={canManageSettings}
         />
       </Main>
     </Wrapper>
