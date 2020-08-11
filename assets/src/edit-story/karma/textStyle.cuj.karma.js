@@ -136,19 +136,19 @@ describe('Element: Text', () => {
         await fixture.events.keyboard.type('Ab');
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
-        let options = document
+        const options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
         expect(options.length).toBe(2);
 
-        await fixture.events.keyboard.press('Delete');
+        await fixture.events.keyboard.press('Del');
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
-        options = document
+        const defaultOptions = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
         // Back to all options.
-        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
+        expect(defaultOptions.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
 
       it('should show empty list in case of no results', async () => {
