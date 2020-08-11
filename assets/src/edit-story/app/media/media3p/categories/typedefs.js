@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-/** Categories actions typedef
+/**
+ * Categories actions typedef
  *
  * @typedef {(payload: {provider: string}) => undefined} DeselectCategory
  * @typedef {(payload: {provider: string}) => undefined} FetchCategoriesStart
@@ -29,7 +30,8 @@
  * @property {string} displayName
  */
 
-/** The categories state returned by the context value.
+/**
+ * The categories state returned by the context value.
  *
  * @typedef {Object} CategoriesState
  * @property {Array.<Category>} categories array of category objects
