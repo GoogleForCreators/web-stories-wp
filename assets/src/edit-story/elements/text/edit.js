@@ -38,6 +38,7 @@ import {
   elementFillContent,
   elementWithFont,
   elementWithTextParagraphStyle,
+  elementWithBackgroundColor,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -47,6 +48,7 @@ import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import useRichText from '../../components/richText/useRichText';
 import { useTransformHandler } from '../../components/transform';
+
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
@@ -62,6 +64,7 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
+  ${elementWithBackgroundColor}
 
   opacity: ${({ opacity }) =>
     typeof opacity !== 'undefined' ? opacity / 100 : null};
