@@ -20,11 +20,20 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Tab = styled.span`
-  cursor: pointer;
+  display: inline-block;
+  border-radius: 100px;
+  background-color: ${({ active, theme }) =>
+    active ? theme.colors.fg.primary : 'transparent'};
   font-size: 16px;
   margin-right: 16px;
-  border-bottom: ${({ theme, active }) =>
-    active ? `solid 4px ${theme.colors.accent.primary};` : 'none'};
+  text-align: center;
+  opacity: 0.86;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 6px 16px;
+  color: ${({ active, theme }) =>
+    active ? theme.colors.bg.workspace : theme.colors.bg.divider};
   &:last-child: {
     margin-right: 0;
   }

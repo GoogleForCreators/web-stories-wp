@@ -103,6 +103,7 @@ function DropDown({
   options = [],
   disabled = false,
   lightMode = false,
+  placement = 'bottom-end',
   placeholder = __('Select an option', 'web-stories'),
   ...rest
 }) {
@@ -171,7 +172,7 @@ function DropDown({
       <Popup
         anchor={selectRef}
         isOpen={isOpen}
-        placement={'bottom-end'}
+        placement={placement}
         fillWidth={true}
       >
         <DropDownList
@@ -194,6 +195,7 @@ DropDown.propTypes = {
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
   labelledBy: PropTypes.string,
+  placement: PropTypes.string,
 };
 
 export default DropDown;

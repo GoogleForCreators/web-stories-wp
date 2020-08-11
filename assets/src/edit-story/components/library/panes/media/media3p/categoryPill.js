@@ -22,29 +22,18 @@ import styled from 'styled-components';
 const PillContainer = styled.span`
   cursor: pointer;
   font-family: ${({ theme }) => theme.fonts.body2.family};
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: ${({ theme }) => theme.colors.fg.white};
-  background-color: rgba(
-    255,
-    255,
-    255,
-    ${(props) => (props.isSelected ? 0.1 : 0.0)}
-  );
-  margin: 4px;
-  padding: 6px 12px;
-  border-radius: 2px;
+  border: 1px solid
+    ${({ theme, isSelected }) =>
+      isSelected ? theme.colors.accent.primary : theme.colors.fg.gray16};
+  color: ${({ theme }) => theme.colors.fg.primary};
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 8px 16px;
+  border-radius: 50px;
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   user-select: none;
   background-clip: padding-box;
-  :hover {
-    background-color: rgba(
-      255,
-      255,
-      255,
-      ${(props) => (props.isSelected ? 0.1 : 0.05)}
-    );
-  }
 `;
 
 PillContainer.propTypes = {

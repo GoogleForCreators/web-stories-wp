@@ -47,7 +47,8 @@ import paneId from './paneId';
 import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
-  margin-top: 30px;
+  margin-top: 16px;
+  margin-bottom: 16px;
   padding: 0 24px;
 `;
 
