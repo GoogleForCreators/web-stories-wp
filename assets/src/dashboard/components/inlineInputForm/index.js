@@ -45,7 +45,6 @@ const InlineInputForm = ({
   onEditComplete,
   placeholder,
   value,
-  disabled,
 }) => {
   const inputContainerRef = useRef(null);
   const [newValue, setNewValue] = useState(value);
@@ -89,7 +88,6 @@ const InlineInputForm = ({
         onKeyDown={handleKeyPress}
         onChange={handleChange}
         placeholder={placeholder}
-        disabled={disabled}
         error={error}
       />
       {error && <ErrorText>{error}</ErrorText>}
@@ -98,7 +96,6 @@ const InlineInputForm = ({
 };
 
 InlineInputForm.propTypes = {
-  disabled: PropTypes.bool,
   error: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
