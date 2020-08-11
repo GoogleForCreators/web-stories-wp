@@ -17,11 +17,13 @@
 /**
  * Categories actions typedef
  *
- * @typedef {(payload: {provider: string}) => undefined} DeselectCategory
- * @typedef {(payload: {provider: string}) => undefined} FetchCategoriesStart
- * @typedef {(payload: {provider: string}) => undefined} FetchCategoriesError
- * @typedef {(payload: {provider: string, categories: *}) => undefined} FetchCategoriesSuccess
- * @typedef {(payload: {provider: string, categoryId: string}) => undefined} SelectCategory
+ * @typedef {(payload: {provider: string}) => undefined} DeselectCategoryFn
+ * @typedef {(payload: {provider: string}) => undefined} FetchCategoriesStartFn
+ * @typedef {(payload: {provider: string}) => undefined} FetchCategoriesErrorFn
+ * @typedef {(payload: {provider: string, categories: Array.<Category>}) =>
+ * undefined} FetchCategoriesSuccessFn
+ * @typedef {(payload: {provider: string, categoryId: string}) => undefined}
+ * SelectCategoryFn
  */
 
 /**

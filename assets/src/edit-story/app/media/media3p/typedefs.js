@@ -29,7 +29,7 @@
  * @property {number} width
  * @property {string} id
  * @property {number} length
- * @property {*} lengthFormatted
+ * @property {string} lengthFormatted
  * @property {boolean} local
  * @property {string} mimeType
  * @property {string} poster
@@ -37,7 +37,6 @@
  * @property {Object} sizes
  * @property {string} src
  * @property {string} title
- * @property {string} typedef
  */
 
 /**
@@ -47,23 +46,43 @@
 /**
  * 'media3p/[provider]' action typedef
  *
- * @typedef {(payload: {provider: string, id: string}) => undefined} DeleteMediaElement
- * @typedef {(payload: {provider: string}) => undefined} FetchMediaError
- * @typedef {(payload: {provider: string, pageToken: string}) => undefined} FetchMediaStart
- * @typedef {(payload: {provider: string, media, nextPageToken: string, totalPages: number}) => undefined} FetchMediaSuccess
- * (Can take extra properties in the payload)
- * @typedef {(payload: {provider: string}) => undefined} SetNextPage
- * @typedef {(payload: {provider: string, id: string }) => undefined} UpdateMediaElement
- * (Can take extra properties in the payload)
+ * @typedef FetchMediaSuccessPayload
+ * @property {string} provider
+ * @property {*} media
+ * @property {string} nextPageToken
+ * @property {number} totalPages
+ * @property {string} pageToken
+ *
+ * @typedef UpdateMediaElementPayload
+ * @property {string} provider
+ * @property {string} id
+ * @property {string} posterId
+ * @property {string} poster
+ * @property {number} height
+ * @property {number} width
+ * @property {string} alt
+ *
+ * @typedef {(payload: {provider: string, id: string}) => undefined}
+ * DeleteMediaElementFn
+ * @typedef {(payload: {provider: string}) => undefined} FetchMediaErrorFn
+ * @typedef {(payload: {provider: string, pageToken: string}) => undefined}
+ * FetchMediaStartFn
+ * @typedef {(payload: FetchMediaSuccessPayload) => undefined}
+ * FetchMediaSuccessFn
+ * @typedef {(payload: {provider: string}) => undefined} SetNextPageFn
+ * @typedef {(payload: UpdateMediaElementPayload) => undefined}
+ * UpdateMediaElementFn
  */
 
 /**
  * 'media3p/[provider]' actions exposed through context providers
  *
  * @typedef {Object} Media3pProviderContextActions
- * @property {SetNextPage} setNextPage action to set next page
- * @property {import('./categories/typedefs').SelectCategory} selectCategory action to select category
- * @property {import('./categories/typedefs').DeselectCategory} deselectCategory action to deselect current
+ * @property {SetNextPageFn} setNextPage action to set next page
+ * @property {import('./categories/typedefs').SelectCategoryFn} selectCategory
+ * action to select category
+ * @property {import('./categories/typedefs').DeselectCategoryFn} deselectCategory
+ * action to deselect current
  * category
  */
 
@@ -83,7 +102,8 @@
  */
 
 /**
- * 'media3p/[provider]' state object used by each provider internally by the reducer.
+ * 'media3p/[provider]' state object used by each provider internally by the
+ * reducer.
  *
  * @typedef {Object} Media3pProviderReducerState
  * @property {CategoriesState} categories Category state object
@@ -110,16 +130,16 @@
 /**
  * 'media3p' root action typedefs
  *
- * @typedef {(payload: {searchTerm: string}) => undefined} SetSearchTerm
- * @typedef {(payload: {provider: string}) => undefined} SetSelectedProvider
+ * @typedef {(payload: {searchTerm: string}) => undefined} SetSearchTermFn
+ * @typedef {(payload: {provider: string}) => undefined} SetSelectedProviderFn
  */
 
 /**
  * 'media3p' root actions in the Media3pContext object.
  *
  * @typedef {Object} Media3pContextActions
- * @property {SetSearchTerm} setSearchTerm Sets current search term
- * @property {SetSelectedProvider} setSelectedProvider Sets provider
+ * @property {SetSearchTermFn} setSearchTerm Sets current search term
+ * @property {SetSelectedProviderFn} setSelectedProvider Sets provider
  */
 
 /**
@@ -158,27 +178,30 @@
  * `useMediaReducer`
  *
  * @typedef {Object} Media3pReducerActions
- * @property {DeleteMediaElement} deleteMediaElement Action dispatched when
+ * @property {DeleteMediaElementFn} deleteMediaElement Action dispatched when
  * media element is deleted
- * @property {DeselectCategory} deselectCategory Action dispatched when current
+ * @property {DeselectCategoryFn} deselectCategory Action dispatched when current
  * category is deselected
- * @property {import('./categories/typedefs').FetchCategoriesStart} fetchCategoriesStart Action dispatched when
- * fetching categories starts
- * @property {import('./categories/typedefs').FetchCategoriesError} fetchCategoriesError Action dispatched when
- * fetching categories returns an error
- * @property {import('./categories/typedefs').FetchCategoriesSuccess} fetchCategoriesSuccess Action dispatched
- * when categories fetching is successful
- * @property {FetchMediaError} fetchMediaError Action dispatched when media
+ * @property {import('./categories/typedefs').FetchCategoriesStartFn}
+ * fetchCategoriesStart Action dispatched when fetching categories starts
+ * @property {import('./categories/typedefs').FetchCategoriesErrorFn}
+ * fetchCategoriesError Action dispatched when fetching categories returns an
+ * error
+ * @property {import('./categories/typedefs').FetchCategoriesSuccessFn}
+ * fetchCategoriesSuccess Action dispatched when categories fetching is
+ * successful
+ * @property {FetchMediaErrorFn} fetchMediaError Action dispatched when media
  * fetching returns an error
- * @property {FetchMediaStart} fetchMediaStart Action dispatched when media
+ * @property {FetchMediaStartFn} fetchMediaStart Action dispatched when media
  * fetching starts
- * @property {FetchMediaSuccess} fetchMediaSuccess Action dispatched when media
- * succesfully fetched
- * @property {import('./categories/typedefs').SelectCategory} selectCategory Selects current category
- * @property {SetNextPage} setNextPage Sets next page token
- * @property {SetSearchTerm} setSearchTerm Sets search term
- * @property {SetSelectedProvider} setSelectedProvider Sets current provider
- * @property {UpdateMediaElement} updateMediaElement Updates a media element
+ * @property {FetchMediaSuccessFn} fetchMediaSuccess Action dispatched when
+ * media succesfully fetched
+ * @property {import('./categories/typedefs').SelectCategoryFn} selectCategory
+ * Selects current category
+ * @property {SetNextPageFn} setNextPage Sets next page token
+ * @property {SetSearchTermFn} setSearchTerm Sets search term
+ * @property {SetSelectedProviderFn} setSelectedProvider Sets current provider
+ * @property {UpdateMediaElementFn} updateMediaElement Updates a media element
  */
 
 // This is required so that the IDE doesn't ignore this file.

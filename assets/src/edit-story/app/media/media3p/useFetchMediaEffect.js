@@ -30,19 +30,21 @@ import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
 /**
- *
- * @param {{
- * provider: string,
- * selectedProvider: string,
- * searchTerm: string,
- * selectedCategoryId: string,
- * pageToken: string,
- * isMediaLoading: boolean,
- * isMediaLoaded: boolean,
- * fetchMediaStart: import('./typedefs').FetchMediaStart
- * fetchMediaSuccess: import('./typedefs').FetchMediaSuccess
- * fetchMediaError: import('./typedefs').FetchMediaError
- * }} obj required actions and parameters
+ * @typedef {Object} FetchMediaEffectParams
+ * @property {string} provider
+ * @property {string} selectedProvider
+ * @property {string} searchTerm
+ * @property {string} selectedCategoryId
+ * @property {string} pageToken
+ * @property {boolean} isMediaLoading
+ * @property {boolean} isMediaLoaded
+ * @property {import('./typedefs').FetchMediaStartFn} fetchMediaStart
+ * @property {import('./typedefs').FetchMediaSuccessFn} fetchMediaSuccess
+ * @property {import('./typedefs').FetchMediaErrorFn} fetchMediaError
+ */
+
+/**
+ * @param {FetchMediaEffectParams} obj required actions and parameters
  */
 export default function useFetchMediaEffect({
   provider,

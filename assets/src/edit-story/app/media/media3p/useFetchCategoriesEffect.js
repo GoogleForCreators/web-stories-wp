@@ -30,15 +30,20 @@ import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
 /**
- *
- * @param {{
- * provider: string,
- * selectedProvider: string,
- * categories:  Array.<import('./categories/typedefs').Category>,
- * fetchCategoriesStart: import('./categories/typedefs').FetchCategoriesStart
- * fetchCategoriesSuccess: import('./categories/typedefs').FetchCategoriesSuccess
- * fetchCategoriesError: import('./categories/typedefs').FetchCategoriesError
- * }} obj required actions and parameters
+ * @typedef {Object} FetchCategoriesEffectParams
+ * @property {string} provider
+ * @property {string} selectedProvider
+ * @property {Array.<import('./categories/typedefs').Category>} categories
+ * @property {import('./categories/typedefs').FetchCategoriesStartFn}
+ * fetchCategoriesStart
+ * @property {import('./categories/typedefs').FetchCategoriesSuccessFn}
+ * fetchCategoriesSuccess
+ * @property {import('./categories/typedefs').FetchCategoriesErrorFn}
+ * fetchCategoriesError
+ */
+
+/**
+ * @param {FetchCategoriesEffectParams} obj required actions and parameters
  */
 export default function useFetchCategoriesEffect({
   provider,
