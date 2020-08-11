@@ -15,17 +15,77 @@
  */
 
 /**
- * @typedef {Object} CategoriesState
- * @property {Array} categories array of category objects
- * @property {boolean} isLoading are categories loading
- * @property {boolean} isLoaded are categories loaded
- * @property {string} selectedCategoryId current selected category id
+ * common media typedefs =================================================
  */
 
 /**
- * State object used by each media provider.
+ * TODO(#3431) Move this to a media/typedef.js file as this is common for local
+ * as well as media3p.
  *
- * @typedef {Object} ProviderState
+ * @typedef Media
+ * @property {Object} attribution
+ * @property {string} creationDate
+ * @property {number} height
+ * @property {number} width
+ * @property {string} id
+ * @property {number} length
+ * @property {*} lengthFormatted
+ * @property {boolean} local
+ * @property {string} mimeType
+ * @property {string} poster
+ * @property {string} posterId
+ * @property {Object} sizes
+ * @property {string} src
+ * @property {string} title
+ * @property {string} typedef
+ */
+
+/**
+ * media3p/[provider] typedefs =================================================
+ */
+
+/**
+ * 'media3p/[provider]' action typedef
+ *
+ * @typedef {(payload: {provider: string, id: string}) => undefined} DeleteMediaElement
+ * @typedef {(payload: {provider: string}) => undefined} FetchMediaError
+ * @typedef {(payload: {provider: string, pageToken: string}) => undefined} FetchMediaStart
+ * @typedef {(payload: {provider: string, media, nextPageToken: string, totalPages: number}) => undefined} FetchMediaSuccess
+ * (Can take extra properties in the payload)
+ * @typedef {(payload: {provider: string}) => undefined} SetNextPage
+ * @typedef {(payload: {provider: string, id: string }) => undefined} UpdateMediaElement
+ * (Can take extra properties in the payload)
+ */
+
+/**
+ * 'media3p/[provider]' actions exposed through context providers
+ *
+ * @typedef {Object} Media3pProviderContextActions
+ * @property {SetNextPage} setNextPage action to set next page
+ * @property {import('./categories/typedefs').SelectCategory} selectCategory action to select category
+ * @property {import('./categories/typedefs').DeselectCategory} deselectCategory action to deselect current
+ * category
+ */
+
+/**
+ * 'media3p/[provider]' state object used by each provider, exposed to the rest
+ * of application through context providers
+ *
+ * @typedef {Object} Media3pProviderContextState
+ * @property {CategoriesState} categories Category state object
+ * @property {boolean} hasMore has more media
+ * @property {boolean} isMediaLoaded is media loaded
+ * @property {boolean} isMediaLoading is media loading
+ * @property {Array.<Media>} media array of media
+ * @property {string} pageToken page token for current page
+ * @property {string} nextPageToken the page token for the next page
+ * @property {number} totalPages total pages
+ */
+
+/**
+ * 'media3p/[provider]' state object used by each provider internally by the reducer.
+ *
+ * @typedef {Object} Media3pProviderReducerState
  * @property {CategoriesState} categories Category state object
  * @property {boolean} hasMore has more media
  * @property {boolean} isMediaLoaded is media loaded
@@ -37,53 +97,76 @@
  */
 
 /**
- * The 'media3p/[provider]' fragment of the state returned from
+ *
+ * @typedef {Object} Media3pProviderContext
+ * @property {Media3pProviderContextState} state state of a single provider
+ * @property {Media3pProviderContextActions} actions actions for the provider
+ */
+
+/**
+ * media3p/ typedefs ===========================================================
+ */
+
+/**
+ * 'media3p' root action typedefs
+ *
+ * @typedef {(payload: {searchTerm: string}) => undefined} SetSearchTerm
+ * @typedef {(payload: {provider: string}) => undefined} SetSelectedProvider
+ */
+
+/**
+ * 'media3p' root actions in the Media3pContext object.
+ *
+ * @typedef {Object} Media3pContextActions
+ * @property {SetSearchTerm} setSearchTerm Sets current search term
+ * @property {SetSelectedProvider} setSelectedProvider Sets provider
+ */
+
+/**
+ * 'media3p' root state in the Media3pContext object.
+ *
+ * @typedef {Object} Media3pContextState
+ * @property {string} searchTerm search term for media3p
+ * @property {string} selectedProvider current selected provider
+ * @property {Media3pProviderContextState} unsplash state for unsplash
+ * @property {Media3pProviderContextState} coverr state for coverr
+ */
+
+/**
+ * Context object representing all of media3p's state and actions.
+ *
+ * @typedef {Object} Media3pContext
+ * @property {Media3pContextState} state Non-provider-specific state
+ * @property {Media3pContextActions} actions Non-provider-specific actions
+ * @property {Media3pProviderContext} unsplash Unsplash state and actions
+ * @property {Media3pProviderContext} coverr Coverr state and actions
+ */
+
+/**
+ * The 'media3p' fragment of the state returned from
  * `useMediaReducer`
  *
- * @typedef {Object} MediaReducerState
+ * @typedef {Object} Media3pReducerState
  * @property {string} searchTerm current search term
  * @property {string} selectedProvider selected provider
- * @property {ProviderState} unsplash state for unsplash
- * @property {ProviderState} coverr state for coverr
- */
-
-/**
- * Actions
- *
- * updateMediaElement: ({ provider, id, ...properties }) => {…}
- *
- */
-
-/**
- * 'media3p/[provider]' action typedef
- *
- * @typedef {(payload: {provider: string, id: string}) => *} DeleteMediaElement
- * @typedef {(payload: {provider: string}) => *} DeselectCategory
- * @typedef {(payload: {provider: string}) => *} FetchCategoriesStart
- * @typedef {(payload: {provider: string}) => *} FetchCategoriesError
- * @typedef {(payload: {provider: string, categories: *}) => *} FetchCategoriesSuccess
- * @typedef {(payload: {provider: string}) => *} FetchMediaError
- * @typedef {(payload: {provider: string, pageToken: string}) => *} FetchMediaStart
- * @typedef {(payload: {provider, media, nextPageToken, totalPages}) => *} FetchMediaSuccess
- * @typedef {(payload: {provider: string, categoryId: string}) => *} SelectCategory
- * @typedef {(payload: {provider: string}) => *} SetNextPage
- * @typedef {(payload: {searchTerm: string}) => *} SetSearchTerm
- * @typedef {(payload: {provider: string}) => *} SetSelectedProvider
- * @typedef {(payload:{ provider, id }) => *} UpdateMediaElement
+ * @property {Media3pProviderReducerState} unsplash state for unsplash
+ * @property {Media3pProviderReducerState} coverr state for coverr
  */
 
 /**
  * The 'media3p/[provider]' fragment of the actions returned from
  * `useMediaReducer`
  *
- * @typedef {Object} MediaReducerActions
+ * @typedef {Object} Media3pReducerActions
  * @property {DeleteMediaElement} deleteMediaElement Action dispatched when
  * media element is deleted
  * @property {DeselectCategory} deselectCategory Action dispatched when current
  * category is deselected
- * @property {FetchCategoriesError} fetchCategoriesError Action dispatched when
+ * @property {import('./categories/typedefs').FetchCategoriesStart} fetchCategoriesStart Action dispatched when
+ * fetching categories starts
+ * @property {import('./categories/typedefs').FetchCategoriesError} fetchCategoriesError Action dispatched when
  * fetching categories returns an error
- * @property {FetchCategoriesSuccess} fetchCategoriesSuccess Action dispatched
+ * @property {import('./categories/typedefs').FetchCategoriesSuccess} fetchCategoriesSuccess Action dispatched
  * when categories fetching is successful
  * @property {FetchMediaError} fetchMediaError Action dispatched when media
  * fetching returns an error
@@ -91,48 +174,11 @@
  * fetching starts
  * @property {FetchMediaSuccess} fetchMediaSuccess Action dispatched when media
  * succesfully fetched
- * @property {SelectCategory} selectCategory Selects current category
+ * @property {import('./categories/typedefs').SelectCategory} selectCategory Selects current category
  * @property {SetNextPage} setNextPage Sets next page token
  * @property {SetSearchTerm} setSearchTerm Sets search term
  * @property {SetSelectedProvider} setSelectedProvider Sets current provider
  * @property {UpdateMediaElement} updateMediaElement Updates a media element
- */
-
-/**
- *
- * @typedef {Object} MediaProviderContextActions
- * @property {SetNextPage} setNextPage action to set next page
- * @property {SelectCategory} selectCategory action to select category
- * @property {DeselectCategory} deselectCategory action to deselect current
- * category
- */
-
-/**
- *
- * @typedef {Object} Media3pSingleProviderContext
- * @property {ProviderState} state state of a single provider
- * @property {MediaProviderContextActions} actions actions for the provider
- */
-
-/**
- * @typedef {Object} RootMedia3pState
- * @property {string} searchTerm search term for media3p
- * @property {string} selectedProvider current selected provider
- */
-
-/**
- * @typedef {Object} RootMedia3pActions
- * @property {SetSearchTerm} setSearchTerm Sets current search term
- * @property {SetSelectedProvider} setSelectedProvider Sets provider
- */
-
-/**
- *
- * @typedef {Object} Media3pContext
- * @property {RootMedia3pState} state Non-provider-specific state
- * @property {RootMedia3pActions} actions Non-provider-specific actions
- * @property {Media3pSingleProviderContext} unsplash Unsplash state and actions
- * @property {Media3pSingleProviderContext} coverr Coverr state and actions
  */
 
 // This is required so that the IDE doesn't ignore this file.

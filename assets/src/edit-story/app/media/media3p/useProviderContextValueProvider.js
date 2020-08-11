@@ -30,13 +30,13 @@ import useFetchCategoriesEffect from './useFetchCategoriesEffect';
  * etc).
  *
  * @param {string} provider The 3p provider to return the context value for
- * @param {import('./typedefs').MediaReducerState} reducerState
+ * @param {import('./typedefs').Media3pReducerState} reducerState
  * The 'media3p/[provider]' fragment of the state returned from
  * `useMediaReducer`
- * @param {import('./typedefs').MediaReducerActions} reducerActions
+ * @param {import('./typedefs').Media3pReducerActions} reducerActions
  * The 'media3p/[provider]' fragment of the actions returned from
  * `useMediaReducer`
- * @return {import('./typedefs').Media3pSingleProviderContext} Context.
+ * @return {import('./typedefs').Media3pProviderContext} Context.
  */
 export default function useProviderContextValueProvider(
   provider,

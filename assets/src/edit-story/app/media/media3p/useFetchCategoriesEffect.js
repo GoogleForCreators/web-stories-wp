@@ -34,10 +34,10 @@ import { PROVIDERS } from './providerConfiguration';
  * @param {{
  * provider: string,
  * selectedProvider: string,
- * categories:  import('./typedefs').CategoriesState,
- * fetchCategoriesStart: import('./typedefs').FetchCategoriesStart
- * fetchCategoriesSuccess: import('./typedefs').FetchCategoriesSuccess
- * fetchCategoriesError: import('./typedefs').FetchCategoriesError
+ * categories:  import('./categories/typedefs').CategoriesState,
+ * fetchCategoriesStart: import('./categories/typedefs').FetchCategoriesStart
+ * fetchCategoriesSuccess: import('./categories/typedefs').FetchCategoriesSuccess
+ * fetchCategoriesError: import('./categories/typedefs').FetchCategoriesError
  * }} parameter required actions and parameters
  */
 export default function useFetchCategoriesEffect({

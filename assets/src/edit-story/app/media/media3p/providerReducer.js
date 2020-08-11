@@ -37,11 +37,11 @@ const INITIAL_STATE = {
  * be evaluated, so the provider-specific `state` passed here will always
  * correspond to the `payload.provider` value.
  *
- * @param {import('./typedefs').ProviderState} state The state to reduce
+ * @param {import('./typedefs').Media3pProviderReducerState} state The state to reduce
  * @param {Object} obj An object with the type and payload
  * @param {string} obj.type A constant that identifies the reducer action
  * @param {Object} obj.payload The details of the action, specific to the action
- * @return {import('./typedefs').ProviderState} The new state
+ * @return {import('./typedefs').Media3pProviderContext} The new state
  */
 function providerReducer(state = INITIAL_STATE, { type, payload }) {
   return {
