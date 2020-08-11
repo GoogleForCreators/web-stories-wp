@@ -57,6 +57,11 @@ describe('paginatedMediaGallery', () => {
     },
   ];
 
+  beforeAll(() => {
+    // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
+    window.HTMLElement.prototype.scrollTo = () => {};
+  });
+
   it('should render attribution when media is present', () => {
     const { queryByTestId } = renderWithTheme(
       <PaginatedMediaGallery
