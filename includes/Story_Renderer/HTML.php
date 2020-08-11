@@ -56,7 +56,7 @@ class HTML {
 	 *
 	 * @param Story $story Post object.
 	 */
-	public function __construct( $story ) {
+	public function __construct( Story $story ) {
 		$this->story = $story;
 	}
 
