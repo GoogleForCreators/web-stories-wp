@@ -141,14 +141,13 @@ describe('Element: Text', () => {
           .querySelectorAll('li');
         expect(options.length).toBe(2);
 
-        await fixture.events.keyboard.press('Del');
+        await fixture.events.keyboard.press('Delete');
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
         // Back to all options.
-        console.log('OPTIONS: ', options);
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
 
