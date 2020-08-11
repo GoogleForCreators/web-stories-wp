@@ -48,7 +48,6 @@ import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import useRichText from '../../components/richText/useRichText';
 import { useTransformHandler } from '../../components/transform';
-
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
