@@ -23,7 +23,7 @@ import { DIRECTION } from '../../constants';
 
 export function EffectFlyIn({
   duration = 500,
-  direction = DIRECTION.TOP_TO_BOTTOM,
+  flyInDir = DIRECTION.TOP_TO_BOTTOM,
   delay,
   easing,
   element,
@@ -34,21 +34,21 @@ export function EffectFlyIn({
 
   const offsetLookup = {
     [DIRECTION.TOP_TO_BOTTOM]: {
-      offsetY: offsetTop,
+      offsetY: `${offsetTop}%`,
     },
     [DIRECTION.BOTTOM_TO_TOP]: {
-      offsetY: offsetBottom,
+      offsetY: `${offsetBottom}%`,
     },
     [DIRECTION.LEFT_TO_RIGHT]: {
-      offsetX: offsetLeft,
+      offsetX: `${offsetLeft}%`,
     },
     [DIRECTION.RIGHT_TO_LEFT]: {
-      offsetX: offsetRight,
+      offsetX: `${offsetRight}%`,
     },
   };
 
   return new AnimationMove({
-    ...offsetLookup[direction],
+    ...offsetLookup[flyInDir],
     duration,
     delay,
     easing,

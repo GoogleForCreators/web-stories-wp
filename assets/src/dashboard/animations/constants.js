@@ -29,10 +29,12 @@ export const ANIMATION_TYPES = {
 };
 
 export const ANIMATION_EFFECTS = {
+  DROP: 'effect-drop',
   FADE_IN: 'effect-fade-in',
   FLY_IN: 'effect-fly-in',
   PULSE: 'effect-pulse',
-  TWIRL_IN: 'twirl-in',
+  TWIRL_IN: 'effect-twirl-in',
+  WHOOSH_IN: 'effect-whoosh-in',
   ZOOM: 'effect-zoom',
 };
 
