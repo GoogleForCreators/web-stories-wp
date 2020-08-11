@@ -165,9 +165,7 @@ function Media3pPane(props) {
     // We display the media name if there's media to display or a category has
     // been selected.
     const shouldDisplayMediaSubheading = Boolean(
-      state.isMediaLoaded ||
-        state?.media?.length ||
-        state.categories.selectedCategoryId
+      state.media?.length || state.categories.selectedCategoryId
     );
     return (
       <ProviderMediaCategoriesWrapper
