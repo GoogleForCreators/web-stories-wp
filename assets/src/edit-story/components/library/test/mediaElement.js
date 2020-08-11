@@ -15,12 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { FlagsProvider } from 'flagged';
-
-/**
  * Internal dependencies
+ */
+/**
+ * External dependencies
  */
 import { Simulate } from 'react-dom/test-utils';
 import MediaElement from '../panes/media/common/mediaElement';
@@ -29,13 +27,11 @@ import { renderWithTheme } from '../../../testUtils';
 
 const renderMediaElement = (resource, providerType) =>
   renderWithTheme(
-    <FlagsProvider features={{ mediaDropdownMenu: true }}>
-      <MediaElement
-        resource={resource}
-        onInsert={() => {}}
-        providerType={providerType}
-      />
-    </FlagsProvider>
+    <MediaElement
+      resource={resource}
+      onInsert={() => {}}
+      providerType={providerType}
+    />
   );
 
 describe('MediaElement', () => {

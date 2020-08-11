@@ -346,30 +346,6 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @joannalee
-			 * Issue: #2820
-			 * Creation date: 2020-06-30
-			 */
-			[
-				'name'        => 'rowBasedGallery',
-				'label'       => __( 'Row Based Uploads Gallery', 'web-stories' ),
-				'description' => __( 'Enable the row-based media gallery in the Upload tab.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @joannag6
-			 * Issue: #1319 and #354
-			 * Creation date: 2020-05-20
-			 */
-			[
-				'name'        => 'mediaDropdownMenu',
-				'label'       => __( 'Media Dropdown Menu', 'web-stories' ),
-				'description' => __( 'Display dropdown menu on hover in media library', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @diegovar
 			 * Issue: #3206
 			 * Creation date: 2020-07-15

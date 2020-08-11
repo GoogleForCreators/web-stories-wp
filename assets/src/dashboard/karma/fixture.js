@@ -110,7 +110,7 @@ export default class Fixture {
    * ```
    * beforeEach(async () => {
    *   fixture = new Fixture();
-   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   fixture.setFlags({FEATURE_NAME: true});
    *   await fixture.render();
    * });
    * ```

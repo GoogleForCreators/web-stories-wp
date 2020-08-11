@@ -71,11 +71,6 @@ export class Fixture {
   constructor() {
     this._config = { ...DEFAULT_CONFIG };
 
-    this._flags = {
-      rowBasedGallery: true,
-      mediaDropdownMenu: true,
-    };
-
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
     //eslint-disable-next-line jasmine/no-unsafe-spy
@@ -167,7 +162,7 @@ export class Fixture {
    * ```
    * beforeEach(async () => {
    *   fixture = new Fixture();
-   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   fixture.setFlags({FEATURE_NAME: true});
    *   await fixture.render();
    * });
    * ```
