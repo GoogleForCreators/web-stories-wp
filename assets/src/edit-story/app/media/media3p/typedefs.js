@@ -44,7 +44,7 @@
  */
 
 /**
- * 'media3p/[provider]' action typedef
+ * 'media3p/[provider]' action typedefs not specific to any provider
  *
  * @typedef FetchMediaSuccessPayload
  * @property {string} provider

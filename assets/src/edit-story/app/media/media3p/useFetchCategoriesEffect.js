@@ -43,6 +43,8 @@ import { PROVIDERS } from './providerConfiguration';
  */
 
 /**
+ * The side effect that fetches the media categories from the backend.
+ *
  * @param {FetchCategoriesEffectParams} obj required actions and parameters
  */
 export default function useFetchCategoriesEffect({

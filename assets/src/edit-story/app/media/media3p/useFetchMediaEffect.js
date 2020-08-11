@@ -44,6 +44,8 @@ import { PROVIDERS } from './providerConfiguration';
  */
 
 /**
+ * The side effect that fetches the media from the backend.
+ *
  * @param {FetchMediaEffectParams} obj required actions and parameters
  */
 export default function useFetchMediaEffect({

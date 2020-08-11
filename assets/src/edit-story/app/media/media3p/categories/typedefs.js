@@ -15,7 +15,7 @@
  */
 
 /**
- * Categories actions typedef
+ * Categories action typedef
  *
  * @typedef {(payload: {provider: string}) => undefined} DeselectCategoryFn
  * @typedef {(payload: {provider: string}) => undefined} FetchCategoriesStartFn
