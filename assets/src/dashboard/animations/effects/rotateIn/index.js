@@ -34,6 +34,7 @@ export function EffectRotateIn({
   duration = 700,
   rotateInDir = DIRECTION.LEFT_TO_RIGHT,
   numberOfRotations = 1,
+  stopAngle = 0,
   easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
   delay,
   element,
@@ -70,6 +71,7 @@ export function EffectRotateIn({
       360 *
       numberOfRotations
     }`,
+    stopAngle,
     duration,
     delay,
     easing,
