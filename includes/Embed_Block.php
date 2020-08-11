@@ -145,11 +145,9 @@ class Embed_Block {
 		$attributes = wp_parse_args( $attributes, $defaults );
 
 		$data = [
-			'title'            => $attributes['title'],
-			'url'              => $attributes['url'],
-			'poster_portrait'  => $attributes['poster'],
-			'poster_square'    => $attributes['poster'],
-			'poster_landscape' => $attributes['poster'],
+			'title'           => $attributes['title'],
+			'url'             => $attributes['url'],
+			'poster_portrait' => $attributes['poster'],
 		];
 
 		$story = new Story( $data );
