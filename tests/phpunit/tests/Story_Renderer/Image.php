@@ -22,8 +22,13 @@ class Image extends \WP_UnitTestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
-		$image  = new \Google\Web_Stories\Story_Renderer\Image( $story, 300, 600, 'none' );
-		$render = $image->render();
+		$image  = new \Google\Web_Stories\Story_Renderer\Image( $story );
+		$args   = [
+			'align'  => 'none',
+			'height' => 600,
+			'width'  => 360,
+		];
+		$render = $image->render( $args );
 		$this->assertContains( 'test title', $render );
 	}
 }

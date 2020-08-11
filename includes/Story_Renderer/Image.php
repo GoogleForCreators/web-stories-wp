@@ -42,50 +42,31 @@ class Image {
 	 */
 	protected $story;
 
-	/**
-	 * Height of image
-	 *
-	 * @var Int Height of image.
-	 */
-	protected $height;
-
-	/**
-	 * Width of image
-	 *
-	 * @var Int Width of image.
-	 */
-	protected $width;
-
-	/**
-	 * Align class.
-	 *
-	 * @var string
-	 */
-	protected $align;
-
 
 	/**
 	 * Image constructor.
 	 *
-	 * @param Story  $story   Story Object.
-	 * @param int    $width   Width of image.
-	 * @param int    $height  Height of image.
-	 * @param string $align   Align Image. Default: none.
+	 * @param Story $story   Story Object.
 	 */
-	public function __construct( $story, $width, $height, $align = 'none' ) {
-		$this->story  = $story;
-		$this->width  = $height;
-		$this->height = $width;
-		$this->align  = $align;
+	public function __construct( Story $story ) {
+		$this->story = $story;
 	}
 
 	/**
 	 * Renders the block as an image.
 	 *
+	 * @param array $args Array of Argument to render.
+	 *
 	 * @return string Rendered block type output.
 	 */
-	public function render() {
-		$align = sprintf( 'align%s', $this->align );
+	public function render( array $args = [] ) {
+		$defaults = [
+			'align'  => 'none',
+			'height' => 600,
+			'width'  => 360,
+		];
+		$args     = wp_parse_args( $args, $defaults );
+		$align    = sprintf( 'align%s', $args['align'] );
 
 		ob_start();
 		?>
@@ -96,8 +77,8 @@ class Image {
 					printf(
 						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
 						esc_url( $this->story->get_poster_portrait() ),
-						absint( $this->width ),
-						absint( $this->height ),
+						absint( $args['width'] ),
+						absint( $args['height'] ),
 						esc_attr( $this->story->get_title() )
 					);
 				} else {

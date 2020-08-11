@@ -43,53 +43,34 @@ class Embed {
 	protected $story;
 
 	/**
-	 * Height of image
-	 *
-	 * @var Int Height of image.
-	 */
-	protected $height;
-
-	/**
-	 * Width of image
-	 *
-	 * @var Int Width of image.
-	 */
-	protected $width;
-
-	/**
-	 * Align class.
-	 *
-	 * @var string
-	 */
-	protected $align;
-
-	/**
 	 * Embed constructor.
 	 *
-	 * @param Story  $story   Story Object.
-	 * @param int    $width   Width of image.
-	 * @param int    $height  Height of image.
-	 * @param string $align   Align Image. Default: none.
+	 * @param Story $story   Story Object.
 	 */
-	public function __construct( $story, $width, $height, $align = 'none' ) {
-		$this->story  = $story;
-		$this->width  = $width;
-		$this->height = $height;
-		$this->align  = $align;
+	public function __construct( Story $story ) {
+		$this->story = $story;
 	}
 
 	/**
 	 * Renders the block output in default context.
 	 *
+	 * @param array $args Array of Argument to render.
+	 *
 	 * @return string Rendered block type output.
 	 */
-	public function render() {
+	public function render( array $args = [] ) {
+		$defaults     = [
+			'align'  => 'none',
+			'height' => 600,
+			'width'  => 360,
+		];
+		$args         = wp_parse_args( $args, $defaults );
+		$align        = sprintf( 'align%s', $args['align'] );
 		$url          = $this->story->get_url();
 		$title        = $this->story->get_title();
 		$poster       = ! empty( $this->story->get_poster_portrait() ) ? esc_url( $this->story->get_poster_portrait() ) : '';
-		$align        = sprintf( 'align%s', $this->align );
 		$margin       = ( 'center' === $this->align ) ? 'auto' : '0';
-		$player_style = sprintf( 'width: %dpx;height: %dpx;margin: %s', absint( $this->width ), absint( $this->height ), esc_attr( $margin ) );
+		$player_style = sprintf( 'width: %dpx;height: %dpx;margin: %s', absint( $args['width'] ), absint( $args['height'] ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
 		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {

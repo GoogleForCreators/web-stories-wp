@@ -76,11 +76,11 @@ class Story {
 	/**
 	 * Story constructor.
 	 *
-	 * @param Array $story Array of attributes.
+	 * @param array $story Array of attributes.
 	 */
 	public function __construct( array $story = [] ) {
-		if ( ! empty( $story ) && is_array( $story ) ) {
-			foreach ( $story as $key => $value ) {
+		foreach ( $story as $key => $value ) {
+			if ( property_exists( $this, $key ) ) {
 				$this->$key = $value;
 			}
 		}

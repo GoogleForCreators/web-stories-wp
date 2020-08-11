@@ -153,12 +153,12 @@ class Embed_Block {
 		$story = new Story( $data );
 
 		if ( is_feed() ) {
-			$renderer = new Image( $story, $attributes['width'], $attributes['height'], $attributes['align'] );
+			$renderer = new Image( $story );
 		} else {
-			$renderer = new Embed( $story, $attributes['width'], $attributes['height'], $attributes['align'] );
+			$renderer = new Embed( $story );
 		}
 
-		return $renderer->render();
+		return $renderer->render( $attributes );
 	}
 
 }

@@ -22,8 +22,13 @@ class Embed extends \WP_UnitTestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
-		$embed  = new \Google\Web_Stories\Story_Renderer\Embed( $story, 300, 600, 'none' );
-		$render = $embed->render();
+		$embed  = new \Google\Web_Stories\Story_Renderer\Embed( $story );
+		$args   = [
+			'align'  => 'none',
+			'height' => 600,
+			'width'  => 360,
+		];
+		$render = $embed->render( $args );
 		$this->assertContains( 'test title', $render );
 	}
 }

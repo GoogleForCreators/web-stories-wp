@@ -111,8 +111,14 @@ class Admin {
 			return $content;
 		}
 
-		$renderer = new Embed( $story, 360, 600, 'none' );
-		$html     = $renderer->render();
+		$renderer = new Embed( $story );
+		$args     = [
+			'align'  => 'none',
+			'height' => 600,
+			'width'  => 360,
+		];
+
+		$html = $renderer->render( $args );
 
 		$block_markup = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s"} -->%4$s<!-- /wp:web-stories/embed -->';
 
