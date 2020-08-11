@@ -68,11 +68,11 @@ describe('CUJ: Creator Can Style Text', () => {
       await openFontPicker();
     });
 
-    it('it should render the font picker', async () => {
+    it('should render the font picker', async () => {
       await fixture.snapshot('font picker open');
     });
 
-    it('it should apply the selected font', async () => {
+    it('should apply the selected font', async () => {
       const option = fixture.screen.getByText('Yrsa');
       await fixture.events.click(option);
       await wait(TIMEOUT);
@@ -88,6 +88,13 @@ describe('CUJ: Creator Can Style Text', () => {
         },
       } = await fixture.renderHook(() => useStory());
       expect(elements[1].font.family).toBe('Yrsa');
+    });
+
+    it('should display only the fonts from curated list by default', () => {
+      const options = document
+        .getElementById('editor-font-picker-list')
+        .querySelectorAll('li');
+      expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
     });
 
     describe('when searching fonts', () => {
