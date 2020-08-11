@@ -64,8 +64,8 @@ const CategoryPill = ({ index, title, isSelected, onClick }) => {
   return (
     <PillContainer
       ref={ref}
-      // Initially, the first category will be in focus for roving
-      // (arrow-based) navigation.
+      // The first or selected category will be in focus for roving
+      // (arrow-based) navigation initially.
       tabIndex={index === 0 || isSelected ? 0 : -1}
       isSelected={isSelected}
       onClick={onClick}
