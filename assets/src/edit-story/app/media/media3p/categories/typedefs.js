@@ -42,7 +42,8 @@
  * @property {string} selectedCategoryId current selected category id
  */
 
-/** The categories used internaly by the reducers (i.e. reducerState)
+/**
+ * The categories used internaly by the reducers (i.e. reducerState).
  *
  * @typedef {Object} CategoriesReducerState
  * @property {Array.<Category>} categories array of category objects

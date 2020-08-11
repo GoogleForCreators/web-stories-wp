@@ -45,7 +45,7 @@
  */
 
 /**
- * 'media3p/[provider]' action typedefs not specific to any provider
+ * 'media3p/[provider]' action typedefs not specific to any provider.
  *
  * @typedef FetchMediaSuccessPayload
  * @property {string} provider
@@ -83,13 +83,12 @@
  * @property {import('./categories/typedefs').SelectCategoryFn} selectCategory
  * action to select category
  * @property {import('./categories/typedefs').DeselectCategoryFn} deselectCategory
- * action to deselect current
- * category
+ * action to deselect current category
  */
 
 /**
  * 'media3p/[provider]' state object used by each provider, exposed to the rest
- * of application through context providers
+ * of application through context providers.
  *
  * @typedef {Object} Media3pProviderContextState
  * @property {CategoriesState} categories Category state object
@@ -129,7 +128,7 @@
  */
 
 /**
- * 'media3p' root action typedefs
+ * 'media3p' root action typedefs.
  *
  * @typedef {(payload: {searchTerm: string}) => undefined} SetSearchTermFn
  * @typedef {(payload: {provider: string}) => undefined} SetSelectedProviderFn
@@ -164,8 +163,7 @@
  */
 
 /**
- * The 'media3p' fragment of the state returned from
- * `useMediaReducer`
+ * The 'media3p' fragment of the state returned from `useMediaReducer`.
  *
  * @typedef {Object} Media3pReducerState
  * @property {string} searchTerm current search term
@@ -176,7 +174,7 @@
 
 /**
  * The 'media3p/[provider]' fragment of the actions returned from
- * `useMediaReducer`
+ * `useMediaReducer`.
  *
  * @typedef {Object} Media3pReducerActions
  * @property {DeleteMediaElementFn} deleteMediaElement Action dispatched when
