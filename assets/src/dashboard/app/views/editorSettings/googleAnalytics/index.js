@@ -94,7 +94,6 @@ function GoogleAnalyticsSettings({
           <InlineLink href={TEXT.CONTEXT_ARTICLE_LINK}>
             {TEXT.CONTEXT_ARTICLE}
           </InlineLink>
-          {'.'}
         </TextInputHelperText>
       </FormContainer>
     </SettingForm>
