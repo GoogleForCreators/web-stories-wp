@@ -55,7 +55,8 @@ describe('CUJ: Creator Can Style Text', () => {
   });
 
   describe('Action: Use font picker', () => {
-    const TOTAL_FONTS = 6;
+    // There are 3 curated fonts included by default even though the total is more.
+    const DEFAULT_VISIBLE_FONTS = 3;
     // Timeout used for submitting / search update + 50ms (250 + 50).
     const TIMEOUT = 300;
     const openFontPicker = async () => {
@@ -118,7 +119,7 @@ describe('CUJ: Creator Can Style Text', () => {
         let options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
-        expect(options.length).toBe(TOTAL_FONTS);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
 
       it('should restore default fonts list when emptying search', async () => {
@@ -137,7 +138,7 @@ describe('CUJ: Creator Can Style Text', () => {
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
         // Back to all options.
-        expect(options.length).toBe(TOTAL_FONTS);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
 
       it('should show empty list in case of no results', async () => {
@@ -153,10 +154,13 @@ describe('CUJ: Creator Can Style Text', () => {
         let options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
-        expect(options.length).toBe(TOTAL_FONTS);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
 
       it('should add up to 5 recent fonts, displaying the most recent first', async () => {
+        await fixture.events.keyboard.type('Space Mono');
+        // Ensure the debounced callback has taken effect.
+        await wait(TIMEOUT);
         let option = fixture.screen.getByText('Space Mono');
         await fixture.events.click(option);
         await wait(TIMEOUT);
@@ -165,9 +169,12 @@ describe('CUJ: Creator Can Style Text', () => {
         let options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
-        expect(options.length).toBe(TOTAL_FONTS + 1);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 1);
         expect(options[0].textContent).toBe('Space Mono');
 
+        await fixture.events.keyboard.type('Abel');
+        // Ensure the debounced callback has taken effect.
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Abel');
         await fixture.events.click(option);
         await wait(TIMEOUT);
@@ -175,8 +182,11 @@ describe('CUJ: Creator Can Style Text', () => {
         options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
-        expect(options.length).toBe(TOTAL_FONTS + 2);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 2);
 
+        await fixture.events.keyboard.type('Abhaya Libre');
+        // Ensure the debounced callback has taken effect.
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Abhaya Libre');
         await fixture.events.click(option);
         await wait(TIMEOUT);
@@ -184,8 +194,11 @@ describe('CUJ: Creator Can Style Text', () => {
         options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
-        expect(options.length).toBe(TOTAL_FONTS + 3);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 3);
 
+        await fixture.events.keyboard.type('Source Serif Pro');
+        // Ensure the debounced callback has taken effect.
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Source Serif Pro');
         await fixture.events.click(option);
         await wait(TIMEOUT);
@@ -193,8 +206,11 @@ describe('CUJ: Creator Can Style Text', () => {
         options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
-        expect(options.length).toBe(TOTAL_FONTS + 4);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 4);
 
+        await fixture.events.keyboard.type('Roboto');
+        // Ensure the debounced callback has taken effect.
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Roboto');
         await fixture.events.click(option);
         await wait(TIMEOUT);
@@ -202,8 +218,11 @@ describe('CUJ: Creator Can Style Text', () => {
         options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li');
-        expect(options.length).toBe(TOTAL_FONTS + 5);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 5);
 
+        await fixture.events.keyboard.type('Yrsa');
+        // Ensure the debounced callback has taken effect.
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Yrsa');
         await fixture.events.click(option);
         await wait(TIMEOUT);
@@ -214,24 +233,26 @@ describe('CUJ: Creator Can Style Text', () => {
           .querySelectorAll('li');
 
         // Ensure there are only 5 extra options added.
-        expect(options.length).toBe(TOTAL_FONTS + 5);
+        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 5);
         // Ensure the first one is the last chosen.
         expect(options[0].textContent).toBe('Yrsa');
       });
 
       it('should display the selected recent font with a tick', async () => {
-        const option = fixture.screen.getByText('Abel');
+        const option = fixture.screen.getByText('Source Serif Pro');
         await fixture.events.click(option);
         await wait(TIMEOUT);
         await openFontPicker();
         const selected = fixture.screen.getAllByRole('option', {
-          name: 'Selected Abel',
+          name: 'Selected Source Serif Pro',
         });
         // One from the recent fonts and one from the general list.
         expect(selected.length).toBe(2);
       });
 
       it('should include recent fonts to search', async () => {
+        await fixture.events.keyboard.type('Ab');
+        await wait(TIMEOUT);
         const option = fixture.screen.getByText('Abel');
         await fixture.events.click(option);
         await wait(TIMEOUT);
@@ -251,12 +272,16 @@ describe('CUJ: Creator Can Style Text', () => {
 
     describe('using keyboard only', () => {
       it('should allow selecting a font with arrow keys and Enter', async () => {
-        await fixture.events.keyboard.press('up');
-        await fixture.events.keyboard.press('up');
+        await fixture.events.keyboard.press('down');
+        await fixture.events.keyboard.press('down');
         await fixture.events.keyboard.press('Enter');
         await openFontPicker();
+
+        await fixture.events.keyboard.type('Ubuntu');
+        // Ensure the debounced callback has taken effect.
+        await wait(TIMEOUT);
         const selected = fixture.screen.getAllByRole('option', {
-          name: 'Selected Abel',
+          name: 'Selected Ubuntu',
         });
         // 1 selected + 1 recent font.
         expect(selected.length).toBe(2);

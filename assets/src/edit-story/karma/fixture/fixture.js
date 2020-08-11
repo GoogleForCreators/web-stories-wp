@@ -518,6 +518,21 @@ class APIProviderFixture {
               ],
             },
             {
+              name: 'Ubuntu',
+              value: 'Ubuntu',
+              family: 'Ubuntu',
+              fallbacks: ['monospace'],
+              service: 'fonts.google.com',
+              weights: [400, 700],
+              styles: ['regular', 'italic'],
+              variants: [
+                [0, 400],
+                [1, 400],
+                [0, 700],
+                [1, 700],
+              ],
+            },
+            {
               name: 'Yrsa',
               value: 'Yrsa',
               family: 'Yrsa',
