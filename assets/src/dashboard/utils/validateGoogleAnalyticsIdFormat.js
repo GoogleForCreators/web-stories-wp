@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
+const googleAnalyticsIdFormatRegex = /^ua-\d+-\d+$/;
+
 export default function validateGoogleAnalyticsIdFormat(value = '') {
-  const googleAnalyticsIdFormatRegex = /^ua-\d+-\d+$/;
   return Boolean(value.toLowerCase().match(googleAnalyticsIdFormatRegex));
 }
