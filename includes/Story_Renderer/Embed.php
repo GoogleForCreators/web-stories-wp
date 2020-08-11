@@ -69,7 +69,7 @@ class Embed {
 		$url          = $this->story->get_url();
 		$title        = $this->story->get_title();
 		$poster       = ! empty( $this->story->get_poster_portrait() ) ? esc_url( $this->story->get_poster_portrait() ) : '';
-		$margin       = ( 'center' === $this->align ) ? 'auto' : '0';
+		$margin       = ( 'center' === $args['align'] ) ? 'auto' : '0';
 		$player_style = sprintf( 'width: %dpx;height: %dpx;margin: %s', absint( $args['width'] ), absint( $args['height'] ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
