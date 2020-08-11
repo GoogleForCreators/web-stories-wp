@@ -41,7 +41,7 @@ const keyframesLookup = {
 };
 
 export function AnimationFloatOn({
-  direction = DIRECTION.BOTTOM_TO_TOP,
+  floatOnDir = DIRECTION.BOTTOM_TO_TOP,
   ...args
 }) {
   const timings = {
@@ -49,8 +49,8 @@ export function AnimationFloatOn({
     ...args,
   };
 
-  const animationName = `dir-${direction}-${ANIMATION_TYPES.FLOAT_ON}`;
-  const keyframes = keyframesLookup[direction];
+  const animationName = `dir-${floatOnDir}-${ANIMATION_TYPES.FLOAT_ON}`;
+  const keyframes = keyframesLookup[floatOnDir];
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,

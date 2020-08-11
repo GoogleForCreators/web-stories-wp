@@ -26,7 +26,7 @@ describe('<AnimationTimeline />', function () {
       id,
     }));
     const { queryAllByTestId } = renderWithTheme(
-      <AnimationTimeline animations={animations} />
+      <AnimationTimeline animations={animations} duration={6000} />
     );
     expect(queryAllByTestId('timeline-animation-item')).toHaveLength(
       animations.length
