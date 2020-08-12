@@ -60,6 +60,7 @@ function InspectorLayout() {
   return (
     <Layout ref={inspector}>
       <TabView
+        label={__('Inspector selection', 'web-stories')}
         tabs={tabs}
         initialTab={initialTab}
         onTabChange={(id) => setTab(id)}
