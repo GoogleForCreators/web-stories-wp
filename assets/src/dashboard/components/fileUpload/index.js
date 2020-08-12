@@ -67,6 +67,10 @@ const UploadLabelAsCta = styled(DefaultButton).attrs({
   z-index: 10;
   font-size: 14px;
   line-height: 16px;
+
+  &:focus-within {
+    border: ${({ theme }) => theme.borders.action};
+  }
 `;
 
 function disableDefaults(e) {
