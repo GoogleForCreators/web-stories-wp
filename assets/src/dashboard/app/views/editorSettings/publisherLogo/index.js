@@ -31,7 +31,6 @@ import { useCallback } from 'react';
 import { getResourceFromLocalFile } from '../../../../utils';
 import {
   Logo,
-  LogoContainer,
   DeleteLogoButton,
   SettingForm,
   HelperText,
@@ -84,9 +83,7 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
   return (
     <SettingForm>
       <div>
-        <SettingHeading htmlFor="publisherLogo">
-          {TEXT.SECTION_HEADING}
-        </SettingHeading>
+        <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
         <HelperText>{TEXT.CONTEXT}</HelperText>
       </div>
       <div>
@@ -94,7 +91,7 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
           <UploadedContainer>
             {publisherLogos.map((publisherLogo, idx) => {
               return (
-                <LogoContainer
+                <div
                   key={`${publisherLogo.title}_${idx}`}
                   data-testid={`remove-publisher-logo-${idx}`}
                 >
@@ -109,7 +106,7 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
                   >
                     <DeleteIcon aria-hidden="true" />
                   </DeleteLogoButton>
-                </LogoContainer>
+                </div>
               );
             })}
           </UploadedContainer>

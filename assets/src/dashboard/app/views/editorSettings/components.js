@@ -96,7 +96,6 @@ export const UploadedContainer = styled.div`
   padding-bottom: 24px;
 `;
 
-export const LogoContainer = styled.div``;
 export const Logo = styled.img`
   object-fit: cover;
   width: 100%;
