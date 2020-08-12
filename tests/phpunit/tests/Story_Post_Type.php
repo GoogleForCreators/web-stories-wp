@@ -285,8 +285,31 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$editor        = get_role( 'editor' );
 
 		foreach ( $all_capabilities as $cap ) {
-			$administrator->has_cap( $cap );
-			$editor->has_cap( $cap );
+			$this->assertTrue( $administrator->has_cap( $cap ) );
+			$this->assertTrue( $editor->has_cap( $cap ) );
 		}
+	}
+
+	/**
+	 * @covers ::add_caps_to_roles
+	 * @covers \Google\Web_Stories\new_site
+	 * @group ms-required
+	 */
+	public function test_add_caps_to_roles_multisite() {
+		$blog_id = $this->factory->blog->create();
+		switch_to_blog( $blog_id );
+
+		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+
+		$administrator = get_role( 'administrator' );
+		$editor        = get_role( 'editor' );
+
+		foreach ( $all_capabilities as $cap ) {
+			$this->assertTrue( $administrator->has_cap( $cap ) );
+			$this->assertTrue( $editor->has_cap( $cap ) );
+		}
+
+		restore_current_blog();
 	}
 }
