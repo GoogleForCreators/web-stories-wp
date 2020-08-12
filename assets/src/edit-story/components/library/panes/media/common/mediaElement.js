@@ -367,7 +367,6 @@ function getInnerElement(
       <>
         <Video
           key={src}
-          s
           ref={ref}
           poster={poster}
           width={width}
