@@ -46,7 +46,7 @@ export const _default = () => {
         ariaLabel={'Click to upload a file'}
         instructionalText={text(
           'instructionalText',
-          'You can also drag your logo here'
+          'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.'
         )}
       />
     </Container>

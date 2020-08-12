@@ -43,7 +43,7 @@ import { FileUpload } from '../../../../components';
 import { Close as DeleteIcon } from '../../../../icons';
 
 export const TEXT = {
-  SECTION_HEADING: __('Publisher Logo', 'web-stories'),
+  SECTION_HEADING: __('Published Logo', 'web-stories'),
   CONTEXT: __(
     'Upload your logos here and they will become available to any stories you create.',
     'web-stories'
@@ -120,7 +120,7 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
           label={TEXT.SUBMIT}
           isMultiple
           ariaLabel={TEXT.ARIA_LABEL}
-          emptyDragHelperText={TEXT.HELPER_UPLOAD}
+          instructionalText={TEXT.HELPER_UPLOAD}
         />
         <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
       </div>
