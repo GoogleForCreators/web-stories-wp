@@ -116,7 +116,7 @@ function activate( $network_wide = false ) {
 /**
  * Hook into new site when they are created and run activation hook.
  *
- * @param int|WP_Site $site Site ID or object.
+ * @param int|\WP_Site $site Site ID or object.
  *
  * @return void
  */
@@ -125,7 +125,7 @@ function new_site( $site ) {
 		return;
 	}
 	$site    = get_site( $site );
-	$site_id = $site->blog_id;
+	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
 	activate();
 	restore_current_blog();
