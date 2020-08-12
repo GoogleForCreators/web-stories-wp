@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import Moveable from 'react-moveable';
@@ -65,17 +65,24 @@ const commonMovableProps = {
 export default function TimingBar({ duration }) {
   const [leftRef, setLeftRef] = useState(null);
   const [rightRef, setRightRef] = useState(null);
+
+  const dragStart = useRef(0);
+
+  const handleDragStart = useCallback(({ clientX }) => {
+    dragStart.current = clientX;
+  }, []);
+
+  const handleDrag = useCallback(({ clientX }) => {
+    console.log(clientX - dragStart.current);
+  }, []);
+
   return (
     <Bar width={duration}>
       <Handle ref={setLeftRef}>
         <Moveable
           target={leftRef}
-          onDragStart={({ target, clientX, clientY }) => {
-            console.log('onDragStart', target);
-          }}
-          onDrag={({ target, clientX, clientY }) => {
-            console.log('onDragStart', target);
-          }}
+          onDragStart={handleDragStart}
+          onDrag={handleDrag}
           {...commonMovableProps}
         />
       </Handle>
@@ -83,12 +90,8 @@ export default function TimingBar({ duration }) {
       <Handle ref={setRightRef}>
         <Moveable
           target={rightRef}
-          onDragStart={({ target, clientX, clientY }) => {
-            console.log('onDragStart', target);
-          }}
-          onDrag={({ target, clientX, clientY }) => {
-            console.log('onDragStart', target);
-          }}
+          onDragStart={handleDragStart}
+          onDrag={handleDrag}
           {...commonMovableProps}
         />
       </Handle>
