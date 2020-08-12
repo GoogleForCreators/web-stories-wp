@@ -285,11 +285,10 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$editor        = get_role( 'editor' );
 
 		foreach ( $all_capabilities as $cap ) {
-			$administrator->has_cap( $cap );
-			$editor->has_cap( $cap );
+			$this->assertTrue( $administrator->has_cap( $cap ) );
+			$this->assertTrue( $editor->has_cap( $cap ) );
 		}
 	}
-
 
 	/**
 	 * @covers ::add_caps_to_roles
