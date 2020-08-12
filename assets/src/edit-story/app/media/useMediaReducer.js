@@ -28,6 +28,10 @@ import * as localActionsToWrap from './local/actions';
 import * as media3pActionsToWrap from './media3p/actions';
 import * as types from './types';
 
+/**
+ * @typedef {import('./typedefs').MediaReducer} MediaReducer
+ */
+
 function rootReducer(state = {}, { type, payload }) {
   return {
     local: localReducer(state.local, { type, payload }),
@@ -58,7 +62,7 @@ const wrapWithDispatch = (actionFnOrActionObject, dispatch) => {
  * @param {Object} actionsToWrap The action dispatcher functions, that are
  * wrapped with the `dispatch` function and may be overriden for unit testing
  * purposes
- * @return {Object} Media reducer object.
+ * @return {MediaReducer} Media reducer object.
  */
 function useMediaReducer(reducer = rootReducer, actionsToWrap) {
   const defaultActionsToWrap = useMemo(
