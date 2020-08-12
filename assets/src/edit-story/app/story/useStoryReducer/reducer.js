@@ -90,6 +90,10 @@ function reducer(state, { type, payload }) {
       return reducers.updateStory(state, payload);
     }
 
+    case types.UPDATE_ANIMATION_STATE: {
+      return reducers.updateAnimationState(state, payload);
+    }
+
     case types.RESTORE: {
       return reducers.restore(state, payload);
     }

@@ -53,6 +53,7 @@ const Wrapper = styled.div`
 		outline: ${({ theme, hasMask }) =>
       hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
 	}
+  
 `;
 
 const EmptyFrame = styled.div`
@@ -80,10 +81,12 @@ function FrameElement({ element }) {
       isEditing: state.state.isEditing,
     })
   );
-  const { selectedElementIds, currentPage } = useStory((state) => ({
-    selectedElementIds: state.state.selectedElementIds,
-    currentPage: state.state.currentPage,
-  }));
+  const { selectedElementIds, currentPage, isAnimating } = useStory(
+    (state) => ({
+      selectedElementIds: state.state.selectedElementIds,
+      currentPage: state.state.currentPage,
+    })
+  );
   const { getBox } = useUnits((state) => ({
     getBox: state.actions.getBox,
   }));
@@ -147,6 +150,7 @@ function FrameElement({ element }) {
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
+        isAnimating={isAnimating}
         data-testid="frameElement"
       >
         <WithMask element={element} fill={true}>
