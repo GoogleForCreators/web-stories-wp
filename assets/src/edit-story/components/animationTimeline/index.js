@@ -33,7 +33,11 @@ import {
 import AnimationRuler from './ruler';
 import TimingBar from './timingBar';
 
-export default function AnimationTimeline({ animations, duration }) {
+export default function AnimationTimeline({
+  animations,
+  duration,
+  onUpdateAnimation,
+}) {
   return (
     <TimelineContainer>
       <TimelineLegend>
@@ -66,4 +70,5 @@ export default function AnimationTimeline({ animations, duration }) {
 AnimationTimeline.propTypes = {
   animations: propTypes.arrayOf(propTypes.object).isRequired,
   duration: propTypes.number.isRequired,
+  onUpdateAnimation: propTypes.func.isRequired,
 };

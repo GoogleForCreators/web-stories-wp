@@ -17,14 +17,19 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
+import React, { useRef, useState } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
+import Moveable from 'react-moveable';
 
 const BAR_HEIGHT = 24;
 
 const Bar = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   background-color: #3988f7;
   width: ${({ width }) => (width / 10) * 40}px;
   height: ${BAR_HEIGHT}px;
@@ -39,17 +44,59 @@ const Bar = styled.div`
   );
 `;
 
-const Handle = styled.div``;
+const Handle = styled.div`
+  background-color: white;
+  width: 14px;
+  height: 14px;
+  transform: rotate(45deg);
+  margin: 6px;
+`;
+
+const Label = styled.span`
+  font-weight: bold;
+`;
+
+const commonMovableProps = {
+  originDraggable: false,
+  origin: false,
+  draggable: true,
+};
 
 export default function TimingBar({ duration }) {
+  const [leftRef, setLeftRef] = useState(null);
+  const [rightRef, setRightRef] = useState(null);
   return (
     <Bar width={duration}>
-      <Handle position="left" />
-      <Handle position="right" />
+      <Handle ref={setLeftRef}>
+        <Moveable
+          target={leftRef}
+          onDragStart={({ target, clientX, clientY }) => {
+            console.log('onDragStart', target);
+          }}
+          onDrag={({ target, clientX, clientY }) => {
+            console.log('onDragStart', target);
+          }}
+          {...commonMovableProps}
+        />
+      </Handle>
+      <Label>Hi</Label>
+      <Handle ref={setRightRef}>
+        <Moveable
+          target={rightRef}
+          onDragStart={({ target, clientX, clientY }) => {
+            console.log('onDragStart', target);
+          }}
+          onDrag={({ target, clientX, clientY }) => {
+            console.log('onDragStart', target);
+          }}
+          {...commonMovableProps}
+        />
+      </Handle>
     </Bar>
   );
 }
 
 TimingBar.propTypes = {
   duration: propTypes.number.isRequired,
+  onUpdateAnimation: propTypes.func.isRequired,
 };
