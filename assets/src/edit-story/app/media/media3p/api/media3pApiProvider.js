@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import getResourceFromMedia3p from '../../utils/getResourceFromMedia3p';
-import { ProviderType } from '../../providerType';
 import { PROVIDERS } from '../providerConfiguration';
 import apiFetcher from './apiFetcher';
 import Context from './context';
@@ -62,13 +61,6 @@ function Media3pApiProvider({ children }) {
   }) {
     if (!Object.keys(PROVIDERS).includes(provider)) {
       throw new Error(`Unsupported provider: ${provider}`);
-    }
-
-    // TODO(#3712): Temporary hack alert!: Convert coverr to unsplash for
-    // testing until Coverr backend is implemented.
-    if (provider === ProviderType.COVERR) {
-      provider = ProviderType.UNSPLASH;
-      searchTerm = 'small ' + searchTerm;
     }
 
     if (selectedCategoryId && searchTerm) {

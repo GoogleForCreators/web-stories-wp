@@ -183,17 +183,17 @@ function getImageResourceFromMedia3p(m) {
 
 function getVideoResourceFromMedia3p(m) {
   const videoUrls = getVideoUrls(m);
-  const length = parseInt(m.videoMetadata.duration.trimEnd('s'));
+  const lengthSeconds = parseInt(m.videoMetadata.duration.trimEnd('s'));
   return createResource({
     type: m.type.toLowerCase(),
     mimeType: videoUrls.full.mime_type,
     creationDate: m.createTime,
     src: videoUrls.full.source_url,
-    width: videoUrls.full.width,
-    height: videoUrls.full.height,
-    poster: m.imageUrls[0],
-    length,
-    lengthFormatted: formatVideoLength(length),
+    width: 1920, // TODO(#3815): Use width from API.
+    height: 1080, // TODO(#3815): Use height from API.
+    poster: m.imageUrls[0].url,
+    lengthSeconds,
+    lengthFormatted: formatVideoLength(lengthSeconds),
     title: m.description,
     alt: null,
     local: false,
