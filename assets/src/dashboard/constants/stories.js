@@ -140,7 +140,7 @@ export const STORY_VIEWING_LABELS = {
   ),
 };
 
-export const STORY_PAGE_STATE = {
+export const STORY_ANIMATION_STATE = {
   RESET: 'reset',
   PAUSED: 'paused',
   SCRUBBING: 'scrubbing',

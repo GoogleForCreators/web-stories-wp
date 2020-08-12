@@ -33,6 +33,7 @@ export const INITIAL_STATE = {
   isMediaLoaded: false,
 };
 
+
 /**
  * The reducer for the state of a media list pagination.
  *

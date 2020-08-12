@@ -142,7 +142,7 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
       WAAPIAnimations.forEach((animation) => animation?.pause());
     const setCurrentTime = (time) =>
       WAAPIAnimations.forEach((animation) => {
-        const { duration, delay } = animation.effect.timing;
+        const { duration, delay } = animation.effect.getTiming() ?? {};
         const animationEndTime = (delay || 0) + (duration || 0);
         animation.currentTime =
           time === 'end'

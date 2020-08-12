@@ -228,6 +228,7 @@
     "workflow:fonts": "./bin/commander.js build-fonts",
     "workflow:templates": "./bin/commander.js update-templates"
   },
+  
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged --relative"

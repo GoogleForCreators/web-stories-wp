@@ -37,6 +37,10 @@ const defaultWAAPIAnimation = {
       duration: 0,
       delay: 0,
     },
+    getTiming: () => ({
+      duration: 0,
+      delay: 0,
+    }),
   },
 };
 const mockWAAPIAnimation = (overrides = {}) => ({
@@ -243,10 +247,10 @@ describe('StoryAnimation.Provider', () => {
           pause,
           currentTime: 0,
           effect: {
-            timing: {
+            getTiming: () => ({
               duration: 300,
               delay: 0,
-            },
+            }),
           },
         });
         act(() => {
@@ -286,10 +290,10 @@ describe('StoryAnimation.Provider', () => {
           pause: jest.fn(),
           currentTime: initialTime,
           effect: {
-            timing: {
+            getTiming: () => ({
               duration: 300,
               delay: 0,
-            },
+            }),
           },
         })
       );
