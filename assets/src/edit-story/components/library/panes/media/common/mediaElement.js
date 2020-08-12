@@ -128,7 +128,7 @@ const HiddenPosterImage = styled.img`
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
- * @param {number?} param.margin The margin in pixels around the element
+ * @param {string?} param.margin The margin in pixels around the element
  * @param {Function} param.onInsert Insertion callback.
  * @param {string} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
@@ -414,7 +414,7 @@ MediaElement.propTypes = {
   resource: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
-  margin: PropTypes.number,
+  margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
 };
