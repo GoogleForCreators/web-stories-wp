@@ -13,8 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const ProviderType = {
-  LOCAL: 'local',
-  UNSPLASH: 'unsplash',
-  COVERR: 'coverr',
+/**
+ * Internal dependencies
+ */
+import { FIELD_TYPES, DIRECTION } from '../../constants';
+
+export default {
+  rotateInDir: {
+    type: FIELD_TYPES.DROPDOWN,
+    values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
+    defaultValue: DIRECTION.LEFT_TO_RIGHT,
+  },
+  stopAngle: {
+    type: FIELD_TYPES.NUMBER,
+    defaultValue: 0,
+  },
+  numberOfRotations: {
+    type: FIELD_TYPES.NUMBER,
+    defaultValue: 1,
+  },
 };

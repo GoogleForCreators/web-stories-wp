@@ -22,7 +22,6 @@
  */
 import { Simulate } from 'react-dom/test-utils';
 import MediaElement from '../panes/media/common/mediaElement';
-import { ProviderType } from '../../../app/media/providerType';
 import { renderWithTheme } from '../../../testUtils';
 
 const renderMediaElement = (resource, providerType) =>
@@ -48,7 +47,7 @@ describe('MediaElement', () => {
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
-      ProviderType.LOCAL
+      'local'
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
@@ -71,7 +70,7 @@ describe('MediaElement', () => {
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
-      ProviderType.LOCAL
+      'local'
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
@@ -94,7 +93,7 @@ describe('MediaElement', () => {
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
-      ProviderType.LOCAL
+      'local'
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
@@ -117,7 +116,7 @@ describe('MediaElement', () => {
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
-      ProviderType.LOCAL
+      'local'
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 

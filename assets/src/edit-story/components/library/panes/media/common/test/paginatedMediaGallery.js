@@ -18,10 +18,9 @@
  */
 import { renderWithTheme } from '../../../../../../testUtils';
 import PaginatedMediaGallery from '../paginatedMediaGallery';
-import { ProviderType } from '../../../../../../app/media/providerType';
 
 describe('paginatedMediaGallery', () => {
-  const providerType = ProviderType.UNSPLASH;
+  const providerType = 'unsplash';
   const resources = [
     {
       alt: null,

@@ -48,6 +48,7 @@ function restore(state, { pages, current, selection, story }) {
     current: newCurrent,
     selection: newSelection,
     story: newStory,
+    animationState: state.animationState,
   };
 }
 

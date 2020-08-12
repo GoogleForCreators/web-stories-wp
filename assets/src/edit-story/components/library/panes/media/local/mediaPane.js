@@ -46,7 +46,6 @@ import {
   StyledPane,
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
-import { ProviderType } from '../../../../../app/media/providerType';
 import Flags from '../../../../../flags';
 import paneId from './paneId';
 
@@ -233,7 +232,7 @@ function MediaPane(props) {
           </MediaGalleryMessage>
         ) : (
           <PaginatedMediaGallery
-            providerType={ProviderType.LOCAL}
+            providerType={'local'}
             resources={resources}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}

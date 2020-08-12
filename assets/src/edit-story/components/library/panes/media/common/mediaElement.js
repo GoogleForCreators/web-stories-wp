@@ -29,7 +29,6 @@ import { rgba } from 'polished';
 import { useDropTargets } from '../../../../../app';
 import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
-import { ProviderType } from '../../../../../app/media/providerType';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
@@ -121,7 +120,7 @@ const HiddenPosterImage = styled.img`
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
  * @param {Function} param.onInsert Insertion callback.
- * @param {ProviderType} param.providerType Which provider the element is from.
+ * @param {string} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
@@ -162,7 +161,7 @@ const MediaElement = ({
 
   const handleRegisterUsage = useCallback(() => {
     if (
-      providerType !== ProviderType.LOCAL &&
+      providerType !== 'local' &&
       resource.attribution &&
       resource.attribution.registerUsageUrl
     ) {
@@ -315,7 +314,7 @@ const MediaElement = ({
           <UploadingIndicator />
         </CSSTransition>
       )}
-      {providerType === ProviderType.LOCAL && (
+      {providerType === 'local' && (
         <DropDownMenu
           resource={resource}
           display={active}
@@ -368,6 +367,7 @@ function getInnerElement(
       <>
         <Video
           key={src}
+          s
           ref={ref}
           poster={poster}
           width={width}
@@ -400,7 +400,7 @@ MediaElement.propTypes = {
 };
 
 MediaElement.defaultProps = {
-  providerType: ProviderType.LOCAL,
+  providerType: 'local',
 };
 
 export default memo(MediaElement);
