@@ -23,7 +23,6 @@ import * as commonTypes from '../pagination/types';
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
 } from '../pagination/reducer';
-import { ProviderType } from '../providerType';
 import * as types from './types';
 
 const INITIAL_STATE = {
@@ -52,7 +51,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     case commonTypes.FETCH_MEDIA_SUCCESS: {
       const { provider, mediaType, searchTerm } = payload;
       if (
-        provider === ProviderType.LOCAL &&
+        provider === 'local' &&
         mediaType === state.mediaType &&
         searchTerm === state.searchTerm
       ) {
@@ -134,7 +133,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     default:
-      if (payload?.provider == ProviderType.LOCAL) {
+      if (payload?.provider == 'local') {
         return commonReducer(state, { type, payload });
       }
       return state;
