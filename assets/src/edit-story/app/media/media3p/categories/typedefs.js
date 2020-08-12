@@ -43,7 +43,7 @@
  */
 
 /**
- * The categories used internaly by the reducers (i.e. reducerState).
+ * The categories used internally by the reducers (i.e. reducerState).
  *
  * @typedef {Object} CategoriesReducerState
  * @property {Array.<Category>} categories array of category objects
