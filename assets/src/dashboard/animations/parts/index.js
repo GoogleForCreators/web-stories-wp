@@ -26,6 +26,7 @@ import { ANIMATION_TYPES, ANIMATION_EFFECTS, BEZIER } from '../constants';
 import { EffectDrop } from '../effects/drop';
 import { EffectFadeIn } from '../effects/fadeIn';
 import { EffectFlyIn } from '../effects/flyIn';
+import { EffectPan } from '../effects/pan';
 import { EffectPulse } from '../effects/pulse';
 import { EffectTwirlIn } from '../effects/twirlIn';
 import { EffectWhooshIn } from '../effects/whooshIn';
@@ -86,6 +87,7 @@ export function AnimationPart(type, args) {
       [ANIMATION_TYPES.ZOOM]: AnimationZoom,
       [ANIMATION_EFFECTS.FADE_IN]: EffectFadeIn,
       [ANIMATION_EFFECTS.FLY_IN]: EffectFlyIn,
+      [ANIMATION_EFFECTS.PAN]: EffectPan,
       [ANIMATION_EFFECTS.PULSE]: EffectPulse,
       [ANIMATION_EFFECTS.TWIRL_IN]: EffectTwirlIn,
       [ANIMATION_EFFECTS.WHOOSH_IN]: EffectWhooshIn,
