@@ -48,7 +48,7 @@ function StatusPanel() {
     actions: { loadUsers },
   } = useInspector();
 
-  const { status, password, updateStory } = useStory(
+  const { status = '', password, updateStory } = useStory(
     ({
       state: {
         story: { status, password },

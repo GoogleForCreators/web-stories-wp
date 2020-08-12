@@ -65,7 +65,7 @@ function PublishPanel() {
     ({
       state: {
         meta: { isSaving },
-        story: { author, featuredMediaUrl, publisherLogoUrl },
+        story: { author = '', featuredMediaUrl = '', publisherLogoUrl = '' },
       },
       actions: { updateStory },
     }) => {
