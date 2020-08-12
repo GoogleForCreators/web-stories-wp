@@ -23,9 +23,15 @@ import WithMask from '../masks/output';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 import WithLink from '../components/elementLink/output';
+import { useChecklist } from '../app/checklist';
 
-function OutputElement({ element }) {
+function OutputElement({ element, checklist }) {
   const { id, opacity, type } = element;
+
+  if (checklist) {
+    return null;
+  }
+
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height

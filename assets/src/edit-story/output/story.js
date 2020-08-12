@@ -30,7 +30,14 @@ import getFontDeclarations from './utils/getFontDeclarations';
 import OutputPage from './page';
 
 function OutputStory({
-  story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },
+  story: {
+    featuredMediaUrl,
+    link,
+    title,
+    autoAdvance,
+    defaultPageDuration,
+    checklist,
+  },
   pages,
   metadata: { publisher, fallbackPoster, logoPlaceholder },
 }) {
@@ -73,6 +80,7 @@ function OutputStory({
               page={page}
               autoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
+              checklist={checklist[page.id] || []}
             />
           ))}
         </amp-story>

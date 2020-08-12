@@ -53,6 +53,7 @@ function APIProvider({ children }) {
     publisherLogo,
     autoAdvance,
     defaultPageDuration,
+    checklist,
     ...rest
   }) => {
     return {
@@ -61,6 +62,7 @@ function APIProvider({ children }) {
         pages,
         autoAdvance,
         defaultPageDuration,
+        checklist,
       },
       featured_media: featuredMedia,
       style_presets: stylePresets,

@@ -31,7 +31,7 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-function OutputPage({ page, autoAdvance, defaultPageDuration }) {
+function OutputPage({ page, autoAdvance, defaultPageDuration, checklist }) {
   const { id, animations, elements, backgroundColor } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
@@ -74,7 +74,11 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {regularElements.map((element) => (
-                <OutputElement key={'el-' + element.id} element={element} />
+                <OutputElement
+                  key={'el-' + element.id}
+                  element={element}
+                  checklist={checklist[element.id]}
+                />
               ))}
             </div>
           </div>

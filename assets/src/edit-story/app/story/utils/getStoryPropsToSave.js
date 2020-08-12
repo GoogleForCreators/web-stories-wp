@@ -34,6 +34,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'stylePresets',
     'autoAdvance',
     'defaultPageDuration',
+    'checklist',
   ]);
 
   const content = getStoryMarkup(story, pages, metadata, flags);
