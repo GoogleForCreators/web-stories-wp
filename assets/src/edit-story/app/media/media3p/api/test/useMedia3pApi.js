@@ -40,7 +40,7 @@ describe('useMedia3pApi', () => {
       media: [
         {
           name: 'media/unsplash:1234',
-          provider: 'UNSPLASH',
+          provider: 'unsplash',
           author: {
             displayName: 'Maria',
             url: 'http://maria.com',

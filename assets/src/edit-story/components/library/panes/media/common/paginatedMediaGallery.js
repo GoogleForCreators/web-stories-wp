@@ -44,7 +44,6 @@ import {
   MediaGalleryMessage,
 } from '../common/styles';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
-import { ProviderType } from '../../../../../app/media/providerType';
 
 const ROOT_MARGIN = 300;
 
@@ -183,7 +182,7 @@ function PaginatedMediaGallery({
   }, [isMediaLoading, hasMore]);
 
   const attribution =
-    providerType !== ProviderType.LOCAL &&
+    providerType !== 'local' &&
     PROVIDERS[providerType].attributionComponent &&
     PROVIDERS[providerType].attributionComponent();
   return (
