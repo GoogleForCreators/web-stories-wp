@@ -91,8 +91,9 @@ export const FinePrintHelperText = styled.p`
 export const UploadedContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, 56px);
-  grid-template-rows: 56px;
+  grid-auto-rows: 56px;
   grid-column-gap: 12px;
+  grid-row-gap: 20px;
   padding-bottom: 24px;
 `;
 
