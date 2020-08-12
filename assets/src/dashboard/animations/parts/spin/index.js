@@ -26,7 +26,7 @@ const defaults = {
   duration: 1000,
 };
 
-export function AnimationSpin({ rotation = 0, ...args }) {
+export function AnimationSpin({ rotation = 0, stopAngle = 0, ...args }) {
   const timings = {
     ...defaults,
     ...args,
@@ -35,7 +35,7 @@ export function AnimationSpin({ rotation = 0, ...args }) {
   const animationName = `rot-${rotation}-${ANIMATION_TYPES.SPIN}`;
   const keyframes = [
     { transform: `rotateZ(${defaultUnit(rotation, 'deg')})` },
-    { transform: 'rotateZ(0deg)' },
+    { transform: `rotateZ(${defaultUnit(stopAngle, 'deg')})` },
   ];
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(

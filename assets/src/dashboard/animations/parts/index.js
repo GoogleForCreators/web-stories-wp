@@ -30,6 +30,7 @@ import { EffectPulse } from '../effects/pulse';
 import { EffectTwirlIn } from '../effects/twirlIn';
 import { EffectWhooshIn } from '../effects/whooshIn';
 import { EffectZoom } from '../effects/zoom';
+import { EffectRotateIn } from '../effects/rotateIn';
 import flyInProps from '../effects/flyIn/animationsProps';
 import pulseProps from '../effects/pulse/animationProps';
 import whooshInProps from '../effects/whooshIn/animationProps';
@@ -90,6 +91,7 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.WHOOSH_IN]: EffectWhooshIn,
       [ANIMATION_EFFECTS.ZOOM]: EffectZoom,
       [ANIMATION_EFFECTS.DROP]: EffectDrop,
+      [ANIMATION_EFFECTS.ROTATE_IN]: EffectRotateIn,
     }[type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];

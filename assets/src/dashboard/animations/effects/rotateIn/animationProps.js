@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../../constants';
+import { FIELD_TYPES, DIRECTION } from '../../constants';
 
 export default {
-  rotation: {
-    type: FIELD_TYPES.STRING,
-    defaultValue: '0',
+  rotateInDir: {
+    type: FIELD_TYPES.DROPDOWN,
+    values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
+    defaultValue: DIRECTION.LEFT_TO_RIGHT,
   },
   stopAngle: {
-    type: FIELD_TYPES.STRING,
-    defaultValue: '0',
+    type: FIELD_TYPES.NUMBER,
+    defaultValue: 0,
+  },
+  numberOfRotations: {
+    type: FIELD_TYPES.NUMBER,
+    defaultValue: 1,
   },
 };

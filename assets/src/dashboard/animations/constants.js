@@ -36,6 +36,7 @@ export const ANIMATION_EFFECTS = {
   TWIRL_IN: 'effect-twirl-in',
   WHOOSH_IN: 'effect-whoosh-in',
   ZOOM: 'effect-zoom',
+  ROTATE_IN: 'effect-rotate-in',
 };
 
 export const DIRECTION = {
