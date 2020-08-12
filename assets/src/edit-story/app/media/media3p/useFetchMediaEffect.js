@@ -29,6 +29,28 @@ import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
+/**
+ * @typedef {Object} FetchMediaEffectParams
+ * @property {string} provider provider name
+ * @property {string} selectedProvider selected provider
+ * @property {string} searchTerm current search term
+ * @property {string} selectedCategoryId current category id
+ * @property {string} pageToken current page token
+ * @property {boolean} isMediaLoading is the media loading
+ * @property {boolean} isMediaLoaded is media loaded
+ * @property {import('./typedefs').FetchMediaStartFn} fetchMediaStart oction
+ * dispatched when fetch media process starts.
+ * @property {import('./typedefs').FetchMediaSuccessFn} fetchMediaSuccess action
+ * dispatched when fetching media has been a success
+ * @property {import('./typedefs').FetchMediaErrorFn} fetchMediaError action
+ * dispatched when fetching media returns an error
+ */
+
+/**
+ * The side effect that fetches the media from the backend.
+ *
+ * @param {FetchMediaEffectParams} obj required actions and parameters
+ */
 export default function useFetchMediaEffect({
   provider,
   selectedProvider,
