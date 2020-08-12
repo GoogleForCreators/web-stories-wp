@@ -25,8 +25,7 @@
 /**
  * @typedef FetchMediaSuccessPayload
  * @property {string} provider media provider name
- * @property {Array.<Media>} media
- * the media that is fetched
+ * @property {Array.<Media>} media the media that is fetched
  * @property {string} nextPageToken token representing the next page
  * @property {number} totalPages total number of pages
  * @property {string} pageToken the current page token
