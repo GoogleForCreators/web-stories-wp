@@ -293,7 +293,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::add_caps_to_roles
-	 * @covers \Google\Web_Stories::new_site
+	 * @covers \Google\Web_Stories\new_site
 	 * @group ms-required
 	 */
 	public function test_add_caps_to_roles_multisite() {

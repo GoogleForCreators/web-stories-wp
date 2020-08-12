@@ -22,7 +22,7 @@ namespace Google\Web_Stories\Tests;
  */
 class Plugin extends \WP_UnitTestCase {
 	/**
-	 * @covers ::registerr
+	 * @covers ::register
 	 */
 	public function test_register() {
 		$plugin = new \Google\Web_Stories\Plugin();
