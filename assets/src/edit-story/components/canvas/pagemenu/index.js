@@ -46,10 +46,12 @@ import {
 import WithTooltip from '../../tooltip';
 import useCanvas from '../useCanvas';
 
+const HEIGHT = 28;
+
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-end;
-  margin-top: 8px;
+  height: ${20 + HEIGHT}px;
 `;
 
 const Box = styled.div`
@@ -58,6 +60,7 @@ const Box = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  height: ${HEIGHT}px;
   width: 100%;
 `;
 
@@ -79,12 +82,12 @@ const Options = styled.div`
 const Divider = styled.span`
   background-color: ${({ theme }) => theme.colors.fg.white};
   opacity: 0.3;
-  height: 20px;
+  height: ${HEIGHT}px;
   width: 1px;
 `;
 
 const Space = styled.div`
-  width: ${({ isDouble }) => (isDouble ? 16 : 8)}px;
+  width: ${({ isDouble }) => (isDouble ? 20 : 10)}px;
 `;
 
 const Icon = styled.button`
@@ -103,8 +106,8 @@ const Icon = styled.button`
     `}
 
   svg {
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 28px;
     display: block;
   }
 `;
