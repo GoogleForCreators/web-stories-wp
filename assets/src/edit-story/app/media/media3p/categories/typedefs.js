@@ -28,8 +28,8 @@
 
 /**
  * @typedef {Object} Category
- * @property {string} id
- * @property {string} displayName
+ * @property {string} id category id
+ * @property {string} displayName the name of the category
  */
 
 /**
@@ -42,7 +42,8 @@
  * @property {string} selectedCategoryId current selected category id
  */
 
-/** The categories used internaly by the reducers (i.e. reducerState)
+/**
+ * The categories used internally by the reducers (i.e. reducerState).
  *
  * @typedef {Object} CategoriesReducerState
  * @property {Array.<Category>} categories array of category objects
