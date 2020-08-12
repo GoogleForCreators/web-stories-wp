@@ -32,6 +32,7 @@ export const ANIMATION_EFFECTS = {
   DROP: 'effect-drop',
   FADE_IN: 'effect-fade-in',
   FLY_IN: 'effect-fly-in',
+  PAN: 'effect-pan',
   PULSE: 'effect-pulse',
   TWIRL_IN: 'effect-twirl-in',
   WHOOSH_IN: 'effect-whoosh-in',
