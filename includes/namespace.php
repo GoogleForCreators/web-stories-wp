@@ -94,7 +94,7 @@ if ( ! class_exists( '\Google\Web_Stories\Plugin' ) ) {
  *
  * @return void
  */
-function activate( $network_wide ) {
+function activate( $network_wide = false ) {
 	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
 		wp_die(
 		/* translators: %s: PHP version number */
@@ -112,6 +112,28 @@ function activate( $network_wide ) {
 
 	do_action( 'web_stories_activation', $network_wide );
 }
+
+/**
+ * Hook into new site when they are created and run activation hook.
+ *
+ * @param int|\WP_Site $site Site ID or object.
+ *
+ * @return void
+ */
+function new_site( $site ) {
+	if ( ! is_multisite() ) {
+		return;
+	}
+	$site = get_site( $site );
+	if ( ! $site ) {
+		return;
+	}
+	$site_id = (int) $site->blog_id;
+	switch_to_blog( $site_id );
+	activate();
+	restore_current_blog();
+}
+add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
 
 /**
  * Handles plugin deactivation.
