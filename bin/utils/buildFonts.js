@@ -17,16 +17,15 @@
 /**
  * External dependencies
  */
-import { writeFileSync, unlinkSync } from 'fs';
-import opentype from 'opentype.js';
+import { writeFileSync } from 'fs';
 import got from 'got';
 
 /**
  * Internal dependencies
  */
 import { SYSTEM_FONTS } from './constants.js';
-import fetch from './fetch.js';
 import normalizeFont from './normalizeFont.js';
+import getFontMetrics from './getFontMetrics.js';
 
 const GOOGLE_WEB_FONTS_API = 'https://www.googleapis.com/webfonts/v1/webfonts';
 
@@ -42,55 +41,50 @@ async function buildFonts(targetFile) {
   url.searchParams.append('prettyPrint', 'false');
   url.searchParams.append('key', process.env.GOOGLE_FONTS_API_KEY);
 
-  const rawData = await fetch(url.toString());
-  if (!rawData.length) {
+  const response = await got(url.toString());
+
+  if (!response.body) {
     return;
   }
 
-  const googleFonts = JSON.parse(rawData);
-  if (!Object.prototype.hasOwnProperty.call(googleFonts, 'items')) {
+  const rawFonts = JSON.parse(response.body);
+  if (!Object.prototype.hasOwnProperty.call(rawFonts, 'items')) {
     return;
   }
 
-  const fonts = [...SYSTEM_FONTS, ...googleFonts.items.map(normalizeFont)];
+  const googleFonts = await Promise.all(
+    rawFonts.items.map(async (font) => {
+      const normalizedFont = normalizeFont(font);
 
-  const tempFile = 'temp.ttf';
-  for (let i = 0, n = fonts.length; i < n; i++) {
-    const font = fonts[i];
-    if (font.fontFileURL) {
+      const fontFileURL =
+        font.files['regular'] ||
+        font.files[400] ||
+        font.files[Object.keys(font.files)[0]];
+
+      let fontMetrics = {};
       try {
-        // eslint-disable-next-line no-await-in-loop
-        const response = await got(font.fontFileURL);
-        writeFileSync(tempFile, response.rawBody);
-        const fontInfo = opentype.loadSync(tempFile);
-
-        fonts[i].metrics = {
-          upm: fontInfo.unitsPerEm,
-          asc: fontInfo.ascender,
-          des: fontInfo.descender,
-          tAsc: fontInfo.tables.os2.sTypoAscender,
-          tDes: fontInfo.tables.os2.sTypoDescender,
-          tLGap: fontInfo.tables.os2.sTypoLineGap,
-          wAsc: fontInfo.tables.os2.usWinAscent,
-          wDes: fontInfo.tables.os2.usWinDescent,
-          xH: fontInfo.tables.os2.sxHeight,
-          capH: fontInfo.tables.os2.sCapHeight,
-          yMin: fontInfo.tables.head.yMin,
-          yMax: fontInfo.tables.head.yMax,
-          hAsc: fontInfo.tables.hhea.ascender,
-          hDes: fontInfo.tables.hhea.descender,
-          lGap: fontInfo.tables.hhea.lineGap,
-        };
-        process.stdout.write('.');
-      } catch (error) {
+        fontMetrics = await getFontMetrics(fontFileURL);
+      } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(font.family, font.fontFileURL, error);
+        console.error(
+          `Error loading font metrics for "${font.family}" (${fontFileURL})`,
+          err
+        );
       }
-    }
-    delete font.fontFileURL;
-  }
-  unlinkSync(tempFile);
 
+      process.stdout.write('.');
+
+      return {
+        ...normalizedFont,
+        metrics: fontMetrics,
+      };
+    })
+  );
+
+  // Force newlines after the dots.
+  process.stdout.write('\n');
+
+  const fonts = [...SYSTEM_FONTS, ...googleFonts];
   fonts.sort((a, b) => a.family.localeCompare(b.family));
 
   writeFileSync(targetFile, JSON.stringify(fonts));

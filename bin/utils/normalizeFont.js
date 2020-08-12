@@ -22,9 +22,19 @@ import getFontFallback from './getFontFallback.js';
 const FONT_VARIANT_PATTERN = /(?<weight>\d+)?(?<style>\D+)?/;
 
 /**
+ * Raw font object.
+ *
+ * @typedef {Object} RawFont font object
+ * @property {string} family Font family.
+ * @property {string} category Font family.
+ * @property {Array<string>} variants Font variants.
+ * @property {Object<*>} fonts Font URLs.
+ */
+
+/**
  * Font object.
  *
- * @typedef {Font} Font
+ * @typedef {Font} Font Font object.
  * @property {string} family Font family.
  * @property {Array<string>} fallbacks Font fallbacks.
  * @property {Array<number>} weights Font weights.
@@ -39,7 +49,7 @@ const FONT_VARIANT_PATTERN = /(?<weight>\d+)?(?<style>\D+)?/;
  * Drops unnecessary fields, and splits provided variants list
  * into weights, styles, and variants tuples.
  *
- * @param {Object} font Font object.
+ * @param {RawFont} font Font object.
  * @return {Font} Normalized font object.
  */
 function normalizeFont(font) {
@@ -77,11 +87,6 @@ function normalizeFont(font) {
     variants.push(variantTuple);
   }
 
-  let fontFileURL =
-    font.files['regular'] ||
-    font.files[400] ||
-    font.files[Object.keys(font.files)[0]];
-
   return {
     family,
     fallbacks: [getFontFallback(category)],
@@ -89,7 +94,6 @@ function normalizeFont(font) {
     styles: [...new Set(styles)],
     variants,
     service: 'fonts.google.com',
-    fontFileURL,
   };
 }
 
