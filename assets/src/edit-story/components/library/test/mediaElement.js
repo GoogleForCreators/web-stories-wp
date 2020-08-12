@@ -24,7 +24,6 @@ import { FlagsProvider } from 'flagged';
  */
 import { Simulate } from 'react-dom/test-utils';
 import MediaElement from '../panes/media/common/mediaElement';
-import { ProviderType } from '../panes/media/common/providerType';
 import { renderWithTheme } from '../../../testUtils';
 
 const renderMediaElement = (resource, providerType) =>
@@ -52,7 +51,7 @@ describe('MediaElement', () => {
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
-      ProviderType.LOCAL
+      'local'
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
@@ -75,7 +74,7 @@ describe('MediaElement', () => {
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
-      ProviderType.LOCAL
+      'local'
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
@@ -98,7 +97,7 @@ describe('MediaElement', () => {
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
-      ProviderType.LOCAL
+      'local'
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
@@ -121,7 +120,7 @@ describe('MediaElement', () => {
 
     const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
       resource,
-      ProviderType.LOCAL
+      'local'
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 

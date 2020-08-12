@@ -30,7 +30,6 @@ import { useFeature } from 'flagged';
 import { useDropTargets } from '../../../../../app';
 import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
-import { ProviderType } from '../common/providerType';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
@@ -41,7 +40,6 @@ const styledTiles = css`
   width: 100%;
   cursor: pointer;
   transition: 0.2s transform, 0.15s opacity;
-  margin-bottom: 10px;
   border-radius: 4px;
   opacity: 0;
 `;
@@ -66,15 +64,15 @@ const Container = styled.div`
 
 const Duration = styled.div`
   position: absolute;
-  bottom: 12px;
-  left: 10px;
+  bottom: 8px;
+  left: 8px;
   background: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.6)};
   font-family: ${({ theme }) => theme.fonts.duration.family};
   font-size: ${({ theme }) => theme.fonts.duration.size};
   line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
-  padding: 2px 8px;
-  border-radius: 8px;
+  padding: 0 6px;
+  border-radius: 10px;
 `;
 
 const gradientAnimation = keyframes`
@@ -123,7 +121,7 @@ const HiddenPosterImage = styled.img`
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
  * @param {Function} param.onInsert Insertion callback.
- * @param {ProviderType} param.providerType Which provider the element is from.
+ * @param {string} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
@@ -165,7 +163,7 @@ const MediaElement = ({
 
   const handleRegisterUsage = useCallback(() => {
     if (
-      providerType !== ProviderType.LOCAL &&
+      providerType !== 'local' &&
       resource.attribution &&
       resource.attribution.registerUsageUrl
     ) {
@@ -274,7 +272,7 @@ const MediaElement = ({
 
   const rowBasedUploadGalleryEnabled = useFeature('rowBasedGallery');
   const isRowBasedGallery =
-    providerType !== ProviderType.LOCAL || rowBasedUploadGalleryEnabled;
+    providerType !== 'local' || rowBasedUploadGalleryEnabled;
   useRovingTabIndex({ ref, isRowBasedGallery });
 
   const handleKeyDown = useCallback(
@@ -321,7 +319,7 @@ const MediaElement = ({
           <UploadingIndicator />
         </CSSTransition>
       )}
-      {hasDropdownMenu && providerType === ProviderType.LOCAL && (
+      {hasDropdownMenu && providerType === 'local' && (
         <DropDownMenu
           resource={resource}
           display={active}
@@ -406,7 +404,7 @@ MediaElement.propTypes = {
 };
 
 MediaElement.defaultProps = {
-  providerType: ProviderType.LOCAL,
+  providerType: 'local',
 };
 
 export default memo(MediaElement);

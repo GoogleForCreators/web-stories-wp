@@ -28,7 +28,7 @@ import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,
   DEFAULT_STORY_PAGE_ADVANCE_DURATION,
-  STORY_PAGE_STATE,
+  STORY_ANIMATION_STATE,
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
 import { clamp, useFocusOut } from '../../utils';
@@ -172,14 +172,15 @@ const CardPreviewContainer = ({
             page={storyPages[pageIndex]}
             animationState={
               CARD_STATE.ACTIVE === cardState
-                ? STORY_PAGE_STATE.PLAYING
-                : STORY_PAGE_STATE.RESET
+                ? STORY_ANIMATION_STATE.PLAYING
+                : STORY_ANIMATION_STATE.RESET
             }
           />
         </PreviewErrorBoundary>
         {children}
       </PreviewPane>
       <EditControls
+        data-testid="card-action-container"
         ref={containElem}
         cardSize={pageSize}
         isActive={CARD_STATE.ACTIVE === cardState}

@@ -36,8 +36,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import styled from 'styled-components';
-import { rgba } from 'polished';
 import MediaGallery from '../common/mediaGallery';
 import {
   MediaGalleryContainer,
@@ -45,36 +43,17 @@ import {
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
 } from '../common/styles';
-import { ReactComponent as UnsplashLogoFull } from '../../../../../icons/unsplash_logo_full.svg';
-import theme from '../../../../../theme';
-import { ProviderType } from './providerType';
+import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 
 const ROOT_MARGIN = 300;
 
-const AttributionPill = styled.div`
-  position: absolute;
-  left: 24px;
-  bottom: 10px;
-  border-radius: 100px;
-  padding: 5px 8px;
-  line-height: 16px;
-  display: flex;
-  flex-wrap: nowrap;
-  font-size: 12px;
-  color: ${theme.colors.fg.white};
-  background-color: ${rgba(theme.colors.bg.black, 0.7)};
-  cursor: pointer;
-`;
-
-const LOGO_PROPS = {
-  fill: theme.colors.fg.white,
-  marginLeft: '6px',
-  height: '14px',
-};
+const SHOW_LOADING_PILL_DELAY_MS = 1000;
 
 function PaginatedMediaGallery({
   providerType,
   resources,
+  searchTerm,
+  selectedCategoryId,
   isMediaLoading,
   isMediaLoaded,
   hasMore,
@@ -132,6 +111,11 @@ function PaginatedMediaGallery({
     }
   }, [hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
 
+  // Scroll to the top when the searchTerm or selected category changes.
+  useEffect(() => {
+    refContainer.current?.scrollTo(0, 0);
+  }, [searchTerm, selectedCategoryId]);
+
   // After scrolls or resize, see if we need the load the next page.
   const [handleScrollOrResize] = useDebouncedCallback(
     loadNextPageIfNeeded,
@@ -184,7 +168,23 @@ function PaginatedMediaGallery({
       </div>
     );
 
-  const displayLoadingPill = isMediaLoading && hasMore;
+  const [showLoadingPill, setShowLoadingPill] = useState(false);
+
+  useEffect(() => {
+    if (isMediaLoading && hasMore) {
+      const showLoadingTimeout = setTimeout(() => {
+        setShowLoadingPill(isMediaLoading);
+      }, SHOW_LOADING_PILL_DELAY_MS);
+      return () => clearTimeout(showLoadingTimeout);
+    }
+    setShowLoadingPill(false);
+    return undefined;
+  }, [isMediaLoading, hasMore]);
+
+  const attribution =
+    providerType !== 'local' &&
+    PROVIDERS[providerType].attributionComponent &&
+    PROVIDERS[providerType].attributionComponent();
   return (
     <>
       <MediaGalleryContainer
@@ -193,26 +193,12 @@ function PaginatedMediaGallery({
       >
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
-      {!displayLoadingPill && providerType === ProviderType.UNSPLASH && (
-        <a
-          data-testid={'attribution'}
-          href={
-            'https://unsplash.com?utm_source=web_stories_wordpress&utm_medium=referral'
-          }
-          target={'_blank'}
-          rel={'noreferrer'}
-        >
-          <AttributionPill>
-            {__('Powered by', 'web-stories')}
-            <UnsplashLogoFull style={LOGO_PROPS} />
-          </AttributionPill>
-        </a>
-      )}
-      {displayLoadingPill && (
+      {showLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
           {__('Loading…', 'web-stories')}
         </MediaGalleryLoadingPill>
       )}
+      {!showLoadingPill && attribution}
     </>
   );
 }
@@ -225,6 +211,8 @@ PaginatedMediaGallery.propTypes = {
   hasMore: PropTypes.bool.isRequired,
   onInsert: PropTypes.func.isRequired,
   setNextPage: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string,
+  selectedCategoryId: PropTypes.string,
 };
 
 export default memo(PaginatedMediaGallery);
