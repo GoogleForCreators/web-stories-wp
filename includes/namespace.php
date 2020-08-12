@@ -124,7 +124,10 @@ function new_site( $site ) {
 	if ( ! is_multisite() ) {
 		return;
 	}
-	$site    = get_site( $site );
+	$site = get_site( $site );
+	if ( ! $site ) {
+		return;
+	}
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
 	activate();
