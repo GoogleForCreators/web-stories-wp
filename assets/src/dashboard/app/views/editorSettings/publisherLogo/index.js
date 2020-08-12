@@ -42,7 +42,7 @@ import {
 import { FileUpload } from '../../../../components';
 import { Close as DeleteIcon } from '../../../../icons';
 
-const TEXT = {
+export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
   CONTEXT: __(
     'Upload your logos here and they will become available to any stories you create.',
@@ -94,7 +94,10 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
           <UploadedContainer>
             {publisherLogos.map((publisherLogo, idx) => {
               return (
-                <LogoContainer key={`${publisherLogo.title}_${idx}`}>
+                <LogoContainer
+                  key={`${publisherLogo.title}_${idx}`}
+                  data-testid={`remove-publisher-logo-${idx}`}
+                >
                   <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   <DeleteLogoButton
                     aria-label={sprintf(
@@ -113,7 +116,6 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
         )}
         <FileUpload
           onSubmit={onSubmitNewFile}
-          onDelete={onSubmitDeleteFile}
           id="settings_publisher_logos"
           label={TEXT.SUBMIT}
           isMultiple
