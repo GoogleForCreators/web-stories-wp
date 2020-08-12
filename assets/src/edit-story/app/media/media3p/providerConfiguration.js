@@ -22,12 +22,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ProviderType } from '../providerType';
 import { CoverrAttribution, UnsplashAttribution } from './attribution';
 
 const ContentType = {
   IMAGE: 'image',
   VIDEO: 'video',
+};
+
+const ProviderType = {
+  UNSPLASH: 'unsplash',
+  COVERR: 'coverr',
 };
 
 /** @typedef {import('react').React.Component} ReactComponent */
