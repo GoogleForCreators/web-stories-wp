@@ -28,7 +28,7 @@ import { ROOT_MARGIN } from '../../local/mediaPane';
 
 const createMediaResource = (name) => ({
   name,
-  provider: 'unsplash',
+  provider: 'UNSPLASH',
   imageUrls: [
     {
       imageName: 'full',

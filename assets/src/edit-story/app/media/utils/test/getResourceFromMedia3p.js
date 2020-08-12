@@ -23,7 +23,7 @@ describe('getResourceFromMedia3p', () => {
   it('should return video resource', () => {
     const media3pResource = {
       name: 'media/coverr:g9re0sRUYA',
-      provider: 'coverr',
+      provider: 'COVERR',
       type: 'VIDEO',
       description: 'NYC Postcard',
       created_at: '',
