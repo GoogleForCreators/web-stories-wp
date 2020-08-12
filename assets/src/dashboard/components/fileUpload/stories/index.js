@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { text, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -26,7 +25,6 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 import FileUpload from '../';
-import { getResourceFromLocalFile } from '../../../utils';
 
 const Container = styled.div`
   width: 600px;
@@ -37,52 +35,18 @@ export default {
 };
 
 export const _default = () => {
-  const [uploadedContent, setUploadedContent] = useState([]);
-
-  const formatFiles = async (files) => {
-    action('onSubmit fired')(files);
-    const resources = await Promise.all(
-      files.map(async (file) => ({
-        localResource: await getResourceFromLocalFile(file),
-        file,
-      }))
-    );
-    setUploadedContent((existingUploads) => {
-      const newUploads = resources.map(({ file, localResource }) => {
-        return {
-          src: localResource.src,
-          title: file.name,
-          alt: localResource.alt,
-        };
-      });
-
-      return [...existingUploads, ...newUploads];
-    });
-  };
-
-  const deleteUploadedContent = useCallback((index, fileData) => {
-    action('onDelete fired')(index, fileData);
-    setUploadedContent((existingUploadedContent) => {
-      existingUploadedContent.splice(index, 1);
-      return [...existingUploadedContent];
-    });
-  }, []);
-
   return (
     <Container>
       <FileUpload
         acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
-        onSubmit={formatFiles}
-        onDelete={deleteUploadedContent}
+        onSubmit={action('files uploaded')}
         id={'898989'}
         label={text('label', 'Upload')}
         isMultiple={boolean('isMultiple', true)}
-        isFileNameVisible={boolean('isFileNameVisible', false)}
         ariaLabel={'Click to upload a file'}
-        uploadedContent={uploadedContent}
-        emptyDragHelperText={text(
-          'emptyDragHelperText',
-          'You can also drag your logo here'
+        instructionalText={text(
+          'instructionalText',
+          'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.'
         )}
       />
     </Container>
