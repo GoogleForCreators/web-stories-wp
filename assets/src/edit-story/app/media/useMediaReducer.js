@@ -29,7 +29,10 @@ import * as media3pActionsToWrap from './media3p/actions';
 import * as types from './types';
 
 /**
- * @typedef {import('./typedefs').MediaReducer} MediaReducer
+ * @typedef {import('./media3p/typedefs').Media3pContextState} Media3pContextState
+ * @typedef {import('./media3p/typedefs').Media3pContextActions} Media3pContextActions
+ * @typedef {import('./local/typedefs').LocalMediaContextState} LocalMediaContextState
+ * @typedef {import('./local/typedefs').LocalMediaContextActions} LocalMediaContextActions
  */
 
 function rootReducer(state = {}, { type, payload }) {
@@ -53,6 +56,18 @@ const wrapWithDispatch = (actionFnOrActionObject, dispatch) => {
     {}
   );
 };
+
+/**
+ * Media reducer object used to created the MediaContext
+ *
+ * @typedef MediaReducer
+ * @property {Object} state Reducer state of media3p and local.
+ * @property {LocalMediaContextState} state.local local state
+ * @property {Media3pContextState} state.media3p media3p state
+ * @property {Object} actions Reducer actions of media3p and local.
+ * @property {LocalMediaContextActions} actions.local local actions
+ * @property {Media3pContextActions} actions.media3p media3p actions
+ */
 
 /**
  * The media state reducer and action dispatcher functions.

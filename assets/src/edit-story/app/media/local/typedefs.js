@@ -20,8 +20,7 @@
 
 /**
  * @typedef FetchMediaSuccessPayload
- * @property {Array.<Media>} media
- * the media that is fetched
+ * @property {Array.<Media>} media the media that is fetched
  * @property {string} nextPageToken token representing the next page
  * @property {number} totalPages total number of pages
  * @property {string} pageToken the current page token
@@ -59,8 +58,8 @@
  *
  * @typedef {Object} LocalMediaContextActions
  * @property {DeleteMediaElementFn} deleteMediaElement action to delete a media
- * @property {ResetFiltersFn} resetFilters action to reset filters ?
- * @property {ResetWithFetchFn} resetWithFetch action to reset with fetch ?
+ * @property {ResetFiltersFn} resetFilters action to reset filters
+ * @property {ResetWithFetchFn} resetWithFetch action to reset with fetch
  * @property {SetMediaTypeFn} setMediaType action to set media type
  * @property {SetNextPageFn} setNextPage action to set next page
  * @property {SetSearchTermFn} setSearchTerm action to set search term
@@ -93,8 +92,8 @@
  * state and action.
  *
  * @typedef {Object} LocalMediaContext
- * @property {LocalMediaContextState} state state of a single provider
- * @property {LocalMediaContextActions} actions actions for the provider
+ * @property {LocalMediaContextState} state state of locally uploaded media
+ * @property {LocalMediaContextActions} actions actions for local media
  */
 
 /**

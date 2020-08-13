@@ -16,11 +16,7 @@
 
 /**
  * @typedef {import('./media3p/typedefs').Media3pContext} Media3pContext
- * @typedef {import('./media3p/typedefs').Media3pContextState} Media3pContextState
- * @typedef {import('./media3p/typedefs').Media3pContextActions} Media3pContextActions
  * @typedef {import('./local/typedefs').LocalMediaContext} LocalMediaContext
- * @typedef {import('./local/typedefs').LocalMediaContextState} LocalMediaContextState
- * @typedef {import('./local/typedefs').LocalMediaContextActions} LocalMediaContextActions
  */
 
 /**
@@ -60,18 +56,6 @@
  * @typedef MediaContext
  * @property {Media3pContext} media3p Context state and actions of media3p.
  * @property {LocalMediaContext} local Context state and actions of local media.
- */
-
-/**
- * Media reducer object used to created the MediaContext
- *
- * @typedef MediaReducer
- * @property {Object} state Reducer state of media3p and local.
- * @property {LocalMediaContextState} state.local local state
- * @property {Media3pContextState} state.media3p media3p state
- * @property {Object} actions Reducer actions of media3p and local.
- * @property {LocalMediaContextActions} actions.local local actions
- * @property {Media3pContextActions} actions.media3p media3p actions
  */
 
 // This is required so that the IDE doesn't ignore this file.
