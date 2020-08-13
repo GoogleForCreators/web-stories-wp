@@ -155,6 +155,10 @@ class Fonts_Controller extends WP_REST_Controller {
 			$data['variants'] = isset( $font['variants'] ) ? (array) $font['variants'] : $schema['properties']['variants']['default'];
 		}
 
+		if ( in_array( 'metrics', $fields, true ) ) {
+			$data['metrics'] = isset( $font['metrics'] ) ? $font['metrics'] : null;
+		}
+
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -239,6 +243,12 @@ class Fonts_Controller extends WP_REST_Controller {
 					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,
 					'default'     => [],
+				],
+				'metrics'   => [
+					'description' => __( 'Font metrics', 'web-stories' ),
+					'type'        => 'object',
+					'context'     => [ 'embed', 'view', 'edit' ],
+					'readonly'    => true,
 				],
 			],
 		];

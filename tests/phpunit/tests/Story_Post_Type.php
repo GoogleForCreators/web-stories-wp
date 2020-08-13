@@ -95,6 +95,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $story_post_type, 'filter_supportable_post_types' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
+		$this->assertSame( 10, has_filter( 'the_content_feed', [ $story_post_type, 'embed_image' ] ) );
+		$this->assertSame( 10, has_filter( 'the_excerpt_rss', [ $story_post_type, 'embed_image' ] ) );
 		$this->assertSame( PHP_INT_MAX, has_filter( 'the_content', [ $story_post_type, 'embed_player' ] ) );
 		$this->assertSame( PHP_INT_MAX, has_filter( 'the_excerpt', [ $story_post_type, 'embed_player' ] ) );
 	}
@@ -326,6 +328,19 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::embed_image
+	 * @throws \Exception
+	 */
+	public function test_the_content_feed() {
+		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$feed = $this->do_rss2();
+
+		$this->assertContains( '<img', $feed );
+		$this->assertContains( 'images/test-image.jpg', $feed );
+		$this->assertContains( 'wp-block-web-stories-embed', $feed );
+	}
+
+	/**
 	 * @covers ::embed_player
 	 */
 	public function test_embed_player() {
@@ -336,5 +351,24 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$excerpt = get_echo( 'the_excerpt' );
 		$this->assertContains( '<amp-story-player', $excerpt );
+	}
+
+	/**
+	 * This is a bit of a hack used to buffer feed content.
+	 *
+	 * @link https://github.com/WordPress/wordpress-develop/blob/ab9aee8af474ac512b31b012f3c7c44fab31a990/tests/phpunit/tests/feed/rss2.php#L78-L94
+	 */
+	protected function do_rss2() {
+		ob_start();
+		// Nasty hack! In the future it would better to leverage do_feed( 'rss2' ).
+		try {
+			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+			@require ABSPATH . 'wp-includes/feed-rss2.php';
+			$out = ob_get_clean();
+		} catch ( Exception $e ) {
+			$out = ob_get_clean();
+			throw($e);
+		}
+		return $out;
 	}
 }

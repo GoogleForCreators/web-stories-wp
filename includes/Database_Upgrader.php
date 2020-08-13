@@ -61,6 +61,7 @@ class Database_Upgrader {
 			'2.0.3' => 'unify_color_presets',
 			'2.0.4' => 'update_publisher_logos',
 			'3.0.0' => 'add_stories_caps',
+			'3.0.1' => 'rewrite_flush',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -239,6 +240,17 @@ class Database_Upgrader {
 	protected function add_stories_caps() {
 		$story_post_type = new Story_Post_Type( new Experiments() );
 		$story_post_type->add_caps_to_roles();
+	}
+
+	/**
+	 * Flush rewrites.
+	 *
+	 * @return void
+	 */
+	protected function rewrite_flush() {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+		}
 	}
 
 	/**
