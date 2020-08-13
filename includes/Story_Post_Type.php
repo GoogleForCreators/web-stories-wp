@@ -635,7 +635,7 @@ class Story_Post_Type {
 			return $content;
 		}
 
-		if ( ! is_search() && ! is_post_type_archive() ) {
+		if ( ! is_search() && ! is_post_type_archive( self::POST_TYPE_SLUG ) ) {
 			return $content;
 		}
 
