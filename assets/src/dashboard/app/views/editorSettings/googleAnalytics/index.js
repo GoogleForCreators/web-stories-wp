@@ -67,7 +67,7 @@ function GoogleAnalyticsSettings({
     (value) => {
       if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
         setInputError('');
-        return handleUpdateSettings({ newGoogleAnalyticsId: value });
+        return handleUpdateSettings(value);
       }
       return setInputError(TEXT.INPUT_ERROR);
     },

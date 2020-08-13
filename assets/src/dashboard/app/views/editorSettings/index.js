@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -27,9 +27,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { getResourceFromLocalFile } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
+import { useConfig } from '../../config';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Header, Heading, Main } from './components';
+import PublisherLogoSettings from './publisherLogo';
 
 function EditorSettings() {
   const { capabilities: { canManageSettings } = {} } = useConfig();
@@ -37,27 +40,70 @@ function EditorSettings() {
   const {
     actions: {
       settingsApi: { fetchSettings, updateSettings },
+      mediaApi: { removeMedia, uploadMedia, fetchMediaById },
     },
     state: {
-      settings: { googleAnalyticsId },
+      settings: { activePublisherLogoId, googleAnalyticsId, publisherLogoIds },
+      media: { isLoading, uploadedMediaIds, publisherLogos },
     },
   } = useContext(ApiContext);
 
+  const { capabilities: { canUploadFiles } = {} } = useConfig();
+
+  // get settings
+  // get logos from IDs retrieved in settings
+
+  // upload new logo to media
+  // tell settings that those new media ids belong to logos
+  // add logos to visible
   useEffect(() => {
     fetchSettings();
   }, [fetchSettings]);
 
-  const handleCompleteUpdateId = useCallback(
-    ({ newGoogleAnalyticsId }) => {
-      const updatedSettings = {
-        googleAnalyticsId:
-          typeof newGoogleAnalyticsId === 'string' && newGoogleAnalyticsId,
-      };
+  useEffect(() => {
+    if (uploadedMediaIds.length > 0) {
+      updateSettings({ publisherLogoIds: uploadedMediaIds });
+    }
+  }, [updateSettings, uploadedMediaIds]);
 
-      updateSettings(updatedSettings);
-    },
+  useEffect(() => {
+    console.log('???', publisherLogoIds);
+    if (publisherLogoIds.length > 0) {
+      console.log('fetch! ');
+      fetchMediaById(publisherLogoIds);
+    }
+  }, [fetchMediaById, publisherLogoIds]);
+
+  const handleUpdateSettings = useCallback(
+    (newGoogleAnalyticsId) =>
+      updateSettings({ googleAnalyticsId: newGoogleAnalyticsId }),
     [updateSettings]
   );
+
+  const handleAddLogos = useCallback(
+    (files) => {
+      uploadMedia(files);
+    },
+    [uploadMedia]
+  );
+
+  const handleRemoveLogo = useCallback(
+    (_, media) => {
+      console.log('MEDIA TO REMOVE: ', media);
+      removeMedia(media);
+    },
+    [removeMedia]
+  );
+
+  const orderedPublisherLogos = useMemo(() => {
+    // to allow to put default logo first
+    return Object.values(publisherLogos).map((publisherLogo) => {
+      if (publisherLogo.id === activePublisherLogoId) {
+        publisherLogo.isActive = true;
+      }
+      return publisherLogo;
+    });
+  }, [activePublisherLogoId, publisherLogos]);
 
   return (
     <Wrapper data-testid="editor-settings">
@@ -66,8 +112,14 @@ function EditorSettings() {
       </Header>
       <Main>
         <GoogleAnalyticsSettings
-          handleUpdateSettings={handleCompleteUpdateId}
+          handleUpdateSettings={handleUpdateSettings}
           googleAnalyticsId={googleAnalyticsId}
+        />
+        <PublisherLogoSettings
+          handleAddLogos={handleAddLogos}
+          handleRemoveLogo={handleRemoveLogo}
+          publisherLogos={orderedPublisherLogos}
+          canUploadFiles={canUploadFiles}
         />
       </Main>
     </Wrapper>

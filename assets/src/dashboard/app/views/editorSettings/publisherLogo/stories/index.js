@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback } from 'react';
+import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -33,38 +34,38 @@ export default {
 export const _default = () => {
   const [uploadedContent, setUploadedContent] = useState([]);
 
-  const handleSubmit = useCallback(({ newPublisherLogos, deleteLogo }) => {
-    if (newPublisherLogos) {
-      action('onSubmit fired')(newPublisherLogos);
+  const handleAddLogos = useCallback((newPublisherLogos) => {
+    action('onSubmit fired')(newPublisherLogos);
 
-      setUploadedContent((existingUploads) => {
-        const newUploads = newPublisherLogos.map(({ file, localResource }) => {
-          return {
-            src: localResource.src,
-            title: file.name,
-            alt: localResource.alt,
-          };
-        });
-
-        return [...existingUploads, ...newUploads];
+    setUploadedContent((existingUploads) => {
+      const newUploads = newPublisherLogos.map(({ file, localResource }) => {
+        return {
+          src: localResource.src,
+          title: file.name,
+          alt: localResource.alt,
+        };
       });
-    }
 
-    if (deleteLogo) {
-      action('onDelete fired')(deleteLogo);
+      return [...existingUploads, ...newUploads];
+    });
+  }, []);
 
-      setUploadedContent((existingUploadedContent) => {
-        const revisedMockUploads = existingUploadedContent.filter(
-          (uploadedLogo) => uploadedLogo.title !== deleteLogo.title
-        );
-        return revisedMockUploads;
-      });
-    }
+  const handleDeleteLogo = useCallback((deleteLogo) => {
+    action('onDelete fired')(deleteLogo);
+
+    setUploadedContent((existingUploadedContent) => {
+      const revisedMockUploads = existingUploadedContent.filter(
+        (uploadedLogo) => uploadedLogo.title !== deleteLogo.title
+      );
+      return revisedMockUploads;
+    });
   }, []);
 
   return (
     <PublisherLogoSettings
-      onUpdatePublisherLogo={handleSubmit}
+      canUploadFiles={boolean('canUploadFile', true)}
+      handleAddLogos={handleAddLogos}
+      handleDeleteLogo={handleDeleteLogo}
       publisherLogos={uploadedContent}
     />
   );

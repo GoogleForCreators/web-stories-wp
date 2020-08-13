@@ -27,11 +27,13 @@ import { renderWithTheme } from '../../../../../testUtils';
 import PublisherLogoSettings, { TEXT } from '..';
 
 describe('PublisherLogo', () => {
-  const mockUpdatePublisherLogo = jest.fn();
+  const mockHandleAddLogos = jest.fn();
+  const mockHandleDeleteLogo = jest.fn();
   it('should render a fileUpload container and helper text by default', () => {
     const { getByTestId, getByText } = renderWithTheme(
       <PublisherLogoSettings
-        onUpdatePublisherLogo={mockUpdatePublisherLogo}
+        handleAddLogos={mockHandleAddLogos}
+        handleDeleteLogo={mockHandleDeleteLogo}
         publisherLogos={[]}
       />
     );
@@ -43,7 +45,8 @@ describe('PublisherLogo', () => {
   it('should trigger onUpdatePublisherLogo when delete button is clicked on an uploaded file', () => {
     const { getByTestId } = renderWithTheme(
       <PublisherLogoSettings
-        onUpdatePublisherLogo={mockUpdatePublisherLogo}
+        handleAddLogos={mockHandleAddLogos}
+        handleDeleteLogo={mockHandleDeleteLogo}
         publisherLogos={[
           {
             src: 'source-that-displays-an-image',
@@ -57,6 +60,6 @@ describe('PublisherLogo', () => {
     const DeleteFileButton = getByTestId('remove-publisher-logo-0').lastChild;
     expect(DeleteFileButton).toBeDefined();
     fireEvent.click(DeleteFileButton);
-    expect(mockUpdatePublisherLogo).toHaveBeenCalledTimes(1);
+    expect(mockHandleDeleteLogo).toHaveBeenCalledTimes(1);
   });
 });

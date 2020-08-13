@@ -76,20 +76,30 @@ export default function useSettingsApi(
   }, [dataAdapter, globalStoriesSettingsApi]);
 
   const updateSettings = useCallback(
-    async ({ googleAnalyticsId }) => {
+    async ({ googleAnalyticsId, publisherLogoIds }) => {
       try {
+        const query = {};
+        if (googleAnalyticsId) {
+          query.web_stories_ga_tracking_id = googleAnalyticsId;
+        }
+
+        if (publisherLogoIds) {
+          query.web_stories_publisher_logos = [
+            ...state.publisherLogoIds,
+            ...publisherLogoIds,
+          ];
+        }
+
         const response = await dataAdapter.post(
           queryString.stringifyUrl({
             url: globalStoriesSettingsApi,
-            query: {
-              web_stories_ga_tracking_id: googleAnalyticsId,
-            },
+            query,
           })
         );
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
-          payload: { googleAnalyticsId: response.web_stories_ga_tracking_id },
+          payload: response,
         });
       } catch (err) {
         dispatch({
@@ -103,7 +113,7 @@ export default function useSettingsApi(
         });
       }
     },
-    [dataAdapter, globalStoriesSettingsApi]
+    [dataAdapter, globalStoriesSettingsApi, state.publisherLogoIds]
   );
 
   const api = useMemo(

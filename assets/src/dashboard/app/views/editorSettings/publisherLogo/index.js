@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,7 +27,6 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { getResourceFromLocalFile } from '../../../../utils';
 import {
   Logo,
   DeleteLogoButton,
@@ -59,27 +57,12 @@ export const TEXT = {
   ),
 };
 
-function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
-  const onSubmitNewFile = useCallback(
-    async (files) => {
-      const resources = await Promise.all(
-        files.map(async (file) => ({
-          localResource: await getResourceFromLocalFile(file),
-          file,
-        }))
-      );
-      onUpdatePublisherLogo({ newPublisherLogos: resources });
-    },
-    [onUpdatePublisherLogo]
-  );
-
-  const onSubmitDeleteFile = useCallback(
-    (_, fileData) => {
-      onUpdatePublisherLogo({ deleteLogo: fileData });
-    },
-    [onUpdatePublisherLogo]
-  );
-
+function PublisherLogoSettings({
+  canUploadFiles,
+  handleAddLogos,
+  handleRemoveLogo,
+  publisherLogos,
+}) {
   return (
     <SettingForm>
       <div>
@@ -93,7 +76,8 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
               return (
                 <div
                   key={`${publisherLogo.title}_${idx}`}
-                  data-testid={`remove-publisher-logo-${idx}`}
+                  data-testid={`publisher-logo-${idx}`}
+                  isActive={publisherLogo.isActive}
                 >
                   <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   <DeleteLogoButton
@@ -102,7 +86,7 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
                       __('delete %s as a publisher logo', 'web-stories'),
                       publisherLogo.title
                     )}
-                    onClick={(e) => onSubmitDeleteFile(e, publisherLogo)}
+                    onClick={(e) => handleRemoveLogo(e, publisherLogo)}
                   >
                     <DeleteIcon aria-hidden="true" />
                   </DeleteLogoButton>
@@ -111,28 +95,33 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
             })}
           </UploadedContainer>
         )}
-        <FileUpload
-          onSubmit={onSubmitNewFile}
-          id="settings_publisher_logos"
-          label={TEXT.SUBMIT}
-          isMultiple
-          ariaLabel={TEXT.ARIA_LABEL}
-          instructionalText={TEXT.HELPER_UPLOAD}
-        />
-        <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
+        {canUploadFiles && (
+          <>
+            <FileUpload
+              onSubmit={handleAddLogos}
+              id="settings_publisher_logos"
+              label={TEXT.SUBMIT}
+              isMultiple
+              ariaLabel={TEXT.ARIA_LABEL}
+              instructionalText={TEXT.HELPER_UPLOAD}
+            />
+            <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
+          </>
+        )}
       </div>
     </SettingForm>
   );
 }
 
 PublisherLogoSettings.propTypes = {
-  onUpdatePublisherLogo: PropTypes.func,
+  canUploadFiles: PropTypes.bool,
+  handleAddLogos: PropTypes.func,
+  handleRemoveLogo: PropTypes.func,
   publisherLogos: PropTypes.arrayOf(
     PropTypes.shape({
       src: PropTypes.string,
       title: PropTypes.string,
-      alt: PropTypes.string,
-      id: PropTypes.string,
+      id: PropTypes.number,
     })
   ),
 };

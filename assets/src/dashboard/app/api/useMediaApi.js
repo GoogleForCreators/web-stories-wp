@@ -1,0 +1,146 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * External dependencies
+ */
+import { useCallback, useMemo, useReducer } from 'react';
+import queryString from 'query-string';
+
+/**
+ * Internal dependencies
+ */
+import mediaReducer, {
+  defaultMediaState,
+  ACTION_TYPES as MEDIA_ACTION_TYPES,
+} from '../reducer/media';
+
+export default function useMediaApi(dataAdapter, { globalMediaApi }) {
+  const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);
+
+  const fetchMediaById = useCallback(
+    async (mediaIds) => {
+      dispatch({
+        type: MEDIA_ACTION_TYPES.LOADING_MEDIA,
+      });
+
+      try {
+        const response = await dataAdapter.get(
+          queryString.stringifyUrl({
+            url: globalMediaApi,
+            query: {
+              include: mediaIds.join(','),
+            },
+          })
+        );
+
+        dispatch({
+          type: MEDIA_ACTION_TYPES.FETCH_MEDIA_SUCCESS,
+          payload: response,
+        });
+      } catch (err) {
+        dispatch({
+          type: MEDIA_ACTION_TYPES.FETCH_MEDIA_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to fetch media', 'web-stories'),
+            },
+          },
+        });
+      }
+    },
+    [dataAdapter, globalMediaApi]
+  );
+
+  const uploadMedia = useCallback(
+    async (files) => {
+      dispatch({
+        type: MEDIA_ACTION_TYPES.LOADING_MEDIA,
+      });
+
+      try {
+        // each file needs to be uploaded separately
+        const mediaResponse = await Promise.all(
+          Object.values(files).map((file) => {
+            const data = new window.FormData();
+            data.append('file', file, file.name || file.type.replace('/', '.'));
+            return dataAdapter.post(globalMediaApi, {
+              body: data,
+            });
+          })
+        );
+
+        dispatch({
+          type: MEDIA_ACTION_TYPES.ADD_MEDIA_SUCCESS,
+          payload: mediaResponse,
+        });
+      } catch (err) {
+        console.error(err);
+        dispatch({
+          type: MEDIA_ACTION_TYPES.ADD_MEDIA_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to add media', 'web-stories'),
+            },
+          },
+        });
+      }
+    },
+    [dataAdapter, globalMediaApi]
+  );
+
+  // todo
+  const deleteMedia = useCallback(
+    async (media) => {
+      dispatch({
+        type: MEDIA_ACTION_TYPES.LOADING_MEDIA,
+      });
+      try {
+        await dataAdapter.deleteRequest(`${globalMediaApi}/${media.id}`, {
+          data: media,
+        });
+        dispatch({
+          type: MEDIA_ACTION_TYPES.REMOVE_MEDIA_SUCCESS,
+          payload: media.id,
+        });
+      } catch (err) {
+        console.error(err);
+        dispatch({
+          type: MEDIA_ACTION_TYPES.REMOVE_MEDIA_FAILURE,
+        });
+      }
+    },
+    [dataAdapter, globalMediaApi]
+  );
+
+  const api = useMemo(
+    () => ({
+      uploadMedia,
+      fetchMediaById,
+      deleteMedia,
+    }),
+    [uploadMedia, deleteMedia, fetchMediaById]
+  );
+
+  return { media: state, api };
+}
