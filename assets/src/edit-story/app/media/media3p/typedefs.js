@@ -15,29 +15,7 @@
  */
 
 /**
- * common media typedefs =================================================
- */
-
-/**
- * TODO(#3431) Move this to a media/typedef.js file as this is common for local
- * as well as media3p.
- *
- * @typedef Media
- * @property {Object} attribution object describing the attribution
- * @property {string} creationDate date created
- * @property {number} height in pixels
- * @property {number} width in pixels
- * @property {string} id media id
- * @property {number} length length
- * @property {string} lengthFormatted lengthFormatted
- * @property {boolean} local whether the media is a locally uploaded media
- * @property {string} mimeType mimeType
- * @property {string} poster poster
- * @property {string} posterId poster id
- * @property {Object} sizes object representing the different sizes of the media
- * @property {string} src url of media
- * @property {string} title title of media
- * @property {string} type type of media
+ * @typedef {import('../typedefs').Media} Media
  */
 
 /**
@@ -47,7 +25,7 @@
 /**
  * @typedef FetchMediaSuccessPayload
  * @property {string} provider media provider name
- * @property {*} media the media that is fetched
+ * @property {Array.<Media>} media the media that is fetched
  * @property {string} nextPageToken token representing the next page
  * @property {number} totalPages total number of pages
  * @property {string} pageToken the current page token
@@ -112,7 +90,7 @@
  * @property {boolean} hasMore has more media
  * @property {boolean} isMediaLoaded is media loaded
  * @property {boolean} isMediaLoading is media loading
- * @property {Array} media array of media
+ * @property {Array.<Media>} media array of media
  * @property {string} pageToken page token for current page
  * @property {string} nextPageToken the page token for the next page
  * @property {number} totalPages total pages
