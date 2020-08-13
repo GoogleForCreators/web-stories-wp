@@ -63,13 +63,6 @@ function Media3pApiProvider({ children }) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
 
-    // TODO(#3712): Temporary hack alert!: Convert coverr to unsplash for
-    // testing until Coverr backend is implemented.
-    if (provider === 'coverr') {
-      provider = 'unsplash';
-      searchTerm = 'small ' + searchTerm;
-    }
-
     if (selectedCategoryId && searchTerm) {
       throw new Error(
         `searchTerm and selectedCategoryId are mutually exclusive.`
