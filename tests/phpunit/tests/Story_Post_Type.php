@@ -330,7 +330,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 */
 	public function test_embed_player() {
 		$this->go_to( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
-		$content = get_the_content( null, false, self::$story_id );
+		$content = get_echo( 'the_content' );
 
 		$this->assertContains( '<amp-story-player', $content );
 	}
