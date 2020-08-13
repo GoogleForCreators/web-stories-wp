@@ -45,6 +45,7 @@ const BoxedTextInput = styled(TextInput)`
 
 function StatusPanel() {
   const {
+    state: { tab },
     actions: { loadUsers },
   } = useInspector();
 
@@ -60,8 +61,10 @@ function StatusPanel() {
   const { capabilities } = useConfig();
 
   useEffect(() => {
-    loadUsers();
-  });
+    if (tab === 'document') {
+      loadUsers();
+    }
+  }, [tab, loadUsers]);
 
   const visibilityOptions = [
     {
