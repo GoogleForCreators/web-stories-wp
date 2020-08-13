@@ -19,7 +19,7 @@
  */
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
-} from '../common/reducer';
+} from '../pagination/reducer';
 
 import categoriesReducer, {
   INITIAL_STATE as CATEGORIES_INITIAL_STATE,

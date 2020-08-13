@@ -113,6 +113,7 @@ function APIProvider({ children }) {
         context: 'edit',
         per_page: perPage,
         page: pagingNum,
+        _web_stories_envelope: true,
       });
 
       if (mediaType) {
@@ -123,12 +124,9 @@ function APIProvider({ children }) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
-      return apiFetch({ path: apiPath, parse: false }).then(
-        async (response) => {
-          const jsonArray = await response.json();
-          return { data: jsonArray, headers: response.headers };
-        }
-      );
+      return apiFetch({ path: apiPath }).then((response) => {
+        return { data: response.body, headers: response.headers };
+      });
     },
     [media]
   );

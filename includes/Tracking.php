@@ -67,6 +67,7 @@ class Tracking {
 			[
 				'type'              => 'boolean',
 				'sanitize_callback' => 'rest_sanitize_boolean',
+				'default'           => false,
 				'show_in_rest'      => true,
 				'auth_callback'     => static function() {
 					return current_user_can( 'manage_options' );

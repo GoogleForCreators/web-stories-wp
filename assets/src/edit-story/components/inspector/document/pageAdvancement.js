@@ -88,6 +88,12 @@ function PageAdvancementPanel() {
     updateDefaultPageDuration(duration);
   }, [duration, updateDefaultPageDuration]);
 
+  const handleRangeChange = useCallback(
+    // Make sure to round to nearest .1
+    (value) => setDuration(Math.round(value * 10) / 10),
+    []
+  );
+
   return (
     <SimplePanel
       name="pageAdvancement"
@@ -117,9 +123,10 @@ function PageAdvancementPanel() {
             <RangeInput
               min={MIN_MAX.PAGE_DURATION.MIN}
               max={MIN_MAX.PAGE_DURATION.MAX}
-              step={0.1}
+              majorStep={1}
+              minorStep={0.1}
               value={duration}
-              onChange={(evt) => setDuration(Number(evt.target.value))}
+              handleChange={handleRangeChange}
               aria-label={__('Default Page Duration', 'web-stories')}
             />
           </Row>

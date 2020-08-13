@@ -80,7 +80,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         pagingNum: p,
       })
         .then(({ data, headers }) => {
-          const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+          const totalPages = parseInt(headers['X-WP-TotalPages']);
           const mediaArray = data.map(getResourceFromAttachment);
           const hasMore = p < totalPages;
           callback({

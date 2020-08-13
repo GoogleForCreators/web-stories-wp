@@ -20,23 +20,29 @@
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import theme from '../theme';
+import { lightTheme, darkTheme, GlobalStyle } from '../theme';
+import MessageContent from './components/messageContent';
+import { ConfigProvider } from './config';
 
 function App({ config }) {
   const { isRTL } = config;
+
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () =>
+    theme === 'light' ? setTheme('dark') : setTheme('light');
+
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={theme}>
-        <p>{__('Plugin activated.', 'web-stories')}</p>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        <ConfigProvider config={config}>
+          <GlobalStyle />
+          <MessageContent onDoubleClick={toggleTheme} />
+        </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>
   );

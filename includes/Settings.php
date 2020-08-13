@@ -32,7 +32,6 @@ namespace Google\Web_Stories;
  * Settings class.
  */
 class Settings {
-
 	/**
 	 * Settings group.
 	 *
@@ -41,11 +40,25 @@ class Settings {
 	const SETTING_GROUP = 'web_stories';
 
 	/**
-	 * Settings handle.
+	 * GA Tracking ID setting name.
 	 *
 	 * @var string
 	 */
 	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
+
+	/**
+	 * Active publisher logo setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ACTIVE_PUBLISHER_LOGO = 'web_stories_active_publisher_logo';
+
+	/**
+	 * Publisher logos setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_PUBLISHER_LOGOS = 'web_stories_publisher_logos';
 
 	/**
 	 * Initializes the Settings logic.
@@ -70,6 +83,34 @@ class Settings {
 				'type'         => 'string',
 				'description'  => __( 'Google Analytics Tracking ID', 'web-stories' ),
 				'default'      => '',
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_ACTIVE_PUBLISHER_LOGO,
+			[
+				'show_in_rest' => true,
+				'type'         => 'integer',
+				'description'  => __( 'Default Publisher Logo', 'web-stories' ),
+				'default'      => 0,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_PUBLISHER_LOGOS,
+			[
+				'type'         => 'array',
+				'description'  => __( 'Publisher Logos', 'web-stories' ),
+				'default'      => [],
+				'show_in_rest' => [
+					'schema' => [
+						'items' => [
+							'type' => 'integer',
+						],
+					],
+				],
 			]
 		);
 	}

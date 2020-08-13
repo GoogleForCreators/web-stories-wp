@@ -72,7 +72,6 @@ describe('Publishing Flow', () => {
       wp.data.select('core/edit-post').isFeatureActive('welcomeGuide')
     );
 
-    //eslint-disable-next-line jest/no-if
     if (isWelcomeGuideActive) {
       await page.evaluate(() =>
         wp.data.dispatch('core/edit-post').toggleFeature('welcomeGuide')
@@ -85,7 +84,6 @@ describe('Publishing Flow', () => {
 
     const werePrePublishChecksEnabled = await arePrePublishChecksEnabled();
 
-    //eslint-disable-next-line jest/no-if
     if (werePrePublishChecksEnabled) {
       await disablePrePublishChecks();
     }

@@ -48,8 +48,12 @@ export const MediaGalleryContainer = styled.div`
 `;
 
 // 312px is the width of the gallery minus the 24px paddings.
+// We add a -4px l/r margin because the react-photo-gallery adds 4px margins
+// around images.
+// Width is thus 312-(-4)*2=320
 export const MediaGalleryInnerContainer = styled.div`
-  width: 312px;
+  width: 320px;
+  margin: 0 -4px;
 `;
 
 export const MediaGalleryLoadingPill = styled.div`
@@ -57,7 +61,7 @@ export const MediaGalleryLoadingPill = styled.div`
   margin-bottom: 16px;
   text-align: center;
   padding: 8px 80px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.4)};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.4)};
   border-radius: 100px;
   margin-top: auto;
   font-size: ${({ theme }) => theme.fonts.label.size};
@@ -66,7 +70,7 @@ export const MediaGalleryLoadingPill = styled.div`
 `;
 
 export const MediaGalleryMessage = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-size: 16px;
   padding: 1em;
 `;

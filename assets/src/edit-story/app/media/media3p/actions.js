@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 export * from './categories/actions';
-export * from '../common/actions';
+export * from '../pagination/actions';
 import * as types from './types';
 
 export const setSelectedProvider = (dispatch) => ({ provider }) => {

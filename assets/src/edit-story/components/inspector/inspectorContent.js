@@ -22,28 +22,19 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import useInspector from './useInspector';
-import DesignInspector from './design';
-import DocumentInspector from './document';
-import PrepublishInspector from './prepublish';
 import { getTabId } from './utils';
 
-const InspectorWrapper = styled.div.attrs({ tabIndex: '0', role: 'tabpanel' })`
+const InspectorWrapper = styled.div.attrs({ role: 'tabpanel' })`
   height: 100%;
 `;
 
 function Inspector() {
   const {
     state: { tab },
-    data: {
-      tabs: { DESIGN, DOCUMENT, PREPUBLISH },
-    },
+    data: { tabs },
   } = useInspector();
 
-  const ContentInspector = {
-    [DESIGN]: DesignInspector,
-    [DOCUMENT]: DocumentInspector,
-    [PREPUBLISH]: PrepublishInspector,
-  }[tab];
+  const ContentInspector = tabs.find(({ id }) => id === tab).Pane;
 
   return (
     <InspectorWrapper aria-labelledby={tab} id={getTabId(tab)}>
