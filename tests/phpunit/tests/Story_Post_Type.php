@@ -95,8 +95,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $story_post_type, 'filter_supportable_post_types' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
-		$this->assertSame( PHP_INT_MAX, has_filter( 'the_content_feed', [ $story_post_type, 'embed_image' ] ) );
-		$this->assertSame( PHP_INT_MAX, has_filter( 'the_excerpt_rss', [ $story_post_type, 'embed_image' ] ) );
+		$this->assertSame( 10, has_filter( 'the_content_feed', [ $story_post_type, 'embed_image' ] ) );
+		$this->assertSame( 10, has_filter( 'the_excerpt_rss', [ $story_post_type, 'embed_image' ] ) );
 	}
 
 	/**
