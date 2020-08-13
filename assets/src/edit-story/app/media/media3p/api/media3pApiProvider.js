@@ -199,6 +199,9 @@ function Media3pApiProvider({ children }) {
     await apiFetcher.registerUsage({ registerUsageUrl });
   }
 
+  /**
+   * @type {import('./typedefs').Media3pApiContext}
+   */
   const contextValue = {
     actions: {
       listMedia,
