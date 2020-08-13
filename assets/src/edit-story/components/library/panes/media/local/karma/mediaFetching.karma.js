@@ -32,7 +32,6 @@ describe('MediaPane fetching', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ rowBasedGallery: true });
     await fixture.render();
 
     localPane = fixture.querySelector('#library-pane-media');

@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 import { useEffect, useCallback, memo, useState, useRef, useMemo } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -141,7 +140,6 @@ const MediaElement = ({
     local,
     alt,
   } = resource;
-  const hasDropdownMenu = useFeature('mediaDropdownMenu');
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -270,10 +268,7 @@ const MediaElement = ({
 
   const ref = useRef();
 
-  const rowBasedUploadGalleryEnabled = useFeature('rowBasedGallery');
-  const isRowBasedGallery =
-    providerType !== 'local' || rowBasedUploadGalleryEnabled;
-  useRovingTabIndex({ ref, isRowBasedGallery });
+  useRovingTabIndex({ ref });
 
   const handleKeyDown = useCallback(
     ({ key }) => {
@@ -319,7 +314,7 @@ const MediaElement = ({
           <UploadingIndicator />
         </CSSTransition>
       )}
-      {hasDropdownMenu && providerType === 'local' && (
+      {providerType === 'local' && (
         <DropDownMenu
           resource={resource}
           display={active}
