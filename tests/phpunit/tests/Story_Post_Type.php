@@ -307,7 +307,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::remove_caps_to_roles
 	 */
 	public function test_remove_caps_to_roles() {
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$story_post_type->remove_caps_to_roles();
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
