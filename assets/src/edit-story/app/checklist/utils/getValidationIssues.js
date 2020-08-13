@@ -59,7 +59,7 @@ const getValidationIssues = (pages) => {
   }, {});
   return {
     errors,
-    recommendations: [],
+    recommendations: {},
   };
 };
 

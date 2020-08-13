@@ -54,7 +54,7 @@ const isLinkBelowLimit = (element) => {
   }
   const limit = FULLBLEED_HEIGHT * 0.8;
   const points = getYCoordinatesByAngle(element);
-  return Boolean(points.find((y) => y - DANGER_ZONE_HEIGHT > limit));
+  return Boolean(points.find((y) => y + DANGER_ZONE_HEIGHT > limit));
 };
 
 export default isLinkBelowLimit;

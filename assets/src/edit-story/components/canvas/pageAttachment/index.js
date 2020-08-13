@@ -19,7 +19,6 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -130,16 +129,7 @@ function PageAttachment({ pageAttachment = {} }) {
     setPageAttachmentContainer: state.actions.setPageAttachmentContainer,
   }));
 
-  const {
-    hasInvalidLinkSelected,
-    registerInvalidLinks,
-    getLinksInAttachmentArea,
-  } = useElementsWithLinks();
-  const links = getLinksInAttachmentArea();
-
-  useEffect(() => {
-    registerInvalidLinks();
-  }, [links, registerInvalidLinks]);
+  const { hasInvalidLinkSelected } = useElementsWithLinks();
 
   const { ctaText = __('Learn more', 'web-stories'), url } = pageAttachment;
   return (

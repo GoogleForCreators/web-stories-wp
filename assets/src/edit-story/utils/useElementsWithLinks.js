@@ -24,7 +24,6 @@ import { useCallback, useMemo } from 'react';
  */
 import { useStory } from '../app/story';
 import { useCanvas } from '../components/canvas';
-import { useChecklist } from '../app/checklist';
 import isTargetOutOfContainer from './isTargetOutOfContainer';
 
 function useElementsWithLinks() {
@@ -35,10 +34,6 @@ function useElementsWithLinks() {
   const { nodesById, pageAttachmentContainer } = useCanvas((state) => ({
     nodesById: state.state.nodesById,
     pageAttachmentContainer: state.state.pageAttachmentContainer,
-  }));
-  const { setPageChecklist } = useChecklist((state) => ({
-    checklist: state.state.checklist,
-    setPageChecklist: state.actions.setPageChecklist,
   }));
 
   const { elements } = currentPage;
@@ -90,18 +85,11 @@ function useElementsWithLinks() {
     [pageAttachmentContainer, currentPage]
   );
 
-  const registerInvalidLinks = useCallback(() => {
-    // @todo Only change if sth changed.
-    const links = getLinksInAttachmentArea();
-    setPageChecklist(currentPage.id, links);
-  }, [currentPage, getLinksInAttachmentArea, setPageChecklist]);
-
   return {
     elementsWithLinks,
     getLinksInAttachmentArea,
     hasInvalidLinkSelected: hasInvalidLinkSelected(),
     isElementInAttachmentArea,
-    registerInvalidLinks,
   };
 }
 

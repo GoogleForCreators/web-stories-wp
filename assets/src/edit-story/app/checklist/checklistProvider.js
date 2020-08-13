@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -28,52 +28,71 @@ import Context from './context';
 import getValidationIssues from './utils/getValidationIssues';
 
 function ChecklistProvider({ children }) {
-  const { checklist, setChecklist, pages } = useStory(
-    ({ state: { checklist, pages }, actions: { setChecklist } }) => ({
+  const { checklist, setChecklist, pages, currentPage } = useStory(
+    ({
+      state: { checklist, pages, currentPage },
+      actions: { setChecklist },
+    }) => ({
       setChecklist,
       checklist,
       pages,
+      currentPage,
     })
   );
-
-  useEffect(() => {
-    if (!checklist && pages?.length > 0) {
-      const _checklist = getValidationIssues(pages);
-      console.log(_checklist);
-      //setChecklist([]);
-    }
-  }, [checklist, setChecklist, pages]);
 
   const updateChecklist = useCallback(
     (value) => setChecklist({ checklist: value }),
     [setChecklist]
   );
 
-  const setPageChecklist = useCallback(
-    (pageId, elements) => {
-      return;
-      const errors = elements.reduce((obj, cur) => {
-        return { ...obj, [cur.id]: [] };
-      }, {});
-      if (
-        errors &&
-        JSON.stringify(errors) !== JSON.stringify(checklist?.[pageId])
-      ) {
-        updateChecklist({
-          ...checklist,
-          [pageId]: errors,
-        });
-      }
+  const pagesLengthTracker = useRef(pages?.length);
+
+  useEffect(() => {
+    if (pages.length !== pagesLengthTracker.current) {
+      pagesLengthTracker.current = pages.length;
+    }
+  }, [pages]);
+
+  const regenerateChecklist = useCallback(
+    (toProcess) => {
+      const issues = getValidationIssues(
+        toProcess && checklist ? toProcess : pages
+      );
+      const _checklist =
+        toProcess && checklist
+          ? {
+              errors: {
+                ...checklist.errors,
+                ...issues.errors,
+              },
+              recommendations: {},
+            }
+          : issues;
+      updateChecklist(_checklist);
     },
-    [checklist, updateChecklist]
+    [checklist, pages, updateChecklist]
   );
+
+  useEffect(() => {
+    // Whenever the number of pages changes, we're regenerating the checklist again.
+    regenerateChecklist();
+  }, [pagesLengthTracker, regenerateChecklist]);
+
+  useEffect(() => {
+    if (!checklist && pages?.length > 0) {
+      regenerateChecklist();
+    }
+  }, [regenerateChecklist, checklist, pages]);
+
+  useEffect(() => {
+    if (currentPage) {
+      regenerateChecklist([currentPage]);
+    }
+  }, [currentPage, regenerateChecklist]);
 
   const state = {
     state: {
       checklist,
-    },
-    actions: {
-      setPageChecklist,
     },
   };
 
