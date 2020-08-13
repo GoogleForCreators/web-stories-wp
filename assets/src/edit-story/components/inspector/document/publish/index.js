@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -52,7 +52,8 @@ const MediaWrapper = styled.div`
 
 function PublishPanel() {
   const {
-    state: { users, isUsersLoading },
+    state: { tab, users, isUsersLoading },
+    actions: { loadUsers },
   } = useInspector();
 
   const {
@@ -78,6 +79,12 @@ function PublishPanel() {
       };
     }
   );
+
+  useEffect(() => {
+    if (tab === 'document') {
+      loadUsers();
+    }
+  }, [tab, loadUsers]);
 
   const { capabilities } = useConfig();
 
