@@ -35,8 +35,9 @@ export const _default = () => {
     Array.from(Array(10).keys()).reduce((acc, id) => {
       acc[id] = {
         id,
-        duration: 1000,
-        offset: id % 2 ? 500 : 0,
+        duration: 500,
+        offset: id % 2 ? 100 : 0,
+        label: `Animation ${id}`,
       };
       return acc;
     }, {})
@@ -53,18 +54,13 @@ export const _default = () => {
   return (
     <AnimationTimeline
       animations={Object.values(animations)}
-      duration={3500}
+      duration={1500}
       onUpdateAnimation={handleUpdateAnimation}
     />
   );
 };
 
 export const noAnimations = () => {
-  const animations = Array.from(Array(10).keys()).map((id) => ({
-    id,
-    duration: id * 100 + 20,
-  }));
-
   return (
     <AnimationTimeline
       animations={[]}

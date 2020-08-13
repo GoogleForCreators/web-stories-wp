@@ -54,10 +54,14 @@ const Handle = styled.div`
   height: 14px;
   transform: rotate(45deg);
   margin: 6px;
+  cursor: pointer;
 `;
 
-const Label = styled.span`
+const Label = styled.div`
+  flex: 1;
   font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
 `;
 
 const commonMovableProps = {
@@ -66,15 +70,22 @@ const commonMovableProps = {
   draggable: true,
 };
 
-export default function TimingBar({ duration, offset, onUpdateAnimation }) {
+export default function TimingBar({
+  duration,
+  maxDuration,
+  offset,
+  label,
+  onUpdateAnimation,
+}) {
   const [leftRef, setLeftRef] = useState(null);
+  const [middleRef, setMiddleRef] = useState(null);
   const [rightRef, setRightRef] = useState(null);
   const dragStart = useRef(0);
   const startingDuration = useRef(0);
   const startingOffset = useRef(0);
 
-  const [d, setDuration] = useState(duration);
-  const [o, setOffset] = useState(offset);
+  const [internalDuration, setDuration] = useState(duration);
+  const [internalOffset, setOffset] = useState(offset);
 
   const handleDragStart = useCallback(
     ({ clientX }) => {
@@ -86,25 +97,53 @@ export default function TimingBar({ duration, offset, onUpdateAnimation }) {
   );
 
   const handleDragEnd = useCallback(() => {
-    onUpdateAnimation({ duration: d, offset: o });
-  }, [d, o, onUpdateAnimation]);
+    onUpdateAnimation({ duration: internalDuration, offset: internalOffset });
+  }, [internalDuration, internalOffset, onUpdateAnimation]);
 
   const handleDragLeft = useCallback(({ clientX }) => {
-    const movedMilliseconds =
-      ((clientX - dragStart.current) / MARK_OFFSET) * 100;
-    setOffset(movedMilliseconds + startingOffset.current);
+    const movedMilliseconds = Math.max(
+      ((clientX - dragStart.current) / MARK_OFFSET) * 100,
+      -startingOffset.current
+    );
+    setOffset(Math.max(0, movedMilliseconds + startingOffset.current));
     setDuration(startingDuration.current - movedMilliseconds);
   }, []);
 
-  const handleDragRight = useCallback(({ clientX }) => {
-    const movedMilliseconds =
-      ((clientX - dragStart.current) / MARK_OFFSET) * 100;
-    setDuration(movedMilliseconds + startingDuration.current);
-  }, []);
+  const handleDragMiddle = useCallback(
+    ({ clientX }) => {
+      const stop =
+        maxDuration - (startingOffset.current + startingDuration.current);
+      const movedMilliseconds = Math.min(
+        Math.max(
+          ((clientX - dragStart.current) / MARK_OFFSET) * 100,
+          -startingOffset.current
+        ),
+        stop
+      );
+      setOffset(movedMilliseconds + startingOffset.current);
+    },
+    [maxDuration]
+  );
+
+  const handleDragRight = useCallback(
+    ({ clientX }) => {
+      const stop =
+        maxDuration - (startingOffset.current + startingDuration.current);
+      const movedMilliseconds = Math.min(
+        ((clientX - dragStart.current) / MARK_OFFSET) * 100,
+        stop
+      );
+      setDuration(movedMilliseconds + startingDuration.current);
+    },
+    [maxDuration]
+  );
 
   return (
     <Bar
-      style={{ width: (d / 100) * MARK_OFFSET, left: (o / 100) * MARK_OFFSET }}
+      style={{
+        width: (internalDuration / 100) * MARK_OFFSET,
+        left: (internalOffset / 100) * MARK_OFFSET,
+      }}
     >
       <Handle ref={setLeftRef}>
         <Moveable
@@ -115,7 +154,16 @@ export default function TimingBar({ duration, offset, onUpdateAnimation }) {
           {...commonMovableProps}
         />
       </Handle>
-      <Label>Hi</Label>
+      <Label ref={setMiddleRef}>
+        {label}
+        <Moveable
+          target={middleRef}
+          onDragStart={handleDragStart}
+          onDrag={handleDragMiddle}
+          onDragEnd={handleDragEnd}
+          {...commonMovableProps}
+        />
+      </Label>
       <Handle ref={setRightRef}>
         <Moveable
           target={rightRef}
@@ -131,7 +179,8 @@ export default function TimingBar({ duration, offset, onUpdateAnimation }) {
 
 TimingBar.propTypes = {
   duration: propTypes.number.isRequired,
+  maxDuration: propTypes.number.isRequired,
   offset: propTypes.number.isRequired,
-
+  label: propTypes.string.isRequired,
   onUpdateAnimation: propTypes.func.isRequired,
 };

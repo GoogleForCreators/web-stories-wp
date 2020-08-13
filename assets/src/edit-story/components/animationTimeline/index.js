@@ -60,8 +60,10 @@ export default function AnimationTimeline({
             alternating={Boolean(index % 2)}
           >
             <TimingBar
+              label={animation.label}
               offset={animation.offset}
               duration={animation.duration}
+              maxDuration={duration}
               onUpdateAnimation={(delta) => onUpdateAnimation(animation, delta)}
             />
           </TimelineRow>
