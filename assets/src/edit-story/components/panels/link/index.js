@@ -75,14 +75,12 @@ const Error = styled.span`
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     clearEditing,
-    nodesById,
     setDisplayLinkGuidelines,
     displayLinkGuidelines,
   } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
     setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
     displayLinkGuidelines: state.state.displayLinkGuidelines,
-    nodesById: state.state.nodesById,
   }));
 
   const { isElementInAttachmentArea } = useElementsWithLinks();
@@ -184,8 +182,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           setDisplayLinkGuidelines(false);
         }}
         onFocus={() => {
-          const node = nodesById[selectedElement.id];
-          if (isElementInAttachmentArea(node) && !hasLinkSet) {
+          if (isElementInAttachmentArea(selectedElement) && !hasLinkSet) {
             setDisplayLinkGuidelines(true);
           }
         }}

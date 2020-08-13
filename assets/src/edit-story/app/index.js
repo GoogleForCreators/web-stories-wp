@@ -46,7 +46,6 @@ import { useStory, StoryProvider } from './story';
 import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
 import { Media3pApiProvider } from './media/media3p/api';
-import { useChecklist, ChecklistProvider } from './checklist';
 
 function App({ config }) {
   const { storyId, isRTL } = config;
@@ -60,24 +59,22 @@ function App({ config }) {
                 <HistoryProvider size={50}>
                   <SnackbarProvider>
                     <StoryProvider storyId={storyId}>
-                      <ChecklistProvider>
-                        <FontProvider>
-                          <MediaProvider>
-                            <AutoSaveHandler />
-                            <TransformProvider>
-                              <DropTargetsProvider>
-                                <GlobalStyle />
-                                <DevTools />
-                                <DefaultMoveableGlobalStyle />
-                                <CropMoveableGlobalStyle />
-                                <ModalGlobalStyle />
-                                <KeyboardOnlyOutlines />
-                                <Layout />
-                              </DropTargetsProvider>
-                            </TransformProvider>
-                          </MediaProvider>
-                        </FontProvider>
-                      </ChecklistProvider>
+                      <FontProvider>
+                        <MediaProvider>
+                          <AutoSaveHandler />
+                          <TransformProvider>
+                            <DropTargetsProvider>
+                              <GlobalStyle />
+                              <DevTools />
+                              <DefaultMoveableGlobalStyle />
+                              <CropMoveableGlobalStyle />
+                              <ModalGlobalStyle />
+                              <KeyboardOnlyOutlines />
+                              <Layout />
+                            </DropTargetsProvider>
+                          </TransformProvider>
+                        </MediaProvider>
+                      </FontProvider>
                     </StoryProvider>
                   </SnackbarProvider>
                 </HistoryProvider>
@@ -99,7 +96,6 @@ export default App;
 export {
   useHistory,
   useAPI,
-  useChecklist,
   useDropTargets,
   useTransform,
   useStory,

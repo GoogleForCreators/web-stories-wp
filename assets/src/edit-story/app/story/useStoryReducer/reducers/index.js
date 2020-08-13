@@ -38,9 +38,6 @@ export { default as selectElement } from './selectElement';
 export { default as unselectElement } from './unselectElement';
 export { default as toggleElement } from './toggleElement';
 
-// Manipulate the pre-publish checklist.
-export { default as setChecklist } from './setChecklist';
-
 // Manipulate entire internal state.
 export { default as restore } from './restore';
 

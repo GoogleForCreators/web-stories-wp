@@ -26,12 +26,13 @@ import StoryAnimation from '../../dashboard/components/storyAnimation';
 import StoryPropTypes from '../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import generatePatternStyles from '../utils/generatePatternStyles';
+import isLinkBelowLimit from '../utils/isLinkBelowLimit';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-function OutputPage({ page, autoAdvance, defaultPageDuration, checklist }) {
+function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, animations, elements, backgroundColor } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
@@ -73,13 +74,13 @@ function OutputPage({ page, autoAdvance, defaultPageDuration, checklist }) {
         <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
-              {regularElements.map((element) => (
-                <OutputElement
-                  key={'el-' + element.id}
-                  element={element}
-                  checklist={checklist[element.id]}
-                />
-              ))}
+              {regularElements.map((element) =>
+                /* Check for invalid elements, @todo this should come from the pre-publish checklist in the future. */
+                page.pageAttachment?.url?.length > 0 &&
+                isLinkBelowLimit(element) ? null : (
+                  <OutputElement key={'el-' + element.id} element={element} />
+                )
+              )}
             </div>
           </div>
         </amp-story-grid-layer>

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import { FULLBLEED_RATIO, PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
 const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
@@ -27,22 +27,22 @@ const getYCoordinatesByAngle = ({ y, width, height, rotationAngle }) => {
   return [
     // Upper left
     y +
-      height +
+      height / 2 +
       (width / -2) * Math.sin(radians) +
       (height / -2) * Math.cos(radians),
     // Upper right
     y +
-      height +
+      height / 2 +
       (width / 2) * Math.sin(radians) +
       (height / -2) * Math.cos(radians),
     // Bottom right.
     y +
-      height +
+      height / 2 +
       (width / 2) * Math.sin(radians) +
       (height / 2) * Math.cos(radians),
     // Bottom left.
     y +
-      height +
+      height / 2 +
       (width / -2) * Math.sin(radians) +
       (height / 2) * Math.cos(radians),
   ];
@@ -52,9 +52,9 @@ const isLinkBelowLimit = (element) => {
   if (!element.link?.url?.length > 0) {
     return false;
   }
-  const limit = FULLBLEED_HEIGHT * 0.8;
+  const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
   const points = getYCoordinatesByAngle(element);
-  return Boolean(points.find((y) => y + DANGER_ZONE_HEIGHT > limit));
+  return Boolean(points.find((y) => y > limit));
 };
 
 export default isLinkBelowLimit;

@@ -24,13 +24,8 @@ import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 import WithLink from '../components/elementLink/output';
 
-function OutputElement({ element, checklist }) {
+function OutputElement({ element }) {
   const { id, opacity, type } = element;
-
-  if (checklist) {
-    return null;
-  }
-
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height

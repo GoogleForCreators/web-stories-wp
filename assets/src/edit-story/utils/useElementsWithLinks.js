@@ -24,15 +24,14 @@ import { useCallback, useMemo } from 'react';
  */
 import { useStory } from '../app/story';
 import { useCanvas } from '../components/canvas';
-import isTargetOutOfContainer from './isTargetOutOfContainer';
+import isLinkBelowLimit from './isLinkBelowLimit';
 
 function useElementsWithLinks() {
   const { currentPage, selectedElements } = useStory((state) => ({
     currentPage: state.state.currentPage,
     selectedElements: state.state.selectedElements,
   }));
-  const { nodesById, pageAttachmentContainer } = useCanvas((state) => ({
-    nodesById: state.state.nodesById,
+  const { pageAttachmentContainer } = useCanvas((state) => ({
     pageAttachmentContainer: state.state.pageAttachmentContainer,
   }));
 
@@ -52,26 +51,24 @@ function useElementsWithLinks() {
     }
     const linksInActivePageAttachment = selectedElements
       .filter(({ link }) => link?.url?.length)
-      .filter(({ id }) => {
-        const node = nodesById[id];
-        return !isTargetOutOfContainer(node, pageAttachmentContainer);
+      .filter((element) => {
+        return isLinkBelowLimit(element);
       });
     return linksInActivePageAttachment.length > 0;
-  }, [currentPage, nodesById, selectedElements, pageAttachmentContainer]);
+  }, [currentPage, selectedElements, pageAttachmentContainer]);
 
   // Checks if a link is in the attachment area, even if there's no active attachment.
   const getLinksInAttachmentArea = useCallback(() => {
     if (!pageAttachmentContainer) {
       return [];
     }
-    return elementsWithLinks.filter(({ id }) => {
-      const node = nodesById[id];
-      return !isTargetOutOfContainer(node, pageAttachmentContainer);
+    return elementsWithLinks.filter((element) => {
+      return isLinkBelowLimit(element);
     });
-  }, [nodesById, elementsWithLinks, pageAttachmentContainer]);
+  }, [elementsWithLinks, pageAttachmentContainer]);
 
   const isElementInAttachmentArea = useCallback(
-    (node) => {
+    (element) => {
       if (!pageAttachmentContainer) {
         return false;
       }
@@ -80,7 +77,7 @@ function useElementsWithLinks() {
         return false;
       }
       // If the node is inside the page attachment container.
-      return !isTargetOutOfContainer(node, pageAttachmentContainer);
+      return isLinkBelowLimit(element);
     },
     [pageAttachmentContainer, currentPage]
   );

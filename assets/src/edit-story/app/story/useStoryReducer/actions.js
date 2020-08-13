@@ -128,9 +128,6 @@ const toggleElementInSelection = (dispatch) => ({ elementId }) =>
 const updateStory = (dispatch) => ({ properties }) =>
   dispatch({ type: types.UPDATE_STORY, payload: { properties } });
 
-const setChecklist = (dispatch) => ({ checklist }) =>
-  dispatch({ type: types.SET_CHECKLIST, payload: { checklist } });
-
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -160,7 +157,6 @@ export const exposedActions = {
   removeElementFromSelection,
   toggleElementInSelection,
   updateStory,
-  setChecklist,
 };
 
 // Internal actions

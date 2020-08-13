@@ -38,9 +38,6 @@ export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UNSELECT_ELEMENT = 'UNSELECT_ELEMENT';
 export const TOGGLE_ELEMENT_IN_SELECTION = 'TOGGLE_ELEMENT_IN_SELECTION';
 
-// Manipulate the pre-publish checklist.
-export const SET_CHECKLIST = 'SET_CHECKLIST';
-
 // Manipulate story-global state.
 export const UPDATE_STORY = 'UPDATE_STORY';
 
