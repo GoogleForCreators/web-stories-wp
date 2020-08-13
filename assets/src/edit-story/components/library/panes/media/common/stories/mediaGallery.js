@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import MediaGallery from '../mediaGallery';
-import { ProviderType } from '../providerType';
+import { ProviderType } from '../../../../../../app/media/providerType';
 
 export default {
   title: 'Stories Editor/Components/Media Gallery',

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -46,9 +45,9 @@ const Wrapper = styled.div`
   }
 `;
 
-function MessageContent({ onDoubleClick }) {
+function MessageContent() {
   return (
-    <Wrapper onDoubleClick={onDoubleClick}>
+    <Wrapper>
       <Dismiss />
       <SuccessMessage />
       <Step1 />
@@ -57,9 +56,5 @@ function MessageContent({ onDoubleClick }) {
     </Wrapper>
   );
 }
-
-MessageContent.propTypes = {
-  onDoubleClick: PropTypes.func.isRequired,
-};
 
 export default MessageContent;

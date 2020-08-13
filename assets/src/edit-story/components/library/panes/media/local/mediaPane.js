@@ -48,7 +48,7 @@ import {
   StyledPane,
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
-import { ProviderType } from '../common/providerType';
+import { ProviderType } from '../../../../../app/media/providerType';
 import Flags from '../../../../../flags';
 import paneId from './paneId';
 
@@ -294,6 +294,7 @@ function MediaPane(props) {
       hasMore={hasMore}
       onInsert={insertMediaElement}
       setNextPage={setNextPage}
+      searchTerm={searchTerm}
     />
   ) : (
     // Arranges elements in columns.
@@ -324,7 +325,7 @@ function MediaPane(props) {
             />
           ))}
       </Column>
-      {hasMore && (
+      {isMediaLoading && hasMore && (
         <MediaGalleryLoadingPill ref={refContainerFooter}>
           {__('Loading…', 'web-stories')}
         </MediaGalleryLoadingPill>

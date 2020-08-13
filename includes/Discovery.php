@@ -212,13 +212,13 @@ class Discovery {
 			return;
 		}
 
-		$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id(), Media::STORY_POSTER_IMAGE_SIZE );
+		$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id(), Media::POSTER_PORTRAIT_IMAGE_SIZE );
 
 		if ( ! $poster ) {
 			return;
 		}
 		?>
-		<meta property="twtter:image" content="<?php echo esc_url( $poster ); ?>">
+		<meta property="twitter:image" content="<?php echo esc_url( $poster ); ?>">
 		<?php
 	}
 

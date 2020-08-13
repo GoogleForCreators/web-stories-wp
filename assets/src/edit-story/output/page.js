@@ -50,7 +50,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
-      <StoryAnimation.Provider animations={animations}>
+      <StoryAnimation.Provider animations={animations} elements={elements}>
         <StoryAnimation.AMPAnimations />
 
         {backgroundElement && (

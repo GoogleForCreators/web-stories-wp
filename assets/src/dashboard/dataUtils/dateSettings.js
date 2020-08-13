@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const ProviderType = {
-  LOCAL: 'local',
-  UNSPLASH: 'unsplash',
+
+export const fillerDateSettingsObject = {
+  dateFormat: 'F j, Y',
+  timeFormat: 'g:i A',
+  gmtOffset: -4,
+  timezone: 'America/Santo_Domingo',
 };

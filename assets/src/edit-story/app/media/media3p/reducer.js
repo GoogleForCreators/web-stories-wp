@@ -25,14 +25,12 @@ import { shallowEqual } from 'react-pure-render';
 import { INITIAL_STATE as INITIAL_STATE_ACTION } from '../types';
 import * as types from './types';
 import providerReducer from './providerReducer.js';
+import { PROVIDERS } from './providerConfiguration';
 
 const INITIAL_STATE = {
   selectedProvider: undefined,
   searchTerm: '',
 };
-
-// TODO(#2804): Use the configuration json to provide this list.
-const providers = ['unsplash'];
 
 /**
  * State reducer for all 3p media providers (Unsplash, Coverr etc).
@@ -40,16 +38,20 @@ const providers = ['unsplash'];
  * For actions that are provider specific, the `payload.provider` attribute
  * is used as the provider discriminator ('unsplash', 'coverr', etc).
  *
- * @param {Object} state The state to reduce
+ * @param {import('./typedefs').Media3pReducerState} state The state to reduce
  * @param {Object} obj An object with the type and payload
  * @param {string} obj.type A constant that identifies the reducer action
  * @param {Object} obj.payload The details of the action, specific to the action
- * @return {Object} The new state
+ * @return {import('./typedefs').Media3pReducerState} The new state
  */
 function reduceProviderStates(state, { type, payload }) {
   const result = { ...state };
-  for (const provider of providers) {
-    if (type == INITIAL_STATE_ACTION || provider == payload?.provider) {
+  for (const provider of Object.keys(PROVIDERS)) {
+    if (
+      type == INITIAL_STATE_ACTION ||
+      !payload?.provider ||
+      provider == payload?.provider
+    ) {
       result[provider] = providerReducer(state[provider], { type, payload });
     }
   }
@@ -59,11 +61,11 @@ function reduceProviderStates(state, { type, payload }) {
 /**
  * State reducer for 3rd party media state.
  *
- * @param {Object} state The state to reduce
+ * @param {import('./typedefs').Media3pReducerState} state The state to reduce
  * @param {Object} obj An object with the type and payload
  * @param {string} obj.type A constant that identifies the reducer action
  * @param {Object} obj.payload The details of the action, specific to the action
- * @return {Object} The new state
+ * @return {import('./typedefs').Media3pReducerState} The new state
  */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   state = reduceProviderStates(state, { type, payload });
@@ -76,16 +78,10 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
     case types.MEDIA3P_SET_SEARCH_TERM: {
-      let resultState = {
+      return {
         ...state,
         searchTerm: payload.searchTerm,
       };
-      // Clear out the pageToken and nextPageToken for all providers.
-      for (const provider of providers) {
-        resultState[provider].pageToken = undefined;
-        resultState[provider].nextPageToken = undefined;
-      }
-      return resultState;
     }
     default:
       return state;

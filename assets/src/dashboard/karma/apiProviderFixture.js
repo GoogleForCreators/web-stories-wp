@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
@@ -44,6 +44,12 @@ export default function ApiProviderFixture({ children }) {
         setStoriesState((currentState) => duplicateStory(story, currentState)),
       fetchStories: (...args) =>
         setStoriesState((currenState) => fetchStories(...args, currenState)),
+      clearStoryPreview: () =>
+        setStoriesState((currentState) => clearStoryPreview(currentState)),
+      createStoryPreviewFromTemplate: () =>
+        setStoriesState((currentState) =>
+          createStoryPreviewFromTemplate(currentState)
+        ),
       createStoryFromTemplate: jasmine.createSpy('createStoryFromTemplate'),
       trashStory: (story) =>
         setStoriesState((currentState) => trashStory(story, currentState)),
@@ -132,6 +138,20 @@ function getStoriesState() {
     storiesOrderById: copiedStories.map(({ id }) => id),
     totalStoriesByStatus: getTotalStoriesByStatus(copiedStories),
     totalPages: 1,
+  };
+}
+
+function clearStoryPreview(currentState) {
+  return {
+    ...currentState,
+    previewMarkup: '',
+  };
+}
+
+function createStoryPreviewFromTemplate(currentState) {
+  return {
+    ...currentState,
+    previewMarkup: '<p>I am markup for a preview</p>',
   };
 }
 

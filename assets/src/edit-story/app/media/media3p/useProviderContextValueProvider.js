@@ -30,11 +30,13 @@ import useFetchCategoriesEffect from './useFetchCategoriesEffect';
  * etc).
  *
  * @param {string} provider The 3p provider to return the context value for
- * @param {Object} reducerState The 'media3p/[provider]' fragment of the state
- * returned from `useMediaReducer`
- * @param {Object} reducerActions The 'media3p/[provider]' fragment of the
- * actions returned from `useMediaReducer`
- * @return {Object} Context.
+ * @param {import('./typedefs').Media3pReducerState} reducerState
+ * The 'media3p/[provider]' fragment of the state returned from
+ * `useMediaReducer`
+ * @param {import('./typedefs').Media3pReducerActions} reducerActions
+ * The 'media3p/[provider]' fragment of the actions returned from
+ * `useMediaReducer`
+ * @return {import('./typedefs').Media3pProviderContext} Context.
  */
 export default function useProviderContextValueProvider(
   provider,
@@ -44,7 +46,9 @@ export default function useProviderContextValueProvider(
   const { selectedProvider, searchTerm } = reducerState;
   const {
     pageToken,
-    categories: { selectedCategoryId },
+    isMediaLoading,
+    isMediaLoaded,
+    categories: { categories, selectedCategoryId },
   } = reducerState[provider];
   const {
     fetchMediaStart,
@@ -60,6 +64,8 @@ export default function useProviderContextValueProvider(
     provider,
     selectedProvider,
     pageToken,
+    isMediaLoading,
+    isMediaLoaded,
     searchTerm,
     selectedCategoryId,
     fetchMediaStart,
@@ -70,6 +76,7 @@ export default function useProviderContextValueProvider(
   useFetchCategoriesEffect({
     provider,
     selectedProvider,
+    categories,
     fetchCategoriesStart,
     fetchCategoriesSuccess,
     fetchCategoriesError,
