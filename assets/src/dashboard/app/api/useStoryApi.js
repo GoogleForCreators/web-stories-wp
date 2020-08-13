@@ -29,6 +29,7 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
+import getStoryMarkup from '../../../edit-story/output/utils/getStoryMarkup';
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
@@ -41,7 +42,7 @@ import storyReducer, {
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 import { getStoryPropsToSave, addQueryArgs } from '../../utils';
-import reshapeStoryObject from '../serializers/stories';
+import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
 
 const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
@@ -187,6 +188,73 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
     [storyApi, dataAdapter]
   );
 
+  const clearStoryPreview = useCallback(() => {
+    dispatch({
+      type: STORY_ACTION_TYPES.CLEAR_STORY_PREVIEW,
+    });
+  }, []);
+
+  const createStoryPreviewFromTemplate = useCallback(
+    async (template) => {
+      dispatch({
+        type: STORY_ACTION_TYPES.CREATING_STORY_PREVIEW_FROM_TEMPLATE,
+        payload: true,
+      });
+
+      try {
+        const { createdBy, pages, title, excerpt } = template;
+
+        const storyProps = await getStoryPropsToSave({
+          story: {
+            status: 'auto-draft',
+            title: title,
+            author: 1,
+            slug: title,
+            date: Date.now().toString(),
+            modified: Date.now().toString(),
+            featuredMedia: 0,
+            password: '',
+            excerpt: excerpt || '',
+          },
+          pages,
+          metadata: {
+            publisher: {
+              name: createdBy,
+            },
+            fallbackPoster: '',
+          },
+          flags,
+        });
+
+        const preppedStoryProps = reshapeStoryPreview(storyProps);
+
+        const markup = await getStoryMarkup(
+          preppedStoryProps.story,
+          preppedStoryProps.pages,
+          preppedStoryProps.metadata,
+          flags
+        );
+
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_SUCCESS,
+          payload: markup.toString(),
+        });
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Render Preview', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
+      }
+    },
+    [flags]
+  );
+
   const createStoryFromTemplate = useCallback(
     async (template) => {
       dispatch({
@@ -299,14 +367,18 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
   const api = useMemo(
     () => ({
+      clearStoryPreview,
       duplicateStory,
       fetchStories,
       createStoryFromTemplate,
+      createStoryPreviewFromTemplate,
       trashStory,
       updateStory,
     }),
     [
+      clearStoryPreview,
       createStoryFromTemplate,
+      createStoryPreviewFromTemplate,
       duplicateStory,
       trashStory,
       updateStory,

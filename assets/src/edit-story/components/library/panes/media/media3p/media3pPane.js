@@ -51,6 +51,12 @@ const ProviderTabSection = styled.div`
   padding: 0 24px;
 `;
 
+const MediaSubheading = styled.div`
+  margin-top: 24px;
+  padding: 0 24px;
+  visibility: ${(props) => (props.shouldDisplay ? 'inherit' : 'hidden')};
+`;
+
 const PaneBottom = styled.div`
   position: relative;
   height: 100%;
@@ -143,6 +149,61 @@ function Media3pPane(props) {
     (p) => !PROVIDERS[p].featureName || features[PROVIDERS[p].featureName]
   );
 
+  function getProviderMediaAndCategories(providerType) {
+    const wrapperProps =
+      providerType === selectedProvider
+        ? { className: 'provider-selected' }
+        : { 'aria-hidden': 'true' };
+    const state = media3p[providerType].state;
+    const actions = media3p[providerType].actions;
+    const displayName = state.categories.selectedCategoryId
+      ? state.categories.categories.find(
+          (e) => e.id === state.categories.selectedCategoryId
+        ).displayName
+      : __('Trending', 'web-stories');
+
+    // We display the media name if there's media to display or a category has
+    // been selected.
+    const shouldDisplayMediaSubheading = Boolean(
+      state.media?.length || state.categories.selectedCategoryId
+    );
+    return (
+      <ProviderMediaCategoriesWrapper
+        dataProvider={providerType}
+        {...wrapperProps}
+        key={`provider-bottom-wrapper-${providerType}`}
+        id={`provider-bottom-wrapper-${providerType}`}
+      >
+        {PROVIDERS[providerType].supportsCategories && (
+          <Media3pCategories
+            categories={state.categories.categories}
+            selectedCategoryId={state.categories.selectedCategoryId}
+            selectCategory={actions.selectCategory}
+            deselectCategory={actions.deselectCategory}
+          />
+        )}
+        <MediaSubheading
+          data-testid={'media-subheading'}
+          shouldDisplay={shouldDisplayMediaSubheading}
+        >
+          {displayName}
+        </MediaSubheading>
+        <PaginatedMediaGallery
+          providerType={providerType}
+          resources={state.media}
+          isMediaLoading={state.isMediaLoading}
+          isMediaLoaded={state.isMediaLoaded}
+          hasMore={state.hasMore}
+          setNextPage={actions.setNextPage}
+          onInsert={insertMediaElement}
+          searchTerm={searchTerm}
+          selectedCategoryId={state.categories.selectedCategoryId}
+        />
+      </ProviderMediaCategoriesWrapper>
+    );
+  }
+
+  // TODO(#2368): handle pagination / infinite scrolling
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -164,6 +225,7 @@ function Media3pPane(props) {
             {enabledProviders.map((providerType) => (
               <ProviderTab
                 key={`provider-tab-${providerType}`}
+                id={`provider-tab-${providerType}`}
                 name={PROVIDERS[providerType].displayName}
                 active={selectedProvider === providerType}
                 onClick={() => onProviderTabClick(providerType)}
@@ -172,39 +234,9 @@ function Media3pPane(props) {
           </ProviderTabSection>
         </PaneHeader>
         <PaneBottom ref={paneBottomRef}>
-          {Object.keys(PROVIDERS).map((providerType) => {
-            const wrapperProps =
-              providerType === selectedProvider
-                ? { className: 'provider-selected' }
-                : { 'aria-hidden': 'true' };
-            const state = media3p[providerType].state;
-            const actions = media3p[providerType].actions;
-            return (
-              <ProviderMediaCategoriesWrapper
-                dataProvider={providerType}
-                {...wrapperProps}
-                key={`provider-bottom-wrapper-${providerType}`}
-              >
-                {PROVIDERS[providerType].supportsCategories && (
-                  <Media3pCategories
-                    categories={state.categories.categories}
-                    selectedCategoryId={state.categories.selectedCategoryId}
-                    selectCategory={actions.selectCategory}
-                    deselectCategory={actions.deselectCategory}
-                  />
-                )}
-                <PaginatedMediaGallery
-                  providerType={providerType}
-                  resources={state.media}
-                  isMediaLoading={state.isMediaLoading}
-                  isMediaLoaded={state.isMediaLoaded}
-                  hasMore={state.hasMore}
-                  setNextPage={actions.setNextPage}
-                  onInsert={insertMediaElement}
-                />
-              </ProviderMediaCategoriesWrapper>
-            );
-          })}
+          {enabledProviders.map((providerType) =>
+            getProviderMediaAndCategories(providerType)
+          )}
         </PaneBottom>
       </PaneInner>
     </StyledPane>

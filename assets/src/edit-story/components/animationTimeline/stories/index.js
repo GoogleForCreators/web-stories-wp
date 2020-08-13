@@ -30,9 +30,9 @@ const animations = Array.from(Array(10).keys()).map((id) => ({
 }));
 
 export const _default = () => {
-  return <AnimationTimeline animations={animations} />;
+  return <AnimationTimeline animations={animations} duration={3500} />;
 };
 
 export const noAnimations = () => {
-  return <AnimationTimeline animations={[]} />;
+  return <AnimationTimeline animations={[]} duration={5000} />;
 };

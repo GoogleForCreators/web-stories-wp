@@ -32,28 +32,28 @@ const animations = [
     targets: ['e1'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
-    direction: DIRECTION.TOP_TO_BOTTOM,
+    floatOnDir: DIRECTION.TOP_TO_BOTTOM,
   },
   {
     targets: ['e2'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
     delay: duration,
-    direction: DIRECTION.BOTTOM_TO_TOP,
+    floatOnDir: DIRECTION.BOTTOM_TO_TOP,
   },
   {
     targets: ['e3'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
     delay: duration * 2,
-    direction: DIRECTION.LEFT_TO_RIGHT,
+    floatOnDir: DIRECTION.LEFT_TO_RIGHT,
   },
   {
     targets: ['e4'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
     delay: duration * 3,
-    direction: DIRECTION.RIGHT_TO_LEFT,
+    floatOnDir: DIRECTION.RIGHT_TO_LEFT,
   },
 ];
 

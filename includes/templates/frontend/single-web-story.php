@@ -8,7 +8,8 @@
  * @link      https://github.com/google/web-stories-wp
  */
 
-use Google\Web_Stories\Story_Renderer;
+use Google\Web_Stories\Story_Renderer\HTML;
+use Google\Web_Stories\Model\Story;
 
 /**
  * Copyright 2020 Google LLC
@@ -32,6 +33,8 @@ $current_post = get_post();
 
 if ( $current_post instanceof WP_Post ) {
 	echo '<!DOCTYPE html>';
-	$renderer = new Story_Renderer( $current_post );
+	$story = new Story();
+	$story->load_from_post( $current_post );
+	$renderer = new HTML( $story );
 	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }

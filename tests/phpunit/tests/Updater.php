@@ -171,11 +171,10 @@ class Updater extends \WP_UnitTestCase {
 		$this->assertSame( 0, $this->request_count );
 	}
 
+	/**
+	 * @group ms-required
+	 */
 	public function test_updater_data_missing_capabilities_multisite() {
-		if ( ! is_multisite() ) {
-			$this->markTestSkipped( 'Test only runs on Multisite' );
-		}
-
 		wp_set_current_user( self::$admin_id );
 		$expected = (object) [ 'foo' => 'bar' ];
 		$actual   = ( new \Google\Web_Stories\Updater() )->updater_data( $expected );

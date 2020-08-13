@@ -24,7 +24,6 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Gallery from 'react-photo-gallery';
-import { ProviderType } from '../../../../../app/media/providerType';
 import MediaElement from './mediaElement';
 
 const PHOTO_MARGIN = 4;
@@ -44,7 +43,7 @@ const PhotoContainer = styled.div.attrs((props) => ({
  * @param {Object} props Component props.
  * @param {Array.<Object>} props.resources List of resources to display.
  * @param {function(Object)} props.onInsert Called when element is selected.
- * @param {ProviderType} props.providerType Provider of gallery's elements.
+ * @param {string} props.providerType Provider of gallery's elements.
  * @return {*} The gallery element.
  */
 function MediaGallery({ resources, onInsert, providerType }) {

@@ -38,7 +38,14 @@ function StoryProvider({ storyId, children }) {
     api,
     internal: { restore },
   } = useStoryReducer();
-  const { pages, current, selection, story, capabilities } = reducerState;
+  const {
+    pages,
+    current,
+    selection,
+    story,
+    animationState,
+    capabilities,
+  } = reducerState;
 
   // Generate current page info.
   const {
@@ -119,6 +126,7 @@ function StoryProvider({ storyId, children }) {
       selectedElements,
       hasSelection,
       story,
+      animationState,
       capabilities,
       meta: {
         isSaving: isSaving || isAutoSaving,

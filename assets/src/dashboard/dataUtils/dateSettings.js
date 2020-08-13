@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { arrange } from './_utils';
-import mediaResponseWithPdfAndImage from './_utils/mediaResponseWithPdfAndImage';
-
-describe('mediaPane', () => {
-  it('should only display supported mimeTypes and not crash on unsupported', async () => {
-    const { getByAltText } = await arrange({
-      mediaResponse: mediaResponseWithPdfAndImage,
-    });
-    expect(getByAltText('test-image')).toBeDefined();
-  });
-});
+export const fillerDateSettingsObject = {
+  dateFormat: 'F j, Y',
+  timeFormat: 'g:i A',
+  gmtOffset: -4,
+  timezone: 'America/Santo_Domingo',
+};

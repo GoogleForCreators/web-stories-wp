@@ -37,15 +37,16 @@ import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,
-  elementWithBackgroundColor,
   elementWithTextParagraphStyle,
+  elementWithBackgroundColor,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import useUnmount from '../../utils/useUnmount';
-import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
+import generatePatternStyles from '../../utils/generatePatternStyles';
+import useRichText from '../../components/richText/useRichText';
 import { useTransformHandler } from '../../components/transform';
 import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
@@ -54,7 +55,6 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 // on the content and properties.
 const Wrapper = styled.div`
   ${elementFillContent}
-  ${elementWithBackgroundColor}
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -63,6 +63,7 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
+  ${elementWithBackgroundColor}
 
   opacity: ${({ opacity }) =>
     typeof opacity !== 'undefined' ? opacity / 100 : null};
@@ -70,6 +71,14 @@ const TextBox = styled.div`
   top: 0;
   left: 0;
   right: 0;
+`;
+
+const Highlight = styled.span`
+  ${({ highlightColor }) => generatePatternStyles(highlightColor)};
+  color: transparent !important;
+  * {
+    color: transparent !important;
+  }
 `;
 
 function TextEdit({
@@ -123,7 +132,8 @@ function TextEdit({
         rest.lineHeight,
         dataToEditorX(rest.padding?.vertical || 0)
       ),
-      backgroundColor: createSolid(255, 255, 255),
+      backgroundColor: null,
+      highlightColor: backgroundColor,
     }),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE && {
       backgroundColor: null,
@@ -146,6 +156,7 @@ function TextEdit({
   );
 
   const wrapperRef = useRef(null);
+  const highlightRef = useRef(null);
   const textBoxRef = useRef(null);
   const editorRef = useRef(null);
   const boxRef = useRef();
@@ -252,10 +263,14 @@ function TextEdit({
   useTransformHandler(id, (transform) => {
     const target = textBoxRef.current;
     const wrapper = wrapperRef.current;
+    const highlight = highlightRef.current;
     const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
+    if (highlight) {
+      highlight.style.fontSize = target.style.fontSize;
+    }
 
     if (transform === null) {
       wrapper.style.width = '';
@@ -269,13 +284,23 @@ function TextEdit({
     }
   });
 
+  const {
+    state: { editorState },
+    actions: { getContentFromState },
+  } = useRichText();
+
+  const editorContent = editorState && getContentFromState(editorState);
+
   return (
-    <Wrapper
-      ref={wrapperRef}
-      onClick={onClick}
-      data-testid="textEditor"
-      {...textProps}
-    >
+    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
+      {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
+        <TextBox ref={highlightRef} {...textProps}>
+          <Highlight
+            dangerouslySetInnerHTML={{ __html: editorContent }}
+            {...textProps}
+          />
+        </TextBox>
+      )}
       <TextBox ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}

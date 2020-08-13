@@ -26,7 +26,9 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Types;
@@ -150,6 +152,7 @@ class Story_Post_Type {
 					'slug' => self::REWRITE_SLUG,
 				],
 				'public'                => true,
+				'has_archive'           => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Controller::class,
@@ -172,6 +175,8 @@ class Story_Post_Type {
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
+		add_filter( 'the_content_feed', [ $this, 'embed_image' ] );
+		add_filter( 'the_excerpt_rss', [ $this, 'embed_image' ] );
 
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
@@ -613,5 +618,26 @@ class Story_Post_Type {
 		$post_types[] = self::POST_TYPE_SLUG;
 
 		return $post_types;
+	}
+
+	/**
+	 * Filter feed content for stories to render as an image.
+	 *
+	 * @param string $content Feed content.
+	 *
+	 * @return string
+	 */
+	public function embed_image( $content ) {
+		$post = get_post();
+
+		if ( $post instanceof WP_Post && self::POST_TYPE_SLUG === $post->post_type ) {
+			$story = new Story();
+			$story->load_from_post( $post );
+
+			$image   = new Image( $story );
+			$content = $image->render();
+		}
+
+		return $content;
 	}
 }

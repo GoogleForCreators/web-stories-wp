@@ -20,7 +20,7 @@
 import { FIELD_TYPES, DIRECTION } from '../../constants';
 
 export default {
-  direction: {
+  floatOnDir: {
     type: FIELD_TYPES.DROPDOWN,
     values: [
       DIRECTION.TOP_TO_BOTTOM,

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -40,16 +40,22 @@ const CategorySection = styled.div`
 
 // This hides the category pills unless expanded
 const CategoryPillContainer = styled.div`
-  height: ${(props) => (props.isExpanded ? 'auto' : '36px')};
+  height: 36px;
+  overflow: hidden;
+  transition: height 0.2s;
+`;
+
+const CategoryPillInnerContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  overflow: hidden;
 `;
 
 // Flips the button upside down when expanded;
+// Important: the visibily is 'inherit' when props.visible because otherwise
+// it gets shown even when the provider is not the selectedProvider!
 const ExpandButton = styled(ArrowDown)`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
-  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  visibility: ${(props) => (props.visible ? 'inherit' : 'hidden')};
   align-self: center;
 `;
 
@@ -85,10 +91,32 @@ const Media3pCategories = ({
     });
   }
 
+  const containerRef = useRef();
+  const innerContainerRef = useRef();
+
+  // We calculate the actual height of the categories list, and set its explicit
+  // height if it's expanded, in order to have a CSS height transition.
+  useLayoutEffect(() => {
+    if (!containerRef.current || !innerContainerRef.current) {
+      return;
+    }
+    if (!isExpanded) {
+      containerRef.current.style.height = '36px';
+    } else {
+      containerRef.current.style.height = `${innerContainerRef.current.offsetHeight}px`;
+    }
+  }, [containerRef, innerContainerRef, isExpanded]);
+
   return categories.length ? (
     <CategorySection aria-expanded={isExpanded}>
-      <CategoryPillContainer isExpanded={isExpanded} role="tablist">
-        {renderCategories()}
+      <CategoryPillContainer
+        ref={containerRef}
+        isExpanded={isExpanded}
+        role="tablist"
+      >
+        <CategoryPillInnerContainer ref={innerContainerRef}>
+          {renderCategories()}
+        </CategoryPillInnerContainer>
       </CategoryPillContainer>
       <ExpandButton
         onClick={() => setIsExpanded(!isExpanded)}
