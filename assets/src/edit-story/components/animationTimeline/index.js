@@ -59,7 +59,11 @@ export default function AnimationTimeline({
             key={`timeline-animation-item-${animation.id}`}
             alternating={Boolean(index % 2)}
           >
-            <TimingBar duration={animation.duration} />
+            <TimingBar
+              offset={animation.offset}
+              duration={animation.duration}
+              onUpdateAnimation={(delta) => onUpdateAnimation(animation, delta)}
+            />
           </TimelineRow>
         ))}
       </TimelineTimingContainer>

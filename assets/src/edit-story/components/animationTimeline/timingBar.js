@@ -22,6 +22,11 @@ import propTypes from 'prop-types';
 import styled from 'styled-components';
 import Moveable from 'react-moveable';
 
+/**
+ * Internal dependencies
+ */
+import { MARK_OFFSET } from './ruler';
+
 const BAR_HEIGHT = 24;
 
 const Bar = styled.div`
@@ -31,7 +36,6 @@ const Bar = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: #3988f7;
-  width: ${({ width }) => (width / 10) * 40}px;
   height: ${BAR_HEIGHT}px;
   text-align: center;
   clip-path: polygon(
@@ -62,27 +66,52 @@ const commonMovableProps = {
   draggable: true,
 };
 
-export default function TimingBar({ duration }) {
+export default function TimingBar({ duration, offset, onUpdateAnimation }) {
   const [leftRef, setLeftRef] = useState(null);
   const [rightRef, setRightRef] = useState(null);
-
   const dragStart = useRef(0);
+  const startingDuration = useRef(0);
+  const startingOffset = useRef(0);
 
-  const handleDragStart = useCallback(({ clientX }) => {
-    dragStart.current = clientX;
+  const [d, setDuration] = useState(duration);
+  const [o, setOffset] = useState(offset);
+
+  const handleDragStart = useCallback(
+    ({ clientX }) => {
+      dragStart.current = clientX;
+      startingDuration.current = duration;
+      startingOffset.current = offset;
+    },
+    [duration, offset]
+  );
+
+  const handleDragEnd = useCallback(() => {
+    onUpdateAnimation({ duration: d, offset: o });
+  }, [d, o, onUpdateAnimation]);
+
+  const handleDragLeft = useCallback(({ clientX }) => {
+    const movedMilliseconds =
+      ((clientX - dragStart.current) / MARK_OFFSET) * 100;
+    setOffset(movedMilliseconds + startingOffset.current);
+    setDuration(startingDuration.current - movedMilliseconds);
   }, []);
 
-  const handleDrag = useCallback(({ clientX }) => {
-    console.log(clientX - dragStart.current);
+  const handleDragRight = useCallback(({ clientX }) => {
+    const movedMilliseconds =
+      ((clientX - dragStart.current) / MARK_OFFSET) * 100;
+    setDuration(movedMilliseconds + startingDuration.current);
   }, []);
 
   return (
-    <Bar width={duration}>
+    <Bar
+      style={{ width: (d / 100) * MARK_OFFSET, left: (o / 100) * MARK_OFFSET }}
+    >
       <Handle ref={setLeftRef}>
         <Moveable
           target={leftRef}
           onDragStart={handleDragStart}
-          onDrag={handleDrag}
+          onDrag={handleDragLeft}
+          onDragEnd={handleDragEnd}
           {...commonMovableProps}
         />
       </Handle>
@@ -91,7 +120,8 @@ export default function TimingBar({ duration }) {
         <Moveable
           target={rightRef}
           onDragStart={handleDragStart}
-          onDrag={handleDrag}
+          onDrag={handleDragRight}
+          onDragEnd={handleDragEnd}
           {...commonMovableProps}
         />
       </Handle>
@@ -101,5 +131,7 @@ export default function TimingBar({ duration }) {
 
 TimingBar.propTypes = {
   duration: propTypes.number.isRequired,
+  offset: propTypes.number.isRequired,
+
   onUpdateAnimation: propTypes.func.isRequired,
 };

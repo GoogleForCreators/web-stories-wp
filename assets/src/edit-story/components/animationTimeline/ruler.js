@@ -34,12 +34,12 @@ const Path = styled.path`
 `;
 
 const Text = styled.text`
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 13px;
   fill: ${({ theme }) => rgba(theme.colors.fg.white, 0.8)};
 `;
 
-const MARK_OFFSET = 40.0;
+export const MARK_OFFSET = 40.0;
 const RULER_HEIGHT = 24.0;
 
 const isMajor = (index) => index % 10 === 0;

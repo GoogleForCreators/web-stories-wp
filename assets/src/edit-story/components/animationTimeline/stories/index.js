@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import React, { useCallback, useState } from 'react';
+
+/**
  * Internal dependencies
  */
 
@@ -25,21 +30,46 @@ export default {
   component: AnimationTimeline,
 };
 
-const animations = Array.from(Array(10).keys()).map((id) => ({
-  id,
-  duration: id * 10 + 20,
-}));
-
 export const _default = () => {
+  const [animations, setAnimations] = useState(
+    Array.from(Array(10).keys()).reduce((acc, id) => {
+      acc[id] = {
+        id,
+        duration: 1000,
+        offset: id % 2 ? 500 : 0,
+      };
+      return acc;
+    }, {})
+  );
+
+  const handleUpdateAnimation = useCallback(({ id }, { duration, offset }) => {
+    setAnimations((a) => {
+      a[id].duration = duration;
+      a[id].offset = offset;
+      return { ...a };
+    });
+  }, []);
+
   return (
     <AnimationTimeline
-      animations={animations}
+      animations={Object.values(animations)}
       duration={3500}
-      onUpdateAnimation={() => {}}
+      onUpdateAnimation={handleUpdateAnimation}
     />
   );
 };
 
 export const noAnimations = () => {
-  return <AnimationTimeline animations={[]} duration={5000} />;
+  const animations = Array.from(Array(10).keys()).map((id) => ({
+    id,
+    duration: id * 100 + 20,
+  }));
+
+  return (
+    <AnimationTimeline
+      animations={[]}
+      duration={5000}
+      onUpdateAnimation={() => {}}
+    />
+  );
 };
