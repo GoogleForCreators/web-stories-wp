@@ -175,7 +175,7 @@ class Story_Post_Type {
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'the_content_feed', [ $this, 'embed_image' ] );
-		add_filter( 'the_excerpt_rss',  [ $this, 'embed_image' ] );
+		add_filter( 'the_excerpt_rss', [ $this, 'embed_image' ] );
 
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
