@@ -28,11 +28,11 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../../app';
-import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
+import getThumbnailUrl from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
 

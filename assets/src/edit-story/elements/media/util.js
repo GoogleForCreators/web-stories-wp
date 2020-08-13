@@ -32,6 +32,21 @@ export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
   return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }
 
+const getOrientation = (obj) => {
+  if (obj.width / obj.height > 1) {
+    return Orientation.LANDSCAPE;
+  } else if (obj.width / obj.height < 1) {
+    return Orientation.PORTRAIT;
+  }
+  return Orientation.SQUARE;
+};
+
+const Orientation = {
+  PORTRAIT: 'portrait',
+  LANDSCAPE: 'landscape',
+  SQUARE: 'square',
+};
+
 /**
  * Returns a valid srcSet attribute value for the given media resource.
  *
@@ -44,14 +59,43 @@ export function calculateSrcSet(resource) {
     return null;
   }
 
-  // The 'thumbnail' sizes attribute is cropped, we don't want that.
-  const filteredSizes = {
-    ...resource.sizes,
-  };
-  delete filteredSizes.thumbnail;
-
-  return Object.values(filteredSizes)
-    .sort((s1, s2) => s2.width - s1.width)
-    .map((s) => `${s.source_url} ${s.width}w`)
-    .join(',');
+  return (
+    Object.values(resource.sizes)
+      .sort((s1, s2) => s2.width - s1.width)
+      .filter((s) => getOrientation(s) === getOrientation(resource))
+      // Remove duplicates. Given it's already ordered in descending width order, we can be
+      // more efficient and just check the last item in each reduction.
+      .reduce(
+        (unique, s) =>
+          unique.length && unique[unique.length - 1].width == s.width
+            ? unique
+            : [...unique, s],
+        []
+      )
+      .map((s) => `${s.source_url} ${s.width}w`)
+      .join(',')
+  );
 }
+
+/**
+ * Choose the source URL of the smallest available size image wider than
+ * minWidth, according to the device pixel ratio.
+ *
+ * @param {number} minWidth The minimum width of the thumbnail to return.
+ * @param {*} resource Image resource object.
+ * @return {string} Source URL of the smallest available size image.
+ */
+function getThumbnailUrl(minWidth, resource) {
+  if (resource.sizes) {
+    const smallestValidImage = Object.values(resource.sizes)
+      .sort((s1, s2) => s1.width - s2.width)
+      .filter((s) => getOrientation(s) === getOrientation(resource))
+      .find((s) => s.width >= minWidth * window.devicePixelRatio);
+    if (smallestValidImage) {
+      return smallestValidImage.source_url;
+    }
+  }
+  return resource.src;
+}
+
+export default getThumbnailUrl;
