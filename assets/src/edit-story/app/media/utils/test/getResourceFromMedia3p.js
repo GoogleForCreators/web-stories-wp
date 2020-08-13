@@ -71,15 +71,10 @@ describe('getResourceFromMedia3p', () => {
       creationDate: '2018-09-25T20:03.07Z',
       src:
         'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-      width: 1080,
-      height: 1920,
-      poster: {
-        url:
-          'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
-        mimeType: 'image/jpeg',
-        width: 640,
-        height: 1138,
-      },
+      width: 1920,
+      height: 1080,
+      poster:
+        'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
       posterId: undefined,
       id: undefined,
       length: 121,
