@@ -38,6 +38,7 @@ import {
   elementFillContent,
   elementWithFont,
   elementWithTextParagraphStyle,
+  elementWithBackgroundColor,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -62,6 +63,7 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
+  ${elementWithBackgroundColor}
 
   opacity: ${({ opacity }) =>
     typeof opacity !== 'undefined' ? opacity / 100 : null};

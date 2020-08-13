@@ -27,6 +27,10 @@ import * as types from './types';
 import providerReducer from './providerReducer.js';
 import { PROVIDERS } from './providerConfiguration';
 
+/**
+ * @typedef {import('./typedefs').Media3pReducerState} Media3pReducerState
+ */
+
 const INITIAL_STATE = {
   selectedProvider: undefined,
   searchTerm: '',
@@ -38,11 +42,11 @@ const INITIAL_STATE = {
  * For actions that are provider specific, the `payload.provider` attribute
  * is used as the provider discriminator ('unsplash', 'coverr', etc).
  *
- * @param {import('./typedefs').Media3pReducerState} state The state to reduce
+ * @param {Media3pReducerState} state The state to reduce
  * @param {Object} obj An object with the type and payload
  * @param {string} obj.type A constant that identifies the reducer action
  * @param {Object} obj.payload The details of the action, specific to the action
- * @return {import('./typedefs').Media3pReducerState} The new state
+ * @return {Media3pReducerState} The new state
  */
 function reduceProviderStates(state, { type, payload }) {
   const result = { ...state };

@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 import { useEffect, useCallback, memo, useState, useRef, useMemo } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -30,7 +29,6 @@ import { useFeature } from 'flagged';
 import { useDropTargets } from '../../../../../app';
 import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
-import { ProviderType } from '../../../../../app/media/providerType';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
@@ -122,7 +120,7 @@ const HiddenPosterImage = styled.img`
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
  * @param {Function} param.onInsert Insertion callback.
- * @param {ProviderType} param.providerType Which provider the element is from.
+ * @param {string} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
@@ -142,7 +140,6 @@ const MediaElement = ({
     local,
     alt,
   } = resource;
-  const hasDropdownMenu = useFeature('mediaDropdownMenu');
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -164,7 +161,7 @@ const MediaElement = ({
 
   const handleRegisterUsage = useCallback(() => {
     if (
-      providerType !== ProviderType.LOCAL &&
+      providerType !== 'local' &&
       resource.attribution &&
       resource.attribution.registerUsageUrl
     ) {
@@ -271,10 +268,7 @@ const MediaElement = ({
 
   const ref = useRef();
 
-  const rowBasedUploadGalleryEnabled = useFeature('rowBasedGallery');
-  const isRowBasedGallery =
-    providerType !== ProviderType.LOCAL || rowBasedUploadGalleryEnabled;
-  useRovingTabIndex({ ref, isRowBasedGallery });
+  useRovingTabIndex({ ref });
 
   const handleKeyDown = useCallback(
     ({ key }) => {
@@ -320,7 +314,7 @@ const MediaElement = ({
           <UploadingIndicator />
         </CSSTransition>
       )}
-      {hasDropdownMenu && providerType === ProviderType.LOCAL && (
+      {providerType === 'local' && (
         <DropDownMenu
           resource={resource}
           display={active}
@@ -407,7 +401,7 @@ MediaElement.propTypes = {
 };
 
 MediaElement.defaultProps = {
-  providerType: ProviderType.LOCAL,
+  providerType: 'local',
 };
 
 export default memo(MediaElement);

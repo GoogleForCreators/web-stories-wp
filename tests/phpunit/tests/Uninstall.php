@@ -72,10 +72,10 @@ class Uninstall extends \WP_UnitTestCase {
 		}
 	}
 
+	/**
+	 * @group ms-required
+	 */
 	public function test_delete_site_options() {
-		if ( ! is_multisite() ) {
-			$this->markTestSkipped( 'Test only runs on Multisite' );
-		}
 		\Google\Web_Stories\delete_site_options();
 		$this->assertFalse( get_site_transient( 'web_stories_updater' ) );
 	}
