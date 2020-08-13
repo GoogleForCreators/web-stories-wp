@@ -152,6 +152,7 @@ class Story_Post_Type {
 					'slug' => self::REWRITE_SLUG,
 				],
 				'public'                => true,
+				'has_archive'           => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Controller::class,
