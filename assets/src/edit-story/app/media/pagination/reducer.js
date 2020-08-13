@@ -19,6 +19,10 @@
  */
 import * as types from './types';
 
+/**
+ * @typedef {import('../local/typedefs').LocalMediaReducerState} LocalMediaReducerState
+ * @typedef {import('../media3p/typedefs').Media3pProviderReducerState} Media3pProviderReducerState
+ */
 export const INITIAL_STATE = {
   media: [],
   // The page token of the last loaded page, or undefined if at the first page
@@ -39,11 +43,12 @@ export const INITIAL_STATE = {
  * This is called by the reducers for the state nodes:
  * media/local, media/media3p/unsplash, media/media3p/coverr, etc.
  *
- * @param {Object} state The state to reduce
+ * @param {LocalMediaReducerState|Media3pProviderReducerState} state The state
+ * to reduce
  * @param {Object} obj An object with the type and payload
  * @param {string} obj.type A constant that identifies the reducer action
  * @param {Object} obj.payload The details of the action, specific to the action
- * @return {Object} The new state
+ * @return {LocalMediaReducerState|Media3pProviderReducerState} The new state
  */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
