@@ -24,13 +24,15 @@ import PropTypes from 'prop-types';
  */
 import { forwardRef } from '@wordpress/element';
 
-function StoryPlayer({ url, title, poster, width, height }, ref) {
+function StoryPlayer({ url, title, poster, width, height, align }, ref) {
+  const margin = 'center' === align ? 'auto' : '0';
   return (
     <amp-story-player
       ref={ref}
       style={{
         width: width ? `${width}px` : undefined,
         height: height ? `${height}px` : undefined,
+        margin: margin,
       }}
       data-testid="amp-story-player"
     >
@@ -52,6 +54,7 @@ StoryPlayer.propTypes = {
   poster: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
+  align: PropTypes.string,
 };
 
 const StoryPlayerWithRef = forwardRef(StoryPlayer);

@@ -53,6 +53,7 @@ function save({ attributes }) {
         poster={poster}
         width={width}
         height={height}
+        align={align}
       />
     </div>
   );

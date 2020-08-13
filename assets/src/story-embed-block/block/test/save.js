@@ -38,6 +38,7 @@ describe('save', () => {
       >
         <amp-story-player
           data-testid="amp-story-player"
+          style="margin: 0px;"
         >
           <a
             href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
