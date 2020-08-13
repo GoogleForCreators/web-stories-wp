@@ -16,18 +16,17 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import styled from 'styled-components';
-
 /**
  * Internal dependencies
  */
+import { StoryAnimation, useStoryAnimationContext } from '../../animation';
 import StoryPropTypes from '../../edit-story/types';
 import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
 import { STORY_ANIMATION_STATE } from '../constants';
 import { PageSizePropType } from '../types';
-import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 import PagePreviewElements from './previewPageElements';
 
 /*
