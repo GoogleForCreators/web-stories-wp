@@ -325,13 +325,34 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::the_content_feed
+	 * @throws \Exception
 	 */
 	public function test_the_content_feed() {
 		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-		$feed = get_echo( 'do_feed' );
+		$feed = $this->do_rss2();
 
 		$this->assertContains( '<img', $feed );
 		$this->assertContains( 'images/test-image.jpg', $feed );
 		$this->assertContains( 'wp-block-web-stories-embed', $feed );
+	}
+
+	/**
+	 * This is a bit of a hack used to buffer feed content.
+	 *
+	 * @link https://github.com/WordPress/wordpress-develop/blob/ab9aee8af474ac512b31b012f3c7c44fab31a990/tests/phpunit/tests/feed/rss2.php#L78-L94
+	 */
+	protected function do_rss2() {
+		ob_start();
+		// Nasty hack! In the future it would better to leverage do_feed( 'rss2' ).
+		global $post;
+		try {
+			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+			@require ABSPATH . 'wp-includes/feed-rss2.php';
+			$out = ob_get_clean();
+		} catch ( Exception $e ) {
+			$out = ob_get_clean();
+			throw($e);
+		}
+		return $out;
 	}
 }
