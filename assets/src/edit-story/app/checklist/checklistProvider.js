@@ -18,44 +18,55 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../story';
 import Context from './context';
+import getValidationIssues from './utils/getValidationIssues';
 
 function ChecklistProvider({ children }) {
-  const [checklist, setChecklist] = useState([]);
+  const { checklist, setChecklist, pages } = useStory(
+    ({ state: { checklist, pages }, actions: { setChecklist } }) => ({
+      setChecklist,
+      checklist,
+      pages,
+    })
+  );
 
-  const { updateStory } = useStory(({ actions: { updateStory } }) => ({
-    updateStory,
-  }));
+  useEffect(() => {
+    if (!checklist && pages?.length > 0) {
+      const _checklist = getValidationIssues(pages);
+      console.log(_checklist);
+      //setChecklist([]);
+    }
+  }, [checklist, setChecklist, pages]);
 
   const updateChecklist = useCallback(
-    (value) => updateStory({ properties: { checklist: value } }),
-    [updateStory]
+    (value) => setChecklist({ checklist: value }),
+    [setChecklist]
   );
 
   const setPageChecklist = useCallback(
     (pageId, elements) => {
+      return;
       const errors = elements.reduce((obj, cur) => {
         return { ...obj, [cur.id]: [] };
       }, {});
-      if (JSON.stringify(errors) !== JSON.stringify(checklist[pageId])) {
-        setChecklist({
+      if (
+        errors &&
+        JSON.stringify(errors) !== JSON.stringify(checklist?.[pageId])
+      ) {
+        updateChecklist({
           ...checklist,
           [pageId]: errors,
         });
       }
     },
-    [checklist]
+    [checklist, updateChecklist]
   );
-
-  useEffect(() => {
-    updateChecklist(checklist);
-  }, [checklist, updateChecklist]);
 
   const state = {
     state: {

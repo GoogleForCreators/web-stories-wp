@@ -105,7 +105,6 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           stylePresets,
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
-          checklist: storyData?.checklist ? storyData.checklist : [],
         };
 
         // TODO read current page and selection from deeplink?

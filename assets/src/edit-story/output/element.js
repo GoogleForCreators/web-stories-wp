@@ -23,7 +23,6 @@ import WithMask from '../masks/output';
 import { getDefinitionForType } from '../elements';
 import { getBox } from '../units/dimensions';
 import WithLink from '../components/elementLink/output';
-import { useChecklist } from '../app/checklist';
 
 function OutputElement({ element, checklist }) {
   const { id, opacity, type } = element;

@@ -30,6 +30,7 @@ const INITIAL_STATE = {
   current: null,
   selection: [],
   story: {},
+  checklist: null,
 };
 
 /**

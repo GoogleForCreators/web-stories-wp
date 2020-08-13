@@ -80,7 +80,7 @@ function OutputStory({
               page={page}
               autoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
-              checklist={checklist[page.id] || []}
+              checklist={checklist?.[page.id] || []}
             />
           ))}
         </amp-story>

@@ -34,10 +34,9 @@ function useElementsWithLinks() {
   }));
   const { nodesById, pageAttachmentContainer } = useCanvas((state) => ({
     nodesById: state.state.nodesById,
-    pageSize: state.state.pageSize,
     pageAttachmentContainer: state.state.pageAttachmentContainer,
   }));
-  const { checklist, setPageChecklist } = useChecklist((state) => ({
+  const { setPageChecklist } = useChecklist((state) => ({
     checklist: state.state.checklist,
     setPageChecklist: state.actions.setPageChecklist,
   }));
