@@ -50,7 +50,7 @@ define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.3' );
 
 if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
-	define( 'WEBSTORIES_DEV_MODE', true );
+	define( 'WEBSTORIES_DEV_MODE', false );
 }
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
