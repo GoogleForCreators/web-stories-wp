@@ -59,7 +59,8 @@
  * @typedef {Object} LocalMediaContextActions
  * @property {DeleteMediaElementFn} deleteMediaElement action to delete a media
  * @property {ResetFiltersFn} resetFilters action to reset filters
- * @property {ResetWithFetchFn} resetWithFetch action to reset with fetch
+ * @property {ResetWithFetchFn} resetWithFetch resets the filter in the state,
+ * and then refetches the media from the server
  * @property {SetMediaTypeFn} setMediaType action to set media type
  * @property {SetNextPageFn} setNextPage action to set next page
  * @property {SetSearchTermFn} setSearchTerm action to set search term
@@ -125,8 +126,9 @@
  * starts
  * @property {FetchMediaSuccessFn} fetchMediaSucccess action when fetching media
  * is successful
- * @property {ResetFiltersFn} resetFilters action to reset filters ?
- * @property {ResetWithFetchFn} resetWithFetch action to reset with fetch ?
+ * @property {ResetFiltersFn} resetFilters action to reset filters
+ * @property {ResetWithFetchFn} resetWithFetch resets the filter in the state,
+ * and then refetches the media from the server
  * @property {SetMediaTypeFn} setMediaType action to set media type
  * @property {SetNextPageFn} setNextPage action to set next page
  * @property {SetSearchTermFn} setSearchTerm action to set search term
