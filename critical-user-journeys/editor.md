@@ -19,7 +19,8 @@
 |                                                 | Set kerning                                      | 🏆 **100.00%** *(5 / 5)*    |
 |                                                 | Set line height                                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Set text color                                   | 🏆 **100.00%** *(5 / 5)*    |
-|                                                 | *[total]*                                        | 🏔️ **90.91%** *(20 / 22)*  |
+|                                                 | Use font picker                                  | 🏆 **100.00%** *(13 / 13)*  |
+|                                                 | *[total]*                                        | 🏔️ **94.29%** *(33 / 35)*  |
 | Creator can Add and Write Text                  | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                 | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Select an individual word to edit                | 🏆 **100.00%** *(7 / 7)*    |
@@ -30,4 +31,4 @@
 |                                                 | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Rotate                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | *[total]*                                        | 🚨 **19.05%** *(4 / 21)*    |
-| *\[total\]*                                     | *\[total\]*                                      | 🛴 **59.05%** *(124 / 210)* |
+| *\[total\]*                                     | *\[total\]*                                      | 🛴 **63.56%** *(150 / 236)* |
