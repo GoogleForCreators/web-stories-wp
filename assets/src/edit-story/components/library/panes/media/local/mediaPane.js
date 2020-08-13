@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -179,17 +179,6 @@ function MediaPane(props) {
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
 
-  const isNullOrUndefined = (item) => item === null || item === undefined;
-  const activeItem = useMemo(
-    () =>
-      FILTERS.find(
-        (item) =>
-          !isNullOrUndefined(mediaType) &&
-          item.value.toString() === mediaType.toString()
-      ) ?? FILTERS[0],
-    [mediaType]
-  );
-
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -204,7 +193,7 @@ function MediaPane(props) {
           </SearchInputContainer>
           <FilterArea>
             <DropDown
-              value={activeItem.value}
+              value={mediaType?.toString() || FILTERS[0].value}
               onChange={onFilter}
               options={FILTERS}
             />
