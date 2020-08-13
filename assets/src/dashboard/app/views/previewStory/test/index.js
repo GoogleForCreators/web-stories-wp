@@ -46,7 +46,7 @@ function renderPreviewInContext({
         },
         actions: {
           storyApi: {
-            createStoryPreviewFromTemplate: jest.fn(),
+            createStoryPreview: jest.fn(),
             clearStoryPreview: jest.fn(),
           },
         },
@@ -54,7 +54,6 @@ function renderPreviewInContext({
     >
       <PreviewStory
         story={hasStory && completeTemplateObject}
-        isTemplate
         handleClose={onClose}
       />
     </ApiContext.Provider>

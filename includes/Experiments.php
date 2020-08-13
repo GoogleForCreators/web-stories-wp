@@ -251,10 +251,26 @@ class Experiments {
 				'description' => __( 'Enable bookmark actions', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 3390
+			 * Creation date: 2020-07-08
+			 */
 			[
 				'name'        => 'enableTemplatePreviews',
 				'label'       => __( 'Template Previews', 'web-stories' ),
 				'description' => __( 'Enable template preview functionality', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 3391
+			 * Creation date: 2020-08-06
+			 */
+			[
+				'name'        => 'enableStoryPreviews',
+				'label'       => __( 'Story Previews', 'web-stories' ),
+				'description' => __( 'Enable story preview functionality', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
 			/**
@@ -266,17 +282,6 @@ class Experiments {
 				'name'        => 'showAnimationTab',
 				'label'       => __( 'Animations', 'web-stories' ),
 				'description' => __( 'Enable animations tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @carlos-kelly
-			 * Issue: #1300
-			 * Creation date: 2020-06-02
-			 */
-			[
-				'name'        => 'newFontPicker',
-				'label'       => __( 'Font Picker', 'web-stories' ),
-				'description' => __( 'Enable new font picker with typeface previews', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**

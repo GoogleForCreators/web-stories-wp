@@ -84,13 +84,13 @@ const HelperContainer = styled.div`
   flex-direction: column;
 `;
 
-const PreviewStory = ({ story, handleClose, isTemplate }) => {
+const PreviewStory = ({ story, handleClose }) => {
   const {
     state: {
       stories: { previewMarkup, isLoading, error },
     },
     actions: {
-      storyApi: { createStoryPreviewFromTemplate, clearStoryPreview },
+      storyApi: { createStoryPreview, clearStoryPreview },
     },
   } = useContext(ApiContext);
 
@@ -126,16 +126,15 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
 
     if (!story) {
       setPreviewError(__('Unable to Render Preview', 'web-stories'));
-    } else if (isTemplate) {
-      createStoryPreviewFromTemplate(story);
     } else {
-      // TODO handle story previews. Should be the default
+      createStoryPreview(story);
     }
+
     return () => {
       clearStoryPreview();
       localStorage.removeItem(AMP_LOCAL_STORAGE);
     };
-  }, [isTemplate, story, createStoryPreviewFromTemplate, clearStoryPreview]);
+  }, [story, clearStoryPreview, createStoryPreview]);
 
   useResizeEffect(
     containerRef,
@@ -209,6 +208,5 @@ export default PreviewStory;
 
 PreviewStory.propTypes = {
   handleClose: PropTypes.func.isRequired,
-  isTemplate: PropTypes.bool,
   story: StoryPropType.isRequired,
 };

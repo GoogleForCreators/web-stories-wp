@@ -24,25 +24,25 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Story_Renderer;
 
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Model\Story;
 use DOMDocument;
 use DOMElement;
-use WP_Post;
 
 /**
  * Class Story_Renderer
  */
-class Story_Renderer {
+class HTML {
 	use Publisher;
 
 	/**
 	 * Current post.
 	 *
-	 * @var WP_Post Post object.
+	 * @var Story Post object.
 	 */
-	protected $post;
+	protected $story;
 
 	/**
 	 * DOMDocument instance.
@@ -54,10 +54,10 @@ class Story_Renderer {
 	/**
 	 * Story_Renderer constructor.
 	 *
-	 * @param WP_Post $post Post object.
+	 * @param Story $story Post object.
 	 */
-	public function __construct( $post ) {
-		$this->post = $post;
+	public function __construct( Story $story ) {
+		$this->story = $story;
 	}
 
 	/**
@@ -66,7 +66,7 @@ class Story_Renderer {
 	 * @return string The complete HTML markup for the story.
 	 */
 	public function render() {
-		$markup = $this->post->post_content;
+		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
 
 		$this->document = $this->string_to_doc( $markup );
@@ -352,19 +352,15 @@ class Story_Renderer {
 	 * @return string[] Images.
 	 */
 	protected function get_poster_images() {
-		$thumbnail_id = (int) get_post_thumbnail_id( $this->post );
-
-		if ( 0 === $thumbnail_id ) {
-			return [
-				'poster-portrait-src' => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
-			];
-		}
-
 		$images = [
-			'poster-portrait-src'  => wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE ),
-			'poster-landscape-src' => wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_LANDSCAPE_IMAGE_DIMENSIONS ),
-			'poster-square-src'    => wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_SQUARE_IMAGE_SIZE ),
+			'poster-portrait-src'  => $this->story->get_poster_portrait(),
+			'poster-square-src'    => $this->story->get_poster_square(),
+			'poster-landscape-src' => $this->story->get_poster_landscape(),
 		];
+
+		if ( ! $images['poster-portrait-src'] ) {
+			$images['poster-portrait-src'] = plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
+		}
 
 		return array_filter( $images );
 	}

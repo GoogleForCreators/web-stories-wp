@@ -98,8 +98,8 @@ const DropDownTitle = styled.span`
 `;
 
 function DropDown({
-  value,
-  onChange,
+  value = '',
+  onChange = () => {},
   options = [],
   disabled = false,
   lightMode = false,
@@ -187,8 +187,8 @@ function DropDown({
 }
 
 DropDown.propTypes = {
-  value: PropTypes.any.isRequired,
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.any,
+  onChange: PropTypes.func,
   options: PropTypes.array,
   disabled: PropTypes.bool,
   lightMode: PropTypes.bool,
