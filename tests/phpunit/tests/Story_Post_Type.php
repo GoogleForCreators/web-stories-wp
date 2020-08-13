@@ -95,6 +95,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $story_post_type, 'filter_supportable_post_types' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'the_content_feed', [ $story_post_type, 'embed_image' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'the_excerpt_rss', [ $story_post_type, 'embed_image' ] ) );
 	}
 
 	/**
@@ -324,7 +326,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::the_content_feed
+	 * @covers ::embed_image
 	 * @throws \Exception
 	 */
 	public function test_the_content_feed() {
@@ -344,7 +346,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	protected function do_rss2() {
 		ob_start();
 		// Nasty hack! In the future it would better to leverage do_feed( 'rss2' ).
-		global $post;
 		try {
 			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 			@require ABSPATH . 'wp-includes/feed-rss2.php';
