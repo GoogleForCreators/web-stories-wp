@@ -48,7 +48,7 @@ function ExploreTemplates() {
     },
   } = useContext(ApiContext);
 
-  const { filter, page, previewVisible, search, sort, view } = useTemplateView({
+  const { filter, page, activePreview, search, sort, view } = useTemplateView({
     totalPages,
   });
 
@@ -64,16 +64,15 @@ function ExploreTemplates() {
 
   const handlePreviewTemplate = useCallback(
     (e, template) => {
-      previewVisible.set(e, template);
+      activePreview.set(e, template);
     },
-    [previewVisible]
+    [activePreview]
   );
 
-  if (previewVisible.value) {
+  if (activePreview.value) {
     return (
       <PreviewStoryView
-        isTemplate
-        story={previewVisible.value}
+        story={activePreview.value}
         handleClose={handlePreviewTemplate}
       />
     );

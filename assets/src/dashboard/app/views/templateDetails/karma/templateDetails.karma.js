@@ -33,9 +33,13 @@ import {
 
 describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
   let fixture;
+  let enableTemplatePreviews = false;
 
   beforeEach(async () => {
     fixture = new Fixture();
+
+    fixture.setFlags({ enableTemplatePreviews });
+
     await fixture.render();
 
     await navigateToFirstTemplate();
@@ -269,10 +273,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
   });
 
   describe('Action: See template preview from detail template view', () => {
-    beforeEach(async () => {
-      fixture.setFlags({ enableTemplatePreviews: true });
-      await fixture.render();
-    });
+    enableTemplatePreviews = true;
 
     it('should trigger template preview when user clicks a related template', async () => {
       // this await is necessary to get the related template section painted.
