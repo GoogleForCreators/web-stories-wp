@@ -61,6 +61,16 @@ class Story_Post_Type extends \WP_UnitTestCase {
 				'post_author'  => self::$admin_id,
 			]
 		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
 	public function tearDown() {
@@ -311,5 +321,17 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		}
 
 		restore_current_blog();
+	}
+
+	/**
+	 * @covers ::the_content_feed
+	 */
+	public function test_the_content_feed() {
+		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$feed = get_echo( 'do_feed' );
+
+		$this->assertContains( '<img', $feed );
+		$this->assertContains( 'images/test-image.jpg', $feed );
+		$this->assertContains( 'wp-block-web-stories-embed', $feed );
 	}
 }
