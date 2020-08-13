@@ -136,7 +136,7 @@ function delete_posts() {
  * @return void
  */
 function remove_caps() {
-	$story_post_type = new Story_Post_Type();
+	$story_post_type = new Story_Post_Type( new Experiments() );
 	$story_post_type->remove_caps_to_roles();
 }
 
