@@ -285,17 +285,6 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @carlos-kelly
-			 * Issue: #1300
-			 * Creation date: 2020-06-02
-			 */
-			[
-				'name'        => 'newFontPicker',
-				'label'       => __( 'Font Picker', 'web-stories' ),
-				'description' => __( 'Enable new font picker with typeface previews', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @dmmulroy
 			 * Issue: #2094
 			 * Creation date: 2020-06-04
