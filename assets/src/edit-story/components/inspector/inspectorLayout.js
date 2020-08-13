@@ -51,7 +51,7 @@ const InspectorContainer = styled.div`
 
 function InspectorLayout() {
   const {
-    state: { initialTab },
+    state: { tab },
     actions: { setInspectorContentNode, setTab },
     refs: { inspector },
     data: { tabs },
@@ -62,7 +62,7 @@ function InspectorLayout() {
       <TabView
         label={__('Inspector Selection', 'web-stories')}
         tabs={tabs}
-        initialTab={initialTab}
+        initialTab={tab}
         onTabChange={(id) => setTab(id)}
         getAriaControlsId={getTabId}
       />

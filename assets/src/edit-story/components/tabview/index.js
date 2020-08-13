@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
@@ -111,6 +111,12 @@ function TabView({
     },
     [setTab, onTabChange]
   );
+
+  useEffect(() => {
+    if (initialTab) {
+      setTab(initialTab);
+    }
+  }, [initialTab]);
 
   const selectTabByIndex = useCallback(
     (index) => {
