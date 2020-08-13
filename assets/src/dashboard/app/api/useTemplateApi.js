@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import queryString from 'query-string';
 
 /**
@@ -54,7 +54,7 @@ export function reshapeTemplateObject(isLocal) {
     createdBy,
     description,
     status: 'template',
-    modified: moment(modified),
+    modified: moment.parseZone(modified),
     tags,
     colors,
     pages,

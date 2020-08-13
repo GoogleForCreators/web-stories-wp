@@ -15,18 +15,19 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { within } from '@testing-library/react';
 import { useContext } from 'react';
+
+/**
+ * Internal dependencies
+ */
 import Fixture from '../../../../karma/fixture';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 import { ApiContext } from '../../../api/apiProvider';
 
-describe('CUJ: Creator can browse templates in grid view', () => {
+describe('Grid view', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -128,7 +129,7 @@ describe('CUJ: Creator can browse templates in grid view', () => {
     expect(viewStories).toBeTruthy();
   });
 
-  describe('Action: Browse all templates', () => {
+  describe('CUJ: Creator can browse templates in grid view: Browse all templates', () => {
     it('should display "View" and "Use Template" controls when hovering over a template', async () => {
       const { templatesOrderById } = await getTemplatesState();
       const firstTemplate = getTemplateElementById(templatesOrderById[0]);
@@ -162,14 +163,56 @@ describe('CUJ: Creator can browse templates in grid view', () => {
       await focusOnTemplateById(lastTemplateId);
       expect(lastTemplate.contains(document.activeElement)).toBeTrue();
     });
-
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should trigger template preview when user clicks a card', () => {});
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should trigger template preview when user presses Enter while focused on a card', () => {});
   });
 
-  describe('Action: See pre-built template details page', () => {
+  describe('Action: See template preview from explore templates', () => {
+    beforeEach(async () => {
+      fixture.setFlags({ enableTemplatePreviews: true });
+
+      await fixture.render();
+    });
+
+    it('should trigger template preview when user clicks a card', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+
+      const currentCard = await getTemplateElementById(templatesOrderById[1]);
+      const utils = within(currentCard);
+
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      const { x, y } = activeCard.getBoundingClientRect();
+
+      // We need to click slightly above the center of the card to avoid clicking 'View'
+      await fixture.events.mouse.click(x - 20, y);
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+
+    it('should trigger template preview when user presses Enter while focused on a card', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+
+      const currentCard = await getTemplateElementById(templatesOrderById[1]);
+      const utils = within(currentCard);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      await fixture.events.focus(activeCard);
+      await fixture.events.keyboard.press('Enter');
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+  });
+
+  describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
     it('should navigate to view an individual template', async () => {
       const { templatesOrderById } = await getTemplatesState();
       const firstTemplate = getTemplateElementById(templatesOrderById[0]);

@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES, FIELD_TYPES, BEZIER } from '../constants';
+import {
+  ANIMATION_TYPES,
+  ANIMATION_EFFECTS,
+  FIELD_TYPES,
+  BEZIER,
+} from '../constants';
 
 export default {
   id: {
@@ -26,7 +31,10 @@ export default {
   type: {
     label: 'Animation Type',
     type: FIELD_TYPES.DROPDOWN,
-    values: Object.values(ANIMATION_TYPES),
+    values: [
+      ...Object.values(ANIMATION_TYPES),
+      ...Object.values(ANIMATION_EFFECTS),
+    ],
   },
   duration: {
     label: 'Duration (ms)',
@@ -46,7 +54,7 @@ export default {
   easingPreset: {
     label: 'Easing Presets',
     type: FIELD_TYPES.DROPDOWN,
-    values: Object.keys(BEZIER),
+    values: ['Use Default', ...Object.keys(BEZIER)],
     defaultValue: Object.keys(BEZIER)[0],
   },
   easing: {

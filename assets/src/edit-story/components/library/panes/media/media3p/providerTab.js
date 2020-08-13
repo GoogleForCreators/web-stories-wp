@@ -22,19 +22,24 @@ import PropTypes from 'prop-types';
 const Tab = styled.span`
   cursor: pointer;
   font-size: 16px;
+  margin-right: 16px;
   border-bottom: ${({ theme, active }) =>
     active ? `solid 4px ${theme.colors.accent.primary};` : 'none'};
+  &:last-child: {
+    margin-right: 0;
+  }
 `;
 
 function ProviderTab(props) {
   return (
-    <Tab onClick={props.onClick} active={props.active}>
+    <Tab onClick={props.onClick} active={props.active} id={props.id}>
       {props.name}
     </Tab>
   );
 }
 
 ProviderTab.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   active: PropTypes.bool.isRequired,

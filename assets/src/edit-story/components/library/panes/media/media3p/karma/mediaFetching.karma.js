@@ -26,123 +26,165 @@ import apiFetcher from '../../../../../../app/media/media3p/api/apiFetcher';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../../local/mediaPane';
 
-const createMediaResource = (name) => ({
-  name,
-  provider: 'UNSPLASH',
-  imageUrls: [
-    {
-      imageName: 'full',
-      url: 'http://www.img.com/1',
-      width: 480,
-      height: 640,
-      mimeType: 'image/png',
+const RESOURCE_BUILDERS = {
+  unsplash: (name) => ({
+    name,
+    provider: 'UNSPLASH',
+    imageUrls: [
+      {
+        imageName: 'full',
+        url: 'http://localhost:9876/__static__/blue-marble.jpg',
+        width: 600,
+        height: 600,
+        mimeType: 'image/png',
+      },
+      {
+        imageName: 'large',
+        url: 'http://localhost:9876/__static__/blue-marble.jpg',
+        width: 300,
+        height: 300,
+        mimeType: 'image/png',
+      },
+      {
+        imageName: 'web_stories_thumbnail',
+        url: 'http://localhost:9876/__static__/blue-marble.jpg',
+        width: 200,
+        height: 200,
+        mimeType: 'image/png',
+      },
+    ],
+    description: 'A cat',
+    type: 'IMAGE',
+    createTime: '1234',
+    updateTime: '5678',
+  }),
+  coverr: (name) => ({
+    name,
+    provider: 'COVERR',
+    videoUrls: [
+      {
+        url: 'http://localhost:9876/__static__/beach.mp4',
+        width: 1920,
+        height: 1080,
+        mimeType: 'image/mp4',
+      },
+      {
+        url: 'http://localhost:9876/__static__/beach.mp4',
+        width: 640,
+        height: 360,
+        mimeType: 'image/jpg',
+      },
+    ],
+    imageUrls: [
+      {
+        url: 'http://localhost:9876/__static__/beach.jpg',
+        width: 1920,
+        height: 1080,
+        mimeType: 'image/jpg',
+      },
+      {
+        url: 'http://localhost:9876/__static__/beach.jpg',
+        width: 640,
+        height: 360,
+        mimeType: 'image/jpg',
+      },
+    ],
+    description: 'A beach',
+    type: 'VIDEO',
+    videoMetadata: {
+      duration: '12.34s',
     },
-    {
-      imageName: 'large',
-      url: 'http://www.img.com/2',
-      width: 300,
-      height: 200,
-      mimeType: 'image/png',
-    },
-    {
-      imageName: 'web_stories_thumbnail',
-      url: 'http://www.img.com/3',
-      width: 200,
-      height: 100,
-      mimeType: 'image/png',
-    },
-  ],
-  description: 'A cat',
-  type: 'IMAGE',
-  createTime: '1234',
-  updateTime: '5678',
-});
+    createTime: '1234',
+    updateTime: '5678',
+  }),
+};
 
-const mediaPage1 = [...new Array(20).keys()].map((n) =>
-  createMediaResource(`media/unsplash:${n + 1}`)
-);
-const mediaPage2 = [...new Array(20).keys()].map((n) =>
-  createMediaResource(`media/unsplash:${n + 21}`)
-);
+// page is index 0.
+const mediaPage = (page, provider) =>
+  [...new Array(MEDIA_PER_PAGE).keys()].map((n) => {
+    const mediaName = `media/${provider}:${n + page * MEDIA_PER_PAGE + 1}`;
+    return RESOURCE_BUILDERS[provider](mediaName);
+  });
+
 const categories = [
   {
-    id: 'categories/unsplash:KHXRtL69hcY',
+    name: 'categories/unsplash:KHXRtL69hcY',
     displayName: 'Sustainability',
   },
   {
-    id: 'categories/unsplash:bo8jQKTaE0Y',
+    name: 'categories/unsplash:bo8jQKTaE0Y',
     displayName: 'Wallpapers',
   },
   {
-    id: 'categories/unsplash:c7USHrQ0Ljw',
+    name: 'categories/unsplash:c7USHrQ0Ljw',
     displayName: 'COVID-19',
   },
   {
-    id: 'categories/unsplash:Fzo3zuOHN6w',
+    name: 'categories/unsplash:Fzo3zuOHN6w',
     displayName: 'Travel',
   },
   {
-    id: 'categories/unsplash:6sMVjTLSkeQ',
+    name: 'categories/unsplash:6sMVjTLSkeQ',
     displayName: 'Nature',
   },
   {
-    id: 'categories/unsplash:iUIsnVtjB0Y',
+    name: 'categories/unsplash:iUIsnVtjB0Y',
     displayName: 'Textures & Patterns',
   },
   {
-    id: 'categories/unsplash:BJJMtteDJA4',
+    name: 'categories/unsplash:BJJMtteDJA4',
     displayName: 'Current Events',
   },
   {
-    id: 'categories/unsplash:towJZFskpGg',
+    name: 'categories/unsplash:towJZFskpGg',
     displayName: 'People',
   },
   {
-    id: 'categories/unsplash:aeu6rL-j6ew',
+    name: 'categories/unsplash:aeu6rL-j6ew',
     displayName: 'Business & Work',
   },
   {
-    id: 'categories/unsplash:J9yrPaHXRQY',
+    name: 'categories/unsplash:J9yrPaHXRQY',
     displayName: 'Technology',
   },
   {
-    id: 'categories/unsplash:Jpg6Kidl-Hk',
+    name: 'categories/unsplash:Jpg6Kidl-Hk',
     displayName: 'Animals',
   },
   {
-    id: 'categories/unsplash:R_Fyn-Gwtlw',
+    name: 'categories/unsplash:R_Fyn-Gwtlw',
     displayName: 'Interiors',
   },
   {
-    id: 'categories/unsplash:rnSKDHwwYUk',
+    name: 'categories/unsplash:rnSKDHwwYUk',
     displayName: 'Architecture',
   },
   {
-    id: 'categories/unsplash:xjPR4hlkBGA',
+    name: 'categories/unsplash:xjPR4hlkBGA',
     displayName: 'Food & Drink',
   },
   {
-    id: 'categories/unsplash:Bn-DjrcBrwo',
+    name: 'categories/unsplash:Bn-DjrcBrwo',
     displayName: 'Athletics',
   },
   {
-    id: 'categories/unsplash:_8zFHuhRhyo',
+    name: 'categories/unsplash:_8zFHuhRhyo',
     displayName: 'Spirituality',
   },
   {
-    id: 'categories/unsplash:_hb-dl4Q-4U',
+    name: 'categories/unsplash:_hb-dl4Q-4U',
     displayName: 'Health & Wellness',
   },
   {
-    id: 'categories/unsplash:hmenvQhUmxM',
+    name: 'categories/unsplash:hmenvQhUmxM',
     displayName: 'Film',
   },
   {
-    id: 'categories/unsplash:S4MKLAsBB74',
+    name: 'categories/unsplash:S4MKLAsBB74',
     displayName: 'Fashion',
   },
   {
-    id: 'categories/unsplash:qPYsDzvJOYc',
+    name: 'categories/unsplash:qPYsDzvJOYc',
     displayName: 'Experimental',
   },
 ];
@@ -150,26 +192,38 @@ const categories = [
 describe('Media3pPane fetching', () => {
   let fixture;
   let media3pTab;
-  let media3pPane;
+  let unsplashSection;
+  let coverrSection;
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ media3pTab: true });
+    fixture.setFlags({ media3pTab: true, showCoverrTab: true });
 
     await fixture.render();
 
     media3pTab = fixture.querySelector('#library-tab-media3p');
-    media3pPane = fixture.querySelector('#library-pane-media3p');
+    unsplashSection = fixture.querySelector(
+      '#provider-bottom-wrapper-unsplash'
+    );
+    coverrSection = fixture.querySelector('#provider-bottom-wrapper-coverr');
   });
 
   function mockListMedia() {
     /* eslint-disable-next-line jasmine/no-unsafe-spy */
-    spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
+    spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken, filter }) => {
+      let provider;
+      if (filter.includes('unsplash')) {
+        provider = 'unsplash';
+      } else if (filter.includes('coverr')) {
+        provider = 'coverr';
+      } else {
+        throw Error('Invalid provider in filter: ' + filter);
+      }
       switch (pageToken) {
         case undefined:
-          return { media: mediaPage1, nextPageToken: 'page2' };
+          return { media: mediaPage(0, provider), nextPageToken: 'page2' };
         case 'page2':
-          return { media: mediaPage2, nextPageToken: undefined };
+          return { media: mediaPage(1, provider), nextPageToken: undefined };
         default:
           throw new Error(`Unexpected pageToken: ${pageToken}`);
       }
@@ -185,12 +239,10 @@ describe('Media3pPane fetching', () => {
     });
   }
 
-  async function expectMediaElements(expectedCount) {
+  async function expectMediaElements(section, expectedCount) {
     let mediaElements;
     await waitFor(() => {
-      mediaElements = media3pPane.querySelectorAll(
-        '[data-testid=mediaElement]'
-      );
+      mediaElements = section.querySelectorAll('[data-testid=mediaElement]');
       if (!mediaElements || mediaElements.length !== expectedCount) {
         throw new Error(
           `Not ready: ${mediaElements?.length} != ${expectedCount}`
@@ -220,13 +272,17 @@ describe('Media3pPane fetching', () => {
   it('should fetch media resources', async () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
   });
 
   it('should render categories and media resources', async () => {
     mockListMedia();
     mockListCategories();
+
     await fixture.events.click(media3pTab);
+
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
     await fixture.snapshot();
   });
 
@@ -234,25 +290,62 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    const mediaGallery = media3pPane.querySelector(
+    const mediaGallery = unsplashSection.querySelector(
       '[data-testid="media-gallery-container"]'
     );
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
     mediaGallery.scrollTo(
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
-    await expectMediaElements(MEDIA_PER_PAGE * 2);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
+  });
+
+  it('should render the second provider', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    const coverrTab = fixture.querySelector('#provider-tab-coverr');
+
+    await fixture.events.click(coverrTab);
+    await expectMediaElements(coverrSection, MEDIA_PER_PAGE);
+  });
+
+  it('should scroll to the top when a category is selected', async () => {
+    mockListMedia();
+    mockListCategories();
+
+    await fixture.events.click(media3pTab);
+
+    const mediaGallery = unsplashSection.querySelector(
+      '[data-testid="media-gallery-container"]'
+    );
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+    mediaGallery.scrollTo(
+      0,
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
+    );
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
+
+    const mediaCategories = unsplashSection.querySelectorAll(
+      '[data-testid="mediaCategory"]'
+    );
+    await fixture.events.click(mediaCategories[0]);
+
+    await waitFor(() => {
+      expect(mediaGallery.scrollTop).toBe(0);
+    });
   });
 
   it('should handle pressing right when focused', async () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -267,9 +360,9 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -284,16 +377,16 @@ describe('Media3pPane fetching', () => {
     // Only mock 1 page.
     spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
       if (!pageToken) {
-        return { media: mediaPage2, nextPageToken: undefined };
+        return { media: mediaPage(1, 'unsplash'), nextPageToken: undefined };
       }
       throw new Error(`Unexpected pageToken: ${pageToken}`);
     });
 
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -310,9 +403,9 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -327,9 +420,9 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -344,9 +437,9 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -361,9 +454,9 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -378,9 +471,9 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -395,9 +488,9 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 
@@ -412,9 +505,9 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = media3pPane.querySelectorAll(
+    let mediaElements = unsplashSection.querySelectorAll(
       '[data-testid=mediaElement]'
     );
 

@@ -23,17 +23,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import getResourceFromMedia3p from '../../utils/getResourceFromMedia3p';
+import { PROVIDERS } from '../providerConfiguration';
 import apiFetcher from './apiFetcher';
 import Context from './context';
-
-/**
- * The supported providers.
- *
- * @enum {string}
- */
-const Providers = {
-  UNSPLASH: 'unsplash',
-};
 
 /** @typedef {import('react').ProviderProps} ProviderProps */
 
@@ -67,9 +59,10 @@ function Media3pApiProvider({ children }) {
     selectedCategoryId,
     mediaType,
   }) {
-    if (provider.toLowerCase() !== Providers.UNSPLASH) {
+    if (!Object.keys(PROVIDERS).includes(provider)) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
+
     if (selectedCategoryId && searchTerm) {
       throw new Error(
         `searchTerm and selectedCategoryId are mutually exclusive.`
@@ -160,7 +153,7 @@ function Media3pApiProvider({ children }) {
       pageToken,
     });
     return {
-      media: response.media.map(getResourceFromMedia3p),
+      media: (response.media || []).map(getResourceFromMedia3p),
       nextPageToken: response.nextPageToken,
     };
   }

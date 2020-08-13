@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
+import { useContext } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
-import { getFormattedDisplayDate } from '../../../../utils';
+import { getRelativeDisplayDate } from '../../../../utils';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
@@ -37,8 +37,9 @@ import {
   VIEW_STYLE,
 } from '../../../../constants';
 import { ApiContext } from '../../../api/apiProvider';
+import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
 
-describe('CUJ: Creator can view their stories in grid view', () => {
+describe('Grid view', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -198,7 +199,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     expect(stories.length).toEqual(initialNumStories);
   });
 
-  describe('Action: Filter their stories by All stories, Drafts and Published', () => {
+  describe('CUJ: Creator can view their stories in grid view: Filter their stories by All stories and Drafts and Published', () => {
     it('should switch to the Drafts Tab', async () => {
       const { stories } = await getStoriesState();
       const numDrafts = Object.values(stories).filter(
@@ -253,7 +254,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
   });
 
-  describe('Action: Sort their stories (last modified, date created, author, title)', () => {
+  describe('CUJ: Creator can view their stories in grid view: Sort their stories (last modified / date created / author / title)', () => {
     it('should should search/filter using the Search Stories search input', async () => {
       const { stories } = await getStoriesState();
 
@@ -374,7 +375,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
   });
 });
 
-describe('CUJ: Creator can view their stories in list view', () => {
+describe('List view', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -402,7 +403,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
     return users;
   }
 
-  describe('Action: See stories in list view', () => {
+  describe('CUJ: Creator can view their stories in list view: See stories in list view', () => {
     it('should switch to List View', async () => {
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
@@ -628,7 +629,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
     });
   });
 
-  describe('Action: Sort their stories (last modified, date created, author, title)', () => {
+  describe('CUJ: Creator can view their stories in list view: Sort their stories (last modified / date created / author / title)', () => {
     it('should sort by Title in List View', async () => {
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
@@ -730,14 +731,14 @@ describe('CUJ: Creator can view their stories in list view', () => {
 
       expect(rows.length).toEqual(storiesOrderById.length);
 
-      const storieDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getFormattedDisplayDate(stories[id].created)
+      const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
+        getRelativeDisplayDate(stories[id].created, fillerDateSettingsObject)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
 
       expect(rowDateCreatedValues).toEqual(
-        storieDateCreatedSortedByDateCreated
+        storiesDateCreatedSortedByDateCreated
       );
 
       // sort by ascending
@@ -751,7 +752,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
       rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
 
       expect(rowDateCreatedValues).toEqual(
-        storieDateCreatedSortedByDateCreated.reverse()
+        storiesDateCreatedSortedByDateCreated.reverse()
       );
     });
 
@@ -771,7 +772,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getFormattedDisplayDate(stories[id].modified)
+        getRelativeDisplayDate(stories[id].modified, fillerDateSettingsObject)
       );
 
       // Last Modified is the fifth column
@@ -794,7 +795,7 @@ describe('CUJ: Creator can view their stories in list view', () => {
     });
   });
 
-  describe('Action: Go to WP list view to do any action', () => {
+  describe('CUJ: Creator can view their stories in list view: Go to WP list view to do any action', () => {
     it('should add a link to the classic WordPress list view', async () => {
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
