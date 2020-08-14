@@ -359,7 +359,7 @@ class HTML {
 		];
 
 		if ( ! $images['poster-portrait-src'] ) {
-			$images['poster-portrait-src'] = plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE );
+			$images['poster-portrait-src'] = plugins_url( 'assets/images/fallback-poster.png', WEBSTORIES_PLUGIN_FILE );
 		}
 
 		return array_filter( $images );
