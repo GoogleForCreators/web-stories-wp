@@ -25,7 +25,7 @@ import Moveable from 'react-moveable';
 /**
  * Internal dependencies
  */
-import { MARK_OFFSET } from './ruler';
+import { MARK_OFFSET, MS_DIVISOR } from './ruler';
 
 const BAR_HEIGHT = 24;
 
@@ -46,6 +46,7 @@ const Bar = styled.div`
     0% 50%,
     ${BAR_HEIGHT / 2}px 0
   );
+  overflow: hidden;
 `;
 
 const Handle = styled.div`
@@ -54,14 +55,14 @@ const Handle = styled.div`
   height: 14px;
   transform: rotate(45deg);
   margin: 6px;
-  cursor: pointer;
+  cursor: ew-resize;
 `;
 
 const Label = styled.div`
   flex: 1;
   font-weight: bold;
   font-size: 12px;
-  cursor: pointer;
+  cursor: grabbing;
 `;
 
 const commonMovableProps = {
@@ -102,7 +103,7 @@ export default function TimingBar({
 
   const handleDragLeft = useCallback(({ clientX }) => {
     const movedMilliseconds = Math.max(
-      ((clientX - dragStart.current) / MARK_OFFSET) * 100,
+      ((clientX - dragStart.current) / MARK_OFFSET) * MS_DIVISOR,
       -startingOffset.current
     );
     setOffset(Math.max(0, movedMilliseconds + startingOffset.current));
@@ -115,7 +116,7 @@ export default function TimingBar({
         maxDuration - (startingOffset.current + startingDuration.current);
       const movedMilliseconds = Math.min(
         Math.max(
-          ((clientX - dragStart.current) / MARK_OFFSET) * 100,
+          ((clientX - dragStart.current) / MARK_OFFSET) * MS_DIVISOR,
           -startingOffset.current
         ),
         stop
@@ -130,7 +131,7 @@ export default function TimingBar({
       const stop =
         maxDuration - (startingOffset.current + startingDuration.current);
       const movedMilliseconds = Math.min(
-        ((clientX - dragStart.current) / MARK_OFFSET) * 100,
+        ((clientX - dragStart.current) / MARK_OFFSET) * MS_DIVISOR,
         stop
       );
       setDuration(movedMilliseconds + startingDuration.current);
@@ -141,8 +142,8 @@ export default function TimingBar({
   return (
     <Bar
       style={{
-        width: (internalDuration / 100) * MARK_OFFSET,
-        left: (internalOffset / 100) * MARK_OFFSET,
+        width: (internalDuration / MS_DIVISOR) * MARK_OFFSET,
+        left: (internalOffset / MS_DIVISOR) * MARK_OFFSET,
       }}
     >
       <Handle ref={setLeftRef}>

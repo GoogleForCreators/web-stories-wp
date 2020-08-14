@@ -40,12 +40,14 @@ const Text = styled.text`
 `;
 
 export const MARK_OFFSET = 40.0;
+export const MS_DIVISOR = 100.0;
+
 const RULER_HEIGHT = 24.0;
 
 const isMajor = (index) => index % 10 === 0;
 
 export default function AnimationRuler({ duration }) {
-  const numberOfMarks = Math.ceil(duration / 100);
+  const numberOfMarks = Math.ceil(duration / MS_DIVISOR);
   const range = [...Array(numberOfMarks).keys()];
   return (
     <svg
