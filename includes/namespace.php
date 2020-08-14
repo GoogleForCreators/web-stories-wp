@@ -103,7 +103,7 @@ function activate( $network_wide = false ) {
 		);
 	}
 
-	if ( version_compare( get_bloginfo('version'), WEBSTORIES_MINIMUM_WP_VERSION, '<' ) ) {
+	if ( version_compare( get_bloginfo( 'version' ), WEBSTORIES_MINIMUM_WP_VERSION, '<' ) ) {
 		wp_die(
 		/* translators: %s: WordPress version number */
 			esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_WP_VERSION ) ),
