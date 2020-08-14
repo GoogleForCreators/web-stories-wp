@@ -26,13 +26,12 @@ import Context from './context';
  * Context value consumer to select a fragment of the context from
  * {@link ./media3pApiProvider}.
  *
- * @param {function(Media3pApiContext):Object?} selector Returns a fragment of
- * the media3p api context value that the caller is interested in. If no
- * selector is provided then the entire context is selected.
- * @return {Object} The selected context value fragment.
+ * @return {Media3pApiContext} The selected context value fragment.
  */
-function useMedia3pApi(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useMedia3pApi() {
+  // No selector because none of the context properties have a state because
+  // they are currently all functions without state.
+  return useContextSelector(Context, identity);
 }
 
 export default useMedia3pApi;
