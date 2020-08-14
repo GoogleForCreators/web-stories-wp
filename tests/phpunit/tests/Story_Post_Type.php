@@ -375,6 +375,22 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::change_default_title
+	 */
+	public function test_change_default_title() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_status'  => 'auto-draft',
+				'post_title'   => 'Auto draft',
+			]
+		);
+
+		$this->assertSame( '', $post->post_title );
+	}
+
+	/**
 	 * This is a bit of a hack used to buffer feed content.
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/ab9aee8af474ac512b31b012f3c7c44fab31a990/tests/phpunit/tests/feed/rss2.php#L78-L94
