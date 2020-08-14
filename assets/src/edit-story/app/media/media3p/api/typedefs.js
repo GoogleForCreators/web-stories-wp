@@ -15,7 +15,7 @@
  */
 
 /**
- * Function exposed from {@link ./useMedia3pApi}.
+ * Functions exposed from {@link ./useMedia3pApi}.
  *
  * @typedef {(obj:{
  * provider: string,
