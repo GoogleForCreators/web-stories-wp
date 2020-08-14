@@ -71,8 +71,8 @@ describe('getResourceFromMedia3p', () => {
       creationDate: '2018-09-25T20:03.07Z',
       src:
         'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-      width: 1920,
-      height: 1080,
+      width: 1080,
+      height: 1920,
       poster:
         'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
       posterId: undefined,
@@ -98,6 +98,89 @@ describe('getResourceFromMedia3p', () => {
           mime_type: 'video/mp4',
           width: 360,
           height: 640,
+        },
+      },
+      attribution: undefined,
+    };
+    expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
+      expectedStoryEditorResource
+    );
+  });
+
+  it('should return video resource with calculated size', () => {
+    const media3pResource = {
+      name: 'media/coverr:g9re0sRUYA',
+      provider: 'COVERR',
+      type: 'VIDEO',
+      description: 'NYC Postcard',
+      created_at: '',
+      createTime: '2018-09-25T20:03.07Z',
+      updateTime: '2019-05-20T22:49.08Z',
+      imageUrls: [
+        {
+          url:
+            'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
+          mimeType: 'image/jpeg',
+        },
+        {
+          url:
+            'https://storage.coverr.co/p/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
+          mimeType: 'image/jpeg',
+          width: 1080,
+          height: 1920,
+        },
+      ],
+      videoUrls: [
+        {
+          url:
+            'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT/preview?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
+          mimeType: 'video/mp4',
+        },
+        {
+          url:
+            'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
+          mimeType: 'video/mp4',
+          width: 1080,
+          height: 1920,
+        },
+      ],
+      videoMetadata: {
+        duration: '121.0000001s',
+      },
+    };
+    const expectedStoryEditorResource = {
+      type: 'video',
+      mimeType: 'video/mp4',
+      creationDate: '2018-09-25T20:03.07Z',
+      src:
+        'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
+      width: 1080,
+      height: 1920,
+      poster:
+        'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
+      posterId: undefined,
+      id: undefined,
+      length: 121,
+      lengthFormatted: '2:01',
+      title: 'NYC Postcard',
+      alt: null,
+      local: false,
+      sizes: {
+        full: {
+          file: 'media/coverr:g9re0sRUYA',
+          source_url:
+            'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
+          mime_type: 'video/mp4',
+          width: 1080,
+          height: 1920,
+        },
+        preview: {
+          file: 'media/coverr:g9re0sRUYA',
+          source_url:
+            'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT/preview?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
+          mime_type: 'video/mp4',
+          width: 640,
+          height: 1137.7777777777778,
         },
       },
       attribution: undefined,
