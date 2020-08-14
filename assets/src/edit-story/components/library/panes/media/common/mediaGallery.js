@@ -49,8 +49,8 @@ const PhotoContainer = styled.div.attrs((props) => ({
 function MediaGallery({ resources, onInsert, providerType }) {
   const photos = resources.map((resource) => ({
     src: resource.src,
-    width: resource.width,
-    height: resource.height,
+    width: resource.width ?? resource.originalWidth,
+    height: resource.height ?? resource.originalHeight,
   }));
 
   const imageRenderer = useCallback(
