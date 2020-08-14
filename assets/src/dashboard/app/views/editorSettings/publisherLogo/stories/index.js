@@ -66,6 +66,7 @@ export const _default = () => {
       canUploadFiles={boolean('canUploadFile', true)}
       handleAddLogos={handleAddLogos}
       handleDeleteLogo={handleDeleteLogo}
+      isLoading={boolean('isLoading', false)}
       publisherLogos={uploadedContent}
     />
   );

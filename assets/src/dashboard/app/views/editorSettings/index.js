@@ -27,7 +27,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { getResourceFromLocalFile } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import GoogleAnalyticsSettings from './googleAnalytics';
@@ -35,27 +34,29 @@ import { Wrapper, Header, Heading, Main } from './components';
 import PublisherLogoSettings from './publisherLogo';
 
 function EditorSettings() {
-  const { capabilities: { canManageSettings } = {} } = useConfig();
-
   const {
     actions: {
       settingsApi: { fetchSettings, updateSettings },
-      mediaApi: { removeMedia, uploadMedia, fetchMediaById },
+      mediaApi: { uploadMedia, fetchMediaById },
     },
     state: {
       settings: { activePublisherLogoId, googleAnalyticsId, publisherLogoIds },
-      media: { isLoading, uploadedMediaIds, publisherLogos },
+      media: { isLoading: isMediaLoading, uploadedMediaIds, publisherLogos },
     },
   } = useContext(ApiContext);
 
   const { capabilities: { canUploadFiles } = {} } = useConfig();
 
-  // get settings
-  // get logos from IDs retrieved in settings
+  /**
+   * WP settings references publisher logos by ID.
+   * We must retrieve the media for those ids from /media when present
+   * Summarized below:
+   * FETCH - fetch settings to know what IDs to load media for
+   * then fetch media when publisherLogoIds are in state with useEffect
+   * ADD - first upload new logo to media. use the new ID(s) to update settings.
+   * REMOVE - send id to remove to settings. Not deleting media, just removing from logos.
+   */
 
-  // upload new logo to media
-  // tell settings that those new media ids belong to logos
-  // add logos to visible
   useEffect(() => {
     fetchSettings();
   }, [fetchSettings]);
@@ -67,9 +68,7 @@ function EditorSettings() {
   }, [updateSettings, uploadedMediaIds]);
 
   useEffect(() => {
-    console.log('???', publisherLogoIds);
     if (publisherLogoIds.length > 0) {
-      console.log('fetch! ');
       fetchMediaById(publisherLogoIds);
     }
   }, [fetchMediaById, publisherLogoIds]);
@@ -88,22 +87,26 @@ function EditorSettings() {
   );
 
   const handleRemoveLogo = useCallback(
-    (_, media) => {
-      console.log('MEDIA TO REMOVE: ', media);
-      removeMedia(media);
+    (e, media) => {
+      e.preventDefault();
+      // TODO how to handle deleting a default?
+      updateSettings({ publisherLogoIdToRemove: media.id });
     },
-    [removeMedia]
+    [updateSettings]
   );
 
   const orderedPublisherLogos = useMemo(() => {
-    // to allow to put default logo first
-    return Object.values(publisherLogos).map((publisherLogo) => {
-      if (publisherLogo.id === activePublisherLogoId) {
-        publisherLogo.isActive = true;
+    if (Object.keys(publisherLogos).length <= 0) {
+      return [];
+    }
+
+    return publisherLogoIds.map((publisherLogoId) => {
+      if (publisherLogoId === activePublisherLogoId) {
+        publisherLogos[publisherLogoId].isActive = true;
       }
-      return publisherLogo;
+      return publisherLogos[publisherLogoId];
     });
-  }, [activePublisherLogoId, publisherLogos]);
+  }, [activePublisherLogoId, publisherLogoIds, publisherLogos]);
 
   return (
     <Wrapper data-testid="editor-settings">
@@ -120,6 +123,7 @@ function EditorSettings() {
           handleRemoveLogo={handleRemoveLogo}
           publisherLogos={orderedPublisherLogos}
           canUploadFiles={canUploadFiles}
+          isLoading={isMediaLoading}
         />
       </Main>
     </Wrapper>

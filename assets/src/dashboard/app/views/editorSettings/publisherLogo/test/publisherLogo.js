@@ -34,6 +34,7 @@ describe('PublisherLogo', () => {
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleDeleteLogo={mockHandleDeleteLogo}
+        isLoading={false}
         publisherLogos={[]}
       />
     );
@@ -47,6 +48,7 @@ describe('PublisherLogo', () => {
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleDeleteLogo={mockHandleDeleteLogo}
+        isLoading={false}
         publisherLogos={[
           {
             src: 'source-that-displays-an-image',

@@ -61,6 +61,7 @@ function PublisherLogoSettings({
   canUploadFiles,
   handleAddLogos,
   handleRemoveLogo,
+  isLoading,
   publisherLogos,
 }) {
   return (
@@ -100,6 +101,7 @@ function PublisherLogoSettings({
             <FileUpload
               onSubmit={handleAddLogos}
               id="settings_publisher_logos"
+              isLoading={isLoading}
               label={TEXT.SUBMIT}
               isMultiple
               ariaLabel={TEXT.ARIA_LABEL}
@@ -117,6 +119,7 @@ PublisherLogoSettings.propTypes = {
   canUploadFiles: PropTypes.bool,
   handleAddLogos: PropTypes.func,
   handleRemoveLogo: PropTypes.func,
+  isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
     PropTypes.shape({
       src: PropTypes.string,

@@ -40,16 +40,16 @@ function settingsReducer(state, action) {
 
     case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS:
     case ACTION_TYPES.FETCH_SETTINGS_SUCCESS: {
-      console.log('action payload ', action.payload);
       return {
         ...state,
         activePublisherLogoId: action.payload.web_stories_active_publisher_logo,
         error: {},
         googleAnalyticsId: action.payload.web_stories_ga_tracking_id,
         publisherLogoIds: [
-          action.payload.web_stories_active_publisher_logo,
-          ...state.publisherLogoIds,
-          ...action.payload.web_stories_publisher_logos,
+          ...new Set([
+            action.payload.web_stories_active_publisher_logo,
+            ...action.payload.web_stories_publisher_logos,
+          ]),
         ],
       };
     }

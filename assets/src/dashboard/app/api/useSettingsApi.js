@@ -76,7 +76,11 @@ export default function useSettingsApi(
   }, [dataAdapter, globalStoriesSettingsApi]);
 
   const updateSettings = useCallback(
-    async ({ googleAnalyticsId, publisherLogoIds }) => {
+    async ({
+      googleAnalyticsId,
+      publisherLogoIds,
+      publisherLogoIdToRemove,
+    }) => {
       try {
         const query = {};
         if (googleAnalyticsId) {
@@ -85,9 +89,14 @@ export default function useSettingsApi(
 
         if (publisherLogoIds) {
           query.web_stories_publisher_logos = [
-            ...state.publisherLogoIds,
-            ...publisherLogoIds,
+            ...new Set([...state.publisherLogoIds, ...publisherLogoIds]),
           ];
+        }
+
+        if (publisherLogoIdToRemove) {
+          query.web_stories_publisher_logos = state.publisherLogoIds.filter(
+            (logoId) => logoId !== publisherLogoIdToRemove
+          );
         }
 
         const response = await dataAdapter.post(
