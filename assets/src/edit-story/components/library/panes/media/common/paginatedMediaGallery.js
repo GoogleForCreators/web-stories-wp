@@ -91,7 +91,13 @@ function PaginatedMediaGallery({
 
   const loadNextPageIfNeeded = useCallback(() => {
     const node = refContainer.current;
-    if (!node || !hasMore || !isMediaLoaded || isMediaLoading) {
+    if (
+      !node ||
+      !node.clientHeight ||
+      !hasMore ||
+      !isMediaLoaded ||
+      isMediaLoading
+    ) {
       return;
     }
 

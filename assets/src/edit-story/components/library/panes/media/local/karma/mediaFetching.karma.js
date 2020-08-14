@@ -29,12 +29,14 @@ import { ROOT_MARGIN } from '../mediaPane';
 describe('MediaPane fetching', () => {
   let fixture;
   let localPane;
+  let nonMediaTab;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
 
     localPane = fixture.querySelector('#library-pane-media');
+    nonMediaTab = fixture.querySelector('#library-tab-text');
   });
 
   afterEach(() => {
@@ -67,5 +69,19 @@ describe('MediaPane fetching', () => {
     );
 
     await expectMediaElements(MEDIA_PER_PAGE * 2);
+  });
+
+  it('should not load results if local media tab not selected', async () => {
+    const mediaGallery = localPane.querySelector(
+      '[data-testid="media-gallery-container"]'
+    );
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    await fixture.events.click(nonMediaTab);
+    mediaGallery.scrollTo(
+      0,
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
+    );
+    await expectMediaElements(MEDIA_PER_PAGE);
   });
 });
