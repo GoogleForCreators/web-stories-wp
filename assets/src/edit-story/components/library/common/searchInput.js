@@ -42,7 +42,6 @@ const SearchField = styled.div`
 const Search = styled(TextInput)`
   width: 100%;
   flex-grow: 1;
-  border: none;
   border-radius: 4px;
   padding: 8px 16px 8px 16px;
 `;
