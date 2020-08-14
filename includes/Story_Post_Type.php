@@ -256,8 +256,9 @@ class Story_Post_Type {
 		}
 
 		$all_capabilities = array_values( (array) $post_type_object->cap );
-		$roles            = wp_roles();
-		foreach ( $roles->role_objects as $name => $role ) {
+		$all_roles        = wp_roles();
+		$roles            = array_values( (array) $all_roles->role_objects );
+		foreach ( $roles as $role ) {
 			if ( $role instanceof WP_Role ) {
 				foreach ( $all_capabilities as $cap ) {
 					$role->remove_cap( $cap );
