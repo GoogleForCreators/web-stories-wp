@@ -85,7 +85,6 @@ export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
-    inProgress: true,
   },
   {
     value: APP_ROUTES.SUPPORT,

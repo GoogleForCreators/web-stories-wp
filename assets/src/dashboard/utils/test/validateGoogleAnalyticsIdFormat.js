@@ -15,24 +15,24 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import { TypographyPresets } from '../typography';
+import { validateGoogleAnalyticsIdFormat } from '../';
 
-export const TextInput = styled.input`
-  ${TypographyPresets.Small};
-  margin: 0;
-  padding: 1px 8px;
-  border-radius: 6px;
-  border: ${({ theme, error }) =>
-    error ? theme.borders.danger : theme.borders.gray100};
-  &:active {
-    border: ${({ theme, error }) =>
-      error ? theme.borders.danger : theme.borders.action};
-  }
-`;
+const idsToValidate = [
+  ['UA-000000-56', true],
+  ['ua-098765432-9875', true],
+  ['78787878', false],
+  ['ua--123448-0', false],
+  ['clearly wrong', false],
+];
+
+describe('validateGoogleAnalyticsIdFormat', () => {
+  it.each(idsToValidate)(
+    'should take " %s " and return as %p google analytic id format',
+    (validId, expected) => {
+      const bool = validateGoogleAnalyticsIdFormat(validId);
+      expect(bool).toBe(expected);
+    }
+  );
+});
