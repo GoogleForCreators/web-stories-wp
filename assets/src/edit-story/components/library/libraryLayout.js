@@ -65,6 +65,7 @@ function LibraryLayout() {
     <Layout>
       <TabsArea>
         <TabView
+          label={__('Element Library Selection', 'web-stories')}
           tabs={tabs}
           initialTab={initialTab}
           onTabChange={(id) => setTab(id)}

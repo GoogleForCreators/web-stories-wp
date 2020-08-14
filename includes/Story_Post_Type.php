@@ -28,6 +28,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
@@ -175,8 +176,14 @@ class Story_Post_Type {
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
+
+		// Filter RSS content fields.
 		add_filter( 'the_content_feed', [ $this, 'embed_image' ] );
 		add_filter( 'the_excerpt_rss', [ $this, 'embed_image' ] );
+
+		// Filter content and excerpt for search and post type archive.
+		add_filter( 'the_content', [ $this, 'embed_player' ], PHP_INT_MAX );
+		add_filter( 'the_excerpt', [ $this, 'embed_player' ], PHP_INT_MAX );
 
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
@@ -669,6 +676,35 @@ class Story_Post_Type {
 
 			$image   = new Image( $story );
 			$content = $image->render();
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Change the content to an embedded player
+	 *
+	 * @param string $content Current content of filter.
+	 *
+	 * @return string
+	 */
+	public function embed_player( $content ) {
+		$post = get_post();
+
+		if ( is_feed() ) {
+			return $content;
+		}
+
+		if ( ! is_search() && ! is_post_type_archive( self::POST_TYPE_SLUG ) ) {
+			return $content;
+		}
+
+		if ( $post instanceof WP_Post && self::POST_TYPE_SLUG === $post->post_type ) {
+			$story = new Story();
+			$story->load_from_post( $post );
+
+			$embed   = new Embed( $story );
+			$content = $embed->render();
 		}
 
 		return $content;

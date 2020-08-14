@@ -97,6 +97,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
 		$this->assertSame( 10, has_filter( 'the_content_feed', [ $story_post_type, 'embed_image' ] ) );
 		$this->assertSame( 10, has_filter( 'the_excerpt_rss', [ $story_post_type, 'embed_image' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'the_content', [ $story_post_type, 'embed_player' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'the_excerpt', [ $story_post_type, 'embed_player' ] ) );
 	}
 
 	/**
@@ -357,6 +359,19 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertContains( '<img', $feed );
 		$this->assertContains( 'images/test-image.jpg', $feed );
 		$this->assertContains( 'wp-block-web-stories-embed', $feed );
+	}
+
+	/**
+	 * @covers ::embed_player
+	 */
+	public function test_embed_player() {
+		$this->go_to( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
+
+		$content = get_echo( 'the_content' );
+		$this->assertContains( '<amp-story-player', $content );
+
+		$excerpt = get_echo( 'the_excerpt' );
+		$this->assertContains( '<amp-story-player', $excerpt );
 	}
 
 	/**
