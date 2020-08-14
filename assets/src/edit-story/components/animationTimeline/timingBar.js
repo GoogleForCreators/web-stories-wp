@@ -59,6 +59,7 @@ const Handle = styled.div`
 `;
 
 const Label = styled.div`
+  font-family: ${({ theme }) => theme.fonts.label.family};
   flex: 1;
   font-weight: bold;
   font-size: 12px;

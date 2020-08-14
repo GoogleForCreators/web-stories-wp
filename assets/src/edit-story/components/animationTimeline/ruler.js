@@ -34,7 +34,7 @@ const Path = styled.path`
 `;
 
 const Text = styled.text`
-  font-family: Roboto, sans-serif;
+  font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: 13px;
   fill: ${({ theme }) => rgba(theme.colors.fg.white, 0.8)};
 `;
