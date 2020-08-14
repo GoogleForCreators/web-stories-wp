@@ -44,7 +44,7 @@ const PREVIEW_TARGET = 'story-preview';
 const ButtonList = styled.nav`
   display: flex;
   justify-content: flex-end;
-  padding: 1em;
+  padding: 1em 1em 1em 40px;
   height: 100%;
 `;
 

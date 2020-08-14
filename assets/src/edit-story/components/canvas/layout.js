@@ -76,7 +76,7 @@ const Layer = styled.section`
 
   display: grid;
   grid:
-    'head      head      head      head      head    ' ${HEADER_HEIGHT}px
+    '.         .         head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(16px, 1fr)
     '.         prev      page      next      .       ' var(
       --fullbleed-height-px

@@ -158,6 +158,11 @@ const theme = {
       lineHeight: '24px',
       weight: 'bold',
     },
+    storyTitle: {
+      family: 'Roboto',
+      size: '16px',
+      lineHeight: '20px',
+    },
     body1: {
       family: 'Roboto',
       size: '16px',

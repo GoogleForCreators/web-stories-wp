@@ -34,11 +34,12 @@ const Background = styled.header`
 
 const Head = styled.div`
   flex: 1 1 auto;
-  padding: 1em;
+  overflow: hidden;
+  padding: 1em 0;
 `;
 
 const ButtonCell = styled.div`
-  grid-area: buttons;
+  flex: 0 0 auto;
 `;
 
 function HeaderLayout() {

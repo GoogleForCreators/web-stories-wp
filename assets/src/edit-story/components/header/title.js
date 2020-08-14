@@ -18,7 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -30,18 +31,37 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
+import { useUnits } from '../../units';
 import cleanForSlug from '../../utils/cleanForSlug';
+
+const Wrapper = styled.header`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  max-width: ${({ maxWidth }) => `${maxWidth}px`};
+`;
+
+const INPUT_MIN_WIDTH = 94;
 
 const Input = styled.input`
   color: ${({ theme }) => `${theme.colors.fg.white} !important`};
   margin: 0;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.fonts.storyTitle.family};
+  font-size: ${({ theme }) => theme.fonts.storyTitle.size};
+  line-height: ${({ theme }) => theme.fonts.storyTitle.lineHeight};
   background: none !important;
-  border: none !important;
-  text-align: start;
+  text-overflow: ellipsis;
+  text-align: ${({ isCentered }) => (isCentered ? 'center' : 'start')};
+  margin-left: ${({ leftMargin }) => (leftMargin ? `${leftMargin}px` : '0')};
+  width: ${({ isFullWidth }) =>
+    isFullWidth ? '100%' : `${INPUT_MIN_WIDTH}px`};
+  border: 1px solid transparent !important;
+
+  &:hover,
+  &:focus {
+    border-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)} !important;
+    box-shadow: none !important;
+  }
 `;
 
 function Title() {
@@ -52,6 +72,38 @@ function Title() {
       },
       actions: { updateStory },
     }) => ({ title, slug, updateStory })
+  );
+  const {
+    state: {
+      pageSize: { width },
+    },
+  } = useUnits();
+  const minCenteredWidth = (width + INPUT_MIN_WIDTH) / 2;
+  const leftMargin = (width - INPUT_MIN_WIDTH) / 2;
+
+  const [isCentered, setIsCentered] = useState(true);
+  const [isFullWidth, setIsFullWidth] = useState(true);
+  const ref = useRef();
+
+  useEffect(
+    () => {
+      if (!ref.current) {
+        return undefined;
+      }
+
+      const update = (entries) => {
+        Array.from(entries).forEach((entry) => {
+          const actualWidth = entry.borderBoxSize[0].inlineSize;
+          setIsFullWidth(actualWidth >= width);
+          setIsCentered(actualWidth >= minCenteredWidth);
+        });
+      };
+      const rs = new ResizeObserver(update);
+      rs.observe(ref.current);
+      return () => rs.disconnect();
+    },
+    // We need `title` here to attach RS when input exists
+    [title, minCenteredWidth, width]
   );
 
   const { storyId } = useConfig();
@@ -79,14 +131,19 @@ function Title() {
   }
 
   return (
-    <Input
-      value={titleFormatted(title)}
-      type={'text'}
-      onBlur={handleBlur}
-      onChange={handleChange}
-      placeholder={__('Add title', 'web-stories')}
-      aria-label={__('Edit: Story title', 'web-stories')}
-    />
+    <Wrapper ref={ref} maxWidth={width}>
+      <Input
+        leftMargin={!isFullWidth && isCentered ? leftMargin : 0}
+        isFullWidth={isFullWidth}
+        isCentered={isCentered}
+        value={titleFormatted(title)}
+        type={'text'}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        placeholder={__('Add title', 'web-stories')}
+        aria-label={__('Edit: Story title', 'web-stories')}
+      />
+    </Wrapper>
   );
 }
 
