@@ -113,18 +113,12 @@ function Title() {
     [updateStory]
   );
 
-  // TODO Make sure that Auto Draft checks translations.
-  const titleFormatted = useCallback((rawTitle) => {
-    return rawTitle === __('Auto Draft', 'web-stories') ? '' : rawTitle;
-  }, []);
-
   const handleBlur = useCallback(() => {
     if (!slug || slug === storyId) {
-      const cleanSlug =
-        encodeURIComponent(cleanForSlug(titleFormatted(title))) || storyId;
+      const cleanSlug = encodeURIComponent(cleanForSlug(title)) || storyId;
       updateStory({ properties: { slug: cleanSlug } });
     }
-  }, [slug, storyId, title, titleFormatted, updateStory]);
+  }, [slug, storyId, title, updateStory]);
 
   if (typeof title !== 'string') {
     return null;
@@ -136,7 +130,7 @@ function Title() {
         leftMargin={!isFullWidth && isCentered ? leftMargin : 0}
         isFullWidth={isFullWidth}
         isCentered={isCentered}
-        value={titleFormatted(title)}
+        value={title}
         type={'text'}
         onBlur={handleBlur}
         onChange={handleChange}
