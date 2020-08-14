@@ -371,7 +371,6 @@ class Experiments {
 				'label'       => __( 'Third-Party Media', 'web-stories' ),
 				'description' => __( 'Enable third-party media tab', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Description: Flag for showing the Coverr Media3p subtab.
@@ -384,7 +383,6 @@ class Experiments {
 				'label'       => __( 'Coverr', 'web-stories' ),
 				'description' => __( 'Enable the Coverr tab in the Third-party media tab.', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 		];
 	}
