@@ -137,7 +137,7 @@ function delete_posts() {
  */
 function remove_caps() {
 	$story_post_type = new Story_Post_Type( new Experiments() );
-	$story_post_type->remove_caps_to_roles();
+	$story_post_type->remove_caps_from_roles();
 }
 
 /**

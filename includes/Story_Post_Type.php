@@ -251,11 +251,11 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Removes story capabilities to all user roles.
+	 * Removes story capabilities from all user roles.
 	 *
 	 * @return void
 	 */
-	public function remove_caps_to_roles() {
+	public function remove_caps_from_roles() {
 		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
 
 		if ( ! $post_type_object ) {
