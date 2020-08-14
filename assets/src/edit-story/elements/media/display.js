@@ -29,8 +29,11 @@ import { useTransformHandler } from '../../components/transform';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
+// TODO: better placeholder color
 const Element = styled.div`
   ${elementFillContent}
+  background: #282a2a;
+  color: transparent;
   overflow: hidden;
 `;
 

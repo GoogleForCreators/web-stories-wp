@@ -244,9 +244,9 @@ const MediaElement = ({
     }
   }, [isMenuOpen, active, type]);
 
-  const onClick = () => {
+  const onClick = (thumbnailUrl) => () => {
     handleRegisterUsage();
-    onInsert(resource, width, height);
+    onInsert(resource, thumbnailUrl);
   };
 
   const innerElement = getInnerElement(type, {
@@ -347,17 +347,18 @@ function getInnerElement(
     ref.current.style.opacity = '1';
   };
   if (type === 'image') {
+    const thumbnailURL = getThumbnailUrl(width, resource);
     return (
       <Image
         key={src}
-        src={getThumbnailUrl(width, resource)}
+        src={thumbnailURL}
         ref={ref}
         width={width}
         height={height}
         alt={alt}
         aria-label={alt}
         loading={'lazy'}
-        onClick={onClick}
+        onClick={onClick(thumbnailURL)}
         onLoad={makeImageVisible}
         {...dropTargetsBindings}
       />
@@ -375,7 +376,7 @@ function getInnerElement(
           preload="none"
           aria-label={alt}
           muted
-          onClick={onClick}
+          onClick={onClick(poster)}
           // crossorigin='anonymous' is required to play videos from other domains.
           crossOrigin="anonymous"
           {...dropTargetsBindings}

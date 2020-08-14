@@ -140,7 +140,7 @@ function MediaPane(props) {
    */
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
-    insertMediaElement(resource);
+    insertMediaElement(resource, mediaPickerEl.sizes.medium.url);
   };
 
   const openMediaPicker = useMediaPicker({
@@ -167,7 +167,13 @@ function MediaPane(props) {
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = useCallback(
-    (resource) => insertElement(resource.type, { resource }),
+    (resource, thumbnailURL) => {
+      window.webStoriesEditorResourceList[resource.id] = {
+        url: thumbnailURL,
+        type: 'cached',
+      };
+      insertElement(resource.type, { resource });
+    },
     [insertElement]
   );
 

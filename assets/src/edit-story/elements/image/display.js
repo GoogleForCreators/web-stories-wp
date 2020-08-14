@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +27,7 @@ import StoryPropTypes from '../../types';
 import { calculateSrcSet, mediaWithScale } from '../media/util';
 import { getMediaSizePositionProps } from '../media';
 import MediaDisplay from '../media/display';
+import { preloadImage } from '../../app/media/utils';
 
 const Img = styled.img`
   position: absolute;
@@ -38,6 +39,27 @@ function ImageDisplay({ element, box }) {
   const { width, height } = box;
   const ref = useRef();
 
+  let initialSrcType = 'smallest';
+  let initialSrc =
+    resource.sizes?.['web-stories-thumbnail']?.source_url ||
+    resource.sizes?.medium?.source_url;
+
+  if (window.webStoriesEditorResourceList[resource.id]?.type === 'cached') {
+    initialSrcType = 'cached';
+    initialSrc = window.webStoriesEditorResourceList[resource.id].url;
+  }
+
+  if (
+    window.webStoriesEditorResourceList[resource.id]?.type === 'fullsize' ||
+    resource.local
+  ) {
+    initialSrcType = 'fullsize';
+    initialSrc = resource.src;
+  }
+
+  const [srcType, setSrcType] = useState(initialSrcType);
+  const [src, setSrc] = useState(initialSrc);
+
   const imgProps = getMediaSizePositionProps(
     resource,
     width,
@@ -47,12 +69,28 @@ function ImageDisplay({ element, box }) {
     focalY
   );
 
+  useEffect(() => {
+    let timeout;
+    if (window.webStoriesEditorResourceList[resource.id]?.type !== 'fullsize') {
+      timeout = setTimeout(async () => {
+        await preloadImage(resource.src);
+        window.webStoriesEditorResourceList[resource.id] = {
+          type: 'fullsize',
+        };
+        setSrc(resource.src);
+        setSrcType('fullsize');
+      }, 0);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [resource.id, resource.src, srcType]);
+
   return (
     <MediaDisplay element={element} mediaRef={ref}>
       <Img
         ref={ref}
         draggable={false}
-        src={resource.src}
+        src={src}
         srcSet={calculateSrcSet(resource)}
         alt={resource.alt}
         {...imgProps}
