@@ -63,8 +63,7 @@ function Title() {
 
   const handleBlur = useCallback(() => {
     if (!slug || slug === storyId) {
-      const cleanSlug =
-        encodeURIComponent(cleanForSlug(title)) || storyId;
+      const cleanSlug = encodeURIComponent(cleanForSlug(title)) || storyId;
       updateStory({ properties: { slug: cleanSlug } });
     }
   }, [slug, storyId, title, updateStory]);

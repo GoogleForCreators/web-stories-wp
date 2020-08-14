@@ -109,7 +109,6 @@ const CardTitle = ({
     }
   }, [status, displayDate]);
 
-
   const titleFormatted = (rawTitle) => {
     return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
   };
@@ -125,7 +124,9 @@ const CardTitle = ({
           label={__('Rename story', 'web-stories')}
         />
       ) : (
-        <TitleStoryLink href={titleLink}>{titleFormatted(title)}</TitleStoryLink>
+        <TitleStoryLink href={titleLink}>
+          {titleFormatted(title)}
+        </TitleStoryLink>
       )}
       <TitleBodyText>
         {status === STORY_STATUS.DRAFT && (
