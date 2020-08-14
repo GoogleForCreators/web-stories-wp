@@ -267,9 +267,9 @@ class Story_Post_Type {
 		}
 
 		/**
-		 * Fires when removing the custom capabilities to existing roles.
+		 * Fires when removing the custom capabilities from existing roles.
 		 *
-		 * Can be used to remove the capabilities to other, custom roles.
+		 * Can be used to remove the capabilities from other, custom roles.
 		 *
 		 * @param array $all_capabilities List of all post type capabilities, for reference.
 		 */
