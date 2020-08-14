@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
+import { BEZIER } from '../../../edit-story/animation';
 import { Checkmark as CheckmarkIcon, Close as CloseIcon } from '../../icons';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { TypographyPresets } from '../typography';

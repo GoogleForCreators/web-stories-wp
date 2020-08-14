@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../animation';
+import { StoryAnimation } from '../animation';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import StoryPropTypes from '../types';
 import generatePatternStyles from '../utils/generatePatternStyles';

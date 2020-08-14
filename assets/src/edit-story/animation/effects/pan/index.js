@@ -17,12 +17,8 @@
 /**
  * Internal dependencies
  */
-import {
-  FULLBLEED_RATIO,
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
-} from '../../../edit-story/constants';
-import { dataToEditorY, getBox } from '../../../edit-story/units/dimensions';
+import { FULLBLEED_RATIO, PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import { dataToEditorY, getBox } from '../../../units/dimensions';
 import { ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
 

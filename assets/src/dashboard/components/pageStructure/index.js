@@ -27,7 +27,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
+import { BEZIER } from '../../../edit-story/animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';

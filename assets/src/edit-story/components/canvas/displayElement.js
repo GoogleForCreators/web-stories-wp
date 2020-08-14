@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../../animation';
+import { StoryAnimation } from '../../animation';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,

@@ -20,6 +20,7 @@ import { useContext } from 'react';
 /**
  * Internal dependencies
  */
+import { identity, useContextSelector } from '../../utils/context';
 import { StoryAnimationContext } from './provider';
 
 function useStoryAnimationContext() {

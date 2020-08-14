@@ -30,7 +30,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
+import { BEZIER } from '../../../edit-story/animation';
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
 import { TypographyPresets } from '../typography';
 

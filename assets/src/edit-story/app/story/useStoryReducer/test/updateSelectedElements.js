@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../../../dashboard/constants';
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { setupReducer } from './_utils';
 
 describe('updateSelectedElements', () => {

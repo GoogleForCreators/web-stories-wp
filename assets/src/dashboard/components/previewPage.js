@@ -22,10 +22,13 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { StoryAnimation, useStoryAnimationContext } from '../../animation';
+import {
+  StoryAnimation,
+  useStoryAnimationContext,
+  STORY_ANIMATION_STATE,
+} from '../../edit-story/animation';
 import StoryPropTypes from '../../edit-story/types';
 import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
-import { STORY_ANIMATION_STATE } from '../constants';
 import { PageSizePropType } from '../types';
 import PagePreviewElements from './previewPageElements';
 

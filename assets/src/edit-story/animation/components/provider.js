@@ -17,26 +17,26 @@
 /**
  * External dependencies
  */
+import { useFeature } from 'flagged';
+import PropTypes from 'prop-types';
 import {
   createContext,
   useCallback,
   useEffect,
   useMemo,
-  useState,
   useReducer,
   useRef,
+  useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useFeature } from 'flagged';
-
 /**
  * Internal dependencies
  */
+import StoryPropTypes from '../../types';
+import clamp from '../../utils/clamp';
+import { createContext } from '../../utils/context';
 import { AnimationPart, throughput } from '../parts';
 import { AnimationProps } from '../parts/types';
-import { clamp } from '../../dashboard/utils';
-import StoryPropTypes from '../../edit-story/types';
 
 const Context = createContext(null);
 
@@ -148,7 +148,7 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
         animation.currentTime =
           time === 'end'
             ? animationEndTime
-            : clamp(time, [0, animationEndTime]);
+            : clamp(time, { MIN: 0, MAX: animationEndTime });
       });
 
     return {

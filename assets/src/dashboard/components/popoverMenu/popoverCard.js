@@ -23,7 +23,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
+import { BEZIER } from '../../../edit-story/animation';
 import { CORNER_DIRECTIONS, DIRECTIONS } from '../../constants';
 import Popover from './popover';
 import Shadow from './shadow';
