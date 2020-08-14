@@ -189,9 +189,9 @@ function getVideoResourceFromMedia3p(m) {
     mimeType: videoUrls.full.mime_type,
     creationDate: m.createTime,
     src: videoUrls.full.source_url,
-    width: videoUrls.full.width,
-    height: videoUrls.full.height,
-    poster: m.imageUrls[0],
+    width: 1920, // TODO(#3815): Use width from API.
+    height: 1080, // TODO(#3815): Use height from API.
+    poster: m.imageUrls[0].url,
     length,
     lengthFormatted: formatVideoLength(length),
     title: m.description,

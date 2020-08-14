@@ -19,7 +19,16 @@
  */
 import { createContext } from '../../utils/context';
 
-export default createContext({
+/**
+ * @typedef {import('./typedefs').MediaContext} MediaContext
+ */
+
+/**
+ * @type {MediaContext}
+ */
+const INITIAL_CONTEXT = {
   local: { state: {}, actions: {} },
   media3p: { state: {}, actions: {} },
-});
+};
+
+export default createContext(INITIAL_CONTEXT);

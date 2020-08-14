@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Story_Renderer;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Story_Renderer
+ * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
  */
-class Story_Renderer extends \WP_UnitTestCase {
+class HTML extends \WP_UnitTestCase {
 	public function setUp() {
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -41,12 +41,12 @@ class Story_Renderer extends \WP_UnitTestCase {
 	public function test_render() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<!DOCTYPE html><html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$actual   = $renderer->render();
+		$actual = $this->setup_renderer( $post );
 
 		$this->assertStringStartsWith( '<!DOCTYPE html>', $actual );
 		$this->assertStringEndsWith( '</html>', $actual );
@@ -58,12 +58,12 @@ class Story_Renderer extends \WP_UnitTestCase {
 	public function test_transform_html_start_tag() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$actual   = $renderer->render();
+		$actual = $this->setup_renderer( $post );
 
 		$this->assertContains( '<html amp="" lang="en-US">', $actual );
 	}
@@ -78,12 +78,12 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body><amp-story></amp-story></body></html>",
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$actual   = $renderer->render();
+		$actual = $this->setup_renderer( $post );
 
 		$this->assertContains( 'FOO', $actual );
 		$this->assertContains( 'BAZ', $actual );
@@ -100,6 +100,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 	public function test_insert_content_after_opening_body() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -110,8 +111,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_body_open', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$actual   = $renderer->render();
+		$actual = $this->setup_renderer( $post );
 
 		remove_action( 'web_stories_body_open', $function );
 
@@ -124,6 +124,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 	public function test_insert_content_before_closing_body() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -134,8 +135,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_footer', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$actual   = $renderer->render();
+		$actual = $this->setup_renderer( $post );
 
 		remove_action( 'web_stories_footer', $function );
 
@@ -145,22 +145,25 @@ class Story_Renderer extends \WP_UnitTestCase {
 	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
-	 * @covers \Google\Web_Stories\Story_Renderer::add_publisher_logo
+	 * @covers \Google\Web_Stories\Story_Renderer\HTML::add_publisher_logo
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 * @covers ::add_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
 		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
 
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
-		$renderer    = new \Google\Web_Stories\Story_Renderer( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
 
 		wp_update_post(
@@ -183,18 +186,18 @@ class Story_Renderer extends \WP_UnitTestCase {
 	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
 
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
 		set_post_thumbnail( $post->ID, $attachment_id );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$rendered = $renderer->render();
+		$rendered = $this->setup_renderer( $post );
 
 		$this->assertContains( 'poster-portrait-src=', $rendered );
 		$this->assertContains( 'poster-square-src=', $rendered );
@@ -208,12 +211,12 @@ class Story_Renderer extends \WP_UnitTestCase {
 	public function test_add_poster_images_no_featured_image() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$rendered = $renderer->render();
+		$rendered = $this->setup_renderer( $post );
 
 		$this->assertContains( 'poster-portrait-src=', $rendered );
 		$this->assertNotContains( 'poster-square-src=', $rendered );
@@ -227,6 +230,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 	public function test_insert_analytics_configuration() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -237,8 +241,7 @@ class Story_Renderer extends \WP_UnitTestCase {
 
 		add_action( 'web_stories_insert_analytics_configuration', $function );
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$actual   = $renderer->render();
+		$actual = $this->setup_renderer( $post );
 
 		remove_action( 'web_stories_insert_analytics_configuration', $function );
 
@@ -253,13 +256,27 @@ class Story_Renderer extends \WP_UnitTestCase {
 	public function test_insert_analytics_configuration_no_output() {
 		$post = self::factory()->post->create_and_get(
 			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Story_Renderer( $post );
-		$actual   = $renderer->render();
+		$actual = $this->setup_renderer( $post );
 
 		$this->assertNotContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
+	}
+
+	/**
+	 * Helper to setup rendered.
+	 *
+	 * @param \WP_Post $post Post Object.
+	 *
+	 * @return string
+	 */
+	protected function setup_renderer( $post ) {
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		return $renderer->render();
 	}
 }

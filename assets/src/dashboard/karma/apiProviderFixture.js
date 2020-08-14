@@ -46,10 +46,8 @@ export default function ApiProviderFixture({ children }) {
         setStoriesState((currenState) => fetchStories(...args, currenState)),
       clearStoryPreview: () =>
         setStoriesState((currentState) => clearStoryPreview(currentState)),
-      createStoryPreviewFromTemplate: () =>
-        setStoriesState((currentState) =>
-          createStoryPreviewFromTemplate(currentState)
-        ),
+      createStoryPreview: () =>
+        setStoriesState((currentState) => createStoryPreview(currentState)),
       createStoryFromTemplate: jasmine.createSpy('createStoryFromTemplate'),
       trashStory: (story) =>
         setStoriesState((currentState) => trashStory(story, currentState)),
@@ -148,7 +146,7 @@ function clearStoryPreview(currentState) {
   };
 }
 
-function createStoryPreviewFromTemplate(currentState) {
+function createStoryPreview(currentState) {
   return {
     ...currentState,
     previewMarkup: '<p>I am markup for a preview</p>',
