@@ -41,6 +41,6 @@ export const GeneralAnimationPropTypes = {
   iterationStart: PropTypes.number,
   iterations: PropTypes.oneOfType([
     PropTypes.number,
-    PropTypes.oneOf(['infinity']),
+    PropTypes.oneOf(['infinity', '']),
   ]),
 };
