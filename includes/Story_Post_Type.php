@@ -251,6 +251,39 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Removes story capabilities from all user roles.
+	 *
+	 * @return void
+	 */
+	public function remove_caps_from_roles() {
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( ! $post_type_object ) {
+			return;
+		}
+
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_roles        = wp_roles();
+		$roles            = array_values( (array) $all_roles->role_objects );
+		foreach ( $roles as $role ) {
+			if ( $role instanceof WP_Role ) {
+				foreach ( $all_capabilities as $cap ) {
+					$role->remove_cap( $cap );
+				}
+			}
+		}
+
+		/**
+		 * Fires when removing the custom capabilities from existing roles.
+		 *
+		 * Can be used to remove the capabilities from other, custom roles.
+		 *
+		 * @param array $all_capabilities List of all post type capabilities, for reference.
+		 */
+		do_action( 'web_stories_remove_capabilities', $all_capabilities );
+	}
+
+	/**
 	 * Base64 encoded svg icon.
 	 *
 	 * @return string Base64-encoded SVG icon.
