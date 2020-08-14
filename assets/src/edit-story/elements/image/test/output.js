@@ -81,6 +81,18 @@ describe('Image output', () => {
     );
   });
 
+  it('should produce an AMP img with no srcset if the resource has no `sizes`', async () => {
+    const basePropsNoSrcset = { ...baseProps };
+    basePropsNoSrcset.element.resource.sizes = {};
+    const output = <ImageOutput {...basePropsNoSrcset} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(output).toBeValidAMPStoryElement();
+    await expect(outputStr).toStrictEqual(expect.not.stringMatching('srcSet='));
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('src="https://example.com/image.png"')
+    );
+  });
+
   it('an undefined alt tag in the element should fall back to the resource', async () => {
     const props = {
       ...baseProps,

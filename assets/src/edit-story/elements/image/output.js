@@ -32,10 +32,15 @@ function ImageOutput({ element, box }) {
 
   const props = {
     layout: 'fill',
-    srcSet: calculateSrcSet(element.resource),
     src: resource.src,
     alt: element.alt !== undefined ? element.alt : resource.alt,
   };
+
+  const srcSet = calculateSrcSet(element.resource);
+  if (srcSet) {
+    props.srcSet = srcSet;
+  }
+
   return (
     <MediaOutput box={box} element={element}>
       <amp-img {...props} />
