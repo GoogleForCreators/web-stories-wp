@@ -109,6 +109,11 @@ const CardTitle = ({
     }
   }, [status, displayDate]);
 
+
+  const titleFormatted = (rawTitle) => {
+    return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+  };
+
   return (
     <StyledCardTitle>
       {editMode ? (
@@ -120,7 +125,7 @@ const CardTitle = ({
           label={__('Rename story', 'web-stories')}
         />
       ) : (
-        <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
+        <TitleStoryLink href={titleLink}>{titleFormatted(title)}</TitleStoryLink>
       )}
       <TitleBodyText>
         {status === STORY_STATUS.DRAFT && (

@@ -185,6 +185,8 @@ class Story_Post_Type {
 		add_filter( 'the_content', [ $this, 'embed_player' ], PHP_INT_MAX );
 		add_filter( 'the_excerpt', [ $this, 'embed_player' ], PHP_INT_MAX );
 
+		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
+
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
@@ -675,5 +677,20 @@ class Story_Post_Type {
 		}
 
 		return $content;
+	}
+
+
+	/**
+	 * Reset default title to empty string for auto-drafts.
+	 *
+	 * @param array $data Array of data to save.
+	 *
+	 * @return array
+	 */
+	public function change_default_title( $data ) {
+		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
+			$data['post_title'] = '';
+		}
+		return $data;
 	}
 }
