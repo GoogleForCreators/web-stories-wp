@@ -27,10 +27,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { Layout } from '../../../components';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
+import { PageHeading } from '../shared';
 import GoogleAnalyticsSettings from './googleAnalytics';
-import { Wrapper, Header, Heading, Main } from './components';
+import { Wrapper, Main } from './components';
 import PublisherLogoSettings from './publisherLogo';
 
 function EditorSettings() {
@@ -125,28 +127,37 @@ function EditorSettings() {
         }
         return publisherLogos[publisherLogoId];
       }
+      return undefined;
     });
   }, [activePublisherLogoId, publisherLogoIds, publisherLogos]);
 
   return (
-    <Wrapper data-testid="editor-settings">
-      <Header>
-        <Heading>{__('Settings', 'web-stories')}</Heading>
-      </Header>
-      <Main>
-        <GoogleAnalyticsSettings
-          handleUpdateSettings={handleUpdateSettings}
-          googleAnalyticsId={googleAnalyticsId}
-        />
-        <PublisherLogoSettings
-          handleAddLogos={handleAddLogos}
-          handleRemoveLogo={handleRemoveLogo}
-          publisherLogos={orderedPublisherLogos}
-          canUploadFiles={canUploadFiles}
-          isLoading={isMediaLoading}
-        />
-      </Main>
-    </Wrapper>
+    <Layout.Provider>
+      <Wrapper data-testid="editor-settings">
+        <Layout.Squishable>
+          <PageHeading
+            defaultTitle={__('Settings', 'web-stories')}
+            showTypeahead={false}
+          />
+        </Layout.Squishable>
+        <Layout.Scrollable>
+          <Main>
+            <GoogleAnalyticsSettings
+              handleUpdateSettings={handleUpdateSettings}
+              googleAnalyticsId={googleAnalyticsId}
+            />
+            <PublisherLogoSettings
+              handleAddLogos={handleAddLogos}
+              handleRemoveLogo={handleRemoveLogo}
+              publisherLogos={orderedPublisherLogos}
+              canUploadFiles={canUploadFiles}
+              isLoading={isMediaLoading}
+              uploadError={mediaError}
+            />
+          </Main>
+        </Layout.Scrollable>
+      </Wrapper>
+    </Layout.Provider>
   );
 }
 
