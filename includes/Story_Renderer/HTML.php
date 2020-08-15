@@ -85,8 +85,8 @@ class HTML {
 	/**
 	 * Loads a full HTML document and returns a DOMDocument instance.
 	 *
-	 * @param string     $string Input string.
-	 * @param int|string $options Optional. Specify additional Libxml parameters.
+	 * @param string $string Input string.
+	 * @param int    $options Optional. Specify additional Libxml parameters.
 	 *
 	 * @return DOMDocument DOMDocument instance.
 	 */
