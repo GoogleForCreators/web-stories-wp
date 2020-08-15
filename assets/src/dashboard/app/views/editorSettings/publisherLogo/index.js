@@ -86,16 +86,18 @@ function PublisherLogoSettings({
                   isActive={publisherLogo.isActive}
                 >
                   <Logo src={publisherLogo.src} alt={publisherLogo.title} />
-                  <DeleteLogoButton
-                    aria-label={sprintf(
-                      /* translators: %s: uploaded logo title */
-                      __('delete %s as a publisher logo', 'web-stories'),
-                      publisherLogo.title
-                    )}
-                    onClick={(e) => handleRemoveLogo(e, publisherLogo)}
-                  >
-                    <DeleteIcon aria-hidden="true" />
-                  </DeleteLogoButton>
+                  {!publisherLogo.isActive && (
+                    <DeleteLogoButton
+                      aria-label={sprintf(
+                        /* translators: %s: uploaded logo title */
+                        __('delete %s as a publisher logo', 'web-stories'),
+                        publisherLogo.title
+                      )}
+                      onClick={(e) => handleRemoveLogo(e, publisherLogo)}
+                    >
+                      <DeleteIcon aria-hidden="true" />
+                    </DeleteLogoButton>
+                  )}
                 </div>
               );
             })}
@@ -133,5 +135,6 @@ PublisherLogoSettings.propTypes = {
       id: PropTypes.number,
     })
   ),
+  uploadError: PropTypes.string,
 };
 export default PublisherLogoSettings;
