@@ -23,65 +23,26 @@ import { __, sprintf } from '@wordpress/i18n';
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import moment from 'moment';
 import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import getStoryMarkup from '../../../edit-story/output/utils/getStoryMarkup';
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
+  STORY_STATUS,
 } from '../../constants';
-import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 import { getStoryPropsToSave, addQueryArgs } from '../../utils';
-
-export function reshapeStoryObject(editStoryURL) {
-  return function (originalStoryData) {
-    const {
-      id,
-      title,
-      modified,
-      status,
-      date,
-      author,
-      story_data: storyData,
-    } = originalStoryData;
-    if (
-      !Array.isArray(storyData.pages) ||
-      !id ||
-      storyData.pages.length === 0
-    ) {
-      return null;
-    }
-
-    const updatedStoryData = {
-      ...migrate(storyData, storyData.version),
-      version: DATA_VERSION,
-    };
-
-    return {
-      id,
-      status,
-      title: title.raw,
-      modified: moment(modified),
-      created: moment(date),
-      pages: updatedStoryData.pages,
-      author,
-      centerTargetAction: '',
-      bottomTargetAction: `${editStoryURL}&post=${id}`,
-      editStoryLink: `${editStoryURL}&post=${id}`,
-      originalStoryData,
-    };
-  };
-}
+import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
 
 const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
@@ -116,6 +77,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
       const query = {
         context: 'edit',
+        _web_stories_envelope: true,
         search: searchTerm || undefined,
         orderby: sortOption,
         page,
@@ -130,30 +92,26 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           query,
         });
 
-        const response = await dataAdapter.get(path, {
-          parse: false,
-          cache: 'no-cache',
-        });
+        const response = await dataAdapter.get(path);
 
         const totalPages =
-          response.headers && parseInt(response.headers.get('X-WP-TotalPages'));
-
+          response.headers && parseInt(response.headers['X-WP-TotalPages']);
         const totalStoriesByStatus =
           response.headers &&
-          JSON.parse(response.headers.get('X-WP-TotalByStatus'));
-
-        const serverStoryResponse = await response.json();
-
-        const reshapedStories = serverStoryResponse
-          .map(reshapeStoryObject(editStoryURL))
-          .filter(Boolean);
+          JSON.parse(response.headers['X-WP-TotalByStatus']);
 
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
-            stories: reshapedStories,
+            editStoryURL,
+            stories: response.body,
             totalPages,
-            totalStoriesByStatus,
+            totalStoriesByStatus: {
+              ...totalStoriesByStatus,
+              [STORY_STATUS.PUBLISHED_AND_FUTURE]:
+                totalStoriesByStatus[STORY_STATUS.PUBLISH] +
+                totalStoriesByStatus[STORY_STATUS.FUTURE],
+            },
             page,
           },
         });
@@ -228,6 +186,83 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       }
     },
     [storyApi, dataAdapter]
+  );
+
+  const clearStoryPreview = useCallback(() => {
+    dispatch({
+      type: STORY_ACTION_TYPES.CLEAR_STORY_PREVIEW,
+    });
+  }, []);
+
+  const createStoryPreview = useCallback(
+    async (dashboardStory) => {
+      dispatch({
+        type: STORY_ACTION_TYPES.CREATING_STORY_PREVIEW,
+        payload: true,
+      });
+
+      try {
+        const {
+          author,
+          createdBy,
+          created,
+          modified,
+          pages,
+          password,
+          title,
+          excerpt,
+          status,
+        } = dashboardStory;
+
+        const storyProps = await getStoryPropsToSave({
+          story: {
+            status: status || 'auto-draft',
+            title: title,
+            author: author || 1,
+            slug: title,
+            date: created ? created.format() : Date.now().toString(),
+            modified: modified ? modified.format() : Date.now().toString(),
+            featuredMedia: 0,
+            password: password || '',
+            excerpt: excerpt || '',
+          },
+          pages,
+          metadata: {
+            publisher: {
+              name: createdBy || '',
+            },
+            fallbackPoster: '',
+          },
+          flags,
+        });
+
+        const preppedStoryProps = reshapeStoryPreview(storyProps);
+
+        const markup = await getStoryMarkup(
+          preppedStoryProps.story,
+          preppedStoryProps.pages,
+          preppedStoryProps.metadata,
+          flags
+        );
+
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS,
+          payload: markup.toString(),
+        });
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Render Preview', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
+      }
+    },
+    [flags]
   );
 
   const createStoryFromTemplate = useCallback(
@@ -342,14 +377,18 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
   const api = useMemo(
     () => ({
+      clearStoryPreview,
       duplicateStory,
       fetchStories,
       createStoryFromTemplate,
+      createStoryPreview,
       trashStory,
       updateStory,
     }),
     [
+      clearStoryPreview,
       createStoryFromTemplate,
+      createStoryPreview,
       duplicateStory,
       trashStory,
       updateStory,

@@ -14,8 +14,95 @@
  * limitations under the License.
  */
 
-// TODO(https://github.com/google/web-stories-wp/issues/2802):
-// Implement, re-using logic from media/common/useContextValueProvider.js.
-export default function useProviderContextValueProvider() {
-  return {};
+/**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import useFetchMediaEffect from './useFetchMediaEffect';
+import useFetchCategoriesEffect from './useFetchCategoriesEffect';
+
+/**
+ * @typedef {import('./typedefs').Media3pReducerState} Media3pReducerState
+ * @typedef {import('./typedefs').Media3pReducerActions} Media3pReducerActions
+ * @typedef {import('./typedefs').Media3pProviderContext} Media3pProviderContext
+ */
+
+/**
+ * Context fragment provider for a single 3p media source (Unsplash, Coverr,
+ * etc).
+ *
+ * @param {string} provider The 3p provider to return the context value for
+ * @param {Media3pReducerState} reducerState
+ * The 'media3p/[provider]' fragment of the state returned from
+ * `useMediaReducer`
+ * @param {Media3pReducerActions} reducerActions
+ * The 'media3p/[provider]' fragment of the actions returned from
+ * `useMediaReducer`
+ * @return {Media3pProviderContext} Context.
+ */
+export default function useProviderContextValueProvider(
+  provider,
+  reducerState,
+  reducerActions
+) {
+  const { selectedProvider, searchTerm } = reducerState;
+  const {
+    pageToken,
+    isMediaLoading,
+    isMediaLoaded,
+    categories: { categories, selectedCategoryId },
+  } = reducerState[provider];
+  const {
+    fetchMediaStart,
+    fetchMediaSuccess,
+    fetchMediaError,
+    fetchCategoriesStart,
+    fetchCategoriesSuccess,
+    fetchCategoriesError,
+  } = reducerActions;
+
+  // Fetch or re-fetch media when the state has changed.
+  useFetchMediaEffect({
+    provider,
+    selectedProvider,
+    pageToken,
+    isMediaLoading,
+    isMediaLoaded,
+    searchTerm,
+    selectedCategoryId,
+    fetchMediaStart,
+    fetchMediaSuccess,
+    fetchMediaError,
+  });
+
+  useFetchCategoriesEffect({
+    provider,
+    selectedProvider,
+    categories,
+    fetchCategoriesStart,
+    fetchCategoriesSuccess,
+    fetchCategoriesError,
+  });
+
+  return {
+    state: reducerState[provider],
+    actions: {
+      setNextPage: useCallback(() => reducerActions.setNextPage({ provider }), [
+        reducerActions,
+        provider,
+      ]),
+      selectCategory: useCallback(
+        (categoryId) => reducerActions.selectCategory({ provider, categoryId }),
+        [reducerActions, provider]
+      ),
+      deselectCategory: useCallback(
+        () => reducerActions.deselectCategory({ provider }),
+        [reducerActions, provider]
+      ),
+    },
+  };
 }

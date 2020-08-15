@@ -17,11 +17,10 @@
 export { isWebUri as isValidUrl } from 'valid-url';
 
 /**
- * Prepends a protocol (default http) to a URL that
- * doesn't have one
+ * Prepends a protocol (default http) to a URL that doesn't have one
  *
- * @param {string} url
- * @param {string=} protocol default protocol to prepend
+ * @param {string} url URL.
+ * @param {string} [protocol=http] default protocol to prepend
  * @return {string} the url with the protocol prepended to it
  */
 export function withProtocol(url, protocol = 'http') {

@@ -30,6 +30,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../tracking';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
@@ -39,6 +40,7 @@ import {
   primaryPaths,
   secondaryPaths,
   Z_INDEX,
+  APP_ROUTES,
 } from '../../constants';
 
 import useFocusOut from '../../utils/useFocusOut';
@@ -100,10 +102,17 @@ export const LeftRailContainer = styled.nav.attrs({
 
 export function LeftRail() {
   const { state } = useRouteHistory();
-  const { newStoryURL, version } = useConfig();
+  const {
+    newStoryURL,
+    version,
+    capabilities: { canManageSettings } = {},
+  } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
+
   const enableInProgressViews = useFeature('enableInProgressViews');
+  const enableSettingsViews =
+    useFeature('enableSettingsView') && canManageSettings;
 
   const {
     state: { sideBarVisible },
@@ -131,11 +140,17 @@ export function LeftRail() {
   }, [enableInProgressViews]);
 
   const enabledSecondaryPaths = useMemo(() => {
+    let copyOfSecondaryPaths = enableSettingsViews
+      ? [...secondaryPaths]
+      : secondaryPaths.filter(
+          (path) => !path.value.includes(APP_ROUTES.EDITOR_SETTINGS)
+        );
+
     if (enableInProgressViews) {
-      return secondaryPaths;
+      return copyOfSecondaryPaths;
     }
-    return secondaryPaths.filter((path) => !path.inProgress);
-  }, [enableInProgressViews]);
+    return copyOfSecondaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews, enableSettingsViews]);
 
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
@@ -150,6 +165,10 @@ export function LeftRail() {
       leftRailRef.current.focus();
     }
   }, [sideBarVisible]);
+
+  const onCreateNewStoryClick = useCallback(async () => {
+    await trackEvent('dashboard', 'create_new_story');
+  }, []);
 
   return (
     <LeftRailContainer
@@ -167,7 +186,12 @@ export function LeftRail() {
           </WebStoriesHeading>
         </Content>
         <Content>
-          <NavButton type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
+          <NavButton
+            type={BUTTON_TYPES.CTA}
+            href={newStoryURL}
+            isLink
+            onClick={onCreateNewStoryClick}
+          >
             {__('Create New Story', 'web-stories')}
           </NavButton>
         </Content>

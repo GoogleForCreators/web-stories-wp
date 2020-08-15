@@ -33,7 +33,7 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-  STORY_PAGE_STATE,
+  STORY_ANIMATION_STATE,
 } from '../../../constants';
 import { PreviewPage } from '../../../components';
 import { clamp, getPagePreviewHeights } from '../../../utils';
@@ -59,7 +59,7 @@ function StoryAnimTool() {
   const [activeAnimation, setActiveAnimation] = useState({});
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [pageAnimationState, setPageAnimationState] = useState(
-    STORY_PAGE_STATE.RESET
+    STORY_ANIMATION_STATE.RESET
   );
 
   const [selectedElementIds, setSelectedElementIds] = useState({});
@@ -112,13 +112,16 @@ function StoryAnimTool() {
         saveActiveStoryUpdates(activeStory);
       }
 
+      // Deselect animation
+      setActiveAnimation({});
+
+      // Reset active page
+      setActivePageIndex(0);
+
       const story = orderedStories.find(
         (s) => s.id === parseInt(e.target.value)
       );
       setActiveStory(story);
-
-      //Deselect animation
-      setActiveAnimation({});
     },
     [activeStory, saveActiveStoryUpdates, orderedStories]
   );
@@ -345,7 +348,7 @@ function StoryAnimTool() {
                         animationState={pageAnimationState}
                         subscribeGlobalTime={globalTimeSubscription.subscribe}
                         onAnimationComplete={() =>
-                          setPageAnimationState(STORY_PAGE_STATE.RESET)
+                          setPageAnimationState(STORY_ANIMATION_STATE.RESET)
                         }
                       />
                     </ActiveCard>
@@ -369,23 +372,29 @@ function StoryAnimTool() {
                 {'Next Page'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.PLAYING)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.PLAYING)
+                }
               >
                 {'Play'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.PAUSED)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.PAUSED)
+                }
               >
                 {'Pause'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.RESET)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.RESET)
+                }
               >
                 {'Reset'}
               </button>
               <button
                 onClick={() =>
-                  setPageAnimationState(STORY_PAGE_STATE.SCRUBBING)
+                  setPageAnimationState(STORY_ANIMATION_STATE.SCRUBBING)
                 }
               >
                 {'Scrub'}
@@ -418,7 +427,7 @@ function StoryAnimTool() {
             onAnimationDelete={handleAnimationDelete}
             onToggleTargetSelect={setIsElementSelectable}
             emitGlobalTime={globalTimeSubscription.emit}
-            canScrub={pageAnimationState === STORY_PAGE_STATE.SCRUBBING}
+            canScrub={pageAnimationState === STORY_ANIMATION_STATE.SCRUBBING}
           />
         </>
       )}

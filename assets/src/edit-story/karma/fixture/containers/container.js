@@ -19,10 +19,13 @@
  */
 import { getByRole, queryByRole, waitFor } from '@testing-library/react';
 
+/** @typedef {import('@testing-library/dom').Matcher} Matcher */
+/** @typedef {import('@testing-library/dom').ByRoleOptions} ByRoleOptions */
+
 export class Container {
   /**
-   * @param {Element} node
-   * @param {string} path
+   * @param {Element} node Node.
+   * @param {string} path Path.
    */
   constructor(node, path) {
     this._node = node;
@@ -67,8 +70,9 @@ export class Container {
   /**
    * See https://testing-library.com/docs/dom-testing-library/api-queries#byrole
    *
-   * @param {string} role
-   * @param {Object} options
+   * @param {Matcher} role Role name.
+   * @param {ByRoleOptions} options Options.
+   * @return {HTMLElement} The found element.
    */
   getByRole(role, options) {
     return getByRole(this._node, role, options);
@@ -77,8 +81,21 @@ export class Container {
   /**
    * See https://testing-library.com/docs/dom-testing-library/api-queries#byrole
    *
-   * @param {string} role
-   * @param {Object} options
+   * @param {HTMLElement} root Root node
+   * @param {Matcher} role Role name.
+   * @param {ByRoleOptions} options Options.
+   * @return {HTMLElement} The found element.
+   */
+  getByRoleIn(root, role, options) {
+    return getByRole(root, role, options);
+  }
+
+  /**
+   * See https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+   *
+   * @param {Matcher} role Role name.
+   * @param {ByRoleOptions} options Options.
+   * @return {HTMLElement} The found element.
    */
   queryByRole(role, options) {
     return queryByRole(this._node, role, options);

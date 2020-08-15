@@ -35,6 +35,7 @@ import {
   RenameStoryPropType,
   StoryMenuPropType,
   PageSizePropType,
+  DateSettingsPropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -68,7 +69,7 @@ import {
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
+import { getRelativeDisplayDate } from '../../../utils/';
 
 const ListView = styled.div`
   width: 100%;
@@ -144,7 +145,7 @@ export default function StoryListView({
   storySort,
   storyStatus,
   users,
-  dateFormat,
+  dateSettings,
 }) {
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
@@ -158,7 +159,7 @@ export default function StoryListView({
     [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
   );
   return (
-    <ListView>
+    <ListView data-testid="story-list-view">
       <Table>
         <TableHeader>
           <TableRow>
@@ -206,7 +207,7 @@ export default function StoryListView({
                 {__('Date Created', 'web-stories')}
                 <ArrowIconWithTitle
                   active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                  asc={sortDirection === SORT_DIRECTION.DESC}
+                  asc={sortDirection === SORT_DIRECTION.ASC}
                 >
                   <ArrowIconSvg />
                 </ArrowIconWithTitle>
@@ -221,7 +222,7 @@ export default function StoryListView({
                 {__('Last Modified', 'web-stories')}
                 <ArrowIconWithTitle
                   active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                  asc={sortDirection === SORT_DIRECTION.DESC}
+                  asc={sortDirection === SORT_DIRECTION.ASC}
                 >
                   <ArrowIconSvg />
                 </ArrowIconWithTitle>
@@ -269,15 +270,17 @@ export default function StoryListView({
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
               <TableCell>
-                {getFormattedDisplayDate(story.created, dateFormat)}
+                {getRelativeDisplayDate(story.created, dateSettings)}
               </TableCell>
               <TableCell>
-                {getFormattedDisplayDate(story.modified, dateFormat)}
+                {getRelativeDisplayDate(story.modified, dateSettings)}
               </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
-                  {story.status === STORY_STATUS.PUBLISHED &&
+                  {story.status === STORY_STATUS.PUBLISH &&
                     __('Published', 'web-stories')}
+                  {story.status === STORY_STATUS.FUTURE &&
+                    __('Scheduled', 'web-stories')}
                 </TableStatusCell>
               )}
             </TableRow>
@@ -299,5 +302,5 @@ StoryListView.propTypes = {
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
   users: UsersPropType.isRequired,
-  dateFormat: PropTypes.string,
+  dateSettings: DateSettingsPropType,
 };

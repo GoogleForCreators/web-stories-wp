@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -32,11 +32,13 @@ import loadStylesheet from '../../utils/loadStylesheet';
 import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
+import { curatedFontNames } from './curatedFonts';
 
 const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
+  const [recentFonts, setRecentFonts] = useState([]);
 
   useLoadFonts({ fonts, setFonts });
 
@@ -100,6 +102,20 @@ function FontProvider({ children }) {
     [getFontByName]
   );
 
+  const addRecentFont = useCallback(
+    (recentFont) => {
+      const newRecentFonts = [recentFont];
+      recentFonts.forEach((font) => {
+        if (recentFont.family === font.family) {
+          return;
+        }
+        newRecentFonts.push(font);
+      });
+      setRecentFonts(newRecentFonts.slice(0, 5));
+    },
+    [recentFonts]
+  );
+
   const menuFonts = useRef([]);
   const ensureMenuFontsLoaded = useCallback((menuFontsRequested) => {
     const newMenuFonts = menuFontsRequested.filter(
@@ -123,9 +139,16 @@ function FontProvider({ children }) {
 
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
 
+  const curatedFonts = useMemo(
+    () => fonts.filter((font) => curatedFontNames.includes(font.name)),
+    [fonts]
+  );
+
   const state = {
     state: {
       fonts,
+      curatedFonts,
+      recentFonts,
     },
     actions: {
       getFontByName,
@@ -133,6 +156,7 @@ function FontProvider({ children }) {
       getFontWeight,
       getFontFallback,
       ensureMenuFontsLoaded,
+      addRecentFont,
     },
   };
 

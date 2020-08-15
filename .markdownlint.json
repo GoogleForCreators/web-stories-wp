@@ -4,5 +4,6 @@
   "MD007": { "indent": 4 },
   "MD013": { "line_length": 9999 },
   "no-hard-tabs": false,
+  "no-inline-html": false,
   "whitespace": false
 }

@@ -59,6 +59,9 @@ class Database_Upgrader {
 			'2.0.1' => 'v_2_add_term',
 			'2.0.2' => 'remove_broken_text_styles',
 			'2.0.3' => 'unify_color_presets',
+			'2.0.4' => 'update_publisher_logos',
+			'3.0.0' => 'add_stories_caps',
+			'3.0.1' => 'rewrite_flush',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -210,6 +213,44 @@ class Database_Upgrader {
 			'colors' => $colors,
 		];
 		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Split publisher logos into two options.
+	 *
+	 * @return void
+	 */
+	protected function update_publisher_logos() {
+		$publisher_logo_id       = 0;
+		$publisher_logo_settings = (array) get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		if ( ! empty( $publisher_logo_settings['active'] ) ) {
+			$publisher_logo_id = $publisher_logo_settings['active'];
+		}
+
+		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id, false );
+		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_filter( [ $publisher_logo_id ] ), false );
+	}
+
+	/**
+	 * Adds story capabilities to default user roles.
+	 *
+	 * @return void
+	 */
+	protected function add_stories_caps() {
+		$story_post_type = new Story_Post_Type( new Experiments() );
+		$story_post_type->add_caps_to_roles();
+	}
+
+	/**
+	 * Flush rewrites.
+	 *
+	 * @return void
+	 */
+	protected function rewrite_flush() {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+		}
 	}
 
 	/**

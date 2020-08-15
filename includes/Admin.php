@@ -130,10 +130,8 @@ BLOCK;
 		$title      = (string) get_the_title( $post_id );
 		$has_poster = has_post_thumbnail( $post_id );
 
-		ob_start();
-
 		if ( $has_poster ) {
-			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::STORY_POSTER_IMAGE_SIZE );
+			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::POSTER_PORTRAIT_IMAGE_SIZE );
 
 			return sprintf(
 				$block_markup_with_poster,
@@ -166,7 +164,7 @@ BLOCK;
 
 		$post_id = absint( sanitize_text_field( (string) wp_unslash( $_GET['from-web-story'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		if ( ! $post_id || Story_Post_Type::POST_TYPE_SLUG !== get_post_type( $post_id ) ) {
+		if ( ! $post_id ) {
 			return $title;
 		}
 
@@ -174,6 +172,14 @@ BLOCK;
 			return $title;
 		}
 
-		return (string) get_the_title( $post_id );
+		$post = get_post( $post_id );
+
+		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+			return $title;
+		}
+
+		// Not using get_the_title() because we need the raw title.
+		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
+		return isset( $post->post_title ) ? $post->post_title : '';
 	}
 }

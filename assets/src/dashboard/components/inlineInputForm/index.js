@@ -26,14 +26,24 @@ import styled from 'styled-components';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
+import { TypographyPresets } from '../typography';
 
 const Label = styled.label(visuallyHiddenStyles);
 
+const ErrorText = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.danger};
+  margin-left: 1em;
+  padding-top: 0.25em;
+`;
+
 const InlineInputForm = ({
+  error,
   id,
   label,
   onEditCancel,
   onEditComplete,
+  placeholder,
   value,
 }) => {
   const inputContainerRef = useRef(null);
@@ -77,16 +87,21 @@ const InlineInputForm = ({
         value={newValue}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
+        placeholder={placeholder}
+        error={error}
       />
+      {error && <ErrorText>{error}</ErrorText>}
     </div>
   );
 };
 
 InlineInputForm.propTypes = {
+  error: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
   onEditCancel: PropTypes.func.isRequired,
   onEditComplete: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
 };
 

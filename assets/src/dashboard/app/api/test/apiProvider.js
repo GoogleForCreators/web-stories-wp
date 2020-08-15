@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
@@ -31,41 +31,42 @@ jest.mock('../wpAdapter', () => ({
   get: () =>
     Promise.resolve({
       headers: {
-        get: () => '1',
+        'X-WP-Total': 1,
+        'X-WP-TotalPages': 1,
+        'X-WP-TotalByStatus': '{"all":1,"publish":1,"draft":0}',
       },
-      json: () =>
-        Promise.resolve([
-          {
-            id: 123,
-            status: 'published',
-            author: 1,
-            title: { rendered: 'Carlos', raw: 'Carlos' },
-            story_data: { pages: [{ id: 1, elements: [] }] },
-            modified: '1970-01-01T00:00:00.000Z',
-            date: '1970-01-01T00:00:00.000Z',
-          },
-        ]),
+      body: [
+        {
+          id: 123,
+          status: 'publish',
+          author: 1,
+          title: { rendered: 'Carlos', raw: 'Carlos' },
+          story_data: { pages: [{ id: 1, elements: [] }] },
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
+        },
+      ],
     }),
   post: (path, { data }) => {
     const title = typeof data.title === 'string' ? data.title : data.title.raw;
     return Promise.resolve({
       id: data.id || 456,
-      status: 'published',
+      status: 'publish',
       title: { rendered: title, raw: title },
       author: 1,
       story_data: { pages: [{ id: 1, elements: [] }] },
-      modified: '1970-01-01T00:00:00.000Z',
-      date: '1970-01-01T00:00:00.000Z',
+      modified_gmt: '1970-01-01T00:00:00.000Z',
+      date_gmt: '1970-01-01T00:00:00.000Z',
     });
   },
   deleteRequest: (path, { data }) =>
     Promise.resolve({
       id: data.id,
-      status: 'published',
+      status: 'publish',
       title: { rendered: data.title, raw: data.title },
       story_data: { pages: [{ id: 1, elements: [] }] },
-      modified: '1970-01-01T00:00:00.000Z',
-      date: '1970-01-01T00:00:00.000Z',
+      modified_gmt: '1970-01-01T00:00:00.000Z',
+      date_gmt: '1970-01-01T00:00:00.000Z',
     }),
 }));
 
@@ -92,14 +93,14 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment('1970-01-01T00:00:00.000Z'),
-        created: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
         author: 1,
         originalStoryData: {
           id: 123,
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
-          status: 'published',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
+          status: 'publish',
           author: 1,
           story_data: {
             pages: [
@@ -120,7 +121,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
-        status: 'published',
+        status: 'publish',
         title: 'Carlos',
       },
     });
@@ -145,14 +146,14 @@ describe('ApiProvider', () => {
     await act(async () => {
       await result.current.actions.storyApi.updateStory({
         id: 123,
-        modified: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
         pages: [
           {
             elements: [],
             id: 1,
           },
         ],
-        status: 'published',
+        status: 'publish',
         title: 'New Title',
       });
     });
@@ -163,14 +164,14 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment('1970-01-01T00:00:00.000Z'),
-        created: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
         author: 1,
         originalStoryData: {
           id: 123,
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
-          status: 'published',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
+          status: 'publish',
           author: 1,
           story_data: {
             pages: [
@@ -191,13 +192,13 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
-        status: 'published',
+        status: 'publish',
         title: 'New Title',
       },
     });
   });
 
-  it('should return an duplicated story in state data when the duplicate method is called.', async () => {
+  it('should return a duplicated story in state data when the duplicate method is called.', async () => {
     const { result } = renderHook(() => useContext(ApiContext), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
@@ -221,7 +222,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
-        status: 'published',
+        status: 'publish',
         title: 'Carlos',
         author: 1,
         originalStoryData: {
@@ -247,14 +248,14 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment('1970-01-01T00:00:00.000Z'),
-        created: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
         author: 1,
         originalStoryData: {
           id: 123,
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
-          status: 'published',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
+          status: 'publish',
           author: 1,
           story_data: {
             pages: [
@@ -275,7 +276,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
-        status: 'published',
+        status: 'publish',
         title: 'Carlos',
       },
       '456': {
@@ -283,14 +284,14 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=456',
         id: 456,
-        modified: moment('1970-01-01T00:00:00.000Z'),
-        created: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
         author: 1,
         originalStoryData: {
           id: 456,
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
-          status: 'published',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
+          status: 'publish',
           author: 1,
           story_data: {
             pages: [
@@ -311,7 +312,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
-        status: 'published',
+        status: 'publish',
         title: 'Carlos (Copy)',
       },
     });

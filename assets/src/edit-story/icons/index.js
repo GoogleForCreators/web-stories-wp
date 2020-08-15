@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { ReactComponent as AddPage } from './add_page.svg';
+export { ReactComponent as Add } from './add.svg';
 export { ReactComponent as AlignBottom } from './align_bottom.svg';
 export { ReactComponent as AlignCenter } from './align_center.svg';
 export { ReactComponent as AlignCenterAlt } from './center_align.svg';
@@ -28,6 +28,7 @@ export { ReactComponent as AlignTop } from './align_top.svg';
 export { ReactComponent as Arrow } from './arrow.svg';
 export { ReactComponent as ArrowLeft } from './arrow_left.svg';
 export { ReactComponent as ArrowRight } from './arrow_right.svg';
+export { ReactComponent as ArrowDown } from './arrow_down.svg';
 export { ReactComponent as Bold } from './bold_icon.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseAlt } from './close_icon.svg';
@@ -65,6 +66,7 @@ export { ReactComponent as OverlayRadial } from './overlay_radial.svg';
 export { ReactComponent as OverlaySolid } from './overlay_solid.svg';
 export { ReactComponent as Pause } from './pause.svg';
 export { ReactComponent as Play } from './play.svg';
+export { ReactComponent as PlayCircular } from './play_circular.svg';
 export { ReactComponent as Radio } from './radio.svg';
 export { ReactComponent as RadioSelected } from './radio-selected.svg';
 export { ReactComponent as Rectangle } from './rectangle.svg';
@@ -73,10 +75,12 @@ export { ReactComponent as RedoAlt } from './redo_icon.svg';
 export { ReactComponent as Remove } from './remove.svg';
 export { ReactComponent as SafeZone } from './safe_zone.svg';
 export { ReactComponent as Shapes } from './shapes.svg';
+export { ReactComponent as StopCircular } from './stop_circular.svg';
 export { ReactComponent as Text } from './text.svg';
 export { ReactComponent as TextHelper } from './text_helper.svg'; // todo: remove?
 export { ReactComponent as Underline } from './underline_icon.svg';
 export { ReactComponent as Undo } from './undo.svg';
 export { ReactComponent as UndoAlt } from './undo_icon.svg';
 export { ReactComponent as Unlock } from './unlock.svg';
+export { ReactComponent as Upload } from './upload.svg';
 export { ReactComponent as Video } from './video.svg';

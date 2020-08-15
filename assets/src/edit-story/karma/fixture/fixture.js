@@ -19,7 +19,8 @@
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
-import { render, act, screen } from '@testing-library/react';
+import { render, act, screen, waitFor } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -69,8 +70,6 @@ const DEFAULT_CONFIG = {
 export class Fixture {
   constructor() {
     this._config = { ...DEFAULT_CONFIG };
-
-    this._flags = {};
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
@@ -140,8 +139,8 @@ export class Fixture {
    *
    * Use sparingly. See `ComponentStub` for more info.
    *
-   * @param {Function} component
-   * @param {Function|undefined} matcher
+   * @param {Function} component Component to stub.
+   * @param {Function|undefined} matcher Matcher.
    * @return {ComponentStub} The component's stub.
    */
   stubComponent(component, matcher) {
@@ -163,19 +162,19 @@ export class Fixture {
    * ```
    * beforeEach(async () => {
    *   fixture = new Fixture();
-   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   fixture.setFlags({FEATURE_NAME: true});
    *   await fixture.render();
    * });
    * ```
    *
-   * @param {Object} flags
+   * @param {Object} flags Flags.
    */
   setFlags(flags) {
     this._flags = { ...flags };
   }
 
   /**
-   * @param {Array<Object>} pages
+   * @param {Array<Object>} pages Pages.
    */
   setPages(pages) {
     this.apiProviderFixture_.setPages(pages);
@@ -187,8 +186,12 @@ export class Fixture {
    *
    * @return {Promise} Yields when the editor rendering is complete.
    */
-  render() {
+  async render() {
     const root = document.querySelector('test-root');
+
+    // see http://reactcommunity.org/react-modal/accessibility/
+    Modal.setAppElement(root);
+
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />
@@ -209,9 +212,20 @@ export class Fixture {
       'editor'
     );
 
+    // wait for the media gallery items to load, as many tests assume they're
+    // there
+    let mediaElements;
+    await waitFor(() => {
+      mediaElements = this.querySelectorAll('[data-testid=mediaElement]');
+      if (!mediaElements?.length) {
+        throw new Error(
+          `Not ready: only found ${mediaElements?.length} media elements`
+        );
+      }
+    });
+
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
-    return Promise.resolve();
   }
 
   /**
@@ -233,7 +247,7 @@ export class Fixture {
    *
    * Similar to the `@testing-library/react`'s `act()` method.
    *
-   * @param {Function} callback
+   * @param {Function} callback Callback.
    * @return {Promise<Object>} Yields when the `act()` and all related
    * editor rendering activity is complete. Resolves to the result of the
    * callback.
@@ -245,7 +259,7 @@ export class Fixture {
   /**
    * To be deprecated.
    *
-   * @param {string} selector
+   * @param {string} selector Selector.
    * @return {Element|null} The found element or null.
    */
   querySelector(selector) {
@@ -255,7 +269,7 @@ export class Fixture {
   /**
    * To be deprecated?
    *
-   * @param {string} selector
+   * @param {string} selector Selector.
    * @return {Array.<Element>} The potentially empty list of found elements.
    */
   querySelectorAll(selector) {
@@ -263,7 +277,7 @@ export class Fixture {
   }
 
   /**
-   * @param {Element} element
+   * @param {Element} element Element.
    * @return {Promise} Yields when the element is displayed on the screen.
    */
   waitOnScreen(element) {
@@ -286,7 +300,7 @@ export class Fixture {
    * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
    * directory.
    *
-   * @param {string} name
+   * @param {string} name Snapshot name.
    * @return {Promise} Yields when the snapshot is completed.
    */
   snapshot(name) {
@@ -416,7 +430,7 @@ class APIProviderFixture {
         // @todo: put this to __db__/
         () =>
           asyncResponse({
-            title: { raw: 'Auto Draft' },
+            title: { raw: '' },
             status: 'draft',
             author: 1,
             slug: '',
@@ -451,13 +465,99 @@ class APIProviderFixture {
       const getAllFonts = useCallback(
         // @todo: put actual data to __db__/
         () =>
-          asyncResponse(
-            [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
+          asyncResponse([
+            {
+              name: 'Abel',
+              value: 'Abel',
+              family: 'Abel',
+              fallbacks: ['sans-serif'],
+              service: 'fonts.google.com',
+              weights: [400],
+              styles: ['regular'],
+              variants: [[0, 400]],
+            },
+            {
+              name: 'Abhaya Libre',
+              value: 'Abhaya Libre',
+              family: 'Abhaya Libre',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [400, 500, 600, 700, 800],
+              styles: ['regular'],
+              variants: [
+                [0, 400],
+                [0, 500],
+                [0, 600],
+                [0, 700],
+                [0, 800],
+              ],
+            },
+            ...[TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
               name: font.family,
               value: font.family,
               ...font,
-            }))
-          ),
+            })),
+            {
+              name: 'Source Serif Pro',
+              value: 'Source Serif Pro',
+              family: 'Source Serif Pro',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [400, 600, 700],
+              styles: ['regular'],
+              variants: [
+                [0, 400],
+                [0, 600],
+                [0, 700],
+              ],
+            },
+            {
+              name: 'Space Mono',
+              value: 'Space Mono',
+              family: 'Space Mono',
+              fallbacks: ['monospace'],
+              service: 'fonts.google.com',
+              weights: [400, 700],
+              styles: ['regular', 'italic'],
+              variants: [
+                [0, 400],
+                [1, 400],
+                [0, 700],
+                [1, 700],
+              ],
+            },
+            {
+              name: 'Ubuntu',
+              value: 'Ubuntu',
+              family: 'Ubuntu',
+              fallbacks: ['monospace'],
+              service: 'fonts.google.com',
+              weights: [400, 700],
+              styles: ['regular', 'italic'],
+              variants: [
+                [0, 400],
+                [1, 400],
+                [0, 700],
+                [1, 700],
+              ],
+            },
+            {
+              name: 'Yrsa',
+              value: 'Yrsa',
+              family: 'Yrsa',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [300, 400, 500, 600, 700],
+              styles: ['regular'],
+              variants: [
+                [0, 300],
+                [0, 400],
+                [0, 500],
+                [0, 600],
+                [0, 700],
+              ],
+            },
+          ]),
         []
       );
 
@@ -478,7 +578,7 @@ class APIProviderFixture {
             .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
             .filter(filterByMediaType)
             .filter(filterBySearchTerm),
-          headers: { get: () => 3 },
+          headers: { 'X-WP-TotalPages': 3 },
         });
       }, []);
       const uploadMedia = useCallback(
@@ -491,7 +591,12 @@ class APIProviderFixture {
       );
 
       const getLinkMetadata = useCallback(
-        () => jasmine.createSpy('getLinkMetadata'),
+        () =>
+          asyncResponse({
+            url: 'https://example.com',
+            title: 'Example Site',
+            image: 'example.jpg',
+          }),
         []
       );
 
@@ -527,7 +632,7 @@ class APIProviderFixture {
   }
 
   /**
-   * @param {Array<Object>} pages
+   * @param {Array<Object>} pages Pages.
    */
   setPages(pages) {
     this._pages = pages.map((page) => {

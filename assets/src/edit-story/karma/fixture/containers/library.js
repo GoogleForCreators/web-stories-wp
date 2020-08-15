@@ -32,12 +32,19 @@ export class Library extends Container {
   }
 
   get media() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('tabpanel', { name: /Media library/ }),
+      'media',
+      Media
+    );
   }
 
   get textTab() {
     return this.getByRole('tab', { name: /Text library/ });
+  }
+
+  get textAdd() {
+    return this.getByRole('button', { name: /Add new text element/ });
   }
 
   get text() {
@@ -65,5 +72,16 @@ export class Shapes extends Container {
 
   shape(name) {
     return this.getByRole('button', { name });
+  }
+}
+
+export class Media extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  item(index) {
+    // TODO: Better query here
+    return this.node.querySelectorAll('[data-testid=mediaElement]')[index];
   }
 }

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
@@ -73,6 +73,36 @@ describe('CardTitle', () => {
     );
 
     expect(getByText('draft')).toBeDefined();
+  });
+
+  it(`should display "Scheduled" before created date when ${STORY_STATUS.FUTURE}`, () => {
+    const { getByText } = renderWithTheme(
+      <CardTitle
+        title="Sample Story"
+        displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
+        status={STORY_STATUS.FUTURE}
+        onEditCancel={jest.fn}
+        onEditComplete={jest.fn}
+        editMode={false}
+      />
+    );
+
+    expect(getByText(/^Scheduled/)).toBeDefined();
+  });
+
+  it(`should display "Published" before created date when ${STORY_STATUS.PUBLISH}`, () => {
+    const { getByText } = renderWithTheme(
+      <CardTitle
+        title="Sample Story"
+        displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
+        status={STORY_STATUS.PUBLISH}
+        onEditCancel={jest.fn}
+        onEditComplete={jest.fn}
+        editMode={false}
+      />
+    );
+
+    expect(getByText(/^Published/)).toBeDefined();
   });
 
   it('should render Card Title with an author', () => {

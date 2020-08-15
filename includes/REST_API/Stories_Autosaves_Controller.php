@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\KSES;
+use Google\Web_Stories\Media;
 use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
@@ -56,6 +57,13 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	private $parent_base;
 
 	/**
+	 * The base namespace.
+	 *
+	 * @var string
+	 */
+	protected $rest_namespace;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $parent_post_type Post type of the parent.
@@ -77,6 +85,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		}
 
 		$this->parent_controller = $parent_controller;
+		$this->rest_namespace    = 'web-stories/v1';
 	}
 
 	/**
@@ -92,7 +101,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		parent::register_routes();
 
 		register_rest_route(
-			'wp/v2',
+			$this->rest_namespace,
 			'/' . $this->parent_base . '/(?P<id>[\d]+)/autosaves',
 			[
 				'args'   => [
@@ -156,7 +165,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		}
 
 		if ( in_array( 'featured_media_url', $fields, true ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, 'medium' );
+			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 

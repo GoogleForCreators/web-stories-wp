@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+
+import { __ } from '@wordpress/i18n';
+/**
  * External dependencies
  */
 import styled from 'styled-components';
@@ -35,7 +40,9 @@ export const ColumnContainer = styled.section`
   `}
 `;
 
-export const DetailContainer = styled.div`
+export const DetailContainer = styled.section.attrs({
+  'aria-label': __('Template Details', 'web-stories'),
+})`
   width: 100%;
   padding: 40px 20px 0;
 `;
@@ -61,7 +68,9 @@ export const Column = styled.div`
   `}
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1.attrs({
+  'aria-label': __('Template Title', 'web-stories'),
+})`
   ${TypographyPresets.ExtraLarge};
   color: ${({ theme }) => theme.colors.gray900};
 `;
@@ -92,7 +101,9 @@ export const MetadataContainer = styled.fieldset`
   }
 `;
 
-export const RowContainer = styled.section`
+export const RowContainer = styled.section.attrs({
+  'aria-label': __('Related Templates', 'web-stories'),
+})`
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 40px;

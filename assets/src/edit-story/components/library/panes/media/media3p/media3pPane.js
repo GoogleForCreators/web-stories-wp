@@ -17,28 +17,64 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import { useFeature, useFeatures } from 'flagged';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import MediaGallery from '../mediaGallery';
-import { Pane } from '../../shared';
-import { ProviderType } from '../providerType';
+import PaginatedMediaGallery from '../common/paginatedMediaGallery';
+import useMedia from '../../../../../app/media/useMedia';
+import {
+  PaneHeader,
+  PaneInner,
+  SearchInputContainer,
+  StyledPane,
+} from '../common/styles';
+import { SearchInput } from '../../../common';
+import useLibrary from '../../../useLibrary';
+import Flags from '../../../../../flags';
+import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import Media3pCategories from './media3pCategories';
 import paneId from './paneId';
+import ProviderTab from './providerTab';
 
-const StyledPane = styled(Pane)`
-  height: 100%;
-  padding: 0;
-  overflow: hidden;
+const ProviderTabSection = styled.div`
+  margin-top: 30px;
+  padding: 0 24px;
 `;
 
-const Container = styled.div`
-  overflow: scroll;
+const MediaSubheading = styled.div`
+  margin-top: 24px;
+  padding: 0 24px;
+  visibility: ${(props) => (props.shouldDisplay ? 'inherit' : 'hidden')};
+`;
+
+const PaneBottom = styled.div`
+  position: relative;
   height: 100%;
-  padding: 0 1.5em 0 1.5em;
-  margin-top: 1em;
+  flex: 0 1 auto;
+  min-height: 0;
+`;
+
+const ProviderMediaCategoriesWrapper = styled.div`
+  position: absolute;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  min-height: 100px;
+  &.provider-selected {
+    position: relative;
+    visibility: visible;
+  }
 `;
 
 /**
@@ -48,76 +84,167 @@ const Container = styled.div`
  * @return {*} The media pane element for 3P integrations.
  */
 function Media3pPane(props) {
-  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-  // State and callback ref necessary to recalculate the padding of the list
-  //  given the scrollbar width.
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-    setScrollbarWidth(element.offsetWidth - element.clientWidth);
-  };
+  const { isActive } = props;
 
-  // TODO(#2368): get resources from useMedia3p
-  // TODO(#2368): handle pagination / infinite scrolling
-  const resources = [
-    {
-      id: 1,
-      type: 'image',
-      local: false,
-      alt: 'image alt',
-      mimeType: 'image/jpeg',
-      width: 18,
-      height: 12,
-      src:
-        'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
-    },
-    {
-      id: 1,
-      type: 'image',
-      local: false,
-      alt: 'image alt',
-      mimeType: 'image/jpeg',
-      width: 128,
-      height: 72,
-      src:
-        'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq',
-    },
-  ];
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
 
-  // Recalculates padding of Media Pane so it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
-  useLayoutEffect(() => {
-    if (!scrollbarWidth) {
-      return;
+  /**
+   * Insert element such image, video and audio into the editor.
+   *
+   * @param {Object} resource Resource object
+   * @return {null|*} Return onInsert or null.
+   */
+  const insertMediaElement = useCallback(
+    (resource) => insertElement(resource.type, { resource }),
+    [insertElement]
+  );
+
+  const {
+    searchTerm,
+    selectedProvider,
+    setSelectedProvider,
+    setSearchTerm,
+    media3p,
+  } = useMedia(
+    ({
+      media3p: {
+        state: { selectedProvider, searchTerm },
+        actions: { setSelectedProvider, setSearchTerm },
+      },
+      media3p,
+    }) => ({
+      searchTerm,
+      selectedProvider,
+      setSelectedProvider,
+      setSearchTerm,
+      media3p,
+    })
+  );
+
+  useEffect(() => {
+    if (isActive && !selectedProvider) {
+      setSelectedProvider({ provider: Object.keys(PROVIDERS)[0] });
     }
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
+  }, [isActive, selectedProvider, setSelectedProvider]);
+
+  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+
+  const incrementalSearchDebounceMedia = useFeature(
+    Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
+  );
+
+  const paneBottomRef = useRef();
+
+  const onProviderTabClick = useCallback(
+    (providerType) => {
+      setSelectedProvider({ provider: providerType });
+    },
+    [setSelectedProvider]
+  );
+
+  const features = useFeatures();
+  const enabledProviders = Object.keys(PROVIDERS).filter(
+    (p) => !PROVIDERS[p].featureName || features[PROVIDERS[p].featureName]
+  );
+
+  function getProviderMediaAndCategories(providerType) {
+    const wrapperProps =
+      providerType === selectedProvider
+        ? { className: 'provider-selected' }
+        : { 'aria-hidden': 'true' };
+    const state = media3p[providerType].state;
+    const actions = media3p[providerType].actions;
+    const displayName = state.categories.selectedCategoryId
+      ? state.categories.categories.find(
+          (e) => e.id === state.categories.selectedCategoryId
+        ).displayName
+      : __('Trending', 'web-stories');
+
+    // We display the media name if there's media to display or a category has
+    // been selected.
+    const shouldDisplayMediaSubheading = Boolean(
+      state.media?.length || state.categories.selectedCategoryId
     );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
+    return (
+      <ProviderMediaCategoriesWrapper
+        dataProvider={providerType}
+        {...wrapperProps}
+        key={`provider-bottom-wrapper-${providerType}`}
+        id={`provider-bottom-wrapper-${providerType}`}
+      >
+        {PROVIDERS[providerType].supportsCategories && (
+          <Media3pCategories
+            categories={state.categories.categories}
+            selectedCategoryId={state.categories.selectedCategoryId}
+            selectCategory={actions.selectCategory}
+            deselectCategory={actions.deselectCategory}
+          />
+        )}
+        <MediaSubheading
+          data-testid={'media-subheading'}
+          shouldDisplay={shouldDisplayMediaSubheading}
+        >
+          {displayName}
+        </MediaSubheading>
+        <PaginatedMediaGallery
+          providerType={providerType}
+          resources={state.media}
+          isMediaLoading={state.isMediaLoading}
+          isMediaLoaded={state.isMediaLoaded}
+          hasMore={state.hasMore}
+          setNextPage={actions.setNextPage}
+          onInsert={insertMediaElement}
+          searchTerm={searchTerm}
+          selectedCategoryId={state.categories.selectedCategoryId}
+        />
+      </ProviderMediaCategoriesWrapper>
+    );
+  }
 
-  // Callback for when a media element is selected.
-  const onInsert = useCallback(() => {}, []);
-
+  // TODO(#2368): handle pagination / infinite scrolling
   return (
     <StyledPane id={paneId} {...props}>
-      <Container ref={refCallbackContainer}>
-        <MediaGallery
-          resources={resources}
-          onInsert={onInsert}
-          providerType={ProviderType.UNSPLASH}
-        />
-      </Container>
+      <PaneInner>
+        <PaneHeader>
+          <SearchInputContainer>
+            <SearchInput
+              initialValue={searchTerm}
+              placeholder={__('Search', 'web-stories')}
+              onSearch={onSearch}
+              incremental={incrementalSearchDebounceMedia}
+              disabled={Boolean(
+                selectedProvider &&
+                  PROVIDERS[selectedProvider].supportsCategories &&
+                  media3p[selectedProvider].categories?.selectedCategoryId
+              )}
+            />
+          </SearchInputContainer>
+          <ProviderTabSection>
+            {enabledProviders.map((providerType) => (
+              <ProviderTab
+                key={`provider-tab-${providerType}`}
+                id={`provider-tab-${providerType}`}
+                name={PROVIDERS[providerType].displayName}
+                active={selectedProvider === providerType}
+                onClick={() => onProviderTabClick(providerType)}
+              />
+            ))}
+          </ProviderTabSection>
+        </PaneHeader>
+        <PaneBottom ref={paneBottomRef}>
+          {enabledProviders.map((providerType) =>
+            getProviderMediaAndCategories(providerType)
+          )}
+        </PaneBottom>
+      </PaneInner>
     </StyledPane>
   );
 }
+
+Media3pPane.propTypes = {
+  isActive: PropTypes.bool,
+};
 
 export default Media3pPane;

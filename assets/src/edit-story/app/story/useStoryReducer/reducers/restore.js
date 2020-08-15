@@ -24,8 +24,12 @@
  * - `selection` is an array.
  * - `story` is an object.
  *
- * @param {Object} state Current state
+ * @param {Object} state Current state.
  * @param {Object} payload New state to set.
+ * @param {Array<Object>} payload.pages List of pages.
+ * @param {string} payload.current Current page ID.
+ * @param {Array} payload.selection Selection.
+ * @param {Object} payload.story Story object.
  * @return {Object} New state
  */
 function restore(state, { pages, current, selection, story }) {
@@ -44,6 +48,7 @@ function restore(state, { pages, current, selection, story }) {
     current: newCurrent,
     selection: newSelection,
     story: newStory,
+    animationState: state.animationState,
   };
 }
 

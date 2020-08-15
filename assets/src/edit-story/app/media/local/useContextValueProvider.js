@@ -27,12 +27,28 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
 
+/**
+ * @typedef {import('./typedefs').LocalMediaContext} LocalMediaContext
+ * @typedef {import('./typedefs').LocalMediaReducerState} LocalMediaReducerState
+ * @typedef {import('./typedefs').LocalMediaReducerActions} LocalMediaReducerActions
+ */
+
+/**
+ * Context fragment provider for local media.
+ * This is called from {@link MediaProvider} to provide the media global state.
+ *
+ * @param {LocalMediaReducerState} reducerState The 'local' fragment of the
+ * state returned from `useMediaReducer`
+ * @param {LocalMediaReducerActions} reducerActions The 'local' fragment of the
+ * actions returned from `useMediaReducer`
+ * @return {LocalMediaContext} Context.
+ */
 export default function useContextValueProvider(reducerState, reducerActions) {
   const {
     processing,
     processed,
     media,
-    pagingNum,
+    pageToken,
     mediaType,
     searchTerm,
   } = reducerState;
@@ -58,25 +74,27 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     (
       {
         searchTerm: currentSearchTerm = '',
-        pagingNum: p = 1,
+        pageToken: p = 1,
         mediaType: currentMediaType,
       } = {},
       callback
     ) => {
-      fetchMediaStart({ pagingNum: p });
+      fetchMediaStart({ pageToken: p });
       getMedia({
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,
         pagingNum: p,
       })
         .then(({ data, headers }) => {
-          const totalPages = parseInt(headers.get('X-WP-TotalPages'));
+          const totalPages = parseInt(headers['X-WP-TotalPages']);
           const mediaArray = data.map(getResourceFromAttachment);
+          const hasMore = p < totalPages;
           callback({
             media: mediaArray,
             mediaType: currentMediaType,
             searchTerm: currentSearchTerm,
-            pagingNum: p,
+            pageToken: p,
+            nextPageToken: hasMore ? p + 1 : undefined,
             totalPages,
           });
         })
@@ -103,17 +121,18 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const resetWithFetch = useCallback(() => {
     // eslint-disable-next-line no-shadow
-    const { mediaType, pagingNum, searchTerm } = stateRef.current;
+    const { mediaType, pageToken, searchTerm } = stateRef.current;
 
     resetFilters();
-    if (!mediaType && !searchTerm && pagingNum === 1) {
+    const isFirstPage = !pageToken;
+    if (!mediaType && !searchTerm && isFirstPage) {
       fetchMedia({ mediaType }, fetchMediaSuccess);
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 
   useEffect(() => {
-    fetchMedia({ searchTerm, pagingNum, mediaType }, fetchMediaSuccess);
-  }, [fetchMedia, fetchMediaSuccess, mediaType, pagingNum, searchTerm]);
+    fetchMedia({ searchTerm, pageToken, mediaType }, fetchMediaSuccess);
+  }, [fetchMedia, fetchMediaSuccess, mediaType, pageToken, searchTerm]);
 
   const uploadVideoPoster = useCallback(
     (id, src) => {

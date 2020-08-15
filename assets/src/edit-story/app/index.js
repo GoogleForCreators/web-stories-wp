@@ -29,8 +29,8 @@ import KeyboardOnlyOutlines from '../utils/keyboardOnlyOutline';
  * Internal dependencies
  */
 import theme, { GlobalStyle } from '../theme';
-import { GlobalStyle as CropMoveableGlobalStyle } from '../components/movable/cropStyle';
-import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/movable/moveStyle';
+import { GlobalStyle as CropMoveableGlobalStyle } from '../components/moveable/cropStyle';
+import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/moveable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
 import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
 import { useTransform, TransformProvider } from '../components/transform';
@@ -45,6 +45,7 @@ import { useLocalMedia, useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
 import { useSnackbar, SnackbarProvider } from './snackbar';
 import Layout from './layout';
+import { Media3pApiProvider } from './media/media3p/api';
 
 function App({ config }) {
   const { storyId, isRTL } = config;
@@ -54,28 +55,30 @@ function App({ config }) {
         <ErrorBoundary>
           <ConfigProvider config={config}>
             <APIProvider>
-              <HistoryProvider size={50}>
-                <SnackbarProvider>
-                  <StoryProvider storyId={storyId}>
-                    <FontProvider>
-                      <MediaProvider>
-                        <AutoSaveHandler />
-                        <TransformProvider>
-                          <DropTargetsProvider>
-                            <GlobalStyle />
-                            <DevTools />
-                            <DefaultMoveableGlobalStyle />
-                            <CropMoveableGlobalStyle />
-                            <ModalGlobalStyle />
-                            <KeyboardOnlyOutlines />
-                            <Layout />
-                          </DropTargetsProvider>
-                        </TransformProvider>
-                      </MediaProvider>
-                    </FontProvider>
-                  </StoryProvider>
-                </SnackbarProvider>
-              </HistoryProvider>
+              <Media3pApiProvider>
+                <HistoryProvider size={50}>
+                  <SnackbarProvider>
+                    <StoryProvider storyId={storyId}>
+                      <FontProvider>
+                        <MediaProvider>
+                          <AutoSaveHandler />
+                          <TransformProvider>
+                            <DropTargetsProvider>
+                              <GlobalStyle />
+                              <DevTools />
+                              <DefaultMoveableGlobalStyle />
+                              <CropMoveableGlobalStyle />
+                              <ModalGlobalStyle />
+                              <KeyboardOnlyOutlines />
+                              <Layout />
+                            </DropTargetsProvider>
+                          </TransformProvider>
+                        </MediaProvider>
+                      </FontProvider>
+                    </StoryProvider>
+                  </SnackbarProvider>
+                </HistoryProvider>
+              </Media3pApiProvider>
             </APIProvider>
           </ConfigProvider>
         </ErrorBoundary>

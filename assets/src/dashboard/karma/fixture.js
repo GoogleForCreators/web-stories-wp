@@ -20,6 +20,7 @@
 import React from 'react';
 import { FlagsProvider } from 'flagged';
 import { act, render, screen } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -29,10 +30,18 @@ import ApiProvider from '../app/api/apiProvider';
 import FixtureEvents from '../../../../karma/fixture/events';
 import ComponentStub from '../../../../karma/fixture/componentStub';
 import actPromise from '../../../../karma/fixture/actPromise';
+import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
 const defaultConfig = {
+  capabilities: {
+    canManageSettings: true,
+  },
   isRTL: false,
+  dateFormat: 'F j, Y',
+  timeFormat: 'g:i a',
+  gmtOffset: -4,
+  timezone: 'America/New_York',
   newStoryURL:
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
@@ -40,9 +49,10 @@ const defaultConfig = {
   assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories//assets',
   version: '1.0.0-alpha.9',
   api: {
-    stories: '/wp/v2/web-story',
+    stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     fonts: '/web-stories/v1/fonts',
+    settings: '/wp/v2/settings',
   },
 };
 
@@ -51,6 +61,7 @@ export default class Fixture {
     this._config = { ...defaultConfig, ...config };
     this._flags = flags;
     this._container = null;
+    this._appFrameStub = null;
     this._screen = null;
     this._componentStubs = new Map();
     this._events = new FixtureEvents(act);
@@ -76,6 +87,8 @@ export default class Fixture {
     });
 
     this.stubComponent(ApiProvider).callFake(ApiProviderFixture);
+
+    this._appFrameStub = this.stubComponent(AppFrame);
   }
 
   get container() {
@@ -105,12 +118,12 @@ export default class Fixture {
    * ```
    * beforeEach(async () => {
    *   fixture = new Fixture();
-   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   fixture.setFlags({FEATURE_NAME: true});
    *   await fixture.render();
    * });
    * ```
    *
-   * @param {Object} flags
+   * @param {Object} flags Flags object.
    */
   setFlags(flags) {
     this._flags = { ...flags };
@@ -124,8 +137,8 @@ export default class Fixture {
    *
    * Use sparingly. See `ComponentStub` for more info.
    *
-   * @param {Function} component
-   * @param {Function|undefined} matcher
+   * @param {Function} component Component.
+   * @param {Function|undefined} matcher Matcher.
    * @return {ComponentStub} The component's stub.
    */
   stubComponent(component, matcher) {
@@ -147,6 +160,10 @@ export default class Fixture {
    */
   render() {
     const root = document.querySelector('test-root');
+
+    // see http://reactcommunity.org/react-modal/accessibility/
+    Modal.setAppElement(root);
+
     const { container } = render(
       <FlagsProvider features={this._flags}>
         <App key={Math.random()} config={this._config} />
@@ -167,13 +184,30 @@ export default class Fixture {
     return Promise.resolve();
   }
 
+  restore() {
+    window.location.hash = '#';
+  }
+
+  /**
+   * Calls a hook in the context of the whole dashboard.
+   *
+   * Similar to the `@testing-library/react`'s `renderHook()` method.
+   *
+   * @param {Function} func The hook function. E.g. `useStory`.
+   * @return {Promise<Object>} Resolves when the hook is rendered with the
+   * value of the hook.
+   */
+  renderHook(func) {
+    return this._appFrameStub.renderHook(func);
+  }
+
   /**
    * Calls the specified callback and performs rendering actions on the
    * whole editor.
    *
    * Similar to the `@testing-library/react`'s `act()` method.
    *
-   * @param {Function} callback
+   * @param {Function} callback Callback.
    * @return {Promise<Object>} Yields when the `act()` and all related
    * editor rendering activity is complete. Resolves to the result of the
    * callback.
@@ -185,7 +219,7 @@ export default class Fixture {
   /**
    * To be deprecated.
    *
-   * @param {string} selector
+   * @param {string} selector Selector.
    * @return {Element|null} The found element or null.
    */
   querySelector(selector) {
@@ -195,7 +229,7 @@ export default class Fixture {
   /**
    * To be deprecated?
    *
-   * @param {string} selector
+   * @param {string} selector Selector.
    * @return {Array.<Element>} The potentially empty list of found elements.
    */
   querySelectorAll(selector) {
@@ -203,7 +237,7 @@ export default class Fixture {
   }
 
   /**
-   * @param {Element} element
+   * @param {Element} element Element.
    * @return {Promise} Yields when the element is displayed on the screen.
    */
   waitOnScreen(element) {
@@ -226,7 +260,7 @@ export default class Fixture {
    * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
    * directory.
    *
-   * @param {string} name
+   * @param {string} name Snapshot name.
    * @return {Promise} Yields when the snapshot is completed.
    */
   snapshot(name) {

@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
@@ -100,22 +101,27 @@ class Stories_Controller extends Stories_Base_Controller {
 	 */
 	public function update_item( $request ) {
 		$response = parent::update_item( $request );
-		if ( ! is_wp_error( $response ) ) {
-			// If publisher logo is set, let's assign that.
-			$publisher_logo_id = $request->get_param( 'publisher_logo' );
-			if ( $publisher_logo_id ) {
-				// @todo This option can keep track of all available publisher logo IDs in the future, thus the array.
-				$publisher_logo_settings           = get_option( $this->get_publisher_logo_option_name(), [] );
-				$publisher_logo_settings['active'] = $publisher_logo_id;
-				update_option( $this->get_publisher_logo_option_name(), $publisher_logo_settings, false );
-			}
 
-			// If style presets are set.
-			$style_presets = $request->get_param( 'style_presets' );
-			if ( is_array( $style_presets ) ) {
-				update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $style_presets );
-			}
+		if ( is_wp_error( $response ) ) {
+			return rest_ensure_response( $response );
 		}
+
+		// If publisher logo is set, let's assign that.
+		$publisher_logo_id = $request->get_param( 'publisher_logo' );
+		if ( $publisher_logo_id ) {
+			$all_publisher_logos   = get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+			$all_publisher_logos[] = $publisher_logo_id;
+
+			update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_unique( $all_publisher_logos ) );
+			update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id );
+		}
+
+		// If style presets are set.
+		$style_presets = $request->get_param( 'style_presets' );
+		if ( is_array( $style_presets ) ) {
+			update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $style_presets );
+		}
+
 		return rest_ensure_response( $response );
 	}
 
@@ -301,8 +307,9 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// Add counts for other statuses.
 		$statuses = [
-			'all'     => [ 'publish', 'draft' ],
+			'all'     => [ 'publish', 'draft', 'future' ],
 			'publish' => 'publish',
+			'future'  => 'future',
 			'draft'   => 'draft',
 		];
 
@@ -320,11 +327,32 @@ class Stories_Controller extends Stories_Base_Controller {
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 		}
+
 		// Encode the array as headers do not support passing an array.
 		$encoded_statuses = wp_json_encode( $statuses_count );
 		if ( $encoded_statuses ) {
 			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
 		}
+		if ( $request['_web_stories_envelope'] ) {
+			$response = rest_get_server()->envelope_response( $response, false );
+		}
 		return $response;
+	}
+
+	/**
+	 * Retrieves the query params for the posts collection.
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params() {
+		$query_params = parent::get_collection_params();
+
+		$query_params['_web_stories_envelope'] = [
+			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
+		];
+
+		return $query_params;
 	}
 }

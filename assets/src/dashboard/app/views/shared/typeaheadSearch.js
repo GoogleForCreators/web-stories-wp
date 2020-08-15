@@ -44,7 +44,7 @@ export default function TypeaheadSearch({
     <TypeaheadInput
       inputId="typeahead-search"
       items={typeaheadMenuOptions}
-      onChange={(val) => handleChange(val.trim())}
+      onChange={handleChange}
       value={currentValue}
       placeholder={placeholder}
       ariaLabel={placeholder}

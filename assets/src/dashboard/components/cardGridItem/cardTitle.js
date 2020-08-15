@@ -85,18 +85,33 @@ const CardTitle = ({
     if (!displayDate) {
       return null;
     }
-    return status === STORY_STATUS.PUBLISHED
-      ? sprintf(
-          /* translators: %s: last modified date */
+
+    switch (status) {
+      case STORY_STATUS.PUBLISH:
+        return sprintf(
+          /* translators: %s: published date */
           __('Published %s', 'web-stories'),
           displayDate
-        )
-      : sprintf(
+        );
+      case STORY_STATUS.FUTURE:
+        return sprintf(
+          /* translators: %s: future publish date */
+          __('Scheduled %s', 'web-stories'),
+          displayDate
+        );
+
+      default:
+        return sprintf(
           /* translators: %s: last modified date */
           __('Modified %s', 'web-stories'),
           displayDate
         );
+    }
   }, [status, displayDate]);
+
+  const titleFormatted = (rawTitle) => {
+    return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+  };
 
   return (
     <StyledCardTitle>
@@ -109,7 +124,9 @@ const CardTitle = ({
           label={__('Rename story', 'web-stories')}
         />
       ) : (
-        <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
+        <TitleStoryLink href={titleLink}>
+          {titleFormatted(title)}
+        </TitleStoryLink>
       )}
       <TitleBodyText>
         {status === STORY_STATUS.DRAFT && (

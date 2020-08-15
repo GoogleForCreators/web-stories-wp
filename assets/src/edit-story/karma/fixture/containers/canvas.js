@@ -45,7 +45,11 @@ export class Canvas extends Container {
   }
 
   get editLayer() {
-    return null;
+    return this._get(
+      this.getByRole('region', { name: 'Edit layer' }),
+      'editLayer',
+      EditLayer
+    );
   }
 }
 
@@ -83,6 +87,12 @@ class Display extends Container {
   constructor(node, path) {
     super(node, path);
   }
+
+  get overlay() {
+    return this.node.querySelector(
+      '[class^="displayElement__BackgroundOverlay-sc-"]'
+    );
+  }
 }
 
 /**
@@ -119,10 +129,27 @@ class FramesLayer extends Container {
 }
 
 /**
+ * Contains elements in edit-mode.
+ */
+class EditLayer extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get text() {
+    return this.node.querySelector('[data-testid="textEditor"]');
+  }
+}
+
+/**
  * An element's frame.
  */
 class Frame extends Container {
   constructor(node, path) {
     super(node, path);
+  }
+
+  get textContentHTML() {
+    return this.node.querySelector('p')?.innerHTML;
   }
 }

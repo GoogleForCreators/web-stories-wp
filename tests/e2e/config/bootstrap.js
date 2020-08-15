@@ -28,6 +28,9 @@ import {
   setBrowserViewport,
 } from '@wordpress/e2e-test-utils';
 
+// Extend Jest matchers.
+import 'jest-extended';
+
 /**
  * Environment variables
  */
@@ -59,11 +62,14 @@ jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 500 });
 
+/**
+ * Set up browser.
+ */
 async function setupBrowser() {
-  // 15inch screen.
+  // Same as jest-puppeteer.config.cjs and percy.config.yml
   await setBrowserViewport({
-    width: 1680,
-    height: 948,
+    width: 1600,
+    height: 1000,
   });
 }
 
@@ -110,6 +116,11 @@ function observeConsoleLogging() {
     // styled-components warns about dynamically created components.
     // @todo Fix issues.
     if (text.includes(' has been created dynamically.')) {
+      return;
+    }
+
+    // WordPress still bundles jQuery Migrate, which logs to the console.
+    if (text.includes('JQMIGRATE')) {
       return;
     }
 

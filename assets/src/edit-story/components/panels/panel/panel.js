@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -35,11 +35,21 @@ const Wrapper = styled.section`
   position: relative;
 `;
 
-function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
+function Panel({
+  name,
+  children,
+  resizeable = false,
+  canCollapse = true,
+  initialHeight = null,
+  ariaLabel = null,
+}) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
   const [height, setHeight] = useState(initialHeight);
+  const [hasTitle, setHasTitle] = useState(false);
   const [manuallyChanged, setManuallyChanged] = useState(false);
+
+  const confirmTitle = useCallback(() => setHasTitle(true), []);
 
   const collapse = useCallback(() => {
     if (!canCollapse) {
@@ -101,6 +111,7 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
   }, [expand, isCollapsed]);
 
   const panelContentId = `panel-${name}-${uuidv4()}`;
+  const panelTitleId = `panel-title-${name}-${uuidv4()}`;
 
   const contextValue = {
     state: {
@@ -108,6 +119,7 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
       resizeable,
       isCollapsed,
       panelContentId,
+      panelTitleId,
     },
     actions: {
       setHeight: manuallySetHeight,
@@ -115,30 +127,34 @@ function Panel({ resizeable, canCollapse, initialHeight, name, children }) {
       collapse,
       expand,
       resetHeight,
+      confirmTitle,
     },
   };
 
   const ContextProvider = panelContext.Provider;
 
+  const wrapperProps = useMemo(
+    () =>
+      hasTitle
+        ? { 'aria-labelledby': panelTitleId }
+        : { 'aria-label': ariaLabel },
+    [hasTitle, panelTitleId, ariaLabel]
+  );
+
   return (
-    <Wrapper>
+    <Wrapper {...wrapperProps}>
       <ContextProvider value={contextValue}>{children}</ContextProvider>
     </Wrapper>
   );
 }
 
 Panel.propTypes = {
-  children: PropTypes.node,
   name: PropTypes.string.isRequired,
+  children: PropTypes.node,
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
-};
-
-Panel.defaultProps = {
-  initialHeight: null,
-  resizeable: false,
-  canCollapse: true,
+  ariaLabel: PropTypes.string,
 };
 
 export default Panel;

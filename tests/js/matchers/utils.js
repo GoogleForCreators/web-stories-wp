@@ -17,22 +17,45 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import AmpOptimizer from '@ampproject/toolbox-optimizer';
 import amphtmlValidator from 'amphtml-validator';
 
-// eslint-disable-next-line react/prop-types
+/** @typedef {import('react').ReactElement} ReactElement */
+
+/**
+ * @param {Object} props Component props.
+ * @param {Node} props.children Children.
+ * @return {ReactElement} AMP Story grid layer component
+ */
 function AmpStoryGridLayer({ children }) {
   return (
     <amp-story-grid-layer template="vertical">{children}</amp-story-grid-layer>
   );
 }
 
-// eslint-disable-next-line react/prop-types
+AmpStoryGridLayer.propTypes = {
+  children: PropTypes.node,
+};
+
+/**
+ * @param {Object} props Component props.
+ * @param {Node} props.children Children.
+ * @return {ReactElement} AMP Story page component
+ */
 function AmpStoryPage({ children }) {
   return <amp-story-page id="foo">{children}</amp-story-page>;
 }
 
-// eslint-disable-next-line react/prop-types
+AmpStoryPage.propTypes = {
+  children: PropTypes.node,
+};
+
+/**
+ * @param {Object} props Component props.
+ * @param {Node} props.children Children.
+ * @return {ReactElement} AMP story component.
+ */
 function AmpStory({ children }) {
   return (
     <amp-story
@@ -46,6 +69,10 @@ function AmpStory({ children }) {
     </amp-story>
   );
 }
+
+AmpStory.propTypes = {
+  children: PropTypes.node,
+};
 
 /**
  * Tests a given string for its AMP compatibility.

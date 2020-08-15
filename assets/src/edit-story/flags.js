@@ -21,8 +21,8 @@
  * @enum {string}
  */
 const Flags = {
-  // Drop-down menu in the MediaElement.
-  MEDIA_DROPDOWN_MENU: 'mediaDropdownMenu',
+  // Flag for using incremental search in media and media3p with a debouncer.
+  INCREMENTAL_SEARCH_DEBOUNCE_MEDIA: 'incrementalSearchDebounceMedia',
 };
 
 export default Flags;

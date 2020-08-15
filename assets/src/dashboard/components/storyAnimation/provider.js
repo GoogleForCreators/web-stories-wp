@@ -36,6 +36,7 @@ import { useFeature } from 'flagged';
 import { AnimationPart, throughput } from '../../animations/parts';
 import { AnimationProps } from '../../animations/parts/types';
 import { clamp } from '../../utils';
+import StoryPropTypes from '../../../edit-story/types';
 
 const Context = createContext(null);
 
@@ -58,23 +59,35 @@ const createOnFinishPromise = (animation) => {
   });
 };
 
-function Provider({ animations, children, onWAAPIFinish }) {
+function Provider({ animations, elements, children, onWAAPIFinish }) {
   const enableAnimation = useFeature('enableAnimation');
+
+  const elementsMap = useMemo(() => {
+    return (elements || []).reduce((map, element) => {
+      map.set(element.id, element);
+      return map;
+    }, new Map());
+  }, [elements]);
+
   const animationPartsMap = useMemo(() => {
     return (animations || []).reduce((map, animation) => {
-      const { targets, type, ...args } = animation;
+      const { id, targets, type, ...args } = animation;
 
       (targets || []).forEach((t) => {
         const generatedParts = map.get(t) || [];
+        const element = elementsMap.get(t);
+
         map.set(t, [
           ...generatedParts,
-          enableAnimation ? AnimationPart(type, args) : throughput(),
+          enableAnimation
+            ? AnimationPart(type, { ...args, element })
+            : throughput(),
         ]);
       });
 
       return map;
     }, new Map());
-  }, [animations, enableAnimation]);
+  }, [animations, enableAnimation, elementsMap]);
 
   const providerId = useMemo(() => uuidv4(), []);
 
@@ -104,6 +117,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
   const hoistWAAPIAnimation = useCallback((WAPPIAnimation) => {
     const symbol = Symbol();
     WAAPIAnimationMap.current.set(symbol, WAPPIAnimation);
+
     setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
     return () => {
       WAPPIAnimation?.cancel();
@@ -114,12 +128,21 @@ function Provider({ animations, children, onWAAPIFinish }) {
 
   const WAAPIAnimationMethods = useMemo(() => {
     const play = () =>
-      WAAPIAnimations.forEach((animation) => animation?.play());
+      WAAPIAnimations.forEach((animation) => {
+        // Sometimes an animation part can get into a
+        // stuck state where executing `play` doesn't
+        // trigger the animation. A workaround to avoid
+        // this is to first `cancel` the animation
+        // before playing.
+        animation?.cancel();
+
+        animation?.play();
+      });
     const pause = () =>
       WAAPIAnimations.forEach((animation) => animation?.pause());
     const setCurrentTime = (time) =>
       WAAPIAnimations.forEach((animation) => {
-        const { duration, delay } = animation.effect.timing;
+        const { duration, delay } = animation.effect.getTiming() ?? {};
         const animationEndTime = (delay || 0) + (duration || 0);
         animation.currentTime =
           time === 'end'
@@ -198,6 +221,7 @@ function Provider({ animations, children, onWAAPIFinish }) {
 
 Provider.propTypes = {
   animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
+  elements: PropTypes.arrayOf(StoryPropTypes.element),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
 };

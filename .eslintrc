@@ -13,11 +13,12 @@
     "plugin:jsdoc/recommended"
   ],
   "plugins": [
-    "react",
-    "react-hooks",
-    "jsx-a11y",
+    "@wordpress",
     "header",
-    "@wordpress"
+    "jsdoc",
+    "jsx-a11y",
+    "react",
+    "react-hooks"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -167,10 +168,13 @@
         ]
       }
     ],
-    "jsdoc/require-jsdoc": "off",
-    "jsdoc/require-returns": "off",
-    "jsdoc/require-param-description": "off",
     "jsdoc/check-indentation": "error",
+    "jsdoc/check-syntax": "warn",
+    "jsdoc/require-jsdoc": ["off", {
+      "publicOnly": true
+    }],
+    "jsdoc/require-returns": "warn",
+    "jsdoc/require-param-description": "warn",
     "eslint-comments/no-unused-disable": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
@@ -195,6 +199,7 @@
   },
   "settings": {
     "jsdoc": {
+      "mode": "typescript",
       "preferredTypes": {
         "object": "Object"
       },
@@ -205,7 +210,15 @@
     },
     "react": {
       "version": "detect"
-    }
+    },
+    "linkComponents": [
+      "Link",
+      {"name": "Plain", "linkAttribute": "href"},
+      {"name": "Primary", "linkAttribute": "href"},
+      "PrimaryLink",
+      "SecondaryLink",
+      "ExternalLink"
+    ]
   },
   "overrides": [
     {
@@ -241,6 +254,7 @@
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
+        "jsdoc/require-jsdoc": "off",
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error"
       }
@@ -265,7 +279,10 @@
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
-        "jasmine/no-disabled-tests": "error"
+        "jasmine/no-disabled-tests": "error",
+        "jasmine/no-spec-dupes": ["error", "branch"],
+        "jasmine/no-suite-dupes": ["error", "branch"],
+        "jsdoc/require-jsdoc": "off"
       },
       "globals": {
         "karmaPuppeteer": "readonly",
@@ -292,6 +309,12 @@
         "browser": "readonly",
         "page": "readonly",
         "wp": "readonly"
+      }
+    },
+    {
+      "files": ["tests/e2e/specs/**/*.js"],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
       }
     },
     {
@@ -323,9 +346,11 @@
         "markdown"
       ],
       "rules": {
+        "@wordpress/dependency-group": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
-        "header/header": "off"
+        "header/header": "off",
+        "prettier/prettier": "off"
       }
     }
   ]

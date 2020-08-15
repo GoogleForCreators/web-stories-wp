@@ -52,7 +52,7 @@ describe('getStoryMarkup', () => {
       },
       logoPlaceholder:
         'https://example.com/fallback-wordpress-publisher-logo.png',
-      fallbackPoster: 'https://example.com/fallback-poster.jpg',
+      fallbackPoster: 'https://example.com/fallback-poster.png',
     };
     const pages = [
       {
@@ -99,7 +99,7 @@ describe('getStoryMarkup', () => {
       '</amp-story-grid-layer></amp-story-page></amp-story></body></html>'
     );
     expect(markup).toContain(
-      'poster-portrait-src="https://example.com/fallback-poster.jpg"'
+      'poster-portrait-src="https://example.com/fallback-poster.png"'
     );
 
     expect(markup).toContain('<amp-story-animation');

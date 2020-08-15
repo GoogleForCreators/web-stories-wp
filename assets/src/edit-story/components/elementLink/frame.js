@@ -30,7 +30,7 @@ import { getLinkFromElement } from './index';
 
 const Tooltip = styled.div`
   position: relative;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
   color: ${({ theme }) => theme.colors.mg.v3};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: 14px;
@@ -38,7 +38,7 @@ const Tooltip = styled.div`
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
   padding: 6px;
   border-radius: 6px;
-  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -49,10 +49,10 @@ const Tooltip = styled.div`
     content: '';
     position: absolute;
     bottom: -6px;
-    border-top: 6px solid ${({ theme }) => theme.colors.fg.v1};
+    border-top: 6px solid ${({ theme }) => theme.colors.fg.white};
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.v0, 0.1)};
+    box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
   }
 `;
 

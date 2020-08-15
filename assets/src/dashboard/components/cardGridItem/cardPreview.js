@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,
   DEFAULT_STORY_PAGE_ADVANCE_DURATION,
-  STORY_PAGE_STATE,
+  STORY_ANIMATION_STATE,
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
 import { clamp, useFocusOut } from '../../utils';
@@ -121,6 +121,7 @@ const CardPreviewContainer = ({
   story,
   pageSize,
   children,
+  containerAction = () => {},
 }) => {
   const [cardState, dispatch] = useReducer(cardReducer, CARD_STATE.IDLE);
   const [pageIndex, setPageIndex] = useState(0);
@@ -154,6 +155,14 @@ const CardPreviewContainer = ({
     return () => intervalId && clearInterval(intervalId);
   }, [storyPages.length, cardState]);
 
+  const handleKeyDownEditControls = useCallback(
+    ({ key }) => {
+      if (key === 'Enter') {
+        containerAction();
+      }
+    },
+    [containerAction]
+  );
   return (
     <>
       <PreviewPane cardSize={pageSize}>
@@ -163,25 +172,30 @@ const CardPreviewContainer = ({
             page={storyPages[pageIndex]}
             animationState={
               CARD_STATE.ACTIVE === cardState
-                ? STORY_PAGE_STATE.PLAYING
-                : STORY_PAGE_STATE.RESET
+                ? STORY_ANIMATION_STATE.PLAYING
+                : STORY_ANIMATION_STATE.RESET
             }
           />
         </PreviewErrorBoundary>
         {children}
       </PreviewPane>
       <EditControls
+        data-testid="card-action-container"
         ref={containElem}
         cardSize={pageSize}
         isActive={CARD_STATE.ACTIVE === cardState}
         onFocus={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
+        onClick={containerAction}
+        onKeyDown={handleKeyDownEditControls}
+        tabIndex={0}
       >
         <EmptyActionContainer />
         {centerAction?.label && (
           <ActionContainer>
             <Button
+              data-testid="card-center-action"
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
             >
@@ -209,6 +223,7 @@ CardPreviewContainer.propTypes = {
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
+  containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
   story: StoryPropType,
 };

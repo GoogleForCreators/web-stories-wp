@@ -3,7 +3,7 @@ name: JavaScript Unit Tests
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
@@ -41,12 +41,14 @@ jobs:
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npx rollup --config bin/rollup.config.migrate.js
         env:
           CI: true
 
       - name: Run JavaScript unit tests
-        run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
+        run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
 
       - name: Upload mismatched image snapshots if found
         uses: actions/upload-artifact@v2
