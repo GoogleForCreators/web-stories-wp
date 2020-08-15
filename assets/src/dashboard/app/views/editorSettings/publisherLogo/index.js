@@ -28,6 +28,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import {
+  Error,
   Logo,
   DeleteLogoButton,
   SettingForm,
@@ -63,6 +64,7 @@ function PublisherLogoSettings({
   handleRemoveLogo,
   isLoading,
   publisherLogos,
+  uploadError,
 }) {
   return (
     <SettingForm>
@@ -74,6 +76,9 @@ function PublisherLogoSettings({
         {publisherLogos.length > 0 && (
           <UploadedContainer>
             {publisherLogos.map((publisherLogo, idx) => {
+              if (!publisherLogo) {
+                return null;
+              }
               return (
                 <div
                   key={`${publisherLogo.title}_${idx}`}
@@ -96,6 +101,7 @@ function PublisherLogoSettings({
             })}
           </UploadedContainer>
         )}
+        {uploadError && <Error>{uploadError}</Error>}
         {canUploadFiles && (
           <>
             <FileUpload

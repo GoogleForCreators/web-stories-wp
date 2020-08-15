@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback } from 'react';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -68,6 +68,7 @@ export const _default = () => {
       handleDeleteLogo={handleDeleteLogo}
       isLoading={boolean('isLoading', false)}
       publisherLogos={uploadedContent}
+      uploadError={text('uploadError', '')}
     />
   );
 };

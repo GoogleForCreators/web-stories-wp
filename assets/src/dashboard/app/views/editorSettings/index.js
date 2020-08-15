@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useContext, useEffect, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -45,8 +45,9 @@ function EditorSettings() {
     },
   } = useContext(ApiContext);
 
-  const { capabilities: { canUploadFiles } = {} } = useConfig();
+  const { capabilities: { canUploadFiles } = {}, maxUpload } = useConfig();
 
+  const [mediaError, setMediaError] = useState('');
   /**
    * WP settings references publisher logos by ID.
    * We must retrieve the media for those ids from /media when present
@@ -81,9 +82,27 @@ function EditorSettings() {
 
   const handleAddLogos = useCallback(
     (files) => {
-      uploadMedia(files);
+      const isFileSizeWithinMaxUpload = files.every(
+        (file) => file.size <= maxUpload
+      );
+
+      if (!isFileSizeWithinMaxUpload) {
+        const errorText =
+          files.length > 1
+            ? __(
+                'Sorry, this file is too big. Make sure your logo is under 100 MB.',
+                'web-stories'
+              )
+            : __(
+                'Sorry, one or more of these files are too big. Make sure your logos are all under 100 MB.',
+                'web-stories'
+              );
+        return setMediaError(errorText);
+      }
+      setMediaError('');
+      return uploadMedia(files);
     },
-    [uploadMedia]
+    [maxUpload, uploadMedia]
   );
 
   const handleRemoveLogo = useCallback(

@@ -93,6 +93,11 @@ export const FinePrintHelperText = styled.p`
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
+export const Error = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  padding-bottom: 10px;
+  color: ${({ theme }) => theme.colors.danger};
+`;
 export const UploadedContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, 56px);
