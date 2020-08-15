@@ -25,39 +25,73 @@ import { renderWithTheme } from '../../../../testUtils';
 import { ApiContext } from '../../../api/apiProvider';
 import EditorSettings from '../';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
+import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
+import { ConfigProvider } from '../../../config';
 
 const mockFetchSettings = jest.fn();
+const mockFetchMediaById = jest.fn();
+const mockUploadMedia = jest.fn();
 
-const SettingsWrapper = ({ googleAnalyticsId }) => {
+const SettingsWrapper = ({
+  activePublisherLogoId,
+  isLoading,
+  googleAnalyticsId,
+  publisherLogoIds,
+  publisherLogos,
+}) => {
   return (
-    <ApiContext.Provider
-      value={{
-        state: {
-          settings: {
-            googleAnalyticsId,
-          },
-        },
-        actions: {
-          settingsApi: {
-            fetchSettings: mockFetchSettings,
-            updateSettings: jest.fn(),
-          },
-        },
-      }}
+    <ConfigProvider
+      config={{ capabilities: { canUploadFiles: true }, maxUpload: 104857600 }}
     >
-      <EditorSettings />
-    </ApiContext.Provider>
+      <ApiContext.Provider
+        value={{
+          state: {
+            settings: {
+              googleAnalyticsId,
+              activePublisherLogoId,
+              publisherLogoIds,
+            },
+            media: {
+              isLoading,
+              uploadedMediaIds: [],
+              publisherLogos,
+            },
+          },
+          actions: {
+            settingsApi: {
+              fetchSettings: mockFetchSettings,
+              updateSettings: jest.fn(),
+            },
+            mediaApi: {
+              uploadMedia: mockUploadMedia,
+              fetchMediaById: mockFetchMediaById,
+            },
+          },
+        }}
+      >
+        <EditorSettings />
+      </ApiContext.Provider>
+    </ConfigProvider>
   );
 };
 
 SettingsWrapper.propTypes = {
+  activePublisherLogoId: PropTypes.number,
+  isLoading: PropTypes.bool,
   googleAnalyticsId: PropTypes.string,
+  publisherLogoIds: PropTypes.array,
+  publisherLogos: PropTypes.object,
 };
 
 describe('Editor Settings: <Editor Settings />', function () {
-  it('should render settings page with google analytics section', function () {
-    const { getByText, getByRole } = renderWithTheme(
-      <SettingsWrapper googleAnalyticsId="UA-098909-05" />
+  it('should render settings page with google analytics and publisher logo sections', function () {
+    const { getByText, getByRole, getByTestId } = renderWithTheme(
+      <SettingsWrapper
+        googleAnalyticsId="UA-098909-05"
+        isLoading={false}
+        publisherLogoIds={[]}
+        publisherLogos={{}}
+      />
     );
 
     const googleAnalyticsHeading = getByText(GA_TEXT.SECTION_HEADING);
@@ -68,6 +102,8 @@ describe('Editor Settings: <Editor Settings />', function () {
 
     expect(input.value).toBe('UA-098909-05');
 
+    expect(getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)).toBeInTheDocument();
+    expect(getByTestId('upload-file-input')).toBeInTheDocument();
     expect(mockFetchSettings).toHaveBeenCalledTimes(1);
   });
 });

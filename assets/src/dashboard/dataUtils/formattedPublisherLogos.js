@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export const publisherLogoIds = [577, 584, 582, 581];
 const formattedPublisherLogos = [
   {
     id: 577,

@@ -109,7 +109,7 @@ export const Logo = styled.img`
   border-radius: 4px;
 `;
 
-export const DeleteLogoButton = styled.button`
+export const RemoveLogoButton = styled.button`
   position: relative;
   left: 2px;
   bottom: 30px;

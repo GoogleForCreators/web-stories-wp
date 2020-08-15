@@ -30,7 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import {
   Error,
   Logo,
-  DeleteLogoButton,
+  RemoveLogoButton,
   SettingForm,
   HelperText,
   FinePrintHelperText,
@@ -38,7 +38,7 @@ import {
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { Close as DeleteIcon } from '../../../../icons';
+import { Close as RemoveIcon } from '../../../../icons';
 
 export const TEXT = {
   SECTION_HEADING: __('Published Logo', 'web-stories'),
@@ -86,17 +86,17 @@ function PublisherLogoSettings({
                 >
                   <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   {!publisherLogo.isActive && (
-                    <DeleteLogoButton
-                      data-testid={`delete-publisher-logo-${idx}`}
+                    <RemoveLogoButton
+                      data-testid={`remove-publisher-logo-${idx}`}
                       aria-label={sprintf(
                         /* translators: %s: uploaded logo title */
-                        __('delete %s as a publisher logo', 'web-stories'),
+                        __('Remove %s as a publisher logo', 'web-stories'),
                         publisherLogo.title
                       )}
                       onClick={(e) => handleRemoveLogo(e, publisherLogo)}
                     >
-                      <DeleteIcon aria-hidden="true" />
-                    </DeleteLogoButton>
+                      <RemoveIcon aria-hidden="true" />
+                    </RemoveLogoButton>
                   )}
                 </div>
               );

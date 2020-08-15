@@ -42,7 +42,7 @@ export const _default = () => {
         onSubmit={action('files uploaded')}
         id={'898989'}
         label={text('label', 'Upload')}
-        isLoading={boolean('isLoading', true)}
+        isLoading={boolean('isLoading', false)}
         isMultiple={boolean('isMultiple', true)}
         ariaLabel={'Click to upload a file'}
         instructionalText={text(

@@ -25,17 +25,20 @@ import { fireEvent } from '@testing-library/react';
 import { renderWithTheme } from '../../../../../testUtils';
 
 import PublisherLogoSettings, { TEXT } from '..';
+import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
 
 describe('PublisherLogo', () => {
   const mockHandleAddLogos = jest.fn();
-  const mockHandleDeleteLogo = jest.fn();
-  it('should render a fileUpload container and helper text by default', () => {
+  const mockHandleRemoveLogo = jest.fn();
+
+  it('should render a fileUpload container and helper text by default when canUploadFiles is true', () => {
     const { getByTestId, getByText } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
-        handleDeleteLogo={mockHandleDeleteLogo}
+        handleRemoveLogo={mockHandleRemoveLogo}
         isLoading={false}
         publisherLogos={[]}
+        canUploadFiles={true}
       />
     );
 
@@ -43,25 +46,92 @@ describe('PublisherLogo', () => {
     expect(getByText(TEXT.SECTION_HEADING)).toBeInTheDocument();
   });
 
-  it('should trigger onUpdatePublisherLogo when delete button is clicked on an uploaded file', () => {
-    const { getByTestId } = renderWithTheme(
+  it('should not render fileUpload container when canUploadFiles is false', () => {
+    const { queryAllByTestId } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
-        handleDeleteLogo={mockHandleDeleteLogo}
+        handleRemoveLogo={mockHandleRemoveLogo}
         isLoading={false}
-        publisherLogos={[
-          {
-            src: 'source-that-displays-an-image',
-            title: 'mockfile.png',
-            alt: 'mockfile.png',
-          },
-        ]}
+        publisherLogos={[]}
       />
     );
 
-    const DeleteFileButton = getByTestId('remove-publisher-logo-0').lastChild;
+    expect(queryAllByTestId('upload-file-input')).toHaveLength(0);
+  });
+
+  it('should render an image for each publisherLogo in the array', () => {
+    const { queryAllByTestId } = renderWithTheme(
+      <PublisherLogoSettings
+        handleAddLogos={mockHandleAddLogos}
+        handleRemoveLogo={mockHandleRemoveLogo}
+        isLoading={false}
+        publisherLogos={formattedPublisherLogos}
+      />
+    );
+
+    expect(queryAllByTestId(/^publisher-logo/)).toHaveLength(
+      formattedPublisherLogos.length
+    );
+  });
+
+  it('should render a button to remove publisherLogos aside from the default logo', () => {
+    const { queryAllByTestId } = renderWithTheme(
+      <PublisherLogoSettings
+        handleAddLogos={mockHandleAddLogos}
+        handleRemoveLogo={mockHandleRemoveLogo}
+        isLoading={false}
+        publisherLogos={formattedPublisherLogos}
+      />
+    );
+
+    expect(queryAllByTestId(/^remove-publisher-logo/)).toHaveLength(
+      formattedPublisherLogos.length - 1
+    );
+  });
+
+  it('should render an error message if uploadError is present', () => {
+    const { getByText } = renderWithTheme(
+      <PublisherLogoSettings
+        handleAddLogos={mockHandleAddLogos}
+        handleRemoveLogo={mockHandleRemoveLogo}
+        isLoading={false}
+        publisherLogos={formattedPublisherLogos}
+        uploadError={'Something went wrong.'}
+      />
+    );
+
+    expect(getByText('Something went wrong.')).toBeInTheDocument();
+  });
+
+  it('should trigger mockHandleRemoveLogo when delete button is clicked on an uploaded file', () => {
+    const { getByTestId } = renderWithTheme(
+      <PublisherLogoSettings
+        handleAddLogos={mockHandleAddLogos}
+        handleRemoveLogo={mockHandleRemoveLogo}
+        isLoading={false}
+        publisherLogos={formattedPublisherLogos}
+      />
+    );
+
+    const DeleteFileButton = getByTestId('remove-publisher-logo-2').lastChild;
     expect(DeleteFileButton).toBeDefined();
     fireEvent.click(DeleteFileButton);
-    expect(mockHandleDeleteLogo).toHaveBeenCalledTimes(1);
+    expect(mockHandleRemoveLogo).toHaveBeenCalledTimes(1);
+  });
+
+  it('should trigger mockHandleRemoveLogo when delete button is pressed with enter on an uploaded file', () => {
+    const { getByTestId } = renderWithTheme(
+      <PublisherLogoSettings
+        handleAddLogos={mockHandleAddLogos}
+        handleRemoveLogo={mockHandleRemoveLogo}
+        isLoading={false}
+        publisherLogos={formattedPublisherLogos}
+      />
+    );
+
+    const DeleteFileButton = getByTestId('remove-publisher-logo-1').lastChild;
+    expect(DeleteFileButton).toBeDefined();
+    fireEvent.keyDown(DeleteFileButton, { key: 'Enter', code: 'Enter' });
+    expect(mockHandleRemoveLogo).toHaveBeenCalledTimes(1);
   });
 });
