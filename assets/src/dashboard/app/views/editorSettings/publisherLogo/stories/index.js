@@ -24,7 +24,9 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
+import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
 import PublisherLogoSettings from '../';
+import { getResourceFromLocalFile } from '../../../../../utils';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/PublisherLogo',
@@ -32,13 +34,23 @@ export default {
 };
 
 export const _default = () => {
-  const [uploadedContent, setUploadedContent] = useState([]);
+  const [uploadedContent, setUploadedContent] = useState(
+    formattedPublisherLogos
+  );
 
-  const handleAddLogos = useCallback((newPublisherLogos) => {
+  const handleAddLogos = useCallback(async (newPublisherLogos) => {
     action('onSubmit fired')(newPublisherLogos);
 
+    // this is purely for the sake of storybook demoing
+    const resources = await Promise.all(
+      newPublisherLogos.map(async (file) => ({
+        localResource: await getResourceFromLocalFile(file),
+        file,
+      }))
+    );
+
     setUploadedContent((existingUploads) => {
-      const newUploads = newPublisherLogos.map(({ file, localResource }) => {
+      const newUploads = resources.map(({ file, localResource }) => {
         return {
           src: localResource.src,
           title: file.name,
@@ -50,12 +62,13 @@ export const _default = () => {
     });
   }, []);
 
-  const handleDeleteLogo = useCallback((deleteLogo) => {
+  const handleRemoveLogo = useCallback((e, deleteLogo) => {
+    e.preventDefault();
     action('onDelete fired')(deleteLogo);
 
     setUploadedContent((existingUploadedContent) => {
       const revisedMockUploads = existingUploadedContent.filter(
-        (uploadedLogo) => uploadedLogo.title !== deleteLogo.title
+        (uploadedLogo) => uploadedLogo.id !== deleteLogo.id
       );
       return revisedMockUploads;
     });
@@ -65,7 +78,7 @@ export const _default = () => {
     <PublisherLogoSettings
       canUploadFiles={boolean('canUploadFile', true)}
       handleAddLogos={handleAddLogos}
-      handleDeleteLogo={handleDeleteLogo}
+      handleRemoveLogo={handleRemoveLogo}
       isLoading={boolean('isLoading', false)}
       publisherLogos={uploadedContent}
       uploadError={text('uploadError', '')}

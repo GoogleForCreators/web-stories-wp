@@ -83,11 +83,11 @@ function PublisherLogoSettings({
                 <div
                   key={`${publisherLogo.title}_${idx}`}
                   data-testid={`publisher-logo-${idx}`}
-                  isActive={publisherLogo.isActive}
                 >
                   <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   {!publisherLogo.isActive && (
                     <DeleteLogoButton
+                      data-testid={`delete-publisher-logo-${idx}`}
                       aria-label={sprintf(
                         /* translators: %s: uploaded logo title */
                         __('delete %s as a publisher logo', 'web-stories'),
