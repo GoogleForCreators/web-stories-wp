@@ -48,6 +48,7 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
             url: globalMediaApi,
             query: {
               include: mediaIds.join(','),
+              per_page: 100,
             },
           })
         );

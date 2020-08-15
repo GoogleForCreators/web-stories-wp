@@ -99,12 +99,13 @@ function EditorSettings() {
     if (Object.keys(publisherLogos).length <= 0) {
       return [];
     }
-
     return publisherLogoIds.map((publisherLogoId) => {
-      if (publisherLogoId === activePublisherLogoId) {
-        publisherLogos[publisherLogoId].isActive = true;
+      if (publisherLogos[publisherLogoId]) {
+        if (publisherLogoId === activePublisherLogoId) {
+          publisherLogos[publisherLogoId].isActive = true;
+        }
+        return publisherLogos[publisherLogoId];
       }
-      return publisherLogos[publisherLogoId];
     });
   }, [activePublisherLogoId, publisherLogoIds, publisherLogos]);
 
