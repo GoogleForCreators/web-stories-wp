@@ -21,8 +21,10 @@ import settingsReducer, { ACTION_TYPES } from '../settings';
 
 describe('settingsReducer', () => {
   const initialState = {
+    activePublisherLogoId: null,
     error: {},
     googleAnalyticsId: null,
+    publisherLogoIds: [],
   };
 
   const MOCK_ERROR_ID = Date.now();
@@ -34,11 +36,17 @@ describe('settingsReducer', () => {
   it(`should update settings state when ${ACTION_TYPES.FETCH_SETTINGS_SUCCESS} is called`, () => {
     const result = settingsReducer(initialState, {
       type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
-      payload: { googleAnalyticsId: 'fakeId12345' },
+      payload: {
+        web_stories_ga_tracking_id: 'fakeId12345',
+        web_stories_active_publisher_logo: 5,
+        web_stories_publisher_logos: [6, 7, 8],
+      },
     });
     expect(result).toMatchObject({
       error: {},
       googleAnalyticsId: 'fakeId12345',
+      activePublisherLogoId: 5,
+      publisherLogoIds: [5, 6, 7, 8],
     });
   });
 
@@ -93,11 +101,17 @@ describe('settingsReducer', () => {
   it(`should update settings state when ${ACTION_TYPES.UPDATE_SETTINGS_SUCCESS} is called`, () => {
     const result = settingsReducer(initialState, {
       type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
-      payload: { googleAnalyticsId: 'fakeId12345NEW' },
+      payload: {
+        web_stories_ga_tracking_id: 'fakeId12345NEW',
+        web_stories_active_publisher_logo: 5,
+        web_stories_publisher_logos: [6, 7, 8],
+      },
     });
     expect(result).toMatchObject({
       error: {},
       googleAnalyticsId: 'fakeId12345NEW',
+      activePublisherLogoId: 5,
+      publisherLogoIds: [5, 6, 7, 8],
     });
   });
 });

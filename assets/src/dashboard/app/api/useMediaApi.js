@@ -95,7 +95,6 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
           payload: mediaResponse,
         });
       } catch (err) {
-        console.error(err);
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_FAILURE,
           payload: {
@@ -110,37 +109,12 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
     [dataAdapter, globalMediaApi]
   );
 
-  // todo
-  const deleteMedia = useCallback(
-    async (media) => {
-      dispatch({
-        type: MEDIA_ACTION_TYPES.LOADING_MEDIA,
-      });
-      try {
-        await dataAdapter.deleteRequest(`${globalMediaApi}/${media.id}`, {
-          data: media,
-        });
-        dispatch({
-          type: MEDIA_ACTION_TYPES.REMOVE_MEDIA_SUCCESS,
-          payload: media.id,
-        });
-      } catch (err) {
-        console.error(err);
-        dispatch({
-          type: MEDIA_ACTION_TYPES.REMOVE_MEDIA_FAILURE,
-        });
-      }
-    },
-    [dataAdapter, globalMediaApi]
-  );
-
   const api = useMemo(
     () => ({
       uploadMedia,
       fetchMediaById,
-      deleteMedia,
     }),
-    [uploadMedia, deleteMedia, fetchMediaById]
+    [uploadMedia, fetchMediaById]
   );
 
   return { media: state, api };

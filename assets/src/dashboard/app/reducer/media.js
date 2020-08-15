@@ -25,8 +25,6 @@ export const ACTION_TYPES = {
   ADD_MEDIA_FAILURE: 'add_media_failure',
   FETCH_MEDIA_SUCCESS: 'fetch_media_success',
   FETCH_MEDIA_FAILURE: 'fetch_media_failure',
-  REMOVE_MEDIA_SUCCESS: 'remove_media_success',
-  REMOVE_MEDIA_FAILURE: 'remove_media_failure',
 };
 
 export const defaultMediaState = {
@@ -64,8 +62,7 @@ function mediaReducer(state, action) {
       };
     }
     case ACTION_TYPES.ADD_MEDIA_FAILURE:
-    case ACTION_TYPES.FETCH_MEDIA_FAILURE:
-    case ACTION_TYPES.REMOVE_MEDIA_FAILURE: {
+    case ACTION_TYPES.FETCH_MEDIA_FAILURE: {
       return {
         ...state,
         error: { ...action.payload, id: Date.now() },
@@ -90,15 +87,6 @@ function mediaReducer(state, action) {
           }, {}),
         },
         uploadedMediaIds: action.payload.map(({ id }) => id),
-      };
-    }
-
-    case ACTION_TYPES.REMOVE_MEDIA_SUCCESS: {
-      return {
-        ...state,
-        error: {},
-        isLoading: false,
-        // todo update publisher logos
       };
     }
 
