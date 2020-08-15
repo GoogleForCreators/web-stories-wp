@@ -66,16 +66,14 @@ class HTML {
 	 * @return string The complete HTML markup for the story.
 	 */
 	public function render() {
-		$markup = $this->story->get_markup();
+		$markup = '<!DOCTYPE html>' . $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
 
-		$this->document = $this->string_to_doc( $markup );
+		$this->document = $this->load_html( $markup );
 
 		// Run all further transformations on the DOMDocument.
 
 		$this->transform_html_start_tag();
-		$this->insert_content_after_opening_body();
-		$this->insert_content_before_closing_body();
 		$this->insert_analytics_configuration();
 
 		$this->add_poster_images();
@@ -85,17 +83,32 @@ class HTML {
 	}
 
 	/**
-	 * Returns a DOMDocument from a string.
+	 * Loads a full HTML document and returns a DOMDocument instance.
 	 *
-	 * @param string $string Input string.
+	 * @param string     $string Input string.
+	 * @param int|string $options Optional. Specify additional Libxml parameters.
 	 *
 	 * @return DOMDocument DOMDocument instance.
 	 */
-	private function string_to_doc( $string ) {
+	private function load_html( $string, $options = 0 ) {
+		$options |= LIBXML_COMPACT;
+
+		/*
+		 * LIBXML_HTML_NODEFDTD is only available for libxml 2.7.8+.
+		 * This should be the case for PHP 5.4+, but some systems seem to compile against a custom libxml version that
+		 * is lower than expected.
+		 */
+		if ( defined( 'LIBXML_HTML_NODEFDTD' ) ) {
+			$options |= constant( 'LIBXML_HTML_NODEFDTD' );
+		}
+
+		$libxml_previous_state = libxml_use_internal_errors( true );
+
 		$doc = new DOMDocument();
-		libxml_use_internal_errors( true );
-		$doc->loadHTML( $string, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		$doc->loadHTML( $string, $options );
+
 		libxml_clear_errors();
+		libxml_use_internal_errors( $libxml_previous_state );
 
 		return $doc;
 	}
@@ -245,6 +258,13 @@ class HTML {
 	 * @return void
 	 */
 	protected function insert_analytics_configuration() {
+		/* @var DOMElement $story_element The <amp-story> element. */
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+
+		if ( ! $story_element ) {
+			return;
+		}
+
 		ob_start();
 
 		do_action( 'web_stories_insert_analytics_configuration' );
@@ -255,95 +275,17 @@ class HTML {
 			return;
 		}
 
-		$new_content = $this->string_to_doc( $output );
+		$fragment = $this->document->createDocumentFragment();
+		$fragment->appendXml( $output );
 
-		if ( ! $new_content->documentElement ) {
-			return;
-		}
+		$story_element->appendChild( $this->document->importNode( $fragment, true ) );
 
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		$story_element->appendChild( $this->document->importNode( $new_content->documentElement, true ) );
-
+		/*
+		 * $fragment could contain anything (amp-analytics, amp-pixel, etc.).
+		 *
+		 * @todo Only insert extension when it actually contains amp-analytics.
+		 */
 		$this->insert_amp_analytics_extension();
-	}
-
-	/**
-	 * Replaces the body start tag to fire a custom action.
-	 *
-	 * @return void
-	 */
-	protected function insert_content_after_opening_body() {
-		ob_start();
-
-		/**
-		 * Prints scripts or data after opening the <body>.
-		 */
-		do_action( 'web_stories_body_open' );
-
-		$output = (string) ob_get_clean();
-
-		if ( empty( $output ) ) {
-			return;
-		}
-
-		$new_content = $this->string_to_doc( $output );
-
-		if ( ! $new_content->documentElement ) {
-			return;
-		}
-
-		/* @var DOMElement $story_element The <amp-story> element */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element || ! $story_element->parentNode ) {
-			return;
-		}
-
-		$story_element->parentNode->insertBefore(
-			$this->document->importNode( $new_content->documentElement, true ),
-			$story_element
-		);
-	}
-
-	/**
-	 * Replaces the body end tag to fire a custom action.
-	 *
-	 * @return void
-	 */
-	protected function insert_content_before_closing_body() {
-		ob_start();
-
-		/**
-		 * Prints scripts or data before closing the </body>.
-		 */
-		do_action( 'web_stories_footer' );
-
-		$output = (string) ob_get_clean();
-
-		if ( empty( $output ) ) {
-			return;
-		}
-
-		$new_content = $this->string_to_doc( $output );
-
-		if ( ! $new_content->documentElement ) {
-			return;
-		}
-
-		/* @var DOMElement $body The <body> element. */
-		$body = $this->get_element_by_tag_name( 'body' );
-
-		if ( ! $body ) {
-			return;
-		}
-
-		$body->appendChild( $this->document->importNode( $new_content->documentElement, true ) );
 	}
 
 	/**
