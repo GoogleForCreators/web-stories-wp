@@ -36,7 +36,7 @@ describe('MediaPane fetching', () => {
     await fixture.render();
 
     localPane = fixture.querySelector('#library-pane-media');
-    nonMediaTab = fixture.querySelector('#library-tab-text');
+    nonMediaTab = fixture.querySelector('#library-tab-shapes');
   });
 
   afterEach(() => {
@@ -71,17 +71,18 @@ describe('MediaPane fetching', () => {
     await expectMediaElements(MEDIA_PER_PAGE * 2);
   });
 
-  it('should not load results if local media tab not selected', async () => {
-    const mediaGallery = localPane.querySelector(
-      '[data-testid="media-gallery-container"]'
-    );
+  it('should not load results on resize if tab is hidden', async () => {
+    localPane.querySelector('[data-testid="media-gallery-container"]');
     await expectMediaElements(MEDIA_PER_PAGE);
 
     await fixture.events.click(nonMediaTab);
-    mediaGallery.scrollTo(
-      0,
-      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
-    );
+
+    // Simulate a browser window resize, and complete the event debounce cycle.
+    jasmine.clock().install();
+    window.dispatchEvent(new Event('resize'));
+    jasmine.clock().tick(600);
+
+    // Expect no additional results to be loaded.
     await expectMediaElements(MEDIA_PER_PAGE);
   });
 });
