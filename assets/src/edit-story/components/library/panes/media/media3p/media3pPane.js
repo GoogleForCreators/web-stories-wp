@@ -60,7 +60,7 @@ const MediaSubheading = styled.div`
 const PaneBottom = styled.div`
   position: relative;
   height: 100%;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-height: 0;
 `;
 
@@ -69,8 +69,10 @@ const ProviderMediaCategoriesWrapper = styled.div`
   visibility: hidden;
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  height: 100%;
   min-height: 100px;
+  top: 0;
+  left: 0;
   &.provider-selected {
     position: relative;
     visibility: visible;
