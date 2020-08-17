@@ -49,7 +49,7 @@ const Bar = styled.div`
   overflow: hidden;
 `;
 
-const Handle = styled.div`
+const Handle = styled.div.attrs({ tabIndex: 0 })`
   background-color: white;
   width: 14px;
   height: 14px;
@@ -58,7 +58,7 @@ const Handle = styled.div`
   cursor: ew-resize;
 `;
 
-const Label = styled.div`
+const Label = styled.div.attrs({ tabIndex: 0 })`
   font-family: ${({ theme }) => theme.fonts.label.family};
   flex: 1;
   font-weight: bold;
