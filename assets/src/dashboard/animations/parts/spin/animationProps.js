@@ -24,4 +24,8 @@ export default {
     type: FIELD_TYPES.STRING,
     defaultValue: '0',
   },
+  stopAngle: {
+    type: FIELD_TYPES.STRING,
+    defaultValue: '0',
+  },
 };

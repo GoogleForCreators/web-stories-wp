@@ -33,17 +33,15 @@ import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
 
-export const TAB_IDS = {
-  MEDIA: 'media',
-  MEDIA3P: 'media3p',
-  TEXT: 'text',
-  SHAPES: 'shapes',
-  ELEMENTS: 'elements',
-  ANIMATION: 'animation',
-};
+const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
+const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
+const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
+const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
+const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };
+const ANIM = { icon: AnimationIcon, Pane: AnimationPane, id: 'animation' };
 
 function LibraryProvider({ children }) {
-  const initialTab = TAB_IDS.MEDIA;
+  const initialTab = MEDIA.id;
   const [tab, setTab] = useState(initialTab);
   const insertElement = useInsertElement();
 
@@ -52,40 +50,12 @@ function LibraryProvider({ children }) {
   // Order here is important, as it denotes the actual visual order of elements.
   const tabs = useMemo(
     () => [
-      { icon: MediaIcon, Pane: MediaPane, id: TAB_IDS.MEDIA },
-      ...(media3pTab
-        ? [
-            {
-              icon: Media3pIcon,
-              Pane: Media3pPane,
-              id: TAB_IDS.MEDIA3P,
-            },
-          ]
-        : []),
-      { icon: TextIcon, Pane: TextPane, id: TAB_IDS.TEXT },
-      {
-        icon: ShapesIcon,
-        Pane: ShapesPane,
-        id: TAB_IDS.SHAPES,
-      },
-      ...(showElementsTab
-        ? [
-            {
-              icon: ElementsIcon,
-              Pane: ElementsPane,
-              id: TAB_IDS.ELEMENTS,
-            },
-          ]
-        : []),
-      ...(showAnimationTab
-        ? [
-            {
-              icon: AnimationIcon,
-              Pane: AnimationPane,
-              id: TAB_IDS.ANIMATION,
-            },
-          ]
-        : []),
+      MEDIA,
+      ...(media3pTab ? [MEDIA3P] : []),
+      TEXT,
+      SHAPES,
+      ...(showElementsTab ? [ELEMS] : []),
+      ...(showAnimationTab ? [ANIM] : []),
     ],
     [media3pTab, showAnimationTab, showElementsTab]
   );

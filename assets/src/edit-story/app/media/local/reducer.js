@@ -23,7 +23,6 @@ import * as commonTypes from '../pagination/types';
 import commonReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
 } from '../pagination/reducer';
-import { ProviderType } from '../providerType';
 import * as types from './types';
 
 const INITIAL_STATE = {
@@ -35,24 +34,28 @@ const INITIAL_STATE = {
 };
 
 /**
+ * @typedef {import('./typedefs').LocalMediaReducerState} LocalMediaReducerState
+ */
+
+/**
  * The reducer for locally uploaded media.
  *
  * For pagination actions, the `payload.provider` discriminator must be
  * assigned to 'local', which is passed from the local media action dispatchers
  * at {@link ./actions}.
  *
- * @param {Object} state The state to reduce
+ * @param {LocalMediaReducerState} state The state to reduce
  * @param {Object} obj An object with the type and payload
  * @param {string} obj.type A constant that identifies the reducer action
  * @param {Object} obj.payload The details of the action, specific to the action
- * @return {Object} The new state
+ * @return {LocalMediaReducerState} The new state
  */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
     case commonTypes.FETCH_MEDIA_SUCCESS: {
       const { provider, mediaType, searchTerm } = payload;
       if (
-        provider === ProviderType.LOCAL &&
+        provider === 'local' &&
         mediaType === state.mediaType &&
         searchTerm === state.searchTerm
       ) {
@@ -134,7 +137,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     default:
-      if (payload?.provider == ProviderType.LOCAL) {
+      if (payload?.provider == 'local') {
         return commonReducer(state, { type, payload });
       }
       return state;

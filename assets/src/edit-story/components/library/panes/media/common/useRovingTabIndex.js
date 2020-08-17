@@ -85,7 +85,7 @@ function getSiblingDirection(isRTL, key) {
  * @return {Element} The sibling.
  */
 function getNextSibling(e, siblingDirection) {
-  return e.parentNode[siblingDirection]?.firstChild;
+  return e[siblingDirection];
 }
 
 /**
@@ -132,7 +132,7 @@ function getClosestValidSibling(element, siblingDirection) {
   return closestValidSibling;
 }
 
-export default function useRovingTabIndex({ ref, isRowBasedGallery }) {
+export default function useRovingTabIndex({ ref }) {
   const { isRTL } = useConfig();
 
   /**
@@ -170,20 +170,20 @@ export default function useRovingTabIndex({ ref, isRowBasedGallery }) {
           closestValidSibling.focus();
         } else if (key === 'ArrowUp') {
           // First sibling.
-          const sibling = element.parentNode.parentNode.firstChild.firstChild;
+          const sibling = element.parentNode.firstChild;
           switchFocusToElement(sibling);
         } else {
           // Last sibling.
-          const sibling = element.parentNode.parentNode.lastChild.firstChild;
+          const sibling = element.parentNode.lastChild;
           switchFocusToElement(sibling);
         }
       } else if (key === 'Home') {
         // First sibling.
-        const sibling = element.parentNode.parentNode.firstChild.firstChild;
+        const sibling = element.parentNode.firstChild;
         switchFocusToElement(sibling);
       } else if (key === 'End') {
         // Last sibling.
-        const sibling = element.parentNode.parentNode.lastChild.firstChild;
+        const sibling = element.parentNode.lastChild;
         switchFocusToElement(sibling);
       } else if (key === 'PageDown' || key === 'PageUp') {
         let sibling = element;
@@ -203,11 +203,9 @@ export default function useRovingTabIndex({ ref, isRowBasedGallery }) {
   useKeyDownEffect(
     ref,
     {
-      key: isRowBasedGallery
-        ? ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end']
-        : [],
+      key: ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end'],
     },
     onKeyDown,
-    [ref, onKeyDown, isRowBasedGallery]
+    [ref, onKeyDown]
   );
 }

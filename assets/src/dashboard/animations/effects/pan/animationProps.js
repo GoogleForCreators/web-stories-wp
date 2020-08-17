@@ -17,14 +17,17 @@
 /**
  * Internal dependencies
  */
-import { arrange } from './_utils';
-import mediaResponseWithPdfAndImage from './_utils/mediaResponseWithPdfAndImage';
+import { FIELD_TYPES, DIRECTION } from '../../constants';
 
-describe('mediaPane', () => {
-  it('should only display supported mimeTypes and not crash on unsupported', async () => {
-    const { getByAltText } = await arrange({
-      mediaResponse: mediaResponseWithPdfAndImage,
-    });
-    expect(getByAltText('test-image')).toBeDefined();
-  });
-});
+export default {
+  panDir: {
+    type: FIELD_TYPES.DROPDOWN,
+    values: [
+      DIRECTION.TOP_TO_BOTTOM,
+      DIRECTION.BOTTOM_TO_TOP,
+      DIRECTION.LEFT_TO_RIGHT,
+      DIRECTION.RIGHT_TO_LEFT,
+    ],
+    defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  },
+};

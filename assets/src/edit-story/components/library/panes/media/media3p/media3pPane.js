@@ -172,6 +172,7 @@ function Media3pPane(props) {
         dataProvider={providerType}
         {...wrapperProps}
         key={`provider-bottom-wrapper-${providerType}`}
+        id={`provider-bottom-wrapper-${providerType}`}
       >
         {PROVIDERS[providerType].supportsCategories && (
           <Media3pCategories
@@ -224,6 +225,7 @@ function Media3pPane(props) {
             {enabledProviders.map((providerType) => (
               <ProviderTab
                 key={`provider-tab-${providerType}`}
+                id={`provider-tab-${providerType}`}
                 name={PROVIDERS[providerType].displayName}
                 active={selectedProvider === providerType}
                 onClick={() => onProviderTabClick(providerType)}

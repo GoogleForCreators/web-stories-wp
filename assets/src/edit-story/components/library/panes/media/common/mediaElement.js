@@ -22,18 +22,16 @@ import PropTypes from 'prop-types';
 import { useEffect, useCallback, memo, useState, useRef, useMemo } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../../app';
-import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
-import { ProviderType } from '../../../../../app/media/providerType';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
+import getThumbnailUrl from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
 
@@ -54,11 +52,20 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Container = styled.div`
+const Container = styled.div.attrs((props) => ({
+  style: {
+    width: props.width + 'px',
+    height: props.height + 'px',
+    margin: props.margin,
+  },
+}))``;
+
+const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  body${KEYBOARD_USER_SELECTOR} &:focus {
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
 `;
@@ -121,8 +128,9 @@ const HiddenPosterImage = styled.img`
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
+ * @param {string?} param.margin The margin in around the element
  * @param {Function} param.onInsert Insertion callback.
- * @param {ProviderType} param.providerType Which provider the element is from.
+ * @param {string} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
  */
 const MediaElement = ({
@@ -130,6 +138,7 @@ const MediaElement = ({
   resource,
   width: requestedWidth,
   height: requestedHeight,
+  margin,
   onInsert,
   providerType,
 }) => {
@@ -142,7 +151,6 @@ const MediaElement = ({
     local,
     alt,
   } = resource;
-  const hasDropdownMenu = useFeature('mediaDropdownMenu');
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -164,7 +172,7 @@ const MediaElement = ({
 
   const handleRegisterUsage = useCallback(() => {
     if (
-      providerType !== ProviderType.LOCAL &&
+      providerType !== 'local' &&
       resource.attribution &&
       resource.attribution.registerUsageUrl
     ) {
@@ -271,10 +279,7 @@ const MediaElement = ({
 
   const ref = useRef();
 
-  const rowBasedUploadGalleryEnabled = useFeature('rowBasedGallery');
-  const isRowBasedGallery =
-    providerType !== ProviderType.LOCAL || rowBasedUploadGalleryEnabled;
-  useRovingTabIndex({ ref, isRowBasedGallery });
+  useRovingTabIndex({ ref });
 
   const handleKeyDown = useCallback(
     ({ key }) => {
@@ -302,34 +307,39 @@ const MediaElement = ({
       data-testid="mediaElement"
       data-id={resourceId}
       className={'mediaElement'}
+      width={width}
+      height={height}
+      margin={margin}
       onPointerEnter={makeActive}
       onFocus={makeActive}
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
     >
-      {innerElement}
-      {attribution}
-      {local && (
-        <CSSTransition
-          in
-          appear={true}
-          timeout={0}
-          className="uploading-indicator"
-        >
-          <UploadingIndicator />
-        </CSSTransition>
-      )}
-      {hasDropdownMenu && providerType === ProviderType.LOCAL && (
-        <DropDownMenu
-          resource={resource}
-          display={active}
-          isMenuOpen={isMenuOpen}
-          onMenuOpen={onMenuOpen}
-          onMenuCancelled={onMenuCancelled}
-          onMenuSelected={onMenuSelected}
-        />
-      )}
+      <InnerContainer>
+        {innerElement}
+        {attribution}
+        {local && (
+          <CSSTransition
+            in
+            appear={true}
+            timeout={0}
+            className="uploading-indicator"
+          >
+            <UploadingIndicator />
+          </CSSTransition>
+        )}
+        {providerType === 'local' && (
+          <DropDownMenu
+            resource={resource}
+            display={active}
+            isMenuOpen={isMenuOpen}
+            onMenuOpen={onMenuOpen}
+            onMenuCancelled={onMenuCancelled}
+            onMenuSelected={onMenuSelected}
+          />
+        )}
+      </InnerContainer>
     </Container>
   );
 };
@@ -381,6 +391,8 @@ function getInnerElement(
           aria-label={alt}
           muted
           onClick={onClick}
+          // crossorigin='anonymous' is required to play videos from other domains.
+          crossOrigin="anonymous"
           {...dropTargetsBindings}
         >
           <source src={src} type={mimeType} />
@@ -400,12 +412,13 @@ MediaElement.propTypes = {
   resource: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
+  margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
 };
 
 MediaElement.defaultProps = {
-  providerType: ProviderType.LOCAL,
+  providerType: 'local',
 };
 
 export default memo(MediaElement);

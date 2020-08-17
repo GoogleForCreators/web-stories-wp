@@ -231,6 +231,17 @@ class Experiments {
 			],
 			/**
 			 * Author: @brittanyirl
+			 * Issue: 3482
+			 * Creation date: 2020-08-10
+			 */
+			[
+				'name'        => 'enableSettingsView',
+				'label'       => __( 'Settings Views', 'web-stories' ),
+				'description' => __( 'Enable settings view in dashboard', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @brittanyirl
 			 * Issue: 2381
 			 * Creation date: 2020-06-11
 			 */
@@ -251,10 +262,26 @@ class Experiments {
 				'description' => __( 'Enable bookmark actions', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 3390
+			 * Creation date: 2020-07-08
+			 */
 			[
 				'name'        => 'enableTemplatePreviews',
 				'label'       => __( 'Template Previews', 'web-stories' ),
 				'description' => __( 'Enable template preview functionality', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 3391
+			 * Creation date: 2020-08-06
+			 */
+			[
+				'name'        => 'enableStoryPreviews',
+				'label'       => __( 'Story Previews', 'web-stories' ),
+				'description' => __( 'Enable story preview functionality', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
 			/**
@@ -266,17 +293,6 @@ class Experiments {
 				'name'        => 'showAnimationTab',
 				'label'       => __( 'Animations', 'web-stories' ),
 				'description' => __( 'Enable animations tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @carlos-kelly
-			 * Issue: #1300
-			 * Creation date: 2020-06-02
-			 */
-			[
-				'name'        => 'newFontPicker',
-				'label'       => __( 'Font Picker', 'web-stories' ),
-				'description' => __( 'Enable new font picker with typeface previews', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -344,30 +360,6 @@ class Experiments {
 				'label'       => __( 'Elements tab', 'web-stories' ),
 				'description' => __( 'Enable elements tab', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @joannalee
-			 * Issue: #2820
-			 * Creation date: 2020-06-30
-			 */
-			[
-				'name'        => 'rowBasedGallery',
-				'label'       => __( 'Row Based Uploads Gallery', 'web-stories' ),
-				'description' => __( 'Enable the row-based media gallery in the Upload tab.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @joannag6
-			 * Issue: #1319 and #354
-			 * Creation date: 2020-05-20
-			 */
-			[
-				'name'        => 'mediaDropdownMenu',
-				'label'       => __( 'Media Dropdown Menu', 'web-stories' ),
-				'description' => __( 'Display dropdown menu on hover in media library', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @diegovar

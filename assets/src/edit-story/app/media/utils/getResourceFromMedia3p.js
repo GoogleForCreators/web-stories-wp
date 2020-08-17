@@ -94,13 +94,7 @@ function getImageUrls(m) {
 
   const sizesFromBiggest = m.imageUrls
     .sort((x, y) => y.width - x.width)
-    .map((u) => ({
-      file: m.name,
-      source_url: u.url,
-      mime_type: u.mimeType,
-      width: u.width,
-      height: u.height,
-    }));
+    .map((u) => mediaUrlToImageSizeDescription(m, u));
   const namedSizes = [
     ['full', sizesFromBiggest[0]],
     ['large', sizesFromBiggest[1]],
@@ -133,16 +127,20 @@ function getVideoUrls(m) {
 
   const sizesFromBiggest = m.videoUrls
     .sort((x, y) => y.width - x.width)
-    .map((u) => ({
-      file: m.name,
-      source_url: u.url,
-      mime_type: u.mimeType,
-      width: u.width,
-      height: u.height,
-    }));
+    .map((u) => mediaUrlToImageSizeDescription(m, u));
   return {
     full: sizesFromBiggest[0],
     preview: sizesFromBiggest[sizesFromBiggest.length - 1],
+  };
+}
+
+function mediaUrlToImageSizeDescription(media, url) {
+  return {
+    file: media.name,
+    source_url: url.url,
+    mime_type: url.mimeType,
+    width: url.width,
+    height: url.height,
   };
 }
 
@@ -189,9 +187,9 @@ function getVideoResourceFromMedia3p(m) {
     mimeType: videoUrls.full.mime_type,
     creationDate: m.createTime,
     src: videoUrls.full.source_url,
-    width: videoUrls.full.width,
-    height: videoUrls.full.height,
-    poster: m.imageUrls[0],
+    width: 1920, // TODO(#3815): Use width from API.
+    height: 1080, // TODO(#3815): Use height from API.
+    poster: m.imageUrls[0].url,
     length,
     lengthFormatted: formatVideoLength(length),
     title: m.description,

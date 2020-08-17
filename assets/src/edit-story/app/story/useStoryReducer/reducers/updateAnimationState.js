@@ -15,31 +15,19 @@
  */
 
 /**
- * External dependencies
- */
-import https from 'https';
-
-/**
- * Simple utility function to make GET requests.
+ * Update the story animation state to play, pause, scrub or reset
+ * active pages animations.
  *
- * @param {string} url URL to request.
- * @return {Promise<string>} Result.
+ * @param {Object} state Current state
+ * @param {Object} payload Action payload
+ * @param {string} payload.animationState STORY_ANIMATION_STATE state to update to.
+ * @return {Object} New state
  */
-function fetch(url) {
-  return new Promise((resolve, reject) => {
-    const data = [];
-
-    https
-      .get(url, (res) => {
-        if (res.statusCode < 200 || res.statusCode > 299) {
-          reject(new Error('Error: ' + res.statusCode));
-        }
-
-        res.on('data', (chunk) => data.push(chunk));
-        res.on('end', () => resolve(data.join('')));
-      })
-      .on('error', reject);
-  });
+function updateAnimationState(state, { animationState }) {
+  return {
+    ...state,
+    animationState,
+  };
 }
 
-export default fetch;
+export default updateAnimationState;
