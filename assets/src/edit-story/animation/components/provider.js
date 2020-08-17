@@ -20,7 +20,6 @@
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import {
-  createContext,
   useCallback,
   useEffect,
   useMemo,

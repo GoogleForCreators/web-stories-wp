@@ -89,3 +89,10 @@ export const FIELD_TYPES = {
   TEXT: 'text',
   CHECKBOX: 'checkbox',
 };
+
+export const STORY_ANIMATION_STATE = {
+  RESET: 'reset',
+  PAUSED: 'paused',
+  SCRUBBING: 'scrubbing',
+  PLAYING: 'playing',
+};
