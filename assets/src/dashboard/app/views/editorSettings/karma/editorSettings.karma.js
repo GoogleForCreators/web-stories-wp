@@ -91,5 +91,52 @@ describe('Settings View', () => {
     expect(newInput.value).toBe(googleAnalyticsId);
   });
 
-  // it("it should not allow an update of google analytics id when id format doesn't match required format", () => {});
+  it('should remove a publisher logo on click', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^publisher-logo/
+    );
+    const initialPublisherLogosLength = PublisherLogos.length;
+    expect(PublisherLogos).toBeTruthy();
+
+    const RemovePublisherLogoButton = within(settingsView).queryAllByTestId(
+      /^remove-publisher-logo/
+    )[0];
+
+    expect(RemovePublisherLogoButton).toBeTruthy();
+
+    await fixture.events.click(RemovePublisherLogoButton);
+
+    const UpdatedPublisherLogos = within(
+      await fixture.screen.getByTestId('editor-settings')
+    ).queryAllByTestId(/^publisher-logo/);
+
+    expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
+  });
+
+  it('should remove a publisher logo on keydown enter', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^publisher-logo/
+    );
+    const initialPublisherLogosLength = PublisherLogos.length;
+    expect(PublisherLogos).toBeTruthy();
+
+    const RemovePublisherLogoButton = within(settingsView).queryAllByTestId(
+      /^remove-publisher-logo/
+    )[0];
+
+    expect(RemovePublisherLogoButton).toBeTruthy();
+
+    await fixture.events.focus(RemovePublisherLogoButton);
+    await fixture.events.keyboard.press('Enter');
+
+    const UpdatedPublisherLogos = within(
+      await fixture.screen.getByTestId('editor-settings')
+    ).queryAllByTestId(/^publisher-logo/);
+
+    expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
+  });
 });

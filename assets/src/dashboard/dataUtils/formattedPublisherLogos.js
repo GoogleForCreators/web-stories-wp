@@ -15,6 +15,31 @@
  */
 
 export const publisherLogoIds = [577, 584, 582, 581];
+
+export const rawPublisherLogos = {
+  577: {
+    id: 577,
+    src: 'https://picsum.photos/96',
+    title: 'dummy image 1',
+    isActive: true,
+  },
+  584: {
+    id: 584,
+    src: 'https://picsum.photos/97',
+    title: 'dummy image 2',
+  },
+  582: {
+    id: 582,
+    src: 'https://picsum.photos/98',
+    title: 'dummy image 3',
+  },
+  581: {
+    id: 581,
+    src: 'https://picsum.photos/99',
+    title: 'dummy image 4',
+  },
+};
+
 const formattedPublisherLogos = [
   {
     id: 577,

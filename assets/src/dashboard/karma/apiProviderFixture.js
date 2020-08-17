@@ -31,9 +31,14 @@ import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
+import {
+  publisherLogoIds as fillerPublisherLogoIds,
+  rawPublisherLogos,
+} from '../dataUtils/formattedPublisherLogos';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
+  const [media, setMediaState] = useState(getMediaState());
   const [settings, setSettingsState] = useState(getSettingsState());
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
@@ -47,6 +52,15 @@ export default function ApiProviderFixture({ children }) {
         setSettingsState((currentState) =>
           updateSettings(updates, currentState)
         ),
+    }),
+    []
+  );
+
+  const mediaApi = useMemo(
+    () => ({
+      uploadMedia: jasmine.createSpy('uploadMedia'),
+      fetchMediaById: (newIds) =>
+        setMediaState((currentState) => fetchMediaById(newIds, currentState)),
     }),
     []
   );
@@ -114,12 +128,14 @@ export default function ApiProviderFixture({ children }) {
   const value = useMemo(
     () => ({
       state: {
+        media,
         settings,
         stories,
         templates,
         users,
       },
       actions: {
+        mediaApi,
         settingsApi,
         storyApi,
         templateApi,
@@ -128,10 +144,12 @@ export default function ApiProviderFixture({ children }) {
       },
     }),
     [
+      media,
       settings,
       stories,
       templates,
       users,
+      mediaApi,
       settingsApi,
       storyApi,
       templateApi,
@@ -148,28 +166,64 @@ ApiProviderFixture.propTypes = {
   children: PropTypes.node,
 };
 
+function getMediaState() {
+  return {
+    error: {},
+    isLoading: false,
+    uploadedMediaIds: [],
+    publisherLogos: rawPublisherLogos,
+  };
+}
+
+function fetchMediaById(newIds, currentState) {
+  const mediaState = { ...(currentState || getMediaState()) };
+  // TODO handle adding Ids
+  return mediaState;
+}
+
 function getSettingsState() {
   return {
     error: {},
     googleAnalyticsId: '',
-    publisherLogos: [],
+    publisherLogoIds: [],
   };
 }
 
 function fetchSettings(currentState) {
   const settingsState = { ...currentState } || getSettingsState();
   settingsState.googleAnalyticsId = 'UA-000000-2';
-
+  settingsState.publisherLogoIds = fillerPublisherLogoIds.slice(0, 2);
   return settingsState;
 }
 
 function updateSettings(updates, currentState) {
-  const { googleAnalyticsId } = updates;
-
-  return {
-    ...currentState,
+  const {
     googleAnalyticsId,
-  };
+    publisherLogoIds,
+    publisherLogoIdToRemove,
+  } = updates;
+  if (googleAnalyticsId) {
+    return {
+      ...currentState,
+      googleAnalyticsId,
+    };
+  } else if (publisherLogoIds) {
+    return {
+      ...currentState,
+      publisherLogoIds: [
+        ...new Set([...currentState.publisherLogoIds, ...publisherLogoIds]),
+      ],
+    };
+  } else if (publisherLogoIdToRemove) {
+    return {
+      ...currentState,
+      publisherLogoIds: currentState.publisherLogoIds.filter(
+        (logoId) => logoId !== publisherLogoIdToRemove
+      ),
+    };
+  }
+
+  return currentState;
 }
 
 function getStoriesState() {

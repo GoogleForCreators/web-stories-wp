@@ -52,10 +52,7 @@ export const TEXT = {
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
 };
 
-function GoogleAnalyticsSettings({
-  googleAnalyticsId = '',
-  handleUpdateSettings,
-}) {
+function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdateSettings }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
 

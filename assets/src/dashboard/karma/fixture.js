@@ -36,7 +36,9 @@ import ApiProviderFixture from './apiProviderFixture';
 const defaultConfig = {
   capabilities: {
     canManageSettings: true,
+    canUploadFiles: true,
   },
+  maxUpload: 104857600,
   isRTL: false,
   dateFormat: 'F j, Y',
   timeFormat: 'g:i a',
