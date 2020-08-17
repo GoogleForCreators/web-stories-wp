@@ -22,21 +22,25 @@ import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import theme from '../theme';
+import { lightTheme, darkTheme, GlobalStyle } from '../theme';
+import MessageContent from './components/messageContent';
+import { ConfigProvider } from './config';
+import usePrefersDarkMode from './utils/usePrefersDarkMode';
 
 function App({ config }) {
   const { isRTL } = config;
+
+  const prefersDarkMode = usePrefersDarkMode();
+
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={theme}>
-        <p>{__('Plugin activated.', 'web-stories')}</p>
+      <ThemeProvider theme={prefersDarkMode ? darkTheme : lightTheme}>
+        <ConfigProvider config={config}>
+          <GlobalStyle />
+          <MessageContent />
+        </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>
   );

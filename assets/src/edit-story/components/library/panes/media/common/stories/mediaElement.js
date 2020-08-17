@@ -19,7 +19,6 @@
  */
 import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
-import { FlagsProvider } from 'flagged';
 import styled from 'styled-components';
 
 /**
@@ -77,15 +76,51 @@ export const _Image = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <FlagsProvider features={{ mediaDropdownMenu: true }}>
-            <Column>
-              <MediaElement
-                resource={resource}
-                width={150}
-                onInsert={action('insert into canvas')}
-              />
-            </Column>
-          </FlagsProvider>
+          <Column>
+            <MediaElement
+              resource={resource}
+              width={150}
+              onInsert={action('insert into canvas')}
+            />
+          </Column>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
+  );
+};
+
+export const _Image_With_Attribution = () => {
+  const resource = object('Image Resource', {
+    id: 123,
+    type: 'image',
+    mimeType: 'image/png',
+    title: 'My Image :)',
+    uploadDate: Date.now(),
+    src: testImage,
+    width: 910,
+    height: 675,
+    local: false,
+    alt: 'my image',
+    sizes: {},
+    attribution: {
+      author: {
+        displayName: 'Some Author',
+        url: 'http://www.google.com',
+      },
+    },
+  });
+
+  return (
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <Column>
+            <MediaElement
+              resource={resource}
+              width={150}
+              onInsert={action('insert into canvas')}
+            />
+          </Column>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
@@ -113,15 +148,53 @@ export const _Video = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <FlagsProvider features={{ mediaDropdownMenu: true }}>
-            <Column>
-              <MediaElement
-                resource={resource}
-                width={150}
-                onInsert={action('insert into canvas')}
-              />
-            </Column>
-          </FlagsProvider>
+          <Column>
+            <MediaElement
+              resource={resource}
+              width={150}
+              onInsert={action('insert into canvas')}
+            />
+          </Column>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
+  );
+};
+
+export const _Video_With_Attribution = () => {
+  const resource = object('Video Resource', {
+    id: 456,
+    type: 'video',
+    mimeType: 'video/mp4',
+    title: 'My Video :)',
+    uploadDate: Date.now(),
+    src: testVideo,
+    width: 640,
+    height: 480,
+    poster: testPoster,
+    lengthFormatted: '0:26',
+    local: false,
+    alt: 'my video',
+    sizes: {},
+    attribution: {
+      author: {
+        displayName: 'Some Author',
+        url: 'http://www.google.com',
+      },
+    },
+  });
+
+  return (
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <Column>
+            <MediaElement
+              resource={resource}
+              width={150}
+              onInsert={action('insert into canvas')}
+            />
+          </Column>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>

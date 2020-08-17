@@ -54,10 +54,10 @@ const MenuItem = styled.li`
   ${TypographyPresets.Small};
   ${({ theme, isDisabled, itemBgColor }) => `
     padding: 10px 20px;
+    margin: 0; 
     background-color: ${itemBgColor ? theme.colors[itemBgColor] : 'none'};
     color: ${theme.colors.gray700};
     cursor: ${isDisabled ? 'default' : 'pointer'};
-    display: flex;
     width: 100%;
   `}
 `;
@@ -67,9 +67,12 @@ MenuItem.propTypes = {
 };
 
 const MenuItemContent = styled.span`
-  align-self: flex-start;
+  display: inline-block;
   height: 100%;
-  margin: auto 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const TypeaheadOptions = ({

@@ -76,18 +76,20 @@ export default function useSettingsApi(
   }, [dataAdapter, globalStoriesSettingsApi]);
 
   const updateSettings = useCallback(
-    async (settings = {}) => {
+    async ({ googleAnalyticsId }) => {
       try {
         const response = await dataAdapter.post(
           queryString.stringifyUrl({
             url: globalStoriesSettingsApi,
-            query: settings,
+            query: {
+              web_stories_ga_tracking_id: googleAnalyticsId,
+            },
           })
         );
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
-          payload: response,
+          payload: { googleAnalyticsId: response.web_stories_ga_tracking_id },
         });
       } catch (err) {
         dispatch({

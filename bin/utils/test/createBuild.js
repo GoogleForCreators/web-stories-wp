@@ -61,6 +61,7 @@ describe('createBuild', () => {
       'bar.txt',
       'baz/',
       'assets/images/templates/',
+      'assets/images/plugin-activation/',
     ]);
   });
 

@@ -2,12 +2,12 @@
 
 Contributors:      google
 Requires at least: 5.3
-Tested up to:      5.4
+Tested up to:      5.5
 Requires PHP:      5.6
 Stable tag:        1.0.0
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
-Tags:              web-stories, amp, stories, storytelling, google
+Tags:              web-stories, amp, stories, storytelling, google, block
 
 Stories is a visual storytelling format for the open web which immerses your readers in fast-loading, full-screen, and visually rich experiences.
 

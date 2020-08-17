@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { act, fireEvent } from '@testing-library/react';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -45,40 +44,23 @@ const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 function Wrapper({ children }) {
   return (
-    <FlagsProvider features={{ newFontPicker: false }}>
-      <FontContext.Provider
-        value={{
-          state: {
-            fonts: [
-              {
-                name: 'ABeeZee',
-                value: 'ABeeZee',
-                service: 'foo.bar.baz',
-                weights: [400],
-                styles: ['italic', 'regular'],
-                variants: [
-                  [0, 400],
-                  [1, 400],
-                ],
-                fallbacks: ['serif'],
-              },
-              {
-                name: 'Neu Font',
-                value: 'Neu Font',
-                service: 'foo.bar.baz',
-                weights: [400],
-                styles: ['italic', 'regular'],
-                variants: [
-                  [0, 400],
-                  [1, 400],
-                ],
-                fallbacks: ['fallback1'],
-              },
-            ],
-          },
-          actions: {
-            maybeEnqueueFontStyle: () => Promise.resolve(),
-            getFontByName: () => ({
+    <FontContext.Provider
+      value={{
+        state: {
+          fonts: [
+            {
+              name: 'ABeeZee',
+              value: 'ABeeZee',
+              service: 'foo.bar.baz',
+              weights: [400],
+              styles: ['italic', 'regular'],
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
+              fallbacks: ['serif'],
+            },
+            {
               name: 'Neu Font',
               value: 'Neu Font',
               service: 'foo.bar.baz',
@@ -89,18 +71,33 @@ function Wrapper({ children }) {
                 [1, 400],
               ],
               fallbacks: ['fallback1'],
-            }),
-            addRecentFont: jest.fn(),
-          },
-        }}
+            },
+          ],
+        },
+        actions: {
+          maybeEnqueueFontStyle: () => Promise.resolve(),
+          getFontByName: () => ({
+            name: 'Neu Font',
+            value: 'Neu Font',
+            service: 'foo.bar.baz',
+            weights: [400],
+            styles: ['italic', 'regular'],
+            variants: [
+              [0, 400],
+              [1, 400],
+            ],
+            fallbacks: ['fallback1'],
+          }),
+          addRecentFont: jest.fn(),
+        },
+      }}
+    >
+      <RichTextContext.Provider
+        value={{ state: {}, actions: { selectionActions: {} } }}
       >
-        <RichTextContext.Provider
-          value={{ state: {}, actions: { selectionActions: {} } }}
-        >
-          {children}
-        </RichTextContext.Provider>
-      </FontContext.Provider>
-    </FlagsProvider>
+        {children}
+      </RichTextContext.Provider>
+    </FontContext.Provider>
   );
 }
 
@@ -483,6 +480,64 @@ describe('Panels/TextStyle', () => {
       const input = getByRole('textbox', { name: 'Font size' });
       await fireEvent.change(input, { target: { value: '' } });
       expect(pushUpdate).not.toHaveBeenCalled();
+    });
+
+    it('should set the text bold when the key command is pressed', async () => {
+      const { pushUpdate, container } = renderTextStyle([textElement]);
+
+      await fireEvent.keyDown(container, {
+        key: 'b',
+        which: 66,
+        ctrlKey: true,
+      });
+
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content: '<span style="font-weight: 700">Hello world</span>',
+        },
+        true
+      );
+    });
+
+    it('should set the text underline when the key command is pressed', async () => {
+      const { pushUpdate, container } = renderTextStyle([textElement]);
+
+      await fireEvent.keyDown(container, {
+        key: 'u',
+        which: 85,
+        ctrlKey: true,
+      });
+
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content:
+            '<span style="text-decoration: underline">Hello world</span>',
+        },
+        true
+      );
+    });
+
+    it('should set the text italics when the key command is pressed', async () => {
+      const { pushUpdate, container } = renderTextStyle([textElement]);
+
+      await fireEvent.keyDown(container, {
+        key: 'i',
+        which: 73,
+        ctrlKey: true,
+      });
+
+      const updatingFunction = pushUpdate.mock.calls[0][0];
+      const resultOfUpdating = updatingFunction({ content: 'Hello world' });
+      expect(resultOfUpdating).toStrictEqual(
+        {
+          content: '<span style="font-style: italic">Hello world</span>',
+        },
+        true
+      );
     });
   });
 

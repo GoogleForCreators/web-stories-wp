@@ -165,7 +165,7 @@ class Discovery extends \WP_UnitTestCase {
 		$object = new \Google\Web_Stories\Discovery();
 		$output = get_echo( [ $object, 'print_twitter_metadata' ] );
 		$this->assertContains( 'twitter:card', $output );
-		$this->assertContains( 'twtter:image', $output );
+		$this->assertContains( 'twitter:image', $output );
 	}
 
 	/**

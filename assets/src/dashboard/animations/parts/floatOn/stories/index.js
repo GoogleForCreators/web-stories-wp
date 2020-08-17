@@ -22,7 +22,7 @@ import { PlayButton, AMPStoryWrapper } from '../../../../storybookUtils';
 import { ANIMATION_TYPES, DIRECTION } from '../../../constants';
 
 export default {
-  title: 'Dashboard/Animations/FloatOn',
+  title: 'Animations/Parts/FloatOn',
 };
 
 const duration = 600;
@@ -32,28 +32,28 @@ const animations = [
     targets: ['e1'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
-    direction: DIRECTION.TOP_TO_BOTTOM,
+    floatOnDir: DIRECTION.TOP_TO_BOTTOM,
   },
   {
     targets: ['e2'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
     delay: duration,
-    direction: DIRECTION.BOTTOM_TO_TOP,
+    floatOnDir: DIRECTION.BOTTOM_TO_TOP,
   },
   {
     targets: ['e3'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
     delay: duration * 2,
-    direction: DIRECTION.LEFT_TO_RIGHT,
+    floatOnDir: DIRECTION.LEFT_TO_RIGHT,
   },
   {
     targets: ['e4'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
     delay: duration * 3,
-    direction: DIRECTION.RIGHT_TO_LEFT,
+    floatOnDir: DIRECTION.RIGHT_TO_LEFT,
   },
 ];
 
@@ -65,6 +65,7 @@ const elements = [
 ];
 
 const defaultStyles = {
+  position: 'relative',
   width: '200px',
   height: '100px',
 };
@@ -101,13 +102,11 @@ export const AMPStory = () => {
 
             <amp-story-grid-layer template="vertical">
               {elements.map(({ id, text }) => (
-                <StoryAnimation.AMPWrapper
-                  key={id}
-                  target={id}
-                  style={defaultStyles}
-                >
-                  {text}
-                </StoryAnimation.AMPWrapper>
+                <div key={id} style={defaultStyles}>
+                  <StoryAnimation.AMPWrapper target={id}>
+                    {text}
+                  </StoryAnimation.AMPWrapper>
+                </div>
               ))}
             </amp-story-grid-layer>
           </StoryAnimation.Provider>

@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -22,7 +27,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
  * Internal dependencies
  */
 import { UnitsProvider } from '../../../edit-story/units';
-import { STORY_PAGE_STATE } from '../../constants';
+import { STORY_ANIMATION_STATE } from '../../constants';
 import { StoryPropType } from '../../types';
 import { getPagePreviewHeights } from '../../utils';
 import PreviewPage from '../previewPage';
@@ -127,6 +132,11 @@ function CardGallery({ story }) {
                 isSelected={index === activePageIndex}
                 {...metrics.miniWrapperSize}
                 onClick={() => handleMiniCardClick(index)}
+                aria-label={sprintf(
+                  /* translators: %s: page number. */
+                  __('Page Preview - Page %s', 'web-stories'),
+                  index + 1
+                )}
               >
                 <MiniCard {...metrics.miniCardSize}>
                   <PreviewPage page={page} pageSize={metrics.miniCardSize} />
@@ -143,11 +153,18 @@ function CardGallery({ story }) {
             height: metrics.activeCardSize.height,
           }}
         >
-          <ActiveCard {...metrics.activeCardSize}>
+          <ActiveCard
+            aria-label={sprintf(
+              /* translators: %s: active preview page number */
+              __('Active Page Preview - Page %s', 'web-stories'),
+              activePageIndex + 1
+            )}
+            {...metrics.activeCardSize}
+          >
             <PreviewPage
               page={pages[activePageIndex]}
               pageSize={metrics.activeCardSize}
-              animationState={STORY_PAGE_STATE.PLAYING}
+              animationState={STORY_ANIMATION_STATE.PLAYING}
             />
           </ActiveCard>
         </UnitsProvider>

@@ -41,12 +41,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WEBSTORIES_VERSION', '1.0.0-beta.1' );
-define( 'WEBSTORIES_DB_VERSION', '2.0.3' );
+define( 'WEBSTORIES_DB_VERSION', '3.0.1' );
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
-define( 'WEBSTORIES_ASSETS_URL', WEBSTORIES_PLUGIN_DIR_URL . '/assets' );
-define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6.0' );
+define( 'WEBSTORIES_ASSETS_URL', WEBSTORIES_PLUGIN_DIR_URL . 'assets' );
+define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6' );
+define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.3' );
+
+if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
+	define( 'WEBSTORIES_DEV_MODE', false );
+}
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	include __DIR__ . '/vendor/autoload.php';

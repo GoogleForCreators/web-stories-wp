@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
+
 export { default as AMPStoryWrapper } from './ampStoryWrapper';
+export { fillerDateSettingsObject } from '../dataUtils/dateSettings';
 export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
 export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
 export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';
@@ -25,3 +31,5 @@ export const STORYBOOK_PAGE_SIZE = {
   height: 318,
   containerHeight: 376.89,
 };
+
+export const AMP_STORY_ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;

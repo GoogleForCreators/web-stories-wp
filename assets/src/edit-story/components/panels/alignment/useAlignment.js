@@ -59,7 +59,7 @@ function useAlignment() {
             ? boundRect.startY + offset
             : boundRect.endY - height - offset,
       };
-    });
+    }, true);
   };
 
   const handleAlignCenter = (boundRect, pushUpdate) => {
@@ -69,7 +69,7 @@ function useAlignment() {
       return {
         x: centerX - width / 2,
       };
-    });
+    }, true);
   };
 
   const handleAlignMiddle = (boundRect, pushUpdate) => {
@@ -79,7 +79,7 @@ function useAlignment() {
       return {
         y: centerY - height / 2,
       };
-    });
+    }, true);
   };
 
   const handleHorizontalDistribution = (boundRect, pushUpdate) => {
@@ -109,7 +109,7 @@ function useAlignment() {
       }
       offsetX += frameWidth + commonSpaceWidthPerElement;
     });
-    pushUpdate(({ id }) => updatedX[id]);
+    pushUpdate(({ id }) => updatedX[id], true);
   };
 
   const handleVerticalDistribution = (boundRect, pushUpdate) => {
@@ -139,7 +139,7 @@ function useAlignment() {
       }
       offsetY += frameHeight + commonSpaceHeightPerElement;
     });
-    pushUpdate(({ id }) => updatedY[id]);
+    pushUpdate(({ id }) => updatedY[id], true);
   };
 
   return {

@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import useLibrary from './useLibrary';
-import { getPane } from './panes';
 import { getTabId } from './panes/shared';
 
 function LibraryPanes() {
@@ -26,8 +25,7 @@ function LibraryPanes() {
     tab: state.state.tab,
     tabs: state.data.tabs,
   }));
-  const panes = tabs.map(getPane);
-  return panes.map(({ id, Pane }) => (
+  return tabs.map(({ id, Pane }) => (
     <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
   ));
 }

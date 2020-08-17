@@ -17,19 +17,48 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
+/**
+ * WordPress dependencies
+ */
+import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
+import { PROVIDERS } from './providerConfiguration';
 
+/**
+ * @typedef {Object} FetchMediaEffectParams
+ * @property {string} provider provider name
+ * @property {string} selectedProvider selected provider
+ * @property {string} searchTerm current search term
+ * @property {string} selectedCategoryId current category id
+ * @property {string} pageToken current page token
+ * @property {boolean} isMediaLoading is the media loading
+ * @property {boolean} isMediaLoaded is media loaded
+ * @property {import('./typedefs').FetchMediaStartFn} fetchMediaStart oction
+ * dispatched when fetch media process starts.
+ * @property {import('./typedefs').FetchMediaSuccessFn} fetchMediaSuccess action
+ * dispatched when fetching media has been a success
+ * @property {import('./typedefs').FetchMediaErrorFn} fetchMediaError action
+ * dispatched when fetching media returns an error
+ */
+
+/**
+ * The side effect that fetches the media from the backend.
+ *
+ * @param {FetchMediaEffectParams} obj required actions and parameters
+ */
 export default function useFetchMediaEffect({
   provider,
   selectedProvider,
   searchTerm,
   selectedCategoryId,
   pageToken,
+  isMediaLoading,
+  isMediaLoaded,
   fetchMediaStart,
   fetchMediaSuccess,
   fetchMediaError,
@@ -38,7 +67,22 @@ export default function useFetchMediaEffect({
     actions: { listMedia, listCategoryMedia },
   } = useMedia3pApi();
 
+  const { showSnackbar } = useSnackbar();
+
+  const previousPropsRef = useRef();
+
   useEffect(() => {
+    // Previous props are read from current, and stored to current after that.
+    // This allows us to get the previous values and compare for changes.
+    const previousProps = previousPropsRef.current;
+    previousPropsRef.current = {
+      pageToken,
+      searchTerm,
+      selectedCategoryId,
+      isMediaLoading,
+      isMediaLoaded,
+    };
+
     async function fetch() {
       fetchMediaStart({ provider, pageToken });
       try {
@@ -56,15 +100,35 @@ export default function useFetchMediaEffect({
             pageToken,
           }));
         }
-        fetchMediaSuccess({ provider, media, pageToken, nextPageToken });
-      } catch {
+        fetchMediaSuccess({
+          provider,
+          media,
+          pageToken,
+          nextPageToken,
+        });
+      } catch (e) {
         fetchMediaError({ provider, pageToken });
+        showSnackbar({ message: PROVIDERS[provider].fetchMediaErrorMessage });
       }
     }
 
-    if (provider === selectedProvider) {
+    // If we switched provider tab, and we already had loaded a page there, we
+    // don't load media again.
+    const somethingChanged =
+      previousProps &&
+      (pageToken != previousProps.pageToken ||
+        searchTerm != previousProps.searchTerm ||
+        selectedCategoryId != previousProps.selectedCategoryId);
+    const firstFetchOrSomethingChanged =
+      !previousProps ||
+      (!previousProps.isMediaLoading && !previousProps.isMediaLoaded) ||
+      somethingChanged;
+
+    if (provider === selectedProvider && firstFetchOrSomethingChanged) {
       fetch();
     }
+    // We don't want to depend on previousProps, see https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     // Fetch media is triggered by changes to these.
     selectedProvider,
@@ -78,5 +142,7 @@ export default function useFetchMediaEffect({
     fetchMediaError,
     fetchMediaStart,
     fetchMediaSuccess,
+    showSnackbar,
+    previousPropsRef,
   ]);
 }

@@ -40,9 +40,10 @@ import {
   UsersPropType,
   PageSizePropType,
   RenameStoryPropType,
+  DateSettingsPropType,
 } from '../../../types';
-import { getFormattedDisplayDate } from '../../../utils';
 import { STORY_STATUS } from '../../../constants';
+import { getRelativeDisplayDate } from '../../../utils';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -69,7 +70,8 @@ const StoryGridView = ({
   pageSize,
   storyMenu,
   renameStory,
-  dateFormat,
+  dateSettings,
+  previewStory,
 }) => {
   return (
     <StoryGrid pageSize={pageSize}>
@@ -92,13 +94,14 @@ const StoryGridView = ({
               pageSize={pageSize}
               story={story}
               centerAction={{
-                targetAction: story.centerTargetAction,
+                targetAction: (e) => previewStory(e, story),
                 label: centerActionLabelByStatus[story.status],
               }}
               bottomAction={{
                 targetAction: story.bottomTargetAction,
                 label: bottomActionLabel,
               }}
+              containerAction={(e) => previewStory(e, story)}
             />
             <DetailRow>
               <CardTitle
@@ -113,8 +116,8 @@ const StoryGridView = ({
                 }
                 displayDate={
                   story?.status === STORY_STATUS.DRAFT
-                    ? getFormattedDisplayDate(story?.modified, dateFormat)
-                    : getFormattedDisplayDate(story?.created, dateFormat)
+                    ? getRelativeDisplayDate(story?.modified, dateSettings)
+                    : getRelativeDisplayDate(story?.created, dateSettings)
                 }
                 {...titleRenameProps}
               />
@@ -145,9 +148,10 @@ StoryGridView.propTypes = {
   ]),
   bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
+  previewStory: PropTypes.func,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
-  dateFormat: PropTypes.string,
+  dateSettings: DateSettingsPropType,
 };
 
 export default StoryGridView;

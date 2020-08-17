@@ -17,17 +17,95 @@
 /**
  * External dependencies
  */
-import { ThemeContext } from 'styled-components';
-
-/**
- * Internal dependencies
- */
+import { createGlobalStyle, ThemeContext } from 'styled-components';
 import { useContext } from 'react';
+
+export const GlobalStyle = createGlobalStyle`
+  #web-stories-plugin-activation-notice {
+    padding: 0;
+    border: none;
+  }
+`;
 
 export function useTheme() {
   return useContext(ThemeContext);
 }
 
-const theme = {};
+const baseTheme = {
+  fonts: {
+    body: {
+      family: 'Roboto',
+      size: '16px',
+      lineHeight: '24px',
+    },
+    title: {
+      family: 'Roboto',
+      size: '32px',
+      lineHeight: '40px',
+    },
+    button: {
+      family: 'Roboto',
+      size: '16px',
+      lineHeight: '32px',
+    },
+    stepNumber: {
+      family: 'Roboto',
+      size: '80px',
+      lineHeight: '80px',
+      fontWeight: 900,
+    },
+  },
+  breakpoint: {
+    tabletSmall: 'screen and (min-width: 700px)',
+    tabletLarge: 'screen and (min-width: 1100px)',
+    desktop: 'screen and (min-width: 1600px)',
+  },
+};
 
-export default theme;
+const lightTheme = {
+  ...baseTheme,
+  colors: {
+    bg: '#ffffff',
+    primary: 'rgba(0, 0, 0, 0.84)',
+    secondary: 'rgba(0, 0, 0, 0.64)',
+    tertiary: 'rgba(0, 0, 0, 0.14)',
+    link: {
+      fg: '#1A73E8',
+      hover: {
+        fg: '#1A1D1F',
+      },
+    },
+    action: {
+      bg: '#1A73E8',
+      fg: '#ffffff',
+      hover: {
+        bg: '#1A1D1F',
+      },
+    },
+  },
+};
+
+const darkTheme = {
+  ...baseTheme,
+  colors: {
+    bg: 'linear-gradient(21.97deg, #010218 -28.03%, #1B0418 95.56%)',
+    primary: 'rgba(255, 255, 255, 0.84)',
+    secondary: 'rgba(255, 255, 255, 0.64)',
+    tertiary: 'rgba(255, 255, 255, 0.38)',
+    link: {
+      fg: '#1A73E8',
+      hover: {
+        fg: '#44aaff',
+      },
+    },
+    action: {
+      bg: '#1A73E8',
+      fg: '#ffffff',
+      hover: {
+        bg: '#44aaff',
+      },
+    },
+  },
+};
+
+export { lightTheme, darkTheme };

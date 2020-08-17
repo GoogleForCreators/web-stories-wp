@@ -36,13 +36,15 @@ import Dialog from '../../../../dialog';
 import { Plain } from '../../../../button';
 import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
-import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import StoryPropTypes from '../../../../../types';
 import { useConfig } from '../../../../../app';
+import getThumbnailUrl from '../../../../../elements/media/util';
+
+const THUMBNAIL_WIDTH = 152;
 
 const styledMediaThumbnail = css`
   display: flex;
-  width: 152px;
+  width: ${THUMBNAIL_WIDTH}px;
   margin-right: 28px;
 `;
 
@@ -90,7 +92,7 @@ const MediaSizeText = styled.div`
 `;
 
 const Input = styled.input`
-  background: ${({ theme }) => theme.colors.bg.v13};
+  background: ${({ theme }) => theme.colors.bg.white};
   border: 1px solid ${({ theme }) => theme.colors.fg.v3};
   box-sizing: border-box;
   border-radius: 4px;
@@ -187,7 +189,11 @@ function MediaEditDialog({ resource, onClose }) {
     >
       <DialogBody>
         {type === 'image' ? (
-          <Image src={getThumbnailUrl(resource)} alt={alt} loading={'lazy'} />
+          <Image
+            src={getThumbnailUrl(THUMBNAIL_WIDTH, resource)}
+            alt={alt}
+            loading={'lazy'}
+          />
         ) : (
           <Video key={src} poster={poster} preload="none" muted>
             <source src={src} type={mimeType} />

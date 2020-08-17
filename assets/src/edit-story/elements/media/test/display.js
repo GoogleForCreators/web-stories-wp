@@ -49,6 +49,18 @@ describe('MediaDisplay', () => {
         src: 'https://example.com/image1',
         width: 1000,
         height: 800,
+        sizes: {
+          mid: {
+            source_url: 'https://example.com/image1-mid',
+            width: 500,
+            height: 400,
+          },
+          full: {
+            source_url: 'https://example.com/image1',
+            width: 1000,
+            height: 800,
+          },
+        },
       },
     };
     videoElement = {
@@ -82,6 +94,19 @@ describe('MediaDisplay', () => {
 
     storyContext = {};
     refs = {};
+  });
+
+  it('should render img with srcset', () => {
+    const { container } = render(
+      <TestDisplayElement storyContext={storyContext} element={imageElement} />
+    );
+
+    const img = container.querySelector('img');
+
+    expect(img.srcset).toBe(
+      'https://example.com/image1 1000w,https://example.com/image1-mid 500w'
+    );
+    expect(img.src).toBe('https://example.com/image1');
   });
 
   it('should render img with scale and focal point', () => {

@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -30,26 +30,33 @@ import { useCallback } from 'react';
  */
 import { getResourceFromLocalFile } from '../../../../utils';
 import {
+  Logo,
+  DeleteLogoButton,
   SettingForm,
-  FileUploadHelperText,
+  HelperText,
   FinePrintHelperText,
-  UploadContainer,
+  UploadedContainer,
   SettingHeading,
 } from '../components';
+import { FileUpload } from '../../../../components';
+import { Close as DeleteIcon } from '../../../../icons';
 
-const TEXT = {
-  SECTION_HEADING: __('Publisher Logo', 'web-stories'),
+export const TEXT = {
+  SECTION_HEADING: __('Published Logo', 'web-stories'),
   CONTEXT: __(
     'Upload your logos here and they will become available to any stories you create.',
     'web-stories'
   ),
   INSTRUCTIONS: __(
-    'Click on upload or drag a jpg, png, or static gif in the box above. Avoid vector files, such as svg or eps. Logos should be at least 96x96 pixels and a perfect square. The background should not be transparent.',
+    'Avoid vector files, such as svg or eps. Logos should be at least 96x96 pixels and a perfect square. The background should not be transparent.',
     'web-stories'
   ),
-  SUBMIT: __('Upload', 'web-stories'),
+  SUBMIT: __('Upload logo', 'web-stories'),
   ARIA_LABEL: __('Click to upload a new logo', 'web-stories'),
-  HELPER_UPLOAD: __('You can also drag your logo here', 'web-stories'),
+  HELPER_UPLOAD: __(
+    'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.',
+    'web-stories'
+  ),
 };
 
 function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
@@ -75,20 +82,42 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
 
   return (
     <SettingForm>
-      <SettingHeading htmlFor="publisherLogo">
-        {TEXT.SECTION_HEADING}
-      </SettingHeading>
       <div>
-        <FileUploadHelperText>{TEXT.CONTEXT}</FileUploadHelperText>
-        <UploadContainer
+        <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+        <HelperText>{TEXT.CONTEXT}</HelperText>
+      </div>
+      <div>
+        {publisherLogos.length > 0 && (
+          <UploadedContainer>
+            {publisherLogos.map((publisherLogo, idx) => {
+              return (
+                <div
+                  key={`${publisherLogo.title}_${idx}`}
+                  data-testid={`remove-publisher-logo-${idx}`}
+                >
+                  <Logo src={publisherLogo.src} alt={publisherLogo.title} />
+                  <DeleteLogoButton
+                    aria-label={sprintf(
+                      /* translators: %s: uploaded logo title */
+                      __('delete %s as a publisher logo', 'web-stories'),
+                      publisherLogo.title
+                    )}
+                    onClick={(e) => onSubmitDeleteFile(e, publisherLogo)}
+                  >
+                    <DeleteIcon aria-hidden="true" />
+                  </DeleteLogoButton>
+                </div>
+              );
+            })}
+          </UploadedContainer>
+        )}
+        <FileUpload
           onSubmit={onSubmitNewFile}
-          onDelete={onSubmitDeleteFile}
           id="settings_publisher_logos"
           label={TEXT.SUBMIT}
           isMultiple
           ariaLabel={TEXT.ARIA_LABEL}
-          uploadedContent={publisherLogos}
-          emptyDragHelperText={TEXT.HELPER_UPLOAD}
+          instructionalText={TEXT.HELPER_UPLOAD}
         />
         <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
       </div>

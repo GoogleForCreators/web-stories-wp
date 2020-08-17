@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../../tracking';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 import {
   CardGridItem,
@@ -39,7 +40,6 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
-import { trackEvent } from '../../../../tracking';
 
 const GridContainer = styled(CardGrid)`
   width: ${({ theme }) =>
@@ -81,6 +81,9 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
               targetAction: targetAction(template),
               label: __('Use template', 'web-stories'),
             }}
+            containerAction={(e) =>
+              templateActions.handlePreviewTemplate(e, template)
+            }
           />
         </CardGridItem>
       ))}
