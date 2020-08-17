@@ -86,6 +86,8 @@ const Media3pCategories = ({
         <CategoryPill
           index={i}
           isSelected={selected}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
           key={e.id}
           title={e.displayName}
           onClick={() => {

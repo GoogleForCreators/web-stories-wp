@@ -23,6 +23,7 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import useRovingTabIndex from '../common/useRovingTabIndex';
+import { useKeyDownEffect } from '../../../../keyboard';
 
 const PillContainer = styled.button`
   cursor: pointer;
@@ -56,10 +57,19 @@ PillContainer.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-const CategoryPill = ({ index, title, isSelected, onClick }) => {
+const CategoryPill = ({
+  index,
+  title,
+  isSelected,
+  isExpanded,
+  setIsExpanded,
+  onClick,
+}) => {
   const ref = useRef();
 
-  useRovingTabIndex({ ref, isRowBasedGallery: true });
+  useRovingTabIndex({ ref, isRowBasedGallery: true }, [isExpanded]);
+
+  useKeyDownEffect(ref, !isExpanded ? 'down' : [], () => setIsExpanded(true));
 
   return (
     <PillContainer
@@ -81,6 +91,8 @@ const CategoryPill = ({ index, title, isSelected, onClick }) => {
 CategoryPill.propTypes = {
   index: PropTypes.number,
   isSelected: PropTypes.bool,
+  isExpanded: PropTypes.bool,
+  setIsExpanded: PropTypes.func,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };

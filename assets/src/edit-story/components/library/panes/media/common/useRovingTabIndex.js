@@ -132,7 +132,7 @@ function getClosestValidSibling(element, siblingDirection) {
   return closestValidSibling;
 }
 
-export default function useRovingTabIndex({ ref, isRowBasedGallery }) {
+export default function useRovingTabIndex({ ref, isRowBasedGallery }, keyEventDeps) {
   const { isRTL } = useConfig();
 
   /**
@@ -197,7 +197,8 @@ export default function useRovingTabIndex({ ref, isRowBasedGallery }) {
         switchFocusToElement(sibling);
       }
     },
-    [ref, isRTL]
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+    [ref, isRTL, ...(keyEventDeps || [])]
   );
 
   useKeyDownEffect(

@@ -252,6 +252,20 @@ describe('Media3pPane fetching', () => {
     );
   });
 
+  it('should expand category section on arrow down', async () => {
+    mockListMedia();
+    mockListCategories();
+    await fixture.events.click(media3pTab);
+
+    await fixture.events.keyboard.press('tab');
+    await fixture.events.keyboard.press('tab');
+    expect(document.activeElement.textContent).toBe('Sustainability');
+
+    await fixture.events.keyboard.press('ArrowDown');
+    const expandButton = fixture.screen.getByTestId('category-expand-button');
+    expect(expandButton.getAttribute('aria-expanded')).toBe('true');
+  });
+
   it('should fetch 2nd page', async () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
