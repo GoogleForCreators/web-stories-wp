@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-/**
  * Internal dependencies
  */
 import { identity, useContextSelector } from '../../utils/context';
 import { StoryAnimationContext } from './provider';
 
-function useStoryAnimationContext() {
-  const context = useContext(StoryAnimationContext);
+function useStoryAnimationContext(selector) {
+  const context = useContextSelector(
+    StoryAnimationContext,
+    selector ?? identity
+  );
   if (!context) {
     throw new Error(
       'Must use `useStoryAnimationContext()` within <StoryAnimation.Provider />'
