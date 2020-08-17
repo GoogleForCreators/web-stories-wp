@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
@@ -42,10 +42,14 @@ const CategorySection = styled.div`
 
 // This hides the category pills unless expanded
 const CategoryPillContainer = styled.div`
-  height: ${(props) => (props.isExpanded ? 'auto' : '36px')};
+  height: 36px;
+  overflow: hidden;
+  transition: height 0.2s;
+`;
+
+const CategoryPillInnerContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  overflow: hidden;
 `;
 
 // Flips the button upside down when expanded;
@@ -82,10 +86,11 @@ const Media3pCategories = ({
     return (selectedCategoryId
       ? [categories.find((e) => e.id === selectedCategoryId)]
       : categories
-    ).map((e) => {
+    ).map((e, i) => {
       const selected = e.id === selectedCategoryId;
       return (
         <CategoryPill
+          index={i}
           isSelected={selected}
           key={e.id}
           title={e.displayName}
@@ -102,18 +107,48 @@ const Media3pCategories = ({
     });
   }
 
-  return categories.length ? (
-    <CategorySection aria-expanded={isExpanded}>
-      <CategoryPillContainer isExpanded={isExpanded} role="tablist">
-        {renderCategories()}
-      </CategoryPillContainer>
-      <ExpandButton
-        onClick={() => setIsExpanded(!isExpanded)}
-        isExpanded={isExpanded}
-        visible={!selectedCategoryId}
-      />
+  const containerRef = useRef();
+  const innerContainerRef = useRef();
+
+  // We calculate the actual height of the categories list, and set its explicit
+  // height if it's expanded, in order to have a CSS height transition.
+  useLayoutEffect(() => {
+    if (!containerRef.current || !innerContainerRef.current) {
+      return;
+    }
+    if (!isExpanded) {
+      containerRef.current.style.height = '36px';
+    } else {
+      containerRef.current.style.height = `${innerContainerRef.current.offsetHeight}px`;
+    }
+  }, [containerRef, innerContainerRef, isExpanded]);
+
+  return (
+    <CategorySection hasCategories={Boolean(categories.length)}>
+      {categories.length ? (
+        <>
+          <CategoryPillContainer
+            id="category-pill-container"
+            ref={containerRef}
+            isExpanded={isExpanded}
+            role="tablist"
+          >
+            <CategoryPillInnerContainer ref={innerContainerRef}>
+              {renderCategories()}
+            </CategoryPillInnerContainer>
+          </CategoryPillContainer>
+          <ExpandButton
+            data-testid="category-expand-button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            visible={!selectedCategoryId}
+            isExpanded={isExpanded}
+            aria-controls="category-pill-container"
+            aria-expanded={isExpanded}
+          />
+        </>
+      ) : null}
     </CategorySection>
-  ) : null;
+  );
 };
 
 Media3pCategories.propTypes = {

@@ -346,6 +346,7 @@ describe('Page output', () => {
         <amp-video
           artwork="https://example.com/poster.png"
           autoplay="autoplay"
+          crossorigin="anonymous"
           id="el-baz-media"
           layout="fill"
           poster="https://example.com/poster.png"

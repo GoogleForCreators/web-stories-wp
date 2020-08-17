@@ -18,10 +18,9 @@
  */
 import { renderWithTheme } from '../../../../../../testUtils';
 import PaginatedMediaGallery from '../paginatedMediaGallery';
-import { ProviderType } from '../../../../../../app/media/providerType';
 
 describe('paginatedMediaGallery', () => {
-  const providerType = ProviderType.UNSPLASH;
+  const providerType = 'unsplash';
   const resources = [
     {
       alt: null,
@@ -56,6 +55,11 @@ describe('paginatedMediaGallery', () => {
       width: 530,
     },
   ];
+
+  beforeAll(() => {
+    // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
+    window.HTMLElement.prototype.scrollTo = () => {};
+  });
 
   it('should render attribution when media is present', () => {
     const { queryByTestId } = renderWithTheme(

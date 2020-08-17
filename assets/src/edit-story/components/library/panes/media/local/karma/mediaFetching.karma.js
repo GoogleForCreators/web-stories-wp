@@ -31,14 +31,16 @@ describe('MediaPane fetching', () => {
   let localPane;
 
   beforeEach(async () => {
+    jasmine.clock().install();
+
     fixture = new Fixture();
-    fixture.setFlags({ rowBasedGallery: true });
     await fixture.render();
 
     localPane = fixture.querySelector('#library-pane-media');
   });
 
   afterEach(() => {
+    jasmine.clock().uninstall();
     fixture.restore();
   });
 
@@ -51,6 +53,7 @@ describe('MediaPane fetching', () => {
           `Not ready: ${mediaElements?.length} != ${expectedCount}`
         );
       }
+      jasmine.clock().tick(10);
     });
     expect(mediaElements.length).toBe(expectedCount);
   }
@@ -66,6 +69,7 @@ describe('MediaPane fetching', () => {
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
+    jasmine.clock().tick(500);
 
     await expectMediaElements(MEDIA_PER_PAGE * 2);
   });

@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { setupReducer } from './_utils';
 
 describe('updateSelectedElements', () => {
@@ -61,6 +62,37 @@ describe('updateSelectedElements', () => {
     const result = updateSelectedElements({ properties: { a: 1 } });
 
     expect(result).toStrictEqual(initialState);
+  });
+
+  it('should do nothing if elements selected and animation playing or scrubbing', () => {
+    const {
+      restore,
+      updateSelectedElements,
+      updateAnimationState,
+    } = setupReducer();
+
+    const initialState = restore({
+      pages: [
+        { id: '111', elements: [{ id: '123' }, { id: '456' }, { id: '789' }] },
+      ],
+      current: '111',
+      selection: ['123', '456'],
+    });
+
+    updateAnimationState({ animationState: STORY_ANIMATION_STATE.PLAYING });
+    const playingResult = updateSelectedElements({ properties: { a: 1 } });
+
+    updateAnimationState({ animationState: STORY_ANIMATION_STATE.SCRUBBING });
+    const scrubbingResult = updateSelectedElements({ properties: { a: 1 } });
+
+    expect(playingResult).toStrictEqual({
+      ...initialState,
+      animationState: STORY_ANIMATION_STATE.PLAYING,
+    });
+    expect(scrubbingResult).toStrictEqual({
+      ...initialState,
+      animationState: STORY_ANIMATION_STATE.SCRUBBING,
+    });
   });
 
   it('should update the selected elements with a function', () => {

@@ -16,18 +16,20 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import styled from 'styled-components';
-
 /**
  * Internal dependencies
  */
+import {
+  StoryAnimation,
+  useStoryAnimationContext,
+  STORY_ANIMATION_STATE,
+} from '../../animation';
 import StoryPropTypes from '../../edit-story/types';
 import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
-import { STORY_PAGE_STATE } from '../constants';
 import { PageSizePropType } from '../types';
-import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
 import PagePreviewElements from './previewPageElements';
 
 /*
@@ -73,16 +75,16 @@ function PreviewPageController({
 
   useEffect(() => {
     switch (animationState) {
-      case STORY_PAGE_STATE.PLAYING:
+      case STORY_ANIMATION_STATE.PLAYING:
         WAAPIAnimationMethods.play();
         return () => {};
-      case STORY_PAGE_STATE.RESET:
+      case STORY_ANIMATION_STATE.RESET:
         WAAPIAnimationMethods.reset();
         return () => {};
-      case STORY_PAGE_STATE.SCRUBBING:
+      case STORY_ANIMATION_STATE.SCRUBBING:
         WAAPIAnimationMethods.pause();
         return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
-      case STORY_PAGE_STATE.PAUSED:
+      case STORY_ANIMATION_STATE.PAUSED:
         WAAPIAnimationMethods.pause();
         return () => {};
       default:
@@ -110,7 +112,7 @@ function PreviewPageController({
 function PreviewPage({
   page,
   pageSize,
-  animationState = STORY_PAGE_STATE.RESET,
+  animationState = STORY_ANIMATION_STATE.RESET,
   onAnimationComplete,
   subscribeGlobalTime,
 }) {
@@ -134,7 +136,7 @@ function PreviewPage({
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   pageSize: PageSizePropType.isRequired,
-  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
+  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
   onAnimationComplete: PropTypes.func,
   subscribeGlobalTime: PropTypes.func,
 };
@@ -142,7 +144,7 @@ PreviewPage.propTypes = {
 PreviewPageController.propTypes = {
   page: StoryPropTypes.page.isRequired,
   pageSize: PageSizePropType.isRequired,
-  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
+  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
   subscribeGlobalTime: PropTypes.func,
 };
 

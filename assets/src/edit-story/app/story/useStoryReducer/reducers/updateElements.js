@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { updateElementWithUpdater, intersect } from './utils';
 
 /**
@@ -44,6 +45,14 @@ function updateElements(
   state,
   { elementIds, properties: propertiesOrUpdater }
 ) {
+  if (
+    [STORY_ANIMATION_STATE.PLAYING, STORY_ANIMATION_STATE.SCRUBBING].includes(
+      state.animationState
+    )
+  ) {
+    return state;
+  }
+
   const idsToUpdate = elementIds === null ? state.selection : elementIds;
 
   if (idsToUpdate.length === 0) {

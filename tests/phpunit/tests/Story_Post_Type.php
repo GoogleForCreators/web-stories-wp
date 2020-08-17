@@ -61,6 +61,16 @@ class Story_Post_Type extends \WP_UnitTestCase {
 				'post_author'  => self::$admin_id,
 			]
 		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
 	public function tearDown() {
@@ -85,6 +95,10 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $story_post_type, 'filter_supportable_post_types' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
+		$this->assertSame( 10, has_filter( 'the_content_feed', [ $story_post_type, 'embed_image' ] ) );
+		$this->assertSame( 10, has_filter( 'the_excerpt_rss', [ $story_post_type, 'embed_image' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'the_content', [ $story_post_type, 'embed_player' ] ) );
+		$this->assertSame( PHP_INT_MAX, has_filter( 'the_excerpt', [ $story_post_type, 'embed_player' ] ) );
 	}
 
 	/**
@@ -285,8 +299,113 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$editor        = get_role( 'editor' );
 
 		foreach ( $all_capabilities as $cap ) {
-			$administrator->has_cap( $cap );
-			$editor->has_cap( $cap );
+			$this->assertTrue( $administrator->has_cap( $cap ) );
+			$this->assertTrue( $editor->has_cap( $cap ) );
 		}
+	}
+
+
+	/**
+	 * @covers ::remove_caps_from_roles
+	 */
+	public function test_remove_caps_from_roles() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$story_post_type->remove_caps_from_roles();
+		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_roles        = wp_roles();
+		$roles            = array_values( (array) $all_roles->role_objects );
+
+		foreach ( $roles as $role ) {
+			foreach ( $all_capabilities as $cap ) {
+				$this->assertFalse( $role->has_cap( $cap ) );
+			}
+		}
+		// Add back roles after test.
+		$story_post_type->add_caps_to_roles();
+	}
+
+	/**
+	 * @covers ::add_caps_to_roles
+	 * @covers \Google\Web_Stories\new_site
+	 * @group ms-required
+	 */
+	public function test_add_caps_to_roles_multisite() {
+		$blog_id = $this->factory->blog->create();
+		switch_to_blog( $blog_id );
+
+		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+
+		$administrator = get_role( 'administrator' );
+		$editor        = get_role( 'editor' );
+
+		foreach ( $all_capabilities as $cap ) {
+			$this->assertTrue( $administrator->has_cap( $cap ) );
+			$this->assertTrue( $editor->has_cap( $cap ) );
+		}
+
+		restore_current_blog();
+	}
+
+	/**
+	 * @covers ::embed_image
+	 * @throws \Exception
+	 */
+	public function test_the_content_feed() {
+		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$feed = $this->do_rss2();
+
+		$this->assertContains( '<img', $feed );
+		$this->assertContains( 'images/test-image.jpg', $feed );
+		$this->assertContains( 'wp-block-web-stories-embed', $feed );
+	}
+
+	/**
+	 * @covers ::embed_player
+	 */
+	public function test_embed_player() {
+		$this->go_to( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
+
+		$content = get_echo( 'the_content' );
+		$this->assertContains( '<amp-story-player', $content );
+
+		$excerpt = get_echo( 'the_excerpt' );
+		$this->assertContains( '<amp-story-player', $excerpt );
+	}
+
+	/**
+	 * @covers ::change_default_title
+	 */
+	public function test_change_default_title() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_status'  => 'auto-draft',
+				'post_title'   => 'Auto draft',
+			]
+		);
+
+		$this->assertSame( '', $post->post_title );
+	}
+
+	/**
+	 * This is a bit of a hack used to buffer feed content.
+	 *
+	 * @link https://github.com/WordPress/wordpress-develop/blob/ab9aee8af474ac512b31b012f3c7c44fab31a990/tests/phpunit/tests/feed/rss2.php#L78-L94
+	 */
+	protected function do_rss2() {
+		ob_start();
+		// Nasty hack! In the future it would better to leverage do_feed( 'rss2' ).
+		try {
+			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+			@require ABSPATH . 'wp-includes/feed-rss2.php';
+			$out = ob_get_clean();
+		} catch ( Exception $e ) {
+			$out = ob_get_clean();
+			throw($e);
+		}
+		return $out;
 	}
 }

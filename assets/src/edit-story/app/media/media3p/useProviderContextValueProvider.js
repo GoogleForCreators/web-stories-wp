@@ -26,15 +26,23 @@ import useFetchMediaEffect from './useFetchMediaEffect';
 import useFetchCategoriesEffect from './useFetchCategoriesEffect';
 
 /**
+ * @typedef {import('./typedefs').Media3pReducerState} Media3pReducerState
+ * @typedef {import('./typedefs').Media3pReducerActions} Media3pReducerActions
+ * @typedef {import('./typedefs').Media3pProviderContext} Media3pProviderContext
+ */
+
+/**
  * Context fragment provider for a single 3p media source (Unsplash, Coverr,
  * etc).
  *
  * @param {string} provider The 3p provider to return the context value for
- * @param {Object} reducerState The 'media3p/[provider]' fragment of the state
- * returned from `useMediaReducer`
- * @param {Object} reducerActions The 'media3p/[provider]' fragment of the
- * actions returned from `useMediaReducer`
- * @return {Object} Context.
+ * @param {Media3pReducerState} reducerState
+ * The 'media3p/[provider]' fragment of the state returned from
+ * `useMediaReducer`
+ * @param {Media3pReducerActions} reducerActions
+ * The 'media3p/[provider]' fragment of the actions returned from
+ * `useMediaReducer`
+ * @return {Media3pProviderContext} Context.
  */
 export default function useProviderContextValueProvider(
   provider,

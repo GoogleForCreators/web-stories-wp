@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import StoryAnimation from '../../dashboard/components/storyAnimation';
-import StoryPropTypes from '../types';
-import WithMask from '../masks/output';
-import { getDefinitionForType } from '../elements';
-import { getBox } from '../units/dimensions';
+import { StoryAnimation } from '../../animation';
 import WithLink from '../components/elementLink/output';
+import { getDefinitionForType } from '../elements';
+import WithMask from '../masks/output';
+import StoryPropTypes from '../types';
+import { getBox } from '../units/dimensions';
 
 function OutputElement({ element }) {
   const { id, opacity, type } = element;
