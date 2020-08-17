@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -53,12 +53,18 @@ export const TEXT = {
 };
 
 function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdateSettings }) {
-  const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
+  const [analyticsId, _setAnalyticsId] = useState('');
   const [inputError, setInputError] = useState('');
+
+  const setAnalyticsId = useCallback((newId) => _setAnalyticsId(newId), []);
+
+  useEffect(() => {
+    setAnalyticsId(googleAnalyticsId);
+  }, [googleAnalyticsId, setAnalyticsId]);
 
   const handleCancelUpdateId = useCallback(() => {
     setAnalyticsId(googleAnalyticsId);
-  }, [googleAnalyticsId]);
+  }, [googleAnalyticsId, setAnalyticsId]);
 
   const handleUpdateId = useCallback(
     (value) => {
@@ -70,7 +76,6 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdateSettings }) {
     },
     [handleUpdateSettings, setInputError]
   );
-
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <SettingHeading htmlFor="gaTrackingID">
@@ -85,6 +90,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdateSettings }) {
           onEditComplete={handleUpdateId}
           placeholder={TEXT.PLACEHOLDER}
           error={inputError}
+          noAutoFocus={true}
         />
         <TextInputHelperText>
           {TEXT.CONTEXT}

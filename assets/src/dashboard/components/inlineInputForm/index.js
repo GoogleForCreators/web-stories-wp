@@ -38,6 +38,7 @@ const ErrorText = styled.p`
 `;
 
 const InlineInputForm = ({
+  noAutoFocus,
   error,
   id,
   label,
@@ -47,7 +48,13 @@ const InlineInputForm = ({
   value,
 }) => {
   const inputContainerRef = useRef(null);
-  const [newValue, setNewValue] = useState(value);
+  const [newValue, _setNewValue] = useState(value);
+
+  const setNewValue = useCallback((newVal) => _setNewValue(newVal), []);
+
+  useEffect(() => {
+    setNewValue(value);
+  }, [setNewValue, value]);
 
   useFocusOut(
     inputContainerRef,
@@ -58,14 +65,17 @@ const InlineInputForm = ({
   );
 
   useEffect(() => {
-    if (inputContainerRef.current) {
+    if (!noAutoFocus && inputContainerRef.current) {
       inputContainerRef.current.firstChild?.focus();
     }
-  }, []);
+  }, [noAutoFocus]);
 
-  const handleChange = useCallback(({ target }) => {
-    setNewValue(target.value);
-  }, []);
+  const handleChange = useCallback(
+    ({ target }) => {
+      setNewValue(target.value);
+    },
+    [setNewValue]
+  );
 
   const handleKeyPress = useCallback(
     ({ nativeEvent }) => {
@@ -99,6 +109,7 @@ InlineInputForm.propTypes = {
   error: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
+  noAutoFocus: PropTypes.bool,
   onEditCancel: PropTypes.func.isRequired,
   onEditComplete: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
