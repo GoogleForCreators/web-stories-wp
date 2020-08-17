@@ -24,11 +24,11 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Button } from '..';
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,
   DEFAULT_STORY_PAGE_ADVANCE_DURATION,
-  STORY_ANIMATION_STATE,
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
 import { clamp, useFocusOut } from '../../utils';
