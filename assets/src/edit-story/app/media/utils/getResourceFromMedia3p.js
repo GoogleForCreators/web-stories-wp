@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PROVIDERS } from '../media3p/providerConfiguration';
 import createResource from './createResource';
 
 /**
@@ -156,12 +157,18 @@ function mediaUrlToImageSizeDescription(media, url, originalSize) {
   if (!originalWidth || !originalHeight) {
     throw new Error('No original size present.');
   }
+  const provider = PROVIDERS[media.provider.toLowerCase()];
+  if ((!url.width || !url.height) && !provider.defaultPreviewWidth) {
+    throw new Error('Missing width & height for ' + media.provider);
+  }
   return {
     file: media.name,
     source_url: url.url,
     mime_type: url.mimeType,
-    width: url.width ?? 640,
-    height: url.height ?? (640 * originalHeight) / originalWidth,
+    width: url.width ?? provider.defaultPreviewWidth,
+    height:
+      url.height ??
+      (provider.defaultPreviewWidth * originalHeight) / originalWidth,
   };
 }
 

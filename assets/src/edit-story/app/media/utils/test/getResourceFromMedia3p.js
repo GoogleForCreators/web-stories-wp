@@ -189,4 +189,66 @@ describe('getResourceFromMedia3p', () => {
       expectedStoryEditorResource
     );
   });
+
+  it('should throw when unsplash has no size', () => {
+    const media3pResource = {
+      name: 'media/unsplash:dpbXgTh0Lac',
+      provider: 'UNSPLASH',
+      type: 'IMAGE',
+      author: {
+        displayName: 'XPS',
+        url:
+          'https://unsplash.com/@xps?utm_source=web_stories_wordpress&utm_medium=referral',
+      },
+      createTime: '2020-07-01T22:30:13Z',
+      updateTime: '2020-08-14T05:05:24Z',
+      registerUsageUrl:
+        'https://autopush-media3p.sandbox.googleapis.com/v1/media:registerUsage?payload=Af81gfyYynHd3Ao2kDkRmfXj7GcpvUB%2BodPzTbGSxvbLB1PmyrpJV4O1IbvAaUFKdHS1QhGxHlTRbkaR1/phBTcevwOmt7yMmwhUsmaNQiTRmTImxIr9NRMBWP6YyGLY/TaoLTyuRBlH5A%3D%3D',
+      imageUrls: [
+        {
+          url:
+            'https://images.unsplash.com/photo-1593642532400-2682810df593?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=6016&h=4016&fit=max',
+          mimeType: 'image/jpeg',
+          width: 6016,
+          height: 4016,
+        },
+        {
+          url:
+            'https://images.unsplash.com/photo-1593642532400-2682810df593?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=4812&h=3212&fit=max',
+          mimeType: 'image/jpeg',
+          width: 4812,
+          height: 3212,
+        },
+        {
+          url:
+            'https://images.unsplash.com/photo-1593642532400-2682810df593?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=3609&h=2409&fit=max',
+          mimeType: 'image/jpeg',
+          width: 3609,
+          height: 2409,
+        },
+        {
+          url:
+            'https://images.unsplash.com/photo-1593642532400-2682810df593?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=2406&h=1606&fit=max',
+          mimeType: 'image/jpeg',
+          width: 2406,
+          height: 1606,
+        },
+        {
+          url:
+            'https://images.unsplash.com/photo-1593642532400-2682810df593?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=1203&h=803&fit=max',
+          mimeType: 'image/jpeg',
+          width: 1203,
+          height: 803,
+        },
+        {
+          url:
+            'https://images.unsplash.com/photo-1593642532400-2682810df593?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=340&h=227&fit=max',
+          mimeType: 'image/jpeg',
+        },
+      ],
+    };
+    expect(() => getResourceFromMedia3p(media3pResource)).toThrow(
+      'Missing width & height for UNSPLASH'
+    );
+  });
 });
