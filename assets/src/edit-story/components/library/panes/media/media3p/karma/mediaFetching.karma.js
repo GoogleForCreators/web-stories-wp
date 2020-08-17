@@ -574,7 +574,7 @@ describe('Media3pPane fetching', () => {
 
       await fixture.events.focus(providerTabs.item(providerTabs.length - 1));
 
-      await fixture.events.keyboard.press('ArrowRight');
+      await fixture.events.keyboard.press('ArrowLeft');
 
       expect(document.activeElement).toBe(
         providerTabs.item(providerTabs.length - 2)
@@ -593,7 +593,7 @@ describe('Media3pPane fetching', () => {
 
       await fixture.events.focus(providerTabs.item(0));
 
-      await fixture.events.keyboard.press('ArrowRight');
+      await fixture.events.keyboard.press('ArrowLeft');
 
       expect(document.activeElement).toBe(providerTabs.item(0));
     });
