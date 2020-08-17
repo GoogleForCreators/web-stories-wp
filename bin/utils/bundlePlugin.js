@@ -63,6 +63,7 @@ function bundlePlugin(
   }
   if (cdn) {
     ignoredFiles.push('assets/images/templates/');
+    ignoredFiles.push('assets/images/plugin-activation/');
   }
   copyFiles(source, pluginBuildDirPath, ignoredFiles);
 

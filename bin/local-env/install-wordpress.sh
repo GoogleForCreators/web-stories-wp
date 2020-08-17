@@ -142,9 +142,13 @@ if [ "$SCRIPT_DEBUG" != $SCRIPT_DEBUG_CURRENT ]; then
 	echo -e $(status_message "SCRIPT_DEBUG: $SCRIPT_DEBUG_RESULT...")
 fi
 
-WEBSTORIES_DEV_MODE_CURRENT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
+WEBSTORIES_DEV_MODE_CURRENT=!$WEBSTORIES_DEV_MODE;
+if [ "$(wp config has --type=constant WEBSTORIES_DEV_MODE)" ]; then
+  WEBSTORIES_DEV_MODE_CURRENT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
+fi
+
 if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
-	wp config set WEBSTORIES_DEV_MODE $WEBSTORIES_DEV_MODE --raw --type=constant --quiet
-	WEBSTORIES_DEV_MODE=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
-	echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
+  wp config set WEBSTORIES_DEV_MODE $WEBSTORIES_DEV_MODE --raw --type=constant --quiet
+  WEBSTORIES_DEV_MODE_RESULT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
+  echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
 fi
