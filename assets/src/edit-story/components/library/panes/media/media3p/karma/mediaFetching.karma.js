@@ -199,6 +199,8 @@ describe('Media3pPane fetching', () => {
     fixture = new Fixture();
     fixture.setFlags({ media3pTab: true, showCoverrTab: true });
 
+    jasmine.clock().install();
+
     await fixture.render();
 
     media3pTab = fixture.querySelector('#library-tab-media3p');
@@ -206,6 +208,11 @@ describe('Media3pPane fetching', () => {
       '#provider-bottom-wrapper-unsplash'
     );
     coverrSection = fixture.querySelector('#provider-bottom-wrapper-coverr');
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+    fixture.restore();
   });
 
   function mockListMedia() {
@@ -248,6 +255,7 @@ describe('Media3pPane fetching', () => {
           `Not ready: ${mediaElements?.length} != ${expectedCount}`
         );
       }
+      jasmine.clock().tick(10);
     });
     expect(mediaElements.length).toBe(expectedCount);
   }
@@ -299,6 +307,7 @@ describe('Media3pPane fetching', () => {
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
+    jasmine.clock().tick(500);
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
   });
 
@@ -327,6 +336,7 @@ describe('Media3pPane fetching', () => {
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
+    jasmine.clock().tick(500);
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
 
     const mediaCategories = unsplashSection.querySelectorAll(
