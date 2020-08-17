@@ -110,6 +110,10 @@ const sharedConfig = {
         sourceMap: false,
         cache: true,
         terserOptions: {
+          // We preserve function names that start with capital letters as
+          // they're _likely_ component names, and these are useful to have
+          // in tracebacks and error messages.
+          keep_fnames: /__|_x|_n|_nx|sprintf|^[A-Z].+$/,
           output: {
             comments: /translators:/i,
           },

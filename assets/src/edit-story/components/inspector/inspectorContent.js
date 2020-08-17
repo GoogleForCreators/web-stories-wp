@@ -24,7 +24,11 @@ import styled from 'styled-components';
 import useInspector from './useInspector';
 import { getTabId } from './utils';
 
-const InspectorWrapper = styled.div.attrs({ role: 'tabpanel' })`
+const InspectorPane = styled.div.attrs({ role: 'tabpanel' })`
+  height: 100%;
+`;
+
+const InspectorPanes = styled.section`
   height: 100%;
 `;
 
@@ -34,12 +38,19 @@ function Inspector() {
     data: { tabs },
   } = useInspector();
 
-  const ContentInspector = tabs.find(({ id }) => id === tab).Pane;
-
   return (
-    <InspectorWrapper aria-labelledby={tab} id={getTabId(tab)}>
-      <ContentInspector />
-    </InspectorWrapper>
+    <InspectorPanes>
+      {tabs.map(({ id, Pane }) => (
+        <InspectorPane
+          aria-labelledby={id}
+          id={getTabId(id)}
+          key={id}
+          hidden={id !== tab}
+        >
+          <Pane />
+        </InspectorPane>
+      ))}
+    </InspectorPanes>
   );
 }
 

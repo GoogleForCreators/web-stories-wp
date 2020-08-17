@@ -38,7 +38,7 @@ export default function useTemplateView({ totalPages }) {
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [sort, _setSort] = useState(TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR);
   const [page, setPage] = useState(1);
-  const [previewVisible, _setPreviewVisible] = useState();
+  const [activePreview, _setActivePreview] = useState();
 
   const { pageSize } = usePagePreviewSize({
     isGrid: true,
@@ -72,10 +72,10 @@ export default function useTemplateView({ totalPages }) {
     [setPageClamped]
   );
 
-  const setPreviewVisible = useCallback(
+  const setActivePreview = useCallback(
     (_, template) => {
       if (enableTemplatePreviews) {
-        _setPreviewVisible(template);
+        _setActivePreview(template);
       }
     },
     [enableTemplatePreviews]
@@ -83,9 +83,9 @@ export default function useTemplateView({ totalPages }) {
 
   return useMemo(
     () => ({
-      previewVisible: {
-        value: previewVisible,
-        set: setPreviewVisible,
+      activePreview: {
+        value: activePreview,
+        set: setActivePreview,
       },
       view: {
         style: VIEW_STYLE.GRID,
@@ -110,8 +110,8 @@ export default function useTemplateView({ totalPages }) {
       },
     }),
     [
-      previewVisible,
-      setPreviewVisible,
+      activePreview,
+      setActivePreview,
       pageSize,
       sort,
       setSort,

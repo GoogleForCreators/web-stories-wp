@@ -64,6 +64,8 @@ function StoriesView({
   const enableInProgressStoryActions = useFeature(
     'enableInProgressStoryActions'
   );
+  const enableStoryPreviews = useFeature('enableStoryPreviews');
+
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
 
@@ -163,10 +165,11 @@ function StoriesView({
       <StoryGridView
         bottomActionLabel={__('Open in editor', 'web-stories')}
         centerActionLabelByStatus={
-          enableInProgressStoryActions && STORY_ITEM_CENTER_ACTION_LABELS
+          enableStoryPreviews && STORY_ITEM_CENTER_ACTION_LABELS
         }
         pageSize={view.pageSize}
         renameStory={renameStory}
+        previewStory={storyActions.handlePreviewStory}
         storyMenu={storyMenu}
         stories={stories}
         users={users}

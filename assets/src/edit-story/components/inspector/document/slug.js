@@ -55,7 +55,7 @@ function SlugPanel() {
   const { slug, link, permalinkConfig, updateStory } = useStory(
     ({
       state: {
-        story: { slug, link, permalinkConfig },
+        story: { slug = '', link, permalinkConfig },
       },
       actions: { updateStory },
     }) => ({ slug, link, permalinkConfig, updateStory })

@@ -222,7 +222,7 @@ function DropDownList({
 DropDownList.propTypes = {
   toggleOptions: PropTypes.func.isRequired,
   handleCurrentValue: PropTypes.func.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.array.isRequired,
 };
 
