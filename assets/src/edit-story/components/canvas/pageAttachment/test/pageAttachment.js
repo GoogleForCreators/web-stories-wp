@@ -22,37 +22,38 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import TransformContext from '../../../transform/context';
 import PageAttachment from '../index';
 import CanvasContext from '../../context';
 import { renderWithTheme } from '../../../../testUtils';
+import StoryContext from '../../../../app/story/context';
 
 function setup(props = {}) {
-  const {
-    pageAttachment = {},
-    isAnythingTransforming = false,
-    canvasProps = null,
-  } = props;
+  const { pageAttachment = {}, canvasProps = null } = props;
   const canvasContext = {
     state: {
       pageSize: {},
       displayLinkGuidelines: false,
       pageAttachmentContainer: null,
+      currentPage: {
+        elements: [],
+      },
       ...canvasProps,
     },
     actions: { setPageAttachmentContainer: jest.fn() },
   };
-  const transformContext = {
+  const storyContext = {
     state: {
-      isAnythingTransforming,
+      currentPage: {
+        elements: [],
+      },
     },
   };
   const { getByText, getByRole } = renderWithTheme(
-    <CanvasContext.Provider value={canvasContext}>
-      <TransformContext.Provider value={transformContext}>
+    <StoryContext.Provider value={storyContext}>
+      <CanvasContext.Provider value={canvasContext}>
         <PageAttachment pageAttachment={pageAttachment} />
-      </TransformContext.Provider>
-    </CanvasContext.Provider>
+      </CanvasContext.Provider>
+    </StoryContext.Provider>
   );
   return {
     getByText,
@@ -98,20 +99,5 @@ describe('PageAttachment', () => {
     // Verify the background was added for displaying dashed line.
     expect(style.backgroundSize).toStrictEqual('16px 0.5px');
     expect(style.backgroundPosition).toStrictEqual('top');
-  });
-
-  it('should display tooltip if link is being transformed on Page Attachment', () => {
-    const { getByText } = setup({
-      pageAttachment: { url: 'http://example.test', ctaText: 'Click me!' },
-      isAnythingTransforming: true,
-      canvasProps: {
-        displayLinkGuidelines: true,
-        pageAttachmentContainer: document.body,
-      },
-    });
-    const popup = getByText(
-      'Links can not be located below the dashed line when a page attachment is present'
-    );
-    expect(popup).toBeDefined();
   });
 });
