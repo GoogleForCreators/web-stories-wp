@@ -22,7 +22,7 @@ import useInsertElement from '../../useInsertElement';
 import { useStory } from '../../../../app/story';
 import { Fixture } from '../../../../karma';
 
-describe('CUJ: Creator can Add a Page Attachment', () => {
+describe('Page Attachment', () => {
   let fixture;
   let frame;
   let safezone;
@@ -44,20 +44,15 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
     fixture.restore();
   });
 
-  const moveElementToBottom = async (keepMouseDown = false) => {
+  const moveElementToBottom = async () => {
     const safezoneHeight = safezone.getBoundingClientRect().height;
     const frameHeight = frame.getBoundingClientRect().height;
-    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => {
-      const seq = [
-        moveRel(frame, 10, 10),
-        down(),
-        moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
-      ];
-      if (!keepMouseDown) {
-        seq.push(up());
-      }
-      return seq;
-    });
+    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+      moveRel(frame, 10, 10),
+      down(),
+      moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
+      up(),
+    ]);
   };
 
   const addElement = async (withLink = true) => {
@@ -100,7 +95,7 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
     await input.dispatchEvent(new window.Event('blur'));
   };
 
-  describe('Action: Add Page Attachment', () => {
+  describe('CUJ: Creator can Add a Page Attachment: Add Page Attachment', () => {
     it('it should allow adding Page Attachment with custom CTA Text', async () => {
       await setPageAttachmentLink('http://example.com');
       await setCtaText('Click me!');
@@ -115,13 +110,13 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
       await clickOnTarget(safezone);
       await setPageAttachmentLink('');
       const warning = fixture.screen.getByText(
-        'Links can not be located below the dashed line when a page attachment is present. The link to elements found below this line will be removed if you add a page attachment'
+        'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.'
       );
       expect(warning).toBeDefined();
     });
   });
 
-  describe('Action: Remove Page Attachment', () => {
+  describe('CUJ: Creator can Add a Page Attachment: Remove Page Attachment', () => {
     it('it should allow removing a Page Attachment', async () => {
       await setPageAttachmentLink('http://example.com');
       await setCtaText('Click me!');
@@ -133,30 +128,7 @@ describe('CUJ: Creator can Add a Page Attachment', () => {
     });
   });
 
-  describe('Action: Transforming link with Page Attachment', () => {
-    it('it should display tooltip for a link in Attachment area', async () => {
-      await setPageAttachmentLink('http://example.com');
-      await addElement();
-      await moveElementToBottom(true);
-
-      const popup = fixture.screen.getByText(
-        'Links can not be located below the dashed line when a page attachment is present'
-      );
-      expect(popup).toBeDefined();
-    });
-
-    it('it should cancel link transformation ending in Attachment area', async () => {
-      await setPageAttachmentLink('http://example.com');
-      await addElement();
-      const frameTop = frame.getBoundingClientRect().top;
-      await moveElementToBottom();
-
-      // Verify the same position.
-      expect(frame.getBoundingClientRect().top).toBeDefined(frameTop);
-    });
-  });
-
-  describe('Action: Adding link to element in Attachment area', () => {
+  describe('CUJ: Creator can Add a Page Attachment: Adding link to element in Attachment area', () => {
     it('it should not allow adding link to Attachment area', async () => {
       await setPageAttachmentLink('http://example.com');
       await addElement(false);

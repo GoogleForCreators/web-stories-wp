@@ -24,7 +24,7 @@ import { useCallback, useMemo } from 'react';
  */
 import { useStory } from '../app/story';
 import { useCanvas } from '../components/canvas';
-import isLinkBelowLimit from './isLinkBelowLimit';
+import isElementBelowLimit from './isElementBelowLimit';
 
 function useElementsWithLinks() {
   const { currentPage, selectedElements } = useStory((state) => ({
@@ -52,7 +52,7 @@ function useElementsWithLinks() {
     const linksInActivePageAttachment = selectedElements
       .filter(({ link }) => link?.url?.length)
       .filter((element) => {
-        return isLinkBelowLimit(element);
+        return isElementBelowLimit(element);
       });
     return linksInActivePageAttachment.length > 0;
   }, [currentPage, selectedElements, pageAttachmentContainer]);
@@ -63,7 +63,7 @@ function useElementsWithLinks() {
       return [];
     }
     return elementsWithLinks.filter((element) => {
-      return isLinkBelowLimit(element);
+      return isElementBelowLimit(element);
     });
   }, [elementsWithLinks, pageAttachmentContainer]);
 
@@ -77,7 +77,7 @@ function useElementsWithLinks() {
         return false;
       }
       // If the node is inside the page attachment container.
-      return isLinkBelowLimit(element);
+      return isElementBelowLimit(element, false);
     },
     [pageAttachmentContainer, currentPage]
   );

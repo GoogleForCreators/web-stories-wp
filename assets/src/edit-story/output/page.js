@@ -26,7 +26,7 @@ import StoryAnimation from '../../dashboard/components/storyAnimation';
 import StoryPropTypes from '../types';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import generatePatternStyles from '../utils/generatePatternStyles';
-import isLinkBelowLimit from '../utils/isLinkBelowLimit';
+import isElementBelowLimit from '../utils/isElementBelowLimit';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
@@ -49,7 +49,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
 
   // Check for invalid elements, @todo this should come from the pre-publish checklist in the future.
   const validElements = regularElements.filter(
-    (element) => hasPageAttachment && !isLinkBelowLimit(element)
+    (element) => hasPageAttachment && !isElementBelowLimit(element)
   );
 
   return (

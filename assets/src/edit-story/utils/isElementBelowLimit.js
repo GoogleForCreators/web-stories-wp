@@ -23,8 +23,8 @@ import { getCorners } from './getBoundRect';
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
 const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
-const isLinkBelowLimit = (element) => {
-  if (!element.link?.url?.length > 0) {
+const isLinkBelowLimit = (element, verifyLink = true) => {
+  if (verifyLink && !element.link?.url?.length > 0) {
     return false;
   }
   const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
