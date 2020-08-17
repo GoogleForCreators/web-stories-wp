@@ -22,6 +22,11 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { ArrowDown } from '../../../../button/index';
@@ -53,7 +58,11 @@ const CategoryPillInnerContainer = styled.div`
 // Flips the button upside down when expanded;
 // Important: the visibily is 'inherit' when props.visible because otherwise
 // it gets shown even when the provider is not the selectedProvider!
-const ExpandButton = styled(ArrowDown)`
+const ExpandButton = styled(ArrowDown).attrs(({ isExpanded }) => ({
+  'aria-label': isExpanded
+    ? __('Collapse Categories', 'web-stories')
+    : __('Expand Categories', 'web-stories'),
+}))`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
   visibility: ${(props) => (props.visible ? 'inherit' : 'hidden')};
   align-self: center;
@@ -71,10 +80,11 @@ const Media3pCategories = ({
     return (selectedCategoryId
       ? [categories.find((e) => e.id === selectedCategoryId)]
       : categories
-    ).map((e) => {
+    ).map((e, i) => {
       const selected = e.id === selectedCategoryId;
       return (
         <CategoryPill
+          index={i}
           isSelected={selected}
           key={e.id}
           title={e.displayName}
@@ -108,8 +118,9 @@ const Media3pCategories = ({
   }, [containerRef, innerContainerRef, isExpanded]);
 
   return categories.length ? (
-    <CategorySection aria-expanded={isExpanded}>
+    <CategorySection>
       <CategoryPillContainer
+        id="category-pill-container"
         ref={containerRef}
         isExpanded={isExpanded}
         role="tablist"
@@ -119,9 +130,12 @@ const Media3pCategories = ({
         </CategoryPillInnerContainer>
       </CategoryPillContainer>
       <ExpandButton
+        data-testid="category-expand-button"
         onClick={() => setIsExpanded(!isExpanded)}
-        isExpanded={isExpanded}
         visible={!selectedCategoryId}
+        isExpanded={isExpanded}
+        aria-controls="category-pill-container"
+        aria-expanded={isExpanded}
       />
     </CategorySection>
   ) : null;
