@@ -25,7 +25,6 @@ import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -90,8 +89,6 @@ function FontControls({ selectedElements, pushUpdate }) {
   ]);
   const fontStyle = isItalic ? 'italic' : 'normal';
 
-  const hasNewFontPicker = useFeature('newFontPicker');
-
   const handleFontPickerChange = useCallback(
     async (value) => {
       const fontObj = fonts.find((item) => item.value === value);
@@ -115,9 +112,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           };
         })
       );
-      if (hasNewFontPicker) {
-        addRecentFont(fontObj);
-      }
+      addRecentFont(fontObj);
       pushUpdate({ font: newFont }, true);
     },
     [
@@ -125,7 +120,6 @@ function FontControls({ selectedElements, pushUpdate }) {
       fontStyle,
       fontWeight,
       fonts,
-      hasNewFontPicker,
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
@@ -149,8 +143,6 @@ function FontControls({ selectedElements, pushUpdate }) {
     [fontStyle, handleSelectFontWeight, maybeEnqueueFontStyle, selectedElements]
   );
 
-  const FontPickerDropdown = hasNewFontPicker ? FontPicker : DropDown;
-
   usePresubmitHandler(
     ({ fontSize: newFontSize }) => ({
       fontSize: clamp(newFontSize, MIN_MAX.FONT_SIZE),
@@ -162,7 +154,7 @@ function FontControls({ selectedElements, pushUpdate }) {
     <>
       {fonts && (
         <Row>
-          <FontPickerDropdown
+          <FontPicker
             data-testid="font"
             aria-label={__('Font family', 'web-stories')}
             options={fonts}
