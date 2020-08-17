@@ -271,7 +271,10 @@ function SingleSelectionMoveable({
         set(frame.translate);
         return undefined;
       }}
-      onDragEnd={({ target }) => {
+      onDragEnd={({ isDrag, target }) => {
+        if (!isDrag) {
+          return false;
+        }
         if (isEditMode) {
           return false;
         }
