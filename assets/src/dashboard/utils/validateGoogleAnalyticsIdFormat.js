@@ -14,31 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
-import { calculateSrcSet } from '../media/util';
+const googleAnalyticsIdFormatRegex = /^ua-\d+-\d+$/;
 
-function ImageLayerContent({
-  element: {
-    resource,
-    resource: { src, alt },
-  },
-}) {
-  return (
-    <VisibleImage
-      src={src}
-      srcSet={calculateSrcSet(resource)}
-      alt={alt}
-      height="20"
-    />
-  );
+export default function validateGoogleAnalyticsIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(googleAnalyticsIdFormatRegex));
 }
-
-ImageLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default ImageLayerContent;

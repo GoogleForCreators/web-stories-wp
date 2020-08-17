@@ -103,6 +103,14 @@ function activate( $network_wide = false ) {
 		);
 	}
 
+	if ( version_compare( get_bloginfo( 'version' ), WEBSTORIES_MINIMUM_WP_VERSION, '<' ) ) {
+		wp_die(
+		/* translators: %s: WordPress version number */
+			esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_WP_VERSION ) ),
+			esc_html__( 'Plugin could not be activated', 'web-stories' )
+		);
+	}
+
 	$story = new Story_Post_Type( new Experiments() );
 	$story->init();
 	$story->add_caps_to_roles();

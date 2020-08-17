@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -36,5 +37,6 @@ export const _default = () => (
     value={'some input value'}
     id={'898989'}
     label="my hidden input label"
+    error={text('error', '')}
   />
 );

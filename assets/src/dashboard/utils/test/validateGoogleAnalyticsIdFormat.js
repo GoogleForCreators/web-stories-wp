@@ -17,28 +17,22 @@
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
-import { calculateSrcSet } from '../media/util';
+import { validateGoogleAnalyticsIdFormat } from '../';
 
-function ImageLayerContent({
-  element: {
-    resource,
-    resource: { src, alt },
-  },
-}) {
-  return (
-    <VisibleImage
-      src={src}
-      srcSet={calculateSrcSet(resource)}
-      alt={alt}
-      height="20"
-    />
+const idsToValidate = [
+  ['UA-000000-56', true],
+  ['ua-098765432-9875', true],
+  ['78787878', false],
+  ['ua--123448-0', false],
+  ['clearly wrong', false],
+];
+
+describe('validateGoogleAnalyticsIdFormat', () => {
+  it.each(idsToValidate)(
+    'should take " %s " and return as %p google analytic id format',
+    (validId, expected) => {
+      const bool = validateGoogleAnalyticsIdFormat(validId);
+      expect(bool).toBe(expected);
+    }
   );
-}
-
-ImageLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default ImageLayerContent;
+});
