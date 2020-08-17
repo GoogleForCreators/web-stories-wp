@@ -45,6 +45,13 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     ? `el-${longestMediaElement?.id}-media`
     : `${defaultPageDuration}s`;
 
+  const hasPageAttachment = page.pageAttachment?.url?.length > 0;
+
+  // Check for invalid elements, @todo this should come from the pre-publish checklist in the future.
+  const validElements = regularElements.filter(
+    (element) => hasPageAttachment && !isLinkBelowLimit(element)
+  );
+
   return (
     <amp-story-page
       id={id}
@@ -74,18 +81,14 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
-              {regularElements.map((element) =>
-                /* Check for invalid elements, @todo this should come from the pre-publish checklist in the future. */
-                page.pageAttachment?.url?.length > 0 &&
-                isLinkBelowLimit(element) ? null : (
-                  <OutputElement key={'el-' + element.id} element={element} />
-                )
-              )}
+              {validElements.map((element) => (
+                <OutputElement key={element.id} element={element} />
+              ))}
             </div>
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {page.pageAttachment?.url?.length > 0 && (
+      {hasPageAttachment && (
         <amp-story-page-attachment
           layout="nodisplay"
           href={page.pageAttachment.url}

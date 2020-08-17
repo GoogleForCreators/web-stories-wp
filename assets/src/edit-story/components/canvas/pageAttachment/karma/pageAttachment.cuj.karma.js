@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import createSolidFromString from '../utils/createSolidFromString';
-import useInsertElement from '../components/canvas/useInsertElement';
-import { useStory } from '../app/story';
-import { Fixture } from './fixture';
+import createSolidFromString from '../../../../utils/createSolidFromString';
+import useInsertElement from '../../useInsertElement';
+import { useStory } from '../../../../app/story';
+import { Fixture } from '../../../../karma';
 
 describe('CUJ: Creator can Add a Page Attachment', () => {
   let fixture;

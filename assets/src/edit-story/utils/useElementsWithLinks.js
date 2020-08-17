@@ -83,7 +83,6 @@ function useElementsWithLinks() {
   );
 
   return {
-    elementsWithLinks,
     getLinksInAttachmentArea,
     hasInvalidLinkSelected: hasInvalidLinkSelected(),
     isElementInAttachmentArea,
