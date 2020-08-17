@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   bottom: 0;
   height: 20%;
   width: 100%;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   z-index: 3;
 `;
 
@@ -52,7 +52,7 @@ const Guideline = styled.div`
   bottom: 20%;
   width: 100%;
   background-image: ${({ theme }) =>
-    `linear-gradient(to right, ${theme.colors.fg.v0} 50%, ${theme.colors.fg.v1} 0%)`};
+    `linear-gradient(to right, ${theme.colors.fg.black} 50%, ${theme.colors.fg.white} 0%)`};
   background-position: top;
   background-size: 16px 0.5px;
   background-repeat: repeat-x;
@@ -75,7 +75,7 @@ const arrowBarCss = css`
   width: 12px;
   border-radius: 3px;
   top: 14px;
-  background: ${({ theme }) => theme.colors.fg.v1};
+  background: ${({ theme }) => theme.colors.fg.white};
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.36);
 `;
 
@@ -107,8 +107,8 @@ const TextWrapper = styled.span`
 `;
 
 const Tooltip = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v0};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.black};
+  color: ${({ theme }) => theme.colors.fg.white};
   width: 200px;
   padding: 8px;
   font-size: 14px;
