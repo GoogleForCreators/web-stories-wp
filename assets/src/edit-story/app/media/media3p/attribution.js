@@ -49,15 +49,18 @@ const AttributionPill = styled.div`
 const logo = css`
   fill: ${({ theme }) => theme.colors.fg.white};
   margin-left: 6px;
-  height: 14px;
+  line-height: 14px;
 `;
 
 const UnsplashLogo = styled(UnsplashLogoFull)`
+  height: 14px;
   ${logo}
 `;
 
 const CoverrLogo = styled(CoverrLogoFull)`
   ${logo}
+  height: 12px;
+  margin-top: 2px;
 `;
 
 const unsplashUrl =
@@ -81,7 +84,7 @@ export function CoverrAttribution() {
     <a href={coverrUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
         {__('Powered by', 'web-stories')}
-        <CoverrLogo>{'COVERR'}</CoverrLogo>
+        <CoverrLogo />
       </AttributionPill>
     </a>
   );

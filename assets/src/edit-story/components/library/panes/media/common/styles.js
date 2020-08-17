@@ -39,7 +39,7 @@ export const MediaGalleryContainer = styled.div`
   margin-top: 1em;
   position: relative;
   width: 100%;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-height: 100px;
 `;
 
