@@ -137,13 +137,6 @@ function Media3pPane(props) {
 
   const paneBottomRef = useRef();
 
-  const onProviderTabClick = useCallback(
-    (providerType) => {
-      setSelectedProvider({ provider: providerType });
-    },
-    [setSelectedProvider]
-  );
-
   const features = useFeatures();
   const enabledProviders = Object.keys(PROVIDERS).filter(
     (p) => !PROVIDERS[p].featureName || features[PROVIDERS[p].featureName]
@@ -222,13 +215,16 @@ function Media3pPane(props) {
             />
           </SearchInputContainer>
           <ProviderTabSection>
-            {enabledProviders.map((providerType) => (
+            {enabledProviders.map((providerType, index) => (
               <ProviderTab
                 key={`provider-tab-${providerType}`}
+                index={index}
+                data-testid={'providerTab'}
                 id={`provider-tab-${providerType}`}
                 name={PROVIDERS[providerType].displayName}
                 active={selectedProvider === providerType}
-                onClick={() => onProviderTabClick(providerType)}
+                providerType={providerType}
+                setSelectedProvider={setSelectedProvider}
               />
             ))}
           </ProviderTabSection>
