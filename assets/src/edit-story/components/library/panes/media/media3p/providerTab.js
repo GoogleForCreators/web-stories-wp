@@ -81,6 +81,7 @@ function ProviderTab({
     <Tab
       ref={ref}
       tabIndex={index == 0 ? 0 : -1}
+      data-testid={'providerTab'}
       onClick={() => setSelectedProvider({ provider: providerType })}
       data-provider-type={providerType}
       active={active}

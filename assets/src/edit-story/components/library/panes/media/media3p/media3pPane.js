@@ -219,7 +219,6 @@ function Media3pPane(props) {
               <ProviderTab
                 key={`provider-tab-${providerType}`}
                 index={index}
-                data-testid={'providerTab'}
                 id={`provider-tab-${providerType}`}
                 name={PROVIDERS[providerType].displayName}
                 active={selectedProvider === providerType}
