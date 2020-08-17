@@ -26,6 +26,7 @@ import { useContext, useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -48,8 +49,9 @@ import {
 } from '../components';
 import ApiProvider from './api/apiProvider';
 import { Route, RouterProvider, RouterContext, matchPath } from './router';
-import { ConfigProvider } from './config';
+import { ConfigProvider, useConfig } from './config';
 import {
+  EditorSettingsView,
   ExploreTemplatesView,
   MyStoriesView,
   SavedTemplatesView,
@@ -62,6 +64,10 @@ const AppContent = () => {
   const {
     state: { currentPath },
   } = useContext(RouterContext);
+
+  const { capabilities: { canManageSettings } = {} } = useConfig();
+  const enableSettingsView =
+    useFeature('enableSettingsView') && canManageSettings;
 
   useEffect(() => {
     const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
@@ -104,6 +110,12 @@ const AppContent = () => {
           path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
           component={<TemplateDetailsView />}
         />
+        {enableSettingsView && (
+          <Route
+            path={APP_ROUTES.EDITOR_SETTINGS}
+            component={<EditorSettingsView />}
+          />
+        )}
         <Route
           path={APP_ROUTES.STORY_ANIM_TOOL}
           component={<StoryAnimTool />}

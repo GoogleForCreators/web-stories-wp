@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import { TypographyPresets } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
+import { Link } from '../../../components/link';
 
 export const Wrapper = styled.div`
   margin: 0 107px;
@@ -71,6 +72,10 @@ export const FormContainer = styled.div`
     width: 100%;
     height: 32px;
   }
+`;
+
+export const InlineLink = styled(Link)`
+  margin-left: 0.25em;
 `;
 
 export const HelperText = styled.p`

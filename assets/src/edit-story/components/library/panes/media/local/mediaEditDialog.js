@@ -36,9 +36,9 @@ import Dialog from '../../../../dialog';
 import { Plain } from '../../../../button';
 import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
-import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import StoryPropTypes from '../../../../../types';
 import { useConfig } from '../../../../../app';
+import getThumbnailUrl from '../../../../../elements/media/util';
 
 const THUMBNAIL_WIDTH = 152;
 
