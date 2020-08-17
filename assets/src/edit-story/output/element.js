@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../animation';
+import { StoryAnimation } from '../../animation';
 import WithLink from '../components/elementLink/output';
 import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';

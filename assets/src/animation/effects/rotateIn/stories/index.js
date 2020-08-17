@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getBox } from '../../../../units/dimensions';
+import { getBox } from '../../../../edit-story/units/dimensions';
 import { StoryAnimation } from '../../../components';
 import { ANIMATION_EFFECTS, DIRECTION } from '../../../constants';
 import {
@@ -26,20 +26,20 @@ import {
 } from '../../../storybookUtils';
 
 export default {
-  title: 'Animations/Effects/Whoosh-In',
+  title: 'Animations/Effects/Rotate-In',
 };
 
 const animations = [
   {
     targets: ['e1'],
-    type: ANIMATION_EFFECTS.WHOOSH_IN,
+    type: ANIMATION_EFFECTS.ROTATE_IN,
     delay: 500,
   },
   {
     targets: ['e2'],
-    type: ANIMATION_EFFECTS.WHOOSH_IN,
+    type: ANIMATION_EFFECTS.ROTATE_IN,
     delay: 1000,
-    whooshInDir: DIRECTION.RIGHT_TO_LEFT,
+    rotateInDir: DIRECTION.RIGHT_TO_LEFT,
   },
 ];
 
@@ -63,14 +63,14 @@ export const _default = () => {
   return (
     <AMPStoryWrapper>
       <amp-story-page id={`page-1`}>
-        <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Whoosh-In'}</p>
+        <p style={{ textAlign: 'center', color: '#fff' }}>{'AMP Rotate-In'}</p>
 
         <amp-story-grid-layer
           template="vertical"
           aspect-ratio={AMP_STORY_ASPECT_RATIO}
         >
           <div
-            animate-in="whoosh-in-left"
+            animate-in="rotate-in-left"
             animate-in-delay="0.5s"
             style={{
               backgroundColor: 'red',
@@ -79,7 +79,7 @@ export const _default = () => {
             }}
           />
           <div
-            animate-in="whoosh-in-right"
+            animate-in="rotate-in-right"
             animate-in-delay="1.0s"
             style={{
               backgroundColor: 'orange',
@@ -92,7 +92,7 @@ export const _default = () => {
         <StoryAnimation.Provider animations={animations} elements={elements}>
           <StoryAnimation.AMPAnimations />
           <p style={{ textAlign: 'center', color: '#fff' }}>
-            {'Custom Whoosh-In Effect'}
+            {'Custom Rotate-In Effect'}
           </p>
 
           <amp-story-grid-layer

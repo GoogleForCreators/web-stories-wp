@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getBox } from '../../../../units/dimensions';
+import { getBox } from '../../../../edit-story/units/dimensions';
 import { StoryAnimation } from '../../../components';
 import { ANIMATION_EFFECTS, DIRECTION } from '../../../constants';
 import {

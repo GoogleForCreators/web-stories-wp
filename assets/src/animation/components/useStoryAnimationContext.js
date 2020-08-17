@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils/context';
+import { identity, useContextSelector } from '../../edit-story/utils/context';
 import { StoryAnimationContext } from './provider';
 
 function useStoryAnimationContext(selector) {

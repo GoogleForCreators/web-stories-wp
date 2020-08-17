@@ -28,7 +28,7 @@ import {
   StoryAnimation,
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
-} from '../../animation';
+} from '../../../animation';
 import { useStory } from '../../app';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';

@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../animation';
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory, useHistory, useConfig } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import {

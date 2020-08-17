@@ -17,8 +17,12 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
-import { dataToEditorY, getBox } from '../../units/dimensions';
+import {
+  FULLBLEED_RATIO,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from '../../edit-story/constants';
+import { dataToEditorY, getBox } from '../../edit-story/units/dimensions';
 
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
 const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;

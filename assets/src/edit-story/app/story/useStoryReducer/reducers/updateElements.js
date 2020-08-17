@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../../animation';
+import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { updateElementWithUpdater, intersect } from './utils';
 
 /**

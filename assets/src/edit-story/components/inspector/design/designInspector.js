@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../animation';
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory } from '../../../app';
 import { LayerPanel } from '../../panels';
 import DesignPanels from './designPanels';

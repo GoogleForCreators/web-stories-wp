@@ -17,7 +17,11 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import {
+  FULLBLEED_RATIO,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from '../../../edit-story/constants';
 import getOffPageOffset from '../getOffPageOffset';
 
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;

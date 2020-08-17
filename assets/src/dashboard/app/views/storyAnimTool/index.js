@@ -23,7 +23,7 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../../edit-story/animation';
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import stripHTML from '../../../../edit-story/utils/stripHTML';

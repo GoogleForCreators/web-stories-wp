@@ -21,9 +21,9 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
-import Boilerplate from '../../output/utils/ampBoilerplate';
-import CustomCSS from '../../output/utils/styles';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../edit-story/constants';
+import Boilerplate from '../../edit-story/output/utils/ampBoilerplate';
+import CustomCSS from '../../edit-story/output/utils/styles';
 import { useStoryAnimationContext } from '../components';
 
 export const AMP_STORY_ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;

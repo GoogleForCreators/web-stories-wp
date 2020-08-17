@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Button } from '..';
-import { STORY_ANIMATION_STATE } from '../../../edit-story/animation';
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,

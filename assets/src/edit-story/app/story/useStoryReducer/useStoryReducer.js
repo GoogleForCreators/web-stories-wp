@@ -22,7 +22,7 @@ import { useReducer, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../animation';
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 

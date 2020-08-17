@@ -27,7 +27,7 @@ import {
   GetAnimationProps,
   ANIMATION_TYPES,
   FIELD_TYPES,
-} from '../../../../../edit-story/animation';
+} from '../../../../../animation';
 import { StoryPropType } from '../../../../types';
 import { clamp } from '../../../../utils';
 import {

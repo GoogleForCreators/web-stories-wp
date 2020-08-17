@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../animation';
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';

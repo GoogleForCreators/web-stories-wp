@@ -37,7 +37,6 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       'default'
     );
 
-    //eslint-disable-next-line react/prop-types,react/display-name
     const mock = (type) => ({ children }) => (
       <div data-testid={type}>{children}</div>
     );
