@@ -19,7 +19,7 @@
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
-import { render, act, screen } from '@testing-library/react';
+import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -70,8 +70,6 @@ const DEFAULT_CONFIG = {
 export class Fixture {
   constructor() {
     this._config = { ...DEFAULT_CONFIG };
-
-    this._flags = {};
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
@@ -164,7 +162,7 @@ export class Fixture {
    * ```
    * beforeEach(async () => {
    *   fixture = new Fixture();
-   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   fixture.setFlags({FEATURE_NAME: true});
    *   await fixture.render();
    * });
    * ```
@@ -188,7 +186,7 @@ export class Fixture {
    *
    * @return {Promise} Yields when the editor rendering is complete.
    */
-  render() {
+  async render() {
     const root = document.querySelector('test-root');
 
     // see http://reactcommunity.org/react-modal/accessibility/
@@ -214,9 +212,20 @@ export class Fixture {
       'editor'
     );
 
+    // wait for the media gallery items to load, as many tests assume they're
+    // there
+    let mediaElements;
+    await waitFor(() => {
+      mediaElements = this.querySelectorAll('[data-testid=mediaElement]');
+      if (!mediaElements?.length) {
+        throw new Error(
+          `Not ready: only found ${mediaElements?.length} media elements`
+        );
+      }
+    });
+
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
-    return Promise.resolve();
   }
 
   /**
