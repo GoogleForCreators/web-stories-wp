@@ -265,6 +265,7 @@ class Dashboard {
 					'users'     => '/wp/v2/users',
 					'fonts'     => '/web-stories/v1/fonts',
 					'templates' => '/web-stories/v1/web-story-template',
+					'settings'  => '/wp/v2/settings',
 				],
 				'maxUpload'    => $max_upload_size,
 				'capabilities' => [

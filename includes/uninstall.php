@@ -130,6 +130,15 @@ function delete_posts() {
 		wp_delete_post( (int) $post_id, true );
 	}
 }
+/**
+ * Remove user capabilities.
+ *
+ * @return void
+ */
+function remove_caps() {
+	$story_post_type = new Story_Post_Type( new Experiments() );
+	$story_post_type->remove_caps_from_roles();
+}
 
 /**
  * Delete all data on a site.
@@ -140,4 +149,5 @@ function delete_site() {
 	delete_options();
 	delete_posts();
 	delete_stories_post_meta();
+	remove_caps();
 }

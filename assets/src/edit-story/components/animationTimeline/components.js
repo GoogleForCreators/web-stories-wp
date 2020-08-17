@@ -28,7 +28,7 @@ const TIMELINE_HEIGHT = 180;
 export const TimelineContainer = styled.div`
   display: flex;
   box-sizing: border-box;
-  font-family: Roboto;
+  font-family: ${({ theme }) => theme.fonts.label.family};
   height: ${TIMELINE_HEIGHT}px;
   background: ${({ theme }) => theme.colors.bg.v16};
   color: ${({ theme }) => theme.colors.fg.white};
@@ -64,6 +64,8 @@ export const TimelineTitleBar = styled.div`
 `;
 
 export const TimelineRow = styled.div`
+  display: flex;
+  align-items: center;
   height: ${ROW_HEIGHT}px;
   min-width: 100%;
   ${({ alternating, theme }) =>

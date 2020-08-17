@@ -32,7 +32,6 @@ the_post();
 $current_post = get_post();
 
 if ( $current_post instanceof WP_Post ) {
-	echo '<!DOCTYPE html>';
 	$story = new Story();
 	$story->load_from_post( $current_post );
 	$renderer = new HTML( $story );
