@@ -22,13 +22,23 @@ import { FULLBLEED_RATIO, PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
 const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
-// We only need Y coordinates since anything below the 20% limit is
-// invalid, X coordinate is not relevant.
+/**
+ * Gets the Y coordinates of the points (corners) of the element.
+ *
+ * @param {Object} element Element
+ * @param {number} element.y Top value.
+ * @param {number} element.width Width.
+ * @param {number} element.height Height.
+ * @param {number} element.rotationAngle Rotation angle.
+ * @return {*[]} Array of Y coordinates.
+ */
 const getYCoordinatesByAngle = ({ y, width, height, rotationAngle }) => {
   const radians = (rotationAngle * Math.PI) / 180;
   const centerY = y + height / 2;
   const sin = Math.sin(radians);
   const cos = Math.cos(radians);
+  // We only need Y coordinates since anything below the 20% limit is
+  // invalid, X coordinate is not relevant.
   return [
     // Upper left
     centerY + (width / -2) * sin + (height / -2) * cos,
