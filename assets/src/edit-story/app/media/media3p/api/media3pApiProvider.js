@@ -63,13 +63,6 @@ function Media3pApiProvider({ children }) {
       throw new Error(`Unsupported provider: ${provider}`);
     }
 
-    // TODO(#3712): Temporary hack alert!: Convert coverr to unsplash for
-    // testing until Coverr backend is implemented.
-    if (provider === 'coverr') {
-      provider = 'unsplash';
-      searchTerm = 'small ' + searchTerm;
-    }
-
     if (selectedCategoryId && searchTerm) {
       throw new Error(
         `searchTerm and selectedCategoryId are mutually exclusive.`
@@ -88,6 +81,7 @@ function Media3pApiProvider({ children }) {
   /**
    * Get media for the given parameters.
    *
+   * @type {import('./typedefs').ListMediaFn}
    * @param {Object} obj - An object with the options.
    * @param {string} obj.provider The provider to get the media from.
    * @param {?string} obj.searchTerm Optional search term to send,
@@ -113,6 +107,7 @@ function Media3pApiProvider({ children }) {
   /**
    * Get media for the given category.
    *
+   * @type {import('./typedefs').ListCategoryMediaFn}
    * @param {Object} obj - An object with the options.
    * @param {string} obj.provider The provider to get the media from.
    * @param {string} obj.selectedCategoryId Id of the selected category.
@@ -168,6 +163,7 @@ function Media3pApiProvider({ children }) {
   /**
    * Get categories for the given parameters.
    *
+   * @type {import('./typedefs').ListCategoriesFn}
    * @param {Object} obj - An object with the options.
    * @param {string} obj.provider The provider to get the media from.
    * @param {?string} obj.orderBy The desired ordering of the results.
@@ -192,6 +188,7 @@ function Media3pApiProvider({ children }) {
   /**
    * Register usage of a media for the given payload.
    *
+   * @type {import('./typedefs').RegisterUsageFn}
    * @param {Object} obj - An object with the options.
    * @param {string} obj.registerUsageUrl The url to be called to register the
    * usage.
@@ -202,6 +199,9 @@ function Media3pApiProvider({ children }) {
     await apiFetcher.registerUsage({ registerUsageUrl });
   }
 
+  /**
+   * @type {import('./typedefs').Media3pApiContext}
+   */
   const contextValue = {
     actions: {
       listMedia,

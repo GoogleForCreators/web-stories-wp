@@ -38,7 +38,7 @@ export const curatedFontNames = [
   'IBM Plex Mono',
   'IBM Plex Serif',
   'Inconsolata',
-  'Muli',
+  'Mulish',
   'Noto Sans',
   'Noto Serif',
   'Open Sans',

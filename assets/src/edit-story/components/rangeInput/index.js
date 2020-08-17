@@ -30,14 +30,14 @@ const rangeThumb = css`
   appearance: none;
   width: ${({ thumbSize = 16 }) => thumbSize}px;
   height: ${({ thumbSize = 16 }) => thumbSize}px;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
   cursor: pointer;
   border-radius: 50px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 `;
 
 const focusedRangeThumb = css`
-  background-color: ${({ theme }) => theme.colors.action};
+  background-color: ${({ theme }) => theme.colors.accent.primary};
 `;
 
 const Input = styled.input.attrs({

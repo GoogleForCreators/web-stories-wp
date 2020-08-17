@@ -59,7 +59,7 @@ PillContainer.propTypes = {
 const CategoryPill = ({ index, title, isSelected, onClick }) => {
   const ref = useRef();
 
-  useRovingTabIndex({ ref, isRowBasedGallery: true });
+  useRovingTabIndex({ ref });
 
   return (
     <PillContainer
