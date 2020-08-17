@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getThumbnailUrl, getPreviewVideoUrl, calculateSrcSet } from '../util';
+import { getThumbnailUrl, calculateSrcSet } from '../util';
 
 describe('util', () => {
   describe('calculateSrcSet', () => {
@@ -173,46 +173,6 @@ describe('util', () => {
         height: 200,
       };
       expect(getThumbnailUrl(200, resource)).toBe('default-url');
-    });
-  });
-
-  describe('getPreviewVideoUrl', () => {
-    it('should return the preview URL if available', () => {
-      const resource = {
-        src: 'default-url',
-        sizes: {
-          full: { source_url: 'full-url' },
-          preview: { source_url: 'preview-url' },
-        },
-      };
-      expect(getPreviewVideoUrl(resource)).toBe('preview-url');
-    });
-
-    it('should return default URL if no preview URL', () => {
-      const resource = {
-        src: 'default-url',
-        sizes: {
-          full: { source_url: 'full-url' },
-          med: { source_url: 'med-url' },
-          large: { source_url: 'large-url' },
-        },
-      };
-      expect(getPreviewVideoUrl(resource)).toBe('default-url');
-    });
-
-    it('should return default URL if sizes is empty', () => {
-      const resource = {
-        src: 'default-url',
-        sizes: {},
-      };
-      expect(getPreviewVideoUrl(resource)).toBe('default-url');
-    });
-
-    it('should return the default src URL if sizes is undefined', () => {
-      const resource = {
-        src: 'default-url',
-      };
-      expect(getPreviewVideoUrl(resource)).toBe('default-url');
     });
   });
 });

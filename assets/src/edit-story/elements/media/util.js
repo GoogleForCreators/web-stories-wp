@@ -78,35 +78,22 @@ export function calculateSrcSet(resource) {
 }
 
 /**
- * Choose the source URL of the smallest available size image wider than
+ * Choose the source URL of the smallest available size image / video wider than
  * minWidth, according to the device pixel ratio.
  *
  * @param {number} minWidth The minimum width of the thumbnail to return.
- * @param {*} resource Image resource object.
- * @return {string} Source URL of the smallest available size image.
+ * @param {*} resource Resource object.
+ * @return {string} Source URL of the smallest available size media.
  */
 export function getThumbnailUrl(minWidth, resource) {
   if (resource.sizes) {
-    const smallestValidImage = Object.values(resource.sizes)
+    const smallestValidMedia = Object.values(resource.sizes)
       .sort((s1, s2) => s1.width - s2.width)
       .filter((s) => getOrientation(s) === getOrientation(resource))
       .find((s) => s.width >= minWidth * window.devicePixelRatio);
-    if (smallestValidImage) {
-      return smallestValidImage.source_url;
+    if (smallestValidMedia) {
+      return smallestValidMedia.source_url;
     }
-  }
-  return resource.src;
-}
-
-/**
- * Choose the preview video URL if available, or else choose the normal source URL.
- *
- * @param {*} resource Image resource object.
- * @return {string} Source URL of the smallest available size image.
- */
-export function getPreviewVideoUrl(resource) {
-  if (resource.sizes && resource.sizes.preview) {
-    return resource.sizes.preview.source_url;
   }
   return resource.src;
 }
