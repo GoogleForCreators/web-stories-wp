@@ -38,7 +38,7 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { useConfig } from '../../../../../app';
-import getThumbnailUrl from '../../../../../elements/media/util';
+import { getThumbnailUrl } from '../../../../../elements/media/util';
 
 const THUMBNAIL_WIDTH = 152;
 

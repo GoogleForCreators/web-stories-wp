@@ -85,7 +85,7 @@ export function calculateSrcSet(resource) {
  * @param {*} resource Image resource object.
  * @return {string} Source URL of the smallest available size image.
  */
-function getThumbnailUrl(minWidth, resource) {
+export function getThumbnailUrl(minWidth, resource) {
   if (resource.sizes) {
     const smallestValidImage = Object.values(resource.sizes)
       .sort((s1, s2) => s1.width - s2.width)
@@ -98,4 +98,15 @@ function getThumbnailUrl(minWidth, resource) {
   return resource.src;
 }
 
-export default getThumbnailUrl;
+/**
+ * Choose the preview video URL if available, or else choose the normal source URL.
+ *
+ * @param {*} resource Image resource object.
+ * @return {string} Source URL of the smallest available size image.
+ */
+export function getPreviewVideoUrl(resource) {
+  if (resource.sizes && resource.sizes.preview) {
+    return resource.sizes.preview.source_url;
+  }
+  return resource.src;
+}
