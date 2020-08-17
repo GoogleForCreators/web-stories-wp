@@ -19,7 +19,6 @@
  */
 import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
-import { FlagsProvider } from 'flagged';
 import styled from 'styled-components';
 
 /**
@@ -77,15 +76,13 @@ export const _Image = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <FlagsProvider features={{ mediaDropdownMenu: true }}>
-            <Column>
-              <MediaElement
-                resource={resource}
-                width={150}
-                onInsert={action('insert into canvas')}
-              />
-            </Column>
-          </FlagsProvider>
+          <Column>
+            <MediaElement
+              resource={resource}
+              width={150}
+              onInsert={action('insert into canvas')}
+            />
+          </Column>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
@@ -117,15 +114,13 @@ export const _Image_With_Attribution = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <FlagsProvider features={{ mediaDropdownMenu: true }}>
-            <Column>
-              <MediaElement
-                resource={resource}
-                width={150}
-                onInsert={action('insert into canvas')}
-              />
-            </Column>
-          </FlagsProvider>
+          <Column>
+            <MediaElement
+              resource={resource}
+              width={150}
+              onInsert={action('insert into canvas')}
+            />
+          </Column>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
@@ -153,15 +148,13 @@ export const _Video = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <FlagsProvider features={{ mediaDropdownMenu: true }}>
-            <Column>
-              <MediaElement
-                resource={resource}
-                width={150}
-                onInsert={action('insert into canvas')}
-              />
-            </Column>
-          </FlagsProvider>
+          <Column>
+            <MediaElement
+              resource={resource}
+              width={150}
+              onInsert={action('insert into canvas')}
+            />
+          </Column>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
@@ -195,15 +188,13 @@ export const _Video_With_Attribution = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <FlagsProvider features={{ mediaDropdownMenu: true }}>
-            <Column>
-              <MediaElement
-                resource={resource}
-                width={150}
-                onInsert={action('insert into canvas')}
-              />
-            </Column>
-          </FlagsProvider>
+          <Column>
+            <MediaElement
+              resource={resource}
+              width={150}
+              onInsert={action('insert into canvas')}
+            />
+          </Column>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>

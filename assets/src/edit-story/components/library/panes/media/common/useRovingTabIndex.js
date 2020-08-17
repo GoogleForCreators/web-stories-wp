@@ -132,7 +132,7 @@ function getClosestValidSibling(element, siblingDirection) {
   return closestValidSibling;
 }
 
-export default function useRovingTabIndex({ ref, isRowBasedGallery }, keyEventDeps) {
+export default function useRovingTabIndex({ ref }, keyEventDeps) {
   const { isRTL } = useConfig();
 
   /**
@@ -204,11 +204,9 @@ export default function useRovingTabIndex({ ref, isRowBasedGallery }, keyEventDe
   useKeyDownEffect(
     ref,
     {
-      key: isRowBasedGallery
-        ? ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end']
-        : [],
+      key: ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end'],
     },
     onKeyDown,
-    [ref, onKeyDown, isRowBasedGallery]
+    [ref, onKeyDown]
   );
 }
