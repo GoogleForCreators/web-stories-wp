@@ -301,8 +301,9 @@ describe('Media3pPane fetching', () => {
     mockListCategories();
     await fixture.events.click(media3pTab);
 
-    await fixture.events.keyboard.press('tab');
-    await fixture.events.keyboard.press('tab');
+    await fixture.events.focus(
+      fixture.querySelectorAll('[data-testid="mediaCategory"]')[0]
+    );
     expect(document.activeElement.textContent).toBe('Sustainability');
 
     await fixture.events.keyboard.press('ArrowRight');
