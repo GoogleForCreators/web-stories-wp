@@ -22,6 +22,8 @@ import { FULLBLEED_RATIO, PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
 const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
+// We only need Y coordinates since anything below the 20% limit is
+// invalid, X coordinate is not relevant.
 const getYCoordinatesByAngle = ({ y, width, height, rotationAngle }) => {
   const radians = (rotationAngle * Math.PI) / 180;
   const centerY = y + height / 2;
