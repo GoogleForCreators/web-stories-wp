@@ -28,6 +28,7 @@ import { calculateSrcSet, mediaWithScale } from '../media/util';
 import { getMediaSizePositionProps } from '../media';
 import MediaDisplay from '../media/display';
 import { preloadImage } from '../../app/media/utils';
+import resourceList from '../../utils/resourceList';
 
 const Img = styled.img`
   position: absolute;
@@ -44,15 +45,12 @@ function ImageDisplay({ element, box }) {
     resource.sizes?.['web-stories-thumbnail']?.source_url ||
     resource.sizes?.medium?.source_url;
 
-  if (window.webStoriesEditorResourceList[resource.id]?.type === 'cached') {
+  if (resourceList[resource.id]?.type === 'cached') {
     initialSrcType = 'cached';
-    initialSrc = window.webStoriesEditorResourceList[resource.id].url;
+    initialSrc = resourceList[resource.id].url;
   }
 
-  if (
-    window.webStoriesEditorResourceList[resource.id]?.type === 'fullsize' ||
-    resource.local
-  ) {
+  if (resourceList[resource.id]?.type === 'fullsize' || resource.local) {
     initialSrcType = 'fullsize';
     initialSrc = resource.src;
   }
@@ -71,12 +69,13 @@ function ImageDisplay({ element, box }) {
 
   useEffect(() => {
     let timeout;
-    if (window.webStoriesEditorResourceList[resource.id]?.type !== 'fullsize') {
+    if (resourceList[resource.id]?.type !== 'fullsize') {
       timeout = setTimeout(async () => {
         await preloadImage(resource.src);
-        window.webStoriesEditorResourceList[resource.id] = {
+        resourceList[resource.id] = {
           type: 'fullsize',
         };
+        console.log('set fullsize', resource.src);
         setSrc(resource.src);
         setSrcType('fullsize');
       }, 0);

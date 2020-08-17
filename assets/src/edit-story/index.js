@@ -37,7 +37,6 @@ import './style.css'; // This way the general editor styles are loaded before al
  */
 const initialize = (id, config, flags) => {
   const appElement = document.getElementById(id);
-  window.webStoriesEditorResourceList = {};
 
   // see http://reactcommunity.org/react-modal/accessibility/
   Modal.setAppElement(appElement);

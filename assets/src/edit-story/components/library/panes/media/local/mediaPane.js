@@ -47,6 +47,7 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
+import resourceList from '../../../../../utils/resourceList';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -168,7 +169,7 @@ function MediaPane(props) {
    */
   const insertMediaElement = useCallback(
     (resource, thumbnailURL) => {
-      window.webStoriesEditorResourceList[resource.id] = {
+      resourceList[resource.id] = {
         url: thumbnailURL,
         type: 'cached',
       };
