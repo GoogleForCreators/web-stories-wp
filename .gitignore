@@ -1,0 +1,10 @@
+.idea/
+.vscode/
+.DS_Store
+node_modules
+/vendor
+/assets
+/bin
+/build
+phpcs.xml
+phpunit.xml
