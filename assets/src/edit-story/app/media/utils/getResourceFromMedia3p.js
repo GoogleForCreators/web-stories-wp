@@ -159,7 +159,7 @@ function mediaUrlToImageSizeDescription(media, url, originalSize) {
   }
   const provider = PROVIDERS[media.provider.toLowerCase()];
   if ((!url.width || !url.height) && !provider.defaultPreviewWidth) {
-    throw new Error('Missing width & height for ' + media.provider);
+    throw new Error('Missing width and height for: ' + media);
   }
   return {
     file: media.name,

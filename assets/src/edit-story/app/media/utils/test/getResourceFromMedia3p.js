@@ -248,7 +248,7 @@ describe('getResourceFromMedia3p', () => {
       ],
     };
     expect(() => getResourceFromMedia3p(media3pResource)).toThrow(
-      'Missing width & height for UNSPLASH'
+      'Missing width and height for: ' + media3pResource
     );
   });
 });
