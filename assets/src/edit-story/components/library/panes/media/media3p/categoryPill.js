@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
@@ -69,7 +69,12 @@ const CategoryPill = ({
 
   useRovingTabIndex({ ref, isRowBasedGallery: true }, [isExpanded]);
 
-  useKeyDownEffect(ref, !isExpanded ? 'down' : [], () => setIsExpanded(true));
+  useKeyDownEffect(
+    ref,
+    !isExpanded ? 'down' : [],
+    useCallback(() => setIsExpanded(true), [setIsExpanded]),
+    [isExpanded, setIsExpanded],
+  );
 
   return (
     <PillContainer
