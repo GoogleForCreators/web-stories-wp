@@ -96,7 +96,8 @@ describe('Settings View', () => {
 
     const input = within(settingsView).getByRole('textbox');
 
-    await fixture.events.hover(input);
+    expect(input).toBeTruthy();
+
     await fixture.events.click(input);
 
     const inputLength = input.value.length;
@@ -108,6 +109,7 @@ describe('Settings View', () => {
     }
 
     await fixture.events.keyboard.type('Clearly not a valid id');
+    await fixture.events.keyboard.press('Enter');
 
     const errorMessage = await fixture.screen.getByText('Invalid ID format');
     expect(errorMessage).toBeTruthy();
