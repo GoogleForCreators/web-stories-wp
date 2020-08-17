@@ -20,6 +20,7 @@
 jest.mock('flagged');
 import { render } from '@testing-library/react';
 import { useFeature } from 'flagged';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -37,9 +38,15 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       'default'
     );
 
-    const mock = (type) => ({ children }) => (
-      <div data-testid={type}>{children}</div>
-    );
+    const mock = (type) => {
+      const MockComponent = ({ children }) => (
+        <div data-testid={type}>{children}</div>
+      );
+      MockComponent.propTypes = {
+        children: PropTypes.node.isRequired,
+      };
+      return MockComponent;
+    };
 
     useStoryAnimationContextMock.mockImplementation(() => ({
       actions: {
