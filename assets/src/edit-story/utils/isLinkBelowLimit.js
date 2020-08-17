@@ -24,27 +24,18 @@ const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 const getYCoordinatesByAngle = ({ y, width, height, rotationAngle }) => {
   const radians = (rotationAngle * Math.PI) / 180;
+  const centerY = y + height / 2;
+  const sin = Math.sin(radians);
+  const cos = Math.cos(radians);
   return [
     // Upper left
-    y +
-      height / 2 +
-      (width / -2) * Math.sin(radians) +
-      (height / -2) * Math.cos(radians),
+    centerY + (width / -2) * sin + (height / -2) * cos,
     // Upper right
-    y +
-      height / 2 +
-      (width / 2) * Math.sin(radians) +
-      (height / -2) * Math.cos(radians),
+    centerY + (width / 2) * sin + (height / -2) * cos,
     // Bottom right.
-    y +
-      height / 2 +
-      (width / 2) * Math.sin(radians) +
-      (height / 2) * Math.cos(radians),
+    centerY + (width / 2) * sin + (height / 2) * cos,
     // Bottom left.
-    y +
-      height / 2 +
-      (width / -2) * Math.sin(radians) +
-      (height / 2) * Math.cos(radians),
+    centerY + (width / -2) * sin + (height / 2) * cos,
   ];
 };
 
