@@ -20,6 +20,11 @@
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import StoryAnimation from '../../dashboard/components/storyAnimation';
@@ -92,7 +97,9 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         <amp-story-page-attachment
           layout="nodisplay"
           href={page.pageAttachment.url}
-          data-cta-text={page.pageAttachment.ctaText}
+          data-cta-text={
+            page.pageAttachment.ctaText || __('Learn more', 'web-stories')
+          }
         />
       )}
     </amp-story-page>
