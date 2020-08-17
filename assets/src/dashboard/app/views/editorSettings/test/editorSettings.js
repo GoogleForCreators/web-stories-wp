@@ -17,50 +17,60 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
+import {
+  publisherLogoIds,
+  rawPublisherLogos,
+} from '../../../../dataUtils/formattedPublisherLogos';
 import { renderWithTheme } from '../../../../testUtils';
 import { ApiContext } from '../../../api/apiProvider';
-import EditorSettings from '../';
+import { ConfigProvider } from '../../../config';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
-import { ConfigProvider } from '../../../config';
+import EditorSettings from '../';
 
 const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
 const mockUploadMedia = jest.fn();
+const mockUpdateSettings = jest.fn();
 
 const SettingsWrapper = ({
-  activePublisherLogoId,
+  canUploadFiles,
+  activeLogoId,
   isLoading,
   googleAnalyticsId,
-  publisherLogoIds,
-  publisherLogos,
+  logoIds,
+  logos,
 }) => {
   return (
     <ConfigProvider
-      config={{ capabilities: { canUploadFiles: true }, maxUpload: 104857600 }}
+      config={{
+        capabilities: { canUploadFiles: canUploadFiles },
+        maxUpload: 104857600,
+      }}
     >
       <ApiContext.Provider
         value={{
           state: {
             settings: {
               googleAnalyticsId,
-              activePublisherLogoId,
-              publisherLogoIds,
+              activePublisherLogoId: activeLogoId,
+              publisherLogoIds: logoIds,
             },
             media: {
               isLoading,
               uploadedMediaIds: [],
-              publisherLogos,
+              publisherLogos: logos,
             },
           },
           actions: {
             settingsApi: {
               fetchSettings: mockFetchSettings,
-              updateSettings: jest.fn(),
+              updateSettings: mockUpdateSettings,
             },
             mediaApi: {
               uploadMedia: mockUploadMedia,
@@ -76,11 +86,12 @@ const SettingsWrapper = ({
 };
 
 SettingsWrapper.propTypes = {
-  activePublisherLogoId: PropTypes.number,
+  activeLogoId: PropTypes.number,
+  canUploadFiles: PropTypes.bool,
   isLoading: PropTypes.bool,
   googleAnalyticsId: PropTypes.string,
-  publisherLogoIds: PropTypes.array,
-  publisherLogos: PropTypes.object,
+  logoIds: PropTypes.array,
+  logos: PropTypes.object,
 };
 
 describe('Editor Settings: <Editor Settings />', function () {
@@ -88,9 +99,10 @@ describe('Editor Settings: <Editor Settings />', function () {
     const { getByText, getByRole, getByTestId } = renderWithTheme(
       <SettingsWrapper
         googleAnalyticsId="UA-098909-05"
+        canUploadFiles={true}
         isLoading={false}
-        publisherLogoIds={[]}
-        publisherLogos={{}}
+        logoIds={[]}
+        logos={{}}
       />
     );
 
@@ -105,5 +117,58 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)).toBeInTheDocument();
     expect(getByTestId('upload-file-input')).toBeInTheDocument();
     expect(mockFetchSettings).toHaveBeenCalledTimes(1);
+  });
+
+  it('should render settings page with publisher logos', function () {
+    const { queryAllByTestId } = renderWithTheme(
+      <SettingsWrapper
+        googleAnalyticsId="UA-098909-05"
+        canUploadFiles={true}
+        isLoading={false}
+        activeLogoId={publisherLogoIds[0]}
+        logoIds={publisherLogoIds}
+        logos={rawPublisherLogos}
+      />
+    );
+    expect(queryAllByTestId(/^publisher-logo/)).toHaveLength(
+      publisherLogoIds.length
+    );
+
+    expect(queryAllByTestId(/^remove-publisher-logo/)).toHaveLength(
+      publisherLogoIds.length - 1
+    );
+  });
+
+  it('should call mockUpdateSettings when a logo is removed', function () {
+    const { getByTestId } = renderWithTheme(
+      <SettingsWrapper
+        googleAnalyticsId="UA-098909-05"
+        canUploadFiles={true}
+        isLoading={false}
+        activeLogoId={publisherLogoIds[0]}
+        logoIds={publisherLogoIds}
+        logos={rawPublisherLogos}
+      />
+    );
+
+    const RemoveLogoButton = getByTestId('remove-publisher-logo-2').lastChild;
+    expect(RemoveLogoButton).toBeDefined();
+
+    fireEvent.click(RemoveLogoButton);
+    expect(mockUpdateSettings).toHaveBeenCalledTimes(1);
+  });
+
+  it('should render settings page without file upload section when canUploadFiles is false', function () {
+    const { queryAllByTestId } = renderWithTheme(
+      <SettingsWrapper
+        googleAnalyticsId="UA-098909-05"
+        canUploadFiles={false}
+        isLoading={false}
+        logoIds={[]}
+        logos={{}}
+      />
+    );
+
+    expect(queryAllByTestId('upload-file-input')).toHaveLength(0);
   });
 });

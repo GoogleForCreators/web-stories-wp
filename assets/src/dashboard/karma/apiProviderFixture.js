@@ -26,15 +26,15 @@ import moment from 'moment-timezone';
 import { useMemo, useState } from 'react';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
+import {
+  publisherLogoIds as fillerPublisherLogoIds,
+  rawPublisherLogos,
+} from '../dataUtils/formattedPublisherLogos';
 import formattedUsersObject from '../dataUtils/formattedUsersObject';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
-import {
-  publisherLogoIds as fillerPublisherLogoIds,
-  rawPublisherLogos,
-} from '../dataUtils/formattedPublisherLogos';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {

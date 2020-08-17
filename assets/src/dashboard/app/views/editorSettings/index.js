@@ -76,7 +76,7 @@ function EditorSettings() {
     }
   }, [fetchMediaById, publisherLogoIds]);
 
-  const handleUpdateSettings = useCallback(
+  const handleUpdateGoogleAnalyticsId = useCallback(
     (newGoogleAnalyticsId) =>
       updateSettings({ googleAnalyticsId: newGoogleAnalyticsId }),
     [updateSettings]
@@ -110,7 +110,6 @@ function EditorSettings() {
   const handleRemoveLogo = useCallback(
     (e, media) => {
       e.preventDefault();
-      // TODO how to handle deleting a default?
       updateSettings({ publisherLogoIdToRemove: media.id });
     },
     [updateSettings]
@@ -127,7 +126,7 @@ function EditorSettings() {
         }
         return publisherLogos[publisherLogoId];
       }
-      return undefined;
+      return undefined; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
     });
   }, [activePublisherLogoId, publisherLogoIds, publisherLogos]);
 
@@ -143,7 +142,7 @@ function EditorSettings() {
         <Layout.Scrollable>
           <Main>
             <GoogleAnalyticsSettings
-              handleUpdateSettings={handleUpdateSettings}
+              handleUpdate={handleUpdateGoogleAnalyticsId}
               googleAnalyticsId={googleAnalyticsId}
             />
             <PublisherLogoSettings

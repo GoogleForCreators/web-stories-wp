@@ -52,7 +52,7 @@ export const TEXT = {
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
 };
 
-function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdateSettings }) {
+function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
   const [analyticsId, _setAnalyticsId] = useState('');
   const [inputError, setInputError] = useState('');
 
@@ -70,11 +70,11 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdateSettings }) {
     (value) => {
       if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
         setInputError('');
-        return handleUpdateSettings(value);
+        return handleUpdate(value);
       }
       return setInputError(TEXT.INPUT_ERROR);
     },
-    [handleUpdateSettings, setInputError]
+    [handleUpdate, setInputError]
   );
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -103,7 +103,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdateSettings }) {
   );
 }
 GoogleAnalyticsSettings.propTypes = {
-  handleUpdateSettings: PropTypes.func,
+  handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
 };
 

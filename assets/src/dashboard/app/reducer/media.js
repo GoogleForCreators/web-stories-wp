@@ -48,7 +48,6 @@ function mediaReducer(state, action) {
       return {
         ...state,
         isLoading: false,
-        // todo should this be map or reduce?
         publisherLogos: {
           ...state.publisherLogos,
           ...action.payload.reduce((acc, current) => {
@@ -75,7 +74,6 @@ function mediaReducer(state, action) {
         ...state,
         error: {},
         isLoading: false,
-        // todo should this be map or reduce?
         publisherLogos: {
           ...state.publisherLogos,
           ...action.payload.reduce((acc, current) => {
