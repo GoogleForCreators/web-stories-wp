@@ -147,10 +147,40 @@ export default function TimingBar({
     leftRef,
     { key: ['left', 'right'] },
     ({ key }) => {
-      setDuration(internalDuration + (key === 'ArrowLeft' ? -100 : 100));
+      switch (key) {
+        case 'ArrowRight':
+          setOffset(
+            Math.min(
+              internalOffset + KEY_OFFSET_MS,
+              internalDuration + internalOffset - MIN_ANIMATION_MS
+            )
+          );
+          setDuration(
+            Math.max(internalDuration - KEY_OFFSET_MS, MIN_ANIMATION_MS)
+          );
+          break;
+        case 'ArrowLeft':
+          setOffset(Math.max(internalOffset - KEY_OFFSET_MS, 0));
+          if (internalOffset === 0) {
+            break;
+          }
+          setDuration(internalDuration + KEY_OFFSET_MS);
+          break;
+        default:
+          break;
+      }
+
       handleDragEnd();
     },
-    [leftRef, handleDragEnd, internalDuration]
+    [
+      leftRef,
+      handleDragEnd,
+      internalDuration,
+      maxDuration,
+      offset,
+      internalOffset,
+      duration,
+    ]
   );
 
   useKeyDownEffect(
