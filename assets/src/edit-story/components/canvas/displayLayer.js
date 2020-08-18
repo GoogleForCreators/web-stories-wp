@@ -13,28 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { memo, useEffect, useCallback } from 'react';
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
+/**
+ * External dependencies
+ */
+import { memo, useCallback, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import StoryAnimation, {
+import {
+  StoryAnimation,
+  STORY_ANIMATION_STATE,
   useStoryAnimationContext,
-} from '../../../dashboard/components/storyAnimation';
-import { STORY_ANIMATION_STATE } from '../../../dashboard/constants';
+} from '../../../animation';
 import { useStory } from '../../app';
-import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
+import useCanvas from './useCanvas';
 
 function DisplayPage({
   page,

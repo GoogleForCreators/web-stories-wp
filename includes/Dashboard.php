@@ -247,8 +247,8 @@ class Dashboard {
 		}
 
 		$settings = [
-			'id'     => 'web-stories-dashboard',
-			'config' => [
+			'id'         => 'web-stories-dashboard',
+			'config'     => [
 				'isRTL'        => is_rtl(),
 				'dateFormat'   => get_option( 'date_format' ),
 				'timeFormat'   => get_option( 'time_format' ),
@@ -265,6 +265,7 @@ class Dashboard {
 					'users'     => '/wp/v2/users',
 					'fonts'     => '/web-stories/v1/fonts',
 					'templates' => '/web-stories/v1/web-story-template',
+					'settings'  => '/wp/v2/settings',
 				],
 				'maxUpload'    => $max_upload_size,
 				'capabilities' => [
@@ -272,10 +273,11 @@ class Dashboard {
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
 			],
-			'flags'  => array_merge(
+			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )
 			),
+			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
 		];
 
 		/**

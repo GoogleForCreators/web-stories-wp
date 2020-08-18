@@ -48,6 +48,7 @@ import {
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
+import { DropDown } from '../../../../form';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -58,28 +59,10 @@ const FilterArea = styled.div`
   padding: 0 1.5em 0 1.5em;
 `;
 
-const FilterButtons = styled.div`
-  flex: 1 1 auto;
-`;
-
-const FilterButton = styled.button`
-  border: 0;
-  cursor: pointer;
-  background: none;
-  padding: 0;
-  margin: 0 18px 0 0;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.fg.white : theme.colors.mg.v1};
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-`;
-
 const FILTERS = [
-  { filter: '', name: __('All', 'web-stories') },
-  { filter: 'image', name: __('Images', 'web-stories') },
-  { filter: 'video', name: __('Video', 'web-stories') },
+  { value: '', name: __('All', 'web-stories') },
+  { value: 'image', name: __('Images', 'web-stories') },
+  { value: 'video', name: __('Video', 'web-stories') },
 ];
 
 function MediaPane(props) {
@@ -155,7 +138,7 @@ function MediaPane(props) {
    * @param {string} value that is passed to rest api to filter.
    */
   const onFilter = useCallback(
-    (filter) => () => {
+    (filter) => {
       setMediaType({ mediaType: filter });
     },
     [setMediaType]
@@ -216,17 +199,11 @@ function MediaPane(props) {
             />
           </SearchInputContainer>
           <FilterArea>
-            <FilterButtons>
-              {FILTERS.map(({ filter, name }, index) => (
-                <FilterButton
-                  key={index}
-                  active={filter === mediaType}
-                  onClick={onFilter(filter)}
-                >
-                  {name}
-                </FilterButton>
-              ))}
-            </FilterButtons>
+            <DropDown
+              value={mediaType?.toString() || FILTERS[0].value}
+              onChange={onFilter}
+              options={FILTERS}
+            />
             <MainButton onClick={openMediaPicker}>
               {__('Upload', 'web-stories')}
             </MainButton>

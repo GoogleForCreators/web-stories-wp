@@ -185,6 +185,8 @@ class Story_Post_Type {
 		add_filter( 'the_content', [ $this, 'embed_player' ], PHP_INT_MAX );
 		add_filter( 'the_excerpt', [ $this, 'embed_player' ], PHP_INT_MAX );
 
+		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
+
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
@@ -248,6 +250,39 @@ class Story_Post_Type {
 		 * @param array $all_capabilities List of all post type capabilities, for reference.
 		 */
 		do_action( 'web_stories_add_capabilities', $all_capabilities );
+	}
+
+	/**
+	 * Removes story capabilities from all user roles.
+	 *
+	 * @return void
+	 */
+	public function remove_caps_from_roles() {
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( ! $post_type_object ) {
+			return;
+		}
+
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_roles        = wp_roles();
+		$roles            = array_values( (array) $all_roles->role_objects );
+		foreach ( $roles as $role ) {
+			if ( $role instanceof WP_Role ) {
+				foreach ( $all_capabilities as $cap ) {
+					$role->remove_cap( $cap );
+				}
+			}
+		}
+
+		/**
+		 * Fires when removing the custom capabilities from existing roles.
+		 *
+		 * Can be used to remove the capabilities from other, custom roles.
+		 *
+		 * @param array $all_capabilities List of all post type capabilities, for reference.
+		 */
+		do_action( 'web_stories_remove_capabilities', $all_capabilities );
 	}
 
 	/**
@@ -551,10 +586,9 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
-
 		$settings = [
-			'id'     => 'edit-story',
-			'config' => [
+			'id'         => 'edit-story',
+			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'dateFormat'       => get_option( 'date_format' ),
@@ -580,13 +614,14 @@ class Story_Post_Type {
 				'metadata'         => [
 					'publisher'       => $this->get_publisher_data(),
 					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
-					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
+					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.png', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
-			'flags'  => array_merge(
+			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'editor' )
 			),
+			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
 		];
 
 		/**
@@ -675,5 +710,20 @@ class Story_Post_Type {
 		}
 
 		return $content;
+	}
+
+
+	/**
+	 * Reset default title to empty string for auto-drafts.
+	 *
+	 * @param array $data Array of data to save.
+	 *
+	 * @return array
+	 */
+	public function change_default_title( $data ) {
+		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
+			$data['post_title'] = '';
+		}
+		return $data;
 	}
 }

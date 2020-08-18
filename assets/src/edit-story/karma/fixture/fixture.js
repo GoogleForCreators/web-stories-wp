@@ -430,7 +430,7 @@ class APIProviderFixture {
         // @todo: put this to __db__/
         () =>
           asyncResponse({
-            title: { raw: 'Auto Draft' },
+            title: { raw: '' },
             status: 'draft',
             author: 1,
             slug: '',

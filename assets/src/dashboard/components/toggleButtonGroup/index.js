@@ -18,20 +18,20 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import {
-  useState,
   useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
+  useState,
 } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { KEYBOARD_USER_SELECTOR, BEZIER } from '../../constants';
+import { BEZIER } from '../../../animation';
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 import { TypographyPresets } from '../typography';
 
 const ToggleButtonContainer = styled.div`

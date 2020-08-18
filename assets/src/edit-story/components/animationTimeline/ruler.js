@@ -34,18 +34,20 @@ const Path = styled.path`
 `;
 
 const Text = styled.text`
-  font-family: Roboto;
+  font-family: ${({ theme }) => theme.fonts.label.family};
   font-size: 13px;
   fill: ${({ theme }) => rgba(theme.colors.fg.white, 0.8)};
 `;
 
-const MARK_OFFSET = 40.0;
+export const MARK_OFFSET = 40.0;
+export const MS_DIVISOR = 100.0;
+
 const RULER_HEIGHT = 24.0;
 
 const isMajor = (index) => index % 10 === 0;
 
 export default function AnimationRuler({ duration }) {
-  const numberOfMarks = Math.ceil(duration / 100);
+  const numberOfMarks = Math.ceil(duration / MS_DIVISOR);
   const range = [...Array(numberOfMarks).keys()];
   return (
     <svg
@@ -58,7 +60,7 @@ export default function AnimationRuler({ duration }) {
         {range.map((value, index) => {
           const isValueMajor = isMajor(index);
           return (
-            <>
+            <React.Fragment key={`ruler-mark-${value}`}>
               {isValueMajor && (
                 <Text x={value * MARK_OFFSET + 5} y={20}>
                   {sprintf(
@@ -75,7 +77,7 @@ export default function AnimationRuler({ duration }) {
                   isValueMajor ? 8 : 18
                 },${RULER_HEIGHT} Z`}
               />
-            </>
+            </React.Fragment>
           );
         })}
       </g>

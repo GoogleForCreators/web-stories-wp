@@ -18,40 +18,37 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 /**
  * External dependencies
  */
-
-import styled from 'styled-components';
-import { useCallback, useRef, useLayoutEffect, useMemo } from 'react';
 import { useFeature } from 'flagged';
-
+import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
-import { resolveRoute, useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
-import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
+import { resolveRoute, useRouteHistory } from '../../app/router';
 import {
-  BEZIER,
   BUTTON_TYPES,
   primaryPaths,
   secondaryPaths,
   Z_INDEX,
+  APP_ROUTES,
 } from '../../constants';
-
+import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
-  NavLink,
-  Rule,
   NavButton,
+  NavLink,
   NavList,
   NavListItem,
+  Rule,
   WebStoriesHeading,
 } from './navigationComponents';
 
@@ -101,10 +98,17 @@ export const LeftRailContainer = styled.nav.attrs({
 
 export function LeftRail() {
   const { state } = useRouteHistory();
-  const { newStoryURL, version } = useConfig();
+  const {
+    newStoryURL,
+    version,
+    capabilities: { canManageSettings } = {},
+  } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
+
   const enableInProgressViews = useFeature('enableInProgressViews');
+  const enableSettingsViews =
+    useFeature('enableSettingsView') && canManageSettings;
 
   const {
     state: { sideBarVisible },
@@ -132,11 +136,17 @@ export function LeftRail() {
   }, [enableInProgressViews]);
 
   const enabledSecondaryPaths = useMemo(() => {
+    let copyOfSecondaryPaths = enableSettingsViews
+      ? [...secondaryPaths]
+      : secondaryPaths.filter(
+          (path) => !path.value.includes(APP_ROUTES.EDITOR_SETTINGS)
+        );
+
     if (enableInProgressViews) {
-      return secondaryPaths;
+      return copyOfSecondaryPaths;
     }
-    return secondaryPaths.filter((path) => !path.inProgress);
-  }, [enableInProgressViews]);
+    return copyOfSecondaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews, enableSettingsViews]);
 
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
