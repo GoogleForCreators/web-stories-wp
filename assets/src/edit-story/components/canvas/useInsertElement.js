@@ -27,6 +27,7 @@ import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
 import { useLocalMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
+import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import useFocusCanvas from './useFocusCanvas';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];
@@ -38,6 +39,9 @@ function useInsertElement() {
   const { uploadVideoPoster } = useLocalMedia((state) => ({
     uploadVideoPoster: state.actions.uploadVideoPoster,
   }));
+  const {
+    actions: { registerUsage },
+  } = useMedia3pApi();
 
   /**
    * @param {Object} resource The resource to verify/update.
@@ -56,6 +60,24 @@ function useInsertElement() {
     [uploadVideoPoster]
   );
 
+  /**
+   * If the resource has a register usage url then the fact that it's been
+   * inserted needs to be registered as per API provider policies.
+   *
+   * @param {Object} resource The resource to verify/update.
+   * is complete.
+   */
+  const handleRegisterUsage = useCallback(
+    (resource) => {
+      if (!resource.local && resource?.attribution?.registerUsageUrl) {
+        registerUsage({
+          registerUsageUrl: resource.attribution.registerUsageUrl,
+        });
+      }
+    },
+    [registerUsage]
+  );
+
   const focusCanvas = useFocusCanvas();
 
   /**
@@ -69,6 +91,7 @@ function useInsertElement() {
       addElement({ element });
       if (resource) {
         backfillResource(resource);
+        handleRegisterUsage(resource);
       }
       // Auto-play on insert.
       if (type === 'video') {
@@ -82,7 +105,7 @@ function useInsertElement() {
       focusCanvas();
       return element;
     },
-    [addElement, backfillResource, focusCanvas]
+    [addElement, backfillResource, focusCanvas, handleRegisterUsage]
   );
 
   return insertElement;
