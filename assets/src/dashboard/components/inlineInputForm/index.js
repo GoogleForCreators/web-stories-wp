@@ -48,13 +48,11 @@ const InlineInputForm = ({
   value,
 }) => {
   const inputContainerRef = useRef(null);
-  const [newValue, _setNewValue] = useState(value);
-
-  const setNewValue = useCallback((newVal) => _setNewValue(newVal), []);
+  const [newValue, setNewValue] = useState(value);
 
   useEffect(() => {
     setNewValue(value);
-  }, [setNewValue, value]);
+  }, [value]);
 
   useFocusOut(
     inputContainerRef,
