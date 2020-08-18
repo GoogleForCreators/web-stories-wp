@@ -51,18 +51,18 @@ const Box = styled.div`
 `;
 
 const Heading = styled.h4`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   margin: 0;
 `;
 
 const Text = styled.p`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 const Icon = styled(UploadIcon)`
   height: 54px;
   width: 54px;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 function UploadDropTargetMessage({ message, ...rest }) {

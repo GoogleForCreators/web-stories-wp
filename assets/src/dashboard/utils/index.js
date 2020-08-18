@@ -16,7 +16,7 @@
 
 export { default as clamp } from './clamp';
 export { default as getCurrentYAxis } from './getCurrentYAxis';
-export { default as getFormattedDisplayDate } from './getFormattedDisplayDate';
+export { getRelativeDisplayDate } from '../../date';
 export { default as groupBy } from './groupBy';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as memoize } from './memoize';
@@ -29,6 +29,7 @@ export {
 } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
+export { default as validateGoogleAnalyticsIdFormat } from './validateGoogleAnalyticsIdFormat';
 
 export { default as addQueryArgs } from '../../edit-story/utils/addQueryArgs';
 export { default as getStoryPropsToSave } from '../../edit-story/app/story/utils/getStoryPropsToSave';

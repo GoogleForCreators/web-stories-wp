@@ -97,30 +97,4 @@ describe('FileUpload', () => {
 
     expect(onSubmitMock).toHaveBeenCalledTimes(1);
   });
-
-  it('should trigger onDelete when delete button is clicked on an uploaded file', () => {
-    const onDeleteMock = jest.fn();
-
-    const { getByTestId } = renderWithTheme(
-      <FileUpload
-        onSubmit={jest.fn}
-        onDelete={onDeleteMock}
-        id={'898989'}
-        label="Upload"
-        ariaLabel="Click to upload a file"
-        uploadedContent={[
-          {
-            src: 'source-that-displays-an-image',
-            title: 'mockfile.png',
-            alt: 'mockfile.png',
-          },
-        ]}
-      />
-    );
-
-    const DeleteFileButton = getByTestId('file-upload-delete-button_0');
-    expect(DeleteFileButton).toBeDefined();
-    fireEvent.click(DeleteFileButton);
-    expect(onDeleteMock).toHaveBeenCalledTimes(1);
-  });
 });

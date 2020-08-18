@@ -28,9 +28,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useEscapeToBlurEffect } from '../keyboard';
+import TabView from '../tabview';
 import useInspector from './useInspector';
-import InspectorTabs from './inspectorTabs';
 import InspectorContent from './inspectorContent';
+import { getTabId } from './utils';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Inspector', 'web-stories'),
@@ -38,32 +39,36 @@ const Layout = styled.section.attrs({
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.bg.panel};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
-const TabsArea = styled.div``;
-
-const InspectorBackground = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v4};
+const InspectorContainer = styled.div`
   height: 100%;
   padding: 0;
-  color: ${({ theme }) => theme.colors.fg.v1};
   overflow: auto;
 `;
 
 function InspectorLayout() {
   const {
-    actions: { setInspectorContentNode },
+    state: { tab },
+    actions: { setInspectorContentNode, setTab },
     refs: { inspector },
+    data: { tabs },
   } = useInspector();
   useEscapeToBlurEffect(inspector);
   return (
     <Layout ref={inspector}>
-      <TabsArea>
-        <InspectorTabs />
-      </TabsArea>
-      <InspectorBackground ref={setInspectorContentNode}>
+      <TabView
+        label={__('Inspector Selection', 'web-stories')}
+        tabs={tabs}
+        initialTab={tab}
+        onTabChange={(id) => setTab(id)}
+        getAriaControlsId={getTabId}
+      />
+      <InspectorContainer ref={setInspectorContentNode}>
         <InspectorContent />
-      </InspectorBackground>
+      </InspectorContainer>
     </Layout>
   );
 }

@@ -23,7 +23,6 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
-import InspectorContext from '../../../inspector/context';
 import ConfigContext from '../../../../app/config/context';
 import StatusPanel from '../status';
 import { renderWithTheme } from '../../../../testUtils';
@@ -34,7 +33,6 @@ function setupPanel(
   }
 ) {
   const updateStory = jest.fn();
-  const loadUsers = jest.fn();
 
   const config = { timeFormat: 'g:i a', capabilities };
   const storyContextValue = {
@@ -43,16 +41,10 @@ function setupPanel(
     },
     actions: { updateStory },
   };
-  const inspectorContextValue = {
-    actions: { loadUsers },
-    state: {},
-  };
   const { getByRole, queryByText } = renderWithTheme(
     <ConfigContext.Provider value={config}>
       <StoryContext.Provider value={storyContextValue}>
-        <InspectorContext.Provider value={inspectorContextValue}>
-          <StatusPanel />
-        </InspectorContext.Provider>
+        <StatusPanel />
       </StoryContext.Provider>
     </ConfigContext.Provider>
   );

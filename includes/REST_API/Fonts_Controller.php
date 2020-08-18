@@ -98,10 +98,10 @@ class Fonts_Controller extends WP_REST_Controller {
 			$formatted_fonts[] = $this->prepare_response_for_collection( $data );
 		}
 
-		$response = rest_ensure_response( $formatted_fonts );
+		$response = new WP_REST_Response( $formatted_fonts );
 
-		$response->header( 'X-WP-Total', (int) $total_fonts );
-		$response->header( 'X-WP-TotalPages', (int) $max_pages );
+		$response->header( 'X-WP-Total', (string) $total_fonts );
+		$response->header( 'X-WP-TotalPages', (string) $max_pages );
 
 		return $response;
 	}
@@ -155,6 +155,10 @@ class Fonts_Controller extends WP_REST_Controller {
 			$data['variants'] = isset( $font['variants'] ) ? (array) $font['variants'] : $schema['properties']['variants']['default'];
 		}
 
+		if ( in_array( 'metrics', $fields, true ) ) {
+			$data['metrics'] = isset( $font['metrics'] ) ? $font['metrics'] : null;
+		}
+
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -181,7 +185,7 @@ class Fonts_Controller extends WP_REST_Controller {
 	 * @return bool|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		return current_user_can( 'edit_posts' );
+		return current_user_can( 'edit_web-stories' );
 	}
 
 	/**
@@ -239,6 +243,12 @@ class Fonts_Controller extends WP_REST_Controller {
 					'context'     => [ 'embed', 'view', 'edit' ],
 					'readonly'    => true,
 					'default'     => [],
+				],
+				'metrics'   => [
+					'description' => __( 'Font metrics', 'web-stories' ),
+					'type'        => 'object',
+					'context'     => [ 'embed', 'view', 'edit' ],
+					'readonly'    => true,
 				],
 			],
 		];

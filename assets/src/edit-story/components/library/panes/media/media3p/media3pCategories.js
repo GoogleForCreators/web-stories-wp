@@ -18,8 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -30,25 +35,36 @@ import CategoryPill from './categoryPill';
 // Pills have a margin of 4, so the l/r padding is 24-4=20.
 const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
-  min-height: 94px;
+  ${({ hasCategories }) => (hasCategories ? '' : 'min-height: 104px;')}
   padding: 30px 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex: 0 1 auto;
 `;
 
 // This hides the category pills unless expanded
 const CategoryPillContainer = styled.div`
-  height: ${(props) => (props.isExpanded ? 'auto' : '36px')};
+  height: 36px;
+  overflow: hidden;
+  transition: height 0.2s;
+`;
+
+const CategoryPillInnerContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  overflow: hidden;
 `;
 
 // Flips the button upside down when expanded;
-const ExpandButton = styled(ArrowDown)`
+// Important: the visibily is 'inherit' when props.visible because otherwise
+// it gets shown even when the provider is not the selectedProvider!
+const ExpandButton = styled(ArrowDown).attrs(({ isExpanded }) => ({
+  'aria-label': isExpanded
+    ? __('Collapse Categories', 'web-stories')
+    : __('Expand Categories', 'web-stories'),
+}))`
   ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
-  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  visibility: ${(props) => (props.visible ? 'inherit' : 'hidden')};
   align-self: center;
 `;
 
@@ -64,10 +80,11 @@ const Media3pCategories = ({
     return (selectedCategoryId
       ? [categories.find((e) => e.id === selectedCategoryId)]
       : categories
-    ).map((e) => {
+    ).map((e, i) => {
       const selected = e.id === selectedCategoryId;
       return (
         <CategoryPill
+          index={i}
           isSelected={selected}
           key={e.id}
           title={e.displayName}
@@ -84,18 +101,48 @@ const Media3pCategories = ({
     });
   }
 
-  return categories.length ? (
-    <CategorySection aria-expanded={isExpanded}>
-      <CategoryPillContainer isExpanded={isExpanded} role="tablist">
-        {renderCategories()}
-      </CategoryPillContainer>
-      <ExpandButton
-        onClick={() => setIsExpanded(!isExpanded)}
-        isExpanded={isExpanded}
-        visible={!selectedCategoryId}
-      />
+  const containerRef = useRef();
+  const innerContainerRef = useRef();
+
+  // We calculate the actual height of the categories list, and set its explicit
+  // height if it's expanded, in order to have a CSS height transition.
+  useLayoutEffect(() => {
+    if (!containerRef.current || !innerContainerRef.current) {
+      return;
+    }
+    if (!isExpanded) {
+      containerRef.current.style.height = '36px';
+    } else {
+      containerRef.current.style.height = `${innerContainerRef.current.offsetHeight}px`;
+    }
+  }, [containerRef, innerContainerRef, isExpanded]);
+
+  return (
+    <CategorySection hasCategories={Boolean(categories.length)}>
+      {categories.length ? (
+        <>
+          <CategoryPillContainer
+            id="category-pill-container"
+            ref={containerRef}
+            isExpanded={isExpanded}
+            role="tablist"
+          >
+            <CategoryPillInnerContainer ref={innerContainerRef}>
+              {renderCategories()}
+            </CategoryPillInnerContainer>
+          </CategoryPillContainer>
+          <ExpandButton
+            data-testid="category-expand-button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            visible={!selectedCategoryId}
+            isExpanded={isExpanded}
+            aria-controls="category-pill-container"
+            aria-expanded={isExpanded}
+          />
+        </>
+      ) : null}
     </CategorySection>
-  ) : null;
+  );
 };
 
 Media3pCategories.propTypes = {

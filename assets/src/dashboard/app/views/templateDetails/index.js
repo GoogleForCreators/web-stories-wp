@@ -40,13 +40,14 @@ import {
   PaginationButton,
   Pill,
 } from '../../../components';
-import { clamp, usePagePreviewSize } from '../../../utils/';
+import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { TemplateGridView } from '../shared';
+import { PreviewStoryView } from '..';
 import {
   ByLine,
   Column,
@@ -78,7 +79,7 @@ function TemplateDetails() {
 
   const {
     state: {
-      templates: { templates, templatesOrderById },
+      templates: { templates, templatesOrderById, totalPages },
     },
     actions: {
       storyApi: { createStoryFromTemplate },
@@ -89,6 +90,8 @@ function TemplateDetails() {
       },
     },
   } = useContext(ApiContext);
+
+  const { activePreview } = useTemplateView({ totalPages });
 
   useEffect(() => {
     if (!templateId) {
@@ -105,11 +108,14 @@ function TemplateDetails() {
   }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
 
   useEffect(() => {
-    if (!template) {
+    if (!template || !templateId) {
       return;
     }
+
+    const id = parseInt(templateId);
+
     setRelatedTemplates(
-      fetchRelatedTemplates().map((relatedTemplate) => ({
+      fetchRelatedTemplates(id).map((relatedTemplate) => ({
         ...relatedTemplate,
         centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
       }))
@@ -119,7 +125,13 @@ function TemplateDetails() {
         (templateByOrderId) => templates[templateByOrderId]
       )
     );
-  }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
+  }, [
+    fetchRelatedTemplates,
+    template,
+    templates,
+    templatesOrderById,
+    templateId,
+  ]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
@@ -202,8 +214,24 @@ function TemplateDetails() {
     createStoryFromTemplate(template);
   }, [createStoryFromTemplate, template]);
 
+  const handlePreviewTemplate = useCallback(
+    (e, previewTemplate) => {
+      activePreview.set(e, previewTemplate);
+    },
+    [activePreview]
+  );
+
   if (!template) {
     return null;
+  }
+
+  if (activePreview.value) {
+    return (
+      <PreviewStoryView
+        story={activePreview.value}
+        handleClose={handlePreviewTemplate}
+      />
+    );
   }
 
   return (
@@ -274,7 +302,10 @@ function TemplateDetails() {
                       <TemplateGridView
                         templates={relatedTemplates}
                         pageSize={pageSize}
-                        templateActions={{ createStoryFromTemplate }}
+                        templateActions={{
+                          createStoryFromTemplate,
+                          handlePreviewTemplate,
+                        }}
                       />
                     </UnitsProvider>
                   </RowContainer>

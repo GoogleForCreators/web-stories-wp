@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-export { default as AMPStoryWrapper } from './ampStoryWrapper';
+/**
+ * Internal dependencies
+ */
+export { fillerDateSettingsObject } from '../dataUtils/dateSettings';
 export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
 export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
 export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';
-export { default as PlayButton } from './playButton';
 
 export const STORYBOOK_PAGE_SIZE = {
   width: 212,

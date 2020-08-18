@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useState, useCallback } from 'react';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -30,12 +31,41 @@ export default {
 };
 
 export const _default = () => {
+  const [uploadedContent, setUploadedContent] = useState([]);
+
+  const handleSubmit = useCallback(({ newPublisherLogos, deleteLogo }) => {
+    if (newPublisherLogos) {
+      action('onSubmit fired')(newPublisherLogos);
+
+      setUploadedContent((existingUploads) => {
+        const newUploads = newPublisherLogos.map(({ file, localResource }) => {
+          return {
+            src: localResource.src,
+            title: file.name,
+            alt: localResource.alt,
+          };
+        });
+
+        return [...existingUploads, ...newUploads];
+      });
+    }
+
+    if (deleteLogo) {
+      action('onDelete fired')(deleteLogo);
+
+      setUploadedContent((existingUploadedContent) => {
+        const revisedMockUploads = existingUploadedContent.filter(
+          (uploadedLogo) => uploadedLogo.title !== deleteLogo.title
+        );
+        return revisedMockUploads;
+      });
+    }
+  }, []);
+
   return (
     <PublisherLogoSettings
-      onUpdatePublisherLogo={(newFiles) => {
-        action('update publisher logo clicked')(newFiles);
-      }}
-      publisherLogos={[]}
+      onUpdatePublisherLogo={handleSubmit}
+      publisherLogos={uploadedContent}
     />
   );
 };

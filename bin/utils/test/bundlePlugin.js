@@ -69,6 +69,7 @@ describe('bundlePlugin', () => {
       'bar.txt',
       'baz/',
       'assets/images/templates/',
+      'assets/images/plugin-activation/',
     ]);
   });
 

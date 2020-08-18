@@ -31,65 +31,69 @@ import {
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../constants';
 
-describe('CUJ: Creator can browse templates in grid view', () => {
+describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
+  let fixture;
+  let enableTemplatePreviews = false;
+
+  beforeEach(async () => {
+    fixture = new Fixture();
+
+    fixture.setFlags({ enableTemplatePreviews });
+
+    await fixture.render();
+
+    await navigateToFirstTemplate();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  async function navigateToFirstTemplate() {
+    const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
+      name: /^Explore Templates$/,
+    });
+
+    await fixture.events.click(exploreTemplatesMenuItem);
+
+    const { templatesOrderById } = await getTemplatesState();
+
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+
+    const utils = within(firstTemplate);
+
+    await fixture.events.hover(firstTemplate);
+
+    const view = utils.getByText(
+      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+    );
+
+    await fixture.events.click(view);
+  }
+
+  function getTemplateElementById(id) {
+    const template = fixture.screen.getByTestId(`template-grid-item-${id}`);
+
+    return template;
+  }
+
+  async function getTemplatesState() {
+    const {
+      state: { templates },
+    } = await fixture.renderHook(() => useContext(ApiContext));
+    return templates;
+  }
+
+  function getQueryParams() {
+    return qs.parse(
+      qs.extract(
+        qs.parseUrl(window.location.href, { parseFragmentIdentifier: true })
+          .fragmentIdentifier ?? ''
+      )
+    );
+  }
+
   describe('Action: See pre-built template details page', () => {
-    let fixture;
-
-    beforeEach(async () => {
-      fixture = new Fixture();
-      await fixture.render();
-
-      await navigateToFirstTemplate();
-    });
-
-    afterEach(() => {
-      fixture.restore();
-    });
-
-    async function navigateToFirstTemplate() {
-      const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-        name: /^Explore Templates$/,
-      });
-
-      await fixture.events.click(exploreTemplatesMenuItem);
-
-      const { templatesOrderById } = await getTemplatesState();
-
-      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
-
-      const utils = within(firstTemplate);
-
-      await fixture.events.hover(firstTemplate);
-
-      const view = utils.getByText(
-        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
-      );
-
-      await fixture.events.click(view);
-    }
-
-    function getTemplateElementById(id) {
-      const template = fixture.screen.getByTestId(`template-grid-item-${id}`);
-
-      return template;
-    }
-
-    async function getTemplatesState() {
-      const {
-        state: { templates },
-      } = await fixture.renderHook(() => useContext(ApiContext));
-      return templates;
-    }
-
-    function getQueryParams() {
-      return qs.parse(
-        qs.extract(
-          qs.parseUrl(window.location.href, { parseFragmentIdentifier: true })
-            .fragmentIdentifier ?? ''
-        )
-      );
-    }
-
     it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
       const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
 
@@ -265,6 +269,64 @@ describe('CUJ: Creator can browse templates in grid view', () => {
         name: /Template Title/,
       });
       expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
+    });
+  });
+
+  describe('Action: See template preview from detail template view', () => {
+    enableTemplatePreviews = true;
+
+    it('should trigger template preview when user clicks a related template', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
+      await getTemplatesState();
+
+      const relatedTemplatesSection = await fixture.screen.getByRole('region', {
+        name: /Related Templates/,
+      });
+
+      // // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+      const utils = within(firstRelatedTemplate);
+
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      const { x, y } = activeCard.getBoundingClientRect();
+      // x, y of the first related template in detail view gives us the outer edge and top, we need to add slightly to these dimension to have anything be clickable
+      await fixture.events.mouse.click(x + 20, y + 10);
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+
+    it('should trigger template preview when user presses Enter while focused on a card', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
+      await getTemplatesState();
+      const relatedTemplatesSection = fixture.screen.getByRole('region', {
+        name: /Related Templates/,
+      });
+      // // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+      const utils = within(firstRelatedTemplate);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      await fixture.events.focus(activeCard);
+      await fixture.events.keyboard.press('Enter');
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
     });
   });
 });

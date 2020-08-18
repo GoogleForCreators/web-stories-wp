@@ -44,13 +44,11 @@ describe('Autoplay video', () => {
   });
 
   it('should autoplay on insert and on drop', async () => {
-    // Temporary, waiting for dropdown for filters (Figma)
-    const videoFilter = fixture.screen.getByText('Video', {
-      exact: true,
-      selector: 'button',
-    });
+    // TODO: Switch to role selector after they are merged
+    const allFilter = fixture.screen.getByText('All');
+    await fixture.events.mouse.clickOn(allFilter);
+    const videoFilter = fixture.screen.getByText('Video');
     await fixture.events.mouse.clickOn(videoFilter);
-
     const video = fixture.screen.getAllByLabelText('ranger9', {
       selector: 'video',
     });

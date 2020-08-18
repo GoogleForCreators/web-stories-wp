@@ -47,7 +47,7 @@ const BoxedTextInput = styled(TextInput)`
   border-radius: 4px;
   flex-grow: 1;
   &:focus {
-    background-color: ${({ theme }) => theme.colors.fg.v1};
+    background-color: ${({ theme }) => theme.colors.fg.white};
   }
 `;
 
@@ -55,7 +55,7 @@ function SlugPanel() {
   const { slug, link, permalinkConfig, updateStory } = useStory(
     ({
       state: {
-        story: { slug, link, permalinkConfig },
+        story: { slug = '', link, permalinkConfig },
       },
       actions: { updateStory },
     }) => ({ slug, link, permalinkConfig, updateStory })

@@ -30,6 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import {
+  DateSettingsPropType,
   StoriesPropType,
   StoryActionsPropType,
   UsersPropType,
@@ -56,13 +57,15 @@ function StoriesView({
   stories,
   users,
   view,
-  dateFormat,
+  dateSettings,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
   const enableInProgressStoryActions = useFeature(
     'enableInProgressStoryActions'
   );
+  const enableStoryPreviews = useFeature('enableStoryPreviews');
+
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
 
@@ -156,20 +159,21 @@ function StoriesView({
         storySort={sort.value}
         storyStatus={filterValue}
         users={users}
-        dateFormat={dateFormat}
+        dateSettings={dateSettings}
       />
     ) : (
       <StoryGridView
         bottomActionLabel={__('Open in editor', 'web-stories')}
         centerActionLabelByStatus={
-          enableInProgressStoryActions && STORY_ITEM_CENTER_ACTION_LABELS
+          enableStoryPreviews && STORY_ITEM_CENTER_ACTION_LABELS
         }
         pageSize={view.pageSize}
         renameStory={renameStory}
+        previewStory={storyActions.handlePreviewStory}
         storyMenu={storyMenu}
         stories={stories}
         users={users}
-        dateFormat={dateFormat}
+        dateSettings={dateSettings}
       />
     );
 
@@ -220,6 +224,6 @@ StoriesView.propTypes = {
   stories: StoriesPropType,
   users: UsersPropType,
   view: ViewPropTypes,
-  dateFormat: PropTypes.string,
+  dateSettings: DateSettingsPropType,
 };
 export default StoriesView;

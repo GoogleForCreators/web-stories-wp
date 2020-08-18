@@ -46,7 +46,7 @@ describe('Background Drop-Target integration', () => {
       const backgroundId = await getBackgroundElementId(fixture);
 
       // Verify that bg replacement is empty
-      const rep1 = await getCanvasBackgroundReplacement(fixture);
+      let rep1 = await getCanvasBackgroundReplacement(fixture);
       expect(rep1).toBeEmpty();
 
       // Get library element reference
@@ -55,6 +55,9 @@ describe('Background Drop-Target integration', () => {
 
       // Drag the element to the background
       await dragToDropTarget(fixture, libraryElement, backgroundId);
+
+      // Update to DOM mutations
+      rep1 = await getCanvasBackgroundReplacement(fixture);
 
       // Verify that bg replacement is no longer empty
       expect(rep1).not.toBeEmpty();
@@ -94,11 +97,14 @@ describe('Background Drop-Target integration', () => {
       const backgroundId = await getBackgroundElementId(fixture);
 
       // Verify that bg replacement is empty
-      const rep1 = await getCanvasBackgroundReplacement(fixture);
+      let rep1 = await getCanvasBackgroundReplacement(fixture);
       expect(rep1).toBeEmpty();
 
       // Drag the image element to the background
       await dragCanvasElementToDropTarget(fixture, imageData.id, backgroundId);
+
+      // Update to DOM mutations
+      rep1 = await getCanvasBackgroundReplacement(fixture);
 
       // Verify that bg replacement is no longer empty
       expect(rep1).not.toBeEmpty();
@@ -166,7 +172,7 @@ describe('Background Drop-Target integration', () => {
       expect(bgImg1).toHaveProperty('src', bgImageData.resource.src);
 
       // Verify that bg replacement is empty
-      const rep1 = await getCanvasBackgroundReplacement(fixture);
+      let rep1 = await getCanvasBackgroundReplacement(fixture);
       expect(rep1).toBeEmpty();
 
       // Get library element reference
@@ -175,6 +181,9 @@ describe('Background Drop-Target integration', () => {
 
       // Drag the element to the background
       await dragToDropTarget(fixture, libraryElement, backgroundId);
+
+      // make sure rep1 is up to date with latest DOM updates.
+      rep1 = await getCanvasBackgroundReplacement(fixture);
 
       // Verify that bg replacement is no longer empty
       expect(rep1).not.toBeEmpty();
@@ -216,7 +225,7 @@ describe('Background Drop-Target integration', () => {
         expect(bgImg1).toHaveProperty('src', bgImageData.resource.src);
 
         // Verify that bg replacement is empty
-        const rep1 = await getCanvasBackgroundReplacement(fixture);
+        let rep1 = await getCanvasBackgroundReplacement(fixture);
         expect(rep1).toBeEmpty();
 
         // Drag the image element to the background
@@ -225,6 +234,9 @@ describe('Background Drop-Target integration', () => {
           imageData.id,
           bgImageData.id
         );
+
+        // Update to DOM mutations
+        rep1 = await getCanvasBackgroundReplacement(fixture);
 
         // Verify that bg replacement is no longer empty
         expect(rep1).not.toBeEmpty();
@@ -362,10 +374,10 @@ describe('Background Drop-Target integration', () => {
 
         it('should correctly handle image dropped on edge with flip', async () => {
           // Verify that background element has the correct transform (none) before doing anything
-          const bg1 = await getCanvasBackgroundElementWrapper(fixture);
-          const rep = bg1.querySelector(
-            `[class^="displayElement__ReplacementContainer-"]`
-          );
+          let bg1 = await getCanvasBackgroundElementWrapper(fixture);
+          let rep = (
+            await getCanvasBackgroundElementWrapper(fixture)
+          ).querySelector(`[class^="displayElement__ReplacementContainer-"]`);
           const bgImg1 = bg1.querySelector('img');
           const combinedBgTransform1 = getAllTransformsBetween(bgImg1, bg1);
           expect(combinedBgTransform1).toBe('');
@@ -376,6 +388,12 @@ describe('Background Drop-Target integration', () => {
             imageData.id,
             bgImageData.id
           );
+
+          // Make sure rep is up to date with DOM mutations
+          rep = (
+            await getCanvasBackgroundElementWrapper(fixture)
+          ).querySelector(`[class^="displayElement__ReplacementContainer-"]`);
+          bg1 = await getCanvasBackgroundElementWrapper(fixture);
 
           // Verify that replacement img is flipped
           const replaceImg = rep.querySelector('img');
@@ -547,6 +565,7 @@ function getAllTransformsBetween(startElement, endElement) {
     transforms.unshift(getComputedStyle(e).transform);
     e = e.parentNode;
   }
+
   return transforms.filter((t) => t !== 'none').join(' ');
 }
 

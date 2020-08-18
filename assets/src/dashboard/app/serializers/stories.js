@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
@@ -29,9 +29,9 @@ export default function reshapeStoryObject(editStoryURL) {
     const {
       id,
       title,
-      modified,
+      modified_gmt,
       status,
-      date,
+      date_gmt,
       author,
       story_data: storyData,
     } = originalStoryData;
@@ -52,8 +52,8 @@ export default function reshapeStoryObject(editStoryURL) {
       id,
       status,
       title: title.raw,
-      modified: moment(modified),
-      created: moment(date),
+      modified: moment.parseZone(modified_gmt),
+      created: moment.parseZone(date_gmt),
       pages: updatedStoryData.pages,
       author,
       centerTargetAction: '',

@@ -18,12 +18,17 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useRef } from 'react';
+/**
+ * Internal dependencies
+ */
+import useRovingTabIndex from '../common/useRovingTabIndex';
 
-const PillContainer = styled.span`
+const PillContainer = styled.button`
   cursor: pointer;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   background-color: rgba(
     255,
     255,
@@ -51,18 +56,30 @@ PillContainer.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-const CategoryPill = (props) => (
-  <PillContainer
-    isSelected={props.isSelected}
-    onClick={props.onClick}
-    role="tab"
-    aria-selected={props.isSelected}
-  >
-    {props.title}
-  </PillContainer>
-);
+const CategoryPill = ({ index, title, isSelected, onClick }) => {
+  const ref = useRef();
+
+  useRovingTabIndex({ ref });
+
+  return (
+    <PillContainer
+      ref={ref}
+      // The first or selected category will be in focus for roving
+      // (arrow-based) navigation initially.
+      tabIndex={index === 0 || isSelected ? 0 : -1}
+      isSelected={isSelected}
+      onClick={onClick}
+      role="tab"
+      aria-selected={isSelected}
+      data-testid="mediaCategory"
+    >
+      {title}
+    </PillContainer>
+  );
+};
 
 CategoryPill.propTypes = {
+  index: PropTypes.number,
   isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,

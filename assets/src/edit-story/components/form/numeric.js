@@ -50,7 +50,7 @@ const StyledInput = styled(Input)`
 `;
 
 const Container = styled.div`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -59,10 +59,12 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
   flex-basis: ${({ flexBasis }) => flexBasis}px;
-
-  ${({ disabled }) => disabled && `opacity: 0.3`};
+  border: 1px solid;
+  border-color: ${({ theme, focused }) =>
+    focused ? theme.colors.whiteout : 'transparent'};
+  opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
 `;
 
 function Numeric({
@@ -130,6 +132,7 @@ function Numeric({
     <Container
       className={`${className}`}
       flexBasis={flexBasis}
+      focused={focused}
       disabled={disabled}
     >
       {label}

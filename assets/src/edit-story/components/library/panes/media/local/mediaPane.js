@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -26,22 +26,20 @@ import styled from 'styled-components';
  */
 
 import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
-import useIntersectionEffect from '../../../../../utils/useIntersectionEffect';
 import { MainButton, SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import {
   getResourceFromMediaPicker,
   getTypeFromMime,
 } from '../../../../../app/media/utils';
-import MediaElement from '../common/mediaElement';
 import {
-  MediaGalleryLoadingPill,
   MediaGalleryMessage,
   PaneHeader,
   PaneInner,
@@ -49,25 +47,11 @@ import {
   StyledPane,
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
-import { ProviderType } from '../common/providerType';
 import Flags from '../../../../../flags';
+import { DropDown } from '../../../../form';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
-
-const ColumnContainer = styled.div`
-  grid-area: infinitescroll;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 1fr;
-  overflow: auto;
-  padding: 0 1.5em 0 1.5em;
-  margin-top: 1em;
-`;
-
-const Column = styled.div`
-  position: relative;
-`;
 
 const FilterArea = styled.div`
   display: flex;
@@ -75,34 +59,13 @@ const FilterArea = styled.div`
   padding: 0 1.5em 0 1.5em;
 `;
 
-const FilterButtons = styled.div`
-  flex: 1 1 auto;
-`;
-
-const FilterButton = styled.button`
-  border: 0;
-  cursor: pointer;
-  background: none;
-  padding: 0;
-  margin: 0 18px 0 0;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.fg.v1 : theme.colors.mg.v1};
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-`;
-
 const FILTERS = [
-  { filter: '', name: __('All', 'web-stories') },
-  { filter: 'image', name: __('Images', 'web-stories') },
-  { filter: 'video', name: __('Video', 'web-stories') },
+  { value: '', name: __('All', 'web-stories') },
+  { value: 'image', name: __('Images', 'web-stories') },
+  { value: 'video', name: __('Video', 'web-stories') },
 ];
 
-const PREVIEW_SIZE = 150;
-
 function MediaPane(props) {
-  const isRowBasedGallery = useFeature('rowBasedGallery');
   const {
     hasMore,
     media,
@@ -175,7 +138,7 @@ function MediaPane(props) {
    * @param {string} value that is passed to rest api to filter.
    */
   const onFilter = useCallback(
-    (filter) => () => {
+    (filter) => {
       setMediaType({ mediaType: filter });
     },
     [setMediaType]
@@ -191,16 +154,6 @@ function MediaPane(props) {
     (resource) => insertElement(resource.type, { resource }),
     [insertElement]
   );
-
-  /**
-   * Check if number is odd or even.
-   *
-   * @param {number} n Number
-   * @return {boolean} Is even.
-   */
-  const isEven = (n) => {
-    return n % 2 === 0;
-  };
 
   const filterResource = useCallback(
     ({ mimeType, width, height }) => {
@@ -221,116 +174,10 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-
-  // State and callback ref necessary to recalculate the padding of the list
-  //  given the scrollbar width.
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
-  const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-    setScrollbarWidth(element.offsetWidth - element.clientWidth);
-  };
-
-  // Recalculates padding of Media Pane so it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
-  useLayoutEffect(() => {
-    if (!scrollbarWidth) {
-      return;
-    }
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
-    );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
-
-  // NOTE: This infinite scrolling logic is used by the Column-based gallery.
-  // The row-based PaginatedMediaGallery has its own pagination logic and
-  // doesn't get affected by this code (it doesn't have `refContainerFooter`).
-  const refContainerFooter = useRef();
-  useIntersectionEffect(
-    refContainerFooter,
-    {
-      root: refContainer,
-      // This rootMargin is added so that we load an extra page when the
-      // "loading" footer is "close" to the bottom of the container, even if
-      // it's not yet visible.
-      rootMargin: `0px 0px ${ROOT_MARGIN}px 0px`,
-    },
-    (entry) => {
-      if (!isMediaLoaded || isMediaLoading) {
-        return;
-      }
-      if (!hasMore) {
-        return;
-      }
-      if (!entry.isIntersecting) {
-        return;
-      }
-      setNextPage();
-    },
-    [hasMore, isMediaLoading, isMediaLoaded, setNextPage]
-  );
-
   const onSearch = (v) => setSearchTerm({ searchTerm: v });
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
-  );
-
-  const mediaLibrary = isRowBasedGallery ? (
-    // Arranges elements in rows.
-    <PaginatedMediaGallery
-      providerType={ProviderType.LOCAL}
-      resources={resources}
-      isMediaLoading={isMediaLoading}
-      isMediaLoaded={isMediaLoaded}
-      hasMore={hasMore}
-      onInsert={insertMediaElement}
-      setNextPage={setNextPage}
-    />
-  ) : (
-    // Arranges elements in columns.
-    <ColumnContainer data-testid="mediaLibrary" ref={refCallbackContainer}>
-      <Column>
-        {resources
-          .filter((_, index) => isEven(index))
-          .map((resource, i) => (
-            <MediaElement
-              index={i}
-              resource={resource}
-              key={i}
-              width={PREVIEW_SIZE}
-              onInsert={insertMediaElement}
-            />
-          ))}
-      </Column>
-      <Column>
-        {resources
-          .filter((_, index) => !isEven(index))
-          .map((resource, i) => (
-            <MediaElement
-              index={i}
-              resource={resource}
-              key={i}
-              width={PREVIEW_SIZE}
-              onInsert={insertMediaElement}
-            />
-          ))}
-      </Column>
-      {hasMore && (
-        <MediaGalleryLoadingPill ref={refContainerFooter}>
-          {__('Loading…', 'web-stories')}
-        </MediaGalleryLoadingPill>
-      )}
-    </ColumnContainer>
   );
 
   return (
@@ -346,17 +193,11 @@ function MediaPane(props) {
             />
           </SearchInputContainer>
           <FilterArea>
-            <FilterButtons>
-              {FILTERS.map(({ filter, name }, index) => (
-                <FilterButton
-                  key={index}
-                  active={filter === mediaType}
-                  onClick={onFilter(filter)}
-                >
-                  {name}
-                </FilterButton>
-              ))}
-            </FilterButtons>
+            <DropDown
+              value={mediaType?.toString() || FILTERS[0].value}
+              onChange={onFilter}
+              options={FILTERS}
+            />
             <MainButton onClick={openMediaPicker}>
               {__('Upload', 'web-stories')}
             </MainButton>
@@ -368,7 +209,16 @@ function MediaPane(props) {
             {__('No media found', 'web-stories')}
           </MediaGalleryMessage>
         ) : (
-          mediaLibrary
+          <PaginatedMediaGallery
+            providerType={'local'}
+            resources={resources}
+            isMediaLoading={isMediaLoading}
+            isMediaLoaded={isMediaLoaded}
+            hasMore={hasMore}
+            onInsert={insertMediaElement}
+            setNextPage={setNextPage}
+            searchTerm={searchTerm}
+          />
         )}
       </PaneInner>
     </StyledPane>

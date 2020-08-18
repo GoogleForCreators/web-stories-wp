@@ -26,33 +26,37 @@ import { useFeatures } from 'flagged';
  */
 import { useInsertElement } from '../canvas';
 import Context from './context';
+import { AnimationPane, AnimationIcon } from './panes/animation';
+import { MediaPane, MediaIcon } from './panes/media/local';
+import { Media3pPane, Media3pIcon } from './panes/media/media3p';
+import { ShapesPane, ShapesIcon } from './panes/shapes';
+import { TextPane, TextIcon } from './panes/text';
+import { ElementsPane, ElementsIcon } from './panes/elements';
 
-export const TAB_IDS = {
-  MEDIA: 'media',
-  MEDIA3P: 'media3p',
-  TEXT: 'text',
-  SHAPES: 'shapes',
-  ELEMENTS: 'elements',
-  ANIMATION: 'animation',
-};
+const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
+const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
+const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
+const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
+const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };
+const ANIM = { icon: AnimationIcon, Pane: AnimationPane, id: 'animation' };
 
 function LibraryProvider({ children }) {
-  const [tab, setTab] = useState(TAB_IDS.MEDIA);
+  const initialTab = MEDIA.id;
+  const [tab, setTab] = useState(initialTab);
   const insertElement = useInsertElement();
 
   const { showAnimationTab, showElementsTab, media3pTab } = useFeatures();
 
   // Order here is important, as it denotes the actual visual order of elements.
   const tabs = useMemo(
-    () =>
-      [
-        TAB_IDS.MEDIA,
-        media3pTab ? TAB_IDS.MEDIA3P : null,
-        TAB_IDS.TEXT,
-        TAB_IDS.SHAPES,
-        showElementsTab ? TAB_IDS.ELEMENTS : null,
-        showAnimationTab ? TAB_IDS.ANIMATION : null,
-      ].filter(Boolean),
+    () => [
+      MEDIA,
+      ...(media3pTab ? [MEDIA3P] : []),
+      TEXT,
+      SHAPES,
+      ...(showElementsTab ? [ELEMS] : []),
+      ...(showAnimationTab ? [ANIM] : []),
+    ],
     [media3pTab, showAnimationTab, showElementsTab]
   );
 
@@ -60,6 +64,7 @@ function LibraryProvider({ children }) {
     () => ({
       state: {
         tab,
+        initialTab,
       },
       actions: {
         setTab,
@@ -69,7 +74,7 @@ function LibraryProvider({ children }) {
         tabs: tabs,
       },
     }),
-    [tab, insertElement, tabs]
+    [tab, insertElement, initialTab, tabs]
   );
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

@@ -28,14 +28,20 @@ import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
 
 /**
+ * @typedef {import('./typedefs').LocalMediaContext} LocalMediaContext
+ * @typedef {import('./typedefs').LocalMediaReducerState} LocalMediaReducerState
+ * @typedef {import('./typedefs').LocalMediaReducerActions} LocalMediaReducerActions
+ */
+
+/**
  * Context fragment provider for local media.
  * This is called from {@link MediaProvider} to provide the media global state.
  *
- * @param {Object} reducerState The 'local' fragment of the state returned from
- * `useMediaReducer`
- * @param {Object} reducerActions The 'local' fragment of the actions returned
- * from `useMediaReducer`
- * @return {Object} Context.
+ * @param {LocalMediaReducerState} reducerState The 'local' fragment of the
+ * state returned from `useMediaReducer`
+ * @param {LocalMediaReducerActions} reducerActions The 'local' fragment of the
+ * actions returned from `useMediaReducer`
+ * @return {LocalMediaContext} Context.
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
   const {

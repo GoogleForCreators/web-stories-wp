@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +27,7 @@ import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
+import { PreviewStoryView } from '..';
 import Content from './content';
 import Header from './header';
 
@@ -49,12 +50,18 @@ function MyStories() {
     },
   } = useContext(ApiContext);
 
-  const { filter, page, search, sort, view } = useStoryView({
+  const { filter, page, activePreview, search, sort, view } = useStoryView({
     filters: STORY_STATUSES,
     totalPages,
   });
 
-  const { wpListURL, dateFormat } = useConfig();
+  const {
+    wpListURL,
+    dateFormat,
+    timeFormat,
+    gmtOffset,
+    timezone,
+  } = useConfig();
 
   useEffect(() => {
     fetchStories({
@@ -80,6 +87,22 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
+  const handlePreviewStory = useCallback(
+    (e, story) => {
+      activePreview.set(e, story);
+    },
+    [activePreview]
+  );
+
+  if (activePreview.value) {
+    return (
+      <PreviewStoryView
+        story={activePreview.value}
+        handleClose={handlePreviewStory}
+      />
+    );
+  }
+
   return (
     <Layout.Provider>
       <Header
@@ -100,12 +123,13 @@ function MyStories() {
         search={search}
         sort={sort}
         stories={orderedStories}
-        dateFormat={dateFormat}
+        dateSettings={{ dateFormat, gmtOffset, timeFormat, timezone }}
         storyActions={{
           createTemplateFromStory,
           duplicateStory,
           trashStory,
           updateStory,
+          handlePreviewStory,
         }}
         users={users}
         view={view}

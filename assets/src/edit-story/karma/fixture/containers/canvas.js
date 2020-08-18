@@ -95,6 +95,12 @@ class Display extends Container {
   constructor(node, path) {
     super(node, path);
   }
+
+  get overlay() {
+    return this.node.querySelector(
+      '[class^="displayElement__BackgroundOverlay-sc-"]'
+    );
+  }
 }
 
 /**

@@ -18,14 +18,6 @@
  * Internal dependencies
  */
 import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
-import beauty from './raw/beauty';
-import cooking from './raw/cooking';
-import diy from './raw/diy';
-import entertainment from './raw/entertainment';
-import fashion from './raw/fashion';
-import fitness from './raw/fitness';
-import travel from './raw/travel';
-import wellbeing from './raw/wellbeing';
 
 export function getImageFile(url) {
   const file = (url || '').split('/').slice(-1).join('');
@@ -33,7 +25,11 @@ export function getImageFile(url) {
   return file.replace(/-\d+(?=.\w{3,4}$)/g, '');
 }
 
-export function loadTemplate(title, data, imageBaseUrl) {
+export async function loadTemplate(title, imageBaseUrl) {
+  const data = await import(
+    /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}.json`
+  );
+
   const template = {
     ...data,
     pages: (data.pages || []).map((page) => ({
@@ -52,31 +48,29 @@ export function loadTemplate(title, data, imageBaseUrl) {
     })),
   };
 
-  const migratedTemplate = {
+  return {
     ...migrate(template, template.version),
     version: DATA_VERSION,
   };
-
-  return migratedTemplate;
 }
 
-export function loadTemplates(imageBaseUrl) {
-  return Object.entries({
-    beauty,
-    cooking,
-    diy,
-    entertainment,
-    fashion,
-    fitness,
-    travel,
-    wellbeing,
-  }).reduce(
-    (accum, [title, data]) => ({
-      ...accum,
-      [title]: loadTemplate(title, data, imageBaseUrl),
-    }),
-    {}
+export default async function loadTemplates(imageBaseUrl) {
+  const templates = [
+    'beauty',
+    'cooking',
+    'diy',
+    'entertainment',
+    'fashion',
+    'fitness',
+    'travel',
+    'wellbeing',
+  ];
+
+  const result = await Promise.all(
+    templates.map(async (title) => {
+      return [title, await loadTemplate(title, imageBaseUrl)];
+    })
   );
-}
 
-export default loadTemplates;
+  return Object.fromEntries(result);
+}

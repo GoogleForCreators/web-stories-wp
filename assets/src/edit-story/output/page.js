@@ -18,13 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
 /**
  * Internal dependencies
  */
-import StoryAnimation from '../../dashboard/components/storyAnimation';
+import { StoryAnimation } from '../../animation';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import StoryPropTypes from '../types';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
@@ -49,7 +48,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
-      <StoryAnimation.Provider animations={animations}>
+      <StoryAnimation.Provider animations={animations} elements={elements}>
         <StoryAnimation.AMPAnimations />
 
         {backgroundElement && (

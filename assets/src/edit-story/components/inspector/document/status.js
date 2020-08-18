@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { Row, TextInput, HelperText, RadioGroup } from '../../form';
 import { useStory } from '../../../app/story';
-import useInspector from '../useInspector';
 import { SimplePanel } from '../../panels/panel';
 import { useConfig } from '../../../app/config';
 
@@ -39,16 +38,12 @@ const BoxedTextInput = styled(TextInput)`
   border-radius: 4px;
   flex-grow: 1;
   &:focus {
-    background-color: ${({ theme }) => theme.colors.fg.v1};
+    background-color: ${({ theme }) => theme.colors.fg.white};
   }
 `;
 
 function StatusPanel() {
-  const {
-    actions: { loadUsers },
-  } = useInspector();
-
-  const { status, password, updateStory } = useStory(
+  const { status = '', password, updateStory } = useStory(
     ({
       state: {
         story: { status, password },
@@ -58,10 +53,6 @@ function StatusPanel() {
   );
 
   const { capabilities } = useConfig();
-
-  useEffect(() => {
-    loadUsers();
-  });
 
   const visibilityOptions = [
     {

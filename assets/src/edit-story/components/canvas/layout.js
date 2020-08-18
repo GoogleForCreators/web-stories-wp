@@ -250,7 +250,10 @@ PageArea.propTypes = {
   children: PropTypes.node,
   showSafeZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
-  fullbleedRef: PropTypes.object,
+  fullbleedRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.elementType }),
+  ]),
   overlay: PropTypes.node,
   background: PropTypes.object,
 };

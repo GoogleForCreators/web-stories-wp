@@ -22,8 +22,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { TypographyPresets, FileUpload } from '../../../components';
+import { TypographyPresets } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
+import { Link } from '../../../components/link';
 
 export const Wrapper = styled.div`
   margin: 0 107px;
@@ -32,17 +33,11 @@ export const Header = styled.header`
   padding-top: 100px;
 `;
 
-export const Heading = styled.h1`
+export const Heading = styled.h2`
   ${TypographyPresets.ExtraExtraLarge};
-  font-size: 50.67px;
-  line-height: 140%;
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  color: ${({ theme }) => theme.colors.black};
   padding: 0;
-  font-weight: bold;
-  color: ${({ theme }) => theme.colors.gray800};
-
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    font-size: 40.67px;
-  }
 `;
 
 export const Main = styled.main`
@@ -65,12 +60,11 @@ export const SettingForm = styled.form`
   }
 `;
 
-export const SettingHeading = styled.h2`
-  ${TypographyPresets.Large};
-  font-size: 18.667px;
+export const SettingHeading = styled.h3`
+  ${TypographyPresets.Small};
   font-weight: ${({ theme }) => theme.typography.weight.bold};
-  line-height: 140%;
-  color: ${({ theme }) => theme.colors.gray600};
+  color: ${({ theme }) => theme.colors.black};
+  padding-bottom: 8px;
 `;
 
 export const FormContainer = styled.div`
@@ -80,28 +74,60 @@ export const FormContainer = styled.div`
   }
 `;
 
-export const TextInputHelperText = styled.p`
-  ${TypographyPresets.Small};
-  padding-top: 10px;
-  color: ${({ theme }) => theme.colors.gray500};
+export const InlineLink = styled(Link)`
+  margin-left: 0.25em;
 `;
 
-export const FileUploadHelperText = styled.p`
+export const HelperText = styled.p`
   ${TypographyPresets.Small};
-  font-size: 15px;
-  padding-bottom: 10px;
-  color: ${({ theme }) => theme.colors.gray500};
-  font-weight: 600;
+  color: ${({ theme }) => theme.colors.gray200};
+`;
+
+export const TextInputHelperText = styled(HelperText)`
+  padding-top: 10px;
 `;
 
 export const FinePrintHelperText = styled.p`
   ${TypographyPresets.ExtraSmall};
   padding-top: 10px;
-  color: ${({ theme }) => theme.colors.gray500};
+  color: ${({ theme }) => theme.colors.gray200};
 `;
 
-export const UploadContainer = styled(FileUpload)`
-  min-height: 153px;
+export const UploadedContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 56px);
+  grid-auto-rows: 56px;
+  grid-column-gap: 12px;
+  grid-row-gap: 20px;
+  padding-bottom: 24px;
+`;
+
+export const Logo = styled.img`
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+`;
+
+export const DeleteLogoButton = styled.button`
+  position: relative;
+  left: 2px;
+  bottom: 30px;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+
+  color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.gray700};
+  border-radius: 50%;
+  border: ${({ theme }) => theme.borders.transparent};
+  cursor: pointer;
+
+  & > svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);
