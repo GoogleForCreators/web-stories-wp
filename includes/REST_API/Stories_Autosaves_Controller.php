@@ -174,7 +174,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		$links   = $response->get_links();
 
 		// Wrap the data in a response object.
-		$response = rest_ensure_response( $data );
+		$response = new WP_REST_Response( $data );
 		foreach ( $links as $rel => $rel_links ) {
 			foreach ( $rel_links as $link ) {
 				$response->add_link( $rel, $link['href'], $link['attributes'] );
