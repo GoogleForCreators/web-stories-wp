@@ -15,14 +15,14 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
