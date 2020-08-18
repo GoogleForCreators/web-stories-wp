@@ -172,8 +172,16 @@ describe('TextEdit integration', () => {
       });
 
       it('should not change height when entering and exiting edit mode', async () => {
+        await fixture.snapshot(
+          'Trailing and leading newlines, before editmode'
+        );
+
         // Enter into editing the text
         await fixture.events.click(frame);
+
+        await fixture.snapshot(
+          'Trailing and leading newlines, during editmode'
+        );
 
         expect(textElement.getBoundingClientRect().height).toEqual(
           initialHeight
@@ -182,6 +190,8 @@ describe('TextEdit integration', () => {
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
         await fixture.events.keyboard.press('Esc');
+
+        await fixture.snapshot('Trailing and leading newlines, after editmode');
 
         const {
           height: heightAfterExitingEditMode,
