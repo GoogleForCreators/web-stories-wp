@@ -26,6 +26,8 @@ import { render } from 'react-dom';
 import { initializeTracking } from '../tracking';
 import App from './app';
 
+__webpack_public_path__ = global.webStoriesActivationSettings.publicPath;
+
 /**
  * Initializes the Web Stories dashboard screen.
  *

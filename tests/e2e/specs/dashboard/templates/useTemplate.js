@@ -39,11 +39,12 @@ describe('Template', () => {
 
     await expect(page).toMatch('Viewing all templates');
 
-    await percySnapshot(page, 'Explore Templates');
-
     const firstTemplate = await expect(page).toMatchElement(
       '[data-testid="template-grid-item-1"]'
     );
+
+    await percySnapshot(page, 'Explore Templates');
+
     await expect(firstTemplate).toClick('button', { text: 'Use template' });
     await page.waitForNavigation();
 
