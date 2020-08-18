@@ -25,9 +25,12 @@ import Moveable from 'react-moveable';
 /**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '../../components/keyboard';
 import { MARK_OFFSET, MS_DIVISOR } from './ruler';
 
 const BAR_HEIGHT = 24;
+const KEY_OFFSET_MS = 100;
+const MIN_ANIMATION_MS = 100;
 
 const Bar = styled.div`
   position: relative;
@@ -79,9 +82,9 @@ export default function TimingBar({
   label,
   onUpdateAnimation,
 }) {
-  const [leftRef, setLeftRef] = useState(null);
-  const [middleRef, setMiddleRef] = useState(null);
-  const [rightRef, setRightRef] = useState(null);
+  const [leftRef, setLeftRef] = useState();
+  const [middleRef, setMiddleRef] = useState();
+  const [rightRef, setRightRef] = useState();
   const dragStart = useRef(0);
   const startingDuration = useRef(0);
   const startingOffset = useRef(0);
@@ -138,6 +141,40 @@ export default function TimingBar({
       setDuration(movedMilliseconds + startingDuration.current);
     },
     [maxDuration]
+  );
+
+  useKeyDownEffect(
+    leftRef,
+    { key: ['left', 'right'] },
+    ({ key }) => {
+      setDuration(internalDuration + (key === 'ArrowLeft' ? -100 : 100));
+      handleDragEnd();
+    },
+    [leftRef, handleDragEnd, internalDuration]
+  );
+
+  useKeyDownEffect(
+    rightRef,
+    { key: ['left', 'right'] },
+    ({ key }) => {
+      switch (key) {
+        case 'ArrowRight':
+          setDuration(
+            Math.min(internalDuration + KEY_OFFSET_MS, maxDuration - offset)
+          );
+          break;
+        case 'ArrowLeft':
+          setDuration(
+            Math.max(internalDuration - KEY_OFFSET_MS, MIN_ANIMATION_MS)
+          );
+          break;
+        default:
+          break;
+      }
+
+      handleDragEnd();
+    },
+    [rightRef, handleDragEnd, internalDuration, maxDuration, duration, offset]
   );
 
   return (
