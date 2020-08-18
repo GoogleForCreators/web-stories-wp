@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Numeric } from '../index';
+import Numeric from '../numeric';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
