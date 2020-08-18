@@ -64,8 +64,7 @@ function useInsertElement() {
    * If the resource has a register usage url then the fact that it's been
    * inserted needs to be registered as per API provider policies.
    *
-   * @param {Object} resource The resource to verify/update.
-   * is complete.
+   * @param {Object} resource The resource to attempt to register usage.
    */
   const handleRegisterUsage = useCallback(
     (resource) => {
