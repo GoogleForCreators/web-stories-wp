@@ -18,41 +18,37 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 /**
  * External dependencies
  */
-
-import styled from 'styled-components';
-import { useCallback, useRef, useLayoutEffect, useMemo } from 'react';
 import { useFeature } from 'flagged';
-
+import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
-import { resolveRoute, useRouteHistory } from '../../app/router';
 import { useConfig } from '../../app/config';
-import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
+import { resolveRoute, useRouteHistory } from '../../app/router';
 import {
-  BEZIER,
   BUTTON_TYPES,
   primaryPaths,
   secondaryPaths,
   Z_INDEX,
   APP_ROUTES,
 } from '../../constants';
-
+import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
-  NavLink,
-  Rule,
   NavButton,
+  NavLink,
   NavList,
   NavListItem,
+  Rule,
   WebStoriesHeading,
 } from './navigationComponents';
 
