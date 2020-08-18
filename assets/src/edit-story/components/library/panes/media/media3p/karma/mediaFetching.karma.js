@@ -322,6 +322,7 @@ describe('Media3pPane fetching', () => {
 
     await fixture.events.keyboard.press('tab');
     await fixture.events.keyboard.press('tab');
+    await fixture.events.keyboard.press('tab');
     expect(document.activeElement.textContent).toBe('Sustainability');
 
     await fixture.events.keyboard.press('ArrowDown');
