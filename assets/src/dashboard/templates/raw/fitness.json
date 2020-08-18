@@ -34,7 +34,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page1_bg-red.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page1_bg-red.png",
             "width": 330,
             "height": 586,
             "id": 1297,
@@ -106,7 +106,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page1_logo-generic.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page1_logo-generic.png",
             "width": 79,
             "height": 22,
             "id": 1241,
@@ -264,7 +264,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page2_figure-formatted.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page2_figure-formatted.png",
             "width": 220,
             "height": 350,
             "posterId": 0,
@@ -485,7 +485,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page3_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page3_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -638,7 +638,7 @@
           "focalY": 50,
           "type": "text",
           "id": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
-          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips on how to best start running</span>",
+          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips on how to best start running</span>",
           "fontSize": 18,
           "padding": {
             "horizontal": 0,
@@ -800,7 +800,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page4_bg-red.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page4_bg-red.png",
             "width": 330,
             "height": 308,
             "id": 1299,
@@ -838,7 +838,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page4_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page4_bg.jpg",
             "width": 220,
             "height": 288,
             "posterId": 0,
@@ -991,7 +991,7 @@
           "type": "text",
           "basedOn": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
           "id": "9832faa6-2c7e-43eb-b75a-b68051da626a",
-          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest lightweight mid-distance shoes for the season.</span>",
+          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest  lightweight mid-distance shoes for the season.</span>",
           "fontSize": 18,
           "padding": {
             "horizontal": 0,
@@ -1144,7 +1144,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page5_bg-no-logo.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page5_bg-no-logo.png",
             "width": 330,
             "height": 295,
             "id": 1256,
@@ -1548,7 +1548,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page6_bg.jpg",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page6_bg.jpg",
             "width": 220,
             "height": 165,
             "posterId": 0,
@@ -1577,7 +1577,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-30T20:40:21",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page6_watch.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page6_watch.png",
             "width": 330,
             "height": 330,
             "posterId": 0,
@@ -1916,7 +1916,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_bg-red.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page7_bg-red.png",
             "width": 330,
             "height": 239,
             "id": 1301,
@@ -1983,46 +1983,6 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_circle-border.png",
-            "width": 52,
-            "height": 52,
-            "id": 1273,
-            "title": "fitness_page7_circle-border",
-            "alt": "fitness_page7_circle-border",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "x": 130,
-          "y": 355.5,
-          "width": 32,
-          "height": 32,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "4aa64455-2d4f-4640-9dfe-0e985f8f057b"
-        },
-        {
-          "x": 139,
-          "y": 364.5,
-          "width": 14,
-          "height": 14,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
               "r": 255,
@@ -2030,15 +1990,18 @@
               "b": 255
             }
           },
+          "type": "shape",
+          "x": 226,
+          "y": 140,
+          "width": 31,
+          "height": 31,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "circle"
+            "type": "bullseye"
           },
-          "type": "shape",
-          "basedOn": "cf1d4db0-d5d9-47a2-ba70-85618df23959",
-          "id": "0584e281-ec48-468c-84ad-c6bc6be4855a",
+          "id": "cc6cc34a-2d46-446b-989c-7b11c51b84b0",
           "link": {
             "url": "https://example.com/",
             "icon": null,
@@ -2053,45 +2016,6 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page7_circle-border.png",
-            "width": 52,
-            "height": 52,
-            "id": 1273,
-            "title": "fitness_page7_circle-border",
-            "alt": "fitness_page7_circle-border",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "width": 32,
-          "height": 32,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "basedOn": "4aa64455-2d4f-4640-9dfe-0e985f8f057b",
-          "id": "1faa5827-39ec-45c0-958e-d5c72bcb4d29",
-          "x": 226,
-          "y": 139.5
-        },
-        {
-          "width": 14,
-          "height": 14,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "backgroundColor": {
             "color": {
               "r": 255,
@@ -2099,17 +2023,19 @@
               "b": 255
             }
           },
+          "type": "shape",
+          "width": 31,
+          "height": 31,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "mask": {
-            "type": "circle"
+            "type": "bullseye"
           },
-          "type": "shape",
-          "basedOn": "0584e281-ec48-468c-84ad-c6bc6be4855a",
-          "id": "2858cbba-bfc8-49a1-b932-bb569e381864",
-          "x": 235,
-          "y": 148.5,
+          "basedOn": "cc6cc34a-2d46-446b-989c-7b11c51b84b0",
+          "id": "e9fa1707-ab8c-4311-9374-af1fcd265b4a",
+          "x": 129,
+          "y": 356,
           "link": {
             "url": "https://example.com/",
             "icon": null,
@@ -2177,7 +2103,8 @@
           "fill": "both",
           "targets": [
             "1faa5827-39ec-45c0-958e-d5c72bcb4d29",
-            "2858cbba-bfc8-49a1-b932-bb569e381864"
+            "2858cbba-bfc8-49a1-b932-bb569e381864",
+            "cc6cc34a-2d46-446b-989c-7b11c51b84b0"
           ]
         },
         {
@@ -2190,7 +2117,8 @@
           "fill": "both",
           "targets": [
             "4aa64455-2d4f-4640-9dfe-0e985f8f057b",
-            "0584e281-ec48-468c-84ad-c6bc6be4855a"
+            "0584e281-ec48-468c-84ad-c6bc6be4855a",
+            "e9fa1707-ab8c-4311-9374-af1fcd265b4a"
           ]
         },
         {
@@ -2308,7 +2236,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story3-formatted.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page8_story3-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
@@ -2345,7 +2273,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story1-formatted.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page8_story1-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
@@ -2382,7 +2310,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories/assets/images/templates/fitness/fitness_page8_story2-formatted.png",
+            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/fitness/fitness_page8_story2-formatted.png",
             "width": 188,
             "height": 97,
             "posterId": 0,
@@ -2492,7 +2420,7 @@
           "type": "text",
           "basedOn": "0884aabc-ca1e-4b37-a87b-68a6fbf377db",
           "id": "96fea994-b71e-442f-b611-16d73f520016",
-          "content": "<span style=\"font-weight: 600; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 600; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 600; color: #fff\">EARBUDS</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 600; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 600; color: #fff\"> EARBUDS</span>",
           "fontSize": 22,
           "padding": {
             "horizontal": 0,
@@ -2541,7 +2469,7 @@
           "type": "text",
           "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
           "id": "9b117b87-0269-4c4b-9e0d-8cdbcb0df89a",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORETRAINING EXERCISES</span></span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORE TRAINING EXERCISES</span></span>",
           "fontSize": 22,
           "padding": {
             "horizontal": 0,
