@@ -23,68 +23,30 @@ import { __, sprintf } from '@wordpress/i18n';
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import moment from 'moment';
 import queryString from 'query-string';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
-
+import getStoryMarkup from '../../../edit-story/output/utils/getStoryMarkup';
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
-  ITEMS_PER_PAGE,
+  STORIES_PER_REQUEST,
+  STORY_STATUS,
 } from '../../constants';
-import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 import { getStoryPropsToSave, addQueryArgs } from '../../utils';
+import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
 
-export function reshapeStoryObject(editStoryURL) {
-  return function (originalStoryData) {
-    const {
-      id,
-      title,
-      modified,
-      status,
-      date,
-      author,
-      story_data: storyData,
-    } = originalStoryData;
-    if (
-      !Array.isArray(storyData.pages) ||
-      !id ||
-      storyData.pages.length === 0
-    ) {
-      return null;
-    }
-
-    const updatedStoryData = {
-      ...migrate(storyData, storyData.version),
-      version: DATA_VERSION,
-    };
-
-    return {
-      id,
-      status,
-      title: title.raw,
-      modified: moment(modified),
-      created: moment(date),
-      pages: updatedStoryData.pages,
-      author,
-      centerTargetAction: '',
-      bottomTargetAction: `${editStoryURL}&post=${id}`,
-      editStoryLink: `${editStoryURL}&post=${id}`,
-      originalStoryData,
-    };
-  };
-}
-
-const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
+const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
+  const flags = useFeatures();
 
   const fetchStories = useCallback(
     async ({
@@ -93,23 +55,29 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
       sortDirection,
       searchTerm,
       page = 1,
-      perPage = ITEMS_PER_PAGE,
+      perPage = STORIES_PER_REQUEST,
     }) => {
       dispatch({
         type: STORY_ACTION_TYPES.LOADING_STORIES,
         payload: true,
       });
 
-      if (!wpApi) {
+      if (!storyApi) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
-          payload: true,
+          payload: {
+            message: {
+              body: __('Cannot connect to data source', 'web-stories'),
+              title: __('Unable to Load Stories', 'web-stories'),
+            },
+          },
         });
         return;
       }
 
       const query = {
         context: 'edit',
+        _web_stories_envelope: true,
         search: searchTerm || undefined,
         orderby: sortOption,
         page,
@@ -120,41 +88,43 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
 
       try {
         const path = queryString.stringifyUrl({
-          url: wpApi,
+          url: storyApi,
           query,
         });
 
-        const response = await dataAdapter.get(path, {
-          parse: false,
-          cache: 'no-cache',
-        });
+        const response = await dataAdapter.get(path);
 
         const totalPages =
-          response.headers && parseInt(response.headers.get('X-WP-TotalPages'));
-
+          response.headers && parseInt(response.headers['X-WP-TotalPages']);
         const totalStoriesByStatus =
           response.headers &&
-          JSON.parse(response.headers.get('X-WP-TotalByStatus'));
-
-        const serverStoryResponse = await response.json();
-
-        const reshapedStories = serverStoryResponse
-          .map(reshapeStoryObject(editStoryURL))
-          .filter(Boolean);
+          JSON.parse(response.headers['X-WP-TotalByStatus']);
 
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
-            stories: reshapedStories,
+            editStoryURL,
+            stories: response.body,
             totalPages,
-            totalStoriesByStatus,
+            totalStoriesByStatus: {
+              ...totalStoriesByStatus,
+              [STORY_STATUS.PUBLISHED_AND_FUTURE]:
+                totalStoriesByStatus[STORY_STATUS.PUBLISH] +
+                totalStoriesByStatus[STORY_STATUS.FUTURE],
+            },
             page,
           },
         });
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
-          payload: { message: err.message, code: err.code },
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Load Stories', 'web-stories'),
+            },
+            code: err.code,
+          },
         });
       } finally {
         dispatch({
@@ -163,43 +133,136 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         });
       }
     },
-    [wpApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL]
   );
 
   const updateStory = useCallback(
     async (story) => {
       try {
-        const response = await dataAdapter.post(`${wpApi}/${story.id}`, {
+        const response = await dataAdapter.post(`${storyApi}/${story.id}`, {
           data: story,
         });
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.UPDATE_STORY_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Update Story', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
       }
     },
-    [wpApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL]
   );
 
   const trashStory = useCallback(
     async (story) => {
       try {
-        await dataAdapter.deleteRequest(`${wpApi}/${story.id}`, {
+        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`, {
           data: story,
         });
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.TRASH_STORY_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Delete Story', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
       }
     },
-    [wpApi, dataAdapter]
+    [storyApi, dataAdapter]
+  );
+
+  const clearStoryPreview = useCallback(() => {
+    dispatch({
+      type: STORY_ACTION_TYPES.CLEAR_STORY_PREVIEW,
+    });
+  }, []);
+
+  const createStoryPreview = useCallback(
+    async (dashboardStory) => {
+      dispatch({
+        type: STORY_ACTION_TYPES.CREATING_STORY_PREVIEW,
+        payload: true,
+      });
+
+      try {
+        const {
+          author,
+          createdBy,
+          created,
+          modified,
+          pages,
+          password,
+          title,
+          excerpt,
+          status,
+        } = dashboardStory;
+
+        const storyProps = await getStoryPropsToSave({
+          story: {
+            status: status || 'auto-draft',
+            title: title,
+            author: author || 1,
+            slug: title,
+            date: created ? created.format() : Date.now().toString(),
+            modified: modified ? modified.format() : Date.now().toString(),
+            featuredMedia: 0,
+            password: password || '',
+            excerpt: excerpt || '',
+          },
+          pages,
+          metadata: {
+            publisher: {
+              name: createdBy || '',
+            },
+            fallbackPoster: '',
+          },
+          flags,
+        });
+
+        const preppedStoryProps = reshapeStoryPreview(storyProps);
+
+        const markup = await getStoryMarkup(
+          preppedStoryProps.story,
+          preppedStoryProps.pages,
+          preppedStoryProps.metadata,
+          flags
+        );
+
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS,
+          payload: markup.toString(),
+        });
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Render Preview', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
+      }
+    },
+    [flags]
   );
 
   const createStoryFromTemplate = useCallback(
@@ -221,8 +284,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
               name: createdBy,
             },
           },
+          flags,
         });
-        const response = await dataAdapter.post(wpApi, {
+        const response = await dataAdapter.post(storyApi, {
           data: {
             ...storyPropsToSave,
             story_data: {
@@ -244,7 +308,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
-          payload: { message: err.message, code: err.code },
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Create Story From Template', 'web-stories'),
+            },
+            code: err.code,
+          },
         });
       } finally {
         dispatch({
@@ -253,7 +323,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
         });
       }
     },
-    [dataAdapter, editStoryURL, wpApi]
+    [dataAdapter, editStoryURL, storyApi, flags]
   );
 
   const duplicateStory = useCallback(
@@ -268,7 +338,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           title,
         } = story.originalStoryData;
 
-        const response = await dataAdapter.post(wpApi, {
+        const response = await dataAdapter.post(storyApi, {
           data: {
             content,
             story_data,
@@ -289,24 +359,36 @@ const useStoryApi = (dataAdapter, { editStoryURL, wpApi }) => {
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
         });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+      } catch (err) {
+        dispatch({
+          type: STORY_ACTION_TYPES.DUPLICATE_STORY_FAILURE,
+          payload: {
+            message: {
+              body: err.message,
+              title: __('Unable to Duplicate Story', 'web-stories'),
+            },
+            code: err.code,
+          },
+        });
       }
     },
-    [wpApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL]
   );
 
   const api = useMemo(
     () => ({
+      clearStoryPreview,
       duplicateStory,
       fetchStories,
       createStoryFromTemplate,
+      createStoryPreview,
       trashStory,
       updateStory,
     }),
     [
+      clearStoryPreview,
       createStoryFromTemplate,
+      createStoryPreview,
       duplicateStory,
       trashStory,
       updateStory,

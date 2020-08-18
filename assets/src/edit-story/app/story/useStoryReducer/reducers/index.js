@@ -38,6 +38,9 @@ export { default as selectElement } from './selectElement';
 export { default as unselectElement } from './unselectElement';
 export { default as toggleElement } from './toggleElement';
 
+// Manipulate animation state
+export { default as updateAnimationState } from './updateAnimationState';
+
 // Manipulate entire internal state.
 export { default as restore } from './restore';
 

@@ -22,33 +22,35 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import useInspector from './useInspector';
-import DesignInspector from './design';
-import DocumentInspector from './document';
-import PrepublishInspector from './prepublish';
 import { getTabId } from './utils';
 
-const InspectorWrapper = styled.div.attrs({ tabIndex: '0', role: 'tabpanel' })`
+const InspectorPane = styled.div.attrs({ role: 'tabpanel' })`
+  height: 100%;
+`;
+
+const InspectorPanes = styled.section`
   height: 100%;
 `;
 
 function Inspector() {
   const {
     state: { tab },
-    data: {
-      tabs: { DESIGN, DOCUMENT, PREPUBLISH },
-    },
+    data: { tabs },
   } = useInspector();
 
-  const ContentInspector = {
-    [DESIGN]: DesignInspector,
-    [DOCUMENT]: DocumentInspector,
-    [PREPUBLISH]: PrepublishInspector,
-  }[tab];
-
   return (
-    <InspectorWrapper aria-labelledby={tab} id={getTabId(tab)}>
-      <ContentInspector />
-    </InspectorWrapper>
+    <InspectorPanes>
+      {tabs.map(({ id, Pane }) => (
+        <InspectorPane
+          aria-labelledby={id}
+          id={getTabId(id)}
+          key={id}
+          hidden={id !== tab}
+        >
+          <Pane />
+        </InspectorPane>
+      ))}
+    </InspectorPanes>
   );
 }
 

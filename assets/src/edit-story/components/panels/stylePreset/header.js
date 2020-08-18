@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,8 +30,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { AddPage, EditPencil } from '../../../icons';
+import { Add, EditPencil } from '../../../icons';
 import { StylePresetPropType } from '../../../types';
+import { useKeyDownEffect } from '../../keyboard';
 import { PanelTitle } from '../panel';
 
 const buttonCSS = css`
@@ -38,9 +40,12 @@ const buttonCSS = css`
   background: transparent;
   width: 30px;
   height: 28px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
   cursor: pointer;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const AddColorPresetButton = styled.button`
@@ -51,73 +56,93 @@ const AddColorPresetButton = styled.button`
   }
 `;
 
-const ExitEditMode = styled.button`
+const EditMode = styled.button`
   ${buttonCSS}
-  color: ${({ theme }) => theme.colors.fg.v1};
-  font-size: 12px;
-  line-height: 14px;
-  padding: 7px;
-  height: initial;
+
+  ${({ isEditMode }) =>
+    isEditMode
+      ? css`
+          color: ${({ theme }) => theme.colors.fg.white};
+          font-size: 12px;
+          line-height: 14px;
+          padding: 7px;
+          height: initial;
+        `
+      : css`
+          svg {
+            width: 16px;
+            height: 20px;
+          }
+        `}
 `;
 
-const EditModeButton = styled.button`
-  ${buttonCSS}
-  height: 20px;
-  svg {
-    width: 16px;
-    height: 20px;
-  }
-`;
+function Button({ onClick, Icon, children, ...rest }) {
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const ref = useRef();
+  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
+  return (
+    <Icon ref={ref} onClick={onClick} {...rest}>
+      {children}
+    </Icon>
+  );
+}
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  Icon: PropTypes.elementType.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 function PresetsHeader({
   handleAddColorPreset,
   isEditMode,
   setIsEditMode,
   stylePresets,
+  canCollapse,
 }) {
-  const { fillColors, textColors } = stylePresets;
-  const hasPresets = fillColors.length > 0 || textColors.length > 0;
+  const { colors } = stylePresets;
+  const hasPresets = colors.length > 0;
 
   const getActions = () => {
-    return !isEditMode ? (
+    return (
       <>
         {hasPresets && (
-          <EditModeButton
+          <Button
+            Icon={EditMode}
             onClick={(evt) => {
               evt.stopPropagation();
-              setIsEditMode(true);
+              setIsEditMode(!isEditMode);
             }}
-            aria-label={__('Edit presets', 'web-stories')}
+            aria-label={
+              isEditMode
+                ? __('Exit edit mode', 'web-stories')
+                : __('Edit presets', 'web-stories')
+            }
+            isEditMode={isEditMode}
           >
-            <EditPencil />
-          </EditModeButton>
+            {isEditMode ? __('Exit', 'web-stories') : <EditPencil />}
+          </Button>
         )}
-        <AddColorPresetButton
-          onClick={handleAddColorPreset}
-          aria-label={__('Add preset', 'web-stories')}
-        >
-          <AddPage />
-        </AddColorPresetButton>
+        {!isEditMode && (
+          <Button
+            Icon={AddColorPresetButton}
+            onClick={handleAddColorPreset}
+            aria-label={__('Add preset', 'web-stories')}
+          >
+            <Add />
+          </Button>
+        )}
       </>
-    ) : (
-      <ExitEditMode
-        onClick={(evt) => {
-          evt.stopPropagation();
-          setIsEditMode(false);
-        }}
-        aria-label={__('Exit edit mode', 'web-stories')}
-      >
-        {__('Exit', 'web-stories')}
-      </ExitEditMode>
     );
   };
 
+  // Todo: Rename label to 'Presets' post-beta.
   return (
-    <PanelTitle
-      secondaryAction={getActions()}
-      canCollapse={!isEditMode && hasPresets}
-    >
-      {__('Presets', 'web-stories')}
+    <PanelTitle secondaryAction={getActions()} canCollapse={canCollapse}>
+      {__('Saved Colors', 'web-stories')}
     </PanelTitle>
   );
 }
@@ -127,6 +152,7 @@ PresetsHeader.propTypes = {
   isEditMode: PropTypes.bool.isRequired,
   handleAddColorPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,
+  canCollapse: PropTypes.bool.isRequired,
 };
 
 export default PresetsHeader;

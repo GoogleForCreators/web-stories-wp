@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -39,14 +39,15 @@ import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../utils/context';
+import { useKeyDownEffect } from '../../../keyboard';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
   if (isPrimary) {
-    return rgba(theme.colors.bg.v0, 0.07);
+    return rgba(theme.colors.bg.black, 0.07);
   }
   if (isSecondary) {
-    return rgba(theme.colors.fg.v1, 0.07);
+    return rgba(theme.colors.fg.white, 0.07);
   }
   return 'transparent';
 }
@@ -57,7 +58,7 @@ const Header = styled.h2`
   border: 0 solid ${({ theme }) => theme.colors.bg.v9};
   border-top-width: ${({ isPrimary, isSecondary }) =>
     isPrimary || isSecondary ? 0 : '1px'};
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
@@ -106,21 +107,56 @@ const Collapse = styled.button`
   }
 `;
 
+function Toggle({ children, toggle, ...rest }) {
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const ref = useRef();
+  useKeyDownEffect(ref, 'enter', toggle, [toggle]);
+  return (
+    <Collapse
+      ref={ref}
+      onClick={(evt) => {
+        evt.stopPropagation();
+        toggle();
+      }}
+      {...rest}
+    >
+      {children}
+    </Collapse>
+  );
+}
+
+Toggle.propTypes = {
+  children: PropTypes.node.isRequired,
+  toggle: PropTypes.func.isRequired,
+};
+
 function Title({
   children,
   isPrimary,
   isSecondary,
   secondaryAction,
   isResizable,
-  canCollapse = true,
+  canCollapse,
 }) {
   const {
-    state: { isCollapsed, height, resizeable, panelContentId },
-    actions: { collapse, expand, setHeight, setExpandToHeight, resetHeight },
+    state: { isCollapsed, height, resizeable, panelContentId, panelTitleId },
+    actions: {
+      collapse,
+      expand,
+      setHeight,
+      setExpandToHeight,
+      resetHeight,
+      confirmTitle,
+    },
   } = useContext(panelContext);
   const {
     state: { inspectorContentHeight },
   } = useInspector();
+
+  useEffect(confirmTitle, [confirmTitle]);
 
   // Max panel height is set to 70% of full available height.
   const maxHeight = Math.round(inspectorContentHeight * 0.7);
@@ -145,6 +181,8 @@ function Title({
     ? __('Expand panel', 'web-stories')
     : __('Collapse panel', 'web-stories');
 
+  const toggle = isCollapsed ? expand : collapse;
+
   return (
     <Header
       isPrimary={isPrimary}
@@ -161,23 +199,20 @@ function Title({
           handleDoubleClick={resetHeight}
         />
       )}
-      <HeaderButton onClick={isCollapsed ? expand : collapse}>
-        <Heading>{children}</Heading>
+      <HeaderButton onClick={toggle}>
+        <Heading id={panelTitleId}>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
           {canCollapse && (
-            <Collapse
+            <Toggle
               isCollapsed={isCollapsed}
-              onClick={(evt) => {
-                evt.stopPropagation();
-                isCollapsed ? expand() : collapse();
-              }}
+              toggle={toggle}
               aria-label={titleLabel}
               aria-expanded={!isCollapsed}
               aria-controls={panelContentId}
             >
               <Arrow />
-            </Collapse>
+            </Toggle>
           )}
         </HeaderActions>
       </HeaderButton>
@@ -201,6 +236,7 @@ Title.defaultProps = {
   isPrimary: false,
   isSecondary: false,
   isResizable: false,
+  canCollapse: true,
 };
 
 export default Title;

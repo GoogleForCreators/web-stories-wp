@@ -28,10 +28,10 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
-import EditCropMovable from './editCropMovable';
-import { mediaWithScale } from './util';
+import EditCropMoveable from './editCropMoveable';
+import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
-import EditPanMovable from './editPanMovable';
+import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { CropBox, MEDIA_MASK_OPACITY } from './';
 
@@ -43,7 +43,9 @@ const Element = styled.div`
 const fadedMediaCSS = css`
   position: absolute;
   opacity: ${({ opacity }) =>
-    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
+    typeof opacity !== 'undefined'
+      ? opacity * MEDIA_MASK_OPACITY
+      : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${mediaWithScale}
   ${elementWithFlip}
@@ -65,8 +67,11 @@ const cropMediaCSS = css`
   ${mediaWithScale}
   ${elementWithFlip}
   position: absolute;
+  cursor: grab;
   opacity: ${({ opacity }) =>
-    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
+    typeof opacity !== 'undefined'
+      ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY)
+      : null};
 `;
 
 const CropImage = styled.img`
@@ -136,7 +141,13 @@ function MediaEdit({ element, box }) {
   const isVideo = 'video' === type;
   return (
     <Element>
-      {isImage && <FadedImage {...fadedMediaProps} src={resource.src} />}
+      {isImage && (
+        <FadedImage
+          {...fadedMediaProps}
+          src={resource.src}
+          srcSet={calculateSrcSet(resource)}
+        />
+      )}
       {isVideo && (
         <FadedVideo {...fadedMediaProps}>
           <source src={resource.src} type={resource.mimeType} />
@@ -154,7 +165,7 @@ function MediaEdit({ element, box }) {
       </CropBox>
 
       {fullMedia && croppedMedia && (
-        <EditPanMovable
+        <EditPanMoveable
           setProperties={setProperties}
           fullMedia={fullMedia}
           croppedMedia={croppedMedia}
@@ -172,7 +183,7 @@ function MediaEdit({ element, box }) {
       )}
 
       {!isBackground && cropBox && croppedMedia && (
-        <EditCropMovable
+        <EditCropMoveable
           setProperties={setProperties}
           cropBox={cropBox}
           croppedMedia={croppedMedia}

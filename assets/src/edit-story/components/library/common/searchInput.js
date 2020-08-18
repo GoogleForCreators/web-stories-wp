@@ -19,10 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
+
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
@@ -46,21 +50,75 @@ const Search = styled(TextInput)`
 const CloseIcon = styled(Close)`
   width: 14px;
   height: 14px;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
+/**
+ * A Search Input component.
+ *
+ * @param {Object} obj The options for the component.
+ * @param {string} obj.initialValue The initial value to populate the input with.
+ * @param {string} obj.placeholder A placeholder text to show when it's empty.
+ * @param {Function} obj.onSearch Callback to call when a search is triggered.
+ * @param {boolean} obj.disabled Whether the input should be shown as disabled.
+ * @param {boolean} obj.incremental If `incremental` is false, a search is
+ * triggered when the user presses enter, or when they clear the input.
+ * If `incremental` is true, this occurs when the text changes, optionally
+ * debounced via `delayMs`.
+ * @param {number} obj.delayMs The number of milliseconds to debounce an autoSearch.
+ * @return {SearchInput} The component.
+ * @class
+ */
 export default function SearchInput({
-  value,
+  initialValue,
   placeholder,
-  onChange,
+  onSearch,
   disabled,
+  incremental,
+  delayMs,
 }) {
+  // Local state so that we can debounce triggering searches.
+  const [localValue, setLocalValue] = useState(initialValue);
+
+  /**
+   * Effectively performs a search, triggered at most every `delayMs`.
+   */
+  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
+    onSearch(localValue);
+  }, delayMs);
+
+  /**
+   * Handle search input changes. Triggers with every keystroke.
+   *
+   * @param {string} v the new search term.
+   */
+  const onChange = (v) => {
+    setLocalValue(v);
+    // When in non-incremental mode, we still trigger onSearch when the search
+    // term is empty, so that the user doesn't need to press enter in that case.
+    if (!incremental && v !== '') {
+      return;
+    }
+    if (incremental && delayMs) {
+      changeSearchTermDebounced();
+    } else {
+      onSearch(v);
+    }
+  };
+
+  const onKeyDown = (e) => {
+    if (!incremental && e.key === 'Enter') {
+      onSearch(localValue);
+    }
+  };
+
   return (
     <SearchField>
       <Search
-        value={value}
+        value={localValue}
         placeholder={placeholder}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         disabled={disabled}
         aria-label={__('Search from library', 'web-stories')}
         clear
@@ -72,12 +130,16 @@ export default function SearchInput({
 }
 
 SearchInput.propTypes = {
-  value: PropTypes.string.isRequired,
+  initialValue: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  incremental: PropTypes.bool,
+  delayMs: PropTypes.number,
 };
 
 SearchInput.defaultProps = {
   disabled: false,
+  incremental: false,
+  delayMs: 500,
 };

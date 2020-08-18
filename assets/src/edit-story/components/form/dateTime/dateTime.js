@@ -29,14 +29,21 @@ import TimePicker from './timePicker';
 import DatePicker from './datePicker';
 
 const DateTimeWrapper = styled.div`
+  border-radius: 4px;
   box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.v0, 0.2)};
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.black, 0.2)};
+  background-color: ${({ theme }) => theme.colors.fg.white};
   width: 100%;
   padding: 4px;
 `;
 
-function DateTime({ value, onChange, is12Hour = true, forwardedRef }) {
+function DateTime({
+  value,
+  onChange,
+  onViewChange,
+  is12Hour = true,
+  forwardedRef,
+}) {
   const selectedTime = value ? new Date(value) : new Date();
   const initialHours = selectedTime.getHours();
   const [localData, setLocalData] = useState({
@@ -53,13 +60,18 @@ function DateTime({ value, onChange, is12Hour = true, forwardedRef }) {
         onChange={onChange}
         is12Hour={is12Hour}
       />
-      <DatePicker currentDate={value} onChange={onChange} />
+      <DatePicker
+        currentDate={value}
+        onChange={onChange}
+        onViewChange={onViewChange}
+      />
     </DateTimeWrapper>
   );
 }
 
 DateTime.propTypes = {
   onChange: PropTypes.func.isRequired,
+  onViewChange: PropTypes.func,
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
   forwardedRef: PropTypes.object,

@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Fonts_Controller;
+use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
 use WP_Post;
@@ -39,36 +40,176 @@ use WP_Post;
  */
 class Plugin {
 	/**
+	 * Media object.
+	 *
+	 * @var Media
+	 */
+	public $media;
+
+	/**
+	 * Story Post Type object.
+	 *
+	 * @var  Story_Post_Type
+	 */
+	public $story;
+
+	/**
+	 * Template object.
+	 *
+	 * @var Template_Post_Type
+	 */
+	public $template;
+
+	/**
+	 * Beta version updater.
+	 *
+	 * @var Updater
+	 */
+	public $updater;
+
+	/**
+	 * Dashboard.
+	 *
+	 * @var Dashboard
+	 */
+	public $dashboard;
+
+	/**
+	 * Settings.
+	 *
+	 * @var Settings
+	 */
+	public $settings;
+
+	/**
+	 * Admin-related functionality.
+	 *
+	 * @var Admin
+	 */
+	public $admin;
+
+	/**
+	 * Gutenberg Blocks.
+	 *
+	 * @var Embed_Block
+	 */
+	public $embed_block;
+
+	/**
+	 * Frontend.
+	 *
+	 * @var Discovery
+	 */
+	public $discovery;
+
+	/**
+	 * Tracking.
+	 *
+	 * @var Tracking
+	 */
+	public $tracking;
+
+	/**
+	 * Database Upgrader.
+	 *
+	 * @var Database_Upgrader
+	 */
+	public $database_upgrader;
+
+	/**
+	 * Analytics.
+	 *
+	 * @var Analytics
+	 */
+	public $analytics;
+
+	/**
+	 * Experiments.
+	 *
+	 * @var Experiments
+	 */
+	public $experiments;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @return void
 	 */
 	public function register() {
-		add_action( 'init', [ Media::class, 'init' ], 9 );
-		add_action( 'init', [ Story_Post_Type::class, 'init' ] );
-		add_action( 'init', [ Template_Post_Type::class, 'init' ] );
+		// Plugin compatibility / polyfills.
+		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
+
+		// Settings.
+		$this->settings = new Settings();
+		add_action( 'init', [ $this->settings, 'init' ], 5 );
+
+
+		$this->experiments = new Experiments();
+		add_action( 'init', [ $this->experiments, 'init' ], 7 );
+
+		// Beta version updater.
+		$this->updater = new Updater();
+		add_action( 'init', [ $this->updater, 'init' ], 9 );
+
+		// Admin-related functionality.
+
+		// Migrations.
+		$this->database_upgrader = new Database_Upgrader();
+		add_action( 'admin_init', [ $this->database_upgrader, 'init' ], 5 );
+
+		$this->admin = new Admin();
+		add_action( 'admin_init', [ $this->admin, 'init' ] );
+
+		$this->media = new Media();
+		add_action( 'init', [ $this->media, 'init' ] );
+
+		$this->tracking = new Tracking();
+		add_action( 'init', [ $this->tracking, 'init' ] );
+
+		$this->template = new Template_Post_Type();
+		add_action( 'init', [ $this->template, 'init' ] );
+
+		$this->dashboard = new Dashboard( $this->experiments );
+		add_action( 'init', [ $this->dashboard, 'init' ] );
+
+		$this->story = new Story_Post_Type( $this->experiments );
+		add_action( 'init', [ $this->story, 'init' ] );
 
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
-		// Dashboard.
-		$dashboard = new Dashboard();
-		add_action( 'init', [ $dashboard, 'init' ] );
-
-		// Admin-related functionality.
-		$admin = new Admin();
-		add_action( 'admin_init', [ $admin, 'init' ] );
-
 		// Gutenberg Blocks.
-		$embed_block = new Embed_Block();
-		add_action( 'init', [ $embed_block, 'init' ] );
+		$this->embed_block = new Embed_Block();
+		add_action( 'init', [ $this->embed_block, 'init' ] );
 
 		// Frontend.
-		$discovery = new Discovery();
-		add_action( 'init', [ $discovery, 'init' ] );
+		$this->discovery = new Discovery();
+		add_action( 'init', [ $this->discovery, 'init' ] );
 
-		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
+		$this->analytics = new Analytics();
+		add_action( 'init', [ $this->analytics, 'init' ] );
+
+		// Register activation flag logic outside of 'init' since it hooks into
+		// plugin activation.
+		$activation_flag = new Activation_Flag();
+		$activation_flag->init();
+
+		$activation_notice = new Activation_Notice( $activation_flag );
+		$activation_notice->init();
+	}
+
+	/**
+	 * Initializes functionality to improve compatibility with the AMP plugin.
+	 *
+	 * Loads a separate PHP file that allows defining functions in the global namespace.
+	 *
+	 * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
+	 *
+	 * @return void
+	 */
+	public function load_amp_plugin_compat() {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/plugin-compat/amp.php';
 	}
 
 	/**
@@ -91,63 +232,8 @@ class Plugin {
 
 		$stories_autosaves = new Stories_Autosaves_Controller( Story_Post_Type::POST_TYPE_SLUG );
 		$stories_autosaves->register_routes();
-	}
 
-	/**
-	 * Filters the gtag configuration options for the amp-analytics tag.
-	 *
-	 * @see https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/
-	 * @see https://github.com/ampproject/amphtml/blob/master/extensions/amp-story/amp-story-analytics.md
-	 *
-	 * @param array $gtag_opt Array of gtag configuration options.
-	 * @return array Modified configuration options.
-	 */
-	public function filter_site_kit_gtag_opt( $gtag_opt ) {
-		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
-			return $gtag_opt;
-		}
-
-		$post = get_post();
-
-		if ( ! $post instanceof WP_Post ) {
-			return $gtag_opt;
-		}
-
-		$title       = get_the_title( $post );
-		$story_id    = $post->ID;
-		$tracking_id = $gtag_opt['vars']['gtag_id'];
-
-		$gtag_opt['triggers'] = $gtag_opt['triggers'] ?: [];
-
-		if ( ! isset( $gtag_opt['triggers']['storyProgress'] ) ) {
-			$gtag_opt['triggers']['storyProgress'] = [
-				'on'   => 'story-page-visible',
-				'vars' => [
-					'event_name'     => 'custom',
-					'event_action'   => 'story_progress',
-					'event_category' => $title,
-					'event_label'    => $story_id,
-					'send_to'        => [
-						$tracking_id,
-					],
-				],
-			];
-		}
-
-		if ( ! isset( $gtag_opt['triggers']['storyEnd'] ) ) {
-			$gtag_opt['triggers']['storyEnd'] = [
-				'on'   => 'story-last-page-visible',
-				'vars' => [
-					'event_name'     => 'custom',
-					'event_action'   => 'story_complete',
-					'event_category' => $title,
-					'send_to'        => [
-						$tracking_id,
-					],
-				],
-			];
-		}
-
-		return $gtag_opt;
+		$stories_media = new Stories_Media_Controller( 'attachment' );
+		$stories_media->register_routes();
 	}
 }

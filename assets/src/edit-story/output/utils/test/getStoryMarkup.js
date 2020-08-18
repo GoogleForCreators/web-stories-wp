@@ -15,11 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+jest.mock('flagged');
+import { useFeature, FlagsProvider } from 'flagged';
+
+/**
  * Internal dependencies
  */
 import getStoryMarkup from '../getStoryMarkup';
 
 describe('getStoryMarkup', () => {
+  useFeature.mockImplementation(() => true);
+  FlagsProvider.mockImplementation(({ children }) => children);
+
   it('should generate expected story markup', () => {
     const story = {
       storyId: 1,
@@ -43,12 +52,16 @@ describe('getStoryMarkup', () => {
       },
       logoPlaceholder:
         'https://example.com/fallback-wordpress-publisher-logo.png',
-      fallbackPoster: 'https://example.com/fallback-poster.jpg',
+      fallbackPoster: 'https://example.com/fallback-poster.png',
     };
     const pages = [
       {
         type: 'page',
         id: '2',
+        animations: [
+          { targets: ['2'], type: 'bounce', duration: 1000 },
+          { targets: ['2'], type: 'spin', duration: 1000 },
+        ],
         elements: [
           {
             id: '2',
@@ -79,14 +92,16 @@ describe('getStoryMarkup', () => {
         ],
       },
     ];
-    const markup = getStoryMarkup(story, pages, meta);
+    const markup = getStoryMarkup(story, pages, meta, {});
     expect(markup).toContain('Hello World');
     expect(markup).toContain('transform:rotate(1deg)');
     expect(markup).toContain(
       '</amp-story-grid-layer></amp-story-page></amp-story></body></html>'
     );
     expect(markup).toContain(
-      'poster-portrait-src="https://example.com/fallback-poster.jpg"'
+      'poster-portrait-src="https://example.com/fallback-poster.png"'
     );
+
+    expect(markup).toContain('<amp-story-animation');
   });
 });

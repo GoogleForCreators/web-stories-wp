@@ -15,7 +15,9 @@
  */
 
 /**
- * @param {Object} element Text element properties.
+ * Generates paragraph text style for a text element.
+ *
+ * @param {Object<*>} element Text element properties.
  * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
  * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
  * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
@@ -23,14 +25,15 @@
  * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
-  element,
+  { font, fontSize, lineHeight, padding, textAlign },
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY = dataToStyleY
 ) {
-  const { font, fontSize, lineHeight, padding, textAlign } = element;
   return {
     whiteSpace: 'pre-wrap',
+    overflowWrap: 'break-word',
+    wordBreak: 'break-word',
     margin: 0,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
@@ -42,7 +45,7 @@ export function generateParagraphTextStyle(
   };
 }
 
-export const generateFontFamily = ({ family, fallbacks }) => {
+export const generateFontFamily = ({ family, fallbacks } = {}) => {
   const genericFamilyKeywords = [
     'cursive',
     'fantasy',
@@ -51,7 +54,7 @@ export const generateFontFamily = ({ family, fallbacks }) => {
     'sans-serif',
   ];
   // Wrap into " since some fonts won't work without it.
-  let fontFamilyDisplay = family ? `"${family}"` : null;
+  let fontFamilyDisplay = family ? `"${family}"` : '';
   if (fallbacks && fallbacks.length) {
     fontFamilyDisplay += family ? `,` : ``;
     fontFamilyDisplay += fallbacks

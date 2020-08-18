@@ -27,7 +27,7 @@ import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
 import getFontDeclarations from './utils/getFontDeclarations';
-import { OutputPage } from './';
+import OutputPage from './page';
 
 function OutputStory({
   story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },
@@ -36,6 +36,7 @@ function OutputStory({
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const fontDeclarations = getFontDeclarations(pages);
+
   return (
     <html amp="" lang="en">
       <head>
@@ -60,7 +61,7 @@ function OutputStory({
       </head>
       <body>
         <amp-story
-          standalone="standalone"
+          standalone=""
           publisher={publisher.name}
           publisher-logo-src={logoPlaceholder}
           title={title}

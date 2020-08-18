@@ -22,24 +22,17 @@ import { useStory } from '../../../app/story';
 import useInsertElement from '../useInsertElement';
 import createSolidFromString from '../../../utils/createSolidFromString';
 
-describe('Multi-selection Movable integration', () => {
+describe('Multi-selection Moveable integration', () => {
   let fixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
-
     await fixture.render();
   });
 
   afterEach(() => {
     fixture.restore();
   });
-
-  function getElementFrame(id) {
-    return fixture.querySelector(
-      `[data-testid="frameElement"][data-element-id="${id}"]`
-    );
-  }
 
   async function clickOnTarget(target, key = false) {
     const { x, y, width, height } = target.getBoundingClientRect();
@@ -64,7 +57,7 @@ describe('Multi-selection Movable integration', () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
       element1 = await fixture.act(() =>
         insertElement('shape', {
-          backgroundColor: createSolidFromString('#ff0000'),
+          backgroundColor: createSolidFromString('#ff00ff'),
           mask: { type: 'rectangle' },
           x: 10,
           y: 10,
@@ -95,9 +88,9 @@ describe('Multi-selection Movable integration', () => {
         })
       );
 
-      frame1 = getElementFrame(element1.id);
-      frame2 = getElementFrame(element2.id);
-      frame3 = getElementFrame(element3.id);
+      frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+      frame2 = fixture.editor.canvas.framesLayer.frame(element2.id).node;
+      frame3 = fixture.editor.canvas.framesLayer.frame(element3.id).node;
     });
 
     it('should render initial content', async () => {

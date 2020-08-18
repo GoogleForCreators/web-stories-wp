@@ -27,24 +27,26 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../../tracking';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../edit-story/units';
 import {
   CardGallery,
   ColorList,
   DetailViewContentGutter,
+  DetailViewNavBar,
   Layout,
   PaginationButton,
   Pill,
-  TemplateNavBar,
 } from '../../../components';
-import { clamp, usePagePreviewSize } from '../../../utils/';
+import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { TemplateGridView } from '../shared';
+import { PreviewStoryView } from '..';
 import {
   ByLine,
   Column,
@@ -76,7 +78,7 @@ function TemplateDetails() {
 
   const {
     state: {
-      templates: { templates, templatesOrderById },
+      templates: { templates, templatesOrderById, totalPages },
     },
     actions: {
       storyApi: { createStoryFromTemplate },
@@ -87,6 +89,8 @@ function TemplateDetails() {
       },
     },
   } = useContext(ApiContext);
+
+  const { activePreview } = useTemplateView({ totalPages });
 
   useEffect(() => {
     if (!templateId) {
@@ -103,11 +107,14 @@ function TemplateDetails() {
   }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
 
   useEffect(() => {
-    if (!template) {
+    if (!template || !templateId) {
       return;
     }
+
+    const id = parseInt(templateId);
+
     setRelatedTemplates(
-      fetchRelatedTemplates().map((relatedTemplate) => ({
+      fetchRelatedTemplates(id).map((relatedTemplate) => ({
         ...relatedTemplate,
         centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
       }))
@@ -117,7 +124,13 @@ function TemplateDetails() {
         (templateByOrderId) => templates[templateByOrderId]
       )
     );
-  }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
+  }, [
+    fetchRelatedTemplates,
+    template,
+    templates,
+    templatesOrderById,
+    templateId,
+  ]);
 
   const { byLine } = useMemo(() => {
     if (!template) {
@@ -195,8 +208,29 @@ function TemplateDetails() {
 
   const handleBookmarkClickSelected = useCallback(() => {}, []);
 
+  const onHandleCta = useCallback(() => {
+    trackEvent('dashboard', 'use_template', undefined, template.id);
+    createStoryFromTemplate(template);
+  }, [createStoryFromTemplate, template]);
+
+  const handlePreviewTemplate = useCallback(
+    (e, previewTemplate) => {
+      activePreview.set(e, previewTemplate);
+    },
+    [activePreview]
+  );
+
   if (!template) {
     return null;
+  }
+
+  if (activePreview.value) {
+    return (
+      <PreviewStoryView
+        story={activePreview.value}
+        handleClose={handlePreviewTemplate}
+      />
+    );
   }
 
   return (
@@ -205,11 +239,12 @@ function TemplateDetails() {
         <TransformProvider>
           <Layout.Provider>
             <Layout.Fixed>
-              <TemplateNavBar
-                handleCta={() => createStoryFromTemplate(template)}
+              <DetailViewNavBar
+                ctaText={__('Use template', 'web-stories')}
                 handleBookmarkClick={
-                  enableBookmarks ? handleBookmarkClickSelected : undefined
+                  enableBookmarks ? handleBookmarkClickSelected : null
                 }
+                handleCta={onHandleCta}
               />
             </Layout.Fixed>
             <Layout.Scrollable>
@@ -257,11 +292,19 @@ function TemplateDetails() {
                     <SubHeading>
                       {__('Related Templates', 'web-stories')}
                     </SubHeading>
-                    <UnitsProvider pageSize={pageSize}>
+                    <UnitsProvider
+                      pageSize={{
+                        width: pageSize.width,
+                        height: pageSize.height,
+                      }}
+                    >
                       <TemplateGridView
                         templates={relatedTemplates}
                         pageSize={pageSize}
-                        templateActions={{ createStoryFromTemplate }}
+                        templateActions={{
+                          createStoryFromTemplate,
+                          handlePreviewTemplate,
+                        }}
                       />
                     </UnitsProvider>
                   </RowContainer>

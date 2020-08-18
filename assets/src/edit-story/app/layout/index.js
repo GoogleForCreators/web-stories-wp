@@ -20,6 +20,11 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import Library from '../../components/library';
@@ -31,12 +36,14 @@ import {
   INSPECTOR_MIN_WIDTH,
 } from '../../constants';
 
-const Editor = styled.div`
+const Editor = styled.section.attrs({
+  'aria-label': __('Web Stories Editor', 'web-stories'),
+})`
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
 
   position: relative;
   height: 100%;

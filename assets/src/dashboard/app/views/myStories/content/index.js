@@ -38,6 +38,7 @@ import {
   UsersPropType,
   StoriesPropType,
   StoryActionsPropType,
+  DateSettingsPropType,
 } from '../../../../types';
 import {
   FilterPropTypes,
@@ -60,12 +61,18 @@ function Content({
   storyActions,
   users,
   view,
+  dateSettings,
 }) {
   return (
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>
+          <UnitsProvider
+            pageSize={{
+              width: view.pageSize.width,
+              height: view.pageSize.height,
+            }}
+          >
             {stories.length > 0 ? (
               <StandardViewContentGutter>
                 <StoriesView
@@ -75,6 +82,7 @@ function Content({
                   stories={stories}
                   users={users}
                   view={view}
+                  dateSettings={dateSettings}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -103,6 +111,7 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
+  dateSettings: DateSettingsPropType,
 };
 
 export default Content;

@@ -23,6 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { useState, useRef } from 'react';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
@@ -30,15 +31,13 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
+import SingleSelectionMoveable from './singleSelectionMoveable';
 
-// Background color is used to make the edited element more prominent and
-// easier to see.
 const Wrapper = styled.div`
 	${elementWithPosition}
 	${elementWithSize}
 	${elementWithRotation}
 	pointer-events: initial;
-	background-color: ${({ theme }) => theme.colors.whiteout};
 `;
 
 function EditElement({ element }) {
@@ -47,17 +46,44 @@ function EditElement({ element }) {
     getBox: state.actions.getBox,
   }));
 
-  const { Edit } = getDefinitionForType(type);
+  const [editWrapper, setEditWrapper] = useState(null);
+
+  const { Edit, hasEditModeMoveable } = getDefinitionForType(type);
   const box = getBox(element);
 
+  const moveable = useRef(null);
+
+  const onResize = () => {
+    // Update moveable when resizing.
+    if (moveable.current) {
+      moveable.current.updateRect();
+    }
+  };
+
   return (
-    <Wrapper
-      aria-labelledby={`layer-${id}`}
-      {...box}
-      onMouseDown={(evt) => evt.stopPropagation()}
-    >
-      <Edit element={element} box={box} />
-    </Wrapper>
+    <>
+      <Wrapper
+        aria-labelledby={`layer-${id}`}
+        {...box}
+        onMouseDown={(evt) => evt.stopPropagation()}
+        ref={setEditWrapper}
+      >
+        <Edit
+          element={element}
+          box={box}
+          editWrapper={hasEditModeMoveable && editWrapper}
+          onResize={onResize}
+        />
+      </Wrapper>
+      {hasEditModeMoveable && editWrapper && (
+        <SingleSelectionMoveable
+          selectedElement={element}
+          targetEl={editWrapper}
+          isEditMode={true}
+          editMoveableRef={moveable}
+        />
+      )}
+    </>
   );
 }
 

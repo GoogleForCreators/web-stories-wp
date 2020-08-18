@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 /**
  * Internal dependencies
@@ -44,7 +44,7 @@ const Page = styled.button`
   border: 0;
   border-top: ${THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
-      isActive ? theme.colors.selection : theme.colors.bg.v1};
+      isActive ? theme.colors.selection : theme.colors.bg.workspace};
   height: ${({ height }) => height}px;
   background-color: transparent;
   width: ${({ width }) => width}px;
@@ -68,22 +68,35 @@ const PreviewWrapper = styled.div`
   position: relative;
   overflow: hidden;
   background-color: white;
+  border-radius: 4.5px;
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-function PagePreview({ index, ...props }) {
+function PagePreview({ index, gridRef, ...props }) {
   const { pages } = useStory((state) => ({
     pages: state.state.pages,
   }));
   const page = pages[index];
   const { backgroundColor } = page;
-  const { width: thumbWidth, height: thumbHeight } = props;
+  const { width: thumbWidth, height: thumbHeight, isActive } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;
   const height = thumbHeight - THUMB_FRAME_HEIGHT;
+  const [tabIndex, setTabIndex] = useState(isActive ? 0 : -1);
+
+  const onBlur = (e) => {
+    if (gridRef?.current?.contains(e.relatedTarget)) {
+      setTabIndex(-1);
+    }
+  };
+
+  const onFocus = () => {
+    setTabIndex(0);
+  };
+
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page {...props}>
+        <Page tabIndex={tabIndex} onBlur={onBlur} onFocus={onFocus} {...props}>
           <PreviewWrapper background={backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
@@ -105,6 +118,8 @@ PagePreview.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,
+  isActive: PropTypes.bool,
+  gridRef: PropTypes.any,
 };
 
 PagePreview.defaultProps = {

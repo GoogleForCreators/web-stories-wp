@@ -58,8 +58,8 @@ const KeyboardOnlyOutline = () => {
 
   useEffect(() => {
     return function cleanup() {
-      document.removeEventListener('keydown', handleKeydown);
-      document.removeEventListener('mousedown', handleMousedown);
+      document.removeEventListener('keydown', handleKeydown, true);
+      document.removeEventListener('mousedown', handleMousedown, true);
     };
   });
 
@@ -69,6 +69,10 @@ const KeyboardOnlyOutline = () => {
 
   return <OutlineStyles />;
 };
+
+export function isKeyboardUser() {
+  return document.body.classList.contains(KEYBOARD_USER_CLASS);
+}
 
 KeyboardOnlyOutline.propTypes = {};
 

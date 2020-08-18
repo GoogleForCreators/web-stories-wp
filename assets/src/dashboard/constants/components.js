@@ -18,6 +18,7 @@ export const PILL_LABEL_TYPES = {
   SWATCH: 'swatch',
   DEFAULT: 'default',
 };
+
 export const PILL_INPUT_TYPES = {
   CHECKBOX: 'checkbox',
   RADIO: 'radio',
@@ -46,3 +47,15 @@ export const KEYS = {
   UP: 'ArrowUp',
   DOWN: 'ArrowDown',
 };
+
+export const ALERT_SEVERITY = {
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+  SUCCESS: 'success',
+  DEFAULT: 'default',
+};
+
+export const AUTO_REMOVE_ALERT_TIME_INTERVAL = 10000;
+
+export const DEFAULT_FILE_UPLOAD_TYPES = ['.jpg', '.jpeg', '.png', '.gif'];

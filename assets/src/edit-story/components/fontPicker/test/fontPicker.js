@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -26,9 +26,10 @@ import FontPicker from '../';
 import { FontProvider } from '../../../app/font';
 import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
+import { curatedFontNames } from '../../../app/font/curatedFonts';
 import fontsListResponse from './fontsResponse';
 
-async function getFontPicker() {
+async function getFontPicker(options) {
   const getAllFontsPromise = Promise.resolve(fontsListResponse);
   const apiContextValue = {
     actions: {
@@ -38,6 +39,7 @@ async function getFontPicker() {
   const props = {
     onChange: jest.fn(),
     value: 'Roboto',
+    ...options,
   };
 
   const accessors = renderWithTheme(
@@ -52,6 +54,10 @@ async function getFontPicker() {
 
   return accessors;
 }
+
+const availableCuratedFonts = fontsListResponse.filter(
+  (font) => curatedFontNames.indexOf(font.name) > 0
+);
 
 describe('Font Picker', () => {
   // Mock scrollTo
@@ -74,10 +80,10 @@ describe('Font Picker', () => {
 
     // Should render all options
     const allOptionItems = getAllByRole('option');
-    expect(allOptionItems).toHaveLength(fontsListResponse.length);
+    expect(allOptionItems).toHaveLength(availableCuratedFonts.length);
   });
 
-  it('should mark the currently selected font and scroll to it', async () => {
+  it('should mark the currently selected font', async () => {
     scrollTo.mockReset();
     const { getByRole } = await getFontPicker();
 
@@ -101,5 +107,122 @@ describe('Font Picker', () => {
     // We can't really validate this number anyway in JSDom (no actual
     // layout is happening), so just expect it to be called
     expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
+  });
+
+  it('should select the next font in the list when using the down arrow plus enter key', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, { key: 'Enter' });
+    });
+
+    // The second font in the list.
+    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1].name);
+  });
+
+  it('should close the menu when the Esc key is pressed.', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'Escape',
+      });
+    });
+
+    await waitFor(() => expect(fontsList).not.toBeInTheDocument());
+  });
+
+  it('should select the previous font in the list when using the up arrow plus enter key', async () => {
+    const onChangeFn = jest.fn();
+    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    const fontsList = getByRole('listbox');
+    expect(fontsList).toBeInTheDocument();
+
+    // Move down by 2
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowUp',
+      });
+    });
+
+    act(() => {
+      fireEvent.keyDown(fontsList, { key: 'Enter' });
+    });
+
+    // Moving down by 2 and back 1 up should end up with the second font: Roboto Condensed.
+    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1].name);
+  });
+
+  it('should search and filter the list to match the results.', async () => {
+    const { getByRole, queryAllByRole } = await getFontPicker();
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    expect(queryAllByRole('option')).toHaveLength(availableCuratedFonts.length);
+
+    act(() => {
+      fireEvent.change(getByRole('combobox'), {
+        target: { value: 'Yrsa' },
+      });
+    });
+
+    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(1), {
+      timeout: 500,
+    });
+  });
+
+  it('should show an empty list when the search keyword has no results.', async () => {
+    const { getByRole, queryAllByRole } = await getFontPicker();
+
+    const selectButton = getByRole('button');
+    fireEvent.click(selectButton);
+
+    expect(queryAllByRole('option')).toHaveLength(availableCuratedFonts.length);
+
+    act(() => {
+      fireEvent.change(getByRole('combobox'), {
+        target: { value: 'Not a font!' },
+      });
+    });
+
+    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(0), {
+      timeout: 500,
+    });
   });
 });

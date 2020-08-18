@@ -3,7 +3,7 @@ name: Build plugin
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
@@ -56,42 +56,46 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
+          npx rollup --config bin/rollup.config.migrate.js
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Bundle plugin
+      - name: Build plugin
         run: |
           npm run build:js
           npm run workflow:version -- --nightly
-          npm run workflow:build-plugin -- --cdn --composer --zip web-stories-composer.zip
-          npm run workflow:build-plugin -- --cdn --zip web-stories.zip
 
-      - name: Bundle development version
-        run: |
-          rm -rf assets/css/* assets/js/*
-          NODE_ENV=development npx webpack --config webpack.config.cjs
-          npm run workflow:version -- --nightly
-          npm run workflow:build-plugin -- --cdn --zip web-stories-dev.zip
-
-      - name: Upload full bundle
-        uses: actions/upload-artifact@v2
-        with:
-          name: web-stories
-          path: build/web-stories.zip
+      - name: Bundle composer version
+        run: npm run workflow:build-plugin -- --cdn --composer
 
       - name: Upload composer bundle
         uses: actions/upload-artifact@v2
         with:
           name: web-stories-composer
-          path: build/web-stories-composer.zip
+          path: build/web-stories
+
+      - name: Bundle regular version
+        run: npm run workflow:build-plugin -- --cdn
+
+      - name: Upload regular bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: web-stories
+          path: build/web-stories
+
+      - name: Bundle development version
+        run: |
+          rm -rf assets/css/* assets/js/*
+          NODE_ENV=development npx webpack --config webpack.config.cjs
+          npm run workflow:build-plugin -- --cdn
 
       - name: Upload development bundle
         uses: actions/upload-artifact@v2
         with:
           name: web-stories-dev
-          path: build/web-stories-dev.zip
+          path: build/web-stories
 
       - name: Upload bundles in combined ZIP file
         uses: actions/upload-artifact@v2
@@ -107,13 +111,23 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}.wiki
+          ref: master
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download combined ZIP file
+      - name: Download all artifacts
         uses: actions/download-artifact@v2
         with:
-          name: All ZIP Files
           path: ${{ github.ref }}
+
+      - name: ZIP artifacts
+        run: |
+          rm -rf web-stories.zip web-stories-composer.zip web-stories-dev.zip
+          zip -mrT web-stories.zip web-stories
+          mv web-stories-composer web-stories
+          zip -mrT web-stories-composer.zip web-stories
+          mv web-stories-dev web-stories
+          zip -mrT web-stories-dev.zip web-stories
+        working-directory: ${{ github.ref }}
 
       - name: Commit updates
         run: |
@@ -132,7 +146,7 @@ jobs:
     name: Update release changelog
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
       - name: Draft release notes
@@ -145,6 +159,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}.wiki
+          ref: master
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download full bundle

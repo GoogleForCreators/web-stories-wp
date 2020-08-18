@@ -15,15 +15,21 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { UnitsProvider } from '../../../edit-story/units';
-import { PAGE_RATIO, STORY_PAGE_STATE } from '../../constants';
 import { StoryPropType } from '../../types';
+import { getPagePreviewHeights } from '../../utils';
 import PreviewPage from '../previewPage';
 import {
   ActiveCard,
@@ -55,18 +61,23 @@ function CardGallery({ story }) {
     }
     const activeCardWidth = ACTIVE_CARD_WIDTH * dimensionMultiplier;
     const miniCardWidth = MINI_CARD_WIDTH * dimensionMultiplier;
+    const activeHeightOptions = getPagePreviewHeights(activeCardWidth);
+    const miniCardHeightOptions = getPagePreviewHeights(miniCardWidth);
+
     return {
       activeCardSize: {
         width: activeCardWidth,
-        height: activeCardWidth / PAGE_RATIO,
+        height: activeHeightOptions.storyHeight,
+        containerHeight: activeHeightOptions.fullBleedHeight,
       },
       miniCardSize: {
         width: miniCardWidth,
-        height: miniCardWidth / PAGE_RATIO,
+        height: miniCardHeightOptions.storyHeight,
+        containerHeight: miniCardHeightOptions.fullBleedHeight,
       },
       miniWrapperSize: {
         width: miniCardWidth + CARD_WRAPPER_BUFFER,
-        height: miniCardWidth / PAGE_RATIO + CARD_WRAPPER_BUFFER,
+        height: miniCardHeightOptions.fullBleedHeight + CARD_WRAPPER_BUFFER,
       },
       gap: CARD_GAP * dimensionMultiplier,
     };
@@ -105,7 +116,12 @@ function CardGallery({ story }) {
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
       {metrics.miniCardSize && (
-        <UnitsProvider pageSize={metrics.miniCardSize}>
+        <UnitsProvider
+          pageSize={{
+            width: metrics.miniCardSize.width,
+            height: metrics.miniCardSize.height,
+          }}
+        >
           <MiniCardsContainer
             rowHeight={metrics.miniWrapperSize.height}
             gap={metrics.gap}
@@ -116,9 +132,14 @@ function CardGallery({ story }) {
                 isSelected={index === activePageIndex}
                 {...metrics.miniWrapperSize}
                 onClick={() => handleMiniCardClick(index)}
+                aria-label={sprintf(
+                  /* translators: %s: page number. */
+                  __('Page Preview - Page %s', 'web-stories'),
+                  index + 1
+                )}
               >
                 <MiniCard {...metrics.miniCardSize}>
-                  <PreviewPage page={page} />
+                  <PreviewPage page={page} pageSize={metrics.miniCardSize} />
                 </MiniCard>
               </MiniCardWrapper>
             ))}
@@ -126,11 +147,24 @@ function CardGallery({ story }) {
         </UnitsProvider>
       )}
       {metrics.activeCardSize && pages[activePageIndex] && (
-        <UnitsProvider pageSize={metrics.activeCardSize}>
-          <ActiveCard {...metrics.activeCardSize}>
+        <UnitsProvider
+          pageSize={{
+            width: metrics.activeCardSize.width,
+            height: metrics.activeCardSize.height,
+          }}
+        >
+          <ActiveCard
+            aria-label={sprintf(
+              /* translators: %s: active preview page number */
+              __('Active Page Preview - Page %s', 'web-stories'),
+              activePageIndex + 1
+            )}
+            {...metrics.activeCardSize}
+          >
             <PreviewPage
               page={pages[activePageIndex]}
-              animationState={STORY_PAGE_STATE.PLAYING}
+              pageSize={metrics.activeCardSize}
+              animationState={STORY_ANIMATION_STATE.PLAYING}
             />
           </ActiveCard>
         </UnitsProvider>

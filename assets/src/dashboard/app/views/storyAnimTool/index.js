@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import stripHTML from '../../../../edit-story/utils/stripHTML';
@@ -32,11 +34,9 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-  STORY_PAGE_STATE,
 } from '../../../constants';
-import { PAGE_RATIO } from '../../../constants/pageStructure';
 import { PreviewPage } from '../../../components';
-import { clamp } from '../../../utils';
+import { clamp, getPagePreviewHeights } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
 import UpdateTemplateForm from './updateTemplateForm';
@@ -59,12 +59,13 @@ function StoryAnimTool() {
   const [activeAnimation, setActiveAnimation] = useState({});
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [pageAnimationState, setPageAnimationState] = useState(
-    STORY_PAGE_STATE.RESET
+    STORY_ANIMATION_STATE.RESET
   );
 
   const [selectedElementIds, setSelectedElementIds] = useState({});
   const [isElementSelectable, setIsElementSelectable] = useState(false);
   const globalTimeSubscription = useMemo(() => emitter(), []);
+  const flags = useFeatures();
 
   const {
     actions: {
@@ -111,13 +112,16 @@ function StoryAnimTool() {
         saveActiveStoryUpdates(activeStory);
       }
 
+      // Deselect animation
+      setActiveAnimation({});
+
+      // Reset active page
+      setActivePageIndex(0);
+
       const story = orderedStories.find(
         (s) => s.id === parseInt(e.target.value)
       );
       setActiveStory(story);
-
-      //Deselect animation
-      setActiveAnimation({});
     },
     [activeStory, saveActiveStoryUpdates, orderedStories]
   );
@@ -232,13 +236,18 @@ function StoryAnimTool() {
       },
     };
 
-    const storyMarkup = getStoryMarkup(story, activeStory.pages, {
-      fallbackPoster: '',
-      logoPlaceholder: '',
-      publisher: {
-        name: 'Demo',
+    const storyMarkup = getStoryMarkup(
+      story,
+      activeStory.pages,
+      {
+        fallbackPoster: '',
+        logoPlaceholder: '',
+        publisher: {
+          name: 'Demo',
+        },
       },
-    });
+      flags
+    );
 
     const popup = window.open('about:blank', '_blank');
 
@@ -256,7 +265,7 @@ function StoryAnimTool() {
     iframeDoc.open();
     iframeDoc.write(storyMarkup.toString());
     iframeDoc.close();
-  }, [activeStory]);
+  }, [activeStory, flags]);
 
   useEffect(() => {
     setSelectedElementIds(
@@ -274,6 +283,8 @@ function StoryAnimTool() {
     // Deselect animation
     setActiveAnimation({});
   }, [activePageIndex]);
+
+  const { fullBleedHeight, storyHeight } = getPagePreviewHeights(STORY_WIDTH);
 
   const renderElementContent = useCallback((element) => {
     switch (element.type) {
@@ -319,20 +330,25 @@ function StoryAnimTool() {
                   <UnitsProvider
                     pageSize={{
                       width: STORY_WIDTH,
-                      height: STORY_WIDTH / PAGE_RATIO,
+                      height: storyHeight,
                     }}
                   >
                     <ActiveCard
                       width={STORY_WIDTH}
-                      height={STORY_WIDTH / PAGE_RATIO}
+                      height={fullBleedHeight}
                       selectedElementIds={selectedElementIds}
                     >
                       <PreviewPage
+                        pageSize={{
+                          width: STORY_WIDTH,
+                          height: storyHeight,
+                          containerHeight: fullBleedHeight,
+                        }}
                         page={activeStory.pages[activePageIndex]}
                         animationState={pageAnimationState}
                         subscribeGlobalTime={globalTimeSubscription.subscribe}
                         onAnimationComplete={() =>
-                          setPageAnimationState(STORY_PAGE_STATE.RESET)
+                          setPageAnimationState(STORY_ANIMATION_STATE.RESET)
                         }
                       />
                     </ActiveCard>
@@ -356,23 +372,29 @@ function StoryAnimTool() {
                 {'Next Page'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.PLAYING)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.PLAYING)
+                }
               >
                 {'Play'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.PAUSED)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.PAUSED)
+                }
               >
                 {'Pause'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.RESET)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.RESET)
+                }
               >
                 {'Reset'}
               </button>
               <button
                 onClick={() =>
-                  setPageAnimationState(STORY_PAGE_STATE.SCRUBBING)
+                  setPageAnimationState(STORY_ANIMATION_STATE.SCRUBBING)
                 }
               >
                 {'Scrub'}
@@ -405,7 +427,7 @@ function StoryAnimTool() {
             onAnimationDelete={handleAnimationDelete}
             onToggleTargetSelect={setIsElementSelectable}
             emitGlobalTime={globalTimeSubscription.emit}
-            canScrub={pageAnimationState === STORY_PAGE_STATE.SCRUBBING}
+            canScrub={pageAnimationState === STORY_ANIMATION_STATE.SCRUBBING}
           />
         </>
       )}

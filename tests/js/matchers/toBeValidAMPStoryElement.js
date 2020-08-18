@@ -29,7 +29,15 @@ import {
   getAMPValidationErrors,
 } from './utils';
 
-async function toBeValidAMPStoryElement(stringOrComponent, ...args) {
+/** @typedef {import('react').ReactElement} ReactElement */
+/** @typedef {import('jest').CustomMatcherResult} CustomMatcherResult */
+
+/**
+ * @param {string|ReactElement} stringOrComponent String containing HTML markup or a component.
+ * @param {boolean} [optimize=true] Whether to use AMP Optimizer on the input string.
+ * @return {CustomMatcherResult} Matcher result.
+ */
+async function toBeValidAMPStoryElement(stringOrComponent, optimize = true) {
   const string = renderToStaticMarkup(stringOrComponent);
   const errors = await getAMPValidationErrors(
     renderToStaticMarkup(
@@ -39,7 +47,7 @@ async function toBeValidAMPStoryElement(stringOrComponent, ...args) {
         </AmpStoryPage>
       </AmpStory>
     ),
-    ...args
+    optimize
   );
 
   const pass = errors.length === 0;

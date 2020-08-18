@@ -18,19 +18,20 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { text } from '@storybook/addon-knobs';
+import { STORY_STATUS } from '../../../constants';
+import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
 import {
   CardGrid,
   CardGridItem,
   CardPreviewContainer,
   CardTitle,
 } from '../../';
-import { STORY_STATUS } from '../../../constants';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
@@ -47,7 +48,7 @@ const Card = styled.div`
 
 export const _default = () => {
   return (
-    <CardGrid pageSize={{ width: 210, height: 316 }}>
+    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -58,7 +59,7 @@ export const _default = () => {
             targetAction: '',
             label: 'Preview',
           }}
-          pageSize={{ width: 210, height: 316 }}
+          pageSize={STORYBOOK_PAGE_SIZE}
           story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
@@ -66,7 +67,7 @@ export const _default = () => {
         <CardTitle
           title="How to be a leader in the apocalpyse"
           author="Rick Grimes"
-          displayDate={moment('04-04-2020', 'MM-DD-YYYY')}
+          displayDate={moment('04-04-2020').format('MM-DD-YYYY')}
           status={STORY_STATUS.DRAFT}
           onEditCancel={() => {}}
           onEditComplete={() => {}}
@@ -78,7 +79,7 @@ export const _default = () => {
 
 export const _publishedStory = () => {
   return (
-    <CardGrid pageSize={{ width: 210, height: 316 }}>
+    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -89,7 +90,7 @@ export const _publishedStory = () => {
             targetAction: '',
             label: 'Preview',
           }}
-          pageSize={{ width: 210, height: 316 }}
+          pageSize={STORYBOOK_PAGE_SIZE}
           story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
@@ -97,8 +98,8 @@ export const _publishedStory = () => {
         <CardTitle
           title="The 6 fingered man"
           author="Inigo Moñtoya"
-          displayDate={moment('04-19-2020', 'MM-DD-YYYY')}
-          status={STORY_STATUS.PUBLISHED}
+          displayDate={moment('04-19-2020').format('MM-DD-YYYY')}
+          status={STORY_STATUS.PUBLISH}
           onEditCancel={() => {}}
           onEditComplete={() => {}}
         />

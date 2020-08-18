@@ -24,6 +24,7 @@
    * See `karma-puppeteer-launcher`.
    *
    * @param {string} methodName The name of the karmaPuppeteer method.
+   * @return {*} Function result.
    */
   function puppeteerFunction(methodName) {
     return function() {
@@ -44,12 +45,13 @@
    * For instance, both are allowed: `click('.element1')` and `click(element1)`.
    *
    * @param {string} methodName The name of the karmaPuppeteer method.
+   * @return {*} Function result.
    */
   function withSelector(methodName) {
     var func = puppeteerFunction(methodName);
     return function() {
       var args = Array.prototype.slice.call(arguments, 0);
-      var node = args[0].nodeType ? args[0] : null;
+      var node = args[0] && args[0].nodeType ? args[0] : null;
       var cleanup = noCleanup;
       if (node) {
         var uniqueId = Math.random();
@@ -93,10 +95,21 @@
     };
   }
 
+  function clipboard() {
+    function clipboardFunction(name) {
+      return puppeteerFunction('clipboard_' + name);
+    }
+    return {
+      copy: clipboardFunction('copy'),
+      paste: clipboardFunction('paste'),
+    };
+  }
+
   window.karmaPuppeteer = {
     saveSnapshot: puppeteerFunction('saveSnapshot'),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pageclickselector-options
     click: withSelector('click'),
+    clipboard: clipboard(),
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#pagefocusselector
     focus: withSelector('focus'),
     // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#framehoverselector

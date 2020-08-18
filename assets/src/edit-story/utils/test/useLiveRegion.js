@@ -31,9 +31,7 @@ describe('useLiveRegion', () => {
 
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
-    ).toHaveTextContent('');
-    // .toBeEmpty() cannot be used, because of
-    // https://github.com/testing-library/jest-dom/issues/216
+    ).toBeEmptyDOMElement();
 
     act(() => {
       result.current('Hello World');
@@ -55,9 +53,7 @@ describe('useLiveRegion', () => {
         document.documentElement,
         'web-stories-aria-live-region-assertive'
       )
-    ).toHaveTextContent('');
-    // .toBeEmpty() cannot be used, because of
-    // https://github.com/testing-library/jest-dom/issues/216
+    ).toBeEmptyDOMElement();
 
     act(() => result.current('Hello World'));
 
@@ -77,9 +73,7 @@ describe('useLiveRegion', () => {
 
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
-    ).toHaveTextContent('');
-    // .toBeEmpty() cannot be used, because of
-    // https://github.com/testing-library/jest-dom/issues/216
+    ).toBeEmptyDOMElement();
 
     unmount();
 
@@ -93,9 +87,7 @@ describe('useLiveRegion', () => {
 
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
-    ).toHaveTextContent('');
-    // .toBeEmpty() cannot be used, because of
-    // https://github.com/testing-library/jest-dom/issues/216
+    ).toBeEmptyDOMElement();
 
     act(() => {
       result.current('Foo');
@@ -118,8 +110,6 @@ describe('useLiveRegion', () => {
 
     expect(
       queryById(document.documentElement, 'web-stories-aria-live-region-polite')
-    ).toHaveTextContent('');
-    // .toBeEmpty() cannot be used, because of
-    // https://github.com/testing-library/jest-dom/issues/216
+    ).toBeEmptyDOMElement();
   });
 });

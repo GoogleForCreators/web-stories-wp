@@ -64,8 +64,8 @@ const ResetButton = styled.button`
   height: 20px;
   text-transform: uppercase;
   font-size: 9px;
-  color: ${({ theme }) => theme.colors.fg.v1};
-  background: ${({ theme }) => theme.colors.action};
+  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.colors.accent.primary};
   border-radius: 100px;
   border: none;
   padding: 1px 8px 0 8px;
@@ -78,9 +78,10 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
         <RangeInput
           min={100}
           max={MAX_SCALE}
-          step={10}
+          majorStep={10}
+          minorStep={1}
           value={scale}
-          onChange={(evt) => setProperties({ scale: evt.target.valueAsNumber })}
+          handleChange={(value) => setProperties({ scale: value })}
         />
         <ResetButton onClick={() => setProperties({ scale: 100 })}>
           {__('Reset', 'web-stories')}

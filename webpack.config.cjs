@@ -55,7 +55,15 @@ const sharedConfig = {
   output: {
     path: path.resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
-    chunkFilename: '[name].js',
+    chunkFilename: '[name]-[chunkhash].js',
+    publicPath: '',
+    /**
+     * If multiple webpack runtimes (from different compilations) are used on the same webpage,
+     * there is a risk of conflicts of on-demand chunks in the global namespace.
+     *
+     * @see (@link https://webpack.js.org/configuration/output/#outputjsonpfunction)
+     */
+    jsonpFunction: '__webStories_webpackJsonp',
   },
   module: {
     rules: [
@@ -98,7 +106,10 @@ const sharedConfig = {
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
-    new webpack.EnvironmentPlugin({ DISABLE_PREVENT: false }),
+    new webpack.EnvironmentPlugin({
+      DISABLE_PREVENT: false,
+      DISABLE_ERROR_BOUNDARIES: false,
+    }),
   ].filter(Boolean),
   optimization: {
     minimizer: [
@@ -107,6 +118,10 @@ const sharedConfig = {
         sourceMap: false,
         cache: true,
         terserOptions: {
+          // We preserve function names that start with capital letters as
+          // they're _likely_ component names, and these are useful to have
+          // in tracebacks and error messages.
+          keep_fnames: /__|_x|_n|_nx|sprintf|^[A-Z].+$/,
           output: {
             comments: /translators:/i,
           },
@@ -205,4 +220,31 @@ const storyEmbedBlock = {
   },
 };
 
-module.exports = [storiesEditor, dashboard, storyEmbedBlock];
+const activationNotice = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-activation-notice': './assets/src/activation-notice/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new WebpackBar({
+      name: 'Activation Notice',
+      color: '#fcd8ba',
+    }),
+  ],
+  optimization: {
+    ...sharedConfig.optimization,
+    splitChunks: {
+      cacheGroups: {
+        stories: {
+          name: 'activation-notice',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
+};
+
+module.exports = [storiesEditor, dashboard, storyEmbedBlock, activationNotice];

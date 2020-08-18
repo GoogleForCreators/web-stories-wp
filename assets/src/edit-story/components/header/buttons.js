@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,13 +28,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../tracking';
 import addQueryArgs from '../../utils/addQueryArgs';
-import { useStory, useMedia, useConfig, useHistory } from '../../app';
+import { useStory, useLocalMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
 import CircularProgress from '../circularProgress';
 import escapeHTML from '../../utils/escapeHTML';
+import { useGlobalKeyDownEffect } from '../keyboard';
 import PreviewErrorDialog from './previewErrorDialog';
+import PostPublishDialog from './postPublishDialog';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -63,6 +66,9 @@ function PreviewButton() {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, link, status, autoSave, saveStory })
   );
+  const { isUploading } = useLocalMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
   const { previewLink: autoSaveLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
@@ -74,6 +80,8 @@ function PreviewButton() {
    * Open a preview of the story in current window.
    */
   const openPreviewLink = useCallback(() => {
+    trackEvent('editor', 'preview_story');
+
     // Display the actual link in case of a draft.
     const previewLink = isDraft
       ? addQueryArgs(link, { preview: 'true' })
@@ -146,7 +154,7 @@ function PreviewButton() {
 
   return (
     <>
-      <Outline onClick={openPreviewLink} isDisabled={isSaving}>
+      <Outline onClick={openPreviewLink} isDisabled={isSaving || isUploading}>
         {__('Preview', 'web-stories')}
       </Outline>
       <PreviewErrorDialog
@@ -168,7 +176,7 @@ function Publish() {
       actions: { saveStory },
     }) => ({ isSaving, date, storyId, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
   const { capabilities } = useConfig();
@@ -177,9 +185,15 @@ function Publish() {
   const hasFutureDate = Date.now() < Date.parse(date);
 
   const handlePublish = useCallback(() => {
+    if (hasFutureDate) {
+      trackEvent('editor', 'schedule_story');
+    } else {
+      trackEvent('editor', 'publish_story');
+    }
+
     saveStory({ status: 'publish' });
     refreshPostEditURL();
-  }, [refreshPostEditURL, saveStory]);
+  }, [refreshPostEditURL, saveStory, hasFutureDate]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
@@ -204,7 +218,7 @@ function SwitchToDraft() {
       actions: { saveStory },
     }) => ({ isSaving, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
 
@@ -229,12 +243,24 @@ function Update() {
       actions: { saveStory },
     }) => ({ isSaving, status, saveStory })
   );
-  const { isUploading } = useMedia((state) => ({
+  const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
   const {
     state: { hasNewChanges },
   } = useHistory();
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+s'] },
+    (event) => {
+      event.preventDefault();
+      if (isSaving) {
+        return;
+      }
+      saveStory();
+    },
+    [saveStory, isSaving]
+  );
 
   let text;
   switch (status) {
@@ -277,24 +303,52 @@ function Loading() {
 }
 
 function Buttons() {
-  const { status } = useStory((state) => ({
-    status: state.state.story.status,
-  }));
+  const { status, storyId, link, isFreshlyPublished } = useStory(
+    ({
+      state: {
+        story: { status, storyId, link },
+        meta: { isFreshlyPublished },
+      },
+    }) => ({
+      status,
+      storyId,
+      link,
+      isFreshlyPublished,
+    })
+  );
+  const [showDialog, setShowDialog] = useState(isFreshlyPublished);
+  useEffect(() => {
+    setShowDialog(isFreshlyPublished);
+  }, [isFreshlyPublished]);
+
   const isDraft = 'draft' === status;
+
+  const confirmURL = addQueryArgs('post-new.php', {
+    ['from-web-story']: storyId,
+  });
+
   return (
-    <ButtonList>
-      <List>
-        <Loading />
-        {isDraft && <Update />}
-        {!isDraft && <SwitchToDraft />}
-        <Space />
-        <PreviewButton />
-        <Space />
-        {isDraft && <Publish />}
-        {!isDraft && <Update />}
-        <Space />
-      </List>
-    </ButtonList>
+    <>
+      <ButtonList>
+        <List>
+          <Loading />
+          {isDraft && <Update />}
+          {!isDraft && <SwitchToDraft />}
+          <Space />
+          <PreviewButton />
+          <Space />
+          {isDraft && <Publish />}
+          {!isDraft && <Update />}
+          <Space />
+        </List>
+      </ButtonList>
+      <PostPublishDialog
+        open={Boolean(showDialog)}
+        onClose={() => setShowDialog(false)}
+        confirmURL={confirmURL}
+        storyURL={link}
+      />
+    </>
   );
 }
 export default Buttons;

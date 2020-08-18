@@ -37,11 +37,13 @@ const Item = styled.li.attrs({
 `;
 
 function ScrollList({
+  id,
   items,
   itemRenderer,
   onScroll,
   currentOffset,
   className,
+  onKeyDown,
 }) {
   const ref = useRef();
   const itemRefs = useRef([]);
@@ -100,17 +102,14 @@ function ScrollList({
     }
 
     if (currentOffset === -1) {
-      // Just focus first node
-      if (itemRefs.current.length > 0) {
-        itemRefs.current[0].focus();
-      }
+      node.scrollTo(0, 0);
       return;
     }
 
     const currentNode = itemRefs.current[currentOffset];
     currentNode.focus();
     node.scrollTo(0, currentNode.offsetTop - node.clientHeight / 2);
-  }, [currentOffset]);
+  }, [currentOffset, numItems]);
 
   // Trim to current length of list
   useEffect(() => {
@@ -119,14 +118,22 @@ function ScrollList({
 
   return (
     <List
+      id={id}
       className={className}
       aria-multiselectable={false}
       aria-required={false}
+      onKeyDown={onKeyDown}
       ref={ref}
     >
       {items.map((item, index) => (
-        <Item ref={setRef(index)} key={index}>
-          {itemRenderer(item)}
+        <Item
+          ref={setRef(index)}
+          key={index}
+          aria-posinset={index + 1}
+          aria-selected={currentOffset === index}
+          aria-setsize={numItems}
+        >
+          {itemRenderer(item, index)}
         </Item>
       ))}
     </List>
@@ -134,11 +141,13 @@ function ScrollList({
 }
 
 ScrollList.propTypes = {
+  id: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
   itemRenderer: PropTypes.func.isRequired,
   onScroll: PropTypes.func.isRequired,
   currentOffset: PropTypes.number,
   className: PropTypes.string,
+  onKeyDown: PropTypes.func,
 };
 
 export default ScrollList;

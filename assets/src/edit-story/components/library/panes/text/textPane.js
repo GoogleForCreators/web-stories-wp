@@ -47,9 +47,9 @@ function TextPane(props) {
     <Pane id={paneId} {...props}>
       {showTextAndShapesSearchInput && (
         <SearchInput
-          value={''}
+          initialValue={''}
           placeholder={__('Search', 'web-stories')}
-          onChange={() => {}}
+          onSearch={() => {}}
           disabled
         />
       )}
@@ -62,11 +62,12 @@ function TextPane(props) {
           </MainButton>
         }
       >
-        {PRESETS.map((preset) => (
+        {PRESETS.map(({ title, element }, i) => (
           <FontPreview
-            key={`preset-${preset.id}`}
-            {...preset}
-            onClick={() => insertElement('text', preset)}
+            key={i}
+            title={title}
+            element={element}
+            onClick={() => insertElement('text', element)}
           />
         ))}
       </Section>

@@ -29,7 +29,7 @@ const Background = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
 `;
 
 const Head = styled.div`

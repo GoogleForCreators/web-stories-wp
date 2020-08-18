@@ -28,13 +28,15 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Traits\Publisher;
+
 use WP_Post;
 
 /**
  * Discovery class.
  */
 class Discovery {
+	use Publisher;
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -45,6 +47,8 @@ class Discovery {
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
+
+		add_action( 'web_stories_story_head', [ $this, 'print_feed_link' ], 4 );
 
 		// @todo Check if there's something to skip in the new version.
 		add_action( 'web_stories_story_head', 'rest_output_link_wp_head', 10, 0 );
@@ -99,7 +103,7 @@ class Discovery {
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
 	protected function get_schemaorg_metadata() {
-		$publisher = self::get_publisher_data();
+		$publisher = $this->get_publisher_data();
 
 		$metadata = [
 			'@context'  => 'http://schema.org',
@@ -208,116 +212,54 @@ class Discovery {
 			return;
 		}
 
-		$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id(), Media::STORY_POSTER_IMAGE_SIZE );
+		$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id(), Media::POSTER_PORTRAIT_IMAGE_SIZE );
 
 		if ( ! $poster ) {
 			return;
 		}
 		?>
-		<meta property="twtter:image" content="<?php echo esc_url( $poster ); ?>">
+		<meta property="twitter:image" content="<?php echo esc_url( $poster ); ?>">
 		<?php
 	}
 
 	/**
-	 * Gets a valid publisher logo URL. Loops through sizes and looks for a square image.
+	 * Add RSS feed link for stories, if theme supports automatic-feed-links.
 	 *
-	 * @param integer $image_id Attachment ID.
-	 *
-	 * @return string|false Either the URL or false if error.
+	 * @return void
 	 */
-	private static function get_valid_publisher_image( $image_id ) {
-		$logo_image_url = false;
-
-		// Get metadata for finding a square image.
-		$metadata = wp_get_attachment_metadata( $image_id );
-		if ( empty( $metadata ) ) {
-			return $logo_image_url;
-		}
-		// First lets check if the image is square by default.
-		$fullsize_img = wp_get_attachment_image_src( $image_id, 'full', false );
-		if ( $metadata['width'] === $metadata['height'] && is_array( $fullsize_img ) ) {
-			return array_shift( $fullsize_img );
+	public static function print_feed_link() {
+		if ( ! current_theme_supports( 'automatic-feed-links' ) ) {
+			return;
 		}
 
-		if ( empty( $metadata['sizes'] ) ) {
-			return $logo_image_url;
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		if ( ! ( $post_type_object instanceof \WP_Post_Type ) ) {
+			return;
 		}
 
-		// Loop through other size to find a square image.
-		foreach ( $metadata['sizes'] as $size ) {
-			if ( $size['width'] === $size['height'] && $size['width'] >= 96 ) {
-				$logo_img = wp_get_attachment_image_src( $image_id, [ $size['width'], $size['height'] ], false );
-				if ( is_array( $logo_img ) ) {
-					return array_shift( $logo_img );
-				}
-			}
+		$feed_url = add_query_arg(
+			'post_type',
+			Story_Post_Type::POST_TYPE_SLUG,
+			get_feed_link()
+		);
+
+		$name = '';
+		if ( property_exists( $post_type_object->labels, 'name' ) ) {
+			$name = $post_type_object->labels->name;
 		}
 
-		// If a square image was not found, return the full size nevertheless,
-		// the editor should take care of warning about incorrect size.
-		return is_array( $fullsize_img ) ? array_shift( $fullsize_img ) : false;
-	}
+		/* translators: Separator between blog name and feed type in feed links. */
+		$separator = _x( '&raquo;', 'feed link', 'web-stories' );
+		/* translators: 1: Blog name, 2: Separator (raquo), 3: Post type name. */
+		$post_type_title = esc_html__( '%1$s %2$s %3$s Feed', 'web-stories' );
 
-	/**
-	 * Get the publisher logo.
-	 *
-	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
-	 * @link https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines
-	 *
-	 * @return string Publisher logo image URL. WordPress logo if no site icon or custom logo defined, and no logo provided via 'amp_site_icon_url' filter.
-	 */
-	public static function get_publisher_logo() {
-		$logo_image_url = null;
+		$title = sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $name );
 
-		$publisher_logo_settings = get_option( Stories_Controller::PUBLISHER_LOGOS_OPTION, [] );
-		$has_publisher_logo      = ! empty( $publisher_logo_settings['active'] );
-		if ( $has_publisher_logo ) {
-			$publisher_logo_id = absint( $publisher_logo_settings['active'] );
-			$logo_image_url    = self::get_valid_publisher_image( $publisher_logo_id );
-		}
-
-		// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
-		// Currently, it's marked as required but that's not actually enforced.
-
-		// Finding fallback image.
-		$custom_logo_id = get_theme_mod( 'custom_logo' );
-		if ( empty( $logo_image_url ) && has_custom_logo() && $custom_logo_id ) {
-			$logo_image_url = self::get_valid_publisher_image( $custom_logo_id );
-		}
-
-		// Try Site Icon, though it is not ideal for non-Story because it should be square.
-		$site_icon_id = get_option( 'site_icon' );
-		if ( empty( $logo_image_url ) && $site_icon_id ) {
-			$logo_image_url = self::get_valid_publisher_image( $site_icon_id );
-		}
-
-		// Fallback to serving the WordPress logo.
-		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = WEBSTORIES_PLUGIN_DIR_URL . 'assets/images/fallback-wordpress-publisher-logo.png';
-		}
-
-		/**
-		 * Filters the publisher's logo.
-		 *
-		 * This should point to a square image.
-		 *
-		 * @param string $logo_image_url URL to the publisher's logo.
-		 */
-		return apply_filters( 'web_stories_publisher_logo', $logo_image_url );
-	}
-
-	/**
-	 * Returns the publisher data.
-	 *
-	 * @return array Publisher name and logo.
-	 */
-	public static function get_publisher_data() {
-		$publisher      = get_bloginfo( 'name' );
-		$publisher_logo = self::get_publisher_logo();
-
-		return [
-			'name' => $publisher,
-			'logo' => $publisher_logo,
-		];
+		printf(
+			'<link rel="alternate" type="%s" title="%s" href="%s">',
+			esc_attr( feed_content_type() ),
+			esc_attr( $title ),
+			esc_url( $feed_url )
+		);
 	}
 }

@@ -28,12 +28,15 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Assets;
 use WP_Screen;
 
 /**
  * Dashboard class.
  */
 class Dashboard {
+
+	use Assets;
 	/**
 	 * Script handle.
 	 *
@@ -49,12 +52,29 @@ class Dashboard {
 	private $hook_suffix;
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Dashboard constructor.
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
+
+	/**
 	 * Initializes the dashboard logic.
 	 *
 	 * @return void
 	 */
 	public function init() {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
+		add_action( 'admin_init', [ $this, 'redirect_menu_page' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
@@ -79,11 +99,34 @@ class Dashboard {
 			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
 			__( 'Dashboard', 'web-stories' ),
 			__( 'Dashboard', 'web-stories' ),
-			'edit_posts',
+			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],
 			0
 		);
+	}
+
+	/**
+	 * Redirects to the correct Dashboard page when clicking on the top-level "Stories" menu item.
+	 *
+	 * @return void
+	 */
+	public function redirect_menu_page() {
+		global $pagenow;
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'stories-dashboard' === $_GET['page'] ) {
+			wp_safe_redirect(
+				add_query_arg(
+					[
+						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+						'page'      => 'stories-dashboard',
+					],
+					admin_url( 'edit.php' )
+				)
+			);
+			exit;
+		}
 	}
 
 	/**
@@ -96,6 +139,8 @@ class Dashboard {
 		// TODO Preload templates.
 		$preload_paths = [
 			'/web-stories/v1/fonts',
+			'/wp/v2/settings',
+			'/web-stories/v1/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
 		];
 
 		/**
@@ -126,11 +171,7 @@ class Dashboard {
 	 * @return void
 	 */
 	public function render() {
-		?>
-		<div id="web-stories-dashboard">
-			<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
-		</div>
-		<?php
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/dashboard.php';
 	}
 
 	/**
@@ -145,21 +186,32 @@ class Dashboard {
 			return;
 		}
 
-		$asset_file   = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . self::SCRIPT_HANDLE . '.asset.php';
-		$asset        = is_readable( $asset_file ) ? require $asset_file : [];
-		$dependencies = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
-		$version      = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
-
-		wp_enqueue_script(
-			self::SCRIPT_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . self::SCRIPT_HANDLE . '.js',
-			$dependencies,
-			$version,
-			false
+		wp_register_style(
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500|Roboto:400',
+			[],
+			WEBSTORIES_VERSION
 		);
 
-		wp_set_script_translations( self::SCRIPT_HANDLE, 'web-stories' );
+		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$this->enqueue_style( self::SCRIPT_HANDLE, [ 'google-fonts' ] );
 
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesDashboardSettings',
+			$this->get_dashboard_settings()
+		);
+
+		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
+		$this->remove_admin_style( [ 'forms' ] );
+	}
+
+	/**
+	 * Get dashboard settings as an array.
+	 *
+	 * @return array
+	 */
+	public function get_dashboard_settings() {
 		$rest_base     = Story_Post_Type::POST_TYPE_SLUG;
 		$new_story_url = admin_url(
 			add_query_arg(
@@ -188,83 +240,52 @@ class Dashboard {
 			)
 		);
 
-		wp_localize_script(
-			self::SCRIPT_HANDLE,
-			'webStoriesDashboardSettings',
-			[
-				'id'     => 'web-stories-dashboard',
-				'config' => [
-					'isRTL'        => is_rtl(),
-					'newStoryURL'  => $new_story_url,
-					'editStoryURL' => $edit_story_url,
-					'wpListURL'    => $classic_wp_list_url,
-					'assetsURL'    => WEBSTORIES_ASSETS_URL,
-					'version'      => WEBSTORIES_VERSION,
-					'api'          => [
-						'stories' => sprintf( '/wp/v2/%s', $rest_base ),
-						'users'   => '/wp/v2/users',
-						'fonts'   => '/web-stories/v1/fonts',
-					],
+		// Media settings.
+		$max_upload_size = wp_max_upload_size();
+		if ( ! $max_upload_size ) {
+			$max_upload_size = 0;
+		}
+
+		$settings = [
+			'id'         => 'web-stories-dashboard',
+			'config'     => [
+				'isRTL'        => is_rtl(),
+				'dateFormat'   => get_option( 'date_format' ),
+				'timeFormat'   => get_option( 'time_format' ),
+				'gmtOffset'    => get_option( 'gmt_offset' ),
+				'timezone'     => get_option( 'timezone_string' ),
+				'newStoryURL'  => $new_story_url,
+				'editStoryURL' => $edit_story_url,
+				'wpListURL'    => $classic_wp_list_url,
+				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'version'      => WEBSTORIES_VERSION,
+				'api'          => [
+					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'     => '/web-stories/v1/media',
+					'users'     => '/wp/v2/users',
+					'fonts'     => '/web-stories/v1/fonts',
+					'templates' => '/web-stories/v1/web-story-template',
+					'settings'  => '/wp/v2/settings',
 				],
-				'flags'  => [
-					/**
-					 * Description: Enables user facing animations.
-					 * Author: @littlemilkstudio
-					 * Issue: 1897
-					 * Creation date: 2020-05-21
-					 */
-					'enableAnimation'                 => false,
-					/**
-					 * Description: Enables in-progress views to be accessed.
-					 * Author: @carlos-kelly
-					 * Issue: 2081
-					 * Creation date: 2020-05-28
-					 */
-					'enableInProgressViews'           => false,
-					/**
-					 * Description: Enables in-progress story actions.
-					 * Author: @brittanyirl
-					 * Issue: 2344
-					 * Creation date: 2020-06-10
-					 */
-					'enableInProgressStoryActions'    => false,
-					/**
-					 * Description: Enables in-progress template actions.
-					 * Author: @brittanyirl
-					 * Issue: 2381
-					 * Creation date: 2020-06-11
-					 */
-					'enableInProgressTemplateActions' => false,
-					/**
-					 * Description: Enables bookmark actions.
-					 * Author: @brittanyirl
-					 * Issue: 2292
-					 * Creation date: 2020-06-11
-					 */
-					'enableBookmarkActions'           => false,
+				'maxUpload'    => $max_upload_size,
+				'capabilities' => [
+					'canManageSettings' => current_user_can( 'manage_options' ),
+					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
-			]
-		);
+			],
+			'flags'      => array_merge(
+				$this->experiments->get_experiment_statuses( 'general' ),
+				$this->experiments->get_experiment_statuses( 'dashboard' )
+			),
+			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+		];
 
-		wp_register_style(
-			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500|Roboto:400',
-			[],
-			WEBSTORIES_VERSION
-		);
-
-		wp_enqueue_style(
-			self::SCRIPT_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/' . self::SCRIPT_HANDLE . '.css',
-			[ 'google-fonts' ],
-			$version
-		);
-
-		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		wp_styles()->registered['wp-admin']->deps = array_diff(
-			wp_styles()->registered['wp-admin']->deps,
-			[ 'forms' ]
-		);
+		/**
+		 * Filters settings passed to the web stories dashboard.
+		 *
+		 * @param array $settings Array of settings passed to web stories dashboard.
+		 */
+		return apply_filters( 'web_stories_dashboard_settings', $settings );
 	}
 
 	/**

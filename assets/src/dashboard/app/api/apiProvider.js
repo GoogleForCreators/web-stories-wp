@@ -29,6 +29,7 @@ import useFontApi from './useFontApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUserApi';
+import useSettingsApi from './useSettingsApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
@@ -36,35 +37,52 @@ export default function ApiProvider({ children }) {
   const { api, editStoryURL, assetsURL } = useConfig();
 
   const { users, api: usersApi } = useUsersApi(dataAdapter, {
-    wpApi: api.users,
+    userApi: api.users,
   });
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
     assetsURL,
+    templateApi: api.templates,
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
     editStoryURL,
-    wpApi: api.stories,
+    storyApi: api.stories,
   });
 
-  const { api: fontApi } = useFontApi(dataAdapter, { wpApi: api.fonts });
+  const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
+
+  const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
+    globalStoriesSettingsApi: api.settings,
+  });
 
   const value = useMemo(
     () => ({
       state: {
+        settings,
         stories,
         templates,
         users,
       },
       actions: {
+        settingsApi,
         storyApi,
         templateApi,
         fontApi,
         usersApi,
       },
     }),
-    [users, stories, templates, storyApi, templateApi, fontApi, usersApi]
+    [
+      settings,
+      stories,
+      templates,
+      users,
+      settingsApi,
+      storyApi,
+      templateApi,
+      fontApi,
+      usersApi,
+    ]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

@@ -1,0 +1,94 @@
+name: Dashboard Integration Tests
+
+on:
+  push:
+    branches:
+      - main
+      - release/*
+  pull_request:
+
+jobs:
+  karma:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
+
+      - name: Setup npm cache
+        uses: pat-s/always-upload-cache@v1.1.4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-${{ env.cache-name }}-
+            ${{ runner.os }}-npm-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          CI: true
+
+      - name: Run dashboard integration tests
+        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage
+        env:
+          DISABLE_ERROR_BOUNDARIES: true
+
+      - name: Upload code coverage report
+        uses: codecov/codecov-action@v1
+        with:
+          file: build/logs/karma-coverage/dashboard/lcov.info
+          flags: karmatests
+
+      - name: Upload CUJ coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: cuj-coverage-dashboard
+          path: build/cuj-coverage-dashboard.md
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+  deploy-cuj-coverage:
+    name: Deploy CUJ Coverage
+    needs: [karma]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+
+      - name: Download coverage file
+        uses: actions/download-artifact@v2
+        with:
+          name: cuj-coverage-dashboard
+
+      - name: Move file
+        run: |
+          mkdir -p critical-user-journeys
+          rm -rf critical-user-journeys/dashboard.md
+          mv cuj-coverage-dashboard.md critical-user-journeys/dashboard.md
+
+      - name: Commit updates
+        run: |
+          git add .
+          git status
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
+          git commit -m "Deploy CUJ coverage for ${{ github.sha }}"
+          git pull --no-edit --quiet
+          git push origin gh-pages
+        env:
+          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_COMMITTER_NAME: ${{ github.actor }}

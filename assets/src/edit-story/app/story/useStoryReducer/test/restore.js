@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { setupReducer } from './_utils';
 
 describe('restore', () => {
@@ -30,6 +31,7 @@ describe('restore', () => {
     const result = restore({ pages });
 
     expect(result).toStrictEqual({
+      animationState: STORY_ANIMATION_STATE.RESET,
       pages,
       selection: [],
       current: '123',
@@ -92,6 +94,7 @@ describe('restore', () => {
     });
 
     expect(result).toStrictEqual({
+      animationState: STORY_ANIMATION_STATE.RESET,
       pages: [],
       selection: [],
       current: null,
@@ -107,6 +110,7 @@ describe('restore', () => {
     const result = restore({});
 
     expect(result).toStrictEqual({
+      animationState: STORY_ANIMATION_STATE.RESET,
       pages: [],
       selection: [],
       current: null,
@@ -138,6 +142,7 @@ describe('restore', () => {
     const result = restore({ pages });
 
     expect(result).toStrictEqual({
+      animationState: STORY_ANIMATION_STATE.RESET,
       pages,
       selection: [],
       current: '123',

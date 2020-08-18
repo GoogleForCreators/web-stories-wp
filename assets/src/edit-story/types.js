@@ -18,9 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
+import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/backgroundOverlay';
 import { BACKGROUND_TEXT_MODE } from './constants';
 import MULTIPLE_VALUE from './components/form/multipleValue';
@@ -54,8 +56,7 @@ export const PatternPropType = PropTypes.shape({
 });
 
 export const StylePresetPropType = PropTypes.shape({
-  fillColors: PropTypes.array,
-  textColors: PropTypes.array,
+  colors: PropTypes.array,
   textStyles: PropTypes.array,
 });
 
@@ -101,6 +102,7 @@ StoryPropTypes.box = PropTypes.exact({
 
 StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
+  animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
@@ -215,8 +217,7 @@ export const PaddingPropType = PropTypes.shape({
   ]),
 });
 
-StoryPropTypes.elements.text = PropTypes.shape({
-  ...StoryElementPropTypes,
+const StoryTextElementPropTypes = {
   content: PropTypes.string,
   backgroundTextMode: PropTypes.oneOf(Object.values(BACKGROUND_TEXT_MODE)),
   backgroundColor: PatternPropType,
@@ -225,6 +226,15 @@ StoryPropTypes.elements.text = PropTypes.shape({
   lineHeight: PropTypes.number,
   padding: PaddingPropType,
   textAlign: PropTypes.string,
+};
+
+StoryPropTypes.textContent = PropTypes.shape({
+  ...StoryTextElementPropTypes,
+});
+
+StoryPropTypes.elements.text = PropTypes.shape({
+  ...StoryElementPropTypes,
+  ...StoryTextElementPropTypes,
 });
 
 StoryPropTypes.elements.shape = PropTypes.shape({

@@ -17,25 +17,24 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
-
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import PropTypes from 'prop-types';
+import { StoryAnimation } from '../../../animation';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,
-  elementWithSize,
   elementWithRotation,
+  elementWithSize,
 } from '../../elements/shared';
-import StoryPropTypes from '../../types';
-import { useTransformHandler } from '../transform';
-import { useUnits } from '../../units';
 import WithMask from '../../masks/display';
+import StoryPropTypes from '../../types';
+import { useUnits } from '../../units';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import StoryAnimation from '../../../dashboard/components/storyAnimation';
+import { useTransformHandler } from '../transform';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -134,7 +133,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
           fill={true}
           box={box}
           style={{
-            opacity: opacity ? opacity / 100 : null,
+            opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
           }}
           previewMode={previewMode}
         >

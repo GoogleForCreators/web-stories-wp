@@ -20,7 +20,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { addDecorator, addParameters } from '@storybook/react';
-import { withA11y } from '@storybook/addon-a11y';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { FlagsProvider } from 'flagged';
@@ -30,7 +29,7 @@ import 'web-animations-js/web-animations-next-lite.min.js';
  * Internal dependencies
  */
 import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
-import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/movable/cropStyle';
+import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/moveable/cropStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
 
 import dashboardTheme, {
@@ -57,6 +56,12 @@ window.wp.media = {
 const { ipad, ipad10p, ipad12p } = INITIAL_VIEWPORTS;
 
 addParameters({
+  a11y: {
+    element: '#root',
+    config: {},
+    options: {},
+    manual: true,
+  },
   viewport: {
     viewports: {
       ipad,
@@ -73,7 +78,6 @@ addParameters({
   },
 });
 
-addDecorator(withA11y);
 addDecorator(withKnobs);
 
 addDecorator((story, { id }) => {

@@ -29,13 +29,15 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, PageArea } from './layout';
 import FrameElement from './frameElement';
-import Selection from './selection';
 import useCanvasKeys from './useCanvasKeys';
+import Selection from './selection';
+import useCanvas from './useCanvas';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
@@ -57,17 +59,24 @@ const FrameSidebar = styled.div`
 
 const Hint = styled.div`
   padding: 12px;
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: 24px;
   text-align: right;
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
 `;
 
 function FramesLayer() {
-  const { currentPage } = useStory((state) => ({
+  const { currentPage, isAnimating } = useStory((state) => ({
     currentPage: state.state.currentPage,
+    isAnimating: [
+      STORY_ANIMATION_STATE.PLAYING,
+      STORY_ANIMATION_STATE.SCRUBBING,
+    ].includes(state.state.animationState),
+  }));
+  const { showSafeZone } = useCanvas(({ state: { showSafeZone } }) => ({
+    showSafeZone,
   }));
   const {
     state: { draggingResource, dropTargets },
@@ -86,26 +95,29 @@ function FramesLayer() {
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
+      aria-label={__('Frames', 'web-stories')}
     >
-      <FramesPageArea
-        overlay={
-          Boolean(draggingResource) &&
-          isDropSource(draggingResource.type) &&
-          Object.keys(dropTargets).length > 0 && (
-            <FrameSidebar>
-              <Hint>
-                {__('Drop targets are outlined in blue.', 'web-stories')}
-              </Hint>
-            </FrameSidebar>
-          )
-        }
-        fullbleed={<Selection />}
-      >
-        {currentPage &&
-          currentPage.elements.map(({ id, ...rest }) => {
-            return <FrameElement key={id} element={{ id, ...rest }} />;
-          })}
-      </FramesPageArea>
+      {!isAnimating && (
+        <FramesPageArea
+          showSafeZone={showSafeZone}
+          overlay={
+            Boolean(draggingResource) &&
+            isDropSource(draggingResource.type) &&
+            Object.keys(dropTargets).length > 0 && (
+              <FrameSidebar>
+                <Hint>
+                  {__('Drop targets are outlined in blue.', 'web-stories')}
+                </Hint>
+              </FrameSidebar>
+            )
+          }
+        >
+          {currentPage &&
+            currentPage.elements.map(({ id, ...rest }) => {
+              return <FrameElement key={id} element={{ id, ...rest }} />;
+            })}
+        </FramesPageArea>
+      )}
       <MenuArea
         pointerEvents="initial"
         // Make its own stacking context.
@@ -115,6 +127,7 @@ function FramesLayer() {
       >
         <PageMenu />
       </MenuArea>
+      <Selection />
     </Layer>
   );
 }

@@ -19,45 +19,62 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { useInsertElement } from '../canvas';
 import Context from './context';
+import { AnimationPane, AnimationIcon } from './panes/animation';
+import { MediaPane, MediaIcon } from './panes/media/local';
+import { Media3pPane, Media3pIcon } from './panes/media/media3p';
+import { ShapesPane, ShapesIcon } from './panes/shapes';
+import { TextPane, TextIcon } from './panes/text';
+import { ElementsPane, ElementsIcon } from './panes/elements';
 
-const MEDIA = 'media';
-const TEXT = 'text';
-const SHAPES = 'shapes';
-const ELEMENTS = 'elements';
-const ANIMATION = 'animation';
-
-const TABS = {
-  MEDIA,
-  TEXT,
-  SHAPES,
-  ELEMENTS,
-  ANIMATION,
-};
+const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
+const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
+const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
+const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
+const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };
+const ANIM = { icon: AnimationIcon, Pane: AnimationPane, id: 'animation' };
 
 function LibraryProvider({ children }) {
-  const [tab, setTab] = useState(MEDIA);
+  const initialTab = MEDIA.id;
+  const [tab, setTab] = useState(initialTab);
   const insertElement = useInsertElement();
+
+  const { showAnimationTab, showElementsTab, media3pTab } = useFeatures();
+
+  // Order here is important, as it denotes the actual visual order of elements.
+  const tabs = useMemo(
+    () => [
+      MEDIA,
+      ...(media3pTab ? [MEDIA3P] : []),
+      TEXT,
+      SHAPES,
+      ...(showElementsTab ? [ELEMS] : []),
+      ...(showAnimationTab ? [ANIM] : []),
+    ],
+    [media3pTab, showAnimationTab, showElementsTab]
+  );
 
   const state = useMemo(
     () => ({
       state: {
         tab,
+        initialTab,
       },
       actions: {
         setTab,
         insertElement,
       },
       data: {
-        tabs: TABS,
+        tabs: tabs,
       },
     }),
-    [tab, insertElement]
+    [tab, insertElement, initialTab, tabs]
   );
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

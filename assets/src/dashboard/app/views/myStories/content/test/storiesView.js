@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { fillerDateSettingsObject } from '../../../../../dataUtils/dateSettings';
 import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
 
 import {
@@ -71,6 +72,7 @@ describe('My Stories <StoriesView />', function () {
           trashStory: jest.fn,
           updateStory: jest.fn,
         }}
+        dateSettings={fillerDateSettingsObject}
         stories={fakeStories}
         users={{}}
         view={{

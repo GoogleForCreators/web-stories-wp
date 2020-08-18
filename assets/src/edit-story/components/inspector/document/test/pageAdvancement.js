@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -25,7 +25,7 @@ import StoryContext from '../../../../app/story/context';
 import PageAdvancementPanel from '../pageAdvancement';
 import { renderWithTheme } from '../../../../testUtils';
 
-function setupPanel() {
+function setupPanel(configs = {}) {
   const updateStory = jest.fn();
 
   const storyContextValue = {
@@ -33,6 +33,7 @@ function setupPanel() {
       story: {
         autoAdvance: false,
         defaultPageDuration: 7,
+        ...configs,
       },
     },
     actions: { updateStory },
@@ -59,5 +60,53 @@ describe('PageAdvancementPanel', () => {
         autoAdvance: true,
       },
     });
+  });
+
+  it('should set Page Duration', async () => {
+    const { getByRole, updateStory } = setupPanel({
+      autoAdvance: true,
+    });
+    const element = getByRole('button', { name: 'Page Advancement' });
+    expect(element).toBeDefined();
+
+    const slider = getByRole('slider', { name: 'Default Page Duration' });
+
+    fireEvent.change(slider, {
+      target: { valueAsNumber: 0, value: '0' },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          defaultPageDuration: 1,
+        },
+      })
+    );
+
+    updateStory.mockClear();
+    fireEvent.change(slider, {
+      target: { valueAsNumber: 1, value: '1' },
+    });
+
+    await waitFor(() => {
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          defaultPageDuration: 1,
+        },
+      });
+      expect(updateStory).toHaveBeenCalledTimes(1);
+    });
+
+    fireEvent.change(slider, {
+      target: { valueAsNumber: 21, value: '21' },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          defaultPageDuration: 20,
+        },
+      })
+    );
   });
 });

@@ -79,8 +79,9 @@ class Fonts_Controller extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
-		$fonts       = Fonts::get_fonts();
-		$total_fonts = count( $fonts );
+		$fonts       = new Fonts();
+		$fonts_list  = $fonts->get_fonts();
+		$total_fonts = count( $fonts_list );
 		$page        = $request['page'];
 		$per_page    = $request['per_page'];
 		$max_pages   = ceil( $total_fonts / (int) $per_page );
@@ -89,18 +90,18 @@ class Fonts_Controller extends WP_REST_Controller {
 			return new WP_Error( 'rest_post_invalid_page_number', __( 'The page number requested is larger than the number of pages available.', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
-		$fonts = array_slice( $fonts, ( ( $page - 1 ) * $per_page ), $per_page );
+		$fonts_list = array_slice( $fonts_list, ( ( $page - 1 ) * $per_page ), $per_page );
 
 		$formatted_fonts = [];
-		foreach ( $fonts as $font ) {
+		foreach ( $fonts_list as $font ) {
 			$data              = $this->prepare_item_for_response( $font, $request );
 			$formatted_fonts[] = $this->prepare_response_for_collection( $data );
 		}
 
-		$response = rest_ensure_response( $formatted_fonts );
+		$response = new WP_REST_Response( $formatted_fonts );
 
-		$response->header( 'X-WP-Total', (int) $total_fonts );
-		$response->header( 'X-WP-TotalPages', (int) $max_pages );
+		$response->header( 'X-WP-Total', (string) $total_fonts );
+		$response->header( 'X-WP-TotalPages', (string) $max_pages );
 
 		return $response;
 	}
@@ -154,6 +155,10 @@ class Fonts_Controller extends WP_REST_Controller {
 			$data['variants'] = isset( $font['variants'] ) ? (array) $font['variants'] : $schema['properties']['variants']['default'];
 		}
 
+		if ( in_array( 'metrics', $fields, true ) ) {
+			$data['metrics'] = isset( $font['metrics'] ) ? $font['metrics'] : null;
+		}
+
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -180,7 +185,7 @@ class Fonts_Controller extends WP_REST_Controller {
 	 * @return bool|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		return current_user_can( 'edit_posts' );
+		return current_user_can( 'edit_web-stories' );
 	}
 
 	/**
@@ -239,6 +244,12 @@ class Fonts_Controller extends WP_REST_Controller {
 					'readonly'    => true,
 					'default'     => [],
 				],
+				'metrics'   => [
+					'description' => __( 'Font metrics', 'web-stories' ),
+					'type'        => 'object',
+					'context'     => [ 'embed', 'view', 'edit' ],
+					'readonly'    => true,
+				],
 			],
 		];
 		$this->schema = $schema;
@@ -257,7 +268,7 @@ class Fonts_Controller extends WP_REST_Controller {
 		$query_params['context'] = $this->get_context_param( [ 'default' => 'view' ] );
 
 		$query_params['per_page']['maximum'] = 10000;
-		$query_params['per_page']['default'] = 1000;
+		$query_params['per_page']['default'] = 10000;
 
 		return $query_params;
 	}

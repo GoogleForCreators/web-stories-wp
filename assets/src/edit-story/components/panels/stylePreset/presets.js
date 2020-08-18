@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,13 +34,15 @@ import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
 import { StylePresetPropType } from '../../../types';
 import WithTooltip from '../../tooltip';
+import { useKeyDownEffect } from '../../keyboard';
 import PresetGroup from './presetGroup';
-import { presetHasOpacity } from './utils';
+import { presetHasOpacity, presetHasGradient } from './utils';
 
 const REMOVE_ICON_SIZE = 18;
-const PRESET_HEIGHT = 30;
+const PRESET_SIZE = 30;
 
 const presetCSS = css`
+  display: block;
   width: 100%;
   height: 100%;
   font-size: 13px;
@@ -71,20 +74,48 @@ const Transparent = styled.div`
 `;
 
 const ColorWrapper = styled.div`
-  display: inline-block;
-  width: 30px;
-  height: ${PRESET_HEIGHT}px;
+  display: block;
+  width: ${PRESET_SIZE}px;
+  height: ${PRESET_SIZE}px;
   border: 1px solid ${({ theme }) => theme.colors.whiteout};
-  border-radius: 15px;
+  border-radius: 100%;
   overflow: hidden;
   position: relative;
   ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
+
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.fg.v1};
+    border-width: 3px;
+  }
 `;
 
-const Color = styled.button.attrs({ type: 'button' })`
+const ColorButton = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
+
+  &:focus {
+    outline: none !important;
+  }
 `;
+
+function Color({ onClick, children, ...rest }) {
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const ref = useRef();
+  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
+  return (
+    <ColorButton ref={ref} onClick={onClick} {...rest}>
+      {children}
+    </ColorButton>
+  );
+}
+
+Color.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 function Presets({
   stylePresets,
@@ -93,23 +124,28 @@ function Presets({
   isText,
   isBackground,
 }) {
-  const { fillColors, textColors } = stylePresets;
+  const { colors } = stylePresets;
 
-  const colorPresets = isText ? textColors : fillColors;
-  const hasPresets = colorPresets.length > 0;
+  const hasPresets = colors.length > 0;
 
   const colorPresetRenderer = (color, i, activeIndex) => {
     if (!color) {
       return null;
     }
-    const disabled = isBackground && !isEditMode && presetHasOpacity(color);
-    // @todo The correct text here should be: Page background colors can not have an opacity.
-    // However, due to bug with Tooltips/Popup, the text flows out of the screen.
-    const title = disabled
-      ? __('Opacity not allowed for Page', 'web-stories')
-      : null;
+    const disabled =
+      !isEditMode &&
+      ((isBackground && presetHasOpacity(color)) ||
+        (isText && presetHasGradient(color)));
+    let tooltip = null;
+    if (disabled) {
+      // @todo The correct text here should be: Page background colors can not have an opacity.
+      // However, due to bug with Tooltips/Popup, the text flows out of the screen.
+      tooltip = isBackground
+        ? __('Opacity not allowed for Page', 'web-stories')
+        : __('Gradient not allowed for Text', 'web-stories');
+    }
     return (
-      <WithTooltip title={title}>
+      <WithTooltip title={tooltip}>
         <ColorWrapper disabled={disabled}>
           <Transparent />
           <Color
@@ -130,16 +166,12 @@ function Presets({
     );
   };
 
-  const colorLabel = isText
-    ? __('Text colors', 'web-stories')
-    : __('Colors', 'web-stories');
   return (
     <PanelContent isPrimary padding={hasPresets ? null : '0'}>
       {hasPresets && (
         <PresetGroup
-          label={colorLabel}
           itemRenderer={colorPresetRenderer}
-          presets={colorPresets}
+          presets={colors}
           type={'color'}
         />
       )}

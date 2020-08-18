@@ -23,7 +23,8 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER, CORNER_DIRECTIONS, DIRECTIONS } from '../../constants';
+import { BEZIER } from '../../../animation';
+import { CORNER_DIRECTIONS, DIRECTIONS } from '../../constants';
 import Popover from './popover';
 import Shadow from './shadow';
 
@@ -110,32 +111,32 @@ const ButtonInner = styled(Popover)`
   }
 
   ${MenuRevealer} {
-    transition: ${(props) => (props.isOpen ? transition : 'none')};
+    transition: ${(props) => (props.isReady ? transition : 'none')};
     ${(props) => {
       const translateFromScale = 100 * (1 - initialScale);
       switch (props.align) {
         case CORNER_DIRECTIONS.top_right:
           return css`
-            transform: ${props.isOpen
+            transform: ${props.isReady
               ? 'none'
               : `translate(${translateFromScale}%, -${translateFromScale}%)`};
           `;
         case CORNER_DIRECTIONS.top_left:
           return css`
-            transform: ${props.isOpen
+            transform: ${props.isReady
               ? 'none'
               : `translate(-${translateFromScale}%, -${translateFromScale}%)`};
           `;
         case CORNER_DIRECTIONS.bottom_right:
           return css`
-            transform: ${props.isOpen
+            transform: ${props.isReady
               ? 'none'
               : `translate(${translateFromScale}%, ${translateFromScale}%)`};
           `;
         case CORNER_DIRECTIONS.bottom_left:
         default:
           return css`
-            transform: ${props.isOpen
+            transform: ${props.isReady
               ? 'none'
               : `translate(-${translateFromScale}%, ${translateFromScale}%)`};
           `;
@@ -144,32 +145,32 @@ const ButtonInner = styled(Popover)`
   }
 
   ${MenuCounterRevealer} {
-    transition: ${(props) => (props.isOpen ? transition : 'none')};
+    transition: ${(props) => (props.isReady ? transition : 'none')};
     ${(props) => {
       const translateFromScale = 100 * (1 - initialScale);
       switch (props.align) {
         case CORNER_DIRECTIONS.top_right:
           return css`
-            transform: ${props.isOpen
+            transform: ${props.isReady
               ? 'none'
               : `translate(-${translateFromScale}%, ${translateFromScale}%)`};
           `;
         case CORNER_DIRECTIONS.top_left:
           return css`
-            transform: ${props.isOpen
+            transform: ${props.isReady
               ? 'none'
               : `translate(${translateFromScale}%, ${translateFromScale}%)`};
           `;
         case CORNER_DIRECTIONS.bottom_right:
           return css`
-            transform: ${props.isOpen
+            transform: ${props.isReady
               ? 'none'
               : `translate(-${translateFromScale}%, -${translateFromScale}%)`};
           `;
         case CORNER_DIRECTIONS.bottom_left:
         default:
           return css`
-            transform: ${props.isOpen
+            transform: ${props.isReady
               ? 'none'
               : `translate(${translateFromScale}%, -${translateFromScale}%)`};
           `;
@@ -178,8 +179,9 @@ const ButtonInner = styled(Popover)`
   }
 
   ${Shadow} {
-    transition: ${(props) => (props.isOpen ? transition : 'none')};
-    transform: ${(props) => (props.isOpen ? 'none' : `scale(${initialScale})`)};
+    transition: ${(props) => (props.isReady ? transition : 'none')};
+    transform: ${(props) =>
+      props.isReady ? 'none' : `scale(${initialScale})`};
     transform-origin: ${(props) => {
       switch (props.align) {
         case CORNER_DIRECTIONS.top_right:
@@ -197,7 +199,7 @@ const ButtonInner = styled(Popover)`
 `;
 ButtonInner.propTypes = {
   align: PropTypes.oneOf(Object.values(CORNER_DIRECTIONS)),
-  isOpen: PropTypes.bool,
+  isReady: PropTypes.bool,
 };
 
 function PopoverCard({ children, isOpen }) {
@@ -241,18 +243,18 @@ function PopoverCard({ children, isOpen }) {
    * Seems funky, but we need 1 full render where the proper
    * alignment is set before we animate in. This prevents react
    * from batching those renders and animating from wrong alignemnt.
-   *
-   * Other options include scheduling with something like rAF
-   * if we think it's a more robust solution.
    */
   useEffect(() => {
-    setIsReady(Boolean(align));
+    const frameId = requestAnimationFrame(() => setIsReady(Boolean(align)));
+
+    return () => cancelAnimationFrame(frameId);
   }, [align]);
 
   return (
     <ButtonInner
       ref={menuTogglePositionRef}
-      isOpen={isOpen && isReady}
+      isOpen={isOpen}
+      isReady={isReady}
       align={align}
     >
       <MenuWrapper>

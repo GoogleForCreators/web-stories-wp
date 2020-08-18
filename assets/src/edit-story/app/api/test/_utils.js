@@ -23,7 +23,7 @@ export function createStory(properties = {}) {
     title: { raw: 'title' },
     excerpt: { raw: 'excerpt' },
     permalink_template: 'http://localhost:8899/stories/%pagename%',
-    style_presets: { fillColors: [TEST_COLOR] },
+    style_presets: { colors: [TEST_COLOR] },
     ...properties,
   };
 }

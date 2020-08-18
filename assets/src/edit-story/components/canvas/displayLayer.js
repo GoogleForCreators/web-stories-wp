@@ -13,24 +13,98 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { memo } from 'react';
-
+import { memo, useCallback, useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import {
+  StoryAnimation,
+  STORY_ANIMATION_STATE,
+  useStoryAnimationContext,
+} from '../../../animation';
 import { useStory } from '../../app';
-import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
+import useCanvas from './useCanvas';
+
+function DisplayPage({
+  page,
+  animationState,
+  editingElement,
+  resetAnimationState,
+}) {
+  const {
+    actions: { WAAPIAnimationMethods },
+  } = useStoryAnimationContext();
+
+  useEffect(() => {
+    switch (animationState) {
+      case STORY_ANIMATION_STATE.PLAYING:
+        WAAPIAnimationMethods.play();
+        return;
+
+      case STORY_ANIMATION_STATE.RESET:
+        WAAPIAnimationMethods.reset();
+        return;
+
+      case STORY_ANIMATION_STATE.SCRUBBING:
+        /*
+         * See `../../../dashboard/components/previewPage: 82` for reference
+         *
+         * @todo
+         * - have WAAPIAnimationMethods.setCurrentTime(time) subscribe to time setter
+         * - return an unsubscribe function when state changes.
+         */
+        WAAPIAnimationMethods.pause();
+        return;
+
+      case STORY_ANIMATION_STATE.PAUSED:
+        WAAPIAnimationMethods.pause();
+        return;
+      default:
+        return;
+    }
+  }, [animationState, WAAPIAnimationMethods]);
+
+  /*
+   * Reset animation state if user changes page
+   */
+  useEffect(() => resetAnimationState, [resetAnimationState, page]);
+
+  return page
+    ? page.elements.map(({ id, ...rest }) => {
+        if (editingElement === id) {
+          return null;
+        }
+        return (
+          <DisplayElement
+            key={id}
+            element={{ id, ...rest }}
+            page={page}
+            isAnimatable
+          />
+        );
+      })
+    : null;
+}
 
 function DisplayLayer() {
-  const { currentPage } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-  }));
+  const { currentPage, animationState, updateAnimationState } = useStory(
+    ({ state, actions }) => {
+      return {
+        currentPage: state.currentPage,
+        animationState: state.animationState,
+        updateAnimationState: actions.updateAnimationState,
+      };
+    }
+  );
   const {
     editingElement,
     setPageContainer,
@@ -42,30 +116,36 @@ function DisplayLayer() {
     }) => ({ editingElement, setPageContainer, setFullbleedContainer })
   );
 
+  const resetAnimationState = useCallback(
+    () => updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET }),
+    [updateAnimationState]
+  );
+
   return (
-    <Layer pointerEvents="none">
-      <PageArea
-        ref={setPageContainer}
-        fullbleedRef={setFullbleedContainer}
-        background={currentPage?.backgroundColor}
-        showDangerZone={true}
+    <StoryAnimation.Provider
+      animations={currentPage?.animations}
+      elements={currentPage?.elements}
+      onWAAPIFinish={resetAnimationState}
+    >
+      <Layer
+        data-testid="DisplayLayer"
+        pointerEvents="none"
+        aria-label={__('Display', 'web-stories')}
       >
-        {currentPage
-          ? currentPage.elements.map(({ id, ...rest }) => {
-              if (editingElement === id) {
-                return null;
-              }
-              return (
-                <DisplayElement
-                  key={id}
-                  element={{ id, ...rest }}
-                  page={currentPage}
-                />
-              );
-            })
-          : null}
-      </PageArea>
-    </Layer>
+        <PageArea
+          ref={setPageContainer}
+          fullbleedRef={setFullbleedContainer}
+          background={currentPage?.backgroundColor}
+        >
+          <DisplayPage
+            page={currentPage}
+            editingElement={editingElement}
+            animationState={animationState}
+            resetAnimationState={resetAnimationState}
+          />
+        </PageArea>
+      </Layer>
+    </StoryAnimation.Provider>
   );
 }
 

@@ -33,6 +33,16 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.
+ *
+ * @param {Object<*>} props Component props.
+ * @param {Object<*>} props.element Story element.
+ * @param {Function} props.dataToStyleX dataToStyleX function.
+ * @param {Function} props.dataToStyleY dataToStyleY function.
+ * @param {Function} props.dataToFontSizeY dataToFontSizeY function. Falls back to dataToStyleY if not provided.
+ * @param {Function} props.dataToPaddingX dataToPaddingX function. Falls back to dataToStyleX if not provided.
+ * @param {Function} props.dataToPaddingY dataToPaddingY function. Falls back to dataToStyleX if not provided.
+ * @param {string} props.className Class name.
+ * @return {*} Rendered component.
  */
 export function TextOutputWithUnits({
   element: { content, backgroundColor, backgroundTextMode, padding, ...rest },
@@ -72,6 +82,7 @@ export function TextOutputWithUnits({
     ...bgColor,
     color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
+    overflowWrap: 'break-word',
   };
 
   const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
@@ -89,6 +100,7 @@ export function TextOutputWithUnits({
     padding: 0,
     background: 'none',
     lineHeight,
+    overflowWrap: 'break-word',
   };
 
   const highlightCloneStyle = {
@@ -100,11 +112,8 @@ export function TextOutputWithUnits({
   const marginStyle = {
     display: 'inline-block',
     position: 'relative',
-    // Disable reason: style lint can't figure out an interpolated calc
-    // stylelint-disable function-calc-no-invalid
-    margin: `0 calc(${paddingStyles.horizontal} + 2%)`,
-    left: `calc(-${paddingStyles.horizontal} - 2%)`,
-    // stylelint-enable function-calc-no-invalid
+    margin: `0 ${paddingStyles.horizontal}`,
+    left: `-${paddingStyles.horizontal}`,
     top: '0',
   };
 
@@ -173,7 +182,7 @@ export function TextOutputWithUnits({
 }
 
 TextOutputWithUnits.propTypes = {
-  element: StoryPropTypes.elements.text.isRequired,
+  element: StoryPropTypes.textContent.isRequired,
   dataToStyleX: PropTypes.func.isRequired,
   dataToStyleY: PropTypes.func.isRequired,
   dataToFontSizeY: PropTypes.func,
@@ -184,6 +193,9 @@ TextOutputWithUnits.propTypes = {
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object<*>} props Props.
+ * @return {*} Rendered component.
  */
 function TextOutput({ element }) {
   const { width } = element;

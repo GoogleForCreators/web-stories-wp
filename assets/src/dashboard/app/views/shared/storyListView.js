@@ -34,6 +34,8 @@ import {
   UsersPropType,
   RenameStoryPropType,
   StoryMenuPropType,
+  PageSizePropType,
+  DateSettingsPropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -60,14 +62,14 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
-import { PAGE_RATIO } from '../../../constants/pageStructure';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
+import { getRelativeDisplayDate } from '../../../utils/';
 
 const ListView = styled.div`
   width: 100%;
@@ -78,7 +80,7 @@ const PreviewContainer = styled.div`
   position: relative;
   overflow: hidden;
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail / PAGE_RATIO}px;
+  height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   border: ${({ theme }) => theme.storyPreview.border};
@@ -135,6 +137,7 @@ const toggleSortLookup = {
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
+  pageSize,
   renameStory,
   sortDirection,
   stories,
@@ -142,6 +145,7 @@ export default function StoryListView({
   storySort,
   storyStatus,
   users,
+  dateSettings,
 }) {
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
@@ -155,7 +159,7 @@ export default function StoryListView({
     [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
   );
   return (
-    <ListView>
+    <ListView data-testid="story-list-view">
       <Table>
         <TableHeader>
           <TableRow>
@@ -203,7 +207,7 @@ export default function StoryListView({
                 {__('Date Created', 'web-stories')}
                 <ArrowIconWithTitle
                   active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                  asc={sortDirection === SORT_DIRECTION.DESC}
+                  asc={sortDirection === SORT_DIRECTION.ASC}
                 >
                   <ArrowIconSvg />
                 </ArrowIconWithTitle>
@@ -218,7 +222,7 @@ export default function StoryListView({
                 {__('Last Modified', 'web-stories')}
                 <ArrowIconWithTitle
                   active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                  asc={sortDirection === SORT_DIRECTION.DESC}
+                  asc={sortDirection === SORT_DIRECTION.ASC}
                 >
                   <ArrowIconSvg />
                 </ArrowIconWithTitle>
@@ -233,7 +237,7 @@ export default function StoryListView({
               <TablePreviewCell>
                 <PreviewContainer>
                   <PreviewErrorBoundary>
-                    <PreviewPage page={story.pages[0]} />
+                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
                   </PreviewErrorBoundary>
                 </PreviewContainer>
               </TablePreviewCell>
@@ -265,12 +269,18 @@ export default function StoryListView({
                 </TitleTableCellContainer>
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
-              <TableCell>{getFormattedDisplayDate(story.modified)}</TableCell>
+              <TableCell>
+                {getRelativeDisplayDate(story.created, dateSettings)}
+              </TableCell>
+              <TableCell>
+                {getRelativeDisplayDate(story.modified, dateSettings)}
+              </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
-                  {story.status === STORY_STATUS.PUBLISHED &&
+                  {story.status === STORY_STATUS.PUBLISH &&
                     __('Published', 'web-stories')}
+                  {story.status === STORY_STATUS.FUTURE &&
+                    __('Scheduled', 'web-stories')}
                 </TableStatusCell>
               )}
             </TableRow>
@@ -284,6 +294,7 @@ export default function StoryListView({
 StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
+  pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,
   sortDirection: PropTypes.string.isRequired,
   storyMenu: StoryMenuPropType.isRequired,
@@ -291,4 +302,5 @@ StoryListView.propTypes = {
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
   users: UsersPropType.isRequired,
+  dateSettings: DateSettingsPropType,
 };

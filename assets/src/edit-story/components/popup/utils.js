@@ -127,6 +127,12 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
   const popupRect = popup.current?.getBoundingClientRect();
   const dockRect = dock?.current?.getBoundingClientRect();
 
+  // Adjust dimensions based on the popup content's inner dimensions
+  if (popupRect) {
+    popupRect.height = Math.max(popupRect.height, popup.current?.scrollHeight);
+    popupRect.width = Math.max(popupRect.width, popup.current?.scrollWidth);
+  }
+
   const { height = 0 } = popupRect || {};
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
 
