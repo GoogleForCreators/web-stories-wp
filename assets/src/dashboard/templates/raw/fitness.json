@@ -638,7 +638,7 @@
           "focalY": 50,
           "type": "text",
           "id": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
-          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips on how to best start running</span>",
+          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips onhow to best start running</span>",
           "fontSize": 18,
           "padding": {
             "horizontal": 0,
@@ -991,7 +991,7 @@
           "type": "text",
           "basedOn": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
           "id": "9832faa6-2c7e-43eb-b75a-b68051da626a",
-          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest  lightweight mid-distance shoes for the season.</span>",
+          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest lightweight mid-distance shoes for the season.</span>",
           "fontSize": 18,
           "padding": {
             "horizontal": 0,
@@ -2420,7 +2420,7 @@
           "type": "text",
           "basedOn": "0884aabc-ca1e-4b37-a87b-68a6fbf377db",
           "id": "96fea994-b71e-442f-b611-16d73f520016",
-          "content": "<span style=\"font-weight: 600; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 600; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 600; color: #fff\"> EARBUDS</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 600; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 600; color: #fff\">EARBUDS</span>",
           "fontSize": 22,
           "padding": {
             "horizontal": 0,
@@ -2469,7 +2469,7 @@
           "type": "text",
           "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
           "id": "9b117b87-0269-4c4b-9e0d-8cdbcb0df89a",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORE TRAINING EXERCISES</span></span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORETRAINING EXERCISES</span></span>",
           "fontSize": 22,
           "padding": {
             "horizontal": 0,
