@@ -39,6 +39,7 @@ const defaultConfig = {
     canUploadFiles: true,
   },
   maxUpload: 104857600,
+  maxUploadFormatted: '100 MB',
   isRTL: false,
   dateFormat: 'F j, Y',
   timeFormat: 'g:i a',

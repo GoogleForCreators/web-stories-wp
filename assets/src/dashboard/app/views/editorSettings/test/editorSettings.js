@@ -51,6 +51,7 @@ const SettingsWrapper = ({
       config={{
         capabilities: { canUploadFiles: canUploadFiles },
         maxUpload: 104857600,
+        maxUploadFormatted: '100 MB',
       }}
     >
       <ApiContext.Provider

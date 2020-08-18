@@ -15,7 +15,6 @@
  */
 
 export { default as clamp } from './clamp';
-export { default as formatBytes } from './formatBytes';
 export { default as getCurrentYAxis } from './getCurrentYAxis';
 export { getRelativeDisplayDate } from '../../date';
 export { default as groupBy } from './groupBy';

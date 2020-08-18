@@ -28,7 +28,6 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
  * Internal dependencies
  */
 import { Layout } from '../../../components';
-import { formatBytes } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
@@ -48,7 +47,11 @@ function EditorSettings() {
     },
   } = useContext(ApiContext);
 
-  const { capabilities: { canUploadFiles } = {}, maxUpload } = useConfig();
+  const {
+    capabilities: { canUploadFiles } = {},
+    maxUpload,
+    maxUploadFormatted,
+  } = useConfig();
 
   const [mediaError, setMediaError] = useState('');
   /**
@@ -90,7 +93,6 @@ function EditorSettings() {
       );
 
       if (!isFileSizeWithinMaxUpload) {
-        const maxUploadSize = formatBytes(maxUpload);
         const errorText =
           files.length === 1
             ? sprintf(
@@ -99,7 +101,7 @@ function EditorSettings() {
                   'Sorry, this file is too big. Make sure your logo is under %s.',
                   'web-stories'
                 ),
-                maxUploadSize
+                maxUploadFormatted
               )
             : sprintf(
                 /* translators: %s: max upload size for media */
@@ -107,14 +109,14 @@ function EditorSettings() {
                   'Sorry, one or more of these files are too big. Make sure your logos are all under %s.',
                   'web-stories'
                 ),
-                maxUploadSize
+                maxUploadFormatted
               );
         return setMediaError(errorText);
       }
       setMediaError('');
       return uploadMedia(files);
     },
-    [maxUpload, uploadMedia]
+    [maxUpload, maxUploadFormatted, uploadMedia]
   );
 
   const handleRemoveLogo = useCallback(
