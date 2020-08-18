@@ -52,7 +52,7 @@ const Input = styled.input.attrs({
   min-width: 100px;
   cursor: pointer;
   outline: none;
-  background: #2f3131;
+  background: ${({ theme }) => theme.colors.fg.gray8};
   border-radius: 100px;
   height: 4px;
   appearance: none;

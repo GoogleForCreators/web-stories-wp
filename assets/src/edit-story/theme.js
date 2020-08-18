@@ -117,6 +117,7 @@ const theme = {
       white: '#FFFFFF',
       primary: '#EDEFEC',
       gray16: '#414442',
+      gray8: '#2F3131',
 
       // v0: '#000000', <=> replaced with fg.black
       // v1: '#FFFFFF', <=> replaced with fg.white
