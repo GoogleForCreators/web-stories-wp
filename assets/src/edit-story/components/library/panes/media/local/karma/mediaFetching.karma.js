@@ -29,6 +29,7 @@ import { ROOT_MARGIN } from '../mediaPane';
 describe('MediaPane fetching', () => {
   let fixture;
   let localPane;
+  let nonMediaTab;
 
   beforeEach(async () => {
     jasmine.clock().install();
@@ -37,6 +38,7 @@ describe('MediaPane fetching', () => {
     await fixture.render();
 
     localPane = fixture.querySelector('#library-pane-media');
+    nonMediaTab = fixture.querySelector('#library-tab-shapes');
   });
 
   afterEach(() => {
@@ -72,5 +74,19 @@ describe('MediaPane fetching', () => {
     jasmine.clock().tick(500);
 
     await expectMediaElements(MEDIA_PER_PAGE * 2);
+  });
+
+  it('should not load results on resize if tab is hidden', async () => {
+    localPane.querySelector('[data-testid="media-gallery-container"]');
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    await fixture.events.click(nonMediaTab);
+
+    // Simulate a browser window resize, and complete the event debounce cycle.
+    window.dispatchEvent(new Event('resize'));
+    jasmine.clock().tick(500);
+
+    // Expect no additional results to be loaded.
+    await expectMediaElements(MEDIA_PER_PAGE);
   });
 });
