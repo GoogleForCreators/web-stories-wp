@@ -304,6 +304,27 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		}
 	}
 
+
+	/**
+	 * @covers ::remove_caps_from_roles
+	 */
+	public function test_remove_caps_from_roles() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$story_post_type->remove_caps_from_roles();
+		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_roles        = wp_roles();
+		$roles            = array_values( (array) $all_roles->role_objects );
+
+		foreach ( $roles as $role ) {
+			foreach ( $all_capabilities as $cap ) {
+				$this->assertFalse( $role->has_cap( $cap ) );
+			}
+		}
+		// Add back roles after test.
+		$story_post_type->add_caps_to_roles();
+	}
+
 	/**
 	 * @covers ::add_caps_to_roles
 	 * @covers \Google\Web_Stories\new_site
@@ -351,6 +372,22 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$excerpt = get_echo( 'the_excerpt' );
 		$this->assertContains( '<amp-story-player', $excerpt );
+	}
+
+	/**
+	 * @covers ::change_default_title
+	 */
+	public function test_change_default_title() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_status'  => 'auto-draft',
+				'post_title'   => 'Auto draft',
+			]
+		);
+
+		$this->assertSame( '', $post->post_title );
 	}
 
 	/**

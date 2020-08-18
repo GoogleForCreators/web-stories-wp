@@ -19,4 +19,13 @@
  */
 import { createContext } from '../../../../utils/context';
 
-export default createContext({ actions: {} });
+/**
+ * @typedef {import('./typedefs').Media3pApiContext} Media3pApiContext
+ */
+
+/**
+ * @type {Media3pApiContext}
+ */
+const INITIAL_CONTEXT = { actions: {} };
+
+export default createContext(INITIAL_CONTEXT);

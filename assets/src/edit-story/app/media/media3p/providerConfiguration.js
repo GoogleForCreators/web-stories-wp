@@ -88,5 +88,6 @@ export const PROVIDERS = {
       'Error loading media from Coverr',
       'web-stories'
     ),
+    defaultPreviewWidth: 640,
   },
 };

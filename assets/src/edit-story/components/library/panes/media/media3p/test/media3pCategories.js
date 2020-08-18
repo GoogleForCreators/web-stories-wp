@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { axe } from 'jest-axe';
 import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
@@ -125,5 +126,19 @@ describe('Media3pCategories', () => {
     fireEvent.click(categoryPill1);
 
     expect(deselectCategoryMock).toHaveBeenCalledWith();
+  });
+
+  it('should render <Media3pCategories /> without accessibility violations', async () => {
+    const { container } = renderWithTheme(
+      <Media3pCategories
+        categories={categories}
+        selectedCategoryName={undefined}
+        selectCategory={selectCategoryMock}
+        deselectCategory={deselectCategoryMock}
+      />
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

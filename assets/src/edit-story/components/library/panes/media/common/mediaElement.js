@@ -27,11 +27,11 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { useDropTargets } from '../../../../../app';
-import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
+import getThumbnailUrl from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
 
@@ -52,11 +52,20 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Container = styled.div`
+const Container = styled.div.attrs((props) => ({
+  style: {
+    width: props.width + 'px',
+    height: props.height + 'px',
+    margin: props.margin,
+  },
+}))``;
+
+const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  body${KEYBOARD_USER_SELECTOR} &:focus {
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
 `;
@@ -119,6 +128,7 @@ const HiddenPosterImage = styled.img`
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
+ * @param {string?} param.margin The margin in around the element
  * @param {Function} param.onInsert Insertion callback.
  * @param {string} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
@@ -128,6 +138,7 @@ const MediaElement = ({
   resource,
   width: requestedWidth,
   height: requestedHeight,
+  margin,
   onInsert,
   providerType,
 }) => {
@@ -296,34 +307,39 @@ const MediaElement = ({
       data-testid="mediaElement"
       data-id={resourceId}
       className={'mediaElement'}
+      width={width}
+      height={height}
+      margin={margin}
       onPointerEnter={makeActive}
       onFocus={makeActive}
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
     >
-      {innerElement}
-      {attribution}
-      {local && (
-        <CSSTransition
-          in
-          appear={true}
-          timeout={0}
-          className="uploading-indicator"
-        >
-          <UploadingIndicator />
-        </CSSTransition>
-      )}
-      {providerType === 'local' && (
-        <DropDownMenu
-          resource={resource}
-          display={active}
-          isMenuOpen={isMenuOpen}
-          onMenuOpen={onMenuOpen}
-          onMenuCancelled={onMenuCancelled}
-          onMenuSelected={onMenuSelected}
-        />
-      )}
+      <InnerContainer>
+        {innerElement}
+        {attribution}
+        {local && (
+          <CSSTransition
+            in
+            appear={true}
+            timeout={0}
+            className="uploading-indicator"
+          >
+            <UploadingIndicator />
+          </CSSTransition>
+        )}
+        {providerType === 'local' && (
+          <DropDownMenu
+            resource={resource}
+            display={active}
+            isMenuOpen={isMenuOpen}
+            onMenuOpen={onMenuOpen}
+            onMenuCancelled={onMenuCancelled}
+            onMenuSelected={onMenuSelected}
+          />
+        )}
+      </InnerContainer>
     </Container>
   );
 };
@@ -396,6 +412,7 @@ MediaElement.propTypes = {
   resource: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
+  margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
 };
