@@ -27,13 +27,13 @@ import { FIELD_TYPES } from '../../constants';
 export default {
   zoomFrom: {
     label: __('From', 'web-stories'),
-    tooltip: 'Valid values range from 0 to 1',
+    tooltip: __('Valid values range from 0 to 1', 'web-stories'),
     type: FIELD_TYPES.FLOAT,
     defaultValue: 0,
   },
   zoomTo: {
     label: __('To', 'web-stories'),
-    tooltip: 'Valid values range from 0 to 1',
+    tooltip: __('Valid values range from 0 to 1', 'web-stories'),
     type: FIELD_TYPES.FLOAT,
     defaultValue: 1,
   },

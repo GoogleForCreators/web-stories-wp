@@ -23,83 +23,27 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import {
-  ANIMATION_EFFECTS,
-  FIELD_TYPES,
-} from '../../../../animation/constants';
-import { GetAnimationEffectProps } from '../../../../animation/parts';
+import { ANIMATION_EFFECTS } from '../../../../animation/constants';
 import StoryPropTypes, { AnimationPropType } from '../../../types';
-import { Row, DropDown, BoxedNumeric } from '../../form';
-import { SimplePanel, Panel, PanelTitle, PanelContent } from '../panel';
+import { Row, DropDown } from '../../form';
+import { SimplePanel } from '../panel';
 import { Note } from '../shared';
+import EffectPanel from './effectPanel';
 
 const ANIMATION_OPTIONS = [
   { value: '', name: __('Add Effect', 'web-stories') },
   ...Object.values(ANIMATION_EFFECTS),
 ];
 
-function getEffectName(type) {
-  return (
-    Object.values(ANIMATION_EFFECTS).find((o) => o.value === type)?.name || ''
-  );
-}
-
-function renderEffectInput(effectProps, effectConfig, field) {
-  switch (effectProps[field].type) {
-    case FIELD_TYPES.DROPDOWN:
-      return (
-        <DropDown
-          value={effectConfig[field] || effectProps[field].defaultValue}
-          onChange={() => {}}
-          options={effectProps[field].values.map((v) => ({
-            value: v,
-            name: v,
-          }))}
-        />
-      );
-    default:
-      return (
-        <BoxedNumeric
-          aria-label={effectProps[field].label}
-          suffix={effectProps[field].label}
-          symbol={effectProps[field].unit}
-          value={effectConfig[field] || effectProps[field].defaultValue}
-          min={0}
-          onChange={() => {}}
-          canBeNegative={false}
-          flexBasis={'100%'}
-        />
-      );
-  }
-}
-
-function renderEffectsPanel({ id, type, ...config }) {
-  const { props } = GetAnimationEffectProps(type);
-
-  const content = Object.keys(props).map((field) => (
-    <Row key={field} expand>
-      {renderEffectInput(props, config, field)}
-    </Row>
-  ));
-
-  return (
-    <Panel key={id} name={type}>
-      <PanelTitle>{getEffectName(type)}</PanelTitle>
-      <PanelContent>{content}</PanelContent>
-    </Panel>
-  );
-}
-
 function AnimationPanel({ selectedElements, selectedElementAnimations }) {
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
-        <Note>{'Group animation support coming soon.'}</Note>
+        <Note>{__('Group animation support coming soon.', 'web-stories')}</Note>
       </Row>
     </SimplePanel>
   ) : (
@@ -111,9 +55,9 @@ function AnimationPanel({ selectedElements, selectedElementAnimations }) {
           options={ANIMATION_OPTIONS}
         />
       </SimplePanel>
-      {selectedElementAnimations.map((animation) =>
-        renderEffectsPanel(animation)
-      )}
+      {selectedElementAnimations.map((animation) => (
+        <EffectPanel key={animation.id} animation={animation} />
+      ))}
     </>
   );
 }
