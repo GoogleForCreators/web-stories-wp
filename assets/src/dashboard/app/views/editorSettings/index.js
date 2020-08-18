@@ -15,19 +15,20 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { Layout } from '../../../components';
+import { formatBytes } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
@@ -89,15 +90,24 @@ function EditorSettings() {
       );
 
       if (!isFileSizeWithinMaxUpload) {
+        const maxUploadSize = formatBytes(maxUpload);
         const errorText =
           files.length === 1
-            ? __(
-                'Sorry, this file is too big. Make sure your logo is under 100 MB.',
-                'web-stories'
+            ? sprintf(
+                /* translators: %s: max upload size for media */
+                __(
+                  'Sorry, this file is too big. Make sure your logo is under %s.',
+                  'web-stories'
+                ),
+                maxUploadSize
               )
-            : __(
-                'Sorry, one or more of these files are too big. Make sure your logos are all under 100 MB.',
-                'web-stories'
+            : sprintf(
+                /* translators: %s: max upload size for media */
+                __(
+                  'Sorry, one or more of these files are too big. Make sure your logos are all under %s.',
+                  'web-stories'
+                ),
+                maxUploadSize
               );
         return setMediaError(errorText);
       }
