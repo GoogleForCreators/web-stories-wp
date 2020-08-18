@@ -30,6 +30,7 @@ const PillContainer = styled.button`
   border: 1px solid
     ${({ theme, isSelected }) =>
       isSelected ? theme.colors.accent.primary : theme.colors.fg.gray16};
+  background-color: transparent;
   color: ${({ theme }) => theme.colors.fg.primary};
   margin-right: 8px;
   margin-bottom: 8px;
