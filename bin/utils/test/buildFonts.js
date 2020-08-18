@@ -18,16 +18,36 @@
  * External dependencies
  */
 import { __setMockFiles, readFileSync } from 'fs';
+import got from 'got';
 
 /**
  * Internal dependencies
  */
 import { SYSTEM_FONTS } from '../constants';
 import buildFonts from '../buildFonts';
-import fetch from '../fetch';
+import getFontMetrics from '../getFontMetrics';
 
 jest.mock('fs');
-jest.mock('../fetch');
+jest.mock('got');
+jest.mock('../getFontMetrics.js');
+
+const ABEZEE_FONT_METRICS = {
+  upm: 1,
+  asc: 1,
+  des: 1,
+  tAsc: 1,
+  tDes: 1,
+  tLGap: 1,
+  wAsc: 1,
+  wDes: 1,
+  xH: 1,
+  capH: 1,
+  yMin: 1,
+  yMax: 1,
+  hAsc: 1,
+  hDes: 1,
+  lGap: 1,
+};
 
 const ABEZEE_FONT_AFTER = {
   family: 'ABeeZee',
@@ -39,6 +59,7 @@ const ABEZEE_FONT_AFTER = {
     [1, 400],
   ],
   service: 'fonts.google.com',
+  metrics: ABEZEE_FONT_METRICS,
 };
 
 describe('buildFonts', () => {
@@ -51,29 +72,40 @@ describe('buildFonts', () => {
   });
 
   it('should combine system fonts with pre-existing list of Google Fonts', async () => {
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve(
-        JSON.stringify({
+    got.mockImplementationOnce(() => {
+      return {
+        body: JSON.stringify({
           items: [
             {
               family: 'ABeeZee',
               variants: ['regular', 'italic'],
               category: 'sans-serif',
+              files: {
+                regular:
+                  'http://fonts.gstatic.com/s/abeezee/v13/esDR31xSG-6AGleN6tKukbcHCpE.ttf',
+                italic:
+                  'http://fonts.gstatic.com/s/abeezee/v13/esDT31xSG-6AGleN2tCklZUCGpG-GQ.ttf',
+              },
             },
           ],
-        })
-      )
-    );
+        }),
+      };
+    });
+
+    getFontMetrics.mockImplementationOnce(() => ABEZEE_FONT_METRICS);
 
     await buildFonts('/includes/data/fonts.json');
 
     const contentAfter = JSON.parse(readFileSync('/includes/data/fonts.json'));
+    expect(getFontMetrics).toHaveBeenCalledWith(
+      'http://fonts.gstatic.com/s/abeezee/v13/esDR31xSG-6AGleN6tKukbcHCpE.ttf'
+    );
     expect(contentAfter).toHaveLength(1 + SYSTEM_FONTS.length);
     expect(contentAfter).toContainEqual(ABEZEE_FONT_AFTER);
   });
 
   it('should bail on empty response', async () => {
-    fetch.mockImplementationOnce(() => Promise.resolve(''));
+    got.mockImplementationOnce(() => ({ body: '' }));
 
     await buildFonts('/includes/data/fonts.json');
 

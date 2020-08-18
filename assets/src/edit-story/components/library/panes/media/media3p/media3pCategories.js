@@ -35,12 +35,12 @@ import CategoryPill from './categoryPill';
 // Pills have a margin of 4, so the l/r padding is 24-4=20.
 const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
-  min-height: 94px;
+  ${({ hasCategories }) => (hasCategories ? '' : 'min-height: 104px;')}
   padding: 30px 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  flex: 1 0 auto;
+  flex: 0 1 auto;
 `;
 
 // This hides the category pills unless expanded
@@ -119,28 +119,32 @@ const Media3pCategories = ({
     }
   }, [containerRef, innerContainerRef, isExpanded]);
 
-  return categories.length ? (
-    <CategorySection>
-      <CategoryPillContainer
-        id="category-pill-container"
-        ref={containerRef}
-        isExpanded={isExpanded}
-        role="tablist"
-      >
-        <CategoryPillInnerContainer ref={innerContainerRef}>
-          {renderCategories()}
-        </CategoryPillInnerContainer>
-      </CategoryPillContainer>
-      <ExpandButton
-        data-testid="category-expand-button"
-        onClick={() => setIsExpanded(!isExpanded)}
-        visible={!selectedCategoryId}
-        isExpanded={isExpanded}
-        aria-controls="category-pill-container"
-        aria-expanded={isExpanded}
-      />
+  return (
+    <CategorySection hasCategories={Boolean(categories.length)}>
+      {categories.length ? (
+        <>
+          <CategoryPillContainer
+            id="category-pill-container"
+            ref={containerRef}
+            isExpanded={isExpanded}
+            role="tablist"
+          >
+            <CategoryPillInnerContainer ref={innerContainerRef}>
+              {renderCategories()}
+            </CategoryPillInnerContainer>
+          </CategoryPillContainer>
+          <ExpandButton
+            data-testid="category-expand-button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            visible={!selectedCategoryId}
+            isExpanded={isExpanded}
+            aria-controls="category-pill-container"
+            aria-expanded={isExpanded}
+          />
+        </>
+      ) : null}
     </CategorySection>
-  ) : null;
+  );
 };
 
 Media3pCategories.propTypes = {

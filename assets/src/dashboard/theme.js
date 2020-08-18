@@ -84,6 +84,7 @@ const borders = {
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
   action: `1px solid ${colors.action}`,
+  danger: `1px solid ${colors.danger}`,
 };
 
 const theme = {

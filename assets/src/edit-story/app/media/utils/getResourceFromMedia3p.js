@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PROVIDERS } from '../media3p/providerConfiguration';
 import createResource from './createResource';
 
 /**
@@ -92,15 +93,14 @@ function getImageUrls(m) {
     throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
   }
 
-  const sizesFromBiggest = m.imageUrls
-    .sort((x, y) => y.width - x.width)
-    .map((u) => ({
-      file: m.name,
-      source_url: u.url,
-      mime_type: u.mimeType,
-      width: u.width,
-      height: u.height,
-    }));
+  const sortedImages = m.imageUrls.sort(
+    (x, y) => (y.width ?? 0) - (x.width ?? 0)
+  );
+  const originalSize = getOriginalSize(sortedImages);
+  const sizesFromBiggest = sortedImages.map((u) =>
+    mediaUrlToImageSizeDescription(m, u, originalSize)
+  );
+
   const namedSizes = [
     ['full', sizesFromBiggest[0]],
     ['large', sizesFromBiggest[1]],
@@ -127,22 +127,48 @@ function getVideoUrls(m) {
   // The rest of the application expects 2 named "sizes": "full", and "preview"
   // The highest fidelity is used (videoUrls is ordered by fidelity from the backend)
   // as "full", and the lowest as "preview".
-  if (m.imageUrls?.length < 2) {
+  if (m.videoUrls?.length < 2) {
     throw new Error('Invalid number of urls for asset. Need at least 2: ' + m);
   }
 
-  const sizesFromBiggest = m.videoUrls
-    .sort((x, y) => y.width - x.width)
-    .map((u) => ({
-      file: m.name,
-      source_url: u.url,
-      mime_type: u.mimeType,
-      width: u.width,
-      height: u.height,
-    }));
+  const sortedVideos = m.videoUrls.sort(
+    (x, y) => (y.width ?? 0) - (x.width ?? 0)
+  );
+  const originalSize = getOriginalSize(sortedVideos);
+  const sizesFromBiggest = sortedVideos.map((u) =>
+    mediaUrlToImageSizeDescription(m, u, originalSize)
+  );
+
   return {
     full: sizesFromBiggest[0],
     preview: sizesFromBiggest[sizesFromBiggest.length - 1],
+  };
+}
+
+function getOriginalSize(mediaUrls) {
+  return {
+    originalWidth: mediaUrls[0].width,
+    originalHeight: mediaUrls[0].height,
+  };
+}
+
+function mediaUrlToImageSizeDescription(media, url, originalSize) {
+  const { originalWidth, originalHeight } = originalSize;
+  if (!originalWidth || !originalHeight) {
+    throw new Error('No original size present.');
+  }
+  const provider = PROVIDERS[media.provider.toLowerCase()];
+  if ((!url.width || !url.height) && !provider.defaultPreviewWidth) {
+    throw new Error('Missing width and height for: ' + media);
+  }
+  return {
+    file: media.name,
+    source_url: url.url,
+    mime_type: url.mimeType,
+    width: url.width ?? provider.defaultPreviewWidth,
+    height:
+      url.height ??
+      (provider.defaultPreviewWidth * originalHeight) / originalWidth,
   };
 }
 
@@ -191,7 +217,7 @@ function getVideoResourceFromMedia3p(m) {
     src: videoUrls.full.source_url,
     width: videoUrls.full.width,
     height: videoUrls.full.height,
-    poster: m.imageUrls[0],
+    poster: m.imageUrls[0].url,
     length,
     lengthFormatted: formatVideoLength(length),
     title: m.description,

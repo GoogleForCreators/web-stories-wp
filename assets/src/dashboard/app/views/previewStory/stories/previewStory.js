@@ -44,9 +44,7 @@ const Wrapper = ({ isLoading, errorText, previewMarkup = '', children }) => {
         },
         actions: {
           storyApi: {
-            createStoryPreviewFromTemplate: action(
-              'create story from template'
-            ),
+            createStoryPreview: action('create story from template'),
             clearStoryPreview: action('clear preview from reducer'),
           },
         },
@@ -67,7 +65,6 @@ export const _default = () => {
   return (
     <PreviewStory
       story={completeTemplateObject}
-      isTemplate
       handleClose={action('close action triggered')}
     />
   );

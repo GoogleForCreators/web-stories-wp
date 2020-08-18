@@ -71,6 +71,7 @@ const StoryGridView = ({
   storyMenu,
   renameStory,
   dateSettings,
+  previewStory,
 }) => {
   return (
     <StoryGrid pageSize={pageSize}>
@@ -93,13 +94,14 @@ const StoryGridView = ({
               pageSize={pageSize}
               story={story}
               centerAction={{
-                targetAction: story.centerTargetAction,
+                targetAction: (e) => previewStory(e, story),
                 label: centerActionLabelByStatus[story.status],
               }}
               bottomAction={{
                 targetAction: story.bottomTargetAction,
                 label: bottomActionLabel,
               }}
+              containerAction={(e) => previewStory(e, story)}
             />
             <DetailRow>
               <CardTitle
@@ -146,6 +148,7 @@ StoryGridView.propTypes = {
   ]),
   bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
+  previewStory: PropTypes.func,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
   dateSettings: DateSettingsPropType,

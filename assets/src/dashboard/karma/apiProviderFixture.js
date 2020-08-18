@@ -34,22 +34,33 @@ import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
+  const [settings, setSettingsState] = useState(getSettingsState());
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
   const [users] = useState(formattedUsersObject);
+
+  const settingsApi = useMemo(
+    () => ({
+      fetchSettings: () =>
+        setSettingsState((currentState) => fetchSettings(currentState)),
+      updateSettings: (updates) =>
+        setSettingsState((currentState) =>
+          updateSettings(updates, currentState)
+        ),
+    }),
+    []
+  );
 
   const storyApi = useMemo(
     () => ({
       duplicateStory: (story) =>
         setStoriesState((currentState) => duplicateStory(story, currentState)),
       fetchStories: (...args) =>
-        setStoriesState((currenState) => fetchStories(...args, currenState)),
+        setStoriesState((currentState) => fetchStories(...args, currentState)),
       clearStoryPreview: () =>
         setStoriesState((currentState) => clearStoryPreview(currentState)),
-      createStoryPreviewFromTemplate: () =>
-        setStoriesState((currentState) =>
-          createStoryPreviewFromTemplate(currentState)
-        ),
+      createStoryPreview: () =>
+        setStoriesState((currentState) => createStoryPreview(currentState)),
       createStoryFromTemplate: jasmine.createSpy('createStoryFromTemplate'),
       trashStory: (story) =>
         setStoriesState((currentState) => trashStory(story, currentState)),
@@ -103,18 +114,30 @@ export default function ApiProviderFixture({ children }) {
   const value = useMemo(
     () => ({
       state: {
+        settings,
         stories,
         templates,
         users,
       },
       actions: {
+        settingsApi,
         storyApi,
         templateApi,
         fontApi,
         usersApi,
       },
     }),
-    [stories, templates, users, usersApi, storyApi, templateApi, fontApi]
+    [
+      settings,
+      stories,
+      templates,
+      users,
+      settingsApi,
+      storyApi,
+      templateApi,
+      fontApi,
+      usersApi,
+    ]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
@@ -124,6 +147,30 @@ export default function ApiProviderFixture({ children }) {
 ApiProviderFixture.propTypes = {
   children: PropTypes.node,
 };
+
+function getSettingsState() {
+  return {
+    error: {},
+    googleAnalyticsId: '',
+    publisherLogos: [],
+  };
+}
+
+function fetchSettings(currentState) {
+  const settingsState = { ...currentState } || getSettingsState();
+  settingsState.googleAnalyticsId = 'UA-000000-2';
+
+  return settingsState;
+}
+
+function updateSettings(updates, currentState) {
+  const { googleAnalyticsId } = updates;
+
+  return {
+    ...currentState,
+    googleAnalyticsId,
+  };
+}
 
 function getStoriesState() {
   const copiedStories = [...formattedStoriesArray];
@@ -148,7 +195,7 @@ function clearStoryPreview(currentState) {
   };
 }
 
-function createStoryPreviewFromTemplate(currentState) {
+function createStoryPreview(currentState) {
   return {
     ...currentState,
     previewMarkup: '<p>I am markup for a preview</p>',

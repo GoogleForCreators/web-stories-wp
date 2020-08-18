@@ -73,11 +73,13 @@ const page = {
   set: action('set page number'),
   requestNextPage: action('request next page clicked'),
 };
+
 const storyActions = {
   createTemplateFromStory: action('create template from story clicked'),
   duplicateStory: action('duplicate story clicked'),
   trashStory: action('trash story clicked'),
   updateStory: action('update story clicked'),
+  handlePreviewStory: action('handle preview story selected'),
 };
 
 const defaultProps = {

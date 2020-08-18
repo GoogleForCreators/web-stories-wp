@@ -476,11 +476,11 @@ describe('storyReducer', () => {
     });
   });
 
-  it(`should update isLoading when ${ACTION_TYPES.CREATING_STORY_PREVIEW_FROM_TEMPLATE} is called`, () => {
+  it(`should update isLoading when ${ACTION_TYPES.CREATING_STORY_PREVIEW} is called`, () => {
     const result = storyReducer(
       { ...initialState },
       {
-        type: ACTION_TYPES.CREATING_STORY_PREVIEW_FROM_TEMPLATE,
+        type: ACTION_TYPES.CREATING_STORY_PREVIEW,
         payload: true,
       }
     );
@@ -491,11 +491,11 @@ describe('storyReducer', () => {
     });
   });
 
-  it(`should update error to empty object and set previewMarkup when ${ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_SUCCESS} is called`, () => {
+  it(`should update error to empty object and set previewMarkup when ${ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS} is called`, () => {
     const result = storyReducer(
       { ...initialState },
       {
-        type: ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_SUCCESS,
+        type: ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS,
         payload: 'markup to render preview',
       }
     );
@@ -507,11 +507,11 @@ describe('storyReducer', () => {
     });
   });
 
-  it(`should update error when ${ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_FAILURE} is called`, () => {
+  it(`should update error when ${ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE} is called`, () => {
     const result = storyReducer(
       { ...initialState },
       {
-        type: ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_FAILURE,
+        type: ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
         payload: {
           message: {
             title: 'Unable to Create Story Preview From Template',

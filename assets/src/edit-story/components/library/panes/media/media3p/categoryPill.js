@@ -67,14 +67,13 @@ const CategoryPill = ({
 }) => {
   const ref = useRef();
 
-  useRovingTabIndex({ ref, isRowBasedGallery: true }, [isExpanded]);
+  useRovingTabIndex({ ref }, [isExpanded]);
 
-  useKeyDownEffect(
-    ref,
-    !isExpanded ? 'down' : [],
-    useCallback(() => setIsExpanded(true), [setIsExpanded]),
-    [isExpanded, setIsExpanded],
-  );
+  const expand = useCallback(() => setIsExpanded(true), [setIsExpanded]);
+  useKeyDownEffect(ref, !isExpanded ? 'down' : [], expand, [
+    isExpanded,
+    expand,
+  ]);
 
   return (
     <PillContainer
