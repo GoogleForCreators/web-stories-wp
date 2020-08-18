@@ -33,7 +33,7 @@ export default function TypeaheadSearch({
   const typeaheadMenuOptions = useMemo(() => {
     // todo add different option sets, value and label won't always be the same
     return stories.reduce((acc, story) => {
-      if (!story.title) {
+      if (!story.title || story.title.trim().length <= 0) {
         return acc;
       }
       return [
