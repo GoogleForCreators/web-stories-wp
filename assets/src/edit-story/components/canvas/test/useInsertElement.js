@@ -29,7 +29,7 @@ import { useLocalMedia, useStory } from '../../../app';
 jest.mock('../../../app/media/media3p/api/useMedia3pApi');
 jest.mock('../../../app');
 
-const TYPE = 'image';
+const IMAGE_TYPE = 'image';
 
 const PROPS_LOCAL = {
   resource: {
@@ -95,7 +95,7 @@ const PROPS_M3P_WITH_ATTRIBUTION = {
   height: 353,
 };
 
-const registerUsageUrl = 'https://registerUsageUrl.com/register';
+const REGISTER_USAGE_URL = 'https://registerUsageUrl.com/register';
 
 describe('useInsertElement', () => {
   const registerUsage = jest.fn();
@@ -122,16 +122,16 @@ describe('useInsertElement', () => {
     it('should be called for external resources with registerUsageUrl', () => {
       const { result } = renderHook(() => useInsertElement());
       act(() => {
-        result.current(TYPE, PROPS_M3P_WITH_ATTRIBUTION);
+        result.current(IMAGE_TYPE, PROPS_M3P_WITH_ATTRIBUTION);
       });
 
-      expect(registerUsage).toHaveBeenCalledWith({ registerUsageUrl });
+      expect(registerUsage).toHaveBeenCalledWith({ REGISTER_USAGE_URL });
     });
 
     it('should not be called for local resources', () => {
       const { result } = renderHook(() => useInsertElement());
       act(() => {
-        result.current(TYPE, PROPS_LOCAL);
+        result.current(IMAGE_TYPE, PROPS_LOCAL);
       });
       expect(registerUsage).not.toHaveBeenCalled();
     });
