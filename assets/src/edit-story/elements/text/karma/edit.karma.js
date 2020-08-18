@@ -82,7 +82,7 @@ describe('TextEdit integration', () => {
         await fixture.snapshot();
       });
 
-      it('should handle a commnad, exit and save', async () => {
+      it('should handle a command, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
 
         // Select all.
@@ -133,6 +133,82 @@ describe('TextEdit integration', () => {
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
         expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+      });
+    });
+  });
+
+  describe('add a multiline text element', () => {
+    let element;
+    let frame;
+    let text = '\n\nThis is some test text.\n\nThis is more test text.\n\n';
+
+    beforeEach(async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      element = await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: text,
+          x: 40,
+          y: 40,
+          width: 300,
+        })
+      );
+
+      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
+    });
+
+    it('should render initial content', () => {
+      expect(frame.textContent).toEqual(text);
+    });
+
+    describe('edit mode', () => {
+      let textElement;
+      let initialHeight;
+
+      beforeEach(async () => {
+        await fixture.events.click(frame);
+        textElement = fixture.querySelector('[data-testid="textEditor"]');
+        initialHeight = textElement.getBoundingClientRect()?.height;
+      });
+
+      it('should not change height when entering and exiting edit mode', async () => {
+        await fixture.snapshot(
+          'Trailing and leading newlines, before editmode'
+        );
+
+        // Enter into editing the text
+        await fixture.events.click(frame);
+
+        await fixture.snapshot(
+          'Trailing and leading newlines, during editmode'
+        );
+
+        expect(textElement.getBoundingClientRect().height).toEqual(
+          initialHeight
+        );
+
+        // Exit edit mode using the Esc key
+        await fixture.events.keyboard.press('Esc');
+        await fixture.events.keyboard.press('Esc');
+
+        await fixture.snapshot('Trailing and leading newlines, after editmode');
+
+        const {
+          height: heightAfterExitingEditMode,
+        } = frame.getBoundingClientRect();
+
+        expect(initialHeight).toEqual(heightAfterExitingEditMode);
+
+        // Reenter edit mode
+        await fixture.events.click(frame);
+        await fixture.events.click(frame);
+        textElement = fixture.querySelector('[data-testid="textEditor"]');
+
+        const {
+          height: heightAfterReenteringEditMode,
+        } = textElement.getBoundingClientRect();
+
+        expect(heightAfterReenteringEditMode).toEqual(initialHeight);
       });
     });
   });

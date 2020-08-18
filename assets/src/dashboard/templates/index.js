@@ -27,8 +27,8 @@ import getTemplates from './getTemplates';
 
 const memoizedGetTemplates = memoize(getTemplates);
 
-export default function ({ assetsURL }) {
-  const templates = memoizedGetTemplates(assetsURL);
+export default async function ({ assetsURL }) {
+  const templates = await memoizedGetTemplates(assetsURL);
 
   const globalConfig = {
     createdBy: 'Google Web Stories',

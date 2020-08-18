@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { getByRole, queryByRole, waitFor } from '@testing-library/react';
+import {
+  getByRole,
+  getAllByRole,
+  queryByRole,
+  waitFor,
+} from '@testing-library/react';
 
 /** @typedef {import('@testing-library/dom').Matcher} Matcher */
 /** @typedef {import('@testing-library/dom').ByRoleOptions} ByRoleOptions */
@@ -76,6 +81,17 @@ export class Container {
    */
   getByRole(role, options) {
     return getByRole(this._node, role, options);
+  }
+
+  /**
+   * See https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+   *
+   * @param {Matcher} role Role name.
+   * @param {ByRoleOptions} options Options.
+   * @return {Array.<HTMLElement>} The found elements.
+   */
+  getAllByRole(role, options) {
+    return getAllByRole(this._node, role, options);
   }
 
   /**
