@@ -23,8 +23,8 @@ describe('mediaReducer', () => {
   const initialState = {
     error: {},
     isLoading: false,
-    uploadedMediaIds: [],
-    publisherLogos: {},
+    newlyCreatedMediaIds: [],
+    mediaById: {},
   };
 
   const MOCK_ERROR_ID = Date.now();
@@ -33,9 +33,9 @@ describe('mediaReducer', () => {
     jest.spyOn(Date, 'now').mockImplementation(() => MOCK_ERROR_ID);
   });
 
-  it(`should update media state of isLoading and reset uploadedMediaIds to an empty array when ${ACTION_TYPES.LOADING_MEDIA} is called`, () => {
+  it(`should update media state of isLoading and reset newlyCreatedMediaIds to an empty array when ${ACTION_TYPES.LOADING_MEDIA} is called`, () => {
     const result = mediaReducer(
-      { ...initialState, uploadedMediaIds: [9, 8] },
+      { ...initialState, newlyCreatedMediaIds: [9, 8] },
       {
         type: ACTION_TYPES.LOADING_MEDIA,
       }
@@ -44,8 +44,8 @@ describe('mediaReducer', () => {
     expect(result).toMatchObject({
       error: {},
       isLoading: true,
-      uploadedMediaIds: [],
-      publisherLogos: {},
+      newlyCreatedMediaIds: [],
+      mediaById: {},
     });
   });
 
@@ -71,8 +71,8 @@ describe('mediaReducer', () => {
         code: 'my_error_code',
       },
       isLoading: false,
-      uploadedMediaIds: [],
-      publisherLogos: {},
+      newlyCreatedMediaIds: [],
+      mediaById: {},
     });
   });
 
@@ -98,51 +98,17 @@ describe('mediaReducer', () => {
         code: 'my_error_code',
       },
       isLoading: false,
-      uploadedMediaIds: [],
-      publisherLogos: {},
+      newlyCreatedMediaIds: [],
+      mediaById: {},
     });
   });
 
-  it(`should update media state of uploadedMediaIds and publisherLogos when ${ACTION_TYPES.ADD_MEDIA_SUCCESS} is called`, () => {
+  it(`should update media state of newlyCreatedMediaIds and mediaById when ${ACTION_TYPES.ADD_MEDIA_SUCCESS} is called`, () => {
     const result = mediaReducer(initialState, {
       type: ACTION_TYPES.ADD_MEDIA_SUCCESS,
-      payload: [
-        {
-          id: 1,
-          source_url: 'fakeimgsource',
-          title: { rendered: 'image 1 title' },
-        },
-        {
-          id: 2,
-          source_url: 'fakeimgsource',
-          title: { rendered: 'image 2 title' },
-        },
-      ],
-    });
-
-    expect(result).toMatchObject({
-      error: {},
-      isLoading: false,
-      uploadedMediaIds: [1, 2],
-      publisherLogos: {
-        1: { id: 1, src: 'fakeimgsource', title: 'image 1 title' },
-        2: { id: 2, src: 'fakeimgsource', title: 'image 2 title' },
-      },
-    });
-  });
-
-  it(`should update media state of publisherLogos when ${ACTION_TYPES.FETCH_MEDIA_SUCCESS} is called`, () => {
-    const result = mediaReducer(
-      {
-        ...initialState,
-        publisherLogos: {
-          7: { id: 7, src: 'fakeimgsource', title: 'image 7 title' },
-          4: { id: 4, src: 'fakeimgsource', title: 'image 4 title' },
-        },
-      },
-      {
-        type: ACTION_TYPES.FETCH_MEDIA_SUCCESS,
-        payload: [
+      payload: {
+        newlyCreatedMediaIds: [1, 2],
+        media: [
           {
             id: 1,
             source_url: 'fakeimgsource',
@@ -154,14 +120,53 @@ describe('mediaReducer', () => {
             title: { rendered: 'image 2 title' },
           },
         ],
+      },
+    });
+
+    expect(result).toMatchObject({
+      error: {},
+      isLoading: false,
+      newlyCreatedMediaIds: [1, 2],
+      mediaById: {
+        1: { id: 1, src: 'fakeimgsource', title: 'image 1 title' },
+        2: { id: 2, src: 'fakeimgsource', title: 'image 2 title' },
+      },
+    });
+  });
+
+  it(`should update media state of sources when ${ACTION_TYPES.FETCH_MEDIA_SUCCESS} is called`, () => {
+    const result = mediaReducer(
+      {
+        ...initialState,
+        mediaById: {
+          7: { id: 7, src: 'fakeimgsource', title: 'image 7 title' },
+          4: { id: 4, src: 'fakeimgsource', title: 'image 4 title' },
+        },
+      },
+      {
+        type: ACTION_TYPES.FETCH_MEDIA_SUCCESS,
+        payload: {
+          media: [
+            {
+              id: 1,
+              source_url: 'fakeimgsource',
+              title: { rendered: 'image 1 title' },
+            },
+            {
+              id: 2,
+              source_url: 'fakeimgsource',
+              title: { rendered: 'image 2 title' },
+            },
+          ],
+        },
       }
     );
 
     expect(result).toMatchObject({
       error: {},
       isLoading: false,
-      uploadedMediaIds: [],
-      publisherLogos: {
+      newlyCreatedMediaIds: [],
+      mediaById: {
         1: { id: 1, src: 'fakeimgsource', title: 'image 1 title' },
         2: { id: 2, src: 'fakeimgsource', title: 'image 2 title' },
         7: { id: 7, src: 'fakeimgsource', title: 'image 7 title' },

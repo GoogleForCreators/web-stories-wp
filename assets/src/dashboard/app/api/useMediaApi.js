@@ -55,7 +55,9 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
 
         dispatch({
           type: MEDIA_ACTION_TYPES.FETCH_MEDIA_SUCCESS,
-          payload: response,
+          payload: {
+            media: response,
+          },
         });
       } catch (err) {
         dispatch({
@@ -92,7 +94,10 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
 
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_SUCCESS,
-          payload: mediaResponse,
+          payload: {
+            media: mediaResponse,
+            newlyCreatedMediaIds: mediaResponse.map(({ id }) => id),
+          },
         });
       } catch (err) {
         dispatch({

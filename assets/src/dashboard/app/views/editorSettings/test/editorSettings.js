@@ -64,8 +64,8 @@ const SettingsWrapper = ({
             },
             media: {
               isLoading,
-              uploadedMediaIds: [],
-              publisherLogos: logos,
+              newlyCreatedMediaIds: [],
+              mediaById: logos,
             },
           },
           actions: {

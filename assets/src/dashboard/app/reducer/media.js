@@ -30,8 +30,8 @@ export const ACTION_TYPES = {
 export const defaultMediaState = {
   error: {},
   isLoading: false,
-  uploadedMediaIds: [],
-  publisherLogos: {},
+  newlyCreatedMediaIds: [],
+  mediaById: {},
 };
 
 function mediaReducer(state, action) {
@@ -40,26 +40,10 @@ function mediaReducer(state, action) {
       return {
         ...state,
         isLoading: true,
-        uploadedMediaIds: [],
+        newlyCreatedMediaIds: [],
       };
     }
 
-    case ACTION_TYPES.FETCH_MEDIA_SUCCESS: {
-      return {
-        ...state,
-        isLoading: false,
-        publisherLogos: {
-          ...state.publisherLogos,
-          ...action.payload.reduce((acc, current) => {
-            if (!current) {
-              return acc;
-            }
-            acc[current.id] = reshapePublisherLogo(current);
-            return acc;
-          }, {}),
-        },
-      };
-    }
     case ACTION_TYPES.ADD_MEDIA_FAILURE:
     case ACTION_TYPES.FETCH_MEDIA_FAILURE: {
       return {
@@ -69,14 +53,15 @@ function mediaReducer(state, action) {
       };
     }
 
-    case ACTION_TYPES.ADD_MEDIA_SUCCESS: {
+    case ACTION_TYPES.ADD_MEDIA_SUCCESS:
+    case ACTION_TYPES.FETCH_MEDIA_SUCCESS: {
       return {
         ...state,
         error: {},
         isLoading: false,
-        publisherLogos: {
-          ...state.publisherLogos,
-          ...action.payload.reduce((acc, current) => {
+        mediaById: {
+          ...state.mediaById,
+          ...action.payload.media.reduce((acc, current) => {
             if (!current) {
               return acc;
             }
@@ -84,7 +69,8 @@ function mediaReducer(state, action) {
             return acc;
           }, {}),
         },
-        uploadedMediaIds: action.payload.map(({ id }) => id),
+        newlyCreatedMediaIds:
+          action.payload.newlyCreatedMediaIds || state.newlyCreatedMediaIds,
       };
     }
 

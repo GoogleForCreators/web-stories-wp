@@ -170,8 +170,8 @@ function getMediaState() {
   return {
     error: {},
     isLoading: false,
-    uploadedMediaIds: [],
-    publisherLogos: rawPublisherLogos,
+    newlyCreatedMediaIds: [],
+    mediaById: rawPublisherLogos,
   };
 }
 

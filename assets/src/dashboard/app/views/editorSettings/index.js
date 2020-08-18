@@ -43,7 +43,7 @@ function EditorSettings() {
     },
     state: {
       settings: { activePublisherLogoId, googleAnalyticsId, publisherLogoIds },
-      media: { isLoading: isMediaLoading, uploadedMediaIds, publisherLogos },
+      media: { isLoading: isMediaLoading, newlyCreatedMediaIds, mediaById },
     },
   } = useContext(ApiContext);
 
@@ -69,10 +69,10 @@ function EditorSettings() {
   }, [fetchSettings]);
 
   useEffect(() => {
-    if (uploadedMediaIds.length > 0) {
-      updateSettings({ publisherLogoIds: uploadedMediaIds });
+    if (newlyCreatedMediaIds.length > 0) {
+      updateSettings({ publisherLogoIds: newlyCreatedMediaIds });
     }
-  }, [updateSettings, uploadedMediaIds]);
+  }, [updateSettings, newlyCreatedMediaIds]);
 
   useEffect(() => {
     if (publisherLogoIds.length > 0) {
@@ -128,19 +128,19 @@ function EditorSettings() {
   );
 
   const orderedPublisherLogos = useMemo(() => {
-    if (Object.keys(publisherLogos).length <= 0) {
+    if (Object.keys(mediaById).length <= 0) {
       return [];
     }
     return publisherLogoIds.map((publisherLogoId) => {
-      if (publisherLogos[publisherLogoId]) {
+      if (mediaById[publisherLogoId]) {
         if (publisherLogoId === activePublisherLogoId) {
-          publisherLogos[publisherLogoId].isActive = true;
+          mediaById[publisherLogoId].isActive = true;
         }
-        return publisherLogos[publisherLogoId];
+        return mediaById[publisherLogoId];
       }
       return undefined; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
     });
-  }, [activePublisherLogoId, publisherLogoIds, publisherLogos]);
+  }, [activePublisherLogoId, publisherLogoIds, mediaById]);
 
   return (
     <Layout.Provider>
