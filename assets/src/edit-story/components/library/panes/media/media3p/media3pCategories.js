@@ -25,7 +25,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { ArrowDown } from '../../../../button/index';
+import { ArrowDown } from '../../../../button';
 import CategoryPill from './categoryPill';
 
 // Pills have a margin of 4, so the l/r padding is 24-4=20.
