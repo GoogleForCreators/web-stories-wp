@@ -62,6 +62,16 @@ import getTypeFromMime from './getTypeFromMime';
  */
 
 /**
+ * ResourceSize object
+ *
+ * @typedef {ResourceSize} ResourceSize
+ * @property {number} width The width of the ResourceSize.
+ * @property {number} height The height of the ResourceSize.
+ * @property {string} source_url The URL pointing to the resource for this size.
+ * @property {string|null} mimeType The mimeType of this ResourceSize.
+ */
+
+/**
  * Resource object.
  *
  * TODO: Try to remove posterId (poster should be enough?)
@@ -86,7 +96,7 @@ import getTypeFromMime from './getTypeFromMime';
  * resource.
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
- * @property {Object} sizes Object of image sizes.
+ * @property {Object.<string, ResourceSize>} sizes Object of image sizes.
  * @property {Attribution|null} attribution An optional attribution for the
  * resource.
  */
