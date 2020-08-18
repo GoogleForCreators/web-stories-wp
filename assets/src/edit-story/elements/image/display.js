@@ -75,7 +75,6 @@ function ImageDisplay({ element, box }) {
         resourceList[resource.id] = {
           type: 'fullsize',
         };
-        console.log('set fullsize', resource.src);
         setSrc(resource.src);
         setSrcType('fullsize');
       }, 0);
