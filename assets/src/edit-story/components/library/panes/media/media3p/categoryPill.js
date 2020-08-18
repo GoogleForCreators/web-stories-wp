@@ -67,6 +67,8 @@ const CategoryPill = ({
 }) => {
   const ref = useRef();
 
+  // useRovingTabIndex and useKeyDownEffect depend on 'isExpanded' to avoid
+  // conflicting 'down' arrow handlers.
   useRovingTabIndex({ ref }, [isExpanded]);
 
   const expand = useCallback(() => setIsExpanded(true), [setIsExpanded]);

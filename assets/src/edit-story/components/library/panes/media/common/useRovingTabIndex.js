@@ -132,7 +132,7 @@ function getClosestValidSibling(element, siblingDirection) {
   return closestValidSibling;
 }
 
-export default function useRovingTabIndex({ ref }, keyEventDeps) {
+export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
   const { isRTL } = useConfig();
 
   /**
@@ -197,8 +197,7 @@ export default function useRovingTabIndex({ ref }, keyEventDeps) {
         switchFocusToElement(sibling);
       }
     },
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-    [ref, isRTL, ...(keyEventDeps || [])]
+    [ref, isRTL]
   );
 
   useKeyDownEffect(
@@ -207,6 +206,6 @@ export default function useRovingTabIndex({ ref }, keyEventDeps) {
       key: ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end'],
     },
     onKeyDown,
-    [ref, onKeyDown]
+    [ref, onKeyDown, ...keyEventDeps]
   );
 }
