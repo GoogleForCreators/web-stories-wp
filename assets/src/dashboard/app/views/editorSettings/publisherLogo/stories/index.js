@@ -25,8 +25,8 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
-import PublisherLogoSettings from '../';
 import { getResourceFromLocalFile } from '../../../../../utils';
+import PublisherLogoSettings from '../';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/PublisherLogo',

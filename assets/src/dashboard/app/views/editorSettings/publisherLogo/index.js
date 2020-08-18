@@ -89,7 +89,7 @@ function PublisherLogoSettings({
                     <RemoveLogoButton
                       data-testid={`remove-publisher-logo-${idx}`}
                       aria-label={sprintf(
-                        /* translators: %s: uploaded logo title */
+                        /* translators: %s: logo title */
                         __('Remove %s as a publisher logo', 'web-stories'),
                         publisherLogo.title
                       )}

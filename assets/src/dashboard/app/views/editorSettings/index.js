@@ -32,18 +32,18 @@ import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import GoogleAnalyticsSettings from './googleAnalytics';
-import { Wrapper, Main } from './components';
+import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
 
 function EditorSettings() {
   const {
     actions: {
       settingsApi: { fetchSettings, updateSettings },
-      mediaApi: { uploadMedia, fetchMediaById },
+      mediaApi: { fetchMediaById, uploadMedia },
     },
     state: {
       settings: { activePublisherLogoId, googleAnalyticsId, publisherLogoIds },
-      media: { isLoading: isMediaLoading, newlyCreatedMediaIds, mediaById },
+      media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
     },
   } = useContext(ApiContext);
 
@@ -56,12 +56,12 @@ function EditorSettings() {
   const [mediaError, setMediaError] = useState('');
   /**
    * WP settings references publisher logos by ID.
-   * We must retrieve the media for those ids from /media when present
+   * We must retrieve the media for those IDs from /media when present
    * Summarized below:
    * FETCH - fetch settings to know what IDs to load media for
    * then fetch media when publisherLogoIds are in state with useEffect
    * ADD - first upload new logo to media. use the new ID(s) to update settings.
-   * REMOVE - send id to remove to settings. Not deleting media, just removing from logos.
+   * REMOVE - send ID to remove to settings. Not deleting media, just removing from logos.
    */
 
   useEffect(() => {

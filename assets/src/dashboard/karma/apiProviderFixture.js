@@ -202,7 +202,7 @@ function updateSettings(updates, currentState) {
     publisherLogoIds,
     publisherLogoIdToRemove,
   } = updates;
-  if (googleAnalyticsId) {
+  if (googleAnalyticsId !== undefined) {
     return {
       ...currentState,
       googleAnalyticsId,
