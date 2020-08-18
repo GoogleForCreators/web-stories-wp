@@ -90,7 +90,7 @@ function EditorSettings() {
 
       if (!isFileSizeWithinMaxUpload) {
         const errorText =
-          files.length > 1
+          files.length === 1
             ? __(
                 'Sorry, this file is too big. Make sure your logo is under 100 MB.',
                 'web-stories'
