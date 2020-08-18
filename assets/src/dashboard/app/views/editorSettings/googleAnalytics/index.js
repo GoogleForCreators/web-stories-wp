@@ -53,14 +53,12 @@ export const TEXT = {
 };
 
 function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
-  const [analyticsId, _setAnalyticsId] = useState('');
+  const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
-
-  const setAnalyticsId = useCallback((newId) => _setAnalyticsId(newId), []);
 
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
-  }, [googleAnalyticsId, setAnalyticsId]);
+  }, [googleAnalyticsId]);
 
   const handleCancelUpdateId = useCallback(() => {
     setAnalyticsId(googleAnalyticsId);
