@@ -207,13 +207,13 @@ const useTemplateApi = (dataAdapter, config) => {
   }, []);
 
   const fetchExternalTemplates = useCallback(
-    (filters) => {
+    async (filters) => {
       dispatch({
         type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
         payload: true,
       });
 
-      const reshapedTemplates = getAllTemplates({ assetsURL }).map(
+      const reshapedTemplates = (await getAllTemplates({ assetsURL })).map(
         reshapeTemplateObject(false)
       );
       dispatch({

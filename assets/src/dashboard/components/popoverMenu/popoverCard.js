@@ -23,7 +23,8 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER, CORNER_DIRECTIONS, DIRECTIONS } from '../../constants';
+import { BEZIER } from '../../../animation';
+import { CORNER_DIRECTIONS, DIRECTIONS } from '../../constants';
 import Popover from './popover';
 import Shadow from './shadow';
 
