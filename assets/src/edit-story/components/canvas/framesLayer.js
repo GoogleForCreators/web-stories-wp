@@ -95,7 +95,7 @@ function FramesLayer() {
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
-      aria-label={__('Frames', 'web-stories')}
+      aria-label={__('Frames layer', 'web-stories')}
     >
       {!isAnimating && (
         <FramesPageArea

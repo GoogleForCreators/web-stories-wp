@@ -19,6 +19,7 @@
  */
 import React, { useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */

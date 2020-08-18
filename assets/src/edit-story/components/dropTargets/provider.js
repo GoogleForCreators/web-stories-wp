@@ -183,6 +183,7 @@ function DropTargetsProvider({ children }) {
               replacement: null,
             },
           });
+          pushTransform(el.id, null);
         });
 
       setActiveDropTargetId(null);

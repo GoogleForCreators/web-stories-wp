@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+
 /**
  * External dependencies
  */
 import { memo, useCallback, useEffect } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
@@ -130,7 +133,7 @@ function DisplayLayer() {
       <Layer
         data-testid="DisplayLayer"
         pointerEvents="none"
-        aria-label={__('Display', 'web-stories')}
+        aria-label={__('Display layer', 'web-stories')}
       >
         <PageArea
           ref={setPageContainer}
