@@ -37,7 +37,7 @@ const rangeThumb = css`
 `;
 
 const focusedRangeThumb = css`
-  border: 2px solid #8ab4f8;
+  border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
   padding: 2px;
   background-clip: content-box;
   width: ${({ thumbSize = 16 }) => thumbSize * 1.5}px;
