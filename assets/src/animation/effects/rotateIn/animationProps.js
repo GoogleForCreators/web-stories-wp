@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
@@ -20,15 +26,18 @@ import { FIELD_TYPES, DIRECTION } from '../../constants';
 
 export default {
   rotateInDir: {
+    label: __('Direction', 'web-stories'),
     type: FIELD_TYPES.DROPDOWN,
     values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
     defaultValue: DIRECTION.LEFT_TO_RIGHT,
   },
   stopAngle: {
+    label: __('Stop Angle', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     defaultValue: 0,
   },
   numberOfRotations: {
+    label: __('# of Rotations', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     defaultValue: 1,
   },

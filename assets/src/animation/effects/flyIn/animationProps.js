@@ -15,12 +15,18 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { FIELD_TYPES, DIRECTION } from '../../constants';
 
 export default {
   flyInDir: {
+    label: __('Direction', 'web-stories'),
     type: FIELD_TYPES.DROPDOWN,
     values: [
       DIRECTION.TOP_TO_BOTTOM,

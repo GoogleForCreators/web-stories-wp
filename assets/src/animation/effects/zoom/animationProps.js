@@ -22,18 +22,19 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
+import { FIELD_TYPES } from '../../constants';
 
 export default {
-  panDir: {
-    label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
-    values: [
-      DIRECTION.TOP_TO_BOTTOM,
-      DIRECTION.BOTTOM_TO_TOP,
-      DIRECTION.LEFT_TO_RIGHT,
-      DIRECTION.RIGHT_TO_LEFT,
-    ],
-    defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  zoomFrom: {
+    label: __('From', 'web-stories'),
+    tooltip: 'Valid values range from 0 to 1',
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 0,
+  },
+  zoomTo: {
+    label: __('To', 'web-stories'),
+    tooltip: 'Valid values range from 0 to 1',
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 1,
   },
 };

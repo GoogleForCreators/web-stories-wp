@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, _x } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import {
@@ -23,6 +28,21 @@ import {
   FIELD_TYPES,
   BEZIER,
 } from '../constants';
+
+export const basicAnimationProps = {
+  duration: {
+    label: __('Duration', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    defaultValue: 1000,
+  },
+  delay: {
+    label: __('Delay', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    defaultValue: 0,
+  },
+};
 
 export default {
   id: {
@@ -33,19 +53,10 @@ export default {
     type: FIELD_TYPES.DROPDOWN,
     values: [
       ...Object.values(ANIMATION_TYPES),
-      ...Object.values(ANIMATION_EFFECTS),
+      ...Object.values(ANIMATION_EFFECTS).map((o) => o.value),
     ],
   },
-  duration: {
-    label: 'Duration (ms)',
-    type: FIELD_TYPES.NUMBER,
-    defaultValue: 1000,
-  },
-  delay: {
-    label: 'Delay (ms)',
-    type: FIELD_TYPES.NUMBER,
-    defaultValue: 0,
-  },
+  ...basicAnimationProps,
   direction: {
     type: FIELD_TYPES.DROPDOWN,
     values: ['normal', 'reverse', 'alternate', 'alternate-reverse'],

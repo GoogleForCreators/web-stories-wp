@@ -15,14 +15,25 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { FIELD_TYPES } from '../../constants';
 
 export default {
   scale: {
+    label: __('Scale', 'web-stories'),
     tooltip: 'Valid values are greater than or equal to 0',
     type: FIELD_TYPES.FLOAT,
     defaultValue: 0.5,
+  },
+  iterations: {
+    label: __('# of Pulses', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    defaultValue: 1,
   },
 };
