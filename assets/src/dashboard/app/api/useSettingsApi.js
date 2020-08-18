@@ -60,7 +60,11 @@ export default function useSettingsApi(
 
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
-        payload: response,
+        payload: {
+          googleAnalyticsId: response.web_stories_ga_tracking_id,
+          activePublisherLogoId: response.web_stories_active_publisher_logo,
+          publisherLogoIds: response.web_stories_publisher_logos,
+        },
       });
     } catch (err) {
       dispatch({
@@ -83,7 +87,7 @@ export default function useSettingsApi(
     }) => {
       try {
         const query = {};
-        if (googleAnalyticsId) {
+        if (googleAnalyticsId !== undefined) {
           query.web_stories_ga_tracking_id = googleAnalyticsId;
         }
 
@@ -108,7 +112,11 @@ export default function useSettingsApi(
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
-          payload: response,
+          payload: {
+            googleAnalyticsId: response.web_stories_ga_tracking_id,
+            activePublisherLogoId: response.web_stories_active_publisher_logo,
+            publisherLogoIds: response.web_stories_publisher_logos,
+          },
         });
       } catch (err) {
         dispatch({

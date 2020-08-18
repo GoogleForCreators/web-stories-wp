@@ -42,13 +42,13 @@ function settingsReducer(state, action) {
     case ACTION_TYPES.FETCH_SETTINGS_SUCCESS: {
       return {
         ...state,
-        activePublisherLogoId: action.payload.web_stories_active_publisher_logo,
+        activePublisherLogoId: action.payload.activePublisherLogoId,
         error: {},
-        googleAnalyticsId: action.payload.web_stories_ga_tracking_id,
+        googleAnalyticsId: action.payload.googleAnalyticsId,
         publisherLogoIds: [
           ...new Set([
-            action.payload.web_stories_active_publisher_logo,
-            ...action.payload.web_stories_publisher_logos,
+            action.payload.activePublisherLogoId,
+            ...action.payload.publisherLogoIds,
           ]),
         ],
       };

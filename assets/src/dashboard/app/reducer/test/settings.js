@@ -37,9 +37,9 @@ describe('settingsReducer', () => {
     const result = settingsReducer(initialState, {
       type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
       payload: {
-        web_stories_ga_tracking_id: 'fakeId12345',
-        web_stories_active_publisher_logo: 5,
-        web_stories_publisher_logos: [6, 7, 8],
+        googleAnalyticsId: 'fakeId12345',
+        activePublisherLogoId: 5,
+        publisherLogoIds: [6, 7, 8],
       },
     });
     expect(result).toMatchObject({
@@ -102,9 +102,9 @@ describe('settingsReducer', () => {
     const result = settingsReducer(initialState, {
       type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
       payload: {
-        web_stories_ga_tracking_id: 'fakeId12345NEW',
-        web_stories_active_publisher_logo: 5,
-        web_stories_publisher_logos: [6, 7, 8],
+        googleAnalyticsId: 'fakeId12345NEW',
+        activePublisherLogoId: 5,
+        publisherLogoIds: [6, 7, 8],
       },
     });
     expect(result).toMatchObject({
