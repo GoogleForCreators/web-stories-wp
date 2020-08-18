@@ -125,7 +125,9 @@ describe('useInsertElement', () => {
         result.current(IMAGE_TYPE, PROPS_M3P_WITH_ATTRIBUTION);
       });
 
-      expect(registerUsage).toHaveBeenCalledWith({ REGISTER_USAGE_URL });
+      expect(registerUsage).toHaveBeenCalledWith({
+        registerUsageUrl: REGISTER_USAGE_URL,
+      });
     });
 
     it('should not be called for local resources', () => {
