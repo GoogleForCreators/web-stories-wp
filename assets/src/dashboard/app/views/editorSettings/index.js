@@ -131,12 +131,12 @@ function EditorSettings() {
     if (Object.keys(mediaById).length <= 0) {
       return [];
     }
+
     return publisherLogoIds.map((publisherLogoId) => {
       if (mediaById[publisherLogoId]) {
-        if (publisherLogoId === activePublisherLogoId) {
-          mediaById[publisherLogoId].isActive = true;
-        }
-        return mediaById[publisherLogoId];
+        return publisherLogoId === activePublisherLogoId
+          ? { ...mediaById[publisherLogoId], isActive: true }
+          : mediaById[publisherLogoId];
       }
       return undefined; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
     });
