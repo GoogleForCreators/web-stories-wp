@@ -94,13 +94,7 @@ function getImageUrls(m) {
 
   const sizesFromBiggest = m.imageUrls
     .sort((x, y) => y.width - x.width)
-    .map((u) => ({
-      file: m.name,
-      source_url: u.url,
-      mime_type: u.mimeType,
-      width: u.width,
-      height: u.height,
-    }));
+    .map((u) => mediaUrlToImageSizeDescription(m, u));
   const namedSizes = [
     ['full', sizesFromBiggest[0]],
     ['large', sizesFromBiggest[1]],
@@ -133,16 +127,20 @@ function getVideoUrls(m) {
 
   const sizesFromBiggest = m.videoUrls
     .sort((x, y) => y.width - x.width)
-    .map((u) => ({
-      file: m.name,
-      source_url: u.url,
-      mime_type: u.mimeType,
-      width: u.width,
-      height: u.height,
-    }));
+    .map((u) => mediaUrlToImageSizeDescription(m, u));
   return {
     full: sizesFromBiggest[0],
     preview: sizesFromBiggest[sizesFromBiggest.length - 1],
+  };
+}
+
+function mediaUrlToImageSizeDescription(media, url) {
+  return {
+    file: media.name,
+    source_url: url.url,
+    mime_type: url.mimeType,
+    width: url.width,
+    height: url.height,
   };
 }
 
