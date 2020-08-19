@@ -25,7 +25,7 @@ import Moveable from 'react-moveable';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../components/keyboard';
+import { useKeyDownEffect } from '../keyboard';
 import { MARK_OFFSET, MS_DIVISOR } from './ruler';
 
 const BAR_HEIGHT = 24;
@@ -205,6 +205,39 @@ export default function TimingBar({
       handleDragEnd();
     },
     [rightRef, handleDragEnd, internalDuration, maxDuration, duration, offset]
+  );
+
+  useKeyDownEffect(
+    middleRef,
+    { key: ['left', 'right'] },
+    ({ key }) => {
+      switch (key) {
+        case 'ArrowRight':
+          setOffset(
+            Math.min(
+              internalOffset + KEY_OFFSET_MS,
+              maxDuration - internalDuration
+            )
+          );
+          break;
+        case 'ArrowLeft':
+          setOffset(Math.max(internalOffset - KEY_OFFSET_MS, 0));
+          break;
+        default:
+          break;
+      }
+
+      handleDragEnd();
+    },
+    [
+      middleRef,
+      handleDragEnd,
+      internalDuration,
+      maxDuration,
+      duration,
+      offset,
+      internalOffset,
+    ]
   );
 
   return (
