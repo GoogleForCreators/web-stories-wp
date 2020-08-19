@@ -31,21 +31,21 @@ describe('date/isToday', () => {
   });
 
   it('should return false that yesterday is today', () => {
-    const dateString = moment().subtract(1, 'days');
+    const dateString = moment.utc().subtract(1, 'days');
     const formattedDate = isToday(dateString);
 
     expect(formattedDate).toBe(false);
   });
 
   it('should return true that 6am of today is today', () => {
-    const dateString = moment().hours(6);
+    const dateString = moment.utc().hours(6);
     const formattedDate = isToday(dateString);
 
     expect(formattedDate).toBe(true);
   });
 
   it('should return true that 11pm of "today" is today', () => {
-    const dateString = moment().hours(23);
+    const dateString = moment.utc().hours(23);
     const formattedDate = isToday(dateString);
 
     expect(formattedDate).toBe(true);

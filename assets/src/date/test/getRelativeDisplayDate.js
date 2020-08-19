@@ -31,7 +31,7 @@ describe('date/getRelativeDisplayDate', () => {
   });
 
   it('should return 2 minutes ago in America/New_York using moment', () => {
-    const dateString = moment().subtract(2, 'minutes');
+    const dateString = moment.utc().subtract(2, 'minutes');
     const formattedDate = getRelativeDisplayDate(dateString, {
       dateFormat: 'F j, Y',
       gmtOffset: -4,
@@ -43,7 +43,7 @@ describe('date/getRelativeDisplayDate', () => {
   });
 
   it('should return 2 minutes ago in America/Los_Angeles using moment', () => {
-    const dateString = moment().subtract(2, 'minutes');
+    const dateString = moment.utc().subtract(2, 'minutes');
     const formattedDate = getRelativeDisplayDate(dateString, {
       dateFormat: 'F j, Y',
       gmtOffset: -7,
@@ -55,7 +55,7 @@ describe('date/getRelativeDisplayDate', () => {
   });
 
   it('should return an hour ago using moment', () => {
-    const dateString = moment().subtract(1, 'hours');
+    const dateString = moment.utc().subtract(1, 'hours');
     const formattedDate = getRelativeDisplayDate(dateString, {
       dateFormat: 'F j, Y',
       gmtOffset: -7,
@@ -67,7 +67,7 @@ describe('date/getRelativeDisplayDate', () => {
   });
 
   it('should return 2 hours ago using moment', () => {
-    const dateString = moment().subtract(2, 'hours');
+    const dateString = moment.utc().subtract(2, 'hours');
     const formattedDate = getRelativeDisplayDate(dateString, {
       dateFormat: 'F j, Y',
       gmtOffset: -7,
@@ -79,7 +79,7 @@ describe('date/getRelativeDisplayDate', () => {
   });
 
   it('should return yesterday using moment', () => {
-    const dateString = moment().subtract(1, 'days');
+    const dateString = moment.utc().subtract(1, 'days');
     const formattedDate = getRelativeDisplayDate(dateString, {
       dateFormat: 'F j, Y',
       gmtOffset: -7,

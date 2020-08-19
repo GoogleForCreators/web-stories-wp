@@ -31,21 +31,21 @@ describe('date/isYesterday', () => {
   });
 
   it('should return true that today minus 1 day is yesterday', () => {
-    const dateString = moment().subtract(1, 'days');
+    const dateString = moment.utc().subtract(1, 'days');
     const formattedDate = isYesterday(dateString);
 
     expect(formattedDate).toBe(true);
   });
 
   it('should return false that today minus 3 days is yesterday', () => {
-    const dateString = moment().subtract(3, 'days');
+    const dateString = moment.utc().subtract(3, 'days');
     const formattedDate = isYesterday(dateString);
 
     expect(formattedDate).toBe(false);
   });
 
   it('should return false that today is yesterday', () => {
-    const dateString = moment();
+    const dateString = moment.utc();
     const formattedDate = isYesterday(dateString);
 
     expect(formattedDate).toBe(false);
