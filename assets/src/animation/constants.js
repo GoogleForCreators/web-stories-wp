@@ -65,8 +65,8 @@ export const ANIMATION_EFFECTS = {
 
 export const DIRECTION = {
   TOP_TO_BOTTOM: 'topToBottom',
-  BOTTOM_TO_TOP: 'bottomToTop',
   LEFT_TO_RIGHT: 'leftToRight',
+  BOTTOM_TO_TOP: 'bottomToTop',
   RIGHT_TO_LEFT: 'rightToLeft',
 };
 
