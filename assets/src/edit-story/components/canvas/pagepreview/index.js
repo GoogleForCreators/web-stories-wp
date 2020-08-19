@@ -50,7 +50,6 @@ const Page = styled.button`
   width: ${({ width }) => width}px;
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
-  outline: 0;
   ${({ isActive, isInteractive, theme }) =>
     !isActive &&
     isInteractive &&
