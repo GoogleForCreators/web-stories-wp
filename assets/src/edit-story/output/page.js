@@ -52,9 +52,14 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
 
   const hasPageAttachment = page.pageAttachment?.url?.length > 0;
 
-  // Check for invalid elements, @todo this should come from the pre-publish checklist in the future.
-  const validElements = regularElements.filter(
-    (element) => hasPageAttachment && !isElementBelowLimit(element)
+  // Remove invalid links, @todo this should come from the pre-publish checklist in the future.
+  const validElements = regularElements.map((element) =>
+    hasPageAttachment && !isElementBelowLimit(element)
+      ? element
+      : {
+          ...element,
+          link: null,
+        }
   );
 
   return (

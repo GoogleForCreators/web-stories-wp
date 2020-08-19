@@ -505,7 +505,7 @@ describe('Page output', () => {
                 horizontal: 0,
               },
               link: {
-                url: 'http://example.com',
+                url: 'http://shouldremove.com',
               },
               fontSize: 30,
               font: {
@@ -532,7 +532,8 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).not.toContain('Hello, link');
+      expect(content).toContain('Hello, link');
+      expect(content).not.toContain('http://shouldremove.com');
     });
   });
 
