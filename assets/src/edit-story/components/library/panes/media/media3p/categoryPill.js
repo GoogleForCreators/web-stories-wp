@@ -18,11 +18,12 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
 import useRovingTabIndex from '../common/useRovingTabIndex';
+import { useKeyDownEffect } from '../../../../keyboard';
 
 const PillContainer = styled.button`
   cursor: pointer;
@@ -56,10 +57,25 @@ PillContainer.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-const CategoryPill = ({ index, title, isSelected, onClick }) => {
+const CategoryPill = ({
+  index,
+  title,
+  isSelected,
+  isExpanded,
+  setIsExpanded,
+  onClick,
+}) => {
   const ref = useRef();
 
-  useRovingTabIndex({ ref });
+  // useRovingTabIndex and useKeyDownEffect depend on 'isExpanded' to avoid
+  // conflicting 'down' arrow handlers.
+  useRovingTabIndex({ ref }, [isExpanded]);
+
+  const expand = useCallback(() => setIsExpanded(true), [setIsExpanded]);
+  useKeyDownEffect(ref, !isExpanded ? 'down' : [], expand, [
+    isExpanded,
+    expand,
+  ]);
 
   return (
     <PillContainer
@@ -81,6 +97,8 @@ const CategoryPill = ({ index, title, isSelected, onClick }) => {
 CategoryPill.propTypes = {
   index: PropTypes.number,
   isSelected: PropTypes.bool,
+  isExpanded: PropTypes.bool,
+  setIsExpanded: PropTypes.func,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };

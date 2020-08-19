@@ -130,7 +130,7 @@ function getClosestValidSibling(element, siblingDirection) {
   return closestValidSibling;
 }
 
-export default function useRovingTabIndex({ ref }) {
+export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
   const { isRTL } = useConfig();
 
   /**
@@ -204,6 +204,6 @@ export default function useRovingTabIndex({ ref }) {
       key: ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end'],
     },
     onKeyDown,
-    [ref, onKeyDown]
+    [ref, onKeyDown, ...keyEventDeps]
   );
 }
