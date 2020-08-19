@@ -65,10 +65,6 @@ describe('Grid view', () => {
     return gridElement;
   }
 
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(() => resolve(), ms));
-  }
-
   it('should render', async () => {
     const { storiesOrderById } = await getStoriesState();
     const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
@@ -279,7 +275,7 @@ describe('Grid view', () => {
       await fixture.events.keyboard.type(firstStoryTitle);
 
       // Wait for the debounce
-      await sleep(300);
+      await fixture.events.sleep(300);
 
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
