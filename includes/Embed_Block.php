@@ -56,6 +56,12 @@ class Embed_Block {
 		$this->register_script( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player', Tracking::SCRIPT_HANDLE ] );
 		$this->register_style( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player' ] );
 
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesEmbedBlockSettings',
+			$this->get_script_settings()
+		);
+
 		// todo: use register_block_type_from_metadata() once generally available.
 
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
@@ -94,6 +100,17 @@ class Embed_Block {
 		);
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+	}
+
+	/**
+	 * Returns script settings.
+	 *
+	 * @return array Script settings.
+	 */
+	private function get_script_settings() {
+		return [
+			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+		];
 	}
 
 	/**

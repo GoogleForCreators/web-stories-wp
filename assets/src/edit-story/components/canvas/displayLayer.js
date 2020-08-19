@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { memo, useEffect, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -27,14 +27,15 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import StoryAnimation, {
+import {
+  StoryAnimation,
+  STORY_ANIMATION_STATE,
   useStoryAnimationContext,
-} from '../../../dashboard/components/storyAnimation';
-import { STORY_ANIMATION_STATE } from '../../../dashboard/constants';
+} from '../../../animation';
 import { useStory } from '../../app';
-import useCanvas from './useCanvas';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
+import useCanvas from './useCanvas';
 import PageAttachment from './pageAttachment';
 
 function DisplayPage({
@@ -133,7 +134,7 @@ function DisplayLayer() {
       <Layer
         data-testid="DisplayLayer"
         pointerEvents="none"
-        aria-label={__('Display', 'web-stories')}
+        aria-label={__('Display layer', 'web-stories')}
       >
         <PageArea
           ref={setPageContainer}

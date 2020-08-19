@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
 /**
  * WordPress dependencies
  */
@@ -27,9 +26,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import StoryAnimation from '../../dashboard/components/storyAnimation';
+import { StoryAnimation } from '../../animation';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import StoryPropTypes from '../types';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
 import OutputElement from './element';

@@ -30,8 +30,7 @@ import { useDropTargets } from '../../../../../app';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
-import { useMedia3pApi } from '../../../../../app/media/media3p/api';
-import getThumbnailUrl from '../../../../../elements/media/util';
+import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
 
@@ -166,22 +165,6 @@ const MediaElement = ({
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
-  const {
-    actions: { registerUsage },
-  } = useMedia3pApi();
-
-  const handleRegisterUsage = useCallback(() => {
-    if (
-      providerType !== 'local' &&
-      resource.attribution &&
-      resource.attribution.registerUsageUrl
-    ) {
-      registerUsage({
-        registerUsageUrl: resource.attribution.registerUsageUrl,
-      });
-    }
-  }, [providerType, resource, registerUsage]);
-
   const measureMediaElement = () =>
     mediaElement?.current?.getBoundingClientRect();
 
@@ -208,11 +191,10 @@ const MediaElement = ({
       onDragEnd: (e) => {
         e.preventDefault();
         setDraggingResource(null);
-        handleRegisterUsage();
         handleDrop(resource);
       },
     }),
-    [setDraggingResource, resource, handleDrag, handleDrop, handleRegisterUsage]
+    [setDraggingResource, resource, handleDrag, handleDrop]
   );
 
   const makeActive = useCallback(() => setActive(true), []);
@@ -255,7 +237,6 @@ const MediaElement = ({
   }, [isMenuOpen, active, type]);
 
   const onClick = () => {
-    handleRegisterUsage();
     onInsert(resource, width, height);
   };
 
@@ -365,7 +346,7 @@ function getInnerElement(
     return (
       <Image
         key={src}
-        src={getThumbnailUrl(width, resource)}
+        src={getSmallestUrlForWidth(width, resource)}
         ref={ref}
         width={width}
         height={height}
@@ -395,7 +376,10 @@ function getInnerElement(
           crossOrigin="anonymous"
           {...dropTargetsBindings}
         >
-          <source src={src} type={mimeType} />
+          <source
+            src={getSmallestUrlForWidth(width, resource)}
+            type={mimeType}
+          />
         </Video>
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}

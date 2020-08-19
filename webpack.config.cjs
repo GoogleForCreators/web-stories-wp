@@ -55,7 +55,15 @@ const sharedConfig = {
   output: {
     path: path.resolve(process.cwd(), 'assets', 'js'),
     filename: '[name].js',
-    chunkFilename: '[name].js',
+    chunkFilename: '[name]-[chunkhash].js',
+    publicPath: '',
+    /**
+     * If multiple webpack runtimes (from different compilations) are used on the same webpage,
+     * there is a risk of conflicts of on-demand chunks in the global namespace.
+     *
+     * @see (@link https://webpack.js.org/configuration/output/#outputjsonpfunction)
+     */
+    jsonpFunction: '__webStories_webpackJsonp',
   },
   module: {
     rules: [

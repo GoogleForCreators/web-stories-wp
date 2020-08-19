@@ -130,14 +130,15 @@ class Activation_Notice {
 		$demo_story_url = 'https://google.github.io/web-stories-wp/beta/tips.html';
 
 		return [
-			'id'     => 'web-stories-plugin-activation-notice',
-			'config' => [
+			'id'         => 'web-stories-plugin-activation-notice',
+			'config'     => [
 				'isRTL'        => is_rtl(),
 				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'demoStoryURL' => $demo_story_url,
 				'newStoryURL'  => $new_story_url,
 				'dashboardURL' => $dashboard_url,
 			],
+			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
 		];
 	}
 
