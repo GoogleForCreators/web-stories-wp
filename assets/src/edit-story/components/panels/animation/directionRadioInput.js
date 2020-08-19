@@ -73,20 +73,19 @@ const Fieldset = styled.fieldset`
   position: relative;
   height: 63px;
   width: 63px;
-  background-color: #1c1c1c;
-  border: 1px solid #2c2c2c;
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  border: 1px solid ${({ theme }) => theme.colors.fg.v9};
   border-radius: 4px;
 `;
 
-const SampleElement = styled.div`
+const Figure = styled.div`
   position: absolute;
   display: block;
   top: 50%;
   left: 50%;
-  width: 16px;
-  height: 24px;
-  background: #2c2c2c;
-  border: 1px solid #2c2c2c;
+  width: 18px;
+  height: 26px;
+  background: ${({ theme }) => theme.colors.fg.v9};
   border-radius: 2px;
   transform: translate(-50%, -50%);
 `;
@@ -125,12 +124,14 @@ const Label = styled.label`
   }}
 
   ${DirectionIndicator} {
-    stroke: #6c6c6c;
+    stroke: ${({ theme }) => theme.colors.fg.v9};
+    /* stroke: #6c6c6c; */
     stroke-width: 1px;
   }
 
   input:checked ~ ${DirectionIndicator} {
     stroke: #dd8162;
+    /* stroke: #dd8162; */
     stroke-width: 2px;
   }
 
@@ -170,7 +171,7 @@ export const DirectionRadioInput = ({
 }) => {
   return (
     <Fieldset>
-      <SampleElement />
+      <Figure />
       <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
       <RadioGroup>
         {directions.map((direction) => (
