@@ -34,7 +34,7 @@ import { getMoment } from './getMoment';
  */
 export function isYesterday(date) {
   const displayDate = getMoment(date);
-  const yesterday = moment().subtract(1, 'days').startOf('day');
+  const yesterday = moment.utc().subtract(1, 'days').startOf('day');
 
   return displayDate.isSame(yesterday, 'd');
 }
