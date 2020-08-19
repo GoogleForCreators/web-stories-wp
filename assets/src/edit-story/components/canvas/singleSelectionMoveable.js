@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import classnames from 'classnames';
 
 /**
@@ -146,12 +146,15 @@ function SingleSelectionMoveable({
   const throttleRotation = useGlobalIsKeyPressed('shift');
 
   const box = getBox(selectedElement);
-  const frame = {
-    translate: [0, 0],
-    rotate: box.rotationAngle,
-    resize: [0, 0],
-    updates: null,
-  };
+  const frame = useMemo(
+    () => ({
+      translate: [0, 0],
+      rotate: box.rotationAngle,
+      resize: [0, 0],
+      updates: null,
+    }),
+    [box.rotationAngle]
+  );
 
   const setTransformStyle = (target) => {
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
