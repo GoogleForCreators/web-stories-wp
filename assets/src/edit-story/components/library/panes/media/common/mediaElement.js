@@ -31,7 +31,7 @@ import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
-import { getThumbnailUrl } from '../../../../../elements/media/util';
+import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
 
@@ -365,7 +365,7 @@ function getInnerElement(
     return (
       <Image
         key={src}
-        src={getThumbnailUrl(width, resource)}
+        src={getSmallestUrlForWidth(width, resource)}
         ref={ref}
         width={width}
         height={height}
@@ -395,7 +395,10 @@ function getInnerElement(
           crossOrigin="anonymous"
           {...dropTargetsBindings}
         >
-          <source src={getThumbnailUrl(width, resource)} type={mimeType} />
+          <source
+            src={getSmallestUrlForWidth(width, resource)}
+            type={mimeType}
+          />
         </Video>
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}

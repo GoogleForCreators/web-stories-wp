@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getThumbnailUrl, calculateSrcSet } from '../util';
+import { getSmallestUrlForWidth, calculateSrcSet } from '../util';
 
 describe('util', () => {
   describe('calculateSrcSet', () => {
@@ -103,7 +103,7 @@ describe('util', () => {
     });
   });
 
-  describe('getThumbnailUrl', () => {
+  describe('getSmallestUrlForWidth', () => {
     beforeEach(() => {
       window.devicePixelRatio = 1;
     });
@@ -119,7 +119,7 @@ describe('util', () => {
           img3: { width: 400, height: 1, source_url: 'large-url' },
         },
       };
-      expect(getThumbnailUrl(210, resource)).toBe('med-url');
+      expect(getSmallestUrlForWidth(210, resource)).toBe('med-url');
     });
 
     it('should return an image according to the device pixel ratio', () => {
@@ -134,7 +134,7 @@ describe('util', () => {
           img3: { width: 400, height: 1, source_url: 'large-url' },
         },
       };
-      expect(getThumbnailUrl(160, resource)).toBe('large-url');
+      expect(getSmallestUrlForWidth(160, resource)).toBe('large-url');
     });
 
     it('should return an image with the same orientation', () => {
@@ -149,7 +149,7 @@ describe('util', () => {
           img4: { width: 400, height: 1, source_url: 'large-url' },
         },
       };
-      expect(getThumbnailUrl(150, resource)).toBe('med-url');
+      expect(getSmallestUrlForWidth(150, resource)).toBe('med-url');
     });
 
     it('should return the resource.src if there is no valid thumb', () => {
@@ -163,7 +163,7 @@ describe('util', () => {
           img3: { width: 400, height: 1, source_url: 'large-url' },
         },
       };
-      expect(getThumbnailUrl(440, resource)).toBe('default-url');
+      expect(getSmallestUrlForWidth(440, resource)).toBe('default-url');
     });
 
     it('should return the default src URL if no alternatives', () => {
@@ -172,7 +172,7 @@ describe('util', () => {
         width: 400,
         height: 200,
       };
-      expect(getThumbnailUrl(200, resource)).toBe('default-url');
+      expect(getSmallestUrlForWidth(200, resource)).toBe('default-url');
     });
   });
 });

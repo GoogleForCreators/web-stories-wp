@@ -50,7 +50,7 @@ const Orientation = {
 /**
  * Returns a valid srcSet attribute value for the given media resource.
  *
- * @param {Object} resource The resource.
+ * @param {import('../../app/media/utils/createResource.js').Resource} resource The resource.
  * @return {?string} The srcSet value, or null if the resource has no `sizes`
  * attribute.
  */
@@ -82,17 +82,17 @@ export function calculateSrcSet(resource) {
  * minWidth, according to the device pixel ratio.
  *
  * @param {number} minWidth The minimum width of the thumbnail to return.
- * @param {*} resource Resource object.
+ * @param {import('../../app/media/utils/createResource.js').Resource} resource The resource.
  * @return {string} Source URL of the smallest available size media.
  */
-export function getThumbnailUrl(minWidth, resource) {
+export function getSmallestUrlForWidth(minWidth, resource) {
   if (resource.sizes) {
-    const smallestValidMedia = Object.values(resource.sizes)
+    const smallestMedia = Object.values(resource.sizes)
       .sort((s1, s2) => s1.width - s2.width)
       .filter((s) => getOrientation(s) === getOrientation(resource))
       .find((s) => s.width >= minWidth * window.devicePixelRatio);
-    if (smallestValidMedia) {
-      return smallestValidMedia.source_url;
+    if (smallestMedia) {
+      return smallestMedia.source_url;
     }
   }
   return resource.src;
