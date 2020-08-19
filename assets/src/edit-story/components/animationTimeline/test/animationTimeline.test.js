@@ -15,21 +15,47 @@
  */
 
 /**
+ * External dependencies
+ */
+import React from 'react';
+
+/**
  * Internal dependencies
  */
 import AnimationTimeline from '..';
 import { renderWithTheme } from '../../../testUtils';
 
+const animations = Array.from(Array(10).keys()).reduce((acc, id) => {
+  acc[id] = {
+    id,
+    duration: 500,
+    offset: id % 2 ? 100 : 0,
+    label: `Animation ${id}`,
+  };
+  return acc;
+}, {});
+
 describe('<AnimationTimeline />', function () {
   it('should generate the number of rows for animations provided.', function () {
-    const animations = Array.from(Array(10).keys()).map((id) => ({
-      id,
-    }));
     const { queryAllByTestId } = renderWithTheme(
-      <AnimationTimeline animations={animations} duration={6000} />
+      <AnimationTimeline
+        animations={Object.values(animations)}
+        duration={6000}
+        onUpdateAnimation={() => {}}
+      />
     );
     expect(queryAllByTestId('timeline-animation-item')).toHaveLength(
-      animations.length
+      Object.values(animations).length
+    );
+  });
+
+  it('should update the offset when a timing bar is adjusted to the right', async function () {
+    const { queryAllByTestId } = renderWithTheme(
+      <AnimationTimeline
+        animations={Object.values(animations)}
+        duration={6000}
+        onUpdateAnimation={() => {}}
+      />
     );
   });
 });
