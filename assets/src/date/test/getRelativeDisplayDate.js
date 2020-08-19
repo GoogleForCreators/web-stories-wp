@@ -24,7 +24,6 @@ import MockDate from 'mockdate';
  * Internal dependencies
  */
 import { getRelativeDisplayDate } from '../';
-import { getMoment } from '../getMoment';
 
 describe('date/getRelativeDisplayDate', () => {
   beforeEach(() => {
