@@ -19,29 +19,13 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+/**
  * Internal dependencies
  */
 import { DIRECTION } from '../../../../animation';
-
-const Container = styled.div`
-  position: relative;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: 63px;
-  width: 63px;
-  background-color: #1c1c1c;
-  border: 1px solid #2c2c2c;
-  border-radius: 4px;
-`;
-
-const SampleElement = styled.div`
-  width: 16px;
-  height: 24px;
-  background: #2c2c2c;
-  border: 1px solid #2c2c2c;
-  border-radius: 2px;
-`;
 
 const Svg = styled.svg`
   display: block;
@@ -82,8 +66,30 @@ Direction.propTypes = {
   direction: PropTypes.oneOf(Object.values(DIRECTION)),
 };
 
-// Must be a styled component to add component css selectors
+// Must be a styled component to add component selectors in css
 const DirectionIndicator = styled(Direction)``;
+
+const Fieldset = styled.fieldset`
+  position: relative;
+  height: 63px;
+  width: 63px;
+  background-color: #1c1c1c;
+  border: 1px solid #2c2c2c;
+  border-radius: 4px;
+`;
+
+const SampleElement = styled.div`
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 24px;
+  background: #2c2c2c;
+  border: 1px solid #2c2c2c;
+  border-radius: 2px;
+  transform: translate(-50%, -50%);
+`;
 
 const Label = styled.label`
   position: absolute;
@@ -122,19 +128,39 @@ const Label = styled.label`
     stroke: #6c6c6c;
     stroke-width: 1px;
   }
+
   input:checked ~ ${DirectionIndicator} {
     stroke: #dd8162;
     stroke-width: 2px;
   }
+
   input:focus ~ ${DirectionIndicator} {
     outline: 5px auto -webkit-focus-ring-color;
   }
 `;
-const HiddenInput = styled.input`
+
+const hidden = css`
   position: absolute;
   opacity: 0;
   clip-path: polygon(0 0);
   cursor: pointer;
+`;
+const HiddenLegend = styled.legend`
+  ${hidden}
+`;
+const HiddenCaption = styled.span`
+  ${hidden}
+`;
+const HiddenInput = styled.input`
+  ${hidden}
+`;
+
+const RadioGroup = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 `;
 
 export const DirectionRadioInput = ({
@@ -143,21 +169,32 @@ export const DirectionRadioInput = ({
   defaultValue,
 }) => {
   return (
-    <Container>
+    <Fieldset>
       <SampleElement />
-      {directions.map((direction) => (
-        <Label key={direction} direction={direction}>
-          <HiddenInput
-            type="radio"
-            name="direction"
-            value={direction}
-            onChange={onChange}
-            defaultChecked={defaultValue === direction}
-          />
-          <DirectionIndicator direction={direction} />
-        </Label>
-      ))}
-    </Container>
+      <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
+      <RadioGroup>
+        {directions.map((direction) => (
+          <Label key={direction} htmlFor={direction} direction={direction}>
+            <HiddenCaption>
+              {sprintf(
+                /* translators: %s: story title. */
+                __('%s Direction', 'web-stories'),
+                direction.replace(/([a-z])([A-Z])/g, '$1 $2')
+              )}
+            </HiddenCaption>
+            <HiddenInput
+              id={direction}
+              type="radio"
+              name="direction"
+              value={direction}
+              onChange={onChange}
+              defaultChecked={defaultValue === direction}
+            />
+            <DirectionIndicator direction={direction} />
+          </Label>
+        ))}
+      </RadioGroup>
+    </Fieldset>
   );
 };
 

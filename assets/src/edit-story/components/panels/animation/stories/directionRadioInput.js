@@ -21,10 +21,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DIRECTION } from '../../../../../animation';
-import { DirectionRadioInput } from '../directionSelect';
+import { DirectionRadioInput } from '../directionRadioInput';
 
 export default {
-  title: 'Animations/DirectionRadioInput',
+  title: 'Animations/Direction Radio Input',
   component: DirectionRadioInput,
 };
 
