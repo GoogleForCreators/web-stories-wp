@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -35,12 +36,29 @@ function getEffectName(type) {
   );
 }
 
-function EffectPanel({ animation: { id, type, ...config } }) {
+function EffectPanel({ animation: { id, type, ...config }, onChange }) {
   const { props } = GetAnimationEffectProps(type);
+
+  const handleInputChange = useCallback(
+    (updates) => {
+      onChange({
+        id,
+        type,
+        ...config,
+        ...updates,
+      });
+    },
+    [id, type, config, onChange]
+  );
 
   const content = Object.keys(props).map((field) => (
     <Row key={field} expand>
-      <EffectInput effectProps={props} effectConfig={config} field={field} />
+      <EffectInput
+        effectProps={props}
+        effectConfig={config}
+        field={field}
+        onChange={(value) => handleInputChange({ [field]: value })}
+      />
     </Row>
   ));
 
@@ -54,6 +72,7 @@ function EffectPanel({ animation: { id, type, ...config } }) {
 
 EffectPanel.propTypes = {
   animation: PropTypes.shape(AnimationProps),
+  onChange: PropTypes.func.isRequired,
 };
 
 export default EffectPanel;

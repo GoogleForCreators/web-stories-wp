@@ -25,13 +25,13 @@ import PropTypes from 'prop-types';
 import { FIELD_TYPES } from '../../../../animation/constants';
 import { DropDown, BoxedNumeric } from '../../form';
 
-function EffectInput({ effectProps, effectConfig, field }) {
+function EffectInput({ effectProps, effectConfig, field, onChange }) {
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
       return (
         <DropDown
           value={effectConfig[field] || effectProps[field].defaultValue}
-          onChange={() => {}}
+          onChange={onChange}
           options={effectProps[field].values.map((v) => ({
             value: v,
             name: v,
@@ -46,8 +46,9 @@ function EffectInput({ effectProps, effectConfig, field }) {
           symbol={effectProps[field].unit}
           value={effectConfig[field] || effectProps[field].defaultValue}
           min={0}
-          onChange={() => {}}
+          onChange={onChange}
           canBeNegative={false}
+          float={effectProps[field].type === FIELD_TYPES.FLOAT}
           flexBasis={'100%'}
         />
       );
@@ -58,6 +59,7 @@ EffectInput.propTypes = {
   effectProps: PropTypes.object,
   effectConfig: PropTypes.object,
   field: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default EffectInput;

@@ -17,6 +17,10 @@
 /**
  * WordPress dependencies
  */
+/**
+ * External dependencies
+ */
+import { useCallback, useMemo } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -39,7 +43,29 @@ const ANIMATION_OPTIONS = [
   ...Object.values(ANIMATION_EFFECTS),
 ];
 
-function AnimationPanel({ selectedElements, selectedElementAnimations }) {
+function AnimationPanel({
+  selectedElements,
+  selectedElementAnimations,
+  pushUpdateForObject,
+}) {
+  const handlePanelChange = useCallback(
+    (animation) => {
+      pushUpdateForObject('animation', animation, null, false);
+    },
+    [pushUpdateForObject]
+  );
+
+  const updatedAnimations = useMemo(() => {
+    // Combining local element updates with the
+    // page level applied updates
+    const updated = selectedElements
+      .map((element) => element.animation)
+      .filter(Boolean);
+    return selectedElementAnimations.map((anim) => ({
+      ...(updated.find((a) => a.id === anim.id) || anim),
+    }));
+  }, [selectedElements, selectedElementAnimations]);
+
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
@@ -55,16 +81,21 @@ function AnimationPanel({ selectedElements, selectedElementAnimations }) {
           options={ANIMATION_OPTIONS}
         />
       </SimplePanel>
-      {selectedElementAnimations.map((animation) => (
-        <EffectPanel key={animation.id} animation={animation} />
+      {updatedAnimations.map((animation) => (
+        <EffectPanel
+          key={animation.id}
+          animation={animation}
+          onChange={handlePanelChange}
+        />
       ))}
     </>
   );
 }
 
 AnimationPanel.propTypes = {
-  selectedElements: PropTypes.arrayOf(StoryPropTypes.element),
+  selectedElements: PropTypes.arrayOf(StoryPropTypes.element).isRequired,
   selectedElementAnimations: PropTypes.arrayOf(AnimationPropType),
+  pushUpdateForObject: PropTypes.func.isRequired,
 };
 
 export default AnimationPanel;
